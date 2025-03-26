@@ -31,11 +31,17 @@ export default {
 </script>
 
 <template>
-  <div id="workflow-container" />
+  <div class="flex-grow flex-shrink min-w-0 p-6 overflow-auto">
+    <div id="workflow-container" />
+  </div>
 </template>
 
 <style lang="scss" scoped>
 #workflow-container {
+  width: 100%;
+  height: 100vh;
+}
+iframe {
   width: 100%;
   height: 100vh;
 }
