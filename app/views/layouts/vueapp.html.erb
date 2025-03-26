@@ -59,6 +59,7 @@
       }
       window.errorLoggingConfig = '<%= ENV.fetch('SENTRY_FRONTEND_DSN', '') || ENV.fetch('SENTRY_DSN', '') %>'
     </script>
+    <script src="https://cdn.activepieces.com/sdk/embed/0.3.5.js"></script>
     <% if @global_config['ANALYTICS_TOKEN'].present? %>
     <script>
       window.analyticsConfig = {
