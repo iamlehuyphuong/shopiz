@@ -760,7 +760,7 @@
           },
           "DNS_CONFIGURATION_DIALOG": {
             "HEADER": "DNS konfigurācija",
-            "DESCRIPTION": "Piesakieties sava DNS nodrošinātāja kontā un pievienojiet CNAME ierakstu apakšdomēnam, kas norāda uz chatwoot.help",
+            "DESCRIPTION": "Piesakieties sava DNS nodrošinātāja kontā un pievienojiet CNAME ierakstu apakšdomēnam, kas norāda uz salesman.help",
             "HELP_TEXT": "Kad tas ir izdarīts, varat sazināties ar mūsu atbalsta dienestu, lai pieprasītu automātiski ģenerētu SSL sertifikātu.",
             "CONFIRM_BUTTON_LABEL": "Sapratu!"
           }

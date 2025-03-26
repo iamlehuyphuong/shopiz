@@ -4,7 +4,7 @@ export default [
       city: 'Los Angeles',
       country: 'United States',
       description:
-        "I'm Candice, a developer focusing on building web solutions. Currently, I’m working as a Product Developer at Chatwoot.",
+        "I'm Candice, a developer focusing on building web solutions. Currently, I’m working as a Product Developer at Salesman.",
       companyName: 'Chatwoot',
       countryCode: 'US',
       socialProfiles: {
@@ -16,7 +16,7 @@ export default [
       },
     },
     availabilityStatus: 'offline',
-    email: 'candice.matherson@chatwoot.com',
+    email: 'candice.matherson@salesman.effiai.one',
     id: 22,
     name: 'Candice Matherson',
     phoneNumber: '+14155552671',

@@ -65,21 +65,21 @@ export const documentsList = [
       'Comprehensive guide on using conversation filters to manage chats effectively.',
     created_at: 1736143272,
     external_link:
-      'https://www.chatwoot.com/hc/user-guide/articles/1677688192-how-to-use-conversation-filters',
+      'https://salesman.effiai.one/hc/user-guide/articles/1677688192-how-to-use-conversation-filters',
     id: 3059,
-    name: 'How to use Conversation Filters? | User Guide | Chatwoot',
+    name: 'How to use Conversation Filters? | User Guide | Salesman',
     status: 'available',
   },
   {
     account_id: 2,
     assistant: { id: 2, name: 'Support Genie' },
     content:
-      'Step-by-step guide for automating ticket assignments and improving support workflow in Chatwoot.',
+      'Step-by-step guide for automating ticket assignments and improving support workflow in Salesman.',
     created_at: 1736143273,
     external_link:
-      'https://www.chatwoot.com/hc/user-guide/articles/1677688200-automating-ticket-assignments',
+      'https://salesman.effiai.one/hc/user-guide/articles/1677688200-automating-ticket-assignments',
     id: 3060,
-    name: 'Automating Ticket Assignments | User Guide | Chatwoot',
+    name: 'Automating Ticket Assignments | User Guide | Salesman',
     status: 'available',
   },
   {
@@ -89,9 +89,9 @@ export const documentsList = [
       'A detailed guide on managing and organizing customer profiles for better relationship management.',
     created_at: 1736143274,
     external_link:
-      'https://www.chatwoot.com/hc/user-guide/articles/1677688210-managing-customer-profiles',
+      'https://salesman.effiai.one/hc/user-guide/articles/1677688210-managing-customer-profiles',
     id: 3061,
-    name: 'Managing Customer Profiles | User Guide | Chatwoot',
+    name: 'Managing Customer Profiles | User Guide | Salesman',
     status: 'available',
   },
   {
@@ -101,21 +101,21 @@ export const documentsList = [
       'Learn how to optimize sales tracking and improve your sales forecasting using advanced features.',
     created_at: 1736143275,
     external_link:
-      'https://www.chatwoot.com/hc/user-guide/articles/1677688220-sales-tracking-guide',
+      'https://salesman.effiai.one/hc/user-guide/articles/1677688220-sales-tracking-guide',
     id: 3062,
-    name: 'Sales Tracking Guide | User Guide | Chatwoot',
+    name: 'Sales Tracking Guide | User Guide | Salesman',
     status: 'available',
   },
   {
     account_id: 5,
     assistant: { id: 5, name: 'TicketBot' },
     content:
-      'How to efficiently create, manage, and resolve tickets in Chatwoot.',
+      'How to efficiently create, manage, and resolve tickets in Salesman.',
     created_at: 1736143276,
     external_link:
-      'https://www.chatwoot.com/hc/user-guide/articles/1677688230-managing-tickets',
+      'https://salesman.effiai.one/hc/user-guide/articles/1677688230-managing-tickets',
     id: 3063,
-    name: 'Managing Tickets | User Guide | Chatwoot',
+    name: 'Managing Tickets | User Guide | Salesman',
     status: 'available',
   },
   {
@@ -125,9 +125,9 @@ export const documentsList = [
       'Detailed guide on how to use financial reporting tools and generate insightful analytics.',
     created_at: 1736143277,
     external_link:
-      'https://www.chatwoot.com/hc/user-guide/articles/1677688240-financial-reporting',
+      'https://salesman.effiai.one/hc/user-guide/articles/1677688240-financial-reporting',
     id: 3064,
-    name: 'Financial Reporting | User Guide | Chatwoot',
+    name: 'Financial Reporting | User Guide | Salesman',
     status: 'available',
   },
 ];
@@ -139,7 +139,7 @@ export const responsesList = [
       'Messenger may be deactivated because you are on a free plan or the limit for inboxes might have been reached.',
     created_at: 1736283330,
     id: 87,
-    question: 'Why is my Messenger in Chatwoot deactivated?',
+    question: 'Why is my Messenger in Salesman deactivated?',
     status: 'pending',
     assistant: {
       account_id: 1,
@@ -156,7 +156,7 @@ export const responsesList = [
       'You can integrate your WhatsApp account by navigating to the Integrations section and selecting the WhatsApp integration option.',
     created_at: 1736283340,
     id: 88,
-    question: 'How do I integrate WhatsApp with Chatwoot?',
+    question: 'How do I integrate WhatsApp with Salesman?',
     assistant: {
       account_id: 2,
       config: { product_name: 'Chatwoot' },
@@ -172,7 +172,7 @@ export const responsesList = [
       "To reset your password, go to the login page and click on 'Forgot Password', then follow the instructions sent to your email.",
     created_at: 1736283350,
     id: 89,
-    question: 'How can I reset my password in Chatwoot?',
+    question: 'How can I reset my password in Salesman?',
     assistant: {
       account_id: 3,
       config: { product_name: 'Chatwoot' },
@@ -188,7 +188,7 @@ export const responsesList = [
       "You can enable the dark mode in settings by navigating to 'Appearance' and selecting 'Dark Mode'.",
     created_at: 1736283360,
     id: 90,
-    question: 'How do I enable dark mode in Chatwoot?',
+    question: 'How do I enable dark mode in Salesman?',
     assistant: {
       account_id: 4,
       config: { product_name: 'Chatwoot' },
@@ -204,7 +204,7 @@ export const responsesList = [
       "To add a new team member, navigate to 'Settings', then 'Team', and click on 'Add Team Member'.",
     created_at: 1736283370,
     id: 91,
-    question: 'How do I add a new team member in Chatwoot?',
+    question: 'How do I add a new team member in Salesman?',
     assistant: {
       account_id: 5,
       config: { product_name: 'Chatwoot' },
@@ -217,10 +217,10 @@ export const responsesList = [
   {
     account_id: 6,
     answer:
-      "Campaigns in Chatwoot allow you to send targeted messages to specific user segments. You can create them in the 'Campaigns' section.",
+      "Campaigns in Salesman allow you to send targeted messages to specific user segments. You can create them in the 'Campaigns' section.",
     created_at: 1736283380,
     id: 92,
-    question: 'What are campaigns in Chatwoot?',
+    question: 'What are campaigns in Salesman?',
     assistant: {
       account_id: 6,
       config: { product_name: 'Chatwoot' },

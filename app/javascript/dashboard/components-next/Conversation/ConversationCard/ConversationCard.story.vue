@@ -8,7 +8,7 @@ const conversationWithoutMeta = {
     sender: {
       additionalAttributes: {},
       availabilityStatus: 'offline',
-      email: 'candice@chatwoot.com',
+      email: 'candice@salesman.effiai.one',
       id: 29,
       name: 'Candice Matherson',
       phone_number: '+918585858585',
@@ -30,7 +30,7 @@ const conversationWithoutMeta = {
       availabilityStatus: 'online',
       autoOffline: false,
       confirmed: true,
-      email: 'sivin@chatwoot.com',
+      email: 'sivin@salesman.effiai.one',
       availableName: 'Sivin',
       name: 'Sivin',
       role: 'administrator',
@@ -66,7 +66,7 @@ const conversationWithoutMeta = {
         unreadCount: 0,
         lastActivityAt: 1730885168,
         contactInbox: {
-          sourceId: 'candice@chatwoot.com',
+          sourceId: 'candice@salesman.effiai.one',
         },
       },
     },
@@ -120,7 +120,7 @@ const conversationWithoutMeta = {
       unread_count: 0,
       last_activity_at: 1730885168,
       contact_inbox: {
-        source_id: 'candice@chatwoot.com',
+        source_id: 'candice@salesman.effiai.one',
       },
     },
     sender: {
@@ -145,7 +145,7 @@ const conversationWithMeta = {
     sender: {
       additionalAttributes: {},
       availabilityStatus: 'offline',
-      email: 'willy@chatwoot.com',
+      email: 'willy@salesman.effiai.one',
       id: 29,
       name: 'Willy Castelot',
       phoneNumber: '+918585858585',
@@ -167,7 +167,7 @@ const conversationWithMeta = {
       availabilityStatus: 'online',
       autoOffline: false,
       confirmed: true,
-      email: 'sivin@chatwoot.com',
+      email: 'sivin@salesman.effiai.one',
       availableName: 'Sivin',
       name: 'Sivin',
       role: 'administrator',
@@ -210,7 +210,7 @@ const conversationWithMeta = {
         unread_count: 0,
         last_activity_at: 1730885428,
         contact_inbox: {
-          source_id: 'candice@chatwoot.com',
+          source_id: 'candice@salesman.effiai.one',
         },
       },
       sender: {
@@ -282,7 +282,7 @@ const conversationWithMeta = {
       unread_count: 2,
       last_activity_at: 1730885428,
       contact_inbox: {
-        source_id: 'willy@chatwoot.com',
+        source_id: 'willy@salesman.effiai.one',
       },
     },
     sender: {
@@ -333,7 +333,7 @@ const conversationWithMeta = {
 
 const contactForConversationWithoutMeta = computed(() => ({
   availabilityStatus: null,
-  email: 'candice@chatwoot.com',
+  email: 'candice@salesman.effiai.one',
   id: 29,
   name: 'Candice Matherson',
   phoneNumber: '+918585858585',
@@ -347,7 +347,7 @@ const contactForConversationWithoutMeta = computed(() => ({
 
 const contactForConversationWithMeta = computed(() => ({
   availabilityStatus: null,
-  email: 'willy@chatwoot.com',
+  email: 'willy@salesman.effiai.one',
   id: 29,
   name: 'Willy Castelot',
   phoneNumber: '+918585858585',

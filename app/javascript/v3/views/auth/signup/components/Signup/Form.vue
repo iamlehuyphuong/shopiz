@@ -68,9 +68,12 @@ export default {
     ...mapGetters({ globalConfig: 'globalConfig/get' }),
     termsLink() {
       return this.$t('REGISTER.TERMS_ACCEPT')
-        .replace('https://www.chatwoot.com/terms', this.globalConfig.termsURL)
         .replace(
-          'https://www.chatwoot.com/privacy-policy',
+          'https://salesman.effiai.one/terms',
+          this.globalConfig.termsURL
+        )
+        .replace(
+          'https://salesman.effiai.one/privacy-policy',
           this.globalConfig.privacyURL
         );
     },
