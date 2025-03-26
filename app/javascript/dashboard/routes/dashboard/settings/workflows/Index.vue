@@ -41,7 +41,7 @@ export default {
   width: 100%;
   height: 100vh;
 }
-iframe {
+#workflow-container :deep(iframe) {
   width: 100%;
   height: 100vh;
 }
