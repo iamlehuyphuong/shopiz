@@ -1550,7 +1550,7 @@
     ]
   },
   "entrypoints/v3app.js": {
-    "file": "assets/v3app-CBmwNF7D.js",
+    "file": "assets/v3app-R_s9okjr.js",
     "name": "entrypoints/v3app.js",
     "src": "entrypoints/v3app.js",
     "isEntry": true,
@@ -1569,7 +1569,7 @@
       "_index-DN3rM4CW.js"
     ],
     "css": [
-      "assets/v3app-CHJByN0A.css"
+      "assets/v3app-BJINU2kp.css"
     ],
     "assets": [
       "assets/auth--bg-CbBjuTMc.svg"
