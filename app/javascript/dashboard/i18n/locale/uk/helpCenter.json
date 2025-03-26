@@ -391,7 +391,7 @@
         "SLUG": {
           "LABEL": "Мітка",
           "PLACEHOLDER": "Мітка категорії для URL-адрес",
-          "HELP_TEXT": "app.chatwoot.com/hc/my-portal/en-US/categories/my-slug",
+          "HELP_TEXT": "salesman.effiai.one/hc/my-portal/en-US/categories/my-slug",
           "ERROR": "Необхідно вказати мітку"
         },
         "DESCRIPTION": {
@@ -422,7 +422,7 @@
         "SLUG": {
           "LABEL": "Мітка",
           "PLACEHOLDER": "Мітка категорії для URL-адрес",
-          "HELP_TEXT": "app.chatwoot.com/hc/my-portal/en-US/categories/my-slug",
+          "HELP_TEXT": "salesman.effiai.one/hc/my-portal/en-US/categories/my-slug",
           "ERROR": "Необхідно вказати мітку"
         },
         "DESCRIPTION": {
@@ -606,7 +606,7 @@
             "LABEL": "Мітка",
             "PLACEHOLDER": "Мітка категорії для URL-адрес",
             "ERROR": "Необхідно вказати мітку",
-            "HELP_TEXT": "app.chatwoot.com/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
+            "HELP_TEXT": "salesman.effiai.one/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
           },
           "DESCRIPTION": {
             "LABEL": "Опис",
@@ -689,7 +689,7 @@
       "CONFIRM_BUTTON_LABEL": "Створити",
       "NAME": {
         "LABEL": "Ім'я",
-        "PLACEHOLDER": "User Guide | Chatwoot",
+        "PLACEHOLDER": "User Guide | Salesman",
         "MESSAGE": "Choose an name for your portal.",
         "ERROR": "Назва обов'язкова"
       },

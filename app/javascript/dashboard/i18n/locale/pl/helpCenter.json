@@ -391,7 +391,7 @@
         "SLUG": {
           "LABEL": "Slug",
           "PLACEHOLDER": "Slug kategorii dla adresów URL",
-          "HELP_TEXT": "app.chatwoot.com/hc/my-portal/pl-PL/categories/my-slug",
+          "HELP_TEXT": "salesman.effiai.one/hc/my-portal/pl-PL/categories/my-slug",
           "ERROR": "Slug jest wymagany"
         },
         "DESCRIPTION": {
@@ -422,7 +422,7 @@
         "SLUG": {
           "LABEL": "Slug",
           "PLACEHOLDER": "Slug kategorii dla adresów URL",
-          "HELP_TEXT": "app.chatwoot.com/hc/my-portal/pl-PL/categories/my-slug",
+          "HELP_TEXT": "salesman.effiai.one/hc/my-portal/pl-PL/categories/my-slug",
           "ERROR": "Slug jest wymagany"
         },
         "DESCRIPTION": {
@@ -606,7 +606,7 @@
             "LABEL": "Slug",
             "PLACEHOLDER": "Slug kategorii dla adresów URL",
             "ERROR": "Slug jest wymagany",
-            "HELP_TEXT": "app.chatwoot.com/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
+            "HELP_TEXT": "salesman.effiai.one/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
           },
           "DESCRIPTION": {
             "LABEL": "Opis",
@@ -689,7 +689,7 @@
       "CONFIRM_BUTTON_LABEL": "Stwórz",
       "NAME": {
         "LABEL": "Imię",
-        "PLACEHOLDER": "User Guide | Chatwoot",
+        "PLACEHOLDER": "User Guide | Salesman",
         "MESSAGE": "Choose an name for your portal.",
         "ERROR": "Nazwa jest wymagana"
       },

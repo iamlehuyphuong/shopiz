@@ -37,7 +37,7 @@
       },
       "INTERFACE_SECTION": {
         "TITLE": "Interface",
-        "NOTE": "Customize the look and feel of your Chatwoot dashboard.",
+        "NOTE": "Customize the look and feel of your Salesman dashboard.",
         "FONT_SIZE": {
           "TITLE": "Font size",
           "NOTE": "Adjust the text size across the dashboard based on your preference.",
@@ -374,7 +374,7 @@
     "NO_BILLING_USER": "Ваш платёжный счёт настраивается. Пожалуйста, обновите страницу и повторите попытку."
   },
   "CREATE_ACCOUNT": {
-    "NO_ACCOUNT_WARNING": "Ой! Мы не смогли найти ни одного аккаунта в Chatwoot. Пожалуйста, создайте новый аккаунт, чтобы продолжить.",
+    "NO_ACCOUNT_WARNING": "Ой! Мы не смогли найти ни одного аккаунта в Salesman. Пожалуйста, создайте новый аккаунт, чтобы продолжить.",
     "NEW_ACCOUNT": "Новый аккаунт",
     "SELECTOR_SUBTITLE": "Создать новый аккаунт",
     "API": {
