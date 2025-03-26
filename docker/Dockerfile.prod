@@ -1,5 +1,6 @@
 # pre-build stage
 FROM chatwoot/chatwoot:latest
 
+COPY ./app /app/app
 COPY ./public /app/public
 COPY ./config /app/config
