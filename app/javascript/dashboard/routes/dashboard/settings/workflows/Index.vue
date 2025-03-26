@@ -10,14 +10,14 @@ export default {
       embedding: {
         containerId: 'workflow-container',
         builder: {
-          disableNavigation: true,
-          hideLogo: true,
-          hideFlowName: true,
+          disableNavigation: false,
+          hideLogo: false,
+          hideFlowName: false,
         },
         dashboard: {
-          hideSidebar: true,
+          hideSidebar: false,
         },
-        hideFolders: true,
+        hideFolders: false,
         navigation: {
           handler: ({ route }) => {
             // The iframe route has changed, make sure you check the navigation section.
