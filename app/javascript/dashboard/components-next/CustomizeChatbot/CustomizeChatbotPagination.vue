@@ -42,7 +42,9 @@
         />
       </svg>
       <b class="bg-gray-200 p-1 text-base rounded">
-        {{ $t('CUSTOMIZE_CHATBOT_PAGINATION.PREVIOUS') }}
+        {{
+          $t('CUSTOMIZE_CHATBOT_PRODUCT.CUSTOMIZE_CHATBOT_PAGINATION.PREVIOUS')
+        }}
       </b>
     </button>
     <span class="text-base flex flex-row gap-1 items-center justify-center">
@@ -53,12 +55,18 @@
           class="text-center justify-center items-center"
         />
       </div>
-      {{ $t('CUSTOMIZE_CHATBOT_PAGINATION.COUNT', { count: 8 }) }}
+      {{
+        $t('CUSTOMIZE_CHATBOT_PRODUCT.CUSTOMIZE_CHATBOT_PAGINATION.COUNT', {
+          page: 8,
+        })
+      }}
     </span>
     <button
       class="bg-gray-200 border border-gray-300 p-1 text-base rounded hover:bg-gray-300 flex flex-row gap-2"
     >
-      <b class="text-base"> {{ $t('CUSTOMIZE_CHATBOT_PAGINATION.NEXT') }} </b>
+      <b class="text-base">
+        {{ $t('CUSTOMIZE_CHATBOT_PRODUCT.CUSTOMIZE_CHATBOT_PAGINATION.NEXT') }}
+      </b>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="6"
