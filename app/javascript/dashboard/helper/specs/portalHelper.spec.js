@@ -4,11 +4,11 @@ describe('PortalHelper', () => {
   describe('buildPortalURL', () => {
     it('returns the correct url', () => {
       window.chatwootConfig = {
-        hostURL: 'https://app.chatwoot.com',
-        helpCenterURL: 'https://help.chatwoot.com',
+        hostURL: 'https://salesman.effiai.one',
+        helpCenterURL: 'https://help.salesman.effiai.one',
       };
       expect(buildPortalURL('handbook')).toEqual(
-        'https://help.chatwoot.com/hc/handbook'
+        'https://help.salesman.effiai.one/hc/handbook'
       );
       window.chatwootConfig = {};
     });
@@ -17,12 +17,14 @@ describe('PortalHelper', () => {
   describe('buildPortalArticleURL', () => {
     it('returns the correct url', () => {
       window.chatwootConfig = {
-        hostURL: 'https://app.chatwoot.com',
-        helpCenterURL: 'https://help.chatwoot.com',
+        hostURL: 'https://salesman.effiai.one',
+        helpCenterURL: 'https://help.salesman.effiai.one',
       };
       expect(
         buildPortalArticleURL('handbook', 'culture', 'fr', 'article-slug')
-      ).toEqual('https://help.chatwoot.com/hc/handbook/articles/article-slug');
+      ).toEqual(
+        'https://help.salesman.effiai.one/hc/handbook/articles/article-slug'
+      );
       window.chatwootConfig = {};
     });
   });

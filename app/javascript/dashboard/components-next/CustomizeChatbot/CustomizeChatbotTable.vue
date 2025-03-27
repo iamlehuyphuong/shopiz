@@ -84,7 +84,7 @@ export default {
           class="bg-white border-t-[0.75px] border-[#D1D1D1]"
         >
           <td class="text-center justify-center px-6">
-            <input type="checkbox" v-bind="p.selected" />
+            <input type="checkbox" />
           </td>
           <td
             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -114,7 +114,6 @@ export default {
             <div class="relative inline-block">
               <select
                 class="appearance-none bg-[#D9F2DF] text-[#249557] font-medium pl-6 text-xs pr-8 rounded-full border border-transparent focus:outline-none focus:ring-2 focus:ring-green-500"
-                v-bind="p.status"
               >
                 <option value="active">
                   {{ $t('CUSTOMIZE_CHATBOT_PRODUCT.TABLE.ACTIVE') }}

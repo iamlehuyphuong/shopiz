@@ -14,8 +14,8 @@ export default {
 <template>
   <div class="w-full h-full bg-white">
     <CustomizeChatbotHeader
-      :title="$t('CUSTOMIZE_CHATBOT_COMPANY.COMPANY_NAME.TITLE')"
-      :button-text="$t('CUSTOMIZE_CHATBOT_COMPANY.COMPANY_NAME.BUTTON')"
+      :title="$t('CUSTOMIZE_CHATBOT_COMPANY.TITLE')"
+      :button-text="$t('CUSTOMIZE_CHATBOT_COMPANY.BUTTON')"
       @button-click="updateSettings"
     />
     <!-- #Company Name -->

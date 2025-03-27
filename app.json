@@ -1,7 +1,7 @@
 {
   "name": "Salesman",
-  "description": "Salesman is a customer support tool for instant messaging channels",
-  "website": "https://www.chatwoot.com/",
+  "description": "Chatwoot is a customer support tool for instant messaging channels",
+  "website": "https://salesman.effiai.one/",
   "repository": "https://github.com/chatwoot/chatwoot",
   "logo": "https://app.chatwoot.com/brand-assets/logo_thumbnail.svg",
   "keywords": ["live chat", "customer support", "ruby", "rails", "vue"],

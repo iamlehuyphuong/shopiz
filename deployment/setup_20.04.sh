@@ -473,7 +473,7 @@ function cwctl_message() {
 #   None
 ##############################################################################
 function get_cw_version() {
-  CW_VERSION=$(curl -s https://app.chatwoot.com/api | python3 -c 'import sys,json;data=json.loads(sys.stdin.read()); print(data["version"])')
+  CW_VERSION=$(curl -s https://salesman.effiai.one/api | python3 -c 'import sys,json;data=json.loads(sys.stdin.read()); print(data["version"])')
 }
 
 ##############################################################################
@@ -561,7 +561,7 @@ Woot! Woot!! Chatwoot server installation is complete.
 The server will be accessible at http://$public_ip:3000
 
 To configure a domain and SSL certificate, follow the guide at
-https://www.chatwoot.com/docs/deployment/deploy-chatwoot-in-linux-vm?utm_source=cwctl
+https://salesman.effiai.one/docs/deployment/deploy-chatwoot-in-linux-vm?utm_source=cwctl
 
 Join the community at https://chatwoot.com/community?utm_source=cwctl
 ***************************************************************************

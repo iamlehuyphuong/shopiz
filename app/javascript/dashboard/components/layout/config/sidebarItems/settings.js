@@ -144,6 +144,17 @@ const settings = accountId => ({
       featureFlag: FEATURE_FLAGS.MACROS,
     },
     {
+      icon: 'flash-settings',
+      label: 'WORKFLOWS',
+      hasSubMenu: false,
+      meta: {
+        permissions: ['administrator', 'agent'],
+      },
+      toState: frontendURL(`accounts/${accountId}/settings/workflows`),
+      toStateName: 'workflow_wrapper',
+      featureFlag: FEATURE_FLAGS.WORKFLOWS,
+    },
+    {
       icon: 'chat-multiple',
       label: 'CANNED_RESPONSES',
       hasSubMenu: false,

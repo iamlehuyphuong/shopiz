@@ -25,7 +25,7 @@ export default {
   <div class="flex flex-col min-h-screen bg-white">
     <CustomizeChatbotHeader
       :title="$t('CUSTOMIZE_CHATBOT_PRODUCT.TITLE')"
-      button-text="$t('CUSTOMIZE_CHATBOT_PRODUCT.BUTTON')"
+      :button-text="$t('CUSTOMIZE_CHATBOT_PRODUCT.BUTTON')"
       @button-click="updateSettings"
     />
     <!-- Content -->
@@ -38,7 +38,7 @@ export default {
             <select
               class="w-full rounded-md border border-gray-300 bg-white font-sans text-black text-sm p-2 appearance-none pr-8"
             >
-              <option value="all" disabled hidden>
+              <option value="" disabled selected hidden>
                 {{ $t('CUSTOMIZE_CHATBOT_PRODUCT.SHOW_PRODUCT') }}
               </option>
             </select>
@@ -48,7 +48,7 @@ export default {
             <select
               class="w-full rounded-md border border-gray-300 bg-white font-sans text-black text-sm p-2 appearance-none pr-8"
             >
-              <option value="all" disabled hidden>
+              <option value="" disabled selected hidden>
                 {{ $t('CUSTOMIZE_CHATBOT_PRODUCT.SOFT_BY') }}
               </option>
             </select>
@@ -103,7 +103,13 @@ export default {
               class="text-center justify-center items-center pagination-input"
             />
           </div>
-          {{ $t('CUSTOMIZE_CHATBOT_PAGINATION.ITEM_PER_PAGE', '1-20', '500') }}
+          {{
+            $t(
+              'CUSTOMIZE_CHATBOT_PAGINATION.ITEM_PER_PAGE',
+              { number: '1-20' },
+              { total: '500' }
+            )
+          }}
         </span>
       </div>
     </div>
@@ -120,11 +126,11 @@ input {
   margin-bottom: 0 !important;
   border: none !important;
 }
-pagination-input {
+.pagination-input {
   width: 2.5rem !important;
   height: 1.25rem !important;
 }
-search-input {
+.search-input {
   padding: 0 !important;
   height: auto !important;
 }

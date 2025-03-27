@@ -3,8 +3,8 @@
   "info": {
     "description": "This is the API documentation for Chatwoot server.",
     "version": "1.0.0",
-    "title": "Chatwoot",
-    "termsOfService": "https://www.chatwoot.com/terms-of-service/",
+    "title": "Salesman",
+    "termsOfService": "https://salesman.effiai.one/terms-of-service/",
     "contact": {
       "email": "hello@chatwoot.com"
     },
@@ -13,7 +13,7 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "host": "app.chatwoot.com",
+  "host": "salesman.effiai.one",
   "basePath": "/",
   "schemes": [
     "https"
@@ -3138,7 +3138,7 @@
                           "type": "object",
                           "description": "The processed param values for template variables in template",
                           "example": {
-                            "1": "Chatwoot"
+                            "1": "Salesman"
                           }
                         }
                       }
@@ -6677,7 +6677,7 @@
               "type": "object",
               "description": "The processed param values for template variables in template",
               "example": {
-                "1": "Chatwoot"
+                "1": "Salesman"
               }
             }
           }
@@ -6866,7 +6866,7 @@
         "homepage_link": {
           "type": "string",
           "description": "link to main dashboard",
-          "example": "https://www.chatwoot.com/"
+          "example": "https://salesman.effiai.one/"
         },
         "name": {
           "type": "string",
