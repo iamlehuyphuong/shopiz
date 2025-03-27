@@ -5,7 +5,7 @@ export default {
   components: { CustomizeChatbotHeader },
   methods: {
     updateSettings() {
-      // Thực hiện cập nhật settings
+      // TODO: Update settings
     },
   },
 };
