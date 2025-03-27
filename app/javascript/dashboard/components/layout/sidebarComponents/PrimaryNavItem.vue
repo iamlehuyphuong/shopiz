@@ -97,20 +97,19 @@ export default {
 
 <template>
   <OnClickOutside
-    class="flex flex-col justify-center items-center"
     v-if="isHelpCenter"
+    class="flex flex-col justify-center items-center"
     @trigger="showHelpCenterMenu = false"
   >
     <button
-      v-tooltip.top="$t(`SIDEBAR.${name}`)"
-      class="relative flex items-center justify-center w-10 h-10 my-2 rounded-lg text-white dark:text-slate-100"
+      class="relative flex items-center justify-center w-10 h-10 rounded-lg text-white dark:text-slate-100"
       :class="{
         'bg-[#793B40]': isHelpCenterSelected,
       }"
       @click="toggleHelpCenterMenu"
     >
       <component :is="icon" v-if="typeof icon === 'object'" />
-      <fluent-icon :icon="icon" v-else />
+      <fluent-icon v-else :icon="icon" />
 
       <DropdownMenu
         v-if="showHelpCenterMenu && isHelpCenter"
@@ -120,7 +119,7 @@ export default {
       />
     </button>
     <span
-      class="font-inter text-white font-medium text-[0.5rem] tracking-[0%] text-center"
+      class="font-inter text-white font-medium text-[0.5rem] tracking-[0%] text-center my-2"
     >
       {{ name }}
     </span>
@@ -128,9 +127,8 @@ export default {
 
   <router-link v-else v-slot="{ href, isActive, navigate }" :to="to" custom>
     <a
-      v-tooltip.right="$t(`SIDEBAR.${name}`)"
       :href="href"
-      class="relative flex items-center justify-center w-10 h-10 my-2 rounded-lg text-white dark:text-slate-100"
+      class="relative flex items-center justify-center w-10 h-10 rounded-lg text-white dark:text-slate-100"
       :class="{
         'bg-[#793B40]': isActive || isChildMenuActive,
       }"
@@ -139,7 +137,7 @@ export default {
       @click="navigate"
     >
       <component :is="icon" v-if="typeof icon === 'object'" />
-      <fluent-icon :icon="icon" v-else />
+      <fluent-icon v-else :icon="icon" />
 
       <span class="sr-only">{{ name }}</span>
       <span
@@ -150,7 +148,7 @@ export default {
       </span>
     </a>
     <span
-      class="font-inter text-white font-medium text-[0.5rem] tracking-[0%] text-center"
+      class="font-inter text-white font-medium text-[0.5rem] tracking-[0%] text-center my-2"
     >
       {{ name }}
     </span>

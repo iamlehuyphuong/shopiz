@@ -5,6 +5,7 @@ import campaigns from './sidebarItems/campaigns';
 import settings from './sidebarItems/settings';
 import notifications from './sidebarItems/notifications';
 import primaryMenu from './sidebarItems/primaryMenu';
+import customizeChatbot from './sidebarItems/customizeChatbot';
 
 export const getSidebarItems = accountId => ({
   primaryMenu: primaryMenu(accountId),
@@ -13,6 +14,7 @@ export const getSidebarItems = accountId => ({
     contacts(accountId),
     reports(accountId),
     campaigns(accountId),
+    customizeChatbot(accountId),
     settings(accountId),
     notifications(accountId),
   ],
