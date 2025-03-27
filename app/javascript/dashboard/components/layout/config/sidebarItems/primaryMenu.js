@@ -2,11 +2,11 @@ import { FEATURE_FLAGS } from '../../../../featureFlags';
 import { frontendURL } from '../../../../helper/URLHelper';
 import ContactIcon from 'components/layout/sidebarComponents/icons/ContactIcon.vue';
 import ConversationsIcon from 'components/layout/sidebarComponents/icons/ConversationsIcon.vue';
-import CustomizeChatboxIcon from 'components/layout/sidebarComponents/icons/CustomizeChatbotIcon.vue';
 import ReportIcon from 'components/layout/sidebarComponents/icons/ReportIcon.vue';
 import HelpIcon from 'components/layout/sidebarComponents/icons/HelpIcon.vue';
 import CompaignIcon from 'components/layout/sidebarComponents/icons/CompaignIcon.vue';
 import SettingIcon from 'components/layout/sidebarComponents/icons/SettingIcon.vue';
+import CustomizeChatbotIcon from 'components/layout/sidebarComponents/icons/CustomizeChatbotIcon.vue';
 
 const primaryMenuItems = accountId => [
   {
@@ -49,12 +49,11 @@ const primaryMenuItems = accountId => [
     toStateName: 'account_overview_reports',
   },
   {
-    icon: CustomizeChatboxIcon,
-    key: 'customizeChatbox',
+    icon: CustomizeChatbotIcon,
+    key: 'customizeChatbot',
     label: 'Customize Chatbot',
-    featureFlag: FEATURE_FLAGS.INBOX_VIEW,
-    toState: frontendURL(`accounts/${accountId}/campaigns`),
-    toStateName: 'campaigns_ongoing_index',
+    toState: frontendURL(`accounts/${accountId}/customize-chatbot`),
+    toStateName: 'account_overview_reports',
   },
   {
     icon: CompaignIcon,

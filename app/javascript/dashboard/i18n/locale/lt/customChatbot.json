@@ -1,0 +1,72 @@
+{
+  "CUSTOMIZE_CHATBOT_PRODUCT": {
+    "TITLE": "Product",
+    "BUTTON": "New Product",
+    "SHOW_PRODUCT": "Show: ALL Products",
+    "SOFT_BY": "Soft by: Default",
+    "TABLE": {
+      "PRODUCT_ NAME": "Product Name",
+      "CATEGORY": "Category",
+      "SALES": "Sales",
+      "UNIT_PRICE": "Unit Price",
+      "QUANTITY": "Quantity",
+      "STATUS": "Status",
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
+    "CUSTOMIZE_CHATBOT_PAGINATION": {
+      "PREVIOUS": "Previous",
+      "NEXT": "Next",
+      "ITEM_PER_PAGE": "Item per page",
+      "COUNT": "Of {page} pages",
+      "TOTAL": "{number} items of {total}"
+    }
+  },
+  "CUSTOMIZE_CHATBOT_COMPANY": {
+    "TITLE": "Company Setup",
+    "BUTTON": "Update setting",
+    "COMPANY_NAME": {
+      "LABEL": "Company Name",
+      "PLACEHOLDER": "Your company name",
+      "DESCRIPTION": "Enter your company's official name"
+    },
+    "COMPANY_DESCRIPTION": {
+      "LABEL": "Company Description",
+      "PLACEHOLDER": "Description",
+      "DESCRIPTION": "Briefly describe your company"
+    },
+    "PHONE_NUMBER": {
+      "LABEL": "Phone number",
+      "PLACEHOLDER": "0123456789",
+      "DESCRIPTION": "Enter a valid contact number"
+    },
+    "ADDRESS": {
+      "LABEL": "Address",
+      "DESCRIPTION": "Select your company's location",
+      "PLACEHOLDER": "Postal Code",
+      "SELECT_COUNTRY": "Select Country",
+      "SELECT_CITY": "Select City",
+      "SELECT_DISTRICT": "Select District"
+    },
+    "WEBSITE": {
+      "LABEL": "Website",
+      "PLACEHOLDER": "Enter Website URL",
+      "DESCRIPTION": "Provide your company's website URL"
+    },
+    "INDUSTRY": {
+      "LABEL": "Industry",
+      "DEFAULT_OPTION": "IT & Technology Services",
+      "DESCRIPTION": "Choose your business sector"
+    },
+    "LANGUAGE": {
+      "LABEL": "Language",
+      "DEFAULT_OPTION": "English",
+      "DESCRIPTION": "Select your primary language"
+    },
+    "TIME_ZONE": {
+      "LABEL": "Time Zone",
+      "DEFAULT_OPTION": "Asia/Hanoi",
+      "DESCRIPTION": "Choose your operating time zone"
+    }
+  }
+}
