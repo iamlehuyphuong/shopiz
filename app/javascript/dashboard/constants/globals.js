@@ -34,7 +34,7 @@ export default {
   DOCS_URL: 'https://salesman.effiai.one/docs/product/',
   HELP_CENTER_DOCS_URL:
     'https://salesman.effiai.one/docs/product/others/help-center',
-  TESTIMONIAL_URL: 'https://testimonials.cdn.salesman.effiai.one/content.json',
+  TESTIMONIAL_URL: 'https://testimonials.cdn.chatwoot.com/content.json',
   SMALL_SCREEN_BREAKPOINT: 1200,
   AVAILABILITY_STATUS_KEYS: ['online', 'busy', 'offline'],
   SNOOZE_OPTIONS: {
