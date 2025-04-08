@@ -106,4 +106,103 @@
 
   // Tech-debt
   --color-medium-gray: #8492a6;
+
+  //#Salesman
+
+  // Light mode neutral
+  --light-neutral-s: #F5F5F5; //Surface
+  --light-neutral-s1: #FFFFFF; // Surface 1
+  --light-neutral-s2: #E5E5E5; // Surface 2
+  --light-neutral-stroke-bold: #D1D1D1;
+  --light-neutral-stroke-light: #C7C7C7;
+  --light-neutral-teriary: #878787;
+  --light-neutral-secondary: #575757;
+  --light-neutral-primary: #0A0A0A;
+
+  // Black mode neutral
+  --black-neutral-s: #0A0A0A;
+  --black-neutral-s1: #141414;
+  --black-neutral-s2: #242424;
+  --black-neutral-stroke-light: #333333;
+  --black-neutral-stroke-bold: #3D3D3D;
+  --black-neutral-teriary: #6E6E6E;
+  --black-neutral-secondary: #9E9E9E;
+  --black-neutral-primary: #FAFAFA;
+
+
+  // Primary
+  --primary-50:#F1F8FD;
+  --primary-100:#E0EEF9;
+  --primary-200:#C9E2F4;
+  --primary-300:#A3D0ED;
+  --primary-400:#77B6E3;
+  --primary-500:#579BDA;
+  --primary-600:#4381CD;
+  --primary-700:#386BB7;
+  --primary-800:#345A99;
+  --primary-900:#2E4D7A;
+
+  //Secondary
+  --secondary-50:#FEF3F2;
+  --secondary-100:#FDE7E6;
+  --secondary-200:#FAD2D1;
+  --secondary-300:#F7ABAA;
+  --secondary-400:#F17B7B;
+  --secondary-500:#E74C50;
+  --secondary-600:#4F46E5;
+  --secondary-700:#B21E2C;
+  --secondary-800:#951C2C;
+  --secondary-900:#801B2B;
+
+  //Success
+  --success-50:#F0FDF4;
+  --success-100:#DCFCE7;
+  --success-200:#BBF7D0;
+  --success-300:#86EFAC;
+  --success-400:#4ADE80;
+  --success-500:#22C55E;
+  --success-600:#16A34A;
+  --success-700:#15803D;
+  --success-800:#166534;
+  --success-900:#14532D;
+
+  //Warning
+  --warning-50: #FFFBEB;
+  --warning-100: #FEF3C7;
+  --warning-200: #FDE68A;
+  --warning-300: #FCD34D;
+  --warning-400: #FBBF24;
+  --warning-500: #F59E0B;
+  --warning-600: #D97706;
+  --warning-700: #B45309;
+  --warning-800: #92400E;
+  --warning-900: #78350F;
+
+
+  //Destructive
+  --destructive-50:#FEF2F2;
+  --destructive-100:#FEE2E2;
+  --destructive-200:#FECACA;
+  --destructive-300:#FCA5A5;
+  --destructive-400:#FB7171;
+  --destructive-500:#EF4444;
+  --destructive-600:#DC2626;
+  --destructive-700:#B91C1C;
+  --destructive-900:#7F1D1D;
+  --destructive-900:#7F1D1D;
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -77,4 +77,5 @@ const greetingMessage = computed(() => {
       :link-text="$t('ONBOARDING.LABELS.NEW_LINK')"
     />
   </div>
+
 </template>

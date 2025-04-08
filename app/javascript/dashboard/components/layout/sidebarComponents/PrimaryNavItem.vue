@@ -27,7 +27,7 @@ export default {
       default: '',
     },
     icon: {
-      type: String,
+      type: [String, Object],
       default: '',
     },
     count: {
@@ -60,6 +60,7 @@ export default {
     isHelpCenter() {
       return this.id === 'helpcenter';
     },
+
     isHelpCenterSelected() {
       const routes = [
         'portals_new',
@@ -98,17 +99,18 @@ export default {
 <template>
   <OnClickOutside
     v-if="isHelpCenter"
-    class="flex flex-col justify-center items-center"
+    class="flex flex-col justify-center items-center my-1"
     @trigger="showHelpCenterMenu = false"
   >
     <button
-      class="relative flex items-center justify-center w-10 h-10 rounded-lg text-white dark:text-slate-100"
+      class="relative flex items-center justify-center w-10 h-10 hover:bg-[#793B40] rounded-lg text-white dark:text-slate-100"
       :class="{
         'bg-[#793B40]': isHelpCenterSelected,
       }"
       @click="toggleHelpCenterMenu"
+      v-tooltip.bottom-start="$t(`SIDEBAR.${name}`)"
     >
-      <component :is="icon" v-if="typeof icon === 'object'" />
+      <component :is="icon" v-if="typeof icon === 'object'" :active="isHelpCenterSelected" />
       <fluent-icon v-else :icon="icon" />
 
       <DropdownMenu
@@ -119,16 +121,17 @@ export default {
       />
     </button>
     <span
-      class="font-inter text-white font-medium text-[0.5rem] tracking-[0%] text-center my-2"
+      class="font-inter inline-block text-white font-medium text-[0.625rem] text-center mt-[0.2rem] overflow-hidden text-ellipsis whitespace-nowrap max-w-[80px] px-2 w-full"
     >
-      {{ name }}
+      {{ $t(`SIDEBAR.${name}`) }}
     </span>
   </OnClickOutside>
 
   <router-link v-else v-slot="{ href, isActive, navigate }" :to="to" custom>
     <a
+      v-tooltip.bottom-start="$t(`SIDEBAR.${name}`)"
       :href="href"
-      class="relative flex items-center justify-center w-10 h-10 rounded-lg text-white dark:text-slate-100"
+      class="relative flex items-center justify-center w-10 h-10 rounded-lg text-white hover:bg-[#793B40] dark:text-slate-100 mt-1"
       :class="{
         'bg-[#793B40]': isActive || isChildMenuActive,
       }"
@@ -136,7 +139,7 @@ export default {
       :target="openInNewPage ? '_blank' : undefined"
       @click="navigate"
     >
-      <component :is="icon" v-if="typeof icon === 'object'" />
+      <component :is="icon" v-if="typeof icon === 'object'" :active="isActive || isChildMenuActive" />
       <fluent-icon v-else :icon="icon" />
 
       <span class="sr-only">{{ name }}</span>
@@ -148,9 +151,9 @@ export default {
       </span>
     </a>
     <span
-      class="font-inter text-white font-medium text-[0.5rem] tracking-[0%] text-center my-2"
+      class="font-inter inline-block text-white font-medium text-[0.625rem] text-center mt-[0.2rem] mb-2 overflow-hidden text-ellipsis whitespace-nowrap max-w-[80px] px-2 w-full"
     >
-      {{ name }}
+      {{ $t(`SIDEBAR.${name}`) }}
     </span>
   </router-link>
 </template>

@@ -36,7 +36,7 @@ import 'floating-vue/dist/style.css';
 
 const i18n = createI18n({
   legacy: false, // https://github.com/intlify/vue-i18n/issues/1902
-  locale: 'en',
+  locale: 'vi',
   messages: i18nMessages,
 });
 
@@ -46,6 +46,7 @@ const app = createApp(App);
 app.use(i18n);
 app.use(store);
 app.use(router);
+
 
 // [VITE] Disabled this, need to renable later
 if (window.errorLoggingConfig) {

@@ -1,8 +1,12 @@
 <script>
 import CustomizeChatbotHeader from '../../../../components-next/CustomizeChatbot/CustomizeChatbotHeader.vue';
 
+import ComboBox from '../../../../components-next/combobox/ComboBox.vue';
+import Input from '../../../../components-next/input/Input.vue';
+import TextArea from '../../../../components-next/textarea/TextArea.vue';
+
 export default {
-  components: { CustomizeChatbotHeader },
+  components: { CustomizeChatbotHeader, ComboBox, Input, TextArea },
   methods: {
     updateSettings() {
       // TODO: Update settings
@@ -12,14 +16,16 @@ export default {
 </script>
 
 <template>
-  <div class="w-full h-full bg-white">
+  <div
+    class="w-full h-full bg-white dark:bg-slate-900 dark:border-~slate-800/50"
+  >
     <CustomizeChatbotHeader
       :title="$t('CUSTOMIZE_CHATBOT_COMPANY.TITLE')"
       :button-text="$t('CUSTOMIZE_CHATBOT_COMPANY.BUTTON')"
       @button-click="updateSettings"
     />
     <!-- #Company Name -->
-    <div class="border-b-[0.5px] border-[#D1D1D1] py-6">
+    <div class="border-b-[0.5px] border-lightNeutral-strokeBold dark:border-blackNeutral-strokeBold py-6">
       <div class="grid grid-cols-12 gap-4 px-6 pb-5">
         <div class="col-span-4">
           <p class="text-base font-semibold">
@@ -30,9 +36,9 @@ export default {
           </span>
         </div>
         <div class="col-span-8">
-          <input
+          <Input
             type="text"
-            class="p-3 gap-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full h-12"
+            customInputClass="h-12"
             :placeholder="
               $t('CUSTOMIZE_CHATBOT_COMPANY.COMPANY_NAME.PLACEHOLDER')
             "
@@ -42,7 +48,7 @@ export default {
     </div>
 
     <!-- #Company description -->
-    <div class="border-b-[0.5px] border-[#D1D1D1] py-6">
+    <div class="border-b-[0.5px] border-lightNeutral-strokeBold dark:border-blackNeutral-strokeBold py-6">
       <div class="grid grid-cols-12 gap-4 px-6 pb-5">
         <div class="col-span-4">
           <p class="text-base font-semibold">
@@ -55,8 +61,9 @@ export default {
           </span>
         </div>
         <div class="col-span-8">
-          <textarea
-            class="w-full h-40 p-2 border border-gray-300 rounded-md"
+          <TextArea
+            custom-text-area-wrapper-class="bg-transparent"
+            custom-text-area-class="h-40"
             :placeholder="
               $t('CUSTOMIZE_CHATBOT_COMPANY.COMPANY_DESCRIPTION.PLACEHOLDER')
             "
@@ -66,7 +73,7 @@ export default {
     </div>
 
     <!-- #Phone number -->
-    <div class="border-b-[0.5px] border-[#D1D1D1] py-6">
+    <div class="border-b-[0.5px] border-lightNeutral-strokeBold dark:border-blackNeutral-strokeBold py-6">
       <div class="grid grid-cols-12 gap-4 px-6 pb-5">
         <div class="col-span-4">
           <p class="text-base font-semibold">
@@ -77,9 +84,9 @@ export default {
           </span>
         </div>
         <div class="col-span-8">
-          <input
+          <Input
             type="text"
-            class="p-3 gap-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full h-12"
+            customInputClass="h-12"
             :placeholder="
               $t('CUSTOMIZE_CHATBOT_COMPANY.PHONE_NUMBER.PLACEHOLDER')
             "
@@ -89,8 +96,9 @@ export default {
     </div>
 
     <!-- #Address -->
-    <div class="border-b-[0.5px] border-[#D1D1D1] py-6">
+    <div class="border-b-[0.5px] border-lightNeutral-strokeBold dark:border-blackNeutral-strokeBold py-6">
       <div class="grid grid-cols-12 gap-4 px-6 pb-5">
+        <!-- Label -->
         <div class="col-span-4">
           <p class="text-base font-semibold">
             {{ $t('CUSTOMIZE_CHATBOT_COMPANY.ADDRESS.LABEL') }}
@@ -99,27 +107,42 @@ export default {
             {{ $t('CUSTOMIZE_CHATBOT_COMPANY.ADDRESS.DESCRIPTION') }}
           </span>
         </div>
+        <!-- Input/Select -->
         <div class="col-span-8">
           <div class="grid grid-cols-2 gap-5">
-            <select class="col-span-1 border border-gray-300 rounded-md">
-              <option value="" disabled selected hidden>
-                {{ $t('CUSTOMIZE_CHATBOT_COMPANY.ADDRESS.SELECT_COUNTRY') }}
-              </option>
-            </select>
-            <select class="col-span-1 border border-gray-300 rounded-md">
-              <option value="" disabled selected hidden class="text-[#575757]">
-                {{ $t('CUSTOMIZE_CHATBOT_COMPANY.ADDRESS.SELECT_CITY') }}
-              </option>
-            </select>
-            <select class="col-span-1 border border-gray-300 rounded-md">
-              <option value="" disabled selected hidden class="text-[#575757]">
-                {{ $t('CUSTOMIZE_CHATBOT_COMPANY.ADDRESS.SELECT_DISTRICT') }}
-              </option>
-            </select>
-            <input
+            <!-- Select: Counrtry -->
+            <ComboBox
+              :searchAble="true"
+              :options="[]"
+              customButtonClass="h-12"
+              :placeholder="
+                $t('CUSTOMIZE_CHATBOT_COMPANY.ADDRESS.SELECT_COUNTRY')
+              "
+            />
+
+            <!-- Select: City -->
+            <ComboBox
+              :searchAble="true"
+              :options="[]"
+              customButtonClass="h-12"
+              :placeholder="$t('CUSTOMIZE_CHATBOT_COMPANY.ADDRESS.SELECT_CITY')"
+            />
+
+            <!-- Select: District -->
+            <ComboBox
+              :searchAble="true"
+              :options="[]"
+              customButtonClass="h-12"
+              :placeholder="
+                $t('CUSTOMIZE_CHATBOT_COMPANY.ADDRESS.SELECT_DISTRICT')
+              "
+            />
+
+            <!-- Input: Address -->
+            <Input
               type="text"
+              customInputClass="h-12"
               :placeholder="$t('CUSTOMIZE_CHATBOT_COMPANY.ADDRESS.PLACEHOLDER')"
-              class="p-3 gap-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 col-span-1 h-12"
             />
           </div>
         </div>
@@ -127,7 +150,7 @@ export default {
     </div>
 
     <!-- #Website  -->
-    <div class="border-b-[0.5px] border-[#D1D1D1] py-6">
+    <div class="border-b-[0.5px] border-lightNeutral-strokeBold dark:border-blackNeutral-strokeBold py-6">
       <div class="grid grid-cols-12 gap-4 px-6 pb-5">
         <div class="col-span-4">
           <p class="text-base font-semibold">
@@ -138,9 +161,9 @@ export default {
           </span>
         </div>
         <div class="col-span-8">
-          <input
+          <Input
             type="text"
-            class="p-3 gap-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full h-12"
+            customInputClass="h-12"
             :placeholder="$t('CUSTOMIZE_CHATBOT_COMPANY.WEBSITE.PLACEHOLDER')"
           />
         </div>
@@ -148,7 +171,7 @@ export default {
     </div>
 
     <!-- #Industry -->
-    <div class="border-b-[0.5px] border-[#D1D1D1] py-6">
+    <div class="border-b-[0.5px] border-lightNeutral-strokeBold dark:border-blackNeutral-strokeBold py-6">
       <div class="grid grid-cols-12 gap-4 px-6 pb-5">
         <div class="col-span-4">
           <p class="text-base font-semibold">
@@ -159,17 +182,20 @@ export default {
           </span>
         </div>
         <div class="col-span-8">
-          <select class="col-span-1 border border-gray-300 rounded-md">
-            <option value="">
-              {{ $t('CUSTOMIZE_CHATBOT_COMPANY.INDUSTRY.DEFAULT_OPTION') }}
-            </option>
-          </select>
+          <ComboBox
+            :searchAble="true"
+            :options="[]"
+            customButtonClass="h-12"
+            :placeholder="
+              $t('CUSTOMIZE_CHATBOT_COMPANY.INDUSTRY.DEFAULT_OPTION')
+            "
+          />
         </div>
       </div>
     </div>
 
     <!-- #Language  -->
-    <div class="border-b-[0.5px] border-[#D1D1D1] py-6">
+    <div class="border-b-[0.5px] border-lightNeutral-strokeBold dark:border-blackNeutral-strokeBold py-6">
       <div class="grid grid-cols-12 gap-4 px-6 pb-5">
         <div class="col-span-4">
           <p class="text-base font-semibold">
@@ -180,17 +206,20 @@ export default {
           </span>
         </div>
         <div class="col-span-8">
-          <select class="col-span-1 border border-gray-300 rounded-md">
-            <option value="">
-              {{ $t('CUSTOMIZE_CHATBOT_COMPANY.LANGUAGE.DEFAULT_OPTION') }}
-            </option>
-          </select>
+          <ComboBox
+            :searchAble="true"
+            :options="[]"
+            customButtonClass="h-12"
+            :placeholder="
+              $t('CUSTOMIZE_CHATBOT_COMPANY.LANGUAGE.DEFAULT_OPTION')
+            "
+          />
         </div>
       </div>
     </div>
 
     <!-- #Time Zone  -->
-    <div class="border-b-[0.5px] border-[#D1D1D1] py-6">
+    <div class="border-b-[0.5px] border-lightNeutral-strokeBold dark:border-blackNeutral-strokeBold py-6">
       <div class="grid grid-cols-12 gap-4 px-6 pb-5">
         <div class="col-span-4">
           <p class="text-base font-semibold">
@@ -201,11 +230,14 @@ export default {
           </span>
         </div>
         <div class="col-span-8">
-          <select class="col-span-1 border border-gray-300 rounded-md">
-            <option value="">
-              {{ $t('CUSTOMIZE_CHATBOT_COMPANY.TIME_ZONE.DEFAULT_OPTION') }}
-            </option>
-          </select>
+          <ComboBox
+            :searchAble="true"
+            :options="[]"
+            customButtonClass="h-12"
+            :placeholder="
+              $t('CUSTOMIZE_CHATBOT_COMPANY.TIME_ZONE.DEFAULT_OPTION')
+            "
+          />
         </div>
       </div>
     </div>

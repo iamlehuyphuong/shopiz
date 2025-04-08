@@ -32,9 +32,9 @@ export default {
 </script>
 
 <template>
-  <div class="mb-4">
+  <div>
     <button
-      class="relative flex items-center justify-center w-10 h-10 p-0 my-2 rounded-lg text-white"
+      class="relative flex items-center justify-center p-0  rounded-lg text-white"
       :class="{
         'bg-woot-50 dark:bg-slate-800 text-woot-500 ':
           isNotificationPanelActive,

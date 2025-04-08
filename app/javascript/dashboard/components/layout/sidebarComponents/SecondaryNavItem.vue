@@ -140,7 +140,7 @@ export default {
         this.isContactsDefaultRoute ||
         this.isCurrentRoute
       ) {
-        return 'bg-woot-25 dark:bg-slate-800 text-woot-500 dark:text-woot-500 hover:text-woot-500 dark:hover:text-woot-500 active-view';
+        return 'bg-[#E0EEF9] dark:bg-slate-800 text-woot-500 dark:text-woot-500 hover:text-woot-500 dark:hover:text-woot-500 active-view';
       }
       if (this.hasSubMenu) {
         if (
@@ -149,7 +149,7 @@ export default {
           this.isIntegrationsSettings ||
           this.isApplicationsSettings
         ) {
-          return 'bg-woot-25 dark:bg-slate-800 text-woot-500 dark:text-woot-500 hover:text-woot-500 dark:hover:text-woot-500 active-view';
+          return 'bg-[#E0EEF9] dark:bg-slate-800 text-woot-500 dark:text-woot-500 hover:text-woot-500 dark:hover:text-woot-500 active-view';
         }
         return 'hover:text-slate-700 dark:hover:text-slate-100';
       }
@@ -221,7 +221,16 @@ export default {
       :class="computedClass"
       :to="menuItem && menuItem.toState"
     >
+      <component
+        :is="menuItem.icon"
+        v-if="typeof menuItem.icon === 'object'"
+
+        class="min-w-[1rem] mr-1.5 rtl:mr-0 rtl:ml-1.5"
+        :color="isActiveView?'#386BB7':'#575757'"
+      />
+
       <fluent-icon
+        v-else
         :icon="menuItem.icon"
         class="min-w-[1rem] mr-1.5 rtl:mr-0 rtl:ml-1.5"
         size="14"
@@ -233,7 +242,7 @@ export default {
         :class="{
           'text-slate-300 dark:text-slate-600': isCountZero && !isActiveView,
           'text-slate-600 dark:text-slate-50': !isCountZero && !isActiveView,
-          'bg-woot-75 dark:bg-woot-200 text-woot-600 dark:text-woot-600':
+          'bg-woot-75 dark:bg-woot-200 text-[#575757] dark:text-woot-600':
             isActiveView,
           'bg-slate-50 dark:bg-slate-700': !isActiveView,
         }"

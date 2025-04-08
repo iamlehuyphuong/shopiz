@@ -1,0 +1,73 @@
+{
+  "CUSTOMIZE_CHATBOT_PRODUCT": {
+    "TITLE": "Sản phẩm",
+    "BUTTON": "Thêm mới ",
+    "SHOW_PRODUCT": "Show: ALL Products",
+    "SOFT_BY": "Soft by: Default",
+    "SEARCH": "Tìm kiếm sản phẩm",
+    "TABLE": {
+      "PRODUCT_NAME": "Tên sản phẩm",
+      "CATEGORY": "Thể loại",
+      "SALES": "Đã bán",
+      "UNIT_PRICE": "Giá/sản phẩm",
+      "QUANTITY": "Số lượng",
+      "STATUS": "Trạng thái",
+      "ACTIVE": "Mở bán",
+      "INACTIVE": "Không mở bán"
+    },
+    "CUSTOMIZE_CHATBOT_PAGINATION": {
+      "PREVIOUS": "Trước",
+      "NEXT": "Sau",
+      "ITEM_PER_PAGE": "số phần tử mỗi trang",
+      "COUNT": "của {page} trang",
+      "TOTAL": "{number} phẩn tử trên {total}"
+    }
+  },
+  "CUSTOMIZE_CHATBOT_COMPANY": {
+    "TITLE": "Thiết lập công ty",
+    "BUTTON": "Cập nhật",
+    "COMPANY_NAME": {
+      "LABEL": "Công ty",
+      "PLACEHOLDER": "Tên công ty của bạn",
+      "DESCRIPTION": "Nhập tên công ty của bạn"
+    },
+    "COMPANY_DESCRIPTION": {
+      "LABEL": "Mô tả công ty",
+      "PLACEHOLDER": "Mô tả",
+      "DESCRIPTION": "Hãy mô tả ngắn gọn về công ty của bạn"
+    },
+    "PHONE_NUMBER": {
+      "LABEL": "Số điện thoại",
+      "PLACEHOLDER": "0123456789",
+      "DESCRIPTION": "Nhập số  điện thoại hợp lệ"
+    },
+    "ADDRESS": {
+      "LABEL": "Địa chỉ",
+      "DESCRIPTION": "Thông tin địa chỉ của công ty",
+      "PLACEHOLDER": "Mã bưu chính",
+      "SELECT_COUNTRY": "Quốc gia",
+      "SELECT_CITY": "Tỉnh",
+      "SELECT_DISTRICT": "Quận/Huyện"
+    },
+    "WEBSITE": {
+      "LABEL": "Website",
+      "PLACEHOLDER": "Nhập Website URL",
+      "DESCRIPTION": "Cung cấp website URL của công ty bạn"
+    },
+    "INDUSTRY": {
+      "LABEL": "Ngành nghề",
+      "DEFAULT_OPTION": "IT & Technology Services",
+      "DESCRIPTION": "Chọn lĩnh vực doanh nghiệp của bạn"
+    },
+    "LANGUAGE": {
+      "LABEL": "Ngộn ngữ",
+      "DEFAULT_OPTION": "Tiếng Việt",
+      "DESCRIPTION": "Chọn ngôn ngữ chính của bạn"
+    },
+    "TIME_ZONE": {
+      "LABEL": "Múi giờ",
+      "DEFAULT_OPTION": "Asia/Hanoi",
+      "DESCRIPTION": "Chọn múi giờ hoạt động của bạn"
+    }
+  }
+}

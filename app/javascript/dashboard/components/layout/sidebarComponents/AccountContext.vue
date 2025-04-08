@@ -42,7 +42,6 @@ export default {
     </p>
     <transition name="fade">
       <div
-        v-if="showSwitchButton"
         class="absolute top-0 right-0 flex items-center justify-end w-full h-full rounded-md ltr:overlay-shadow ltr:dark:overlay-shadow-dark rtl:rtl-overlay-shadow rtl:dark:rtl-overlay-shadow-dark"
       >
         <div class="mx-2 my-0">

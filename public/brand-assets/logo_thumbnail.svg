@@ -1,6 +1,9 @@
-<svg width="26" height="25" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Group 8739">
-<path id="Union" fill-rule="evenodd" clip-rule="evenodd" d="M0.592163 8.46773L8.69865 16.5742V8.46773L17.3014 8.46774L17.3015 8.46773V8.46767L25.4079 0.195806L17.3015 0.195801H9.02953L0.592163 8.46773Z" fill="#FAFAFA"/>
-<path id="Union_2" fill-rule="evenodd" clip-rule="evenodd" d="M25.4079 16.5742L17.3015 8.46774V16.5742H8.69865L0.592163 24.8462H8.69865H16.9706L25.4079 16.5742Z" fill="#FAFAFA"/>
-</g>
+<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path id="Union" fill-rule="evenodd" clip-rule="evenodd" d="M8.66677 17.1107L0.500122 8.88926L9.0001 0.5H17.3333H17.3334H25.5L17.3334 8.88919V8.88926L17.3333 8.88926L8.66677 8.88926V17.1107ZM17.3333 8.88927L25.4999 17.1107L16.9999 25.5H8.66665H8.66661H0.5L8.66661 17.1107L8.66665 17.1107L17.3333 17.1107V8.88927Z" fill="url(#paint0_linear_3069_76628)"/>
+<defs>
+<linearGradient id="paint0_linear_3069_76628" x1="0.5" y1="13" x2="25.5" y2="13" gradientUnits="userSpaceOnUse">
+<stop offset="0.12" stop-color="#386BB7"/>
+<stop offset="0.85" stop-color="#E24C4A"/>
+</linearGradient>
+</defs>
 </svg>

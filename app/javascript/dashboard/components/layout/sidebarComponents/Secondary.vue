@@ -1,3 +1,4 @@
+<!-- #Secondary Bar -->
 <script>
 import { frontendURL } from '../../../helper/URLHelper';
 import SecondaryNavItem from './SecondaryNavItem.vue';
@@ -10,8 +11,10 @@ import {
 } from '../../../helper/permissionsHelper';
 import { routesWithPermissions } from '../../../routes';
 
+import CustomButton from '../../buttons/Button.vue';
 export default {
   components: {
+    CustomButton,
     AccountContext,
     SecondaryNavItem,
   },
@@ -47,6 +50,11 @@ export default {
     isOnChatwootCloud: {
       type: Boolean,
       default: false,
+    },
+
+    selectedPrimaryBar: {
+      type: String,
+      default: '',
     },
   },
   emits: ['addLabel', 'toggleAccounts'],
@@ -241,13 +249,19 @@ export default {
 
 <template>
   <div
-    class="flex flex-col w-48 h-full px-2 pb-8 overflow-auto text-sm bg-white border-r dark:bg-slate-900 dark:border-slate-800/50 rtl:border-r-0 rtl:border-l border-slate-50"
+    class="flex flex-col w-[14.25rem] h-full px-3 pb-8 overflow-auto text-sm bg-white dark:border-r-0 border-r dark:bg-slate-900 dark:border-~slate-800/50 rtl:border-r-0 rtl:border-l border-slate-50"
   >
     <AccountContext @toggle-accounts="toggleAccountModal" />
+    <!-- Header secondary bar -->
+    <b class="pl-1 flex flex-row justify-between items-center mt-5 mb-2 font-semibold text-lightNeutral-primary dark:text-blackNeutral-primary font-inter text-base">
+      {{ $t(`SIDEBAR.${selectedPrimaryBar}`) }}
+    </b>
+
+    <!-- Body secondary bar -->
     <transition-group
       name="menu-list"
       tag="ul"
-      class="pt-2 list-none reset-base"
+      class="pt-2 list-none reset-base flex-grow"
     >
       <SecondaryNavItem
         v-for="menuItem in accessibleMenuItems"
@@ -261,5 +275,17 @@ export default {
         @add-label="showAddLabelPopup"
       />
     </transition-group>
+
+    <!-- Footer secondary bar -->
+    <p
+      class="text-[#4D6F7C] text-center font-lato text-[12px] not-italic font-bold leading-[15px] w-full"
+    >
+      Copyright © 2025 By
+      <span
+        class="text-transparent bg-gradient-to-r from-[#386BB7] to-[#E24C4A] bg-clip-text text-[12px] not-italic font-bold leading-[15px]"
+        >EffiAI</span
+      ><br />
+      All Rights Reserved.
+    </p>
   </div>
 </template>

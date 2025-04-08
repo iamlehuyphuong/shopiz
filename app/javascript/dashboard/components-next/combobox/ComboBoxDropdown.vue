@@ -27,6 +27,10 @@ const props = defineProps({
     type: [String, Number, Array],
     default: () => [],
   },
+  searchAble: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const emit = defineEmits(['select', 'search']);
@@ -63,8 +67,9 @@ defineExpose({
     class="absolute z-50 w-full mt-1 transition-opacity duration-200 border rounded-md shadow-lg bg-n-solid-1 border-n-strong"
   >
     <div class="relative border-b border-n-strong">
-      <span class="absolute i-lucide-search top-2.5 size-4 left-3" />
+      <span v-if="searchAble" class="absolute i-lucide-search top-2.5 size-4 left-3" />
       <input
+        v-if="searchAble"
         ref="searchInput"
         :value="searchValue"
         type="search"
