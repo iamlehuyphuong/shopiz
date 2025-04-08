@@ -49,7 +49,7 @@ export default {
         },
         {
           path: 'FQAs',
-          name: 'customizeChatbot_FQAs_index',
+          name: 'customizeChatbot_FAQs_index',
           meta,
           component: CustomizeChatbotView,
         },

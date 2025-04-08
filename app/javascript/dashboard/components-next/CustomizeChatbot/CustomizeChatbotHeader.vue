@@ -1,6 +1,13 @@
 <script>
+import Badge from '../../components-salesman/badge/Badge.vue';
+import Button from '../../components-salesman/button/Button.vue';
+
 export default {
   name: 'HeaderComponent',
+  components: {
+    Badge,
+    Button
+  },
   props: {
     title: {
       type: String,
@@ -17,15 +24,17 @@ export default {
 
 <template>
   <div
-    class="h-[4.5rem] flex justify-between border-b-[0.5px] pt-4 pr-6 pb-4 pl-6 border-[#D1D1D1]"
+    class="h-[4.5rem] flex justify-between border-b-[0.5px] pt-4 pr-6 pb-4 pl-6 border-lightNeutral-strokeBold dark:border-blackNeutral-strokeBold"
   >
     <h1 class="text-2xl font-bold">{{ title }}</h1>
-    <button
+    <Button
       v-if="buttonText"
-      class="h-[2.5rem] p-2 px-4 gap-2 rounded-lg bg-[#386BB7] text-white"
       @click="$emit('buttonClick')"
-    >
+      color="primary"
+      variant="solid"
+      size="lg"
+      >
       {{ buttonText }}
-    </button>
+    </Button>
   </div>
 </template>

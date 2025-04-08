@@ -1,3 +1,6 @@
+<!-- #Primarybar -->
+<!-- ReadDocsIcon.vue -->
+
 <template>
   <svg
     width="22"

@@ -132,6 +132,8 @@ export default {
     },
   },
 };
+
+
 </script>
 
 <template>
@@ -171,9 +173,9 @@ export default {
   font-weight: 400;
 }
 
-.v-popper--theme-tooltip .v-popper__arrow-container {
-  display: none;
-}
+// .v-popper--theme-tooltip .v-popper__arrow-container {
+//   display: none;
+// }
 
 .multiselect__input {
   margin-bottom: 0px !important;

@@ -29,10 +29,5 @@ export default {
     <router-link :to="dashboardPath" replace>
       <img :src="source" :alt="name" />
     </router-link>
-    <span
-      class="font-[Poppins] font-semibold text-[11.25px] leading-[150%] tracking-[0%] text-center text-white"
-    >
-      Salesman</span
-    >
   </div>
 </template>

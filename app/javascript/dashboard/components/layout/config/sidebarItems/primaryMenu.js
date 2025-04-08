@@ -8,6 +8,8 @@ import CompaignIcon from 'components/layout/sidebarComponents/icons/CompaignIcon
 import SettingIcon from 'components/layout/sidebarComponents/icons/SettingIcon.vue';
 import CustomizeChatbotIcon from 'components/layout/sidebarComponents/icons/CustomizeChatbotIcon.vue';
 
+// #Primarybar
+
 const primaryMenuItems = accountId => [
   {
     icon: 'mail-inbox',
@@ -20,7 +22,7 @@ const primaryMenuItems = accountId => [
   {
     icon: ConversationsIcon,
     key: 'conversations',
-    label: 'Conversations',
+    label: 'CONVERSATIONS',
     toState: frontendURL(`accounts/${accountId}/dashboard`),
     toStateName: 'home',
   },
@@ -35,7 +37,7 @@ const primaryMenuItems = accountId => [
   {
     icon: ContactIcon,
     key: 'contacts',
-    label: 'Contacts',
+    label: 'CONTACTS',
     featureFlag: FEATURE_FLAGS.CRM,
     toState: frontendURL(`accounts/${accountId}/contacts`),
     toStateName: 'contacts_dashboard_index',
@@ -43,7 +45,7 @@ const primaryMenuItems = accountId => [
   {
     icon: ReportIcon,
     key: 'reports',
-    label: 'Reports',
+    label: 'REPORTS',
     featureFlag: FEATURE_FLAGS.REPORTS,
     toState: frontendURL(`accounts/${accountId}/reports`),
     toStateName: 'account_overview_reports',
@@ -51,14 +53,14 @@ const primaryMenuItems = accountId => [
   {
     icon: CustomizeChatbotIcon,
     key: 'customizeChatbot',
-    label: 'Customize Chatbot',
+    label: 'CUSTOMIZE_CHATBOT',
     toState: frontendURL(`accounts/${accountId}/customize-chatbot`),
     toStateName: 'account_overview_reports',
   },
   {
     icon: CompaignIcon,
     key: 'campaigns',
-    label: 'Campaigns',
+    label: 'CAMPAIGNS',
     featureFlag: FEATURE_FLAGS.CAMPAIGNS,
     toState: frontendURL(`accounts/${accountId}/campaigns`),
     toStateName: 'campaigns_ongoing_index',
@@ -66,7 +68,7 @@ const primaryMenuItems = accountId => [
   {
     icon: HelpIcon,
     key: 'helpcenter',
-    label: 'Helper center',
+    label: 'HELP_CENTER.TITLE',
     featureFlag: FEATURE_FLAGS.HELP_CENTER,
     alwaysVisibleOnChatwootInstances: true,
     toState: frontendURL(`accounts/${accountId}/portals/portal_articles_index`),
@@ -75,7 +77,7 @@ const primaryMenuItems = accountId => [
   {
     icon: SettingIcon,
     key: 'settings',
-    label: 'Settings',
+    label: 'SETTINGS',
     toState: frontendURL(`accounts/${accountId}/settings`),
     toStateName: 'settings_home',
   },
