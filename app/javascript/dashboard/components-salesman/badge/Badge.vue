@@ -90,18 +90,41 @@ const computedJustify = computed(() => {
   if (attrs.center || attrs.center === '') return 'center';
   if (attrs.end || attrs.end === '') return 'end';
 
-  return 'center';
+    return 'center';
 });
 
 const STYLE_CONFIG = {
   colors: {
     primary: {
       solid:
-        'bg-linear-secondary-x-l text-white hover:bg-primary-800 disable:bg-primary-300',
+        'bg-primary-700 text-white hover:bg-primary-800 disable:bg-primary-300',
       surface: 'bg-primary-100 text-primary-700 hover:text-primary-800 disable:text-primary-300',
       outline: 'outline-primary-700 bg-white text-primary-700 hover:bg-primary-100 disable:text-primary-400 disable:outline-primary-300',
     },
-    secondary: {
+    neutral: {
+      solid:
+        'bg-lightNeutral-primary text-white hover:bg-lightNeutral-secondary disbale:text-lightNeutral-strokeLight disable:bg-lightNeutral-s2',
+      surface:
+        'bg-lightNeutral-s text-lightNeutral-secondary hover:bg-lightNeutral-secondary hover:text-lightNeutral-primary disable:bg-lightNeutral-s disable:text-lightNeutral-stokeLight',
+      outline: 'bg-white outline-lightNeutral-s2 text-lightNeutral-primary hover:bg-light-Neutral-s hover:outline-lightNeutral-strokeBold',
+     
+    },
+    success: {
+      solid:
+        'bg-success-500 text-white hover:bg-success-600 disabled:bg-success-300',
+      surface:
+        'bg-success-50 text-success-500 hover:bg-success-100 hover:text-success-600 disable:bg-success-50 disable:text-success-300',
+      outline:
+        'bg-white outline-success-500 text-success-500 hover:bg-success-50 disable:outline-success-300 disable:text-success-400',
+    },
+    warning: {
+      solid:
+        'bg-warning-500 text-white hover:bg-warning-600 disable:bg-warning-300',
+      surface:
+        'bg-warning-50 text-warning-500 hover:bg-warning-100 hover:text-warning-600 disable:bg-warning-50 disable:text-warning-300',
+      outline: 'outline-warning-500 text-warning-500 hover:bg-warning-50 disable:bg-warning-300 disable:bg-warning-400',
+    },
+    danger: {
       solid:
         'bg-destructive-500 text-white hover:bg-destructive-600 disable:bg-destructive-300',
       surface:
@@ -111,23 +134,23 @@ const STYLE_CONFIG = {
   },
   sizes: {
     regular: {
-      sm: 'h-8 w-[8.375rem] px-3 py-[0.375rem]',
-      md: 'h-10 w-40 px-3 py-1',
-      lg: 'h-12 w-48 px-6 py-3',
+      sm: 'h-6 w-[6.25rem]',
+      md: 'h-7 w-28 px-3 py-1',
+      lg: 'h-8 w-[7.5rem] px-4 py-[0.375rem]',
     },
 
   },
   fontSize: {
     sm: 'text-xs',
     md: 'text-sm',
-    lg: 'text-base',
+    lg: 'text-sm',
   },
   justify: {
     start: 'justify-start',
     center: 'justify-center',
     end: 'justify-end',
   },
-  base: 'rounded-lg inline-flex items-center min-w-0 gap-2 transition-all duration-200 ease-in-out border-0 rounded-lg outline-1 outline gap-[0.375rem] cursor-pointer',
+  base: 'rounded-3xl inline-flex items-center min-w-0 gap-2 transition-all duration-200 ease-in-out border-0 rounded-lg outline-1 outline gap-[0.375rem] cursor-pointer',
 };
 
 const variantClasses = computed(() => {

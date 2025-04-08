@@ -97,16 +97,25 @@ const STYLE_CONFIG = {
   colors: {
     primary: {
       solid:
-        'bg-linear-secondary-x-r text-white hover:bg-primary-800 disable:bg-primary-300',
-      surface: 'bg-primary-100 text-primary-700 hover:text-primary-800 disable:text-primary-300',
-      outline: 'outline-primary-700 bg-white text-primary-700 hover:bg-primary-100 disable:text-primary-400 disable:outline-primary-300',
+        'bg-primary-700 text-white hover:bg-primary-800 disable:bg-primary-300 active:bg-primary-800 active:text-primary-200',
+      surface:
+        'bg-primary-50 text-primary-700 hover:bg-primary-100 hover:text-primary-800 active:bg-primary-100 active:text-primary-700 disable:bg-primary-100 disable:text-primary-700',
+      tertiary:
+        'bg-white outline-lightNeutral-strokeBold text-lightNeutral-primary hover:bg-lightNeutral-s hover:text-lightNeutral-secondary active:bg-lightNeutral-s active:text-lightNeutral-strokeBold disable:outline-lightNeutral-s2 disable:bg-white disable:text-lightNeutral-strokeLight',
+      outline:
+        'outline-primary-700 text-primary-700 hover:outline-primary-400 active:outline-primary-400 active:text-priary-400 disable:outline-primary-300 text:outline-primary-300',
+      link: 'bg-white text-primary-700 hover:text-primary-800 active:text-primary-400 disable:text-primary-300',
     },
     secondary: {
       solid:
-        'bg-destructive-500 text-white hover:bg-destructive-600 disable:bg-destructive-300',
+        'bg-destructive-500 text-white hover:bg-destructive-600 active:bg-destructive-600 active:text-destructive-200 disable:bg-destructive-300',
       surface:
-        'bg-destructive-50 text-destructive-500 hover:bg-destructive-100 hover:text-destructive-600 disable:bg-destructive-300 disable:text-destructive-50',
-      outline: 'bg-white text-destructive-500 outline-destructive-500 hover:bg-destructive-50 disable:outline-destructive-300 disable:bg-destructive-300 disabled:text-destructive-400',
+        'bg-destructive-50 text-destructive-500 hover:bg-destructive-100 hover:text-destructive-600 active:bg-destructive-100 active:text-destructive-500 disable:bg-destructive-300 disable:text-destructive-50',
+      tertiary:
+        'bg-white outline-destructive-200 text-destructive-500 hover:bg-destructive-50 active:bg-destructive-50 active:outline-destructive-300 disable:bg-white disable:outline-destructive-200 disable:text-destructive-300',
+      outline:
+        'bg-white text-destructive-500 outline-destructive-500 hover:outline-destructive-400 active:outline-destructive-400 active:text-destructive-400 disable:outline-destructive-300 disable:text-destructive-300',
+      link: 'bg-white text-destructive-500 hover:text-destructive-600 active:text-destructive-500 disable:text-destructive-500',
     },
   },
   sizes: {
@@ -115,7 +124,6 @@ const STYLE_CONFIG = {
       md: 'h-10 w-40 px-3 py-1',
       lg: 'h-12 w-48 px-6 py-3',
     },
-
   },
   fontSize: {
     sm: 'text-xs',
@@ -133,7 +141,9 @@ const STYLE_CONFIG = {
 const variantClasses = computed(() => {
   const variantMap = {
     ghost: `${STYLE_CONFIG.colors[computedColor.value].ghost}`,
-    link: `${STYLE_CONFIG.colors[computedColor.value].link} p-0 font-medium underline-offset-4`,
+    link: `${
+      STYLE_CONFIG.colors[computedColor.value].link
+    } p-0 font-medium underline-offset-4`,
     outline: STYLE_CONFIG.colors[computedColor.value].outline,
     faded: STYLE_CONFIG.colors[computedColor.value].faded,
     solid: STYLE_CONFIG.colors[computedColor.value].solid,
