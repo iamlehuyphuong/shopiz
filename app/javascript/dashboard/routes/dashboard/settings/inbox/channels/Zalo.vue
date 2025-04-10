@@ -1,5 +1,6 @@
 <script>
 /* eslint-env browser */
+import { useVuelidate } from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import LoadingState from 'dashboard/components/widgets/LoadingState.vue';
 import { useAccount } from 'dashboard/composables/useAccount';
@@ -20,6 +21,7 @@ export default {
 
     return {
       accountId,
+      v$: useVuelidate(),
     };
   },
   data() {
