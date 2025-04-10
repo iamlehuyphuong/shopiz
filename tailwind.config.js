@@ -194,12 +194,14 @@ const tailwindConfig = {
       xxs: '0.625rem',
     },
     colors: {
+      inherit: 'inherit',
       transparent: 'transparent',
       white: '#fff',
       'modal-backdrop-light': 'rgba(0, 0, 0, 0.4)',
       'modal-backdrop-dark': 'rgba(0, 0, 0, 0.6)',
       current: 'currentColor',
       ...colors,
+      ...defaultTheme.colors,
       body: slateDark.slate7,
       lightNeutral: {
         s: "var(--light-neutral-s)",

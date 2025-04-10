@@ -36,6 +36,7 @@ const props = defineProps({
   icon: { type: [String, Object, Function], default: '' },
   trailingIcon: { type: Boolean, default: false },
   isLoading: { type: Boolean, default: false },
+  customClass: {type: String, default: ''}
 });
 
 const slots = useSlots();
@@ -61,18 +62,18 @@ const computedVariant = computed(() => {
   if (props.variant) return props.variant;
   // The useAttrs method returns attributes values an empty string (not boolean value as in props).
   if (attrs.solid || attrs.solid === '') return 'solid';
+  if (attrs.surface || attrs.surface === '') return 'surface';
+  if (attrs.tertiary || attrs.tertiary === '') return 'tertiary';
   if (attrs.outline || attrs.outline === '') return 'outline';
-  if (attrs.surface || attrs.surface === '') return 'faded';
+  if (attrs.link || attrs.link === '') return 'link';
   return 'solid'; // Default variant
 });
 
 const computedColor = computed(() => {
   if (props.color) return props.color;
   if (attrs.primary || attrs.primary === '') return 'primary';
-  if (attrs.neutral || attrs.neutral === '') return 'neutral';
-  if (attrs.success || attrs.success === '') return 'success';
-  if (attrs.warning || attrs.warning === '') return 'warning';
-  if (attrs.danger || attrs.danger === '') return 'danger';
+  if (attrs.secondary || attrs.secondary === '') return 'secondary';
+
   return 'primary'; // Default color
 });
 
@@ -120,9 +121,9 @@ const STYLE_CONFIG = {
   },
   sizes: {
     regular: {
-      sm: 'h-8 w-[8.375rem] px-3 py-[0.375rem]',
-      md: 'h-10 w-40 px-3 py-1',
-      lg: 'h-12 w-48 px-6 py-3',
+      sm: 'h-8 px-3 py-[0.375rem]',
+      md: 'h-10 px-3 py-1',
+      lg: 'h-12 px-6 py-3',
     },
   },
   fontSize: {
@@ -185,6 +186,7 @@ const linkButtonClasses = computed(() => {
       [STYLE_CONFIG.fontSize[computedSize]]: true,
       [STYLE_CONFIG.justify[computedJustify]]: true,
       'flex-row-reverse': trailingIcon && !isIconOnly,
+      [customClass]: true
     }"
   >
     <slot v-if="(icon || $slots.icon) && !isLoading" name="icon">

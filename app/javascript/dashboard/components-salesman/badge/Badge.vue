@@ -133,12 +133,9 @@ const STYLE_CONFIG = {
     },
   },
   sizes: {
-    regular: {
       sm: 'h-6 w-[6.25rem]',
       md: 'h-7 w-28 px-3 py-1',
-      lg: 'h-8 w-[7.5rem] px-4 py-[0.375rem]',
-    },
-
+      lg: 'h-8 w-[7.5rem] px-4 py-[0.375rem] px-0.5 py-2.5',
   },
   fontSize: {
     sm: 'text-xs',
@@ -150,7 +147,7 @@ const STYLE_CONFIG = {
     center: 'justify-center',
     end: 'justify-end',
   },
-  base: 'rounded-3xl inline-flex items-center min-w-0 gap-2 transition-all duration-200 ease-in-out border-0 rounded-lg outline-1 outline gap-[0.375rem] cursor-pointer',
+  base: 'rounded-3xl inline-flex items-center min-w-0 gap-2 transition-all duration-200 ease-in-out border-0 outline-1 outline gap-[0.375rem] cursor-pointer',
 };
 
 const variantClasses = computed(() => {
@@ -168,27 +165,16 @@ const variantClasses = computed(() => {
 });
 
 const isIconOnly = computed(() => !props.label && !slots.default);
-const isLink = computed(() => computedVariant.value === 'link');
 
 const buttonClasses = computed(() => {
-  const sizeConfig = isIconOnly.value ? 'iconOnly' : 'regular';
   const classes = [
     variantClasses.value,
-    computedVariant.value !== 'link' &&
-      STYLE_CONFIG.sizes[sizeConfig][computedSize.value],
+      STYLE_CONFIG.sizes[computedSize.value],
   ].filter(Boolean);
 
   return classes.join(' ');
 });
 
-const linkButtonClasses = computed(() => {
-  const classes = [
-    variantClasses.value,
-    STYLE_CONFIG.sizes.link[computedSize.value],
-  ].filter(Boolean);
-
-  return classes.join(' ');
-});
 </script>
 
 <template>
@@ -196,7 +182,7 @@ const linkButtonClasses = computed(() => {
     v-bind="filteredAttrs"
     :class="{
       [STYLE_CONFIG.base]: true,
-      [isLink ? linkButtonClasses : buttonClasses]: true,
+      [buttonClasses]: true,
       [STYLE_CONFIG.fontSize[computedSize]]: true,
       [STYLE_CONFIG.justify[computedJustify]]: true,
       'flex-row-reverse': trailingIcon && !isIconOnly,
