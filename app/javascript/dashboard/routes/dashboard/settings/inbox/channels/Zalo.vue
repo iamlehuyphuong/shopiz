@@ -2,6 +2,7 @@
 /* eslint-env browser */
 import { required } from '@vuelidate/validators';
 import LoadingState from 'dashboard/components/widgets/LoadingState.vue';
+import { useAccount } from 'dashboard/composables/useAccount';
 import { mapGetters } from 'vuex';
 import axios from 'axios';
 import PageHeader from '../../SettingsSubPageHeader.vue';
@@ -14,6 +15,13 @@ export default {
     PageHeader,
   },
   mixins: [globalConfigMixin],
+  setup() {
+    const { accountId } = useAccount();
+
+    return {
+      accountId,
+    };
+  },
   data() {
     return {
       isCreating: false,
