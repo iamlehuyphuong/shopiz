@@ -24,6 +24,20 @@ export default {
   beforeMount() {
     this.isLoading = this.isAChatwootInstance;
   },
+  mounted() {
+    const script = document.createElement('script');
+    script.src =
+      '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    document.body.appendChild(script);
+    window.googleTranslateElementInit = () => {
+      new window.google.translate.TranslateElement(
+        {
+          pageLanguage: 'en',
+        },
+        'google_translate_element'
+      );
+    };
+  },
   methods: {
     resizeContainers() {
       this.isLoading = false;
@@ -34,6 +48,7 @@ export default {
 
 <template>
   <div class="w-full h-full dark:bg-slate-900">
+    <div id="google_translate_element"></div>
     <div v-show="!isLoading" class="flex h-full min-h-screen items-center">
       <div
         class="flex-1 min-h-[640px] inline-flex items-center h-full justify-center overflow-auto py-6"
@@ -71,11 +86,6 @@ export default {
           </div>
         </div>
       </div>
-      <Testimonials
-        v-if="isAChatwootInstance"
-        class="flex-1"
-        @resize-containers="resizeContainers"
-      />
     </div>
     <div
       v-show="isLoading"

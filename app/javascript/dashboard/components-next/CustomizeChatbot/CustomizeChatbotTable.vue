@@ -1,25 +1,16 @@
-<script>
+<script lang="ts">
+import { PropType } from 'vue';
 import FilterByIcon from '../icon/FilterByIcon.vue';
+import { Product } from '../../../shared/model/product.model';
 export default {
   components: {
     FilterByIcon,
   },
-  data() {
-    return {
-      products: [
-        {
-          id: 1,
-          selected: false,
-          name: 'Midnight Sky Blue Jacket',
-          category: 'Jacket',
-          sales: 500,
-          unitPrice: 20,
-          quantity: 50,
-          status: 'active',
-          description: 'Description',
-        },
-      ],
-    };
+  props: {
+    products: {
+      type: Array as PropType<Product[]>,
+      default: () => [],
+    },
   },
 };
 </script>
@@ -28,14 +19,16 @@ export default {
   <!-- #Show: all products -->
 
   <div
-    class="relative overflow-x-auto sm:rounded-xl border-[#D1D1D1] border-[0.75px]"
+    class="relative h-full overflow-x-auto sm:rounded-xl border-lightNeutral-strokeBold dark:border-blackNeutral-strokeBold border-[0.75px]"
   >
     <table
-      class="w-full text-sm text-left rtl:text-right text-[#575757] dark:text-gray-400"
+      class="w-full text-sm text-left rtl:text-right text-lightNeutral-secondary dark:white"
     >
-      <thead class="text-xs text-[#575757] bg-[#F7F7F7] border-b-[#D1D1D1]">
+      <thead
+        class="text-xs text-lightNeutral-secondary bg-lightNeutral-s border-b-lightNeutral-strokeBold dark:text-white dark:bg-blackNeutral-s dark:border-blackNeutral-strokeBold "
+      >
         <tr>
-          <th scope="col" class="flex px-6 py-3 justify-center">
+          <th scope="col" class="px-6 py-3">
             <input type="checkbox" />
           </th>
           <th scope="col" class="px-6 py-3">
@@ -77,11 +70,13 @@ export default {
           </th>
         </tr>
       </thead>
-      <tbody class="text-[#575757]">
+      <tbody
+        class="text-lightNeutral-secondary dark:text-white"
+      >
         <tr
           v-for="p in products"
           :key="p.id"
-          class="bg-white border-t-[0.75px] border-[#D1D1D1]"
+          class="bg-white dark:bg-slate-900 border-t-[0.75px] border-lightNeutral-strokeBold dark:border-blackNeutral-strokeBold"
         >
           <td class="text-center justify-center px-6">
             <input type="checkbox" />
@@ -89,8 +84,8 @@ export default {
           <td
             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
           >
-            <div class="grid grid-cols-12">
-              <div class="col-span-2">
+            <div class="grid grid-cols-12 gap-2">
+              <div class="col-span-3">
                 <img
                   width="60"
                   height="60"
@@ -98,11 +93,13 @@ export default {
                   alt="Midnight Sky Blue Jacket"
                 />
               </div>
-              <div class="col-span-10">
-                <p class="text-sm font-medium text-[#386BB7]">
+              <div class="col-span-9">
+                <p class="text-sm font-medium text-primary-700">
                   {{ p.name }}
                 </p>
-                <span class="text-xs text-[#575757]">{{ p.description }}</span>
+                <span class="text-xs text-wrap text-ellipsis line-clamp-3">{{
+                  p.description
+                }}</span>
               </div>
             </div>
           </td>

@@ -23,7 +23,7 @@ export default {
     return {
       id: '',
       name: '',
-      locale: 'en',
+      locale: 'vi',
       domain: '',
       supportEmail: '',
       features: {},

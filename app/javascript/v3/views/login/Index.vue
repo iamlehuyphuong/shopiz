@@ -76,6 +76,7 @@ export default {
     showSignupLink() {
       return parseBoolean(window.chatwootConfig.signupEnabled);
     },
+
   },
   created() {
     if (this.ssoAuthToken) {
@@ -149,11 +150,14 @@ export default {
 
       this.submitLogin();
     },
+
   },
 };
 </script>
 
 <template>
+  <div id="google_translate_element" class="bg-transparent"></div>
+
   <main
     class="flex flex-col w-full min-h-screen py-20 bg-woot-25 sm:px-6 lg:px-8 dark:bg-slate-900"
   >
@@ -174,6 +178,7 @@ export default {
       >
         {{
           useInstallationName($t('LOGIN.TITLE'), globalConfig.installationName)
+          
         }}
       </h2>
       <p
