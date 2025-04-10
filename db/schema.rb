@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_02_28_185548) do
+ActiveRecord::Schema[7.0].define(version: 2025_04_09_185549) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -371,6 +371,17 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_28_185548) do
     t.string "instagram_id"
     t.index ["page_id", "account_id"], name: "index_channel_facebook_pages_on_page_id_and_account_id", unique: true
     t.index ["page_id"], name: "index_channel_facebook_pages_on_page_id"
+  end
+
+  create_table "channel_zalo_oa", force: :cascade do |t|
+    t.string "oa_access_token", null: false
+    t.string "refresh_token", null: false
+    t.integer "expires_in", null: false
+    t.integer "account_id", null: false
+    t.string "oa_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["oa_id"], name: "index_channel_zalo_oa_on_oa_id", unique: true
   end
 
   create_table "channel_line", force: :cascade do |t|
