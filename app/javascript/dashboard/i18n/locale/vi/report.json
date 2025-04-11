@@ -4,8 +4,8 @@
     "LOADING_CHART": "Đang tải các biểu đồ dữ liệu...",
     "NO_ENOUGH_DATA": "Chúng tôi không nhận được đủ điểm dữ liệu để tạo báo cáo, Vui lòng thử lại sau.",
     "DOWNLOAD_AGENT_REPORTS": "Tải xuống báo cáo tổng đài viên",
-    "DATA_FETCHING_FAILED": "Failed to fetch data, please try again later.",
-    "SUMMARY_FETCHING_FAILED": "Failed to fetch summary, please try again later.",
+    "DATA_FETCHING_FAILED": "Không thể lấy dữ liệu, vui lòng thử lại sau.",
+    "SUMMARY_FETCHING_FAILED": "Không thể lấy bảng tóm tắt, vui lòng thử lại sau.",
     "METRICS": {
       "CONVERSATIONS": {
         "NAME": "Các cuộc trò chuyện",
@@ -40,12 +40,12 @@
         "DESC": "( Tổng cộng )"
       },
       "BOT_HANDOFF_COUNT": {
-        "NAME": "Handoff Count",
+        "NAME": "Số lượt chuyển giao",
         "DESC": "( Tổng cộng )"
       },
       "REPLY_TIME": {
-        "NAME": "Customer waiting time",
-        "TOOLTIP_TEXT": "Waiting time is {metricValue} (based on {conversationCount} replies)",
+        "NAME": "Thời gian khách chờ",
+        "TOOLTIP_TEXT": "Thời gian chờ là {metricValue} (dựa trên {conversationCount} phản hồi)",
         "DESC": ""
       }
     },
@@ -115,16 +115,16 @@
     ],
     "BUSINESS_HOURS": "Giờ làm việc",
     "FILTER_ACTIONS": {
-      "CLEAR_FILTER": "Clear filter",
+      "CLEAR_FILTER": "Xóa bộ lọc",
       "EMPTY_LIST": "Không tìm thấy kết quả"
-    },
+   },
     "PAGINATION": {
-      "RESULTS": "Showing {start} to {end} of {total} results"
+      "RESULTS": "Hiển thị từ {start} đến {end} trong tổng số {total} kết quả"
     }
   },
   "AGENT_REPORTS": {
     "HEADER": "Tổng quan người dùng",
-    "DESCRIPTION": "Easily track agent performance with key metrics such as conversations, response times, resolution times, and resolved cases. Click an agent’s name to learn more.",
+    "DESCRIPTION": "Theo dõi hiệu suất của người dùng dễ dàng với các chỉ số quan trọng như cuộc hội thoại, thời gian phản hồi, thời gian giải quyết và số ca được giải quyết. Nhấp vào tên người dùng để tìm hiểu thêm.",
     "LOADING_CHART": "Đang tải các biểu đồ dữ liệu...",
     "NO_ENOUGH_DATA": "Chúng tôi không nhận được đủ điểm dữ liệu để tạo báo cáo, Vui lòng thử lại sau.",
     "DOWNLOAD_AGENT_REPORTS": "Tải xuống báo cáo người dùng",
@@ -259,7 +259,7 @@
   },
   "INBOX_REPORTS": {
     "HEADER": "Tổng quan hộp thư đến",
-    "DESCRIPTION": "Quickly view your inbox performance with key metrics like conversations, response times, resolution times, and resolved cases—all in one place. Click an inbox name for more details.",
+    "DESCRIPTION": "Xem nhanh hiệu suất hộp thư đến của bạn với các chỉ số quan trọng như cuộc hội thoại, thời gian phản hồi, thời gian giải quyết và các ca đã giải quyết - tất cả trong một nơi. Nhấp vào tên hộp thư đến để biết thêm chi tiết.",
     "LOADING_CHART": "Đang tải các biểu đồ dữ liệu...",
     "NO_ENOUGH_DATA": "Chúng tôi không nhận được đủ điểm dữ liệu để tạo báo cáo, Vui lòng thử lại sau.",
     "DOWNLOAD_INBOX_REPORTS": "Tải xuống báo cáo hộp thư đến",
@@ -327,7 +327,7 @@
   },
   "TEAM_REPORTS": {
     "HEADER": "Tổng quan nhóm",
-    "DESCRIPTION": "Get a snapshot of your team’s performance with essential metrics, including conversations, response times, resolution times, and resolved cases. Click a team name for more details.",
+    "DESCRIPTION": "Nhận bản tóm tắt hiệu suất của nhóm bạn với các chỉ số thiết yếu, bao gồm cuộc hội thoại, thời gian phản hồi, thời gian giải quyết và các ca đã giải quyết. Nhấp vào tên nhóm để biết thêm chi tiết.",
     "LOADING_CHART": "Đang tải các biểu đồ dữ liệu...",
     "NO_ENOUGH_DATA": "Chúng tôi không nhận được đủ điểm dữ liệu để tạo báo cáo, Vui lòng thử lại sau.",
     "DOWNLOAD_TEAM_REPORTS": "Tải xuống báo cáo nhóm",
@@ -397,7 +397,7 @@
     "HEADER": "Báo cáo CSAT",
     "NO_RECORDS": "Không có phản hồi báo cáo CSAT có sẵn.",
     "DOWNLOAD": "Tải về các báo cáo CSAT",
-    "DOWNLOAD_FAILED": "Failed to download CSAT Reports",
+    "DOWNLOAD_FAILED": "Không thể tải báo cáo CSAT",
     "FILTERS": {
       "AGENTS": {
         "PLACEHOLDER": "Chọn tổng đài viên"
@@ -427,23 +427,23 @@
     }
   },
   "BOT_REPORTS": {
-    "HEADER": "Bot Reports",
+    "HEADER": "Báo cáo Bot",
     "METRIC": {
       "TOTAL_CONVERSATIONS": {
-        "LABEL": "No. of Conversations",
-        "TOOLTIP": "Total number of conversations handled by the bot"
+        "LABEL": "Số lượng cuộc hội thoại",
+        "TOOLTIP": "Tổng số cuộc hội thoại mà bot đã xử lý"
       },
       "TOTAL_RESPONSES": {
-        "LABEL": "Total Responses",
-        "TOOLTIP": "Total number of responses sent by the bot"
+        "LABEL": "Tổng số phản hồi",
+        "TOOLTIP": "Tổng số phản hồi mà bot đã gửi"
       },
       "RESOLUTION_RATE": {
-        "LABEL": "Resolution Rate",
-        "TOOLTIP": "Total number of conversations resolved by the bot / Total number of conversations handled by the bot * 100"
+        "LABEL": "Tỷ lệ giải quyết",
+        "TOOLTIP": "Tổng số cuộc hội thoại được bot giải quyết / Tổng số cuộc hội thoại mà bot xử lý * 100"
       },
       "HANDOFF_RATE": {
-        "LABEL": "Handoff Rate",
-        "TOOLTIP": "Total number of conversations handed off to agents / Total number of conversations handled by the bot * 100"
+        "LABEL": "Tỷ lệ chuyển giao",
+        "TOOLTIP": "Tổng số cuộc hội thoại được chuyển giao cho tổng đài viên / Tổng số cuộc hội thoại mà bot xử lý * 100"
       }
     }
   },
@@ -459,11 +459,11 @@
       "PENDING": "Chờ giải quyết"
     },
     "CONVERSATION_HEATMAP": {
-      "HEADER": "Conversation Traffic",
-      "NO_CONVERSATIONS": "No conversations",
-      "CONVERSATION": "{count} conversation",
-      "CONVERSATIONS": "{count} conversations",
-      "DOWNLOAD_REPORT": "Download report"
+      "HEADER": "Lưu lượng hội thoại",
+      "NO_CONVERSATIONS": "Không có cuộc hội thoại",
+      "CONVERSATION": "{count} cuộc hội thoại",
+      "CONVERSATIONS": "{count} cuộc hội thoại",
+      "DOWNLOAD_REPORT": "Tải xuống báo cáo"
     },
     "AGENT_CONVERSATIONS": {
       "HEADER": "Cuộc hội thoại của các tổng đài viên",
@@ -484,71 +484,71 @@
     }
   },
   "DAYS_OF_WEEK": {
-    "SUNDAY": "Sunday",
-    "MONDAY": "Monday",
-    "TUESDAY": "Tuesday",
-    "WEDNESDAY": "Wednesday",
-    "THURSDAY": "Thursday",
-    "FRIDAY": "Friday",
-    "SATURDAY": "Saturday"
+    "SUNDAY": "Chủ Nhật",
+    "MONDAY": "Thứ Hai",
+    "TUESDAY": "Thứ Ba",
+    "WEDNESDAY": "Thứ Tư",
+    "THURSDAY": "Thứ Năm",
+    "FRIDAY": "Thứ Sáu",
+    "SATURDAY": "Thứ Bảy"
   },
   "SLA_REPORTS": {
-    "HEADER": "SLA Reports",
-    "NO_RECORDS": "SLA applied conversations are not available.",
-    "LOADING": "Loading SLA data...",
-    "DOWNLOAD_SLA_REPORTS": "Download SLA reports",
-    "DOWNLOAD_FAILED": "Failed to download SLA Reports",
+    "HEADER": "Báo cáo SLA",
+    "NO_RECORDS": "Không có cuộc hội thoại áp dụng SLA.",
+    "LOADING": "Đang tải dữ liệu SLA...",
+    "DOWNLOAD_SLA_REPORTS": "Tải xuống báo cáo SLA",
+    "DOWNLOAD_FAILED": "Không thể tải báo cáo SLA",
     "DROPDOWN": {
       "ADD_FIlTER": "Thêm bộ lọc",
-      "CLEAR_ALL": "Clear all",
-      "CLEAR_FILTER": "Clear filter",
+      "CLEAR_ALL": "Xóa tất cả",
+      "CLEAR_FILTER": "Xóa bộ lọc",
       "EMPTY_LIST": "Không tìm thấy kết quả",
-      "NO_FILTER": "No filters available",
-      "SEARCH": "Search filter",
+      "NO_FILTER": "Không có bộ lọc nào khả dụng",
+      "SEARCH": "Tìm bộ lọc",
       "INPUT_PLACEHOLDER": {
-        "SLA": "SLA name",
+        "SLA": "Tên SLA",
         "AGENTS": "Tên tổng đài viên",
         "INBOXES": "Tên kênh",
         "LABELS": "Tên nhãn",
         "TEAMS": "Tên nhóm"
       },
-      "SLA": "SLA Policy",
+      "SLA": "Chính sách SLA",
       "INBOXES": "Hộp thư đến",
       "AGENTS": "Người dùng",
       "LABELS": "Nhãn",
       "TEAMS": "Nhóm"
     },
-    "WITH": "with",
+    "WITH": "với",
     "METRICS": {
       "HIT_RATE": {
-        "LABEL": "Hit Rate",
-        "TOOLTIP": "Percentage of SLAs created were completed successfully"
+        "LABEL": "Tỷ lệ đạt",
+        "TOOLTIP": "Phần trăm SLA được tạo thành công"
       },
       "NO_OF_MISSES": {
-        "LABEL": "Number of Misses",
-        "TOOLTIP": "Total SLA misses in a certain period"
+        "LABEL": "Số lần không đạt",
+        "TOOLTIP": "Tổng số lần SLA không đạt trong một khoảng thời gian"
       },
       "NO_OF_CONVERSATIONS": {
-        "LABEL": "Number of Conversations",
-        "TOOLTIP": "Total number of conversations with SLA"
+        "LABEL": "Số cuộc hội thoại",
+        "TOOLTIP": "Tổng số cuộc hội thoại có SLA"
       }
     },
     "TABLE": {
       "HEADER": {
-        "POLICY": "Policy",
+        "POLICY": "Chính sách",
         "CONVERSATION": "Cuộc hội thoại",
         "AGENT": "Người dùng"
       },
-      "VIEW_DETAILS": "View Details"
+      "VIEW_DETAILS": "Xem chi tiết"
     }
   },
   "SUMMARY_REPORTS": {
     "INBOX": "Hộp thư đến",
     "AGENT": "Người dùng",
     "TEAM": "Nhóm",
-    "AVG_RESOLUTION_TIME": "Avg. Resolution Time",
-    "AVG_FIRST_RESPONSE_TIME": "Avg. First Response Time",
-    "AVG_REPLY_TIME": "Avg. Customer Waiting Time",
+    "AVG_RESOLUTION_TIME": "Thời gian giải quyết trung bình",
+    "AVG_FIRST_RESPONSE_TIME": "Thời gian phản hồi đầu tiên trung bình",
+    "AVG_REPLY_TIME": "Thời gian chờ của khách hàng trung bình",
     "RESOLUTION_COUNT": "Số lượng giải quyết",
     "CONVERSATIONS": "Số hội thoại"
   }

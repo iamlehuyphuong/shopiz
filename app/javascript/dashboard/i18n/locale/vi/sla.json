@@ -1,37 +1,37 @@
 {
   "SLA": {
-    "HEADER": "Service Level Agreements",
-    "ADD_ACTION": "Add SLA",
-    "ADD_ACTION_LONG": "Create a new SLA Policy",
-    "DESCRIPTION": "Service Level Agreements (SLAs) are contracts that define clear expectations between your team and customers. They establish standards for response and resolution times, creating a framework for accountability and ensures a consistent, high-quality experience.",
-    "LEARN_MORE": "Learn more about SLA",
-    "LOADING": "Fetching SLAs",
+    "HEADER": "Thỏa thuận mức dịch vụ",
+    "ADD_ACTION": "Thêm SLA",
+    "ADD_ACTION_LONG": "Tạo chính sách SLA mới",
+    "DESCRIPTION": "Thỏa thuận mức dịch vụ (SLA) là các hợp đồng định nghĩa rõ ràng kỳ vọng giữa đội ngũ của bạn và khách hàng. Chúng thiết lập tiêu chuẩn cho thời gian phản hồi và giải quyết, tạo ra một khung làm việc có trách nhiệm và đảm bảo trải nghiệm chất lượng cao, nhất quán.",
+    "LEARN_MORE": "Tìm hiểu thêm về SLA",
+    "LOADING": "Đang lấy dữ liệu SLA",
     "PAYWALL": {
-      "TITLE": "Upgrade to create SLAs",
-      "AVAILABLE_ON": "The SLA feature is only available in the Business and Enterprise plans.",
-      "UPGRADE_PROMPT": "Upgrade your plan to get access to advanced features like team management, automations, custom attributes, and more.",
-      "UPGRADE_NOW": "Upgrade now",
-      "CANCEL_ANYTIME": "You can change or cancel your plan anytime"
+      "TITLE": "Nâng cấp để tạo SLA",
+      "AVAILABLE_ON": "Tính năng SLA chỉ có sẵn trong các gói Business và Enterprise.",
+      "UPGRADE_PROMPT": "Nâng cấp gói của bạn để truy cập các tính năng nâng cao như quản lý đội nhóm, tự động hóa, thuộc tính tùy chỉnh và nhiều hơn nữa.",
+      "UPGRADE_NOW": "Nâng cấp ngay",
+      "CANCEL_ANYTIME": "Bạn có thể thay đổi hoặc hủy gói bất kỳ lúc nào"
     },
     "ENTERPRISE_PAYWALL": {
-      "AVAILABLE_ON": "The SLA feature is only available in the paid plans.",
-      "UPGRADE_PROMPT": "Upgrade to a paid plan to access advanced features like audit logs, agent capacity, and more.",
-      "ASK_ADMIN": "Please reach out to your administrator for the upgrade."
+      "AVAILABLE_ON": "Tính năng SLA chỉ có sẵn trong các gói trả phí.",
+      "UPGRADE_PROMPT": "Nâng cấp lên gói trả phí để truy cập các tính năng nâng cao như nhật ký kiểm tra, năng lực của nhân viên và nhiều hơn nữa.",
+      "ASK_ADMIN": "Vui lòng liên hệ với quản trị viên của bạn để nâng cấp."
     },
     "LIST": {
-      "404": "There are no SLAs available in this account.",
+      "404": "Không có SLA nào khả dụng trong tài khoản này.",
       "EMPTY": {
-        "TITLE_1": "Enterprise P0",
-        "DESC_1": "Issues raised by enterprise customers, that require immediate attention.",
-        "TITLE_2": "Enterprise P1",
-        "DESC_2": "Issues raised by enterprise customers, that needs to be acknowledged quickly."
+        "TITLE_1": "Doanh nghiệp P0",
+        "DESC_1": "Các vấn đề được khách hàng doanh nghiệp nêu ra, cần được chú ý ngay lập tức.",
+        "TITLE_2": "Doanh nghiệp P1",
+        "DESC_2": "Các vấn đề được khách hàng doanh nghiệp nêu ra, cần được xác nhận nhanh chóng."
       },
-      "BUSINESS_HOURS_ON": "Business hours on",
-      "BUSINESS_HOURS_OFF": "Business hours off",
+      "BUSINESS_HOURS_ON": "Giờ làm việc bật",
+      "BUSINESS_HOURS_OFF": "Giờ làm việc tắt",
       "RESPONSE_TYPES": {
-        "FRT": "First response time threshold",
-        "NRT": "Next response time threshold",
-        "RT": "Resolution time threshold",
+        "FRT": "Ngưỡng thời gian phản hồi đầu tiên",
+        "NRT": "Ngưỡng thời gian phản hồi tiếp theo",
+        "RT": "Ngưỡng thời gian giải quyết",
         "SHORT_HAND": {
           "FRT": "FRT",
           "NRT": "NRT",
@@ -41,22 +41,22 @@
     },
     "FORM": {
       "NAME": {
-        "LABEL": "SLA Name",
-        "PLACEHOLDER": "SLA Name",
-        "REQUIRED_ERROR": "SLA name is required",
+        "LABEL": "Tên SLA",
+        "PLACEHOLDER": "Tên SLA",
+        "REQUIRED_ERROR": "Tên SLA là bắt buộc",
         "MINIMUM_LENGTH_ERROR": "Bắt buộc độ dài tối thiểu là 2",
         "VALID_ERROR": "Chỉ cho phép Chữ cái, Chữ số, Dấu gạch ngang và Dấu gạch dưới"
       },
       "DESCRIPTION": {
         "LABEL": "Mô tả",
-        "PLACEHOLDER": "SLA for premium customers"
+        "PLACEHOLDER": "SLA cho khách hàng cao cấp"
       },
       "FIRST_RESPONSE_TIME": {
         "LABEL": "Thời gian phản hồi đầu tiên",
         "PLACEHOLDER": "5"
       },
       "NEXT_RESPONSE_TIME": {
-        "LABEL": "Next Response Time",
+        "LABEL": "Thời gian phản hồi tiếp theo",
         "PLACEHOLDER": "5"
       },
       "RESOLUTION_TIME": {
@@ -65,10 +65,10 @@
       },
       "BUSINESS_HOURS": {
         "LABEL": "Giờ làm việc",
-        "PLACEHOLDER": "Only during business hours"
+        "PLACEHOLDER": "Chỉ trong giờ làm việc"
       },
       "THRESHOLD_TIME": {
-        "INVALID_FORMAT_ERROR": "Threshold should be a number and greater than zero"
+        "INVALID_FORMAT_ERROR": "Ngưỡng phải là một số và lớn hơn 0"
       },
       "EDIT": "Chỉnh sửa",
       "CREATE": "Tạo",
@@ -76,33 +76,33 @@
       "CANCEL": "Huỷ"
     },
     "ADD": {
-      "TITLE": "Add SLA",
-      "DESC": "Friendly promises for great service!",
+      "TITLE": "Thêm SLA",
+      "DESC": "Những cam kết thân thiện cho dịch vụ tuyệt vời!",
       "API": {
-        "SUCCESS_MESSAGE": "SLA added successfully",
+        "SUCCESS_MESSAGE": "Thêm SLA thành công",
         "ERROR_MESSAGE": "Đã có lỗi, vui lòng thử lại"
       }
     },
     "DELETE": {
-      "TITLE": "Delete SLA",
+      "TITLE": "Xoá SLA",
       "API": {
-        "SUCCESS_MESSAGE": "SLA deleted successfully",
+        "SUCCESS_MESSAGE": "Xoá SLA thành công",
         "ERROR_MESSAGE": "Đã có lỗi, vui lòng thử lại"
       },
       "CONFIRM": {
         "TITLE": "Xác nhận xoá",
-        "MESSAGE": "Are you sure you want to delete ",
+        "MESSAGE": "Bạn có chắc chắn muốn xoá ",
         "YES": "Có, xoá ",
-        "NO": "Không, giữ "
+        "NO": "Không, giữ lại "
       }
     },
     "EVENTS": {
-      "TITLE": "SLA Misses",
+      "TITLE": "SLA bị bỏ lỡ",
       "FRT": "Thời gian phản hồi đầu tiên",
-      "NRT": "Next response time",
-      "RT": "Resolution time",
-      "SHOW_MORE": "{count} more",
-      "HIDE": "Hide {count} rows"
+      "NRT": "Thời gian phản hồi tiếp theo",
+      "RT": "Thời gian giải quyết",
+      "SHOW_MORE": "{count} thêm",
+      "HIDE": "Ẩn {count} hàng"
     }
   }
 }

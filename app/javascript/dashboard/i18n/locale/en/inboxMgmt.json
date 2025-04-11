@@ -754,6 +754,7 @@
     },
     "CHANNELS": {
       "MESSENGER": "Messenger",
+      "ZALO": "Zalo",
       "WEB_WIDGET": "Website",
       "TWITTER_PROFILE": "Twitter",
       "TWILIO_SMS": "Twilio SMS",

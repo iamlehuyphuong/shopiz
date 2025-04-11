@@ -18,6 +18,7 @@ const { t } = useI18n();
 const globalConfig = computed(() => getters['globalConfig/get'].value);
 
 const i18nMap = {
+  'Channel::ZaloOa': 'ZALO',
   'Channel::FacebookPage': 'MESSENGER',
   'Channel::WebWidget': 'WEB_WIDGET',
   'Channel::TwitterProfile': 'TWITTER_PROFILE',

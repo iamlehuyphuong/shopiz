@@ -1,7 +1,7 @@
 {
   "EMOJI": {
-    "PLACEHOLDER": "Search emojis",
-    "NOT_FOUND": "No emoji match your search",
-    "REMOVE": "Xoá"
+    "PLACEHOLDER": "Tìm kiếm biểu tượng cảm xúc",
+    "NOT_FOUND": "Không có biểu tượng cảm xúc nào khớp với tìm kiếm của bạn",
+    "REMOVE": "Xóa"
   }
 }
