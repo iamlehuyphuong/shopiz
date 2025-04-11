@@ -11,10 +11,17 @@ import customizeChatbotRoutes from './customizeChatbot/customizeChatbot.routes';
 import { routes as captainRoutes } from './captain/captain.routes';
 import AppContainer from './Dashboard.vue';
 import Suspended from './suspended/Index.vue';
+import SalesmanComponentPage from '../../components-salesman/SalesmanComponentPage.vue';
+import path from 'path';
 
 export default {
   routes: [
     {
+      path: frontendURL('component'),
+      component: SalesmanComponentPage
+    },
+    {
+
       path: frontendURL('accounts/:accountId'),
       component: AppContainer,
       children: [
@@ -38,5 +45,6 @@ export default {
       },
       component: Suspended,
     },
+
   ],
 };

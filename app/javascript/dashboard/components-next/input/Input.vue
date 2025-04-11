@@ -112,44 +112,25 @@ onMounted(() => {
 
 <template>
   <div class="relative flex flex-col min-w-0 gap-1" :class="hasPrefix.value ? 'pl-20' : ''">
-    <label
-      v-if="label"
-      :for="id"
-      class="mb-0.5 text-sm font-medium text-n-slate-12"
-    >
+    <label v-if="label" :for="id" class="mb-0.5 text-sm font-medium text-n-slate-12">
       {{ label }}
     </label>
     <!-- Added prefix slot to allow adding icons to the input -->
     <slot name="prefix" />
-    <input
-      :id="id"
-      ref="inputRef"
-      :value="modelValue"
-      :class="[
-        customInputClass,
-        inputBorderClass,
-        {
-          error: messageType === 'error',
-          focus: isFocused,
-          '!pl-10':hasPrefix
-        },
-      ]"
-      :type="type"
-      :placeholder="placeholder"
-      :disabled="disabled"
+    <input :id="id" ref="inputRef" :value="modelValue" :class="[
+      customInputClass,
+      inputBorderClass,
+      {
+        error: messageType === 'error',
+        focus: isFocused,
+        '!pl-10': hasPrefix
+      },
+    ]" :type="type" :placeholder="placeholder" :disabled="disabled"
       :min="['date', 'datetime-local', 'time'].includes(type) ? min : undefined"
-      class="block w-full reset-base text-sm h-10 !px-3 !py-2.5 !mb-0 border-lightNeutral-strokeBold dark:border-blackNeutral-strokeBold border rounded-lg bg-transparent file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-n-slate-10 dark:placeholder:text-n-slate-10 disabled:cursor-not-allowed disabled:opacity-50 text-n-slate-12"
-      @input="handleInput"
-      @focus="handleFocus"
-      @blur="handleBlur"
-      @keyup.enter="handleEnter"
-      
-    />
-    <p
-      v-if="message"
-      class="min-w-0 mt-1 mb-0 text-xs truncate transition-all duration-500 ease-in-out"
-      :class="messageClass"
-    >
+      class="block w-full reset-base text-sm h-10 !px-3 !py-2.5 !mb-0 border-light-neutral-stroke-bold dark:border-black-neutral-stroke-bold border rounded-lg bg-transparent file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-n-slate-10 dark:placeholder:text-n-slate-10 disabled:cursor-not-allowed disabled:opacity-50 text-n-slate-12"
+      @input="handleInput" @focus="handleFocus" @blur="handleBlur" @keyup.enter="handleEnter" />
+    <p v-if="message" class="min-w-0 mt-1 mb-0 text-xs truncate transition-all duration-500 ease-in-out"
+      :class="messageClass">
       {{ message }}
     </p>
   </div>

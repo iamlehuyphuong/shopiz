@@ -203,22 +203,22 @@ const tailwindConfig = {
       ...colors,
       ...defaultTheme.colors,
       body: slateDark.slate7,
-      lightNeutral: {
+      "light-neutral": {
         s: "var(--light-neutral-s)",
         s1: "var(--light-neutral-s1)",
         s2: "var(--light-neutral-s2)",
-        strokeBold: "var(--light-neutral-stroke-bold)",
-        strokeLight: "var(--light-neutral-stroke-light)",
+        "stroke-bold": "var(--light-neutral-stroke-bold)",
+        "stroke-light": "var(--light-neutral-stroke-light)",
         teriary: "var(--light-neutral-teriary)",
         secondary: "var(--light-neutral-secondary)",
         primary: "var(--light-neutral-primary)",
       },
-      blackNeutral: {
-        s: "var(--black-neutral-s)",
-        s1: "var(--black-neutral-s1)",
-        s2: "var(--black-neutral-s2)",
-        strokeLight: "var(--black-neutral-stroke-light)",
-        strokeBold: "var(--black-neutral-stroke-bold)",
+      "black-neutral": {
+        surface: "var(--black-neutral-s)",
+        "surface-1": "var(--black-neutral-s1)",
+        "surface-2": "var(--black-neutral-s2)",
+        "stroke-light": "var(--black-neutral-stroke-light)",
+        "stroke-bold": "var(--black-neutral-stroke-bold)",
         teriary: "var(--black-neutral-teriary)",
         secondary: "var(--black-neutral-secondary)",
         primary: "var(--black-neutral-primary)",
@@ -285,7 +285,7 @@ const tailwindConfig = {
       },
     },
     backgroundImage: {
-      ...defaultTheme.backgroundImage, 
+      ...defaultTheme.backgroundImage,
       "linear-primary-y-b": "linear-gradient(to bottom, #E24C4A, #386BB7)",
       "linear-primary-y-t": "linear-gradient(to top, #E24C4A, #386BB7)",
       "linear-primary-x-l": "linear-gradient(to left, #E24C4A, #386BB7)",
@@ -296,7 +296,7 @@ const tailwindConfig = {
       "linear-secondary-y-t": "linear-gradient(to top, #386BB7, #799DD2)",
       "linear-secondary-x-l": "linear-gradient(to left, #386BB7, #799DD2)",
       "linear-secondary-x-r": "linear-gradient(to right, #386BB7, #799DD2)",
-      
+
     },
     keyframes: {
       ...defaultTheme.keyframes,

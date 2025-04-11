@@ -90,7 +90,7 @@ const computedJustify = computed(() => {
   if (attrs.center || attrs.center === '') return 'center';
   if (attrs.end || attrs.end === '') return 'end';
 
-    return 'center';
+  return 'center';
 });
 
 const STYLE_CONFIG = {
@@ -103,11 +103,11 @@ const STYLE_CONFIG = {
     },
     neutral: {
       solid:
-        'bg-lightNeutral-primary text-white hover:bg-lightNeutral-secondary disbale:text-lightNeutral-strokeLight disable:bg-lightNeutral-s2',
+        'bg-light-neutral-primary text-white hover:bg-light-neutral-secondary disbale:text-light-neutral-strokeLight disable:bg-light-neutral-s2',
       surface:
-        'bg-lightNeutral-s text-lightNeutral-secondary hover:bg-lightNeutral-secondary hover:text-lightNeutral-primary disable:bg-lightNeutral-s disable:text-lightNeutral-stokeLight',
-      outline: 'bg-white outline-lightNeutral-s2 text-lightNeutral-primary hover:bg-light-Neutral-s hover:outline-lightNeutral-strokeBold',
-     
+        'bg-light-neutral-s text-light-neutral-secondary hover:bg-light-neutral-secondary hover:text-light-neutral-primary disable:bg-light-neutral-s disable:text-light-neutral-stokeLight',
+      outline: 'bg-white outline-light-neutral-s2 text-light-neutral-primary hover:bg-light-Neutral-s hover:outline-light-neutral-stroke-bold',
+
     },
     success: {
       solid:
@@ -133,9 +133,9 @@ const STYLE_CONFIG = {
     },
   },
   sizes: {
-      sm: 'h-6 w-[6.25rem]',
-      md: 'h-7 w-28 px-3 py-1',
-      lg: 'h-8 w-[7.5rem] px-4 py-[0.375rem] px-0.5 py-2.5',
+    sm: 'h-6 w-[6.25rem]',
+    md: 'h-7 w-28 px-3 py-1',
+    lg: 'h-8 w-[7.5rem] px-4 py-[0.375rem] px-0.5 py-2.5',
   },
   fontSize: {
     sm: 'text-xs',
@@ -153,9 +153,8 @@ const STYLE_CONFIG = {
 const variantClasses = computed(() => {
   const variantMap = {
     ghost: `${STYLE_CONFIG.colors[computedColor.value].ghost}`,
-    link: `${
-      STYLE_CONFIG.colors[computedColor.value].link
-    } p-0 font-medium underline-offset-4`,
+    link: `${STYLE_CONFIG.colors[computedColor.value].link
+      } p-0 font-medium underline-offset-4`,
     outline: STYLE_CONFIG.colors[computedColor.value].outline,
     faded: STYLE_CONFIG.colors[computedColor.value].faded,
     solid: STYLE_CONFIG.colors[computedColor.value].solid,
@@ -169,7 +168,7 @@ const isIconOnly = computed(() => !props.label && !slots.default);
 const buttonClasses = computed(() => {
   const classes = [
     variantClasses.value,
-      STYLE_CONFIG.sizes[computedSize.value],
+    STYLE_CONFIG.sizes[computedSize.value],
   ].filter(Boolean);
 
   return classes.join(' ');
@@ -178,16 +177,13 @@ const buttonClasses = computed(() => {
 </script>
 
 <template>
-  <button
-    v-bind="filteredAttrs"
-    :class="{
-      [STYLE_CONFIG.base]: true,
-      [buttonClasses]: true,
-      [STYLE_CONFIG.fontSize[computedSize]]: true,
-      [STYLE_CONFIG.justify[computedJustify]]: true,
-      'flex-row-reverse': trailingIcon && !isIconOnly,
-    }"
-  >
+  <button v-bind="filteredAttrs" :class="{
+    [STYLE_CONFIG.base]: true,
+    [buttonClasses]: true,
+    [STYLE_CONFIG.fontSize[computedSize]]: true,
+    [STYLE_CONFIG.justify[computedJustify]]: true,
+    'flex-row-reverse': trailingIcon && !isIconOnly,
+  }">
     <slot v-if="startIcon && !isLoading" name="icon">
       <Icon :icon="startIcon" class="flex-shrink-0" />
     </slot>

@@ -8,7 +8,7 @@ import {
 } from './constants.js';
 
 const props = defineProps({
-  
+
   color: {
     type: String,
     default: null,
@@ -19,7 +19,7 @@ const props = defineProps({
     default: null,
     validator: value => SIZE_OPTIONS.includes(value) || value === null,
   },
-  
+
 });
 
 const attrs = useAttrs();
@@ -65,9 +65,9 @@ const STYLE_CONFIG = {
     primary: 'peer-focus:ring-primary-100 dark:peer-focus:ring-primary-800 peer-checked:bg-primary-700 dark:peer-checked:bg-primary-700',
   },
   sizes: {
-      md: 'w-10 h-6 after:h-5 after:w-5',
+    md: 'w-10 h-6 after:h-5 after:w-5',
   },
-  base: "relative bg-lightNeutral-s2 rounded-full peer peer-focus:ring-2 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full dark:bg-n-slate-7 peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[-1px] after:bg-white after:border-n-gray-3 after:border after:rounded-full after:transition-all dark:border-n-gray-6",
+  base: "relative bg-light-neutral-s2 rounded-full peer peer-focus:ring-2 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full dark:bg-n-slate-7 peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[-1px] after:bg-white after:border-n-gray-3 after:border after:rounded-full after:transition-all dark:border-n-gray-6",
 };
 
 const colorClass = computed(() => {
@@ -77,7 +77,7 @@ const colorClass = computed(() => {
 
 const switcherClasses = computed(() => {
   const classes = [
-  colorClass.value,
+    colorClass.value,
     STYLE_CONFIG.sizes[computedSize.value],
   ].filter(Boolean);
 
@@ -88,14 +88,11 @@ const switcherClasses = computed(() => {
 
 <template>
   <label class="inline-flex items-center cursor-pointer">
-    <input v-bind="filteredAttrs"
-     type="checkbox" value="" class="sr-only peer" checked />
-    <div
-      :class="{
+    <input v-bind="filteredAttrs" type="checkbox" value="" class="sr-only peer" checked />
+    <div :class="{
       [STYLE_CONFIG.base]: true,
       [switcherClasses]: true,
-    }"
-      ></div>
+    }"></div>
   </label>
 
 

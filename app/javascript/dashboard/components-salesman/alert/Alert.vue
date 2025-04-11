@@ -63,7 +63,7 @@ const computedSize = computed(() => {
 const STYLE_CONFIG = {
   colors: {
     neutral:
-      'bg-lightNeutral-s border-lightNeutral-stokeBold',
+      'bg-light-neutral-s border-light-neutral-stoke-bold',
     primary:
       'bg-primary-100 border-primary-400',
     success:
@@ -88,8 +88,8 @@ const STYLE_CONFIG = {
       closeIcon: '#386BB7'
     },
     neutral: {
-      other: 'text-lightNeutral-primary',
-      description: 'text-lightNeutral-secondary',
+      other: 'text-light-neutral-primary',
+      description: 'text-light-neutral-secondary',
       closeIcon: '#878787'
 
     },

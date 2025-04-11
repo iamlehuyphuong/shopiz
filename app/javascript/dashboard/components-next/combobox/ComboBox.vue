@@ -101,7 +101,7 @@ watch(
         :label="selectedLabel"
         trailing-icon
         :disabled="disabled"
-        class="justify-between w-full text-grey !px-3 !py-2.5 text-n-slate-12 font-normal group-hover/combobox:border-n-slate-6 !outline-lightNeutral-strokeBold dark:!outline-blackNeutral-strokeBold focus:border-n-brand focus:dark:border-n-brand"
+        class="justify-between w-full text-grey !px-3 !py-2.5 text-n-slate-12 font-normal group-hover/combobox:border-n-slate-6 !outline-light-neutral-stroke-bold dark:!outline-black-neutral-stroke-bold focus:border-n-brand focus:dark:border-n-brand"
         :class="[{ focused: open },customButtonClass]"
         :icon="open ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'"
         @click="toggleDropdown"

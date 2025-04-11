@@ -36,7 +36,7 @@ const props = defineProps({
   icon: { type: [String, Object, Function], default: '' },
   trailingIcon: { type: Boolean, default: false },
   isLoading: { type: Boolean, default: false },
-  customClass: {type: String, default: ''}
+  customClass: { type: String, default: '' }
 });
 
 const slots = useSlots();
@@ -102,7 +102,7 @@ const STYLE_CONFIG = {
       surface:
         'bg-primary-50 text-primary-700 hover:bg-primary-100 hover:text-primary-800 active:bg-primary-100 active:text-primary-700 disable:bg-primary-100 disable:text-primary-700',
       tertiary:
-        'bg-white outline-lightNeutral-strokeBold text-lightNeutral-primary hover:bg-lightNeutral-s hover:text-lightNeutral-secondary active:bg-lightNeutral-s active:text-lightNeutral-strokeBold disable:outline-lightNeutral-s2 disable:bg-white disable:text-lightNeutral-strokeLight',
+        'bg-white outline-light-neutral-stroke-bold text-light-neutral-primary hover:bg-light-neutral-s hover:text-light-neutral-secondary active:bg-light-neutral-s active:text-light-neutral-stroke-bold disable:outline-light-neutral-s2 disable:bg-white disable:text-light-neutral-strokeLight',
       outline:
         'outline-primary-700 text-primary-700 hover:outline-primary-400 active:outline-primary-400 active:text-priary-400 disable:outline-primary-300 text:outline-primary-300',
       link: 'bg-white text-primary-700 hover:text-primary-800 active:text-primary-400 disable:text-primary-300',
@@ -142,9 +142,8 @@ const STYLE_CONFIG = {
 const variantClasses = computed(() => {
   const variantMap = {
     ghost: `${STYLE_CONFIG.colors[computedColor.value].ghost}`,
-    link: `${
-      STYLE_CONFIG.colors[computedColor.value].link
-    } p-0 font-medium underline-offset-4`,
+    link: `${STYLE_CONFIG.colors[computedColor.value].link
+      } p-0 font-medium underline-offset-4`,
     outline: STYLE_CONFIG.colors[computedColor.value].outline,
     faded: STYLE_CONFIG.colors[computedColor.value].faded,
     solid: STYLE_CONFIG.colors[computedColor.value].solid,
@@ -161,7 +160,7 @@ const buttonClasses = computed(() => {
   const classes = [
     variantClasses.value,
     computedVariant.value !== 'link' &&
-      STYLE_CONFIG.sizes[sizeConfig][computedSize.value],
+    STYLE_CONFIG.sizes[sizeConfig][computedSize.value],
   ].filter(Boolean);
 
   return classes.join(' ');
@@ -178,17 +177,14 @@ const linkButtonClasses = computed(() => {
 </script>
 
 <template>
-  <button
-    v-bind="filteredAttrs"
-    :class="{
-      [STYLE_CONFIG.base]: true,
-      [isLink ? linkButtonClasses : buttonClasses]: true,
-      [STYLE_CONFIG.fontSize[computedSize]]: true,
-      [STYLE_CONFIG.justify[computedJustify]]: true,
-      'flex-row-reverse': trailingIcon && !isIconOnly,
-      [customClass]: true
-    }"
-  >
+  <button v-bind="filteredAttrs" :class="{
+    [STYLE_CONFIG.base]: true,
+    [isLink ? linkButtonClasses : buttonClasses]: true,
+    [STYLE_CONFIG.fontSize[computedSize]]: true,
+    [STYLE_CONFIG.justify[computedJustify]]: true,
+    'flex-row-reverse': trailingIcon && !isIconOnly,
+    [customClass]: true
+  }">
     <slot v-if="(icon || $slots.icon) && !isLoading" name="icon">
       <Icon :icon="icon" class="flex-shrink-0" />
     </slot>

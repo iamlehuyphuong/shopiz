@@ -138,15 +138,11 @@ onMounted(() => {
 
 <template>
   <div class="relative flex flex-col gap-1">
-    <label
-      v-if="label"
-      :for="id"
-      class="mb-0.5 text-sm font-medium text-n-slate-12"
-    >
+    <label v-if="label" :for="id" class="mb-0.5 text-sm font-medium text-n-slate-12">
       {{ label }}
     </label>
     <div
-      class="flex flex-col gap-2 px-3 pt-3 pb-3 border rounded-lg bg-n-alpha-black2 border-lightNeutral-strokeBold dark:!border-blackNeutral-strokeBold"
+      class="flex flex-col gap-2 px-3 pt-3 pb-3 border rounded-lg bg-n-alpha-black2 border-light-neutral-stroke-bold dark:!border-black-neutral-stroke-bold"
       :class="[
         customTextAreaWrapperClass,
         {
@@ -158,46 +154,28 @@ onMounted(() => {
           'border-n-ruby-8 dark:border-n-ruby-8 hover:border-n-ruby-9 dark:hover:border-n-ruby-9':
             messageType === 'error' && !isFocused,
         },
-      ]"
-    >
+      ]">
       <slot /><!-- Slot for adding popover -->
-      <textarea
-        :id="id"
-        ref="textareaRef"
-        :value="modelValue"
-        :placeholder="placeholder"
-        :maxlength="showCharacterCount ? maxLength : undefined"
-        :class="[
+      <textarea :id="id" ref="textareaRef" :value="modelValue" :placeholder="placeholder"
+        :maxlength="showCharacterCount ? maxLength : undefined" :class="[
           customTextAreaClass,
           {
             'resize-none': !resize,
           },
-        ]"
-        :style="{
+        ]" :style="{
           minHeight: autoHeight ? minHeight : undefined,
           maxHeight: autoHeight ? maxHeight : undefined,
-        }"
-        :disabled="disabled"
-        rows="1"
+        }" :disabled="disabled" rows="1"
         class="flex w-full reset-base text-sm p-0 !rounded-none !bg-transparent dark:!bg-transparent !border-0 !mb-0 placeholder:text-n-slate-10 dark:placeholder:text-n-slate-10 text-n-slate-12 dark:text-n-slate-12 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-slate-25 dark:disabled:bg-slate-900"
-        @input="handleInput"
-        @focus="handleFocus"
-        @blur="handleBlur"
-      />
-      <div
-        v-if="showCharacterCount"
-        class="flex items-center justify-end h-4 mt-1 bottom-3 ltr:right-3 rtl:left-3"
-      >
+        @input="handleInput" @focus="handleFocus" @blur="handleBlur" />
+      <div v-if="showCharacterCount" class="flex items-center justify-end h-4 mt-1 bottom-3 ltr:right-3 rtl:left-3">
         <span class="text-xs tabular-nums text-n-slate-10">
           {{ characterCount }} / {{ maxLength }}
         </span>
       </div>
     </div>
-    <p
-      v-if="message"
-      class="min-w-0 mt-1 mb-0 text-xs truncate transition-all duration-500 ease-in-out"
-      :class="messageClass"
-    >
+    <p v-if="message" class="min-w-0 mt-1 mb-0 text-xs truncate transition-all duration-500 ease-in-out"
+      :class="messageClass">
       {{ message }}
     </p>
   </div>
