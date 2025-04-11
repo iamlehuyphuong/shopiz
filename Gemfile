@@ -175,6 +175,8 @@ gem 'reverse_markdown'
 
 gem 'ruby-openai'
 
+gem 'digest'
+
 ### Gems required only in specific deployment environments ###
 ##############################################################
 
