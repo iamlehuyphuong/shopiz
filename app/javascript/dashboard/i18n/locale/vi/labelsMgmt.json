@@ -3,8 +3,8 @@
     "HEADER": "Nhãn",
     "HEADER_BTN_TXT": "Thêm nhãn",
     "LOADING": "Tải về các nhãn",
-    "DESCRIPTION": "Labels help you categorize and prioritize conversations and leads. You can assign a label to a conversation or contact using the side panel.",
-    "LEARN_MORE": "Learn more about labels",
+    "DESCRIPTION": "Nhãn giúp bạn phân loại và ưu tiên các cuộc trò chuyện và khách hàng tiềm năng. Bạn có thể gán nhãn cho một cuộc trò chuyện hoặc liên hệ bằng cách sử dụng bảng bên.",
+    "LEARN_MORE": "Tìm hiểu thêm về nhãn",
     "SEARCH_404": "Không có kết quả nào phù hợp",
     "LIST": {
       "404": "Không có nhãn nào có sẵn trong tài khoản này.",
@@ -32,7 +32,7 @@
         "LABEL": "Màu sắc"
       },
       "SHOW_ON_SIDEBAR": {
-        "LABEL": "Hiển thị nhãn trên sidebar"
+        "LABEL": "Hiển thị nhãn trên thanh bên"
       },
       "EDIT": "Chỉnh sửa",
       "CREATE": "Tạo",
@@ -41,17 +41,17 @@
     },
     "SUGGESTIONS": {
       "TOOLTIP": {
-        "SINGLE_SUGGESTION": "Add label to conversation",
-        "MULTIPLE_SUGGESTION": "Select this label",
-        "DESELECT": "Deselect label",
-        "DISMISS": "Dismiss suggestion"
+        "SINGLE_SUGGESTION": "Thêm nhãn vào cuộc trò chuyện",
+        "MULTIPLE_SUGGESTION": "Chọn nhãn này",
+        "DESELECT": "Bỏ chọn nhãn",
+        "DISMISS": "Bỏ qua gợi ý"
       },
       "POWERED_BY": "Salesman AI",
-      "DISMISS": "Dismiss",
-      "ADD_SELECTED_LABELS": "Add selected labels",
-      "ADD_SELECTED_LABEL": "Add selected label",
-      "ADD_ALL_LABELS": "Add all labels",
-      "SUGGESTED_LABELS": "Suggested labels"
+      "DISMISS": "Bỏ qua",
+      "ADD_SELECTED_LABELS": "Thêm các nhãn đã chọn",
+      "ADD_SELECTED_LABEL": "Thêm nhãn đã chọn",
+      "ADD_ALL_LABELS": "Thêm tất cả nhãn",
+      "SUGGESTED_LABELS": "Nhãn được gợi ý"
     },
     "ADD": {
       "TITLE": "Thêm nhãn",
@@ -76,9 +76,9 @@
       },
       "CONFIRM": {
         "TITLE": "Xác Nhận Xoá",
-        "MESSAGE": "Bạn có chắc muốn xoá? ",
-        "YES": "Có, xoá ",
-        "NO": "Không, giữ "
+        "MESSAGE": "Bạn có chắc muốn xoá?",
+        "YES": "Có, xoá",
+        "NO": "Không, giữ lại"
       }
     }
   }

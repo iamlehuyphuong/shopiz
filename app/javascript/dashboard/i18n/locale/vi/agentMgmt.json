@@ -3,14 +3,14 @@
     "HEADER": "Người dùng",
     "HEADER_BTN_TXT": "Thêm người dùng / người dùng",
     "LOADING": "Tải danh sách người dùng",
-    "DESCRIPTION": "An agent is a member of your customer support team who can view and respond to user messages. The list below shows all the agents in your account.",
-    "LEARN_MORE": "Learn about user roles",
+    "DESCRIPTION": "Người dùng là thành viên trong nhóm hỗ trợ khách hàng của bạn, người có thể xem và trả lời tin nhắn của người dùng. Danh sách dưới đây hiển thị tất cả người dùng trong tài khoản của bạn.",
+    "LEARN_MORE": "Tìm hiểu về vai trò người dùng",
     "AGENT_TYPES": {
       "ADMINISTRATOR": "Quản trị viên",
       "AGENT": "Người dùng"
     },
     "LIST": {
-      "404": "Không có tác nhân nào được liên kết với tài khoản này",
+      "404": "Không có người dùng nào được liên kết với tài khoản này",
       "TITLE": "Quản lý các người dùng trong nhóm của bạn",
       "DESC": "Bạn có thể thêm / bớt người dùng vào / trong nhóm của mình.",
       "NAME": "Tên",
@@ -19,7 +19,7 @@
       "ACTIONS": "Hành động",
       "VERIFIED": "Đã xác minh",
       "VERIFICATION_PENDING": "Đang chờ xác minh",
-      "AVAILABLE_CUSTOM_ROLE": "Available custom role permissions"
+      "AVAILABLE_CUSTOM_ROLE": "Quyền vai trò tùy chỉnh có sẵn"
     },
     "ADD": {
       "TITLE": "Thêm người dùng vào nhóm của bạn",
@@ -43,7 +43,7 @@
       },
       "API": {
         "SUCCESS_MESSAGE": "Người dùng được thêm thành công",
-        "EXIST_MESSAGE": "Email đã được sử dung, vui lòng chọn email khác.",
+        "EXIST_MESSAGE": "Email đã được sử dụng, vui lòng chọn email khác.",
         "ERROR_MESSAGE": "Không thể kết nối với Máy chủ Woot, Vui lòng thử lại sau"
       }
     },
@@ -73,13 +73,13 @@
           "ERROR": "Loại người dùng là bắt buộc"
         },
         "EMAIL": {
-          "LABEL": "Emails",
+          "LABEL": "Email",
           "PLACEHOLDER": "Vui lòng nhập email"
         },
         "AGENT_AVAILABILITY": {
           "LABEL": "Khả dụng",
-          "PLACEHOLDER": "Please select an availability status",
-          "ERROR": "Availability is required"
+          "PLACEHOLDER": "Vui lòng chọn trạng thái khả dụng",
+          "ERROR": "Trạng thái khả dụng là bắt buộc"
         },
         "SUBMIT": "Chỉnh sửa người dùng"
       },

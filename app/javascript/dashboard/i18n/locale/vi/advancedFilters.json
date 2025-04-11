@@ -5,7 +5,7 @@
     "EDIT_CUSTOM_FILTER": "Sửa Thư Mục",
     "CUSTOM_VIEWS_SUBTITLE": "Thêm hoặc xóa bộ lọc và cập nhật thư mục của bạn.",
     "ADD_NEW_FILTER": "Thêm bộ lọc",
-    "FILTER_DELETE_ERROR": "Rât tiếc, dường như chưa có sự thay đổi nào! Hãy thêm ít nhất một bộ lọc để lưu nó.",
+    "FILTER_DELETE_ERROR": "Rất tiếc, dường như chưa có sự thay đổi nào! Hãy thêm ít nhất một bộ lọc để lưu nó.",
     "SUBMIT_BUTTON_LABEL": "Áp dụng bộ lọc",
     "UPDATE_BUTTON_LABEL": "Cập nhật thư mục",
     "CANCEL_BUTTON_LABEL": "Huỷ",
@@ -18,7 +18,7 @@
       "AND": "VÀ",
       "OR": "HOẶC"
     },
-    "INPUT_PLACEHOLDER": "Enter value",
+    "INPUT_PLACEHOLDER": "Nhập giá trị",
     "OPERATOR_LABELS": {
       "equal_to": "Bằng",
       "not_equal_to": "Không bằng",
@@ -66,9 +66,9 @@
     },
     "ERRORS": {
       "VALUE_REQUIRED": "Giá trị bắt buộc có",
-      "ATTRIBUTE_KEY_REQUIRED": "Attribute key is required",
-      "FILTER_OPERATOR_REQUIRED": "Filter operator is required",
-      "VALUE_MUST_BE_BETWEEN_1_AND_998": "Value must be between 1 and 998"
+      "ATTRIBUTE_KEY_REQUIRED": "Khoá thuộc tính là bắt buộc",
+      "FILTER_OPERATOR_REQUIRED": "Toán tử bộ lọc là bắt buộc",
+      "VALUE_MUST_BE_BETWEEN_1_AND_998": "Giá trị phải nằm trong khoảng từ 1 đến 998"
     },
     "GROUPS": {
       "STANDARD_FILTERS": "Bộ lọc tiêu chuẩn",
