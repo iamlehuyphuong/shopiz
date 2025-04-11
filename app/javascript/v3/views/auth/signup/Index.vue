@@ -1,29 +1,29 @@
 <script>
-// import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 import globalConfigMixin from 'shared/mixins/globalConfigMixin';
 import SignupForm from './components/Signup/Form.vue';
 import Testimonials from './components/Testimonials/Index.vue';
-// import Spinner from 'shared/components/Spinner.vue';
+import Spinner from 'shared/components/Spinner.vue';
 
 export default {
   components: {
     SignupForm,
-    // Spinner,
+    Spinner,
     Testimonials,
   },
   mixins: [globalConfigMixin],
-  // data() {
-  // return { isLoading: false };
-  // },
-  // computed: {
-  //   ...mapGetters({ globalConfig: 'globalConfig/get' }),
-  // isAChatwootInstance() {
-  //   return this.globalConfig.installationName === 'Salesman';
-  // },
-  // },
-  // beforeMount() {
-  //   this.isLoading = this.isAChatwootInstance;
-  // },
+  data() {
+    return { isLoading: false };
+  },
+  computed: {
+    ...mapGetters({ globalConfig: 'globalConfig/get' }),
+    isAChatwootInstance() {
+      return this.globalConfig.installationName === 'Salesman';
+    },
+  },
+  beforeMount() {
+    this.isLoading = this.isAChatwootInstance;
+  },
 
   methods: {
     resizeContainers() {
@@ -35,7 +35,7 @@ export default {
 
 <template>
   <div class="w-full h-full dark:bg-slate-900">
-    <div class="flex h-full min-h-screen items-center">
+    <div v-show="!isLoading" class="flex h-full min-h-screen items-center">
       <div class="flex-1 min-h-[640px] inline-flex items-center h-full justify-center overflow-auto py-6">
         <div class="px-8 max-w-[560px] w-full overflow-auto">
           <div class="mb-4">
@@ -61,8 +61,8 @@ export default {
         </div>
       </div>
     </div>
-    <!-- <div v-show="isLoading" class="flex items-center justify-center w-full h-full">
+    <div v-show="isLoading" class="flex items-center justify-center w-full h-full">
       <Spinner color-scheme="primary" size="" />
-    </div> -->
+    </div>
   </div>
 </template>
