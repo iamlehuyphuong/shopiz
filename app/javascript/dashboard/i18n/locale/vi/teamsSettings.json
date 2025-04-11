@@ -2,9 +2,9 @@
   "TEAMS_SETTINGS": {
     "NEW_TEAM": "Tạo nhóm mới",
     "HEADER": "Nhóm",
-    "LOADING": "Fetching teams",
-    "DESCRIPTION": "Teams allow you to organize agents into groups based on their responsibilities. An agent can belong to multiple teams. When working collaboratively, you can assign conversations to specific teams.",
-    "LEARN_MORE": "Learn more about teams",
+    "LOADING": "Đang tải nhóm",
+    "DESCRIPTION": "Nhóm cho phép bạn tổ chức các đại lý thành các nhóm dựa trên trách nhiệm của họ. Một đại lý có thể thuộc nhiều nhóm. Khi làm việc cộng tác, bạn có thể gán các cuộc trò chuyện cho các nhóm cụ thể.",
+    "LEARN_MORE": "Tìm hiểu thêm về nhóm",
     "LIST": {
       "404": "Không có nhóm nào được tạo đối với tài khoản này.",
       "EDIT_TEAM": "Sửa nhóm",
@@ -79,11 +79,11 @@
       "SELECT_ALL": "chọn tất cả người dùng",
       "SELECTED_COUNT": "{selected} trên {total} người dùng được chọn.",
       "BUTTON_TEXT": "Thêm các người dùng",
-      "AGENT_VALIDATION_ERROR": "Chọn ít nhật một tổng đài viên."
+      "AGENT_VALIDATION_ERROR": "Chọn ít nhất một tổng đài viên."
     },
     "FINISH": {
       "TITLE": "Nhóm của bạn đã sẵn sàng!",
-      "MESSAGE": "Giờ đây, bạn có thể cộng tác với tư cách là một nhóm trong các cuộc trò chuyện. Chúc ủng hộ vui vẻ ",
+      "MESSAGE": "Giờ đây, bạn có thể cộng tác với tư cách là một nhóm trong các cuộc trò chuyện. Chúc ủng hộ vui vẻ",
       "BUTTON_TEXT": "Hoàn tất"
     },
     "DELETE": {
@@ -93,10 +93,10 @@
         "ERROR_MESSAGE": "Không thể xoá nhóm. Thử lại."
       },
       "CONFIRM": {
-        "TITLE": "Are you sure you want to delete the team?",
+        "TITLE": "Bạn có chắc chắn muốn xóa nhóm không?",
         "PLACE_HOLDER": "Vui lòng điền {teamName} để xác nhận",
         "MESSAGE": "Xóa nhóm sẽ xóa phân công nhóm khỏi các cuộc trò chuyện được phân công cho nhóm này.",
-        "YES": "Xoá ",
+        "YES": "Xoá",
         "NO": "Huỷ"
       }
     },

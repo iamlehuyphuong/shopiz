@@ -1,8 +1,8 @@
 {
   "AUTOMATION": {
     "HEADER": "Tự động hoá",
-    "DESCRIPTION": "Automation can replace and streamline existing processes that require manual effort, such as adding labels and assigning conversations to the most suitable agent. This allows the team to focus on their strengths while reducing time spent on routine tasks.",
-    "LEARN_MORE": "Learn more about automation",
+    "DESCRIPTION": "Tự động hóa có thể thay thế và đơn giản hóa các quy trình hiện tại đòi hỏi nỗ lực thủ công, chẳng hạn như thêm nhãn và phân công cuộc trò chuyện cho nhân viên phù hợp nhất. Điều này giúp đội ngũ tập trung vào thế mạnh của mình trong khi giảm thời gian dành cho các công việc lặp đi lặp lại.",
+    "LEARN_MORE": "Tìm hiểu thêm về tự động hóa",
     "HEADER_BTN_TXT": "Thêm luật Tự động hoá",
     "LOADING": "Đang lấy luật tự động hoá",
     "ADD": {
@@ -118,13 +118,13 @@
       "LABEL_UPLOAD_FAILED": "Không tải lên được"
     },
     "ERRORS": {
-      "ATTRIBUTE_KEY_REQUIRED": "Attribute key is required",
-      "FILTER_OPERATOR_REQUIRED": "Filter operator is required",
+      "ATTRIBUTE_KEY_REQUIRED": "Khóa của thuộc tính là bắt buộc.",
+      "FILTER_OPERATOR_REQUIRED": "Toán tử lọc là bắt buộc",
       "VALUE_REQUIRED": "Giá trị bắt buộc có",
-      "VALUE_MUST_BE_BETWEEN_1_AND_998": "Value must be between 1 and 998",
-      "ACTION_PARAMETERS_REQUIRED": "Action parameters are required",
-      "ATLEAST_ONE_CONDITION_REQUIRED": "At least one condition is required",
-      "ATLEAST_ONE_ACTION_REQUIRED": "At least one action is required"
+      "VALUE_MUST_BE_BETWEEN_1_AND_998": "Giá trị phải nằm trong khoảng từ 1 đến 998",
+      "ACTION_PARAMETERS_REQUIRED": "Tham số hành động là bắt buộc",
+      "ATLEAST_ONE_CONDITION_REQUIRED": "Cần ít nhất một điều kiện",
+      "ATLEAST_ONE_ACTION_REQUIRED": "Cần ít nhất một hành động"
     }
   }
 }

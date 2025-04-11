@@ -1,12 +1,12 @@
 {
   "MACROS": {
     "HEADER": "Macros",
-    "DESCRIPTION": "A macro is a set of saved actions that help customer service agents easily complete tasks. The agents can define a set of actions like tagging a conversation with a label, sending an email transcript, updating a custom attribute, etc., and they can run these actions in a single click.",
-    "LEARN_MORE": "Learn more about macros",
-    "HEADER_BTN_TXT": "Add a new macro",
-    "HEADER_BTN_TXT_SAVE": "Save macro",
-    "LOADING": "Fetching macros",
-    "ERROR": "Something went wrong. Please try again",
+    "DESCRIPTION": "Macro là một tập hợp các hành động được lưu giúp các nhân viên dịch vụ khách hàng dễ dàng hoàn thành nhiệm vụ. Các nhân viên có thể định nghĩa một tập hợp các hành động như gắn thẻ cuộc trò chuyện bằng nhãn, gửi bản sao email, cập nhật thuộc tính tùy chỉnh, v.v., và họ có thể thực hiện các hành động này chỉ bằng một cú nhấp chuột.",
+    "LEARN_MORE": "Tìm hiểu thêm về macros",
+    "HEADER_BTN_TXT": "Thêm macro mới",
+    "HEADER_BTN_TXT_SAVE": "Lưu macro",
+    "LOADING": "Đang tải macros",
+    "ERROR": "Đã xảy ra lỗi. Vui lòng thử lại",
     "ORDER_INFO": "Macro sẽ chạy theo thứ tự hành động của bạn. Bạn có thể sắp xếp lại chúng bằng cách kéo chúng bằng tay cầm bên cạnh mỗi nút.",
     "ADD": {
       "FORM": {
@@ -76,13 +76,13 @@
       "EXECUTED_SUCCESSFULLY": "Macro được thực thi thành công"
     },
     "ERRORS": {
-      "ATTRIBUTE_KEY_REQUIRED": "Attribute key is required",
-      "FILTER_OPERATOR_REQUIRED": "Filter operator is required",
+      "ATTRIBUTE_KEY_REQUIRED": "Cần có khóa thuộc tính",
+      "FILTER_OPERATOR_REQUIRED": "Cần có toán tử bộ lọc",
       "VALUE_REQUIRED": "Giá trị bắt buộc có",
-      "VALUE_MUST_BE_BETWEEN_1_AND_998": "Value must be between 1 and 998",
-      "ACTION_PARAMETERS_REQUIRED": "Action parameters are required",
-      "ATLEAST_ONE_CONDITION_REQUIRED": "At least one condition is required",
-      "ATLEAST_ONE_ACTION_REQUIRED": "At least one action is required"
+      "VALUE_MUST_BE_BETWEEN_1_AND_998": "Giá trị phải nằm trong khoảng từ 1 đến 998",
+      "ACTION_PARAMETERS_REQUIRED": "Cần có tham số hành động",
+      "ATLEAST_ONE_CONDITION_REQUIRED": "Cần ít nhất một điều kiện",
+      "ATLEAST_ONE_ACTION_REQUIRED": "Cần ít nhất một hành động"
     }
   }
 }
