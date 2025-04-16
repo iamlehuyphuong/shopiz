@@ -35,7 +35,7 @@ export default {
 
 <template>
   <div class="w-full h-full dark:bg-slate-900">
-    <div v-show="!isLoading" class="flex h-full min-h-screen items-center">
+    <div class="flex h-full min-h-screen items-center">
       <div class="flex-1 min-h-[640px] inline-flex items-center h-full justify-center overflow-auto py-6">
         <div class="px-8 max-w-[560px] w-full overflow-auto">
           <div class="mb-4">
@@ -61,8 +61,8 @@ export default {
         </div>
       </div>
     </div>
-    <div v-show="isLoading" class="flex items-center justify-center w-full h-full">
+    <!-- <div v-show="isLoading" class="flex items-center justify-center w-full h-full">
       <Spinner color-scheme="primary" size="" />
-    </div>
+    </div> -->
   </div>
 </template>
