@@ -13,29 +13,29 @@ describe('#Campaigns Helper', () => {
     it('returns correct value if a valid URL is passed', () => {
       expect(
         isPatternMatchingWithURL(
-          'https://salesman.effiai.one/pricing*',
-          'https://salesman.effiai.one/pricing/'
+          'https://salesman.effiai.pro/pricing*',
+          'https://salesman.effiai.pro/pricing/'
         )
       ).toBe(true);
 
       expect(
         isPatternMatchingWithURL(
-          'https://*.salesman.effiai.one/pricing/',
-          'https://salesman.effiai.one/pricing/'
+          'https://*.salesman.effiai.pro/pricing/',
+          'https://salesman.effiai.pro/pricing/'
         )
       ).toBe(true);
 
       expect(
         isPatternMatchingWithURL(
-          'https://{*.}?salesman.effiai.one/pricing?test=true',
-          'https://salesman.effiai.one/pricing/?test=true'
+          'https://{*.}?salesman.effiai.pro/pricing?test=true',
+          'https://salesman.effiai.pro/pricing/?test=true'
         )
       ).toBe(true);
 
       expect(
         isPatternMatchingWithURL(
-          'https://{*.}?salesman.effiai.one/pricing*\\?*',
-          'https://salesman.effiai.one/pricing/?test=true'
+          'https://{*.}?salesman.effiai.pro/pricing*\\?*',
+          'https://salesman.effiai.pro/pricing/?test=true'
         )
       ).toBe(true);
     });
@@ -48,13 +48,13 @@ describe('#Campaigns Helper', () => {
           id: 1,
           timeOnPage: 3,
           triggerOnlyDuringBusinessHours: false,
-          url: 'https://salesman.effiai.one/pricing',
+          url: 'https://salesman.effiai.pro/pricing',
         },
         {
           id: 2,
           triggerOnlyDuringBusinessHours: false,
           timeOnPage: 6,
-          url: 'https://salesman.effiai.one/about',
+          url: 'https://salesman.effiai.pro/about',
         },
       ]);
     });
@@ -67,23 +67,23 @@ describe('#Campaigns Helper', () => {
             {
               id: 1,
               timeOnPage: 3,
-              url: 'https://salesman.effiai.one/pricing',
+              url: 'https://salesman.effiai.pro/pricing',
               triggerOnlyDuringBusinessHours: false,
             },
             {
               id: 2,
               timeOnPage: 6,
-              url: 'https://salesman.effiai.one/about',
+              url: 'https://salesman.effiai.pro/about',
               triggerOnlyDuringBusinessHours: false,
             },
           ],
-          currentURL: 'https://salesman.effiai.one/about/',
+          currentURL: 'https://salesman.effiai.pro/about/',
         })
       ).toStrictEqual([
         {
           id: 2,
           timeOnPage: 6,
-          url: 'https://salesman.effiai.one/about',
+          url: 'https://salesman.effiai.pro/about',
           triggerOnlyDuringBusinessHours: false,
         },
       ]);
@@ -95,24 +95,24 @@ describe('#Campaigns Helper', () => {
             {
               id: 1,
               timeOnPage: 3,
-              url: 'https://salesman.effiai.one/pricing',
+              url: 'https://salesman.effiai.pro/pricing',
               triggerOnlyDuringBusinessHours: false,
             },
             {
               id: 2,
               timeOnPage: 6,
-              url: 'https://salesman.effiai.one/about',
+              url: 'https://salesman.effiai.pro/about',
               triggerOnlyDuringBusinessHours: true,
             },
           ],
-          currentURL: 'https://salesman.effiai.one/about/',
+          currentURL: 'https://salesman.effiai.pro/about/',
           isInBusinessHours: true,
         })
       ).toStrictEqual([
         {
           id: 2,
           timeOnPage: 6,
-          url: 'https://salesman.effiai.one/about',
+          url: 'https://salesman.effiai.pro/about',
           triggerOnlyDuringBusinessHours: true,
         },
       ]);
@@ -124,17 +124,17 @@ describe('#Campaigns Helper', () => {
             {
               id: 1,
               timeOnPage: 3,
-              url: 'https://salesman.effiai.one/pricing',
+              url: 'https://salesman.effiai.pro/pricing',
               triggerOnlyDuringBusinessHours: true,
             },
             {
               id: 2,
               timeOnPage: 6,
-              url: 'https://salesman.effiai.one/about',
+              url: 'https://salesman.effiai.pro/about',
               triggerOnlyDuringBusinessHours: true,
             },
           ],
-          currentURL: 'https://salesman.effiai.one/about/',
+          currentURL: 'https://salesman.effiai.pro/about/',
           isInBusinessHours: false,
         })
       ).toStrictEqual([]);

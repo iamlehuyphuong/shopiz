@@ -391,7 +391,7 @@
         "SLUG": {
           "LABEL": "Slug",
           "PLACEHOLDER": "Slug kategorija, skirta URL",
-          "HELP_TEXT": "salesman.effiai.one/hc/my-portal/en-US/categories/my-slug",
+          "HELP_TEXT": "salesman.effiai.pro/hc/my-portal/en-US/categories/my-slug",
           "ERROR": "Yra reikalingas slug"
         },
         "DESCRIPTION": {
@@ -422,7 +422,7 @@
         "SLUG": {
           "LABEL": "Slug",
           "PLACEHOLDER": "Slug kategorija, skirta URL",
-          "HELP_TEXT": "salesman.effiai.one/hc/my-portal/en-US/categories/my-slug",
+          "HELP_TEXT": "salesman.effiai.pro/hc/my-portal/en-US/categories/my-slug",
           "ERROR": "Yra reikalingas slug"
         },
         "DESCRIPTION": {
@@ -606,7 +606,7 @@
             "LABEL": "Slug",
             "PLACEHOLDER": "Slug kategorija, skirta URL",
             "ERROR": "Yra reikalingas slug",
-            "HELP_TEXT": "salesman.effiai.one/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
+            "HELP_TEXT": "salesman.effiai.pro/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
           },
           "DESCRIPTION": {
             "LABEL": "Aprašymas",

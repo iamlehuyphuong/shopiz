@@ -15,7 +15,7 @@ export const contacts = [
       },
     },
     availabilityStatus: 'offline',
-    email: 'ozler@salesman.effiai.one',
+    email: 'ozler@salesman.effiai.pro',
     id: 29,
     name: 'Abraham Ozlers',
     phoneNumber: '+246232222222',
@@ -25,7 +25,7 @@ export const contacts = [
     customAttributes: {
       dateContact: '2024-02-01T00:00:00.000Z',
       linkContact:
-        'https://staging.salesman.effiai.one/app/accounts/3/contacts-new',
+        'https://staging.salesman.effiai.pro/app/accounts/3/contacts-new',
       listContact: 'Not spam',
       numberContact: '12',
     },
@@ -35,9 +35,9 @@ export const contacts = [
 ];
 
 export const activeContact = {
-  email: 'ozler@salesman.effiai.one',
+  email: 'ozler@salesman.effiai.pro',
   id: 29,
-  label: 'Abraham Ozlers (ozler@salesman.effiai.one)',
+  label: 'Abraham Ozlers (ozler@salesman.effiai.pro)',
   name: 'Abraham Ozlers',
   thumbnail: {
     name: 'Abraham Ozlers',

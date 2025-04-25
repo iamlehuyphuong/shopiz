@@ -61,7 +61,7 @@ const onConfirm = dialog => {};
             type="text"
             placeholder="user-guide"
             label="Slug"
-            message="salesman.effiai.one/hc/my-portal/en-US/categories/my-slug"
+            message="salesman.effiai.pro/hc/my-portal/en-US/categories/my-slug"
           />
         </div>
       </Dialog>

@@ -714,6 +714,7 @@
       },
       "CHANNELS": {
         "MESSENGER": "Messenger",
+        "ZALO": "Zalo",
         "WEB_WIDGET": "Trang web",
         "TWITTER_PROFILE": "Hồ sơ Twitter",
         "TWILIO_SMS": "Twilio SMS",

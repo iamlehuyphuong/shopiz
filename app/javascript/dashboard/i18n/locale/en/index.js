@@ -36,6 +36,7 @@ import sla from './sla.json';
 import teamsSettings from './teamsSettings.json';
 import whatsappTemplates from './whatsappTemplates.json';
 import customChatbot from './customChatbot.json';
+import workflows from './workflows.json';
 
 export default {
   ...advancedFilters,
@@ -76,4 +77,5 @@ export default {
   ...teamsSettings,
   ...whatsappTemplates,
   ...customChatbot,
+  ...workflows,
 };
