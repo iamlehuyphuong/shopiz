@@ -16,7 +16,7 @@ export default [
       },
     },
     availabilityStatus: 'offline',
-    email: 'candice.matherson@salesman.effiai.one',
+    email: 'candice.matherson@salesman.effiai.pro',
     id: 22,
     name: 'Candice Matherson',
     phoneNumber: '+14155552671',

@@ -4,11 +4,11 @@ describe('PortalHelper', () => {
   describe('buildPortalURL', () => {
     it('returns the correct url', () => {
       window.chatwootConfig = {
-        hostURL: 'https://salesman.effiai.one',
-        helpCenterURL: 'https://help.salesman.effiai.one',
+        hostURL: 'https://salesman.effiai.pro',
+        helpCenterURL: 'https://help.salesman.effiai.pro',
       };
       expect(buildPortalURL('handbook')).toEqual(
-        'https://help.salesman.effiai.one/hc/handbook'
+        'https://help.salesman.effiai.pro/hc/handbook'
       );
       window.chatwootConfig = {};
     });
@@ -17,13 +17,13 @@ describe('PortalHelper', () => {
   describe('buildPortalArticleURL', () => {
     it('returns the correct url', () => {
       window.chatwootConfig = {
-        hostURL: 'https://salesman.effiai.one',
-        helpCenterURL: 'https://help.salesman.effiai.one',
+        hostURL: 'https://salesman.effiai.pro',
+        helpCenterURL: 'https://help.salesman.effiai.pro',
       };
       expect(
         buildPortalArticleURL('handbook', 'culture', 'fr', 'article-slug')
       ).toEqual(
-        'https://help.salesman.effiai.one/hc/handbook/articles/article-slug'
+        'https://help.salesman.effiai.pro/hc/handbook/articles/article-slug'
       );
       window.chatwootConfig = {};
     });

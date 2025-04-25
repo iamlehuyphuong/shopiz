@@ -11,7 +11,7 @@ export default {
       },
       component: SettingsContent,
       props: {
-        headerTitle: 'WORKFLOW_SETTINGS.TITLE',
+        headerTitle: 'WORKFLOW_SETTINGS.HEADER',
         icon: 'briefcase',
         showNewButton: false,
       },

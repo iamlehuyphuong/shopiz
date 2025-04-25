@@ -6,13 +6,13 @@ describe('#mutations', () => {
     it('set agent records', () => {
       const state = { records: [] };
       mutations[types.default.SET_AGENTS](state, [
-        { id: 1, name: 'Agent1', email: 'agent1@salesman.effiai.one' },
+        { id: 1, name: 'Agent1', email: 'agent1@salesman.effiai.pro' },
       ]);
       expect(state.records).toEqual([
         {
           id: 1,
           name: 'Agent1',
-          email: 'agent1@salesman.effiai.one',
+          email: 'agent1@salesman.effiai.pro',
         },
       ]);
     });
@@ -22,17 +22,17 @@ describe('#mutations', () => {
     it('push newly created agent data to the store', () => {
       const state = {
         records: [
-          { id: 1, name: 'Agent1', email: 'agent1@salesman.effiai.one' },
+          { id: 1, name: 'Agent1', email: 'agent1@salesman.effiai.pro' },
         ],
       };
       mutations[types.default.ADD_AGENT](state, {
         id: 2,
         name: 'Agent2',
-        email: 'agent2@salesman.effiai.one',
+        email: 'agent2@salesman.effiai.pro',
       });
       expect(state.records).toEqual([
-        { id: 1, name: 'Agent1', email: 'agent1@salesman.effiai.one' },
-        { id: 2, name: 'Agent2', email: 'agent2@salesman.effiai.one' },
+        { id: 1, name: 'Agent1', email: 'agent1@salesman.effiai.pro' },
+        { id: 2, name: 'Agent2', email: 'agent2@salesman.effiai.pro' },
       ]);
     });
   });
@@ -41,16 +41,16 @@ describe('#mutations', () => {
     it('update agent record', () => {
       const state = {
         records: [
-          { id: 1, name: 'Agent1', email: 'agent1@salesman.effiai.one' },
+          { id: 1, name: 'Agent1', email: 'agent1@salesman.effiai.pro' },
         ],
       };
       mutations[types.default.EDIT_AGENT](state, {
         id: 1,
         name: 'Agent2',
-        email: 'agent2@salesman.effiai.one',
+        email: 'agent2@salesman.effiai.pro',
       });
       expect(state.records).toEqual([
-        { id: 1, name: 'Agent2', email: 'agent2@salesman.effiai.one' },
+        { id: 1, name: 'Agent2', email: 'agent2@salesman.effiai.pro' },
       ]);
     });
   });
@@ -59,7 +59,7 @@ describe('#mutations', () => {
     it('delete agent record', () => {
       const state = {
         records: [
-          { id: 1, name: 'Agent1', email: 'agent1@salesman.effiai.one' },
+          { id: 1, name: 'Agent1', email: 'agent1@salesman.effiai.pro' },
         ],
       };
       mutations[types.default.DELETE_AGENT](state, 1);
@@ -74,13 +74,13 @@ describe('#mutations', () => {
           {
             id: 1,
             name: 'Agent1',
-            email: 'agent1@salesman.effiai.one',
+            email: 'agent1@salesman.effiai.pro',
             availability_status: 'offline',
           },
           {
             id: 2,
             name: 'Agent1',
-            email: 'agent1@salesman.effiai.one',
+            email: 'agent1@salesman.effiai.pro',
             availability_status: 'online',
           },
         ],
@@ -91,13 +91,13 @@ describe('#mutations', () => {
         {
           id: 1,
           name: 'Agent1',
-          email: 'agent1@salesman.effiai.one',
+          email: 'agent1@salesman.effiai.pro',
           availability_status: 'busy',
         },
         {
           id: 2,
           name: 'Agent1',
-          email: 'agent1@salesman.effiai.one',
+          email: 'agent1@salesman.effiai.pro',
           availability_status: 'offline',
         },
       ]);
@@ -111,13 +111,13 @@ describe('#mutations', () => {
           {
             id: 1,
             name: 'Agent1',
-            email: 'agent1@salesman.effiai.one',
+            email: 'agent1@salesman.effiai.pro',
             availability_status: 'offline',
           },
           {
             id: 2,
             name: 'Agent1',
-            email: 'agent1@salesman.effiai.one',
+            email: 'agent1@salesman.effiai.pro',
             availability_status: 'online',
           },
         ],
@@ -131,13 +131,13 @@ describe('#mutations', () => {
         {
           id: 1,
           name: 'Agent1',
-          email: 'agent1@salesman.effiai.one',
+          email: 'agent1@salesman.effiai.pro',
           availability_status: 'busy',
         },
         {
           id: 2,
           name: 'Agent1',
-          email: 'agent1@salesman.effiai.one',
+          email: 'agent1@salesman.effiai.pro',
           availability_status: 'online',
         },
       ]);

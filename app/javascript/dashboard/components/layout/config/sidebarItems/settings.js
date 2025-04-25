@@ -40,6 +40,7 @@ const settings = accountId => ({
     'settings_teams_new',
     'sla_list',
     'custom_roles_list',
+    'workflow_list',
   ],
   menuItems: [
     {
@@ -151,7 +152,7 @@ const settings = accountId => ({
         permissions: ['administrator', 'agent'],
       },
       toState: frontendURL(`accounts/${accountId}/settings/workflows`),
-      toStateName: 'workflow_wrapper',
+      toStateName: 'workflow_list',
       featureFlag: FEATURE_FLAGS.WORKFLOWS,
     },
     {

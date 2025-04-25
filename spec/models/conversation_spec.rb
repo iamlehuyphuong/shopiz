@@ -720,10 +720,10 @@ RSpec.describe Conversation do
   end
 
   describe 'validate valid referer url' do
-    let(:conversation) { create(:conversation, additional_attributes: { referer: 'https://salesman.effiai.one/' }) }
+    let(:conversation) { create(:conversation, additional_attributes: { referer: 'https://salesman.effiai.pro/' }) }
 
     it 'returns nil' do
-      expect(conversation['additional_attributes']['referer']).to eq('https://salesman.effiai.one/')
+      expect(conversation['additional_attributes']['referer']).to eq('https://salesman.effiai.pro/')
     end
   end
 

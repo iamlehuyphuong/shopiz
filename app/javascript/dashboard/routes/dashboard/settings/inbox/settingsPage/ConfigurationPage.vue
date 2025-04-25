@@ -125,7 +125,7 @@ export default {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://salesman.effiai.one/docs/product/channels/live-chat/sdk/identity-validation/"
+            href="https://salesman.effiai.pro/docs/product/channels/live-chat/sdk/identity-validation/"
           >
             {{ $t('INBOX_MGMT.SETTINGS_POPUP.HMAC_LINK_TO_DOCS') }}
           </a>
