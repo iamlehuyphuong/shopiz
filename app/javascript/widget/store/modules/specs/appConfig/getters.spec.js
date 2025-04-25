@@ -9,8 +9,8 @@ describe('#getters', () => {
   });
   describe('#getReferrerHost', () => {
     it('returns correct value', () => {
-      const state = { referrerHost: 'salesman.effiai.one' };
-      expect(getters.getReferrerHost(state)).toEqual('salesman.effiai.one');
+      const state = { referrerHost: 'salesman.effiai.pro' };
+      expect(getters.getReferrerHost(state)).toEqual('salesman.effiai.pro');
     });
   });
   describe('#getShowUnreadMessagesDialog', () => {

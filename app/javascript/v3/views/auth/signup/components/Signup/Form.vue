@@ -69,11 +69,11 @@ export default {
     termsLink() {
       return this.$t('REGISTER.TERMS_ACCEPT')
         .replace(
-          'https://salesman.effiai.one/terms',
+          'https://salesman.effiai.pro/terms',
           this.globalConfig.termsURL
         )
         .replace(
-          'https://salesman.effiai.one/privacy-policy',
+          'https://salesman.effiai.pro/privacy-policy',
           this.globalConfig.privacyURL
         );
     },

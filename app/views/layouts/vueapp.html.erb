@@ -40,6 +40,8 @@
         fbAppId: '<%= @global_config['FB_APP_ID'] %>',
         zaloAppId: '<%= ENV.fetch('ZALO_APP_ID', nil) %>',
         zaloAppSecret: '<%= ENV.fetch('ZALO_APP_SECRET', nil) %>',
+        activepiecesInstanceUrl: '<%= ENV.fetch('ACTIVE_PIECES_INSTANCE_URL', nil) %>',
+        activepiecesJwtSecret: '<%= ENV.fetch('ACTIVE_PIECES_JWT_SECRET', nil) %>',
         googleOAuthClientId: '<%= ENV.fetch('GOOGLE_OAUTH_CLIENT_ID', nil) %>',
         googleOAuthCallbackUrl: '<%= ENV.fetch('GOOGLE_OAUTH_CALLBACK_URL', nil) %>',
         fbApiVersion: '<%= @global_config['FACEBOOK_API_VERSION'] %>',
@@ -61,7 +63,7 @@
       }
       window.errorLoggingConfig = '<%= ENV.fetch('SENTRY_FRONTEND_DSN', '') || ENV.fetch('SENTRY_DSN', '') %>'
     </script>
-    <script src="https://cdn.activepieces.com/sdk/embed/0.3.5.js"></script>
+    <script src="https://cdn.activepieces.com/sdk/embed/0.3.7.js"></script>
     <% if @global_config['ANALYTICS_TOKEN'].present? %>
     <script>
       window.analyticsConfig = {

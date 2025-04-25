@@ -21,7 +21,7 @@ describe('#actions', () => {
         { commit },
         {
           websiteToken: 'XDsafmADasd',
-          currentURL: 'https://salesman.effiai.one',
+          currentURL: 'https://salesman.effiai.pro',
           isInBusinessHours: true,
         }
       );
@@ -35,7 +35,7 @@ describe('#actions', () => {
             {
               id: 11,
               timeOnPage: '20',
-              url: 'https://salesman.effiai.one',
+              url: 'https://salesman.effiai.pro',
               triggerOnlyDuringBusinessHours: false,
             },
           ],
@@ -49,7 +49,7 @@ describe('#actions', () => {
         { commit },
         {
           websiteToken: 'XDsafmADasd',
-          currentURL: 'https://salesman.effiai.one',
+          currentURL: 'https://salesman.effiai.pro',
           isInBusinessHours: true,
         }
       );
@@ -59,7 +59,7 @@ describe('#actions', () => {
   describe('#initCampaigns', () => {
     const actionParams = {
       websiteToken: 'XDsafmADasd',
-      currentURL: 'https://salesman.effiai.one',
+      currentURL: 'https://salesman.effiai.pro',
     };
     it('sends correct actions if campaigns are empty', async () => {
       await actions.initCampaigns(
@@ -81,7 +81,7 @@ describe('#actions', () => {
             {
               id: 11,
               timeOnPage: '20',
-              url: 'https://salesman.effiai.one',
+              url: 'https://salesman.effiai.pro',
               triggerOnlyDuringBusinessHours: false,
             },
           ],

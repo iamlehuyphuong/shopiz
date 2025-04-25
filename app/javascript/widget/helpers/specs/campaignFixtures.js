@@ -4,7 +4,7 @@ export default [
     trigger_only_during_business_hours: false,
     trigger_rules: {
       time_on_page: 3,
-      url: 'https://salesman.effiai.one/pricing',
+      url: 'https://salesman.effiai.pro/pricing',
     },
   },
   {
@@ -12,7 +12,7 @@ export default [
     trigger_only_during_business_hours: false,
     trigger_rules: {
       time_on_page: 6,
-      url: 'https://salesman.effiai.one/about',
+      url: 'https://salesman.effiai.pro/about',
     },
   },
 ];

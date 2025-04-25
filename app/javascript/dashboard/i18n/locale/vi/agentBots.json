@@ -3,7 +3,7 @@
     "HEADER": "Bots",
     "LOADING_EDITOR": "Đang tải trình chỉnh sửa...",
     "HEADER_BTN_TXT": "Thêm cấu hình bot",
-    "SIDEBAR_TXT": "<p><b>Agent Bots</b> <p>Agent Bots giống như những thành viên tuyệt vời nhất trong nhóm của bạn. Chúng có thể xử lý những việc nhỏ, để bạn tập trung vào những việc quan trọng. Hãy thử sử dụng chúng.</p> <p>Bạn có thể quản lý bot của mình từ trang này hoặc tạo bot mới bằng cách nhấn nút 'Thêm cấu hình bot'.</p> <p>Mở <a href=\"https://salesman.effiai.one/hc/chatwoot-user-guide-cloud-version/articles/1677497472-how-to-use-agent-bots\" target=\"blank\">sổ tay Agent Bots</a> trong một tab khác để được hỗ trợ.</p>",
+    "SIDEBAR_TXT": "<p><b>Agent Bots</b> <p>Agent Bots giống như những thành viên tuyệt vời nhất trong nhóm của bạn. Chúng có thể xử lý những việc nhỏ, để bạn tập trung vào những việc quan trọng. Hãy thử sử dụng chúng.</p> <p>Bạn có thể quản lý bot của mình từ trang này hoặc tạo bot mới bằng cách nhấn nút 'Thêm cấu hình bot'.</p> <p>Mở <a href=\"https://salesman.effiai.pro/hc/chatwoot-user-guide-cloud-version/articles/1677497472-how-to-use-agent-bots\" target=\"blank\">sổ tay Agent Bots</a> trong một tab khác để được hỗ trợ.</p>",
     "CSML_BOT_EDITOR": {
       "NAME": {
         "LABEL": "Tên bot",
