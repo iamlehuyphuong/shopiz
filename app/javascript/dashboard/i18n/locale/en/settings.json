@@ -37,7 +37,7 @@
       },
       "INTERFACE_SECTION": {
         "TITLE": "Interface",
-        "NOTE": "Customize the look and feel of your Salesman dashboard.",
+        "NOTE": "Customize the look and feel of your Chatwoot dashboard.",
         "FONT_SIZE": {
           "TITLE": "Font size",
           "NOTE": "Adjust the text size across the dashboard based on your preference.",
@@ -278,8 +278,6 @@
     "PARTICIPATING_CONVERSATIONS": "Participating",
     "UNATTENDED_CONVERSATIONS": "Unattended",
     "REPORTS": "Reports",
-    "CUSTOMIZE_CHATBOT":"Customize chatbot",
-    "WORKFLOWS": "Workflows",
     "SETTINGS": "Settings",
     "CONTACTS": "Contacts",
     "CAPTAIN": "Captain",
@@ -315,11 +313,6 @@
     "LIVE_CHAT": "Live Chat",
     "SMS": "SMS",
     "CAMPAIGNS": "Campaigns",
-    "COMPANY_SETUP": "Company Setup",
-    "PRODUCT": "Product",
-    "SERVICE": "Service",
-    "FAQS": "FAQs",
-    "CONFIG_CHATBOT": "Config Chatbot",
     "ONGOING": "Ongoing",
     "ONE_OFF": "One off",
     "REPORTS_SLA": "SLA",
@@ -381,7 +374,7 @@
     "NO_BILLING_USER": "Your billing account is being configured. Please refresh the page and try again."
   },
   "CREATE_ACCOUNT": {
-    "NO_ACCOUNT_WARNING": "Uh oh! We could not find any Salesman accounts. Please create a new account to continue.",
+    "NO_ACCOUNT_WARNING": "Uh oh! We could not find any Chatwoot accounts. Please create a new account to continue.",
     "NEW_ACCOUNT": "New Account",
     "SELECTOR_SUBTITLE": "Create a new account",
     "API": {
@@ -394,7 +387,8 @@
         "LABEL": "Company Name",
         "PLACEHOLDER": "Wayne Enterprises"
       },
-      "SUBMIT": "Submit"
+      "SUBMIT": "Submit",
+      "CANCEL": "Cancel"
     }
   },
   "KEYBOARD_SHORTCUTS": {

@@ -4,7 +4,6 @@ import { INBOX_TYPES } from 'dashboard/helper/inbox';
 import InboxesAPI from '../../api/inboxes';
 import WebChannel from '../../api/channel/webChannel';
 import FBChannel from '../../api/channel/fbChannel';
-import ZaloChannel from '../../api/channel/zaloChannel';
 import TwilioChannel from '../../api/channel/twilioChannel';
 import { throwErrorMessage } from '../utils/api';
 import AnalyticsHelper from '../../helper/AnalyticsHelper';
@@ -123,6 +122,20 @@ export const getters = {
       item => item.channel_type !== INBOX_TYPES.EMAIL
     );
   },
+  getFacebookInboxByInstagramId: $state => instagramId => {
+    return $state.records.find(
+      item =>
+        item.instagram_id === instagramId &&
+        item.channel_type === INBOX_TYPES.FB
+    );
+  },
+  getInstagramInboxByInstagramId: $state => instagramId => {
+    return $state.records.find(
+      item =>
+        item.instagram_id === instagramId &&
+        item.channel_type === INBOX_TYPES.INSTAGRAM
+    );
+  },
 };
 
 const sendAnalyticsEvent = channelType => {
@@ -201,19 +214,6 @@ export const actions = {
       commit(types.default.ADD_INBOXES, response.data);
       commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
       sendAnalyticsEvent('facebook');
-      return response.data;
-    } catch (error) {
-      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
-      throw new Error(error);
-    }
-  },
-  createZaloChannel: async ({ commit }, params) => {
-    try {
-      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: true });
-      const response = await ZaloChannel.create(params);
-      commit(types.default.ADD_INBOXES, response.data);
-      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
-      sendAnalyticsEvent('zalo');
       return response.data;
     } catch (error) {
       commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });

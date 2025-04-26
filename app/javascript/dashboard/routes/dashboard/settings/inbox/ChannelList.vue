@@ -25,7 +25,6 @@ export default {
       return [
         { key: 'website', name: 'Website' },
         { key: 'facebook', name: 'Messenger' },
-        { key: 'zalo', name: 'Zalo' },
         { key: 'whatsapp', name: 'WhatsApp' },
         { key: 'sms', name: 'SMS' },
         { key: 'email', name: 'Email' },
@@ -36,6 +35,7 @@ export default {
         },
         { key: 'telegram', name: 'Telegram' },
         { key: 'line', name: 'Line' },
+        { key: 'instagram', name: 'Instagram' },
       ];
     },
     ...mapGetters({
@@ -63,7 +63,7 @@ export default {
 
 <template>
   <div
-    class="border border-slate-25 dark:border-slate-800/60 bg-white dark:bg-slate-900 h-full p-6 w-full max-w-full md:w-3/4 md:max-w-[75%] flex-shrink-0 flex-grow-0"
+    class="w-full h-full col-span-6 p-6 overflow-auto border border-b-0 rounded-t-lg border-n-weak bg-n-solid-1"
   >
     <PageHeader
       class="max-w-4xl"

@@ -14,11 +14,11 @@ export default {
   },
   emits: ['channelItemClick'],
   computed: {
-    hasZaloConfigured() {
-      return window.chatwootConfig?.zaloAppId;
-    },
     hasFbConfigured() {
       return window.chatwootConfig?.fbAppId;
+    },
+    hasInstagramConfigured() {
+      return window.chatwootConfig?.instagramAppId;
     },
     isActive() {
       const { key } = this.channel;
@@ -31,11 +31,14 @@ export default {
       if (key === 'facebook') {
         return this.enabledFeatures.channel_facebook && this.hasFbConfigured;
       }
-      if (key === 'zalo') {
-        return this.enabledFeatures.channel_zalo && this.hasZaloConfigured;
-      }
       if (key === 'email') {
         return this.enabledFeatures.channel_email;
+      }
+
+      if (key === 'instagram') {
+        return (
+          this.enabledFeatures.channel_instagram && this.hasInstagramConfigured
+        );
       }
 
       return [
@@ -46,6 +49,7 @@ export default {
         'sms',
         'telegram',
         'line',
+        'instagram',
       ].includes(key);
     },
   },

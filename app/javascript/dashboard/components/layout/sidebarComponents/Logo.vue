@@ -25,7 +25,7 @@ export default {
 </script>
 
 <template>
-  <div class="flex items-center justify-center flex-col">
+  <div class="w-8 h-8">
     <router-link :to="dashboardPath" replace>
       <img :src="source" :alt="name" />
     </router-link>

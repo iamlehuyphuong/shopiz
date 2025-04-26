@@ -567,7 +567,7 @@ export const sampleActiveFilters = [
   {
     attributeKey: 'email',
     filterOperator: 'does_not_contain',
-    values: 'test@salesman.effiai.pro',
+    values: 'test@chatwoot.com',
     queryOperator: 'or',
   },
   {

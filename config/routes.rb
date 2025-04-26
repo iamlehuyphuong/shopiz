@@ -18,8 +18,11 @@ Rails.application.routes.draw do
     get '/app/*params', to: 'dashboard#index'
     get '/app/accounts/:account_id/settings/inboxes/new/twitter', to: 'dashboard#index', as: 'app_new_twitter_inbox'
     get '/app/accounts/:account_id/settings/inboxes/new/microsoft', to: 'dashboard#index', as: 'app_new_microsoft_inbox'
+    get '/app/accounts/:account_id/settings/inboxes/new/instagram', to: 'dashboard#index', as: 'app_new_instagram_inbox'
     get '/app/accounts/:account_id/settings/inboxes/new/:inbox_id/agents', to: 'dashboard#index', as: 'app_twitter_inbox_agents'
     get '/app/accounts/:account_id/settings/inboxes/new/:inbox_id/agents', to: 'dashboard#index', as: 'app_email_inbox_agents'
+    get '/app/accounts/:account_id/settings/inboxes/new/:inbox_id/agents', to: 'dashboard#index', as: 'app_instagram_inbox_agents'
+    get '/app/accounts/:account_id/settings/inboxes/:inbox_id', to: 'dashboard#index', as: 'app_instagram_inbox_settings'
     get '/app/accounts/:account_id/settings/inboxes/:inbox_id', to: 'dashboard#index', as: 'app_email_inbox_settings'
 
     resource :widget, only: [:show]
@@ -87,12 +90,6 @@ Rails.application.routes.draw do
           resources :dashboard_apps, only: [:index, :show, :create, :update, :destroy]
           namespace :channels do
             resource :twilio_channel, only: [:create]
-            resource :zalo_channel, only: [] do
-              collection do
-                post :create
-                get :create
-              end
-            end
           end
           resources :conversations, only: [:index, :create, :show, :update] do
             collection do
@@ -220,6 +217,10 @@ Rails.application.routes.draw do
             resource :authorization, only: [:create]
           end
 
+          namespace :instagram do
+            resource :authorization, only: [:create]
+          end
+
           resources :webhooks, only: [:index, :create, :update, :destroy]
           namespace :integrations do
             resources :apps, only: [:index, :show]
@@ -237,6 +238,12 @@ Rails.application.routes.draw do
               collection do
                 post :create_a_meeting
                 post :add_participant_to_meeting
+              end
+            end
+            resource :shopify, controller: 'shopify', only: [:destroy] do
+              collection do
+                post :auth
+                get :orders
               end
             end
             resource :linear, controller: 'linear', only: [] do
@@ -257,7 +264,6 @@ Rails.application.routes.draw do
           resources :portals do
             member do
               patch :archive
-              put :add_members
               delete :logo
             end
             resources :categories
@@ -365,6 +371,7 @@ Rails.application.routes.draw do
               post :checkout
               post :subscription
               get :limits
+              post :toggle_deletion
             end
           end
         end
@@ -454,14 +461,16 @@ Rails.application.routes.draw do
   post 'webhooks/whatsapp/:phone_number', to: 'webhooks/whatsapp#process_payload'
   get 'webhooks/instagram', to: 'webhooks/instagram#verify'
   post 'webhooks/instagram', to: 'webhooks/instagram#events'
-  post 'webhooks/zalo', to: 'webhooks/zalo#process_payload'
-  get '/zalo/callback', to: 'zalo/callback#create'
 
   namespace :twitter do
     resource :callback, only: [:show]
   end
 
   namespace :linear do
+    resource :callback, only: [:show]
+  end
+
+  namespace :shopify do
     resource :callback, only: [:show]
   end
 
@@ -472,7 +481,7 @@ Rails.application.routes.draw do
 
   get 'microsoft/callback', to: 'microsoft/callbacks#show'
   get 'google/callback', to: 'google/callbacks#show'
-
+  get 'instagram/callback', to: 'instagram/callbacks#show'
   # ----------------------------------------------------------------------
   # Routes for external service verifications
   get '.well-known/assetlinks.json' => 'android_app#assetlinks'

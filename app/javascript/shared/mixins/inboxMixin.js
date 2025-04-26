@@ -15,7 +15,6 @@ export const INBOX_FEATURE_MAP = {
     INBOX_TYPES.WHATSAPP,
     INBOX_TYPES.TELEGRAM,
     INBOX_TYPES.API,
-    INBOX_TYPES.ZALO,
   ],
   [INBOX_FEATURES.REPLY_TO_OUTGOING]: [
     INBOX_TYPES.WEB,
@@ -23,7 +22,6 @@ export const INBOX_FEATURE_MAP = {
     INBOX_TYPES.WHATSAPP,
     INBOX_TYPES.TELEGRAM,
     INBOX_TYPES.API,
-    INBOX_TYPES.ZALO,
   ],
 };
 
@@ -49,9 +47,6 @@ export default {
     },
     isAFacebookInbox() {
       return this.channelType === INBOX_TYPES.FB;
-    },
-    isAZaloOaChannel() {
-      return this.channelType === INBOX_TYPES.ZALO;
     },
     isAWebWidgetInbox() {
       return this.channelType === INBOX_TYPES.WEB;
@@ -125,6 +120,9 @@ export default {
         this.channelType === INBOX_TYPES.WHATSAPP ||
         this.isATwilioWhatsAppChannel
       );
+    },
+    isAInstagramChannel() {
+      return this.channelType === INBOX_TYPES.INSTAGRAM;
     },
   },
   methods: {

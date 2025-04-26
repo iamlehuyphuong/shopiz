@@ -53,6 +53,8 @@ ar:
       invalid_message_type: 'نوع الرسالة غير صالح. الإجراء غير مسموح به'
     slack:
       invalid_channel_id: 'قناة Slack غير صحيحة. الرجاء المحاولة مرة أخرى'
+    channel_service:
+      invalid_source_id: "This conversation may have originally belonged to a different contact but is now showing here due to a merge or update. You won't be able to continue this conversation. Please create a new conversation to proceed."
     inboxes:
       imap:
         socket_error: الرجاء التحقق من اتصال الشبكة وعنوان IMAP ثم حاول مرة أخرى.
@@ -68,6 +70,8 @@ ar:
       invalid_operator: مشغل غير صالح. المشغل المسموح به لـ %{attribute_name} هو [%{allowed_keys}].
       invalid_query_operator: Query operator must be either "AND" or "OR".
       invalid_value: قيمة غير صالحة. القيم المقدمة ل %{attribute_name} غير صالحة
+    custom_attribute_definition:
+      key_conflict: The provided key is not allowed as it might conflict with default attributes.
   reports:
     period: فترة التبليغ %{since} إلى %{until}
     utc_warning: التقرير الذي تم إنشاؤه في التوقيت العالمي الموحّد
@@ -195,14 +199,14 @@ ar:
       description: 'تسمح لك تطبيقات لوحة التحكم بإنشاء وتضمين التطبيقات التي تعرض معلومات المستخدم أو الطلبات أو سجل الدفع، مما يوفر المزيد من السياق لوكلاء دعم العملاء الخاص بك.'
     dyte:
       name: 'Dyte'
-      description: 'Dyte هو منتج يدمج وظائف الصوت والفيديو في تطبيقك. مع هذا الدمج، يمكن لوكلائك بدء مكالمات الفيديو/الصوت مع عملائك مباشرة من Salesman.'
+      description: 'Dyte هو منتج يدمج وظائف الصوت والفيديو في تطبيقك. مع هذا الدمج، يمكن لوكلائك بدء مكالمات الفيديو/الصوت مع عملائك مباشرة من Chatwoot.'
       meeting_name: 'بدأ %{agent_name} اجتماعاً'
     slack:
       name: 'Slack'
-      description: "دمج Salesman مع Slack للحفاظ على مزامنة فريقك. هذا التكامل يسمح لك باستلام إشعارات للمحادثات الجديدة والرد عليها مباشرة داخل واجهة Slacks."
+      description: "دمج Chatwoot مع Slack للحفاظ على مزامنة فريقك. هذا التكامل يسمح لك باستلام إشعارات للمحادثات الجديدة والرد عليها مباشرة داخل واجهة Slacks."
     webhooks:
       name: 'Webhook'
-      description: 'أحداث Webhook توفر تحديثات في الوقت الحقيقي حول الأنشطة في حساب Salesman الخاص بك. يمكنك الاشتراك في الأحداث المفضلة الخاصة بك، وسترسل Salesman لك اتصالات HTTP مع التحديثات.'
+      description: 'أحداث Webhook توفر تحديثات في الوقت الحقيقي حول الأنشطة في حساب Chatwoot الخاص بك. يمكنك الاشتراك في الأحداث المفضلة الخاصة بك، وسترسل Chatwoot لك اتصالات HTTP مع التحديثات.'
     dialogflow:
       name: 'Dialogflow'
       description: 'بناء روبوتات الدردشة مع حركة الاتصال ودمجها بسهولة في صندوق الوارد الخاص بك. يمكن لهذه الروبوتات التعامل مع الاستفسارات الأولية قبل نقلها إلى وكيل خدمة العملاء.'
@@ -215,6 +219,9 @@ ar:
     linear:
       name: 'Linear'
       description: 'إنشاء مشكلات في Linear مباشرة من نافذة المحادثة الخاصة بك. بدلاً من ذلك، قم بربط مشكلات Linear القائمة من أجل عملية تتبع أكثر تبسيطاً وكفاءة.'
+    shopify:
+      name: 'Shopify'
+      description: 'Connect your Shopify store to access order details, customer information, and product data directly within your conversations and helps your support team provide faster, more contextual assistance to your customers.'
   captain:
     copilot_error: 'Please connect an assistant to this inbox to use Copilot'
     copilot_limit: 'You are out of Copilot credits. You can buy more credits from the billing section.'

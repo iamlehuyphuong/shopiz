@@ -40,7 +40,6 @@ const settings = accountId => ({
     'settings_teams_new',
     'sla_list',
     'custom_roles_list',
-    'workflow_list',
   ],
   menuItems: [
     {
@@ -128,7 +127,6 @@ const settings = accountId => ({
       meta: {
         permissions: ['administrator'],
       },
-      globalConfigFlag: 'csmlEditorHost',
       toState: frontendURL(`accounts/${accountId}/settings/agent-bots`),
       toStateName: 'agent_bots',
       featureFlag: FEATURE_FLAGS.AGENT_BOTS,
@@ -143,17 +141,6 @@ const settings = accountId => ({
       toState: frontendURL(`accounts/${accountId}/settings/macros`),
       toStateName: 'macros_wrapper',
       featureFlag: FEATURE_FLAGS.MACROS,
-    },
-    {
-      icon: 'flash-settings',
-      label: 'WORKFLOWS',
-      hasSubMenu: false,
-      meta: {
-        permissions: ['administrator', 'agent'],
-      },
-      toState: frontendURL(`accounts/${accountId}/settings/flows`),
-      toStateName: 'workflow_list',
-      featureFlag: FEATURE_FLAGS.WORKFLOWS,
     },
     {
       icon: 'chat-multiple',

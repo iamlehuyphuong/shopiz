@@ -9,7 +9,7 @@ export default [
   {
     id: 4,
     title: 'saas-customer',
-    description: 'Customers who have account on salesman.effiai.pro',
+    description: 'Customers who have account on app.chatwoot.com',
     color: '#A8DBCB',
     show_on_sidebar: false,
   },

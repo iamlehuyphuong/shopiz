@@ -11,7 +11,7 @@ import SubmitButton from '../../../../../components/Button/SubmitButton.vue';
 import { isValidPassword } from 'shared/helpers/Validators';
 import GoogleOAuthButton from '../../../../../components/GoogleOauth/Button.vue';
 import { register } from '../../../../../api/auth';
-// import * as CompanyEmailValidator from 'company-email-validator';
+import * as CompanyEmailValidator from 'company-email-validator';
 
 export default {
   components: {
@@ -52,9 +52,9 @@ export default {
         email: {
           required,
           email,
-          // businessEmailValidator(value) {
-          //   return CompanyEmailValidator.isCompanyEmail(value);
-          // },
+          businessEmailValidator(value) {
+            return CompanyEmailValidator.isCompanyEmail(value);
+          },
         },
         password: {
           required,
@@ -68,12 +68,9 @@ export default {
     ...mapGetters({ globalConfig: 'globalConfig/get' }),
     termsLink() {
       return this.$t('REGISTER.TERMS_ACCEPT')
+        .replace('https://www.chatwoot.com/terms', this.globalConfig.termsURL)
         .replace(
-          'https://salesman.effiai.pro/terms',
-          this.globalConfig.termsURL
-        )
-        .replace(
-          'https://salesman.effiai.pro/privacy-policy',
+          'https://www.chatwoot.com/privacy-policy',
           this.globalConfig.privacyURL
         );
     },
@@ -88,16 +85,19 @@ export default {
       if (!password.$error) {
         return '';
       }
-      if (!password.minLength) {
+      if (password.minLength.$invalid) {
         return this.$t('REGISTER.PASSWORD.ERROR');
       }
-      if (!password.isValidPassword) {
+      if (password.isValidPassword.$invalid) {
         return this.$t('REGISTER.PASSWORD.IS_INVALID_PASSWORD');
       }
       return '';
     },
     showGoogleOAuth() {
       return Boolean(window.chatwootConfig.googleOAuthClientId);
+    },
+    isFormValid() {
+      return !this.v$.$invalid && this.hasAValidCaptcha;
     },
   },
   methods: {
@@ -123,6 +123,7 @@ export default {
     onRecaptchaVerified(token) {
       this.credentials.hCaptchaClientResponse = token;
       this.didCaptchaReset = false;
+      this.v$.$touch();
     },
     resetCaptcha() {
       if (!this.globalConfig.hCaptchaSiteKey) {
@@ -201,7 +202,7 @@ export default {
       </div>
       <SubmitButton
         :button-text="$t('REGISTER.SUBMIT')"
-        :disabled="isSignupInProgress || !hasAValidCaptcha"
+        :disabled="isSignupInProgress || !isFormValid"
         :loading="isSignupInProgress"
         icon-class="arrow-chevron-right"
       />
