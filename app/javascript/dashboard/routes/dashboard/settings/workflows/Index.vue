@@ -1,38 +1,64 @@
-<script>
-export default {
-  name: 'WorkflowEmbed',
-  mounted() {
-    window.activepieces.configure({
-      prefix: '/',
-      instanceUrl: window.chatwootConfig.activepiecesInstanceUrl,
-      jwtToken: window.chatwootConfig.activepiecesJwtSecret,
-      embedding: {
-        containerId: 'workflow-container',
-        builder: {
-          disableNavigation: true,
-          hideLogo: true,
-          hideFlowName: true,
-        },
-        dashboard: {
-          hideSidebar: true,
-        },
-        hideFolders: true,
-        navigation: {
-          handler: ({ route }) => {
-            // The iframe route has changed, make sure you check the navigation section.
-            console.log(route);
-          },
+<script setup>
+import SettingsLayout from '../SettingsLayout.vue';
+import { frontendURL } from 'dashboard/helper/URLHelper';
+import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+onMounted(() => {
+  const router = useRouter();
+  const { accountId } = router.currentRoute.value.params;
+  window.addEventListener('popstate', () => {
+    const route = window.activepieces.extractActivepiecesRouteFromUrl({
+      vendorUrl: window.location.href,
+    });
+    window.activepieces.navigate({ route });
+  });
+  window.addEventListener('load', () => {
+    const route = window.activepieces.extractActivepiecesRouteFromUrl({
+      vendorUrl: window.location.href,
+    });
+    window.activepieces.navigate({ route });
+  });
+  window.activepieces.configure({
+    prefix: frontendURL(`accounts/${accountId}/settings`),
+    instanceUrl: window.chatwootConfig.activepiecesInstanceUrl,
+    jwtToken: window.chatwootConfig.activepiecesJwtSecret,
+    embedding: {
+      containerId: 'workflow-container',
+      builder: {
+        disableNavigation: false,
+        hideLogo: true,
+        hideFlowName: false,
+      },
+      dashboard: {
+        hideSidebar: true,
+      },
+      hideFolders: false,
+      navigation: {
+        handler: ({ route }) => {
+          // The iframe route has changed, make sure you check the navigation section.
+          // console.log('Route changed to: ', frontendURL(`accounts/${accountId}/settings${route}`));
+          // console.log(route);
+          // route can include search params at the end of it
+          if (!window.location.href.endsWith(route)) {
+            window.history.pushState({}, '', window.location.origin + route);
+          }
+          // router.replace(route);
         },
       },
-    });
-  },
-};
+    },
+  });
+});
 </script>
 
 <template>
-  <div class="flex-grow flex-shrink min-w-0 p-6 overflow-auto">
-    <div id="workflow-container" />
-  </div>
+  <SettingsLayout
+    :loading-message="$t('WORKFLOWS.LOADING')"
+    feature-name="workflow_list"
+  >
+    <template #body>
+      <div id="workflow-container" />
+    </template>
+  </SettingsLayout>
 </template>
 
 <style lang="scss" scoped>

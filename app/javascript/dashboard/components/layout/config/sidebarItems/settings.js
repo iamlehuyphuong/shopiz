@@ -151,7 +151,7 @@ const settings = accountId => ({
       meta: {
         permissions: ['administrator', 'agent'],
       },
-      toState: frontendURL(`accounts/${accountId}/settings/workflows`),
+      toState: frontendURL(`accounts/${accountId}/settings/flows`),
       toStateName: 'workflow_list',
       featureFlag: FEATURE_FLAGS.WORKFLOWS,
     },
