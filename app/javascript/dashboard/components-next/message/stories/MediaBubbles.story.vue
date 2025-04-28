@@ -174,7 +174,7 @@ const location = computed(() =>
       getAttachment('location', null, {
         coordinatesLat: 37.7937545,
         coordinatesLong: -122.3997472,
-        fallbackTitle: 'Chatwoot Inc',
+        fallbackTitle: 'Salesman Inc',
       }),
     ],
     ...baseSenderData.value,
