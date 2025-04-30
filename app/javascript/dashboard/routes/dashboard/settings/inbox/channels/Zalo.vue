@@ -18,7 +18,6 @@ export default {
   mixins: [globalConfigMixin],
   setup() {
     const { accountId } = useAccount();
-
     return {
       accountId,
       v$: useVuelidate(),

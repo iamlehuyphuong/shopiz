@@ -387,6 +387,17 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_16_182131) do
     t.index ["instagram_id"], name: "index_channel_instagram_on_instagram_id", unique: true
   end
 
+  create_table "channel_zalo_oa", force: :cascade do |t|
+    t.string "oa_access_token", null: false
+    t.string "refresh_token", null: false
+    t.integer "expires_in", null: false
+    t.integer "account_id", null: false
+    t.string "oa_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["oa_id"], name: "index_channel_zalo_oa_on_oa_id", unique: true
+  end
+
   create_table "channel_line", force: :cascade do |t|
     t.integer "account_id", null: false
     t.string "line_channel_id", null: false

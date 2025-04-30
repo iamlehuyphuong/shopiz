@@ -241,6 +241,9 @@ export default {
       if (this.isAFacebookInbox) {
         return MESSAGE_MAX_LENGTH.FACEBOOK;
       }
+      if (this.isAZaloOaChannel) {
+        return MESSAGE_MAX_LENGTH.FACEBOOK;
+      }
       if (this.isAWhatsAppChannel) {
         return MESSAGE_MAX_LENGTH.TWILIO_WHATSAPP;
       }
@@ -262,7 +265,8 @@ export default {
         this.isASmsInbox ||
         this.isATelegramChannel ||
         this.isALineChannel ||
-        this.isAInstagramChannel
+        this.isAInstagramChannel ||
+        this.isAZaloOaChannel
       );
     },
     replyButtonLabel() {

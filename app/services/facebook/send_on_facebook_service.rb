@@ -6,7 +6,11 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
   end
 
   def perform_reply
-    send_message_to_facebook fb_text_message_params if message.content.present?
+    if message.content_type? && message.content_attributes?
+      send_message_to_facebook fb_internative_message_params message
+    elsif message.content.present?
+      send_message_to_facebook fb_text_message_params
+    end
 
     if message.attachments.present?
       message.attachments.each do |attachment|
@@ -69,6 +73,117 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
           type: attachment_type(attachment),
           payload: {
             url: attachment.download_url
+          }
+        }
+      },
+      messaging_type: 'MESSAGE_TAG',
+      tag: 'ACCOUNT_UPDATE'
+    }
+  end
+
+  # Facebook internative message
+  def fb_internative_message_params(message)
+    case message.content_type
+    # 1. Options
+    when 'input_select'
+      fb_input_select_message_params message
+    # 2. Form
+    # when 'form'
+    #   fb_form_message_params message
+    # 3. Cards
+    when 'cards'
+      fb_card_message_params message
+    end
+  end
+
+  # 1. Options: FB custom like option message
+  def fb_input_select_message_params(message)
+    # 1. Element
+    items = message.content_attributes['items']
+    quick_replies = items.map do |item|
+      {
+        content_type: 'text',
+        title: item['title'],
+        payload: item['value']
+      }
+    end
+    # 2. Return
+    {
+      recipient: { id: contact.get_source_id(inbox.id) },
+      message: {
+        text: message.content,
+        quick_replies: quick_replies
+      },
+      messaging_type: 'MESSAGE_TAG',
+      tag: 'ACCOUNT_UPDATE'
+    }
+  end
+
+  # 2. Form: FB form message params
+  def fb_form_message_params(message)
+    # 1. Fields
+    fields = message.content_attributes['items'].map do |item|
+      {
+        label: item['label'],
+        value: item['default'] || 'N/A'
+      }
+    end
+    # 2. Return
+    {
+      recipient: { id: contact.get_source_id(inbox.id) },
+      message: {
+        attachment: {
+          type: 'template',
+          payload: {
+            template_type: 'structured_information',
+            elements: [
+              {
+                title: message.content,
+                fields: fields
+              }
+            ]
+          }
+        }
+      },
+      messaging_type: 'MESSAGE_TAG',
+      tag: 'ACCOUNT_UPDATE'
+    }
+  end
+
+  # 3. Facebook card message
+  def fb_card_message_params(message)
+    # 1. Element
+    elements = message.content_attributes['items'].map do |item|
+      {
+        title: item['title'],
+        image_url: item['media_url'],
+        subtitle: item['description'],
+        buttons: item['actions'].map do |action|
+          if action['type'] == 'link'
+            {
+              type: 'web_url',
+              title: action['text'],
+              url: action['uri']
+            }
+          elsif action['type'] == 'postback'
+            {
+              type: 'postback',
+              title: action['text'],
+              payload: action['payload']
+            }
+          end
+        end
+      }
+    end
+    #  2. Return
+    {
+      recipient: { id: contact.get_source_id(inbox.id) },
+      message: {
+        attachment: {
+          type: 'template',
+          payload: {
+            template_type: 'generic',
+            elements: elements
           }
         }
       },

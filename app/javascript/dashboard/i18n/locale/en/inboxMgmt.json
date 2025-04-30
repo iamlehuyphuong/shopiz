@@ -46,6 +46,13 @@
         "PICK_A_VALUE": "Pick a value",
         "CREATE_INBOX": "Create Inbox"
       },
+      "ZALO": {
+        "HELP": "PS: By signing in, we only get access to your Zalo OA's messages. Your private messages can never be accessed by Chatwoot.",
+        "INBOX_NAME": "Inbox Name",
+        "ADD_NAME": "Add a name for your inbox",
+        "PICK_NAME": "Pick A Name Your Inbox",
+        "PICK_A_VALUE": "Pick a value"
+      },
       "INSTAGRAM": {
         "CONTINUE_WITH_INSTAGRAM": "Continue with Instagram",
         "CONNECT_YOUR_INSTAGRAM_PROFILE": "Connect your Instagram Profile",

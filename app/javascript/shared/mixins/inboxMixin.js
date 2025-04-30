@@ -48,6 +48,9 @@ export default {
     isAFacebookInbox() {
       return this.channelType === INBOX_TYPES.FB;
     },
+    isAZaloOaChannel() {
+      return this.channelType === INBOX_TYPES.ZALO;
+    },
     isAWebWidgetInbox() {
       return this.channelType === INBOX_TYPES.WEB;
     },

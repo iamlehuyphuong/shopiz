@@ -21,6 +21,7 @@
 # Ignore Byebug command history file.
 .byebug_history
 .DS_Store
+.pnpm-store/
 *.log
 # Ignore application configuration
 node_modules
@@ -94,3 +95,11 @@ yarn-debug.log*
 
 # Claude.ai config file
 CLAUDE.md
+
+# Vite Ruby
+/public/vite*
+node_modules
+# Vite uses dotenv and suggests to ignore local-only env files. See
+# https://vitejs.dev/guide/env-and-mode.html#env-files
+*.local
+

@@ -1,0 +1,9 @@
+# pre-build stage
+FROM chatwoot/chatwoot:latest
+
+ENV NODE_OPTIONS="--max-old-space-size=8192"
+ENV CW_EDITION=ee
+RUN apk add --update npm
+RUN npm install -g pnpm
+
+EXPOSE 3000 3036

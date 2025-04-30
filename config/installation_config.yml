@@ -175,14 +175,15 @@
   type: secret
 - name: CHATWOOT_CLOUD_PLANS
   display_title: 'Cloud Plans'
-  value:
+  value: '[{"name":"Hacker","product_id":["plan_id"],"price_ids":["price_1"]},{"name":"Startups","product_id":["plan_id_2"],"price_ids":["price_2"]}]'
   description: 'Config to store stripe plans for cloud'
 - name: CHATWOOT_CLOUD_PLAN_FEATURES
   display_title: 'Planwise Features List'
   value:
   description: 'Config to features and their associated plans'
 - name: DEPLOYMENT_ENV
-  value: self-hosted
+  #value: self-hosted
+  value: cloud
   description: 'The deployment environment of the installation, to differentiate between Chatwoot cloud and self-hosted'
 - name: ANALYTICS_TOKEN
   value:
@@ -213,10 +214,10 @@
 
 # ------- Chatwoot Internal Config for Self Hosted ----#
 - name: INSTALLATION_PRICING_PLAN
-  value: 'community'
+  value: 'enterprise'
   description: 'The pricing plan for the installation, retrieved from the billing API'
 - name: INSTALLATION_PRICING_PLAN_QUANTITY
-  value: 0
+  value: 100000
   description: 'The number of licenses purchased for the installation, retrieved from the billing API'
 - name: CHATWOOT_SUPPORT_WEBSITE_TOKEN
   value:
@@ -319,3 +320,34 @@
   value: 'v22.0'
   locked: true
 # ------- End of Instagram Channel Related Config ------- #
+
+# ------- Zalo Integration Config ------- #
+- name: ZALO_APP_ID
+  display_title: 'Zalo App ID'
+  description: 'Zalo App ID'
+  locked: false
+  type: secret
+- name: ZALO_APP_SECRET
+  display_title: 'Zalo App Secret'
+  description: 'Zalo App Secret'
+  locked: false
+  type: secret
+- name: ZALO_OA_SECRET_KEY
+  display_title: 'Zalo OA Secret Key'
+  description: 'Zalo OA Secret Key'
+  locked: false
+  type: secret
+# ------- End of Zalo Related Config ------- #
+
+# ------- ActivePieces Integration Config ------- #
+- name: ACTIVE_PIECES_INSTANCE_URL
+  display_title: 'ActivePieces Instance URL'
+  description: 'The URL of the ActivePieces instance'
+  locked: false
+  type: secret
+- name: ACTIVE_PIECES_JWT_SECRET
+  display_title: 'ActivePieces JWT Secret'
+  description: 'The JWT secret used to authenticate with ActivePieces'
+  locked: false
+  type: secret
+# ------- End of ActivePieces Related Config ------- #

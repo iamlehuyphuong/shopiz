@@ -19,7 +19,7 @@ onMounted(() => {
     window.activepieces.navigate({ route });
   });
   window.activepieces.configure({
-    prefix: frontendURL(`accounts/${accountId}/settings`),
+    prefix: frontendURL(`accounts/${accountId}/settings/agent-bots`),
     instanceUrl: window.chatwootConfig.activepiecesInstanceUrl,
     jwtToken: window.chatwootConfig.activepiecesJwtSecret,
     embedding: {
