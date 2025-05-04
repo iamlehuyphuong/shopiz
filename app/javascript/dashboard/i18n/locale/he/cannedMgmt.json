@@ -35,7 +35,7 @@
       },
       "API": {
         "SUCCESS_MESSAGE": "Canned response added successfully.",
-        "ERROR_MESSAGE": "לא ניתן להתחבר לשרת Woot, נסה שוב מאוחר יותר"
+        "ERROR_MESSAGE": "לא ניתן להתחבר לשרת, נסה שוב מאוחר יותר"
       }
     },
     "EDIT": {
@@ -57,14 +57,14 @@
       "BUTTON_TEXT": "ערוך",
       "API": {
         "SUCCESS_MESSAGE": "Canned response is updated successfully.",
-        "ERROR_MESSAGE": "לא ניתן להתחבר לשרת Woot, נסה שוב מאוחר יותר"
+        "ERROR_MESSAGE": "לא ניתן להתחבר לשרת, נסה שוב מאוחר יותר"
       }
     },
     "DELETE": {
       "BUTTON_TEXT": "מחק",
       "API": {
         "SUCCESS_MESSAGE": "Canned response deleted successfully.",
-        "ERROR_MESSAGE": "לא ניתן להתחבר לשרת Woot, נסה שוב מאוחר יותר"
+        "ERROR_MESSAGE": "לא ניתן להתחבר לשרת, נסה שוב מאוחר יותר"
       },
       "CONFIRM": {
         "TITLE": "אשר מחיקה",

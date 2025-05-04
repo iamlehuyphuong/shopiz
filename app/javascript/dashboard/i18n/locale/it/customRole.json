@@ -54,7 +54,7 @@
       },
       "CANCEL_BUTTON_TEXT": "annulla",
       "API": {
-        "ERROR_MESSAGE": "Impossibile connettersi al server Woot, riprova più tardi"
+        "ERROR_MESSAGE": "Impossibile connettersi al server, riprova più tardi"
       }
     },
     "ADD": {
@@ -78,7 +78,7 @@
       "BUTTON_TEXT": "Elimina",
       "API": {
         "SUCCESS_MESSAGE": "Custom role deleted successfully.",
-        "ERROR_MESSAGE": "Impossibile connettersi al server Woot, riprova più tardi"
+        "ERROR_MESSAGE": "Impossibile connettersi al server, riprova più tardi"
       },
       "CONFIRM": {
         "TITLE": "Conferma eliminazione",
