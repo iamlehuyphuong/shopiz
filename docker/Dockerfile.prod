@@ -8,6 +8,8 @@ RUN npm install -g pnpm
 
 COPY ./app /app/app
 COPY ./db /app/db
+COPY ./package.json /app/package.json
+COPY ./pnpm-lock.yaml /app/pnpm-lock.yaml
 COPY ./enterprise /app/enterprise
 COPY ./public /app/public
 COPY ./config /app/config
