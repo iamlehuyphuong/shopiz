@@ -24,10 +24,10 @@ services:
       - ./lib:/app/lib
       - ./vendor:/app/vendor
       - ./enterprise:/app/enterprise
-      - ./public/vite:/app/public/vite
+      - ./public:/app/public
       - ./db:/app/db
       - .env:/app/.env
-      #- node_modules:/app/node_modules
+      - node_modules:/app/node_modules
       #- packs:/app/public/packs
       - cache:/app/tmp/cache
       - bundle:/usr/local/bundle
