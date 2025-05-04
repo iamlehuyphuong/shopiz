@@ -1,2 +1,0 @@
-import{I as r}from"./IframeLoader-C5EsudX2.js";import{_ as t,s as n,n as s,o as a,e as c}from"./_plugin-vue_export-helper-Dsw5LM4T.js";const l={name:"ArticleViewer",components:{IframeLoader:r}},i={class:"bg-white h-full"};function m(e,p,_,f,d,u){const o=n("IframeLoader");return a(),s("div",i,[c(o,{url:e.$route.query.link},null,8,["url"])])}const I=t(l,[["render",m]]);export{I as default};
-//# sourceMappingURL=ArticleViewer-CEqMWJLy.js.map

@@ -67,19 +67,19 @@ export const documentsList = [
     external_link:
       'https://salesman.effiai.pro/hc/user-guide/articles/1677688192-how-to-use-conversation-filters',
     id: 3059,
-    name: 'How to use Conversation Filters? | User Guide | Salesman',
+    name: 'How to use Conversation Filters? | User Guide | Chatwoot',
     status: 'available',
   },
   {
     account_id: 2,
     assistant: { id: 2, name: 'Support Genie' },
     content:
-      'Step-by-step guide for automating ticket assignments and improving support workflow in Salesman.',
+      'Step-by-step guide for automating ticket assignments and improving support workflow in Chatwoot.',
     created_at: 1736143273,
     external_link:
       'https://salesman.effiai.pro/hc/user-guide/articles/1677688200-automating-ticket-assignments',
     id: 3060,
-    name: 'Automating Ticket Assignments | User Guide | Salesman',
+    name: 'Automating Ticket Assignments | User Guide | Chatwoot',
     status: 'available',
   },
   {
@@ -91,7 +91,7 @@ export const documentsList = [
     external_link:
       'https://salesman.effiai.pro/hc/user-guide/articles/1677688210-managing-customer-profiles',
     id: 3061,
-    name: 'Managing Customer Profiles | User Guide | Salesman',
+    name: 'Managing Customer Profiles | User Guide | Chatwoot',
     status: 'available',
   },
   {
@@ -103,19 +103,19 @@ export const documentsList = [
     external_link:
       'https://salesman.effiai.pro/hc/user-guide/articles/1677688220-sales-tracking-guide',
     id: 3062,
-    name: 'Sales Tracking Guide | User Guide | Salesman',
+    name: 'Sales Tracking Guide | User Guide | Chatwoot',
     status: 'available',
   },
   {
     account_id: 5,
     assistant: { id: 5, name: 'TicketBot' },
     content:
-      'How to efficiently create, manage, and resolve tickets in Salesman.',
+      'How to efficiently create, manage, and resolve tickets in Chatwoot.',
     created_at: 1736143276,
     external_link:
       'https://salesman.effiai.pro/hc/user-guide/articles/1677688230-managing-tickets',
     id: 3063,
-    name: 'Managing Tickets | User Guide | Salesman',
+    name: 'Managing Tickets | User Guide | Chatwoot',
     status: 'available',
   },
   {
@@ -127,7 +127,7 @@ export const documentsList = [
     external_link:
       'https://salesman.effiai.pro/hc/user-guide/articles/1677688240-financial-reporting',
     id: 3064,
-    name: 'Financial Reporting | User Guide | Salesman',
+    name: 'Financial Reporting | User Guide | Chatwoot',
     status: 'available',
   },
 ];
@@ -139,7 +139,7 @@ export const responsesList = [
       'Messenger may be deactivated because you are on a free plan or the limit for inboxes might have been reached.',
     created_at: 1736283330,
     id: 87,
-    question: 'Why is my Messenger in Salesman deactivated?',
+    question: 'Why is my Messenger in Chatwoot deactivated?',
     status: 'pending',
     assistant: {
       account_id: 1,
@@ -156,7 +156,7 @@ export const responsesList = [
       'You can integrate your WhatsApp account by navigating to the Integrations section and selecting the WhatsApp integration option.',
     created_at: 1736283340,
     id: 88,
-    question: 'How do I integrate WhatsApp with Salesman?',
+    question: 'How do I integrate WhatsApp with Chatwoot?',
     assistant: {
       account_id: 2,
       config: { product_name: 'Chatwoot' },
@@ -172,7 +172,7 @@ export const responsesList = [
       "To reset your password, go to the login page and click on 'Forgot Password', then follow the instructions sent to your email.",
     created_at: 1736283350,
     id: 89,
-    question: 'How can I reset my password in Salesman?',
+    question: 'How can I reset my password in Chatwoot?',
     assistant: {
       account_id: 3,
       config: { product_name: 'Chatwoot' },
@@ -188,7 +188,7 @@ export const responsesList = [
       "You can enable the dark mode in settings by navigating to 'Appearance' and selecting 'Dark Mode'.",
     created_at: 1736283360,
     id: 90,
-    question: 'How do I enable dark mode in Salesman?',
+    question: 'How do I enable dark mode in Chatwoot?',
     assistant: {
       account_id: 4,
       config: { product_name: 'Chatwoot' },
@@ -204,7 +204,7 @@ export const responsesList = [
       "To add a new team member, navigate to 'Settings', then 'Team', and click on 'Add Team Member'.",
     created_at: 1736283370,
     id: 91,
-    question: 'How do I add a new team member in Salesman?',
+    question: 'How do I add a new team member in Chatwoot?',
     assistant: {
       account_id: 5,
       config: { product_name: 'Chatwoot' },
@@ -217,10 +217,10 @@ export const responsesList = [
   {
     account_id: 6,
     answer:
-      "Campaigns in Salesman allow you to send targeted messages to specific user segments. You can create them in the 'Campaigns' section.",
+      "Campaigns in Chatwoot allow you to send targeted messages to specific user segments. You can create them in the 'Campaigns' section.",
     created_at: 1736283380,
     id: 92,
-    question: 'What are campaigns in Salesman?',
+    question: 'What are campaigns in Chatwoot?',
     assistant: {
       account_id: 6,
       config: { product_name: 'Chatwoot' },

@@ -1,19 +1,19 @@
 {
   "DATE_PICKER": {
     "APPLY_BUTTON": "Áp dụng",
-    "CLEAR_BUTTON": "Xóa",
+    "CLEAR_BUTTON": "Clear",
     "DATE_RANGE_INPUT": {
-      "START": "Ngày bắt đầu",
-      "END": "Ngày kết thúc"
+      "START": "Start Date",
+      "END": "End Date"
     },
     "DATE_RANGE_OPTIONS": {
-      "TITLE": "PHẠM VI NGÀY",
-      "LAST_7_DAYS": "7 ngày qua",
-      "LAST_30_DAYS": "30 ngày qua",
-      "LAST_3_MONTHS": "3 tháng qua",
-      "LAST_6_MONTHS": "6 tháng qua",
-      "LAST_YEAR": "Năm trước",
-      "CUSTOM_RANGE": "Phạm vi tùy chỉnh"
+      "TITLE": "DATE RANGE",
+      "LAST_7_DAYS": "7 ngày cuối",
+      "LAST_30_DAYS": "30 ngày cuối",
+      "LAST_3_MONTHS": "3 tháng vừa qua",
+      "LAST_6_MONTHS": "6 tháng vừa qua",
+      "LAST_YEAR": "Năm ngoái",
+      "CUSTOM_RANGE": "Phạm vi ngày tùy chỉnh"
     }
   }
 }

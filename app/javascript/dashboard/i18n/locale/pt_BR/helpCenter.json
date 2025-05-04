@@ -9,7 +9,7 @@
       "FILTER": "Filtrar por",
       "SORT": "Classificar por",
       "LOCALE": "Localidade",
-      "SETTINGS_BUTTON": "Confirgurações",
+      "SETTINGS_BUTTON": "Configurações",
       "NEW_BUTTON": "Novo artigo",
       "DROPDOWN_OPTIONS": {
         "PUBLISHED": "Publicado",
@@ -121,7 +121,7 @@
             "COUNT_LABEL": "artigos",
             "ADD": "Adicionar localidade",
             "VISIT": "Visitar site",
-            "SETTINGS": "Confirgurações",
+            "SETTINGS": "Configurações",
             "DELETE": "Excluir"
           },
           "PORTAL_CONFIG": {
@@ -689,7 +689,7 @@
       "CONFIRM_BUTTON_LABEL": "Criar",
       "NAME": {
         "LABEL": "Nome",
-        "PLACEHOLDER": "Guia do Usuário | Salesman",
+        "PLACEHOLDER": "Guia do Usuário | Chatwoot",
         "MESSAGE": "Escolha um nome para o seu portal.",
         "ERROR": "O nome é obrigatório"
       },
@@ -760,7 +760,7 @@
           },
           "DNS_CONFIGURATION_DIALOG": {
             "HEADER": "Configuração de DNS",
-            "DESCRIPTION": "Faça o login na conta que você tem com seu provedor DNS e adicione um registro CNAME para subdomínio apontando para salesman.help",
+            "DESCRIPTION": "Faça o login na conta que você tem com seu provedor DNS e adicione um registro CNAME para subdomínio apontando para chatwoot.help",
             "HELP_TEXT": "Assim que isso for feito, você poderá entrar em contato com o nosso suporte para solicitar o certificado SSL gerado automaticamente.",
             "CONFIRM_BUTTON_LABEL": "Entendi!"
           }

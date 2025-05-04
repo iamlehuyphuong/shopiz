@@ -1,12 +1,10 @@
 class Facebook::SendOnFacebookService < Base::SendOnChannelService
   private
 
-  # Get channel class
   def channel_class
     Channel::FacebookPage
   end
 
-  # Perform reply
   def perform_reply
     if message.content_type? && message.content_attributes?
       send_message_to_facebook fb_internative_message_params message
@@ -25,18 +23,31 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
     message.update!(status: :failed, external_error: e.message)
   end
 
-  # Send message to facebook
   def send_message_to_facebook(delivery_params)
-    result = Facebook::Messenger::Bot.deliver(delivery_params, page_id: channel.page_id)
-    parsed_result = JSON.parse(result)
+    parsed_result = deliver_message(delivery_params)
+    return if parsed_result.nil?
+
     if parsed_result['error'].present?
       message.update!(status: :failed, external_error: external_error(parsed_result))
-      Rails.logger.info "Facebook::SendOnFacebookService: Error sending message to Facebook : Page - #{channel.page_id} : #{result}"
+      Rails.logger.info "Facebook::SendOnFacebookService: Error sending message to Facebook : Page - #{channel.page_id} : #{parsed_result}"
     end
+
     message.update!(source_id: parsed_result['message_id']) if parsed_result['message_id'].present?
   end
 
-  # Facebook text message param
+  def deliver_message(delivery_params)
+    result = Facebook::Messenger::Bot.deliver(delivery_params, page_id: channel.page_id)
+    JSON.parse(result)
+  rescue JSON::ParserError
+    message.update!(status: :failed, external_error: 'Facebook was unable to process this request')
+    Rails.logger.error "Facebook::SendOnFacebookService: Error parsing JSON response from Facebook : Page - #{channel.page_id} : #{result}"
+    nil
+  rescue Net::OpenTimeout
+    message.update!(status: :failed, external_error: 'Request timed out, please try again later')
+    Rails.logger.error "Facebook::SendOnFacebookService: Timeout error sending message to Facebook : Page - #{channel.page_id}"
+    nil
+  end
+
   def fb_text_message_params
     {
       recipient: { id: contact.get_source_id(inbox.id) },
@@ -46,7 +57,6 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
     }
   end
 
-  # External error
   def external_error(response)
     # https://developers.facebook.com/docs/graph-api/guides/error-handling/
     error_message = response['error']['message']
@@ -55,7 +65,6 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
     "#{error_code} - #{error_message}"
   end
 
-  # Facebook attachment message params
   def fb_attachment_message_params(attachment)
     {
       recipient: { id: contact.get_source_id(inbox.id) },
@@ -183,20 +192,17 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
     }
   end
 
-  # Attachment type
   def attachment_type(attachment)
     return attachment.file_type if %w[image audio video file].include? attachment.file_type
 
     'file'
   end
 
-  # Sent first outgoing message after 24 hours
   def sent_first_outgoing_message_after_24_hours?
     # we can send max 1 message after 24 hour window
     conversation.messages.outgoing.where('id > ?', conversation.last_incoming_message.id).count == 1
   end
 
-  # Handle facebook error
   def handle_facebook_error(exception)
     # Refer: https://github.com/jgorset/facebook-messenger/blob/64fe1f5cef4c1e3fca295b205037f64dfebdbcab/lib/facebook/messenger/error.rb
     return unless exception.to_s.include?('The session has been invalidated') || exception.to_s.include?('Error validating access token')

@@ -11,7 +11,7 @@ import { directive as onClickaway } from 'vue3-click-away';
 
 const i18n = createI18n({
   legacy: false, // https://github.com/intlify/vue-i18n/issues/1902
-  locale: 'vi',
+  locale: 'en',
   messages: i18nMessages,
 });
 

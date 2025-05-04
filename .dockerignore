@@ -10,6 +10,7 @@ public/system
 tmp
 .codeclimate.yml
 public/packs
+public/vite
 node_modules
 vendor/bundle
 .DS_Store

@@ -36,7 +36,7 @@ class DashboardController < ActionController::Base
       'LOGOUT_REDIRECT_LINK',
       'DISABLE_USER_PROFILE_UPDATE',
       'DEPLOYMENT_ENV',
-      'CSML_EDITOR_HOST', 'INSTALLATION_PRICING_PLAN'
+      'INSTALLATION_PRICING_PLAN'
     ).merge(app_config)
   end
 
@@ -65,9 +65,15 @@ class DashboardController < ActionController::Base
       VAPID_PUBLIC_KEY: VapidService.public_key,
       ENABLE_ACCOUNT_SIGNUP: GlobalConfigService.load('ENABLE_ACCOUNT_SIGNUP', 'false'),
       FB_APP_ID: GlobalConfigService.load('FB_APP_ID', ''),
+      INSTAGRAM_APP_ID: GlobalConfigService.load('INSTAGRAM_APP_ID', ''),
       FACEBOOK_API_VERSION: GlobalConfigService.load('FACEBOOK_API_VERSION', 'v17.0'),
       IS_ENTERPRISE: ChatwootApp.enterprise?,
       AZURE_APP_ID: GlobalConfigService.load('AZURE_APP_ID', ''),
+      ZALO_APP_ID: GlobalConfigService.load('ZALO_APP_ID', ''),
+      ZALO_APP_SECRET: GlobalConfigService.load('ZALO_APP_SECRET', ''),
+      ZALO_OA_SECRET_KEY: GlobalConfigService.load('ZALO_OA_SECRET_KEY', ''),
+      ACTIVE_PIECES_INSTANCE_URL: GlobalConfigService.load('ACTIVE_PIECES_INSTANCE_URL', ''),
+      ACTIVE_PIECES_JWT_SECRET: GlobalConfigService.load('ACTIVE_PIECES_JWT_SECRET', ''),
       GIT_SHA: GIT_HASH
     }
   end

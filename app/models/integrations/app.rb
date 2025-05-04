@@ -48,7 +48,12 @@ class Integrations::App
     when 'slack'
       ENV['SLACK_CLIENT_SECRET'].present?
     when 'linear'
-      account.feature_enabled?('linear_integration')
+      GlobalConfigService.load('LINEAR_CLIENT_ID', nil).present?
+    when 'shopify'
+      GlobalConfigService.load('SHOPIFY_CLIENT_ID', nil).present?
+      #account.feature_enabled?('shopify_integration') && GlobalConfigService.load('SHOPIFY_CLIENT_ID', nil).present?
+    when 'activepieces'
+      GlobalConfigService.load('ACTIVE_PIECES_JWT_SECRET', nil).present?
     else
       true
     end

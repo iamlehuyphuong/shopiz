@@ -123,6 +123,20 @@ export const getters = {
       item => item.channel_type !== INBOX_TYPES.EMAIL
     );
   },
+  getFacebookInboxByInstagramId: $state => instagramId => {
+    return $state.records.find(
+      item =>
+        item.instagram_id === instagramId &&
+        item.channel_type === INBOX_TYPES.FB
+    );
+  },
+  getInstagramInboxByInstagramId: $state => instagramId => {
+    return $state.records.find(
+      item =>
+        item.instagram_id === instagramId &&
+        item.channel_type === INBOX_TYPES.INSTAGRAM
+    );
+  },
 };
 
 const sendAnalyticsEvent = channelType => {
@@ -181,6 +195,19 @@ export const actions = {
       return throwErrorMessage(error);
     }
   },
+  createZaloChannel: async ({ commit }, params) => {
+    try {
+      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: true });
+      const response = await ZaloChannel.create(params);
+      commit(types.default.ADD_INBOXES, response.data);
+      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
+      sendAnalyticsEvent('zalo');
+      return response.data;
+    } catch (error) {
+      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
+      throw new Error(error);
+    }
+  },
   createTwilioChannel: async ({ commit }, params) => {
     try {
       commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: true });
@@ -201,19 +228,6 @@ export const actions = {
       commit(types.default.ADD_INBOXES, response.data);
       commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
       sendAnalyticsEvent('facebook');
-      return response.data;
-    } catch (error) {
-      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
-      throw new Error(error);
-    }
-  },
-  createZaloChannel: async ({ commit }, params) => {
-    try {
-      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: true });
-      const response = await ZaloChannel.create(params);
-      commit(types.default.ADD_INBOXES, response.data);
-      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
-      sendAnalyticsEvent('zalo');
       return response.data;
     } catch (error) {
       commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });

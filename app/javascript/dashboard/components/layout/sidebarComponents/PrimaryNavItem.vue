@@ -3,13 +3,9 @@ import { OnClickOutside } from '@vueuse/components';
 import { HELP_CENTER_MENU_ITEMS } from 'dashboard/helper/portalHelper';
 
 import DropdownMenu from 'dashboard/components-next/dropdown-menu/DropdownMenu.vue';
-import ConversationsIcon from 'components/layout/sidebarComponents/icons/ConversationsIcon.vue';
-import ContactIcon from 'components/layout/sidebarComponents/icons/ContactIcon.vue';
 
 export default {
   components: {
-    ContactIcon,
-    ConversationsIcon,
     DropdownMenu,
     OnClickOutside,
   },
@@ -27,7 +23,7 @@ export default {
       default: '',
     },
     icon: {
-      type: [String, Object],
+      type: String,
       default: '',
     },
     count: {
@@ -60,7 +56,6 @@ export default {
     isHelpCenter() {
       return this.id === 'helpcenter';
     },
-
     isHelpCenterSelected() {
       const routes = [
         'portals_new',
@@ -97,22 +92,22 @@ export default {
 </script>
 
 <template>
-  <OnClickOutside
-    v-if="isHelpCenter"
-    class="flex flex-col justify-center items-center my-1"
-    @trigger="showHelpCenterMenu = false"
-  >
+  <OnClickOutside v-if="isHelpCenter" @trigger="showHelpCenterMenu = false">
     <button
-      class="relative flex items-center justify-center w-10 h-10 hover:bg-[#793B40] rounded-lg text-white dark:text-slate-100"
+      v-tooltip.top="$t(`SIDEBAR.${name}`)"
+      class="relative flex items-center justify-center w-10 h-10 my-2 rounded-lg text-slate-700 dark:text-slate-100 hover:!bg-slate-25 dark:hover:!bg-slate-700 dark:hover:text-slate-100 hover:text-slate-600"
       :class="{
-        'bg-[#793B40]': isHelpCenterSelected,
+        'bg-woot-50 dark:bg-slate-800 text-woot-500 hover:bg-woot-50':
+          isHelpCenterSelected,
       }"
       @click="toggleHelpCenterMenu"
-      v-tooltip.bottom-start="$t(`SIDEBAR.${name}`)"
     >
-      <component :is="icon" v-if="typeof icon === 'object'" :active="isHelpCenterSelected" />
-      <fluent-icon v-else :icon="icon" />
-
+      <fluent-icon
+        :icon="icon"
+        :class="{
+          'text-woot-500': isHelpCenterSelected,
+        }"
+      />
       <DropdownMenu
         v-if="showHelpCenterMenu && isHelpCenter"
         :menu-items="helpCenterMenuItems"
@@ -120,28 +115,27 @@ export default {
         @action="handleHelpCenterAction"
       />
     </button>
-    <span
-      class="font-inter inline-block text-white font-medium text-[0.625rem] text-center mt-[0.2rem] overflow-hidden text-ellipsis whitespace-nowrap max-w-[80px] px-2 w-full"
-    >
-      {{ $t(`SIDEBAR.${name}`) }}
-    </span>
   </OnClickOutside>
 
   <router-link v-else v-slot="{ href, isActive, navigate }" :to="to" custom>
     <a
-      v-tooltip.bottom-start="$t(`SIDEBAR.${name}`)"
+      v-tooltip.right="$t(`SIDEBAR.${name}`)"
       :href="href"
-      class="relative flex items-center justify-center w-10 h-10 rounded-lg text-white hover:bg-[#793B40] dark:text-slate-100 mt-1"
+      class="relative flex items-center justify-center w-10 h-10 my-2 rounded-lg text-slate-700 dark:text-slate-100 hover:bg-slate-25 dark:hover:bg-slate-700 dark:hover:text-slate-100 hover:text-slate-600"
       :class="{
-        'bg-[#793B40]': isActive || isChildMenuActive,
+        'bg-woot-50 dark:bg-slate-800 text-woot-500 hover:bg-woot-50':
+          isActive || isChildMenuActive,
       }"
       :rel="openInNewPage ? 'noopener noreferrer nofollow' : undefined"
       :target="openInNewPage ? '_blank' : undefined"
       @click="navigate"
     >
-      <component :is="icon" v-if="typeof icon === 'object'" :active="isActive || isChildMenuActive" />
-      <fluent-icon v-else :icon="icon" />
-
+      <fluent-icon
+        :icon="icon"
+        :class="{
+          'text-woot-500': isActive || isChildMenuActive,
+        }"
+      />
       <span class="sr-only">{{ name }}</span>
       <span
         v-if="count"
@@ -150,10 +144,5 @@ export default {
         {{ count }}
       </span>
     </a>
-    <span
-      class="font-inter inline-block text-white font-medium text-[0.625rem] text-center mt-[0.2rem] mb-2 overflow-hidden text-ellipsis whitespace-nowrap max-w-[80px] px-2 w-full"
-    >
-      {{ $t(`SIDEBAR.${name}`) }}
-    </span>
   </router-link>
 </template>

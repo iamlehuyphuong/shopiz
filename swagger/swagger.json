@@ -3,10 +3,10 @@
   "info": {
     "description": "This is the API documentation for Chatwoot server.",
     "version": "1.0.0",
-    "title": "Salesman",
+    "title": "Chatwoot",
     "termsOfService": "https://salesman.effiai.pro/terms-of-service/",
     "contact": {
-      "email": "hello@chatwoot.com"
+      "email": "hello@salesman.effiai.pro"
     },
     "license": {
       "name": "MIT License",
@@ -3138,7 +3138,7 @@
                           "type": "object",
                           "description": "The processed param values for template variables in template",
                           "example": {
-                            "1": "Salesman"
+                            "1": "Chatwoot"
                           }
                         }
                       }
@@ -6677,7 +6677,7 @@
               "type": "object",
               "description": "The processed param values for template variables in template",
               "example": {
-                "1": "Salesman"
+                "1": "Chatwoot"
               }
             }
           }

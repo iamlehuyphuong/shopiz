@@ -1,10 +1,16 @@
 {
-  "name": "Salesman",
-  "description": "Salesman is a customer support tool for instant messaging channels",
+  "name": "Chatwoot",
+  "description": "Chatwoot is a customer support tool for instant messaging channels",
   "website": "https://salesman.effiai.pro/",
   "repository": "https://github.com/chatwoot/chatwoot",
-  "logo": "https://app.chatwoot.com/brand-assets/logo_thumbnail.svg",
-  "keywords": ["live chat", "customer support", "ruby", "rails", "vue"],
+  "logo": "https://salesman.effiai.pro/brand-assets/logo_thumbnail.svg",
+  "keywords": [
+    "live chat",
+    "customer support",
+    "ruby",
+    "rails",
+    "vue"
+  ],
   "success_url": "/",
   "env": {
     "SECRET_TOKEN": {
@@ -20,14 +26,14 @@
       "value": "production"
     },
     "FRONTEND_URL": {
-      "description": "Public root URL of the Salesman installation. This will be used in the emails.",
+      "description": "Public root URL of the Chatwoot installation. This will be used in the emails.",
       "value": "https://CHANGE.herokuapp.com"
     },
     "INSTALLATION_ENV": {
-      "description": "Installation method used for Salesman.",
+      "description": "Installation method used for Chatwoot.",
       "value": "heroku"
     },
-    "REDIS_OPENSSL_VERIFY_MODE": {
+    "REDIS_OPENSSL_VERIFY_MODE":{
       "description": "OpenSSL verification mode for Redis connections. ref https://help.heroku.com/HC0F8CUS/redis-connection-issues",
       "value": "none"
     }
