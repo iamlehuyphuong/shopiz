@@ -3,8 +3,8 @@
     "HEADER": "Nhà cung cấp",
     "HEADER_BTN_TXT": "Thêm nhà cung cấp / đại lý",
     "LOADING": "Tải danh sách nhà cung cấp",
-    "DESCRIPTION": "An agent is a member of your customer support team who can view and respond to user messages. The list below shows all the agents in your account.",
-    "LEARN_MORE": "Learn about user roles",
+    "DESCRIPTION": "Một nhà cung cấp là thành viên của đội hỗ trợ khách hàng của bạn, có thể xem và trả lời tin nhắn của người dùng. Danh sách bên dưới hiển thị tất cả các nhà cung cấp trong tài khoản của bạn.",
+    "LEARN_MORE": "Tìm hiểu về vai trò người dùng",
     "AGENT_TYPES": {
       "ADMINISTRATOR": "Quản trị viên",
       "AGENT": "Nhà cung cấp"
@@ -19,7 +19,7 @@
       "ACTIONS": "Hành động",
       "VERIFIED": "Đã xác minh",
       "VERIFICATION_PENDING": "Đang chờ xác minh",
-      "AVAILABLE_CUSTOM_ROLE": "Available custom role permissions"
+      "AVAILABLE_CUSTOM_ROLE": "Quyền vai trò tùy chỉnh có sẵn"
     },
     "ADD": {
       "TITLE": "Thêm đại lý vào nhóm của bạn",
@@ -43,15 +43,15 @@
       },
       "API": {
         "SUCCESS_MESSAGE": "Nhà cung cấp được thêm thành công",
-        "EXIST_MESSAGE": "Email đã được sử dung, vui lòng chọn email khác.",
-        "ERROR_MESSAGE": "Không thể kết nối với Máy chủ Woot, Vui lòng thử lại sau"
+        "EXIST_MESSAGE": "Email đã được sử dụng, vui lòng chọn email khác.",
+        "ERROR_MESSAGE": "Không thể kết nối với Máy chủ, Vui lòng thử lại sau"
       }
     },
     "DELETE": {
       "BUTTON_TEXT": "Xoá",
       "API": {
         "SUCCESS_MESSAGE": "Nhà cung cấp được xoá thành công",
-        "ERROR_MESSAGE": "Không thể kết nối với Máy chủ Woot, Vui lòng thử lại sau"
+        "ERROR_MESSAGE": "Không thể kết nối với Máy chủ, Vui lòng thử lại sau"
       },
       "CONFIRM": {
         "TITLE": "Xác nhận xoá",
@@ -78,8 +78,8 @@
         },
         "AGENT_AVAILABILITY": {
           "LABEL": "Khả dụng",
-          "PLACEHOLDER": "Please select an availability status",
-          "ERROR": "Availability is required"
+          "PLACEHOLDER": "Vui lòng chọn trạng thái khả dụng",
+          "ERROR": "Cần phải có trạng thái khả dụng"
         },
         "SUBMIT": "Chỉnh sửa nhà cung cấp"
       },
@@ -87,13 +87,13 @@
       "CANCEL_BUTTON_TEXT": "Huỷ",
       "API": {
         "SUCCESS_MESSAGE": "Nhà cung cấp được cập nhật thành công",
-        "ERROR_MESSAGE": "Không thể kết nối với Máy chủ Woot, Vui lòng thử lại sau"
+        "ERROR_MESSAGE": "Không thể kết nối với Máy chủ, Vui lòng thử lại sau"
       },
       "PASSWORD_RESET": {
         "ADMIN_RESET_BUTTON": "Đặt lại mật khẩu",
         "ADMIN_SUCCESS_MESSAGE": "Một email với hướng dẫn đặt lại mật khẩu đã được gửi đến đại lý",
         "SUCCESS_MESSAGE": "Đặt lại mật khẩu đại lý thành công",
-        "ERROR_MESSAGE": "Không thể kết nối với Máy chủ Woot, Vui lòng thử lại sau"
+        "ERROR_MESSAGE": "Không thể kết nối với Máy chủ, Vui lòng thử lại sau"
       }
     },
     "SEARCH": {

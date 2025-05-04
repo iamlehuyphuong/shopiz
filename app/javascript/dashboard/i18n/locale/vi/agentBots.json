@@ -1,73 +1,73 @@
 {
   "AGENT_BOTS": {
-    "HEADER": "Bots",
-    "LOADING_EDITOR": "Loading editor...",
-    "DESCRIPTION": "Agent Bots are like the most fabulous members of your team. They can handle the small stuff, so you can focus on the stuff that matters. Give them a try.You can manage your bots from this page or create new ones using the 'Configure new bot' button.",
-    "LEARN_MORE": "Learn about agent bots",
+    "HEADER": "Bot",
+    "LOADING_EDITOR": "Đang tải trình soạn thảo...",
+    "DESCRIPTION": "Agent Bots giống như những thành viên tuyệt vời nhất trong đội của bạn. Chúng có thể xử lý những việc nhỏ nhặt, để bạn có thể tập trung vào những vấn đề quan trọng. Hãy thử chúng. Bạn có thể quản lý bot của mình từ trang này hoặc tạo mới bằng cách sử dụng nút 'Cấu hình bot mới'.",
+    "LEARN_MORE": "Tìm hiểu về bot đại lý",
     "CSML_BOT_EDITOR": {
       "NAME": {
-        "LABEL": "Bot name",
-        "PLACEHOLDER": "Name your bot.",
-        "ERROR": "Bot name is required."
+        "LABEL": "Tên bot",
+        "PLACEHOLDER": "Đặt tên cho bot của bạn.",
+        "ERROR": "Tên bot là bắt buộc."
       },
       "DESCRIPTION": {
-        "LABEL": "Bot description",
+        "LABEL": "Mô tả bot",
         "PLACEHOLDER": "Bot này sẽ làm gì?"
       },
       "BOT_CONFIG": {
         "ERROR": "",
-        "API_ERROR": "Your CSML configuration is invalid. Please fix it and try again."
+        "API_ERROR": "Cấu hình CSML của bạn không hợp lệ. Vui lòng sửa lỗi và thử lại."
       },
-      "SUBMIT": "Validate and save"
+      "SUBMIT": "Xác nhận và lưu"
     },
     "BOT_CONFIGURATION": {
-      "TITLE": "Select an agent bot",
-      "DESC": "Assign an Agent Bot to your inbox. They can handle initial conversations and transfer them to a live agent when necessary.",
+      "TITLE": "Chọn một bot đại lý",
+      "DESC": "Gán một bot đại lý cho hộp thư đến của bạn. Chúng có thể xử lý các cuộc trò chuyện ban đầu và chuyển tiếp đến nhân viên trực tiếp khi cần.",
       "SUBMIT": "Cập nhật",
-      "DISCONNECT": "Disconnect bot",
-      "SUCCESS_MESSAGE": "Successfully updated the agent bot.",
-      "DISCONNECTED_SUCCESS_MESSAGE": "Successfully disconnected the agent bot.",
-      "ERROR_MESSAGE": "Could not update the agent bot. Please try again.",
-      "DISCONNECTED_ERROR_MESSAGE": "Could not disconnect the agent bot. Please try again.",
-      "SELECT_PLACEHOLDER": "Select bot"
+      "DISCONNECT": "Ngắt kết nối bot",
+      "SUCCESS_MESSAGE": "Cập nhật bot đại lý thành công.",
+      "DISCONNECTED_SUCCESS_MESSAGE": "Ngắt kết nối bot đại lý thành công.",
+      "ERROR_MESSAGE": "Không thể cập nhật bot đại lý. Vui lòng thử lại.",
+      "DISCONNECTED_ERROR_MESSAGE": "Không thể ngắt kết nối bot đại lý. Vui lòng thử lại.",
+      "SELECT_PLACEHOLDER": "Chọn bot"
     },
     "ADD": {
-      "TITLE": "Configure new bot",
+      "TITLE": "Cấu hình bot mới",
       "CANCEL_BUTTON_TEXT": "Huỷ",
       "API": {
-        "SUCCESS_MESSAGE": "Bot added successfully.",
-        "ERROR_MESSAGE": "Could not add bot. Please try again later."
+        "SUCCESS_MESSAGE": "Thêm bot thành công.",
+        "ERROR_MESSAGE": "Không thể thêm bot. Vui lòng thử lại sau."
       }
     },
     "LIST": {
-      "404": "No bots found. You can create a bot by clicking the 'Configure new bot' button ↗",
-      "LOADING": "Fetching bots...",
-      "TYPE": "Bot type"
+      "404": "Không tìm thấy bot nào. Bạn có thể tạo bot bằng cách nhấp vào nút 'Cấu hình bot mới' ↗",
+      "LOADING": "Đang lấy danh sách bot...",
+      "TYPE": "Loại bot"
     },
     "DELETE": {
       "BUTTON_TEXT": "Xoá",
-      "TITLE": "Delete bot",
+      "TITLE": "Xoá bot",
       "SUBMIT": "Xoá",
       "CANCEL_BUTTON_TEXT": "Huỷ",
-      "DESCRIPTION": "Are you sure you want to delete this bot? This action is irreversible.",
+      "DESCRIPTION": "Bạn có chắc chắn muốn xoá bot này? Hành động này không thể hoàn tác.",
       "API": {
-        "SUCCESS_MESSAGE": "Bot deleted successfully.",
-        "ERROR_MESSAGE": "Could not delete bot. Please try again."
+        "SUCCESS_MESSAGE": "Xoá bot thành công.",
+        "ERROR_MESSAGE": "Không thể xoá bot. Vui lòng thử lại."
       }
     },
     "EDIT": {
       "BUTTON_TEXT": "Chỉnh sửa",
-      "LOADING": "Fetching bots...",
-      "TITLE": "Edit bot",
+      "LOADING": "Đang lấy danh sách bot...",
+      "TITLE": "Chỉnh sửa bot",
       "CANCEL_BUTTON_TEXT": "Huỷ",
       "API": {
-        "SUCCESS_MESSAGE": "Bot updated successfully.",
-        "ERROR_MESSAGE": "Could not update bot. Please try again."
+        "SUCCESS_MESSAGE": "Cập nhật bot thành công.",
+        "ERROR_MESSAGE": "Không thể cập nhật bot. Vui lòng thử lại."
       }
     },
     "TYPES": {
-      "WEBHOOK": "Webhook bot",
-      "CSML": "CSML bot"
+      "WEBHOOK": "Bot webhook",
+      "CSML": "Bot CSML"
     }
   }
 }

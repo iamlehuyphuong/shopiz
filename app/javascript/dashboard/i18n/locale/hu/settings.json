@@ -37,7 +37,7 @@
       },
       "INTERFACE_SECTION": {
         "TITLE": "Interface",
-        "NOTE": "Customize the look and feel of your Chatwoot dashboard.",
+        "NOTE": "Customize the look and feel of your Salesman dashboard.",
         "FONT_SIZE": {
           "TITLE": "Font size",
           "NOTE": "Adjust the text size across the dashboard based on your preference.",
@@ -374,13 +374,13 @@
     "NO_BILLING_USER": "Számlázási fiókod konfigurálás alatt áll. Kérjük, frissítsd az oldalt, és próbáld újra."
   },
   "CREATE_ACCOUNT": {
-    "NO_ACCOUNT_WARNING": "Uppsz! Nem találtunk egyetlen Chatwoot-fiókot sem. A folytatáshoz kérlek hozz létre egy új fiókot.",
+    "NO_ACCOUNT_WARNING": "Uppsz! Nem találtunk egyetlen Salesman-fiókot sem. A folytatáshoz kérlek hozz létre egy új fiókot.",
     "NEW_ACCOUNT": "Új fiók",
     "SELECTOR_SUBTITLE": "Új fiók létrehozása",
     "API": {
       "SUCCESS_MESSAGE": "Ügynök sikeresen létrehozva",
       "EXIST_MESSAGE": "A fiók már létezik",
-      "ERROR_MESSAGE": "Nem sikerült csatlakozni a Woot szerverhez, kérjük próbáld később"
+      "ERROR_MESSAGE": "Nem sikerült csatlakozni a szerverhez, kérjük próbáld később"
     },
     "FORM": {
       "NAME": {

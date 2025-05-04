@@ -1,8 +1,8 @@
 {
   "AUTOMATION": {
     "HEADER": "Tự động hoá",
-    "DESCRIPTION": "Automation can replace and streamline existing processes that require manual effort, such as adding labels and assigning conversations to the most suitable agent. This allows the team to focus on their strengths while reducing time spent on routine tasks.",
-    "LEARN_MORE": "Learn more about automation",
+    "DESCRIPTION": "Tự động hoá có thể thay thế và tối ưu hóa các quy trình hiện có yêu cầu công sức thủ công, chẳng hạn như thêm nhãn và gán các cuộc hội thoại cho đại lý phù hợp nhất. Điều này cho phép nhóm tập trung vào thế mạnh của mình trong khi giảm thiểu thời gian dành cho các công việc lặp đi lặp lại.",
+    "LEARN_MORE": "Tìm hiểu thêm về tự động hoá",
     "HEADER_BTN_TXT": "Thêm luật Tự động hoá",
     "LOADING": "Đang lấy luật tự động hoá",
     "ADD": {
@@ -18,12 +18,12 @@
         "DESC": {
           "LABEL": "Mô tả",
           "PLACEHOLDER": "Nhập mô tả luật",
-          "ERROR": "Cần phải có \u001dmô tả"
+          "ERROR": "Cần phải có mô tả"
         },
         "EVENT": {
           "LABEL": "Sự kiện",
           "PLACEHOLDER": "Vui lòng chọn một",
-          "ERROR": "Cần phải có \u001dsự kiện"
+          "ERROR": "Cần phải có sự kiện"
         },
         "CONDITIONS": {
           "LABEL": "Điều kiện"
@@ -59,7 +59,7 @@
         "NO": "Không, giữ "
       },
       "API": {
-        "SUCCESS_MESSAGE": "Luật\u001d tự động hoá được xoá thành công",
+        "SUCCESS_MESSAGE": "Luật tự động hoá được xoá thành công",
         "ERROR_MESSAGE": "Không thể xoá luật tự động hoá, Vui lòng thử lại sau"
       }
     },
@@ -68,15 +68,15 @@
       "SUBMIT": "Cập nhật",
       "CANCEL_BUTTON_TEXT": "Huỷ",
       "API": {
-        "SUCCESS_MESSAGE": "Luật\u001d tự động hoá được thêm thành công",
-        "ERROR_MESSAGE": "Không thể cập nhật \bluật tự động hoá, Vui lòng thử lại sau"
+        "SUCCESS_MESSAGE": "Luật tự động hoá được cập nhật thành công",
+        "ERROR_MESSAGE": "Không thể cập nhật luật tự động hoá, Vui lòng thử lại sau"
       }
     },
     "CLONE": {
       "TOOLTIP": "Nhân bản",
       "API": {
-        "SUCCESS_MESSAGE": "Luật tự động hoá mô phỏng thành công",
-        "ERROR_MESSAGE": "Không thể mô phỏng luật tự động hoá, Vui lòng thử lại sau"
+        "SUCCESS_MESSAGE": "Luật tự động hoá đã được nhân bản thành công",
+        "ERROR_MESSAGE": "Không thể nhân bản luật tự động hoá, Vui lòng thử lại sau"
       }
     },
     "FORM": {
@@ -95,12 +95,12 @@
       "DELETE_MESSAGE": "Bạn cần có ít nhất một hành động để lưu",
       "TEAM_MESSAGE_INPUT_PLACEHOLDER": "Viết tin nhắn ở đây",
       "TEAM_DROPDOWN_PLACEHOLDER": "Chọn nhóm",
-      "EMAIL_INPUT_PLACEHOLDER": "Enter email",
-      "URL_INPUT_PLACEHOLDER": "Enter URL"
+      "EMAIL_INPUT_PLACEHOLDER": "Nhập email",
+      "URL_INPUT_PLACEHOLDER": "Nhập URL"
     },
     "TOGGLE": {
       "ACTIVATION_TITLE": "Kích hoạt Luật Tự động hoá",
-      "DEACTIVATION_TITLE": "Vô hiệu hoá \bLuật Tự động hoá",
+      "DEACTIVATION_TITLE": "Vô hiệu hoá Luật Tự động hoá",
       "ACTIVATION_DESCRIPTION": "Thao tác này sẽ kích hoạt luật tự động hoá tên '{automationName}'. Bạn có chắc là muốn tiếp tục?",
       "DEACTIVATION_DESCRIPTION": "Thao tác này sẽ vô hiệu hoá luật tự động hoá tên '{automationName}'. Bạn có chắc là muốn tiếp tục?",
       "ACTIVATION_SUCCESFUL": "Luật tự động hoá đã được kích hoạt thành công",
@@ -118,13 +118,13 @@
       "LABEL_UPLOAD_FAILED": "Không tải lên được"
     },
     "ERRORS": {
-      "ATTRIBUTE_KEY_REQUIRED": "Attribute key is required",
-      "FILTER_OPERATOR_REQUIRED": "Filter operator is required",
-      "VALUE_REQUIRED": "Giá trị bắt buộc có",
-      "VALUE_MUST_BE_BETWEEN_1_AND_998": "Value must be between 1 and 998",
-      "ACTION_PARAMETERS_REQUIRED": "Action parameters are required",
-      "ATLEAST_ONE_CONDITION_REQUIRED": "At least one condition is required",
-      "ATLEAST_ONE_ACTION_REQUIRED": "At least one action is required"
+      "ATTRIBUTE_KEY_REQUIRED": "Yêu cầu có khóa thuộc tính",
+      "FILTER_OPERATOR_REQUIRED": "Yêu cầu có toán tử lọc",
+      "VALUE_REQUIRED": "Giá trị là bắt buộc",
+      "VALUE_MUST_BE_BETWEEN_1_AND_998": "Giá trị phải nằm trong khoảng từ 1 đến 998",
+      "ACTION_PARAMETERS_REQUIRED": "Yêu cầu có tham số hành động",
+      "ATLEAST_ONE_CONDITION_REQUIRED": "Cần ít nhất một điều kiện",
+      "ATLEAST_ONE_ACTION_REQUIRED": "Cần ít nhất một hành động"
     },
     "NONE_OPTION": "Không có"
   }

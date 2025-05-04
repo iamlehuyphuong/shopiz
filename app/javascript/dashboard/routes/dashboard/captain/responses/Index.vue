@@ -255,7 +255,7 @@ onMounted(() => {
         :note="$t('CAPTAIN.RESPONSES.EMPTY_STATE.FEATURE_SPOTLIGHT.NOTE')"
         fallback-thumbnail="/assets/images/dashboard/captain/faqs-popover-light.svg"
         fallback-thumbnail-dark="/assets/images/dashboard/captain/faqs-popover-dark.svg"
-        learn-more-url="https://chwt.app/captain-faq"
+        learn-more-url="https://salesman.effiai.pro/captain-faq"
       />
     </template>
 
