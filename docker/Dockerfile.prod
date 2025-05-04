@@ -1,8 +1,16 @@
 # pre-build stage
 FROM chatwoot/chatwoot:v4.1.0
 
+ENV NODE_OPTIONS="--max-old-space-size=8192"
+ENV CW_EDITION=ee
+RUN apk add --update npm
+RUN npm install -g pnpm
+
 COPY ./app /app/app
 COPY ./db /app/db
 COPY ./enterprise /app/enterprise
 COPY ./public /app/public
 COPY ./config /app/config
+
+RUN pnpm install --prod
+RUN bin/vite build
