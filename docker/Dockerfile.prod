@@ -12,5 +12,5 @@ COPY ./enterprise /app/enterprise
 COPY ./public /app/public
 COPY ./config /app/config
 
-RUN pnpm install --prod
+RUN pnpm install
 RUN bin/vite build
