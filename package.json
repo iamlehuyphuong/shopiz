@@ -13,7 +13,6 @@
     "dev": "overmind start -f ./Procfile.dev",
     "ruby:prettier": "bundle exec rubocop -a",
     "build:sdk": "BUILD_MODE=library vite build",
-    "prepare": "husky install",
     "size": "size-limit",
     "story:dev": "histoire dev",
     "story:build": "histoire build",
@@ -146,11 +145,6 @@
   "engines": {
     "node": "23.x",
     "pnpm": "10.x"
-  },
-  "husky": {
-    "hooks": {
-      "pre-push": "sh bin/validate_push"
-    }
   },
   "pnpm": {
     "overrides": {
