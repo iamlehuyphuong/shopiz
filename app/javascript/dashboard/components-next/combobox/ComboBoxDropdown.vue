@@ -27,10 +27,6 @@ const props = defineProps({
     type: [String, Number, Array],
     default: () => [],
   },
-  searchAble: {
-    type: Boolean,
-    default: true,
-  },
 });
 
 const emit = defineEmits(['select', 'search']);
@@ -67,14 +63,13 @@ defineExpose({
     class="absolute z-50 w-full mt-1 transition-opacity duration-200 border rounded-md shadow-lg bg-n-solid-1 border-n-strong"
   >
     <div class="relative border-b border-n-strong">
-      <span v-if="searchAble" class="absolute i-lucide-search top-2.5 size-4 left-3" />
+      <span class="absolute i-lucide-search top-2.5 size-4 left-3" />
       <input
-        v-if="searchAble"
         ref="searchInput"
         :value="searchValue"
         type="search"
         :placeholder="searchPlaceholder || t('COMBOBOX.SEARCH_PLACEHOLDER')"
-        class="w-full py-2 pl-10 pr-2 text-sm border-none rounded-t-md bg-n-solid-1 text-slate-900 dark:text-slate-50"
+        class="reset-base w-full py-2 pl-10 pr-2 text-sm focus:outline-none border-none rounded-t-md bg-n-solid-1 text-slate-900 dark:text-slate-50"
         @input="onInputSearch"
       />
     </div>

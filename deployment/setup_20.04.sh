@@ -21,7 +21,7 @@ LONGOPTS=console,debug,help,install,Install:,logs:,restart,ssl,upgrade,webserver
 OPTIONS=cdhiI:l:rsuwv
 CWCTL_VERSION="3.2.0"
 pg_pass=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 15 ; echo '')
-CHATWOOT_HUB_URL="https://hub.2.chatwoot.com/events"
+CHATWOOT_HUB_URL="https://hub.2.salesman.effiai.pro/events"
 
 # if user does not specify an option
 if [ "$#" -eq 0 ]; then
@@ -451,7 +451,7 @@ function ssl_success_message() {
 Woot! Woot!! Chatwoot server installation is complete.
 The server will be accessible at https://$domain_name
 
-Join the community at https://chatwoot.com/community?utm_source=cwctl
+Join the community at https://salesman.effiai.pro/community?utm_source=cwctl
 ***************************************************************************
 
 EOF
@@ -563,7 +563,7 @@ The server will be accessible at http://$public_ip:3000
 To configure a domain and SSL certificate, follow the guide at
 https://salesman.effiai.pro/docs/deployment/deploy-chatwoot-in-linux-vm?utm_source=cwctl
 
-Join the community at https://chatwoot.com/community?utm_source=cwctl
+Join the community at https://salesman.effiai.pro/community?utm_source=cwctl
 ***************************************************************************
 
 EOF
@@ -650,7 +650,7 @@ Exit status:
 Returns 0 if successful; non-zero otherwise.
 
 Report bugs at https://github.com/chatwoot/chatwoot/issues
-Get help, https://chatwoot.com/community?utm_source=cwctl
+Get help, https://salesman.effiai.pro/community?utm_source=cwctl
 
 EOF
 }
@@ -941,7 +941,7 @@ function report_event() {
   local event_name="$1"
   local event_data="$2"
 
-  CHATWOOT_HUB_URL="https://hub.2.chatwoot.com/events"
+  CHATWOOT_HUB_URL="https://hub.2.salesman.effiai.pro/events"
 
   # get installation identifier
   local installation_identifier=$(get_installation_identifier)

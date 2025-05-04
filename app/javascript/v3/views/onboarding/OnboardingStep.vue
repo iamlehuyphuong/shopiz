@@ -1,7 +1,6 @@
 <script>
 export default {
   name: 'OnboardingStep',
-  components: {},
   props: {
     title: {
       type: String,

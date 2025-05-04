@@ -13,7 +13,6 @@ const props = defineProps({
     validator: value =>
       value.every(option => 'value' in option && 'label' in option),
   },
-  searchAble: { type: Boolean, default: true },
   placeholder: { type: String, default: '' },
   modelValue: { type: [String, Number], default: '' },
   disabled: { type: Boolean, default: false },
@@ -21,10 +20,6 @@ const props = defineProps({
   emptyState: { type: String, default: '' },
   message: { type: String, default: '' },
   hasError: { type: Boolean, default: false },
-  customButtonClass: {
-    type: [String, Object, Array],
-    default: '',
-  },
   useApiResults: { type: Boolean, default: false }, // useApiResults prop to determine if search is handled by API
 });
 
@@ -87,7 +82,7 @@ watch(
 <template>
   <div
     ref="comboboxRef"
-    class="relative w-full min-w-0 "
+    class="relative w-full min-w-0"
     :class="{
       'cursor-not-allowed': disabled,
       'group/combobox': !disabled,
@@ -101,14 +96,13 @@ watch(
         :label="selectedLabel"
         trailing-icon
         :disabled="disabled"
-        class="justify-between w-full text-grey !px-3 !py-2.5 text-n-slate-12 font-normal group-hover/combobox:border-n-slate-6 !outline-lightNeutral-strokeBold dark:!outline-blackNeutral-strokeBold focus:border-n-brand focus:dark:border-n-brand"
-        :class="[{ focused: open },customButtonClass]"
+        class="justify-between w-full !px-3 !py-2.5 text-n-slate-12 font-normal group-hover/combobox:border-n-slate-6 [&:not(.focused)]:hover:enabled:outline-n-slate-6 [&:not(.focused)]:dark:hover:enabled:outline-n-slate-6 [&:not(.focused)]:dark:outline-n-weak focus:outline-n-brand"
+        :class="{ focused: open }"
         :icon="open ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'"
         @click="toggleDropdown"
       />
 
       <ComboBoxDropdown
-        :searchAble="searchAble"
         ref="dropdownRef"
         v-model:search-value="search"
         :open="open"

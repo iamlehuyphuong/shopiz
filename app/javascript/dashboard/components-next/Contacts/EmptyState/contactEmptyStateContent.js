@@ -4,7 +4,7 @@ export default [
       city: 'Los Angeles',
       country: 'United States',
       description:
-        "I'm Candice, a developer focusing on building web solutions. Currently, I’m working as a Product Developer at Salesman.",
+        "I'm Candice, a developer focusing on building web solutions. Currently, I’m working as a Product Developer at Chatwoot.",
       companyName: 'Chatwoot',
       countryCode: 'US',
       socialProfiles: {

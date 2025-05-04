@@ -77,23 +77,23 @@ RSpec.describe Account do
     let(:account) { create(:account) }
 
     it 'returns the support email from inbox if inbox value is present' do
-      account.update(support_email: 'support@chatwoot.com')
-      with_modified_env MAILER_SENDER_EMAIL: 'hello@chatwoot.com' do
-        expect(account.support_email).to eq('support@chatwoot.com')
+      account.update(support_email: 'support@salesman.effiai.pro')
+      with_modified_env MAILER_SENDER_EMAIL: 'hello@salesman.effiai.pro' do
+        expect(account.support_email).to eq('support@salesman.effiai.pro')
       end
     end
 
     it 'returns the support email from ENV if inbox value is nil' do
       account.update(support_email: nil)
-      with_modified_env MAILER_SENDER_EMAIL: 'hello@chatwoot.com' do
-        expect(account.support_email).to eq('hello@chatwoot.com')
+      with_modified_env MAILER_SENDER_EMAIL: 'hello@salesman.effiai.pro' do
+        expect(account.support_email).to eq('hello@salesman.effiai.pro')
       end
     end
 
     it 'returns the support email from ENV if inbox value is empty string' do
       account.update(support_email: '')
-      with_modified_env MAILER_SENDER_EMAIL: 'hello@chatwoot.com' do
-        expect(account.support_email).to eq('hello@chatwoot.com')
+      with_modified_env MAILER_SENDER_EMAIL: 'hello@salesman.effiai.pro' do
+        expect(account.support_email).to eq('hello@salesman.effiai.pro')
       end
     end
   end
@@ -106,6 +106,32 @@ RSpec.describe Account do
       expect(account.locale).to eq('en')
       account.destroy
       expect(ActiveRecord::Base.connection.execute(query).count).to eq(0)
+    end
+  end
+
+  describe 'locale' do
+    it 'returns correct language if the value is set' do
+      account = create(:account, locale: 'fr')
+      expect(account.locale).to eq('fr')
+      expect(account.locale_english_name).to eq('french')
+    end
+
+    it 'returns english if the value is not set' do
+      account = create(:account, locale: nil)
+      expect(account.locale).to be_nil
+      expect(account.locale_english_name).to eq('english')
+    end
+
+    it 'returns english if the value is empty string' do
+      account = create(:account, locale: '')
+      expect(account.locale).to be_nil
+      expect(account.locale_english_name).to eq('english')
+    end
+
+    it 'returns correct language if the value has country code' do
+      account = create(:account, locale: 'pt_BR')
+      expect(account.locale).to eq('pt_BR')
+      expect(account.locale_english_name).to eq('portuguese')
     end
   end
 end

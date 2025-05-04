@@ -1,13 +1,13 @@
 {
   "CSAT": {
     "TITLE": "Đánh giá cuộc hội thoại",
-    "PLACEHOLDER": "Hãy cho chúng tôi biết thêm...",
+    "PLACEHOLDER": "Cho chúng tôi biết thêm...",
     "RATINGS": {
-      "POOR": "😞 Kém",
-      "FAIR": "😑 Trung bình",
-      "AVERAGE": "😐 Bình thường",
-      "GOOD": "😀 Tốt",
-      "EXCELLENT": "😍 Xuất sắc"
+      "POOR": "😞 Poor",
+      "FAIR": "😑 Fair",
+      "AVERAGE": "😐 Average",
+      "GOOD": "😀 Good",
+      "EXCELLENT": "😍 Excellent"
     }
   }
 }

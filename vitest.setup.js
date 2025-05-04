@@ -5,7 +5,7 @@ import FloatingVue from 'floating-vue';
 
 const i18n = createI18n({
   legacy: false,
-  locale: 'vi',
+  locale: 'en',
   messages: i18nMessages,
 });
 
@@ -13,5 +13,5 @@ config.global.plugins = [i18n, FloatingVue];
 config.global.stubs = {
   WootModal: { template: '<div><slot/></div>' },
   WootModalHeader: { template: '<div><slot/></div>' },
-  WootButton: { template: '<button><slot/></button>' },
+  NextButton: { template: '<button><slot/></button>' },
 };

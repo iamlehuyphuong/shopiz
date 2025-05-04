@@ -1,27 +1,27 @@
 {
   "LOGIN": {
-    "TITLE": "Đăng nhập Salesman",
+    "TITLE": "Đăng nhập Chatwoot",
     "EMAIL": {
       "LABEL": "Email",
-      "PLACEHOLDER": "ví dụ{'@'}tencongty.com",
+      "PLACEHOLDER": "example{'@'}companyname.com",
       "ERROR": "Vui lòng nhập một địa chỉ email hợp lệ"
     },
     "PASSWORD": {
       "LABEL": "Mật khẩu",
-      "PLACEHOLDER": "Nhập mật khẩu"
+      "PLACEHOLDER": "Mật khẩu"
     },
     "API": {
-      "SUCCESS_MESSAGE": "Đăng nhập thành công",
-      "ERROR_MESSAGE": "Không thể kết nối đến máy chủ Woot. Vui lòng thử lại.",
-      "UNAUTH": "Tên đăng nhập hoặc mật khẩu không đúng. Vui lòng thử lại."
+      "SUCCESS_MESSAGE": "Login successful",
+      "ERROR_MESSAGE": "Could not connect to Woot server. Please try again.",
+      "UNAUTH": "Username or password is incorrect. Please try again."
     },
     "OAUTH": {
-      "GOOGLE_LOGIN": "Đăng nhập bằng Google",
-      "BUSINESS_ACCOUNTS_ONLY": "Vui lòng sử dụng địa chỉ email công ty để đăng nhập",
-      "NO_ACCOUNT_FOUND": "Chúng tôi không tìm thấy tài khoản nào cho địa chỉ email của bạn."
+      "GOOGLE_LOGIN": "Login with Google",
+      "BUSINESS_ACCOUNTS_ONLY": "Please use your company email address to login",
+      "NO_ACCOUNT_FOUND": "We couldn't find an account for your email address."
     },
     "FORGOT_PASSWORD": "Quên mật khẩu?",
-    "CREATE_NEW_ACCOUNT": "Tạo tài khoản mới",
+    "CREATE_NEW_ACCOUNT": "Tạo mới tài khoản",
     "SUBMIT": "Đăng nhập"
   }
 }

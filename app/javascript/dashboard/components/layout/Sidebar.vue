@@ -232,7 +232,6 @@ export default {
     <SecondarySidebar
       v-if="hasSecondarySidebar"
       :account-id="accountId"
-      :selectedPrimaryBar="activePrimaryMenu.label"
       :inboxes="inboxes"
       :labels="labels"
       :teams="teams"

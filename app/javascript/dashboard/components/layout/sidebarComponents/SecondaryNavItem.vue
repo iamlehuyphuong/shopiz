@@ -13,9 +13,10 @@ import {
   isOnUnattendedView,
 } from '../../../store/modules/conversations/helpers/actionHelpers';
 import Policy from '../../policy.vue';
+import NextButton from 'dashboard/components-next/button/Button.vue';
 
 export default {
-  components: { SecondaryChildNavItem, Policy },
+  components: { SecondaryChildNavItem, Policy, NextButton },
   props: {
     menuItem: {
       type: Object,
@@ -48,13 +49,6 @@ export default {
       return !!this.menuItem.children;
     },
     isMenuItemVisible() {
-      if (this.menuItem.globalConfigFlag) {
-        // this checks for the `csmlEditorHost` flag in the global config
-        // if this is present, we toggle the CSML editor menu item
-        // TODO: This is very specific, and can be handled better, fix it
-        return !!this.globalConfig[this.menuItem.globalConfigFlag];
-      }
-
       let isFeatureEnabled = true;
       if (this.menuItem.featureFlag) {
         isFeatureEnabled = this.isFeatureEnabledonAccount(
@@ -140,7 +134,7 @@ export default {
         this.isContactsDefaultRoute ||
         this.isCurrentRoute
       ) {
-        return 'bg-[#E0EEF9] dark:bg-slate-800 text-woot-500 dark:text-woot-500 hover:text-woot-500 dark:hover:text-woot-500 active-view';
+        return 'bg-woot-25 dark:bg-slate-800 text-woot-500 dark:text-woot-500 hover:text-woot-500 dark:hover:text-woot-500 active-view';
       }
       if (this.hasSubMenu) {
         if (
@@ -149,7 +143,7 @@ export default {
           this.isIntegrationsSettings ||
           this.isApplicationsSettings
         ) {
-          return 'bg-[#E0EEF9] dark:bg-slate-800 text-woot-500 dark:text-woot-500 hover:text-woot-500 dark:hover:text-woot-500 active-view';
+          return 'bg-woot-25 dark:bg-slate-800 text-woot-500 dark:text-woot-500 hover:text-woot-500 dark:hover:text-woot-500 active-view';
         }
         return 'hover:text-slate-700 dark:hover:text-slate-100';
       }
@@ -205,14 +199,7 @@ export default {
         {{ $t(`SIDEBAR.${menuItem.label}`) }}
       </span>
       <div v-if="menuItem.showNewButton" class="flex items-center">
-        <woot-button
-          size="tiny"
-          variant="clear"
-          color-scheme="secondary"
-          icon="add"
-          class="p-0 ml-2"
-          @click="onClickOpen"
-        />
+        <NextButton ghost xs slate icon="i-lucide-plus" @click="onClickOpen" />
       </div>
     </div>
     <router-link
@@ -221,16 +208,7 @@ export default {
       :class="computedClass"
       :to="menuItem && menuItem.toState"
     >
-      <component
-        :is="menuItem.icon"
-        v-if="typeof menuItem.icon === 'object'"
-
-        class="min-w-[1rem] mr-1.5 rtl:mr-0 rtl:ml-1.5"
-        :color="isActiveView?'#386BB7':'#575757'"
-      />
-
       <fluent-icon
-        v-else
         :icon="menuItem.icon"
         class="min-w-[1rem] mr-1.5 rtl:mr-0 rtl:ml-1.5"
         size="14"
@@ -242,7 +220,7 @@ export default {
         :class="{
           'text-slate-300 dark:text-slate-600': isCountZero && !isActiveView,
           'text-slate-600 dark:text-slate-50': !isCountZero && !isActiveView,
-          'bg-woot-75 dark:bg-woot-200 text-[#575757] dark:text-woot-600':
+          'bg-woot-75 dark:bg-woot-200 text-woot-600 dark:text-woot-600':
             isActiveView,
           'bg-slate-50 dark:bg-slate-700': !isActiveView,
         }"
@@ -281,16 +259,15 @@ export default {
         >
           <li class="pl-1">
             <a :href="href">
-              <woot-button
-                size="tiny"
-                variant="clear"
-                color-scheme="secondary"
-                icon="add"
+              <NextButton
+                ghost
+                xs
+                slate
+                icon="i-lucide-plus"
+                :label="$t(`SIDEBAR.${menuItem.newLinkTag}`)"
                 :data-testid="menuItem.dataTestid"
                 @click="e => newLinkClick(e, navigate)"
-              >
-                {{ $t(`SIDEBAR.${menuItem.newLinkTag}`) }}
-              </woot-button>
+              />
             </a>
           </li>
         </router-link>

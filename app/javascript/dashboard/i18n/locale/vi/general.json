@@ -1,6 +1,6 @@
 {
   "GENERAL": {
-    "SHOWING_RESULTS": "Hiển thị {firstIndex}-{lastIndex} trong tổng số {totalCount} mục",
+    "SHOWING_RESULTS": "Showing {firstIndex}-{lastIndex} of {totalCount} items",
     "PHONE_INPUT": {
       "PLACEHOLDER": "Tìm kiếm",
       "EMPTY_STATE": "Không tìm thấy kết quả"

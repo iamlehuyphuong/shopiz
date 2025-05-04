@@ -62,7 +62,7 @@ export const ONGOING_CAMPAIGN_EMPTY_STATE_CONTENT = [
       id: 1,
       name: 'Chatwoot',
     },
-    message: 'Hi! Salesman here. Need help setting up? Let me know!',
+    message: 'Hi! Chatwoot here. Need help setting up? Let me know!',
     campaign_status: 'active',
     enabled: false,
     campaign_type: 'ongoing',

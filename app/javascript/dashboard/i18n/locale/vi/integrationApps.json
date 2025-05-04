@@ -56,7 +56,7 @@
       "BUTTON_TEXT": "Ngắt kết nối"
     },
     "SIDEBAR_DESCRIPTION": {
-      "DIALOGFLOW": "Dialogflow là một nền tảng hiểu ngôn ngữ tự nhiên giúp dễ dàng thiết kế và tích hợp giao diện người dùng hội thoại vào ứng dụng di động, ứng dụng web, thiết bị, bot, hệ thống trả lời giọng nói tương tác, v.v. <br /> <br /> Tích hợp Dialogflow với {installationName} cho phép bạn cấu hình bot Dialogflow với các hộp thư đến của mình, giúp bot xử lý các truy vấn ban đầu và chuyển chúng cho nhân viên khi cần thiết. Dialogflow có thể được sử dụng để đánh giá khách hàng tiềm năng, giảm khối lượng công việc của nhân viên bằng cách cung cấp các câu hỏi thường gặp, v.v. <br /> <br /> Để thêm Dialogflow, bạn cần tạo một Tài khoản Dịch vụ trong bảng điều khiển dự án Google của mình và chia sẻ thông tin xác thực. Vui lòng tham khảo tài liệu Dialogflow để biết thêm thông tin."
+      "DIALOGFLOW": "Dialogflow is a natural language processing platform for building conversational interfaces. Integrating it with {installationName} lets bots handle queries first and transfer them to agents when needed. It helps qualify leads and reduce agent workload by answering FAQs. To add Dialogflow, create a Service Account in Google Console and share the credentials. Refer to the docs for details"
     }
   }
 }

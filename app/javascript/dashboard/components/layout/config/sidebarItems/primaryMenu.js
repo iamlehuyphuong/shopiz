@@ -1,14 +1,5 @@
 import { FEATURE_FLAGS } from '../../../../featureFlags';
 import { frontendURL } from '../../../../helper/URLHelper';
-import ContactIcon from 'components/layout/sidebarComponents/icons/ContactIcon.vue';
-import ConversationsIcon from 'components/layout/sidebarComponents/icons/ConversationsIcon.vue';
-import ReportIcon from 'components/layout/sidebarComponents/icons/ReportIcon.vue';
-import HelpIcon from 'components/layout/sidebarComponents/icons/HelpIcon.vue';
-import CompaignIcon from 'components/layout/sidebarComponents/icons/CompaignIcon.vue';
-import SettingIcon from 'components/layout/sidebarComponents/icons/SettingIcon.vue';
-import CustomizeChatbotIcon from 'components/layout/sidebarComponents/icons/CustomizeChatbotIcon.vue';
-
-// #Primarybar
 
 const primaryMenuItems = accountId => [
   {
@@ -20,7 +11,7 @@ const primaryMenuItems = accountId => [
     toStateName: 'inbox_view',
   },
   {
-    icon: ConversationsIcon,
+    icon: 'chat',
     key: 'conversations',
     label: 'CONVERSATIONS',
     toState: frontendURL(`accounts/${accountId}/dashboard`),
@@ -28,14 +19,14 @@ const primaryMenuItems = accountId => [
   },
   {
     icon: 'captain',
-    key: 'Captain',
+    key: 'captain',
     label: 'CAPTAIN',
     featureFlag: FEATURE_FLAGS.CAPTAIN,
     toState: frontendURL(`accounts/${accountId}/captain/documents`),
     toStateName: 'captain',
   },
   {
-    icon: ContactIcon,
+    icon: 'book-contacts',
     key: 'contacts',
     label: 'CONTACTS',
     featureFlag: FEATURE_FLAGS.CRM,
@@ -43,7 +34,7 @@ const primaryMenuItems = accountId => [
     toStateName: 'contacts_dashboard_index',
   },
   {
-    icon: ReportIcon,
+    icon: 'arrow-trending-lines',
     key: 'reports',
     label: 'REPORTS',
     featureFlag: FEATURE_FLAGS.REPORTS,
@@ -51,14 +42,7 @@ const primaryMenuItems = accountId => [
     toStateName: 'account_overview_reports',
   },
   {
-    icon: CustomizeChatbotIcon,
-    key: 'customizeChatbot',
-    label: 'CUSTOMIZE_CHATBOT',
-    toState: frontendURL(`accounts/${accountId}/customize-chatbot`),
-    toStateName: 'account_overview_reports',
-  },
-  {
-    icon: CompaignIcon,
+    icon: 'megaphone',
     key: 'campaigns',
     label: 'CAMPAIGNS',
     featureFlag: FEATURE_FLAGS.CAMPAIGNS,
@@ -66,7 +50,7 @@ const primaryMenuItems = accountId => [
     toStateName: 'campaigns_ongoing_index',
   },
   {
-    icon: HelpIcon,
+    icon: 'library',
     key: 'helpcenter',
     label: 'HELP_CENTER.TITLE',
     featureFlag: FEATURE_FLAGS.HELP_CENTER,
@@ -75,7 +59,7 @@ const primaryMenuItems = accountId => [
     toStateName: 'portals_index',
   },
   {
-    icon: SettingIcon,
+    icon: 'settings',
     key: 'settings',
     label: 'SETTINGS',
     toState: frontendURL(`accounts/${accountId}/settings`),

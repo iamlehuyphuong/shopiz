@@ -32,11 +32,11 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="mb-4">
     <button
-      class="relative flex items-center justify-center p-0  rounded-lg text-white"
+      class="relative flex items-center justify-center w-10 h-10 p-0 my-2 rounded-lg text-slate-600 dark:text-slate-100 hover:bg-slate-25 dark:hover:bg-slate-700 dark:hover:text-slate-100 hover:text-slate-600"
       :class="{
-        'bg-woot-50 dark:bg-slate-800 text-woot-500 ':
+        'bg-woot-50 dark:bg-slate-800 text-woot-500 hover:bg-woot-50':
           isNotificationPanelActive,
       }"
       @click="openNotificationPanel"

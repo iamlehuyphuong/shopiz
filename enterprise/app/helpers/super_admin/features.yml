@@ -4,6 +4,7 @@ captain:
   name: 'Captain'
   description: 'Enable AI-powered conversations with your customers.'
   enabled: <%= (ChatwootHub.pricing_plan != 'community') %>
+  #enabled: true
   icon: 'icon-captain'
   config_key: 'captain'
   enterprise: true
@@ -11,6 +12,7 @@ custom_branding:
   name: 'Custom Branding'
   description: 'Apply your own branding to this installation.'
   enabled: <%= (ChatwootHub.pricing_plan != 'community') %>
+  #enabled: true
   icon: 'icon-paint-brush-line'
   config_key: 'custom_branding'
   enterprise: true
@@ -24,12 +26,14 @@ audit_logs:
   name: 'Audit Logs'
   description: 'Track and trace account activities with ease with detailed audit logs.'
   enabled: <%= (ChatwootHub.pricing_plan != 'community') %>
+  #enabled: true
   icon: 'icon-menu-search-line'
   enterprise: true
 disable_branding:
   name: 'Disable Branding'
   description: 'Disable branding on live-chat widget and external emails.'
   enabled: <%= (ChatwootHub.pricing_plan != 'community') %>
+  #enabled: true
   icon: 'icon-sailbot-fill'
   enterprise: true
 live_chat:
@@ -39,7 +43,7 @@ live_chat:
   icon: 'icon-chat-smile-3-line'
 email:
   name: 'Email'
-  description: 'Manage your email customer interactions from Salesman'
+  description: 'Manage your email customer interactions from Chatwoot.'
   enabled: true
   icon: 'icon-mail-send-fill'
 messenger:
@@ -48,30 +52,24 @@ messenger:
   enabled: true
   icon: 'icon-messenger-line'
   config_key: 'facebook'
-zalo:
-  name: 'Zalo'
-  description: 'Stay connected with your customers on Zalo Official Account.'
-  enabled: true
-  icon: 'icon-messenger-line'
-  config_key: 'zalo'
 whatsapp:
   name: 'WhatsApp'
-  description: 'Manage your WhatsApp business interactions from Salesman'
+  description: 'Manage your WhatsApp business interactions from Chatwoot.'
   enabled: true
   icon: 'icon-whatsapp-line'
 telegram:
   name: 'Telegram'
-  description: 'Manage your Telegram customer interactions from Salesman'
+  description: 'Manage your Telegram customer interactions from Chatwoot.'
   enabled: true
   icon: 'icon-telegram-line'
 line:
   name: 'Line'
-  description: 'Manage your Line customer interactions from Salesman'
+  description: 'Manage your Line customer interactions from Chatwoot.'
   enabled: true
   icon: 'icon-line-line'
 sms:
   name: 'SMS'
-  description: 'Manage your SMS customer interactions from Salesman'
+  description: 'Manage your SMS customer interactions from Chatwoot.'
   enabled: true
   icon: 'icon-message-line'
 help_center:
@@ -91,3 +89,27 @@ linear:
   enabled: true
   icon: 'icon-linear'
   config_key: 'linear'
+instagram:
+  name: 'Instagram'
+  description: 'Configuration for setting up Instagram'
+  enabled: true
+  icon: 'icon-instagram'
+  config_key: 'instagram'
+shopify:
+  name: 'Shopify'
+  description: 'Configuration for setting up Shopify'
+  enabled: true
+  icon: 'icon-shopify'
+  config_key: 'shopify'
+zalo:
+  name: 'Zalo'
+  description: 'Stay connected with your customers on Zalo Official Account.'
+  enabled: true
+  icon: 'icon-zalo'
+  config_key: 'zalo'
+activepieces:
+  name: 'Active Pieces'
+  description: 'Automation software that is AI-first.'
+  enabled: true
+  icon: 'icon-activepieces'
+  config_key: 'activepieces'

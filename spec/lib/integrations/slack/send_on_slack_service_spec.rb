@@ -141,7 +141,7 @@ describe Integrations::Slack::SendOnSlackService do
         unflur_payload = { :channel => 'channel',
                            :ts => 'timestamp',
                            :unfurls =>
-           { :'https://qa.chatwoot.com/app/accounts/1/conversations/1' =>
+           { :'https://qa.salesman.effiai.pro/app/accounts/1/conversations/1' =>
              { :blocks => [{ :type => 'section',
                              :text => { :type => 'plain_text', :text => 'This is a plain text section block.', :emoji => true } }] } } }
         allow(slack_client).to receive(:chat_unfurl).with(unflur_payload)
@@ -269,12 +269,25 @@ describe Integrations::Slack::SendOnSlackService do
         expect(hook).to be_disabled
         expect(hook).to have_received(:prompt_reauthorization!)
       end
+
+      it 'logs MissingScope error during link unfurl' do
+        unflur_payload = { channel: 'channel', ts: 'timestamp', unfurls: {} }
+        error = Slack::Web::Api::Errors::MissingScope.new('Missing required scope')
+
+        expect(slack_client).to receive(:chat_unfurl)
+          .with(unflur_payload)
+          .and_raise(error)
+
+        expect(Rails.logger).to receive(:warn).with('Slack: Missing scope error: Missing required scope')
+
+        link_builder.link_unfurl(unflur_payload)
+      end
     end
 
     context 'when message contains mentions' do
       it 'sends formatted message to slack along with inbox name when identifier not present' do
         inbox = conversation.inbox
-        message.update!(content: "Hi [@#{contact.name}](mention://user/#{contact.id}/#{contact.name}), welcome to Salesman!")
+        message.update!(content: "Hi [@#{contact.name}](mention://user/#{contact.id}/#{contact.name}), welcome to Chatwoot!")
         formatted_message_text = message.content.gsub(RegexHelper::MENTION_REGEX, '\1')
 
         expect(slack_client).to receive(:chat_postMessage).with(
@@ -291,7 +304,7 @@ describe Integrations::Slack::SendOnSlackService do
 
       it 'sends formatted message to slack when identifier is present' do
         conversation.update!(identifier: 'random_slack_thread_ts')
-        message.update!(content: "Hi [@#{contact.name}](mention://user/#{contact.id}/#{contact.name}), welcome to Salesman!")
+        message.update!(content: "Hi [@#{contact.name}](mention://user/#{contact.id}/#{contact.name}), welcome to Chatwoot!")
         formatted_message_text = message.content.gsub(RegexHelper::MENTION_REGEX, '\1')
 
         expect(slack_client).to receive(:chat_postMessage).with(

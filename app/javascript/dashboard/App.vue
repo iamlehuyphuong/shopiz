@@ -4,7 +4,6 @@ import AddAccountModal from '../dashboard/components/layout/sidebarComponents/Ad
 import LoadingState from './components/widgets/LoadingState.vue';
 import NetworkNotification from './components/NetworkNotification.vue';
 import UpdateBanner from './components/app/UpdateBanner.vue';
-import UpgradeBanner from './components/app/UpgradeBanner.vue';
 import PaymentPendingBanner from './components/app/PaymentPendingBanner.vue';
 import PendingEmailVerificationBanner from './components/app/PendingEmailVerificationBanner.vue';
 import vueActionCable from './helper/actionCable';
@@ -31,7 +30,6 @@ export default {
     UpdateBanner,
     PaymentPendingBanner,
     WootSnackbarBox,
-    UpgradeBanner,
     PendingEmailVerificationBanner,
   },
   setup() {
@@ -132,8 +130,6 @@ export default {
     },
   },
 };
-
-
 </script>
 
 <template>
@@ -148,7 +144,6 @@ export default {
     <template v-if="currentAccountId">
       <PendingEmailVerificationBanner v-if="hideOnOnboardingView" />
       <PaymentPendingBanner v-if="hideOnOnboardingView" />
-      <UpgradeBanner />
     </template>
     <router-view v-slot="{ Component }">
       <transition name="fade" mode="out-in">
@@ -173,9 +168,9 @@ export default {
   font-weight: 400;
 }
 
-// .v-popper--theme-tooltip .v-popper__arrow-container {
-//   display: none;
-// }
+.v-popper--theme-tooltip .v-popper__arrow-container {
+  display: none;
+}
 
 .multiselect__input {
   margin-bottom: 0px !important;
