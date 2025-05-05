@@ -3,6 +3,7 @@ require 'openai'
 class Captain::LlmService
   def initialize(config)
     @client = OpenAI::Client.new(
+      uri_base: config[:uri_base],
       access_token: config[:api_key],
       log_errors: Rails.env.development?
     )

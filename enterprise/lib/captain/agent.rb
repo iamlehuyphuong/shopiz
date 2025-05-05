@@ -8,7 +8,7 @@ class Captain::Agent
     @tools = prepare_tools(config[:tools] || [])
     @messages = config[:messages] || []
     @max_iterations = config[:max_iterations] || 10
-    @llm = Captain::LlmService.new(api_key: config[:secrets][:OPENAI_API_KEY])
+    @llm = Captain::LlmService.new(uri_base: config[:secrets][:OPENAI_API_BASE_URL], api_key: config[:secrets][:OPENAI_API_KEY])
     @logger = Rails.logger
 
     @logger.info(@prompt)

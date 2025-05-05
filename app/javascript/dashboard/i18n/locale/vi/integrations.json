@@ -2,126 +2,126 @@
   "INTEGRATION_SETTINGS": {
     "SHOPIFY": {
       "DELETE": {
-        "TITLE": "Xóa Tích Hợp Shopify",
+        "TITLE": "Xóa tích hợp Shopify",
         "MESSAGE": "Bạn có chắc chắn muốn xóa tích hợp Shopify không?"
       },
       "STORE_URL": {
-        "TITLE": "Kết Nối Cửa Hàng Shopify",
+        "TITLE": "Kết nối cửa hàng Shopify",
         "LABEL": "URL cửa hàng",
-        "PLACEHOLDER": "cửa-hàng-của-bạn.myshopify.com",
+        "PLACEHOLDER": "your-store.myshopify.com",
         "HELP": "Nhập URL cửa hàng myshopify.com của bạn",
-        "CANCEL": "Huỷ",
+        "CANCEL": "Hủy",
         "SUBMIT": "Kết nối cửa hàng"
       },
-      "ERROR": "Có lỗi xảy ra khi kết nối với Shopify. Vui lòng thử lại hoặc liên hệ hỗ trợ nếu vấn đề vẫn tiếp diễn."
+      "ERROR": "Đã xảy ra lỗi khi kết nối với Shopify. Vui lòng thử lại hoặc liên hệ hỗ trợ nếu lỗi vẫn tiếp diễn."
     },
     "HEADER": "Tích hợp",
-    "DESCRIPTION": "Salesman tích hợp với nhiều công cụ và dịch vụ để cải thiện hiệu quả làm việc của đội ngũ bạn. Khám phá danh sách bên dưới để cấu hình các ứng dụng yêu thích của bạn.",
+    "DESCRIPTION": "Salesman tích hợp với nhiều công cụ và dịch vụ nhằm nâng cao hiệu quả cho đội ngũ của bạn. Khám phá danh sách bên dưới để cấu hình ứng dụng bạn yêu thích.",
     "LEARN_MORE": "Tìm hiểu thêm về tích hợp",
     "LOADING": "Đang lấy thông tin tích hợp",
     "CAPTAIN": {
-      "DISABLED": "Captain không được bật trên tài khoản của bạn.",
+      "DISABLED": "AI Agent không được kích hoạt trên tài khoản của bạn.",
       "CLICK_HERE_TO_CONFIGURE": "Nhấp vào đây để cấu hình",
-      "LOADING_CONSOLE": "Đang tải Bảng điều khiển Captain...",
-      "FAILED_TO_LOAD_CONSOLE": "Không thể tải Bảng điều khiển Captain. Vui lòng làm mới và thử lại."
+      "LOADING_CONSOLE": "Đang tải AI Agent Console...",
+      "FAILED_TO_LOAD_CONSOLE": "Không tải được AI Agent Console. Vui lòng làm mới và thử lại."
     },
     "WEBHOOK": {
-      "SUBSCRIBED_EVENTS": "Những sự kiện được theo dõi",
+      "SUBSCRIBED_EVENTS": "Sự kiện đã đăng ký",
       "LEARN_MORE": "Tìm hiểu thêm về webhook",
       "FORM": {
-        "CANCEL": "Huỷ",
-        "DESC": "Webhook events cung cấp cho bạn thông tin thời gian thực về những gì đang xảy ra trong tài khoản Salesman của bạn. Vui lòng nhập một URL hợp lệ để định cấu hình một cuộc gọi lại.",
+        "CANCEL": "Hủy",
+        "DESC": "Webhook cung cấp thông tin thời gian thực về những gì đang xảy ra trong tài khoản Salesman của bạn. Vui lòng nhập URL hợp lệ để cấu hình callback.",
         "SUBSCRIPTIONS": {
-          "LABEL": "Các sự kiện",
+          "LABEL": "Sự kiện",
           "EVENTS": {
-            "CONVERSATION_CREATED": "Cuộc trò chuyện đã được tạo",
-            "CONVERSATION_STATUS_CHANGED": "Trạng thái cuộc trò chuyện đã thay đổi",
-            "CONVERSATION_UPDATED": "Cuộc trò chuyện đã được cập nhật",
-            "MESSAGE_CREATED": "Tin nhắn đã được tạo",
-            "MESSAGE_UPDATED": "Tin nhắn đã được cập nhật",
-            "WEBWIDGET_TRIGGERED": "Tiện ích trò chuyện trực tuyến do người dùng mở",
-            "CONTACT_CREATED": "Liên hệ đã được tạo",
-            "CONTACT_UPDATED": "Liên hệ đã được cập nhật"
+            "CONVERSATION_CREATED": "Tạo cuộc đối thoại",
+            "CONVERSATION_STATUS_CHANGED": "Thay đổi trạng thái đối thoại",
+            "CONVERSATION_UPDATED": "Cập nhật đối thoại",
+            "MESSAGE_CREATED": "Tin nhắn được tạo",
+            "MESSAGE_UPDATED": "Tin nhắn được cập nhật",
+            "WEBWIDGET_TRIGGERED": "Widget chat trực tiếp được mở bởi người dùng",
+            "CONTACT_CREATED": "Tạo liên hệ",
+            "CONTACT_UPDATED": "Cập nhật liên hệ"
           }
         },
         "END_POINT": {
-          "LABEL": "URL Webhook",
+          "LABEL": "URL webhook",
           "PLACEHOLDER": "Ví dụ: {webhookExampleURL}",
-          "ERROR": "Vui lòng nhập một URL hợp lệ"
+          "ERROR": "Vui lòng nhập URL hợp lệ"
         },
         "EDIT_SUBMIT": "Cập nhật webhook",
         "ADD_SUBMIT": "Tạo webhook"
       },
       "TITLE": "Webhook",
       "CONFIGURE": "Cấu hình",
-      "HEADER": "Cài đặt Webhook",
-      "HEADER_BTN_TXT": "Thêm mới webhook",
-      "LOADING": "Đang tải về các webhooks",
-      "SEARCH_404": "Không có kết quả nào được tìm thấy",
-      "SIDEBAR_TXT": "<p><b>Webhooks</b></p><p>Webhook là các lệnh gọi lại HTTP có thể được xác định cho mọi tài khoản. Chúng được kích hoạt bởi các sự kiện như tạo tin nhắn trong Salesman. Bạn có thể tạo nhiều webhook cho tài khoản này. <br /><br /> Để tạo một <b>webhook</b>, click vào <b>Tạo mới</b>. Bạn cũng có thể xóa bất kỳ webhook hiện có nào bằng cách nhấp vào nút Xóa.</p>",
+      "HEADER": "Cài đặt webhook",
+      "HEADER_BTN_TXT": "Thêm webhook mới",
+      "LOADING": "Đang tải webhook được đính kèm",
+      "SEARCH_404": "Không có mục nào khớp với truy vấn",
+      "SIDEBAR_TXT": "<p><b>Webhook</b></p> <p>Webhook là các callback HTTP có thể được thiết lập cho mỗi tài khoản. Chúng được kích hoạt bởi các sự kiện như tạo tin nhắn trong Salesman. Bạn có thể tạo nhiều webhook cho tài khoản này. <br /><br /> Để tạo một <b>webhook</b>, nhấp vào nút <b>Thêm webhook mới</b>. Bạn cũng có thể xóa webhook hiện có bằng cách nhấp vào nút Xóa.</p>",
       "LIST": {
-        "404": "Không có webhook nào được định cấu hình cho tài khoản này.",
-        "TITLE": "Quản lý webhooks",
+        "404": "Chưa có webhook nào được cấu hình cho tài khoản này.",
+        "TITLE": "Quản lý webhook",
         "TABLE_HEADER": {
-          "WEBHOOK_ENDPOINT": "Endpoint Webhook",
+          "WEBHOOK_ENDPOINT": "Đích webhook",
           "ACTIONS": "Hành động"
         }
       },
       "EDIT": {
         "BUTTON_TEXT": "Chỉnh sửa",
-        "TITLE": "Sửa webhook",
+        "TITLE": "Chỉnh sửa webhook",
         "API": {
-          "SUCCESS_MESSAGE": "Đã cập nhật cấu hình Webhook thành công",
-          "ERROR_MESSAGE": "Không thể kết nối với Máy chủ, Vui lòng thử lại sau"
+          "SUCCESS_MESSAGE": "Cấu hình webhook đã được cập nhật thành công",
+          "ERROR_MESSAGE": "Không thể kết nối với máy chủ Woot, vui lòng thử lại sau"
         }
       },
       "ADD": {
-        "CANCEL": "Xoá",
-        "TITLE": "Thêm mới webhook",
+        "CANCEL": "Hủy",
+        "TITLE": "Thêm webhook mới",
         "API": {
-          "SUCCESS_MESSAGE": "Đã thêm Webhook thành công",
-          "ERROR_MESSAGE": "Không thể kết nối với Máy chủ, Vui lòng thử lại sau"
+          "SUCCESS_MESSAGE": "Cấu hình webhook đã được thêm thành công",
+          "ERROR_MESSAGE": "Không thể kết nối với máy chủ Woot, vui lòng thử lại sau"
         }
       },
       "DELETE": {
-        "BUTTON_TEXT": "Xoá",
+        "BUTTON_TEXT": "Xóa",
         "API": {
           "SUCCESS_MESSAGE": "Webhook đã được xóa thành công",
-          "ERROR_MESSAGE": "Không thể kết nối với Máy chủ, Vui lòng thử lại sau"
+          "ERROR_MESSAGE": "Không thể kết nối với máy chủ Woot, vui lòng thử lại sau"
         },
         "CONFIRM": {
-          "TITLE": "Xác Nhận Xoá",
-          "MESSAGE": "Bạn có chắc chắn muốn xóa webhook không? ({webhookURL})",
-          "YES": "Có, Xoá ",
-          "NO": "Không, Giữ"
+          "TITLE": "Xác nhận xóa",
+          "MESSAGE": "Bạn có chắc chắn muốn xóa webhook? ({webhookURL})",
+          "YES": "Vâng, xóa",
+          "NO": "Không, giữ lại"
         }
       }
     },
     "SLACK": {
-      "DELETE": "Xoá",
+      "DELETE": "Xóa",
       "DELETE_CONFIRMATION": {
         "TITLE": "Xóa tích hợp",
-        "MESSAGE": "Bạn có chắc chắn muốn xóa tích hợp không? Việc xóa sẽ khiến bạn mất quyền truy cập vào các cuộc trò chuyện trên không gian làm việc Slack của bạn."
+        "MESSAGE": "Bạn có chắc chắn muốn xóa tích hợp không? Thao tác này sẽ dẫn đến mất quyền truy cập các cuộc đối thoại trên workspace Slack của bạn."
       },
       "HELP_TEXT": {
-        "TITLE": "Dùng tích hợp Slack",
-        "BODY": "Với tích hợp này, tất cả các cuộc trò chuyện đến của bạn sẽ được đồng bộ đến kênh ***{selectedChannelName}*** trong không gian làm việc Slack của bạn. Bạn có thể quản lý tất cả các cuộc trò chuyện khách hàng ngay trong kênh và không bao giờ bỏ lỡ tin nhắn.\n\nĐây là những tính năng chính của tích hợp:\n\n**Trả lời cuộc trò chuyện ngay trong Slack:** Để trả lời một cuộc trò chuyện tại kênh Slack ***{selectedChannelName}***, chỉ cần nhập tin nhắn và gửi nó dưới dạng chuỗi trả lời. Điều này sẽ tạo ra phản hồi gửi lại cho khách hàng thông qua Salesman. Đơn giản vậy!\n\n**Tạo ghi chú riêng tư:** Nếu bạn muốn tạo ghi chú riêng tư thay vì trả lời, hãy bắt đầu tin nhắn của bạn với ***`note:`***. Điều này đảm bảo tin nhắn của bạn được giữ riêng tư và sẽ không hiển thị cho khách hàng.\n\n**Liên kết hồ sơ đại lý:** Nếu người trả lời trên Slack có hồ sơ đại lý trong Salesman cùng email, các phản hồi sẽ tự động liên kết với hồ sơ đại lý đó. Điều này giúp bạn dễ dàng theo dõi ai đã nói gì và khi nào. Ngược lại, nếu người trả lời không có hồ sơ đại lý liên kết, phản hồi sẽ hiển thị từ hồ sơ bot cho khách hàng.",
+        "TITLE": "Cách sử dụng tích hợp Slack?",
+        "BODY": "Với tích hợp này, tất cả cuộc đối thoại đến sẽ được đồng bộ vào kênh ***{selectedChannelName}*** trên workspace Slack của bạn. Bạn có thể quản lý các cuộc đối thoại khách hàng ngay trong kênh mà không bỏ sót tin nhắn nào.\n\nCác tính năng chính:\n\n**Trả lời từ Slack:** Để trả lời một đối thoại trong kênh ***{selectedChannelName}***, chỉ cần gõ và gửi dưới dạng chuỗi. Điều này sẽ tạo phản hồi gửi trở lại khách hàng thông qua Salesman. Đơn giản như vậy!\n\n **Tạo ghi chú riêng:** Nếu muốn tạo ghi chú thay vì trả lời, hãy bắt đầu tin nhắn với ***`note:`***. Như vậy, tin nhắn sẽ được giữ riêng tư và không hiển thị cho khách hàng.\n\n**Liên kết hồ sơ đại lý:** Nếu người trả lời trên Slack có hồ sơ đại lý trong Salesman với cùng email, câu trả lời sẽ tự động được liên kết với hồ sơ đó. Ngược lại, nếu không có hồ sơ liên kết, các phản hồi sẽ hiển thị từ hồ sơ bot.",
         "SELECTED": "đã chọn"
       },
       "SELECT_CHANNEL": {
-        "OPTION_LABEL": "Chọn một kênh",
+        "OPTION_LABEL": "Chọn kênh",
         "UPDATE": "Cập nhật",
         "BUTTON_TEXT": "Kết nối kênh",
-        "DESCRIPTION": "Không gian làm việc Slack của bạn hiện đã được liên kết với Salesman. Tuy nhiên, tích hợp hiện đang ở trạng thái không kích hoạt. Để kích hoạt tích hợp và kết nối một kênh với Salesman, vui lòng nhấp vào nút bên dưới.\n\n**Lưu ý:** Nếu bạn đang cố kết nối một kênh riêng tư, hãy thêm ứng dụng Salesman vào kênh Slack trước khi tiến hành bước này.",
+        "DESCRIPTION": "Workspace Slack của bạn hiện đã được liên kết với Salesman. Tuy nhiên, tích hợp chưa hoạt động. Để kích hoạt và kết nối kênh với Salesman, vui lòng nhấp vào nút bên dưới.\n\n**Lưu ý:** Nếu đang kết nối kênh riêng tư, hãy thêm ứng dụng Salesman vào kênh Slack trước khi tiếp tục.",
         "ATTENTION_REQUIRED": "Yêu cầu chú ý",
-        "EXPIRED": "Tích hợp Slack của bạn đã hết hạn. Để tiếp tục nhận tin nhắn trên Slack, vui lòng xóa tích hợp và kết nối lại không gian làm việc của bạn."
+        "EXPIRED": "Tích hợp Slack của bạn đã hết hạn. Để tiếp tục nhận tin nhắn trên Slack, vui lòng xóa tích hợp và kết nối lại workspace."
       },
-      "UPDATE_ERROR": "Có lỗi xảy ra khi cập nhật tích hợp, vui lòng thử lại",
+      "UPDATE_ERROR": "Có lỗi khi cập nhật tích hợp, vui lòng thử lại",
       "UPDATE_SUCCESS": "Kênh đã được kết nối thành công",
-      "FAILED_TO_FETCH_CHANNELS": "Có lỗi khi lấy danh sách kênh từ Slack, vui lòng thử lại"
+      "FAILED_TO_FETCH_CHANNELS": "Có lỗi khi lấy các kênh từ Slack, vui lòng thử lại"
     },
     "DYTE": {
-      "CLICK_HERE_TO_JOIN": "Nhấn vào đây để tham gia",
+      "CLICK_HERE_TO_JOIN": "Nhấp vào đây để tham gia",
       "LEAVE_THE_ROOM": "Rời khỏi phòng",
       "START_VIDEO_CALL_HELP_TEXT": "Bắt đầu cuộc gọi video mới với khách hàng",
       "JOIN_ERROR": "Có lỗi khi tham gia cuộc gọi, vui lòng thử lại",
@@ -129,16 +129,16 @@
     },
     "OPEN_AI": {
       "AI_ASSIST": "Hỗ trợ AI",
-      "WITH_AI": " {option} với AI ",
+      "WITH_AI": " {option} cùng AI ",
       "OPTIONS": {
-        "REPLY_SUGGESTION": "Gợi ý phản hồi",
+        "REPLY_SUGGESTION": "Gợi ý trả lời",
         "SUMMARIZE": "Tóm tắt",
-        "REPHRASE": "Cải thiện văn phong",
+        "REPHRASE": "Cải thiện cách viết",
         "FIX_SPELLING_GRAMMAR": "Sửa lỗi chính tả và ngữ pháp",
         "SHORTEN": "Rút gọn",
         "EXPAND": "Mở rộng",
-        "MAKE_FRIENDLY": "Thay đổi giọng điệu tin nhắn thành thân thiện",
-        "MAKE_FORMAL": "Sử dụng giọng điệu trang trọng",
+        "MAKE_FRIENDLY": "Thay đổi giọng nói thân thiện",
+        "MAKE_FORMAL": "Sử dụng giọng chính thức",
         "SIMPLIFY": "Đơn giản hóa"
       },
       "ASSISTANCE_MODAL": {
@@ -147,27 +147,27 @@
         "AI_WRITING": "AI đang viết",
         "BUTTONS": {
           "APPLY": "Sử dụng gợi ý này",
-          "CANCEL": "Huỷ"
+          "CANCEL": "Hủy"
         }
       },
       "CTA_MODAL": {
         "TITLE": "Tích hợp với OpenAI",
-        "DESC": "Mang các tính năng AI tiên tiến đến bảng điều khiển của bạn với các mô hình GPT của OpenAI. Để bắt đầu, nhập khóa API từ tài khoản OpenAI của bạn.",
-        "KEY_PLACEHOLDER": "Nhập khóa API OpenAI của bạn",
+        "DESC": "Mang đến các tính năng AI tiên tiến cho bảng điều khiển của bạn với mô hình GPT của OpenAI. Để bắt đầu, hãy nhập API key từ tài khoản OpenAI của bạn.",
+        "KEY_PLACEHOLDER": "Nhập API key của OpenAI",
         "BUTTONS": {
-          "NEED_HELP": "Cần hỗ trợ?",
+          "NEED_HELP": "Cần trợ giúp?",
           "DISMISS": "Bỏ qua",
           "FINISH": "Hoàn tất cài đặt"
         },
-        "DISMISS_MESSAGE": "Bạn có thể cài đặt tích hợp OpenAI sau bất cứ lúc nào bạn muốn.",
+        "DISMISS_MESSAGE": "Bạn có thể thiết lập tích hợp OpenAI sau bất cứ lúc nào.",
         "SUCCESS_MESSAGE": "Tích hợp OpenAI đã được cài đặt thành công"
       },
-      "TITLE": "Cải thiện với AI",
+      "TITLE": "Cải thiện cùng AI",
       "SUMMARY_TITLE": "Tóm tắt với AI",
-      "REPLY_TITLE": "Gợi ý phản hồi với AI",
-      "SUBTITLE": "Một phản hồi cải tiến sẽ được tạo ra bằng AI, dựa trên bản nháp hiện tại của bạn.",
+      "REPLY_TITLE": "Gợi ý trả lời với AI",
+      "SUBTITLE": "Nội dung trả lời được cải thiện sẽ được tạo ra bằng AI, dựa trên bản nháp hiện tại của bạn.",
       "TONE": {
-        "TITLE": "Giọng điệu",
+        "TITLE": "Giọng nói",
         "OPTIONS": {
           "PROFESSIONAL": "Chuyên nghiệp",
           "FRIENDLY": "Thân thiện"
@@ -176,12 +176,12 @@
       "BUTTONS": {
         "GENERATE": "Tạo",
         "GENERATING": "Đang tạo...",
-        "CANCEL": "Huỷ"
+        "CANCEL": "Hủy"
       },
-      "GENERATE_ERROR": "Có lỗi khi xử lý nội dung, vui lòng thử lại"
+      "GENERATE_ERROR": "Có lỗi khi xử lý nội dung, vui lòng kiểm tra API key của OpenAI và thử lại"
     },
     "DELETE": {
-      "BUTTON_TEXT": "Xoá",
+      "BUTTON_TEXT": "Xóa",
       "API": {
         "SUCCESS_MESSAGE": "Tích hợp đã được xóa thành công"
       }
@@ -190,55 +190,55 @@
       "BUTTON_TEXT": "Kết nối"
     },
     "DASHBOARD_APPS": {
-      "TITLE": "Ứng dụng bảng điều khiển",
-      "HEADER_BTN_TXT": "Thêm mới một Ứng dụng bảng điều khiển",
-      "SIDEBAR_TXT": "<p><b>Ứng dụng bảng điều khiển</b></p><p>Ứng dụng bảng điều khiển cho phép bạn nhúng ứng dụng vào trang bảng điều khiển nhằm cung cấp ngữ cảnh cho tổng đài viên hỗ trợ khách hàng. Tính năng này cho phép tạo ứng dụng một cách độc lập và nhúng chúng vào trang điều khiển để cung cấp thông tin về người dùng, đơn hàng hoặc lịch sử thanh toán của họ.</p><p>Khi nhúng ứng dụng vào bảng điều khiển, ứng dụng của bạn sẽ lấy thông tin ngữ cảnh từ cuộc trò chuyện và liên hệ dưới dạng sự kiện cửa sổ. Triển khai trình nghe sự kiện trên trang để nhận thông tin ngữ cảnh.</p><p>Để thêm ứng dụng vào bảng điều khiển mới, hãy nhấp vào nút 'Thêm ứng dụng bảng điều khiển mới'.</p>",
-      "DESCRIPTION": "Ứng dụng bảng điều khiển cho phép các tổ chức nhúng một ứng dụng bên trong trang điều khiển để cung cấp ngữ cảnh cho các tổng đài viên hỗ trợ khách hàng. Tính năng này cho phép bạn tạo ứng dụng một cách độc lập và nhúng ứng dụng đó để cung cấp thông tin người dùng, đơn đặt hàng hoặc lịch sử thanh toán trước đó của họ.",
-      "LEARN_MORE": "Tìm hiểu thêm về Ứng dụng bảng điều khiển",
+      "TITLE": "Ứng dụng Dashboard",
+      "HEADER_BTN_TXT": "Thêm ứng dụng dashboard mới",
+      "SIDEBAR_TXT": "<p><b>Ứng dụng Dashboard</b></p><p>Ứng dụng Dashboard cho phép tổ chức nhúng một ứng dụng bên trong bảng điều khiển của Salesman để cung cấp ngữ cảnh cho nhân viên hỗ trợ khách hàng. Tính năng này cho phép bạn tạo ứng dụng độc lập và nhúng nó để hiển thị thông tin người dùng, đơn hàng hoặc lịch sử thanh toán.</p><p>Khi bạn nhúng ứng dụng vào bảng điều khiển Salesman, ứng dụng sẽ nhận ngữ cảnh của cuộc đối thoại và thông tin liên hệ qua các sự kiện. Hãy triển khai trình lắng nghe sự kiện message trên trang của bạn để nhận dữ liệu ngữ cảnh.</p><p>Để thêm ứng dụng dashboard mới, nhấp vào nút 'Thêm ứng dụng dashboard mới'.</p>",
+      "DESCRIPTION": "Ứng dụng Dashboard cho phép tổ chức nhúng một ứng dụng vào bảng điều khiển để cung cấp ngữ cảnh cho nhân viên hỗ trợ khách hàng. Tính năng này cho phép bạn tạo ứng dụng độc lập và nhúng nó để hiển thị thông tin người dùng, đơn hàng hoặc lịch sử thanh toán.",
+      "LEARN_MORE": "Tìm hiểu thêm về ứng dụng Dashboard",
       "LIST": {
-        "404": "Chưa có ứng dụng bảng điều khiển nào được cấu hình cho tài khoản này",
-        "LOADING": "Đang tải ứng dụng bảng điều khiển...",
+        "404": "Chưa có ứng dụng dashboard nào được cấu hình cho tài khoản này",
+        "LOADING": "Đang lấy ứng dụng dashboard...",
         "TABLE_HEADER": {
           "NAME": "Tên",
-          "ENDPOINT": "Đầu cuối"
+          "ENDPOINT": "Đích"
         },
-        "EDIT_TOOLTIP": "Sửa ứng dụng",
+        "EDIT_TOOLTIP": "Chỉnh sửa ứng dụng",
         "DELETE_TOOLTIP": "Xóa ứng dụng"
       },
       "FORM": {
         "TITLE_LABEL": "Tên",
-        "TITLE_PLACEHOLDER": "Nhập tên cho ứng dụng bảng điều khiển",
-        "TITLE_ERROR": "Cần có tên cho ứng dụng bảng điều khiển",
-        "URL_LABEL": "Đầu cuối",
-        "URL_PLACEHOLDER": "Nhập URL endpoint nơi ứng dụng của bạn được lưu trữ",
-        "URL_ERROR": "Cần một URL hợp lệ"
+        "TITLE_PLACEHOLDER": "Nhập tên ứng dụng dashboard của bạn",
+        "TITLE_ERROR": "Bắt buộc phải nhập tên cho ứng dụng dashboard",
+        "URL_LABEL": "Đích",
+        "URL_PLACEHOLDER": "Nhập URL nơi ứng dụng của bạn được lưu trữ",
+        "URL_ERROR": "Bắt buộc phải nhập URL hợp lệ"
       },
       "CREATE": {
-        "HEADER": "Thêm mới một Ứng dụng bảng điều khiển",
+        "HEADER": "Thêm ứng dụng dashboard mới",
         "FORM_SUBMIT": "Gửi",
-        "FORM_CANCEL": "Huỷ",
-        "API_SUCCESS": "Ứng dụng bảng điều khiển đã được cấu hình thành công",
+        "FORM_CANCEL": "Hủy",
+        "API_SUCCESS": "Ứng dụng dashboard đã được cấu hình thành công",
         "API_ERROR": "Không thể tạo ứng dụng. Vui lòng thử lại sau"
       },
       "UPDATE": {
-        "HEADER": "Cập nhật ứng dụng bảng điều khiển",
+        "HEADER": "Chỉnh sửa ứng dụng dashboard",
         "FORM_SUBMIT": "Cập nhật",
-        "FORM_CANCEL": "Huỷ",
-        "API_SUCCESS": "Đã cập nhật ứng dụng bảng điều khiển thành công",
+        "FORM_CANCEL": "Hủy",
+        "API_SUCCESS": "Ứng dụng dashboard đã được cập nhật thành công",
         "API_ERROR": "Không thể cập nhật ứng dụng. Vui lòng thử lại sau"
       },
       "DELETE": {
-        "CONFIRM_YES": "Có, xóa nó",
+        "CONFIRM_YES": "Vâng, xóa",
         "CONFIRM_NO": "Không, giữ lại",
         "TITLE": "Xác nhận xóa",
-        "MESSAGE": "Bạn có chắc chắn xóa ứng dụng - {appName}?",
-        "API_SUCCESS": "Đã xóa ứng dụng bảng điều khiển thành công",
+        "MESSAGE": "Bạn có chắc chắn muốn xóa ứng dụng - {appName}?",
+        "API_SUCCESS": "Ứng dụng dashboard đã được xóa thành công",
         "API_ERROR": "Không thể xóa ứng dụng. Vui lòng thử lại sau"
       }
     },
     "LINEAR": {
-      "ADD_OR_LINK_BUTTON": "Tạo/Liên kết Vấn đề Linear",
-      "LOADING": "Đang lấy vấn đề Linear...",
+      "ADD_OR_LINK_BUTTON": "Tạo/ Liên kết Vấn đề Linear",
+      "LOADING": "Đang lấy các vấn đề Linear...",
       "LOADING_ERROR": "Có lỗi khi lấy các vấn đề Linear, vui lòng thử lại",
       "CREATE": "Tạo",
       "LINK": {
@@ -248,18 +248,18 @@
         "EMPTY_LIST": "Không tìm thấy vấn đề Linear",
         "LOADING": "Đang tải",
         "ERROR": "Có lỗi khi lấy các vấn đề Linear, vui lòng thử lại",
-        "LINK_SUCCESS": "Liên kết vấn đề thành công",
+        "LINK_SUCCESS": "Vấn đề đã được liên kết thành công",
         "LINK_ERROR": "Có lỗi khi liên kết vấn đề, vui lòng thử lại",
-        "LINK_TITLE": "Cuộc trò chuyện (#{conversationId}) với {name}"
+        "LINK_TITLE": "Cuộc đối thoại (#{conversationId}) với {name}"
       },
       "ADD_OR_LINK": {
-        "TITLE": "Tạo/liên kết vấn đề Linear",
-        "DESCRIPTION": "Tạo vấn đề Linear từ cuộc trò chuyện, hoặc liên kết các vấn đề hiện có để theo dõi liên tục.",
+        "TITLE": "Tạo/Liên kết vấn đề Linear",
+        "DESCRIPTION": "Tạo vấn đề Linear từ các cuộc đối thoại, hoặc liên kết vấn đề hiện có để theo dõi liền mạch.",
         "FORM": {
           "TITLE": {
             "LABEL": "Tiêu đề",
             "PLACEHOLDER": "Nhập tiêu đề",
-            "REQUIRED_ERROR": "Tiêu đề bắt buộc có"
+            "REQUIRED_ERROR": "Tiêu đề là bắt buộc"
           },
           "DESCRIPTION": {
             "LABEL": "Mô tả",
@@ -277,9 +277,9 @@
             "SEARCH": "Tìm kiếm người được giao"
           },
           "PRIORITY": {
-            "LABEL": "Mức độ ưu tiên",
-            "PLACEHOLDER": "Chọn mức ưu tiên",
-            "SEARCH": "Tìm kiếm mức ưu tiên"
+            "LABEL": "Độ ưu tiên",
+            "PLACEHOLDER": "Chọn độ ưu tiên",
+            "SEARCH": "Tìm kiếm độ ưu tiên"
           },
           "LABEL": {
             "LABEL": "Nhãn",
@@ -298,61 +298,84 @@
           }
         },
         "CREATE": "Tạo",
-        "CANCEL": "Huỷ",
-        "CREATE_SUCCESS": "Tạo vấn đề thành công",
+        "CANCEL": "Hủy",
+        "CREATE_SUCCESS": "Vấn đề đã được tạo thành công",
         "CREATE_ERROR": "Có lỗi khi tạo vấn đề, vui lòng thử lại",
-        "LOADING_TEAM_ERROR": "Có lỗi khi lấy danh sách nhóm, vui lòng thử lại",
-        "LOADING_TEAM_ENTITIES_ERROR": "Có lỗi khi lấy thông tin nhóm, vui lòng thử lại"
+        "LOADING_TEAM_ERROR": "Có lỗi khi lấy các nhóm, vui lòng thử lại",
+        "LOADING_TEAM_ENTITIES_ERROR": "Có lỗi khi lấy thực thể của nhóm, vui lòng thử lại"
       },
       "ISSUE": {
         "STATUS": "Trạng thái",
-        "PRIORITY": "Mức độ ưu tiên",
+        "PRIORITY": "Độ ưu tiên",
         "ASSIGNEE": "Người được giao",
         "LABELS": "Nhãn",
-        "CREATED_AT": "Tạo lúc {createdAt}"
+        "CREATED_AT": "Ngày tạo {createdAt}"
       },
       "UNLINK": {
         "TITLE": "Hủy liên kết",
-        "SUCCESS": "Hủy liên kết vấn đề thành công",
+        "SUCCESS": "Vấn đề đã được hủy liên kết thành công",
         "ERROR": "Có lỗi khi hủy liên kết vấn đề, vui lòng thử lại"
       },
       "DELETE": {
-        "TITLE": "Bạn có chắc chắn muốn xóa tích hợp hay không?",
-        "MESSAGE": "Bạn có chắc chắn muốn xóa tích hợp hay không?",
-        "CONFIRM": "Có, xóa",
-        "CANCEL": "Huỷ"
+        "TITLE": "Bạn có chắc chắn muốn xóa tích hợp?",
+        "MESSAGE": "Bạn có chắc chắn muốn xóa tích hợp không?",
+        "CONFIRM": "Vâng, xóa",
+        "CANCEL": "Hủy"
       }
     }
   },
   "CAPTAIN": {
-    "NAME": "Captain",
+    "NAME": "AI Agent",
     "HEADER_KNOW_MORE": "Tìm hiểu thêm",
     "COPILOT": {
       "SEND_MESSAGE": "Gửi tin nhắn...",
-      "LOADER": "Captain đang suy nghĩ",
+      "EMPTY_MESSAGE": "Có lỗi khi tạo phản hồi. Vui lòng thử lại.",
+      "LOADER": "AI Agent đang suy nghĩ",
       "YOU": "Bạn",
-      "USE": "Sử dụng cái này",
+      "USE": "Sử dụng",
       "RESET": "Đặt lại",
-      "SELECT_ASSISTANT": "Chọn trợ lý"
+      "SELECT_ASSISTANT": "Chọn trợ lý",
+      "PROMPTS": {
+        "SUMMARIZE": {
+          "LABEL": "Tóm tắt cuộc trò chuyện này",
+          "CONTENT": "Tóm tắt các điểm chính được thảo luận giữa khách hàng và nhân viên hỗ trợ, bao gồm những mối quan tâm của khách hàng, các câu hỏi và các giải pháp hoặc phản hồi từ nhân viên hỗ trợ."
+        },
+        "SUGGEST": {
+          "LABEL": "Đề xuất câu trả lời",
+          "CONTENT": "Phân tích yêu cầu của khách hàng và soạn thảo một phản hồi hiệu quả giải quyết các mối quan tâm hoặc câu hỏi của họ. Đảm bảo câu trả lời rõ ràng, ngắn gọn và cung cấp thông tin hữu ích."
+        },
+        "RATE": {
+          "LABEL": "Đánh giá cuộc trò chuyện này",
+          "CONTENT": "Đánh giá cuộc trò chuyện để xem nó đáp ứng nhu cầu của khách hàng như thế nào. Chia sẻ đánh giá trên thang điểm từ 1 đến 5 dựa trên giọng điệu, độ rõ ràng và hiệu quả."
+        }
+      }
+    },
+    "PLAYGROUND": {
+      "USER": "Bạn",
+      "ASSISTANT": "Trợ lý",
+      "MESSAGE_PLACEHOLDER": "Nhập tin nhắn của bạn...",
+      "HEADER": "Thử nghiệm",
+      "DESCRIPTION": "Sử dụng tính năng này để gửi tin nhắn đến trợ lý và kiểm tra xem nó có phản hồi chính xác, nhanh chóng và đúng giọng mà bạn mong đợi hay không.",
+      "CREDIT_NOTE": "Tin nhắn gửi tại đây sẽ được tính vào hạn mức tín dụng của AI Agent."
     },
     "PAYWALL": {
-      "TITLE": "Nâng cấp để sử dụng Captain AI",
-      "AVAILABLE_ON": "Captain không có sẵn trong gói miễn phí.",
-      "UPGRADE_PROMPT": "Nâng cấp gói của bạn để truy cập các trợ lý, copilot và nhiều tính năng khác.",
+      "TITLE": "Nâng cấp để sử dụng AI Agent",
+      "AVAILABLE_ON": "AI Agent không khả dụng trên gói miễn phí.",
+      "UPGRADE_PROMPT": "Nâng cấp gói của bạn để truy cập trợ lý, copilot và nhiều tính năng khác.",
       "UPGRADE_NOW": "Nâng cấp ngay",
-      "CANCEL_ANYTIME": "Bạn có thể thay đổi hoặc hủy gói bất cứ lúc nào"
+      "CANCEL_ANYTIME": "Bạn có thể thay đổi hoặc hủy gói của mình bất cứ lúc nào"
     },
     "ENTERPRISE_PAYWALL": {
-      "AVAILABLE_ON": "Tính năng Captain AI chỉ có trong gói trả phí.",
-      "UPGRADE_PROMPT": "Nâng cấp gói của bạn để truy cập các trợ lý, copilot và nhiều tính năng khác.",
-      "ASK_ADMIN": "Vui lòng liên hệ quản trị viên của bạn để nâng cấp."
+      "AVAILABLE_ON": "Tính năng AI Agent chỉ khả dụng trên gói trả phí.",
+      "UPGRADE_PROMPT": "Nâng cấp gói của bạn để truy cập trợ lý, copilot và nhiều tính năng khác.",
+      "ASK_ADMIN": "Vui lòng liên hệ với quản trị viên của bạn để được nâng cấp."
     },
     "BANNER": {
-      "RESPONSES": "Bạn đã sử dụng trên 80% giới hạn phản hồi. Để tiếp tục sử dụng Captain AI, vui lòng nâng cấp.",
-      "DOCUMENTS": "Đã đạt giới hạn tài liệu. Nâng cấp để tiếp tục sử dụng Captain AI."
+      "RESPONSES": "Bạn đã sử dụng quá 80% hạn mức phản hồi. Để tiếp tục sử dụng AI Agent, vui lòng nâng cấp.",
+      "DOCUMENTS": "Hạn mức tài liệu đã đạt mức giới hạn. Hãy nâng cấp để tiếp tục sử dụng AI Agent."
     },
     "FORM": {
-      "CANCEL": "Huỷ",
+      "CANCEL": "Hủy",
       "CREATE": "Tạo",
       "EDIT": "Cập nhật"
     },
@@ -361,55 +384,77 @@
       "ADD_NEW": "Tạo trợ lý mới",
       "DELETE": {
         "TITLE": "Bạn có chắc chắn muốn xóa trợ lý không?",
-        "DESCRIPTION": "Hành động này là vĩnh viễn. Xóa trợ lý sẽ loại bỏ nó khỏi tất cả các hộp thư được kết nối và xóa vĩnh viễn tất cả kiến thức đã tạo ra.",
-        "CONFIRM": "Có, xóa",
+        "DESCRIPTION": "Hành động này là vĩnh viễn. Việc xóa trợ lý sẽ loại bỏ nó khỏi tất cả các hộp thư được kết nối và xoá bỏ toàn bộ kiến thức đã tạo ra.",
+        "CONFIRM": "Vâng, xóa",
         "SUCCESS_MESSAGE": "Trợ lý đã được xóa thành công",
         "ERROR_MESSAGE": "Có lỗi khi xóa trợ lý, vui lòng thử lại."
       },
-      "FORM_DESCRIPTION": "Điền các thông tin dưới đây để đặt tên trợ lý, mô tả mục đích và chỉ định sản phẩm mà nó sẽ hỗ trợ.",
+      "FORM_DESCRIPTION": "Điền thông tin bên dưới để đặt tên trợ lý, mô tả mục đích sử dụng và xác định sản phẩm mà nó sẽ hỗ trợ.",
       "CREATE": {
         "TITLE": "Tạo trợ lý",
         "SUCCESS_MESSAGE": "Trợ lý đã được tạo thành công",
         "ERROR_MESSAGE": "Có lỗi khi tạo trợ lý, vui lòng thử lại."
       },
       "FORM": {
+        "UPDATE": "Cập nhật",
+        "SECTIONS": {
+          "BASIC_INFO": "Thông tin cơ bản",
+          "SYSTEM_MESSAGES": "Tin nhắn hệ thống",
+          "INSTRUCTIONS": "Hướng dẫn",
+          "FEATURES": "Tính năng",
+          "TOOLS": "Công cụ"
+        },
         "NAME": {
-          "LABEL": "Tên trợ lý",
-          "PLACEHOLDER": "Nhập tên cho trợ lý",
-          "ERROR": "Vui lòng cung cấp tên cho trợ lý"
+          "LABEL": "Tên",
+          "PLACEHOLDER": "Nhập tên trợ lý"
         },
         "DESCRIPTION": {
-          "LABEL": "Mô tả trợ lý",
-          "PLACEHOLDER": "Mô tả cách thức và nơi trợ lý này sẽ được sử dụng",
-          "ERROR": "Yêu cầu nhập mô tả"
+          "LABEL": "Mô tả",
+          "PLACEHOLDER": "Nhập mô tả trợ lý"
         },
         "PRODUCT_NAME": {
           "LABEL": "Tên sản phẩm",
-          "PLACEHOLDER": "Nhập tên sản phẩm mà trợ lý này được thiết kế cho",
-          "ERROR": "Yêu cầu nhập tên sản phẩm"
+          "PLACEHOLDER": "Nhập tên sản phẩm"
+        },
+        "WELCOME_MESSAGE": {
+          "LABEL": "Tin nhắn chào mừng",
+          "PLACEHOLDER": "Nhập tin nhắn chào mừng"
+        },
+        "HANDOFF_MESSAGE": {
+          "LABEL": "Tin nhắn chuyển giao",
+          "PLACEHOLDER": "Nhập tin nhắn chuyển giao"
+        },
+        "RESOLUTION_MESSAGE": {
+          "LABEL": "Tin nhắn kết thúc",
+          "PLACEHOLDER": "Nhập tin nhắn kết thúc"
+        },
+        "INSTRUCTIONS": {
+          "LABEL": "Hướng dẫn",
+          "PLACEHOLDER": "Nhập hướng dẫn cho trợ lý"
         },
         "FEATURES": {
-          "TITLE": "Các tính năng",
-          "ALLOW_CONVERSATION_FAQS": "Tạo câu hỏi thường gặp từ các cuộc trò chuyện đã giải quyết",
-          "ALLOW_MEMORIES": "Ghi lại các chi tiết quan trọng từ tương tác với khách hàng."
+          "TITLE": "Tính năng",
+          "ALLOW_CONVERSATION_FAQS": "Tạo FAQ từ các cuộc đối thoại đã kết thúc",
+          "ALLOW_MEMORIES": "Ghi nhận các chi tiết quan trọng từ tương tác với khách hàng."
         }
       },
       "EDIT": {
         "TITLE": "Cập nhật trợ lý",
         "SUCCESS_MESSAGE": "Trợ lý đã được cập nhật thành công",
-        "ERROR_MESSAGE": "Có lỗi khi cập nhật trợ lý, vui lòng thử lại."
+        "ERROR_MESSAGE": "Có lỗi khi cập nhật trợ lý, vui lòng thử lại.",
+        "NOT_FOUND": "Không tìm thấy trợ lý. Vui lòng thử lại."
       },
       "OPTIONS": {
         "EDIT_ASSISTANT": "Chỉnh sửa trợ lý",
         "DELETE_ASSISTANT": "Xóa trợ lý",
-        "VIEW_CONNECTED_INBOXES": "Xem hộp thư được kết nối"
+        "VIEW_CONNECTED_INBOXES": "Xem hộp thư đã kết nối"
       },
       "EMPTY_STATE": {
-        "TITLE": "Không có trợ lý nào",
-        "SUBTITLE": "Tạo trợ lý để cung cấp phản hồi nhanh và chính xác cho người dùng. Nó có thể học hỏi từ các bài viết trợ giúp và các cuộc trò chuyện trước đó.",
+        "TITLE": "Không có trợ lý",
+        "SUBTITLE": "Tạo trợ lý để cung cấp phản hồi nhanh chóng và chính xác cho người dùng. Nó có thể học từ các bài hướng dẫn và các cuộc đối thoại trước đây.",
         "FEATURE_SPOTLIGHT": {
-          "TITLE": "Captain Assistant",
-          "NOTE": "Captain Assistant tương tác trực tiếp với khách hàng, học hỏi từ tài liệu trợ giúp và các cuộc trò chuyện trước đó, đồng thời cung cấp phản hồi nhanh chóng và chính xác. Nó xử lý các truy vấn ban đầu, cung cấp giải pháp nhanh trước khi chuyển giao cho đại lý khi cần."
+          "TITLE": "AI Agent Assistant",
+          "NOTE": "AI Agent Assistant tương tác trực tiếp với khách hàng, học từ bài viết hỗ trợ và các cuộc đối thoại trước, và đưa ra phản hồi nhanh, chính xác. Nó xử lý câu hỏi ban đầu trước khi chuyển giao cho nhân viên hỗ trợ khi cần."
         }
       }
     },
@@ -417,20 +462,20 @@
       "HEADER": "Tài liệu",
       "ADD_NEW": "Tạo tài liệu mới",
       "RELATED_RESPONSES": {
-        "TITLE": "Câu hỏi thường gặp liên quan",
-        "DESCRIPTION": "Các câu hỏi thường gặp này được tạo trực tiếp từ tài liệu."
+        "TITLE": "FAQ liên quan",
+        "DESCRIPTION": "Các FAQ này được tạo trực tiếp từ tài liệu."
       },
-      "FORM_DESCRIPTION": "Nhập URL của tài liệu để thêm nó làm nguồn kiến thức và chọn trợ lý để liên kết.",
+      "FORM_DESCRIPTION": "Nhập URL của tài liệu để thêm vào nguồn kiến thức và chọn trợ lý liên kết.",
       "CREATE": {
         "TITLE": "Thêm tài liệu",
-        "SUCCESS_MESSAGE": "Tài liệu đã được tạo thành công",
+        "SUCCESS_MESSAGE": "Tài liệu đã được thêm thành công",
         "ERROR_MESSAGE": "Có lỗi khi tạo tài liệu, vui lòng thử lại."
       },
       "FORM": {
         "URL": {
           "LABEL": "URL",
           "PLACEHOLDER": "Nhập URL của tài liệu",
-          "ERROR": "Vui lòng cung cấp URL hợp lệ cho tài liệu"
+          "ERROR": "Vui lòng cung cấp URL hợp lệ"
         },
         "ASSISTANT": {
           "LABEL": "Trợ lý",
@@ -440,50 +485,50 @@
       },
       "DELETE": {
         "TITLE": "Bạn có chắc chắn muốn xóa tài liệu không?",
-        "DESCRIPTION": "Hành động này là vĩnh viễn. Xóa tài liệu sẽ xóa vĩnh viễn tất cả kiến thức đã tạo ra.",
-        "CONFIRM": "Có, xóa",
+        "DESCRIPTION": "Hành động này là vĩnh viễn. Xóa tài liệu sẽ xoá bỏ toàn bộ kiến thức đã được tạo ra.",
+        "CONFIRM": "Vâng, xóa",
         "SUCCESS_MESSAGE": "Tài liệu đã được xóa thành công",
         "ERROR_MESSAGE": "Có lỗi khi xóa tài liệu, vui lòng thử lại."
       },
       "OPTIONS": {
-        "VIEW_RELATED_RESPONSES": "Xem các phản hồi liên quan",
+        "VIEW_RELATED_RESPONSES": "Xem phản hồi liên quan",
         "DELETE_DOCUMENT": "Xóa tài liệu"
       },
       "EMPTY_STATE": {
-        "TITLE": "Không có tài liệu nào",
-        "SUBTITLE": "Tài liệu được sử dụng bởi trợ lý của bạn để tạo ra các câu hỏi thường gặp. Bạn có thể nhập tài liệu để cung cấp ngữ cảnh cho trợ lý.",
+        "TITLE": "Không có tài liệu",
+        "SUBTITLE": "Tài liệu được dùng bởi trợ lý để tạo các FAQ. Bạn có thể nhập tài liệu để cung cấp ngữ cảnh cho trợ lý.",
         "FEATURE_SPOTLIGHT": {
-          "TITLE": "Tài liệu Captain",
-          "NOTE": "Một tài liệu trong Captain đóng vai trò là nguồn kiến thức cho trợ lý. Bằng cách kết nối trung tâm trợ giúp hoặc hướng dẫn, Captain có thể phân tích nội dung và đưa ra phản hồi chính xác cho các câu hỏi của khách hàng."
+          "TITLE": "AI Agent Document",
+          "NOTE": "Một tài liệu trong AI Agent đóng vai trò là nguồn kiến thức cho trợ lý. Bằng cách kết nối trung tâm hỗ trợ hoặc hướng dẫn, AI Agent có thể phân tích nội dung và đưa ra phản hồi chính xác cho các thắc mắc của khách hàng."
         }
       }
     },
     "RESPONSES": {
-      "HEADER": "Câu hỏi thường gặp",
-      "ADD_NEW": "Tạo câu hỏi thường gặp mới",
+      "HEADER": "FAQ",
+      "ADD_NEW": "Tạo FAQ mới",
       "DOCUMENTABLE": {
-        "CONVERSATION": "Cuộc trò chuyện #{id}"
+        "CONVERSATION": "Cuộc đối thoại #{id}"
       },
-      "SELECTED": "{count} đã chọn",
+      "SELECTED": "{count} đã được chọn",
       "BULK_APPROVE_BUTTON": "Phê duyệt",
       "BULK_DELETE_BUTTON": "Xóa",
       "BULK_APPROVE": {
-        "SUCCESS_MESSAGE": "Câu hỏi thường gặp đã được phê duyệt thành công",
-        "ERROR_MESSAGE": "Có lỗi khi phê duyệt các câu hỏi thường gặp, vui lòng thử lại."
+        "SUCCESS_MESSAGE": "FAQ đã được phê duyệt thành công",
+        "ERROR_MESSAGE": "Có lỗi khi phê duyệt FAQ, vui lòng thử lại."
       },
       "BULK_DELETE": {
-        "TITLE": "Xóa các câu hỏi thường gặp?",
-        "DESCRIPTION": "Bạn có chắc chắn muốn xóa các câu hỏi thường gặp đã chọn không? Hành động này không thể đảo ngược.",
+        "TITLE": "Xóa các FAQ?",
+        "DESCRIPTION": "Bạn có chắc chắn muốn xóa các FAQ đã chọn? Hành động này không thể hoàn tác.",
         "CONFIRM": "Vâng, xóa tất cả",
-        "SUCCESS_MESSAGE": "Các câu hỏi thường gặp đã được xóa thành công",
-        "ERROR_MESSAGE": "Có lỗi khi xóa các câu hỏi thường gặp, vui lòng thử lại."
+        "SUCCESS_MESSAGE": "Các FAQ đã được xóa thành công",
+        "ERROR_MESSAGE": "Có lỗi khi xóa FAQ, vui lòng thử lại."
       },
       "DELETE": {
-        "TITLE": "Bạn có chắc chắn muốn xóa câu hỏi thường gặp không?",
+        "TITLE": "Bạn có chắc chắn muốn xóa FAQ không?",
         "DESCRIPTION": "",
-        "CONFIRM": "Có, xóa",
-        "SUCCESS_MESSAGE": "Câu hỏi thường gặp đã được xóa thành công",
-        "ERROR_MESSAGE": "Có lỗi khi xóa câu hỏi thường gặp, vui lòng thử lại."
+        "CONFIRM": "Vâng, xóa",
+        "SUCCESS_MESSAGE": "FAQ đã được xóa thành công",
+        "ERROR_MESSAGE": "Có lỗi khi xóa FAQ, vui lòng thử lại."
       },
       "FILTER": {
         "ASSISTANT": "Trợ lý: {selected}",
@@ -492,25 +537,25 @@
       },
       "STATUS": {
         "TITLE": "Trạng thái",
-        "PENDING": "Chờ giải quyết",
+        "PENDING": "Đang chờ",
         "APPROVED": "Đã phê duyệt",
         "ALL": "Tất cả"
       },
-      "FORM_DESCRIPTION": "Thêm một câu hỏi và câu trả lời tương ứng vào cơ sở kiến thức và chọn trợ lý liên quan.",
+      "FORM_DESCRIPTION": "Thêm câu hỏi và câu trả lời tương ứng vào cơ sở kiến thức và chọn trợ lý liên kết.",
       "CREATE": {
-        "TITLE": "Thêm câu hỏi thường gặp",
-        "SUCCESS_MESSAGE": "Câu hỏi thường gặp đã được thêm thành công.",
-        "ERROR_MESSAGE": "Có lỗi xảy ra khi thêm câu hỏi thường gặp. Vui lòng thử lại."
+        "TITLE": "Thêm FAQ",
+        "SUCCESS_MESSAGE": "FAQ đã được thêm thành công.",
+        "ERROR_MESSAGE": "Có lỗi khi thêm FAQ, vui lòng thử lại."
       },
       "FORM": {
         "QUESTION": {
           "LABEL": "Câu hỏi",
-          "PLACEHOLDER": "Nhập câu hỏi tại đây",
+          "PLACEHOLDER": "Nhập câu hỏi ở đây",
           "ERROR": "Vui lòng cung cấp câu hỏi hợp lệ."
         },
         "ANSWER": {
           "LABEL": "Câu trả lời",
-          "PLACEHOLDER": "Nhập câu trả lời tại đây",
+          "PLACEHOLDER": "Nhập câu trả lời ở đây",
           "ERROR": "Vui lòng cung cấp câu trả lời hợp lệ."
         },
         "ASSISTANT": {
@@ -520,27 +565,27 @@
         }
       },
       "EDIT": {
-        "TITLE": "Cập nhật câu hỏi thường gặp",
-        "SUCCESS_MESSAGE": "Câu hỏi thường gặp đã được cập nhật thành công",
-        "ERROR_MESSAGE": "Có lỗi khi cập nhật câu hỏi thường gặp, vui lòng thử lại",
-        "APPROVE_SUCCESS_MESSAGE": "Câu hỏi thường gặp đã được đánh dấu là đã phê duyệt"
+        "TITLE": "Cập nhật FAQ",
+        "SUCCESS_MESSAGE": "FAQ đã được cập nhật thành công",
+        "ERROR_MESSAGE": "Có lỗi khi cập nhật FAQ, vui lòng thử lại",
+        "APPROVE_SUCCESS_MESSAGE": "FAQ đã được đánh dấu phê duyệt"
       },
       "OPTIONS": {
-        "APPROVE": "Đánh dấu là đã phê duyệt",
-        "EDIT_RESPONSE": "Chỉnh sửa câu hỏi thường gặp",
-        "DELETE_RESPONSE": "Xóa câu hỏi thường gặp"
+        "APPROVE": "Đánh dấu đã phê duyệt",
+        "EDIT_RESPONSE": "Chỉnh sửa FAQ",
+        "DELETE_RESPONSE": "Xóa FAQ"
       },
       "EMPTY_STATE": {
-        "TITLE": "Không tìm thấy câu hỏi thường gặp",
-        "SUBTITLE": "Câu hỏi thường gặp giúp trợ lý của bạn cung cấp các câu trả lời nhanh và chính xác cho các câu hỏi từ khách hàng. Chúng có thể được tạo tự động từ nội dung của bạn hoặc có thể thêm thủ công.",
+        "TITLE": "Không tìm thấy FAQ",
+        "SUBTITLE": "FAQ giúp trợ lý của bạn cung cấp câu trả lời nhanh chóng và chính xác cho các câu hỏi khách hàng. Chúng có thể được tạo tự động từ nội dung của bạn hoặc được thêm thủ công.",
         "FEATURE_SPOTLIGHT": {
-          "TITLE": "Câu hỏi thường gặp Captain",
-          "NOTE": "Câu hỏi thường gặp Captain phát hiện các câu hỏi phổ biến từ khách hàng—dù chúng thiếu trong cơ sở kiến thức của bạn hay được hỏi thường xuyên—và tạo ra các câu hỏi phù hợp để cải thiện hỗ trợ. Bạn có thể xem xét từng gợi ý và quyết định phê duyệt hoặc từ chối."
+          "TITLE": "AI Agent FAQ",
+          "NOTE": "AI Agent FAQ phát hiện các câu hỏi thường gặp — dù thiếu trong cơ sở kiến thức của bạn hoặc được hỏi nhiều — và tạo ra các FAQ phù hợp giúp cải thiện hỗ trợ. Bạn có thể xem xét và quyết định phê duyệt hay từ chối từng gợi ý."
         }
       }
     },
     "INBOXES": {
-      "HEADER": "Hộp thư được kết nối",
+      "HEADER": "Hộp thư đã kết nối",
       "ADD_NEW": "Kết nối hộp thư mới",
       "OPTIONS": {
         "DISCONNECT": "Ngắt kết nối"
@@ -548,25 +593,25 @@
       "DELETE": {
         "TITLE": "Bạn có chắc chắn muốn ngắt kết nối hộp thư không?",
         "DESCRIPTION": "",
-        "CONFIRM": "Có, xóa",
+        "CONFIRM": "Vâng, xóa",
         "SUCCESS_MESSAGE": "Hộp thư đã được ngắt kết nối thành công.",
         "ERROR_MESSAGE": "Có lỗi khi ngắt kết nối hộp thư, vui lòng thử lại."
       },
-      "FORM_DESCRIPTION": "Chọn một hộp thư để kết nối với trợ lý.",
+      "FORM_DESCRIPTION": "Chọn hộp thư để kết nối với trợ lý.",
       "CREATE": {
         "TITLE": "Kết nối hộp thư",
         "SUCCESS_MESSAGE": "Hộp thư đã được kết nối thành công.",
-        "ERROR_MESSAGE": "Có lỗi xảy ra khi kết nối hộp thư, vui lòng thử lại."
+        "ERROR_MESSAGE": "Có lỗi khi kết nối hộp thư, vui lòng thử lại."
       },
       "FORM": {
         "INBOX": {
-          "LABEL": "Hộp thư đến",
+          "LABEL": "Hộp thư",
           "PLACEHOLDER": "Chọn hộp thư để triển khai trợ lý.",
-          "ERROR": "Yêu cầu chọn hộp thư."
+          "ERROR": "Bắt buộc phải chọn hộp thư."
         }
       },
       "EMPTY_STATE": {
-        "TITLE": "Không có hộp thư nào được kết nối",
+        "TITLE": "Không có hộp thư được kết nối",
         "SUBTITLE": "Kết nối hộp thư cho phép trợ lý xử lý các câu hỏi ban đầu từ khách hàng trước khi chuyển giao cho bạn."
       }
     }

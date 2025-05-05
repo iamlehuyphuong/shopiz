@@ -360,11 +360,11 @@
     },
     "CAPTAIN": {
       "TITLE": "Capitão",
-      "DESCRIPTION": "Gerenciar uso e créditos para o Captain AI.",
+      "DESCRIPTION": "Gerenciar uso e créditos para o AI Agent.",
       "BUTTON_TXT": "Comprar mais créditos",
       "DOCUMENTS": "Documentos",
       "RESPONSES": "Respostas",
-      "UPGRADE": "O Captain não está disponível no plano gratuito, faça o upgrade para ter acesso aos assistentes, copilot e muito mais."
+      "UPGRADE": "O AI Agent não está disponível no plano gratuito, faça o upgrade para ter acesso aos assistentes, copilot e muito mais."
     },
     "CHAT_WITH_US": {
       "TITLE": "Precisa de ajuda?",

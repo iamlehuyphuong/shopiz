@@ -6,7 +6,7 @@ import { emitter } from 'shared/helpers/mitt';
 
 class ActionCableConnector extends BaseActionCableConnector {
   constructor(app, pubsubToken) {
-    const { websocketURL = '' } = window.chatwootConfig || {};
+    const { websocketURL = '' } = window.salesmanConfig || {};
     super(app, pubsubToken, websocketURL);
     this.CancelTyping = [];
     this.events = {

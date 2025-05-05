@@ -36,8 +36,10 @@ const handleCreate = () => {
 };
 
 const handleEdit = () => {
-  dialogType.value = 'edit';
-  nextTick(() => createAssistantDialog.value.dialogRef.open());
+  router.push({
+    name: 'captain_assistants_edit',
+    params: { assistantId: selectedAssistant.value.id },
+  });
 };
 
 const handleViewConnectedInboxes = () => {
@@ -90,7 +92,7 @@ onMounted(() => store.dispatch('captainAssistants/get'));
         :note="$t('CAPTAIN.ASSISTANTS.EMPTY_STATE.FEATURE_SPOTLIGHT.NOTE')"
         fallback-thumbnail="/assets/images/dashboard/captain/assistant-popover-light.svg"
         fallback-thumbnail-dark="/assets/images/dashboard/captain/assistant-popover-dark.svg"
-        learn-more-url="https://salesman.effiai.pro/captain-assistant"
+        learn-more-url="https://chwt.app/captain-assistant"
       />
     </template>
     <template #emptyState>

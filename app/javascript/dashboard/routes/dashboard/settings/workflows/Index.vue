@@ -20,8 +20,8 @@ onMounted(() => {
   });
   window.activepieces.configure({
     prefix: frontendURL(`accounts/${accountId}/settings/agent-bots`),
-    instanceUrl: window.chatwootConfig.activepiecesInstanceUrl,
-    jwtToken: window.chatwootConfig.activepiecesJwtSecret,
+    instanceUrl: window.salesmanConfig.activepiecesInstanceUrl,
+    jwtToken: window.salesmanConfig.activepiecesJwtSecret,
     embedding: {
       containerId: 'workflow-container',
       builder: {
