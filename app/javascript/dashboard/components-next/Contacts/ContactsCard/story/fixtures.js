@@ -19,7 +19,7 @@ export default [
       city: 'kerala',
       country: 'India',
       description: 'Curious about the web. ',
-      companyName: 'Chatwoot',
+      companyName: 'Salesman',
       countryCode: '',
       socialProfiles: {
         github: 'abozler',
@@ -52,7 +52,7 @@ export default [
       country: 'India',
       description:
         "I'm Candice developer focusing on building things for the web 🌍. Currently, I’m working as a Product Developer here at @chatwootapp ⚡️🔥",
-      companyName: 'Chatwoot',
+      companyName: 'Salesman',
       countryCode: 'IN',
       socialProfiles: {
         github: 'cmathersonj',
