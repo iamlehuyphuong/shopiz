@@ -280,7 +280,7 @@
     "REPORTS": "Báo cáo",
     "SETTINGS": "Cài đặt",
     "CONTACTS": "Liên hệ",
-    "CAPTAIN": "Captain",
+    "CAPTAIN": "AI Agent",
     "CAPTAIN_ASSISTANTS": "Trợ lý",
     "CAPTAIN_DOCUMENTS": "Tài liệu",
     "CAPTAIN_RESPONSES": "Câu trả lời",
@@ -359,12 +359,12 @@
       "BUTTON_TXT": "Đi tới cổng thanh toán"
     },
     "CAPTAIN": {
-      "TITLE": "Captain",
-      "DESCRIPTION": "Quản lý mức sử dụng và tín dụng cho Captain AI.",
+      "TITLE": "AI Agent",
+      "DESCRIPTION": "Quản lý mức sử dụng và tín dụng cho AI Agent.",
       "BUTTON_TXT": "Mua thêm tín dụng",
       "DOCUMENTS": "Tài liệu",
       "RESPONSES": "Câu trả lời",
-      "UPGRADE": "Captain không khả dụng trên gói miễn phí, nâng cấp ngay để truy cập trợ lý, copilot và nhiều tính năng khác."
+      "UPGRADE": "AI Agent không khả dụng trên gói miễn phí, nâng cấp ngay để truy cập trợ lý, copilot và nhiều tính năng khác."
     },
     "CHAT_WITH_US": {
       "TITLE": "Cần hỗ trợ?",

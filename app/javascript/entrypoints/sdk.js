@@ -41,11 +41,11 @@ const runSDK = ({ baseUrl, websiteToken }) => {
     restoreWidgetInDOM(event.newDocument.body)
   );
 
-  const chatwootSettings = window.chatwootSettings || {};
-  let locale = chatwootSettings.locale;
-  let baseDomain = chatwootSettings.baseDomain;
+  const salesmanSettings = window.salesmanSettings || {};
+  let locale = salesmanSettings.locale;
+  let baseDomain = salesmanSettings.baseDomain;
 
-  if (chatwootSettings.useBrowserLanguage) {
+  if (salesmanSettings.useBrowserLanguage) {
     locale = window.navigator.language.replace('-', '_');
   }
 
@@ -53,19 +53,19 @@ const runSDK = ({ baseUrl, websiteToken }) => {
     baseUrl,
     baseDomain,
     hasLoaded: false,
-    hideMessageBubble: chatwootSettings.hideMessageBubble || false,
+    hideMessageBubble: salesmanSettings.hideMessageBubble || false,
     isOpen: false,
-    position: chatwootSettings.position === 'left' ? 'left' : 'right',
+    position: salesmanSettings.position === 'left' ? 'left' : 'right',
     websiteToken,
     locale,
-    useBrowserLanguage: chatwootSettings.useBrowserLanguage || false,
-    type: getBubbleView(chatwootSettings.type),
-    launcherTitle: chatwootSettings.launcherTitle || '',
-    showPopoutButton: chatwootSettings.showPopoutButton || false,
-    showUnreadMessagesDialog: chatwootSettings.showUnreadMessagesDialog ?? true,
-    widgetStyle: getWidgetStyle(chatwootSettings.widgetStyle) || 'standard',
+    useBrowserLanguage: salesmanSettings.useBrowserLanguage || false,
+    type: getBubbleView(salesmanSettings.type),
+    launcherTitle: salesmanSettings.launcherTitle || '',
+    showPopoutButton: salesmanSettings.showPopoutButton || false,
+    showUnreadMessagesDialog: salesmanSettings.showUnreadMessagesDialog ?? true,
+    widgetStyle: getWidgetStyle(salesmanSettings.widgetStyle) || 'standard',
     resetTriggered: false,
-    darkMode: getDarkMode(chatwootSettings.darkMode),
+    darkMode: getDarkMode(salesmanSettings.darkMode),
 
     toggle(state) {
       IFrameHelper.events.toggleBubble(state);
@@ -203,6 +203,6 @@ const runSDK = ({ baseUrl, websiteToken }) => {
   });
 };
 
-window.chatwootSDK = {
+window.salesmanSDK = {
   run: runSDK,
 };

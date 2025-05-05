@@ -138,6 +138,11 @@
 # End of Microsoft Email Channel Config
 
 # MARK: Captain Config
+- name: CAPTAIN_OPEN_AI_API_BASE_URL
+  value: 'https://api.openai.com/v1'
+  display_title: 'OpenAI API Base Url'
+  description: 'The base URL for OpenAI API. Default: https://api.openai.com/v1'
+  locked: false
 - name: CAPTAIN_OPEN_AI_API_KEY
   display_title: 'OpenAI API Key'
   description: 'The API key used to authenticate requests to OpenAI services for Captain AI.'
