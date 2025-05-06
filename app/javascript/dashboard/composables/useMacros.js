@@ -33,6 +33,8 @@ export const useMacros = () => {
         }));
       case 'change_priority':
         return PRIORITY_CONDITION_VALUES;
+      case 'send_webhook_event':
+        return [];
       default:
         return [];
     }
