@@ -33,14 +33,30 @@ openai:
       'type': 'object',
       'properties':
         {
+          'api_base_url': { 'type': 'string' },
+          'model': { 'type': 'string' },
           'api_key': { 'type': 'string' },
           'label_suggestion': { 'type': 'boolean' },
         },
-      'required': ['api_key'],
+      'required': ['api_base_url','api_key'],
       'additionalProperties': false,
     }
   settings_form_schema:
     [
+      {
+        'label': 'API Base URL',
+        'type': 'text',
+        'name': 'api_base_url',
+        'value': 'https://api.openai.com/v1',
+        'validation': 'required',
+      },
+      {
+        'label': 'Model',
+        'type': 'text',
+        'name': 'model',
+        'value': 'gpt-4o-mini',
+        'validation': 'required',
+      },
       {
         'label': 'API Key',
         'type': 'text',
@@ -54,7 +70,7 @@ openai:
         'validation': '',
       },
     ]
-  visible_properties: ['api_key', 'label_suggestion']
+  visible_properties: ['api_base_url', 'api_key', 'label_suggestion']
 linear:
   id: linear
   logo: linear.png

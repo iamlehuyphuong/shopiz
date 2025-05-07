@@ -9,9 +9,8 @@ class Integrations::OpenaiBaseService
 
   ALLOWED_EVENT_NAMES = %w[rephrase summarize reply_suggestion fix_spelling_grammar shorten expand make_friendly make_formal simplify].freeze
   CACHEABLE_EVENTS = %w[].freeze
-
   pattr_initialize [:hook!, :event!]
-
+  
   def perform
     return nil unless valid_event_name?
 
@@ -88,7 +87,7 @@ class Integrations::OpenaiBaseService
     }
 
     Rails.logger.info("OpenAI API request: #{body}")
-    response = HTTParty.post(API_URL, headers: headers, body: body)
+    response = HTTParty.post("#{hook.settings['api_base_url']}/chat/completions".freeze, headers: headers, body: body)
     Rails.logger.info("OpenAI API response: #{response.body}")
 
     return { error: response.parsed_response, error_code: response.code } unless response.success?

@@ -6,11 +6,11 @@ docker/Dockerfile
 docker/dockerfiles
 log
 storage
-public/system
+#public/system
 tmp
 .codeclimate.yml
-public/packs
-public/vite
+#public/packs
+#public/vite
 node_modules
 vendor/bundle
 .DS_Store
