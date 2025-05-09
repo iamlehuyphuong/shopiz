@@ -1,7 +1,7 @@
 class Llm::BaseOpenAiService
   DEFAULT_MODEL = 'gpt-4o-mini'.freeze
   def initialize
-    fetch_hook
+    #fetch_hook
     @client = OpenAI::Client.new(
       uri_base: InstallationConfig.find_by!(name: 'CAPTAIN_OPEN_AI_API_BASE_URL').value,
       access_token: InstallationConfig.find_by!(name: 'CAPTAIN_OPEN_AI_API_KEY').value,
