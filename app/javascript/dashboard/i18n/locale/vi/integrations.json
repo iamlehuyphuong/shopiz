@@ -16,7 +16,7 @@
       "ERROR": "Đã xảy ra lỗi khi kết nối với Shopify. Vui lòng thử lại hoặc liên hệ hỗ trợ nếu lỗi vẫn tiếp diễn."
     },
     "HEADER": "Tích hợp",
-    "DESCRIPTION": "ShopIZ tích hợp với nhiều công cụ và dịch vụ nhằm nâng cao hiệu quả cho đội ngũ của bạn. Khám phá danh sách bên dưới để cấu hình ứng dụng bạn yêu thích.",
+    "DESCRIPTION": "Shopiz tích hợp với nhiều công cụ và dịch vụ nhằm nâng cao hiệu quả cho đội ngũ của bạn. Khám phá danh sách bên dưới để cấu hình ứng dụng bạn yêu thích.",
     "LEARN_MORE": "Tìm hiểu thêm về tích hợp",
     "LOADING": "Đang lấy thông tin tích hợp",
     "CAPTAIN": {
@@ -30,7 +30,7 @@
       "LEARN_MORE": "Tìm hiểu thêm về webhook",
       "FORM": {
         "CANCEL": "Hủy",
-        "DESC": "Webhook cung cấp thông tin thời gian thực về những gì đang xảy ra trong tài khoản ShopIZ của bạn. Vui lòng nhập URL hợp lệ để cấu hình callback.",
+        "DESC": "Webhook cung cấp thông tin thời gian thực về những gì đang xảy ra trong tài khoản Shopiz của bạn. Vui lòng nhập URL hợp lệ để cấu hình callback.",
         "SUBSCRIPTIONS": {
           "LABEL": "Sự kiện",
           "EVENTS": {
@@ -58,7 +58,7 @@
       "HEADER_BTN_TXT": "Thêm webhook mới",
       "LOADING": "Đang tải webhook được đính kèm",
       "SEARCH_404": "Không có mục nào khớp với truy vấn",
-      "SIDEBAR_TXT": "<p><b>Webhook</b></p> <p>Webhook là các callback HTTP có thể được thiết lập cho mỗi tài khoản. Chúng được kích hoạt bởi các sự kiện như tạo tin nhắn trong ShopIZ. Bạn có thể tạo nhiều webhook cho tài khoản này. <br /><br /> Để tạo một <b>webhook</b>, nhấp vào nút <b>Thêm webhook mới</b>. Bạn cũng có thể xóa webhook hiện có bằng cách nhấp vào nút Xóa.</p>",
+      "SIDEBAR_TXT": "<p><b>Webhook</b></p> <p>Webhook là các callback HTTP có thể được thiết lập cho mỗi tài khoản. Chúng được kích hoạt bởi các sự kiện như tạo tin nhắn trong Shopiz. Bạn có thể tạo nhiều webhook cho tài khoản này. <br /><br /> Để tạo một <b>webhook</b>, nhấp vào nút <b>Thêm webhook mới</b>. Bạn cũng có thể xóa webhook hiện có bằng cách nhấp vào nút Xóa.</p>",
       "LIST": {
         "404": "Chưa có webhook nào được cấu hình cho tài khoản này.",
         "TITLE": "Quản lý webhook",
@@ -105,14 +105,14 @@
       },
       "HELP_TEXT": {
         "TITLE": "Cách sử dụng tích hợp Slack?",
-        "BODY": "Với tích hợp này, tất cả cuộc đối thoại đến sẽ được đồng bộ vào kênh ***{selectedChannelName}*** trên workspace Slack của bạn. Bạn có thể quản lý các cuộc đối thoại khách hàng ngay trong kênh mà không bỏ sót tin nhắn nào.\n\nCác tính năng chính:\n\n**Trả lời từ Slack:** Để trả lời một đối thoại trong kênh ***{selectedChannelName}***, chỉ cần gõ và gửi dưới dạng chuỗi. Điều này sẽ tạo phản hồi gửi trở lại khách hàng thông qua ShopIZ. Đơn giản như vậy!\n\n **Tạo ghi chú riêng:** Nếu muốn tạo ghi chú thay vì trả lời, hãy bắt đầu tin nhắn với ***`note:`***. Như vậy, tin nhắn sẽ được giữ riêng tư và không hiển thị cho khách hàng.\n\n**Liên kết hồ sơ đại lý:** Nếu người trả lời trên Slack có hồ sơ đại lý trong ShopIZ với cùng email, câu trả lời sẽ tự động được liên kết với hồ sơ đó. Ngược lại, nếu không có hồ sơ liên kết, các phản hồi sẽ hiển thị từ hồ sơ bot.",
+        "BODY": "Với tích hợp này, tất cả cuộc đối thoại đến sẽ được đồng bộ vào kênh ***{selectedChannelName}*** trên workspace Slack của bạn. Bạn có thể quản lý các cuộc đối thoại khách hàng ngay trong kênh mà không bỏ sót tin nhắn nào.\n\nCác tính năng chính:\n\n**Trả lời từ Slack:** Để trả lời một đối thoại trong kênh ***{selectedChannelName}***, chỉ cần gõ và gửi dưới dạng chuỗi. Điều này sẽ tạo phản hồi gửi trở lại khách hàng thông qua Shopiz. Đơn giản như vậy!\n\n **Tạo ghi chú riêng:** Nếu muốn tạo ghi chú thay vì trả lời, hãy bắt đầu tin nhắn với ***`note:`***. Như vậy, tin nhắn sẽ được giữ riêng tư và không hiển thị cho khách hàng.\n\n**Liên kết hồ sơ đại lý:** Nếu người trả lời trên Slack có hồ sơ đại lý trong Shopiz với cùng email, câu trả lời sẽ tự động được liên kết với hồ sơ đó. Ngược lại, nếu không có hồ sơ liên kết, các phản hồi sẽ hiển thị từ hồ sơ bot.",
         "SELECTED": "đã chọn"
       },
       "SELECT_CHANNEL": {
         "OPTION_LABEL": "Chọn kênh",
         "UPDATE": "Cập nhật",
         "BUTTON_TEXT": "Kết nối kênh",
-        "DESCRIPTION": "Workspace Slack của bạn hiện đã được liên kết với ShopIZ. Tuy nhiên, tích hợp chưa hoạt động. Để kích hoạt và kết nối kênh với ShopIZ, vui lòng nhấp vào nút bên dưới.\n\n**Lưu ý:** Nếu đang kết nối kênh riêng tư, hãy thêm ứng dụng ShopIZ vào kênh Slack trước khi tiếp tục.",
+        "DESCRIPTION": "Workspace Slack của bạn hiện đã được liên kết với Shopiz. Tuy nhiên, tích hợp chưa hoạt động. Để kích hoạt và kết nối kênh với Shopiz, vui lòng nhấp vào nút bên dưới.\n\n**Lưu ý:** Nếu đang kết nối kênh riêng tư, hãy thêm ứng dụng Shopiz vào kênh Slack trước khi tiếp tục.",
         "ATTENTION_REQUIRED": "Yêu cầu chú ý",
         "EXPIRED": "Tích hợp Slack của bạn đã hết hạn. Để tiếp tục nhận tin nhắn trên Slack, vui lòng xóa tích hợp và kết nối lại workspace."
       },
@@ -192,7 +192,7 @@
     "DASHBOARD_APPS": {
       "TITLE": "Ứng dụng Dashboard",
       "HEADER_BTN_TXT": "Thêm ứng dụng dashboard mới",
-      "SIDEBAR_TXT": "<p><b>Ứng dụng Dashboard</b></p><p>Ứng dụng Dashboard cho phép tổ chức nhúng một ứng dụng bên trong bảng điều khiển của ShopIZ để cung cấp ngữ cảnh cho nhân viên hỗ trợ khách hàng. Tính năng này cho phép bạn tạo ứng dụng độc lập và nhúng nó để hiển thị thông tin người dùng, đơn hàng hoặc lịch sử thanh toán.</p><p>Khi bạn nhúng ứng dụng vào bảng điều khiển ShopIZ, ứng dụng sẽ nhận ngữ cảnh của cuộc đối thoại và thông tin liên hệ qua các sự kiện. Hãy triển khai trình lắng nghe sự kiện message trên trang của bạn để nhận dữ liệu ngữ cảnh.</p><p>Để thêm ứng dụng dashboard mới, nhấp vào nút 'Thêm ứng dụng dashboard mới'.</p>",
+      "SIDEBAR_TXT": "<p><b>Ứng dụng Dashboard</b></p><p>Ứng dụng Dashboard cho phép tổ chức nhúng một ứng dụng bên trong bảng điều khiển của Shopiz để cung cấp ngữ cảnh cho nhân viên hỗ trợ khách hàng. Tính năng này cho phép bạn tạo ứng dụng độc lập và nhúng nó để hiển thị thông tin người dùng, đơn hàng hoặc lịch sử thanh toán.</p><p>Khi bạn nhúng ứng dụng vào bảng điều khiển Shopiz, ứng dụng sẽ nhận ngữ cảnh của cuộc đối thoại và thông tin liên hệ qua các sự kiện. Hãy triển khai trình lắng nghe sự kiện message trên trang của bạn để nhận dữ liệu ngữ cảnh.</p><p>Để thêm ứng dụng dashboard mới, nhấp vào nút 'Thêm ứng dụng dashboard mới'.</p>",
       "DESCRIPTION": "Ứng dụng Dashboard cho phép tổ chức nhúng một ứng dụng vào bảng điều khiển để cung cấp ngữ cảnh cho nhân viên hỗ trợ khách hàng. Tính năng này cho phép bạn tạo ứng dụng độc lập và nhúng nó để hiển thị thông tin người dùng, đơn hàng hoặc lịch sử thanh toán.",
       "LEARN_MORE": "Tìm hiểu thêm về ứng dụng Dashboard",
       "LIST": {

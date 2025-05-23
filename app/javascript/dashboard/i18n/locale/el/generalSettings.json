@@ -48,10 +48,10 @@
         "CUSTOM_EMAIL_DOMAIN_ENABLED": "Τώρα μπορείτε να λαμβάνετε emails στον τομέα (domain) σας."
       }
     },
-    "UPDATE_CHATWOOT": "Μια ενημέρωση {latestShopIZVersion} για το ShopIZ είναι διαθέσιμη. Ενημερώστε την εφαρμογή σας.",
+    "UPDATE_CHATWOOT": "Μια ενημέρωση {latestShopizVersion} για το Shopiz είναι διαθέσιμη. Ενημερώστε την εφαρμογή σας.",
     "LEARN_MORE": "Μάθετε περισσότερα",
-    "PAYMENT_PENDING": "Your payment is pending. Please update your payment information to continue using ShopIZ",
-    "LIMITS_UPGRADE": "Your account has exceeded the usage limits, please upgrade your plan to continue using ShopIZ",
+    "PAYMENT_PENDING": "Your payment is pending. Please update your payment information to continue using Shopiz",
+    "LIMITS_UPGRADE": "Your account has exceeded the usage limits, please upgrade your plan to continue using Shopiz",
     "OPEN_BILLING": "Open billing"
   },
   "FORMS": {

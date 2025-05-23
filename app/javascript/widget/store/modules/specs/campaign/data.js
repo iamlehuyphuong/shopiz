@@ -7,7 +7,7 @@ export const campaigns = [
     inbox: {
       id: 37,
       channel_id: 1,
-      name: 'ShopIZ',
+      name: 'Shopiz',
       channel_type: 'Channel::WebWidget',
     },
     sender: {
@@ -64,7 +64,7 @@ export const campaigns = [
     inbox: {
       id: 37,
       channel_id: 1,
-      name: 'ShopIZ',
+      name: 'Shopiz',
       channel_type: 'Channel::WebWidget',
     },
     sender: {

@@ -1,6 +1,6 @@
 {
   "LOGIN": {
-    "TITLE": "Login to ShopIZ",
+    "TITLE": "Login to Shopiz",
     "EMAIL": {
       "LABEL": "E-pošta",
       "PLACEHOLDER": "primer{'@'}imepodjetja.com",

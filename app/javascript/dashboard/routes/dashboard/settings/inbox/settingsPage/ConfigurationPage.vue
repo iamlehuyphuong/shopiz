@@ -113,7 +113,7 @@ export default {
         <woot-code
           :script="inbox.web_widget_script"
           lang="html"
-          :codepen-title="`${inbox.name} - ShopIZ Widget Test`"
+          :codepen-title="`${inbox.name} - Shopiz Widget Test`"
           enable-code-pen
         />
       </SettingsSection>

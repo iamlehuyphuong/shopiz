@@ -1,6 +1,6 @@
 {
   "LOGIN": {
-    "TITLE": "Logg inn i ShopIZ",
+    "TITLE": "Logg inn i Shopiz",
     "EMAIL": {
       "LABEL": "E-post",
       "PLACEHOLDER": "example{'@'}companyname.com",

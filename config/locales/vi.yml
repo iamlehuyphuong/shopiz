@@ -181,14 +181,14 @@ vi:
       description: 'Ứng dụng bảng điều khiển cho phép bạn tạo và nhúng các ứng dụng hiển thị thông tin người dùng, đơn hàng hoặc lịch sử thanh toán, cung cấp thêm bối cảnh cho nhân viên hỗ trợ khách hàng.'
     dyte:
       name: 'Dyte'
-      description: 'Dyte là một sản phẩm tích hợp chức năng âm thanh và video vào ứng dụng của bạn. Với tích hợp này, nhân viên của bạn có thể bắt đầu các cuộc gọi video/giọng nói với khách hàng trực tiếp từ ShopIZ.'
+      description: 'Dyte là một sản phẩm tích hợp chức năng âm thanh và video vào ứng dụng của bạn. Với tích hợp này, nhân viên của bạn có thể bắt đầu các cuộc gọi video/giọng nói với khách hàng trực tiếp từ Shopiz.'
       meeting_name: '%{agent_name} đã bắt đầu một cuộc họp'
     slack:
       name: 'Slack'
-      description: 'Tích hợp ShopIZ với Slack để giữ cho nhóm của bạn luôn được cập nhật. Tích hợp này cho phép bạn nhận thông báo về những cuộc trò chuyện mới và phản hồi trực tiếp trong giao diện của Slack.'
+      description: 'Tích hợp Shopiz với Slack để giữ cho nhóm của bạn luôn được cập nhật. Tích hợp này cho phép bạn nhận thông báo về những cuộc trò chuyện mới và phản hồi trực tiếp trong giao diện của Slack.'
     webhooks:
       name: 'Webhooks'
-      description: 'Sự kiện webhook cung cấp cập nhật thời gian thực về các hoạt động trong tài khoản ShopIZ của bạn. Bạn có thể đăng ký các sự kiện ưa thích, và ShopIZ sẽ gửi cho bạn các callback HTTP với các cập nhật.'
+      description: 'Sự kiện webhook cung cấp cập nhật thời gian thực về các hoạt động trong tài khoản Shopiz của bạn. Bạn có thể đăng ký các sự kiện ưa thích, và Shopiz sẽ gửi cho bạn các callback HTTP với các cập nhật.'
     dialogflow:
       name: 'Dialogflow'
       description: 'Xây dựng chatbot với Dialogflow và dễ dàng tích hợp chúng vào hộp thư đến của bạn. Các bot này có thể xử lý các truy vấn ban đầu trước khi chuyển tiếp cho nhân viên hỗ trợ khách hàng.'

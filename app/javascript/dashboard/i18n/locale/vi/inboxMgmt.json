@@ -11,7 +11,7 @@
     "CREATE_FLOW": {
       "CHANNEL": {
         "TITLE": "Chọn Kênh",
-        "BODY": "Chọn nhà cung cấp mà bạn muốn tích hợp với ShopIZ."
+        "BODY": "Chọn nhà cung cấp mà bạn muốn tích hợp với Shopiz."
       },
       "INBOX": {
         "TITLE": "Tạo Hộp Thư",
@@ -37,7 +37,7 @@
         "PLACEHOLDER": "Nhập tên website của bạn (ví dụ: Acme Inc)"
       },
       "FB": {
-        "HELP": "CHÚ Ý: Bằng cách đăng nhập, chúng tôi chỉ có quyền truy cập tin nhắn của Trang của bạn. Tin nhắn riêng tư của bạn sẽ không bao giờ bị ShopIZ truy cập.",
+        "HELP": "CHÚ Ý: Bằng cách đăng nhập, chúng tôi chỉ có quyền truy cập tin nhắn của Trang của bạn. Tin nhắn riêng tư của bạn sẽ không bao giờ bị Shopiz truy cập.",
         "CHOOSE_PAGE": "Chọn Trang",
         "CHOOSE_PLACEHOLDER": "Chọn một trang từ danh sách",
         "INBOX_NAME": "Tên Hộp Thư",
@@ -47,7 +47,7 @@
         "CREATE_INBOX": "Tạo Hộp Thư"
       },
       "ZALO": {
-        "HELP": "CHÚ Ý: Bằng cách đăng nhập, chúng tôi chỉ có quyền truy cập tin nhắn của Zalo OA của bạn. Tin nhắn riêng tư của bạn sẽ không bao giờ bị ShopIZ truy cập.",
+        "HELP": "CHÚ Ý: Bằng cách đăng nhập, chúng tôi chỉ có quyền truy cập tin nhắn của Zalo OA của bạn. Tin nhắn riêng tư của bạn sẽ không bao giờ bị Shopiz truy cập.",
         "INBOX_NAME": "Tên Hộp Thư",
         "ADD_NAME": "Thêm tên cho hộp thư của bạn",
         "PICK_NAME": "Chọn tên cho Hộp Thư của bạn",
@@ -356,7 +356,7 @@
       },
       "AUTH": {
         "TITLE": "Chọn một kênh",
-        "DESC": "ShopIZ hỗ trợ các kênh như tiện ích trò chuyện trực tiếp, Facebook Messenger, WhatsApp, Email, v.v. Nếu bạn muốn xây dựng một kênh tùy chỉnh, bạn có thể tạo nó bằng kênh API. Để bắt đầu, hãy chọn một trong các kênh dưới đây."
+        "DESC": "Shopiz hỗ trợ các kênh như tiện ích trò chuyện trực tiếp, Facebook Messenger, WhatsApp, Email, v.v. Nếu bạn muốn xây dựng một kênh tùy chỉnh, bạn có thể tạo nó bằng kênh API. Để bắt đầu, hãy chọn một trong các kênh dưới đây."
       },
       "AGENTS": {
         "TITLE": "Nhân Viên",
@@ -366,11 +366,11 @@
       },
       "DETAILS": {
         "TITLE": "Chi tiết Hộp Thư",
-        "DESC": "Từ danh sách bên dưới, chọn Trang Facebook mà bạn muốn kết nối với ShopIZ. Bạn cũng có thể đặt tên tùy chỉnh cho hộp thư của mình để nhận dạng dễ dàng hơn."
+        "DESC": "Từ danh sách bên dưới, chọn Trang Facebook mà bạn muốn kết nối với Shopiz. Bạn cũng có thể đặt tên tùy chỉnh cho hộp thư của mình để nhận dạng dễ dàng hơn."
       },
       "FINISH": {
         "TITLE": "Xong Rồi!",
-        "DESC": "Bạn đã hoàn tất tích hợp Trang Facebook của mình với ShopIZ thành công. Lần sau khi khách hàng nhắn tin đến Trang của bạn, cuộc trò chuyện sẽ tự động xuất hiện trong hộp thư. <br>Chúng tôi cũng cung cấp cho bạn một đoạn mã tiện ích mà bạn có thể dễ dàng thêm vào website. Khi nó hoạt động trên website của bạn, khách hàng có thể nhắn tin trực tiếp từ website mà không cần công cụ bên ngoài và cuộc trò chuyện sẽ hiện lên ngay tại đây, trên ShopIZ. <br>Thật tuyệt, phải không? Chúng tôi rất cố gắng để đạt điều đó.",
+        "DESC": "Bạn đã hoàn tất tích hợp Trang Facebook của mình với Shopiz thành công. Lần sau khi khách hàng nhắn tin đến Trang của bạn, cuộc trò chuyện sẽ tự động xuất hiện trong hộp thư. <br>Chúng tôi cũng cung cấp cho bạn một đoạn mã tiện ích mà bạn có thể dễ dàng thêm vào website. Khi nó hoạt động trên website của bạn, khách hàng có thể nhắn tin trực tiếp từ website mà không cần công cụ bên ngoài và cuộc trò chuyện sẽ hiện lên ngay tại đây, trên Shopiz. <br>Thật tuyệt, phải không? Chúng tôi rất cố gắng để đạt điều đó.",
         "BUTTON_TEXT": "Đưa tôi đến đó",
         "MORE_SETTINGS": "Cài đặt thêm",
         "WEBSITE_SUCCESS": "Bạn đã hoàn tất tạo kênh website thành công. Sao chép mã hiển thị dưới đây và dán vào website của bạn. Lần sau khi khách hàng sử dụng trò chuyện trực tiếp, cuộc trò chuyện sẽ tự động xuất hiện trong hộp thư của bạn."
@@ -715,7 +715,7 @@
           "USER_MESSAGE": "Chào",
           "AGENT_MESSAGE": "Xin chào"
         },
-        "BRANDING_TEXT": "Được hỗ trợ bởi ShopIZ",
+        "BRANDING_TEXT": "Được hỗ trợ bởi Shopiz",
         "SCRIPT_SETTINGS": "\n      window.shopizSettings = {options};"
       },
       "EMAIL_PROVIDERS": {

@@ -48,10 +48,10 @@
         "CUSTOM_EMAIL_DOMAIN_ENABLED": "Ahora puede recibir emails en su dominio personalizado."
       }
     },
-    "UPDATE_CHATWOOT": "Hay una actualización {latestShopIZVersion} para ShopIZ disponible. Por favor, actualiza tu instancia.",
+    "UPDATE_CHATWOOT": "Hay una actualización {latestShopizVersion} para Shopiz disponible. Por favor, actualiza tu instancia.",
     "LEARN_MORE": "Más información",
-    "PAYMENT_PENDING": "Tu pago está pendiente. Por favor actualiza tu información de pago para seguir usando ShopIZ",
-    "LIMITS_UPGRADE": "Su cuenta ha excedido los límites de uso, por favor actualice su plan para seguir usando ShopIZ",
+    "PAYMENT_PENDING": "Tu pago está pendiente. Por favor actualiza tu información de pago para seguir usando Shopiz",
+    "LIMITS_UPGRADE": "Su cuenta ha excedido los límites de uso, por favor actualice su plan para seguir usando Shopiz",
     "OPEN_BILLING": "Abrir facturación"
   },
   "FORMS": {

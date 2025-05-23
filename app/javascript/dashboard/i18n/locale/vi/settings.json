@@ -37,7 +37,7 @@
       },
       "INTERFACE_SECTION": {
         "TITLE": "Giao diện",
-        "NOTE": "Tùy chỉnh giao diện bảng điều khiển ShopIZ của bạn.",
+        "NOTE": "Tùy chỉnh giao diện bảng điều khiển Shopiz của bạn.",
         "FONT_SIZE": {
           "TITLE": "Kích thước chữ",
           "NOTE": "Điều chỉnh kích thước văn bản trên toàn bộ bảng điều khiển theo sở thích của bạn.",
@@ -392,7 +392,7 @@
     }
   },
   "CREATE_ACCOUNT": {
-    "NO_ACCOUNT_WARNING": "Ồ ồ! Chúng tôi không tìm thấy tài khoản ShopIZ nào. Vui lòng tạo tài khoản mới để tiếp tục.",
+    "NO_ACCOUNT_WARNING": "Ồ ồ! Chúng tôi không tìm thấy tài khoản Shopiz nào. Vui lòng tạo tài khoản mới để tiếp tục.",
     "NEW_ACCOUNT": "Tạo tài khoản mới",
     "SELECTOR_SUBTITLE": "Tạo tài khoản mới",
     "API": {

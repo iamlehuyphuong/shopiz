@@ -48,10 +48,10 @@
         "CUSTOM_EMAIL_DOMAIN_ENABLED": "Nyní můžete přijímat e-maily na vaši vlastní doménu."
       }
     },
-    "UPDATE_CHATWOOT": "Je dostupná aktualizace {latestShopIZVersion} pro ShopIZ. Aktualizujte prosím svou instanci.",
+    "UPDATE_CHATWOOT": "Je dostupná aktualizace {latestShopizVersion} pro Shopiz. Aktualizujte prosím svou instanci.",
     "LEARN_MORE": "Learn more",
-    "PAYMENT_PENDING": "Your payment is pending. Please update your payment information to continue using ShopIZ",
-    "LIMITS_UPGRADE": "Your account has exceeded the usage limits, please upgrade your plan to continue using ShopIZ",
+    "PAYMENT_PENDING": "Your payment is pending. Please update your payment information to continue using Shopiz",
+    "LIMITS_UPGRADE": "Your account has exceeded the usage limits, please upgrade your plan to continue using Shopiz",
     "OPEN_BILLING": "Open billing"
   },
   "FORMS": {

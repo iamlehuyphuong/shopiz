@@ -48,10 +48,10 @@
         "CUSTOM_EMAIL_DOMAIN_ENABLED": "Artık özel alan adınızda e-postalar alabilirsiniz."
       }
     },
-    "UPDATE_CHATWOOT": "{latestShopIZVersion} shopiz sürümü indirilebilir. Lütfen sürümü güncelleyin.",
+    "UPDATE_CHATWOOT": "{latestShopizVersion} shopiz sürümü indirilebilir. Lütfen sürümü güncelleyin.",
     "LEARN_MORE": "Daha Fazla",
     "PAYMENT_PENDING": "Ödemeniz bekliyor. Devam etmek için ödeme bilgilerinizi güncelleyin.",
-    "LIMITS_UPGRADE": "Hesabınız kullanım sınırlarını aştı, lütfen ShopIZ'u kullanmaya devam etmek için planınızı yükseltin",
+    "LIMITS_UPGRADE": "Hesabınız kullanım sınırlarını aştı, lütfen Shopiz'u kullanmaya devam etmek için planınızı yükseltin",
     "OPEN_BILLING": "Fatura Detayları"
   },
   "FORMS": {

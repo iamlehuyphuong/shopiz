@@ -66,7 +66,7 @@ class Zalo::IncomingMessageService
             payload: {
               template_type: 'request_user_info',
               elements: [{
-                title: 'ShopIZ cảm ơn bạn đã liên hệ',
+                title: 'Shopiz cảm ơn bạn đã liên hệ',
                 subtitle: 'Nhấp vào đây để cung cấp thông tin của bạn',
                 image_url: 'https://noventiq.si/uploads/resizer/images/2b68b5/ed7a86/d2b6d2/origin-mode1-760x362.jpg'
               }]

@@ -4,8 +4,8 @@ export default [
       city: 'Los Angeles',
       country: 'United States',
       description:
-        "I'm Candice, a developer focusing on building web solutions. Currently, I’m working as a Product Developer at ShopIZ.",
-      companyName: 'ShopIZ',
+        "I'm Candice, a developer focusing on building web solutions. Currently, I’m working as a Product Developer at Shopiz.",
+      companyName: 'Shopiz',
       countryCode: 'US',
       socialProfiles: {
         github: 'candice-dev',

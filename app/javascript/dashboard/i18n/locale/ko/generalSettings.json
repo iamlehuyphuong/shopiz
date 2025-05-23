@@ -48,10 +48,10 @@
         "CUSTOM_EMAIL_DOMAIN_ENABLED": "지금 사용자 지정 도메인에서 이메일을 받을 수 있다."
       }
     },
-    "UPDATE_CHATWOOT": "ShopIZ에 대한 {latestShopIZVersion} 업데이트를 사용할 수 있습니다. 인스턴스를 업데이트하십시오.",
+    "UPDATE_CHATWOOT": "Shopiz에 대한 {latestShopizVersion} 업데이트를 사용할 수 있습니다. 인스턴스를 업데이트하십시오.",
     "LEARN_MORE": "Learn more",
-    "PAYMENT_PENDING": "Your payment is pending. Please update your payment information to continue using ShopIZ",
-    "LIMITS_UPGRADE": "Your account has exceeded the usage limits, please upgrade your plan to continue using ShopIZ",
+    "PAYMENT_PENDING": "Your payment is pending. Please update your payment information to continue using Shopiz",
+    "LIMITS_UPGRADE": "Your account has exceeded the usage limits, please upgrade your plan to continue using Shopiz",
     "OPEN_BILLING": "Open billing"
   },
   "FORMS": {
