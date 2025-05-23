@@ -6,11 +6,11 @@
     "DESCRIPTION": "Nhật ký kiểm tra lưu trữ các hoạt động trong tài khoản của bạn, giúp bạn theo dõi và kiểm tra tài khoản, đội ngũ hoặc dịch vụ của mình.",
     "LEARN_MORE": "Tìm hiểu thêm về nhật ký kiểm tra",
     "SEARCH_404": "Không có kết quả nào được tìm thấy",
-    "SIDEBAR_TXT": "<p><b>Nhật ký kiểm tra</b></p><p>Nhật ký kiểm tra là dấu vết của các sự kiện và hành động trong hệ thống Salesman.</p>",
+    "SIDEBAR_TXT": "<p><b>Nhật ký kiểm tra</b></p><p>Nhật ký kiểm tra là dấu vết của các sự kiện và hành động trong hệ thống ShopIZ.</p>",
     "LIST": {
       "404": "Không có nhật ký kiểm tra nào trong tài khoản này.",
       "TITLE": "Quản lý nhật ký kiểm tra",
-      "DESC": "Nhật ký kiểm tra là dấu vết của các sự kiện và hành động trong hệ thống Salesman.",
+      "DESC": "Nhật ký kiểm tra là dấu vết của các sự kiện và hành động trong hệ thống ShopIZ.",
       "TABLE_HEADER": {
         "ACTIVITY": "Người dùng",
         "TIME": "Hành động",

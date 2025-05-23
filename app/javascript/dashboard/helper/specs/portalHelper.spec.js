@@ -3,29 +3,29 @@ import { buildPortalArticleURL, buildPortalURL } from '../portalHelper';
 describe('PortalHelper', () => {
   describe('buildPortalURL', () => {
     it('returns the correct url', () => {
-      window.salesmanConfig = {
-        hostURL: 'https://salesman.effiai.pro',
-        helpCenterURL: 'https://help.salesman.effiai.pro',
+      window.shopizConfig = {
+        hostURL: 'https://shopiz.pro',
+        helpCenterURL: 'https://help.shopiz.pro',
       };
       expect(buildPortalURL('handbook')).toEqual(
-        'https://help.salesman.effiai.pro/hc/handbook'
+        'https://help.shopiz.pro/hc/handbook'
       );
-      window.salesmanConfig = {};
+      window.shopizConfig = {};
     });
   });
 
   describe('buildPortalArticleURL', () => {
     it('returns the correct url', () => {
-      window.salesmanConfig = {
-        hostURL: 'https://salesman.effiai.pro',
-        helpCenterURL: 'https://help.salesman.effiai.pro',
+      window.shopizConfig = {
+        hostURL: 'https://shopiz.pro',
+        helpCenterURL: 'https://help.shopiz.pro',
       };
       expect(
         buildPortalArticleURL('handbook', 'culture', 'fr', 'article-slug')
       ).toEqual(
-        'https://help.salesman.effiai.pro/hc/handbook/articles/article-slug'
+        'https://help.shopiz.pro/hc/handbook/articles/article-slug'
       );
-      window.salesmanConfig = {};
+      window.shopizConfig = {};
     });
   });
 });

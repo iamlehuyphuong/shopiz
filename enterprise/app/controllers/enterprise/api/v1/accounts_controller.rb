@@ -2,7 +2,7 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
   include BillingHelper
   before_action :fetch_account
   before_action :check_authorization
-  before_action :check_cloud_env, only: [:limits, :toggle_deletion]
+  before_action :check_cloud_env, only: [:plans, :limits, :toggle_deletion]
 
   def subscription
     if stripe_customer_id.blank? && @account.custom_attributes['is_creating_customer'].blank?
@@ -36,10 +36,42 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
     render json: { id: @account.id, limits: limits }, status: :ok
   end
 
-  def checkout
-    return create_stripe_billing_session(stripe_customer_id) if stripe_customer_id.present?
+  def plans
+    installation_config = InstallationConfig.find_by(name: 'CHATWOOT_CLOUD_PLANS')
+    Polar.configure do |config|
+      config.access_token = ENV['POLAR_ACCESS_TOKEN']
+      config.sandbox = ENV['POLAR_ENV'] == 'sandbox'
+      #config.webhook_secret = ENV['POLAR_WEBHOOK_SECRET']
+    end
+    plans = []
+    installation_config.value.each do |plan|
+      plan['products'] = []
+      plan['product_id'].each do |product_id|
+        product = Polar::Product.get(product_id)
+        plan['products'] << product.table
+      end
+      plans << plan
+    end
+    render json: { id: @account.id, plans: plans}, status: :ok
+  end
 
-    render_invalid_billing_details
+  # def checkout
+  #   return create_stripe_billing_session(stripe_customer_id) if stripe_customer_id.present?
+
+  #   render_invalid_billing_details
+  # end
+
+  def checkout
+    case params[:payment_method]
+      when 'stripe'
+        return create_stripe_billing_session(stripe_customer_id) if stripe_customer_id.present?
+      when 'vnpay'
+        return create_vnpay_billing_session(@account.id,params[:product_id]) if @account.id.present?
+      when 'polar'
+        return create_polar_billing_session(@account.id,params[:product_id]) if @account.id.present?
+      else
+        render_invalid_billing_details
+      end
   end
 
   def toggle_deletion
@@ -105,6 +137,16 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
   def create_stripe_billing_session(customer_id)
     session = Enterprise::Billing::CreateSessionService.new.create_session(customer_id)
     render_redirect_url(session.url)
+  end
+
+  def create_vnpay_billing_session(customer_id,product_id)
+    url = Enterprise::Billing::CreateSessionService.new.create_vnpay_session(customer_id,product_id)
+    render_redirect_url(url)
+  end
+
+  def create_polar_billing_session(customer_id,product_id)
+    url = Enterprise::Billing::CreateSessionService.new.create_vnpay_session(customer_id,product_id)
+    render_redirect_url(url)
   end
 
   def render_redirect_url(redirect_url)

@@ -54,14 +54,14 @@ export const sendRegistrationToServer = subscription => {
 };
 
 export const registerSubscription = (onSuccess = () => {}) => {
-  if (!window.salesmanConfig.vapidPublicKey) {
+  if (!window.shopizConfig.vapidPublicKey) {
     return;
   }
   navigator.serviceWorker.ready
     .then(serviceWorkerRegistration =>
       serviceWorkerRegistration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: window.salesmanConfig.vapidPublicKey,
+        applicationServerKey: window.shopizConfig.vapidPublicKey,
       })
     )
     .then(sendRegistrationToServer)

@@ -17,7 +17,7 @@ export const ONGOING_CAMPAIGN_EMPTY_STATE_CONTENT = [
     enabled: true,
     campaign_type: 'ongoing',
     trigger_rules: {
-      url: 'https://salesman.effiai.pro/features/chatbot/',
+      url: 'https://shopiz.pro/features/chatbot/',
       time_on_page: 10,
     },
     trigger_only_during_business_hours: true,
@@ -42,7 +42,7 @@ export const ONGOING_CAMPAIGN_EMPTY_STATE_CONTENT = [
     enabled: false,
     campaign_type: 'ongoing',
     trigger_rules: {
-      url: 'https://salesman.effiai.pro/pricings',
+      url: 'https://shopiz.pro/pricings',
       time_on_page: 10,
     },
     trigger_only_during_business_hours: false,
@@ -60,14 +60,14 @@ export const ONGOING_CAMPAIGN_EMPTY_STATE_CONTENT = [
     },
     sender: {
       id: 1,
-      name: 'Salesman',
+      name: 'ShopIZ',
     },
-    message: 'Hi! Salesman here. Need help setting up? Let me know!',
+    message: 'Hi! ShopIZ here. Need help setting up? Let me know!',
     campaign_status: 'active',
     enabled: false,
     campaign_type: 'ongoing',
     trigger_rules: {
-      url: 'https://{*.}?salesman.effiai.pro/apps/account/*/settings/inboxes/new/',
+      url: 'https://{*.}?shopiz.pro/apps/account/*/settings/inboxes/new/',
       time_on_page: 10,
     },
     trigger_only_during_business_hours: false,
@@ -114,7 +114,7 @@ export const ONE_OFF_CAMPAIGN_EMPTY_STATE_CONTENT = [
       provider: 'default',
     },
     message:
-      'Hello! Enjoying our product? Share your feedback on G2 and earn a $25 Amazon coupon: https://salesman.effiai.pro/g2-review',
+      'Hello! Enjoying our product? Share your feedback on G2 and earn a $25 Amazon coupon: https://shopiz.pro/g2-review',
     campaign_status: 'active',
     enabled: true,
     campaign_type: 'one_off',

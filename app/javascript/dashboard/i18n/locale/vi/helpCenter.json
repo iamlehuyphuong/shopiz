@@ -391,7 +391,7 @@
         "SLUG": {
           "LABEL": "Slug",
           "PLACEHOLDER": "Slug danh mục cho URL",
-          "HELP_TEXT": "salesman.effiai.pro/hc/my-portal/en-US/categories/my-slug",
+          "HELP_TEXT": "shopiz.pro/hc/my-portal/en-US/categories/my-slug",
           "ERROR": "Phải có Slug"
         },
         "DESCRIPTION": {
@@ -422,7 +422,7 @@
         "SLUG": {
           "LABEL": "Slug",
           "PLACEHOLDER": "Slug danh mục cho URL",
-          "HELP_TEXT": "salesman.effiai.pro/hc/my-portal/en-US/categories/my-slug",
+          "HELP_TEXT": "shopiz.pro/hc/my-portal/en-US/categories/my-slug",
           "ERROR": "Phải có Slug"
         },
         "DESCRIPTION": {
@@ -606,7 +606,7 @@
             "LABEL": "Slug",
             "PLACEHOLDER": "Slug danh mục cho URL",
             "ERROR": "Phải có Slug",
-            "HELP_TEXT": "salesman.effiai.pro/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
+            "HELP_TEXT": "shopiz.pro/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
           },
           "DESCRIPTION": {
             "LABEL": "Mô tả",
@@ -689,7 +689,7 @@
       "CONFIRM_BUTTON_LABEL": "Tạo",
       "NAME": {
         "LABEL": "Tên",
-        "PLACEHOLDER": "Hướng dẫn sử dụng | Salesman",
+        "PLACEHOLDER": "Hướng dẫn sử dụng | ShopIZ",
         "MESSAGE": "Chọn một tên cho cổng của bạn.",
         "ERROR": "Tên bắt buộc có"
       },
@@ -760,7 +760,7 @@
           },
           "DNS_CONFIGURATION_DIALOG": {
             "HEADER": "Cấu hình DNS",
-            "DESCRIPTION": "Đăng nhập vào tài khoản của bạn với nhà cung cấp DNS, và thêm một bản ghi CNAME cho miền phụ trỏ đến salesman.help",
+            "DESCRIPTION": "Đăng nhập vào tài khoản của bạn với nhà cung cấp DNS, và thêm một bản ghi CNAME cho miền phụ trỏ đến shopiz.help",
             "HELP_TEXT": "Khi hoàn tất, bạn có thể liên hệ với bộ phận hỗ trợ của chúng tôi để yêu cầu chứng chỉ SSL tự động tạo ra.",
             "CONFIRM_BUTTON_LABEL": "Đã hiểu!"
           }

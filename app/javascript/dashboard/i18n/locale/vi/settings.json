@@ -37,7 +37,7 @@
       },
       "INTERFACE_SECTION": {
         "TITLE": "Giao diện",
-        "NOTE": "Tùy chỉnh giao diện bảng điều khiển Salesman của bạn.",
+        "NOTE": "Tùy chỉnh giao diện bảng điều khiển ShopIZ của bạn.",
         "FONT_SIZE": {
           "TITLE": "Kích thước chữ",
           "NOTE": "Điều chỉnh kích thước văn bản trên toàn bộ bảng điều khiển theo sở thích của bạn.",
@@ -312,6 +312,9 @@
     "CSAT": "CSAT",
     "LIVE_CHAT": "Trò chuyện trực tiếp",
     "SMS": "SMS",
+    "SURVEY": "Khảo sát",
+    "LANDING_PAGE": "Landing Page",
+    "FORM": "Biểu mẫu",
     "CAMPAIGNS": "Chiến dịch",
     "ONGOING": "Đang diễn ra",
     "ONE_OFF": "Một lần",
@@ -330,6 +333,7 @@
     "REAUTHORIZE": "Kết nối hộp thư của bạn đã hết hạn, vui lòng kết nối lại để tiếp tục nhận và gửi tin nhắn",
     "HELP_CENTER": {
       "TITLE": "Trung tâm trợ giúp",
+      "LANDING_PAGE": "Trang chủ",
       "ARTICLES": "Bài viết",
       "CATEGORIES": "Danh mục",
       "LOCALES": "Ngôn ngữ",
@@ -349,19 +353,19 @@
     "CURRENT_PLAN": {
       "TITLE": "Gói hiện tại",
       "PLAN_NOTE": "Bạn đang đăng ký gói **{plan}** với **{quantity}** giấy phép",
-      "SEAT_COUNT": "Số lượng ghế",
+      "SEAT_COUNT": "Số lượng nhân viên",
       "RENEWS_ON": "Gia hạn vào"
     },
     "VIEW_PRICING": "Xem bảng giá",
     "MANAGE_SUBSCRIPTION": {
       "TITLE": "Quản lý thuê bao của bạn",
       "DESCRIPTION": "Xem các hóa đơn trước đây, chỉnh sửa thông tin thanh toán hoặc hủy thuê bao.",
-      "BUTTON_TXT": "Đi tới cổng thanh toán"
+      "BUTTON_TXT": "Đăng ký ngay"
     },
     "CAPTAIN": {
-      "TITLE": "AI Agent",
-      "DESCRIPTION": "Quản lý mức sử dụng và tín dụng cho AI Agent.",
-      "BUTTON_TXT": "Mua thêm tín dụng",
+      "TITLE": "Tài nguyên AI",
+      "DESCRIPTION": "Quản lý mức sử dụng AI.",
+      "BUTTON_TXT": "Mua thêm",
       "DOCUMENTS": "Tài liệu",
       "RESPONSES": "Câu trả lời",
       "UPGRADE": "AI Agent không khả dụng trên gói miễn phí, nâng cấp ngay để truy cập trợ lý, copilot và nhiều tính năng khác."
@@ -371,10 +375,24 @@
       "DESCRIPTION": "Bạn gặp vấn đề về thanh toán? Hãy cho chúng tôi biết.",
       "BUTTON_TXT": "Trò chuyện với chúng tôi"
     },
-    "NO_BILLING_USER": "Tài khoản thanh toán của bạn đang được cấu hình. Vui lòng làm mới trang và thử lại."
+    "NO_BILLING_USER": "Tài khoản thanh toán của bạn đang được cấu hình. Vui lòng làm mới trang và thử lại.",
+    "PRICING_PACKAGES": {
+      "HEADING": {
+        "TITLE": "Phát triển kinh doanh với Gói dịch vụ phù hợp",
+        "DESCRIPTION": "Lựa chọn linh hoạt cho mọi quy mô doanh nghiệp, thanh toán đơn giản, nâng cấp dễ dàng",
+        "FEATURES": "Tính năng nôi bật"
+      },
+      "BUTTONS": {
+        "CURRENT_PACKAGE": "Gói hiện tại",
+        "UPGRADE_NOW": "Nâng cấp ngay"
+      },
+      "MONTH": "Gói 1 tháng",
+      "HALF-YEAR": "Gói 6 tháng",
+      "YEAR": "Gói 1 năm"
+    }
   },
   "CREATE_ACCOUNT": {
-    "NO_ACCOUNT_WARNING": "Ồ ồ! Chúng tôi không tìm thấy tài khoản Salesman nào. Vui lòng tạo tài khoản mới để tiếp tục.",
+    "NO_ACCOUNT_WARNING": "Ồ ồ! Chúng tôi không tìm thấy tài khoản ShopIZ nào. Vui lòng tạo tài khoản mới để tiếp tục.",
     "NEW_ACCOUNT": "Tạo tài khoản mới",
     "SELECTOR_SUBTITLE": "Tạo tài khoản mới",
     "API": {

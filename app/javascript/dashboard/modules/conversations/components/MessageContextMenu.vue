@@ -83,7 +83,7 @@ export default {
   methods: {
     async copyLinkToMessage() {
       const fullConversationURL =
-        window.salesmanConfig.hostURL +
+        window.shopizConfig.hostURL +
         frontendURL(
           conversationUrl({
             id: this.conversationId,

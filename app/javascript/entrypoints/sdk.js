@@ -41,11 +41,11 @@ const runSDK = ({ baseUrl, websiteToken }) => {
     restoreWidgetInDOM(event.newDocument.body)
   );
 
-  const salesmanSettings = window.salesmanSettings || {};
-  let locale = salesmanSettings.locale;
-  let baseDomain = salesmanSettings.baseDomain;
+  const shopizSettings = window.shopizSettings || {};
+  let locale = shopizSettings.locale;
+  let baseDomain = shopizSettings.baseDomain;
 
-  if (salesmanSettings.useBrowserLanguage) {
+  if (shopizSettings.useBrowserLanguage) {
     locale = window.navigator.language.replace('-', '_');
   }
 
@@ -53,19 +53,19 @@ const runSDK = ({ baseUrl, websiteToken }) => {
     baseUrl,
     baseDomain,
     hasLoaded: false,
-    hideMessageBubble: salesmanSettings.hideMessageBubble || false,
+    hideMessageBubble: shopizSettings.hideMessageBubble || false,
     isOpen: false,
-    position: salesmanSettings.position === 'left' ? 'left' : 'right',
+    position: shopizSettings.position === 'left' ? 'left' : 'right',
     websiteToken,
     locale,
-    useBrowserLanguage: salesmanSettings.useBrowserLanguage || false,
-    type: getBubbleView(salesmanSettings.type),
-    launcherTitle: salesmanSettings.launcherTitle || '',
-    showPopoutButton: salesmanSettings.showPopoutButton || false,
-    showUnreadMessagesDialog: salesmanSettings.showUnreadMessagesDialog ?? true,
-    widgetStyle: getWidgetStyle(salesmanSettings.widgetStyle) || 'standard',
+    useBrowserLanguage: shopizSettings.useBrowserLanguage || false,
+    type: getBubbleView(shopizSettings.type),
+    launcherTitle: shopizSettings.launcherTitle || '',
+    showPopoutButton: shopizSettings.showPopoutButton || false,
+    showUnreadMessagesDialog: shopizSettings.showUnreadMessagesDialog ?? true,
+    widgetStyle: getWidgetStyle(shopizSettings.widgetStyle) || 'standard',
     resetTriggered: false,
-    darkMode: getDarkMode(salesmanSettings.darkMode),
+    darkMode: getDarkMode(shopizSettings.darkMode),
 
     toggle(state) {
       IFrameHelper.events.toggleBubble(state);
@@ -203,6 +203,6 @@ const runSDK = ({ baseUrl, websiteToken }) => {
   });
 };
 
-window.salesmanSDK = {
+window.shopizSDK = {
   run: runSDK,
 };

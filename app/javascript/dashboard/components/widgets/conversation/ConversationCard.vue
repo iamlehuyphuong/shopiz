@@ -168,7 +168,7 @@ export default {
 
       if (e.metaKey || e.ctrlKey) {
         window.open(
-          window.salesmanConfig.hostURL + path,
+          window.shopizConfig.hostURL + path,
           '_blank',
           'noopener noreferrer nofollow'
         );

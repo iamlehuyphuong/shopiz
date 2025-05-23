@@ -11,7 +11,7 @@ const validateSSOLoginParams = to => {
   return isLoginRoute && hasValidSSOParams;
 };
 
-export const validateRouteAccess = (to, next, salesmanConfig = {}) => {
+export const validateRouteAccess = (to, next, shopizConfig = {}) => {
   // Pages with ignoreSession:true would be rendered
   // even if there is an active session
   // Used for confirmation or password reset pages
@@ -37,7 +37,7 @@ export const validateRouteAccess = (to, next, salesmanConfig = {}) => {
   // Disable navigation to signup page if signups are disabled
   // Signup route has an attribute (requireSignupEnabled) in it's definition
   const isAnInalidSignupNavigation =
-    salesmanConfig.signupEnabled !== 'true' &&
+    shopizConfig.signupEnabled !== 'true' &&
     to.meta &&
     to.meta.requireSignupEnabled;
 

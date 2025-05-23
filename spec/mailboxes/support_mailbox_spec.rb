@@ -5,7 +5,7 @@ RSpec.describe SupportMailbox do
 
   describe 'when a chatwoot notification email is received' do
     let(:account) { create(:account) }
-    let!(:channel_email) { create(:channel_email, email: 'sojan@salesman.effiai.pro', account: account) }
+    let!(:channel_email) { create(:channel_email, email: 'sojan@shopiz.pro', account: account) }
     let(:notification_mail) { create_inbound_email_from_fixture('notification.eml') }
     let(:described_subject) { described_class.receive notification_mail }
     let(:conversation) { Conversation.where(inbox_id: channel_email.inbox).last }
@@ -72,8 +72,8 @@ RSpec.describe SupportMailbox do
       end
 
       it 'creates contact with proper email address' do
-        expect(support_in_reply_to_mail.mail['reply_to'].try(:value)).to eq('Sony Mathew <sony@salesman.effiai.pro>')
-        expect(conversation.contact.email).to eq('sony@salesman.effiai.pro')
+        expect(support_in_reply_to_mail.mail['reply_to'].try(:value)).to eq('Sony Mathew <sony@shopiz.pro>')
+        expect(conversation.contact.email).to eq('sony@shopiz.pro')
       end
     end
 
@@ -172,7 +172,7 @@ RSpec.describe SupportMailbox do
 
       before do
         # this email is hardcoded eml fixture file that's why we are updating this
-        channel_email.email = 'support@salesman.effiai.pro'
+        channel_email.email = 'support@shopiz.pro'
         channel_email.save!
       end
 
@@ -212,7 +212,7 @@ RSpec.describe SupportMailbox do
         expect(conversation_1.messages.count).to eq(1)
 
         reply_mail_without_uuid.mail['In-Reply-To'] = 'conversation/6bdc3f4d-0bec-4515-a284-5d916fdde489/messages/123'
-        reply_mail_without_uuid.mail['Message-Id'] = '0CB459E0-0336-41DA-BC88-E6E28C697SFC@salesman.effiai.pro'
+        reply_mail_without_uuid.mail['Message-Id'] = '0CB459E0-0336-41DA-BC88-E6E28C697SFC@shopiz.pro'
 
         described_class.receive reply_mail_without_uuid
 

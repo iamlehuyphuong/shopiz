@@ -48,10 +48,10 @@
         "CUSTOM_EMAIL_DOMAIN_ENABLED": "Du kan motta e-post i ditt egendefinerte domene nå."
       }
     },
-    "UPDATE_CHATWOOT": "En oppdatering av {latestSalesmanVersion} for Salesman er tilgjengelig. Oppdater din instans.",
+    "UPDATE_CHATWOOT": "En oppdatering av {latestShopIZVersion} for ShopIZ er tilgjengelig. Oppdater din instans.",
     "LEARN_MORE": "Learn more",
-    "PAYMENT_PENDING": "Your payment is pending. Please update your payment information to continue using Salesman",
-    "LIMITS_UPGRADE": "Your account has exceeded the usage limits, please upgrade your plan to continue using Salesman",
+    "PAYMENT_PENDING": "Your payment is pending. Please update your payment information to continue using ShopIZ",
+    "LIMITS_UPGRADE": "Your account has exceeded the usage limits, please upgrade your plan to continue using ShopIZ",
     "OPEN_BILLING": "Open billing"
   },
   "FORMS": {

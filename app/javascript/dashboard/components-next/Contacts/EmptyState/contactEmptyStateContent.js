@@ -4,8 +4,8 @@ export default [
       city: 'Los Angeles',
       country: 'United States',
       description:
-        "I'm Candice, a developer focusing on building web solutions. Currently, I’m working as a Product Developer at Salesman.",
-      companyName: 'Salesman',
+        "I'm Candice, a developer focusing on building web solutions. Currently, I’m working as a Product Developer at ShopIZ.",
+      companyName: 'ShopIZ',
       countryCode: 'US',
       socialProfiles: {
         github: 'candice-dev',
@@ -16,7 +16,7 @@ export default [
       },
     },
     availabilityStatus: 'offline',
-    email: 'candice.matherson@salesman.effiai.pro',
+    email: 'candice.matherson@shopiz.pro',
     id: 22,
     name: 'Candice Matherson',
     phoneNumber: '+14155552671',

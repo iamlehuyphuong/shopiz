@@ -1,6 +1,6 @@
 <script>
-import Badge from '../../components-salesman/badge/Badge.vue';
-import Button from '../../components-salesman/button/Button.vue';
+import Badge from '../../components-shopiz/badge/Badge.vue';
+import Button from '../../components-shopiz/button/Button.vue';
 
 export default {
   name: 'HeaderComponent',

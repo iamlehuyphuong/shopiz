@@ -13,7 +13,7 @@
 %>
 <script>
 
-window.salesmanSettings = {
+window.shopizSettings = {
   hideMessageBubble: false,
   // showUnreadMessagesDialog: false,
   // baseDomain: '.loca.lt',
@@ -34,7 +34,7 @@ window.salesmanSettings = {
   g.async = true;
   s.parentNode.insertBefore(g,s);
   g.onload=function(){
-    window.salesmanSDK.run({
+    window.shopizSDK.run({
       websiteToken: '<%= @web_widget.website_token %>',
       baseUrl: BASE_URL
     })

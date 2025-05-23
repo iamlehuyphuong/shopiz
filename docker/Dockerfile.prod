@@ -3,8 +3,8 @@ FROM chatwoot/chatwoot:v4.1.0
 
 ENV NODE_OPTIONS="--max-old-space-size=8192"
 ENV CW_EDITION=ee
-RUN apk add --update npm
-RUN npm install -g pnpm
+# RUN apk add --update npm
+# RUN npm install -g pnpm
 
 COPY ./app /app/app
 COPY ./db /app/db
@@ -15,8 +15,8 @@ COPY ./enterprise /app/enterprise
 COPY ./public /app/public
 COPY ./config /app/config
 
-RUN pnpm install
-RUN if [ "$RAILS_ENV" = "production" ]; then \
-  SECRET_KEY_BASE=precompile_placeholder RAILS_LOG_TO_STDOUT=enabled bundle exec rake assets:precompile \
-  && rm -rf spec node_modules tmp/cache; \
-  fi
+# RUN pnpm install
+# RUN if [ "$RAILS_ENV" = "production" ]; then \
+#   SECRET_KEY_BASE=precompile_placeholder RAILS_LOG_TO_STDOUT=enabled bundle exec rake assets:precompile \
+#   && rm -rf spec node_modules tmp/cache; \
+#   fi

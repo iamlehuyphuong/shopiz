@@ -1,6 +1,6 @@
 {
   "LOGIN": {
-    "TITLE": "Entra a Salesman",
+    "TITLE": "Entra a ShopIZ",
     "EMAIL": {
       "LABEL": "Correu electrònic",
       "PLACEHOLDER": "example{'@'}companyname.com",

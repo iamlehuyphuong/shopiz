@@ -7,7 +7,7 @@ class Api::V1::Accounts::Channels::ZaloChannelsController < Api::V1::Accounts::B
       inbox_name = params[:inbox_name]
       avatar_url = params[:avatar_url]
       zalo_inbox = nil
-  
+      
       ActiveRecord::Base.transaction do
         channel = Current.account.zalo_oas.create!(oa_id: oa_id, oa_access_token: access_token, refresh_token: refresh_token, expires_in: expires_in)
         zalo_inbox = Current.account.inboxes.create!(name: inbox_name, channel: channel)

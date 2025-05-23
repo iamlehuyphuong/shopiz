@@ -22,7 +22,7 @@ properties:
   homepage_link:
     type: string
     description: link to main dashboard
-    example: https://salesman.effiai.pro/
+    example: https://shopiz.pro/
   name:
     type: string
     description: Name for the portal

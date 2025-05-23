@@ -553,6 +553,8 @@ GEM
       activerecord (>= 5.2)
       activesupport (>= 5.2)
     pgvector (0.1.1)
+    polar_sh (0.1.1)
+      http (~> 5)
     procore-sift (1.0.0)
       activerecord (>= 6.1)
     pry (0.14.2)
@@ -943,6 +945,7 @@ DEPENDENCIES
   pg
   pg_search
   pgvector
+  polar_sh (~> 0.1.1)
   procore-sift
   pry-rails
   puma
@@ -1000,4 +1003,4 @@ RUBY VERSION
    ruby 3.3.3p89
 
 BUNDLED WITH
-   2.5.16
+   2.5.11

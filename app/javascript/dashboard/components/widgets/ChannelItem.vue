@@ -15,13 +15,13 @@ export default {
   emits: ['channelItemClick'],
   computed: {
     hasZaloConfigured() {
-      return window.salesmanConfig?.zaloAppId;
+      return window.shopizConfig?.zaloAppId;
     },
     hasFbConfigured() {
-      return window.salesmanConfig?.fbAppId;
+      return window.shopizConfig?.fbAppId;
     },
     hasInstagramConfigured() {
-      return window.salesmanConfig?.instagramAppId;
+      return window.shopizConfig?.instagramAppId;
     },
     isActive() {
       const { key } = this.channel;

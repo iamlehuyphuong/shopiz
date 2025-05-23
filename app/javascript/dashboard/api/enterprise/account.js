@@ -6,8 +6,8 @@ class EnterpriseAccountAPI extends ApiClient {
     super('', { accountScoped: true, enterprise: true });
   }
 
-  checkout() {
-    return axios.post(`${this.url}checkout`);
+  checkout(paymentInfo) {
+    return axios.post(`${this.url}checkout`, paymentInfo);
   }
 
   subscription() {
@@ -16,6 +16,10 @@ class EnterpriseAccountAPI extends ApiClient {
 
   getLimits() {
     return axios.get(`${this.url}limits`);
+  }
+
+  getPlans() {
+    return axios.get(`${this.url}plans`);
   }
 
   toggleDeletion(action) {

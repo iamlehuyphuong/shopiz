@@ -1,6 +1,6 @@
 {
   "LOGIN": {
-    "TITLE": "Masuk ke Salesman",
+    "TITLE": "Masuk ke ShopIZ",
     "EMAIL": {
       "LABEL": "Email",
       "PLACEHOLDER": "example{'@'}companyname.com",

@@ -243,3 +243,5 @@ group :development, :test do
   gem 'spring'
   gem 'spring-watcher-listen'
 end
+
+gem "polar_sh", "~> 0.1.1"

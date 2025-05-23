@@ -71,10 +71,10 @@ export default {
   computed: {
     ...mapGetters({ globalConfig: 'globalConfig/get' }),
     showGoogleOAuth() {
-      return Boolean(window.salesmanConfig.googleOAuthClientId);
+      return Boolean(window.shopizConfig.googleOAuthClientId);
     },
     showSignupLink() {
-      return parseBoolean(window.salesmanConfig.signupEnabled);
+      return parseBoolean(window.shopizConfig.signupEnabled);
     },
   },
   created() {

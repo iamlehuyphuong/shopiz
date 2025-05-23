@@ -380,6 +380,7 @@ Rails.application.routes.draw do
               post :checkout
               post :subscription
               get :limits
+              get :plans
               post :toggle_deletion
             end
           end
@@ -388,6 +389,8 @@ Rails.application.routes.draw do
 
       post 'webhooks/stripe', to: 'webhooks/stripe#process_payload'
       post 'webhooks/firecrawl', to: 'webhooks/firecrawl#process_payload'
+      post 'webhooks/polar', to: 'webhooks/polar#process_payload'
+      post 'webhooks/vnpay', to: 'webhooks/vnpay#process_payload'
     end
   end
 

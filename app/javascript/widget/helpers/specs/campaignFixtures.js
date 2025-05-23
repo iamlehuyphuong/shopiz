@@ -4,7 +4,7 @@ export default [
     trigger_only_during_business_hours: false,
     trigger_rules: {
       time_on_page: 3,
-      url: 'https://salesman.effiai.pro/pricing',
+      url: 'https://shopiz.pro/pricing',
     },
   },
   {
@@ -12,7 +12,7 @@ export default [
     trigger_only_during_business_hours: false,
     trigger_rules: {
       time_on_page: 6,
-      url: 'https://salesman.effiai.pro/about',
+      url: 'https://shopiz.pro/about',
     },
   },
 ];

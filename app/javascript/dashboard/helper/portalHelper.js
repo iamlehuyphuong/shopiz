@@ -1,5 +1,5 @@
 export const buildPortalURL = portalSlug => {
-  const { hostURL, helpCenterURL } = window.salesmanConfig;
+  const { hostURL, helpCenterURL } = window.shopizConfig;
   const baseURL = helpCenterURL || hostURL || '';
   return `${baseURL}/hc/${portalSlug}`;
 };

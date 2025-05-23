@@ -20,8 +20,8 @@ onMounted(() => {
   });
   window.activepieces.configure({
     prefix: frontendURL(`accounts/${accountId}/settings/agent-bots`),
-    instanceUrl: window.salesmanConfig.activepiecesInstanceUrl,
-    jwtToken: window.salesmanConfig.activepiecesJwtSecret,
+    instanceUrl: window.shopizConfig.activepiecesInstanceUrl,
+    jwtToken: window.shopizConfig.activepiecesJwtSecret,
     embedding: {
       containerId: 'workflow-container',
       builder: {

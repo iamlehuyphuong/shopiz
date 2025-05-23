@@ -17,7 +17,7 @@ export const initalizeRouter = () => {
       });
     }
 
-    return validateRouteAccess(to, next, window.salesmanConfig);
+    return validateRouteAccess(to, next, window.shopizConfig);
   });
 };
 

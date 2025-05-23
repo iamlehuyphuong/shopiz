@@ -9,7 +9,7 @@ export default [
     attributeKey: 'linkContact',
     attributeDisplayName: 'URL Input',
     attributeDisplayType: 'link',
-    value: 'https://salesman.effiai.pro',
+    value: 'https://shopiz.pro',
   },
   {
     attributeKey: 'numberContact',

@@ -82,7 +82,7 @@ const menuItems = computed(() => {
       showOnCustomBrandedInstance: false,
       label: t('SIDEBAR_ITEMS.DOCS'),
       icon: 'i-lucide-book',
-      link: 'https://salesman.effiai.pro/hc/user-guide/en',
+      link: 'https://shopiz.pro/hc/user-guide/en',
       nativeLink: true,
       target: '_blank',
     },

@@ -4,7 +4,7 @@ services:
   base: &base
     build:
       context: .
-      dockerfile: ./docker/Dockerfile
+      dockerfile: ./docker/Dockerfile.dev
       args:
         BUNDLE_WITHOUT: ''
         EXECJS_RUNTIME: 'Node'
@@ -59,6 +59,7 @@ services:
     environment:
       - NODE_ENV=development
       - RAILS_ENV=development
+    entrypoint: docker/entrypoints/rails.sh
     command: ["bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml"]
 
   vite:

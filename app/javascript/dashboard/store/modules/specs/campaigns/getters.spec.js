@@ -21,7 +21,7 @@ describe('#getters', () => {
         campaign_type: 'one_off',
 
         trigger_rules: {
-          url: 'https://salesman.effiai.pro',
+          url: 'https://shopiz.pro',
           time_on_page: '20',
         },
         created_at: '2021-05-03T08:15:35.828Z',

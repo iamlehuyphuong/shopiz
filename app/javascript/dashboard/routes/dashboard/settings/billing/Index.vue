@@ -1,18 +1,22 @@
 <script setup>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useMapGetter, useStore } from 'dashboard/composables/store.js';
 import { useAccount } from 'dashboard/composables/useAccount';
 import { useCaptain } from 'dashboard/composables/useCaptain';
 import { format } from 'date-fns';
-
+import { useI18n } from 'vue-i18n';
 import BillingMeter from './components/BillingMeter.vue';
 import BillingCard from './components/BillingCard.vue';
+import BillingCardWide from './components/BillingCardWide.vue';
 import BillingHeader from './components/BillingHeader.vue';
 import DetailItem from './components/DetailItem.vue';
+import BenefitItem from './components/BenefitItem.vue';
 import BaseSettingsHeader from '../components/BaseSettingsHeader.vue';
 import SettingsLayout from '../SettingsLayout.vue';
 import ButtonV4 from 'next/button/Button.vue';
+import TabBar from 'dashboard/components-next/tabbar/TabBar.vue';
 
+const { t } = useI18n();
 const { currentAccount } = useAccount();
 const {
   captainEnabled,
@@ -34,6 +38,19 @@ const customAttributes = computed(() => {
  */
 const planName = computed(() => {
   return customAttributes.value.plan_name;
+});
+
+/**
+ * Computed property for plan name
+ * @returns {string|undefined}
+ */
+const planId = computed(() => {
+  console.log('customAttributes.value', customAttributes.value);
+  return customAttributes.value.stripe_product_id;
+});
+
+const plans = computed(() => {
+  return currentAccount.value.plans?.filter(plan => plan.name !== 'Enterprise') || [];
 });
 
 /**
@@ -60,20 +77,75 @@ const hasABillingPlan = computed(() => {
 });
 
 const fetchAccountDetails = async () => {
+  store.dispatch('accounts/plans');
   if (!hasABillingPlan.value) {
     store.dispatch('accounts/subscription');
     fetchLimits();
   }
 };
 
-const onClickBillingPortal = () => {
-  store.dispatch('accounts/checkout');
+const enterpisePlan = computed(() => {
+  if (!currentAccount.value.plans) return null;
+  return currentAccount.value.plans.find(plan => plan.name === 'Enterprise');
+});
+
+const onClickBillingPortal = (paymentInfo) => {
+  store.dispatch('accounts/checkout', paymentInfo);
 };
 
 const onToggleChatWindow = () => {
   if (window.$chatwoot) {
     window.$chatwoot.toggle();
   }
+};
+
+const tabs = computed(() => {
+  const PLAN_TABS_OPTIONS = [
+    {
+      key: 'MONTH',
+      value: 'MONTH',
+      count: '',
+    },
+    {
+      key: 'HALF-YEAR',
+      value: 'HALF-YEAR',
+      count: '-10%',
+    },
+    {
+      key: 'YEAR',
+      value: 'YEAR',
+      count: '-20%',
+    },
+  ];
+  return PLAN_TABS_OPTIONS.map(tab => ({
+    label: t(`BILLING_SETTINGS.PRICING_PACKAGES.${tab.key}`),
+    value: tab.value,
+    count: tab.count,
+  }));
+});
+
+const activeTab = ref(0);
+
+const formatCurrency = (price) => {
+  if (!price) return '';
+  const { amount_type, price_amount, price_currency } = price;
+  if(amount_type === 'free') 
+    return 'Free';
+  if (amount_type === 'custom') {
+    return 'Contact for consultation';
+  }
+  const amount = price_amount * 25000;
+  return new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+    maximumFractionDigits: 0,
+  }).format(amount) + ' / month';
+};
+
+const handleTabChange = selectedTab => {
+  activeTab.value = tabs.value.findIndex(
+    tabItem => tabItem.value === selectedTab.value
+  );
 };
 
 onMounted(fetchAccountDetails);
@@ -100,11 +172,6 @@ onMounted(fetchAccountDetails);
           :title="$t('BILLING_SETTINGS.MANAGE_SUBSCRIPTION.TITLE')"
           :description="$t('BILLING_SETTINGS.MANAGE_SUBSCRIPTION.DESCRIPTION')"
         >
-          <template #action>
-            <ButtonV4 sm solid blue @click="onClickBillingPortal">
-              {{ $t('BILLING_SETTINGS.MANAGE_SUBSCRIPTION.BUTTON_TXT') }}
-            </ButtonV4>
-          </template>
           <div
             v-if="planName || subscribedQuantity || subscriptionRenewsOn"
             class="grid lg:grid-cols-4 sm:grid-cols-3 grid-cols-1 gap-2 divide-x divide-n-weak"
@@ -125,6 +192,78 @@ onMounted(fetchAccountDetails);
             />
           </div>
         </BillingCard>
+        <BillingHeader
+          class="px-1"
+          :title="$t('BILLING_SETTINGS.PRICING_PACKAGES.HEADING.TITLE')"
+          :description="$t('BILLING_SETTINGS.PRICING_PACKAGES.HEADING.DESCRIPTION')"
+        />
+        <TabBar
+          :tabs="tabs"
+          :initial-active-tab="activeTab"
+          class="w-full [&>button]:w-full"
+          @tab-changed="handleTabChange"
+        />
+        <template v-for="(tab, index) in tabs" :key="tab.key">
+          <div
+            v-show="activeTab === index"
+            class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4"
+          >
+            <template v-for="plan in plans" :key="plan.products[index].id">
+              <BillingCard
+                :title="plan.products[index].name"
+                :price="formatCurrency(plan.products[index]?.prices[0])"
+                :description="plan.products[index].description"
+              >
+                <template #action>
+                  <div class="flex justify-center">
+                    <ButtonV4
+                      md
+                      solid
+                      ruby
+                      @disabled="planId === plan.products[index].id"
+                      @click="onClickBillingPortal({
+                        product_id: plan.products[index].id,
+                        payment_method: 'vnpay',
+                      })">
+                    {{ planId === plan.products[index].id ? $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.CURRENT_PACKAGE') : $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.UPGRADE_NOW') }}
+                    </ButtonV4>
+                  </div>
+                </template>
+                <template v-for="benefit in plan.products[index].benefits" :key="benefit.id">
+                  <div class="grid lg:grid-cols-1 sm:grid-cols-1 grid-cols-1 gap-2 divide-x divide-n-weak">
+                    <BenefitItem :label="benefit.description" />
+                  </div>
+                </template>
+              </BillingCard>
+          </template>
+          </div>
+        </template>
+        <BillingCardWide
+          v-if="enterpisePlan"
+          :title="enterpisePlan.products[0].name"
+          :price="formatCurrency(enterpisePlan.products[0]?.prices[0])"
+          :description="enterpisePlan.products[0].description"
+        >
+          <template #action>
+            <div class="flex justify-start">
+              <ButtonV4
+                sm
+                solid
+                blue
+                width="100%"
+                @open="onToggleChatWindow"
+              >
+                {{ $t('CONTACTS_LAYOUT.HEADER.TITLE') }}
+              </ButtonV4>
+            </div>
+          </template>
+          <div class="grid lg:grid-cols-1 sm:grid-cols-1 grid-cols-1 gap-2 divide-x divide-n-weak">
+            <span><strong>{{$t('BILLING_SETTINGS.PRICING_PACKAGES.HEADING.FEATURES')}}</strong></span>
+            <template v-for="benefit in enterpisePlan.products[0].benefits" :key="benefit.id">
+              <BenefitItem :label="benefit.description" />
+            </template>
+          </div>
+        </BillingCardWide>
         <BillingCard
           v-if="captainEnabled"
           :title="$t('BILLING_SETTINGS.CAPTAIN.TITLE')"

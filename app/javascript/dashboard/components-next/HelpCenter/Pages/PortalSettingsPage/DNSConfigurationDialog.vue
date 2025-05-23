@@ -17,7 +17,7 @@ const emit = defineEmits(['confirm']);
 const { t } = useI18n();
 
 const domain = computed(() => {
-  const { hostURL, helpCenterURL } = window?.salesmanConfig || {};
+  const { hostURL, helpCenterURL } = window?.shopizConfig || {};
   return getHostNameFromURL(helpCenterURL) || getHostNameFromURL(hostURL) || '';
 });
 

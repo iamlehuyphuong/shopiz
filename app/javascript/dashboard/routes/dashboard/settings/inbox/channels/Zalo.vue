@@ -63,9 +63,9 @@ export default {
       this.hasLoginStarted = true;
       window.location.replace(
         'https://oauth.zaloapp.com/v4/oa/permission?app_id=' +
-          window.salesmanConfig.zaloAppId +
+          window.shopizConfig.zaloAppId +
           '&redirect_uri=' +
-          window.salesmanConfig.hostURL +
+          window.shopizConfig.hostURL +
           '/zalo/callback&state=' +
           encodeURIComponent(this.accountId)
       );
@@ -75,12 +75,12 @@ export default {
       const url = 'https://oauth.zaloapp.com/v4/oa/access_token';
       const data = new URLSearchParams();
       data.append('code', this.$route.query.code);
-      data.append('app_id', window.salesmanConfig.zaloAppId);
+      data.append('app_id', window.shopizConfig.zaloAppId);
       data.append('grant_type', 'authorization_code');
       const config = {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          secret_key: window.salesmanConfig.zaloAppSecret,
+          secret_key: window.shopizConfig.zaloAppSecret,
         },
       };
       axios

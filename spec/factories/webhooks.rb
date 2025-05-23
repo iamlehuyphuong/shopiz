@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :webhook do
     account_id { 1 }
     inbox_id { 1 }
-    url { 'https://api.salesman.effiai.pro' }
+    url { 'https://api.shopiz.pro' }
     subscriptions do
       %w[
         conversation_status_changed

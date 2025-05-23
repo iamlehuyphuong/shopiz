@@ -88,7 +88,7 @@ export default {
   mounted() {
     this.initializeColorTheme();
     this.listenToThemeChanges();
-    this.setLocale(window.salesmanConfig.selectedLocale);
+    this.setLocale(window.shopizConfig.selectedLocale);
   },
   unmounted() {
     if (this.reconnectService) {

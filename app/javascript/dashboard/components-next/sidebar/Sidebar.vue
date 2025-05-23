@@ -325,6 +325,11 @@ const menuItems = computed(() => {
           label: t('SIDEBAR.SMS'),
           to: accountScopedRoute('campaigns_sms_index'),
         },
+        {
+          name: 'Survey',
+          label: t('SIDEBAR.SURVEY'),
+          to: accountScopedRoute('campaigns_survey_index'),
+        },
       ],
     },
     {
@@ -332,6 +337,18 @@ const menuItems = computed(() => {
       label: t('SIDEBAR.HELP_CENTER.TITLE'),
       icon: 'i-lucide-library-big',
       children: [
+        {
+          name: 'Landing Pages',
+          label: t('SIDEBAR.HELP_CENTER.LANDING_PAGES'),
+          activeOn: [
+            'portals_pages_index',
+            'portals_pages_new',
+            'portals_pages_edit',
+          ],
+          to: accountScopedRoute('portals_index', {
+            navigationPath: 'portals_pages_index',
+          }),
+        },
         {
           name: 'Articles',
           label: t('SIDEBAR.HELP_CENTER.ARTICLES'),
