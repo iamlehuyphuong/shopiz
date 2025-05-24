@@ -378,7 +378,12 @@
     "PRICING_PACKAGES": {
       "HEADING": {
         "TITLE": "Pricing Packages",
-        "DESCRIPTION": "Flexible options for every business size, simple payments, easy upgrades"
+        "DESCRIPTION": "Flexible options for every business size, simple payments, easy upgrades",
+        "FEATURES": "Features"
+      },
+      "BUTTONS": {
+        "CURRENT_PACKAGE": "Current Package",
+        "UPGRADE_NOW": "Upgrade Now"
       },
       "MONTH": "1 month",
       "HALF-YEAR": "6 months",
