@@ -50,7 +50,7 @@ export const campaigns = [
     message: 'Begin your onboarding campaign with a welcome message',
     enabled: true,
     trigger_rules: {
-      url: 'https://shopiz.pro',
+      url: 'https://www.shopiz.pro',
       time_on_page: '20',
     },
     created_at: '2021-05-03T08:15:35.828Z',

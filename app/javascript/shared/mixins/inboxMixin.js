@@ -51,6 +51,9 @@ export default {
     isAZaloOaChannel() {
       return this.channelType === INBOX_TYPES.ZALO;
     },
+    isAZaloPersonalChannel() {
+      return this.channelType === INBOX_TYPES.ZALOPERSONAL;
+    },
     isAWebWidgetInbox() {
       return this.channelType === INBOX_TYPES.WEB;
     },

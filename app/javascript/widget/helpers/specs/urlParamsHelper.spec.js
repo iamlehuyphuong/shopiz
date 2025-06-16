@@ -39,13 +39,13 @@ describe('#buildPopoutURL', () => {
   it('returns popout URL', () => {
     expect(
       buildPopoutURL({
-        origin: 'https://shopiz.pro',
+        origin: 'https://www.shopiz.pro',
         conversationCookie: 'random-jwt-token',
         websiteToken: 'random-website-token',
         locale: 'ar',
       })
     ).toEqual(
-      'https://shopiz.pro/widget?cw_conversation=random-jwt-token&website_token=random-website-token&locale=ar'
+      'https://www.shopiz.pro/widget?cw_conversation=random-jwt-token&website_token=random-website-token&locale=ar'
     );
   });
 });

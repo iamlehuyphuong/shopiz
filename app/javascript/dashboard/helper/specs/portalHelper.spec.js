@@ -4,7 +4,7 @@ describe('PortalHelper', () => {
   describe('buildPortalURL', () => {
     it('returns the correct url', () => {
       window.shopizConfig = {
-        hostURL: 'https://shopiz.pro',
+        hostURL: 'https://www.shopiz.pro',
         helpCenterURL: 'https://help.shopiz.pro',
       };
       expect(buildPortalURL('handbook')).toEqual(
@@ -17,7 +17,7 @@ describe('PortalHelper', () => {
   describe('buildPortalArticleURL', () => {
     it('returns the correct url', () => {
       window.shopizConfig = {
-        hostURL: 'https://shopiz.pro',
+        hostURL: 'https://www.shopiz.pro',
         helpCenterURL: 'https://help.shopiz.pro',
       };
       expect(

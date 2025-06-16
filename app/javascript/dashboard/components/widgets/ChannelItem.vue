@@ -14,6 +14,9 @@ export default {
   },
   emits: ['channelItemClick'],
   computed: {
+    hasZaloPersonalConfigured() {
+      return window.shopizConfig?.zaloAppId;
+    },
     hasZaloConfigured() {
       return window.shopizConfig?.zaloAppId;
     },
@@ -36,6 +39,9 @@ export default {
       }
       if (key === 'zalo') {
         return this.enabledFeatures.channel_zalo && this.hasZaloConfigured;
+      }
+      if (key === 'zalopersonal') {
+        return this.enabledFeatures.channel_zalopersonal && this.hasZaloConfigured;
       }
       if (key === 'email') {
         return this.enabledFeatures.channel_email;

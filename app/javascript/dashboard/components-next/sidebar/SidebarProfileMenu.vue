@@ -48,7 +48,7 @@ const menuItems = computed(() => {
       label: t('SIDEBAR_ITEMS.CONTACT_SUPPORT'),
       icon: 'i-lucide-life-buoy',
       click: () => {
-        window.$chatwoot.toggle();
+        window.$shopiz.toggle();
       },
     },
     {
@@ -82,7 +82,7 @@ const menuItems = computed(() => {
       showOnCustomBrandedInstance: false,
       label: t('SIDEBAR_ITEMS.DOCS'),
       icon: 'i-lucide-book',
-      link: 'https://shopiz.pro/hc/user-guide/en',
+      link: 'https://help.shopiz.pro/hc/user-guide/en',
       nativeLink: true,
       target: '_blank',
     },

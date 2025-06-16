@@ -31,9 +31,9 @@ export default {
     CONDENSED: 'condensed',
     EXPANDED: 'expanded',
   },
-  DOCS_URL: 'https://shopiz.pro/docs/product/',
+  DOCS_URL: 'https://www.shopiz.pro/docs/product/',
   HELP_CENTER_DOCS_URL:
-    'https://shopiz.pro/docs/product/others/help-center',
+    'https://www.shopiz.pro/docs/product/others/help-center',
   TESTIMONIAL_URL: 'https://testimonials.cdn.shopiz.pro/content.json',
   SMALL_SCREEN_BREAKPOINT: 1200,
   AVAILABILITY_STATUS_KEYS: ['online', 'busy', 'offline'],

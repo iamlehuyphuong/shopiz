@@ -94,8 +94,8 @@ const onClickBillingPortal = (paymentInfo) => {
 };
 
 const onToggleChatWindow = () => {
-  if (window.$chatwoot) {
-    window.$chatwoot.toggle();
+  if (window.$shopiz) {
+    window.$shopiz.toggle();
   }
 };
 
@@ -134,7 +134,7 @@ const formatCurrency = (price) => {
   if (amount_type === 'custom') {
     return 'Contact for consultation';
   }
-  const amount = price_amount * 25000;
+  const amount = (price_amount / 100) * 25000;
   return new Intl.NumberFormat('vi-VN', {
     style: 'currency',
     currency: 'VND',
@@ -251,7 +251,7 @@ onMounted(fetchAccountDetails);
                 solid
                 blue
                 width="100%"
-                @open="onToggleChatWindow"
+                @click="onToggleChatWindow"
               >
                 {{ $t('CONTACTS_LAYOUT.HEADER.TITLE') }}
               </ButtonV4>
@@ -309,7 +309,7 @@ onMounted(fetchAccountDetails);
             solid
             slate
             icon="i-lucide-life-buoy"
-            @open="onToggleChatWindow"
+            @click="onToggleChatWindow"
           >
             {{ $t('BILLING_SETTINGS.CHAT_WITH_US.BUTTON_TXT') }}
           </ButtonV4>

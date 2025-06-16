@@ -451,7 +451,7 @@ function ssl_success_message() {
 Woot! Woot!! Chatwoot server installation is complete.
 The server will be accessible at https://$domain_name
 
-Join the community at https://shopiz.pro/community?utm_source=cwctl
+Join the community at https://www.shopiz.pro/community?utm_source=cwctl
 ***************************************************************************
 
 EOF
@@ -473,7 +473,7 @@ function cwctl_message() {
 #   None
 ##############################################################################
 function get_cw_version() {
-  CW_VERSION=$(curl -s https://shopiz.pro/api | python3 -c 'import sys,json;data=json.loads(sys.stdin.read()); print(data["version"])')
+  CW_VERSION=$(curl -s https://www.shopiz.pro/api | python3 -c 'import sys,json;data=json.loads(sys.stdin.read()); print(data["version"])')
 }
 
 ##############################################################################
@@ -561,9 +561,9 @@ Woot! Woot!! Chatwoot server installation is complete.
 The server will be accessible at http://$public_ip:3000
 
 To configure a domain and SSL certificate, follow the guide at
-https://shopiz.pro/docs/deployment/deploy-chatwoot-in-linux-vm?utm_source=cwctl
+https://www.shopiz.pro/docs/deployment/deploy-chatwoot-in-linux-vm?utm_source=cwctl
 
-Join the community at https://shopiz.pro/community?utm_source=cwctl
+Join the community at https://www.shopiz.pro/community?utm_source=cwctl
 ***************************************************************************
 
 EOF
@@ -650,7 +650,7 @@ Exit status:
 Returns 0 if successful; non-zero otherwise.
 
 Report bugs at https://github.com/chatwoot/chatwoot/issues
-Get help, https://shopiz.pro/community?utm_source=cwctl
+Get help, https://www.shopiz.pro/community?utm_source=cwctl
 
 EOF
 }
@@ -843,7 +843,7 @@ function upgrade() {
       echo "Proceeding with the upgrade..."
     else
       echo "Upgrade aborted. Please install pgvector support before upgrading."
-      echo "Read more at https://shopiz.pro/v4/migration"
+      echo "Read more at https://www.shopiz.pro/v4/migration"
       return 1
     fi
   fi

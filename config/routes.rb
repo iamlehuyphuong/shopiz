@@ -99,6 +99,12 @@ Rails.application.routes.draw do
                 get :create
               end
             end
+            resource :zalo_personal_channel, only: [] do
+              collection do
+                post :create
+                get :create
+              end
+            end
           end
           resources :conversations, only: [:index, :create, :show, :update] do
             collection do
@@ -390,7 +396,7 @@ Rails.application.routes.draw do
       post 'webhooks/stripe', to: 'webhooks/stripe#process_payload'
       post 'webhooks/firecrawl', to: 'webhooks/firecrawl#process_payload'
       post 'webhooks/polar', to: 'webhooks/polar#process_payload'
-      post 'webhooks/vnpay', to: 'webhooks/vnpay#process_payload'
+      get 'webhooks/vnpay', to: 'webhooks/vnpay#process_payload'
     end
   end
 
@@ -474,7 +480,9 @@ Rails.application.routes.draw do
   get 'webhooks/instagram', to: 'webhooks/instagram#verify'
   post 'webhooks/instagram', to: 'webhooks/instagram#events'
   post 'webhooks/zalo', to: 'webhooks/zalo#process_payload'
+  post 'webhooks/zalo_personal', to: 'webhooks/zalo_personal#process_payload'
   get '/zalo/callback', to: 'zalo/callback#create'
+  get '/zalo_personal/callback', to: 'zalo_personal/callback#create'
 
   namespace :twitter do
     resource :callback, only: [:show]

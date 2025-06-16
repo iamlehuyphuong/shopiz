@@ -32,7 +32,7 @@ describe('#actions', () => {
         { commit },
         {
           websiteToken: 'XDsafmADasd',
-          currentURL: 'https://shopiz.pro',
+          currentURL: 'https://www.shopiz.pro',
           isInBusinessHours: true,
         }
       );
@@ -53,7 +53,7 @@ describe('#actions', () => {
             {
               id: 11,
               timeOnPage: '20',
-              url: 'https://shopiz.pro',
+              url: 'https://www.shopiz.pro',
               triggerOnlyDuringBusinessHours: false,
             },
           ],
@@ -70,7 +70,7 @@ describe('#actions', () => {
         { commit },
         {
           websiteToken: 'XDsafmADasd',
-          currentURL: 'https://shopiz.pro',
+          currentURL: 'https://www.shopiz.pro',
           isInBusinessHours: true,
         }
       );
@@ -94,7 +94,7 @@ describe('#actions', () => {
             {
               id: 11,
               timeOnPage: '20',
-              url: 'https://shopiz.pro',
+              url: 'https://www.shopiz.pro',
               triggerOnlyDuringBusinessHours: false,
             },
           ],
@@ -110,7 +110,7 @@ describe('#actions', () => {
         { commit },
         {
           websiteToken: 'XDsafmADasd',
-          currentURL: 'https://shopiz.pro',
+          currentURL: 'https://www.shopiz.pro',
           isInBusinessHours: true,
         }
       );
@@ -120,7 +120,7 @@ describe('#actions', () => {
   describe('#initCampaigns', () => {
     const actionParams = {
       websiteToken: 'XDsafmADasd',
-      currentURL: 'https://shopiz.pro',
+      currentURL: 'https://www.shopiz.pro',
     };
     it('sends correct actions if campaigns are empty', async () => {
       await actions.initCampaigns(
@@ -164,7 +164,7 @@ describe('#actions', () => {
             {
               id: 11,
               timeOnPage: '20',
-              url: 'https://shopiz.pro',
+              url: 'https://www.shopiz.pro',
               triggerOnlyDuringBusinessHours: false,
             },
           ],

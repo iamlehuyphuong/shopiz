@@ -244,6 +244,9 @@ export default {
       if (this.isAZaloOaChannel) {
         return MESSAGE_MAX_LENGTH.FACEBOOK;
       }
+      if (this.isAZaloPersonalChannel) {
+        return MESSAGE_MAX_LENGTH.FACEBOOK;
+      }
       if (this.isAWhatsAppChannel) {
         return MESSAGE_MAX_LENGTH.TWILIO_WHATSAPP;
       }
@@ -266,7 +269,8 @@ export default {
         this.isATelegramChannel ||
         this.isALineChannel ||
         this.isAInstagramChannel ||
-        this.isAZaloOaChannel
+        this.isAZaloOaChannel ||
+        this.isAZaloPersonalChannel
       );
     },
     replyButtonLabel() {

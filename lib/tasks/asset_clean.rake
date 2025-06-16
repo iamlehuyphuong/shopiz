@@ -1,4 +1,4 @@
-# Asset clean logic taken from the article https://shopiz.pro/heroku-slug-size
+# Asset clean logic taken from the article https://www.shopiz.pro/heroku-slug-size
 
 namespace :assets do
   desc "Remove 'node_modules' folder"

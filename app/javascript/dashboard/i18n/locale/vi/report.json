@@ -124,12 +124,12 @@
     }
   },
   "AGENT_REPORTS": {
-    "HEADER": "Tổng quan đại lý",
-    "DESCRIPTION": "Theo dõi hiệu suất của đại lý dễ dàng với các chỉ số chính như cuộc hội thoại, thời gian phản hồi, thời gian giải quyết và số lượng giải quyết. Nhấp vào tên đại lý để biết thêm chi tiết.",
+    "HEADER": "Tổng quan nhân viên",
+    "DESCRIPTION": "Theo dõi hiệu suất của nhân viên dễ dàng với các chỉ số chính như cuộc hội thoại, thời gian phản hồi, thời gian giải quyết và số lượng giải quyết. Nhấp vào tên nhân viên để biết thêm chi tiết.",
     "LOADING_CHART": "Đang tải các biểu đồ dữ liệu...",
     "NO_ENOUGH_DATA": "Chúng tôi không nhận được đủ điểm dữ liệu để tạo báo cáo, vui lòng thử lại sau.",
-    "DOWNLOAD_AGENT_REPORTS": "Tải xuống báo cáo đại lý",
-    "FILTER_DROPDOWN_LABEL": "Chọn đại lý",
+    "DOWNLOAD_AGENT_REPORTS": "Tải xuống báo cáo nhân viên",
+    "FILTER_DROPDOWN_LABEL": "Chọn nhân viên",
     "METRICS": {
       "CONVERSATIONS": {
         "NAME": "Các cuộc hội thoại",
@@ -407,7 +407,7 @@
     "TABLE": {
       "HEADER": {
         "CONTACT_NAME": "Liên hệ",
-        "AGENT_NAME": "Đại lý được phân công",
+        "AGENT_NAME": "Nhân viên được phân công",
         "RATING": "Đánh giá",
         "FEEDBACK_TEXT": "Bình luận phản hồi"
       }
@@ -444,7 +444,7 @@
       },
       "HANDOFF_RATE": {
         "LABEL": "Tỷ lệ chuyển giao",
-        "TOOLTIP": "Tỷ lệ chuyển giao = (Số cuộc hội thoại chuyển giao cho đại lý / Tổng số cuộc hội thoại mà bot xử lý) * 100"
+        "TOOLTIP": "Tỷ lệ chuyển giao = (Số cuộc hội thoại chuyển giao cho nhân viên / Tổng số cuộc hội thoại mà bot xử lý) * 100"
       }
     }
   },
@@ -557,7 +557,7 @@
   },
   "SUMMARY_REPORTS": {
     "INBOX": "Hộp thư đến",
-    "AGENT": "Đại lý",
+    "AGENT": "Nhân viên",
     "TEAM": "Nhóm",
     "AVG_RESOLUTION_TIME": "Thời gian giải quyết trung bình",
     "AVG_FIRST_RESPONSE_TIME": "Thời gian phản hồi đầu tiên trung bình",

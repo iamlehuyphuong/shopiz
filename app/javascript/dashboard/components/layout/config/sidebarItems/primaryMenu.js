@@ -22,8 +22,8 @@ const primaryMenuItems = accountId => [
     key: 'captain',
     label: 'CAPTAIN',
     featureFlag: FEATURE_FLAGS.CAPTAIN,
-    toState: frontendURL(`accounts/${accountId}/captain/documents`),
-    toStateName: 'captain',
+    toState: frontendURL(`accounts/${accountId}/captain/assistants`),
+    toStateName: 'captain_assistants_index',
   },
   {
     icon: 'book-contacts',

@@ -2,6 +2,7 @@
 import { defineComponent, h } from 'vue';
 import Facebook from './channels/Facebook.vue';
 import Zalo from './channels/Zalo.vue';
+import ZaloPersonal from './channels/ZaloPersonal.vue';
 import Website from './channels/Website.vue';
 import Twitter from './channels/Twitter.vue';
 import Api from './channels/Api.vue';
@@ -24,6 +25,7 @@ const channelViewList = {
   telegram: Telegram,
   instagram: Instagram,
   zalo: Zalo,
+  zalopersonal: ZaloPersonal,
 };
 
 export default defineComponent({

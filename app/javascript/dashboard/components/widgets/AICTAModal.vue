@@ -71,7 +71,7 @@ export default {
       }
     },
     openOpenAIDoc() {
-      window.open('https://shopiz.pro/blog/v2-17', '_blank');
+      window.open('https://www.shopiz.pro/blog/v2-17', '_blank');
     },
   },
 };

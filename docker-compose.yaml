@@ -37,9 +37,13 @@ services:
       - 3000:3000
     env_file: .env
     environment:
-      - VITE_DEV_SERVER_HOST=vite
+      - VITE_DEV_SERVER_HOST=0.0.0.0
       - NODE_ENV=development
       - RAILS_ENV=development
+      - SMTP_ADDRESS=sandbox.smtp.mailtrap.io
+      - SMTP_PORT=25
+      - SMTP_USERNAME=80fdb03d74d498
+      - SMTP_PASSWORD=992a0ecf68a5d6
     entrypoint: docker/entrypoints/rails.sh
     command: ["bundle", "exec", "rails", "s", "-p", "3000", "-b", "0.0.0.0"]
 
@@ -59,6 +63,10 @@ services:
     environment:
       - NODE_ENV=development
       - RAILS_ENV=development
+      - SMTP_ADDRESS=sandbox.smtp.mailtrap.io
+      - SMTP_PORT=25
+      - SMTP_USERNAME=80fdb03d74d498
+      - SMTP_PASSWORD=992a0ecf68a5d6
     entrypoint: docker/entrypoints/rails.sh
     command: ["bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml"]
 

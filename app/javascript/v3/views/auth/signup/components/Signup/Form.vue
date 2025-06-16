@@ -65,11 +65,11 @@ export default {
     termsLink() {
       return this.$t('REGISTER.TERMS_ACCEPT')
         .replace(
-          'https://shopiz.pro/terms',
+          'https://www.shopiz.pro/terms',
           this.globalConfig.termsURL
         )
         .replace(
-          'https://shopiz.pro/privacy-policy',
+          'https://www.shopiz.pro/privacy-policy',
           this.globalConfig.privacyURL
         );
     },

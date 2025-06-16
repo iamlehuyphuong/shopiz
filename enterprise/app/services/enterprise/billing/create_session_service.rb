@@ -20,16 +20,18 @@ class Enterprise::Billing::CreateSessionService
       config.website_code = ENV['VNPAY_WEBSITE_CODE']
     end
     product = Polar::Product.get(product_id)
-    price_amount = product[:prices].first[:price_amount]
+    price = product.table[:prices].first
+    price_amount = price["price_amount"]
     order = Vnpay::OrderInfo.new(
-      amount: price_amount.to_i * 25000,
+      amount: price_amount * 250,
       created_at: Time.now,
       order_type: 'other',
-      payment_ref: 'SALESMAN-' + customer_id.to_s + '-' + Time.now.to_i.to_s,
-      description: 'Payment for product=' + product[:name] + ' with customer_id=' + customer_id.to_s,
+      payment_ref: 'SHOPIZ-' + customer_id.to_s + '-' + Time.now.to_i.to_s,
+      description: "Thanh toán cho Shopiz - Gói #{product[:name]} - Tham số: product_id=#{product[:id]}||price_id=#{price['id']}||customer_id=#{customer_id}",
     )
-    print order.to_json
+    #print "Vnpay order: #{order.inspect}"
     payment_url = Vnpay::Url.new(order, '127.0.0.1', return_url)
+    print "Vnpay payment_url: #{payment_url.generate}"
     payment_url.generate
   end
 end

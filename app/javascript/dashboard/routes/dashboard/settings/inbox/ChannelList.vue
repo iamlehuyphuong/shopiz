@@ -26,6 +26,7 @@ export default {
         { key: 'website', name: 'Website' },
         { key: 'facebook', name: 'Messenger' },
         { key: 'zalo', name: 'Zalo' },
+        { key: 'zalopersonal', name: 'ZaloPersonal' },
         { key: 'whatsapp', name: 'WhatsApp' },
         { key: 'sms', name: 'SMS' },
         { key: 'email', name: 'Email' },

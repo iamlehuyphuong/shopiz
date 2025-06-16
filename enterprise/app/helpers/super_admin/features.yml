@@ -113,3 +113,9 @@ activepieces:
   enabled: true
   icon: 'icon-activepieces'
   config_key: 'activepieces'
+google:
+  name: 'Google'
+  description: 'Configuration for setting up Google'
+  enabled: true
+  icon: 'icon-google'
+  config_key: 'google'

@@ -2,7 +2,7 @@ import { frontendURL } from '../../../../helper/URLHelper';
 
 const campaigns = accountId => ({
   parentNav: 'campaigns',
-  routes: ['campaigns_sms_index', 'campaigns_livechat_index'],
+  routes: ['campaigns_sms_index', 'campaigns_livechat_index', 'campaigns_survey_index'],
   menuItems: [
     {
       icon: 'arrow-swap',
@@ -19,6 +19,14 @@ const campaigns = accountId => ({
       hasSubMenu: false,
       toState: frontendURL(`accounts/${accountId}/campaigns/sms`),
       toStateName: 'campaigns_sms_index',
+    },
+    {
+      key: 'surveys',
+      icon: 'sound-source',
+      label: 'SURVEY',
+      hasSubMenu: false,
+      toState: frontendURL(`accounts/${accountId}/campaigns/surveys`),
+      toStateName: 'campaigns_survey_index',
     },
   ],
 });

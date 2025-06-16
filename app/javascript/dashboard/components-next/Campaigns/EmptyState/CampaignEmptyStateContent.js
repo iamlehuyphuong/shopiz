@@ -17,7 +17,7 @@ export const ONGOING_CAMPAIGN_EMPTY_STATE_CONTENT = [
     enabled: true,
     campaign_type: 'ongoing',
     trigger_rules: {
-      url: 'https://shopiz.pro/features/chatbot/',
+      url: 'https://www.shopiz.pro/features/chatbot/',
       time_on_page: 10,
     },
     trigger_only_during_business_hours: true,
@@ -42,7 +42,7 @@ export const ONGOING_CAMPAIGN_EMPTY_STATE_CONTENT = [
     enabled: false,
     campaign_type: 'ongoing',
     trigger_rules: {
-      url: 'https://shopiz.pro/pricings',
+      url: 'https://www.shopiz.pro/pricings',
       time_on_page: 10,
     },
     trigger_only_during_business_hours: false,
@@ -114,7 +114,7 @@ export const ONE_OFF_CAMPAIGN_EMPTY_STATE_CONTENT = [
       provider: 'default',
     },
     message:
-      'Hello! Enjoying our product? Share your feedback on G2 and earn a $25 Amazon coupon: https://shopiz.pro/g2-review',
+      'Hello! Enjoying our product? Share your feedback on G2 and earn a $25 Amazon coupon: https://www.shopiz.pro/g2-review',
     campaign_status: 'active',
     enabled: true,
     campaign_type: 'one_off',

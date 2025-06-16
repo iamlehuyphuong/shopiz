@@ -14,7 +14,8 @@ class SendReplyJob < ApplicationJob
       'Channel::Whatsapp' => ::Whatsapp::SendOnWhatsappService,
       'Channel::Sms' => ::Sms::SendOnSmsService,
       'Channel::Instagram' => ::Instagram::SendOnInstagramService,
-      'Channel::ZaloOa' => ::Zalo::SendOnZaloService
+      'Channel::ZaloOa' => ::Zalo::SendOnZaloService,
+      'Channel::ZaloPersonal' => ::ZaloPersonal::SendOnZaloService
     }
 
     case channel_name

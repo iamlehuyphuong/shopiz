@@ -4,24 +4,24 @@ describe('#MessageFormatter', () => {
   describe('content with links', () => {
     it('should format correctly', () => {
       const message =
-        'Chatwoot is an opensource tool. [Chatwoot](https://shopiz.pro)';
+        'Chatwoot is an opensource tool. [Chatwoot](https://www.shopiz.pro)';
       expect(new MessageFormatter(message).formattedMessage).toMatch(
-        '<p>Chatwoot is an opensource tool. <a href="https://shopiz.pro" class="link" rel="noreferrer noopener nofollow" target="_blank">Chatwoot</a></p>'
+        '<p>Chatwoot is an opensource tool. <a href="https://www.shopiz.pro" class="link" rel="noreferrer noopener nofollow" target="_blank">Chatwoot</a></p>'
       );
     });
     it('should format correctly', () => {
       const message =
-        'Chatwoot is an opensource tool. https://shopiz.pro';
+        'Chatwoot is an opensource tool. https://www.shopiz.pro';
       expect(new MessageFormatter(message).formattedMessage).toMatch(
-        '<p>Chatwoot is an opensource tool. <a href="https://shopiz.pro" class="link" rel="noreferrer noopener nofollow" target="_blank">https://shopiz.pro</a></p>'
+        '<p>Chatwoot is an opensource tool. <a href="https://www.shopiz.pro" class="link" rel="noreferrer noopener nofollow" target="_blank">https://www.shopiz.pro</a></p>'
       );
     });
     it('should not convert template variables to links when linkify is disabled', () => {
       const message =
-        'Hey {{customer.name}}, check https://shopiz.pro';
+        'Hey {{customer.name}}, check https://www.shopiz.pro';
       const formatter = new MessageFormatter(message, false, false, false);
       expect(formatter.formattedMessage).toMatch(
-        '<p>Hey {{customer.name}}, check https://shopiz.pro</p>'
+        '<p>Hey {{customer.name}}, check https://www.shopiz.pro</p>'
       );
     });
   });
@@ -113,9 +113,9 @@ describe('#MessageFormatter', () => {
   describe('plain text content', () => {
     it('returns the plain text without HTML', () => {
       const message =
-        '<b>Chatwoot is an opensource tool. https://shopiz.pro</b>';
+        '<b>Chatwoot is an opensource tool. https://www.shopiz.pro</b>';
       expect(new MessageFormatter(message).plainText).toMatch(
-        'Chatwoot is an opensource tool. https://shopiz.pro'
+        'Chatwoot is an opensource tool. https://www.shopiz.pro'
       );
     });
   });

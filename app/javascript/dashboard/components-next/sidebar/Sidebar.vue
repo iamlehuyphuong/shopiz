@@ -339,7 +339,7 @@ const menuItems = computed(() => {
       children: [
         {
           name: 'Landing Pages',
-          label: t('SIDEBAR.HELP_CENTER.LANDING_PAGES'),
+          label: t('SIDEBAR.HELP_CENTER.LANDING_PAGE'),
           activeOn: [
             'portals_pages_index',
             'portals_pages_new',
