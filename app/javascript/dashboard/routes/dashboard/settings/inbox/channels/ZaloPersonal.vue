@@ -68,7 +68,7 @@ export default {
       this.generateQR();
     },
     generateQR() {
-      this.qrCode = 'http://localhost:3001/api/zalo-login?proxy';
+      this.qrCode = `://${window.shopizConfig?.zaloApiHost}/api/zalo-login?proxy`;
       this.connectWebSocket();
       this.hasLoginStarted = false;
     },
@@ -79,7 +79,7 @@ export default {
       }
       // Xác định URL WebSocket dựa trên URL hiện tại
       const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-      const wsUrl = `${protocol}//localhost:3001/ws`;
+      const wsUrl = `${protocol}//${window.shopizConfig?.zaloApiHost}/ws`;
       console.log('Đang kết nối đến WebSocket tại:', wsUrl);
       try {
           this.socket = new WebSocket(wsUrl);

@@ -96,7 +96,7 @@ class ZaloPersonal::IncomingMessageService
   
     def get_profile(user_id, access_token)
       HTTParty.post(
-        "#{ENV['ZALO_API_URL']}/api/getUserInfo",
+        "https://#{ENV['ZALO_API_HOST']}/api/getUserInfo",
         :body => { :userId => user_id, :ownId => access_token }.to_json,
         :headers => { 'Content-Type' => 'application/json' }
       )
@@ -104,7 +104,7 @@ class ZaloPersonal::IncomingMessageService
 
     def get_group(group_id, access_token)
       HTTParty.post(
-        "#{ENV['ZALO_API_URL']}/api/getGroupInfo",
+        "https://#{ENV['ZALO_API_HOST']}/api/getGroupInfo",
         :body => { :groupId => group_id, :ownId => access_token }.to_json,
         :headers => { 'Content-Type' => 'application/json' }
       )
