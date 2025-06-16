@@ -71,6 +71,7 @@ class DashboardController < ActionController::Base
       AZURE_APP_ID: GlobalConfigService.load('AZURE_APP_ID', ''),
       ZALO_APP_ID: GlobalConfigService.load('ZALO_APP_ID', ''),
       ZALO_APP_SECRET: GlobalConfigService.load('ZALO_APP_SECRET', ''),
+      ZALO_API_HOST: GlobalConfigService.load('ZALO_API_HOST', ''),
       ZALO_OA_SECRET_KEY: GlobalConfigService.load('ZALO_OA_SECRET_KEY', ''),
       ACTIVE_PIECES_INSTANCE_URL: GlobalConfigService.load('ACTIVE_PIECES_INSTANCE_URL', ''),
       ACTIVE_PIECES_JWT_SECRET: GlobalConfigService.load('ACTIVE_PIECES_JWT_SECRET', ''),

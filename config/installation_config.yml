@@ -327,6 +327,10 @@
 # ------- End of Instagram Channel Related Config ------- #
 
 # ------- Zalo Integration Config ------- #
+- name: ZALO_API_HOST
+  display_title: 'Zalo Api Host'
+  description: 'Zalo Api Host'
+  locked: false
 - name: ZALO_APP_ID
   display_title: 'Zalo App ID'
   description: 'Zalo App ID'
