@@ -37,6 +37,8 @@
         "PLACEHOLDER": "Nhập tên website của bạn (ví dụ: Acme Inc)"
       },
       "FB": {
+        "TITLE": "Kênh Facebook",
+        "DESC": "Kết nối Facebook của bạn với Shopiz để quản lý tin nhắn từ khách hàng của bạn.",
         "HELP": "CHÚ Ý: Bằng cách đăng nhập, chúng tôi chỉ có quyền truy cập tin nhắn của Trang của bạn. Tin nhắn riêng tư của bạn sẽ không bao giờ bị Shopiz truy cập.",
         "CHOOSE_PAGE": "Chọn Trang",
         "CHOOSE_PLACEHOLDER": "Chọn một trang từ danh sách",
@@ -47,11 +49,16 @@
         "CREATE_INBOX": "Tạo Hộp Thư"
       },
       "ZALO": {
+        "TITLE": "Kênh Zalo OA",
+        "DESC": "CHÚ Ý: Bằng cách đăng nhập, chúng tôi chỉ có quyền truy cập tin nhắn của Zalo OA của bạn. Tin nhắn riêng tư của bạn sẽ không bao giờ bị Shopiz truy cập.",
         "HELP": "CHÚ Ý: Bằng cách đăng nhập, chúng tôi chỉ có quyền truy cập tin nhắn của Zalo OA của bạn. Tin nhắn riêng tư của bạn sẽ không bao giờ bị Shopiz truy cập.",
+        "CHOOSE_PAGE": "Chọn Trang",
+        "CHOOSE_PLACEHOLDER": "Chọn một trang từ danh sách",
         "INBOX_NAME": "Tên Hộp Thư",
         "ADD_NAME": "Thêm tên cho hộp thư của bạn",
         "PICK_NAME": "Chọn tên cho Hộp Thư của bạn",
-        "PICK_A_VALUE": "Chọn một giá trị"
+        "PICK_A_VALUE": "Chọn một giá trị",
+        "CREATE_INBOX": "Tạo Hộp Thư"
       },
       "INSTAGRAM": {
         "CONTINUE_WITH_INSTAGRAM": "Tiếp tục với Instagram",

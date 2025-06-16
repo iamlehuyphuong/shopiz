@@ -68,7 +68,7 @@ export default {
       this.generateQR();
     },
     generateQR() {
-      this.qrCode = `://${window.shopizConfig?.zaloApiHost}/api/zalo-login?proxy`;
+      this.qrCode = `//${window.shopizConfig?.zaloApiHost}/api/zalo-login?proxy`;
       this.connectWebSocket();
       this.hasLoginStarted = false;
     },
