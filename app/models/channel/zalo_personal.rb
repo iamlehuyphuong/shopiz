@@ -75,11 +75,11 @@ class Channel::ZaloPersonal < ApplicationRecord
     end
   
     def url_upload_file
-      '#{ENV['ZALO_API_URL']}/api/sendImageToUser'
+      "#{ENV['ZALO_API_URL']}/api/sendImageToUser"
     end
   
     def url_upload_image
-      '#{ENV['ZALO_API_URL']}/api/sendImageToUser'
+      "#{ENV['ZALO_API_URL']}/api/sendImageToUser"
     end
   
     def send_attachment(user_id, attachment, access_token)
