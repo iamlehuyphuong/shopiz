@@ -30,57 +30,56 @@ class Channel::ZaloPersonal < ApplicationRecord
     validates :oa_id, uniqueness: true
   
     def name
-      'ZaloOa'
+      'ZaloPersonal'
     end
   
     def send_message(user_id, message, access_token)
       # check attachment to send first
       if message.attachments&.first
-        response = send_attachment(user_id, message.attachments.first, access_token)
+        response = send_attachment(user_id, message.attachments.first)
         return response unless (response['error']).zero?
       end
   
       # message content will come separately
       return unless message.content
   
-      body = message_body(user_id, message.content)
-      body[:message][:quote_message_id] = message.content_attributes[:in_reply_to_external_id] if message.content_attributes[:in_reply_to_external_id]
-      send_message_cs(body, access_token)
+      body = message_body(user_id, message)
+      send_message_cs(body)
     end
   
     def refresh_access_token(channel)
-      response = refresh_post(channel.refresh_token)
-      if response['access_token']
-        channel.update!(oa_access_token: response['access_token'], refresh_token: response['refresh_token'],
-                        expires_in: response['expires_in'])
-      end
+      response = {
+        'access_token' => channel.oa_access_token,
+      }
       response
     end
   
-    def send_message_cs(body, access_token)
-      HTTParty.post(
+    def send_message_cs(body)
+      res = HTTParty.post(
         url_message_cs,
-        headers: { 'Content-Type' => 'application/json', 'access_token' => access_token },
+        headers: { 'Content-Type' => 'application/json' },
         body: body.to_json
       )
+      if res['error'].present?
+        Rails.logger.error "ZaloPersonal send_message_cs error: #{res['message']}"
+        { 'error' => 1, 'message' => res['message'] }
+      else
+        { 'error' => 0, 'data' => { 'message_id' => res['data']['message_id'] } }
+      end
     end
   
     private
   
     def url_message_cs
-      'https://openapi.zalo.me/v3.0/oa/message/cs'
-    end
-  
-    def url_refresh_token
-      'https://oauth.zaloapp.com/v4/oa/access_token'
+      "#{ENV['ZALO_API_URL']}/api/sendmessage"
     end
   
     def url_upload_file
-      'https://openapi.zalo.me/v2.0/oa/upload/file'
+      '#{ENV['ZALO_API_URL']}/api/sendImageToUser'
     end
   
     def url_upload_image
-      'https://openapi.zalo.me/v2.0/oa/upload/image'
+      '#{ENV['ZALO_API_URL']}/api/sendImageToUser'
     end
   
     def send_attachment(user_id, attachment, access_token)
@@ -92,7 +91,7 @@ class Channel::ZaloPersonal < ApplicationRecord
       return data unless (data['error']).zero?
   
       body = is_image ? image_body(user_id, data['data']['attachment_id']) : attachment_body(user_id, data['data']['token'])
-      send_message_cs(body, access_token)
+      send_message_cs(body)
     end
   
     # unknown issue with HTTParty so changed to Net::HTTP with success
@@ -109,22 +108,6 @@ class Channel::ZaloPersonal < ApplicationRecord
                        ], 'multipart/form-data')
   
       http.request(request)
-    end
-  
-    def refresh_post(refresh_token)
-      HTTParty.post(
-        url_refresh_token,
-        headers: { 'Content-Type' => 'application/x-www-form-urlencoded', 'secret_key' => GlobalConfigService.load('ZALO_APP_SECRET', nil) },
-        body: refresh_body(refresh_token)
-      )
-    end
-  
-    def refresh_body(refresh_token)
-      {
-        refresh_token: refresh_token,
-        app_id: GlobalConfigService.load('ZALO_APP_ID', nil), #ENV.fetch('ZALO_APP_ID', nil),
-        grant_type: 'refresh_token'
-      }
     end
   
     def attachment_body(user_id, file_token)
@@ -159,10 +142,12 @@ class Channel::ZaloPersonal < ApplicationRecord
       }
     end
   
-    def message_body(user_id, message_content)
+    def message_body(user_id, message)
       {
-        recipient: { user_id: user_id },
-        message: { text: message_content }
+        threadId: user_id,
+        message: message.content,
+        type: message.conversation.additional_attributes["type"] || 0,
+        ownId: self.oa_id,
       }
     end
   end

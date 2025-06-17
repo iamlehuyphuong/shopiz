@@ -192,10 +192,10 @@ export default {
       >
         <div class="w-full">
           <PageHeader
-            :header-title="$t('INBOX_MGMT.DETAILS.TITLE')"
+            :header-title="$t('INBOX_MGMT.ADD.ZALO.TITLE')"
             :header-content="
               useInstallationName(
-                $t('INBOX_MGMT.DETAILS.DESC_ZALO'),
+                $t('INBOX_MGMT.ADD.ZALO.TITLE'),
                 globalConfig.installationName
               )
             "

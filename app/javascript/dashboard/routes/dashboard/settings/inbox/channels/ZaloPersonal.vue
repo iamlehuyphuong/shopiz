@@ -68,7 +68,7 @@ export default {
       this.generateQR();
     },
     generateQR() {
-      this.qrCode = `//${window.shopizConfig?.zaloApiHost}/api/zalo-login?proxy`;
+      this.qrCode = `${window.shopizConfig?.zaloApiUrl}/api/zalo-login?proxy`;
       this.connectWebSocket();
       this.hasLoginStarted = false;
     },
@@ -78,8 +78,8 @@ export default {
         this.socket.close();
       }
       // Xác định URL WebSocket dựa trên URL hiện tại
-      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-      const wsUrl = `${protocol}//${window.shopizConfig?.zaloApiHost}/ws`;
+      //const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const wsUrl = `${window.shopizConfig?.zaloApiUrl.replace('http', 'ws')}/ws`;
       console.log('Đang kết nối đến WebSocket tại:', wsUrl);
       try {
           this.socket = new WebSocket(wsUrl);
@@ -177,10 +177,10 @@ export default {
       >
         <div class="w-full">
           <PageHeader
-            :header-title="$t('INBOX_MGMT.DETAILS.TITLE')"
+            :header-title="$t('INBOX_MGMT.ADD.ZALO.TITLE')"
             :header-content="
               useInstallationName(
-                $t('INBOX_MGMT.DETAILS.DESC_ZALO'),
+                $t('INBOX_MGMT.ADD.ZALO.TITLE'),
                 globalConfig.installationName
               )
             "

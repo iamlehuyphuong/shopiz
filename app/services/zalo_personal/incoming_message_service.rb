@@ -96,7 +96,7 @@ class ZaloPersonal::IncomingMessageService
   
     def get_profile(user_id, access_token)
       HTTParty.post(
-        "https://#{ENV['ZALO_API_HOST']}/api/getUserInfo",
+        "#{ENV['ZALO_API_URL']}/api/getUserInfo",
         :body => { :userId => user_id, :ownId => access_token }.to_json,
         :headers => { 'Content-Type' => 'application/json' }
       )
@@ -104,7 +104,7 @@ class ZaloPersonal::IncomingMessageService
 
     def get_group(group_id, access_token)
       HTTParty.post(
-        "https://#{ENV['ZALO_API_HOST']}/api/getGroupInfo",
+        "#{ENV['ZALO_API_URL']}/api/getGroupInfo",
         :body => { :groupId => group_id, :ownId => access_token }.to_json,
         :headers => { 'Content-Type' => 'application/json' }
       )
@@ -183,7 +183,10 @@ class ZaloPersonal::IncomingMessageService
         account_id: @inbox.account_id,
         inbox_id: @inbox.id,
         contact_id: @contact.id,
-        contact_inbox_id: @contact_inbox.id
+        contact_inbox_id: @contact_inbox.id,
+        additional_attributes: {
+          type: params[:data][:idTo] == params[:_accountId] ? 0 : 1
+        }
       }
     end
   
@@ -194,7 +197,10 @@ class ZaloPersonal::IncomingMessageService
         inbox_id: @inbox.id,
         message_type: :incoming,
         sender: @contact,
-        source_id: params[:threadId]
+        source_id: params[:threadId],
+        additional_attributes: {
+          type: params[:data][:idTo] == params[:_accountId] ? 0 : 1
+        }
       }
     end
   

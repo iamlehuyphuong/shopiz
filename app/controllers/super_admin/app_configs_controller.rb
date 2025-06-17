@@ -46,7 +46,7 @@ class SuperAdmin::AppConfigsController < SuperAdmin::ApplicationController
                        when 'instagram'
                          %w[INSTAGRAM_APP_ID INSTAGRAM_APP_SECRET INSTAGRAM_VERIFY_TOKEN INSTAGRAM_API_VERSION ENABLE_INSTAGRAM_CHANNEL_HUMAN_AGENT]
                        when 'zalo'
-                         %w[ZALO_API_HOST ZALO_APP_ID ZALO_APP_SECRET ZALO_OA_SECRET_KEY]
+                         %w[ZALO_API_URL ZALO_APP_ID ZALO_APP_SECRET ZALO_OA_SECRET_KEY]
                        when 'activepieces'
                          %w[ACTIVE_PIECES_INSTANCE_URL ACTIVE_PIECES_JWT_SECRET]
                        else
