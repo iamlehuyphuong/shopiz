@@ -778,7 +778,9 @@
       "TELEGRAM": "Telegram",
       "LINE": "Line",
       "API": "API Channel",
-      "INSTAGRAM": "Instagram"
+      "INSTAGRAM": "Instagram",
+      "ZALO": "Zalo OA",
+      "ZALOPERSONAL": "Zalo Personal"
     }
   }
 }

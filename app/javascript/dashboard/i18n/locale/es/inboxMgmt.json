@@ -752,6 +752,8 @@
       "SMS": "SMS",
       "EMAIL": "E-mail",
       "TELEGRAM": "Telegram",
+      "ZALO": "Zalo OA",
+      "ZALOPERSONAL": "Zalo Personal",
       "LINE": "Line",
       "API": "Canal API"
     }

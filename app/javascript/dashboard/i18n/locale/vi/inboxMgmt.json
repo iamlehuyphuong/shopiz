@@ -741,7 +741,9 @@
         "TELEGRAM": "Telegram",
         "LINE": "Line",
         "API": "Kênh API",
-        "INSTAGRAM": "Instagram"
+        "INSTAGRAM": "Instagram",
+        "ZALO": "Zalo OA",
+        "ZALOPERSONAL": "Zalo Cá Nhân"
       }
     }
   }
