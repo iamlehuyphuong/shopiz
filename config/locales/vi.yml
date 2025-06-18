@@ -34,9 +34,7 @@ vi:
     dyte:
       invalid_message_type: 'Loại tin nhắn không hợp lệ. Hành động không được phép'
     slack:
-      invalid_channel_id: 'Kênh Slack không hợp lệ. Vui lòng thử lại.'
-    channel_service:
-      invalid_source_id: 'Cuộc trò chuyện này có thể ban đầu thuộc về một liên hệ khác nhưng hiện đang hiển thị do hợp nhất hoặc cập nhật. Bạn sẽ không thể tiếp tục cuộc trò chuyện này. Vui lòng tạo một cuộc trò chuyện mới để tiếp tục.'
+      invalid_channel_id: 'Slack channel không hợp lệ. Vui lòng thử lại'
     inboxes:
       imap:
         socket_error: 'Vui lòng kiểm tra kết nối mạng, địa chỉ IMAP và thử lại.'
@@ -75,6 +73,8 @@ vi:
       conversations_count: 'Số hội thoại'
       avg_first_response_time: 'Thời gian phản hồi đầu tiên trung bình'
       avg_resolution_time: 'Thời gian giải quyết trung bình'
+      avg_reply_time: 'Thời gian trả lời trung bình'
+      resolution_count: 'Số lượng giải quyết'
     team_csv:
       team_name: 'Tên nhóm'
       conversations_count: 'Số hội thoại'
@@ -116,20 +116,29 @@ vi:
     attachment: 'Tệp đính kèm'
     no_content: 'Không có nội dung'
   conversations:
+    captain:
+      handoff: 'Đang chuyển cuộc trò chuyện cho đại lý khác để hỗ trợ thêm.'
     messages:
       instagram_story_content: '%{story_sender} đã đề cập đến bạn trong hội thoại: '
       instagram_deleted_story_content: 'Hội thoại này không còn nữa.'
       deleted: 'Tin nhắn đã bị xoá'
+      whatsapp:
+        list_button_label: 'Chọn một mục'
       delivery_status:
         error_code: 'Mã lỗi: %{error_code}'
     activity:
+      captain:
+        resolved: 'Cuộc trò chuyện đã được đánh dấu là đã giải quyết bởi %{user_name} do không có hoạt động'
+        open: 'Cuộc trò chuyện đã được mở lại bởi %{user_name}'
       status:
         resolved: 'Cuộc trò chuyện được đánh dấu là đã giải quyết bởi %{user_name}'
         contact_resolved: 'Hội thoại đã được giải quyết bởi %{contact_name}'
         open: 'Cuộc trò chuyện đã được mở lại bởi %{user_name}'
         pending: 'Hội thoại được đánh dấu là chưa giải quyết bởi %{user_name}'
         snoozed: 'Hội thoại đã được tạm dừng lại bởi %{user_name}'
-        auto_resolved: 'Hội thoại được đánh dấu là đã giải quyết bởi hệ thống vì %{duration} ngày không hoạt động'
+        auto_resolved_days: 'Hội thoại được đánh dấu là đã giải quyết bởi hệ thống vì %{count} ngày không hoạt động'
+        auto_resolved_hours: 'Cuộc trò chuyện đã được đánh dấu là đã giải quyết bởi hệ thống do %{count} giờ không có hoạt động'
+        auto_resolved_minutes: 'Cuộc trò chuyện đã được đánh dấu là đã giải quyết bởi hệ thống do %{count} phút không có hoạt động'
         system_auto_open: 'Hệ thống mở lại hội thoại do có tin nhắn mới.'
       priority:
         added: '%{user_name} đã thiết lập độ ưu tiên thành %{new_priority}'
@@ -138,7 +147,7 @@ vi:
       assignee:
         self_assigned: '%{user_name} phân công chính mình vào hội thoại này'
         assigned: 'Đã chỉ định %{assignee_name} bởi %{user_name}'
-        removed: 'Cuộc hội thoại chưa được chỉ định bởi %{user_name}'
+        removed: 'Cuộc trò chuyện chưa được chỉ định bởi %{user_name}'
       team:
         assigned: 'Đã chỉ định %{team_name} bởi %{user_name}'
         assigned_with_assignee: 'Đã phân công cho %{assignee_name} thông qua %{team_name} bởi %{user_name}'
@@ -147,8 +156,14 @@ vi:
         added: '%{user_name} đã thêm %{labels}'
         removed: '%{user_name} đã xoá %{labels}'
       sla:
-        added: 'Đã thêm chính sách SLA %{sla_name} bởi %{user_name}'
-        removed: 'Đã xoá chính sách SLA %{sla_name} bởi %{user_name}'
+        added: '%{user_name} đã thêm chính sách SLA %{sla_name}'
+        removed: '%{user_name} đã xoá chính sách SLA %{sla_name}'
+      linear:
+        issue_created: 'Vấn đề Linear %{issue_id} đã được tạo bởi %{user_name}'
+        issue_linked: 'Vấn đề Linear %{issue_id} đã được liên kết bởi %{user_name}'
+        issue_unlinked: 'Vấn đề Linear %{issue_id} đã được hủy liên kết bởi %{user_name}'
+      csat:
+        not_sent_due_to_messaging_window: 'Khảo sát CSAT không được gửi do hạn chế gửi tin nhắn đi'
       muted: '%{user_name} đã tắt tiếng hội thoại'
       unmuted: '%{user_name} đã bật tiếng cuộc trò chuyện'
       auto_resolution_message: 'Đang giải quyết cuộc trò chuyện vì đã không hoạt động trong một thời gian. Vui lòng bắt đầu một cuộc trò chuyện mới nếu cần hỗ trợ thêm.'
@@ -181,32 +196,48 @@ vi:
       description: 'Ứng dụng bảng điều khiển cho phép bạn tạo và nhúng các ứng dụng hiển thị thông tin người dùng, đơn hàng hoặc lịch sử thanh toán, cung cấp thêm bối cảnh cho nhân viên hỗ trợ khách hàng.'
     dyte:
       name: 'Dyte'
-      description: 'Dyte là một sản phẩm tích hợp chức năng âm thanh và video vào ứng dụng của bạn. Với tích hợp này, nhân viên của bạn có thể bắt đầu các cuộc gọi video/giọng nói với khách hàng trực tiếp từ Shopiz.'
+      short_description: 'Bắt đầu cuộc gọi video/âm thanh với khách hàng trực tiếp từ Shopiz.'
+      description: 'Dyte là một sản phẩm tích hợp chức năng âm thanh và video vào ứng dụng của bạn. Với tính năng này, nhân viên của bạn có thể bắt đầu cuộc gọi video/âm thanh với khách hàng trực tiếp từ Shopiz.'
       meeting_name: '%{agent_name} đã bắt đầu một cuộc họp'
     slack:
       name: 'Slack'
-      description: 'Tích hợp Shopiz với Slack để giữ cho nhóm của bạn luôn được cập nhật. Tích hợp này cho phép bạn nhận thông báo về những cuộc trò chuyện mới và phản hồi trực tiếp trong giao diện của Slack.'
+      short_description: 'Nhận thông báo và trả lời cuộc trò chuyện trực tiếp trên Slack.'
+      description: 'Tích hợp Shopiz với Slack để giữ cho đội ngũ của bạn đồng bộ. Tính năng này cho phép bạn nhận thông báo về các cuộc trò chuyện mới và trả lời trực tiếp từ giao diện của Slack.'
     webhooks:
       name: 'Webhooks'
       description: 'Sự kiện webhook cung cấp cập nhật thời gian thực về các hoạt động trong tài khoản Shopiz của bạn. Bạn có thể đăng ký các sự kiện ưa thích, và Shopiz sẽ gửi cho bạn các callback HTTP với các cập nhật.'
     dialogflow:
       name: 'Dialogflow'
-      description: 'Xây dựng chatbot với Dialogflow và dễ dàng tích hợp chúng vào hộp thư đến của bạn. Các bot này có thể xử lý các truy vấn ban đầu trước khi chuyển tiếp cho nhân viên hỗ trợ khách hàng.'
+      short_description: 'Xây dựng chatbot để xử lý các truy vấn ban đầu trước khi chuyển cho nhân viên.'
+      description: 'Xây dựng chatbot với Dialogflow và dễ dàng tích hợp chúng vào hộp thư đến của bạn. Những bot này có thể xử lý các truy vấn ban đầu trước khi chuyển cho nhân viên hỗ trợ khách hàng.'
     google_translate:
       name: 'Google Translate'
-      description: 'Tích hợp Google Translate để giúp nhân viên dễ dàng dịch tin nhắn của khách hàng. Tích hợp này tự động phát hiện ngôn ngữ và chuyển đổi sang ngôn ngữ ưa thích của nhân viên hoặc quản trị viên.'
+      short_description: 'Tự động dịch tin nhắn của khách hàng cho nhân viên hỗ trợ.'
+      description: 'Tích hợp Google Translate để giúp nhân viên dễ dàng dịch tin nhắn của khách hàng. Tính năng này tự động nhận diện ngôn ngữ và chuyển đổi sang ngôn ngữ ưu thích của nhân viên hoặc quản trị viên.'
     openai:
       name: 'OpenAI'
-      description: 'Tận dụng sức mạnh của các mô hình ngôn ngữ lớn từ OpenAI với các tính năng như gợi ý phản hồi, tóm tắt, diễn giải lại tin nhắn, kiểm tra chính tả và phân loại nhãn.'
+      short_description: 'Gợi ý trả lời, tóm tắt và cải thiện tin nhắn dựa trên AI.'
+      description: 'Khai thác sức mạnh của các mô hình ngôn ngữ lớn từ OpenAI với các tính năng như gợi ý trả lời, tóm tắt, diễn đạt lại tin nhắn, kiểm tra chính tả và phân loại nhãn.'
     linear:
       name: 'Linear'
-      description: 'Tạo vấn đề trong Linear trực tiếp từ cửa sổ trò chuyện của bạn. Hoặc liên kết các vấn đề hiện có trong Linear để quy trình theo dõi vấn đề trở nên hiệu quả và chuyên nghiệp hơn.'
+      short_description: 'Tạo và liên kết các vấn đề Linear trực tiếp từ cuộc trò chuyện.'
+      description: 'Tạo vấn đề trong Linear trực tiếp từ cửa sổ cuộc trò chuyện của bạn. Hoặc liên kết các vấn đề Linear hiện có để quá trình theo dõi trở nên liền mạch và hiệu quả hơn.'
     shopify:
       name: 'Shopify'
-      description: 'Kết nối cửa hàng Shopify của bạn để truy cập chi tiết đơn hàng, thông tin khách hàng và dữ liệu sản phẩm trực tiếp trong các cuộc trò chuyện, giúp đội ngũ hỗ trợ của bạn cung cấp sự hỗ trợ nhanh chóng và có bối cảnh hơn cho khách hàng.'
+      short_description: 'Truy cập chi tiết đơn hàng và dữ liệu khách hàng từ cửa hàng Shopify của bạn.'
+      description: 'Kết nối cửa hàng Shopify của bạn để truy cập chi tiết đơn hàng, thông tin khách hàng và dữ liệu sản phẩm trực tiếp trong cuộc trò chuyện, giúp đội ngũ hỗ trợ của bạn cung cấp hỗ trợ nhanh chóng và có bối cảnh hơn cho khách hàng.'
+    leadsquared:
+      name: 'LeadSquared'
+      short_description: 'Đồng bộ hóa danh bạ và cuộc trò chuyện của bạn với CRM LeadSquared.'
+      description: 'Đồng bộ hóa danh bạ và cuộc trò chuyện của bạn với CRM LeadSquared. Tính năng này tự động tạo khách hàng tiềm năng trong LeadSquared khi danh bạ mới được thêm và lưu lại các hoạt động cuộc trò chuyện để cung cấp bối cảnh đầy đủ cho đội ngũ bán hàng của bạn.'
   captain:
-    copilot_error: 'Vui lòng kết nối một trợ lý với hộp thư đến này để sử dụng Copilot'
-    copilot_limit: 'Bạn đã hết tín chỉ Copilot. Bạn có thể mua thêm tín chỉ từ phần thanh toán.'
+    copilot_error: 'Vui lòng kết nối một trợ lý vào hộp thư đến này để sử dụng Copilot'
+    copilot_limit: 'Bạn đã hết tín dụng Copilot. Bạn có thể mua thêm từ phần thanh toán.'
+    copilot:
+      using_tool: 'Đang sử dụng công cụ %{function_name}'
+      completed_tool_call: 'Hoàn thành cuộc gọi công cụ %{function_name}'
+      invalid_tool_call: 'Cuộc gọi công cụ không hợp lệ'
+      tool_not_available: 'Công cụ không khả dụng'
   public_portal:
     search:
       search_placeholder: 'Tìm bài viết theo tiêu đề hoặc nội dung...'
@@ -231,7 +262,8 @@ vi:
     footer:
       made_with: 'Tạo bởi'
     header:
-      go_to_homepage: 'Trang chủ'
+      go_to_homepage: 'Trang Chủ'
+      visit_website: 'Truy cập trang web'
       appearance:
         system: 'Hệ thống'
         light: 'Sáng'
@@ -260,3 +292,25 @@ vi:
       other: '%{count} phút'
     seconds:
       other: '%{count} giây'
+  automation:
+    system_name: 'Hệ thống tự động hóa'
+  crm:
+    no_message: 'Không có tin nhắn trong cuộc trò chuyện'
+    attachment: '[Tệp đính kèm: %{type}]'
+    no_content: '[Không có nội dung]'
+    created_activity: |
+      Cuộc trò chuyện mới bắt đầu trên %{brand_name}
+
+      Kênh: %{channel_info}
+      Được tạo: %{formatted_creation_time}
+      ID cuộc trò chuyện: %{display_id}
+      Xem trên %{brand_name}: %{url}
+    transcript_activity: |
+      Bản ghi cuộc trò chuyện từ %{brand_name}
+
+      Kênh: %{channel_info}
+      ID cuộc trò chuyện: %{display_id}
+      Xem trên %{brand_name}: %{url}
+
+      Bản ghi:
+      %{format_messages}

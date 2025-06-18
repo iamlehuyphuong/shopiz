@@ -1,6 +1,6 @@
-# This file contains all the installation wide configuration which controls various settings in Chatwoot
+# This file contains all the installation wide configuration which controls various settings in Shopiz
 # This is internal config and should not be modified by the user directly in database
-# Chatwoot might override and modify these values during the upgrade process
+# Shopiz might override and modify these values during the upgrade process
 # Configs which can be modified by the user are available in the dashboard under appropriate UI
 #
 # name: the name of the config referenced in the code
@@ -14,7 +14,7 @@
 
 # ------- Branding Related Config ------- #
 - name: INSTALLATION_NAME
-  value: 'Chatwoot'
+  value: 'Shopiz'
   display_title: 'Installation Name'
   description: 'The installation wide name that would be used in the dashboard, title etc.'
 - name: LOGO_THUMBNAIL
@@ -38,7 +38,7 @@
   display_title: 'Widget Brand URL'
   description: 'The URL that would be used in the widget under the section “Powered By”'
 - name: BRAND_NAME
-  value: 'Chatwoot'
+  value: 'Shopiz'
   display_title: 'Brand Name'
   description: 'The name that would be used in emails and the widget'
 - name: TERMS_URL
@@ -51,8 +51,8 @@
   description: 'The privacy policy URL displayed in the app'
 - name: DISPLAY_MANIFEST
   value: true
-  display_title: 'Chatwoot Metadata'
-  description: 'Display default Chatwoot metadata like favicons and upgrade warnings'
+  display_title: 'Shopiz Metadata'
+  description: 'Display default Shopiz metadata like favicons and upgrade warnings'
   type: boolean
 # ------- End of Branding Related Config ------- #
 
@@ -165,17 +165,17 @@
 
 # End of Captain Config
 
-# ------- Chatwoot Internal Config for Cloud ----#
+# ------- Shopiz Internal Config for Cloud ----#
 - name: CHATWOOT_INBOX_TOKEN
   value:
   display_title: 'Inbox Token'
-  description: 'The Chatwoot Inbox Token for Contact Support in Cloud'
+  description: 'The Shopiz Inbox Token for Contact Support in Cloud'
   locked: false
   type: secret
 - name: CHATWOOT_INBOX_HMAC_KEY
   value:
   display_title: 'Inbox HMAC Key'
-  description: 'The Chatwoot Inbox HMAC Key for Contact Support in Cloud'
+  description: 'The Shopiz Inbox HMAC Key for Contact Support in Cloud'
   locked: false
   type: secret
 - name: CHATWOOT_CLOUD_PLANS
@@ -189,11 +189,11 @@
 - name: DEPLOYMENT_ENV
   #value: self-hosted
   value: cloud
-  description: 'The deployment environment of the installation, to differentiate between Chatwoot cloud and self-hosted'
+  description: 'The deployment environment of the installation, to differentiate between Shopiz cloud and self-hosted'
 - name: ANALYTICS_TOKEN
   value:
   display_title: 'Analytics Token'
-  description: 'The June.so analytics token for Chatwoot cloud'
+  description: 'The June.so analytics token for Shopiz cloud'
   type: secret
 - name: CLEARBIT_API_KEY
   value:
@@ -215,9 +215,9 @@
   display_title: 'Inactive WhatsApp Numbers'
   description: 'Comma-separated list of WhatsApp numbers that should be rejected with a 422 error'
   type: code
-# ------- End of Chatwoot Internal Config for Cloud ----#
+# ------- End of Shopiz Internal Config for Cloud ----#
 
-# ------- Chatwoot Internal Config for Self Hosted ----#
+# ------- Shopiz Internal Config for Self Hosted ----#
 - name: INSTALLATION_PRICING_PLAN
   value: 'cloud'
   description: 'The pricing plan for the installation, retrieved from the billing API'
@@ -226,20 +226,28 @@
   description: 'The number of licenses purchased for the installation, retrieved from the billing API'
 - name: CHATWOOT_SUPPORT_WEBSITE_TOKEN
   value:
-  description: 'The Chatwoot website token, used to identify the Chatwoot inbox and display the "Contact Support" option on the billing page'
+  description: 'The Shopiz website token, used to identify the Shopiz inbox and display the "Contact Support" option on the billing page'
   type: secret
 - name: CHATWOOT_SUPPORT_SCRIPT_URL
   value:
-  description: 'The Chatwoot script base URL, to display the "Contact Support" option on the billing page'
+  description: 'The Shopiz script base URL, to display the "Contact Support" option on the billing page'
 - name: CHATWOOT_SUPPORT_IDENTIFIER_HASH
   value:
-  description: 'The Chatwoot identifier hash, to validate the contact in the live chat window.'
+  description: 'The Shopiz identifier hash, to validate the contact in the live chat window.'
   type: secret
 - name: ACCOUNT_SECURITY_NOTIFICATION_WEBHOOK_URL
   display_title: Webhook URL to post security analysis
   value:
-  description: Used to notify Chatwoot about account abuses, potential threads (Should be a Discord Webhook URL)
-# ------- End of Chatwoot Internal Config for Self Hosted ----#
+  description: Used to notify Shopiz about account abuses, potential threads (Should be a Discord Webhook URL)
+# ------- End of Shopiz Internal Config for Self Hosted ----#
+
+# ------- Compliance Related Config ----#
+- name: CHATWOOT_INSTANCE_ADMIN_EMAIL
+  display_title: 'Instance Admin Email'
+  value:
+  description: 'The email of the instance administrator to receive compliance-related notifications'
+  locked: false
+# ------- End of Compliance Related Config ----#
 
 ## ------ Configs added for enterprise clients ------ ##
 - name: API_CHANNEL_NAME
@@ -285,6 +293,20 @@
   description: 'Linear client secret'
   type: secret
 ## ------ End of Configs added for Linear ------ ##
+
+## ------ Configs added for Slack ------ ##
+- name: SLACK_CLIENT_ID
+  display_title: 'Slack Client ID'
+  value:
+  locked: false
+  description: 'Slack client ID'
+- name: SLACK_CLIENT_SECRET
+  display_title: 'Slack Client Secret'
+  value:
+  locked: false
+  description: 'Slack client secret'
+  type: secret
+## ------ End of Configs added for Slack ------ ##
 
 # ------- Shopify Integration Config ------- #
 - name: SHOPIFY_CLIENT_ID

@@ -285,6 +285,7 @@
     "HEADER": {
       "TITLE": "Liên hệ",
       "SEARCH_TITLE": "Tìm kiếm liên hệ",
+      "ACTIVE_TITLE": "Active contacts",
       "SEARCH_PLACEHOLDER": "Tìm kiếm...",
       "MESSAGE_BUTTON": "Tin nhắn",
       "SEND_MESSAGE": "Gửi tin nhắn",
@@ -457,6 +458,10 @@
             "PLACEHOLDER": "Thêm Twitter"
           }
         }
+      },
+      "DELETE_CONTACT": {
+        "MESSAGE": "This action is permanent and irreversible.",
+        "BUTTON": "Delete now"
       }
     },
     "DETAILS": {
@@ -466,8 +471,8 @@
       "DELETE_CONTACT": "Xoá liên hệ",
       "DELETE_DIALOG": {
         "TITLE": "Xác nhận xoá",
-        "DESCRIPTION": "Bạn có chắc chắn muốn xoá liên hệ {contactName} này?",
-        "CONFIRM": "Có, xoá",
+        "DESCRIPTION": "Are you sure you want to delete this contact?",
+        "CONFIRM": "Có, Xoá",
         "API": {
           "SUCCESS_MESSAGE": "Liên hệ đã được xóa thành công",
           "ERROR_MESSAGE": "Không thể xoá liên hệ. Vui lòng thử lại sau."
@@ -541,18 +546,22 @@
       },
       "NOTES": {
         "PLACEHOLDER": "Thêm ghi chú",
-        "WROTE": "đã viết",
-        "YOU": "Bạn",
-        "SAVE": "Lưu ghi chú",
-        "EMPTY_STATE": "Không có ghi chú liên quan đến liên hệ này. Bạn có thể thêm ghi chú bằng cách nhập vào ô phía trên."
+        "WROTE": "wrote",
+        "YOU": "You",
+        "SAVE": "Save note",
+        "EXPAND": "Expand",
+        "COLLAPSE": "Collapse",
+        "NO_NOTES": "No notes, you can add notes from the contact details page.",
+        "EMPTY_STATE": "There are no notes associated to this contact. You can add a note by typing in the box above."
       }
     },
     "EMPTY_STATE": {
-      "TITLE": "Không có liên hệ nào trong tài khoản này",
-      "SUBTITLE": "Bắt đầu thêm liên hệ mới bằng cách nhấn vào nút bên dưới",
-      "BUTTON_LABEL": "Thêm liên hệ",
-      "SEARCH_EMPTY_STATE_TITLE": "Không có liên hệ nào phù hợp với tìm kiếm của bạn 🔍",
-      "LIST_EMPTY_STATE_TITLE": "Không có liên hệ nào trong danh sách 📋"
+      "TITLE": "No contacts found in this account",
+      "SUBTITLE": "Start adding new contacts by clicking on the button below",
+      "BUTTON_LABEL": "Add contact",
+      "SEARCH_EMPTY_STATE_TITLE": "Không có liên hệ nào khớp với tìm kiếm của bạn 🔍",
+      "LIST_EMPTY_STATE_TITLE": "No contacts available in this view 📋",
+      "ACTIVE_EMPTY_STATE_TITLE": "No contacts are active at the moment 🌙"
     }
   },
   "COMPOSE_NEW_CONVERSATION": {

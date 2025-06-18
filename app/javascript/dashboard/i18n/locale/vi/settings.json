@@ -75,8 +75,13 @@
       },
       "ACCESS_TOKEN": {
         "TITLE": "Token truy cập",
-        "NOTE": "Sử dụng Token này nếu bạn đang xây dựng tích hợp qua API",
-        "COPY": "Sao chép"
+        "NOTE": "Có thể sử dụng Token này nếu bạn đang xây dựng tích hợp dựa trên API",
+        "COPY": "Sao Chép",
+        "RESET": "Reset",
+        "CONFIRM_RESET": "Are you sure?",
+        "CONFIRM_HINT": "Click again to confirm",
+        "RESET_SUCCESS": "Access token regenerated successfully",
+        "RESET_ERROR": "Unable to regenerate access token. Please try again"
       },
       "AUDIO_NOTIFICATIONS_SECTION": {
         "TITLE": "Cảnh báo âm thanh",
@@ -184,8 +189,9 @@
           "BUSY": "Bận",
           "OFFLINE": "Không trực tuyến"
         },
-        "SET_AVAILABILITY_SUCCESS": "Tùy chọn khả dụng đã được thiết lập thành công",
-        "SET_AVAILABILITY_ERROR": "Không thể cập nhật, vui lòng thử lại"
+        "SET_AVAILABILITY_SUCCESS": "Tính khả dụng đã được thiết lập thành công",
+        "SET_AVAILABILITY_ERROR": "Không thể đặt, vui lòng thử lại",
+        "IMPERSONATING_ERROR": "Cannot change availability while impersonating a user"
       },
       "EMAIL": {
         "LABEL": "Địa chỉ email của bạn",
@@ -280,10 +286,11 @@
     "REPORTS": "Báo cáo",
     "SETTINGS": "Cài đặt",
     "CONTACTS": "Liên hệ",
-    "CAPTAIN": "AI Agent",
-    "CAPTAIN_ASSISTANTS": "Trợ lý",
-    "CAPTAIN_DOCUMENTS": "Tài liệu",
-    "CAPTAIN_RESPONSES": "Câu trả lời",
+    "ACTIVE": "Có hiệu lực",
+    "CAPTAIN": "Captain",
+    "CAPTAIN_ASSISTANTS": "Assistants",
+    "CAPTAIN_DOCUMENTS": "Documents",
+    "CAPTAIN_RESPONSES": "FAQs",
     "HOME": "Trang Chủ",
     "AGENTS": "Nhân viên",
     "AGENT_BOTS": "Bot",
@@ -405,7 +412,8 @@
         "LABEL": "Tên công ty",
         "PLACEHOLDER": "Wayne Enterprises"
       },
-      "SUBMIT": "Gửi"
+      "SUBMIT": "Gửi",
+      "CANCEL": "Huỷ"
     }
   },
   "KEYBOARD_SHORTCUTS": {

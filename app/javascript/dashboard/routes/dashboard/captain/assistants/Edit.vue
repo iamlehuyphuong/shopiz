@@ -8,6 +8,7 @@ import { useI18n } from 'vue-i18n';
 import PageLayout from 'dashboard/components-next/captain/PageLayout.vue';
 import EditAssistantForm from '../../../../components-next/captain/pageComponents/assistant/EditAssistantForm.vue';
 import AssistantPlayground from 'dashboard/components-next/captain/assistant/AssistantPlayground.vue';
+
 const route = useRoute();
 const store = useStore();
 const { t } = useI18n();
@@ -17,7 +18,9 @@ const isFetching = computed(() => uiFlags.value.fetchingItem);
 const assistant = computed(() =>
   store.getters['captainAssistants/getRecord'](Number(assistantId))
 );
+
 const isAssistantAvailable = computed(() => !!assistant.value?.id);
+
 const handleSubmit = async updatedAssistant => {
   try {
     await store.dispatch('captainAssistants/update', {
@@ -31,6 +34,7 @@ const handleSubmit = async updatedAssistant => {
     useAlert(errorMessage);
   }
 };
+
 onMounted(() => {
   if (!isAssistantAvailable.value) {
     store.dispatch('captainAssistants/show', assistantId);

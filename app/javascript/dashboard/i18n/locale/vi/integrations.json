@@ -34,14 +34,16 @@
         "SUBSCRIPTIONS": {
           "LABEL": "Sự kiện",
           "EVENTS": {
-            "CONVERSATION_CREATED": "Tạo cuộc đối thoại",
-            "CONVERSATION_STATUS_CHANGED": "Thay đổi trạng thái đối thoại",
-            "CONVERSATION_UPDATED": "Cập nhật đối thoại",
-            "MESSAGE_CREATED": "Tin nhắn được tạo",
-            "MESSAGE_UPDATED": "Tin nhắn được cập nhật",
-            "WEBWIDGET_TRIGGERED": "Widget chat trực tiếp được mở bởi người dùng",
-            "CONTACT_CREATED": "Tạo liên hệ",
-            "CONTACT_UPDATED": "Cập nhật liên hệ"
+            "CONVERSATION_CREATED": "Cuộc trò chuyện đã được tạo",
+            "CONVERSATION_STATUS_CHANGED": "Trạng thái cuộc trò chuyện đã thay đổi",
+            "CONVERSATION_UPDATED": "Cuộc trò chuyện đã được cập nhật",
+            "MESSAGE_CREATED": "Tin nhắn đã được tạo",
+            "MESSAGE_UPDATED": "Tin nhắn đã được cập nhật",
+            "WEBWIDGET_TRIGGERED": "Tiện ích trò chuyện trực tuyến do người dùng mở",
+            "CONTACT_CREATED": "Contact created",
+            "CONTACT_UPDATED": "Contact updated",
+            "CONVERSATION_TYPING_ON": "Conversation Typing On",
+            "CONVERSATION_TYPING_OFF": "Conversation Typing Off"
           }
         },
         "END_POINT": {
@@ -316,11 +318,18 @@
         "SUCCESS": "Vấn đề đã được hủy liên kết thành công",
         "ERROR": "Có lỗi khi hủy liên kết vấn đề, vui lòng thử lại"
       },
+      "NO_LINKED_ISSUES": "No linked issues found",
       "DELETE": {
-        "TITLE": "Bạn có chắc chắn muốn xóa tích hợp?",
-        "MESSAGE": "Bạn có chắc chắn muốn xóa tích hợp không?",
-        "CONFIRM": "Vâng, xóa",
-        "CANCEL": "Hủy"
+        "TITLE": "Are you sure you want to delete the integration?",
+        "MESSAGE": "Are you sure you want to delete the integration?",
+        "CONFIRM": "Có, xoá",
+        "CANCEL": "Huỷ"
+      },
+      "CTA": {
+        "TITLE": "Connect to Linear",
+        "AGENT_DESCRIPTION": "Linear workspace is not connected. Request your administrator to connect a workspace to use this integration.",
+        "DESCRIPTION": "Linear workspace is not connected. Click the button below to connect your workspace to use this integration.",
+        "BUTTON_TEXT": "Connect Linear workspace"
       }
     }
   },
@@ -328,35 +337,48 @@
     "NAME": "AI Agent",
     "HEADER_KNOW_MORE": "Tìm hiểu thêm",
     "COPILOT": {
+      "TITLE": "Copilot",
+      "TRY_THESE_PROMPTS": "Try these prompts",
+      "PANEL_TITLE": "Get started with Copilot",
+      "KICK_OFF_MESSAGE": "Need a quick summary, want to check past conversations, or draft a better reply? Copilot’s here to speed things up.",
       "SEND_MESSAGE": "Gửi tin nhắn...",
-      "EMPTY_MESSAGE": "Có lỗi khi tạo phản hồi. Vui lòng thử lại.",
-      "LOADER": "AI Agent đang suy nghĩ",
-      "YOU": "Bạn",
-      "USE": "Sử dụng",
-      "RESET": "Đặt lại",
-      "SELECT_ASSISTANT": "Chọn trợ lý",
+      "EMPTY_MESSAGE": "There was an error generating the response. Please try again.",
+      "LOADER": "Captain is thinking",
+      "YOU": "You",
+      "USE": "Use this",
+      "RESET": "Reset",
+      "SHOW_STEPS": "Show steps",
+      "SELECT_ASSISTANT": "Select Assistant",
       "PROMPTS": {
         "SUMMARIZE": {
-          "LABEL": "Tóm tắt cuộc trò chuyện này",
-          "CONTENT": "Tóm tắt các điểm chính được thảo luận giữa khách hàng và nhân viên hỗ trợ, bao gồm những mối quan tâm của khách hàng, các câu hỏi và các giải pháp hoặc phản hồi từ nhân viên hỗ trợ."
+          "LABEL": "Summarize this conversation",
+          "CONTENT": "Summarize the key points discussed between the customer and the support agent, including the customer's concerns, questions, and the solutions or responses provided by the support agent"
         },
         "SUGGEST": {
-          "LABEL": "Đề xuất câu trả lời",
-          "CONTENT": "Phân tích yêu cầu của khách hàng và soạn thảo một phản hồi hiệu quả giải quyết các mối quan tâm hoặc câu hỏi của họ. Đảm bảo câu trả lời rõ ràng, ngắn gọn và cung cấp thông tin hữu ích."
+          "LABEL": "Suggest an answer",
+          "CONTENT": "Analyze the customer's inquiry, and draft a response that effectively addresses their concerns or questions. Ensure the reply is clear, concise, and provides helpful information."
         },
         "RATE": {
-          "LABEL": "Đánh giá cuộc trò chuyện này",
-          "CONTENT": "Đánh giá cuộc trò chuyện để xem nó đáp ứng nhu cầu của khách hàng như thế nào. Chia sẻ đánh giá trên thang điểm từ 1 đến 5 dựa trên giọng điệu, độ rõ ràng và hiệu quả."
+          "LABEL": "Rate this conversation",
+          "CONTENT": "Review the conversation to see how well it meets the customer's needs. Share a rating out of 5 based on tone, clarity, and effectiveness."
+        },
+        "HIGH_PRIORITY": {
+          "LABEL": "High priority conversations",
+          "CONTENT": "Give me a summary of all high priority open conversations. Include the conversation ID, customer name (if available), last message content, and assigned agent. Group by status if relevant."
+        },
+        "LIST_CONTACTS": {
+          "LABEL": "List contacts",
+          "CONTENT": "Show me the list of top 10 contacts. Include name, email or phone number (if available), last seen time, tags (if any)."
         }
       }
     },
     "PLAYGROUND": {
-      "USER": "Bạn",
-      "ASSISTANT": "Trợ lý",
-      "MESSAGE_PLACEHOLDER": "Nhập tin nhắn của bạn...",
-      "HEADER": "Thử nghiệm",
-      "DESCRIPTION": "Sử dụng tính năng này để gửi tin nhắn đến trợ lý và kiểm tra xem nó có phản hồi chính xác, nhanh chóng và đúng giọng mà bạn mong đợi hay không.",
-      "CREDIT_NOTE": "Tin nhắn gửi tại đây sẽ được tính vào hạn mức tín dụng của AI Agent."
+      "USER": "You",
+      "ASSISTANT": "Assistant",
+      "MESSAGE_PLACEHOLDER": "Gõ tin nhắn của bạn...",
+      "HEADER": "Playground",
+      "DESCRIPTION": "Use this playground to send messages to your assistant and check if it responds accurately, quickly, and in the tone you expect.",
+      "CREDIT_NOTE": "Messages sent here will count toward your Captain credits."
     },
     "PAYWALL": {
       "TITLE": "Nâng cấp để sử dụng AI Agent",
@@ -366,9 +388,8 @@
       "CANCEL_ANYTIME": "Bạn có thể thay đổi hoặc hủy gói của mình bất cứ lúc nào"
     },
     "ENTERPRISE_PAYWALL": {
-      "AVAILABLE_ON": "Tính năng AI Agent chỉ khả dụng trên gói trả phí.",
-      "UPGRADE_PROMPT": "Nâng cấp gói của bạn để truy cập trợ lý, copilot và nhiều tính năng khác.",
-      "ASK_ADMIN": "Vui lòng liên hệ với quản trị viên của bạn để được nâng cấp."
+      "UPGRADE_PROMPT": "Upgrade your plan to get access to our assistants, copilot and more.",
+      "ASK_ADMIN": "Please reach out to your administrator for the upgrade."
     },
     "BANNER": {
       "RESPONSES": "Bạn đã sử dụng quá 80% hạn mức phản hồi. Để tiếp tục sử dụng AI Agent, vui lòng nâng cấp.",
@@ -380,8 +401,9 @@
       "EDIT": "Cập nhật"
     },
     "ASSISTANTS": {
-      "HEADER": "Trợ lý",
-      "ADD_NEW": "Tạo trợ lý mới",
+      "HEADER": "Assistants",
+      "NO_ASSISTANTS_AVAILABLE": "There are no assistants available in your account.",
+      "ADD_NEW": "Create a new assistant",
       "DELETE": {
         "TITLE": "Bạn có chắc chắn muốn xóa trợ lý không?",
         "DESCRIPTION": "Hành động này là vĩnh viễn. Việc xóa trợ lý sẽ loại bỏ nó khỏi tất cả các hộp thư được kết nối và xoá bỏ toàn bộ kiến thức đã tạo ra.",
@@ -398,39 +420,46 @@
       "FORM": {
         "UPDATE": "Cập nhật",
         "SECTIONS": {
-          "BASIC_INFO": "Thông tin cơ bản",
-          "SYSTEM_MESSAGES": "Tin nhắn hệ thống",
-          "INSTRUCTIONS": "Hướng dẫn",
-          "FEATURES": "Tính năng",
-          "TOOLS": "Công cụ"
+          "BASIC_INFO": "Basic Information",
+          "SYSTEM_MESSAGES": "System Messages",
+          "INSTRUCTIONS": "Instructions",
+          "FEATURES": "Các tính năng",
+          "TOOLS": "Tools "
         },
         "NAME": {
           "LABEL": "Tên",
-          "PLACEHOLDER": "Nhập tên trợ lý"
+          "PLACEHOLDER": "Enter assistant name",
+          "ERROR": "The name is required"
+        },
+        "TEMPERATURE": {
+          "LABEL": "Response Temperature",
+          "DESCRIPTION": "Adjust how creative or restrictive the assistant's responses should be. Lower values produce more focused and deterministic responses, while higher values allow for more creative and varied outputs."
         },
         "DESCRIPTION": {
           "LABEL": "Mô tả",
-          "PLACEHOLDER": "Nhập mô tả trợ lý"
+          "PLACEHOLDER": "Enter assistant description",
+          "ERROR": "The description is required"
         },
         "PRODUCT_NAME": {
-          "LABEL": "Tên sản phẩm",
-          "PLACEHOLDER": "Nhập tên sản phẩm"
+          "LABEL": "Product Name",
+          "PLACEHOLDER": "Enter product name",
+          "ERROR": "The product name is required"
         },
         "WELCOME_MESSAGE": {
-          "LABEL": "Tin nhắn chào mừng",
-          "PLACEHOLDER": "Nhập tin nhắn chào mừng"
+          "LABEL": "Welcome Message",
+          "PLACEHOLDER": "Enter welcome message"
         },
         "HANDOFF_MESSAGE": {
-          "LABEL": "Tin nhắn chuyển giao",
-          "PLACEHOLDER": "Nhập tin nhắn chuyển giao"
+          "LABEL": "Handoff Message",
+          "PLACEHOLDER": "Enter handoff message"
         },
         "RESOLUTION_MESSAGE": {
-          "LABEL": "Tin nhắn kết thúc",
-          "PLACEHOLDER": "Nhập tin nhắn kết thúc"
+          "LABEL": "Resolution Message",
+          "PLACEHOLDER": "Enter resolution message"
         },
         "INSTRUCTIONS": {
-          "LABEL": "Hướng dẫn",
-          "PLACEHOLDER": "Nhập hướng dẫn cho trợ lý"
+          "LABEL": "Instructions",
+          "PLACEHOLDER": "Enter instructions for the assistant"
         },
         "FEATURES": {
           "TITLE": "Tính năng",
@@ -439,10 +468,10 @@
         }
       },
       "EDIT": {
-        "TITLE": "Cập nhật trợ lý",
-        "SUCCESS_MESSAGE": "Trợ lý đã được cập nhật thành công",
-        "ERROR_MESSAGE": "Có lỗi khi cập nhật trợ lý, vui lòng thử lại.",
-        "NOT_FOUND": "Không tìm thấy trợ lý. Vui lòng thử lại."
+        "TITLE": "Update the assistant",
+        "SUCCESS_MESSAGE": "The assistant has been successfully updated",
+        "ERROR_MESSAGE": "There was an error updating the assistant, please try again.",
+        "NOT_FOUND": "Could not find the assistant. Please try again."
       },
       "OPTIONS": {
         "EDIT_ASSISTANT": "Chỉnh sửa trợ lý",

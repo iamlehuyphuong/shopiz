@@ -1,24 +1,14 @@
 {
   "AGENT_BOTS": {
-    "HEADER": "Bot",
-    "LOADING_EDITOR": "Đang tải trình soạn thảo...",
-    "DESCRIPTION": "Agent Bots giống như những thành viên tuyệt vời nhất trong đội của bạn. Chúng có thể xử lý những việc nhỏ nhặt, để bạn có thể tập trung vào những vấn đề quan trọng. Hãy thử chúng. Bạn có thể quản lý bot của mình từ trang này hoặc tạo mới bằng cách sử dụng nút 'Cấu hình bot mới'.",
-    "LEARN_MORE": "Tìm hiểu về bot đại lý",
-    "CSML_BOT_EDITOR": {
-      "NAME": {
-        "LABEL": "Tên bot",
-        "PLACEHOLDER": "Đặt tên cho bot của bạn.",
-        "ERROR": "Tên bot là bắt buộc."
-      },
-      "DESCRIPTION": {
-        "LABEL": "Mô tả bot",
-        "PLACEHOLDER": "Bot này sẽ làm gì?"
-      },
-      "BOT_CONFIG": {
-        "ERROR": "",
-        "API_ERROR": "Cấu hình CSML của bạn không hợp lệ. Vui lòng sửa lỗi và thử lại."
-      },
-      "SUBMIT": "Xác nhận và lưu"
+    "HEADER": "Bots",
+    "LOADING_EDITOR": "Loading editor...",
+    "DESCRIPTION": "Agent Bots are like the most fabulous members of your team. They can handle the small stuff, so you can focus on the stuff that matters. Give them a try. You can manage your bots from this page or create new ones using the 'Add Bot' button.",
+    "LEARN_MORE": "Learn about agent bots",
+    "GLOBAL_BOT": "System bot",
+    "GLOBAL_BOT_BADGE": "System",
+    "AVATAR": {
+      "SUCCESS_DELETE": "Bot avatar deleted successfully",
+      "ERROR_DELETE": "Error deleting bot avatar, please try again"
     },
     "BOT_CONFIGURATION": {
       "TITLE": "Chọn một bot đại lý",
@@ -32,7 +22,7 @@
       "SELECT_PLACEHOLDER": "Chọn bot"
     },
     "ADD": {
-      "TITLE": "Cấu hình bot mới",
+      "TITLE": "Add Bot",
       "CANCEL_BUTTON_TEXT": "Huỷ",
       "API": {
         "SUCCESS_MESSAGE": "Thêm bot thành công.",
@@ -40,16 +30,22 @@
       }
     },
     "LIST": {
-      "404": "Không tìm thấy bot nào. Bạn có thể tạo bot bằng cách nhấp vào nút 'Cấu hình bot mới' ↗",
-      "LOADING": "Đang lấy danh sách bot...",
-      "TYPE": "Loại bot"
+      "404": "No bots found. You can create a bot by clicking the 'Add Bot' button.",
+      "LOADING": "Fetching bots...",
+      "TABLE_HEADER": {
+        "DETAILS": "Bot Details",
+        "URL": "Webhook URL"
+      }
     },
     "DELETE": {
       "BUTTON_TEXT": "Xoá",
-      "TITLE": "Xoá bot",
-      "SUBMIT": "Xoá",
-      "CANCEL_BUTTON_TEXT": "Huỷ",
-      "DESCRIPTION": "Bạn có chắc chắn muốn xoá bot này? Hành động này không thể hoàn tác.",
+      "TITLE": "Delete bot",
+      "CONFIRM": {
+        "TITLE": "Xác nhận xoá",
+        "MESSAGE": "Are you sure you want to delete {name}?",
+        "YES": "Có, Xoá",
+        "NO": "Không, giữ"
+      },
       "API": {
         "SUCCESS_MESSAGE": "Xoá bot thành công.",
         "ERROR_MESSAGE": "Không thể xoá bot. Vui lòng thử lại."
@@ -57,17 +53,51 @@
     },
     "EDIT": {
       "BUTTON_TEXT": "Chỉnh sửa",
-      "LOADING": "Đang lấy danh sách bot...",
-      "TITLE": "Chỉnh sửa bot",
-      "CANCEL_BUTTON_TEXT": "Huỷ",
+      "TITLE": "Edit bot",
       "API": {
-        "SUCCESS_MESSAGE": "Cập nhật bot thành công.",
-        "ERROR_MESSAGE": "Không thể cập nhật bot. Vui lòng thử lại."
+        "SUCCESS_MESSAGE": "Bot updated successfully.",
+        "ERROR_MESSAGE": "Could not update bot. Please try again."
       }
     },
+    "ACCESS_TOKEN": {
+      "TITLE": "Token truy cập",
+      "DESCRIPTION": "Copy the access token and save it securely",
+      "COPY_SUCCESSFUL": "Access token copied to clipboard",
+      "RESET_SUCCESS": "Access token regenerated successfully",
+      "RESET_ERROR": "Unable to regenerate access token. Please try again"
+    },
+    "FORM": {
+      "AVATAR": {
+        "LABEL": "Bot avatar"
+      },
+      "NAME": {
+        "LABEL": "Bot name",
+        "PLACEHOLDER": "Enter bot name",
+        "REQUIRED": "Bot name is required"
+      },
+      "DESCRIPTION": {
+        "LABEL": "Mô tả",
+        "PLACEHOLDER": "Bot này sẽ làm gì?"
+      },
+      "WEBHOOK_URL": {
+        "LABEL": "Webhook URL",
+        "PLACEHOLDER": "https://example.com/webhook",
+        "REQUIRED": "Webhook URL is required"
+      },
+      "ERRORS": {
+        "NAME": "Bot name is required",
+        "URL": "Webhook URL is required",
+        "VALID_URL": "Please enter a valid URL starting with http:// or https://"
+      },
+      "CANCEL": "Huỷ",
+      "CREATE": "Create Bot",
+      "UPDATE": "Update Bot"
+    },
+    "WEBHOOK": {
+      "DESCRIPTION": "Configure a webhook bot to integrate with your custom services. The bot will receive and process events from conversations and can respond to them."
+    },
     "TYPES": {
-      "WEBHOOK": "Bot webhook",
-      "CSML": "Bot CSML"
+      "WEBHOOK": "Webhook bot"
     }
   }
 }
