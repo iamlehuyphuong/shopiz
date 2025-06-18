@@ -50,6 +50,7 @@
       },
       "ZALO": {
         "TITLE": "Zalo OA Channel",
+        "LOADING": "Authenticating you with Zalo...",
         "DESC": "PS: By signing in, we only get access to your Zalo OA's messages. Your private messages can never be accessed by Shopiz.",
         "HELP": "PS: By signing in, we only get access to your Zalo OA's messages. Your private messages can never be accessed by Shopiz.",
         "CHOOSE_PAGE": "Choose Page",

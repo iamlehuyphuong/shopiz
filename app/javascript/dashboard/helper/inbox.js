@@ -23,8 +23,8 @@ const INBOX_ICON_MAP_FILL = {
   [INBOX_TYPES.EMAIL]: 'i-ri-mail-fill',
   [INBOX_TYPES.TELEGRAM]: 'i-ri-telegram-fill',
   [INBOX_TYPES.LINE]: 'i-ri-line-fill',
-  [INBOX_TYPES.ZALO]: 'i-ri-zalo-x-fill',
-  [INBOX_TYPES.ZALOPERSONAL]: 'i-ri-zalo-x-fill',
+  [INBOX_TYPES.ZALO]: 'i-ri-zalo-fill',
+  [INBOX_TYPES.ZALOPERSONAL]: 'i-ri-zalo-fill',
   [INBOX_TYPES.INSTAGRAM]: 'i-ri-instagram-fill',
 };
 
@@ -72,7 +72,7 @@ export const getReadableInboxByType = (type, phoneNumber) => {
 
     case INBOX_TYPES.ZALO:
       return 'zalo';
-    
+
     case INBOX_TYPES.ZALOPERSONAL:
       return 'zalopersonal';
 

@@ -13,6 +13,8 @@ export function useChannelIcon(inbox) {
     'Channel::WebWidget': 'i-ri-global-fill',
     'Channel::Whatsapp': 'i-ri-whatsapp-fill',
     'Channel::Instagram': 'i-ri-instagram-fill',
+    'Channel::Zalo': 'i-ri-zalo-fill',
+    'Channel::ZaloPersonal': 'i-ri-zalo-fill',
   };
 
   const providerIconMap = {
