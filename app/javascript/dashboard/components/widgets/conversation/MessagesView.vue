@@ -12,6 +12,7 @@ import Message from './Message.vue';
 import NextMessageList from 'next/message/MessageList.vue';
 import ConversationLabelSuggestion from './conversation/LabelSuggestion.vue';
 import Banner from 'dashboard/components/ui/Banner.vue';
+import VoiceTimelineView from './VoiceTimelineView.vue';
 
 // stores and apis
 import { mapGetters } from 'vuex';
@@ -45,6 +46,8 @@ export default {
     ReplyBox,
     Banner,
     ConversationLabelSuggestion,
+    NextButton,
+    VoiceTimelineView,
   },
   mixins: [inboxMixin],
   setup() {
@@ -135,6 +138,10 @@ export default {
     },
     inbox() {
       return this.$store.getters['inboxes/getInbox'](this.inboxId);
+    },
+    isAVoiceChannel() {
+      // Use inbox.channel_type to match backend conventions
+      return this.inbox?.channel_type === 'Channel::Voice';
     },
     typingUsersList() {
       const userList = this.$store.getters[
@@ -616,9 +623,15 @@ export default {
           />
         </div>
       </div>
+      <VoiceTimelineView
+        v-if="isAVoiceChannel"
+        :conversation-id="currentChat.id"
+        class="mb-4"
+      />
       <ReplyBox
         v-model:popout-reply-box="isPopOutReplyBox"
         @toggle-popout="showPopOutReplyBox"
+        :is-private-note-only="isAVoiceChannel"
       />
     </div>
   </div>

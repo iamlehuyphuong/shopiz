@@ -36,6 +36,7 @@ import DyteBubble from './bubbles/Dyte.vue';
 import LocationBubble from './bubbles/Location.vue';
 import CSATBubble from './bubbles/CSAT.vue';
 import FormBubble from './bubbles/Form.vue';
+import VoiceCallBubble from './bubbles/VoiceCall.vue';
 
 import MessageError from './MessageError.vue';
 import ContextMenu from 'dashboard/modules/conversations/components/MessageContextMenu.vue';
@@ -296,6 +297,15 @@ const componentToRender = computed(() => {
     return InstagramStoryBubble;
   }
 
+  // Handle voice call bubble
+  if (
+    props.contentType === 'voice_call' ||
+    props.contentAttributes?.type === 'voice_call' ||
+    props.contentAttributes?.data?.callType === 'voice_call'
+  ) {
+    return VoiceCallBubble;
+  }
+
   if (Array.isArray(props.attachments) && props.attachments.length === 1) {
     const fileType = props.attachments[0].fileType;
 
@@ -509,10 +519,11 @@ provideMessageContext({
           'ltr:ml-8 rtl:mr-8 justify-end': orientation === ORIENTATION.RIGHT,
           'ltr:mr-8 rtl:ml-8': orientation === ORIENTATION.LEFT,
           'min-w-0': variant === MESSAGE_VARIANTS.EMAIL,
+          'min-w-0 max-w-full': componentToRender === VoiceCallBubble,
         }"
         @contextmenu="openContextMenu($event)"
       >
-        <Component :is="componentToRender" />
+        <Component :is="componentToRender" :message="props" />
       </div>
       <MessageError
         v-if="contentAttributes.externalError"

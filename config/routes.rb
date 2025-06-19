@@ -97,6 +97,16 @@ Rails.application.routes.draw do
           resources :dashboard_apps, only: [:index, :show, :create, :update, :destroy]
           namespace :channels do
             resource :twilio_channel, only: [:create]
+            namespace :voice do
+              # Voice webhooks using resource scope to avoid plural/singular confusion
+              resource :webhooks, only: [], controller: 'webhooks' do
+                collection do
+                  post :incoming
+                  match :conference_status, via: [:post, :options]  # Allow both POST and OPTIONS
+                  match :incoming, via: [:post, :options]           # Allow both POST and OPTIONS
+                end
+              end
+            end
             resource :zalo_channel, only: [] do
               collection do
                 post :create
@@ -123,6 +133,7 @@ Rails.application.routes.draw do
                   post :retry
                 end
               end
+              post :call, on: :member
               resources :assignments, only: [:create]
               resources :labels, only: [:create, :index]
               resource :participants, only: [:show, :create, :update, :destroy]
@@ -171,6 +182,7 @@ Rails.application.routes.draw do
               resources :contact_inboxes, only: [:create]
               resources :labels, only: [:create, :index]
               resources :notes
+              post :call, to: 'calls#create'
             end
           end
           resources :csat_survey_responses, only: [:index] do
@@ -193,6 +205,23 @@ Rails.application.routes.draw do
             get :agent_bot, on: :member
             post :set_agent_bot, on: :member
             delete :avatar, on: :member
+          end
+
+          # Voice call management - using resource to avoid plural/singular confusion
+          resource :voice, only: [], controller: 'voice' do
+            member do
+              post :end_call
+              post :join_call
+              post :reject_call
+              get :call_status
+              # Explicitly set the format for TwiML to ensure proper Content-Type headers
+              match :twiml_for_client, via: [:get, :post, :options], defaults: { format: :xml } # Allow GET, POST, and OPTIONS
+            end
+          end
+          
+          # Voice call client SDK support
+          namespace :voice do
+            resources :tokens, only: [:create]
           end
           resources :inbox_members, only: [:create, :show], param: :inbox_id do
             collection do
@@ -516,6 +545,21 @@ Rails.application.routes.draw do
   namespace :twilio do
     resources :callback, only: [:create]
     resources :delivery_status, only: [:create]
+
+    # Transcription webhook
+    post :transcription_callback, to: 'transcription#transcription_callback'
+
+    # Recording webhook
+    post :recording_callback, to: 'recording#recording_callback'
+
+    # Use resource scope to avoid plural/singular confusion
+    resource :voice, only: [], controller: 'voice' do
+      collection do
+        get :simple, action: :simple_twiml
+        post :simple, action: :simple_twiml
+        post :status_callback
+      end
+    end
   end
 
   get 'microsoft/callback', to: 'microsoft/callbacks#show'

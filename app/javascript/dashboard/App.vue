@@ -6,6 +6,7 @@ import NetworkNotification from './components/NetworkNotification.vue';
 import UpdateBanner from './components/app/UpdateBanner.vue';
 import PaymentPendingBanner from './components/app/PaymentPendingBanner.vue';
 import PendingEmailVerificationBanner from './components/app/PendingEmailVerificationBanner.vue';
+import FloatingCallWidget from './components/widgets/FloatingCallWidget.vue';
 import vueActionCable from './helper/actionCable';
 import { useRouter } from 'vue-router';
 import { useStore } from 'dashboard/composables/store';
@@ -14,6 +15,8 @@ import { setColorTheme } from './helper/themeHelper';
 import { isOnOnboardingView } from 'v3/helpers/RouteHelper';
 import { useAccount } from 'dashboard/composables/useAccount';
 import { useFontSize } from 'dashboard/composables/useFontSize';
+import { useAlert } from 'dashboard/composables';
+import VoiceAPI from 'dashboard/api/channels/voice';
 import {
   registerSubscription,
   verifyServiceWorkerExistence,
@@ -25,6 +28,7 @@ export default {
 
   components: {
     AddAccountModal,
+    FloatingCallWidget,
     LoadingState,
     NetworkNotification,
     UpdateBanner,
@@ -51,6 +55,7 @@ export default {
       showAddAccountModal: false,
       latestChatwootVersion: null,
       reconnectService: null,
+      showCallWidget: false, // Will be set to true when calls are active
     };
   },
   computed: {
@@ -60,6 +65,10 @@ export default {
       currentUser: 'getCurrentUser',
       authUIFlags: 'getAuthUIFlags',
       accountUIFlags: 'accounts/getUIFlags',
+      activeCall: 'calls/getActiveCall',
+      hasActiveCall: 'calls/hasActiveCall',
+      incomingCall: 'calls/getIncomingCall',
+      hasIncomingCall: 'calls/hasIncomingCall',
     }),
     hasAccounts() {
       const { accounts = [] } = this.currentUser || {};
@@ -84,11 +93,38 @@ export default {
         }
       },
     },
+    hasIncomingCall: {
+      immediate: true,
+      handler(newVal) {
+        console.log('App.vue detected change in hasIncomingCall to', newVal);
+        if (newVal) {
+          console.log('Incoming call data:', this.incomingCall);
+          this.showCallWidget = true;
+        } else {
+          this.showCallWidget = false;
+        }
+      }
+    },
+    hasActiveCall: {
+      immediate: true,
+      handler(newVal) {
+        console.log('App.vue detected change in hasActiveCall to', newVal);
+        if (newVal) {
+          console.log('Active call data:', this.activeCall);
+          this.showCallWidget = true;
+        } else {
+          this.showCallWidget = false;
+        }
+      }
+    },
   },
   mounted() {
     this.initializeColorTheme();
     this.listenToThemeChanges();
     this.setLocale(window.shopizConfig.selectedLocale);
+    
+    // Make app instance available globally for direct call widget updates
+    window.app = this;
   },
   unmounted() {
     if (this.reconnectService) {
@@ -105,6 +141,77 @@ export default {
     },
     setLocale(locale) {
       this.$root.$i18n.locale = locale;
+    },
+    handleCallEnded() {
+      this.showCallWidget = false;
+      this.$store.dispatch('calls/clearActiveCall');
+      this.$store.dispatch('calls/clearIncomingCall');
+      
+      // Clear the activeCallConversation state in all ContactInfo components
+      this.$nextTick(() => {
+        const clearContactInfoCallState = (components) => {
+          if (!components) return;
+          
+          components.forEach(component => {
+            if (component.$options && component.$options.name === 'ContactInfo') {
+              if (component.activeCallConversation) {
+                component.activeCallConversation = null;
+                component.$forceUpdate();
+              }
+            }
+            if (component.$children && component.$children.length) {
+              clearContactInfoCallState(component.$children);
+            }
+          });
+        };
+        
+        clearContactInfoCallState(this.$children);
+      });
+    },
+    handleCallJoined() {
+      this.showCallWidget = true;
+    },
+    handleCallRejected() {
+      this.showCallWidget = false;
+      this.$store.dispatch('calls/clearIncomingCall');
+    },
+    forceEndCall() {
+      this.showCallWidget = false;
+      if (window.forceEndCallHandlers) {
+        window.forceEndCallHandlers.forEach(handler => {
+          try {
+            handler();
+          } catch (e) {
+            // Optionally log error in production
+          }
+        });
+      }
+      if (this.activeCall && this.activeCall.callSid) {
+        const { callSid, conversationId } = this.activeCall;
+        const savedCallSid = callSid;
+        const savedConversationId = conversationId;
+        this.$store.dispatch('calls/clearActiveCall');
+        if (savedConversationId) {
+          VoiceAPI.endCall(savedCallSid, savedConversationId)
+            .then(response => {
+              useAlert({ message: 'Call ended successfully', type: 'success' });
+            })
+            .catch(error => {
+              setTimeout(() => {
+                VoiceAPI.endCall(savedCallSid, savedConversationId)
+                  .then(retryResponse => {
+                  })
+                  .catch(retryError => {
+                  });
+              }, 1000);
+              useAlert({ message: 'Call UI has been reset', type: 'info' });
+            });
+        } else {
+          useAlert({ message: 'Call ended', type: 'success' });
+        }
+      } else {
+        this.$store.dispatch('calls/clearActiveCall');
+      }
     },
     async initializeAccount() {
       await this.$store.dispatch('accounts/get');
@@ -153,6 +260,25 @@ export default {
     <AddAccountModal :show="showAddAccountModal" :has-accounts="hasAccounts" />
     <WootSnackbarBox />
     <NetworkNotification />
+    <!-- Floating call widget that appears during active calls -->
+    <FloatingCallWidget
+      v-if="showCallWidget || hasActiveCall || hasIncomingCall"
+      :key="activeCall ? activeCall.callSid : (incomingCall ? incomingCall.callSid : 'no-call')"
+      :call-sid="activeCall ? activeCall.callSid : (incomingCall ? incomingCall.callSid : '')"
+      :inbox-name="activeCall ? (activeCall.inboxName || 'Primary') : (incomingCall ? incomingCall.inboxName : 'Primary')"
+      :conversation-id="activeCall ? activeCall.conversationId : (incomingCall ? incomingCall.conversationId : null)"
+      :contact-name="activeCall ? activeCall.contactName : (incomingCall ? incomingCall.contactName : '')"
+      :contact-id="activeCall ? activeCall.contactId : (incomingCall ? incomingCall.contactId : null)"
+      :inbox-id="activeCall ? activeCall.inboxId : (incomingCall ? incomingCall.inboxId : null)"
+      :inbox-avatar-url="activeCall ? activeCall.inboxAvatarUrl : (incomingCall ? incomingCall.inboxAvatarUrl : '')"
+      :inbox-phone-number="activeCall ? activeCall.inboxPhoneNumber : (incomingCall ? incomingCall.inboxPhoneNumber : '')"
+      :avatar-url="activeCall ? activeCall.avatarUrl : (incomingCall ? incomingCall.avatarUrl : '')"
+      :phone-number="activeCall ? activeCall.phoneNumber : (incomingCall ? incomingCall.phoneNumber : '')"
+      :use-web-rtc="true"
+      @callEnded="handleCallEnded"
+      @callJoined="handleCallJoined"
+      @callRejected="handleCallRejected"
+    />
   </div>
   <LoadingState v-else />
 </template>

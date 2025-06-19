@@ -448,6 +448,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_18_153843) do
     t.index ["account_id", "profile_id"], name: "index_channel_twitter_profiles_on_account_id_and_profile_id", unique: true
   end
 
+  create_table "channel_voice", force: :cascade do |t|
+    t.string "phone_number", null: false
+    t.string "provider", default: "twilio", null: false
+    t.jsonb "provider_config", null: false
+    t.integer "account_id", null: false
+    t.jsonb "additional_attributes", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["phone_number"], name: "index_channel_voice_on_phone_number", unique: true
+  end
+
   create_table "channel_web_widgets", id: :serial, force: :cascade do |t|
     t.string "website_url"
     t.integer "account_id"

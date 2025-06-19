@@ -111,7 +111,8 @@ export default {
         this.data.content ||
         this.isEmailContentType ||
         this.isUnsupported ||
-        this.isAnIntegrationMessage
+        this.isAnIntegrationMessage ||
+        this.isVoiceCall
       );
     },
     emailMessageContent() {
@@ -266,6 +267,9 @@ export default {
     },
     isAnIntegrationMessage() {
       return this.contentType === 'integrations';
+    },
+    isVoiceCall() {
+      return this.contentType === 'voice_call';
     },
     emailHeadAttributes() {
       return {
@@ -505,6 +509,7 @@ export default {
           :display-quoted-button="displayQuotedButton"
         />
         <BubbleIntegration
+          v-else-if="isAnIntegrationMessage"
           :message-id="data.id"
           :content-attributes="contentAttributes"
           :inbox-id="data.inbox_id"
