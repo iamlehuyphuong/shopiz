@@ -25,6 +25,7 @@ class Seeders::AccountSeeder
     seed_canned_responses
     seed_inboxes
     seed_contacts
+    seed_csat_responses
   end
 
   def set_up_account
@@ -116,43 +117,17 @@ class Seeders::AccountSeeder
         contact.update!(contact_data.slice('name', 'email'))
         Avatar::AvatarFromUrlJob.perform_later(contact, "https://xsgames.co/randomusers/avatar.php?g=#{contact_data['gender']}")
       end
-      contact_data['conversations'].each do |conversation_data|
-        inbox = @account.inboxes.find_by(channel_type: conversation_data['channel'])
-        contact_inbox = inbox.contact_inboxes.create_or_find_by!(contact: contact, source_id: (conversation_data['source_id'] || SecureRandom.hex))
-        create_conversation(contact_inbox: contact_inbox, conversation_data: conversation_data)
-      end
     end
-  end
 
-  def create_conversation(contact_inbox:, conversation_data:)
-    assignee = User.from_email(conversation_data['assignee']) if conversation_data['assignee'].present?
-    conversation = contact_inbox.conversations.create!(account: contact_inbox.inbox.account, contact: contact_inbox.contact,
-                                                       inbox: contact_inbox.inbox, assignee: assignee)
-    create_messages(conversation: conversation, messages: conversation_data['messages'])
-    conversation.update_labels(conversation_data[:labels]) if conversation_data[:labels].present?
-    conversation.update!(priority: conversation_data[:priority]) if conversation_data[:priority].present?
-  end
-
-  def create_messages(conversation:, messages:)
-    messages.each do |message_data|
-      sender = find_message_sender(conversation, message_data)
-      conversation.messages.create!(
-        message_data.slice('content', 'message_type').merge(
-          account: conversation.inbox.account, sender: sender, inbox: conversation.inbox
-        )
-      )
-    end
-  end
-
-  def find_message_sender(conversation, message_data)
-    if message_data['message_type'] == 'incoming'
-      conversation.contact
-    elsif message_data['sender'].present?
-      User.from_email(message_data['sender'])
-    end
+    # Create conversations after all contacts are created
+    Seeders::ConversationSeeder.new(account: @account, contact_data: @account_data['contacts']).perform!
   end
 
   def seed_inboxes
     Seeders::InboxSeeder.new(account: @account, company_data: @account_data[:company]).perform!
+  end
+
+  def seed_csat_responses
+    Seeders::CsatSeeder.new(account: @account).perform!
   end
 end
