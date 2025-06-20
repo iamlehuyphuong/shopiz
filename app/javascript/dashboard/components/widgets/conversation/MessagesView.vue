@@ -46,7 +46,6 @@ export default {
     ReplyBox,
     Banner,
     ConversationLabelSuggestion,
-    NextButton,
     VoiceTimelineView,
   },
   mixins: [inboxMixin],

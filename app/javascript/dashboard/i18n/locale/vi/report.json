@@ -261,11 +261,30 @@
   },
   "INBOX_REPORTS": {
     "HEADER": "Tổng quan hộp thư đến",
+    "VOICE_HEADER": "Tổng quan kênh thoại",
     "DESCRIPTION": "Xem hiệu suất hộp thư đến của bạn một cách nhanh chóng với các chỉ số chính như cuộc hội thoại, thời gian phản hồi, thời gian giải quyết và số lượng giải quyết - tất cả trong một nơi. Nhấp vào tên hộp thư đến để biết thêm chi tiết.",
     "LOADING_CHART": "Đang tải các biểu đồ dữ liệu...",
     "NO_ENOUGH_DATA": "Chúng tôi không nhận được đủ điểm dữ liệu để tạo báo cáo, vui lòng thử lại sau.",
+    "NO_VOICE_INBOXES": "Không tìm thấy kênh thoại",
+    "CREATE_VOICE_INBOX_PROMPT": "Tạo kênh thoại trước để xem báo cáo",
     "DOWNLOAD_INBOX_REPORTS": "Tải xuống báo cáo hộp thư đến",
+    "DOWNLOAD_VOICE_REPORTS": "Tải xuống báo cáo thoại",
     "FILTER_DROPDOWN_LABEL": "Chọn Hộp thư đến",
+    "VOICE_METRICS": {
+      "TOTAL_CALLS": "Tổng số cuộc gọi",
+      "INCOMING_CALLS": "Cuộc gọi đến",
+      "OUTGOING_CALLS": "Cuộc gọi đi",
+      "MISSED_CALLS": "Cuộc gọi nhỡ",
+      "AVG_DURATION": "Thời lượng cuộc gọi trung bình",
+      "AVG_WAITING_TIME": "Thời gian chờ trung bình",
+      "SUCCESS_RATE": "Tỷ lệ thành công cuộc gọi"
+    },
+    "VOICE_CHARTS": {
+      "CALLS_BY_TYPE": "Cuộc gọi theo loại",
+      "CALL_DURATION": "Thời lượng cuộc gọi trung bình",
+      "WAITING_TIME": "Thời gian chờ trung bình",
+      "SUCCESS_RATE": "Tỷ lệ thành công cuộc gọi"
+    },
     "METRICS": {
       "CONVERSATIONS": {
         "NAME": "Các cuộc hội thoại",

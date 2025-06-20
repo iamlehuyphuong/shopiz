@@ -287,10 +287,10 @@
     "SETTINGS": "Cài đặt",
     "CONTACTS": "Liên hệ",
     "ACTIVE": "Có hiệu lực",
-    "CAPTAIN": "Captain",
-    "CAPTAIN_ASSISTANTS": "Assistants",
-    "CAPTAIN_DOCUMENTS": "Documents",
-    "CAPTAIN_RESPONSES": "FAQs",
+    "CAPTAIN": "Trợ lý AI",
+    "CAPTAIN_ASSISTANTS": "Trợ lý",
+    "CAPTAIN_DOCUMENTS": "Tài liệu",
+    "CAPTAIN_RESPONSES": "Câu hỏi thường gặp",
     "HOME": "Trang Chủ",
     "AGENTS": "Nhân viên",
     "AGENT_BOTS": "Bot",
@@ -319,6 +319,7 @@
     "CSAT": "CSAT",
     "LIVE_CHAT": "Trò chuyện trực tiếp",
     "SMS": "SMS",
+    "VOICE": "Voice",
     "SURVEY": "Khảo sát",
     "LANDING_PAGE": "Landing Page",
     "FORM": "Biểu mẫu",
@@ -339,7 +340,7 @@
     "REPORTS_OVERVIEW": "Tổng quan",
     "REAUTHORIZE": "Kết nối hộp thư của bạn đã hết hạn, vui lòng kết nối lại để tiếp tục nhận và gửi tin nhắn",
     "HELP_CENTER": {
-      "TITLE": "Trung tâm trợ giúp",
+      "TITLE": "Cổng thông tin",
       "LANDING_PAGE": "Trang chủ",
       "ARTICLES": "Bài viết",
       "CATEGORIES": "Danh mục",
@@ -375,7 +376,7 @@
       "BUTTON_TXT": "Mua thêm",
       "DOCUMENTS": "Tài liệu",
       "RESPONSES": "Câu trả lời",
-      "UPGRADE": "AI Agent không khả dụng trên gói miễn phí, nâng cấp ngay để truy cập trợ lý, copilot và nhiều tính năng khác."
+      "UPGRADE": "Trợ lý AI không khả dụng trên gói miễn phí, nâng cấp ngay để truy cập trợ lý, copilot và nhiều tính năng khác."
     },
     "CHAT_WITH_US": {
       "TITLE": "Cần hỗ trợ?",

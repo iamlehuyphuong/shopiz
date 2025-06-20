@@ -232,6 +232,37 @@
           }
         }
       },
+      "VOICE": {
+        "TITLE": "Kênh Thoại",
+        "DESC": "Tích hợp khả năng gọi thoại với nhà cung cấp ưa thích của bạn.",
+        "PROVIDER": {
+          "LABEL": "Nhà Cung Cấp",
+          "PLACEHOLDER": "Chọn một nhà cung cấp thoại"
+        },
+        "PHONE_NUMBER": {
+          "LABEL": "Số Điện Thoại",
+          "PLACEHOLDER": "Vui lòng nhập số điện thoại từ đó cuộc gọi sẽ được thực hiện.",
+          "REQUIRED": "Trường này là bắt buộc",
+          "ERROR": "Vui lòng nhập số điện thoại hợp lệ bắt đầu bằng dấu `+` và không chứa khoảng trắng."
+        },
+        "TWILIO": {
+          "ACCOUNT_SID": {
+        "LABEL": "SID Tài Khoản",
+        "PLACEHOLDER": "Vui lòng nhập SID Tài Khoản Twilio của bạn",
+        "REQUIRED": "Trường này là bắt buộc"
+          },
+          "AUTH_TOKEN": {
+        "LABEL": "Mã Xác Thực",
+        "PLACEHOLDER": "Vui lòng nhập Mã Xác Thực Twilio của bạn",
+        "REQUIRED": "Trường này là bắt buộc"
+          }
+        },
+        "SUBMIT_BUTTON": "Tạo Kênh Thoại",
+        "API": {
+          "SUCCESS_MESSAGE": "Đăng ký kênh thoại thành công",
+          "ERROR_MESSAGE": "Không thể tạo kênh thoại. Vui lòng thử lại."
+        }
+      },
       "WHATSAPP": {
         "TITLE": "Kênh WhatsApp",
         "DESC": "Bắt đầu hỗ trợ khách hàng qua WhatsApp.",
@@ -514,6 +545,11 @@
       "INBOX_AGENTS_SUB_TEXT": "Thêm hoặc xóa tác nhân khỏi hộp thư đến này",
       "AGENT_ASSIGNMENT": "Phân công cuộc trò chuyện",
       "AGENT_ASSIGNMENT_SUB_TEXT": "Cập nhật phân công cuộc trò chuyện",
+      "VOICE_CALL_ROUTING": "Định tuyến cuộc gọi",
+      "VOICE_CALL_ROUTING_SUB_TEXT": "Cấu hình cách xử lý cuộc gọi khi các nhân viên không trực tuyến",
+      "PERSONAL_PHONE_ROUTING": "Bật định tuyến đến điện thoại cá nhân",
+      "PERSONAL_PHONE_ROUTING_SUB_TEXT": "Khi một nhân viên không trực tuyến trên Chatwoot, định tuyến cuộc gọi đến số điện thoại cá nhân của họ",
+      "AGENT_PHONE_SETTINGS_INFO": "Mỗi nhân viên có thể cấu hình số điện thoại cá nhân của họ trên trang cài đặt hồ sơ",
       "UPDATE": "Cập nhật",
       "ENABLE_EMAIL_COLLECT_BOX": "Bật hộp thu thập email",
       "ENABLE_EMAIL_COLLECT_BOX_SUB_TEXT": "Bật hoặc tắt hộp thu thập email trên cuộc trò chuyện mới",
@@ -798,6 +834,7 @@
       "WEB_WIDGET": "Website",
       "TWITTER_PROFILE": "Twitter",
       "TWILIO_SMS": "Twilio SMS",
+      "VOICE": "Voice",
       "WHATSAPP": "WhatsApp",
       "SMS": "SMS",
       "EMAIL": "Email",

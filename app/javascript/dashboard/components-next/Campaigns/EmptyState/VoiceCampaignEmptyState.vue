@@ -49,7 +49,7 @@ const { t } = useI18n();
           {{ t('CAMPAIGN.VOICE.EMPTY_STATE.JS_API_DESCRIPTION') }}
         </p>
         <code class="block px-5 py-4 overflow-auto text-xs rounded bg-slate-800 text-slate-200 text-left">
-          chatwoot.triggerVoiceCampaign({
+          shopiz.triggerVoiceCampaign({
             campaignId: 'CAMPAIGN_ID',
             user: {
               name: 'John Doe', 

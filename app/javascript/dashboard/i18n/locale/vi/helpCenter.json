@@ -1,8 +1,8 @@
 {
   "HELP_CENTER": {
-    "TITLE": "Trung tâm trợ giúp",
+    "TITLE": "Cổng thông tin",
     "NEW_PAGE": {
-      "DESCRIPTION": "Tạo các cổng tự phục vụ trung tâm trợ giúp cho khách hàng của bạn. Giúp họ nhanh chóng tìm được câu trả lời mà không phải chờ đợi. Tinh gọn các yêu cầu, tăng hiệu quả cho nhân viên và nâng cao chất lượng hỗ trợ khách hàng.",
+      "DESCRIPTION": "Tạo các cổng thông tin trợ giúp cho khách hàng của bạn. Giúp họ nhanh chóng tìm được câu trả lời mà không phải chờ đợi. Tinh gọn các yêu cầu, tăng hiệu quả cho nhân viên và nâng cao chất lượng hỗ trợ khách hàng.",
       "CREATE_PORTAL_BUTTON": "Tạo cổng"
     },
     "HEADER": {
@@ -454,7 +454,7 @@
       "SEARCH_BUTTON": "Tìm kiếm",
       "INSERT_ARTICLE": "Chèn liên kết",
       "IFRAME_ERROR": "URL rỗng hoặc không hợp lệ. Không thể hiển thị nội dung.",
-      "OPEN_ARTICLE_SEARCH": "Chèn bài viết từ Trung tâm trợ giúp",
+      "OPEN_ARTICLE_SEARCH": "Chèn bài viết từ Cổng thông tin",
       "SUCCESS_ARTICLE_INSERTED": "Bài viết đã được chèn thành công",
       "PREVIEW_LINK": "Xem trước bài viết",
       "CANCEL": "Đóng",
@@ -462,7 +462,7 @@
       "BACK_RESULTS": "Quay lại kết quả"
     },
     "UPGRADE_PAGE": {
-      "TITLE": "Trung tâm trợ giúp",
+      "TITLE": "Cổng thông tin",
       "DESCRIPTION": "Tạo các cổng tự phục vụ thân thiện với người dùng. Giúp người dùng truy cập bài viết và nhận hỗ trợ 24/7. Nâng cấp gói dịch vụ của bạn để kích hoạt tính năng này.",
       "SELF_HOSTED_DESCRIPTION": "Tạo các cổng tự phục vụ thân thiện với người dùng. Giúp người dùng truy cập bài viết và nhận hỗ trợ 24/7. Vui lòng liên hệ quản trị viên của bạn để kích hoạt tính năng này.",
       "BUTTON": {

@@ -222,6 +222,10 @@ vi:
       name: 'Linear'
       short_description: 'Tạo và liên kết các vấn đề Linear trực tiếp từ cuộc trò chuyện.'
       description: 'Tạo vấn đề trong Linear trực tiếp từ cửa sổ cuộc trò chuyện của bạn. Hoặc liên kết các vấn đề Linear hiện có để quá trình theo dõi trở nên liền mạch và hiệu quả hơn.'
+    notion:
+      name: 'Notion'
+      short_description: 'Tích hợp cơ sở dữ liệu, tài liệu và trang trực tiếp với Shopiz AI.'
+      description: 'Kết nối không gian làm việc Notion của bạn để cho phép Shopiz AI tạo ra phản hồi từ cơ sở dữ liệu, tài liệu và trang của bạn.'
     shopify:
       name: 'Shopify'
       short_description: 'Truy cập chi tiết đơn hàng và dữ liệu khách hàng từ cửa hàng Shopify của bạn.'
@@ -231,8 +235,8 @@ vi:
       short_description: 'Đồng bộ hóa danh bạ và cuộc trò chuyện của bạn với CRM LeadSquared.'
       description: 'Đồng bộ hóa danh bạ và cuộc trò chuyện của bạn với CRM LeadSquared. Tính năng này tự động tạo khách hàng tiềm năng trong LeadSquared khi danh bạ mới được thêm và lưu lại các hoạt động cuộc trò chuyện để cung cấp bối cảnh đầy đủ cho đội ngũ bán hàng của bạn.'
   captain:
-    copilot_error: 'Vui lòng kết nối một trợ lý vào hộp thư đến này để sử dụng Copilot'
-    copilot_limit: 'Bạn đã hết tín dụng Copilot. Bạn có thể mua thêm từ phần thanh toán.'
+    copilot_error: 'Vui lòng kết nối một trợ lý vào hộp thư đến này để sử dụng Shopiz AI'
+    copilot_limit: 'Bạn đã hết tín dụng Shopiz AI. Bạn có thể mua thêm từ phần thanh toán.'
     copilot:
       using_tool: 'Đang sử dụng công cụ %{function_name}'
       completed_tool_call: 'Hoàn thành cuộc gọi công cụ %{function_name}'

@@ -53,6 +53,7 @@ const toggleSidebar = () => {
     <div class="rounded-full bg-n-alpha-2 p-1">
       <Button
         icon="i-woot-captain"
+        color="ruby"
         class="!rounded-full !bg-n-solid-3 dark:!bg-n-alpha-2 !text-n-slate-12 text-xl"
         lg
         @click="toggleSidebar"

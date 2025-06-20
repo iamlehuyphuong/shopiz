@@ -36,7 +36,6 @@
         helpCenterURL: '<%= ENV.fetch('HELPCENTER_URL', '') %>',
         fbAppId: '<%= @global_config['FB_APP_ID'] %>',
         zaloAppId: '<%= @global_config['ZALO_APP_ID'] %>',
-        zaloAppSecret: '<%= @global_config['ZALO_APP_SECRET'] %>',
         zaloApiUrl: '<%= @global_config['ZALO_API_URL'] %>',
         activepiecesInstanceUrl: '<%= @global_config['ACTIVE_PIECES_INSTANCE_URL'] %>',
         activepiecesJwtSecret: '<%= @global_config['ACTIVE_PIECES_JWT_SECRET'] %>',
@@ -99,6 +98,7 @@
     <%= vite_client_tag %>
     <%= vite_javascript_tag @application_pack %>
     <script src="https://cdn.activepieces.com/sdk/embed/0.3.7.js"></script>
+    <link href="https://cdn.syncfusion.com/ej2/29.2.4/tailwind3-dark.css" rel="stylesheet">
   </head>
   <body class="text-slate-600">
     <div id="app"></div>

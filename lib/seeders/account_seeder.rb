@@ -11,8 +11,9 @@
 class Seeders::AccountSeeder
   def initialize(account:)
     raise 'Account Seeding is not allowed.' unless ENV.fetch('ENABLE_ACCOUNT_SEEDING', !Rails.env.production?)
-
-    @account_data = ActiveSupport::HashWithIndifferentAccess.new(YAML.safe_load(Rails.root.join('lib/seeders/seed_data.yml').read))
+    print "Seeding account with locale_english_name: #{account.locale_english_name}\n"
+    seed_data_file = account.locale_english_name.present? ? "lib/seeders/seed_data_#{account.locale_english_name}.yml" : 'lib/seeders/seed_data.yml'
+    @account_data = ActiveSupport::HashWithIndifferentAccess.new(YAML.safe_load(Rails.root.join(seed_data_file).read))
     @account = account
   end
 

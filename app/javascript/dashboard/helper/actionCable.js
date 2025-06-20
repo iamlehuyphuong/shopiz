@@ -33,11 +33,10 @@ class ActionCableConnector extends BaseActionCableConnector {
       'conversation.read': this.onConversationRead,
       'conversation.updated': this.onConversationUpdated,
       'account.cache_invalidated': this.onCacheInvalidate,
-      
       // Call events
       'incoming_call': this.onIncomingCall,
-      'call_status_changed': this.onCallStatusChanged
-      'copilot.message.created': this.onCopilotMessageCreated,
+      'call_status_changed': this.onCallStatusChanged,
+      'copilot.message.created': this.onCopilotMessageCreated
     };
   }
 

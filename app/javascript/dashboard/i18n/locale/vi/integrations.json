@@ -20,10 +20,10 @@
     "LEARN_MORE": "Tìm hiểu thêm về tích hợp",
     "LOADING": "Đang lấy thông tin tích hợp",
     "CAPTAIN": {
-      "DISABLED": "AI Agent không được kích hoạt trên tài khoản của bạn.",
+      "DISABLED": "Trợ lý AI không được kích hoạt trên tài khoản của bạn.",
       "CLICK_HERE_TO_CONFIGURE": "Nhấp vào đây để cấu hình",
-      "LOADING_CONSOLE": "Đang tải AI Agent Console...",
-      "FAILED_TO_LOAD_CONSOLE": "Không tải được AI Agent Console. Vui lòng làm mới và thử lại."
+      "LOADING_CONSOLE": "Đang tải Trợ lý AI Console...",
+      "FAILED_TO_LOAD_CONSOLE": "Không tải được Trợ lý AI Console. Vui lòng làm mới và thử lại."
     },
     "WEBHOOK": {
       "SUBSCRIBED_EVENTS": "Sự kiện đã đăng ký",
@@ -40,10 +40,10 @@
             "MESSAGE_CREATED": "Tin nhắn đã được tạo",
             "MESSAGE_UPDATED": "Tin nhắn đã được cập nhật",
             "WEBWIDGET_TRIGGERED": "Tiện ích trò chuyện trực tuyến do người dùng mở",
-            "CONTACT_CREATED": "Contact created",
-            "CONTACT_UPDATED": "Contact updated",
-            "CONVERSATION_TYPING_ON": "Conversation Typing On",
-            "CONVERSATION_TYPING_OFF": "Conversation Typing Off"
+            "CONTACT_CREATED": "Thông tin khách hàng đã được tạo",
+            "CONTACT_UPDATED": "Thông tin khách hàng đã được cập nhật",
+            "CONVERSATION_TYPING_ON": "Đang soạn thảo cuộc trò chuyện",
+            "CONVERSATION_TYPING_OFF": "Ngừng soạn thảo cuộc trò chuyện"
           }
         },
         "END_POINT": {
@@ -107,7 +107,7 @@
       },
       "HELP_TEXT": {
         "TITLE": "Cách sử dụng tích hợp Slack?",
-        "BODY": "Với tích hợp này, tất cả cuộc đối thoại đến sẽ được đồng bộ vào kênh ***{selectedChannelName}*** trên workspace Slack của bạn. Bạn có thể quản lý các cuộc đối thoại khách hàng ngay trong kênh mà không bỏ sót tin nhắn nào.\n\nCác tính năng chính:\n\n**Trả lời từ Slack:** Để trả lời một đối thoại trong kênh ***{selectedChannelName}***, chỉ cần gõ và gửi dưới dạng chuỗi. Điều này sẽ tạo phản hồi gửi trở lại khách hàng thông qua Shopiz. Đơn giản như vậy!\n\n **Tạo ghi chú riêng:** Nếu muốn tạo ghi chú thay vì trả lời, hãy bắt đầu tin nhắn với ***`note:`***. Như vậy, tin nhắn sẽ được giữ riêng tư và không hiển thị cho khách hàng.\n\n**Liên kết hồ sơ đại lý:** Nếu người trả lời trên Slack có hồ sơ đại lý trong Shopiz với cùng email, câu trả lời sẽ tự động được liên kết với hồ sơ đó. Ngược lại, nếu không có hồ sơ liên kết, các phản hồi sẽ hiển thị từ hồ sơ bot.",
+        "BODY": "Với tích hợp này, tất cả cuộc đối thoại đến sẽ được đồng bộ vào kênh ***{selectedChannelName}*** trên workspace Slack của bạn. Bạn có thể quản lý các cuộc đối thoại khách hàng ngay trong kênh mà không bỏ sót tin nhắn nào.\n\nCác tính năng chính:\n\n**Trả lời từ Slack:** Để trả lời một đối thoại trong kênh ***{selectedChannelName}***, chỉ cần gõ và gửi dưới dạng chuỗi. Điều này sẽ tạo phản hồi gửi trở lại khách hàng thông qua Shopiz. Đơn giản như vậy!\n\n**Tạo ghi chú riêng:** Nếu muốn tạo ghi chú thay vì trả lời, hãy bắt đầu tin nhắn với ***`note:`***. Như vậy, tin nhắn sẽ được giữ riêng tư và không hiển thị cho khách hàng.\n\n**Liên kết hồ sơ đại lý:** Nếu người trả lời trên Slack có hồ sơ đại lý trong Shopiz với cùng email, câu trả lời sẽ tự động được liên kết với hồ sơ đó. Ngược lại, nếu không có hồ sơ liên kết, các phản hồi sẽ hiển thị từ hồ sơ bot.",
         "SELECTED": "đã chọn"
       },
       "SELECT_CHANNEL": {
@@ -318,82 +318,82 @@
         "SUCCESS": "Vấn đề đã được hủy liên kết thành công",
         "ERROR": "Có lỗi khi hủy liên kết vấn đề, vui lòng thử lại"
       },
-      "NO_LINKED_ISSUES": "No linked issues found",
+      "NO_LINKED_ISSUES": "Không tìm thấy vấn đề liên kết",
       "DELETE": {
-        "TITLE": "Are you sure you want to delete the integration?",
-        "MESSAGE": "Are you sure you want to delete the integration?",
+        "TITLE": "Bạn có chắc chắn muốn xoá tích hợp?",
+        "MESSAGE": "Bạn có chắc chắn muốn xoá tích hợp?",
         "CONFIRM": "Có, xoá",
         "CANCEL": "Huỷ"
       },
       "CTA": {
-        "TITLE": "Connect to Linear",
-        "AGENT_DESCRIPTION": "Linear workspace is not connected. Request your administrator to connect a workspace to use this integration.",
-        "DESCRIPTION": "Linear workspace is not connected. Click the button below to connect your workspace to use this integration.",
-        "BUTTON_TEXT": "Connect Linear workspace"
+        "TITLE": "Kết nối với Linear",
+        "AGENT_DESCRIPTION": "Workspace Linear chưa được kết nối. Yêu cầu quản trị viên của bạn kết nối workspace để sử dụng tích hợp này.",
+        "DESCRIPTION": "Workspace Linear chưa được kết nối. Nhấp vào nút bên dưới để kết nối workspace và sử dụng tích hợp này.",
+        "BUTTON_TEXT": "Kết nối workspace Linear"
       }
     }
   },
   "CAPTAIN": {
-    "NAME": "AI Agent",
+    "NAME": "Trợ lý AI",
     "HEADER_KNOW_MORE": "Tìm hiểu thêm",
     "COPILOT": {
-      "TITLE": "Copilot",
-      "TRY_THESE_PROMPTS": "Try these prompts",
-      "PANEL_TITLE": "Get started with Copilot",
-      "KICK_OFF_MESSAGE": "Need a quick summary, want to check past conversations, or draft a better reply? Copilot’s here to speed things up.",
+      "TITLE": "Shopiz AI",
+      "TRY_THESE_PROMPTS": "Thử các mẫu sau",
+      "PANEL_TITLE": "Bắt đầu với Copilot",
+      "KICK_OFF_MESSAGE": "Cần tóm tắt nhanh, muốn kiểm tra các cuộc trò chuyện trước đó hoặc soạn thảo câu trả lời tốt hơn? Copilot sẵn sàng hỗ trợ.",
       "SEND_MESSAGE": "Gửi tin nhắn...",
-      "EMPTY_MESSAGE": "There was an error generating the response. Please try again.",
-      "LOADER": "Captain is thinking",
-      "YOU": "You",
-      "USE": "Use this",
-      "RESET": "Reset",
-      "SHOW_STEPS": "Show steps",
-      "SELECT_ASSISTANT": "Select Assistant",
+      "EMPTY_MESSAGE": "Đã xảy ra lỗi khi tạo phản hồi. Vui lòng thử lại.",
+      "LOADER": "Trợ lý AI đang suy nghĩ",
+      "YOU": "Bạn",
+      "USE": "Sử dụng",
+      "RESET": "Đặt lại",
+      "SHOW_STEPS": "Hiển thị các bước",
+      "SELECT_ASSISTANT": "Chọn trợ lý",
       "PROMPTS": {
         "SUMMARIZE": {
-          "LABEL": "Summarize this conversation",
-          "CONTENT": "Summarize the key points discussed between the customer and the support agent, including the customer's concerns, questions, and the solutions or responses provided by the support agent"
+          "LABEL": "Tóm tắt cuộc trò chuyện",
+          "CONTENT": "Tóm tắt các điểm chính đã thảo luận giữa khách hàng và nhân viên hỗ trợ, bao gồm những mối quan tâm, câu hỏi và giải pháp đã được cung cấp."
         },
         "SUGGEST": {
-          "LABEL": "Suggest an answer",
-          "CONTENT": "Analyze the customer's inquiry, and draft a response that effectively addresses their concerns or questions. Ensure the reply is clear, concise, and provides helpful information."
+          "LABEL": "Đề xuất câu trả lời",
+          "CONTENT": "Phân tích yêu cầu của khách hàng và soạn thảo một câu trả lời nhằm giải quyết các mối quan tâm của họ. Hãy đảm bảo phản hồi rõ ràng, ngắn gọn và hữu ích."
         },
         "RATE": {
-          "LABEL": "Rate this conversation",
-          "CONTENT": "Review the conversation to see how well it meets the customer's needs. Share a rating out of 5 based on tone, clarity, and effectiveness."
+          "LABEL": "Đánh giá cuộc trò chuyện",
+          "CONTENT": "Đánh giá cuộc trò chuyện dựa trên mức độ đáp ứng nhu cầu của khách hàng. Hãy đưa ra số điểm từ 1 đến 5 dựa trên tone, tính rõ ràng và hiệu quả."
         },
         "HIGH_PRIORITY": {
-          "LABEL": "High priority conversations",
-          "CONTENT": "Give me a summary of all high priority open conversations. Include the conversation ID, customer name (if available), last message content, and assigned agent. Group by status if relevant."
+          "LABEL": "Cuộc trò chuyện ưu tiên cao",
+          "CONTENT": "Tóm tắt tất cả các cuộc đối thoại mở có độ ưu tiên cao. Bao gồm ID, tên khách hàng (nếu có), tin nhắn cuối cùng và nhân viên được giao. Nhóm theo trạng thái nếu cần."
         },
         "LIST_CONTACTS": {
-          "LABEL": "List contacts",
-          "CONTENT": "Show me the list of top 10 contacts. Include name, email or phone number (if available), last seen time, tags (if any)."
+          "LABEL": "Liệt kê khách hàng",
+          "CONTENT": "Hiển thị danh sách 10 khách hàng hàng đầu, bao gồm tên, email hoặc số điện thoại (nếu có), thời gian hoạt động cuối và các thẻ (nếu có)."
         }
       }
     },
     "PLAYGROUND": {
-      "USER": "You",
-      "ASSISTANT": "Assistant",
-      "MESSAGE_PLACEHOLDER": "Gõ tin nhắn của bạn...",
-      "HEADER": "Playground",
-      "DESCRIPTION": "Use this playground to send messages to your assistant and check if it responds accurately, quickly, and in the tone you expect.",
-      "CREDIT_NOTE": "Messages sent here will count toward your Captain credits."
+      "USER": "Bạn",
+      "ASSISTANT": "Trợ lý",
+      "MESSAGE_PLACEHOLDER": "Nhập tin nhắn của bạn...",
+      "HEADER": "Sân chơi",
+      "DESCRIPTION": "Sử dụng sân chơi này để gửi tin nhắn cho trợ lý và kiểm tra xem nó có phản hồi chính xác, nhanh chóng, và với tông giọng như mong đợi hay không.",
+      "CREDIT_NOTE": "Các tin nhắn gửi ở đây sẽ được tính vào hạn mức tín dụng của Trợ lý AI."
     },
     "PAYWALL": {
-      "TITLE": "Nâng cấp để sử dụng AI Agent",
-      "AVAILABLE_ON": "AI Agent không khả dụng trên gói miễn phí.",
+      "TITLE": "Nâng cấp để sử dụng Trợ lý AI",
+      "AVAILABLE_ON": "Trợ lý AI không khả dụng trên gói miễn phí.",
       "UPGRADE_PROMPT": "Nâng cấp gói của bạn để truy cập trợ lý, copilot và nhiều tính năng khác.",
       "UPGRADE_NOW": "Nâng cấp ngay",
       "CANCEL_ANYTIME": "Bạn có thể thay đổi hoặc hủy gói của mình bất cứ lúc nào"
     },
     "ENTERPRISE_PAYWALL": {
-      "UPGRADE_PROMPT": "Upgrade your plan to get access to our assistants, copilot and more.",
-      "ASK_ADMIN": "Please reach out to your administrator for the upgrade."
+      "UPGRADE_PROMPT": "Nâng cấp gói của bạn để truy cập trợ lý, copilot và nhiều tính năng khác.",
+      "ASK_ADMIN": "Vui lòng liên hệ với quản trị viên để nâng cấp."
     },
     "BANNER": {
-      "RESPONSES": "Bạn đã sử dụng quá 80% hạn mức phản hồi. Để tiếp tục sử dụng AI Agent, vui lòng nâng cấp.",
-      "DOCUMENTS": "Hạn mức tài liệu đã đạt mức giới hạn. Hãy nâng cấp để tiếp tục sử dụng AI Agent."
+      "RESPONSES": "Bạn đã sử dụng quá 80% hạn mức phản hồi. Để tiếp tục sử dụng Trợ lý AI, vui lòng nâng cấp.",
+      "DOCUMENTS": "Hạn mức tài liệu đã đạt mức giới hạn. Hãy nâng cấp để tiếp tục sử dụng Trợ lý AI."
     },
     "FORM": {
       "CANCEL": "Hủy",
@@ -401,9 +401,9 @@
       "EDIT": "Cập nhật"
     },
     "ASSISTANTS": {
-      "HEADER": "Assistants",
-      "NO_ASSISTANTS_AVAILABLE": "There are no assistants available in your account.",
-      "ADD_NEW": "Create a new assistant",
+      "HEADER": "Trợ lý",
+      "NO_ASSISTANTS_AVAILABLE": "Không có trợ lý nào có sẵn trong tài khoản của bạn.",
+      "ADD_NEW": "Tạo trợ lý mới",
       "DELETE": {
         "TITLE": "Bạn có chắc chắn muốn xóa trợ lý không?",
         "DESCRIPTION": "Hành động này là vĩnh viễn. Việc xóa trợ lý sẽ loại bỏ nó khỏi tất cả các hộp thư được kết nối và xoá bỏ toàn bộ kiến thức đã tạo ra.",
@@ -411,7 +411,7 @@
         "SUCCESS_MESSAGE": "Trợ lý đã được xóa thành công",
         "ERROR_MESSAGE": "Có lỗi khi xóa trợ lý, vui lòng thử lại."
       },
-      "FORM_DESCRIPTION": "Điền thông tin bên dưới để đặt tên trợ lý, mô tả mục đích sử dụng và xác định sản phẩm mà nó sẽ hỗ trợ.",
+      "FORM_DESCRIPTION": "Nhập thông tin bên dưới để đặt tên trợ lý, mô tả mục đích sử dụng và xác định sản phẩm mà nó sẽ hỗ trợ.",
       "CREATE": {
         "TITLE": "Tạo trợ lý",
         "SUCCESS_MESSAGE": "Trợ lý đã được tạo thành công",
@@ -420,46 +420,46 @@
       "FORM": {
         "UPDATE": "Cập nhật",
         "SECTIONS": {
-          "BASIC_INFO": "Basic Information",
-          "SYSTEM_MESSAGES": "System Messages",
-          "INSTRUCTIONS": "Instructions",
+          "BASIC_INFO": "Thông tin cơ bản",
+          "SYSTEM_MESSAGES": "Tin nhắn hệ thống",
+          "INSTRUCTIONS": "Hướng dẫn",
           "FEATURES": "Các tính năng",
-          "TOOLS": "Tools "
+          "TOOLS": "Công cụ"
         },
         "NAME": {
           "LABEL": "Tên",
-          "PLACEHOLDER": "Enter assistant name",
-          "ERROR": "The name is required"
+          "PLACEHOLDER": "Nhập tên trợ lý",
+          "ERROR": "Tên là bắt buộc"
         },
         "TEMPERATURE": {
-          "LABEL": "Response Temperature",
-          "DESCRIPTION": "Adjust how creative or restrictive the assistant's responses should be. Lower values produce more focused and deterministic responses, while higher values allow for more creative and varied outputs."
+          "LABEL": "Độ nhiệt phản hồi",
+          "DESCRIPTION": "Điều chỉnh mức độ sáng tạo hoặc hạn chế của phản hồi trợ lý. Giá trị thấp tạo ra phản hồi tập trung và xác định, trong khi giá trị cao cho phép phản hồi sáng tạo và đa dạng hơn."
         },
         "DESCRIPTION": {
           "LABEL": "Mô tả",
-          "PLACEHOLDER": "Enter assistant description",
-          "ERROR": "The description is required"
+          "PLACEHOLDER": "Nhập mô tả trợ lý",
+          "ERROR": "Mô tả là bắt buộc"
         },
         "PRODUCT_NAME": {
-          "LABEL": "Product Name",
-          "PLACEHOLDER": "Enter product name",
-          "ERROR": "The product name is required"
+          "LABEL": "Tên sản phẩm",
+          "PLACEHOLDER": "Nhập tên sản phẩm",
+          "ERROR": "Tên sản phẩm là bắt buộc"
         },
         "WELCOME_MESSAGE": {
-          "LABEL": "Welcome Message",
-          "PLACEHOLDER": "Enter welcome message"
+          "LABEL": "Tin nhắn chào mừng",
+          "PLACEHOLDER": "Nhập tin nhắn chào mừng"
         },
         "HANDOFF_MESSAGE": {
-          "LABEL": "Handoff Message",
-          "PLACEHOLDER": "Enter handoff message"
+          "LABEL": "Tin nhắn chuyển giao",
+          "PLACEHOLDER": "Nhập tin nhắn chuyển giao"
         },
         "RESOLUTION_MESSAGE": {
-          "LABEL": "Resolution Message",
-          "PLACEHOLDER": "Enter resolution message"
+          "LABEL": "Tin nhắn giải quyết",
+          "PLACEHOLDER": "Nhập tin nhắn giải quyết"
         },
         "INSTRUCTIONS": {
-          "LABEL": "Instructions",
-          "PLACEHOLDER": "Enter instructions for the assistant"
+          "LABEL": "Hướng dẫn",
+          "PLACEHOLDER": "Nhập hướng dẫn cho trợ lý"
         },
         "FEATURES": {
           "TITLE": "Tính năng",
@@ -468,10 +468,10 @@
         }
       },
       "EDIT": {
-        "TITLE": "Update the assistant",
-        "SUCCESS_MESSAGE": "The assistant has been successfully updated",
-        "ERROR_MESSAGE": "There was an error updating the assistant, please try again.",
-        "NOT_FOUND": "Could not find the assistant. Please try again."
+        "TITLE": "Cập nhật trợ lý",
+        "SUCCESS_MESSAGE": "Trợ lý đã được cập nhật thành công",
+        "ERROR_MESSAGE": "Có lỗi khi cập nhật trợ lý, vui lòng thử lại",
+        "NOT_FOUND": "Không tìm thấy trợ lý. Vui lòng thử lại."
       },
       "OPTIONS": {
         "EDIT_ASSISTANT": "Chỉnh sửa trợ lý",
@@ -482,8 +482,8 @@
         "TITLE": "Không có trợ lý",
         "SUBTITLE": "Tạo trợ lý để cung cấp phản hồi nhanh chóng và chính xác cho người dùng. Nó có thể học từ các bài hướng dẫn và các cuộc đối thoại trước đây.",
         "FEATURE_SPOTLIGHT": {
-          "TITLE": "AI Agent Assistant",
-          "NOTE": "AI Agent Assistant tương tác trực tiếp với khách hàng, học từ bài viết hỗ trợ và các cuộc đối thoại trước, và đưa ra phản hồi nhanh, chính xác. Nó xử lý câu hỏi ban đầu trước khi chuyển giao cho nhân viên hỗ trợ khi cần."
+          "TITLE": "Trợ lý AI",
+          "NOTE": "Trợ lý AI tương tác trực tiếp với khách hàng, học từ các bài hỗ trợ và các cuộc đối thoại trước đó, và đưa ra phản hồi nhanh, chính xác. Nó xử lý câu hỏi ban đầu trước khi chuyển giao cho nhân viên hỗ trợ khi cần."
         }
       }
     },
@@ -527,8 +527,8 @@
         "TITLE": "Không có tài liệu",
         "SUBTITLE": "Tài liệu được dùng bởi trợ lý để tạo các FAQ. Bạn có thể nhập tài liệu để cung cấp ngữ cảnh cho trợ lý.",
         "FEATURE_SPOTLIGHT": {
-          "TITLE": "AI Agent Document",
-          "NOTE": "Một tài liệu trong AI Agent đóng vai trò là nguồn kiến thức cho trợ lý. Bằng cách kết nối trung tâm hỗ trợ hoặc hướng dẫn, AI Agent có thể phân tích nội dung và đưa ra phản hồi chính xác cho các thắc mắc của khách hàng."
+          "TITLE": "Tài liệu Trợ lý AI",
+          "NOTE": "Một tài liệu trong Trợ lý AI đóng vai trò là nguồn kiến thức cho trợ lý. Bằng cách kết nối trung tâm hỗ trợ hoặc hướng dẫn, Trợ lý AI có thể phân tích nội dung và đưa ra phản hồi chính xác cho các thắc mắc của khách hàng."
         }
       }
     },
@@ -608,8 +608,8 @@
         "TITLE": "Không tìm thấy FAQ",
         "SUBTITLE": "FAQ giúp trợ lý của bạn cung cấp câu trả lời nhanh chóng và chính xác cho các câu hỏi khách hàng. Chúng có thể được tạo tự động từ nội dung của bạn hoặc được thêm thủ công.",
         "FEATURE_SPOTLIGHT": {
-          "TITLE": "AI Agent FAQ",
-          "NOTE": "AI Agent FAQ phát hiện các câu hỏi thường gặp — dù thiếu trong cơ sở kiến thức của bạn hoặc được hỏi nhiều — và tạo ra các FAQ phù hợp giúp cải thiện hỗ trợ. Bạn có thể xem xét và quyết định phê duyệt hay từ chối từng gợi ý."
+          "TITLE": "FAQ Trợ lý AI",
+          "NOTE": "FAQ Trợ lý AI phát hiện các câu hỏi thường gặp — dù chưa có trong cơ sở kiến thức hoặc được hỏi nhiều — và tạo ra các FAQ phù hợp giúp cải thiện hỗ trợ. Bạn có thể xem xét và quyết định phê duyệt hay từ chối từng gợi ý."
         }
       }
     },

@@ -607,7 +607,8 @@
       },
       "ACTION_BUTTONS": {
         "DISCARD": "Hủy bỏ",
-        "SEND": "Gửi ({keyCode})"
+        "SEND": "Gửi ({keyCode})",
+        "MAKE_CALL": "Make a Call"
       }
     }
   }

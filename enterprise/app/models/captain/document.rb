@@ -4,7 +4,6 @@
 #
 #  id            :bigint           not null, primary key
 #  content       :text
-#  crawl_type    :string           default("full_crawl")
 #  document_type :integer          default("web"), not null
 #  external_link :string           not null
 #  name          :string

@@ -31,6 +31,7 @@ export default {
       twimlAppSid: '',
       providerOptions: [
         { value: 'twilio', label: 'Twilio' },
+        { value: 'stringee', label: 'Stringee' }
         // Add more providers as needed
         // { value: 'other_provider', label: 'Other Provider' },
       ],
@@ -54,10 +55,10 @@ export default {
         required: this.provider === 'twilio',
       },
       apiKeySid: {
-        required: this.provider === 'twilio',
+        required: this.provider === 'twilio' || this.provider === 'stringee'
       },
       apiKeySecret: {
-        required: this.provider === 'twilio',
+        required: this.provider === 'twilio' || this.provider === 'stringee'
       },
       // TwiML App SID is not required, but if provided it must follow Twilio's format
       twimlAppSid: {
@@ -87,6 +88,13 @@ export default {
         return config;
       }
       // Add handler for other providers here
+      if (this.provider === 'stringee') {
+        const config = {
+          api_key_sid: this.apiKeySid,
+          api_key_secret: this.apiKeySecret,
+        };
+        return config;
+      }
       return {};
     },
     async createChannel() {
@@ -144,7 +152,7 @@ export default {
           {{ $t('INBOX_MGMT.ADD.VOICE.PROVIDER.LABEL') }}
           <select
             v-model="provider"
-            class="p-2 bg-white border border-n-blue-100 rounded"
+            class="p-2 border border-n-blue-100 rounded"
             @change="onProviderChange"
           >
             <option
@@ -257,12 +265,66 @@ export default {
               "
             />
             <span class="help-text">
-              {{ $t('INBOX_MGMT.ADD.VOICE.TWILIO.TWIML_APP_SID.HELP', 'Required for browser-based calling. Create a TwiML App in the Twilio Console with Voice URLs pointing to your Chatwoot instance.') }}
+              {{ $t('INBOX_MGMT.ADD.VOICE.TWILIO.TWIML_APP_SID.HELP', 'Required for browser-based calling. Create a TwiML App in the Twilio Console with Voice URLs pointing to your Shopiz instance.') }}
             </span>
           </label>
         </div>
       </div>
 
+      <!-- Stringee Provider Config -->
+      <div v-if="provider === 'stringee'" class="flex-shrink-0 flex-grow-0">
+        <div class="flex-shrink-0 flex-grow-0">
+          <label :class="{ error: v$.phoneNumber.$error }">
+            {{ $t('INBOX_MGMT.ADD.VOICE.PHONE_NUMBER.LABEL') }}
+            <input
+              v-model.trim="phoneNumber"
+              type="text"
+              :placeholder="$t('INBOX_MGMT.ADD.VOICE.PHONE_NUMBER.PLACEHOLDER')"
+              @blur="v$.phoneNumber.$touch"
+            />
+            <span v-if="v$.phoneNumber.$error" class="message">
+              {{ $t('INBOX_MGMT.ADD.VOICE.PHONE_NUMBER.ERROR') }}
+            </span>
+          </label>
+        </div>
+
+        <div class="flex-shrink-0 flex-grow-0">
+          <label :class="{ error: v$.apiKeySid.$error }">
+            {{ $t('INBOX_MGMT.ADD.VOICE.TWILIO.API_KEY_SID.LABEL', 'API Key SID') }}
+            <input
+              v-model.trim="apiKeySid"
+              type="text"
+              :placeholder="
+                $t('INBOX_MGMT.ADD.VOICE.TWILIO.API_KEY_SID.PLACEHOLDER', 'Enter your Stringee API Key SID')
+              "
+              @blur="v$.apiKeySid.$touch"
+            />
+            <span v-if="v$.apiKeySid.$error" class="message">
+              {{ $t('INBOX_MGMT.ADD.VOICE.TWILIO.API_KEY_SID.REQUIRED', 'API Key SID is required') }}
+            </span>
+            <span class="help-text">
+              {{ $t('INBOX_MGMT.ADD.VOICE.TWILIO.API_KEY_SID.HELP', 'You can create API keys in the Stringee Console') }}
+            </span>
+          </label>
+        </div>
+
+        <div class="flex-shrink-0 flex-grow-0">
+          <label :class="{ error: v$.apiKeySecret.$error }">
+            {{ $t('INBOX_MGMT.ADD.VOICE.TWILIO.API_KEY_SECRET.LABEL', 'API Key Secret') }}
+            <input
+              v-model.trim="apiKeySecret"
+              type="text"
+              :placeholder="
+                $t('INBOX_MGMT.ADD.VOICE.TWILIO.API_KEY_SECRET.PLACEHOLDER', 'Enter your Stringee API Key Secret')
+              "
+              @blur="v$.apiKeySecret.$touch"
+            />
+            <span v-if="v$.apiKeySecret.$error" class="message">
+              {{ $t('INBOX_MGMT.ADD.VOICE.TWILIO.API_KEY_SECRET.REQUIRED', 'API Key Secret is required') }}
+            </span>
+          </label>
+        </div>
+      </div>
       <!-- Add other provider configs here -->
 
       <div class="mt-4">
