@@ -3,7 +3,7 @@
 captain:
   name: 'Captain'
   description: 'Enable AI-powered conversations with your customers.'
-  enabled: <%= (ShopizHub.pricing_plan != 'community') %>
+  enabled: <%= (ChatwootHub.pricing_plan != 'community') %>
   #enabled: true
   icon: 'icon-captain'
   config_key: 'captain'
@@ -11,7 +11,7 @@ captain:
 custom_branding:
   name: 'Custom Branding'
   description: 'Apply your own branding to this installation.'
-  enabled: <%= (ShopizHub.pricing_plan != 'community') %>
+  enabled: <%= (ChatwootHub.pricing_plan != 'community') %>
   #enabled: true
   icon: 'icon-paint-brush-line'
   config_key: 'custom_branding'
@@ -19,20 +19,20 @@ custom_branding:
 agent_capacity:
   name: 'Agent Capacity'
   description: 'Set limits to auto-assigning conversations to your agents.'
-  enabled: <%= (ShopizHub.pricing_plan != 'community') %>
+  enabled: <%= (ChatwootHub.pricing_plan != 'community') %>
   icon: 'icon-hourglass-line'
   enterprise: true
 audit_logs:
   name: 'Audit Logs'
   description: 'Track and trace account activities with ease with detailed audit logs.'
-  enabled: <%= (ShopizHub.pricing_plan != 'community') %>
+  enabled: <%= (ChatwootHub.pricing_plan != 'community') %>
   #enabled: true
   icon: 'icon-menu-search-line'
   enterprise: true
 disable_branding:
   name: 'Disable Branding'
   description: 'Disable branding on live-chat widget and external emails.'
-  enabled: <%= (ShopizHub.pricing_plan != 'community') %>
+  enabled: <%= (ChatwootHub.pricing_plan != 'community') %>
   #enabled: true
   icon: 'icon-sailbot-fill'
   enterprise: true

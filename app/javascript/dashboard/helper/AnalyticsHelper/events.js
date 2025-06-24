@@ -30,6 +30,12 @@ export const LABEL_EVENTS = Object.freeze({
   APPLY_LABEL: 'Applied a label',
 });
 
+export const PRODUCT_EVENTS = Object.freeze({
+  CREATE: 'Created a product',
+  UPDATE: 'Updated a product',
+  DELETED: 'Deleted a product',
+});
+
 // REPORTS EVENTS
 export const REPORTS_EVENTS = Object.freeze({
   DOWNLOAD_REPORT: 'Downloaded a report',

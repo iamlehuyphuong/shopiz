@@ -189,7 +189,7 @@ vi:
       response: 'Bạn hãy vui lòng đánh giá hội thoại, %{link}'
   contacts:
     online:
-      delete: '%{contact_name} đang trực tuyến, vui lòng thử lại sau'
+      delete: '%{contact_name} đang online, vui lòng thử lại sau'
   integration_apps:
     dashboard_apps:
       name: 'Ứng dụng bảng điều khiển'

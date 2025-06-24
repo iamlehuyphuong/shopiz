@@ -4,7 +4,7 @@
 #
 #  id            :bigint           not null, primary key
 #  content       :text
-#  document_type :integer          default("web"), not null
+#  document_type :integer          default("url"), not null
 #  external_link :string           not null
 #  name          :string
 #  status        :integer          default("in_progress"), not null
@@ -44,11 +44,13 @@ class Captain::Document < ApplicationRecord
   }
 
   enum document_type: {
-    web: 0,
-    notion: 1
+    url: 0,
+    pdf: 1,
+    notion: 2
   }
 
   before_create :ensure_within_plan_limit
+  before_create :detect_document_type
   after_create_commit :enqueue_crawl_job
   after_create_commit :update_document_usage
   after_destroy :update_document_usage
@@ -58,12 +60,38 @@ class Captain::Document < ApplicationRecord
   scope :for_account, ->(account_id) { where(account_id: account_id) }
   scope :for_assistant, ->(assistant_id) { where(assistant_id: assistant_id) }
 
+  def url_document?
+    document_type == 'url'
+  end
+
+  def pdf_document?
+    document_type == 'pdf'
+  end
+
   private
 
   def enqueue_crawl_job
     return if status != 'in_progress'
 
-    Captain::Documents::CrawlJob.perform_later(self)
+    if pdf_document?
+      Captain::Documents::PdfProcessingJob.perform_later(self)
+    else
+      Captain::Documents::CrawlJob.perform_later(self)
+    end
+  end
+
+  def detect_document_type
+    return unless external_link.present?
+    
+    # Check if URL points to a PDF file
+    uri = URI.parse(external_link)
+    if uri.path.downcase.end_with?('.pdf') || external_link.downcase.include?('.pdf')
+      self.document_type = :pdf
+    else
+      self.document_type = :url
+    end
+  rescue URI::InvalidURIError
+    self.document_type = :url
   end
 
   def enqueue_response_builder_job

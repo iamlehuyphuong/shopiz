@@ -185,9 +185,9 @@
       "AVAILABILITY": {
         "LABEL": "Khả dụng",
         "STATUS": {
-          "ONLINE": "Trực tuyến",
+          "ONLINE": "Online",
           "BUSY": "Bận",
-          "OFFLINE": "Không trực tuyến"
+          "OFFLINE": "Offline"
         },
         "SET_AVAILABILITY_SUCCESS": "Tính khả dụng đã được thiết lập thành công",
         "SET_AVAILABILITY_ERROR": "Không thể đặt, vui lòng thử lại",
@@ -224,7 +224,7 @@
     "PROFILE_SETTINGS": "Cài Đặt Hồ Sơ",
     "KEYBOARD_SHORTCUTS": "Phím tắt",
     "APPEARANCE": "Thay đổi giao diện",
-    "SUPER_ADMIN_CONSOLE": "Bảng điều khiển Quản trị Siêu cấp",
+    "SUPER_ADMIN_CONSOLE": "Quản trị hệ thống",
     "DOCS": "Đọc tài liệu",
     "LOGOUT": "Đăng xuất"
   },
@@ -324,6 +324,10 @@
     "LANDING_PAGE": "Landing Page",
     "FORM": "Biểu mẫu",
     "CAMPAIGNS": "Chiến dịch",
+    "SALES": "Bán hàng",
+    "SALES_PIPELINE": "Cơ hội",
+    "SALES_CATALOG": "Sản phẩm",
+    "SALES_ORDERS": "Đơn hàng",
     "ONGOING": "Đang diễn ra",
     "ONE_OFF": "Một lần",
     "REPORTS_SLA": "SLA",
@@ -333,7 +337,7 @@
     "REPORTS_INBOX": "Kênh",
     "REPORTS_TEAM": "Nhóm",
     "SET_AVAILABILITY_TITLE": "Đặt trạng thái của bạn",
-    "SET_YOUR_AVAILABILITY": "Cài đặt khả dụng của bạn",
+    "SET_YOUR_AVAILABILITY": "Trạng thái của bạn",
     "SLA": "SLA",
     "CUSTOM_ROLES": "Vai trò tùy chỉnh",
     "BETA": "Beta",
@@ -349,9 +353,9 @@
     },
     "CHANNELS": "Kênh",
     "SET_AUTO_OFFLINE": {
-      "TEXT": "Tự động chuyển sang ngoại tuyến",
-      "INFO_TEXT": "Hệ thống sẽ tự động chuyển bạn sang trạng thái ngoại tuyến khi không sử dụng ứng dụng hoặc bảng điều khiển.",
-      "INFO_SHORT": "Tự động chuyển sang ngoại tuyến khi không sử dụng ứng dụng."
+      "TEXT": "Tự động chuyển sang offline",
+      "INFO_TEXT": "Hệ thống sẽ tự động chuyển bạn sang trạng thái offline khi không sử dụng ứng dụng hoặc bảng điều khiển.",
+      "INFO_SHORT": "Tự động chuyển sang offline khi không sử dụng ứng dụng."
     },
     "DOCS": "Đọc tài liệu"
   },

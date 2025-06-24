@@ -125,8 +125,18 @@ export default {
         this.currentUser,
         this.accountId
       );
+      console.log(
+        `User permissions for account ${this.accountId}: ${JSON.stringify(
+          userPermissions
+        )}`
+      );
       const menuItems = this.sideMenuConfig.primaryMenu;
       return menuItems.filter(menuItem => {
+        console.log(
+          `Checking permissions for ${menuItem.key} with permissions: ${JSON.stringify(
+            routesWithPermissions[menuItem.toStateName]
+          )}`
+        );
         const isAvailableForTheUser = hasPermissions(
           routesWithPermissions[menuItem.toStateName],
           userPermissions

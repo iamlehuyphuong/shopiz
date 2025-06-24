@@ -357,6 +357,28 @@ const menuItems = computed(() => {
       ],
     },
     {
+      name: 'Sales',
+      label: t('SIDEBAR.SALES'),
+      icon: 'i-lucide-sales',
+      children: [
+        {
+          name: 'pipeline',
+          label: t('SIDEBAR.SALES_PIPELINE'),
+          to: accountScopedRoute('sales_pipeline_index'),
+        },
+        {
+          name: 'orders',
+          label: t('SIDEBAR.SALES_ORDERS'),
+          to: accountScopedRoute('sales_orders_index'),
+        },
+        {
+          name: 'catalog',
+          label: t('SIDEBAR.SALES_CATALOG'),
+          to: accountScopedRoute('sales_catalog_index'),
+        },
+      ],
+    },
+    {
       name: 'Portals',
       label: t('SIDEBAR.HELP_CENTER.TITLE'),
       icon: 'i-lucide-library-big',

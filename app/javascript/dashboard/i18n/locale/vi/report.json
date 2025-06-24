@@ -470,7 +470,7 @@
   },
   "OVERVIEW_REPORTS": {
     "HEADER": "Tổng quan",
-    "LIVE": "Trực tuyến",
+    "LIVE": "Online",
     "ACCOUNT_CONVERSATIONS": {
       "HEADER": "Mở cuộc hội thoại",
       "LOADING_MESSAGE": "Đang tải số liệu cuộc hội thoại...",
@@ -511,7 +511,7 @@
     },
     "AGENT_STATUS": {
       "HEADER": "Trạng thái tổng đài viên",
-      "ONLINE": "Trực tuyến",
+      "ONLINE": "Online",
       "BUSY": "Bận",
       "OFFLINE": "Không Trực Tuyến"
     }

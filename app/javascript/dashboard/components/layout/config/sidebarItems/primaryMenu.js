@@ -26,6 +26,15 @@ const primaryMenuItems = accountId => [
     toStateName: 'captain_assistants_index',
   },
   {
+    icon: 'sales',
+    key: 'sales',
+    label: 'SALES',
+    featureFlag: FEATURE_FLAGS.SALES,
+    alwaysVisibleOnChatwootInstances: true,
+    toState: frontendURL(`accounts/${accountId}/sales/pipeline`),
+    toStateName: 'sales_pipeline_index',
+  },
+  {
     icon: 'book-contacts',
     key: 'contacts',
     label: 'CONTACTS',

@@ -546,9 +546,9 @@
       "AGENT_ASSIGNMENT": "Phân công cuộc trò chuyện",
       "AGENT_ASSIGNMENT_SUB_TEXT": "Cập nhật phân công cuộc trò chuyện",
       "VOICE_CALL_ROUTING": "Định tuyến cuộc gọi",
-      "VOICE_CALL_ROUTING_SUB_TEXT": "Cấu hình cách xử lý cuộc gọi khi các nhân viên không trực tuyến",
+      "VOICE_CALL_ROUTING_SUB_TEXT": "Cấu hình cách xử lý cuộc gọi khi các nhân viên không online",
       "PERSONAL_PHONE_ROUTING": "Bật định tuyến đến điện thoại cá nhân",
-      "PERSONAL_PHONE_ROUTING_SUB_TEXT": "Khi một nhân viên không trực tuyến trên Chatwoot, định tuyến cuộc gọi đến số điện thoại cá nhân của họ",
+      "PERSONAL_PHONE_ROUTING_SUB_TEXT": "Khi một nhân viên không online trên Shopiz, định tuyến cuộc gọi đến số điện thoại cá nhân của họ",
       "AGENT_PHONE_SETTINGS_INFO": "Mỗi nhân viên có thể cấu hình số điện thoại cá nhân của họ trên trang cài đặt hồ sơ",
       "UPDATE": "Cập nhật",
       "ENABLE_EMAIL_COLLECT_BOX": "Bật hộp thu thập email",
@@ -815,7 +815,7 @@
       },
       "BODY": {
         "TEAM_AVAILABILITY": {
-          "ONLINE": "Chúng tôi đang trực tuyến",
+          "ONLINE": "Chúng tôi đang online",
           "OFFLINE": "Hiện tại chúng tôi đang bận chút"
         },
         "USER_MESSAGE": "Xin chào",
