@@ -65,8 +65,8 @@ export default {
         'https://oauth.zaloapp.com/v4/oa/permission?app_id=' +
           window.shopizConfig.zaloAppId +
           '&redirect_uri=' +
-          window.shopizConfig.hostURL +
-          '/zalo/callback&state=' +
+          encodeURIComponent(window.shopizConfig.hostURL + '/zalo/callback/') +
+          '&state=' +
           encodeURIComponent(this.accountId)
       );
     },
