@@ -54,7 +54,8 @@ import captainInboxes from './captain/inboxes';
 import captainBulkActions from './captain/bulkActions';
 import copilotThreads from './captain/copilotThreads';
 import copilotMessages from './captain/copilotMessages';
-import products from './modules/sales/products';
+import salesProducts from './modules/sales/products';
+import salesOrders from './modules/sales/orders';
 
 const plugins = [];
 
@@ -114,7 +115,8 @@ export default createStore({
     captainBulkActions,
     copilotThreads,
     copilotMessages,
-    products,
+    salesProducts,
+    salesOrders,
   },
   plugins,
 });

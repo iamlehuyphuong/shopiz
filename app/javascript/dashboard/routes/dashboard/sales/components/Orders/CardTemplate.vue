@@ -24,13 +24,13 @@ export default {
       return name.match(/\b(\w)/g).join("").toUpperCase();
     },
     getCardFooter: function(data) {
-      let tagDiv = "";
-      let tags = data.Tags.split(",");
-      for (let tag of tags) {
-        tagDiv += "<div class='e-card-tag-field e-tooltip-text'>" + tag + "</div>";
+      let productDiv = "";
+      let products = data.products;
+      for (let product of products) {
+        productDiv += "<div class='e-card-tag-field e-tooltip-text'>" + product.title + "</div>";
       }
-      tagDiv += "<div class='e-card-avatar'>" + this.getString(data.Assignee) + "</div>";
-      return tagDiv;
+      productDiv += "<div class='e-card-avatar'>" + this.getString(data.source) + "</div>";
+      return productDiv;
     }
   }
 };

@@ -296,6 +296,9 @@ Rails.application.routes.draw do
               collection do
                 post :auth
                 get :orders
+                get :all_orders
+                get :products
+                get :customers
               end
             end
             resource :linear, controller: 'linear', only: [] do

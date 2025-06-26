@@ -1,6 +1,6 @@
 import * as MutationHelpers from 'shared/helpers/vuex/mutationHelpers';
 import types from '../../mutation-types';
-import ProductsAPI from '../../../api/products';
+import ProductsAPI from '../../../api/sales/products';
 import AnalyticsHelper from '../../../helper/AnalyticsHelper';
 import { PRODUCT_EVENTS } from '../../../helper/AnalyticsHelper/events';
 
@@ -48,6 +48,7 @@ export const actions = {
     commit(types.SET_PRODUCT_UI_FLAG, { isFetching: true });
     try {
       const response = await ProductsAPI.getProducts();
+      console.log("PRODUCTS",response)
       const sortedProducts = response.data.products.sort((a, b) =>
         a.title.localeCompare(b.title)
       );

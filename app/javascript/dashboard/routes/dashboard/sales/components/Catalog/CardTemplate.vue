@@ -7,7 +7,7 @@
     </div>
     <div class="e-card-content e-tooltip-text">
       <div class="e-image"><img :src="data.thumbnail"/></div>
-      <div class="e-text">{{data.description}}</div>
+      <div class="e-text" v-html="data.description"></div>
     </div>
     <div class="e-card-custom-footer" v-html="getCardFooter(data)"></div>
   </div>
@@ -30,7 +30,7 @@ export default {
       for (let tag of tags) {
         tagDiv += "<div class='e-card-tag-field e-tooltip-text'>" + tag + "</div>";
       }
-      tagDiv += "<div class='e-card-avatar'>" + this.getString(data.category) + "</div>";
+      tagDiv += "<div class='e-card-avatar'>" + this.getString(data.source) + "</div>";
       return tagDiv;
     }
   }

@@ -211,6 +211,80 @@
         }
       }
     },
+    "SURVEY": {
+      "HEADER_TITLE": "Chiến dịch khảo sát",
+      "NEW_CAMPAIGN": "Tạo chiến dịch",
+      "EMPTY_STATE": {
+        "TITLE": "Không có chiến dịch khảo sát khả dụng",
+        "SUBTITLE": "Cá nhân hoá việc tiếp cận khách hàng với khảo sát được hỗ trợ bởi AI. Hoàn hảo cho nhắc lịch hẹn, xác thực và theo dõi sau một cách tự nhiên. Trợ lý AI của bạn có thể thích ứng với phản hồi khách hàng, thu thập thông tin và làm giàu dữ liệu tiềm năng—giúp tiết kiệm thời gian cho đội ngũ.",
+        "JS_API_DESCRIPTION": "Bạn có thể kích hoạt chiến dịch khảo sát qua chương trình bằng API JavaScript của chúng tôi:"
+      },
+      "CARD": {
+        "STATUS": {
+          "COMPLETED": "Hoàn thành",
+          "SCHEDULED": "Đã lên lịch"
+        },
+        "CAMPAIGN_DETAILS": {
+          "SENT_BY": "Gửi bởi ",
+          "FROM": " từ ",
+          "ON": " vào ",
+          "BOT": "Bot"
+        }
+      },
+      "EMPTY_STATE_BADGE": {
+        "ENABLED": "Đang hoạt động",
+        "DISABLED": "Không hoạt động"
+      },
+      "DETAILS": {
+        "MESSAGE": "Tin nhắn",
+        "INBOX": "Hộp thư",
+        "AUDIENCE": "Tập khách hàng",
+        "SCHEDULED_AT": "Thời gian dự kiến"
+      },
+      "CREATE": {
+        "TITLE": "Tạo chiến dịch khảo sát",
+        "FORM": {
+          "TITLE": {
+            "LABEL": "Tiêu đề",
+            "PLACEHOLDER": "Nhập tiêu đề chiến dịch khảo sát của bạn",
+            "ERROR": "Tiêu đề là bắt buộc"
+          },
+          "MESSAGE": {
+            "LABEL": "Kịch bản cuộc gọi",
+            "PLACEHOLDER": "Thêm lời nhắc để hướng dẫn AI trong cuộc gọi này. Hãy cụ thể về giọng điệu, thông tin cần thu thập và cách xử lý các phản hồi khác nhau.",
+            "ERROR": "Kịch bản cuộc gọi là bắt buộc"
+          },
+          "INBOX": {
+            "LABEL": "Hộp thư khảo sát",
+            "PLACEHOLDER": "Chọn hộp thư khảo sát",
+            "ERROR": "Hộp thư khảo sát là bắt buộc"
+          },
+          "SENT_BY": {
+            "LABEL": "Người gửi",
+            "PLACEHOLDER": "Chọn người gửi",
+            "ERROR": "Người gửi là bắt buộc"
+          },
+          "AUDIENCE": {
+            "LABEL": "Tập khách hàng",
+            "PLACEHOLDER": "Chọn nhãn khách hàng",
+            "ERROR": "Tập khách hàng là bắt buộc"
+          },
+          "SCHEDULED_AT": {
+            "LABEL": "Thời gian dự kiến",
+            "PLACEHOLDER": "Chọn thời điểm bắt đầu chiến dịch",
+            "ERROR": "Thời gian dự kiến là bắt buộc"
+          },
+          "BUTTONS": {
+            "CREATE": "Tạo",
+            "CANCEL": "Huỷ"
+          },
+          "API": {
+            "SUCCESS_MESSAGE": "Chiến dịch khảo sát được tạo thành công",
+            "ERROR_MESSAGE": "Đã có lỗi. Vui lòng thử lại."
+          }
+        }
+      }
+    },
     "CONFIRM_DELETE": {
       "TITLE": "Bạn có chắc muốn xoá?",
       "DESCRIPTION": "Hành động xoá là vĩnh viễn và không thể hoàn tác.",

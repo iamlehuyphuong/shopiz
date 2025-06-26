@@ -9,8 +9,8 @@ defineProps({
 const store = useStore();
 
 onMounted(() => {
-  store.dispatch('products/get');
-  //store.dispatch('labels/get');
+  store.dispatch('salesProducts/get');
+  store.dispatch('salesOrders/get');
 });
 </script>
 

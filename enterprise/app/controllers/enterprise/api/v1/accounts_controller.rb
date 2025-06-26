@@ -46,6 +46,7 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
     end
     plans = []
     installation_config.value.each do |plan|
+      next if plan['name'] == 'Trial'
       plan['products'] = []
       plan['product_id'].each do |product_id|
         product = Polar::Product.get(product_id)

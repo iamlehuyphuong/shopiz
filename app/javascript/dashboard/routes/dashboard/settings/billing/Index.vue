@@ -206,7 +206,7 @@ onMounted(fetchAccountDetails);
         <template v-for="(tab, index) in tabs" :key="tab.key">
           <div
             v-show="activeTab === index"
-            class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4"
+            class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"
           >
             <template v-for="plan in plans" :key="plan.products[index].id">
               <BillingCard

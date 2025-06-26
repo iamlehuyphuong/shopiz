@@ -36,6 +36,12 @@ export const PRODUCT_EVENTS = Object.freeze({
   DELETED: 'Deleted a product',
 });
 
+export const ORDER_EVENTS = Object.freeze({
+  CREATE: 'Created a order',
+  UPDATE: 'Updated a order',
+  DELETED: 'Deleted a order',
+});
+
 // REPORTS EVENTS
 export const REPORTS_EVENTS = Object.freeze({
   DOWNLOAD_REPORT: 'Downloaded a report',

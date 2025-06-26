@@ -99,6 +99,48 @@
     <%= vite_javascript_tag @application_pack %>
     <script src="https://cdn.activepieces.com/sdk/embed/0.3.7.js"></script>
     <link href="https://cdn.syncfusion.com/ej2/29.2.4/tailwind3-dark.css" rel="stylesheet">
+    <style>
+    :root {
+      --color-sf-content-bg-color: rgb(40 42 45);
+      --color-sf-content-bg-color-alt1: #111113;
+    }
+    </style>
+    <script>
+      // Auto-remove elements containing the Syncfusion trial message using MutationObserver
+      const removeSyncfusionTrial = (text) => {
+        const selector = [
+          "h1", "h2", "h3", "h4", "h5", "h6", "p", "span", "div"
+        ].map(tag => `${tag}:contains("${text}")`).join(",");
+        document.querySelectorAll(selector).forEach(el => {
+          let parent = el.closest("div");
+          if (parent) parent.remove();
+        });
+      };
+
+      // Polyfill for :contains in querySelectorAll (not supported natively)
+      const removeSyncfusionTrialPolyfill = (text) => {
+        const tags = ["h1", "h2", "h3", "h4", "h5", "h6", "p", "span", "div"];
+        tags.forEach(tag => {
+          document.querySelectorAll(tag).forEach(el => {
+        if (el.textContent.includes(text)) {
+          let parent = el.closest("div");
+          if (parent) parent.remove();
+        }
+          });
+        });
+      };
+
+      // Initial removal
+      removeSyncfusionTrialPolyfill("Claim your FREE account and get a key in less than a minute");
+      removeSyncfusionTrialPolyfill("This application was built using a trial version of Syncfusion");
+
+      // Observe DOM changes
+      const observer = new MutationObserver(() => {
+        removeSyncfusionTrialPolyfill("Claim your FREE account and get a key in less than a minute");
+        removeSyncfusionTrialPolyfill("This application was built using a trial version of Syncfusion");
+      });
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+    </script>
   </head>
   <body class="text-slate-600">
     <div id="app"></div>
