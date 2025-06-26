@@ -44,7 +44,7 @@ class Campaign < ApplicationRecord
   belongs_to :inbox
   belongs_to :sender, class_name: 'User', optional: true
 
-  enum campaign_type: { ongoing: 0, one_off: 1 }
+  enum campaign_type: { ongoing: 0, one_off: 1, voice: 2, survey:3 }
   # TODO : enabled attribute is unneccessary . lets move that to the campaign status with additional statuses like draft, disabled etc.
   enum campaign_status: { active: 0, completed: 1 }
 
@@ -69,7 +69,7 @@ class Campaign < ApplicationRecord
 
   def validate_campaign_inbox
     return unless inbox
-    
+
     errors.add :inbox, 'Unsupported Inbox type' unless ['Website', 'Twilio SMS', 'Sms', 'Voice'].include? inbox.inbox_type
   end
 
