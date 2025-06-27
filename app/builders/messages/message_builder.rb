@@ -7,7 +7,7 @@ class Messages::MessageBuilder
     @private = params[:private] || false
     @conversation = conversation
     @user = user
-    @message_type = params[:message_type].to_s || 'outgoing'
+    @message_type = params[:message_type] || 'outgoing'
     @attachments = params[:attachments]
     @automation_rule = content_attributes&.dig(:automation_rule_id)
     return unless params.instance_of?(ActionController::Parameters)
@@ -148,12 +148,10 @@ class Messages::MessageBuilder
       echo_id: @params[:echo_id],
       source_id: @params[:source_id]
     }.merge(external_created_at).merge(automation_rule_id).merge(campaign_id).merge(template_params)
-    
+
     # Directly add content_attributes from params if present
-    if @params[:content_attributes].present?
-      message_attrs[:content_attributes] = content_attributes
-    end
-    
+    message_attrs[:content_attributes] = content_attributes if @params[:content_attributes].present?
+
     message_attrs
   end
 end
