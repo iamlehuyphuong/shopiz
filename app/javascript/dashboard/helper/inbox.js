@@ -24,7 +24,7 @@ const INBOX_ICON_MAP_FILL = {
   [INBOX_TYPES.EMAIL]: 'i-ri-mail-fill',
   [INBOX_TYPES.TELEGRAM]: 'i-ri-telegram-fill',
   [INBOX_TYPES.LINE]: 'i-ri-line-fill',
-  [INBOX_TYPES.ZALO]: 'i-ri-zalo-fill',
+  [INBOX_TYPES.ZALO]: 'i-ri-zalo-oa-fill',
   [INBOX_TYPES.ZALOPERSONAL]: 'i-ri-zalo-fill',
   [INBOX_TYPES.INSTAGRAM]: 'i-ri-instagram-fill',
   [INBOX_TYPES.VOICE]: 'i-ri-phone-fill',
@@ -41,7 +41,7 @@ const INBOX_ICON_MAP_LINE = {
   [INBOX_TYPES.EMAIL]: 'i-ri-mail-line',
   [INBOX_TYPES.TELEGRAM]: 'i-ri-telegram-line',
   [INBOX_TYPES.LINE]: 'i-ri-line-line',
-  [INBOX_TYPES.ZALO]: 'i-ri-zalo-line',
+  [INBOX_TYPES.ZALO]: 'i-ri-zalo-oa-line',
   [INBOX_TYPES.ZALOPERSONAL]: 'i-ri-zalo-line',
   [INBOX_TYPES.INSTAGRAM]: 'i-ri-instagram-line',
   [INBOX_TYPES.VOICE]: 'i-ri-phone-line',
@@ -146,7 +146,7 @@ export const getInboxClassByType = (type, phoneNumber) => {
       return 'brand-instagram';
 
     case INBOX_TYPES.ZALO:
-      return 'brand-zalo';
+      return 'brand-zalo-oa';
 
     case INBOX_TYPES.ZALOPERSONAL:
       return 'brand-zalo';
