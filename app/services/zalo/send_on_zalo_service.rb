@@ -2,7 +2,7 @@ class Zalo::SendOnZaloService < Base::SendOnChannelService
   private
 
   def channel_class
-    Channel::Zalo
+    Channel::ZaloOa
   end
 
   def perform_reply

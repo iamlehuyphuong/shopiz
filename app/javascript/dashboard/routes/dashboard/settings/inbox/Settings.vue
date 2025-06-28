@@ -10,6 +10,7 @@ import FacebookReauthorize from './facebook/Reauthorize.vue';
 import InstagramReauthorize from './channels/instagram/Reauthorize.vue';
 import DuplicateInboxBanner from './channels/instagram/DuplicateInboxBanner.vue';
 import MicrosoftReauthorize from './channels/microsoft/Reauthorize.vue';
+import ZaloReauthorize from './channels/zalo/Reauthorize.vue';
 import GoogleReauthorize from './channels/google/Reauthorize.vue';
 import PreChatFormSettings from './PreChatForm/Settings.vue';
 import WeeklyAvailability from './components/WeeklyAvailability.vue';
@@ -41,6 +42,7 @@ export default {
     WidgetBuilder,
     SenderNameExamplePreview,
     MicrosoftReauthorize,
+    ZaloReauthorize,
     GoogleReauthorize,
     NextButton,
     InstagramReauthorize,
@@ -128,6 +130,16 @@ export default {
           {
             key: 'widgetBuilder',
             name: this.$t('INBOX_MGMT.TABS.WIDGET_BUILDER'),
+          },
+        ];
+      }
+
+      if (this.isAZaloPersonalChannel) {
+        visibleToAllChannelTabs = [
+          ...visibleToAllChannelTabs,
+          {
+            key: 'zaloPersonalLogin',
+            name: this.$t('INBOX_MGMT.ADD.ZALO.RELOGIN'),
           },
         ];
       }
@@ -807,6 +819,9 @@ export default {
       </div>
       <div v-if="selectedTabKey === 'widgetBuilder'">
         <WidgetBuilder :inbox="inbox" />
+      </div>
+      <div v-if="selectedTabKey === 'zaloPersonalLogin'">
+        <ZaloReauthorize :inbox="inbox" />
       </div>
       <div v-if="selectedTabKey === 'botConfiguration'">
         <BotConfiguration :inbox="inbox" />
