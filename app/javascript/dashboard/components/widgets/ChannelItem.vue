@@ -20,6 +20,9 @@ export default {
     hasZaloConfigured() {
       return window.shopizConfig?.zaloAppId;
     },
+    hasZaloPersonalConfigured() {
+      return window.shopizConfig?.zaloApiUrl;
+    },
     hasFbConfigured() {
       return window.shopizConfig?.fbAppId;
     },
@@ -41,12 +44,29 @@ export default {
         return this.enabledFeatures.channel_zalo && this.hasZaloConfigured;
       }
       if (key === 'zalopersonal') {
-        return this.enabledFeatures.channel_zalopersonal && this.hasZaloConfigured;
+        return this.enabledFeatures.channel_zalopersonal && this.hasZaloPersonalConfigured;
       }
       if (key === 'email') {
         return this.enabledFeatures.channel_email;
       }
-
+      if (key === 'sms') {
+        return this.enabledFeatures.channel_sms;
+      }
+      if (key === 'line') {
+        return this.enabledFeatures.channel_line;
+      }
+      if (key === 'voice') {
+        return this.enabledFeatures.channel_voice;
+      }
+      if (key === 'telegram') {
+        return this.enabledFeatures.channel_telegram;
+      }
+      if (key === 'api') {
+        return this.enabledFeatures.channel_api;
+      }
+      if (key === 'whatsapp') {
+        return this.enabledFeatures.channel_whatsapp;
+      }
       if (key === 'instagram') {
         return (
           this.enabledFeatures.channel_instagram && this.hasInstagramConfigured
@@ -57,6 +77,7 @@ export default {
         'twilio',
         'voice',
         'zalo',
+        'zalopersonal',
         'api',
         'whatsapp',
         'sms',

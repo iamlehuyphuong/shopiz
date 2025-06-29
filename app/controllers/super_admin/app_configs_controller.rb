@@ -41,7 +41,8 @@ class SuperAdmin::AppConfigsController < SuperAdmin::ApplicationController
       'slack' => %w[SLACK_CLIENT_ID SLACK_CLIENT_SECRET],
       'notion' => %w[NOTION_CLIENT_ID NOTION_CLIENT_SECRET],
       'instagram' => %w[INSTAGRAM_APP_ID INSTAGRAM_APP_SECRET INSTAGRAM_VERIFY_TOKEN INSTAGRAM_API_VERSION ENABLE_INSTAGRAM_CHANNEL_HUMAN_AGENT],
-      'zalo' => %w[ZALO_APP_ID ZALO_APP_SECRET ZALO_API_URL ZALO_OA_SECRET_KEY],
+      'zalo' => %w[ZALO_APP_ID ZALO_APP_SECRET ZALO_OA_SECRET_KEY],
+      'zalo_personal' => %w[ZALO_API_URL],
       'active_pieces' => %w[ACTIVE_PIECES_INSTANCE_URL ACTIVE_PIECES_JWT_SECRET]
     }
 

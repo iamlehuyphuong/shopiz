@@ -19,25 +19,25 @@
   help_url: https://help.shopiz.pro/hc/fb
 - name: channel_twitter
   display_name: Twitter Channel
-  enabled: true
+  enabled: false
   deprecated: true
 - name: ip_lookup
   display_name: IP Lookup
   enabled: false
 - name: disable_branding
   display_name: Disable Branding
-  enabled: true
+  enabled: false
   premium: true
 - name: email_continuity_on_api_channel
   display_name: Email Continuity on API Channel
   enabled: false
 - name: help_center
   display_name: Help Center
-  enabled: true
+  enabled: false
   help_url: https://help.shopiz.pro/hc/help-center
 - name: agent_bots
   display_name: Agent Bots
-  enabled: true
+  enabled: false
   help_url: https://help.shopiz.pro/hc/agent-bots
 - name: macros
   display_name: Macros
@@ -58,11 +58,11 @@
   help_url: https://help.shopiz.pro/hc/labels
 - name: custom_attributes
   display_name: Custom Attributes
-  enabled: true
+  enabled: false
   help_url: https://help.shopiz.pro/hc/custom-attributes
 - name: automations
   display_name: Automations
-  enabled: true
+  enabled: false
 - name: canned_responses
   display_name: Canned Responses
   enabled: true
@@ -83,11 +83,11 @@
   enabled: true
 - name: campaigns
   display_name: Campaigns
-  enabled: true
+  enabled: false
   help_url: https://help.shopiz.pro/hc/campaigns
 - name: sales
   display_name: Sales
-  enabled: true
+  enabled: false
   help_url: https://help.shopiz.pro/hc/sales
 - name: reports
   display_name: Reports
@@ -107,7 +107,7 @@
   enabled: true
 - name: audit_logs
   display_name: Audit Logs
-  enabled: true
+  enabled: false
   premium: true
 - name: response_bot
   display_name: Response Bot
@@ -142,11 +142,11 @@
   enabled: true
 - name: captain_integration
   display_name: Captain
-  enabled: true
+  enabled: false
   premium: true
 - name: custom_roles
   display_name: Custom Roles
-  enabled: true
+  enabled: false
   premium: true
 - name: chatwoot_v4
   display_name: Shopiz V4
@@ -161,14 +161,14 @@
   chatwoot_internal: false
 - name: shopify_integration
   display_name: Shopify Integration
-  enabled: true
+  enabled: false
 - name: search_with_gin
   display_name: Search messages with GIN
   enabled: true
   chatwoot_internal: false
 - name: channel_instagram
   display_name: Instagram Channel
-  enabled: true
+  enabled: false
 - name: crm_integration
   display_name: CRM Integration
   enabled: false
@@ -177,13 +177,33 @@
   enabled: true
 - name: channel_zalopersonal
   display_name: Zalo Personal Channel
-  enabled: true
+  enabled: false
   help_url: https://help.shopiz.pro/hc/zalo-personal
+- name: channel_telegram
+  display_name: Telegram Channel
+  enabled: false
+  help_url: https://help.shopiz.pro/hc/telegram
+- name: channel_api
+  display_name: API Channel
+  enabled: false
+  help_url: https://help.shopiz.pro/hc/api
+- name: channel_voice
+  display_name: Voice Channel
+  enabled: false
+  help_url: https://help.shopiz.pro/hc/voice
+- name: channel_line
+  display_name: Line Channel
+  enabled: false
+  help_url: https://help.shopiz.pro/hc/line
+- name: channel_whatsapp
+  display_name: Whatsapp Channel
+  enabled: false
+  help_url: https://help.shopiz.pro/hc/whatsapp
 - name: workflow
   display_name: Workflow
-  enabled: true
+  enabled: false
   help_url: https://help.shopiz.pro/hc/workflows
 - name: survey
   display_name: Survey
-  enabled: true
+  enabled: false
   help_url: https://help.shopiz.pro/hc/survey

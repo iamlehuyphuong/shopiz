@@ -119,6 +119,12 @@ zalo:
   enabled: true
   icon: 'icon-zalo'
   config_key: 'zalo'
+zalo_personal:
+  name: 'Zalo Personal'
+  description: 'Stay connected with your customers on Zalo Personal.'
+  enabled: true
+  icon: 'icon-zalo'
+  config_key: 'zalo_personal'
 activepieces:
   name: 'Active Pieces'
   description: 'Automation software that is AI-first.'
