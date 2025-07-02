@@ -240,8 +240,8 @@ const gridClass = computed(() => {
 const gridTemplate = computed(() => {
   const map = {
     [ORIENTATION.LEFT]: `
-      "bubble"
-      "meta"
+      "meta spacer"
+      "avatar bubble"
     `,
     [ORIENTATION.RIGHT]: `
       "bubble avatar"
@@ -260,7 +260,7 @@ const shouldGroupWithNext = computed(() => {
 
 const shouldShowAvatar = computed(() => {
   if (props.messageType === MESSAGE_TYPES.ACTIVITY) return false;
-  if (orientation.value === ORIENTATION.LEFT) return false;
+  //if (orientation.value === ORIENTATION.LEFT) return false;
 
   return true;
 });

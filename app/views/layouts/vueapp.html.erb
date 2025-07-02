@@ -98,14 +98,7 @@
     <% end %>
     <%= vite_client_tag %>
     <%= vite_javascript_tag @application_pack %>
-    <script src="https://cdn.activepieces.com/sdk/embed/0.3.7.js"></script>
-    <link href="https://cdn.syncfusion.com/ej2/29.2.4/tailwind3-dark.css" rel="stylesheet">
-    <style>
-    :root {
-      --color-sf-content-bg-color: rgb(40 42 45);
-      --color-sf-content-bg-color-alt1: #111113;
-    }
-    </style>
+    <link id="kanban-css" href="https://cdn.syncfusion.com/ej2/30.1.37/tailwind3-dark.css" rel="stylesheet">
     <script>
       // Auto-remove elements containing the Syncfusion trial message using MutationObserver
       const removeSyncfusionTrial = (text) => {

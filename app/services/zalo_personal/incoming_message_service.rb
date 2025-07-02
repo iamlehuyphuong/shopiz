@@ -5,19 +5,56 @@ class ZaloPersonal::IncomingMessageService
 
   def perform
     set_contact
-    update_contact_from_profile
     first_message_processing if @contact.messages.empty?
+    update_contact_from_profile
     set_conversation
 
+    icon_map = {
+      '/-strong' => '💪',
+      '/-heart' => '❤️',
+      ':-((' => '😭',
+      ':>' => '😊',
+      ':-h' => '🤗',
+      ':o' => '😮',
+      ':D' => '😃',
+      '/-like' => '👍',
+      '/-dislike' => '👎',
+      '/-haha' => '😂',
+      '/-wow' => '😲',
+      '/-sad' => '😢',
+      '/-angry' => '😠',
+      '/-kiss' => '😘',
+      '/-clap' => '👏',
+      '/-ok' => '👌',
+      '/-party' => '🥳',
+      '/-star' => '⭐',
+      '/-fire' => '🔥',
+      '/-cry' => '😭',
+      '/-love' => '😍',
+      '/-thumbsup' => '👍',
+      '/-thumbsdown' => '👎'
+    }
     if params[:data][:msgType] == 'webchat'
       if params[:data][:content].is_a?(Hash)
         data_content = params[:data][:content]
         params[:data][:content] = [data_content[:title], data_content[:description]].compact.join("\n")
       end
+      params[:data][:content] = icon_map[params[:data][:content]] || params[:data][:content]
       @message = @conversation.messages.create!(message_params)
+    elsif params[:data][:msgType] == 'chat.reaction'
+      data_content = params[:data][:content]
+      if data_content.is_a?(Hash) && (data_content[:rIcon])
+        icon = data_content[:rIcon]
+        icon = icon_map[icon] || icon
+        params[:data][:content] = icon
+        @message = @conversation.messages.create!(message_params)
+        if data_content && data_content[:rMsg] && data_content[:rMsg][0][:cMsgID].present?
+          @message.content_attributes[:in_reply_to_external_id] = data_content[:rMsg][0][:cMsgID]
+        end
+      end
     elsif params[:data][:msgType] == 'chat.video.msg'
       @file = params[:data][:content]
-      params[:data][:content] = ''
+      params[:data][:content] = nil
       @message = @conversation.messages.create!(message_params)
       @media = {
         type: 'video',
@@ -31,7 +68,7 @@ class ZaloPersonal::IncomingMessageService
       attach_media
     elsif params[:data][:msgType] == 'chat.photo'
       @file = params[:data][:content]
-      params[:data][:content] = ''
+      params[:data][:content] = nil
       @message = @conversation.messages.create!(message_params)
       @media = {
         type: 'image',
@@ -72,7 +109,13 @@ class ZaloPersonal::IncomingMessageService
       raise ArgumentError, 'Unexpected format for params[:data][:content]'
     end
 
-    #@message.content_attributes[:in_reply_to_external_id] = params[:data][:quote_msg_id] if params[:data][:quote_msg_id]
+    if params[:data][:idTo] != params[:_accountId] && params[:data][:dName].present?
+      params[:data][:content] = "#{params[:data][:dName]}\n#{params[:data][:content]}"
+    end
+
+    if params[:data][:quote] && params[:data][:quote][:cliMsgId].present?
+      @message.content_attributes[:in_reply_to_external_id] = params[:data][:quote][:cliMsgId]
+    end
     @message.save!
   end
 
@@ -88,7 +131,7 @@ class ZaloPersonal::IncomingMessageService
 
   def first_message_processing
     # try to get user info from followed user first
-    update_contact_from_profile
+    update_contact_from_profile_first
     # request user info for unfollowed user
     request_user_info if @contact.name == params[:data][:dName]
   end
@@ -108,6 +151,14 @@ class ZaloPersonal::IncomingMessageService
       :body => { :groupId => group_id, :ownId => access_token }.to_json,
       :headers => { 'Content-Type' => 'application/json' }
     )
+  end
+
+  def get_group_name
+    gId = params[:data][:idTo]
+    response = get_group(gId, channel.oa_access_token)
+    return if response['error']
+
+    response['data']['gridInfoMap'][gId]
   end
 
   def request_user_info
@@ -137,7 +188,7 @@ class ZaloPersonal::IncomingMessageService
     }
   end
 
-  def update_contact_from_profile
+  def update_contact_from_profile_first
     if params[:data][:idTo] == params[:_accountId]
       uId = params[:data][:uidFrom]
       response = get_profile(uId, channel.oa_access_token)
@@ -145,8 +196,8 @@ class ZaloPersonal::IncomingMessageService
       return if response['error']
 
       profile = response['data']['changed_profiles'][uId]
-      # print "Profile:"
-      # print profile.inspect
+      #print 'Profile:'
+      #print profile.inspect
       @contact.update!(name: profile['displayName'])
       if profile['phoneNumber'].present? && profile['phoneNumber'] != ''
         phone = profile['phoneNumber']
@@ -157,15 +208,33 @@ class ZaloPersonal::IncomingMessageService
     else
       gId = params[:data][:idTo]
       response = get_group(gId, channel.oa_access_token)
-      # print "Response from get_group: #{response.inspect}"
+      #print "Response from get_group: #{response.inspect}"
       return if response['error']
 
       profile = response['data']['gridInfoMap'][gId]
-      # print "Group:"
-      # print profile.inspect
+      #print 'Group:'
+      #print profile.inspect
       @contact.update!(name: profile['name'])
       ::Avatar::AvatarFromUrlJob.perform_later(@contact, profile['fullAvt'])
     end
+  end
+
+  def update_contact_from_profile
+    uId = params[:data][:uidFrom]
+    response = get_profile(uId, channel.oa_access_token)
+    # print "Response from get_profile: #{response.inspect}"
+    return if response['error']
+
+    profile = response['data']['changed_profiles'][uId]
+    #print 'Profile:'
+    #print profile.inspect
+    @contact.update!(name: profile['displayName'])
+    if profile['phoneNumber'].present? && profile['phoneNumber'] != ''
+      phone = profile['phoneNumber']
+      phone = "+#{phone}" unless phone.start_with?('+')
+      @contact.update!(phone_number: phone)
+    end
+    ::Avatar::AvatarFromUrlJob.perform_later(@contact, profile['avatar'])
   end
 
   def update_contact_from_shared_info
@@ -192,7 +261,8 @@ class ZaloPersonal::IncomingMessageService
       contact_id: @contact.id,
       contact_inbox_id: @contact_inbox.id,
       additional_attributes: {
-        type: params[:data][:idTo] == params[:_accountId] ? 0 : 1
+        type: params[:data][:idTo] == params[:_accountId] ? 0 : 1,
+        group: get_group_name
       }
     }
   end
@@ -204,6 +274,9 @@ class ZaloPersonal::IncomingMessageService
       inbox_id: @inbox.id,
       message_type: :incoming,
       sender: @contact,
+      external_source_ids: {
+        'zalopersonal': params[:data][:msgId]
+      },
       source_id: params[:threadId],
       additional_attributes: {
         type: params[:data][:idTo] == params[:_accountId] ? 0 : 1

@@ -29,8 +29,8 @@ class Webhooks::ZaloPersonalEventsJob < ApplicationJob
   end
 
   def process_event_params(channel, params)
-    if delivery_event?(params)
-      #ZaloPersonal::DeliveryStatusService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
+    if outgoing_event?(params)
+      ZaloPersonal::OutgoingMessageService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
     else
       ZaloPersonal::IncomingMessageService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
     end
@@ -38,5 +38,9 @@ class Webhooks::ZaloPersonalEventsJob < ApplicationJob
 
   def delivery_event?(params)
     params[:data][:msgType] == 'chat.reaction'
+  end
+
+  def outgoing_event?(params)
+    params[:isSelf] == true
   end
 end

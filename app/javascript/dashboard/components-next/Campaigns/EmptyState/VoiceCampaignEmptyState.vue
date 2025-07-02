@@ -23,16 +23,16 @@ const { t } = useI18n();
   <EmptyStateLayout :title="title" :subtitle="subtitle">
     <template #empty-state-item>
       <div class="flex flex-col gap-4 p-px">
-        <div 
-          v-for="(campaign, index) in VOICE_CAMPAIGN_EMPTY_STATE_CONTENT" 
+        <div
+          v-for="(campaign, index) in VOICE_CAMPAIGN_EMPTY_STATE_CONTENT"
           :key="campaign.id"
           :style="{
             opacity: index === 0 ? 1 : index === 1 ? 0.7 : index === 2 ? 0.4 : 0.2
           }"
         >
           <CampaignCard
-            :title="campaign.title"
-            :message="campaign.message"
+            :title="$t(campaign.title)"
+            :message="$t(campaign.message)"
             :is-enabled="campaign.enabled"
             :status="campaign.campaign_status"
             :sender="campaign.sender"
@@ -52,7 +52,7 @@ const { t } = useI18n();
           shopiz.triggerVoiceCampaign({
             campaignId: 'CAMPAIGN_ID',
             user: {
-              name: 'John Doe', 
+              name: 'John Doe',
               phone: '+1234567890'
             }
           });

@@ -279,9 +279,9 @@ export default {
       </label>
       <Thumbnail
         v-if="!hideThumbnail"
-        :src="currentContact.thumbnail"
+        :src="chat?.additional_attributes?.group?.avt || currentContact.thumbnail"
         :badge="inboxBadge"
-        :username="currentContact.name"
+        :username="chat?.additional_attributes?.group?.name || currentContact.name"
         :status="currentContact.availability_status"
         size="32px"
       />
@@ -306,7 +306,7 @@ export default {
         class="conversation--user text-sm my-0 mx-2 capitalize pt-0.5 text-ellipsis overflow-hidden whitespace-nowrap w-[calc(100%-70px)] text-n-slate-12"
         :class="hasUnread ? 'font-semibold' : 'font-medium'"
       >
-        {{ currentContact.name }}
+        {{ chat?.additional_attributes?.group?.name || currentContact.name }}
       </h4>
       <MessagePreview
         v-if="lastMessageInChat"

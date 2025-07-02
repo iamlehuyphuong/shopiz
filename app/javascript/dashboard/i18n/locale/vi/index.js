@@ -36,6 +36,7 @@ import sla from './sla.json';
 import teamsSettings from './teamsSettings.json';
 import whatsappTemplates from './whatsappTemplates.json';
 import sales from './sales.json';
+import fixtures from './fixtures.json';
 
 export default {
   ...advancedFilters,
@@ -76,4 +77,5 @@ export default {
   ...teamsSettings,
   ...whatsappTemplates,
   ...sales,
+  ...fixtures,
 };

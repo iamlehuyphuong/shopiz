@@ -59,7 +59,9 @@ class Integrations::App
     when 'leadsquared'
       account.feature_enabled?('crm_integration')
     when 'activepieces'
-      GlobalConfigService.load('ACTIVE_PIECES_JWT_SECRET', nil).present?
+      account.feature_enabled?('activepieces') &&
+        GlobalConfigService.load('ACTIVE_PIECES_INSTANCE_URL', nil).present? &&
+        GlobalConfigService.load('ACTIVE_PIECES_JWT_SECRET', nil).present?
     else
       true
     end
