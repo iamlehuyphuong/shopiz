@@ -240,11 +240,13 @@ const gridClass = computed(() => {
 const gridTemplate = computed(() => {
   const map = {
     [ORIENTATION.LEFT]: `
-      "meta spacer"
       "avatar bubble"
+      "reaction reaction"
+      "spacer meta"
     `,
     [ORIENTATION.RIGHT]: `
       "bubble avatar"
+      "reaction reaction"
       "meta spacer"
     `,
   };
@@ -524,6 +526,23 @@ provideMessageContext({
         @contextmenu="openContextMenu($event)"
       >
         <Component :is="componentToRender" :message="props" />
+      </div>
+      <div
+        v-if="Array.isArray(contentAttributes?.reactions) && contentAttributes.reactions.length"
+        class="[grid-area:reaction] flex"
+        :class="{
+          'ltr:ml-8 rtl:mr-8 justify-end': orientation === ORIENTATION.LEFT,
+          'ltr:mr-8 rtl:ml-8': orientation === ORIENTATION.RIGHT,
+          'min-w-0': variant === MESSAGE_VARIANTS.EMAIL,
+          'min-w-0 max-w-full': componentToRender === VoiceCallBubble,
+        }"
+        :style="{
+          marginTop: '-10px',
+          marginRight: orientation === ORIENTATION.LEFT ? '40px' : '',
+          marginLeft: orientation === ORIENTATION.RIGHT ? '40px' : '',
+        }"
+      >
+        {{ contentAttributes.reactions.join('  ') }}
       </div>
       <MessageError
         v-if="contentAttributes.externalError"

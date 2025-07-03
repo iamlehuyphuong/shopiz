@@ -8,7 +8,7 @@ class Webhooks::ZaloPersonalEventsJob < ApplicationJob
     #return unless SUPPORTED_EVENTS.include?(params[:event_name])
     #return unless validate_signature(params, post_body, signature)
 
-    oa_id = delivery_event?(params) ? params[:_accountId] : params[:_accountId]
+    oa_id = params[:_accountId]
     channel = Channel::ZaloPersonal.find_by(oa_id: oa_id)
     Rails.logger.info("Zalo Personal webhook received events for channel: #{channel&.id}, oa_id: #{oa_id}")
     return unless channel
@@ -29,7 +29,9 @@ class Webhooks::ZaloPersonalEventsJob < ApplicationJob
   end
 
   def process_event_params(channel, params)
-    if outgoing_event?(params)
+    if delivery_event?(params)
+      ZaloPersonal::DeliveryStatusService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
+    elsif outgoing_event?(params)
       ZaloPersonal::OutgoingMessageService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
     else
       ZaloPersonal::IncomingMessageService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform

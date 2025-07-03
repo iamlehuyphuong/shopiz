@@ -6,8 +6,8 @@ class ZaloPersonal::OutgoingMessageService
     set_contact
     return unless @contact
 
-    update_contact_from_profile
     first_message_processing if @contact.messages.empty?
+    update_contact_from_profile
     set_conversation
     return unless @conversation
 
@@ -45,17 +45,6 @@ class ZaloPersonal::OutgoingMessageService
       end
       params[:data][:content] = icon_map[params[:data][:content]] || params[:data][:content]
       @message = @conversation.messages.create!(message_params)
-    elsif params[:data][:msgType] == 'chat.reaction'
-      data_content = params[:data][:content]
-      if data_content.is_a?(Hash) && (data_content[:rIcon])
-        icon = data_content[:rIcon]
-        icon = icon_map[icon] || icon
-        params[:data][:content] = icon
-        @message = @conversation.messages.create!(message_params)
-        if data_content && data_content[:rMsg] && data_content[:rMsg][0][:cMsgID].present?
-          @message.content_attributes[:in_reply_to_external_id] = data_content[:rMsg][0][:cMsgID]
-        end
-      end
     elsif params[:data][:msgType] == 'chat.video.msg'
       @file = params[:data][:content]
       params[:data][:content] = nil
@@ -113,8 +102,10 @@ class ZaloPersonal::OutgoingMessageService
       raise ArgumentError, 'Unexpected format for params[:data][:content]'
     end
 
-    if params[:data][:quote] && params[:data][:quote][:cliMsgId].present?
-      @message.content_attributes[:in_reply_to_external_id] = params[:data][:quote][:cliMsgId]
+    if params[:data][:quote] && params[:data][:quote][:globalMsgId].present?
+      content_attributes = @message.content_attributes || {}
+      content_attributes[:in_reply_to_external_id] = params[:data][:quote][:globalMsgId]
+      @message.content_attributes = content_attributes
     end
 
     @message.save!
@@ -148,8 +139,8 @@ class ZaloPersonal::OutgoingMessageService
   end
 
   def update_contact_from_profile
-    if params[:data][:idTo] == params[:_accountId]
-      uId = params[:data][:uidFrom]
+    if params[:data][:uidFrom] == params[:_accountId]
+      uId = params[:data][:idTo]
       response = get_profile(uId, channel.oa_access_token)
       # print "Response from get_profile: #{response.inspect}"
       return if response['error']
@@ -241,6 +232,10 @@ class ZaloPersonal::OutgoingMessageService
       account_id: @inbox.account_id,
       inbox_id: @inbox.id,
       message_type: :outgoing,
+      additional_attributes: {
+        type: params[:data][:idTo] == params[:_accountId] ? 0 : 1,
+        msgId: params[:data][:msgId]
+      },
       source_id: params[:threadId]
     }
   end

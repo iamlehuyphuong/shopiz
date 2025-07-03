@@ -279,9 +279,9 @@ export default {
       </label>
       <Thumbnail
         v-if="!hideThumbnail"
-        :src="chat?.additional_attributes?.group?.avt || currentContact.thumbnail"
+        :src="chat?.additional_attributes?.group?.avt ?? currentContact.thumbnail"
         :badge="inboxBadge"
-        :username="chat?.additional_attributes?.group?.name || currentContact.name"
+        :username="chat?.additional_attributes?.group?.name ?? currentContact.name"
         :status="currentContact.availability_status"
         size="32px"
       />
