@@ -281,6 +281,13 @@ class ZaloPersonal::IncomingMessageService
                       @contact_inbox.conversations.where
                                     .not(status: :resolved).last
                     end
+
+    additional_attributes = @conversation[:additional_attributes] || {}
+    if additional_attributes.empty? || additional_attributes[:group].blank?
+      additional_attributes[:type] = params[:data][:idTo] == params[:_accountId] ? 0 : 1
+      additional_attributes[:group] = get_group_name
+      @conversation.update!(additional_attributes: additional_attributes)
+    end
     return if @conversation
 
     @conversation = ::Conversation.create!(conversation_params)
