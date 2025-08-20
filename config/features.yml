@@ -169,3 +169,7 @@
   display_name: Zalo Channel
   enabled: true
   help_url: https://salesman.effiai.pro/hc/zalo
+- name: channel_tiktok
+  display_name: TikTok Channel
+  enabled: true
+  help_url: https://salesman.effiai.pro/hc/tiktok

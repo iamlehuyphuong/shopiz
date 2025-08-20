@@ -37,6 +37,7 @@ export default {
         { key: 'telegram', name: 'Telegram' },
         { key: 'line', name: 'Line' },
         { key: 'instagram', name: 'Instagram' },
+        { key: 'tiktok', name: 'TikTok'}
       ];
     },
     ...mapGetters({

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_04_16_182131) do
+ActiveRecord::Schema[7.0].define(version: 2025_08_20_020322) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -426,6 +426,18 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_16_182131) do
     t.datetime "updated_at", null: false
     t.index ["bot_token"], name: "index_channel_telegram_on_bot_token", unique: true
   end
+
+  create_table "channel_tiktok", force: :cascade do |t|
+    t.string "access_token", null: false
+    t.string "refresh_token", null: false
+    t.integer "expires_in", null: false
+    t.integer "account_id", null: false
+    t.string "shop_id", null: false
+    t.string "shop_cipher", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shop_cipher"], name: "index_channel_tiktok_on_shop_cipher", unique: true
+    t.index ["shop_id"], name: "index_channel_tiktok_on_shop_id", unique: true
 
   create_table "channel_twilio_sms", force: :cascade do |t|
     t.string "phone_number"

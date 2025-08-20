@@ -11,6 +11,7 @@ export const INBOX_TYPES = {
   SMS: 'Channel::Sms',
   ZALO: 'Channel::ZaloOa',
   INSTAGRAM: 'Channel::Instagram',
+  TIKTOK: 'Channel::Tiktok',
 };
 
 const INBOX_ICON_MAP_FILL = {
@@ -24,6 +25,7 @@ const INBOX_ICON_MAP_FILL = {
   [INBOX_TYPES.LINE]: 'i-ri-line-fill',
   [INBOX_TYPES.ZALO]: 'i-ri-zalo-x-fill',
   [INBOX_TYPES.INSTAGRAM]: 'i-ri-instagram-fill',
+  [INBOX_TYPES.TIKTOK]: 'i-ri-tiktok-fill',
 };
 
 const DEFAULT_ICON_FILL = 'i-ri-chat-1-fill';
@@ -39,6 +41,7 @@ const INBOX_ICON_MAP_LINE = {
   [INBOX_TYPES.LINE]: 'i-ri-line-line',
   [INBOX_TYPES.ZALO]: 'i-ri-zalo-line',
   [INBOX_TYPES.INSTAGRAM]: 'i-ri-instagram-line',
+  [INBOX_TYPES.TIKTOK]: 'i-ri-tiktok-line',
 };
 
 const DEFAULT_ICON_LINE = 'i-ri-chat-1-line';
@@ -69,6 +72,9 @@ export const getReadableInboxByType = (type, phoneNumber) => {
 
     case INBOX_TYPES.ZALO:
       return 'zalo';
+
+    case INBOX_TYPES.TIKTOK:
+      return 'tiktok';
 
     case INBOX_TYPES.TWITTER:
       return 'twitter';
@@ -132,6 +138,9 @@ export const getInboxClassByType = (type, phoneNumber) => {
 
     case INBOX_TYPES.ZALO:
       return 'brand-zalo';
+
+    case INBOX_TYPES.TIKTOK:
+      return 'brand-tiktok';
 
     default:
       return 'chat';

@@ -17,6 +17,9 @@ export default {
     hasZaloConfigured() {
       return window.salesmanConfig?.zaloAppId;
     },
+    hasTiktokConfigured() {
+      return window.salesmanConfig?.tiktokAppId;
+    },
     hasFbConfigured() {
       return window.salesmanConfig?.fbAppId;
     },
@@ -36,6 +39,9 @@ export default {
       }
       if (key === 'zalo') {
         return this.enabledFeatures.channel_zalo && this.hasZaloConfigured;
+      }
+      if (key === 'tiktok') {
+        return this.enabledFeatures.channel_tiktok && this.hasTiktokConfigured;
       }
       if (key === 'email') {
         return this.enabledFeatures.channel_email;
@@ -57,6 +63,7 @@ export default {
         'telegram',
         'line',
         'instagram',
+        'tiktok',
       ].includes(key);
     },
   },
