@@ -406,6 +406,8 @@
       "ERROR_FB_UNAUTHORIZED_HELP": "Please ensure you have access to the Facebook page with full control. You can read more about Facebook roles <a href=\" https://www.facebook.com/help/187316341316631\">here</a>.",
       "CREATING_CHANNEL": "Creating your Inbox...",
       "TITLE": "Configure Inbox Details",
+      "LOADING_TIKTOK": "Authenticating you with Tiktok...",
+      "DESC_TIKTOK": "TIKTOK",
       "DESC": ""
     },
     "AGENTS": {
@@ -778,7 +780,8 @@
       "TELEGRAM": "Telegram",
       "LINE": "Line",
       "API": "API Channel",
-      "INSTAGRAM": "Instagram"
+      "INSTAGRAM": "Instagram",
+      "TIKTOK": "Tiktok"
     }
   }
 }

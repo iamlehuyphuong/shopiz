@@ -25,6 +25,7 @@
 #  contact_id             :bigint
 #  contact_inbox_id       :bigint
 #  display_id             :integer          not null
+#  external_source_id     :string
 #  inbox_id               :integer          not null
 #  sla_policy_id          :bigint
 #  team_id                :bigint

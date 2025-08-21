@@ -33,7 +33,7 @@ export default {
       shopName: '',
       avatar: '',
       channel: 'tiktok',
-      emptyStateMessage: this.$t('INBOX_MGMT.DETAILS.LOADING_ZALO'),
+      emptyStateMessage: this.$t('INBOX_MGMT.DETAILS.LOADING_TIKTOK'),
       errorStateMessage: '',
       errorStateDescription: '',
       hasLoginStarted: false,

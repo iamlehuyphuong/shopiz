@@ -6,11 +6,11 @@ class Webhooks::TiktokController < ActionController::API
       render plain: "Unauthorized", status: :unauthorized and return
     end
 
-    data = JSON.parse(body) rescue nil
-    return render plain: "Invalid JSON", status: :bad_request unless data
+    payload = JSON.parse(body) rescue nil
+    return render plain: "Invalid JSON", status: :bad_request unless payload
 
-    Rails.logger.info "Verified TikTok webhook event: #{data}"
-    Webhooks::TiktokMessagesJob.perform_later(data)
+    Rails.logger.info "Verified TikTok webhook event: #{payload}"
+    Webhooks::TiktokMessagesJob.perform_later(payload)
 
     head :ok
   end
