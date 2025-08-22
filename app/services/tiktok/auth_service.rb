@@ -62,7 +62,7 @@ class Tiktok::AuthService
 
   def store_data(data)
     session_id = SecureRandom.uuid
-    ttl = 30 * 60
+    ttl = 10 * 60
     redis = Redis.new(url: ENV["REDIS_URL"])
 
     redis.setex("tiktok_session:#{session_id}", ttl, data.to_json)

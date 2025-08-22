@@ -1,6 +1,6 @@
 class TiktokDefaultFeatureFlagInstallationConfig < ActiveRecord::Migration[7.0]
   def up
-    # Update the default feature flag config to enable chatwoot_v4
+    # Update the default feature flag config to enable channel_tiktok
     config = InstallationConfig.find_by(name: 'ACCOUNT_LEVEL_FEATURE_DEFAULTS')
     if config && config.value.present?
       features = config.value.map do |f|

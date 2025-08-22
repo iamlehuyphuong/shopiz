@@ -218,6 +218,10 @@ class Message < ApplicationRecord
     save!
   end
 
+  def source_conversation_id
+    conversation.external_source_id
+  end
+
   private
 
   def prevent_message_flooding

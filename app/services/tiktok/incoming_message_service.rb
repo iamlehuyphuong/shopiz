@@ -48,9 +48,9 @@ class Tiktok::IncomingMessageService
                   @contact_inbox.conversations.where
                                 .not(status: :resolved).last
                 end
-      return if @conversation
+    return if @conversation
 
-      @conversation = ::Conversation.create!(conversation_params)
+    @conversation = ::Conversation.create!(conversation_params)
   end
 
   def conversation_params
