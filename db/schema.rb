@@ -438,6 +438,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_20_193908) do
     t.datetime "updated_at", null: false
     t.index ["shop_cipher"], name: "index_channel_tiktok_on_shop_cipher", unique: true
     t.index ["shop_id"], name: "index_channel_tiktok_on_shop_id", unique: true
+  end
 
   create_table "channel_twilio_sms", force: :cascade do |t|
     t.string "phone_number"

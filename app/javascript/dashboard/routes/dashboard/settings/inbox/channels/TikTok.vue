@@ -46,7 +46,7 @@ export default {
   },
   computed: {
     showLoader() {
-      return this.shopName === '' || this.isCreating;
+      return this.isCreating;
     },
     ...mapGetters({
       globalConfig: 'globalConfig/get',
@@ -123,7 +123,7 @@ export default {
           v-dompurify-html="errorStateDescription"
         />
       </div>
-      <LoadingState v-else-if="showLoader" :message="emptyStateMessage" />
+      <LoadingState v-if="showLoader" :message="emptyStateMessage" />
       <form
         v-else
         class="mx-0 flex flex-wrap"

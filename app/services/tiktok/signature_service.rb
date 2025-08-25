@@ -1,5 +1,5 @@
 class Tiktok::SignatureService
-  APP_SECRET = ENV["TIKTOK_APP_SECRET"]
+  APP_SECRET = GlobalConfigService.load('TIKTOK_APP_SECRET', '')
   EXCLUDE_KEYS = ["access_token", "sign"]
 
   class << self

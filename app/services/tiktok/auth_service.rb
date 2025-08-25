@@ -1,8 +1,8 @@
 class Tiktok::AuthService
   AUTHORIZED_SHOPS_URL = "https://open-api.tiktokglobalshop.com/authorization/202309/shops"
   GET_ACCESS_TOKEN_URL = "https://auth.tiktok-shops.com/api/v2/token/get"
-  APP_KEY = ENV["TIKTOK_APP_ID"]
-  APP_SECRET = ENV["TIKTOK_APP_SECRET"]
+  APP_KEY = GlobalConfigService.load('TIKTOK_APP_ID', '')
+  APP_SECRET = GlobalConfigService.load('TIKTOK_APP_SECRET', '')
 
   def initialize(account_id, code)
     @account_id = account_id
