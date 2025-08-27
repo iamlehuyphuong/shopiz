@@ -356,3 +356,16 @@
   locked: false
   type: secret
 # ------- End of ActivePieces Related Config ------- #
+
+# ------- Tiktok Integration Config ------- #
+- name: TIKTOK_APP_ID
+  display_title: 'Tiktok App ID'
+  description: 'Tiktok App ID'
+  locked: false
+  type: secret
+- name: TIKTOK_APP_SECRET
+  display_title: 'Tiktok App Secret'
+  description: 'Tiktok App Secret'
+  locked: false
+  type: secret
+# ------- End of Tiktok Related Config ------- #

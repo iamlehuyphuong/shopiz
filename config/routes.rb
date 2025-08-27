@@ -99,6 +99,7 @@ Rails.application.routes.draw do
                 get :create
               end
             end
+            resource :tiktok_channel, only: [:show, :create]
           end
           resources :conversations, only: [:index, :create, :show, :update] do
             collection do
@@ -472,6 +473,8 @@ Rails.application.routes.draw do
   post 'webhooks/instagram', to: 'webhooks/instagram#events'
   post 'webhooks/zalo', to: 'webhooks/zalo#process_payload'
   get '/zalo/callback', to: 'zalo/callback#create'
+  get '/tiktok/callback', to: 'tiktok/callback#create'
+  post 'webhooks/tiktok', to: 'webhooks/tiktok#process_payload'
 
   namespace :twitter do
     resource :callback, only: [:show]

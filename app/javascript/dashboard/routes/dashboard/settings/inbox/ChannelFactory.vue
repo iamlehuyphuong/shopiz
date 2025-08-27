@@ -11,6 +11,7 @@ import Whatsapp from './channels/Whatsapp.vue';
 import Line from './channels/Line.vue';
 import Telegram from './channels/Telegram.vue';
 import Instagram from './channels/Instagram.vue';
+import TikTok from './channels/TikTok.vue';
 
 const channelViewList = {
   facebook: Facebook,
@@ -24,6 +25,7 @@ const channelViewList = {
   telegram: Telegram,
   instagram: Instagram,
   zalo: Zalo,
+  tiktok: TikTok,
 };
 
 export default defineComponent({

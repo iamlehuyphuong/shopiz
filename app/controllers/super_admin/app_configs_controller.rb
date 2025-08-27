@@ -49,6 +49,8 @@ class SuperAdmin::AppConfigsController < SuperAdmin::ApplicationController
                          %w[ZALO_APP_ID ZALO_APP_SECRET ZALO_OA_SECRET_KEY]
                        when 'activepieces'
                          %w[ACTIVE_PIECES_INSTANCE_URL ACTIVE_PIECES_JWT_SECRET]
+                       when 'tiktok'
+                         %w[TIKTOK_APP_ID TIKTOK_APP_SECRET]
                        else
                          %w[ENABLE_ACCOUNT_SIGNUP FIREBASE_PROJECT_ID FIREBASE_CREDENTIALS]
                        end

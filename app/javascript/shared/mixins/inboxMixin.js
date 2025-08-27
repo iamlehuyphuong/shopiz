@@ -15,6 +15,7 @@ export const INBOX_FEATURE_MAP = {
     INBOX_TYPES.WHATSAPP,
     INBOX_TYPES.TELEGRAM,
     INBOX_TYPES.API,
+    INBOX_TYPES.TIKTOK,
   ],
   [INBOX_FEATURES.REPLY_TO_OUTGOING]: [
     INBOX_TYPES.WEB,
@@ -22,6 +23,7 @@ export const INBOX_FEATURE_MAP = {
     INBOX_TYPES.WHATSAPP,
     INBOX_TYPES.TELEGRAM,
     INBOX_TYPES.API,
+    INBOX_TYPES.TIKTOK,
   ],
 };
 
@@ -50,6 +52,9 @@ export default {
     },
     isAZaloOaChannel() {
       return this.channelType === INBOX_TYPES.ZALO;
+    },
+    isATiktokChannel() {
+      return this.channelType === INBOX_TYPES.TIKTOK;
     },
     isAWebWidgetInbox() {
       return this.channelType === INBOX_TYPES.WEB;

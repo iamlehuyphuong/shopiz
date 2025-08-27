@@ -266,7 +266,8 @@ export default {
         this.isATelegramChannel ||
         this.isALineChannel ||
         this.isAInstagramChannel ||
-        this.isAZaloOaChannel
+        this.isAZaloOaChannel ||
+        this.isATiktokChannel
       );
     },
     replyButtonLabel() {

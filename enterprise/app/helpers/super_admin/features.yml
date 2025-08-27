@@ -113,3 +113,9 @@ activepieces:
   enabled: true
   icon: 'icon-activepieces'
   config_key: 'activepieces'
+tiktok:
+  name: 'Tiktok'
+  description: 'Stay connected with your customers on Tiktok.'
+  enabled: true
+  icon: 'icon-tiktok'
+  config_key: 'tiktok'
