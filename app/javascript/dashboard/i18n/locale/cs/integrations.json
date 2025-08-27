@@ -16,7 +16,7 @@
       "ERROR": "There was an error connecting to Shopify. Please try again or contact support if the issue persists."
     },
     "HEADER": "Integrace",
-    "DESCRIPTION": "Salesman integrates with multiple tools and services to improve your team's efficiency. Explore the list below to configure your favorite apps.",
+    "DESCRIPTION": "Shopiz integrates with multiple tools and services to improve your team's efficiency. Explore the list below to configure your favorite apps.",
     "LEARN_MORE": "Learn more about integrations",
     "LOADING": "Fetching integrations",
     "CAPTAIN": {
@@ -30,7 +30,7 @@
       "LEARN_MORE": "Learn more about webhooks",
       "FORM": {
         "CANCEL": "Zrušit",
-        "DESC": "Události webhooku vám poskytují reálné informace o tom, co se děje ve vašem Salesman účtu. Zadejte prosím platnou URL pro nastavení hovoru.",
+        "DESC": "Události webhooku vám poskytují reálné informace o tom, co se děje ve vašem Shopiz účtu. Zadejte prosím platnou URL pro nastavení hovoru.",
         "SUBSCRIPTIONS": {
           "LABEL": "Events",
           "EVENTS": {
@@ -41,7 +41,9 @@
             "MESSAGE_UPDATED": "Message updated",
             "WEBWIDGET_TRIGGERED": "Live chat widget opened by the user",
             "CONTACT_CREATED": "Contact created",
-            "CONTACT_UPDATED": "Contact updated"
+            "CONTACT_UPDATED": "Contact updated",
+            "CONVERSATION_TYPING_ON": "Conversation Typing On",
+            "CONVERSATION_TYPING_OFF": "Conversation Typing Off"
           }
         },
         "END_POINT": {
@@ -58,7 +60,7 @@
       "HEADER_BTN_TXT": "Přidat nový webový háček",
       "LOADING": "Načítání připojených webhooků",
       "SEARCH_404": "Neexistují žádné položky odpovídající tomuto dotazu",
-      "SIDEBAR_TXT": "<p><b>Webové háčky</b> </p> <p>jsou HTTP zpětné volání, které lze definovat pro každý účet. Jsou spouštěny událostmi, jako je vytváření zpráv v Salesman. Můžete vytvořit více než jeden webový háček pro tento účet. <br /><br /> Pro vytvoření webového háčku <b></b>klikněte na tlačítko <b>Přidat nový webhook</b> . Kliknutím na tlačítko Odstranit můžete také odstranit jakýkoli existující webový háček.</p>",
+      "SIDEBAR_TXT": "<p><b>Webové háčky</b> </p> <p>jsou HTTP zpětné volání, které lze definovat pro každý účet. Jsou spouštěny událostmi, jako je vytváření zpráv v Shopiz. Můžete vytvořit více než jeden webový háček pro tento účet. <br /><br /> Pro vytvoření webového háčku <b></b>klikněte na tlačítko <b>Přidat nový webhook</b> . Kliknutím na tlačítko Odstranit můžete také odstranit jakýkoli existující webový háček.</p>",
       "LIST": {
         "404": "Pro tento účet nejsou nakonfigurovány žádné webové háčky.",
         "TITLE": "Spravovat webové háčky",
@@ -105,14 +107,14 @@
       },
       "HELP_TEXT": {
         "TITLE": "Using Slack Integration",
-        "BODY": "With this integration, all of your incoming conversations will be synced to the ***{selectedChannelName}*** channel in your Slack workspace. You can manage all your customer conversations right within the channel and never miss a message.\n\nHere are the main features of the integration:\n\n**Respond to conversations from within Slack:** To respond to a conversation in the ***{selectedChannelName}*** Slack channel, simply type out your message and send it as a thread. This will create a response back to the customer through Salesman. It's that simple!\n\n **Create private notes:** If you want to create private notes instead of replies, start your message with ***`note:`***. This ensures that your message is kept private and won't be visible to the customer.\n\n**Associate an agent profile:** If the person who replied on Slack has an agent profile in Salesman under the same email, the replies will be associated with that agent profile automatically. This means you can easily track who said what and when. On the other hand, when the replier doesn't have an associated agent profile, the replies will appear from the bot profile to the customer.",
+        "BODY": "With this integration, all of your incoming conversations will be synced to the ***{selectedChannelName}*** channel in your Slack workspace. You can manage all your customer conversations right within the channel and never miss a message.\n\nHere are the main features of the integration:\n\n**Respond to conversations from within Slack:** To respond to a conversation in the ***{selectedChannelName}*** Slack channel, simply type out your message and send it as a thread. This will create a response back to the customer through Shopiz. It's that simple!\n\n **Create private notes:** If you want to create private notes instead of replies, start your message with ***`note:`***. This ensures that your message is kept private and won't be visible to the customer.\n\n**Associate an agent profile:** If the person who replied on Slack has an agent profile in Shopiz under the same email, the replies will be associated with that agent profile automatically. This means you can easily track who said what and when. On the other hand, when the replier doesn't have an associated agent profile, the replies will appear from the bot profile to the customer.",
         "SELECTED": "selected"
       },
       "SELECT_CHANNEL": {
         "OPTION_LABEL": "Select a channel",
         "UPDATE": "Aktualizovat",
         "BUTTON_TEXT": "Connect channel",
-        "DESCRIPTION": "Your Slack workspace is now linked with Salesman. However, the integration is currently inactive. To activate the integration and connect a channel to Salesman, please click the button below.\n\n**Note:** If you are attempting to connect a private channel, add the Salesman app to the Slack channel before proceeding with this step.",
+        "DESCRIPTION": "Your Slack workspace is now linked with Shopiz. However, the integration is currently inactive. To activate the integration and connect a channel to Shopiz, please click the button below.\n\n**Note:** If you are attempting to connect a private channel, add the Shopiz app to the Slack channel before proceeding with this step.",
         "ATTENTION_REQUIRED": "Attention required",
         "EXPIRED": "Your Slack integration has expired. To continue receiving messages on Slack, please delete the integration and connect your workspace again."
       },
@@ -192,7 +194,7 @@
     "DASHBOARD_APPS": {
       "TITLE": "Dashboard Apps",
       "HEADER_BTN_TXT": "Add a new dashboard app",
-      "SIDEBAR_TXT": "<p><b>Dashboard Apps</b></p><p>Dashboard Apps allow organizations to embed an application inside the Salesman dashboard to provide the context for customer support agents. This feature allows you to create an application independently and embed that inside the dashboard to provide user information, their orders, or their previous payment history.</p><p>When you embed your application using the dashboard in Salesman, your application will get the context of the conversation and contact as a window event. Implement a listener for the message event on your page to receive the context.</p><p>To add a new dashboard app, click on the button 'Add a new dashboard app'.</p>",
+      "SIDEBAR_TXT": "<p><b>Dashboard Apps</b></p><p>Dashboard Apps allow organizations to embed an application inside the Shopiz dashboard to provide the context for customer support agents. This feature allows you to create an application independently and embed that inside the dashboard to provide user information, their orders, or their previous payment history.</p><p>When you embed your application using the dashboard in Shopiz, your application will get the context of the conversation and contact as a window event. Implement a listener for the message event on your page to receive the context.</p><p>To add a new dashboard app, click on the button 'Add a new dashboard app'.</p>",
       "DESCRIPTION": "Dashboard Apps allow organizations to embed an application inside the dashboard to provide the context for customer support agents. This feature allows you to create an application independently and embed that to provide user information, their orders, or their previous payment history.",
       "LEARN_MORE": "Learn more about Dashboard Apps",
       "LIST": {
@@ -316,11 +318,18 @@
         "SUCCESS": "Issue unlinked successfully",
         "ERROR": "There was an error unlinking the issue, please try again"
       },
+      "NO_LINKED_ISSUES": "No linked issues found",
       "DELETE": {
         "TITLE": "Are you sure you want to delete the integration?",
         "MESSAGE": "Are you sure you want to delete the integration?",
         "CONFIRM": "Yes, delete",
         "CANCEL": "Zrušit"
+      },
+      "CTA": {
+        "TITLE": "Connect to Linear",
+        "AGENT_DESCRIPTION": "Linear workspace is not connected. Request your administrator to connect a workspace to use this integration.",
+        "DESCRIPTION": "Linear workspace is not connected. Click the button below to connect your workspace to use this integration.",
+        "BUTTON_TEXT": "Connect Linear workspace"
       }
     }
   },
@@ -328,12 +337,48 @@
     "NAME": "AI Agent",
     "HEADER_KNOW_MORE": "Know more",
     "COPILOT": {
+      "TITLE": "Shopiz AI",
+      "TRY_THESE_PROMPTS": "Try these prompts",
+      "PANEL_TITLE": "Get started with Copilot",
+      "KICK_OFF_MESSAGE": "Need a quick summary, want to check past conversations, or draft a better reply? Copilot’s here to speed things up.",
       "SEND_MESSAGE": "Send message...",
-      "LOADER": "AI Agent is thinking",
+      "EMPTY_MESSAGE": "There was an error generating the response. Please try again.",
+      "LOADER": "Captain is thinking",
       "YOU": "Vy",
       "USE": "Use this",
       "RESET": "Reset",
-      "SELECT_ASSISTANT": "Select Assistant"
+      "SHOW_STEPS": "Show steps",
+      "SELECT_ASSISTANT": "Select Assistant",
+      "PROMPTS": {
+        "SUMMARIZE": {
+          "LABEL": "Summarize this conversation",
+          "CONTENT": "Summarize the key points discussed between the customer and the support agent, including the customer's concerns, questions, and the solutions or responses provided by the support agent"
+        },
+        "SUGGEST": {
+          "LABEL": "Suggest an answer",
+          "CONTENT": "Analyze the customer's inquiry, and draft a response that effectively addresses their concerns or questions. Ensure the reply is clear, concise, and provides helpful information."
+        },
+        "RATE": {
+          "LABEL": "Rate this conversation",
+          "CONTENT": "Review the conversation to see how well it meets the customer's needs. Share a rating out of 5 based on tone, clarity, and effectiveness."
+        },
+        "HIGH_PRIORITY": {
+          "LABEL": "High priority conversations",
+          "CONTENT": "Give me a summary of all high priority open conversations. Include the conversation ID, customer name (if available), last message content, and assigned agent. Group by status if relevant."
+        },
+        "LIST_CONTACTS": {
+          "LABEL": "List contacts",
+          "CONTENT": "Show me the list of top 10 contacts. Include name, email or phone number (if available), last seen time, tags (if any)."
+        }
+      }
+    },
+    "PLAYGROUND": {
+      "USER": "Vy",
+      "ASSISTANT": "Assistant",
+      "MESSAGE_PLACEHOLDER": "Zde začněte psát...",
+      "HEADER": "Playground",
+      "DESCRIPTION": "Use this playground to send messages to your assistant and check if it responds accurately, quickly, and in the tone you expect.",
+      "CREDIT_NOTE": "Messages sent here will count toward your Captain credits."
     },
     "PAYWALL": {
       "TITLE": "Upgrade to use AI Agent",
@@ -343,7 +388,6 @@
       "CANCEL_ANYTIME": "You can change or cancel your plan anytime"
     },
     "ENTERPRISE_PAYWALL": {
-      "AVAILABLE_ON": "AI Agent feature is only available in a paid plan.",
       "UPGRADE_PROMPT": "Upgrade your plan to get access to our assistants, copilot and more.",
       "ASK_ADMIN": "Please reach out to your administrator for the upgrade."
     },
@@ -358,6 +402,7 @@
     },
     "ASSISTANTS": {
       "HEADER": "Assistants",
+      "NO_ASSISTANTS_AVAILABLE": "There are no assistants available in your account.",
       "ADD_NEW": "Create a new assistant",
       "DELETE": {
         "TITLE": "Are you sure to delete the assistant?",
@@ -373,20 +418,48 @@
         "ERROR_MESSAGE": "There was an error creating the assistant, please try again."
       },
       "FORM": {
+        "UPDATE": "Aktualizovat",
+        "SECTIONS": {
+          "BASIC_INFO": "Basic Information",
+          "SYSTEM_MESSAGES": "System Messages",
+          "INSTRUCTIONS": "Instructions",
+          "FEATURES": "Funkce",
+          "TOOLS": "Tools "
+        },
         "NAME": {
-          "LABEL": "Assistant Name",
-          "PLACEHOLDER": "Enter a name for the assistant",
-          "ERROR": "Please provide a name for the assistant"
+          "LABEL": "Název",
+          "PLACEHOLDER": "Enter assistant name",
+          "ERROR": "The name is required"
+        },
+        "TEMPERATURE": {
+          "LABEL": "Response Temperature",
+          "DESCRIPTION": "Adjust how creative or restrictive the assistant's responses should be. Lower values produce more focused and deterministic responses, while higher values allow for more creative and varied outputs."
         },
         "DESCRIPTION": {
-          "LABEL": "Assistant Description",
-          "PLACEHOLDER": "Describe how and where this assistant will be used",
-          "ERROR": "A description is required"
+          "LABEL": "Description",
+          "PLACEHOLDER": "Enter assistant description",
+          "ERROR": "The description is required"
         },
         "PRODUCT_NAME": {
           "LABEL": "Product Name",
-          "PLACEHOLDER": "Enter the name of the product this assistant is designed for",
+          "PLACEHOLDER": "Enter product name",
           "ERROR": "The product name is required"
+        },
+        "WELCOME_MESSAGE": {
+          "LABEL": "Welcome Message",
+          "PLACEHOLDER": "Enter welcome message"
+        },
+        "HANDOFF_MESSAGE": {
+          "LABEL": "Handoff Message",
+          "PLACEHOLDER": "Enter handoff message"
+        },
+        "RESOLUTION_MESSAGE": {
+          "LABEL": "Resolution Message",
+          "PLACEHOLDER": "Enter resolution message"
+        },
+        "INSTRUCTIONS": {
+          "LABEL": "Instructions",
+          "PLACEHOLDER": "Enter instructions for the assistant"
         },
         "FEATURES": {
           "TITLE": "Funkce",
@@ -397,7 +470,8 @@
       "EDIT": {
         "TITLE": "Update the assistant",
         "SUCCESS_MESSAGE": "The assistant has been successfully updated",
-        "ERROR_MESSAGE": "There was an error updating the assistant, please try again."
+        "ERROR_MESSAGE": "There was an error updating the assistant, please try again.",
+        "NOT_FOUND": "Could not find the assistant. Please try again."
       },
       "OPTIONS": {
         "EDIT_ASSISTANT": "Edit Assistant",

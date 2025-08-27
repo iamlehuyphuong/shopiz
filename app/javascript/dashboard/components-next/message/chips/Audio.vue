@@ -16,7 +16,9 @@ defineOptions({
 });
 
 const timeStampURL = computed(() => {
-  return timeStampAppendedURL(attachment.dataUrl);
+  // Safely access the URL, providing a fallback if not available
+  const url = attachment?.dataUrl || attachment?.data_url || '';
+  return timeStampAppendedURL(url);
 });
 
 const audioPlayer = useTemplateRef('audioPlayer');
@@ -91,8 +93,17 @@ const changePlaybackSpeed = () => {
 };
 
 const downloadAudio = async () => {
-  const { fileType, dataUrl, extension } = attachment;
-  downloadFile({ url: dataUrl, type: fileType, extension });
+  // Get the URL with fallback options
+  const url = attachment?.dataUrl || attachment?.data_url || '';
+  if (!url) {
+    console.error('No valid URL found for download');
+    return;
+  }
+
+  const fileType = attachment?.fileType || attachment?.file_type || 'file';
+  const extension = attachment?.extension || 'mp3';
+
+  downloadFile({ url, type: fileType, extension });
 };
 </script>
 
@@ -109,49 +120,58 @@ const downloadAudio = async () => {
   </audio>
   <div
     v-bind="$attrs"
-    class="rounded-xl w-full gap-1 p-1.5 bg-n-alpha-white flex items-center border border-n-container shadow-[0px_2px_8px_0px_rgba(94,94,94,0.06)]"
+    class="rounded-xl w-full gap-2 p-1.5 bg-n-alpha-white flex flex-col items-center border border-n-container shadow-[0px_2px_8px_0px_rgba(94,94,94,0.06)]"
   >
-    <button class="p-0 border-0 size-8" @click="playOrPause">
-      <Icon
-        v-if="isPlaying"
-        class="size-8"
-        icon="i-teenyicons-pause-small-solid"
-      />
-      <Icon v-else class="size-8" icon="i-teenyicons-play-small-solid" />
-    </button>
-    <div class="tabular-nums text-xs">
-      {{ formatTime(currentTime) }} / {{ formatTime(duration) }}
+    <div class="flex gap-1 w-full flex-1 items-center justify-start">
+      <button class="p-0 border-0 size-8" @click="playOrPause">
+        <Icon
+          v-if="isPlaying"
+          class="size-8"
+          icon="i-teenyicons-pause-small-solid"
+        />
+        <Icon v-else class="size-8" icon="i-teenyicons-play-small-solid" />
+      </button>
+      <div class="tabular-nums text-xs">
+        {{ formatTime(currentTime) }} / {{ formatTime(duration) }}
+      </div>
+      <div class="flex-1 items-center flex px-2">
+        <input
+          type="range"
+          min="0"
+          :max="duration"
+          :value="currentTime"
+          class="w-full h-1 bg-n-slate-12/40 rounded-lg appearance-none cursor-pointer accent-current"
+          @input="seek"
+        />
+      </div>
+      <button
+        class="border-0 w-10 h-6 grid place-content-center bg-n-alpha-2 hover:bg-alpha-3 rounded-2xl"
+        @click="changePlaybackSpeed"
+      >
+        <span class="text-xs text-n-slate-11 font-medium">
+          {{ playbackSpeedLabel }}
+        </span>
+      </button>
+      <button
+        class="p-0 border-0 size-8 grid place-content-center"
+        @click="toggleMute"
+      >
+        <Icon v-if="isMuted" class="size-4" icon="i-lucide-volume-off" />
+        <Icon v-else class="size-4" icon="i-lucide-volume-2" />
+      </button>
+      <button
+        class="p-0 border-0 size-8 grid place-content-center"
+        @click="downloadAudio"
+      >
+        <Icon class="size-4" icon="i-lucide-download" />
+      </button>
     </div>
-    <div class="flex-1 items-center flex px-2">
-      <input
-        type="range"
-        min="0"
-        :max="duration"
-        :value="currentTime"
-        class="w-full h-1 bg-n-slate-12/40 rounded-lg appearance-none cursor-pointer accent-current"
-        @input="seek"
-      />
+
+    <div
+      v-if="attachment.transcribedText"
+      class="text-n-slate-12 p-3 text-sm bg-n-alpha-1 rounded-lg w-full break-words"
+    >
+      {{ attachment.transcribedText }}
     </div>
-    <button
-      class="border-0 w-10 h-6 grid place-content-center bg-n-alpha-2 hover:bg-alpha-3 rounded-2xl"
-      @click="changePlaybackSpeed"
-    >
-      <span class="text-xs text-n-slate-11 font-medium">
-        {{ playbackSpeedLabel }}
-      </span>
-    </button>
-    <button
-      class="p-0 border-0 size-8 grid place-content-center"
-      @click="toggleMute"
-    >
-      <Icon v-if="isMuted" class="size-4" icon="i-lucide-volume-off" />
-      <Icon v-else class="size-4" icon="i-lucide-volume-2" />
-    </button>
-    <button
-      class="p-0 border-0 size-8 grid place-content-center"
-      @click="downloadAudio"
-    >
-      <Icon class="size-4" icon="i-lucide-download" />
-    </button>
   </div>
 </template>

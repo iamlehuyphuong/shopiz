@@ -63,10 +63,14 @@ export const actions = {
       });
     }
   },
-  update: async ({ commit }, updateObj) => {
-    commit(types.default.SET_ACCOUNT_UI_FLAG, { isUpdating: true });
+  update: async ({ commit }, { options, ...updateObj }) => {
+    if (options?.silent !== true) {
+      commit(types.default.SET_ACCOUNT_UI_FLAG, { isUpdating: true });
+    }
+
     try {
-      await AccountAPI.update('', updateObj);
+      const response = await AccountAPI.update('', updateObj);
+      commit(types.default.EDIT_ACCOUNT, response.data);
       commit(types.default.SET_ACCOUNT_UI_FLAG, { isUpdating: false });
     } catch (error) {
       commit(types.default.SET_ACCOUNT_UI_FLAG, { isUpdating: false });
@@ -109,10 +113,10 @@ export const actions = {
     }
   },
 
-  checkout: async ({ commit }) => {
+  checkout: async ({ commit }, paymentInfo) => {
     commit(types.default.SET_ACCOUNT_UI_FLAG, { isCheckoutInProcess: true });
     try {
-      const response = await EnterpriseAccountAPI.checkout();
+      const response = await EnterpriseAccountAPI.checkout(paymentInfo);
       window.location = response.data.redirect_url;
     } catch (error) {
       throwErrorMessage(error);
@@ -141,6 +145,15 @@ export const actions = {
     }
   },
 
+  plans: async ({ commit }) => {
+    try {
+      const response = await EnterpriseAccountAPI.getPlans();
+      commit(types.default.SET_ACCOUNT_PLANS, response.data);
+    } catch (error) {
+      // silent error
+    }
+  },
+
   getCacheKeys: async () => {
     return AccountAPI.getCacheKeys();
   },
@@ -156,6 +169,7 @@ export const mutations = {
   [types.default.ADD_ACCOUNT]: MutationHelpers.setSingleRecord,
   [types.default.EDIT_ACCOUNT]: MutationHelpers.update,
   [types.default.SET_ACCOUNT_LIMITS]: MutationHelpers.updateAttributes,
+  [types.default.SET_ACCOUNT_PLANS]: MutationHelpers.updateAttributes,
 };
 
 export default {

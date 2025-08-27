@@ -14,17 +14,23 @@ export default {
   },
   emits: ['channelItemClick'],
   computed: {
+    hasZaloPersonalConfigured() {
+      return window.shopizConfig?.zaloAppId;
+    },
     hasZaloConfigured() {
-      return window.salesmanConfig?.zaloAppId;
+      return window.shopizConfig?.zaloAppId;
+    },
+    hasZaloPersonalConfigured() {
+      return window.shopizConfig?.zaloApiUrl;
     },
     hasTiktokConfigured() {
-      return window.salesmanConfig?.tiktokAppId;
+      return window.shopizConfig?.tiktokAppId;
     },
     hasFbConfigured() {
-      return window.salesmanConfig?.fbAppId;
+      return window.shopizConfig?.fbAppId;
     },
     hasInstagramConfigured() {
-      return window.salesmanConfig?.instagramAppId;
+      return window.shopizConfig?.instagramAppId;
     },
     isActive() {
       const { key } = this.channel;
@@ -40,23 +46,44 @@ export default {
       if (key === 'zalo') {
         return this.enabledFeatures.channel_zalo && this.hasZaloConfigured;
       }
+      if (key === 'zalopersonal') {
+        return this.enabledFeatures.channel_zalopersonal && this.hasZaloPersonalConfigured;
+      }
       if (key === 'tiktok') {
         return this.enabledFeatures.channel_tiktok && this.hasTiktokConfigured;
       }
       if (key === 'email') {
         return this.enabledFeatures.channel_email;
       }
-
+      if (key === 'sms') {
+        return this.enabledFeatures.channel_sms;
+      }
+      if (key === 'line') {
+        return this.enabledFeatures.channel_line;
+      }
+      if (key === 'voice') {
+        return this.enabledFeatures.channel_voice;
+      }
+      if (key === 'telegram') {
+        return this.enabledFeatures.channel_telegram;
+      }
+      if (key === 'api') {
+        return this.enabledFeatures.channel_api;
+      }
+      if (key === 'whatsapp') {
+        return this.enabledFeatures.channel_whatsapp;
+      }
       if (key === 'instagram') {
         return (
           this.enabledFeatures.channel_instagram && this.hasInstagramConfigured
         );
       }
-
       return [
         'website',
         'twilio',
+        'voice',
         'zalo',
+        'zalopersonal',
         'api',
         'whatsapp',
         'sms',

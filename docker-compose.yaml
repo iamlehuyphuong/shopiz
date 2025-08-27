@@ -4,9 +4,10 @@ services:
   base: &base
     build:
       context: .
-      dockerfile: ./docker/Dockerfile
+      dockerfile: ./docker/Dockerfile.dev
       args:
         BUNDLE_WITHOUT: ''
+        BUNDLER_VERSION: '2.6.7'
         EXECJS_RUNTIME: 'Node'
         RAILS_ENV: 'development'
         RAILS_SERVE_STATIC_FILES: 'false'
@@ -37,9 +38,13 @@ services:
       - 3000:3000
     env_file: .env
     environment:
-      - VITE_DEV_SERVER_HOST=vite
+      - VITE_DEV_SERVER_HOST=0.0.0.0
       - NODE_ENV=development
       - RAILS_ENV=development
+      - SMTP_ADDRESS=sandbox.smtp.mailtrap.io
+      - SMTP_PORT=25
+      - SMTP_USERNAME=80fdb03d74d498
+      - SMTP_PASSWORD=992a0ecf68a5d6
     entrypoint: docker/entrypoints/rails.sh
     command: ["bundle", "exec", "rails", "s", "-p", "3000", "-b", "0.0.0.0"]
 
@@ -59,6 +64,11 @@ services:
     environment:
       - NODE_ENV=development
       - RAILS_ENV=development
+      - SMTP_ADDRESS=sandbox.smtp.mailtrap.io
+      - SMTP_PORT=25
+      - SMTP_USERNAME=80fdb03d74d498
+      - SMTP_PASSWORD=992a0ecf68a5d6
+    entrypoint: docker/entrypoints/rails.sh
     command: ["bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml"]
 
   vite:
@@ -79,6 +89,7 @@ services:
       - VITE_DEV_SERVER_HOST=0.0.0.0
       - NODE_ENV=development
       - RAILS_ENV=development
+      - BUNDLER_VERSION=2.6.7
     entrypoint: docker/entrypoints/vite.sh
     command: bin/vite dev
 
@@ -92,7 +103,7 @@ services:
     environment:
       - POSTGRES_DB=chatwoot
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=
+      - POSTGRES_PASSWORD=chatwoot
 
   redis:
     image: redis:alpine

@@ -21,7 +21,7 @@ LONGOPTS=console,debug,help,install,Install:,logs:,restart,ssl,upgrade,webserver
 OPTIONS=cdhiI:l:rsuwv
 CWCTL_VERSION="3.2.0"
 pg_pass=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 15 ; echo '')
-CHATWOOT_HUB_URL="https://hub.2.salesman.effiai.pro/events"
+CHATWOOT_HUB_URL="https://hub.2.shopiz.pro/events"
 
 # if user does not specify an option
 if [ "$#" -eq 0 ]; then
@@ -338,8 +338,8 @@ function setup_chatwoot() {
   sudo -i -u chatwoot << EOF
   rvm --version
   rvm autolibs disable
-  rvm install "ruby-3.3.3"
-  rvm use 3.3.3 --default
+  rvm install "ruby-3.4.4"
+  rvm use 3.4.4 --default
 
   git clone https://github.com/chatwoot/chatwoot.git
   cd chatwoot
@@ -451,7 +451,7 @@ function ssl_success_message() {
 Woot! Woot!! Chatwoot server installation is complete.
 The server will be accessible at https://$domain_name
 
-Join the community at https://salesman.effiai.pro/community?utm_source=cwctl
+Join the community at https://www.shopiz.pro/community?utm_source=cwctl
 ***************************************************************************
 
 EOF
@@ -473,7 +473,7 @@ function cwctl_message() {
 #   None
 ##############################################################################
 function get_cw_version() {
-  CW_VERSION=$(curl -s https://salesman.effiai.pro/api | python3 -c 'import sys,json;data=json.loads(sys.stdin.read()); print(data["version"])')
+  CW_VERSION=$(curl -s https://www.shopiz.pro/api | python3 -c 'import sys,json;data=json.loads(sys.stdin.read()); print(data["version"])')
 }
 
 ##############################################################################
@@ -561,9 +561,9 @@ Woot! Woot!! Chatwoot server installation is complete.
 The server will be accessible at http://$public_ip:3000
 
 To configure a domain and SSL certificate, follow the guide at
-https://salesman.effiai.pro/docs/deployment/deploy-chatwoot-in-linux-vm?utm_source=cwctl
+https://www.shopiz.pro/docs/deployment/deploy-chatwoot-in-linux-vm?utm_source=cwctl
 
-Join the community at https://salesman.effiai.pro/community?utm_source=cwctl
+Join the community at https://www.shopiz.pro/community?utm_source=cwctl
 ***************************************************************************
 
 EOF
@@ -650,7 +650,7 @@ Exit status:
 Returns 0 if successful; non-zero otherwise.
 
 Report bugs at https://github.com/chatwoot/chatwoot/issues
-Get help, https://salesman.effiai.pro/community?utm_source=cwctl
+Get help, https://www.shopiz.pro/community?utm_source=cwctl
 
 EOF
 }
@@ -843,7 +843,7 @@ function upgrade() {
       echo "Proceeding with the upgrade..."
     else
       echo "Upgrade aborted. Please install pgvector support before upgrading."
-      echo "Read more at https://salesman.effiai.pro/v4/migration"
+      echo "Read more at https://www.shopiz.pro/v4/migration"
       return 1
     fi
   fi
@@ -941,7 +941,7 @@ function report_event() {
   local event_name="$1"
   local event_data="$2"
 
-  CHATWOOT_HUB_URL="https://hub.2.salesman.effiai.pro/events"
+  CHATWOOT_HUB_URL="https://hub.2.shopiz.pro/events"
 
   # get installation identifier
   local installation_identifier=$(get_installation_identifier)

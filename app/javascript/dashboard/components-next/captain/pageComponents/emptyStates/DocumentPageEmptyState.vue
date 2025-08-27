@@ -18,7 +18,7 @@ const onClick = () => {
     :note="$t('CAPTAIN.DOCUMENTS.EMPTY_STATE.FEATURE_SPOTLIGHT.NOTE')"
     fallback-thumbnail="/assets/images/dashboard/captain/document-light.svg"
     fallback-thumbnail-dark="/assets/images/dashboard/captain/document-dark.svg"
-    learn-more-url="https://salesman.effiai.pro/captain-document"
+    learn-more-url="https://www.shopiz.pro/captain-document"
     class="mb-8"
   />
   <EmptyStateLayout

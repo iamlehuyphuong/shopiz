@@ -391,7 +391,7 @@
         "SLUG": {
           "LABEL": "Метка",
           "PLACEHOLDER": "Метка категории для url",
-          "HELP_TEXT": "salesman.effiai.pro/hc/my-portal/en-US/categories/my-slug",
+          "HELP_TEXT": "shopiz.pro/hc/my-portal/en-US/categories/my-slug",
           "ERROR": "Необходимо указать метку"
         },
         "DESCRIPTION": {
@@ -422,7 +422,7 @@
         "SLUG": {
           "LABEL": "Метка",
           "PLACEHOLDER": "Метка категории для url",
-          "HELP_TEXT": "salesman.effiai.pro/hc/my-portal/en-US/categories/my-slug",
+          "HELP_TEXT": "shopiz.pro/hc/my-portal/en-US/categories/my-slug",
           "ERROR": "Необходимо указать метку"
         },
         "DESCRIPTION": {
@@ -606,7 +606,7 @@
             "LABEL": "Метка",
             "PLACEHOLDER": "Метка категории для url",
             "ERROR": "Необходимо указать метку",
-            "HELP_TEXT": "salesman.effiai.pro/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
+            "HELP_TEXT": "shopiz.pro/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
           },
           "DESCRIPTION": {
             "LABEL": "Описание",
@@ -689,14 +689,15 @@
       "CONFIRM_BUTTON_LABEL": "Создать",
       "NAME": {
         "LABEL": "Имя",
-        "PLACEHOLDER": "Руководство пользователя | Salesman",
+        "PLACEHOLDER": "Руководство пользователя | Shopiz",
         "MESSAGE": "Выберите имя для вашего портала.",
         "ERROR": "Необходимо указать имя"
       },
       "SLUG": {
         "LABEL": "Метка",
         "PLACEHOLDER": "руководство пользователя",
-        "ERROR": "Необходимо указать метку"
+        "ERROR": "Необходимо указать метку",
+        "FORMAT_ERROR": "Please enter a valid slug, for eg: user-guide"
       }
     },
     "PORTAL_SETTINGS": {
@@ -760,7 +761,7 @@
           },
           "DNS_CONFIGURATION_DIALOG": {
             "HEADER": "Настройка DNS",
-            "DESCRIPTION": "Войдите в учетную запись с вашим DNS провайдером и добавьте запись CNAME для поддомена, указывающего на salesman.help",
+            "DESCRIPTION": "Войдите в учетную запись с вашим DNS провайдером и добавьте запись CNAME для поддомена, указывающего на shopiz.help",
             "HELP_TEXT": "Как только это будет сделано, вы можете связаться с нашей службой поддержки для запроса SSL-сертификата.",
             "CONFIRM_BUTTON_LABEL": "Понял!"
           }

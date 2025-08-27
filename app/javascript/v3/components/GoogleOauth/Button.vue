@@ -19,8 +19,8 @@ export default {
       // https://github.com/lynndylanhurley/devise_token_auth/issues/1466
       const baseUrl =
         'https://accounts.google.com/o/oauth2/auth/oauthchooseaccount';
-      const clientId = window.salesmanConfig.googleOAuthClientId;
-      const redirectUri = window.salesmanConfig.googleOAuthCallbackUrl;
+      const clientId = window.shopizConfig.googleOAuthClientId;
+      const redirectUri = window.shopizConfig.googleOAuthCallbackUrl;
       const responseType = 'code';
       const scope = 'email profile';
 

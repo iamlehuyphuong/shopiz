@@ -5,6 +5,7 @@ import InboxesAPI from '../../api/inboxes';
 import WebChannel from '../../api/channel/webChannel';
 import FBChannel from '../../api/channel/fbChannel';
 import ZaloChannel from '../../api/channel/zaloChannel';
+import ZaloPersonalChannel from '../../api/channel/zalopersonalChannel';
 import TiktokChannel from '../../api/channel/tiktokChannel';
 import TwilioChannel from '../../api/channel/twilioChannel';
 import { throwErrorMessage } from '../utils/api';
@@ -119,6 +120,22 @@ export const getters = {
         (item.channel_type === INBOX_TYPES.TWILIO && item.medium === 'sms')
     );
   },
+  getVoiceInboxes($state) {
+    return $state.records.filter(
+      item =>
+        item.channel_type === INBOX_TYPES.VOICE
+    );
+  },
+  getSurveyInboxes($state) {
+    return $state.records.filter(
+      item =>
+        item.channel_type === INBOX_TYPES.SMS ||
+        item.channel_type === INBOX_TYPES.WEB ||
+        item.channel_type === INBOX_TYPES.ZALO ||
+        item.channel_type === INBOX_TYPES.ZALOPERSONAL ||
+        (item.channel_type === INBOX_TYPES.TWILIO && item.medium === 'sms')
+    );
+  },
   dialogFlowEnabledInboxes($state) {
     return $state.records.filter(
       item => item.channel_type !== INBOX_TYPES.EMAIL
@@ -209,6 +226,19 @@ export const actions = {
       throw new Error(error);
     }
   },
+  createZaloPersonalChannel: async ({ commit }, params) => {
+    try {
+      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: true });
+      const response = await ZaloPersonalChannel.create(params);
+      commit(types.default.ADD_INBOXES, response.data);
+      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
+      sendAnalyticsEvent('zalopersonal');
+      return response.data;
+    } catch (error) {
+      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
+      throw new Error(error);
+    }
+  },
   createTiktokChannel: async ({ commit }, params) => {
     try {
       commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: true });
@@ -229,6 +259,33 @@ export const actions = {
       commit(types.default.ADD_INBOXES, response.data);
       commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
       sendAnalyticsEvent('twilio');
+      return response.data;
+    } catch (error) {
+      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
+      throw error;
+    }
+  },
+  createVoiceChannel: async ({ commit }, params) => {
+    try {
+      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: true });
+      
+      // Create a formatted payload for the voice channel
+      const inboxParams = {
+        name: params.voice.name || `Voice (${params.voice.phone_number})`,
+        channel: {
+          type: 'voice',
+          phone_number: params.voice.phone_number,
+          provider: params.voice.provider,
+          provider_config: params.voice.provider_config,
+        },
+      };
+      
+      // Use InboxesAPI to create the channel which handles authentication properly
+      const response = await InboxesAPI.create(inboxParams);
+      
+      commit(types.default.ADD_INBOXES, response.data);
+      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
+      sendAnalyticsEvent('voice');
       return response.data;
     } catch (error) {
       commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });

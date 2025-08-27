@@ -59,7 +59,7 @@ export default {
       this.$emit('toggleAccounts');
     },
     toggleSupportChatWindow() {
-      window.$chatwoot.toggle();
+      window.$shopiz.toggle();
     },
     openNotificationPanel() {
       useTrack(ACCOUNT_EVENTS.OPENED_NOTIFICATIONS);

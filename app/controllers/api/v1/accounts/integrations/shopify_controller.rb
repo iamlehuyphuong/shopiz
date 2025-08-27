@@ -25,8 +25,32 @@ class Api::V1::Accounts::Integrations::ShopifyController < Api::V1::Accounts::Ba
     customers = fetch_customers
     return render json: { orders: [] } if customers.empty?
 
-    orders = fetch_orders(customers.first['id'])
+    orders = fetch_orders({
+      customer_id: customers.first['id']
+    })
     render json: { orders: orders }
+  rescue ShopifyAPI::Errors::HttpResponseError => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+
+  def all_orders
+    orders = fetch_orders({})
+    render json: { orders: orders }
+  rescue ShopifyAPI::Errors::HttpResponseError => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+
+  def customers
+    customers = fetch_customers
+    render json: { customers: customers }
+  rescue ShopifyAPI::Errors::HttpResponseError => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+
+  def products
+    products = fetch_products
+    return render json: { products: [] } if products.empty?
+    render json: { products: products }
   rescue ShopifyAPI::Errors::HttpResponseError => e
     render json: { error: e.message }, status: :unprocessable_entity
   end
@@ -66,18 +90,38 @@ class Api::V1::Accounts::Integrations::ShopifyController < Api::V1::Accounts::Ba
     ).body['customers'] || []
   end
 
-  def fetch_orders(customer_id)
+  def fetch_orders(filters)
+    query = {
+      status: 'any',
+      fields: 'id,email,created_at,total_price,currency,fulfillment_status,financial_status'
+    }.merge(filters.is_a?(Hash) ? filters : {})
+
     orders = shopify_client.get(
       path: 'orders.json',
-      query: {
-        customer_id: customer_id,
-        status: 'any',
-        fields: 'id,email,created_at,total_price,currency,fulfillment_status,financial_status'
-      }
+      query: query
     ).body['orders'] || []
 
     orders.map do |order|
       order.merge('admin_url' => "https://#{@hook.reference_id}/admin/orders/#{order['id']}")
+    end
+  end
+
+  def fetch_products
+    products = shopify_client.get(
+      path: 'products.json'
+    ).body['products'] || []
+
+    products.map do |product|
+      total_stock = product['variants'].sum { |variant| variant['inventory_quantity'].to_i }
+      stock_status =
+        if total_stock > 5
+          'In Stock'
+        elsif total_stock > 0
+          'Low Stock'
+        else
+          'Out Of Stock'
+        end
+      product.merge('stock' => total_stock,'stock_status' => stock_status)
     end
   end
 

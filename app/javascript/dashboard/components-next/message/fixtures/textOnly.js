@@ -4,7 +4,7 @@ export default camelcaseKeys(
   [
     {
       id: 5272,
-      content: 'Hey, how are ya, I had a few questions about Salesman?',
+      content: 'Hey, how are ya, I had a few questions about Shopiz?',
       inbox_id: 475,
       conversation_id: 43,
       message_type: 0,

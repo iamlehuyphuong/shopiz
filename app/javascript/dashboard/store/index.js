@@ -9,6 +9,7 @@ import auditlogs from './modules/auditlogs';
 import auth from './modules/auth';
 import automations from './modules/automations';
 import bulkActions from './modules/bulkActions';
+import calls from './modules/calls';
 import campaigns from './modules/campaigns';
 import cannedResponse from './modules/cannedResponse';
 import categories from './modules/helpCenterCategories';
@@ -51,6 +52,11 @@ import captainDocuments from './captain/document';
 import captainResponses from './captain/response';
 import captainInboxes from './captain/inboxes';
 import captainBulkActions from './captain/bulkActions';
+import copilotThreads from './captain/copilotThreads';
+import copilotMessages from './captain/copilotMessages';
+import salesProducts from './modules/sales/products';
+import salesOrders from './modules/sales/orders';
+
 const plugins = [];
 
 export default createStore({
@@ -64,6 +70,7 @@ export default createStore({
     auth,
     automations,
     bulkActions,
+    calls,
     campaigns,
     cannedResponse,
     categories,
@@ -106,6 +113,10 @@ export default createStore({
     captainResponses,
     captainInboxes,
     captainBulkActions,
+    copilotThreads,
+    copilotMessages,
+    salesProducts,
+    salesOrders,
   },
   plugins,
 });

@@ -3,6 +3,9 @@ FROM chatwoot/chatwoot:latest
 
 ENV NODE_OPTIONS="--max-old-space-size=8192"
 ENV CW_EDITION=ee
+RUN apk update && apk add --no-cache \
+  poppler-utils \
+  tesseract-ocr
 RUN apk add --update npm
 RUN npm install -g pnpm
 

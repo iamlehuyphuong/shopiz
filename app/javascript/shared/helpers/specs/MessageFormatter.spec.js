@@ -4,24 +4,24 @@ describe('#MessageFormatter', () => {
   describe('content with links', () => {
     it('should format correctly', () => {
       const message =
-        'Chatwoot is an opensource tool. [Chatwoot](https://salesman.effiai.pro)';
+        'Chatwoot is an opensource tool. [Chatwoot](https://www.shopiz.pro)';
       expect(new MessageFormatter(message).formattedMessage).toMatch(
-        '<p>Chatwoot is an opensource tool. <a href="https://salesman.effiai.pro" class="link" rel="noreferrer noopener nofollow" target="_blank">Chatwoot</a></p>'
+        '<p>Chatwoot is an opensource tool. <a href="https://www.shopiz.pro" class="link" rel="noreferrer noopener nofollow" target="_blank">Chatwoot</a></p>'
       );
     });
     it('should format correctly', () => {
       const message =
-        'Chatwoot is an opensource tool. https://salesman.effiai.pro';
+        'Chatwoot is an opensource tool. https://www.shopiz.pro';
       expect(new MessageFormatter(message).formattedMessage).toMatch(
-        '<p>Chatwoot is an opensource tool. <a href="https://salesman.effiai.pro" class="link" rel="noreferrer noopener nofollow" target="_blank">https://salesman.effiai.pro</a></p>'
+        '<p>Chatwoot is an opensource tool. <a href="https://www.shopiz.pro" class="link" rel="noreferrer noopener nofollow" target="_blank">https://www.shopiz.pro</a></p>'
       );
     });
     it('should not convert template variables to links when linkify is disabled', () => {
       const message =
-        'Hey {{customer.name}}, check https://salesman.effiai.pro';
+        'Hey {{customer.name}}, check https://www.shopiz.pro';
       const formatter = new MessageFormatter(message, false, false, false);
       expect(formatter.formattedMessage).toMatch(
-        '<p>Hey {{customer.name}}, check https://salesman.effiai.pro</p>'
+        '<p>Hey {{customer.name}}, check https://www.shopiz.pro</p>'
       );
     });
   });
@@ -39,25 +39,25 @@ describe('#MessageFormatter', () => {
   describe('content with image and has "cw_image_height" query at the end of URL', () => {
     it('should set image height correctly', () => {
       const message =
-        'Chatwoot is an opensource tool. ![](http://salesman.effiai.pro/chatwoot.png?cw_image_height=24px)';
+        'Chatwoot is an opensource tool. ![](http://shopiz.pro/chatwoot.png?cw_image_height=24px)';
       expect(new MessageFormatter(message).formattedMessage).toMatch(
-        '<p>Chatwoot is an opensource tool. <img src="http://salesman.effiai.pro/chatwoot.png?cw_image_height=24px" alt="" style="height: 24px;" /></p>'
+        '<p>Chatwoot is an opensource tool. <img src="http://shopiz.pro/chatwoot.png?cw_image_height=24px" alt="" style="height: 24px;" /></p>'
       );
     });
 
     it('should set image height correctly if its original size', () => {
       const message =
-        'Chatwoot is an opensource tool. ![](http://salesman.effiai.pro/chatwoot.png?cw_image_height=auto)';
+        'Chatwoot is an opensource tool. ![](http://shopiz.pro/chatwoot.png?cw_image_height=auto)';
       expect(new MessageFormatter(message).formattedMessage).toMatch(
-        '<p>Chatwoot is an opensource tool. <img src="http://salesman.effiai.pro/chatwoot.png?cw_image_height=auto" alt="" style="height: auto;" /></p>'
+        '<p>Chatwoot is an opensource tool. <img src="http://shopiz.pro/chatwoot.png?cw_image_height=auto" alt="" style="height: auto;" /></p>'
       );
     });
 
     it('should not set height', () => {
       const message =
-        'Chatwoot is an opensource tool. ![](http://salesman.effiai.pro/chatwoot.png)';
+        'Chatwoot is an opensource tool. ![](http://shopiz.pro/chatwoot.png)';
       expect(new MessageFormatter(message).formattedMessage).toMatch(
-        '<p>Chatwoot is an opensource tool. <img src="http://salesman.effiai.pro/chatwoot.png" alt="" /></p>'
+        '<p>Chatwoot is an opensource tool. <img src="http://shopiz.pro/chatwoot.png" alt="" /></p>'
       );
     });
   });
@@ -113,9 +113,9 @@ describe('#MessageFormatter', () => {
   describe('plain text content', () => {
     it('returns the plain text without HTML', () => {
       const message =
-        '<b>Chatwoot is an opensource tool. https://salesman.effiai.pro</b>';
+        '<b>Chatwoot is an opensource tool. https://www.shopiz.pro</b>';
       expect(new MessageFormatter(message).plainText).toMatch(
-        'Chatwoot is an opensource tool. https://salesman.effiai.pro'
+        'Chatwoot is an opensource tool. https://www.shopiz.pro'
       );
     });
   });

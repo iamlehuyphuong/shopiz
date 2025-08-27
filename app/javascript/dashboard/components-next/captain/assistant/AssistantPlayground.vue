@@ -4,28 +4,34 @@ import { useI18n } from 'vue-i18n';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import MessageList from './MessageList.vue';
 import CaptainAssistant from 'dashboard/api/captain/assistant';
+
 const { assistantId } = defineProps({
   assistantId: {
     type: Number,
     required: true,
   },
 });
+
 const { t } = useI18n();
 const messages = ref([]);
 const newMessage = ref('');
 const isLoading = ref(false);
+
 const formatMessagesForApi = () => {
   return messages.value.map(message => ({
     role: message.sender,
     content: message.content,
   }));
 };
+
 const resetConversation = () => {
   messages.value = [];
   newMessage.value = '';
 };
+
 const sendMessage = async () => {
   if (!newMessage.value.trim() || isLoading.value) return;
+
   const userMessage = {
     content: newMessage.value,
     sender: 'user',
@@ -34,6 +40,7 @@ const sendMessage = async () => {
   messages.value.push(userMessage);
   const currentMessage = newMessage.value;
   newMessage.value = '';
+
   try {
     isLoading.value = true;
     const { data } = await CaptainAssistant.playground({
@@ -41,6 +48,7 @@ const sendMessage = async () => {
       messageContent: currentMessage,
       messageHistory: formatMessagesForApi(),
     });
+
     messages.value.push({
       content: data.response,
       sender: 'assistant',

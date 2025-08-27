@@ -73,7 +73,7 @@ describe('#URL Helpers', () => {
 
   describe('isValidURL', () => {
     it('should return true if valid url is passed', () => {
-      expect(isValidURL('https://salesman.effiai.pro')).toBe(true);
+      expect(isValidURL('https://www.shopiz.pro')).toBe(true);
     });
     it('should return false if invalid url is passed', () => {
       expect(isValidURL('alert.window')).toBe(false);
@@ -170,7 +170,7 @@ describe('#URL Helpers', () => {
 
   describe('hasValidAvatarUrl', () => {
     test('should return true for valid non-Gravatar URL', () => {
-      expect(hasValidAvatarUrl('https://salesman.effiai.pro/avatar.jpg')).toBe(
+      expect(hasValidAvatarUrl('https://www.shopiz.pro/avatar.jpg')).toBe(
         true
       );
     });

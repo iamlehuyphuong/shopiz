@@ -1,6 +1,6 @@
 # ------- Branding Related Config ------- #
 - name: INSTALLATION_NAME
-  value: 'Chatwoot'
+  value: 'Shopiz'
 - name: LOGO_THUMBNAIL
   value: '/brand-assets/logo_thumbnail.svg'
 - name: LOGO
@@ -8,15 +8,15 @@
 - name: LOGO_DARK
   value: '/brand-assets/logo_dark.svg'
 - name: BRAND_URL
-  value: 'https://salesman.effiai.pro'
+  value: 'https://www.shopiz.pro'
 - name: WIDGET_BRAND_URL
-  value: 'https://salesman.effiai.pro'
+  value: 'https://www.shopiz.pro'
 - name: BRAND_NAME
-  value: 'Chatwoot'
+  value: 'Shopiz'
 - name: TERMS_URL
-  value: 'https://salesman.effiai.pro/terms-of-service'
+  value: 'https://www.shopiz.pro/terms-of-service'
 - name: PRIVACY_URL
-  value: 'https://salesman.effiai.pro/privacy-policy'
+  value: 'https://www.shopiz.pro/privacy-policy'
 - name: DISPLAY_MANIFEST
   value: true
 # ------- End of Branding Related Config ------- #

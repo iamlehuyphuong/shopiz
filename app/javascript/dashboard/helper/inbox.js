@@ -3,6 +3,7 @@ export const INBOX_TYPES = {
   FB: 'Channel::FacebookPage',
   TWITTER: 'Channel::TwitterProfile',
   TWILIO: 'Channel::TwilioSms',
+  VOICE: 'Channel::Voice',
   WHATSAPP: 'Channel::Whatsapp',
   API: 'Channel::Api',
   EMAIL: 'Channel::Email',
@@ -10,6 +11,7 @@ export const INBOX_TYPES = {
   LINE: 'Channel::Line',
   SMS: 'Channel::Sms',
   ZALO: 'Channel::ZaloOa',
+  ZALOPERSONAL: 'Channel::ZaloPersonal',
   INSTAGRAM: 'Channel::Instagram',
   TIKTOK: 'Channel::Tiktok',
 };
@@ -23,8 +25,10 @@ const INBOX_ICON_MAP_FILL = {
   [INBOX_TYPES.EMAIL]: 'i-ri-mail-fill',
   [INBOX_TYPES.TELEGRAM]: 'i-ri-telegram-fill',
   [INBOX_TYPES.LINE]: 'i-ri-line-fill',
-  [INBOX_TYPES.ZALO]: 'i-ri-zalo-x-fill',
+  [INBOX_TYPES.ZALO]: 'i-ri-zalo-oa-fill',
+  [INBOX_TYPES.ZALOPERSONAL]: 'i-ri-zalo-fill',
   [INBOX_TYPES.INSTAGRAM]: 'i-ri-instagram-fill',
+  [INBOX_TYPES.VOICE]: 'i-ri-phone-fill',
   [INBOX_TYPES.TIKTOK]: 'i-ri-tiktok-fill',
 };
 
@@ -39,8 +43,10 @@ const INBOX_ICON_MAP_LINE = {
   [INBOX_TYPES.EMAIL]: 'i-ri-mail-line',
   [INBOX_TYPES.TELEGRAM]: 'i-ri-telegram-line',
   [INBOX_TYPES.LINE]: 'i-ri-line-line',
-  [INBOX_TYPES.ZALO]: 'i-ri-zalo-line',
+  [INBOX_TYPES.ZALO]: 'i-ri-zalo-oa-line',
+  [INBOX_TYPES.ZALOPERSONAL]: 'i-ri-zalo-line',
   [INBOX_TYPES.INSTAGRAM]: 'i-ri-instagram-line',
+  [INBOX_TYPES.VOICE]: 'i-ri-phone-line',
   [INBOX_TYPES.TIKTOK]: 'i-ri-tiktok-line',
 };
 
@@ -73,6 +79,9 @@ export const getReadableInboxByType = (type, phoneNumber) => {
     case INBOX_TYPES.ZALO:
       return 'zalo';
 
+    case INBOX_TYPES.ZALOPERSONAL:
+      return 'zalopersonal';
+
     case INBOX_TYPES.TIKTOK:
       return 'tiktok';
 
@@ -81,6 +90,9 @@ export const getReadableInboxByType = (type, phoneNumber) => {
 
     case INBOX_TYPES.TWILIO:
       return phoneNumber?.startsWith('whatsapp') ? 'whatsapp' : 'sms';
+
+    case INBOX_TYPES.VOICE:
+      return 'voice';
 
     case INBOX_TYPES.WHATSAPP:
       return 'whatsapp';
@@ -118,6 +130,9 @@ export const getInboxClassByType = (type, phoneNumber) => {
         ? 'brand-whatsapp'
         : 'brand-sms';
 
+    case INBOX_TYPES.VOICE:
+      return 'phone';
+
     case INBOX_TYPES.WHATSAPP:
       return 'brand-whatsapp';
 
@@ -137,6 +152,9 @@ export const getInboxClassByType = (type, phoneNumber) => {
       return 'brand-instagram';
 
     case INBOX_TYPES.ZALO:
+      return 'brand-zalo-oa';
+
+    case INBOX_TYPES.ZALOPERSONAL:
       return 'brand-zalo';
 
     case INBOX_TYPES.TIKTOK:

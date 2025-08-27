@@ -23,8 +23,8 @@ defineProps({
         <CampaignCard
           v-for="campaign in ONGOING_CAMPAIGN_EMPTY_STATE_CONTENT"
           :key="campaign.id"
-          :title="campaign.title"
-          :message="campaign.message"
+          :title="$t(campaign.title)"
+          :message="$t(campaign.message)"
           :is-enabled="campaign.enabled"
           :status="campaign.campaign_status"
           :sender="campaign.sender"

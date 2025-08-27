@@ -4,6 +4,7 @@
 #
 #  id            :bigint           not null, primary key
 #  content       :text
+#  document_type :integer          default("url"), not null
 #  external_link :string           not null
 #  name          :string
 #  status        :integer          default("in_progress"), not null
@@ -11,13 +12,16 @@
 #  updated_at    :datetime         not null
 #  account_id    :bigint           not null
 #  assistant_id  :bigint           not null
+#  external_id   :string
 #
 # Indexes
 #
 #  index_captain_documents_on_account_id                      (account_id)
 #  index_captain_documents_on_assistant_id                    (assistant_id)
 #  index_captain_documents_on_assistant_id_and_external_link  (assistant_id,external_link) UNIQUE
+#  index_captain_documents_on_document_type                   (document_type)
 #  index_captain_documents_on_status                          (status)
+#  index_captain_documents_unique_external_id                 (assistant_id,external_id,document_type) UNIQUE
 #
 class Captain::Document < ApplicationRecord
   class LimitExceededError < StandardError; end
@@ -27,8 +31,10 @@ class Captain::Document < ApplicationRecord
   has_many :responses, class_name: 'Captain::AssistantResponse', dependent: :destroy, as: :documentable
   belongs_to :account
 
-  validates :external_link, presence: true
-  validates :external_link, uniqueness: { scope: :assistant_id }
+  validates :external_link, presence: true, if: :web?
+  validates :external_link, uniqueness: { scope: :assistant_id }, if: :web?
+  validates :external_id, presence: true, if: :notion?
+  validates :external_id, uniqueness: { scope: [:assistant_id, :document_type] }, allow_nil: true
   validates :content, length: { maximum: 200_000 }
   before_validation :ensure_account_id
 
@@ -37,7 +43,14 @@ class Captain::Document < ApplicationRecord
     available: 1
   }
 
+  enum document_type: {
+    url: 0,
+    pdf: 1,
+    notion: 2
+  }
+
   before_create :ensure_within_plan_limit
+  before_create :detect_document_type
   after_create_commit :enqueue_crawl_job
   after_create_commit :update_document_usage
   after_destroy :update_document_usage
@@ -47,12 +60,38 @@ class Captain::Document < ApplicationRecord
   scope :for_account, ->(account_id) { where(account_id: account_id) }
   scope :for_assistant, ->(assistant_id) { where(assistant_id: assistant_id) }
 
+  def url_document?
+    document_type == 'url'
+  end
+
+  def pdf_document?
+    document_type == 'pdf'
+  end
+
   private
 
   def enqueue_crawl_job
     return if status != 'in_progress'
 
-    Captain::Documents::CrawlJob.perform_later(self)
+    if pdf_document?
+      Captain::Documents::PdfProcessingJob.perform_later(self)
+    else
+      Captain::Documents::CrawlJob.perform_later(self)
+    end
+  end
+
+  def detect_document_type
+    return unless external_link.present?
+    
+    # Check if URL points to a PDF file
+    uri = URI.parse(external_link)
+    if uri.path.downcase.end_with?('.pdf') || external_link.downcase.include?('.pdf')
+      self.document_type = :pdf
+    else
+      self.document_type = :url
+    end
+  rescue URI::InvalidURIError
+    self.document_type = :url
   end
 
   def enqueue_response_builder_job

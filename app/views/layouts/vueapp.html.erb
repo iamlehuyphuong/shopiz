@@ -31,19 +31,20 @@
     <link rel="icon" type="image/png" sizes="512x512" href="<%= @global_config['LOGO_THUMBNAIL'] %>">
     <%= csrf_meta_tags %>
     <script>
-      window.salesmanConfig = {
+      window.shopizConfig = {
         hostURL: '<%= ENV.fetch('FRONTEND_URL', '') %>',
         helpCenterURL: '<%= ENV.fetch('HELPCENTER_URL', '') %>',
         fbAppId: '<%= @global_config['FB_APP_ID'] %>',
         zaloAppId: '<%= @global_config['ZALO_APP_ID'] %>',
         zaloAppSecret: '<%= @global_config['ZALO_APP_SECRET'] %>',
+        zaloApiUrl: '<%= @global_config['ZALO_API_URL'] %>',
         tiktokAppId: '<%= @global_config['TIKTOK_APP_ID'] %>',
         tiktokAppSecret: '<%= @global_config['TIKTOK_APP_SECRET'] %>',
         activepiecesInstanceUrl: '<%= @global_config['ACTIVE_PIECES_INSTANCE_URL'] %>',
         activepiecesJwtSecret: '<%= @global_config['ACTIVE_PIECES_JWT_SECRET'] %>',
         instagramAppId: '<%= @global_config['INSTAGRAM_APP_ID'] %>',
-        googleOAuthClientId: '<%= ENV.fetch('GOOGLE_OAUTH_CLIENT_ID', nil) %>',
-        googleOAuthCallbackUrl: '<%= ENV.fetch('GOOGLE_OAUTH_CALLBACK_URL', nil) %>',
+        googleOAuthClientId: '<%= ENV.fetch('GOOGLE_OAUTH2_CLIENT_ID', '') %>',
+        googleOAuthCallbackUrl: '<%= ENV.fetch('GOOGLE_OAUTH2_CALLBACK_URL', '') %>',
         fbApiVersion: '<%= @global_config['FACEBOOK_API_VERSION'] %>',
         signupEnabled: '<%= @global_config['ENABLE_ACCOUNT_SIGNUP'] %>',
         isEnterprise: '<%= @global_config['IS_ENTERPRISE'] %>',
@@ -63,6 +64,33 @@
       }
       window.errorLoggingConfig = '<%= ENV.fetch('SENTRY_FRONTEND_DSN', '') || ENV.fetch('SENTRY_DSN', '') %>'
     </script>
+    <script>
+      window.shopizSettings = {
+        hideMessageBubble: true,
+      };
+
+      (function(d,t) {
+        var BASE_URL = '';
+        var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src= BASE_URL + "/packs/js/sdk.js";
+        g.defer = true;
+        g.async = true;
+        s.parentNode.insertBefore(g,s);
+        g.onload=function(){
+          window.shopizSDK.run({
+            websiteToken: '<%= ChatwootHub.support_config[:support_website_token] %>',
+            baseUrl: '<%= ChatwootHub.support_config[:support_script_url] %>'
+          })
+        }
+      })(document,"script");
+      window.addEventListener('chatwoot:ready', function() {
+        window.$shopiz.setUser('<%= ChatwootHub.installation_identifier %>', {
+          identifier_hash: '<%= ChatwootHub.support_config[:support_identifier_hash] %>',
+          email: '<%= SuperAdmin.first.email %>',
+          name: '<%= SuperAdmin.first.name %>'
+        });
+      })
+    </script>
     <% if @global_config['ANALYTICS_TOKEN'].present? %>
     <script>
       window.analyticsConfig = {
@@ -72,7 +100,43 @@
     <% end %>
     <%= vite_client_tag %>
     <%= vite_javascript_tag @application_pack %>
-    <script src="https://cdn.activepieces.com/sdk/embed/0.3.7.js"></script>
+    <link id="kanban-css" href="https://cdn.syncfusion.com/ej2/30.1.37/tailwind3-dark.css" rel="stylesheet">
+    <script>
+      // Auto-remove elements containing the Syncfusion trial message using MutationObserver
+      const removeSyncfusionTrial = (text) => {
+        const selector = [
+          "h1", "h2", "h3", "h4", "h5", "h6", "p", "span", "div"
+        ].map(tag => `${tag}:contains("${text}")`).join(",");
+        document.querySelectorAll(selector).forEach(el => {
+          let parent = el.closest("div");
+          if (parent) parent.remove();
+        });
+      };
+
+      // Polyfill for :contains in querySelectorAll (not supported natively)
+      const removeSyncfusionTrialPolyfill = (text) => {
+        const tags = ["h1", "h2", "h3", "h4", "h5", "h6", "p", "span", "div"];
+        tags.forEach(tag => {
+          document.querySelectorAll(tag).forEach(el => {
+        if (el.textContent.includes(text)) {
+          let parent = el.closest("div");
+          if (parent) parent.remove();
+        }
+          });
+        });
+      };
+
+      // Initial removal
+      removeSyncfusionTrialPolyfill("Claim your FREE account and get a key in less than a minute");
+      removeSyncfusionTrialPolyfill("This application was built using a trial version of Syncfusion");
+
+      // Observe DOM changes
+      const observer = new MutationObserver(() => {
+        removeSyncfusionTrialPolyfill("Claim your FREE account and get a key in less than a minute");
+        removeSyncfusionTrialPolyfill("This application was built using a trial version of Syncfusion");
+      });
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+    </script>
   </head>
   <body class="text-slate-600">
     <div id="app"></div>

@@ -13,7 +13,7 @@
     }
   },
   "TEAM_AVAILABILITY": {
-    "ONLINE": "Chúng tôi đang trực tuyến",
+    "ONLINE": "Chúng tôi đang online",
     "OFFLINE": "Hiện tại chúng tôi đang bận chút"
   },
   "REPLY_TIME": {
@@ -46,7 +46,7 @@
   "BUBBLE": {
     "LABEL": "Trò chuyện với chúng tôi"
   },
-  "POWERED_BY": "CC bởi Chatwoot",
+  "POWERED_BY": "CC bởi Shopiz",
   "EMAIL_PLACEHOLDER": "Vui lòng nhập email",
   "CHAT_PLACEHOLDER": "Gõ tin nhắn của bạn",
   "TODAY": "Hôm nay",

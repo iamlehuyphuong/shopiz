@@ -15,7 +15,7 @@ class DashboardController < ActionController::Base
   private
 
   def ensure_html_format
-    head :not_acceptable unless request.format.html?
+    render json: { error: 'Please use API routes instead of dashboard routes for JSON requests' }, status: :not_acceptable if request.format.json?
   end
 
   def set_global_config
@@ -71,6 +71,7 @@ class DashboardController < ActionController::Base
       AZURE_APP_ID: GlobalConfigService.load('AZURE_APP_ID', ''),
       ZALO_APP_ID: GlobalConfigService.load('ZALO_APP_ID', ''),
       ZALO_APP_SECRET: GlobalConfigService.load('ZALO_APP_SECRET', ''),
+      ZALO_API_URL: GlobalConfigService.load('ZALO_API_URL', ''),
       ZALO_OA_SECRET_KEY: GlobalConfigService.load('ZALO_OA_SECRET_KEY', ''),
       TIKTOK_APP_ID: GlobalConfigService.load('TIKTOK_APP_ID', ''),
       TIKTOK_APP_SECRET: GlobalConfigService.load('TIKTOK_APP_SECRET', ''),

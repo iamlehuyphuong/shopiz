@@ -66,6 +66,12 @@ export default {
     WootMessageEditor,
   },
   mixins: [inboxMixin, fileUploadMixin, keyboardEventListenerMixins],
+  props: {
+    isPrivateNoteOnly: {
+      type: Boolean,
+      default: false,
+    },
+  },
   emits: ['update:popoutReplyBox', 'togglePopout'],
   setup() {
     const {
@@ -102,7 +108,7 @@ export default {
       recordingAudioState: '',
       recordingAudioDurationText: '',
       isUploading: false,
-      replyType: REPLY_EDITOR_MODES.REPLY,
+      replyType: REPLY_EDITOR_MODES.NOTE,
       mentionSearchKey: '',
       hasSlashCommand: false,
       bccEmails: '',
@@ -244,14 +250,29 @@ export default {
       if (this.isAZaloOaChannel) {
         return MESSAGE_MAX_LENGTH.FACEBOOK;
       }
-      if (this.isAWhatsAppChannel) {
+      if (this.isAZaloPersonalChannel) {
+        return MESSAGE_MAX_LENGTH.FACEBOOK;
+      }
+      if (this.isAnInstagramChannel) {
+        return MESSAGE_MAX_LENGTH.INSTAGRAM;
+      }
+      if (this.isATwilioWhatsAppChannel) {
         return MESSAGE_MAX_LENGTH.TWILIO_WHATSAPP;
+      }
+      if (this.isAWhatsAppCloudChannel) {
+        return MESSAGE_MAX_LENGTH.WHATSAPP_CLOUD;
       }
       if (this.isASmsInbox) {
         return MESSAGE_MAX_LENGTH.TWILIO_SMS;
       }
       if (this.isAnEmailChannel) {
         return MESSAGE_MAX_LENGTH.EMAIL;
+      }
+      if (this.isATwilioSMSChannel) {
+        return MESSAGE_MAX_LENGTH.TWILIO_SMS;
+      }
+      if (this.isAWhatsAppChannel) {
+        return MESSAGE_MAX_LENGTH.WHATSAPP_CLOUD;
       }
       return MESSAGE_MAX_LENGTH.GENERAL;
     },
@@ -265,8 +286,9 @@ export default {
         this.isASmsInbox ||
         this.isATelegramChannel ||
         this.isALineChannel ||
-        this.isAInstagramChannel ||
+        this.isAnInstagramChannel ||
         this.isAZaloOaChannel ||
+        this.isAZaloPersonalChannel ||
         this.isATiktokChannel
       );
     },
@@ -393,9 +415,14 @@ export default {
     },
   },
   watch: {
-    currentChat(conversation) {
+    currentChat(conversation, oldConversation) {
       const { can_reply: canReply } = conversation;
-      this.setCCAndToEmailsFromLastChat();
+      if (oldConversation && oldConversation.id !== conversation.id) {
+        // Only update email fields when switching to a completely different conversation (by ID)
+        // This prevents overwriting user input (e.g., CC/BCC fields) when performing actions
+        // like self-assign or other updates that do not actually change the conversation context
+        this.setCCAndToEmailsFromLastChat();
+      }
 
       if (this.isOnPrivateNote) {
         return;
@@ -411,13 +438,12 @@ export default {
     },
     // When moving from one conversation to another, the store may not have the
     // list of all the messages. A fetch is subsequently made to get the messages.
-    // However, this update does not trigger the `currentChat` watcher.
-    // We can add a deep watcher to it, but then, that would be too broad of a net to cast
-    // And would impact performance too. So we watch the messages directly.
-    // The watcher here is `deep` too, because the messages array is mutated and
-    // not replaced. So, a shallow watcher would not catch the change.
-    'currentChat.messages': {
-      handler() {
+    // This watcher handles two main cases:
+    // 1. When switching conversations and messages are fetched/updated, ensures CC/BCC fields are set from the latest OUTGOING/INCOMING email (not activity/private messages).
+    // 2. Fixes and issue where CC/BCC fields could be reset/lost after assignment/activity actions or message mutations that did not represent a true email context change.
+    lastEmail: {
+      handler(lastEmail) {
+        if (!lastEmail) return;
         this.setCCAndToEmailsFromLastChat();
       },
       deep: true,
@@ -694,7 +720,7 @@ export default {
         // When users send messages containing both text and attachments on Instagram, Instagram treats them as separate messages.
         // Although Chatwoot combines these into a single message, Instagram sends separate echo events for each component.
         // This can create duplicate messages in Chatwoot. To prevent this issue, we'll handle text and attachments as separate messages.
-        const isOnInstagram = this.isAInstagramChannel;
+        const isOnInstagram = this.isAnInstagramChannel;
         if ((isOnWhatsApp || isOnInstagram) && !this.isPrivate) {
           this.sendMessageAsMultipleMessages(this.message);
         } else {
@@ -948,7 +974,7 @@ export default {
       const multipleMessagePayload = [];
 
       if (this.attachedFiles && this.attachedFiles.length) {
-        let caption = this.isAInstagramChannel ? '' : message;
+        let caption = this.isAnInstagramChannel ? '' : message;
         this.attachedFiles.forEach(attachment => {
           const attachedFile = this.globalConfig.directUploadsEnabled
             ? attachment.blobSignedId
@@ -964,7 +990,7 @@ export default {
           attachmentPayload = this.setReplyToInPayload(attachmentPayload);
           multipleMessagePayload.push(attachmentPayload);
           // For WhatsApp, only the first attachment gets a caption
-          if (!this.isAInstagramChannel) caption = '';
+          if (!this.isAnInstagramChannel) caption = '';
         });
       }
 
@@ -973,8 +999,8 @@ export default {
       // For Instagram, we need a separate text message
       // For WhatsApp, we only need a text message if there are no attachments
       if (
-        (this.isAInstagramChannel && this.message) ||
-        (!this.isAInstagramChannel && hasNoAttachments)
+        (this.isAnInstagramChannel && this.message) ||
+        (!this.isAnInstagramChannel && hasNoAttachments)
       ) {
         let messagePayload = {
           conversationId: this.currentChat.id,

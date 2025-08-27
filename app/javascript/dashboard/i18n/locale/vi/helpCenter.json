@@ -1,8 +1,8 @@
 {
   "HELP_CENTER": {
-    "TITLE": "Trung tâm trợ giúp",
+    "TITLE": "Cổng thông tin",
     "NEW_PAGE": {
-      "DESCRIPTION": "Tạo các cổng tự phục vụ trung tâm trợ giúp cho khách hàng của bạn. Giúp họ nhanh chóng tìm được câu trả lời mà không phải chờ đợi. Tinh gọn các yêu cầu, tăng hiệu quả cho nhân viên và nâng cao chất lượng hỗ trợ khách hàng.",
+      "DESCRIPTION": "Tạo các cổng thông tin trợ giúp cho khách hàng của bạn. Giúp họ nhanh chóng tìm được câu trả lời mà không phải chờ đợi. Tinh gọn các yêu cầu, tăng hiệu quả cho nhân viên và nâng cao chất lượng hỗ trợ khách hàng.",
       "CREATE_PORTAL_BUTTON": "Tạo cổng"
     },
     "HEADER": {
@@ -391,7 +391,7 @@
         "SLUG": {
           "LABEL": "Slug",
           "PLACEHOLDER": "Slug danh mục cho URL",
-          "HELP_TEXT": "salesman.effiai.pro/hc/my-portal/en-US/categories/my-slug",
+          "HELP_TEXT": "shopiz.pro/hc/my-portal/en-US/categories/my-slug",
           "ERROR": "Phải có Slug"
         },
         "DESCRIPTION": {
@@ -422,7 +422,7 @@
         "SLUG": {
           "LABEL": "Slug",
           "PLACEHOLDER": "Slug danh mục cho URL",
-          "HELP_TEXT": "salesman.effiai.pro/hc/my-portal/en-US/categories/my-slug",
+          "HELP_TEXT": "shopiz.pro/hc/my-portal/en-US/categories/my-slug",
           "ERROR": "Phải có Slug"
         },
         "DESCRIPTION": {
@@ -454,7 +454,7 @@
       "SEARCH_BUTTON": "Tìm kiếm",
       "INSERT_ARTICLE": "Chèn liên kết",
       "IFRAME_ERROR": "URL rỗng hoặc không hợp lệ. Không thể hiển thị nội dung.",
-      "OPEN_ARTICLE_SEARCH": "Chèn bài viết từ Trung tâm trợ giúp",
+      "OPEN_ARTICLE_SEARCH": "Chèn bài viết từ Cổng thông tin",
       "SUCCESS_ARTICLE_INSERTED": "Bài viết đã được chèn thành công",
       "PREVIEW_LINK": "Xem trước bài viết",
       "CANCEL": "Đóng",
@@ -462,7 +462,7 @@
       "BACK_RESULTS": "Quay lại kết quả"
     },
     "UPGRADE_PAGE": {
-      "TITLE": "Trung tâm trợ giúp",
+      "TITLE": "Cổng thông tin",
       "DESCRIPTION": "Tạo các cổng tự phục vụ thân thiện với người dùng. Giúp người dùng truy cập bài viết và nhận hỗ trợ 24/7. Nâng cấp gói dịch vụ của bạn để kích hoạt tính năng này.",
       "SELF_HOSTED_DESCRIPTION": "Tạo các cổng tự phục vụ thân thiện với người dùng. Giúp người dùng truy cập bài viết và nhận hỗ trợ 24/7. Vui lòng liên hệ quản trị viên của bạn để kích hoạt tính năng này.",
       "BUTTON": {
@@ -606,7 +606,7 @@
             "LABEL": "Slug",
             "PLACEHOLDER": "Slug danh mục cho URL",
             "ERROR": "Phải có Slug",
-            "HELP_TEXT": "salesman.effiai.pro/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
+            "HELP_TEXT": "shopiz.pro/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
           },
           "DESCRIPTION": {
             "LABEL": "Mô tả",
@@ -689,14 +689,15 @@
       "CONFIRM_BUTTON_LABEL": "Tạo",
       "NAME": {
         "LABEL": "Tên",
-        "PLACEHOLDER": "Hướng dẫn sử dụng | Salesman",
+        "PLACEHOLDER": "Hướng dẫn sử dụng | Shopiz",
         "MESSAGE": "Chọn một tên cho cổng của bạn.",
         "ERROR": "Tên bắt buộc có"
       },
       "SLUG": {
         "LABEL": "Slug",
         "PLACEHOLDER": "user-guide",
-        "ERROR": "Phải có Slug"
+        "ERROR": "Phải có Slug",
+        "FORMAT_ERROR": "Please enter a valid slug, for eg: user-guide"
       }
     },
     "PORTAL_SETTINGS": {
@@ -760,7 +761,7 @@
           },
           "DNS_CONFIGURATION_DIALOG": {
             "HEADER": "Cấu hình DNS",
-            "DESCRIPTION": "Đăng nhập vào tài khoản của bạn với nhà cung cấp DNS, và thêm một bản ghi CNAME cho miền phụ trỏ đến salesman.help",
+            "DESCRIPTION": "Đăng nhập vào tài khoản của bạn với nhà cung cấp DNS, và thêm một bản ghi CNAME cho miền phụ trỏ đến shopiz.help",
             "HELP_TEXT": "Khi hoàn tất, bạn có thể liên hệ với bộ phận hỗ trợ của chúng tôi để yêu cầu chứng chỉ SSL tự động tạo ra.",
             "CONFIRM_BUTTON_LABEL": "Đã hiểu!"
           }

@@ -43,7 +43,7 @@ live_chat:
   icon: 'icon-chat-smile-3-line'
 email:
   name: 'Email'
-  description: 'Manage your email customer interactions from Chatwoot.'
+  description: 'Manage your email customer interactions from Shopiz.'
   enabled: true
   icon: 'icon-mail-send-fill'
 messenger:
@@ -52,24 +52,30 @@ messenger:
   enabled: true
   icon: 'icon-messenger-line'
   config_key: 'facebook'
+instagram:
+  name: 'Instagram'
+  description: 'Stay connected with your customers on Instagram'
+  enabled: true
+  icon: 'icon-instagram'
+  config_key: 'instagram'
 whatsapp:
   name: 'WhatsApp'
-  description: 'Manage your WhatsApp business interactions from Chatwoot.'
+  description: 'Manage your WhatsApp business interactions from Shopiz.'
   enabled: true
   icon: 'icon-whatsapp-line'
 telegram:
   name: 'Telegram'
-  description: 'Manage your Telegram customer interactions from Chatwoot.'
+  description: 'Manage your Telegram customer interactions from Shopiz.'
   enabled: true
   icon: 'icon-telegram-line'
 line:
   name: 'Line'
-  description: 'Manage your Line customer interactions from Chatwoot.'
+  description: 'Manage your Line customer interactions from Shopiz.'
   enabled: true
   icon: 'icon-line-line'
 sms:
   name: 'SMS'
-  description: 'Manage your SMS customer interactions from Chatwoot.'
+  description: 'Manage your SMS customer interactions from Shopiz.'
   enabled: true
   icon: 'icon-message-line'
 help_center:
@@ -85,19 +91,25 @@ microsoft:
   config_key: 'microsoft'
 linear:
   name: 'Linear'
-  description: 'Configuration for setting up Linear'
+  description: 'Configuration for setting up Linear Integration'
   enabled: true
   icon: 'icon-linear'
   config_key: 'linear'
-instagram:
-  name: 'Instagram'
-  description: 'Configuration for setting up Instagram'
+notion:
+  name: 'Notion'
+  description: 'Configuration for setting up Notion Integration'
   enabled: true
-  icon: 'icon-instagram'
-  config_key: 'instagram'
+  icon: 'icon-notion'
+  config_key: 'notion'
+slack:
+  name: 'Slack'
+  description: 'Configuration for setting up Slack Integration'
+  enabled: true
+  icon: 'icon-slack'
+  config_key: 'slack'
 shopify:
   name: 'Shopify'
-  description: 'Configuration for setting up Shopify'
+  description: 'Configuration for setting up Shopify Integration'
   enabled: true
   icon: 'icon-shopify'
   config_key: 'shopify'
@@ -107,12 +119,25 @@ zalo:
   enabled: true
   icon: 'icon-zalo'
   config_key: 'zalo'
+zalo_personal:
+  name: 'Zalo Personal'
+  description: 'Stay connected with your customers on Zalo Personal.'
+  enabled: true
+  icon: 'icon-zalo'
+  config_key: 'zalo_personal'
 activepieces:
   name: 'Active Pieces'
   description: 'Automation software that is AI-first.'
   enabled: true
   icon: 'icon-activepieces'
   config_key: 'activepieces'
+google:
+  name: 'Google'
+  description: 'Configuration for setting up Google'
+  enabled: true
+  icon: 'icon-google'
+  config_key: 'google'
+
 tiktok:
   name: 'Tiktok'
   description: 'Stay connected with your customers on Tiktok.'

@@ -111,7 +111,8 @@ export default {
         this.data.content ||
         this.isEmailContentType ||
         this.isUnsupported ||
-        this.isAnIntegrationMessage
+        this.isAnIntegrationMessage ||
+        this.isVoiceCall
       );
     },
     emailMessageContent() {
@@ -185,8 +186,17 @@ export default {
     contextMenuEnabledOptions() {
       return {
         copy: this.hasText,
-        delete: this.hasText || this.hasAttachments,
-        cannedResponse: this.isOutgoing && this.hasText,
+        delete:
+          (this.hasText || this.hasAttachments) &&
+          !this.isMessageDeleted &&
+          !this.isFailed,
+        cannedResponse:
+          this.isOutgoing && this.hasText && !this.isMessageDeleted,
+        copyLink: !this.isFailed || !this.isProcessing,
+        translate:
+          (!this.isFailed || !this.isProcessing) &&
+          !this.isMessageDeleted &&
+          this.hasText,
         replyTo: !this.data.private && this.inboxSupportsReplyTo.outgoing,
       };
     },
@@ -258,6 +268,9 @@ export default {
     isAnIntegrationMessage() {
       return this.contentType === 'integrations';
     },
+    isVoiceCall() {
+      return this.contentType === 'voice_call';
+    },
     emailHeadAttributes() {
       return {
         email: this.contentAttributes.email,
@@ -328,7 +341,7 @@ export default {
       return !this.sender.type || this.sender.type === 'agent_bot';
     },
     shouldShowContextMenu() {
-      return !(this.isFailed || this.isPending || this.isUnsupported);
+      return !this.isUnsupported;
     },
     showAvatar() {
       if (this.isOutgoing || this.isTemplate) {
@@ -496,6 +509,7 @@ export default {
           :display-quoted-button="displayQuotedButton"
         />
         <BubbleIntegration
+          v-else-if="isAnIntegrationMessage"
           :message-id="data.id"
           :content-attributes="contentAttributes"
           :inbox-id="data.inbox_id"

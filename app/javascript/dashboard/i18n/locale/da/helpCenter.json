@@ -391,7 +391,7 @@
         "SLUG": {
           "LABEL": "Snegl",
           "PLACEHOLDER": "Kategori slug for webls",
-          "HELP_TEXT": "salesman.effiai.pro/hc/my-portal/da-DK/categories/my-slug",
+          "HELP_TEXT": "shopiz.pro/hc/my-portal/da-DK/categories/my-slug",
           "ERROR": "Slug er påkrævet"
         },
         "DESCRIPTION": {
@@ -422,7 +422,7 @@
         "SLUG": {
           "LABEL": "Slug",
           "PLACEHOLDER": "Kategori slug for urls",
-          "HELP_TEXT": "salesman.effiai.pro/hc/my-portal/da-DK/categories/my-slug",
+          "HELP_TEXT": "shopiz.pro/hc/my-portal/da-DK/categories/my-slug",
           "ERROR": "Slug er påkrævet"
         },
         "DESCRIPTION": {
@@ -606,7 +606,7 @@
             "LABEL": "Snegl",
             "PLACEHOLDER": "Kategori slug for webls",
             "ERROR": "Slug er påkrævet",
-            "HELP_TEXT": "salesman.effiai.pro/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
+            "HELP_TEXT": "shopiz.pro/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
           },
           "DESCRIPTION": {
             "LABEL": "Beskrivelse",
@@ -689,14 +689,15 @@
       "CONFIRM_BUTTON_LABEL": "Opret",
       "NAME": {
         "LABEL": "Navn",
-        "PLACEHOLDER": "User Guide | Salesman",
+        "PLACEHOLDER": "User Guide | Shopiz",
         "MESSAGE": "Choose an name for your portal.",
         "ERROR": "Navn er påkrævet"
       },
       "SLUG": {
         "LABEL": "Snegl",
         "PLACEHOLDER": "user-guide",
-        "ERROR": "Slug er påkrævet"
+        "ERROR": "Slug er påkrævet",
+        "FORMAT_ERROR": "Please enter a valid slug, for eg: user-guide"
       }
     },
     "PORTAL_SETTINGS": {
@@ -760,7 +761,7 @@
           },
           "DNS_CONFIGURATION_DIALOG": {
             "HEADER": "DNS configuration",
-            "DESCRIPTION": "Log in to the account you have with your DNS provider, and add a CNAME record for subdomain pointing to salesman.help",
+            "DESCRIPTION": "Log in to the account you have with your DNS provider, and add a CNAME record for subdomain pointing to shopiz.help",
             "HELP_TEXT": "Once this is done, you can reach out to our support to request for the auto-generated SSL certificate.",
             "CONFIRM_BUTTON_LABEL": "Got it!"
           }

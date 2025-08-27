@@ -188,7 +188,7 @@ const settings = accountId => ({
       toState: frontendURL(`accounts/${accountId}/settings/custom-roles/list`),
       toStateName: 'custom_roles_list',
       isEnterpriseOnly: true,
-      beta: true,
+      beta: false,
     },
     {
       icon: 'document-list-clock',
@@ -201,7 +201,7 @@ const settings = accountId => ({
       toStateName: 'sla_list',
       isEnterpriseOnly: true,
       featureFlag: FEATURE_FLAGS.SLA,
-      beta: true,
+      beta: false,
     },
     {
       icon: 'credit-card-person',

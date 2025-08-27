@@ -8,6 +8,7 @@ import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import { useStorage } from '@vueuse/core';
 import { useSidebarKeyboardShortcuts } from './useSidebarKeyboardShortcuts';
+import { INBOX_TYPES } from 'dashboard/helper/inbox';
 
 import Button from 'dashboard/components-next/button/Button.vue';
 import SidebarGroup from './SidebarGroup.vue';
@@ -16,6 +17,7 @@ import ChannelLeaf from './ChannelLeaf.vue';
 import SidebarAccountSwitcher from './SidebarAccountSwitcher.vue';
 import Logo from 'next/icon/Logo.vue';
 import ComposeConversation from 'dashboard/components-next/NewConversation/ComposeConversation.vue';
+import CallButton from 'dashboard/components-next/CallModal/CallButton.vue';
 
 const emit = defineEmits([
   'closeKeyShortcutModal',
@@ -63,6 +65,11 @@ const conversationCustomViews = useMapGetter(
   'customViews/getConversationCustomViews'
 );
 
+// Check if there are any voice inboxes
+const hasVoiceInbox = computed(() => 
+  inboxes.value.some(inbox => inbox.channel_type === INBOX_TYPES.VOICE)
+);
+
 onMounted(() => {
   store.dispatch('labels/get');
   store.dispatch('inboxes/get');
@@ -87,7 +94,7 @@ const newReportRoutes = () => [
   {
     name: 'Reports Label',
     label: t('SIDEBAR.REPORTS_LABEL'),
-    to: accountScopedRoute('label_reports'),
+    to: accountScopedRoute('label_reports_index'),
   },
   {
     name: 'Reports Inbox',
@@ -133,6 +140,12 @@ const menuItems = computed(() => {
           label: t('SIDEBAR.MENTIONED_CONVERSATIONS'),
           activeOn: ['conversation_through_mentions'],
           to: accountScopedRoute('conversation_mentions'),
+        },
+        {
+          name: 'Participating',
+          label: t('SIDEBAR.PARTICIPATING_CONVERSATIONS'),
+          activeOn: ['conversation_through_participating'],
+          to: accountScopedRoute('conversation_participating'),
         },
         {
           name: 'Unattended',
@@ -236,6 +249,12 @@ const menuItems = computed(() => {
           activeOn: ['contacts_dashboard_index', 'contacts_edit'],
         },
         {
+          name: 'Active',
+          label: t('SIDEBAR.ACTIVE'),
+          to: accountScopedRoute('contacts_dashboard_active'),
+          activeOn: ['contacts_dashboard_active'],
+        },
+        {
           name: 'Segments',
           icon: 'i-lucide-group',
           label: t('SIDEBAR.CUSTOM_VIEWS_SEGMENTS'),
@@ -325,6 +344,38 @@ const menuItems = computed(() => {
           label: t('SIDEBAR.SMS'),
           to: accountScopedRoute('campaigns_sms_index'),
         },
+        {
+          name: 'Voice',
+          label: t('SIDEBAR.VOICE'),
+          to: accountScopedRoute('campaigns_voice_index'),
+        },
+        {
+          name: 'Survey',
+          label: t('SIDEBAR.SURVEY'),
+          to: accountScopedRoute('campaigns_survey_index'),
+        },
+      ],
+    },
+    {
+      name: 'Sales',
+      label: t('SIDEBAR.SALES'),
+      icon: 'i-lucide-sales',
+      children: [
+        {
+          name: 'pipeline',
+          label: t('SIDEBAR.SALES_PIPELINE'),
+          to: accountScopedRoute('sales_pipeline_index'),
+        },
+        {
+          name: 'orders',
+          label: t('SIDEBAR.SALES_ORDERS'),
+          to: accountScopedRoute('sales_orders_index'),
+        },
+        {
+          name: 'catalog',
+          label: t('SIDEBAR.SALES_CATALOG'),
+          to: accountScopedRoute('sales_catalog_index'),
+        },
       ],
     },
     {
@@ -332,6 +383,18 @@ const menuItems = computed(() => {
       label: t('SIDEBAR.HELP_CENTER.TITLE'),
       icon: 'i-lucide-library-big',
       children: [
+        {
+          name: 'Landing Pages',
+          label: t('SIDEBAR.HELP_CENTER.LANDING_PAGE'),
+          activeOn: [
+            'portals_pages_index',
+            'portals_pages_new',
+            'portals_pages_edit',
+          ],
+          to: accountScopedRoute('portals_index', {
+            navigationPath: 'portals_pages_index',
+          }),
+        },
         {
           name: 'Articles',
           label: t('SIDEBAR.HELP_CENTER.ARTICLES'),
@@ -477,7 +540,7 @@ const menuItems = computed(() => {
 
 <template>
   <aside
-    class="w-[12.5rem] bg-n-solid-2 rtl:border-l ltr:border-r border-n-weak h-screen flex flex-col text-sm pb-1"
+    class="w-[200px] bg-n-solid-2 rtl:border-l ltr:border-r border-n-weak h-screen flex flex-col text-sm pb-1"
   >
     <section class="grid gap-2 mt-2 mb-4">
       <div class="flex items-center min-w-0 gap-2 px-2">
@@ -505,6 +568,7 @@ const menuItems = computed(() => {
             {{ searchShortcut }}
           </span>
         </RouterLink>
+        <CallButton v-if="hasVoiceInbox" class="flex-shrink-0" />
         <ComposeConversation align-position="right">
           <template #trigger="{ toggle }">
             <Button
@@ -519,7 +583,7 @@ const menuItems = computed(() => {
       </div>
     </section>
     <nav class="grid flex-grow gap-2 px-2 pb-5 overflow-y-scroll no-scrollbar">
-      <ul class="flex flex-col gap-2 m-0 list-none">
+      <ul class="flex flex-col gap-1.5 m-0 list-none">
         <SidebarGroup
           v-for="item in menuItems"
           :key="item.name"

@@ -13,6 +13,8 @@ export function useChannelIcon(inbox) {
     'Channel::WebWidget': 'i-ri-global-fill',
     'Channel::Whatsapp': 'i-ri-whatsapp-fill',
     'Channel::Instagram': 'i-ri-instagram-fill',
+    'Channel::ZaloOa': 'i-ri-zalo-oa-fill',
+    'Channel::ZaloPersonal': 'i-ri-zalo-fill',
     'Channel::Tiktok': 'i-ri-tiktok-fill',
   };
 

@@ -124,12 +124,12 @@
     }
   },
   "AGENT_REPORTS": {
-    "HEADER": "Tổng quan đại lý",
-    "DESCRIPTION": "Theo dõi hiệu suất của đại lý dễ dàng với các chỉ số chính như cuộc hội thoại, thời gian phản hồi, thời gian giải quyết và số lượng giải quyết. Nhấp vào tên đại lý để biết thêm chi tiết.",
+    "HEADER": "Tổng quan nhân viên",
+    "DESCRIPTION": "Theo dõi hiệu suất của nhân viên dễ dàng với các chỉ số chính như cuộc hội thoại, thời gian phản hồi, thời gian giải quyết và số lượng giải quyết. Nhấp vào tên nhân viên để biết thêm chi tiết.",
     "LOADING_CHART": "Đang tải các biểu đồ dữ liệu...",
     "NO_ENOUGH_DATA": "Chúng tôi không nhận được đủ điểm dữ liệu để tạo báo cáo, vui lòng thử lại sau.",
-    "DOWNLOAD_AGENT_REPORTS": "Tải xuống báo cáo đại lý",
-    "FILTER_DROPDOWN_LABEL": "Chọn đại lý",
+    "DOWNLOAD_AGENT_REPORTS": "Tải xuống báo cáo nhân viên",
+    "FILTER_DROPDOWN_LABEL": "Chọn nhân viên",
     "METRICS": {
       "CONVERSATIONS": {
         "NAME": "Các cuộc hội thoại",
@@ -193,6 +193,7 @@
   },
   "LABEL_REPORTS": {
     "HEADER": "Tổng quan nhãn",
+    "DESCRIPTION": "Track label performance with key metrics including conversations, response times, resolution times, and resolved cases. Click a label name for detailed insights.",
     "LOADING_CHART": "Đang tải các biểu đồ dữ liệu...",
     "NO_ENOUGH_DATA": "Chúng tôi không nhận được đủ điểm dữ liệu để tạo báo cáo, vui lòng thử lại sau.",
     "DOWNLOAD_LABEL_REPORTS": "Tải xuống báo cáo nhãn",
@@ -260,11 +261,30 @@
   },
   "INBOX_REPORTS": {
     "HEADER": "Tổng quan hộp thư đến",
+    "VOICE_HEADER": "Tổng quan kênh thoại",
     "DESCRIPTION": "Xem hiệu suất hộp thư đến của bạn một cách nhanh chóng với các chỉ số chính như cuộc hội thoại, thời gian phản hồi, thời gian giải quyết và số lượng giải quyết - tất cả trong một nơi. Nhấp vào tên hộp thư đến để biết thêm chi tiết.",
     "LOADING_CHART": "Đang tải các biểu đồ dữ liệu...",
     "NO_ENOUGH_DATA": "Chúng tôi không nhận được đủ điểm dữ liệu để tạo báo cáo, vui lòng thử lại sau.",
+    "NO_VOICE_INBOXES": "Không tìm thấy kênh thoại",
+    "CREATE_VOICE_INBOX_PROMPT": "Tạo kênh thoại trước để xem báo cáo",
     "DOWNLOAD_INBOX_REPORTS": "Tải xuống báo cáo hộp thư đến",
+    "DOWNLOAD_VOICE_REPORTS": "Tải xuống báo cáo thoại",
     "FILTER_DROPDOWN_LABEL": "Chọn Hộp thư đến",
+    "VOICE_METRICS": {
+      "TOTAL_CALLS": "Tổng số cuộc gọi",
+      "INCOMING_CALLS": "Cuộc gọi đến",
+      "OUTGOING_CALLS": "Cuộc gọi đi",
+      "MISSED_CALLS": "Cuộc gọi nhỡ",
+      "AVG_DURATION": "Thời lượng cuộc gọi trung bình",
+      "AVG_WAITING_TIME": "Thời gian chờ trung bình",
+      "SUCCESS_RATE": "Tỷ lệ thành công cuộc gọi"
+    },
+    "VOICE_CHARTS": {
+      "CALLS_BY_TYPE": "Cuộc gọi theo loại",
+      "CALL_DURATION": "Thời lượng cuộc gọi trung bình",
+      "WAITING_TIME": "Thời gian chờ trung bình",
+      "SUCCESS_RATE": "Tỷ lệ thành công cuộc gọi"
+    },
     "METRICS": {
       "CONVERSATIONS": {
         "NAME": "Các cuộc hội thoại",
@@ -407,7 +427,7 @@
     "TABLE": {
       "HEADER": {
         "CONTACT_NAME": "Liên hệ",
-        "AGENT_NAME": "Đại lý được phân công",
+        "AGENT_NAME": "Nhân viên được phân công",
         "RATING": "Đánh giá",
         "FEEDBACK_TEXT": "Bình luận phản hồi"
       }
@@ -444,13 +464,13 @@
       },
       "HANDOFF_RATE": {
         "LABEL": "Tỷ lệ chuyển giao",
-        "TOOLTIP": "Tỷ lệ chuyển giao = (Số cuộc hội thoại chuyển giao cho đại lý / Tổng số cuộc hội thoại mà bot xử lý) * 100"
+        "TOOLTIP": "Tỷ lệ chuyển giao = (Số cuộc hội thoại chuyển giao cho nhân viên / Tổng số cuộc hội thoại mà bot xử lý) * 100"
       }
     }
   },
   "OVERVIEW_REPORTS": {
     "HEADER": "Tổng quan",
-    "LIVE": "Trực tuyến",
+    "LIVE": "Online",
     "ACCOUNT_CONVERSATIONS": {
       "HEADER": "Mở cuộc hội thoại",
       "LOADING_MESSAGE": "Đang tải số liệu cuộc hội thoại...",
@@ -491,7 +511,7 @@
     },
     "AGENT_STATUS": {
       "HEADER": "Trạng thái tổng đài viên",
-      "ONLINE": "Trực tuyến",
+      "ONLINE": "Online",
       "BUSY": "Bận",
       "OFFLINE": "Không Trực Tuyến"
     }
@@ -557,11 +577,12 @@
   },
   "SUMMARY_REPORTS": {
     "INBOX": "Hộp thư đến",
-    "AGENT": "Đại lý",
+    "AGENT": "Nhân viên",
     "TEAM": "Nhóm",
-    "AVG_RESOLUTION_TIME": "Thời gian giải quyết trung bình",
-    "AVG_FIRST_RESPONSE_TIME": "Thời gian phản hồi đầu tiên trung bình",
-    "AVG_REPLY_TIME": "Thời gian chờ của khách hàng trung bình",
+    "LABEL": "Nhãn",
+    "AVG_RESOLUTION_TIME": "Avg. Resolution Time",
+    "AVG_FIRST_RESPONSE_TIME": "Avg. First Response Time",
+    "AVG_REPLY_TIME": "Avg. Customer Waiting Time",
     "RESOLUTION_COUNT": "Số lượng giải quyết",
     "CONVERSATIONS": "Số hội thoại"
   }

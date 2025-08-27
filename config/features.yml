@@ -4,7 +4,7 @@
 # display_name: the name to be used in the UI
 # enabled: whether the feature is enabled by default
 # help_url: the url to the help center article
-# chatwoot_internal: whether the feature is internal to Chatwoot and should not be shown in the UI for other self hosted installations
+# chatwoot_internal: whether the feature is internal to Shopiz and should not be shown in the UI for other self hosted installations
 # deprecated: purpose of feature flag is done, no need to show it in the UI anymore
 - name: inbound_emails
   display_name: Inbound Emails
@@ -12,33 +12,33 @@
 - name: channel_email
   display_name: Email Channel
   enabled: true
-  help_url: https://salesman.effiai.pro/hc/email
+  help_url: https://help.shopiz.pro/hc/email
 - name: channel_facebook
   display_name: Facebook Channel
   enabled: true
-  help_url: https://salesman.effiai.pro/hc/fb
+  help_url: https://help.shopiz.pro/hc/fb
 - name: channel_twitter
   display_name: Twitter Channel
-  enabled: true
+  enabled: false
   deprecated: true
 - name: ip_lookup
   display_name: IP Lookup
   enabled: false
 - name: disable_branding
   display_name: Disable Branding
-  enabled: true
+  enabled: false
   premium: true
 - name: email_continuity_on_api_channel
   display_name: Email Continuity on API Channel
   enabled: false
 - name: help_center
   display_name: Help Center
-  enabled: true
-  help_url: https://salesman.effiai.pro/hc/help-center
+  enabled: false
+  help_url: https://help.shopiz.pro/hc/help-center
 - name: agent_bots
   display_name: Agent Bots
-  enabled: true
-  help_url: https://salesman.effiai.pro/hc/agent-bots
+  enabled: false
+  help_url: https://help.shopiz.pro/hc/agent-bots
 - name: macros
   display_name: Macros
   enabled: true
@@ -48,29 +48,29 @@
 - name: team_management
   display_name: Team Management
   enabled: true
-  help_url: https://salesman.effiai.pro/hc/teams
+  help_url: https://help.shopiz.pro/hc/teams
 - name: inbox_management
   display_name: Inbox Management
   enabled: true
 - name: labels
   display_name: Labels
   enabled: true
-  help_url: https://salesman.effiai.pro/hc/labels
+  help_url: https://help.shopiz.pro/hc/labels
 - name: custom_attributes
   display_name: Custom Attributes
-  enabled: true
-  help_url: https://salesman.effiai.pro/hc/custom-attributes
+  enabled: false
+  help_url: https://help.shopiz.pro/hc/custom-attributes
 - name: automations
   display_name: Automations
-  enabled: true
+  enabled: false
 - name: canned_responses
   display_name: Canned Responses
   enabled: true
-  help_url: https://salesman.effiai.pro/hc/canned
+  help_url: https://help.shopiz.pro/hc/canned
 - name: integrations
   display_name: Integrations
   enabled: true
-  help_url: https://salesman.effiai.pro/hc/integrations
+  help_url: https://help.shopiz.pro/hc/integrations
 - name: voice_recorder
   display_name: Voice Recorder
   enabled: true
@@ -83,12 +83,16 @@
   enabled: true
 - name: campaigns
   display_name: Campaigns
-  enabled: true
-  help_url: https://salesman.effiai.pro/hc/campaigns
+  enabled: false
+  help_url: https://help.shopiz.pro/hc/campaigns
+- name: sales
+  display_name: Sales
+  enabled: false
+  help_url: https://help.shopiz.pro/hc/sales
 - name: reports
   display_name: Reports
   enabled: true
-  help_url: https://salesman.effiai.pro/hc/reports
+  help_url: https://help.shopiz.pro/hc/reports
 - name: crm
   display_name: CRM
   enabled: true
@@ -103,7 +107,7 @@
   enabled: true
 - name: audit_logs
   display_name: Audit Logs
-  enabled: true
+  enabled: false
   premium: true
 - name: response_bot
   display_name: Response Bot
@@ -113,7 +117,7 @@
 - name: message_reply_to
   display_name: Message Reply To
   enabled: true
-  help_url: https://salesman.effiai.pro/hc/reply-to
+  help_url: https://help.shopiz.pro/hc/reply-to
   deprecated: true
 - name: insert_article_in_reply
   display_name: Insert Article in Reply
@@ -127,7 +131,7 @@
   display_name: SLA
   enabled: true
   premium: true
-  help_url: https://salesman.effiai.pro/hc/sla
+  help_url: https://help.shopiz.pro/hc/sla
 - name: help_center_embedding_search
   display_name: Help Center Embedding Search
   enabled: true
@@ -138,38 +142,72 @@
   enabled: true
 - name: captain_integration
   display_name: Captain
-  enabled: true
+  enabled: false
   premium: true
 - name: custom_roles
   display_name: Custom Roles
-  enabled: true
+  enabled: false
   premium: true
 - name: chatwoot_v4
-  display_name: Chatwoot V4
+  display_name: Shopiz V4
   enabled: true
 - name: report_v4
   display_name: Report V4
   enabled: true
   deprecated: true
 - name: contact_chatwoot_support_team
-  display_name: Contact Chatwoot Support Team
+  display_name: Contact Shopiz Support Team
   enabled: true
   chatwoot_internal: false
 - name: shopify_integration
   display_name: Shopify Integration
-  enabled: true
+  enabled: false
 - name: search_with_gin
   display_name: Search messages with GIN
   enabled: true
   chatwoot_internal: false
 - name: channel_instagram
   display_name: Instagram Channel
-  enabled: true
+  enabled: false
+- name: crm_integration
+  display_name: CRM Integration
+  enabled: false
 - name: channel_zalo
   display_name: Zalo Channel
   enabled: true
-  help_url: https://salesman.effiai.pro/hc/zalo
+- name: channel_zalopersonal
+  display_name: Zalo Personal Channel
+  enabled: false
+  help_url: https://help.shopiz.pro/hc/zalo-personal
+- name: channel_telegram
+  display_name: Telegram Channel
+  enabled: false
+  help_url: https://help.shopiz.pro/hc/telegram
+- name: channel_api
+  display_name: API Channel
+  enabled: false
+  help_url: https://help.shopiz.pro/hc/api
+- name: channel_voice
+  display_name: Voice Channel
+  enabled: false
+  help_url: https://help.shopiz.pro/hc/voice
+- name: channel_line
+  display_name: Line Channel
+  enabled: false
+  help_url: https://help.shopiz.pro/hc/line
+- name: channel_whatsapp
+  display_name: Whatsapp Channel
+  enabled: false
+  help_url: https://help.shopiz.pro/hc/whatsapp
+- name: workflow
+  display_name: Workflow
+  enabled: false
+  help_url: https://help.shopiz.pro/hc/workflows
+- name: survey
+  display_name: Survey
+  enabled: false
+  help_url: https://help.shopiz.pro/hc/survey
 - name: channel_tiktok
   display_name: TikTok Channel
   enabled: true
-  help_url: https://salesman.effiai.pro/hc/tiktok
+  help_url: https://help.shopiz.pro/hc/tiktok

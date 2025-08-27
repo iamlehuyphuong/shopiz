@@ -2,9 +2,9 @@ export default [
   {
     id: 1,
     provider: 'email',
-    uid: 'agent1@salesman.effiai.pro',
+    uid: 'agent1@shopiz.pro',
     name: 'Agent1',
-    email: 'agent1@salesman.effiai.pro',
+    email: 'agent1@shopiz.pro',
     account_id: 1,
     created_at: '2019-11-18T02:21:06.225Z',
     updated_at: '2019-12-20T07:43:35.794Z',
@@ -15,9 +15,9 @@ export default [
   {
     id: 2,
     provider: 'email',
-    uid: 'agent2@salesman.effiai.pro',
+    uid: 'agent2@shopiz.pro',
     name: 'Agent2',
-    email: 'agent2@salesman.effiai.pro',
+    email: 'agent2@shopiz.pro',
     account_id: 1,
     created_at: '2019-11-18T02:21:06.225Z',
     updated_at: '2019-12-20T07:43:35.794Z',

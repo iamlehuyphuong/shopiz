@@ -78,6 +78,7 @@ export default {
     'markAsRead',
     'assignPriority',
     'updateConversationStatus',
+    'deleteConversation',
   ],
   data() {
     return {
@@ -168,7 +169,7 @@ export default {
 
       if (e.metaKey || e.ctrlKey) {
         window.open(
-          window.salesmanConfig.hostURL + path,
+          window.shopizConfig.hostURL + path,
           '_blank',
           'noopener noreferrer nofollow'
         );
@@ -237,13 +238,17 @@ export default {
       this.$emit('assignPriority', priority, this.chat.id);
       this.closeContextMenu();
     },
+    async deleteConversation() {
+      this.$emit('deleteConversation', this.chat.id);
+      this.closeContextMenu();
+    },
   },
 };
 </script>
 
 <template>
   <div
-    class="relative flex items-start flex-grow-0 flex-shrink-0 w-auto max-w-full px-4 py-0 border-t-0 border-b-0 border-l-2 border-r-0 border-transparent border-solid cursor-pointer conversation hover:bg-n-alpha-1 dark:hover:bg-n-alpha-3 group"
+    class="relative flex items-start flex-grow-0 flex-shrink-0 w-auto max-w-full px-3 py-0 border-t-0 border-b-0 border-l-2 border-r-0 border-transparent border-solid cursor-pointer conversation hover:bg-n-alpha-1 dark:hover:bg-n-alpha-3 group"
     :class="{
       'active animate-card-select bg-n-alpha-1 dark:bg-n-alpha-3 border-n-weak':
         isActiveChat,
@@ -274,11 +279,11 @@ export default {
       </label>
       <Thumbnail
         v-if="!hideThumbnail"
-        :src="currentContact.thumbnail"
+        :src="chat?.additional_attributes?.group?.avt ?? currentContact.thumbnail"
         :badge="inboxBadge"
-        :username="currentContact.name"
+        :username="chat?.additional_attributes?.group?.name ?? currentContact.name"
         :status="currentContact.availability_status"
-        size="40px"
+        size="32px"
       />
     </div>
     <div
@@ -301,11 +306,12 @@ export default {
         class="conversation--user text-sm my-0 mx-2 capitalize pt-0.5 text-ellipsis overflow-hidden whitespace-nowrap w-[calc(100%-70px)] text-n-slate-12"
         :class="hasUnread ? 'font-semibold' : 'font-medium'"
       >
-        {{ currentContact.name }}
+        {{ chat?.additional_attributes?.group?.name || currentContact.name }}
       </h4>
       <MessagePreview
         v-if="lastMessageInChat"
         :message="lastMessageInChat"
+        :conversation="chat"
         class="conversation--message my-0 mx-2 leading-6 h-6 max-w-[96%] w-[16.875rem] text-sm"
         :class="hasUnread ? 'font-medium text-n-slate-12' : 'text-n-slate-11'"
       />
@@ -363,6 +369,7 @@ export default {
         @mark-as-unread="markAsUnread"
         @mark-as-read="markAsRead"
         @assign-priority="assignPriority"
+        @delete-conversation="deleteConversation"
       />
     </ContextMenu>
   </div>

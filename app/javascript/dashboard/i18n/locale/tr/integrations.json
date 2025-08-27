@@ -16,7 +16,7 @@
       "ERROR": "There was an error connecting to Shopify. Please try again or contact support if the issue persists."
     },
     "HEADER": "Entegrasyonlar",
-    "DESCRIPTION": "Salesman integrates with multiple tools and services to improve your team's efficiency. Explore the list below to configure your favorite apps.",
+    "DESCRIPTION": "Shopiz integrates with multiple tools and services to improve your team's efficiency. Explore the list below to configure your favorite apps.",
     "LEARN_MORE": "Learn more about integrations",
     "LOADING": "Fetching integrations",
     "CAPTAIN": {
@@ -30,7 +30,7 @@
       "LEARN_MORE": "Learn more about webhooks",
       "FORM": {
         "CANCEL": "İptal Et",
-        "DESC": "Web kancası etkinlikleri, Salesman hesabınızdaki olaylar hakkında gerçek zamanlı bilgi sağlar. Bir geri aramayı yapılandırmak için lütfen geçerli bir URL girin.",
+        "DESC": "Web kancası etkinlikleri, Shopiz hesabınızdaki olaylar hakkında gerçek zamanlı bilgi sağlar. Bir geri aramayı yapılandırmak için lütfen geçerli bir URL girin.",
         "SUBSCRIPTIONS": {
           "LABEL": "Olaylar",
           "EVENTS": {
@@ -41,7 +41,9 @@
             "MESSAGE_UPDATED": "Mesaj Güncellendi",
             "WEBWIDGET_TRIGGERED": "Kullanıcı tarafından canlı sohbet widget'ı açıldı",
             "CONTACT_CREATED": "Kişi Oluşturuldu",
-            "CONTACT_UPDATED": "Kişi Güncellendi"
+            "CONTACT_UPDATED": "Kişi Güncellendi",
+            "CONVERSATION_TYPING_ON": "Sohbet Yazıyor Açık",
+            "CONVERSATION_TYPING_OFF": "Sohbet Yazıyor Kapalı"
           }
         },
         "END_POINT": {
@@ -58,7 +60,7 @@
       "HEADER_BTN_TXT": "Yeni Web Kancası Ekle",
       "LOADING": "Ekli web kancaları getiriliyor",
       "SEARCH_404": "Bu sorgu ile eşleşen öğe yok",
-      "SIDEBAR_TXT": "<p> <b> Web Kancaları </b> </p> <p> Web Kancaları, her hesap için tanımlanabilen HTTP geri aramalarıdır. Salesman'ta mesaj oluşturma gibi olaylar tarafından tetiklenirler. Bu hesap için birden fazla web kancası oluşturabilirsiniz. <br /> <br /> Bir <b> web kancası </b> oluşturmak için, <b> Yeni Web Kancası Ekle </b> düğmesini tıklayın. Ayrıca, Sil düğmesini tıklayarak mevcut herhangi bir web kancasını kaldırabilirsiniz. </p>",
+      "SIDEBAR_TXT": "<p> <b> Web Kancaları </b> </p> <p> Web Kancaları, her hesap için tanımlanabilen HTTP geri aramalarıdır. Shopiz'ta mesaj oluşturma gibi olaylar tarafından tetiklenirler. Bu hesap için birden fazla web kancası oluşturabilirsiniz. <br /> <br /> Bir <b> web kancası </b> oluşturmak için, <b> Yeni Web Kancası Ekle </b> düğmesini tıklayın. Ayrıca, Sil düğmesini tıklayarak mevcut herhangi bir web kancasını kaldırabilirsiniz. </p>",
       "LIST": {
         "404": "Bu hesap için yapılandırılmış web kancası yok.",
         "TITLE": "Web Kancalarını Yönet",
@@ -105,14 +107,14 @@
       },
       "HELP_TEXT": {
         "TITLE": "Slack Entegrasyonu Kullanımı",
-        "BODY": "With this integration, all of your incoming conversations will be synced to the ***{selectedChannelName}*** channel in your Slack workspace. You can manage all your customer conversations right within the channel and never miss a message.\n\nHere are the main features of the integration:\n\n**Respond to conversations from within Slack:** To respond to a conversation in the ***{selectedChannelName}*** Slack channel, simply type out your message and send it as a thread. This will create a response back to the customer through Salesman. It's that simple!\n\n **Create private notes:** If you want to create private notes instead of replies, start your message with ***`note:`***. This ensures that your message is kept private and won't be visible to the customer.\n\n**Associate an agent profile:** If the person who replied on Slack has an agent profile in Salesman under the same email, the replies will be associated with that agent profile automatically. This means you can easily track who said what and when. On the other hand, when the replier doesn't have an associated agent profile, the replies will appear from the bot profile to the customer.",
+        "BODY": "With this integration, all of your incoming conversations will be synced to the ***{selectedChannelName}*** channel in your Slack workspace. You can manage all your customer conversations right within the channel and never miss a message.\n\nHere are the main features of the integration:\n\n**Respond to conversations from within Slack:** To respond to a conversation in the ***{selectedChannelName}*** Slack channel, simply type out your message and send it as a thread. This will create a response back to the customer through Shopiz. It's that simple!\n\n **Create private notes:** If you want to create private notes instead of replies, start your message with ***`note:`***. This ensures that your message is kept private and won't be visible to the customer.\n\n**Associate an agent profile:** If the person who replied on Slack has an agent profile in Shopiz under the same email, the replies will be associated with that agent profile automatically. This means you can easily track who said what and when. On the other hand, when the replier doesn't have an associated agent profile, the replies will appear from the bot profile to the customer.",
         "SELECTED": "seçili"
       },
       "SELECT_CHANNEL": {
         "OPTION_LABEL": "Bir kanal seçin",
         "UPDATE": "Güncelleme",
         "BUTTON_TEXT": "Kanalı Bağla",
-        "DESCRIPTION": "Slack iş alanınız şimdi Salesman ile bağlantılı. Ancak entegrasyon şu anda etkin değil. Entegrasyonu etkinleştirmek ve bir kanalı Salesman'a bağlamak için lütfen aşağıdaki düğmeye tıklayın.\n\n**Not:** Eğer özel bir kanal bağlamaya çalışıyorsanız, bu adımdan önce Slack kanalına Salesman uygulamasını ekleyin.",
+        "DESCRIPTION": "Slack iş alanınız şimdi Shopiz ile bağlantılı. Ancak entegrasyon şu anda etkin değil. Entegrasyonu etkinleştirmek ve bir kanalı Shopiz'a bağlamak için lütfen aşağıdaki düğmeye tıklayın.\n\n**Not:** Eğer özel bir kanal bağlamaya çalışıyorsanız, bu adımdan önce Slack kanalına Shopiz uygulamasını ekleyin.",
         "ATTENTION_REQUIRED": "Dikkat gerekiyor",
         "EXPIRED": "Slack entegrasyonunuz süresi dolmuştur. Slack üzerinde mesaj almaya devam etmek için lütfen entegrasyonu silip iş alanınızı tekrar bağlayın."
       },
@@ -192,7 +194,7 @@
     "DASHBOARD_APPS": {
       "TITLE": "Panel Uygulamaları",
       "HEADER_BTN_TXT": "Yeni bir panel uygulaması ekle",
-      "SIDEBAR_TXT": "<p><b>Panel Uygulamaları</b></p><p>Panel Uygulamaları, organizasyonlara destek uzmanları için bağlam sağlamak amacıyla bir uygulamayı Salesman paneli içine yerleştirmelerine izin verir. Bu özellik, bağımsız bir uygulama oluşturmanıza ve bunu panel içine yerleştirmenize olanak tanır, böylece kullanıcı bilgilerini, siparişlerini veya önceki ödeme geçmişini sağlayabilirsiniz.</p><p>Salesman'taki panel üzerine uygulamanızı yerleştirdiğinizde, uygulamanız konuşma ve iletişim bağlamını pencere olayı olarak alır. Bağlamı almak için sayfanızda bir message olayı için bir dinleyici uygulayın.</p><p>Yeni bir panel uygulaması eklemek için 'Yeni bir panel uygulaması ekle' düğmesine tıklayın.</p>",
+      "SIDEBAR_TXT": "<p><b>Panel Uygulamaları</b></p><p>Panel Uygulamaları, organizasyonlara destek uzmanları için bağlam sağlamak amacıyla bir uygulamayı Shopiz paneli içine yerleştirmelerine izin verir. Bu özellik, bağımsız bir uygulama oluşturmanıza ve bunu panel içine yerleştirmenize olanak tanır, böylece kullanıcı bilgilerini, siparişlerini veya önceki ödeme geçmişini sağlayabilirsiniz.</p><p>Shopiz'taki panel üzerine uygulamanızı yerleştirdiğinizde, uygulamanız konuşma ve iletişim bağlamını pencere olayı olarak alır. Bağlamı almak için sayfanızda bir message olayı için bir dinleyici uygulayın.</p><p>Yeni bir panel uygulaması eklemek için 'Yeni bir panel uygulaması ekle' düğmesine tıklayın.</p>",
       "DESCRIPTION": "Panel Uygulamaları, organizasyonlara destek uzmanları için bağlam sağlamak amacıyla bir uygulamayı panel içine yerleştirmelerine izin verir. Bu özellik, bağımsız bir uygulama oluşturmanıza ve bunu panel içine yerleştirmenize olanak tanır, böylece kullanıcı bilgilerini, siparişlerini veya önceki ödeme geçmişini sağlayabilirsiniz.",
       "LEARN_MORE": "Learn more about Dashboard Apps",
       "LIST": {
@@ -316,11 +318,18 @@
         "SUCCESS": "Issue unlinked successfully",
         "ERROR": "There was an error unlinking the issue, please try again"
       },
+      "NO_LINKED_ISSUES": "No linked issues found",
       "DELETE": {
         "TITLE": "Are you sure you want to delete the integration?",
         "MESSAGE": "Are you sure you want to delete the integration?",
         "CONFIRM": "Evet, sil",
         "CANCEL": "İptal Et"
+      },
+      "CTA": {
+        "TITLE": "Connect to Linear",
+        "AGENT_DESCRIPTION": "Linear workspace is not connected. Request your administrator to connect a workspace to use this integration.",
+        "DESCRIPTION": "Linear workspace is not connected. Click the button below to connect your workspace to use this integration.",
+        "BUTTON_TEXT": "Connect Linear workspace"
       }
     }
   },
@@ -328,12 +337,48 @@
     "NAME": "AI Agent",
     "HEADER_KNOW_MORE": "Know more",
     "COPILOT": {
+      "TITLE": "Shopiz AI",
+      "TRY_THESE_PROMPTS": "Try these prompts",
+      "PANEL_TITLE": "Copilot ile başlayın",
+      "KICK_OFF_MESSAGE": "Hızlı bir özet mi lazım, geçmiş sohbetleri mi kontrol etmek istiyorsunuz ya da daha iyi bir yanıt mı yazmak istiyorsunuz? Copilot işleri hızlandırmak için burada.",
       "SEND_MESSAGE": "Mesajı Gönder...",
-      "LOADER": "AI Agent is thinking",
+      "EMPTY_MESSAGE": "Yanıt oluşturulurken bir hata oluştu. Lütfen tekrar deneyin.",
+      "LOADER": "Captain is thinking",
       "YOU": "Sen",
       "USE": "Use this",
       "RESET": "Reset",
-      "SELECT_ASSISTANT": "Select Assistant"
+      "SHOW_STEPS": "Adımları göster",
+      "SELECT_ASSISTANT": "Select Assistant",
+      "PROMPTS": {
+        "SUMMARIZE": {
+          "LABEL": "Bu sohbeti özetle",
+          "CONTENT": "Müşteri ile destek temsilcisi arasında tartışılan ana noktaları özetle; müşterinin endişeleri, soruları ve temsilcinin sunduğu çözümler veya yanıtlar dahil"
+        },
+        "SUGGEST": {
+          "LABEL": "Bir yanıt öner",
+          "CONTENT": "Müşterinin sorusunu analiz edin ve endişelerini veya sorularını etkili bir şekilde ele alan bir yanıt taslağı oluşturun. Yanıtın açık, öz ve bilgilendirici olmasını sağlayın."
+        },
+        "RATE": {
+          "LABEL": "Bu sohbeti değerlendir",
+          "CONTENT": "Sohbetin müşterinin ihtiyaçlarını ne kadar karşıladığını gözden geçirin. Ton, açıklık ve etkililik açısından 5 üzerinden bir puan verin."
+        },
+        "HIGH_PRIORITY": {
+          "LABEL": "Yüksek öncelikli sohbetler",
+          "CONTENT": "Tüm yüksek öncelikli açık sohbetlerin bir özetini verin. Sohbet kimliği, müşteri adı (varsa), son mesaj içeriği ve atanan temsilciyi ekleyin. Gerekirse duruma göre gruplayın."
+        },
+        "LIST_CONTACTS": {
+          "LABEL": "Kişileri listele",
+          "CONTENT": "İlk 10 kişiyi göster. Ad, e-posta veya telefon numarası (varsa), son görülme zamanı ve etiketler (varsa) dahil olsun."
+        }
+      }
+    },
+    "PLAYGROUND": {
+      "USER": "Sen",
+      "ASSISTANT": "Assistant",
+      "MESSAGE_PLACEHOLDER": "Mesajınız...",
+      "HEADER": "Oyun Alanı",
+      "DESCRIPTION": "Bu oyun alanını asistanınıza mesaj göndermek ve yanıtlarının doğru, hızlı ve beklediğiniz tonda olup olmadığını kontrol etmek için kullanın.",
+      "CREDIT_NOTE": "Buradan gönderilen mesajlar Captain kredilerinize sayılacaktır."
     },
     "PAYWALL": {
       "TITLE": "Upgrade to use AI Agent",
@@ -343,7 +388,6 @@
       "CANCEL_ANYTIME": "You can change or cancel your plan anytime"
     },
     "ENTERPRISE_PAYWALL": {
-      "AVAILABLE_ON": "AI Agent feature is only available in a paid plan.",
       "UPGRADE_PROMPT": "Upgrade your plan to get access to our assistants, copilot and more.",
       "ASK_ADMIN": "Please reach out to your administrator for the upgrade."
     },
@@ -358,6 +402,7 @@
     },
     "ASSISTANTS": {
       "HEADER": "Assistants",
+      "NO_ASSISTANTS_AVAILABLE": "Hesabınızda kullanılabilir asistan yok.",
       "ADD_NEW": "Create a new assistant",
       "DELETE": {
         "TITLE": "Are you sure to delete the assistant?",
@@ -373,20 +418,48 @@
         "ERROR_MESSAGE": "There was an error creating the assistant, please try again."
       },
       "FORM": {
+        "UPDATE": "Güncelleme",
+        "SECTIONS": {
+          "BASIC_INFO": "Temel Bilgiler",
+          "SYSTEM_MESSAGES": "Sistem Mesajları",
+          "INSTRUCTIONS": "Talimatlar",
+          "FEATURES": "Özellikleri",
+          "TOOLS": "Araçlar "
+        },
         "NAME": {
-          "LABEL": "Assistant Name",
-          "PLACEHOLDER": "Enter a name for the assistant",
-          "ERROR": "Please provide a name for the assistant"
+          "LABEL": "İsim",
+          "PLACEHOLDER": "Asistan adını girin",
+          "ERROR": "Ad gereklidir"
+        },
+        "TEMPERATURE": {
+          "LABEL": "Yanıt Sıcaklığı",
+          "DESCRIPTION": "Asistanın yanıtlarının ne kadar yaratıcı veya kısıtlayıcı olması gerektiğini ayarlayın. Düşük değerler daha odaklı ve deterministik yanıtlar üretir, yüksek değerler ise daha yaratıcı ve çeşitli yanıtlar sağlar."
         },
         "DESCRIPTION": {
-          "LABEL": "Assistant Description",
-          "PLACEHOLDER": "Describe how and where this assistant will be used",
-          "ERROR": "A description is required"
+          "LABEL": "Açıklama",
+          "PLACEHOLDER": "Asistan açıklamasını girin",
+          "ERROR": "Açıklama gereklidir"
         },
         "PRODUCT_NAME": {
           "LABEL": "Product Name",
-          "PLACEHOLDER": "Enter the name of the product this assistant is designed for",
+          "PLACEHOLDER": "Ürün adını girin",
           "ERROR": "The product name is required"
+        },
+        "WELCOME_MESSAGE": {
+          "LABEL": "Karşılama Mesajı",
+          "PLACEHOLDER": "Karşılama mesajı girin"
+        },
+        "HANDOFF_MESSAGE": {
+          "LABEL": "Aktarım Mesajı",
+          "PLACEHOLDER": "Aktarım mesajı girin"
+        },
+        "RESOLUTION_MESSAGE": {
+          "LABEL": "Çözüm Mesajı",
+          "PLACEHOLDER": "Çözüm mesajı girin"
+        },
+        "INSTRUCTIONS": {
+          "LABEL": "Talimatlar",
+          "PLACEHOLDER": "Asistan için talimatları girin"
         },
         "FEATURES": {
           "TITLE": "Özellikleri",
@@ -397,7 +470,8 @@
       "EDIT": {
         "TITLE": "Update the assistant",
         "SUCCESS_MESSAGE": "The assistant has been successfully updated",
-        "ERROR_MESSAGE": "There was an error updating the assistant, please try again."
+        "ERROR_MESSAGE": "There was an error updating the assistant, please try again.",
+        "NOT_FOUND": "Asistan bulunamadı. Lütfen tekrar deneyin."
       },
       "OPTIONS": {
         "EDIT_ASSISTANT": "Edit Assistant",

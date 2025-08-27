@@ -21,6 +21,8 @@ class ContactInboxBuilder
       email_source_id
     when 'Channel::Sms'
       phone_source_id
+    when 'Channel::Voice'
+      phone_source_id # Voice uses phone number as source ID
     when 'Channel::Api', 'Channel::WebWidget'
       SecureRandom.uuid
     else
@@ -35,7 +37,12 @@ class ContactInboxBuilder
   end
 
   def phone_source_id
-    raise ActionController::ParameterMissing, 'contact phone number' unless @contact.phone_number
+    unless @contact.phone_number.present?
+      # For voice channels, we'll create a fallback source ID if phone number is missing
+      return SecureRandom.uuid if @inbox.channel_type == 'Channel::Voice'
+
+      raise ActionController::ParameterMissing, 'contact phone number'
+    end
 
     @contact.phone_number
   end
@@ -59,11 +66,13 @@ class ContactInboxBuilder
   end
 
   def create_contact_inbox
-    ::ContactInbox.create_with(hmac_verified: hmac_verified || false).find_or_create_by!(
+    attrs = {
       contact_id: @contact.id,
       inbox_id: @inbox.id,
       source_id: @source_id
-    )
+    }
+
+    ::ContactInbox.where(attrs).first_or_create!(hmac_verified: hmac_verified || false)
   rescue ActiveRecord::RecordNotUnique
     Rails.logger.info("[ContactInboxBuilder] RecordNotUnique #{@source_id} #{@contact.id} #{@inbox.id}")
     update_old_contact_inbox
@@ -98,6 +107,6 @@ class ContactInboxBuilder
   end
 
   def allowed_channels?
-    @inbox.email? || @inbox.sms? || @inbox.twilio? || @inbox.whatsapp?
+    @inbox.email? || @inbox.sms? || @inbox.twilio? || @inbox.whatsapp? || @inbox.channel_type == 'Channel::Voice'
   end
 end

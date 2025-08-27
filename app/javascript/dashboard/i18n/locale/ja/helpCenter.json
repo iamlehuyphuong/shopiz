@@ -391,7 +391,7 @@
         "SLUG": {
           "LABEL": "スラッグ",
           "PLACEHOLDER": "URL用のカテゴリーのスラッグ",
-          "HELP_TEXT": "salesman.effiai.pro/hc/my-portal/en-US/categories/my-slug",
+          "HELP_TEXT": "shopiz.pro/hc/my-portal/en-US/categories/my-slug",
           "ERROR": "スラッグが必須です"
         },
         "DESCRIPTION": {
@@ -422,7 +422,7 @@
         "SLUG": {
           "LABEL": "スラッグ",
           "PLACEHOLDER": "URL用のカテゴリーのスラッグ",
-          "HELP_TEXT": "salesman.effiai.pro/hc/my-portal/en-US/categories/my-slug",
+          "HELP_TEXT": "shopiz.pro/hc/my-portal/en-US/categories/my-slug",
           "ERROR": "スラッグが必須です"
         },
         "DESCRIPTION": {
@@ -606,7 +606,7 @@
             "LABEL": "スラッグ",
             "PLACEHOLDER": "URL用のカテゴリーのスラッグ",
             "ERROR": "スラッグが必須です",
-            "HELP_TEXT": "salesman.effiai.pro/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
+            "HELP_TEXT": "shopiz.pro/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
           },
           "DESCRIPTION": {
             "LABEL": "説明",
@@ -689,14 +689,15 @@
       "CONFIRM_BUTTON_LABEL": "作成",
       "NAME": {
         "LABEL": "名前",
-        "PLACEHOLDER": "ユーザーガイド | Salesman",
+        "PLACEHOLDER": "ユーザーガイド | Shopiz",
         "MESSAGE": "ポータルの名前を選択してください。",
         "ERROR": "名前が必須です"
       },
       "SLUG": {
         "LABEL": "スラッグ",
         "PLACEHOLDER": "user-guide",
-        "ERROR": "スラッグが必須です"
+        "ERROR": "スラッグが必須です",
+        "FORMAT_ERROR": "Please enter a valid slug, for eg: user-guide"
       }
     },
     "PORTAL_SETTINGS": {
@@ -760,7 +761,7 @@
           },
           "DNS_CONFIGURATION_DIALOG": {
             "HEADER": "DNS設定",
-            "DESCRIPTION": "DNSプロバイダーのアカウントにログインし、サブドメインのCNAMEレコードをsalesman.helpにポイントするように追加してください。",
+            "DESCRIPTION": "DNSプロバイダーのアカウントにログインし、サブドメインのCNAMEレコードをshopiz.helpにポイントするように追加してください。",
             "HELP_TEXT": "これが完了したら、自動生成されたSSL証明書のリクエストのためにサポートに連絡できます。",
             "CONFIRM_BUTTON_LABEL": "了解しました！"
           }

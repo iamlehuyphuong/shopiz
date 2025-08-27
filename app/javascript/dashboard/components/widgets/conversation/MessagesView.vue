@@ -1,5 +1,5 @@
 <script>
-import { ref } from 'vue';
+import { ref, provide } from 'vue';
 // composable
 import { useConfig } from 'dashboard/composables/useConfig';
 import { useKeyboardEvents } from 'dashboard/composables/useKeyboardEvents';
@@ -12,6 +12,7 @@ import Message from './Message.vue';
 import NextMessageList from 'next/message/MessageList.vue';
 import ConversationLabelSuggestion from './conversation/LabelSuggestion.vue';
 import Banner from 'dashboard/components/ui/Banner.vue';
+import VoiceTimelineView from './VoiceTimelineView.vue';
 
 // stores and apis
 import { mapGetters } from 'vuex';
@@ -38,8 +39,6 @@ import { LOCAL_STORAGE_KEYS } from 'dashboard/constants/localStorage';
 import { FEATURE_FLAGS } from '../../../featureFlags';
 import { INBOX_TYPES } from 'dashboard/helper/inbox';
 
-import NextButton from 'dashboard/components-next/button/Button.vue';
-
 export default {
   components: {
     Message,
@@ -47,22 +46,12 @@ export default {
     ReplyBox,
     Banner,
     ConversationLabelSuggestion,
-    NextButton,
+    VoiceTimelineView,
   },
   mixins: [inboxMixin],
-  props: {
-    isContactPanelOpen: {
-      type: Boolean,
-      default: false,
-    },
-    isInboxView: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  emits: ['contactPanelToggle'],
   setup() {
     const isPopOutReplyBox = ref(false);
+    const conversationPanelRef = ref(null);
     const { isEnterprise } = useConfig();
 
     const closePopOutReplyBox = () => {
@@ -98,6 +87,8 @@ export default {
       FEATURE_FLAGS.CHATWOOT_V4
     );
 
+    provide('contextMenuElementTarget', conversationPanelRef);
+
     return {
       isEnterprise,
       isPopOutReplyBox,
@@ -108,6 +99,7 @@ export default {
       fetchIntegrationsIfRequired,
       fetchLabelSuggestions,
       showNextBubbles,
+      conversationPanelRef,
     };
   },
   data() {
@@ -145,6 +137,10 @@ export default {
     },
     inbox() {
       return this.$store.getters['inboxes/getInbox'](this.inboxId);
+    },
+    isAVoiceChannel() {
+      // Use inbox.channel_type to match backend conventions
+      return this.inbox?.channel_type === 'Channel::Voice';
     },
     typingUsersList() {
       const userList = this.$store.getters[
@@ -199,12 +195,6 @@ export default {
     isATweet() {
       return this.conversationType === 'tweet';
     },
-    isRightOrLeftIcon() {
-      if (this.isContactPanelOpen) {
-        return 'arrow-chevron-right';
-      }
-      return 'arrow-chevron-left';
-    },
     getLastSeenAt() {
       const { contact_last_seen_at: contactLastSeenAt } = this.currentChat;
       return contactLastSeenAt;
@@ -213,12 +203,17 @@ export default {
     // Check there is a instagram inbox exists with the same instagram_id
     hasDuplicateInstagramInbox() {
       const instagramId = this.inbox.instagram_id;
+      const { additional_attributes: additionalAttributes = {} } = this.inbox;
       const instagramInbox =
         this.$store.getters['inboxes/getInstagramInboxByInstagramId'](
           instagramId
         );
 
-      return this.inbox.channel_type === INBOX_TYPES.FB && instagramInbox;
+      return (
+        this.inbox.channel_type === INBOX_TYPES.FB &&
+        additionalAttributes.type === 'instagram_direct_message' &&
+        instagramInbox
+      );
     },
 
     replyWindowBannerMessage() {
@@ -244,7 +239,7 @@ export default {
       return this.$t('CONVERSATION.CANNOT_REPLY');
     },
     replyWindowLink() {
-      if (this.isAFacebookInbox || this.isAInstagramChannel) {
+      if (this.isAFacebookInbox || this.isAnInstagramChannel) {
         return REPLY_POLICY.FACEBOOK;
       }
       if (this.isAWhatsAppCloudChannel) {
@@ -259,7 +254,7 @@ export default {
       if (
         this.isAWhatsAppChannel ||
         this.isAFacebookInbox ||
-        this.isAInstagramChannel
+        this.isAnInstagramChannel
       ) {
         return this.$t('CONVERSATION.24_HOURS_WINDOW');
       }
@@ -435,9 +430,6 @@ export default {
         relevantMessages
       );
     },
-    onToggleContactPanel() {
-      this.$emit('contactPanelToggle');
-    },
     setScrollParams() {
       this.heightBeforeLoad = this.conversationPanel.scrollHeight;
       this.scrollTopBeforeLoad = this.conversationPanel.scrollTop;
@@ -521,21 +513,9 @@ export default {
       class="mx-2 mt-2 overflow-hidden rounded-lg"
       :banner-message="$t('CONVERSATION.OLD_INSTAGRAM_INBOX_REPLY_BANNER')"
     />
-    <div class="flex justify-end">
-      <NextButton
-        faded
-        xs
-        slate
-        class="!rounded-r-none rtl:rotate-180 !rounded-2xl !fixed z-10"
-        :icon="
-          isContactPanelOpen ? 'i-ph-caret-right-fill' : 'i-ph-caret-left-fill'
-        "
-        :class="isInboxView ? 'top-52 md:top-40' : 'top-32'"
-        @click="onToggleContactPanel"
-      />
-    </div>
     <NextMessageList
       v-if="showNextBubbles"
+      ref="conversationPanelRef"
       class="conversation-panel"
       :current-user-id="currentUserId"
       :first-unread-id="unReadMessages[0]?.id"
@@ -567,7 +547,7 @@ export default {
         />
       </template>
     </NextMessageList>
-    <ul v-else class="conversation-panel">
+    <ul v-else ref="conversationPanelRef" class="conversation-panel">
       <transition name="slide-up">
         <!-- eslint-disable-next-line vue/require-toggle-inside-transition -->
         <li class="min-h-[4rem]">
@@ -642,9 +622,15 @@ export default {
           />
         </div>
       </div>
+      <VoiceTimelineView
+        v-if="isAVoiceChannel"
+        :conversation-id="currentChat.id"
+        class="mb-4"
+      />
       <ReplyBox
         v-model:popout-reply-box="isPopOutReplyBox"
         @toggle-popout="showPopOutReplyBox"
+        :is-private-note-only="isAVoiceChannel"
       />
     </div>
   </div>

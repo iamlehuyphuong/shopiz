@@ -201,7 +201,7 @@ export default {
       }
     },
     toggleSupportChatWindow() {
-      window.$chatwoot.toggle();
+      window.$shopiz.toggle();
     },
     toggleAccountModal() {
       this.$emit('toggleAccountModal');

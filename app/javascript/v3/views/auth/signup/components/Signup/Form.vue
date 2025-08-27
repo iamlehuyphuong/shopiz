@@ -65,11 +65,11 @@ export default {
     termsLink() {
       return this.$t('REGISTER.TERMS_ACCEPT')
         .replace(
-          'https://salesman.effiai.pro/terms',
+          'https://www.shopiz.pro/terms',
           this.globalConfig.termsURL
         )
         .replace(
-          'https://salesman.effiai.pro/privacy-policy',
+          'https://www.shopiz.pro/privacy-policy',
           this.globalConfig.privacyURL
         );
     },
@@ -93,7 +93,7 @@ export default {
       return '';
     },
     showGoogleOAuth() {
-      return Boolean(window.salesmanConfig.googleOAuthClientId);
+      return Boolean(window.shopizConfig.googleOAuthClientId);
     },
     isFormValid() {
       return !this.v$.$invalid && this.hasAValidCaptcha;

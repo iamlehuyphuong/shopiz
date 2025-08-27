@@ -92,7 +92,8 @@ class Message < ApplicationRecord
     incoming_email: 8,
     input_csat: 9,
     integrations: 10,
-    sticker: 11
+    sticker: 11,
+    voice_call: 12
   }
   enum status: { sent: 0, delivered: 1, read: 2, failed: 3 }
   # [:submitted_email, :items, :submitted_values] : Used for bot message types
@@ -101,9 +102,10 @@ class Message < ApplicationRecord
   # [:deleted] : Used to denote whether the message was deleted by the agent
   # [:external_created_at] : Can specify if the message was created at a different timestamp externally
   # [:external_error : Can specify if the message creation failed due to an error at external API
+  # [:data] : Used for structured content types such as voice_call
   store :content_attributes, accessors: [:submitted_email, :items, :submitted_values, :email, :in_reply_to, :deleted,
                                          :external_created_at, :story_sender, :story_id, :external_error,
-                                         :translations, :in_reply_to_external_id, :is_unsupported], coder: JSON
+                                         :translations, :in_reply_to_external_id, :is_unsupported, :data], coder: JSON
 
   store :external_source_ids, accessors: [:slack], coder: JSON, prefix: :external_source_id
 
@@ -111,6 +113,7 @@ class Message < ApplicationRecord
   scope :chat, -> { where.not(message_type: :activity).where(private: false) }
   scope :non_activity_messages, -> { where.not(message_type: :activity).reorder('id desc') }
   scope :today, -> { where("date_trunc('day', created_at) = ?", Date.current) }
+  scope :voice_calls, -> { where(content_type: :voice_call) }
 
   # TODO: Get rid of default scope
   # https://stackoverflow.com/a/1834250/939299
@@ -181,11 +184,9 @@ class Message < ApplicationRecord
     data
   end
 
-  def content
-    # move this to a presenter
-    return self[:content] if !input_csat? || inbox.web_widget?
-
-    I18n.t('conversations.survey.response', link: "#{ENV.fetch('FRONTEND_URL', nil)}/survey/responses/#{conversation.uuid}")
+  # Method to get content with survey URL for outgoing channel delivery
+  def outgoing_content
+    MessageContentPresenter.new(self).outgoing_content
   end
 
   def email_notifiable_message?
@@ -197,10 +198,10 @@ class Message < ApplicationRecord
   end
 
   def valid_first_reply?
-    return false unless outgoing? && human_response? && !private?
+    return false unless human_response? && !private?
     return false if conversation.first_reply_created_at.present?
     return false if conversation.messages.outgoing
-                                .where.not(sender_type: 'AgentBot')
+                                .where.not(sender_type: ['AgentBot', 'Captain::Assistant'])
                                 .where.not(private: true)
                                 .where("(additional_attributes->'campaign_id') is null").count > 1
 
@@ -216,6 +217,21 @@ class Message < ApplicationRecord
       }
     )
     save!
+  end
+
+  # For voice calls - convenience method to get status from content attributes
+  def voice_call_status
+    content_attributes.dig('data', 'status')
+  end
+
+  # For voice calls - check if this is an active call
+  def active_voice_call?
+    voice_call? && !%w[completed failed busy no-answer canceled missed ended].include?(voice_call_status)
+  end
+
+  def send_update_event
+    Rails.configuration.dispatcher.dispatch(MESSAGE_UPDATED, Time.zone.now, message: self, performed_by: Current.executed_by,
+                                                                            previous_changes: previous_changes)
   end
 
   def source_conversation_id
@@ -311,8 +327,7 @@ class Message < ApplicationRecord
     # we want to skip the update event if the message is not updated
     return if previous_changes.blank?
 
-    Rails.configuration.dispatcher.dispatch(MESSAGE_UPDATED, Time.zone.now, message: self, performed_by: Current.executed_by,
-                                                                            previous_changes: previous_changes)
+    send_update_event
   end
 
   def send_reply

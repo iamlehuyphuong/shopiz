@@ -8,7 +8,7 @@ import {
 
 describe('#getUserCookieName', () => {
   it('returns correct cookie name', () => {
-    global.$chatwoot = { websiteToken: '123456' };
+    global.$shopiz = { websiteToken: '123456' };
     expect(getUserCookieName()).toBe('cw_user_123456');
   });
 });
@@ -20,24 +20,24 @@ describe('#getUserString', () => {
         user: {
           name: 'Pranav',
           email: 'pranav@example.com',
-          avatar_url: 'https://images.salesman.effiai.pro/placeholder',
+          avatar_url: 'https://images.shopiz.pro/placeholder',
           identifier_hash: '12345',
         },
         identifier: '12345',
       })
     ).toBe(
-      'avatar_urlhttps://images.salesman.effiai.pro/placeholderemailpranav@example.comnamePranavidentifier_hash12345identifier12345'
+      'avatar_urlhttps://images.shopiz.pro/placeholderemailpranav@example.comnamePranavidentifier_hash12345identifier12345'
     );
 
     expect(
       getUserString({
         user: {
           email: 'pranav@example.com',
-          avatar_url: 'https://images.salesman.effiai.pro/placeholder',
+          avatar_url: 'https://images.shopiz.pro/placeholder',
         },
       })
     ).toBe(
-      'avatar_urlhttps://images.salesman.effiai.pro/placeholderemailpranav@example.comnameidentifier_hashidentifier'
+      'avatar_urlhttps://images.shopiz.pro/placeholderemailpranav@example.comnameidentifier_hashidentifier'
     );
   });
 });

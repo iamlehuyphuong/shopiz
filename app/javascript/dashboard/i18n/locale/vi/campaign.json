@@ -1,7 +1,7 @@
 {
   "CAMPAIGN": {
     "LIVE_CHAT": {
-      "HEADER_TITLE": "Chiến dịch trò chuyện trực tuyến",
+      "HEADER_TITLE": "Chiến dịch live chat",
       "NEW_CAMPAIGN": "Tạo chiến dịch",
       "CARD": {
         "STATUS": {
@@ -16,11 +16,11 @@
         }
       },
       "EMPTY_STATE": {
-        "TITLE": "Không có chiến dịch trò chuyện trực tuyến khả dụng",
+        "TITLE": "Không có chiến dịch live chat khả dụng",
         "SUBTITLE": "Kết nối với khách hàng của bạn bằng các tin nhắn chủ động. Nhấn 'Tạo chiến dịch' để bắt đầu."
       },
       "CREATE": {
-        "TITLE": "Tạo chiến dịch trò chuyện trực tuyến",
+        "TITLE": "Tạo chiến dịch live chat",
         "CANCEL_BUTTON_TEXT": "Huỷ",
         "CREATE_BUTTON_TEXT": "Tạo",
         "FORM": {
@@ -64,16 +64,90 @@
             "CANCEL": "Huỷ"
           },
           "API": {
-            "SUCCESS_MESSAGE": "Chiến dịch trò chuyện trực tuyến được tạo thành công",
+            "SUCCESS_MESSAGE": "Chiến dịch live chat được tạo thành công",
             "ERROR_MESSAGE": "Đã có lỗi. Vui lòng thử lại."
           }
         }
       },
       "EDIT": {
-        "TITLE": "Chỉnh sửa chiến dịch trò chuyện trực tuyến",
+        "TITLE": "Chỉnh sửa chiến dịch live chat",
         "FORM": {
           "API": {
-            "SUCCESS_MESSAGE": "Chiến dịch trò chuyện trực tuyến được cập nhật thành công",
+            "SUCCESS_MESSAGE": "Chiến dịch live chat được cập nhật thành công",
+            "ERROR_MESSAGE": "Đã có lỗi. Vui lòng thử lại."
+          }
+        }
+      }
+    },
+    "VOICE": {
+      "HEADER_TITLE": "Chiến dịch thoại",
+      "NEW_CAMPAIGN": "Tạo chiến dịch",
+      "EMPTY_STATE": {
+        "TITLE": "Không có chiến dịch thoại nào khả dụng",
+        "SUBTITLE": "Tăng cường tương tác với khách hàng một cách cá nhân qua các cuộc gọi thoại được hỗ trợ bởi AI. Hoàn hảo cho việc nhắc lịch hẹn, xác thực và theo dõi sau, mang lại cảm giác tự nhiên. Trợ lý AI của bạn có thể thích ứng với phản hồi khách hàng, thu thập thông tin và làm giàu dữ liệu tiềm năng—giúp tiết kiệm thời gian quý báu cho đội ngũ.",
+        "JS_API_DESCRIPTION": "Bạn có thể kích hoạt chiến dịch thoại qua chương trình bằng API JavaScript của chúng tôi:"
+      },
+      "CARD": {
+        "STATUS": {
+          "COMPLETED": "Hoàn thành",
+          "SCHEDULED": "Đã lên lịch"
+        },
+        "CAMPAIGN_DETAILS": {
+          "SENT_BY": "Gửi bởi ",
+          "FROM": " từ ",
+          "ON": " vào ",
+          "BOT": "Bot"
+        }
+      },
+      "EMPTY_STATE_BADGE": {
+        "ENABLED": "Đang hoạt động",
+        "DISABLED": "Không hoạt động"
+      },
+      "DETAILS": {
+        "MESSAGE": "Tin nhắn",
+        "INBOX": "Hộp thư",
+        "AUDIENCE": "Tập khách hàng",
+        "SCHEDULED_AT": "Thời gian dự kiến"
+      },
+      "CREATE": {
+        "TITLE": "Tạo chiến dịch thoại",
+        "FORM": {
+          "TITLE": {
+            "LABEL": "Tiêu đề",
+            "PLACEHOLDER": "Nhập tiêu đề chiến dịch thoại của bạn",
+            "ERROR": "Tiêu đề là bắt buộc"
+          },
+          "MESSAGE": {
+            "LABEL": "Kịch bản cuộc gọi",
+            "PLACEHOLDER": "Thêm lời kịch bản để hướng dẫn AI trong cuộc gọi. Hãy cụ thể về giọng điệu, thông tin cần thu thập và cách xử lý các phản hồi khác nhau.",
+            "ERROR": "Kịch bản cuộc gọi là bắt buộc"
+          },
+          "INBOX": {
+            "LABEL": "Hộp thư thoại",
+            "PLACEHOLDER": "Chọn hộp thư thoại",
+            "ERROR": "Hộp thư thoại là bắt buộc"
+          },
+          "SENT_BY": {
+            "LABEL": "Người gửi",
+            "PLACEHOLDER": "Chọn người gửi",
+            "ERROR": "Người gửi là bắt buộc"
+          },
+          "AUDIENCE": {
+            "LABEL": "Tập khách hàng",
+            "PLACEHOLDER": "Chọn nhãn khách hàng",
+            "ERROR": "Tập khách hàng là bắt buộc"
+          },
+          "SCHEDULED_AT": {
+            "LABEL": "Thời gian dự kiến",
+            "PLACEHOLDER": "Chọn thời điểm bắt đầu chiến dịch",
+            "ERROR": "Thời gian dự kiến là bắt buộc"
+          },
+          "BUTTONS": {
+            "CREATE": "Tạo",
+            "CANCEL": "Huỷ"
+          },
+          "API": {
+            "SUCCESS_MESSAGE": "Chiến dịch thoại được tạo thành công",
             "ERROR_MESSAGE": "Đã có lỗi. Vui lòng thử lại."
           }
         }
@@ -117,9 +191,9 @@
             "ERROR": "Cần phải có kênh"
           },
           "AUDIENCE": {
-            "LABEL": "Khán giả",
+            "LABEL": "Tập khách hàng",
             "PLACEHOLDER": "Chọn nhãn người dùng",
-            "ERROR": "Khán giả bắt buộc có"
+            "ERROR": "Tập khách hàng bắt buộc có"
           },
           "SCHEDULED_AT": {
             "LABEL": "Thời gian dự kiến",
@@ -132,6 +206,80 @@
           },
           "API": {
             "SUCCESS_MESSAGE": "Chiến dịch SMS được tạo thành công",
+            "ERROR_MESSAGE": "Đã có lỗi. Vui lòng thử lại."
+          }
+        }
+      }
+    },
+    "SURVEY": {
+      "HEADER_TITLE": "Chiến dịch khảo sát",
+      "NEW_CAMPAIGN": "Tạo chiến dịch",
+      "EMPTY_STATE": {
+        "TITLE": "Không có chiến dịch khảo sát khả dụng",
+        "SUBTITLE": "Cá nhân hoá việc tiếp cận khách hàng với khảo sát được hỗ trợ bởi AI. Hoàn hảo cho nhắc lịch hẹn, xác thực và theo dõi sau một cách tự nhiên. Trợ lý AI của bạn có thể thích ứng với phản hồi khách hàng, thu thập thông tin và làm giàu dữ liệu tiềm năng—giúp tiết kiệm thời gian cho đội ngũ.",
+        "JS_API_DESCRIPTION": "Bạn có thể kích hoạt chiến dịch khảo sát qua chương trình bằng API JavaScript của chúng tôi:"
+      },
+      "CARD": {
+        "STATUS": {
+          "COMPLETED": "Hoàn thành",
+          "SCHEDULED": "Đã lên lịch"
+        },
+        "CAMPAIGN_DETAILS": {
+          "SENT_BY": "Gửi bởi ",
+          "FROM": " từ ",
+          "ON": " vào ",
+          "BOT": "Bot"
+        }
+      },
+      "EMPTY_STATE_BADGE": {
+        "ENABLED": "Đang hoạt động",
+        "DISABLED": "Không hoạt động"
+      },
+      "DETAILS": {
+        "MESSAGE": "Tin nhắn",
+        "INBOX": "Hộp thư",
+        "AUDIENCE": "Tập khách hàng",
+        "SCHEDULED_AT": "Thời gian dự kiến"
+      },
+      "CREATE": {
+        "TITLE": "Tạo chiến dịch khảo sát",
+        "FORM": {
+          "TITLE": {
+            "LABEL": "Tiêu đề",
+            "PLACEHOLDER": "Nhập tiêu đề chiến dịch khảo sát của bạn",
+            "ERROR": "Tiêu đề là bắt buộc"
+          },
+          "MESSAGE": {
+            "LABEL": "Kịch bản cuộc gọi",
+            "PLACEHOLDER": "Thêm lời nhắc để hướng dẫn AI trong cuộc gọi này. Hãy cụ thể về giọng điệu, thông tin cần thu thập và cách xử lý các phản hồi khác nhau.",
+            "ERROR": "Kịch bản cuộc gọi là bắt buộc"
+          },
+          "INBOX": {
+            "LABEL": "Hộp thư khảo sát",
+            "PLACEHOLDER": "Chọn hộp thư khảo sát",
+            "ERROR": "Hộp thư khảo sát là bắt buộc"
+          },
+          "SENT_BY": {
+            "LABEL": "Người gửi",
+            "PLACEHOLDER": "Chọn người gửi",
+            "ERROR": "Người gửi là bắt buộc"
+          },
+          "AUDIENCE": {
+            "LABEL": "Tập khách hàng",
+            "PLACEHOLDER": "Chọn nhãn khách hàng",
+            "ERROR": "Tập khách hàng là bắt buộc"
+          },
+          "SCHEDULED_AT": {
+            "LABEL": "Thời gian dự kiến",
+            "PLACEHOLDER": "Chọn thời điểm bắt đầu chiến dịch",
+            "ERROR": "Thời gian dự kiến là bắt buộc"
+          },
+          "BUTTONS": {
+            "CREATE": "Tạo",
+            "CANCEL": "Huỷ"
+          },
+          "API": {
+            "SUCCESS_MESSAGE": "Chiến dịch khảo sát được tạo thành công",
             "ERROR_MESSAGE": "Đã có lỗi. Vui lòng thử lại."
           }
         }

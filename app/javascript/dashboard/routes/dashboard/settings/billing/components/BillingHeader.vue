@@ -4,6 +4,10 @@ defineProps({
     type: String,
     required: true,
   },
+  price: {
+    type: String,
+    required: true,
+  },
   description: {
     type: String,
     required: true,
@@ -17,10 +21,13 @@ defineProps({
       <span class="text-base font-medium text-n-slate-12">
         {{ title }}
       </span>
+      <p class="text-base font-medium text-n-slate-12">
+        {{ price }}
+      </p>
       <p class="text-sm mt-1 text-n-slate-11">
         {{ description }}
       </p>
+      <slot />
     </div>
-    <slot />
   </div>
 </template>

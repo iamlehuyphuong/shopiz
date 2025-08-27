@@ -80,6 +80,7 @@ const isLimitExceeded = computed(() => {
 });
 
 const shouldShowUpgradePage = computed(() => {
+  //return false;
   // Skip upgrade page in Billing, Inbox, and Agent pages
   if (props.bypassUpgradePage) return false;
   if (!isOnChatwootCloud.value) return false;
