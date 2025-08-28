@@ -1,6 +1,6 @@
 class Webhooks::TiktokController < ActionController::API
   def process_payload
-    body = request.body.read
+    body = request.raw_post
 
     unless verify_tiktok_signature(body, request.headers["TikTok-Signature"])
       render plain: "Unauthorized", status: :unauthorized and return
