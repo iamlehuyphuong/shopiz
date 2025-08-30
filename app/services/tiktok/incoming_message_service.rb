@@ -34,7 +34,27 @@ class Tiktok::IncomingMessageService
   end
 
   def update_contact_info
-    # get profile sender by call API
+    response = load_profile
+
+    if response['code'] == Channel::Tiktok::INVALID_ACCESS_TOKEN_CODE
+      channel.refresh_access_token
+      response = load_profile
+    end
+    return unless response['code']&.zero?
+
+    sender_info = response.dig('data', 'messages', 0, 'sender')
+    return unless sender_info && sender_info['im_user_id'] == im_user_id
+
+    @contact.update!(name: sender_info['nickname'])
+    ::Avatar::AvatarFromUrlJob.perform_later(@contact, sender_info['avatar'])
+  end
+
+  def load_profile
+    channel.get_conversation_messages(source_conversation_id, { page_size: 1 })
+  end
+
+  def channel
+    @channel ||= @inbox.channel
   end
 
   def set_conversation
@@ -43,11 +63,10 @@ class Tiktok::IncomingMessageService
       contact_inbox_id: @contact_inbox.id
     )
     @conversation ||= if @inbox.lock_to_single_conversation
-                  @contact_inbox.conversations.last
-                else
-                  @contact_inbox.conversations.where
-                                .not(status: :resolved).last
-                end
+                        @contact_inbox.conversations.last
+                      else
+                        @contact_inbox.conversations.where.not(status: :resolved).last
+                      end
     return if @conversation
 
     @conversation = ::Conversation.create!(conversation_params)
@@ -59,7 +78,7 @@ class Tiktok::IncomingMessageService
       inbox_id: @inbox.id,
       contact_id: @contact.id,
       contact_inbox_id: @contact_inbox.id,
-      external_source_id: source_conversation_id,
+      external_source_id: source_conversation_id
     }
   end
 
@@ -74,27 +93,28 @@ class Tiktok::IncomingMessageService
       inbox_id: @inbox.id,
       message_type: :incoming,
       sender: @contact,
-      source_id: params[:data][:message_id]
+      source_id: params[:data][:message_id],
+      created_at: params[:data][:create_time]
     }
   end
 
   def attach_media
     case params[:data][:type]
-    when "IMAGE"
-      attach_file(data_content["url"], :image)
-    when "VIDEO"
+    when 'IMAGE'
+      attach_file(data_content['url'], :image)
+    when 'VIDEO'
       if data_content[:size].to_i > 10 * 1024 * 1024
         @message.content = "File to download: #{data_content['url']}"
       else
-        attach_file(data_content["url"], :video)
+        attach_file(data_content['url'], :video)
       end
     end
   end
 
   def message_content
-    return if ["IMAGE", "VIDEO"].include?(params[:data][:type])
+    return if %w[IMAGE VIDEO].include?(params[:data][:type])
 
-    data_content["content"]
+    data_content['content']
   end
 
   def data_content
