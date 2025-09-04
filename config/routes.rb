@@ -126,12 +126,16 @@ Rails.application.routes.draw do
               get :meta
               get :search
               post :filter
+              get :load_more_history
             end
             scope module: :conversations do
               resources :messages, only: [:index, :create, :destroy, :update] do
                 member do
                   post :translate
                   post :retry
+                end
+                collection do
+                  get :load_more_history
                 end
               end
               post :call, on: :member
@@ -219,7 +223,7 @@ Rails.application.routes.draw do
               match :twiml_for_client, via: [:get, :post, :options], defaults: { format: :xml } # Allow GET, POST, and OPTIONS
             end
           end
-          
+
           # Voice call client SDK support
           namespace :voice do
             resources :tokens, only: [:create]

@@ -108,6 +108,10 @@ class MessageApi extends ApiClient {
       }
     );
   }
+
+  getHistoryMessages({ conversationId }) {
+    return axios.get(`${this.url}/${conversationId}/messages/load_more_history`);
+  }
 }
 
 export default new MessageApi();

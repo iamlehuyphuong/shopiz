@@ -182,8 +182,7 @@ export default {
     },
     shouldShowSpinner() {
       return (
-        (this.currentChat && this.currentChat.dataFetched === undefined) ||
-        (!this.listLoadingStatus && this.isLoadingPrevious)
+        (this.currentChat && this.currentChat.dataFetched === undefined) || this.isLoadingPrevious
       );
     },
     conversationType() {
@@ -286,6 +285,12 @@ export default {
 
       return { incoming, outgoing };
     },
+    showEndOfListMessage() {
+      return this.listLoadingStatus && !this.isLoadingPrevious;
+    },
+    showLoadHistoryMessage() {
+      return this.currentChat.meta.show_load_more_history;
+    }
   },
 
   watch: {
@@ -466,6 +471,32 @@ export default {
       }
     },
 
+    async onClickLoadHistoryMessages() {
+      this.setScrollParams();
+      const shouldLoadHistoryMessages =
+        this.currentChat.dataFetched === true &&
+        this.listLoadingStatus &&
+        !this.isLoadingPrevious;
+
+      if (shouldLoadHistoryMessages) {
+        this.isLoadingPrevious = true;
+        try {
+          await this.$store.dispatch('fetchHistoryMessages', {
+            conversationId: this.currentChat.id,
+          });
+          const heightDifference =
+            this.conversationPanel.scrollHeight - this.heightBeforeLoad;
+          this.conversationPanel.scrollTop =
+            this.scrollTopBeforeLoad + heightDifference;
+          this.setScrollParams();
+        } catch (error) {
+          // Ignore Error
+        } finally {
+          this.isLoadingPrevious = false;
+        }
+      }
+    },
+
     handleScroll(e) {
       if (this.isProgrammaticScroll) {
         // Reset the flag
@@ -546,6 +577,22 @@ export default {
           :conversation-id="currentChat.id"
         />
       </template>
+      <template v-if="showEndOfListMessage" #loadMoreHistory>
+        <div v-if="showLoadHistoryMessage" class="flex justify-center my-4">
+          <button
+            class="w-48 text-center px-2 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-indigo-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 transition w-32"
+            @click="onClickLoadHistoryMessages"
+          >
+            {{ $t('CONVERSATION.LOAD_MORE_MESSAGES') }}
+          </button>
+        </div>
+        <p
+          v-else
+          class="p-4 text-center text-slate-400 dark:text-slate-300"
+        >
+          {{ $t('CONVERSATION.ALL_MESSAGE_LOADED') }}
+        </p>
+      </template>
     </NextMessageList>
     <ul v-else ref="conversationPanelRef" class="conversation-panel">
       <transition name="slide-up">
@@ -554,6 +601,22 @@ export default {
           <span v-if="shouldShowSpinner" class="spinner message" />
         </li>
       </transition>
+      <template v-if="showEndOfListMessage">
+        <div v-if="showLoadHistoryMessage" class="flex justify-center my-4">
+          <button
+            class="w-48 text-center px-2 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-indigo-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 transition w-32"
+            @click="onClickLoadHistoryMessages"
+          >
+            {{ $t('CONVERSATION.LOAD_MORE_MESSAGES') }}
+          </button>
+        </div>
+        <p
+          v-else
+          class="p-4 text-center text-slate-400 dark:text-slate-300"
+        >
+          {{ $t('CONVERSATION.ALL_MESSAGE_LOADED') }}
+        </p>
+      </template>
       <Message
         v-for="message in readMessages"
         :key="message.id"

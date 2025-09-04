@@ -141,6 +141,32 @@ class ConversationApi extends ApiClient {
   delete(conversationId) {
     return axios.delete(`${this.url}/${conversationId}`);
   }
+
+  getHistories({
+    inboxId,
+    status,
+    assigneeType,
+    page,
+    labels,
+    teamId,
+    conversationType,
+    sortBy,
+    updatedWithin,
+  }) {
+    return axios.get(`${this.url}/load_more_history`, {
+      params: {
+        inbox_id: inboxId,
+        team_id: teamId,
+        status,
+        assignee_type: assigneeType,
+        page,
+        labels,
+        conversation_type: conversationType,
+        sort_by: sortBy,
+        updated_within: updatedWithin,
+      },
+    });
+  }
 }
 
 export default new ConversationApi();

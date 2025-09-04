@@ -3,8 +3,9 @@ class Api::V1::Accounts::ConversationsController < Api::V1::Accounts::BaseContro
   include DateRangeHelper
   include HmacConcern
 
-  before_action :conversation, except: [:index, :meta, :search, :create, :filter]
+  before_action :conversation, except: [:index, :meta, :search, :create, :filter, :load_more_history]
   before_action :inbox, :contact, :contact_inbox, only: [:create]
+  before_action :inbox, only: [:index, :filter, :load_more_history]
 
   ATTACHMENT_RESULTS_PER_PAGE = 100
 
@@ -12,6 +13,7 @@ class Api::V1::Accounts::ConversationsController < Api::V1::Accounts::BaseContro
     result = conversation_finder.perform
     @conversations = result[:conversations]
     @conversations_count = result[:count]
+    @is_load_all_conversation = @inbox&.is_load_all_conversation
   end
 
   def meta
@@ -51,6 +53,7 @@ class Api::V1::Accounts::ConversationsController < Api::V1::Accounts::BaseContro
     result = ::Conversations::FilterService.new(params.permit!, current_user, current_account).perform
     @conversations = result[:conversations]
     @conversations_count = result[:count]
+    @is_load_all_conversation = @inbox&.is_load_all_conversation
   rescue CustomExceptions::CustomFilter::InvalidAttribute,
          CustomExceptions::CustomFilter::InvalidOperator,
          CustomExceptions::CustomFilter::InvalidQueryOperator,
@@ -128,6 +131,12 @@ class Api::V1::Accounts::ConversationsController < Api::V1::Accounts::BaseContro
     authorize @conversation, :destroy?
     ::DeleteObjectJob.perform_later(@conversation, Current.user, request.ip)
     head :ok
+  end
+
+  def load_more_history
+    @conversations, @is_load_all_conversation = Conversations::LoadMoreHistoryService.new(@inbox).perform
+    result = conversation_finder.perform
+    @conversations_count = result[:count]
   end
 
   private

@@ -48,11 +48,13 @@ export const mutations = {
       mine_count: mineCount,
       unassigned_count: unAssignedCount,
       all_count: allCount,
+      is_load_all_conversation: isLoadAllConversation,
     } = {}
   ) {
     $state.mineCount = mineCount;
     $state.allCount = allCount;
     $state.unAssignedCount = unAssignedCount;
+    $state.isLoadAllConversation = isLoadAllConversation;
     $state.updatedOn = new Date();
   },
 };

@@ -18,6 +18,7 @@ json.meta do
     end
   end
   json.hmac_verified conversation.contact_inbox&.hmac_verified
+  json.show_load_more_history conversation.show_load_more_history
 end
 
 json.id conversation.display_id

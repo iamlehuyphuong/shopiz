@@ -11,7 +11,9 @@
 #  custom_attributes      :jsonb
 #  first_reply_created_at :datetime
 #  identifier             :string
+#  is_load_all_message    :boolean
 #  last_activity_at       :datetime         not null
+#  next_cursor            :string
 #  priority               :integer
 #  snoozed_until          :datetime
 #  status                 :integer          default("open"), not null
@@ -70,6 +72,8 @@ class Conversation < ApplicationRecord
   validates :uuid, uniqueness: true
   validate :validate_referer_url
 
+  attr_accessor :loaded_from_history
+
   enum status: { open: 0, resolved: 1, pending: 2, snoozed: 3 }
   enum priority: { low: 0, medium: 1, high: 2, urgent: 3 }
 
@@ -116,8 +120,8 @@ class Conversation < ApplicationRecord
   before_create :ensure_waiting_since
 
   after_update_commit :execute_after_update_commit_callbacks
-  after_create_commit :notify_conversation_creation
-  after_create_commit :load_attributes_created_by_db_triggers
+  after_create_commit :notify_conversation_creation, unless: :loaded_from_history
+  after_create_commit :load_attributes_created_by_db_triggers, unless: :loaded_from_history
 
   delegate :auto_resolve_after, to: :account
 
@@ -196,6 +200,10 @@ class Conversation < ApplicationRecord
     dispatcher_dispatch(CONVERSATION_UPDATED, previous_changes)
   end
 
+  def show_load_more_history
+    inbox.channel.instance_of?(::Channel::FacebookPage) && !is_load_all_message
+  end
+
   private
 
   def execute_after_update_commit_callbacks
@@ -245,7 +253,7 @@ class Conversation < ApplicationRecord
   def allowed_keys?
     (
       previous_changes.keys.intersect?(list_of_keys) ||
-      (previous_changes['additional_attributes'].present? && 
+      (previous_changes['additional_attributes'].present? &&
         (previous_changes['additional_attributes'][1].keys.intersect?(%w[conversation_language call_status call_duration])))
     )
   end
