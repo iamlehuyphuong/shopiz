@@ -99,7 +99,10 @@ export default {
       if (this.channel.key === 'api' && this.channel.thumbnail) {
         return this.channel.thumbnail;
       }
-      return `/assets/images/dashboard/channels/${this.channel.key}.png`;
+      const specialKeys = ["zalo", "zalopersonal", "tiktok"];
+      const ext = specialKeys.includes(this.channel.key) ? "svg" : "png";
+
+      return `/assets/images/dashboard/channels/${this.channel.key}.${ext}`;
     },
     onItemClick() {
       if (this.isActive) {
