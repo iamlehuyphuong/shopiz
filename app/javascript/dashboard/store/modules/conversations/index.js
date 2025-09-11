@@ -102,6 +102,11 @@ export const mutations = {
     chat.meta.team = team;
   },
 
+  [types.SHOW_LOAD_HISTORY](_state, showLoadHistory) {
+    const [chat] = getSelectedChatConversation(_state);
+    chat.meta.show_load_more_history = showLoadHistory;
+  },
+
   [types.UPDATE_CONVERSATION_LAST_ACTIVITY](
     _state,
     { lastActivityAt, conversationId }

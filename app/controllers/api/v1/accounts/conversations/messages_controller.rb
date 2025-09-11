@@ -2,6 +2,7 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
   before_action :ensure_api_inbox, only: :update
 
   def index
+    load_init_history_messages
     @messages = message_finder.perform
   end
 
@@ -54,6 +55,10 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
     render json: { content: translated_content }
   end
 
+  def load_more_history
+    @messages = Messages::LoadMoreHistoryService.new(@conversation).perform
+  end
+
   private
 
   def message
@@ -76,5 +81,12 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
   def ensure_api_inbox
     # Only API inboxes can update messages
     render json: { error: 'Message status update is only allowed for API inboxes' }, status: :forbidden unless @conversation.inbox.api?
+  end
+
+  def load_init_history_messages
+    return if @conversation.next_cursor.present? || @conversation.is_load_all_message
+    return unless @conversation.messages.count == 1
+
+    Messages::LoadMoreHistoryService.new(@conversation).perform
   end
 end

@@ -349,6 +349,16 @@ const showEndOfListMessage = computed(() => {
   );
 });
 
+const currentInbox = computed(() => {
+  const { inbox_id: inboxId } = router.currentRoute.value.params;
+  return store.getters['inboxes/getInbox'](inboxId);
+});
+
+const showLoadHistoryConversation = computed(() => {
+  return currentInbox.value.channel_type === 'Channel::FacebookPage' &&
+    !conversationStats.value['isLoadAllConversation'];
+})
+
 const allConversationsSelected = computed(() => {
   return (
     conversationList.value.length === selectedConversations.value.length &&
@@ -453,6 +463,11 @@ function onClickOpenDeleteFoldersModal() {
 
 function onCloseDeleteFoldersModal() {
   showDeleteFoldersModal.value = false;
+}
+
+function onClickLoadHistoryConversation() {
+  store.dispatch('updateChatListFilters', conversationFilters.value);
+  store.dispatch('fetchHistoryConversations').then(emitConversationLoaded);
 }
 
 function setParamsForEditFolderModal() {
@@ -892,12 +907,22 @@ watch(conversationFilters, (newVal, oldVal) => {
       @chat-tab-change="updateAssigneeTab"
     />
 
-    <p
-      v-if="!chatListLoading && !conversationList.length"
-      class="flex items-center justify-center p-4 overflow-auto"
-    >
-      {{ $t('CHAT_LIST.LIST.404') }}
-    </p>
+    <template v-if="!chatListLoading && !conversationList.length">
+      <div v-if="showLoadHistoryConversation" class="flex justify-center my-4">
+        <button
+          class="w-48 text-center px-2 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-indigo-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 transition w-32"
+          @click="onClickLoadHistoryConversation"
+        >
+          {{ $t('CHAT_LIST.LOAD_MORE_CONVERSATIONS') }}
+        </button>
+      </div>
+      <p
+        v-else
+        class="flex items-center justify-center p-4 overflow-auto"
+      >
+        {{ $t('CHAT_LIST.LIST.404') }}
+      </p>
+    </template>
     <ConversationBulkActions
       v-if="selectedConversations.length"
       :conversations="selectedConversations"
@@ -956,12 +981,23 @@ watch(conversationFilters, (newVal, oldVal) => {
           <div v-if="chatListLoading" class="text-center">
             <span class="mt-4 mb-4 spinner" />
           </div>
-          <p
-            v-else-if="showEndOfListMessage"
-            class="p-4 text-center text-slate-400 dark:text-slate-300"
-          >
-            {{ $t('CHAT_LIST.EOF') }}
-          </p>
+          <template v-else-if="showEndOfListMessage">
+            <div v-if="showLoadHistoryConversation" class="flex justify-center my-4">
+              <button
+                class="w-48 text-center px-2 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-indigo-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 transition w-32"
+                @click="onClickLoadHistoryConversation"
+              >
+                {{ $t('CHAT_LIST.LOAD_MORE_CONVERSATIONS') }}
+              </button>
+            </div>
+            <p
+              v-else
+              class="p-4 text-center text-slate-400 dark:text-slate-300"
+            >
+              {{ $t('CHAT_LIST.EOF') }}
+            </p>
+          </template>
+
           <IntersectionObserver
             v-else
             :options="intersectionObserverOptions"

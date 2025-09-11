@@ -287,7 +287,9 @@
     },
     "GALLERY_VIEW": {
       "ERROR_DOWNLOADING": "Không thể tải xuống tệp đính kèm. Vui lòng thử lại"
-    }
+    },
+    "LOAD_MORE_MESSAGES": "Tải thêm tin nhắn",
+    "ALL_MESSAGE_LOADED": "Tất cả các tin nhắn đã được tải 🎉"
   },
   "EMAIL_TRANSCRIPT": {
     "TITLE": "Gửi bản ghi cuộc trò chuyện",

@@ -5,6 +5,7 @@ json.meta do
   json.assignee @conversation.assignee.push_event_data if @conversation.assignee.present?
   json.agent_last_seen_at @conversation.agent_last_seen_at
   json.assignee_last_seen_at @conversation.assignee_last_seen_at
+  json.show_load_more_history @conversation.show_load_more_history
 end
 
 json.payload do

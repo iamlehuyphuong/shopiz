@@ -287,7 +287,9 @@
     },
     "GALLERY_VIEW": {
       "ERROR_DOWNLOADING": "Unable to download attachment. Please try again"
-    }
+    },
+    "LOAD_MORE_MESSAGES": "Load more messages",
+    "ALL_MESSAGE_LOADED": "All messages loaded 🎉"
   },
   "EMAIL_TRANSCRIPT": {
     "TITLE": "Send conversation transcript",

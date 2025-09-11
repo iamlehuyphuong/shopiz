@@ -33,15 +33,22 @@ class MessageFinder
   end
 
   def messages_after(after_id)
-    messages.reorder('created_at asc').where('id > ?', after_id).limit(100)
+    after_time = Message.find(after_id).created_at
+
+    messages.reorder('created_at asc').where('created_at > ?', after_time).limit(100)
   end
 
   def messages_before(before_id)
-    messages.reorder('created_at desc').where('id < ?', before_id).limit(20).reverse
+    before_time = Message.find(before_id).created_at
+
+    messages.reorder('created_at desc').where('created_at < ?', before_time).limit(20).reverse
   end
 
   def messages_between(after_id, before_id)
-    messages.reorder('created_at asc').where('id >= ? AND id < ?', after_id, before_id).limit(1000)
+    after_time = Message.find(after_id).created_at
+    before_time = Message.find(before_id).created_at
+
+    messages.reorder('created_at asc').where('created_at >= ? AND created_at < ?', after_time, before_time).limit(1000)
   end
 
   def messages_latest

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_08_20_193908) do
+ActiveRecord::Schema[7.0].define(version: 2025_09_05_105555) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -621,6 +621,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_20_193908) do
     t.datetime "waiting_since"
     t.text "cached_label_list"
     t.string "external_source_id"
+    t.boolean "is_load_all_message"
+    t.string "next_cursor"
     t.index ["account_id", "display_id"], name: "index_conversations_on_account_id_and_display_id", unique: true
     t.index ["account_id", "id"], name: "index_conversations_on_id_and_account_id"
     t.index ["account_id", "inbox_id", "status", "assignee_id"], name: "conv_acid_inbid_stat_asgnid_idx"
@@ -792,6 +794,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_20_193908) do
     t.integer "sender_name_type", default: 0, null: false
     t.string "business_name"
     t.jsonb "csat_config", default: {}, null: false
+    t.boolean "is_load_all_conversation"
+    t.string "next_cursor"
     t.index ["account_id"], name: "index_inboxes_on_account_id"
     t.index ["channel_id", "channel_type"], name: "index_inboxes_on_channel_id_and_channel_type"
     t.index ["portal_id"], name: "index_inboxes_on_portal_id"

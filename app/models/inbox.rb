@@ -16,8 +16,10 @@
 #  enable_email_collect          :boolean          default(TRUE)
 #  greeting_enabled              :boolean          default(FALSE)
 #  greeting_message              :string
+#  is_load_all_conversation      :boolean
 #  lock_to_single_conversation   :boolean          default(FALSE), not null
 #  name                          :string           not null
+#  next_cursor                   :string
 #  out_of_office_message         :string
 #  sender_name_type              :integer          default("friendly"), not null
 #  timezone                      :string           default("UTC")
@@ -44,6 +46,8 @@ class Inbox < ApplicationRecord
   include Avatarable
   include OutOfOffisable
   include AccountCacheRevalidator
+
+  ENABLE_LOAD_HISTORY_CONVERSATION = ['Channel::FacebookPage'].freeze
 
   # Not allowing characters:
   validates :name, presence: true
@@ -78,6 +82,7 @@ class Inbox < ApplicationRecord
 
   after_create_commit :dispatch_create_event
   after_update_commit :dispatch_update_event
+  after_create_commit :auto_load_old_conversation
 
   scope :order_by_name, -> { order('lower(name) ASC') }
 
@@ -224,6 +229,12 @@ class Inbox < ApplicationRecord
 
   def check_channel_type?
     ['Channel::Email', 'Channel::Api', 'Channel::WebWidget'].include?(channel_type)
+  end
+
+  def auto_load_old_conversation
+    return if ENABLE_LOAD_HISTORY_CONVERSATION.exclude?(channel.class.to_s)
+
+    ::Facebook::LoadHistoryConversationService.new(self).perform
   end
 end
 
