@@ -21,25 +21,18 @@ export default {
       return this.$store.getters['accounts/getAccount'](this.accountId);
     },
     channelList() {
-      const { apiChannelName, apiChannelThumbnail } = this.globalConfig;
       return [
         { key: 'website', name: 'Website' },
         { key: 'facebook', name: 'Messenger' },
-        { key: 'zalo', name: 'Zalo' },
-        { key: 'zalopersonal', name: 'ZaloPersonal' },
+        { key: 'tiktok', name: 'TikTok Shop'},
+        { key: 'zalo', name: 'Zalo OA' },
+        { key: 'zalopersonal', name: 'Zalo User' },
         { key: 'whatsapp', name: 'WhatsApp' },
-        { key: 'sms', name: 'SMS' },
-        { key: 'email', name: 'Email' },
-        { key: 'voice', name: 'Voice' },
-        {
-          key: 'api',
-          name: apiChannelName || 'API',
-          thumbnail: apiChannelThumbnail,
-        },
+        { key: 'instagram', name: 'Instagram' },
         { key: 'telegram', name: 'Telegram' },
         { key: 'line', name: 'Line' },
-        { key: 'instagram', name: 'Instagram' },
-        { key: 'tiktok', name: 'TikTok'}
+        { key: 'email', name: 'Email' },
+        { key: 'voice', name: 'Voice' },
       ];
     },
     ...mapGetters({
