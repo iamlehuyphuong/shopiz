@@ -31,51 +31,11 @@
 
 en:
   hello: 'Hello world'
-  INBOX_MGMT:
-    ADD:
-      TWILIO_VOICE:
-        TITLE: 'Add Twilio Voice Channel'
-        DESC: 'Integrate Twilio Voice to accept and make voice calls through Chatwoot.'
-        PHONE_NUMBER:
-          LABEL: 'Phone Number'
-          PLACEHOLDER: '+1234567890'
-          ERROR: 'Please enter a valid phone number'
-        ACCOUNT_SID:
-          LABEL: 'Account SID'
-          PLACEHOLDER: 'Enter your Twilio Account SID'
-          REQUIRED: 'Account SID is required'
-        AUTH_TOKEN:
-          LABEL: 'Auth Token'
-          PLACEHOLDER: 'Enter your Twilio Auth Token'
-          REQUIRED: 'Auth Token is required'
-        SUBMIT_BUTTON: 'Create Channel'
-        API:
-          ERROR_MESSAGE: 'Failed to create Twilio Voice channel'
-  CONVERSATION:
-    VOICE_CALL: 'Voice Call'
-    CALL_ERROR: 'Failed to initiate voice call'
-    CALL_INITIATED: 'Voice call initiated successfully'
-    END_CALL: 'End call'
-    CALL_ENDED: 'Call ended successfully'
-    CALL_END_ERROR: 'Failed to end call. Please try again.'
-    AUDIO_NOT_SUPPORTED: 'Your browser does not support audio playback'
-    TRANSCRIPTION: 'Transcription'
-    VOICE_CALL:
-      RINGING: 'Incoming Call - Join'
-      ACTIVE: 'Call in progress'
-      MISSED: 'Missed Call'
-      ENDED: 'Call Ended'
-      INCOMING_CALL: 'Incoming Call'
-      JOIN_CALL: 'Join'
-      CALL_JOINED: 'Joining call...'
-      JOIN_ERROR: 'Failed to join call. Please try again.'
-      MISSED_CALL: 'Call was not answered'
-      DURATION: 'Duration: %{duration}'
-      INCOMING_FROM: 'Incoming call from %{name}'
-      OUTGOING_FROM: 'Outgoing call from %{name}'
-  CONTACT_PANEL:
-    NEW_MESSAGE: 'New Message'
-    MERGE_CONTACT: 'Merge Contact'
+  inbox:
+    reauthorization:
+      success: 'Channel reauthorized successfully'
+      not_required: 'Reauthorization is not required for this inbox'
+      invalid_channel: 'Invalid channel type for reauthorization'
   messages:
     reset_password_success: Shopiz! Request for password reset is successful. Check your mail for instructions.
     reset_password_failure: Uh ho! We could not find any user with the specified email.
@@ -93,6 +53,8 @@ en:
       email_already_exists: 'You have already signed up for an account with %{email}'
       invalid_params: 'Invalid, please check the signup paramters and try again'
       failed: Signup failed
+    assignment_policy:
+      not_found: Assignment policy not found
     data_import:
       data_type:
         invalid: Invalid data type
@@ -112,6 +74,13 @@ en:
       invalid_message_type: 'Invalid message type. Action not permitted'
     slack:
       invalid_channel_id: 'Invalid slack channel. Please try again'
+    whatsapp:
+      token_exchange_failed: 'Failed to exchange code for access token. Please try again.'
+      invalid_token_permissions: 'The access token does not have the required permissions for WhatsApp.'
+      phone_info_fetch_failed: 'Failed to fetch phone number information. Please try again.'
+      reauthorization:
+        generic: 'Failed to reauthorize WhatsApp. Please try again.'
+        not_supported: 'Reauthorization is not supported for this type of WhatsApp channel.'
     inboxes:
       imap:
         socket_error: Please check the network connection, IMAP address and try again.
@@ -315,6 +284,7 @@ en:
       short_description: 'Sync your contacts and conversations with LeadSquared CRM.'
       description: 'Sync your contacts and conversations with LeadSquared CRM. This integration automatically creates leads in LeadSquared when new contacts are added, and logs conversation activity to provide your sales team with complete context.'
   captain:
+    copilot_message_required: Message is required
     copilot_error: 'Please connect an assistant to this inbox to use Copilot'
     copilot_limit: 'You are out of Copilot credits. You can buy more credits from the billing section.'
     copilot:
@@ -402,3 +372,12 @@ en:
 
       Transcript:
       %{format_messages}
+  portals:
+    send_instructions:
+      email_required: 'Email is required'
+      invalid_email_format: 'Invalid email format'
+      custom_domain_not_configured: 'Custom domain is not configured'
+      instructions_sent_successfully: 'Instructions sent successfully'
+      subject: 'Finish setting up %{custom_domain}'
+    ssl_status:
+      custom_domain_not_configured: 'Custom domain is not configured'

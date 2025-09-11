@@ -305,11 +305,13 @@ const createNode = (editorView, nodeType, content) => {
       const mentionType = content.type || 'user';
       const displayName = content.displayName || content.name;
 
-      return state.schema.nodes.mention.create({
+      const mentionNode = state.schema.nodes.mention.create({
         userId: content.id,
         userFullName: displayName,
-        mentionType: mentionType,
+        mentionType,
       });
+
+      return mentionNode;
     }
     case 'cannedResponse':
       return new MessageMarkdownTransformer(messageSchema).parse(content);
@@ -317,6 +319,12 @@ const createNode = (editorView, nodeType, content) => {
       return state.schema.text(`{{${content}}}`);
     case 'emoji':
       return state.schema.text(content);
+    case 'tool': {
+      return state.schema.nodes.tools.create({
+        id: content.id,
+        name: content.title,
+      });
+    }
     default:
       return null;
   }
@@ -350,6 +358,11 @@ const nodeCreators = {
   }),
   emoji: (editorView, content, from, to) => ({
     node: createNode(editorView, 'emoji', content),
+    from,
+    to,
+  }),
+  tool: (editorView, content, from, to) => ({
+    node: createNode(editorView, 'tool', content),
     from,
     to,
   }),

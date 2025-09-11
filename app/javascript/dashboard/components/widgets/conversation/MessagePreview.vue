@@ -191,99 +191,49 @@ export default {
 
 <template>
   <div class="overflow-hidden text-ellipsis whitespace-nowrap">
-    <!-- Always show call status for voice channels if present -->
-    <template v-if="shouldShowCallStatus">
-      <span
-        class="-mt-0.5 align-middle inline-block mr-1"
-        :class="{
-          'text-red-600 dark:text-red-400': callStatus === 'missed' || callStatus === 'no-answer',
-          'text-green-600 dark:text-green-400': callStatus === 'active' || callStatus === 'ringing',
-          'text-slate-600 dark:text-slate-300': callStatus === 'ended'
-        }"
-      >
-        <!-- Missed call icon -->
-        <i v-if="callStatus === 'missed' || callStatus === 'no-answer'" 
-           class="i-ph-phone-x text-base"></i>
-        <!-- Active call icon -->
-        <i v-else-if="callStatus === 'active'" 
-           class="i-ph-phone-call text-base"></i>
-        <!-- Incoming call icon -->
-        <i v-else-if="(callStatus === 'ended' && isIncomingCall) || (isIncomingCall)" 
-           class="i-ph-phone-incoming text-base"></i>
-        <!-- Outgoing call icon -->
-        <i v-else 
-           class="i-ph-phone-outgoing text-base"></i>
-      </span>
-      <span>{{ parsedLastMessage }}</span>
+    <template v-if="showMessageType">
+      <fluent-icon
+        v-if="isMessagePrivate"
+        size="16"
+        class="-mt-0.5 align-middle text-n-slate-11 inline-block"
+        icon="lock-closed"
+      />
+      <fluent-icon
+        v-else-if="messageByAgent"
+        size="16"
+        class="-mt-0.5 align-middle text-n-slate-11 inline-block"
+        icon="arrow-reply"
+      />
+      <fluent-icon
+        v-else-if="isMessageAnActivity"
+        size="16"
+        class="-mt-0.5 align-middle text-n-slate-11 inline-block"
+        icon="info"
+      />
     </template>
-    <template v-else>
-      <template v-if="showMessageType">
-        <fluent-icon
-          v-if="isMessagePrivate"
-          size="16"
-          class="-mt-0.5 align-middle text-slate-600 dark:text-slate-300 inline-block"
-          icon="lock-closed"
-        />
-        <!-- Voice calls with phosphor icons (non-filled variants) -->
-        <span
-          v-else-if="isVoiceCall"
-          class="-mt-0.5 align-middle inline-block mr-1"
-          :class="{
-            'text-red-600 dark:text-red-400': callStatus === 'missed' || callStatus === 'no-answer',
-            'text-green-600 dark:text-green-400': callStatus === 'active' || callStatus === 'ringing',
-            'text-slate-600 dark:text-slate-300': callStatus === 'ended'
-          }"
-        >
-          <!-- Missed call icon -->
-          <i v-if="callStatus === 'missed' || callStatus === 'no-answer'" 
-             class="i-ph-phone-x text-base"></i>
-          <!-- Active call icon -->
-          <i v-else-if="callStatus === 'active'" 
-             class="i-ph-phone-call text-base"></i>
-          <!-- Incoming call icon -->
-          <i v-else-if="(callStatus === 'ended' && isIncomingCall) || (isIncomingCall)" 
-             class="i-ph-phone-incoming text-base"></i>
-          <!-- Outgoing call icon -->
-          <i v-else 
-             class="i-ph-phone-outgoing text-base"></i>
-        </span>
-        <fluent-icon
-          v-else-if="messageByAgent"
-          size="16"
-          class="-mt-0.5 align-middle text-slate-600 dark:text-slate-300 inline-block"
-          icon="arrow-reply"
-        />
-        <fluent-icon
-          v-else-if="isMessageAnActivity"
-          size="16"
-          class="-mt-0.5 align-middle text-slate-600 dark:text-slate-300 inline-block"
-          icon="info"
-        />
-      </template>
-      <span v-if="message.content && isMessageSticker">
-        <fluent-icon
-          size="16"
-          class="-mt-0.5 align-middle inline-block text-slate-600 dark:text-slate-300"
-          icon="image"
-        />
-        {{ $t('CHAT_LIST.ATTACHMENTS.image.CONTENT') }}
-      </span>
-      <span v-else-if="message.content || isVoiceCall">
-        {{ parsedLastMessage }}
-      </span>
-      <span v-else-if="message.attachments">
-        <fluent-icon
-          v-if="attachmentIcon && showMessageType"
-          size="16"
-          class="-mt-0.5 align-middle inline-block text-slate-600 dark:text-slate-300"
-          :icon="attachmentIcon"
-        />
-        {{ $t(`${attachmentMessageContent}`) }}
-      </span>
-      <span v-else>
-        {{ defaultEmptyMessage || $t('CHAT_LIST.NO_CONTENT') }}
-      </span>
-    </template>
+    <span v-if="message.content && isMessageSticker">
+      <fluent-icon
+        size="16"
+        class="-mt-0.5 align-middle inline-block text-n-slate-11"
+        icon="image"
+      />
+      {{ $t('CHAT_LIST.ATTACHMENTS.image.CONTENT') }}
+    </span>
+    <span v-else-if="message.content">
+      {{ parsedLastMessage }}
+    </span>
+    <span v-else-if="message.attachments">
+      <fluent-icon
+        v-if="attachmentIcon && showMessageType"
+        size="16"
+        class="-mt-0.5 align-middle inline-block text-n-slate-11"
+        :icon="attachmentIcon"
+      />
+      {{ $t(`${attachmentMessageContent}`) }}
+    </span>
+    <span v-else>
+      {{ defaultEmptyMessage || $t('CHAT_LIST.NO_CONTENT') }}
+    </span>
   </div>
 </template>
 

@@ -3,7 +3,7 @@
     "LIMIT_MESSAGES": {
       "CONVERSATION": "Bạn đã vượt quá giới hạn hội thoại. Gói Basic chỉ cho phép 500 hội thoại.",
       "INBOXES": "Bạn đã vượt quá giới hạn kênh. Gói Basic chỉ hỗ trợ live-chat trên website. Các kênh bổ sung như email, WhatsApp v.v. yêu cầu nâng cấp gói.",
-      "AGENTS": "Bạn đã vượt quá giới hạn tổng đài viên. Gói Basic chỉ cho phép 2 tổng đài viên.",
+      "AGENTS": "Bạn đã vượt quá giới hạn tổng đài viên. Gói Basic chỉ cho phép {allowedAgents} tổng đài viên.",
       "NON_ADMIN": "Vui lòng liên hệ quản trị viên để nâng cấp gói và tiếp tục sử dụng đầy đủ tính năng."
     },
     "TITLE": "Cài đặt tài khoản",
@@ -134,6 +134,7 @@
     "MULTISELECT": {
       "ENTER_TO_SELECT": "Bấm enter để chọn",
       "ENTER_TO_REMOVE": "Bấm enter để xoá",
+      "NO_OPTIONS": "List is empty",
       "SELECT_ONE": "Chọn một",
       "SELECT": "Chọn"
     }

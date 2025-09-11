@@ -129,6 +129,10 @@ export const useInbox = () => {
     return channelType.value === INBOX_TYPES.INSTAGRAM;
   });
 
+  const isAVoiceChannel = computed(() => {
+    return channelType.value === INBOX_TYPES.VOICE;
+  });
+
   return {
     inbox,
     isAFacebookInbox,

@@ -68,10 +68,28 @@
       "MARK_AS_READ": "Thông báo đã được đánh dấu là đã đọc",
       "MARK_AS_UNREAD": "Thông báo đã được đánh dấu là chưa đọc",
       "SNOOZE": "Thông báo đã được tạm hoãn",
-      "DELETE": "Thông báo đã bị xóa",
+      "DELETE": "Thông báo đã được xóa",
       "MARK_ALL_READ": "Tất cả thông báo đã được đánh dấu là đã đọc",
-      "DELETE_ALL": "Tất cả thông báo đã bị xóa",
-      "DELETE_ALL_READ": "Tất cả thông báo đã đọc đã bị xóa"
+      "DELETE_ALL": "Tất cả thông báo đã được xóa",
+      "DELETE_ALL_READ": "Tất cả thông báo đã đọc đã được xóa"
+    },
+    "REAUTHORIZE": {
+      "TITLE": "Yêu cầu xác thực lại",
+      "DESCRIPTION": "Kết nối WhatsApp của bạn đã hết hạn. Vui lòng kết nối lại để tiếp tục nhận và gửi tin nhắn.",
+      "BUTTON_TEXT": "Kết nối lại WhatsApp",
+      "LOADING_FACEBOOK": "Đang tải Facebook...",
+      "SUCCESS": "Kết nối lại WhatsApp thành công",
+      "ERROR": "Không thể kết nối lại WhatsApp. Vui lòng thử lại.",
+      "WHATSAPP_APP_ID_MISSING": "WhatsApp App ID chưa được cấu hình. Vui lòng liên hệ với quản trị viên của bạn.",
+      "WHATSAPP_CONFIG_ID_MISSING": "WhatsApp Configuration ID chưa được cấu hình. Vui lòng liên hệ với quản trị viên của bạn.",
+      "CONFIGURATION_ERROR": "Đã xảy ra lỗi cấu hình trong quá trình xác thực lại.",
+      "FACEBOOK_LOAD_ERROR": "Không thể tải Facebook SDK. Vui lòng thử lại.",
+      "TROUBLESHOOTING": {
+        "TITLE": "Khắc phục sự cố",
+        "POPUP_BLOCKED": "Đảm bảo rằng cửa sổ bật lên được phép cho trang này",
+        "COOKIES": "Cookie của bên thứ ba phải được bật",
+        "ADMIN_ACCESS": "Bạn cần quyền truy cập quản trị viên vào Tài khoản Doanh nghiệp WhatsApp"
+      }
     }
   }
 }

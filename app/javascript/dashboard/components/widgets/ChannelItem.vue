@@ -78,6 +78,11 @@ export default {
           this.enabledFeatures.channel_instagram && this.hasInstagramConfigured
         );
       }
+
+      if (key === 'voice') {
+        return this.enabledFeatures.channel_voice;
+      }
+
       return [
         'website',
         'twilio',
@@ -90,8 +95,15 @@ export default {
         'telegram',
         'line',
         'instagram',
+        'voice',
         'tiktok',
       ].includes(key);
+    },
+    isComingSoon() {
+      const { key } = this.channel;
+      // Show "Coming Soon" only if the channel is marked as coming soon
+      // and the corresponding feature flag is not enabled yet.
+      return ['voice'].includes(key) && !this.isActive;
     },
   },
   methods: {
@@ -118,6 +130,7 @@ export default {
     :class="{ inactive: !isActive }"
     :title="channel.name"
     :src="getChannelThumbnail()"
+    :is-coming-soon="isComingSoon"
     @click="onItemClick"
   />
 </template>

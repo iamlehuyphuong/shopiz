@@ -72,6 +72,13 @@ const runSDK = ({ baseUrl, websiteToken }) => {
     widgetStyle: getWidgetStyle(shopizSettings.widgetStyle) || 'standard',
     resetTriggered: false,
     darkMode: getDarkMode(shopizSettings.darkMode),
+    welcomeTitle: shopizSettings.welcomeTitle || '',
+    welcomeDescription: shopizSettings.welcomeDescription || '',
+    availableMessage: shopizSettings.availableMessage || '',
+    unavailableMessage: shopizSettings.unavailableMessage || '',
+    enableFileUpload: shopizSettings.enableFileUpload ?? true,
+    enableEmojiPicker: shopizSettings.enableEmojiPicker ?? true,
+    enableEndConversation: shopizSettings.enableEndConversation ?? true,
 
     toggle(state) {
       IFrameHelper.events.toggleBubble(state);

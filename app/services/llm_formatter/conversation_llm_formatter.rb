@@ -28,9 +28,11 @@ class LlmFormatter::ConversationLlmFormatter < LlmFormatter::DefaultLlmFormatter
 
     message_text = ''
     messages = @record.messages.where.not(message_type: :activity).order(created_at: :asc)
+
     messages.each do |message|
       # Skip private messages unless explicitly included in config
       next if message.private? && !config[:include_private_messages]
+
       message_text << format_message(message)
     end
     message_text

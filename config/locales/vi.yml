@@ -1,5 +1,10 @@
 vi:
   hello: 'Chào thế giới'
+  inbox:
+    reauthorization:
+      success: 'Channel reauthorized successfully'
+      not_required: 'Reauthorization is not required for this inbox'
+      invalid_channel: 'Invalid channel type for reauthorization'
   messages:
     reset_password_success: 'Chà! Yêu cầu đặt lại mật khẩu thành công. Kiểm tra thư của bạn để biết hướng dẫn.'
     reset_password_failure: 'Ồ không! Chúng tôi không thể tìm thấy bất kỳ người dùng nào có email được chỉ định.'
@@ -34,7 +39,14 @@ vi:
     dyte:
       invalid_message_type: 'Loại tin nhắn không hợp lệ. Hành động không được phép'
     slack:
-      invalid_channel_id: 'Slack channel không hợp lệ. Vui lòng thử lại'
+      invalid_channel_id: 'Channel ID không hợp lệ'
+    whatsapp:
+      token_exchange_failed: 'Không thể trao đổi mã để lấy mã thông báo truy cập. Vui lòng thử lại.'
+      invalid_token_permissions: 'Mã thông báo truy cập không có quyền cần thiết cho WhatsApp.'
+      phone_info_fetch_failed: 'Không thể lấy thông tin số điện thoại. Vui lòng thử lại.'
+      reauthorization:
+        generic: 'Không thể cấp lại quyền truy cập cho WhatsApp. Vui lòng thử lại.'
+        not_supported: 'Cấp lại quyền truy cập không được hỗ trợ cho loại kênh WhatsApp này.'
     inboxes:
       imap:
         socket_error: 'Vui lòng kiểm tra kết nối mạng, địa chỉ IMAP và thử lại.'
@@ -163,7 +175,9 @@ vi:
         issue_linked: 'Vấn đề Linear %{issue_id} đã được liên kết bởi %{user_name}'
         issue_unlinked: 'Vấn đề Linear %{issue_id} đã được hủy liên kết bởi %{user_name}'
       csat:
-        not_sent_due_to_messaging_window: 'Khảo sát CSAT không được gửi do hạn chế gửi tin nhắn đi'
+        not_sent_due_to_messaging_window: 'CSAT thông báo không được gửi do hạn chế tin nhắn đi'
+      auto_resolve:
+        not_sent_due_to_messaging_window: 'Thông điệp tự động giải quyết không được gửi do hạn chế tin nhắn đi'
       muted: '%{user_name} đã tắt tiếng hội thoại'
       unmuted: '%{user_name} đã bật tiếng cuộc trò chuyện'
       auto_resolution_message: 'Đang giải quyết cuộc trò chuyện vì đã không hoạt động trong một thời gian. Vui lòng bắt đầu một cuộc trò chuyện mới nếu cần hỗ trợ thêm.'
@@ -220,12 +234,12 @@ vi:
       description: 'Khai thác sức mạnh của các mô hình ngôn ngữ lớn từ OpenAI với các tính năng như gợi ý trả lời, tóm tắt, diễn đạt lại tin nhắn, kiểm tra chính tả và phân loại nhãn.'
     linear:
       name: 'Linear'
-      short_description: 'Tạo và liên kết các vấn đề Linear trực tiếp từ cuộc trò chuyện.'
-      description: 'Tạo vấn đề trong Linear trực tiếp từ cửa sổ cuộc trò chuyện của bạn. Hoặc liên kết các vấn đề Linear hiện có để quá trình theo dõi trở nên liền mạch và hiệu quả hơn.'
+      short_description: 'Create and link Linear issues directly from conversations.'
+      description: 'Create issues in Linear directly from your conversation window. Alternatively, link existing Linear issues for a more streamlined and efficient issue tracking process.'
     notion:
       name: 'Notion'
       short_description: 'Tích hợp cơ sở dữ liệu, tài liệu và trang trực tiếp với Shopiz AI.'
-      description: 'Kết nối không gian làm việc Notion của bạn để cho phép Shopiz AI tạo ra phản hồi từ cơ sở dữ liệu, tài liệu và trang của bạn.'
+      description: 'Kết nối không gian làm việc Notion của bạn để Shopiz AI có thể truy cập và tạo ra các phản hồi thông minh bằng cách sử dụng nội dung từ cơ sở dữ liệu, tài liệu và trang của bạn nhằm cung cấp hỗ trợ khách hàng có bối cảnh hơn.'
     shopify:
       name: 'Shopify'
       short_description: 'Truy cập chi tiết đơn hàng và dữ liệu khách hàng từ cửa hàng Shopify của bạn.'
@@ -235,8 +249,9 @@ vi:
       short_description: 'Đồng bộ hóa danh bạ và cuộc trò chuyện của bạn với CRM LeadSquared.'
       description: 'Đồng bộ hóa danh bạ và cuộc trò chuyện của bạn với CRM LeadSquared. Tính năng này tự động tạo khách hàng tiềm năng trong LeadSquared khi danh bạ mới được thêm và lưu lại các hoạt động cuộc trò chuyện để cung cấp bối cảnh đầy đủ cho đội ngũ bán hàng của bạn.'
   captain:
-    copilot_error: 'Vui lòng kết nối một trợ lý vào hộp thư đến này để sử dụng Shopiz AI'
-    copilot_limit: 'Bạn đã hết tín dụng Shopiz AI. Bạn có thể mua thêm từ phần thanh toán.'
+    copilot_message_required: Thông điệp bắt buộc có
+    copilot_error: 'Please connect an assistant to this inbox to use Copilot'
+    copilot_limit: 'You are out of Copilot credits. You can buy more credits from the billing section.'
     copilot:
       using_tool: 'Đang sử dụng công cụ %{function_name}'
       completed_tool_call: 'Hoàn thành cuộc gọi công cụ %{function_name}'
@@ -318,3 +333,12 @@ vi:
 
       Bản ghi:
       %{format_messages}
+  portals:
+    send_instructions:
+      email_required: 'Email bắt buộc có'
+      invalid_email_format: 'Định dạng email không hợp lệ'
+      custom_domain_not_configured: 'Tùy chỉnh tên miền chưa được cấu hình. Vui lòng liên hệ quản trị viên của bạn.'
+      instructions_sent_successfully: 'Hướng dẫn đã được gửi thành công đến %{email}'
+      subject: 'Hoàn tất thiết lập %{custom_domain}'
+    ssl_status:
+      custom_domain_not_configured: 'Tùy chỉnh tên miền chưa được cấu hình.'

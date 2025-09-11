@@ -269,9 +269,16 @@
         "DESC": "Bắt đầu hỗ trợ khách hàng qua WhatsApp.",
         "PROVIDERS": {
           "LABEL": "Nhà cung cấp API",
+          "WHATSAPP_EMBEDDED": "WhatsApp Business",
           "TWILIO": "Twilio",
           "WHATSAPP_CLOUD": "WhatsApp Cloud",
+          "WHATSAPP_CLOUD_DESC": "Cài đặt qua WhatsApp Cloud",
+          "TWILIO_DESC": "Kết nối qua thông tin xác thực Twilio",
           "360_DIALOG": "360Dialog"
+        },
+        "SELECT_PROVIDER": {
+          "TITLE": "Chọn nhà cung cấp API của bạn",
+          "DESCRIPTION": "Chọn nhà cung cấp WhatsApp của bạn. Bạn có thể kết nối trực tiếp qua Meta mà không cần cấu hình, hoặc kết nối qua Twilio bằng thông tin tài khoản của bạn."
         },
         "INBOX_NAME": {
           "LABEL": "Tên Hộp Thư",
@@ -310,9 +317,76 @@
           "WEBHOOK_URL": "URL Webhook",
           "WEBHOOK_VERIFICATION_TOKEN": "Token Xác Thực Webhook"
         },
-        "SUBMIT_BUTTON": "Tạo Kênh WhatsApp",
+        "SUBMIT_BUTTON": "Tạo kênh WhatsApp",
+        "EMBEDDED_SIGNUP": {
+          "TITLE": "Kết nối với WhatsApp Business",
+          "DESC": "Bạn sẽ được chuyển hướng đến Meta để đăng nhập vào tài khoản WhatsApp Business của mình. Quyền truy cập quản trị sẽ giúp việc thiết lập diễn ra suôn sẻ và dễ dàng.",
+          "BENEFITS": {
+            "TITLE": "Lợi ích của việc đăng ký nhúng:",
+            "EASY_SETUP": "Không cần cấu hình thủ công",
+            "SECURE_AUTH": "Xác thực dựa trên OAuth an toàn",
+            "AUTO_CONFIG": "Cấu hình webhook và số điện thoại tự động"
+          },
+          "LEARN_MORE": {
+            "TEXT": "Để tìm hiểu thêm về đăng ký nhúng, giá cả và giới hạn, hãy truy cập",
+            "LINK_TEXT": "liên kết này.",
+            "LINK_URL": "https://developers.facebook.com/docs/whatsapp/embedded-signup/custom-flows/onboarding-business-app-users#limitations"
+          },
+          "SUBMIT_BUTTON": "Kết nối với WhatsApp Business",
+          "AUTH_PROCESSING": "Đang xác thực với Meta",
+          "WAITING_FOR_BUSINESS_INFO": "Vui lòng hoàn tất thiết lập doanh nghiệp trong cửa sổ Meta...",
+          "PROCESSING": "Đang thiết lập tài khoản WhatsApp Business của bạn",
+          "LOADING_SDK": "Đang tải Facebook SDK...",
+          "CANCELLED": "Đăng ký WhatsApp đã bị hủy",
+          "SUCCESS_TITLE": "Tài khoản WhatsApp Business đã được kết nối!",
+          "WAITING_FOR_AUTH": "Đang chờ xác thực...",
+          "INVALID_BUSINESS_DATA": "Dữ liệu doanh nghiệp không hợp lệ nhận được từ Facebook. Vui lòng thử lại.",
+          "SIGNUP_ERROR": "Đã xảy ra lỗi đăng ký",
+          "AUTH_NOT_COMPLETED": "Xác thực chưa hoàn tất. Vui lòng khởi động lại quá trình.",
+          "SUCCESS_FALLBACK": "Tài khoản WhatsApp Business đã được cấu hình thành công"
+        },
         "API": {
-          "ERROR_MESSAGE": "Không thể lưu kênh WhatsApp"
+          "ERROR_MESSAGE": "Chúng tôi không thể lưu kênh WhatsApp"
+        }
+      },
+      "VOICE": {
+        "TITLE": "Kênh Giọng Nói",
+        "DESC": "Tích hợp Twilio Voice và bắt đầu hỗ trợ khách hàng của bạn qua các cuộc gọi điện thoại.",
+        "PHONE_NUMBER": {
+          "LABEL": "Số điện thoại",
+          "PLACEHOLDER": "Nhập số điện thoại của bạn (ví dụ: +1234567890)",
+          "ERROR": "Vui lòng cung cấp số điện thoại hợp lệ theo định dạng E.164 (ví dụ: +1234567890)"
+        },
+        "TWILIO": {
+          "ACCOUNT_SID": {
+            "LABEL": "Tài khoản SID",
+            "PLACEHOLDER": "Nhập Tài khoản SID của bạn",
+            "REQUIRED": "Tài khoản SID là bắt buộc"
+          },
+          "AUTH_TOKEN": {
+            "LABEL": "Token xác thực",
+            "PLACEHOLDER": "Nhập Token xác thực của bạn",
+            "REQUIRED": "Token xác thực là bắt buộc"
+          },
+          "API_KEY_SID": {
+            "LABEL": "API Key SID",
+            "PLACEHOLDER": "Nhập API Key SID của bạn",
+            "REQUIRED": "API Key SID là bắt buộc"
+          },
+          "API_KEY_SECRET": {
+            "LABEL": "API Key Secret",
+            "PLACEHOLDER": "Nhập API Key Secret của bạn",
+            "REQUIRED": "API Key Secret là bắt buộc"
+          },
+          "TWIML_APP_SID": {
+            "LABEL": "TwiML App SID",
+            "PLACEHOLDER": "Nhập Twilio TwiML App SID của bạn (bắt đầu bằng AP)",
+            "REQUIRED": "TwiML App SID là bắt buộc"
+          }
+        },
+        "SUBMIT_BUTTON": "Tạo Kênh Giọng Nói",
+        "API": {
+          "ERROR_MESSAGE": "Chúng tôi không thể tạo kênh giọng nói"
         }
       },
       "API_CHANNEL": {
@@ -413,30 +487,30 @@
         "DESC": "Bạn đã tích hợp thành công Trang Facebook của mình với Shopiz. Lần tới khi khách hàng nhắn tin cho Trang của bạn, cuộc trò chuyện sẽ tự động xuất hiện trong hộp thư đến của bạn.<br>Chúng tôi cũng đang cung cấp cho bạn tập lệnh widget mà bạn có thể dễ dàng thêm vào trang web của mình. Khi điều này xuất hiện trên trang web của bạn, khách hàng có thể nhắn tin cho bạn ngay từ trang web của bạn mà không cần sự trợ giúp của bất kỳ công cụ bên ngoài nào và cuộc trò chuyện sẽ xuất hiện ngay tại đây, trên Shopiz.<br>Cool, huh? Well :)"
       },
       "EMAIL_PROVIDER": {
-        "TITLE": "Select your email provider",
-        "DESCRIPTION": "Select an email provider from the list below. If you don't see your email provider in the list, you can select the other provider option and provide the IMAP and SMTP Credentials."
+        "TITLE": "Chọn Nhà Cung Cấp Email",
+        "DESCRIPTION": "Chọn một nhà cung cấp email từ danh sách bên dưới. Nếu bạn không thấy nhà cung cấp email của mình trong danh sách, bạn có thể chọn tùy chọn nhà cung cấp khác và cung cấp thông tin xác thực IMAP và SMTP."
       },
       "MICROSOFT": {
         "TITLE": "Microsoft Email",
-        "DESCRIPTION": "Click on the Sign in with Microsoft button to get started. You will redirected to the email sign in page. Once you accept the requested permissions, you would be redirected back to the inbox creation step.",
-        "EMAIL_PLACEHOLDER": "Enter email address",
-        "SIGN_IN": "Sign in with Microsoft",
-        "ERROR_MESSAGE": "There was an error connecting to Microsoft, please try again"
+        "DESCRIPTION": "Nhấp vào nút Đăng nhập với Microsoft để bắt đầu. Bạn sẽ được chuyển hướng đến trang đăng nhập email. Khi bạn chấp nhận các quyền được yêu cầu, bạn sẽ được chuyển hướng trở lại bước tạo hộp thư.",
+        "EMAIL_PLACEHOLDER": "Nhập địa chỉ email",
+        "SIGN_IN": "Đăng nhập với Microsoft",
+        "ERROR_MESSAGE": "Đã xảy ra lỗi khi kết nối với Microsoft, vui lòng thử lại"
       },
       "GOOGLE": {
         "TITLE": "Google Email",
-        "DESCRIPTION": "Click on the Sign in with Google button to get started. You will redirected to the email sign in page. Once you accept the requested permissions, you would be redirected back to the inbox creation step.",
-        "SIGN_IN": "Sign in with Google",
-        "EMAIL_PLACEHOLDER": "Enter email address",
-        "ERROR_MESSAGE": "There was an error connecting to Google, please try again"
+        "DESCRIPTION": "Nhấp vào nút Đăng nhập với Google để bắt đầu. Bạn sẽ được chuyển hướng đến trang đăng nhập email. Khi bạn chấp nhận các quyền được yêu cầu, bạn sẽ được chuyển hướng trở lại bước tạo hộp thư.",
+        "SIGN_IN": "Đăng nhập với Google",
+        "EMAIL_PLACEHOLDER": "Nhập địa chỉ email",
+        "ERROR_MESSAGE": "Đã xảy ra lỗi khi kết nối với Google, vui lòng thử lại"
       }
     },
     "DETAILS": {
       "LOADING_FB": "Xác thực bạn bằng Facebook...",
-      "ERROR_FB_LOADING": "Error loading Facebook SDK. Please disable any ad-blockers and try again from a different browser.",
+      "ERROR_FB_LOADING": "Lỗi khi tải Facebook SDK. Vui lòng tắt bất kỳ trình chặn quảng cáo nào và thử lại từ trình duyệt khác.",
       "ERROR_FB_AUTH": "Đã xảy ra sự cố, Vui lòng làm mới trang...",
-      "ERROR_FB_UNAUTHORIZED": "You're not authorized to perform this action. ",
-      "ERROR_FB_UNAUTHORIZED_HELP": "Please ensure you have access to the Facebook page with full control. You can read more about Facebook roles <a href=\" https://www.facebook.com/help/187316341316631\">here</a>.",
+      "ERROR_FB_UNAUTHORIZED": "Bạn không được phép thực hiện hành động này.",
+      "ERROR_FB_UNAUTHORIZED_HELP": "Vui lòng đảm bảo bạn có quyền truy cập vào trang Facebook với quyền kiểm soát đầy đủ. Bạn có thể đọc thêm về vai trò của Facebook <a href=\" https://www.facebook.com/help/187316341316631\">tại đây</a>.",
       "CREATING_CHANNEL": "Tạo Hộp thư đến của bạn...",
       "TITLE": "Cấu hình chi tiết hộp thư đến",
       "DESC": ""
@@ -469,22 +543,22 @@
         "DISABLED": "Không bật"
       },
       "SENDER_NAME_SECTION": {
-        "TITLE": "Sender name",
-        "SUB_TEXT": "Select the name shown to your customer when they receive emails from your agents.",
-        "FOR_EG": "For eg:",
+        "TITLE": "Tên người gửi",
+        "SUB_TEXT": "Chọn tên hiển thị cho khách hàng của bạn khi họ nhận email từ các đại lý của bạn.",
+        "FOR_EG": "Ví dụ:",
         "FRIENDLY": {
-          "TITLE": "Friendly",
+          "TITLE": "Thân thiện",
           "FROM": "từ",
-          "SUBTITLE": "Add the name of the agent who sent the reply in the sender name to make it friendly."
+          "SUBTITLE": "Thêm tên của đại lý đã gửi phản hồi vào tên người gửi để làm cho nó thân thiện hơn."
         },
         "PROFESSIONAL": {
-          "TITLE": "Professional",
-          "SUBTITLE": "Use only the configured business name as the sender name in the email header."
+          "TITLE": "Chuyên nghiệp",
+          "SUBTITLE": "Chỉ sử dụng tên doanh nghiệp đã cấu hình làm tên người gửi trong tiêu đề email."
         },
         "BUSINESS_NAME": {
-          "BUTTON_TEXT": "+ Configure your business name",
-          "PLACEHOLDER": "Enter your business name",
-          "SAVE_BUTTON_TEXT": "Save"
+          "BUTTON_TEXT": "+ Cấu hình tên doanh nghiệp của bạn",
+          "PLACEHOLDER": "Nhập tên doanh nghiệp của bạn",
+          "SAVE_BUTTON_TEXT": "Lưu"
         }
       },
       "ALLOW_MESSAGES_AFTER_RESOLVED": {
@@ -581,8 +655,27 @@
       "WHATSAPP_SECTION_UPDATE_TITLE": "Update API Key",
       "WHATSAPP_SECTION_UPDATE_PLACEHOLDER": "Enter the new API Key here",
       "WHATSAPP_SECTION_UPDATE_BUTTON": "Cập nhật",
+      "WHATSAPP_EMBEDDED_SIGNUP_TITLE": "WhatsApp Embedded Signup",
+      "WHATSAPP_EMBEDDED_SIGNUP_SUBHEADER": "This inbox is connected through WhatsApp embedded signup.",
+      "WHATSAPP_EMBEDDED_SIGNUP_DESCRIPTION": "You can reconfigure this inbox to update your WhatsApp Business settings.",
+      "WHATSAPP_RECONFIGURE_BUTTON": "Reconfigure",
+      "WHATSAPP_CONNECT_TITLE": "Connect to WhatsApp Business",
+      "WHATSAPP_CONNECT_SUBHEADER": "Upgrade to WhatsApp embedded signup for easier management.",
+      "WHATSAPP_CONNECT_DESCRIPTION": "Connect this inbox to WhatsApp Business for enhanced features and easier management.",
+      "WHATSAPP_CONNECT_BUTTON": "Kết nối",
+      "WHATSAPP_CONNECT_SUCCESS": "Successfully connected to WhatsApp Business!",
+      "WHATSAPP_CONNECT_ERROR": "Failed to connect to WhatsApp Business. Please try again.",
+      "WHATSAPP_RECONFIGURE_SUCCESS": "Successfully reconfigured WhatsApp Business!",
+      "WHATSAPP_RECONFIGURE_ERROR": "Failed to reconfigure WhatsApp Business. Please try again.",
+      "WHATSAPP_APP_ID_MISSING": "WhatsApp App ID is not configured. Please contact your administrator.",
+      "WHATSAPP_CONFIG_ID_MISSING": "WhatsApp Configuration ID is not configured. Please contact your administrator.",
+      "WHATSAPP_LOGIN_CANCELLED": "WhatsApp login was cancelled. Please try again.",
       "WHATSAPP_WEBHOOK_TITLE": "Mã xác minh Webhook",
       "WHATSAPP_WEBHOOK_SUBHEADER": "This token is used to verify the authenticity of the webhook endpoint.",
+      "WHATSAPP_TEMPLATES_SYNC_TITLE": "Sync Templates",
+      "WHATSAPP_TEMPLATES_SYNC_SUBHEADER": "Manually sync message templates from WhatsApp to update your available templates.",
+      "WHATSAPP_TEMPLATES_SYNC_BUTTON": "Sync Templates",
+      "WHATSAPP_TEMPLATES_SYNC_SUCCESS": "Templates sync initiated successfully. It may take a couple of minutes to update.",
       "UPDATE_PRE_CHAT_FORM_SETTINGS": "Update Pre Chat Form Settings"
     },
     "HELP_CENTER": {
@@ -843,8 +936,7 @@
       "LINE": "Line",
       "API": "Kênh API",
       "INSTAGRAM": "Instagram",
-      "ZALO": "Zalo OA",
-      "ZALOPERSONAL": "Zalo Cá nhân"
+      "VOICE": "Voice"
     }
   }
 }

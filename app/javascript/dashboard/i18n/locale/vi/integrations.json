@@ -331,6 +331,22 @@
         "DESCRIPTION": "Workspace Linear chưa được kết nối. Nhấp vào nút bên dưới để kết nối workspace và sử dụng tích hợp này.",
         "BUTTON_TEXT": "Kết nối workspace Linear"
       }
+    },
+    "NOTION": {
+      "DELETE": {
+        "TITLE": "Bạn có chắc chắn muốn xoá tích hợp Notion?",
+        "MESSAGE": "Việc xoá tích hợp này sẽ loại bỏ quyền truy cập vào không gian làm việc Notion của bạn và dừng tất cả các chức năng liên quan.",
+        "CONFIRM": "Có, xoá",
+        "CANCEL": "Huỷ"
+      }
+    },
+    "NOTION": {
+      "DELETE": {
+        "TITLE": "Bạn có chắc chắn muốn xoá tích hợp Notion?",
+        "MESSAGE": "Việc xoá tích hợp này sẽ loại bỏ quyền truy cập vào không gian làm việc Notion của bạn và dừng tất cả các chức năng liên quan.",
+        "CONFIRM": "Có, xoá",
+        "CANCEL": "Huỷ"
+      }
     }
   },
   "CAPTAIN": {
@@ -462,9 +478,10 @@
           "PLACEHOLDER": "Nhập hướng dẫn cho trợ lý"
         },
         "FEATURES": {
-          "TITLE": "Tính năng",
-          "ALLOW_CONVERSATION_FAQS": "Tạo FAQ từ các cuộc đối thoại đã kết thúc",
-          "ALLOW_MEMORIES": "Ghi nhận các chi tiết quan trọng từ tương tác với khách hàng."
+          "TITLE": "Các tính năng",
+          "ALLOW_CONVERSATION_FAQS": "Generate FAQs from resolved conversations",
+          "ALLOW_MEMORIES": "Capture key details as memories from customer interactions.",
+          "ALLOW_CITATIONS": "Include source citations in responses"
         }
       },
       "EDIT": {
@@ -472,6 +489,68 @@
         "SUCCESS_MESSAGE": "Trợ lý đã được cập nhật thành công",
         "ERROR_MESSAGE": "Có lỗi khi cập nhật trợ lý, vui lòng thử lại",
         "NOT_FOUND": "Không tìm thấy trợ lý. Vui lòng thử lại."
+      },
+      "SETTINGS": {
+        "BREADCRUMB": {
+          "ASSISTANT": "Trợ lý"
+        },
+        "BASIC_SETTINGS": {
+          "TITLE": "Cài đặt cơ bản",
+          "DESCRIPTION": "Tùy chỉnh những gì trợ lý nói khi kết thúc cuộc trò chuyện hoặc chuyển giao cho con người."
+        },
+        "SYSTEM_SETTINGS": {
+          "TITLE": "Cài đặt hệ thống",
+          "DESCRIPTION": "Tùy chỉnh những gì trợ lý nói khi kết thúc cuộc trò chuyện hoặc chuyển giao cho con người."
+        },
+        "CONTROL_ITEMS": {
+          "TITLE": "Những điều thú vị",
+          "DESCRIPTION": "Thêm nhiều điều khiển hơn cho trợ lý. (hơi hình ảnh hơn như một câu chuyện: Rào cản truy vấn → kịch bản → đầu ra) Thúc đẩy người dùng thực sự sử dụng những điều này.",
+          "OPTIONS": {
+            "GUARDRAILS": {
+              "TITLE": "Rào cản",
+              "DESCRIPTION": "Giữ mọi thứ đi đúng hướng - chỉ những loại câu hỏi mà bạn muốn trợ lý của mình trả lời, không có gì ngoài giới hạn hoặc không liên quan."
+            },
+            "SCENARIOS": {
+              "TITLE": "Kịch bản",
+              "DESCRIPTION": "Cung cấp cho trợ lý của bạn một số ngữ cảnh - như “phải làm gì khi người dùng bị kẹt,” hoặc “cách hành động trong trường hợp yêu cầu hoàn tiền.”"
+            },
+            "RESPONSE_GUIDELINES": {
+              "TITLE": "Hướng dẫn phản hồi",
+              "DESCRIPTION": "Bầu không khí và cấu trúc của các phản hồi của trợ lý—rõ ràng và thân thiện? Ngắn gọn và súc tích? Chi tiết và trang trọng?"
+            }
+          }
+        }
+      },
+      "SETTINGS": {
+        "BREADCRUMB": {
+          "ASSISTANT": "Trợ lý"
+        },
+        "BASIC_SETTINGS": {
+          "TITLE": "Cài đặt cơ bản",
+          "DESCRIPTION": "Tùy chỉnh những gì trợ lý nói khi kết thúc cuộc trò chuyện hoặc chuyển giao cho con người."
+        },
+        "SYSTEM_SETTINGS": {
+          "TITLE": "Cài đặt hệ thống",
+          "DESCRIPTION": "Tùy chỉnh những gì trợ lý nói khi kết thúc cuộc trò chuyện hoặc chuyển giao cho con người."
+        },
+        "CONTROL_ITEMS": {
+          "TITLE": "Những điều thú vị",
+          "DESCRIPTION": "Thêm nhiều điều khiển hơn cho trợ lý. (hơi hình ảnh hơn như một câu chuyện: Rào cản truy vấn → kịch bản → đầu ra) Thúc đẩy người dùng thực sự sử dụng những điều này.",
+          "OPTIONS": {
+            "GUARDRAILS": {
+              "TITLE": "Rào cản",
+              "DESCRIPTION": "Giữ mọi thứ đi đúng hướng - chỉ những loại câu hỏi mà bạn muốn trợ lý của mình trả lời, không có gì ngoài giới hạn hoặc không liên quan."
+            },
+            "SCENARIOS": {
+              "TITLE": "Kịch bản",
+              "DESCRIPTION": "Cung cấp cho trợ lý của bạn một số ngữ cảnh—như “phải làm gì khi người dùng bị kẹt,” hoặc “cách hành động trong trường hợp yêu cầu hoàn tiền.”"
+            },
+            "RESPONSE_GUIDELINES": {
+              "TITLE": "Hướng dẫn phản hồi",
+              "DESCRIPTION": "Bầu không khí và cấu trúc của các phản hồi của trợ lý—rõ ràng và thân thiện? Ngắn gọn và súc tích? Chi tiết và trang trọng?"
+            }
+          }
+        }
       },
       "OPTIONS": {
         "EDIT_ASSISTANT": "Chỉnh sửa trợ lý",
@@ -484,6 +563,332 @@
         "FEATURE_SPOTLIGHT": {
           "TITLE": "Trợ lý AI",
           "NOTE": "Trợ lý AI tương tác trực tiếp với khách hàng, học từ các bài hỗ trợ và các cuộc đối thoại trước đó, và đưa ra phản hồi nhanh, chính xác. Nó xử lý câu hỏi ban đầu trước khi chuyển giao cho nhân viên hỗ trợ khi cần."
+        }
+      },
+      "GUARDRAILS": {
+        "TITLE": "Rào cản",
+        "DESCRIPTION": "Giữ mọi thứ đi đúng hướng - chỉ những loại câu hỏi mà bạn muốn trợ lý của mình trả lời, không có gì ngoài giới hạn hoặc không liên quan.",
+        "BREADCRUMB": {
+          "TITLE": "Rào cản"
+        },
+        "BULK_ACTION": {
+          "SELECTED": "{count} item selected | {count} items selected",
+          "SELECT_ALL": "Chọn tất cả ({count})",
+          "UNSELECT_ALL": "Bỏ chọn tất cả ({count})",
+          "BULK_DELETE_BUTTON": "Xoá"
+        },
+        "ADD": {
+          "SUGGESTED": {
+            "TITLE": "Ví dụ về rào cản",
+            "ADD": "Thêm tất cả",
+            "ADD_SINGLE": "Thêm cái này",
+            "SAVE": "Thêm và lưu (↵)",
+            "PLACEHOLDER": "Nhập một rào cản khác..."
+          },
+          "NEW": {
+            "TITLE": "Thêm một rào cản",
+            "CREATE": "Tạo",
+            "CANCEL": "Huỷ",
+            "PLACEHOLDER": "Nhập một rào cản khác...",
+            "TEST_ALL": "Kiểm tra tất cả"
+          }
+        },
+        "LIST": {
+          "SEARCH_PLACEHOLDER": "Tìm kiếm..."
+        },
+        "EMPTY_MESSAGE": "Không tìm thấy rào cản nào. Tạo hoặc thêm ví dụ để bắt đầu.",
+        "SEARCH_EMPTY_MESSAGE": "Không tìm thấy rào cản nào cho tìm kiếm này.",
+        "API": {
+          "ADD": {
+            "SUCCESS": "Rào cản đã được thêm thành công",
+            "ERROR": "Đã có lỗi xảy ra khi thêm rào cản, vui lòng thử lại."
+          },
+          "UPDATE": {
+            "SUCCESS": "Rào cản đã được cập nhật thành công",
+            "ERROR": "Đã có lỗi xảy ra khi cập nhật rào cản, vui lòng thử lại."
+          },
+          "DELETE": {
+            "SUCCESS": "Rào cản đã được xóa thành công",
+            "ERROR": "Đã có lỗi xảy ra khi xóa rào cản, vui lòng thử lại."
+          }
+        }
+      },
+      "RESPONSE_GUIDELINES": {
+        "TITLE": "Hướng dẫn phản hồi",
+        "DESCRIPTION": "Bầu không khí và cấu trúc của các phản hồi từ trợ lý của bạn - rõ ràng và thân thiện? Ngắn gọn và súc tích? Chi tiết và trang trọng?",
+        "BREADCRUMB": {
+          "TITLE": "Hướng dẫn phản hồi"
+        },
+        "BULK_ACTION": {
+          "SELECTED": "{count} item selected | {count} items selected",
+          "SELECT_ALL": "Chọn tất cả ({count})",
+          "UNSELECT_ALL": "Bỏ chọn tất cả ({count})",
+          "BULK_DELETE_BUTTON": "Xoá"
+        },
+        "ADD": {
+          "SUGGESTED": {
+            "TITLE": "Ví dụ về hướng dẫn phản hồi",
+            "ADD": "Thêm tất cả",
+            "ADD_SINGLE": "Thêm cái này",
+            "SAVE": "Thêm và lưu (↵)",
+            "PLACEHOLDER": "Nhập một hướng dẫn phản hồi khác..."
+          },
+          "NEW": {
+            "TITLE": "Thêm một hướng dẫn phản hồi",
+            "CREATE": "Tạo",
+            "CANCEL": "Huỷ",
+            "PLACEHOLDER": "Nhập một hướng dẫn phản hồi khác...",
+            "TEST_ALL": "Kiểm tra tất cả"
+          }
+        },
+        "LIST": {
+          "SEARCH_PLACEHOLDER": "Tìm kiếm..."
+        },
+        "EMPTY_MESSAGE": "Không tìm thấy hướng dẫn phản hồi nào. Tạo hoặc thêm ví dụ để bắt đầu.",
+        "SEARCH_EMPTY_MESSAGE": "Không tìm thấy hướng dẫn phản hồi nào cho tìm kiếm này.",
+        "API": {
+          "ADD": {
+            "SUCCESS": "Hướng dẫn phản hồi đã được thêm thành công",
+            "ERROR": "Đã có lỗi xảy ra khi thêm hướng dẫn phản hồi, vui lòng thử lại."
+          },
+          "UPDATE": {
+            "SUCCESS": "Hướng dẫn phản hồi đã được cập nhật thành công",
+            "ERROR": "Đã có lỗi xảy ra khi cập nhật hướng dẫn phản hồi, vui lòng thử lại."
+          },
+          "DELETE": {
+            "SUCCESS": "Hướng dẫn phản hồi đã được xóa thành công",
+            "ERROR": "Đã có lỗi xảy ra khi xóa hướng dẫn phản hồi, vui lòng thử lại."
+          }
+        }
+      },
+      "SCENARIOS": {
+        "TITLE": "Kịch bản",
+        "DESCRIPTION": "Cung cấp cho trợ lý của bạn một số ngữ cảnh—như “phải làm gì khi người dùng bị kẹt,” hoặc “cách hành động trong trường hợp yêu cầu hoàn tiền.”",
+        "BREADCRUMB": {
+          "TITLE": "Kịch bản"
+        },
+        "BULK_ACTION": {
+          "SELECTED": "{count} item selected | {count} items selected",
+          "SELECT_ALL": "Chọn tất cả ({count})",
+          "UNSELECT_ALL": "Bỏ chọn tất cả ({count})",
+          "BULK_DELETE_BUTTON": "Xoá"
+        },
+        "ADD": {
+          "SUGGESTED": {
+            "TITLE": "Ví dụ về kịch bản",
+            "ADD": "Thêm tất cả",
+            "ADD_SINGLE": "Thêm cái này",
+            "TOOLS_USED": "Công cụ đã sử dụng:"
+          },
+          "NEW": {
+            "CREATE": "Thêm một kịch bản",
+            "TITLE": "Tạo một kịch bản",
+            "FORM": {
+              "TITLE": {
+                "LABEL": "Tiêu đề",
+                "PLACEHOLDER": "Nhập tên cho kịch bản",
+                "ERROR": "Tên kịch bản là bắt buộc"
+              },
+              "DESCRIPTION": {
+                "LABEL": "Mô tả",
+                "PLACEHOLDER": "Mô tả cách và nơi kịch bản này sẽ được sử dụng",
+                "ERROR": "Mô tả kịch bản là bắt buộc"
+              },
+              "INSTRUCTION": {
+                "LABEL": "Cách xử lý",
+                "PLACEHOLDER": "Mô tả cách và nơi kịch bản này sẽ được xử lý",
+                "ERROR": "Nội dung kịch bản là bắt buộc"
+              },
+              "CREATE": "Tạo",
+              "CANCEL": "Huỷ"
+            }
+          }
+        },
+        "UPDATE": {
+          "CANCEL": "Huỷ",
+          "UPDATE": "Cập nhật"
+        },
+        "LIST": {
+          "SEARCH_PLACEHOLDER": "Tìm kiếm..."
+        },
+        "EMPTY_MESSAGE": "Không tìm thấy kịch bản nào. Tạo hoặc thêm ví dụ để bắt đầu.",
+        "SEARCH_EMPTY_MESSAGE": "Không tìm thấy kịch bản nào cho tìm kiếm này.",
+        "API": {
+          "ADD": {
+            "SUCCESS": "Kịch bản đã được thêm thành công",
+            "ERROR": "Đã có lỗi xảy ra khi thêm kịch bản, vui lòng thử lại."
+          },
+          "UPDATE": {
+            "SUCCESS": "Kịch bản đã được cập nhật thành công",
+            "ERROR": "Đã có lỗi xảy ra khi cập nhật kịch bản, vui lòng thử lại."
+          },
+          "DELETE": {
+            "SUCCESS": "Kịch bản đã được xóa thành công",
+            "ERROR": "Đã có lỗi xảy ra khi xóa kịch bản, vui lòng thử lại."
+          }
+        }
+      },
+      "GUARDRAILS": {
+        "TITLE": "Rào cản",
+        "DESCRIPTION": "Giữ mọi thứ đi đúng hướng—chỉ những loại câu hỏi mà bạn muốn trợ lý của mình trả lời, không có gì ngoài giới hạn hoặc không liên quan.",
+        "BREADCRUMB": {
+          "TITLE": "Rào cản"
+        },
+        "BULK_ACTION": {
+          "SELECTED": "{count} item selected | {count} items selected",
+          "SELECT_ALL": "Chọn tất cả ({count})",
+          "UNSELECT_ALL": "Bỏ chọn tất cả ({count})",
+          "BULK_DELETE_BUTTON": "Xoá"
+        },
+        "ADD": {
+          "SUGGESTED": {
+            "TITLE": "Ví dụ về rào cản",
+            "ADD": "Thêm tất cả",
+            "ADD_SINGLE": "Thêm cái này",
+            "SAVE": "Thêm và lưu (↵)",
+            "PLACEHOLDER": "Nhập một rào cản khác..."
+          },
+          "NEW": {
+            "TITLE": "Thêm một rào cản",
+            "CREATE": "Tạo",
+            "CANCEL": "Huỷ",
+            "PLACEHOLDER": "Nhập một rào cản khác...",
+            "TEST_ALL": "Kiểm tra tất cả"
+          }
+        },
+        "LIST": {
+          "SEARCH_PLACEHOLDER": "Tìm kiếm..."
+        },
+        "EMPTY_MESSAGE": "Không tìm thấy rào cản nào. Tạo hoặc thêm ví dụ để bắt đầu.",
+        "SEARCH_EMPTY_MESSAGE": "Không tìm thấy rào cản nào cho tìm kiếm này.",
+        "API": {
+          "ADD": {
+            "SUCCESS": "Rào cản đã được thêm thành công",
+            "ERROR": "Đã có lỗi xảy ra khi thêm rào cản, vui lòng thử lại."
+          },
+          "UPDATE": {
+            "SUCCESS": "Rào cản đã được cập nhật thành công",
+            "ERROR": "Đã có lỗi xảy ra khi cập nhật rào cản, vui lòng thử lại."
+          },
+          "DELETE": {
+            "SUCCESS": "Rào cản đã được xóa thành công",
+            "ERROR": "Đã có lỗi xảy ra khi xóa rào cản, vui lòng thử lại."
+          }
+        }
+      },
+      "RESPONSE_GUIDELINES": {
+        "TITLE": "Hướng dẫn phản hồi",
+        "DESCRIPTION": "Bầu không khí và cấu trúc của các phản hồi của trợ lý của bạn—rõ ràng và thân thiện? Ngắn gọn và súc tích? Chi tiết và trang trọng?",
+        "BREADCRUMB": {
+          "TITLE": "Hướng dẫn phản hồi"
+        },
+        "BULK_ACTION": {
+          "SELECTED": "{count} item selected | {count} items selected",
+          "SELECT_ALL": "Chọn tất cả ({count})",
+          "UNSELECT_ALL": "Bỏ chọn tất cả ({count})",
+          "BULK_DELETE_BUTTON": "Xoá"
+        },
+        "ADD": {
+          "SUGGESTED": {
+            "TITLE": "Ví dụ về hướng dẫn phản hồi",
+            "ADD": "Thêm tất cả",
+            "ADD_SINGLE": "Thêm cái này",
+            "SAVE": "Thêm và lưu (↵)",
+            "PLACEHOLDER": "Nhập một hướng dẫn phản hồi khác..."
+          },
+          "NEW": {
+            "TITLE": "Thêm một hướng dẫn phản hồi",
+            "CREATE": "Tạo",
+            "CANCEL": "Huỷ",
+            "PLACEHOLDER": "Nhập một hướng dẫn phản hồi khác...",
+            "TEST_ALL": "Kiểm tra tất cả"
+          }
+        },
+        "LIST": {
+          "SEARCH_PLACEHOLDER": "Tìm kiếm..."
+        },
+        "EMPTY_MESSAGE": "Không tìm thấy hướng dẫn phản hồi nào. Tạo hoặc thêm ví dụ để bắt đầu.",
+        "SEARCH_EMPTY_MESSAGE": "Không tìm thấy hướng dẫn phản hồi nào cho tìm kiếm này.",
+        "API": {
+          "ADD": {
+            "SUCCESS": "Hướng dẫn phản hồi đã được thêm thành công",
+            "ERROR": "Đã có lỗi xảy ra khi thêm hướng dẫn phản hồi, vui lòng thử lại."
+          },
+          "UPDATE": {
+            "SUCCESS": "Hướng dẫn phản hồi đã được cập nhật thành công",
+            "ERROR": "Đã có lỗi xảy ra khi cập nhật hướng dẫn phản hồi, vui lòng thử lại."
+          },
+          "DELETE": {
+            "SUCCESS": "Hướng dẫn phản hồi đã được xóa thành công",
+            "ERROR": "Đã có lỗi xảy ra khi xóa hướng dẫn phản hồi, vui lòng thử lại."
+          }
+        }
+      },
+      "SCENARIOS": {
+        "TITLE": "Kịch bản",
+        "DESCRIPTION": "Cung cấp cho trợ lý của bạn một số ngữ cảnh—như “phải làm gì khi người dùng bị kẹt,” hoặc “cách hành động trong trường hợp yêu cầu hoàn tiền.”",
+        "BREADCRUMB": {
+          "TITLE": "Kịch bản"
+        },
+        "BULK_ACTION": {
+          "SELECTED": "{count} item selected | {count} items selected",
+          "SELECT_ALL": "Chọn tất cả ({count})",
+          "UNSELECT_ALL": "Bỏ chọn tất cả ({count})",
+          "BULK_DELETE_BUTTON": "Xoá"
+        },
+        "ADD": {
+          "SUGGESTED": {
+            "TITLE": "Ví dụ về kịch bản",
+            "ADD": "Thêm tất cả",
+            "ADD_SINGLE": "Thêm cái này",
+            "TOOLS_USED": "Công cụ đã sử dụng:"
+          },
+          "NEW": {
+            "CREATE": "Thêm một kịch bản",
+            "TITLE": "Tạo một kịch bản",
+            "FORM": {
+              "TITLE": {
+                "LABEL": "Tiêu đề",
+                "PLACEHOLDER": "Nhập tên cho kịch bản",
+                "ERROR": "Tên kịch bản là bắt buộc"
+              },
+              "DESCRIPTION": {
+                "LABEL": "Mô tả",
+                "PLACEHOLDER": "Mô tả cách và nơi kịch bản này sẽ được sử dụng",
+                "ERROR": "Mô tả kịch bản là bắt buộc"
+              },
+              "INSTRUCTION": {
+                "LABEL": "Cách xử lý",
+                "PLACEHOLDER": "Mô tả cách và nơi kịch bản này sẽ được xử lý",
+                "ERROR": "Nội dung kịch bản là bắt buộc"
+              },
+              "CREATE": "Tạo",
+              "CANCEL": "Huỷ"
+            }
+          }
+        },
+        "UPDATE": {
+          "CANCEL": "Huỷ",
+          "UPDATE": "Cập nhật thay đổi"
+        },
+        "LIST": {
+          "SEARCH_PLACEHOLDER": "Tìm kiếm..."
+        },
+        "EMPTY_MESSAGE": "Không tìm thấy kịch bản nào. Tạo hoặc thêm ví dụ để bắt đầu.",
+        "SEARCH_EMPTY_MESSAGE": "Không tìm thấy kịch bản nào cho tìm kiếm này.",
+        "API": {
+          "ADD": {
+            "SUCCESS": "Kịch bản đã được thêm thành công",
+            "ERROR": "Đã có lỗi xảy ra khi thêm kịch bản, vui lòng thử lại."
+          },
+          "UPDATE": {
+            "SUCCESS": "Kịch bản đã được cập nhật thành công",
+            "ERROR": "Đã có lỗi xảy ra khi cập nhật kịch bản, vui lòng thử lại."
+          },
+          "DELETE": {
+            "SUCCESS": "Kịch bản đã được xóa thành công",
+            "ERROR": "Đã có lỗi xảy ra khi xóa kịch bản, vui lòng thử lại."
+          }
         }
       }
     },
@@ -538,9 +943,11 @@
       "DOCUMENTABLE": {
         "CONVERSATION": "Cuộc đối thoại #{id}"
       },
-      "SELECTED": "{count} đã được chọn",
+      "SELECTED": "{count} đã chọn",
+      "SELECT_ALL": "Chọn tất cả ({count})",
+      "UNSELECT_ALL": "Bỏ chọn tất cả ({count})",
       "BULK_APPROVE_BUTTON": "Phê duyệt",
-      "BULK_DELETE_BUTTON": "Xóa",
+      "BULK_DELETE_BUTTON": "Xoá",
       "BULK_APPROVE": {
         "SUCCESS_MESSAGE": "FAQ đã được phê duyệt thành công",
         "ERROR_MESSAGE": "Có lỗi khi phê duyệt FAQ, vui lòng thử lại."

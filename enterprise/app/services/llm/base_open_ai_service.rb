@@ -5,8 +5,7 @@ class Llm::BaseOpenAiService
     @client = OpenAI::Client.new(
       uri_base: InstallationConfig.find_by!(name: 'CAPTAIN_OPEN_AI_API_BASE_URL').value,
       access_token: InstallationConfig.find_by!(name: 'CAPTAIN_OPEN_AI_API_KEY').value,
-      #uri_base: (@hook.settings['api_base_url'].presence || InstallationConfig.find_by!(name: 'CAPTAIN_OPEN_AI_API_BASE_URL').value),
-      #access_token: (@hook.settings['api_key'].presence || InstallationConfig.find_by!(name: 'CAPTAIN_OPEN_AI_API_KEY').value),
+      uri_base: uri_base,
       log_errors: Rails.env.development?
     )
     setup_model
@@ -19,6 +18,11 @@ class Llm::BaseOpenAiService
   end
 
   private
+
+  def uri_base
+    endpoint = InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_ENDPOINT')&.value
+    endpoint.presence || 'https://api.openai.com/'
+  end
 
   def setup_model
     config_value = InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_MODEL')&.value

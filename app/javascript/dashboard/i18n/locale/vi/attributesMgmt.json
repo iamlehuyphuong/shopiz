@@ -1,10 +1,22 @@
 {
   "ATTRIBUTES_MGMT": {
     "HEADER": "Thuộc tính tùy chỉnh",
-    "HEADER_BTN_TXT": "Thêm thuộc tính tùy chỉnh",
-    "LOADING": "Đang lấy thuộc tính tùy chỉnh",
+    "HEADER_BTN_TXT": "Thêm thuộc tính Tùy chỉnh",
+    "LOADING": "Đang lấy thuộc tính tuỳ chỉnh",
     "DESCRIPTION": "Thuộc tính tùy chỉnh theo dõi các thông tin bổ sung về liên hệ hoặc cuộc hội thoại của bạn — chẳng hạn như gói đăng ký hoặc ngày mua hàng đầu tiên. Bạn có thể thêm nhiều loại thuộc tính tùy chỉnh, như văn bản, danh sách hoặc số, để thu thập thông tin cụ thể mà bạn cần.",
     "LEARN_MORE": "Tìm hiểu thêm về các thuộc tính tùy chỉnh",
+    "ATTRIBUTE_MODELS": {
+      "CONVERSATION": "Cuộc hội thoại",
+      "CONTACT": "Liên hệ"
+    },
+    "ATTRIBUTE_TYPES": {
+      "TEXT": "Văn bản",
+      "NUMBER": "Số",
+      "LINK": "Liên kết",
+      "DATE": "Date",
+      "LIST": "Danh sách",
+      "CHECKBOX": "Hộp kiểm"
+    },
     "ADD": {
       "TITLE": "Thêm thuộc tính tùy chỉnh",
       "SUBMIT": "Tạo",

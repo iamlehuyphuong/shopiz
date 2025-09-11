@@ -99,7 +99,10 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
     {
       'conversation' => {},
       'non_web_inboxes' => {},
-      'agents' => {},
+      'agents' => {
+        'allowed' => @account.usage_limits[:agents],
+        'consumed' => agents(@account)
+      },
       'captain' => @account.usage_limits[:captain]
     }
   end

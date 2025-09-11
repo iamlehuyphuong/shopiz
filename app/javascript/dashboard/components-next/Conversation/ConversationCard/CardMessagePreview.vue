@@ -181,6 +181,7 @@ const unreadMessagesCount = computed(() => {
     
     <div class="flex items-center flex-shrink-0 gap-2 pb-2">
       <Avatar
+        v-if="assignee.name"
         :name="assignee.name"
         :src="assignee.thumbnail"
         :size="20"
