@@ -163,13 +163,16 @@ class ZaloPersonal::BaseService
 
   def process_media_message(media_type)
     @file = params[:data][:content]
+    options = JSON.parse(@file[:params]) rescue {}
     params[:data][:content] = nil
     @message = @conversation.messages.create!(message_params)
     @media = {
       type: media_type,
       payload: {
         url: @file['href'],
-        name: File.basename(URI.parse(@file['href']).path)
+        name: File.basename(URI.parse(@file['href']).path),
+        width: options['width'] || options['video_width'],
+        height: options['height'] || options['video_height'],
       }
     }
     params[:data][:attachments] ||= []
@@ -277,10 +280,10 @@ class ZaloPersonal::BaseService
     @message.attachments.new(
       account_id: @message.account_id,
       file_type: file_content_type(media),
-      file: {
-        io: attachment_file,
-        filename: file_name,
-        content_type: attachment_file.content_type
+      external_url: external_url,
+      meta: {
+        width: media.dig(:payload, :width),
+        height: media.dig(:payload, :height),
       }
     )
     @message.content_type = 'sticker' if media[:type] == 'sticker'
