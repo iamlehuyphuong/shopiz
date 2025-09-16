@@ -61,9 +61,9 @@ class Channel::ZaloPersonal < ApplicationRecord
     )
     if res['error'].present?
       Rails.logger.error "ZaloPersonal send_message_cs error: #{res['message']}"
-      { 'error' => 1, 'message' => res['message'] }
+      { 'error' => 1, 'message' => res['error'] }
     else
-      { 'error' => 0, 'data' => { 'message_id' => res['data']['message_id'] } }
+      { 'error' => 0, 'data' => { 'message_id' => res['data']['message']['msgId'] } }
     end
   end
 

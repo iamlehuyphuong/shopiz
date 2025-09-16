@@ -1,36 +1,12 @@
 class ZaloPersonal::BaseService
   include ::FileTypeHelper
-
-  ICON_MAPPING = {
-    '/-strong' => '💪',
-    '/-heart' => '❤️',
-    ':-((' => '😭',
-    ':>' => '😊',
-    ':-h' => '🤗',
-    ':o' => '😮',
-    ':D' => '😃',
-    '/-like' => '👍',
-    '/-dislike' => '👎',
-    '/-haha' => '😂',
-    '/-wow' => '😲',
-    '/-sad' => '😢',
-    '/-angry' => '😠',
-    '/-kiss' => '😘',
-    '/-clap' => '👏',
-    '/-ok' => '👌',
-    '/-party' => '🥳',
-    '/-star' => '⭐',
-    '/-fire' => '🔥',
-    '/-cry' => '😭',
-    '/-love' => '😍',
-    '/-thumbsup' => '👍',
-    '/-thumbsdown' => '👎'
-  }.freeze
+  include ZaloPersonal::Const
 
   pattr_initialize [:inbox!, :params!]
 
   def perform
-    return if params.dig(:data, :msgType).blank?
+    return if VALID_TYPE.exclude?(params[:type])
+    return if Message.exists?(source_id: params.dig(:data, :msgId), inbox_id: @inbox.id)
 
     set_contact
     update_contact
@@ -38,6 +14,8 @@ class ZaloPersonal::BaseService
     set_conversation
     build_message
     @message.save!
+  rescue ArgumentError
+    Rails.logger.error "Unexpected format for params[:data][:content]: #{params[:data][:content]}"
   end
 
   private
@@ -115,32 +93,39 @@ class ZaloPersonal::BaseService
       external_source_id: params[:threadId],
       additional_attributes: {
         type: zalo_user? ? 0 : 1,
-        group: zalo_user? ? nil : get_group_info
+        group: zalo_user? ? nil : group_addition_attributes
       }
     }
   end
 
   def update_addition_attributes
     additional_attributes = @conversation.additional_attributes || {}
-    return if additional_attributes.dig(:group).present?
-
     additional_attributes[:type] = zalo_user? ? 0 : 1
-    additional_attributes[:group] = zalo_user? ? nil : get_group_info
+    additional_attributes[:group] = zalo_user? ? nil : group_addition_attributes
     @conversation.update!(additional_attributes: additional_attributes)
+  end
+
+  def group_addition_attributes
+    group_info = get_group_info
+    return {} unless group_info
+
+    group_info.slice('name', 'avt')
   end
 
   def build_message
     case params[:data][:msgType]
     when 'webchat'
       process_web_chat
-    when 'chat.video.msg'
-      process_media_message('video')
-    when 'chat.photo'
-      process_media_message('image')
+    when 'chat.video.msg', 'chat.photo'
+      process_media_message
     when 'chat.recommended'
       process_recommended
+    when 'chat.voice', 'share.file'
+      process_file_message
+    when 'chat.sticker'
+      process_sticker_message
     else
-      raise ArgumentError, 'Unexpected format for params[:data][:content]'
+      raise ArgumentError
     end
 
     assign_quote_message
@@ -160,21 +145,26 @@ class ZaloPersonal::BaseService
       params[:data][:content] = [data_content[:title], data_content[:description]].compact.join("\n")
     end
     params[:data][:content] = ICON_MAPPING[params[:data][:content]] || params[:data][:content]
-    @message = @conversation.messages.create!(message_params)
+    @message = @conversation.messages.build(message_params)
   end
 
-  def process_media_message(media_type)
-    @file = params[:data][:content]
-    options = JSON.parse(@file[:params]) rescue {}
+  def process_media_message
+    data_content = params[:data][:content]
+    options = begin
+      JSON.parse(data_content[:params])
+    rescue StandardError
+      {}
+    end
     params[:data][:content] = nil
-    @message = @conversation.messages.create!(message_params)
+
+    @message = @conversation.messages.build(message_params)
     @media = {
-      type: media_type,
+      type: FILE_TYPE_MAPPING[params[:data][:msgType]],
       payload: {
-        url: @file['href'],
-        name: File.basename(URI.parse(@file['href']).path),
+        url: data_content['href'],
+        name: File.basename(URI.parse(data_content['href']).path),
         width: options['width'] || options['video_width'],
-        height: options['height'] || options['video_height'],
+        height: options['height'] || options['video_height']
       }
     }
     params[:data][:attachments] ||= []
@@ -184,9 +174,13 @@ class ZaloPersonal::BaseService
 
   def process_recommended
     data_content = params[:data][:content]
-    description = JSON.parse(data_content['description']) rescue {}
+    description = begin
+      JSON.parse(data_content['description'])
+    rescue StandardError
+      {}
+    end
     params[:data][:content] = "#{data_content['title']} - #{description['phone']}"
-    @message = @conversation.messages.create!(message_params)
+    @message = @conversation.messages.build(message_params)
     params[:data][:attachments] ||= []
 
     if data_content['thumb'].present?
@@ -212,6 +206,63 @@ class ZaloPersonal::BaseService
     end
 
     attach_media
+  end
+
+  def process_file_message
+    data_content = params[:data][:content]
+    if JSON.parse(data_content[:params])['fileSize'].to_i > 10 * 1024 * 1024
+      params[:data][:content] = "File to download: #{data_content[:href]}"
+      return @message = @conversation.messages.build(message_params)
+    end
+
+    params[:data][:content] = ''
+    @message = @conversation.messages.build(message_params)
+
+    attachment_file = Down.download(data_content[:href])
+    @message.attachments.new(
+      account_id: @message.account_id,
+      file_type: FILE_TYPE_MAPPING[params[:data][:msgType]],
+      external_url: data_content['href'],
+      file: {
+        io: attachment_file,
+        filename: attachment_file.original_filename,
+        content_type: attachment_file.content_type
+      }
+    )
+  end
+
+  def process_sticker_message
+    params[:data][:content] = '[Sticker]'
+    @message = @conversation.messages.build(message_params)
+  end
+
+  def attach_media
+    return if params[:data][:attachments].blank?
+
+    params[:data][:attachments].each do |media|
+      if media[:type] == 'file' && media[:payload][:size].to_i > 10 * 1024 * 1024
+        @message.content = "File to download: #{media[:payload][:url]}"
+        next
+      end
+
+      attach_file(media)
+    end
+  end
+
+  def attach_file(media)
+    external_url = media&.dig(:payload, :url)
+    return unless external_url
+
+    @message.attachments.new(
+      account_id: @message.account_id,
+      file_type: file_content_type(media),
+      external_url: external_url,
+      meta: {
+        width: media.dig(:payload, :width),
+        height: media.dig(:payload, :height)
+      }
+    )
+    @message.content_type = 'sticker' if media[:type] == 'sticker'
   end
 
   def file_content_type(media)
@@ -249,51 +300,6 @@ class ZaloPersonal::BaseService
     }
   end
 
-  def attach_media
-    return if params[:data][:attachments].blank?
-
-    params[:data][:attachments].each do |media|
-      case media[:type]
-      when 'link'
-        @message.content = "Link: #{media[:payload][:url]}"
-      when 'location'
-        attach_location(media)
-      else
-        if media[:type] == 'file' && media[:payload][:size].to_i > 10 * 1024 * 1024
-          @message.content = "File to download: #{media[:payload][:url]}"
-          next
-        end
-
-        attach_file(media)
-      end
-    end
-  end
-
-  def attach_location(media)
-    @message.attachments.new(
-      account_id: @message.account_id,
-      file_type: :location,
-      coordinates_lat: media[:payload][:coordinates][:latitude],
-      coordinates_long: media[:payload][:coordinates][:longitude]
-    )
-  end
-
-  def attach_file(media)
-    external_url = media&.dig(:payload, :url)
-    return unless external_url
-
-    @message.attachments.new(
-      account_id: @message.account_id,
-      file_type: file_content_type(media),
-      external_url: external_url,
-      meta: {
-        width: media.dig(:payload, :width),
-        height: media.dig(:payload, :height),
-      }
-    )
-    @message.content_type = 'sticker' if media[:type] == 'sticker'
-  end
-
   def update_contact
     zalo_user? ? update_user_info : update_group_info
   end
@@ -324,7 +330,7 @@ class ZaloPersonal::BaseService
   def get_user_info(user_id = nil)
     return @user_info if defined?(@user_info)
 
-    user_id = user_id || target_user
+    user_id ||= target_user
     response = HTTParty.post(
       "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/getUserInfo",
       :body => { :userId => user_id, :ownId => channel.oa_access_token }.to_json,
