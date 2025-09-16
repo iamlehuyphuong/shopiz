@@ -30,6 +30,8 @@ class ZaloPersonal::BaseService
   pattr_initialize [:inbox!, :params!]
 
   def perform
+    return if params.dig(:data, :msgType).blank?
+
     set_contact
     update_contact
     first_message_processing if first_message?
@@ -181,29 +183,34 @@ class ZaloPersonal::BaseService
   end
 
   def process_recommended
-    @data_content = params[:data][:content]
-    @description = JSON.parse(@data_content['description']) rescue {}
-    params[:data][:content] = "#{@data_content['title']} - #{@description['phone']}"
+    data_content = params[:data][:content]
+    description = JSON.parse(data_content['description']) rescue {}
+    params[:data][:content] = "#{data_content['title']} - #{description['phone']}"
     @message = @conversation.messages.create!(message_params)
-    @avatar = {
-      type: 'sticker',
-      payload: {
-        url: @data_content['thumb'],
-        title: @data_content['title'],
-        name: File.basename(URI.parse(@data_content['thumb']).path)
-      }
-    }
-    @qr = {
-      type: 'image',
-      payload: {
-        url: @description['qrCodeUrl'],
-        title: @description['phone'],
-        name: File.basename(URI.parse(@description['qrCodeUrl']).path)
-      }
-    }
     params[:data][:attachments] ||= []
-    params[:data][:attachments] << @avatar
-    params[:data][:attachments] << @qr
+
+    if data_content['thumb'].present?
+      params[:data][:attachments] << {
+        type: 'sticker',
+        payload: {
+          url: data_content['thumb'],
+          title: data_content['title'],
+          name: File.basename(URI.parse(data_content['thumb']).path)
+        }
+      }
+    end
+
+    if description['qrCodeUrl']
+      params[:data][:attachments] << {
+        type: 'image',
+        payload: {
+          url: description['qrCodeUrl'],
+          title: description['phone'],
+          name: File.basename(URI.parse(description['qrCodeUrl']).path)
+        }
+      }
+    end
+
     attach_media
   end
 
@@ -275,8 +282,6 @@ class ZaloPersonal::BaseService
     external_url = media&.dig(:payload, :url)
     return unless external_url
 
-    # attachment_file = Down.download(external_url)
-    file_name = media[:payload][:name]
     @message.attachments.new(
       account_id: @message.account_id,
       file_type: file_content_type(media),
@@ -316,10 +321,10 @@ class ZaloPersonal::BaseService
     ::Avatar::AvatarFromUrlJob.perform_later(@contact, group_info['fullAvt'])
   end
 
-  def get_user_info
+  def get_user_info(user_id = nil)
     return @user_info if defined?(@user_info)
 
-    user_id = target_user
+    user_id = user_id || target_user
     response = HTTParty.post(
       "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/getUserInfo",
       :body => { :userId => user_id, :ownId => channel.oa_access_token }.to_json,
@@ -345,16 +350,22 @@ class ZaloPersonal::BaseService
   end
 
   def message_params
+    additional_attributes = {
+      type: zalo_user? ? 0 : 1,
+      msgId: params[:data][:msgId]
+    }
+    unless zalo_user?
+      sender_info = get_user_info(params[:data][:uidFrom])
+      additional_attributes.merge!(sender: sender_info['displayName'], thumbnail: sender_info['avatar']) if sender_info
+    end
+
     {
       content: params[:data][:content],
       account_id: @inbox.account_id,
       inbox_id: @inbox.id,
       message_type: message_type,
       sender: incoming_message? ? @contact : nil,
-      additional_attributes: {
-        type: zalo_user? ? 0 : 1,
-        msgId: params[:data][:msgId]
-      },
+      additional_attributes: additional_attributes,
       source_id: params[:data][:msgId]
     }
   end

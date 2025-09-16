@@ -161,7 +161,18 @@ class Message < ApplicationRecord
   def merge_sender_attributes(data)
     data[:sender] = sender.push_event_data if sender && !sender.is_a?(AgentBot)
     data[:sender] = sender.push_event_data(inbox) if sender.is_a?(AgentBot)
+    data[:sender] && data[:sender].merge!(sender_in_group)
+
     data
+  end
+
+  def sender_in_group
+    return {} unless additional_attributes["type"] == 1 && additional_attributes["sender"].present?
+
+    {
+      name: additional_attributes["sender"],
+      thumbnail: additional_attributes["thumbnail"]
+    }
   end
 
   def webhook_data
