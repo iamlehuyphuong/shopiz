@@ -13,41 +13,17 @@ class ZaloPersonal::DeliveryStatusService
 
   def reaction_message
     @message = inbox.messages.find_by("additional_attributes ->> 'msgId' = '?'", params[:data][:content][:rMsg][0][:gMsgID])
+    return unless @message
 
-    icon_map = {
-      '/-strong' => '💪',
-      '/-heart' => '❤️',
-      ':-((' => '😭',
-      ':>' => '😊',
-      ':-h' => '🤗',
-      ':o' => '😮',
-      ':D' => '😃',
-      '/-like' => '👍',
-      '/-dislike' => '👎',
-      '/-haha' => '😂',
-      '/-wow' => '😲',
-      '/-sad' => '😢',
-      '/-angry' => '😠',
-      '/-kiss' => '😘',
-      '/-clap' => '👏',
-      '/-ok' => '👌',
-      '/-party' => '🥳',
-      '/-star' => '⭐',
-      '/-fire' => '🔥',
-      '/-cry' => '😭',
-      '/-love' => '😍',
-      '/-thumbsup' => '👍',
-      '/-thumbsdown' => '👎'
-    }
     icon = params[:data][:content][:rIcon]
-    icon = icon_map[icon] || icon
+    icon = ZaloPersonal::BaseService::ICON_MAPPING[icon] || icon
     content_attributes = @message.content_attributes || {}
     if content_attributes['reactions'].is_a?(Array)
       content_attributes['reactions'] += [icon]
     else
       content_attributes['reactions'] = [icon]
     end
-    @message&.update!(content_attributes: content_attributes)
+    @message.update!(content_attributes: content_attributes)
   end
 
   def seen_message

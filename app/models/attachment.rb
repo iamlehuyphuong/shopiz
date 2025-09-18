@@ -103,11 +103,13 @@ class Attachment < ApplicationRecord
       data_url: file_url,
       thumb_url: thumb_url,
       file_size: file.byte_size,
-      width: file.metadata[:width],
-      height: file.metadata[:height]
+      width: file&.metadata&.dig(:width) || meta.dig('width'),
+      height: file&.metadata&.dig(:height) || meta.dig('height')
     }
 
-    metadata[:data_url] = metadata[:thumb_url] = external_url if message.inbox.instagram? && message.incoming?
+    if (message.inbox.instagram? && message.incoming?) || (message.inbox.zalo_personal? && external_url.present?)
+      metadata[:data_url] = metadata[:thumb_url] = external_url
+    end
     metadata
   end
 
