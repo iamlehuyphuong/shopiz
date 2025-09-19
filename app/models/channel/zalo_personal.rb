@@ -33,14 +33,10 @@ class Channel::ZaloPersonal < ApplicationRecord
     'ZaloPersonal'
   end
 
-  def send_message(user_id, message, access_token)
-    # check attachment to send first
-    if message.attachments&.first
-      response = send_attachment(user_id, message.attachments.first)
-      return response unless (response['error']).zero?
+  def send_message(user_id, message)
+    if attachment = message.attachments&.first
+      return send_attachment(user_id, attachment, message.conversation.zalo_group?)
     end
-
-    # message content will come separately
     return unless message.content
 
     body = message_body(user_id, message)
@@ -73,72 +69,40 @@ class Channel::ZaloPersonal < ApplicationRecord
     "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendmessage"
   end
 
-  def url_upload_file
+  def send_image_to_user_url
     "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendImageToUser"
   end
 
-  def url_upload_image
-    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendImageToUser"
+  def send_image_to_group_url
+    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendImageToGroup"
   end
 
-  def send_attachment(user_id, attachment, access_token)
-    is_image = attachment.file_type == 'image'
-    url_upload = is_image ? url_upload_image : url_upload_file
-    return unless (response = upload_file_to_zalo_api(url_upload, attachment, access_token)).zero?
+  def send_attachment(user_id, attachment, is_zalo_group)
+    return {} if attachment.file_type != 'image'
 
-    data = JSON.parse(response.body)
-    return data unless (data['error']).zero?
+    url_upload = is_zalo_group ? send_image_to_group_url : send_image_to_user_url
+    response = send_image(user_id, url_upload, attachment)
 
-    body = is_image ? image_body(user_id, data['data']['attachment_id']) : attachment_body(user_id, data['data']['token'])
-    send_message_cs(body)
+    if response['error'].present?
+      Rails.logger.error "ZaloPersonal image error: #{response['message']}"
+      { 'error' => 1, 'message' => response['error'] }
+    else
+      { 'error' => 0, 'data' => { 'message_id' => response['data']['attachment'][0]['msgId'] } }
+    end
   end
 
-  # unknown issue with HTTParty so changed to Net::HTTP with success
-  def upload_file_to_zalo_api(url_upload, attachment, access_token)
-    url = URI.parse(url_upload)
-    http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = true
-
-    request = Net::HTTP::Post.new(url.path)
-    request['access_token'] = access_token
-    request.content_type = 'multipart/form-data'
-    request.set_form([
-                       ['file', attachment.file.download, { filename: attachment.file.filename.to_s }]
-                     ], 'multipart/form-data')
-
-    http.request(request)
-  end
-
-  def attachment_body(user_id, file_token)
-    {
-      recipient: { user_id: user_id },
-      message: {
-        attachment: {
-          type: 'file',
-          payload: {
-            token: file_token
-          }
-        }
-      }
+  def send_image(user_id, url_upload, attachment)
+    body = {
+      imagePath: attachment.file_url,
+      threadId: user_id,
+      ownId: oa_id
     }
-  end
 
-  def image_body(user_id, attachment_id)
-    {
-      recipient: { user_id: user_id },
-      message: {
-        attachment: {
-          type: 'template',
-          payload: {
-            template_type: 'media',
-            elements: [{
-              media_type: 'image',
-              attachment_id: attachment_id
-            }]
-          }
-        }
-      }
-    }
+    res = HTTParty.post(
+      url_upload,
+      headers: { 'Content-Type' => 'application/json' },
+      body: body.to_json
+    )
   end
 
   def message_body(user_id, message)

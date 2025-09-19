@@ -204,6 +204,10 @@ class Conversation < ApplicationRecord
     inbox.channel.instance_of?(::Channel::FacebookPage) && !is_load_all_message
   end
 
+  def zalo_group?
+    additional_attributes['type'] == 1
+  end
+
   private
 
   def execute_after_update_commit_callbacks
