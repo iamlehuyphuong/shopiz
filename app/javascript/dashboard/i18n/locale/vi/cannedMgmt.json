@@ -1,15 +1,15 @@
 {
   "CANNED_MGMT": {
-    "HEADER": "Thư mẫu phản hồi",
+    "HEADER": "Tin nhắn mẫu",
     "LEARN_MORE": "Tìm hiểu thêm về các thư mẫu",
     "DESCRIPTION": "Các thư mẫu là các phản hồi được soạn sẵn giúp bạn trả lời nhanh chóng trong cuộc hội thoại. Nhân viên có thể gõ ký tự '/' theo sau là mã ngắn để chèn thư mẫu vào cuộc trò chuyện.",
-    "HEADER_BTN_TXT": "Thêm thư mẫu",
+    "HEADER_BTN_TXT": "Thêm tin nhắn mẫu",
     "LOADING": "Đang lấy thư mẫu...",
     "SEARCH_404": "Không có kết quả nào phù hợp.",
     "LIST": {
       "404": "Không có câu trả lời soạn trước nào có sẵn trong tài khoản này.",
-      "TITLE": "Quản lý thư mẫu phản hồi",
-      "DESC": "Các thư mẫu là các mẫu phản hồi được định nghĩa sẵn có thể được sử dụng để gửi nhanh các phản hồi trong cuộc hội thoại.",
+      "TITLE": "Quản lý tin nhắn mẫu",
+      "DESC": "Tin nhắn mẫu là các phản hồi được soạn sẵn giúp bạn trả lời nhanh chóng trong cuộc hội thoại. Bạn có thể gõ ký tự '/' theo sau là mã ngắn để chèn thư mẫu vào cuộc trò chuyện.",
       "TABLE_HEADER": {
         "SHORT_CODE": "Mã ngắn",
         "CONTENT": "Nội dung",
@@ -17,8 +17,8 @@
       }
     },
     "ADD": {
-      "TITLE": "Thêm thư mẫu",
-      "DESC": "Các thư mẫu là các mẫu phản hồi được định nghĩa sẵn có thể được sử dụng để gửi nhanh các phản hồi trong cuộc hội thoại.",
+      "TITLE": "Thêm tin nhắn mẫu",
+      "DESC": "Tin nhắn mẫu là các phản hồi được soạn sẵn giúp bạn trả lời nhanh chóng trong cuộc hội thoại. Bạn có thể gõ ký tự '/' theo sau là mã ngắn để chèn thư mẫu vào cuộc trò chuyện.",
       "CANCEL_BUTTON_TEXT": "Huỷ",
       "FORM": {
         "SHORT_CODE": {
@@ -34,12 +34,12 @@
         "SUBMIT": "Gửi"
       },
       "API": {
-        "SUCCESS_MESSAGE": "Thêm thư mẫu thành công.",
+        "SUCCESS_MESSAGE": "Thêm tin nhắn mẫu thành công.",
         "ERROR_MESSAGE": "Không thể kết nối đến máy chủ. Vui lòng thử lại."
       }
     },
     "EDIT": {
-      "TITLE": "Chỉnh sửa thư mẫu",
+      "TITLE": "Chỉnh sửa tin nhắn mẫu",
       "CANCEL_BUTTON_TEXT": "Huỷ",
       "FORM": {
         "SHORT_CODE": {

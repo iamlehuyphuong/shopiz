@@ -1,7 +1,7 @@
 {
   "MACROS": {
     "HEADER": "Macro",
-    "DESCRIPTION": "Macro là một tập hợp các hành động đã được lưu giúp đại diện chăm sóc khách hàng hoàn thành công việc một cách dễ dàng. Đại diện có thể định nghĩa một tập hợp các hành động như gắn nhãn hội thoại, gửi bản sao email, cập nhật thuộc tính tùy chỉnh, vv và họ có thể thực hiện các hành động này chỉ với một cú nhấp chuột.",
+    "DESCRIPTION": "Macro là một tập hợp các hành động đã được lưu giúp đại diện chăm sóc khách hàng hoàn thành công việc một cách dễ dàng. Bạn có thể định nghĩa một tập hợp các hành động như gắn nhãn hội thoại, gửi bản sao email, cập nhật thuộc tính tùy chỉnh, vv và họ có thể thực hiện các hành động này chỉ với một cú nhấp chuột.",
     "LEARN_MORE": "Tìm hiểu thêm về macro",
     "HEADER_BTN_TXT": "Thêm macro mới",
     "HEADER_BTN_TXT_SAVE": "Lưu macro",

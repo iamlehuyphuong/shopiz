@@ -100,7 +100,7 @@ vi:
         contact_email_address: 'Địa chỉ email của liên hệ'
         contact_phone_number: 'Số điện thoại của liên hệ'
         link_to_the_conversation: 'Liên kết đến cuộc trò chuyện'
-        agent_name: 'Tên đại lý'
+        agent_name: 'Tên nhân viên'
         rating: 'Đánh giá'
         feedback: 'Phản hồi ý kiến'
         recorded_at: 'Ngày ghi nhận'
@@ -117,7 +117,7 @@ vi:
     no_content: 'Không có nội dung'
   conversations:
     captain:
-      handoff: 'Đang chuyển cuộc trò chuyện cho đại lý khác để hỗ trợ thêm.'
+      handoff: 'Đang chuyển cuộc trò chuyện cho nhân viên khác để hỗ trợ thêm.'
     messages:
       instagram_story_content: '%{story_sender} đã đề cập đến bạn trong hội thoại: '
       instagram_deleted_story_content: 'Hội thoại này không còn nữa.'
