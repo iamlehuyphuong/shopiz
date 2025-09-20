@@ -35,9 +35,14 @@ class Channel::ZaloPersonal < ApplicationRecord
 
   def send_message(user_id, message)
     if attachment = message.attachments&.first
-      return send_attachment(user_id, attachment, message.conversation.zalo_group?)
+      response = send_attachment(user_id, attachment, message.conversation.zalo_group?)
+      if response['error'] == 0
+        additional_attributes = message.additional_attributes
+        additional_attributes['attachment_msg_id'] = response['data']['message_id']
+        message.update_columns(additional_attributes: additional_attributes)
+      end
     end
-    return unless message.content
+    return response unless message.content
 
     body = message_body(user_id, message)
     send_message_cs(body)
