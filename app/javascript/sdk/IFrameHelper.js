@@ -19,6 +19,7 @@ import {
   setBubbleText,
   addUnreadClass,
   removeUnreadClass,
+  addImageToButton,
 } from './bubbleHelpers';
 import { isWidgetColorLighter } from 'shared/helpers/colorHelper';
 import { dispatchWindowEvent } from 'shared/helpers/CustomEventHelper';
@@ -176,7 +177,7 @@ export const IFrameHelper = {
         IFrameHelper.sendMessage('set-user', window.$shopiz.user);
       }
 
-      window.playAudioAlert = () => {};
+      window.playAudioAlert = () => { };
 
       initOnEvents.forEach(e => {
         document.addEventListener(e, IFrameHelper.setupAudioListeners, false);
@@ -320,7 +321,7 @@ export const IFrameHelper = {
     });
 
     addClasses(closeBubble, closeBtnClassName);
-
+    addImageToButton({ target: closeBubble, imageName: 'bubble_off_chat.svg' });
     chatIcon.style.background = widgetColor;
     closeBubble.style.background = widgetColor;
 
