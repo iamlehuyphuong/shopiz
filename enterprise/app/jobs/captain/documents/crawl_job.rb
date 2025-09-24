@@ -5,7 +5,7 @@ class Captain::Documents::CrawlJob < ApplicationJob
     case document.document_type
     when 'notion'
       perform_notion_crawl(document)
-    when 'web'
+    when 'url'
       if InstallationConfig.find_by(name: 'CAPTAIN_FIRECRAWL_API_KEY')&.value.present?
         perform_firecrawl_crawl(document)
       else
