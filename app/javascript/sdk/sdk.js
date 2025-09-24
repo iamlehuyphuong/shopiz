@@ -39,11 +39,10 @@ export const SDK_CSS = `
 }
 
 .woot-widget-bubble {
-  background: #1f93ff;
+  background: transparent !important;
   border-radius: 100px;
   border-width: 0px;
   bottom: 20px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, .16) !important;
   cursor: pointer;
   height: 64px;
   padding: 0px;
@@ -51,7 +50,14 @@ export const SDK_CSS = `
   user-select: none;
   width: 64px;
   z-index: 2147483000 !important;
-  overflow: hidden;
+}
+
+.woot-widget-bubble .bubble-icon {
+  display: inline-block !important;
+  width: 64px !important;
+  height: 64px !important;
+  object-fit: contain;
+  scale: 1.1;
 }
 
 .woot-widget-bubble.woot-widget-bubble--flat {
@@ -128,11 +134,6 @@ export const SDK_CSS = `
   right: 20px;
 }
 
-.woot-widget-bubble:hover {
-  background: #1f93ff;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, .4) !important;
-}
-
 .woot-widget-bubble svg {
   all: revert;
   height: 24px;
@@ -151,25 +152,6 @@ export const SDK_CSS = `
   .woot-widget-holder.woot-elements--right {
     right: 20px;
  }
-}
-
-.woot--close:hover {
-  opacity: 1;
-}
-
-.woot--close::before, .woot--close::after {
-  background-color: #fff;
-  content: ' ';
-  display: inline;
-  height: 24px;
-  left: 32px;
-  position: absolute;
-  top: 20px;
-  width: 2px;
-}
-
-.woot-widget-bubble-color--lighter.woot--close::before, .woot-widget-bubble-color--lighter.woot--close::after {
-  background-color: var(--s-700);
 }
 
 .woot--close::before {
@@ -195,6 +177,7 @@ export const SDK_CSS = `
   transform: translateY(40px);
 }
 .woot-widget-bubble.woot--close {
+  background: transparent !important;
   transform: translateX(0px) scale(1) rotate(0deg);
   transition: transform 300ms ease, opacity 100ms ease, visibility 0ms linear 0ms, bottom 0ms linear 0ms;
 }
@@ -209,6 +192,11 @@ export const SDK_CSS = `
   transform: translateX(0) scale(1) rotate(0deg);
   transition: transform 300ms ease, opacity 100ms ease, visibility 0ms linear 0ms, bottom 0ms linear 0ms;
 }
+
+.woot-widget-bubble.woot--close .bubble-icon {
+  scale: 1;
+}
+
 .woot-widget-bubble.woot--hide {
   transform: translateX(8px) scale(.75) rotate(-30deg);
   transition: transform 300ms ease, opacity 200ms ease, visibility 0ms linear 500ms, bottom 0ms ease 200ms;
