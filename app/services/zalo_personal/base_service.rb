@@ -6,7 +6,9 @@ class ZaloPersonal::BaseService
 
   def perform
     return if VALID_TYPE.exclude?(params[:type])
-    return if Message.exists?(source_id: params.dig(:data, :msgId), inbox_id: @inbox.id)
+    if exist_message = find_exist_message
+      return update_timestamp(exist_message)
+    end
 
     set_contact
     update_contact
@@ -372,11 +374,25 @@ class ZaloPersonal::BaseService
       message_type: message_type,
       sender: incoming_message? ? @contact : nil,
       additional_attributes: additional_attributes,
-      source_id: params[:data][:msgId]
+      source_id: params[:data][:msgId],
+      created_at: created_time,
     }
   end
 
   def incoming_message?
     message_type == :incoming
+  end
+
+  def update_timestamp(message)
+    message.update_columns(created_at: created_time)
+  end
+
+  def created_time
+    Time.at(params[:data][:ts].to_i / 1000)
+  end
+
+  def find_exist_message
+    inbox.messages.find_by("source_id = :source_id OR additional_attributes ->> 'attachment_msg_id' = :source_id",
+      source_id: params.dig(:data, :msgId).to_s)
   end
 end
