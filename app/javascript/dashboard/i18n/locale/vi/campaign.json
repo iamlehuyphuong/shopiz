@@ -1,7 +1,7 @@
 {
   "CAMPAIGN": {
     "LIVE_CHAT": {
-      "HEADER_TITLE": "Chiến dịch live chat",
+      "HEADER_TITLE": "Chiến dịch Live chat",
       "NEW_CAMPAIGN": "Tạo chiến dịch",
       "CARD": {
         "STATUS": {
@@ -16,11 +16,11 @@
         }
       },
       "EMPTY_STATE": {
-        "TITLE": "Không có chiến dịch live chat khả dụng",
+        "TITLE": "Không có chiến dịch Live chat khả dụng",
         "SUBTITLE": "Kết nối với khách hàng của bạn bằng các tin nhắn chủ động. Nhấn 'Tạo chiến dịch' để bắt đầu."
       },
       "CREATE": {
-        "TITLE": "Tạo chiến dịch live chat",
+        "TITLE": "Tạo chiến dịch Live chat",
         "CANCEL_BUTTON_TEXT": "Huỷ",
         "CREATE_BUTTON_TEXT": "Tạo",
         "FORM": {
@@ -64,16 +64,16 @@
             "CANCEL": "Huỷ"
           },
           "API": {
-            "SUCCESS_MESSAGE": "Chiến dịch live chat được tạo thành công",
+            "SUCCESS_MESSAGE": "Chiến dịch Live chat được tạo thành công",
             "ERROR_MESSAGE": "Đã có lỗi. Vui lòng thử lại."
           }
         }
       },
       "EDIT": {
-        "TITLE": "Chỉnh sửa chiến dịch live chat",
+        "TITLE": "Chỉnh sửa chiến dịch Live chat",
         "FORM": {
           "API": {
-            "SUCCESS_MESSAGE": "Chiến dịch live chat được cập nhật thành công",
+            "SUCCESS_MESSAGE": "Chiến dịch Live chat được cập nhật thành công",
             "ERROR_MESSAGE": "Đã có lỗi. Vui lòng thử lại."
           }
         }

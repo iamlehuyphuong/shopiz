@@ -1,7 +1,7 @@
 {
   "AUTOMATION": {
     "HEADER": "Tự động hoá",
-    "DESCRIPTION": "Tự động hoá có thể thay thế và tối ưu hóa các quy trình hiện có yêu cầu công sức thủ công, chẳng hạn như thêm nhãn và gán các cuộc hội thoại cho đại lý phù hợp nhất. Điều này cho phép nhóm tập trung vào thế mạnh của mình trong khi giảm thiểu thời gian dành cho các công việc lặp đi lặp lại.",
+    "DESCRIPTION": "Tự động hoá có thể thay thế và tối ưu hóa các quy trình hiện có yêu cầu công sức thủ công, chẳng hạn như thêm nhãn và gán các cuộc hội thoại cho nhân viên phù hợp nhất. Điều này cho phép nhóm tập trung vào thế mạnh của mình trong khi giảm thiểu thời gian dành cho các công việc lặp đi lặp lại.",
     "LEARN_MORE": "Tìm hiểu thêm về tự động hoá",
     "HEADER_BTN_TXT": "Thêm luật Tự động hoá",
     "LOADING": "Đang lấy luật tự động hoá",

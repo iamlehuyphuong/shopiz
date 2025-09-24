@@ -1,7 +1,7 @@
 {
   "INBOX_MGMT": {
     "HEADER": "Hộp thư đến",
-    "DESCRIPTION": "Một kênh là phương thức giao tiếp mà khách hàng của bạn chọn để tương tác với bạn. Hộp thư đến là nơi bạn quản lý các tương tác của một kênh cụ thể. Nó có thể bao gồm thông tin liên lạc từ nhiều nguồn khác nhau như email, trò chuyện trực tiếp, và mạng xã hội.",
+    "DESCRIPTION": "Hộp thư đến là phương thức giao tiếp mà khách hàng của bạn chọn để tương tác với bạn. Hộp thư đến là nơi bạn quản lý các tương tác của một kênh cụ thể. Nó có thể bao gồm thông tin liên lạc từ nhiều nguồn khác nhau như email, trò chuyện trực tiếp, và mạng xã hội.",
     "LEARN_MORE": "Tìm hiểu thêm về hộp thư đến",
     "RECONNECTION_REQUIRED": "Hộp thư của bạn đã bị ngắt kết nối. Bạn sẽ không nhận được tin nhắn mới cho đến khi bạn kết nối lại.",
     "CLICK_TO_RECONNECT": "Nhấp vào đây để kết nối lại.",
@@ -52,7 +52,7 @@
         "TITLE": "Kênh Zalo OA",
         "DESC": "CHÚ Ý: Bằng cách đăng nhập, chúng tôi chỉ có quyền truy cập tin nhắn của Zalo OA của bạn. Tin nhắn riêng tư của bạn sẽ không bao giờ bị Shopiz truy cập.",
         "LOADING": "Đang xác thực qua Zalo...",
-        "RELOGIN" : "Đăng nhập lại",
+        "RELOGIN": "Đăng nhập lại",
         "HELP": "CHÚ Ý: Bằng cách đăng nhập, chúng tôi chỉ có quyền truy cập tin nhắn của Zalo OA của bạn. Tin nhắn riêng tư của bạn sẽ không bao giờ bị Shopiz truy cập.",
         "CHOOSE_PAGE": "Chọn Trang",
         "CHOOSE_PLACEHOLDER": "Chọn một trang từ danh sách",
@@ -248,14 +248,14 @@
         },
         "TWILIO": {
           "ACCOUNT_SID": {
-        "LABEL": "SID Tài Khoản",
-        "PLACEHOLDER": "Vui lòng nhập SID Tài Khoản Twilio của bạn",
-        "REQUIRED": "Trường này là bắt buộc"
+            "LABEL": "SID Tài Khoản",
+            "PLACEHOLDER": "Vui lòng nhập SID Tài Khoản Twilio của bạn",
+            "REQUIRED": "Trường này là bắt buộc"
           },
           "AUTH_TOKEN": {
-        "LABEL": "Mã Xác Thực",
-        "PLACEHOLDER": "Vui lòng nhập Mã Xác Thực Twilio của bạn",
-        "REQUIRED": "Trường này là bắt buộc"
+            "LABEL": "Mã Xác Thực",
+            "PLACEHOLDER": "Vui lòng nhập Mã Xác Thực Twilio của bạn",
+            "REQUIRED": "Trường này là bắt buộc"
           }
         },
         "SUBMIT_BUTTON": "Tạo Kênh Thoại",
@@ -442,8 +442,8 @@
       "DESC": ""
     },
     "AGENTS": {
-      "BUTTON_TEXT": "Thêm các nhà cung cấp",
-      "ADD_AGENTS": "Thêm các nhà cung cấp vào hộp thư đến của bạn..."
+      "BUTTON_TEXT": "Thêm nhân viên",
+      "ADD_AGENTS": "Thêm nhân viên vào hộp thư đến của bạn..."
     },
     "FINISH": {
       "TITLE": "Hộp thư đến của bạn đã sẵn sàng!",
@@ -542,7 +542,7 @@
     "SETTINGS_POPUP": {
       "MESSENGER_HEADING": "Tập lệnh Messenger",
       "MESSENGER_SUB_HEAD": "Đặt nút này bên trong thẻ body của bạn",
-      "INBOX_AGENTS": "Nhà cung cấp",
+      "INBOX_AGENTS": "Nhân viên",
       "INBOX_AGENTS_SUB_TEXT": "Thêm hoặc xóa tác nhân khỏi hộp thư đến này",
       "AGENT_ASSIGNMENT": "Phân công cuộc trò chuyện",
       "AGENT_ASSIGNMENT_SUB_TEXT": "Cập nhật phân công cuộc trò chuyện",
@@ -586,11 +586,11 @@
       "UPDATE_PRE_CHAT_FORM_SETTINGS": "Update Pre Chat Form Settings"
     },
     "HELP_CENTER": {
-      "LABEL": "Help Center",
-      "PLACEHOLDER": "Select Help Center",
-      "SELECT_PLACEHOLDER": "Select Help Center",
-      "REMOVE": "Remove Help Center",
-      "SUB_TEXT": "Attach a Help Center with the inbox"
+      "LABEL": "Trung tâm trợ giúp",
+      "PLACEHOLDER": "Chọn trung tâm trợ giúp",
+      "SELECT_PLACEHOLDER": "Chọn trung tâm trợ giúp",
+      "REMOVE": "Xoá trung tâm trợ giúp",
+      "SUB_TEXT": "Gắn Trung tâm trợ giúp vào hộp thư"
     },
     "AUTO_ASSIGNMENT": {
       "MAX_ASSIGNMENT_LIMIT": "Giới hạn tự động phân công tối đa",

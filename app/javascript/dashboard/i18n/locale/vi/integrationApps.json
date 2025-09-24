@@ -56,7 +56,7 @@
       "BUTTON_TEXT": "Ngắt kết nối"
     },
     "SIDEBAR_DESCRIPTION": {
-      "DIALOGFLOW": "Dialogflow là một nền tảng xử lý ngôn ngữ tự nhiên để xây dựng giao diện đối thoại. Việc tích hợp nó với {installationName} cho phép bot xử lý các truy vấn trước và chuyển giao cho đại lý khi cần thiết. Nó giúp xác định khách hàng tiềm năng và giảm tải cho đại lý khi trả lời các câu hỏi thường gặp. Để thêm Dialogflow, hãy tạo một Tài khoản Dịch vụ trong Google Console và chia sẻ thông tin xác thực. Vui lòng tham khảo tài liệu để biết thêm chi tiết."
+      "DIALOGFLOW": "Dialogflow là một nền tảng xử lý ngôn ngữ tự nhiên để xây dựng giao diện đối thoại. Việc tích hợp nó với {installationName} cho phép bot xử lý các truy vấn trước và chuyển giao cho nhân viên khi cần thiết. Nó giúp xác định khách hàng tiềm năng và giảm tải cho nhân viên khi trả lời các câu hỏi thường gặp. Để thêm Dialogflow, hãy tạo một Tài khoản Dịch vụ trong Google Console và chia sẻ thông tin xác thực. Vui lòng tham khảo tài liệu để biết thêm chi tiết."
     }
   }
 }

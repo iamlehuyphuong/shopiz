@@ -7,7 +7,7 @@
       "404": "Không có bất kỳ hoạt động trò chuyện nào trong nhóm."
     },
     "FAILED_TO_SEND": "Gửi thất bại",
-    "TAB_HEADING": "Các cuộc hội thoại",
+    "TAB_HEADING": "Hội thoại",
     "MENTION_HEADING": "Nhắn đến",
     "UNATTENDED_HEADING": "Không giám sát",
     "SEARCH": {
@@ -16,7 +16,7 @@
     "FILTER_ALL": "Tất cả",
     "ASSIGNEE_TYPE_TABS": {
       "me": "Của tôi",
-      "unassigned": "Chưa được phân công",
+      "unassigned": "Chưa phân công",
       "all": "Tất cả"
     },
     "CHAT_STATUS_FILTER_ITEMS": {
