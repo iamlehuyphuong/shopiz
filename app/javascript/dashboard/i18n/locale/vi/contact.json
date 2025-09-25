@@ -283,9 +283,9 @@
   },
   "CONTACTS_LAYOUT": {
     "HEADER": {
-      "TITLE": "Liên hệ",
+      "TITLE": "Danh bạ",
       "SEARCH_TITLE": "Tìm kiếm liên hệ",
-      "ACTIVE_TITLE": "Active contacts",
+      "ACTIVE_TITLE": "Đang hoạt động",
       "SEARCH_PLACEHOLDER": "Tìm kiếm...",
       "MESSAGE_BUTTON": "Nhắn tin",
       "SEND_MESSAGE": "Gửi tin nhắn",

@@ -475,7 +475,7 @@
       "HEADER": "Mở cuộc hội thoại",
       "LOADING_MESSAGE": "Đang tải số liệu cuộc hội thoại...",
       "OPEN": "Mở",
-      "UNATTENDED": "Không giám sát",
+      "UNATTENDED": "Chưa phản hồi",
       "UNASSIGNED": "Chưa được phân công",
       "PENDING": "Chờ giải quyết"
     },
@@ -493,7 +493,7 @@
       "TABLE_HEADER": {
         "AGENT": "Tổng đài viên",
         "OPEN": "Mở",
-        "UNATTENDED": "Không giám sát",
+        "UNATTENDED": "Chưa phản hồi",
         "STATUS": "Trạng thái"
       }
     },
@@ -505,7 +505,7 @@
       "TABLE_HEADER": {
         "TEAM": "Nhóm",
         "OPEN": "Mở",
-        "UNATTENDED": "Không giám sát",
+        "UNATTENDED": "Chưa phản hồi",
         "STATUS": "Trạng thái"
       }
     },
