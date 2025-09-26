@@ -31,8 +31,8 @@ class Captain::Document < ApplicationRecord
   has_many :responses, class_name: 'Captain::AssistantResponse', dependent: :destroy, as: :documentable
   belongs_to :account
 
-  validates :external_link, presence: true
-  validates :external_link, uniqueness: { scope: :assistant_id }
+  validates :external_link, presence: true, if: :url?
+  validates :external_link, uniqueness: { scope: :assistant_id }, allow_blank: true
   validates :external_id, presence: true, if: :notion?
   validates :external_id, uniqueness: { scope: [:assistant_id, :document_type] }, allow_nil: true
   validates :content, length: { maximum: 200_000 }
@@ -82,7 +82,7 @@ class Captain::Document < ApplicationRecord
 
   def detect_document_type
     return unless external_link.present?
-    
+
     # Check if URL points to a PDF file
     uri = URI.parse(external_link)
     if uri.path.downcase.end_with?('.pdf') || external_link.downcase.include?('.pdf')
