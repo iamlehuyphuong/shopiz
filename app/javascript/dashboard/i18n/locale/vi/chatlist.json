@@ -7,9 +7,9 @@
       "404": "Không có bất kỳ hoạt động trò chuyện nào trong nhóm."
     },
     "FAILED_TO_SEND": "Gửi thất bại",
-    "TAB_HEADING": "Hội thoại",
-    "MENTION_HEADING": "Nhắn đến",
-    "UNATTENDED_HEADING": "Không giám sát",
+    "TAB_HEADING": "Tất cả hội thoại",
+    "MENTION_HEADING": "Được nhắc đến",
+    "UNATTENDED_HEADING": "Chưa phản hồi",
     "SEARCH": {
       "INPUT": "Tìm kiếm cho người, đoạn chat, lưu trữ trả lời .."
     },

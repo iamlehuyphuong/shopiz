@@ -123,7 +123,7 @@ onMounted(() => {
         :note="$t('CAPTAIN.DOCUMENTS.EMPTY_STATE.FEATURE_SPOTLIGHT.NOTE')"
         fallback-thumbnail="/assets/images/dashboard/captain/document-popover-light.svg"
         fallback-thumbnail-dark="/assets/images/dashboard/captain/document-popover-dark.svg"
-        learn-more-url="https://www.shopiz.pro/captain-document"
+        learn-more-url="https://docs.shopiz.pro/features/shopiz-ai/document"
       />
     </template>
 
