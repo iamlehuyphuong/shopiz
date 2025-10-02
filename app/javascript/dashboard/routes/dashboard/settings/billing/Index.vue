@@ -129,7 +129,7 @@ const activeTab = ref(0);
 const formatCurrency = (price) => {
   if (!price) return '';
   const { amount_type, price_amount, price_currency } = price;
-  if(amount_type === 'free') 
+  if(amount_type === 'free')
     return 'Free';
   if (amount_type === 'custom') {
     return 'Contact for consultation';
@@ -223,7 +223,8 @@ onMounted(fetchAccountDetails);
                       @disabled="planId === plan.products[index].id"
                       @click="onClickBillingPortal({
                         product_id: plan.products[index].id,
-                        payment_method: 'vnpay',
+                        payment_method: 'payos',
+                        product_name: plan.products[index].name
                       })">
                     {{ planId === plan.products[index].id ? $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.CURRENT_PACKAGE') : $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.UPGRADE_NOW') }}
                     </ButtonV4>
