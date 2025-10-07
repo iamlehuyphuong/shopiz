@@ -208,6 +208,16 @@ class Conversation < ApplicationRecord
     additional_attributes['type'] == 1
   end
 
+  def status_display
+    return :bot if pending_bot?
+
+    status.to_sym
+  end
+
+  def pending_bot?
+    pending? && assignee.is_a?(AgentBot)
+  end
+
   private
 
   def execute_after_update_commit_callbacks

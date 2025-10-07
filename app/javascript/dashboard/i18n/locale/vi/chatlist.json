@@ -2,6 +2,7 @@
   "CHAT_LIST": {
     "LOADING": "Đang tải các cuộc trò chuyện",
     "LOAD_MORE_CONVERSATIONS": "Tải thêm các cuộc trò chuyện",
+    "LOAD_MORE": "Tải thêm",
     "EOF": "Tất cả các cuộc trò chuyện đã được tải 🎉",
     "LIST": {
       "404": "Không có bất kỳ hoạt động trò chuyện nào trong nhóm."
@@ -31,6 +32,9 @@
       },
       "snoozed": {
         "TEXT": "Tạm dừng"
+      },
+      "bot": {
+        "TEXT": "Bot"
       },
       "all": {
         "TEXT": "Tất cả"
