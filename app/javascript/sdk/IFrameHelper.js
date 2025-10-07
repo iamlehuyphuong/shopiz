@@ -94,10 +94,12 @@ export const IFrameHelper = {
   getBubbleHolder: () => document.getElementsByClassName('woot--bubble-holder'),
   sendMessage: (key, value) => {
     const element = IFrameHelper.getAppFrame();
-    element.contentWindow.postMessage(
-      `chatwoot-widget:${JSON.stringify({ event: key, ...value })}`,
-      '*'
-    );
+    if (element) {
+      element.contentWindow.postMessage(
+        `chatwoot-widget:${JSON.stringify({ event: key, ...value })}`,
+        '*'
+      );
+    }
   },
   initPostMessageCommunication: () => {
     window.onmessage = e => {

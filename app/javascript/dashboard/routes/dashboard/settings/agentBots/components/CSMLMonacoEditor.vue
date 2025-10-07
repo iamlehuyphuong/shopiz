@@ -40,7 +40,9 @@ export default {
         event: 'editorContext',
         data: this.modelValue || '',
       };
-      frameElement.contentWindow.postMessage(JSON.stringify(eventData), '*');
+      if (frameElement) {
+        frameElement.contentWindow.postMessage(JSON.stringify(eventData), '*');
+      }
       this.iframeLoading = false;
     },
   },
