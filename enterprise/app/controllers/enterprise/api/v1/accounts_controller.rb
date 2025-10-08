@@ -68,9 +68,11 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
       when 'stripe'
         return create_stripe_billing_session(stripe_customer_id) if stripe_customer_id.present?
       when 'vnpay'
-        return create_vnpay_billing_session(@account.id,params[:product_id]) if @account.id.present?
+        return create_vnpay_billing_session(@account.id, params[:product_id]) if @account.id.present?
       when 'polar'
-        return create_polar_billing_session(@account.id,params[:product_id]) if @account.id.present?
+        return create_polar_billing_session(@account.id, params[:product_id]) if @account.id.present?
+      when 'payos'
+        return create_payos_billing_session(@account.id, params[:product_id], params[:product_name]) if @account.id.present?
       else
         render_invalid_billing_details
       end
@@ -147,6 +149,13 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
 
   def create_polar_billing_session(customer_id,product_id)
     url = Enterprise::Billing::CreateSessionService.new.create_vnpay_session(customer_id,product_id)
+    render_redirect_url(url)
+  end
+
+  def create_payos_billing_session(customer_id, product_id, product_name)
+    url = Enterprise::Billing::CreateSessionService.new.create_payos_session(customer_id, product_id, product_name)
+    return if url.blank?
+
     render_redirect_url(url)
   end
 
