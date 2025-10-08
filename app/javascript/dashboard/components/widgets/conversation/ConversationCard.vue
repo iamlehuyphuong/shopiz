@@ -137,6 +137,10 @@ export default {
       return stateInbox;
     },
 
+    statusText() {
+      return this.$t(`CHAT_LIST.CHAT_STATUS_FILTER_ITEMS.${this.chat.status}.TEXT`);
+    },
+
     showInboxName() {
       return (
         !this.hideInboxName &&
@@ -302,12 +306,20 @@ export default {
           <PriorityMark :priority="chat.priority" />
         </div>
       </div>
-      <h4
-        class="conversation--user text-sm my-0 mx-2 capitalize pt-0.5 text-ellipsis overflow-hidden whitespace-nowrap w-[calc(100%-70px)] text-n-slate-12"
-        :class="hasUnread ? 'font-semibold' : 'font-medium'"
-      >
-        {{ chat?.additional_attributes?.group?.name || currentContact.name }}
-      </h4>
+      <div class="flex items-center gap-2">
+        <h4
+          class="conversation--title my-1 mx-2 font-semibold text-sm leading-5 max-w-[96%] text-ellipsis overflow-hidden whitespace-nowrap"
+          :class="hasUnread ? 'text-n-slate-12' : 'text-n-slate-11'"
+        >
+          {{ chat?.additional_attributes?.group?.name ?? currentContact.name }}
+        </h4>
+        <span
+          class="conversation--status text-white text-xxs font-medium leading-4 py-0.5 px-2 rounded border border-solid border-n-strong text-n-slate-10 bg-n-slate-1"
+          :class="chat.status"
+        >
+          {{ statusText }}
+        </span>
+      </div>
       <MessagePreview
         v-if="lastMessageInChat"
         :message="lastMessageInChat"
@@ -422,6 +434,24 @@ export default {
 
     input[type='checkbox'] {
       @apply m-0 cursor-pointer;
+    }
+  }
+
+  .conversation--status {
+    &.bot {
+      @apply bg-[#4077f1];
+    }
+    &.open {
+      @apply bg-[#22c55e];
+    }
+    &.pending {
+      @apply bg-[#f59e08];
+    }
+    &.resolved {
+      @apply bg-[#00c0e8];
+    }
+    &.snoozed {
+      @apply bg-[#6155f5];
     }
   }
 }

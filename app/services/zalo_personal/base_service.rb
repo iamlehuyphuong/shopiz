@@ -78,11 +78,32 @@ class ZaloPersonal::BaseService
   end
 
   def set_conversation
-    @conversation = @contact_inbox.conversations.where.not(status: :resolved).last
-    if @conversation
-      update_addition_attributes
-    else
-      @conversation = ::Conversation.create!(conversation_params)
+    lock_key = format(Redis::RedisKeys::CONVERSATION_SOURCE_KEY, id: params[:threadId])
+
+    wait_if_locked(lock_key)
+    Redis::Alfred.setex(lock_key, true, 1.minutes)
+
+    begin
+      @conversation = active_conversation || create_conversation
+
+      update_addition_attributes if @conversation
+    ensure
+      ::Redis::Alfred.delete(lock_key)
+    end
+  end
+
+  def active_conversation
+    @contact_inbox.conversations.where.not(status: :resolved).last
+  end
+
+  def create_conversation
+    active_conversation || ::Conversation.create!(conversation_params)
+  end
+
+  def wait_if_locked(lock_key)
+    while Redis::Alfred.get(lock_key)
+      Rails.logger.info("[ConversationLock] waiting for #{lock_key}")
+      sleep 0.5
     end
   end
 
