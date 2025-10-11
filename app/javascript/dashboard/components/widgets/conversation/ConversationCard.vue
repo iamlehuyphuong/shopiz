@@ -314,7 +314,7 @@ export default {
           {{ chat?.additional_attributes?.group?.name ?? currentContact.name }}
         </h4>
         <span
-          class="conversation--status text-white text-xxs font-medium leading-4 py-0.5 px-2 rounded border border-solid border-n-strong text-n-slate-10 bg-n-slate-1"
+          class="conversation--status text-white text-xxs font-medium leading-4 py-0.5 px-2 rounded border border-solid border-n-strong text-n-slate-10 bg-n-slate-1 text-ellipsis overflow-hidden whitespace-nowrap"
           :class="chat.status"
         >
           {{ statusText }}

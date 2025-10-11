@@ -215,7 +215,7 @@ class Conversation < ApplicationRecord
   end
 
   def pending_bot?
-    pending? && assignee.is_a?(AgentBot)
+    pending? && inbox.active_bot?
   end
 
   private
