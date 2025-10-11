@@ -107,9 +107,11 @@ class Attachment < ApplicationRecord
       height: file&.metadata&.dig(:height) || meta.dig('height')
     }
 
-    if (message.inbox.instagram? && message.incoming?) || (message.inbox.zalo_personal? && external_url.present?)
+    if (message.inbox.instagram? && message.incoming?) ||
+      (metadata[:data_url].blank? && message.inbox.zalo_personal? && external_url.present?)
       metadata[:data_url] = metadata[:thumb_url] = external_url
     end
+
     metadata
   end
 

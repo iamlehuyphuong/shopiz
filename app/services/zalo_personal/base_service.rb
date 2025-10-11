@@ -276,13 +276,15 @@ class ZaloPersonal::BaseService
     external_url = media&.dig(:payload, :url)
     return unless external_url
 
+    attachment_file = Down.download(external_url)
     @message.attachments.new(
       account_id: @message.account_id,
       file_type: file_content_type(media),
       external_url: external_url,
-      meta: {
-        width: media.dig(:payload, :width),
-        height: media.dig(:payload, :height)
+      file: {
+        io: attachment_file,
+        filename: media.dig(:payload, :name),
+        content_type: attachment_file.content_type
       }
     )
     @message.content_type = 'sticker' if media[:type] == 'sticker'
