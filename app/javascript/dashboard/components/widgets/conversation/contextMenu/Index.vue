@@ -197,6 +197,9 @@ export default {
     show(key) {
       // If the conversation status is same as the action, then don't display the option
       // i.e.: Don't show an option to resolve if the conversation is already resolved.
+      if (this.status == 'bot' && key === 'pending') {
+        return false;
+      }
       return this.status !== key;
     },
     generateMenuLabelConfig(option, type = 'text') {
