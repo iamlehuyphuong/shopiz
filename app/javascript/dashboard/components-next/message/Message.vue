@@ -131,6 +131,8 @@ const props = defineProps({
   sourceId: { type: String, default: '' }, // eslint-disable-line vue/no-unused-properties
 });
 
+const emit = defineEmits(['retry']);
+
 const contextMenuPosition = ref({});
 const showBackgroundHighlight = ref(false);
 const showContextMenu = ref(false);
@@ -281,6 +283,10 @@ const componentToRender = computed(() => {
     [CONTENT_TYPES.INPUT_SELECT, CONTENT_TYPES.FORM].includes(props.contentType)
   ) {
     return FormBubble;
+  }
+
+  if (props.contentType === CONTENT_TYPES.VOICE_CALL) {
+    return VoiceCallBubble;
   }
 
   if (props.contentType === CONTENT_TYPES.INCOMING_EMAIL) {
@@ -549,6 +555,7 @@ provideMessageContext({
         class="[grid-area:meta]"
         :class="flexOrientationClass"
         :error="contentAttributes.externalError"
+        @retry="emit('retry')"
       />
     </div>
     <div v-if="shouldShowContextMenu" class="context-menu-wrap">

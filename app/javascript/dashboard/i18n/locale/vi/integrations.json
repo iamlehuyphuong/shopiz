@@ -906,10 +906,27 @@
         "ERROR_MESSAGE": "Có lỗi khi tạo tài liệu, vui lòng thử lại."
       },
       "FORM": {
+        "TYPE": {
+          "LABEL": "Document Type",
+          "URL": "URL",
+          "PDF": "PDF File"
+        },
         "URL": {
           "LABEL": "URL",
           "PLACEHOLDER": "Nhập URL của tài liệu",
           "ERROR": "Vui lòng cung cấp URL hợp lệ"
+        },
+        "PDF_FILE": {
+          "LABEL": "PDF File",
+          "CHOOSE_FILE": "Choose PDF file",
+          "ERROR": "Please select a PDF file",
+          "HELP_TEXT": "Maximum file size: 10MB",
+          "INVALID_TYPE": "Please select a valid PDF file",
+          "TOO_LARGE": "File size exceeds 10MB limit"
+        },
+        "NAME": {
+          "LABEL": "Document Name (Optional)",
+          "PLACEHOLDER": "Enter a name for the document"
         },
         "ASSISTANT": {
           "LABEL": "Trợ lý",

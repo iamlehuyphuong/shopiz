@@ -52,7 +52,7 @@
         "TITLE": "Kênh Zalo OA",
         "DESC": "CHÚ Ý: Bằng cách đăng nhập, chúng tôi chỉ có quyền truy cập tin nhắn của Zalo OA của bạn. Tin nhắn riêng tư của bạn sẽ không bao giờ bị Shopiz truy cập.",
         "LOADING": "Đang xác thực qua Zalo...",
-        "RELOGIN" : "Đăng nhập lại",
+        "RELOGIN": "Đăng nhập lại",
         "HELP": "CHÚ Ý: Bằng cách đăng nhập, chúng tôi chỉ có quyền truy cập tin nhắn của Zalo OA của bạn. Tin nhắn riêng tư của bạn sẽ không bao giờ bị Shopiz truy cập.",
         "CHOOSE_PAGE": "Chọn Trang",
         "CHOOSE_PLACEHOLDER": "Chọn một trang từ danh sách",
@@ -248,14 +248,14 @@
         },
         "TWILIO": {
           "ACCOUNT_SID": {
-        "LABEL": "SID Tài Khoản",
-        "PLACEHOLDER": "Vui lòng nhập SID Tài Khoản Twilio của bạn",
-        "REQUIRED": "Trường này là bắt buộc"
+            "LABEL": "SID Tài Khoản",
+            "PLACEHOLDER": "Vui lòng nhập SID Tài Khoản Twilio của bạn",
+            "REQUIRED": "Trường này là bắt buộc"
           },
           "AUTH_TOKEN": {
-        "LABEL": "Mã Xác Thực",
-        "PLACEHOLDER": "Vui lòng nhập Mã Xác Thực Twilio của bạn",
-        "REQUIRED": "Trường này là bắt buộc"
+            "LABEL": "Mã Xác Thực",
+            "PLACEHOLDER": "Vui lòng nhập Mã Xác Thực Twilio của bạn",
+            "REQUIRED": "Trường này là bắt buộc"
           }
         },
         "SUBMIT_BUTTON": "Tạo Kênh Thoại",
@@ -375,14 +375,15 @@
           },
           "API_KEY_SECRET": {
             "LABEL": "API Key Secret",
-            "PLACEHOLDER": "Nhập API Key Secret của bạn",
-            "REQUIRED": "API Key Secret là bắt buộc"
-          },
-          "TWIML_APP_SID": {
-            "LABEL": "TwiML App SID",
-            "PLACEHOLDER": "Nhập Twilio TwiML App SID của bạn (bắt đầu bằng AP)",
-            "REQUIRED": "TwiML App SID là bắt buộc"
+            "PLACEHOLDER": "Enter your Twilio API Key Secret",
+            "REQUIRED": "API Key Secret is required"
           }
+        },
+        "CONFIGURATION": {
+          "TWILIO_VOICE_URL_TITLE": "Twilio Voice URL",
+          "TWILIO_VOICE_URL_SUBTITLE": "Configure this URL as the Voice URL on your Twilio phone number and TwiML App.",
+          "TWILIO_STATUS_URL_TITLE": "Twilio Status Callback URL",
+          "TWILIO_STATUS_URL_SUBTITLE": "Configure this URL as the Status Callback URL on your Twilio phone number."
         },
         "SUBMIT_BUTTON": "Tạo Kênh Giọng Nói",
         "API": {
@@ -469,8 +470,64 @@
         }
       },
       "AUTH": {
-        "TITLE": "Chọn một kênh",
-        "DESC": "Shopiz hỗ trợ các kênh như tiện ích trò chuyện trực tiếp, Facebook Messenger, WhatsApp, Email, v.v. Nếu bạn muốn xây dựng một kênh tùy chỉnh, bạn có thể tạo nó bằng kênh API. Để bắt đầu, hãy chọn một trong các kênh dưới đây."
+        "TITLE": "Chọn kênh",
+        "DESC": "Chatwoot hỗ trợ các tiện ích trò chuyện trực tiếp, Facebook Messenger, hồ sơ Twitter, WhatsApp, Email, v. v., dưới dạng các kênh. Nếu bạn muốn xây dựng một kênh tùy chỉnh, bạn có thể tạo kênh này bằng cách sử dụng kênh API. Để bắt đầu, hãy chọn một trong các kênh bên dưới.",
+        "TITLE_NEXT": "Complete the setup",
+        "TITLE_FINISH": "Voilà!",
+        "CHANNEL": {
+          "WEBSITE": {
+            "TITLE": "Website",
+            "DESCRIPTION": "Create a live-chat widget"
+          },
+          "FACEBOOK": {
+            "TITLE": "Facebook",
+            "DESCRIPTION": "Connect your Facebook page"
+          },
+          "WHATSAPP": {
+            "TITLE": "WhatsApp",
+            "DESCRIPTION": "Support your customers on WhatsApp"
+          },
+          "EMAIL": {
+            "TITLE": "Email",
+            "DESCRIPTION": "Connect with Gmail, Outlook, or other providers"
+          },
+          "SMS": {
+            "TITLE": "SMS",
+            "DESCRIPTION": "Integrate SMS channel with Twilio or bandwidth"
+          },
+          "API": {
+            "TITLE": "API",
+            "DESCRIPTION": "Make a custom channel using our API"
+          },
+          "TELEGRAM": {
+            "TITLE": "Telegram",
+            "DESCRIPTION": "Configure Telegram channel using Bot token"
+          },
+          "LINE": {
+            "TITLE": "Line",
+            "DESCRIPTION": "Integrate your Line channel"
+          },
+          "INSTAGRAM": {
+            "TITLE": "Instagram",
+            "DESCRIPTION": "Connect your instagram account"
+          },
+          "VOICE": {
+            "TITLE": "Voice",
+            "DESCRIPTION": "Integrate with Twilio Voice"
+          },
+          "ZALO": {
+            "TITLE": "Zalo",
+            "DESCRIPTION": "Integrate with Zalo OA"
+          },
+          "ZALOPERSONAL": {
+            "TITLE": "Zalo User",
+            "DESCRIPTION": "Integrate with Zalo User"
+          },
+          "TIKTOK": {
+            "TITLE": "Tiktok",
+            "DESCRIPTION": "Integrate with Tiktok Shop"
+          }
+        }
       },
       "AGENTS": {
         "TITLE": "Nhân Viên",
@@ -524,7 +581,10 @@
       "MESSAGE": "Giờ đây, bạn có thể tương tác với khách hàng thông qua Kênh mới của mình. Chúc vui vẻ ủng hộ",
       "BUTTON_TEXT": "Đưa cho tôi",
       "MORE_SETTINGS": "Nhiều tuỳ chọn hơn",
-      "WEBSITE_SUCCESS": "Bạn đã hoàn thành việc tạo kênh trang web thành công. Sao chép mã được hiển thị bên dưới và dán vào trang web của bạn. Lần tới khi khách hàng sử dụng cuộc trò chuyện trực tiếp, cuộc trò chuyện sẽ tự động xuất hiện trong hộp thư đến của bạn."
+      "WEBSITE_SUCCESS": "Bạn đã hoàn thành việc tạo kênh trang web thành công. Sao chép mã được hiển thị bên dưới và dán vào trang web của bạn. Lần tới khi khách hàng sử dụng cuộc trò chuyện trực tiếp, cuộc trò chuyện sẽ tự động xuất hiện trong hộp thư đến của bạn.",
+      "WHATSAPP_QR_INSTRUCTION": "Scan the QR code above to quickly test your WhatsApp inbox",
+      "MESSENGER_QR_INSTRUCTION": "Scan the QR code above to quickly test your Facebook Messenger inbox",
+      "TELEGRAM_QR_INSTRUCTION": "Scan the QR code above to quickly test your Telegram inbox"
     },
     "REAUTH": "Ủy quyền lại",
     "VIEW": "Xem",
@@ -919,9 +979,18 @@
       "SCRIPT_SETTINGS": "\nwindow.shopizSettings = {options};"
     },
     "EMAIL_PROVIDERS": {
-      "MICROSOFT": "Microsoft",
-      "GOOGLE": "Google",
-      "OTHER_PROVIDERS": "Other Providers"
+      "MICROSOFT": {
+        "TITLE": "Microsoft",
+        "DESCRIPTION": "Connect with Microsoft"
+      },
+      "GOOGLE": {
+        "TITLE": "Google",
+        "DESCRIPTION": "Connect with Google"
+      },
+      "OTHER_PROVIDERS": {
+        "TITLE": "Other Providers",
+        "DESCRIPTION": "Connect with Other Providers"
+      }
     },
     "CHANNELS": {
       "MESSENGER": "Messenger",
@@ -936,7 +1005,9 @@
       "LINE": "Line",
       "API": "Kênh API",
       "INSTAGRAM": "Instagram",
-      "VOICE": "Voice"
+      "ZALO": "Zalo OA",
+      "ZALOPERSONAL": "Zalo User",
+      "TIKTOK": "Tiktok Shop"
     }
   }
 }

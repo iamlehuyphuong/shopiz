@@ -12,6 +12,7 @@ import ComposeConversation from 'dashboard/components-next/NewConversation/Compo
 import { BUS_EVENTS } from 'shared/constants/busEvents';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import VoiceCallButton from 'dashboard/components-next/Contacts/VoiceCallButton.vue';
+import inboxMixin, { INBOX_FEATURES } from 'shared/mixins/inboxMixin';
 
 import {
   isAConversationRoute,
@@ -61,7 +62,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ 
+    ...mapGetters({
       uiFlags: 'contacts/getUIFlags',
       storeActiveCall: 'calls/getActiveCall',
       storeHasActiveCall: 'calls/hasActiveCall',
@@ -251,10 +252,10 @@ export default {
       // Immediately reset local state
       this.activeCallConversation = null;
       this.isCallLoading = false;
-      
+
       // Clear global call state
       this.$store.dispatch('calls/clearActiveCall');
-      
+
       // Force re-render the component to ensure button state updates
       this.$forceUpdate();
     },
@@ -466,13 +467,13 @@ export default {
         }
         return;
       }
-      
+
       // Check if we have a stale local state
       if (this.activeCallConversation) {
         // Reset our local state
         this.activeCallConversation = null;
         this.$forceUpdate();
-        
+
         // If store is clear, initiate a new call after state reset
         if (!this.storeHasActiveCall) {
           this.$nextTick(() => {

@@ -27,7 +27,7 @@ export const generateLabelForContactableInboxesList = ({
     channelType === INBOX_TYPES.WHATSAPP ||
     channelType === INBOX_TYPES.VOICE
   ) {
-    return `${name} (${phoneNumber})`;
+    return phoneNumber ? `${name} (${phoneNumber})` : name;
   }
   return name;
 };
@@ -55,6 +55,7 @@ const transformInbox = ({
   email,
   phoneNumber,
   channelType,
+  medium,
   ...rest,
 });
 

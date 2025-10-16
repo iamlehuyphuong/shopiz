@@ -6,13 +6,11 @@ import LoadingState from 'dashboard/components/widgets/LoadingState.vue';
 import { useAccount } from 'dashboard/composables/useAccount';
 import { mapGetters } from 'vuex';
 import axios from 'axios';
-import globalConfigMixin from 'shared/mixins/globalConfigMixin';
 
 export default {
   components: {
     LoadingState,
   },
-  mixins: [globalConfigMixin],
   setup() {
     const { accountId } = useAccount();
     return {

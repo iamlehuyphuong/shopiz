@@ -1,136 +1,121 @@
-<script>
+<script setup>
+import { computed } from 'vue';
 import ChannelSelector from '../ChannelSelector.vue';
-export default {
-  components: { ChannelSelector },
-  props: {
-    channel: {
-      type: Object,
-      required: true,
-    },
-    enabledFeatures: {
-      type: Object,
-      required: true,
-    },
-  },
-  emits: ['channelItemClick'],
-  computed: {
-    hasZaloPersonalConfigured() {
-      return window.shopizConfig?.zaloAppId;
-    },
-    hasZaloConfigured() {
-      return window.shopizConfig?.zaloAppId;
-    },
-    hasZaloPersonalConfigured() {
-      return window.shopizConfig?.zaloApiUrl;
-    },
-    hasTiktokConfigured() {
-      return window.shopizConfig?.tiktokAppId;
-    },
-    hasFbConfigured() {
-      return window.shopizConfig?.fbAppId;
-    },
-    hasInstagramConfigured() {
-      return window.shopizConfig?.instagramAppId;
-    },
-    isActive() {
-      const { key } = this.channel;
-      if (Object.keys(this.enabledFeatures).length === 0) {
-        return false;
-      }
-      if (key === 'website') {
-        return this.enabledFeatures.channel_website;
-      }
-      if (key === 'facebook') {
-        return this.enabledFeatures.channel_facebook && this.hasFbConfigured;
-      }
-      if (key === 'zalo') {
-        return this.enabledFeatures.channel_zalo && this.hasZaloConfigured;
-      }
-      if (key === 'zalopersonal') {
-        return this.enabledFeatures.channel_zalopersonal && this.hasZaloPersonalConfigured;
-      }
-      if (key === 'tiktok') {
-        return this.enabledFeatures.channel_tiktok && this.hasTiktokConfigured;
-      }
-      if (key === 'email') {
-        return this.enabledFeatures.channel_email;
-      }
-      if (key === 'sms') {
-        return this.enabledFeatures.channel_sms;
-      }
-      if (key === 'line') {
-        return this.enabledFeatures.channel_line;
-      }
-      if (key === 'voice') {
-        return this.enabledFeatures.channel_voice;
-      }
-      if (key === 'telegram') {
-        return this.enabledFeatures.channel_telegram;
-      }
-      if (key === 'api') {
-        return this.enabledFeatures.channel_api;
-      }
-      if (key === 'whatsapp') {
-        return this.enabledFeatures.channel_whatsapp;
-      }
-      if (key === 'instagram') {
-        return (
-          this.enabledFeatures.channel_instagram && this.hasInstagramConfigured
-        );
-      }
 
-      if (key === 'voice') {
-        return this.enabledFeatures.channel_voice;
-      }
-
-      return [
-        'website',
-        'twilio',
-        'voice',
-        'zalo',
-        'zalopersonal',
-        'api',
-        'whatsapp',
-        'sms',
-        'telegram',
-        'line',
-        'instagram',
-        'voice',
-        'tiktok',
-      ].includes(key);
-    },
-    isComingSoon() {
-      const { key } = this.channel;
-      // Show "Coming Soon" only if the channel is marked as coming soon
-      // and the corresponding feature flag is not enabled yet.
-      return ['voice'].includes(key) && !this.isActive;
-    },
+const props = defineProps({
+  channel: {
+    type: Object,
+    required: true,
   },
-  methods: {
-    getChannelThumbnail() {
-      if (this.channel.key === 'api' && this.channel.thumbnail) {
-        return this.channel.thumbnail;
-      }
-      const specialKeys = ["zalo", "zalopersonal", "tiktok"];
-      const ext = specialKeys.includes(this.channel.key) ? "svg" : "png";
-
-      return `/assets/images/dashboard/channels/${this.channel.key}.${ext}`;
-    },
-    onItemClick() {
-      if (this.isActive) {
-        this.$emit('channelItemClick', this.channel.key);
-      }
-    },
+  enabledFeatures: {
+    type: Object,
+    required: true,
   },
+});
+
+const emit = defineEmits(['channelItemClick']);
+
+const hasFbConfigured = computed(() => {
+  return window.shopizConfig?.fbAppId;
+});
+
+const hasInstagramConfigured = computed(() => {
+  return window.shopizConfig?.instagramAppId;
+});
+
+const hasZaloPersonalConfigured = computed(() => {
+  return window.shopizConfig?.zaloAppId;
+});
+
+const hasZaloConfigured = computed(() => {
+  return window.shopizConfig?.zaloAppId;
+});
+
+const hasTiktokConfigured = computed(() => {
+  return window.shopizConfig?.tiktokAppId;
+});
+
+const isActive = computed(() => {
+  const { key } = props.channel;
+  if (Object.keys(props.enabledFeatures).length === 0) {
+    return false;
+  }
+  if (key === 'website') {
+    return props.enabledFeatures.channel_website;
+  }
+  if (key === 'facebook') {
+    return props.enabledFeatures.channel_facebook && hasFbConfigured.value;
+  }
+  if (key === 'email') {
+    return props.enabledFeatures.channel_email;
+  }
+
+  if (key === 'zalo') {
+    return (
+      props.enabledFeatures.channel_zalo && hasZaloConfigured.value
+    );
+  }
+
+  if (key === 'zalopersonal') {
+    return (
+      props.enabledFeatures.channel_zalopersonal &&
+      hasZaloPersonalConfigured.value
+    );
+  }
+
+  if (key === 'tiktok') {
+    return (
+      props.enabledFeatures.channel_tiktok && hasTiktokConfigured.value
+    );
+  }
+
+  if (key === 'instagram') {
+    return (
+      props.enabledFeatures.channel_instagram && hasInstagramConfigured.value
+    );
+  }
+
+  if (key === 'voice') {
+    return props.enabledFeatures.channel_voice;
+  }
+
+  return [
+    'website',
+    'twilio',
+    'api',
+    'whatsapp',
+    'sms',
+    'telegram',
+    'line',
+    'instagram',
+    'zalo',
+    'zalopersonal',
+    'tiktok',
+    'voice',
+  ].includes(key);
+});
+
+const isComingSoon = computed(() => {
+  const { key } = props.channel;
+  // Show "Coming Soon" only if the channel is marked as coming soon
+  // and the corresponding feature flag is not enabled yet.
+  return ['voice'].includes(key) && !isActive.value;
+});
+
+const onItemClick = () => {
+  if (isActive.value) {
+    emit('channelItemClick', props.channel.key);
+  }
 };
 </script>
 
 <template>
   <ChannelSelector
-    :class="{ inactive: !isActive }"
-    :title="channel.name"
-    :src="getChannelThumbnail()"
+    :title="channel.title"
+    :description="channel.description"
+    :icon="channel.icon"
     :is-coming-soon="isComingSoon"
+    :disabled="!isActive"
     @click="onItemClick"
   />
 </template>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_09_05_105555) do
+ActiveRecord::Schema[7.1].define(version: 2025_09_16_024703) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -26,6 +26,18 @@ ActiveRecord::Schema[7.0].define(version: 2025_09_05_105555) do
     t.datetime "updated_at", precision: nil, null: false
     t.index ["owner_type", "owner_id"], name: "index_access_tokens_on_owner_type_and_owner_id"
     t.index ["token"], name: "index_access_tokens_on_token", unique: true
+  end
+
+  create_table "account_saml_settings", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.string "sso_url"
+    t.text "certificate"
+    t.string "sp_entity_id"
+    t.string "idp_entity_id"
+    t.json "role_mappings", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_account_saml_settings_on_account_id"
   end
 
   create_table "account_users", force: :cascade do |t|
@@ -322,6 +334,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_09_05_105555) do
     t.integer "status", default: 0, null: false
     t.integer "document_type", default: 0, null: false
     t.string "external_id"
+    t.jsonb "metadata", default: {}
     t.index ["account_id"], name: "index_captain_documents_on_account_id"
     t.index ["assistant_id", "external_id", "document_type"], name: "index_captain_documents_unique_external_id", unique: true
     t.index ["assistant_id", "external_link"], name: "index_captain_documents_on_assistant_id_and_external_link", unique: true
@@ -338,22 +351,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_09_05_105555) do
     t.index ["captain_assistant_id", "inbox_id"], name: "index_captain_inboxes_on_captain_assistant_id_and_inbox_id", unique: true
     t.index ["captain_assistant_id"], name: "index_captain_inboxes_on_captain_assistant_id"
     t.index ["inbox_id"], name: "index_captain_inboxes_on_inbox_id"
-  end
-
-  create_table "captain_scenarios", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
-    t.text "instruction"
-    t.jsonb "tools", default: []
-    t.boolean "enabled", default: true, null: false
-    t.bigint "assistant_id", null: false
-    t.bigint "account_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_captain_scenarios_on_account_id"
-    t.index ["assistant_id", "enabled"], name: "index_captain_scenarios_on_assistant_id_and_enabled"
-    t.index ["assistant_id"], name: "index_captain_scenarios_on_assistant_id"
-    t.index ["enabled"], name: "index_captain_scenarios_on_enabled"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -481,19 +478,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_09_05_105555) do
     t.index ["shop_id"], name: "index_channel_tiktok_on_shop_id", unique: true
   end
 
-  create_table "channel_tiktok", force: :cascade do |t|
-    t.string "access_token", null: false
-    t.string "refresh_token", null: false
-    t.integer "expires_in", null: false
-    t.integer "account_id", null: false
-    t.string "shop_id", null: false
-    t.string "shop_cipher", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["shop_cipher"], name: "index_channel_tiktok_on_shop_cipher", unique: true
-    t.index ["shop_id"], name: "index_channel_tiktok_on_shop_id", unique: true
-  end
-
   create_table "channel_twilio_sms", force: :cascade do |t|
     t.string "phone_number"
     t.string "auth_token", null: false
@@ -504,6 +488,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_09_05_105555) do
     t.integer "medium", default: 0
     t.string "messaging_service_sid"
     t.string "api_key_sid"
+    t.jsonb "content_templates", default: {}
+    t.datetime "content_templates_last_updated"
     t.index ["account_sid", "phone_number"], name: "index_channel_twilio_sms_on_account_sid_and_phone_number", unique: true
     t.index ["messaging_service_sid"], name: "index_channel_twilio_sms_on_messaging_service_sid", unique: true
     t.index ["phone_number"], name: "index_channel_twilio_sms_on_phone_number", unique: true
@@ -528,7 +514,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_09_05_105555) do
     t.jsonb "additional_attributes", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_channel_voice_on_account_id"
     t.index ["phone_number"], name: "index_channel_voice_on_phone_number", unique: true
   end
 
@@ -548,6 +533,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_09_05_105555) do
     t.jsonb "pre_chat_form_options", default: {}
     t.boolean "hmac_mandatory", default: false
     t.boolean "continuity_via_email", default: true, null: false
+    t.text "allowed_domains", default: ""
     t.index ["hmac_token"], name: "index_channel_web_widgets_on_hmac_token", unique: true
     t.index ["website_token"], name: "index_channel_web_widgets_on_website_token", unique: true
   end
@@ -831,26 +817,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_09_05_105555) do
     t.index ["inbox_id"], name: "index_inbox_capacity_limits_on_inbox_id"
   end
 
-  create_table "inbox_assignment_policies", force: :cascade do |t|
-    t.bigint "inbox_id", null: false
-    t.bigint "assignment_policy_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["assignment_policy_id"], name: "index_inbox_assignment_policies_on_assignment_policy_id"
-    t.index ["inbox_id"], name: "index_inbox_assignment_policies_on_inbox_id", unique: true
-  end
-
-  create_table "inbox_capacity_limits", force: :cascade do |t|
-    t.bigint "agent_capacity_policy_id", null: false
-    t.bigint "inbox_id", null: false
-    t.integer "conversation_limit", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["agent_capacity_policy_id", "inbox_id"], name: "idx_on_agent_capacity_policy_id_inbox_id_71c7ec4caf", unique: true
-    t.index ["agent_capacity_policy_id"], name: "index_inbox_capacity_limits_on_agent_capacity_policy_id"
-    t.index ["inbox_id"], name: "index_inbox_capacity_limits_on_inbox_id"
-  end
-
   create_table "inbox_members", id: :serial, force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "inbox_id", null: false
@@ -1082,8 +1048,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_09_05_105555) do
     t.string "homepage_link"
     t.string "page_title"
     t.text "header_text"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.jsonb "config", default: {"allowed_locales" => ["en"]}
     t.boolean "archived", default: false
     t.bigint "channel_web_widget_id"
@@ -1208,14 +1174,6 @@ ActiveRecord::Schema[7.0].define(version: 2025_09_05_105555) do
     t.index ["name", "account_id"], name: "index_teams_on_name_and_account_id", unique: true
   end
 
-  create_table "telegram_bots", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.string "auth_key"
-    t.integer "account_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-  end
-
   create_table "users", id: :serial, force: :cascade do |t|
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
@@ -1244,7 +1202,13 @@ ActiveRecord::Schema[7.0].define(version: 2025_09_05_105555) do
     t.jsonb "custom_attributes", default: {}
     t.string "type"
     t.text "message_signature"
+    t.string "otp_secret"
+    t.integer "consumed_timestep"
+    t.boolean "otp_required_for_login", default: false, null: false
+    t.text "otp_backup_codes"
     t.index ["email"], name: "index_users_on_email"
+    t.index ["otp_required_for_login"], name: "index_users_on_otp_required_for_login"
+    t.index ["otp_secret"], name: "index_users_on_otp_secret", unique: true
     t.index ["pubsub_token"], name: "index_users_on_pubsub_token", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true

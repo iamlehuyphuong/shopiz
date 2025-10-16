@@ -8,13 +8,11 @@ import { mapGetters } from 'vuex';
 import axios from 'axios';
 import PageHeader from '../../SettingsSubPageHeader.vue';
 import router from '../../../../index';
-import globalConfigMixin from 'shared/mixins/globalConfigMixin';
 export default {
   components: {
     LoadingState,
     PageHeader,
   },
-  mixins: [globalConfigMixin],
   setup() {
     const { accountId } = useAccount();
     return {
@@ -106,14 +104,7 @@ export default {
           alt="Tiktok-logo"
         />
       </a>
-      <p>
-        {{
-          useInstallationName(
-            $t('INBOX_MGMT.ADD.TIKTOK.HELP'),
-            globalConfig.installationName
-          )
-        }}
-      </p>
+      <p>{{$t('INBOX_MGMT.ADD.TIKTOK.HELP')}}</p>
     </div>
     <div v-else>
       <div v-if="hasError" class="max-w-lg mx-auto text-center">

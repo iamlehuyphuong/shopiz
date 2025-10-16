@@ -8,15 +8,11 @@ import { mapGetters } from 'vuex';
 import axios from 'axios';
 import PageHeader from '../../SettingsSubPageHeader.vue';
 import router from '../../../../index';
-import globalConfigMixin from 'shared/mixins/globalConfigMixin';
-
-// import accountMixin from '../../../../../mixins/account';
 export default {
   components: {
     LoadingState,
     PageHeader,
   },
-  mixins: [globalConfigMixin],
   setup() {
     const { accountId } = useAccount();
     return {
@@ -102,13 +98,13 @@ export default {
                 console.log('oa_id:', this.oa_id);
             }
           }.bind(this);
-          
+
           this.socket.onerror = function(error) {
               console.error('Lỗi WebSocket:', error);
               this.hasError = true;
               this.errorStateMessage = 'Lỗi kết nối WebSocket.Thử kết nối lại.';
           }.bind(this);
-          
+
           this.socket.onclose = function() {
               console.log('WebSocket đã đóng kết nối');
               this.hasError = true;
@@ -178,12 +174,7 @@ export default {
         <div class="w-full">
           <PageHeader
             :header-title="$t('INBOX_MGMT.ADD.ZALO.TITLE')"
-            :header-content="
-              useInstallationName(
-                $t('INBOX_MGMT.ADD.ZALO.TITLE'),
-                globalConfig.installationName
-              )
-            "
+            :header-content="$t('INBOX_MGMT.ADD.ZALO.TITLE')"
           />
         </div>
         <div class="w-[60%]">

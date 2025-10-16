@@ -69,6 +69,7 @@ Rails.application.routes.draw do
             end
             resources :documents, only: [:index, :show, :create, :destroy]
           end
+          resource :saml_settings, only: [:show, :create, :update, :destroy]
           resources :agent_bots, only: [:index, :create, :show, :update, :destroy] do
             delete :avatar, on: :member
             post :reset_access_token, on: :member
@@ -97,6 +98,12 @@ Rails.application.routes.draw do
           end
           resources :sla_policies, only: [:index, :create, :show, :update, :destroy]
           resources :custom_roles, only: [:index, :create, :show, :update, :destroy]
+          resources :agent_capacity_policies, only: [:index, :create, :show, :update, :destroy] do
+            scope module: :agent_capacity_policies do
+              resources :users, only: [:index, :create, :destroy]
+              resources :inbox_limits, only: [:create, :update, :destroy]
+            end
+          end
           resources :campaigns, only: [:index, :create, :show, :update, :destroy]
           resources :dashboard_apps, only: [:index, :show, :create, :update, :destroy]
           namespace :channels do
@@ -376,6 +383,14 @@ Rails.application.routes.draw do
           post :resend_confirmation
           post :reset_access_token
         end
+
+        # MFA routes
+        scope module: 'profile' do
+          resource :mfa, controller: 'mfa', only: [:show, :create, :destroy] do
+            post :verify
+            post :backup_codes
+          end
+        end
       end
 
       resource :notification_subscriptions, only: [:create, :destroy]
@@ -576,18 +591,12 @@ Rails.application.routes.draw do
     resources :callback, only: [:create]
     resources :delivery_status, only: [:create]
 
-    # Transcription webhook
-    post :transcription_callback, to: 'transcription#transcription_callback'
-
-    # Recording webhook
-    post :recording_callback, to: 'recording#recording_callback'
-
-    # Use resource scope to avoid plural/singular confusion
-    resource :voice, only: [], controller: 'voice' do
-      collection do
-        get :simple, action: :simple_twiml
-        post :simple, action: :simple_twiml
-        post :status_callback
+    if ChatwootApp.enterprise?
+      resource :voice, only: [], controller: 'voice' do
+        collection do
+          post 'call/:phone', action: :call_twiml
+          post 'status/:phone', action: :status
+        end
       end
     end
   end

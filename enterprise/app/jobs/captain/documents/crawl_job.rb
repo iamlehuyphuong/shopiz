@@ -2,15 +2,12 @@ class Captain::Documents::CrawlJob < ApplicationJob
   queue_as :low
 
   def perform(document)
-    case document.document_type
-    when 'notion'
-      perform_notion_crawl(document)
-    when 'web'
-      if InstallationConfig.find_by(name: 'CAPTAIN_FIRECRAWL_API_KEY')&.value.present?
-        perform_firecrawl_crawl(document)
-      else
-        perform_simple_crawl(document)
-      end
+    if document.pdf_document?
+      perform_pdf_processing(document)
+    elsif InstallationConfig.find_by(name: 'CAPTAIN_FIRECRAWL_API_KEY')&.value.present?
+      perform_firecrawl_crawl(document)
+    else
+      perform_simple_crawl(document)
     end
   end
 
@@ -18,19 +15,12 @@ class Captain::Documents::CrawlJob < ApplicationJob
 
   include Captain::FirecrawlHelper
 
-  def perform_notion_crawl(document)
-    # external_id contains the Notion page ID for notion documents
-    page_id = document.external_id
-    crawler = Captain::Tools::NotionCrawlService.new(document.account, page_id)
-
-    page_ids = crawler.page_ids
-
-    page_ids.each do |notion_page_id|
-      Captain::Tools::NotionCrawlParserJob.perform_later(
-        assistant_id: document.assistant_id,
-        page_id: notion_page_id
-      )
-    end
+  def perform_pdf_processing(document)
+    Captain::Llm::PdfProcessingService.new(document).process
+    document.update!(status: :available)
+  rescue StandardError => e
+    Rails.logger.error I18n.t('captain.documents.pdf_processing_failed', document_id: document.id, error: e.message)
+    raise # Re-raise to let job framework handle retry logic
   end
 
   def perform_simple_crawl(document)

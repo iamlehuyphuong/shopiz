@@ -8,14 +8,11 @@ import { mapGetters } from 'vuex';
 import axios from 'axios';
 import PageHeader from '../../SettingsSubPageHeader.vue';
 import router from '../../../../index';
-import globalConfigMixin from 'shared/mixins/globalConfigMixin';
-// import accountMixin from '../../../../../mixins/account';
 export default {
   components: {
     LoadingState,
     PageHeader,
   },
-  mixins: [globalConfigMixin],
   setup() {
     const { accountId } = useAccount();
     return {
@@ -169,10 +166,7 @@ export default {
       </a>
       <p>
         {{
-          useInstallationName(
-            $t('INBOX_MGMT.ADD.ZALO.HELP'),
-            globalConfig.installationName
-          )
+          $t('INBOX_MGMT.ADD.ZALO.HELP')
         }}
       </p>
     </div>
