@@ -28,6 +28,12 @@ const {
 
 const uiFlags = useMapGetter('accounts/getUIFlags');
 const store = useStore();
+
+const BILLING_REFRESH_ATTEMPTED = 'billing_refresh_attempted';
+
+// State for handling refresh attempts and loading
+const isWaitingForBilling = ref(false);
+
 const customAttributes = computed(() => {
   return currentAccount.value.custom_attributes || {};
 });
@@ -79,7 +85,7 @@ const hasABillingPlan = computed(() => {
 const fetchAccountDetails = async () => {
   store.dispatch('accounts/plans');
   if (!hasABillingPlan.value) {
-    store.dispatch('accounts/subscription');
+    await store.dispatch('accounts/subscription');
     fetchLimits();
   }
 };
@@ -129,7 +135,7 @@ const activeTab = ref(0);
 const formatCurrency = (price) => {
   if (!price) return '';
   const { amount_type, price_amount, price_currency } = price;
-  if(amount_type === 'free') 
+  if(amount_type === 'free')
     return 'Free';
   if (amount_type === 'custom') {
     return 'Contact for consultation';
@@ -153,9 +159,13 @@ onMounted(fetchAccountDetails);
 
 <template>
   <SettingsLayout
-    :is-loading="uiFlags.isFetchingItem"
-    :loading-message="$t('ATTRIBUTES_MGMT.LOADING')"
-    :no-records-found="!hasABillingPlan"
+    :is-loading="uiFlags.isFetchingItem || isWaitingForBilling"
+    :loading-message="
+      isWaitingForBilling
+        ? $t('BILLING_SETTINGS.NO_BILLING_USER')
+        : $t('ATTRIBUTES_MGMT.LOADING')
+    "
+    :no-records-found="!hasABillingPlan && !isWaitingForBilling"
     :no-records-message="$t('BILLING_SETTINGS.NO_BILLING_USER')"
   >
     <template #header>

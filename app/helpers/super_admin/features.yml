@@ -6,7 +6,6 @@ captain:
   name: 'Captain'
   description: 'Enable AI-powered conversations with your customers.'
   enabled: <%= (ChatwootHub.pricing_plan != 'community') %>
-  #enabled: true
   icon: 'icon-captain'
   config_key: 'captain'
   enterprise: true
@@ -14,7 +13,6 @@ custom_branding:
   name: 'Custom Branding'
   description: 'Apply your own branding to this installation.'
   enabled: <%= (ChatwootHub.pricing_plan != 'community') %>
-  #enabled: true
   icon: 'icon-paint-brush-line'
   config_key: 'custom_branding'
   enterprise: true
@@ -28,14 +26,12 @@ audit_logs:
   name: 'Audit Logs'
   description: 'Track and trace account activities with ease with detailed audit logs.'
   enabled: <%= (ChatwootHub.pricing_plan != 'community') %>
-  #enabled: true
   icon: 'icon-menu-search-line'
   enterprise: true
 disable_branding:
   name: 'Disable Branding'
   description: 'Disable branding on live-chat widget and external emails.'
   enabled: <%= (ChatwootHub.pricing_plan != 'community') %>
-  #enabled: true
   icon: 'icon-sailbot-fill'
   enterprise: true
 
@@ -90,17 +86,11 @@ line:
   description: 'Manage your Line customer interactions from Shopiz.'
   enabled: true
   icon: 'icon-line-line'
-<<<<<<< HEAD:enterprise/app/helpers/super_admin/features.yml
-sms:
-  name: 'SMS'
-  description: 'Manage your SMS customer interactions from Shopiz.'
-=======
 
 # ------- OAuth & Authentication ------- #
 google:
   name: 'Google'
   description: 'Configuration for setting up Google OAuth Integration'
->>>>>>> chatwoot/sync-v4.5.2:app/helpers/super_admin/features.yml
   enabled: true
   icon: 'icon-google'
   config_key: 'google'
@@ -166,7 +156,6 @@ google:
   enabled: true
   icon: 'icon-google'
   config_key: 'google'
-
 tiktok:
   name: 'Tiktok'
   description: 'Stay connected with your customers on Tiktok.'

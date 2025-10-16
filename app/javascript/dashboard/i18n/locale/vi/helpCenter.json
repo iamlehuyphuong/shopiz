@@ -741,7 +741,8 @@
         "LIVE_CHAT_WIDGET": {
           "LABEL": "Tiện ích chat trực tiếp",
           "PLACEHOLDER": "Chọn tiện ích chat trực tiếp",
-          "HELP_TEXT": "Chọn tiện ích chat trực tiếp sẽ hiển thị trên trung tâm trợ giúp của bạn."
+          "HELP_TEXT": "Chọn tiện ích chat trực tiếp sẽ hiển thị trên trung tâm trợ giúp của bạn.",
+          "NONE_OPTION": "No widget"
         },
         "BRAND_COLOR": {
           "LABEL": "Màu thương hiệu"

@@ -8,8 +8,6 @@ module SuperAdmin::NavigationHelper
       attrs['config_key'].present? && attrs['enabled']
     end
 
-    print features
-
     # Add general at the beginning
     general_feature = [['general', { 'config_key' => 'general', 'name' => 'General' }]]
 

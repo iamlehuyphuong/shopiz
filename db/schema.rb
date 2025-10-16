@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_09_16_024703) do
+ActiveRecord::Schema[7.1].define(version: 2025_10_03_091242) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -323,6 +323,25 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_16_024703) do
     t.index ["account_id"], name: "index_captain_assistants_on_account_id"
   end
 
+  create_table "captain_custom_tools", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.string "slug", null: false
+    t.string "title", null: false
+    t.text "description"
+    t.string "http_method", default: "GET", null: false
+    t.text "endpoint_url", null: false
+    t.text "request_template"
+    t.text "response_template"
+    t.string "auth_type", default: "none"
+    t.jsonb "auth_config", default: {}
+    t.jsonb "param_schema", default: []
+    t.boolean "enabled", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "slug"], name: "index_captain_custom_tools_on_account_id_and_slug", unique: true
+    t.index ["account_id"], name: "index_captain_custom_tools_on_account_id"
+  end
+
   create_table "captain_documents", force: :cascade do |t|
     t.string "name"
     t.string "external_link", null: false
@@ -334,12 +353,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_16_024703) do
     t.integer "status", default: 0, null: false
     t.integer "document_type", default: 0, null: false
     t.string "external_id"
+    t.string "source_type", default: "url"
     t.jsonb "metadata", default: {}
     t.index ["account_id"], name: "index_captain_documents_on_account_id"
     t.index ["assistant_id", "external_id", "document_type"], name: "index_captain_documents_unique_external_id", unique: true
     t.index ["assistant_id", "external_link"], name: "index_captain_documents_on_assistant_id_and_external_link", unique: true
     t.index ["assistant_id"], name: "index_captain_documents_on_assistant_id"
     t.index ["document_type"], name: "index_captain_documents_on_document_type"
+    t.index ["source_type"], name: "index_captain_documents_on_source_type"
     t.index ["status"], name: "index_captain_documents_on_status"
   end
 
@@ -351,6 +372,22 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_16_024703) do
     t.index ["captain_assistant_id", "inbox_id"], name: "index_captain_inboxes_on_captain_assistant_id_and_inbox_id", unique: true
     t.index ["captain_assistant_id"], name: "index_captain_inboxes_on_captain_assistant_id"
     t.index ["inbox_id"], name: "index_captain_inboxes_on_inbox_id"
+  end
+
+  create_table "captain_scenarios", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.text "instruction"
+    t.jsonb "tools", default: []
+    t.boolean "enabled", default: true, null: false
+    t.bigint "assistant_id", null: false
+    t.bigint "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_captain_scenarios_on_account_id"
+    t.index ["assistant_id", "enabled"], name: "index_captain_scenarios_on_assistant_id_and_enabled"
+    t.index ["assistant_id"], name: "index_captain_scenarios_on_assistant_id"
+    t.index ["enabled"], name: "index_captain_scenarios_on_enabled"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -410,6 +447,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_16_024703) do
     t.boolean "smtp_enable_ssl_tls", default: false
     t.jsonb "provider_config", default: {}
     t.string "provider"
+    t.boolean "verified_for_sending", default: false, null: false
     t.index ["email"], name: "index_channel_email_on_email", unique: true
     t.index ["forward_to_email"], name: "index_channel_email_on_forward_to_email", unique: true
   end
@@ -514,6 +552,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_16_024703) do
     t.jsonb "additional_attributes", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_channel_voice_on_account_id"
     t.index ["phone_number"], name: "index_channel_voice_on_phone_number", unique: true
   end
 
@@ -572,6 +611,18 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_16_024703) do
     t.index ["oa_id"], name: "index_channel_zalo_personal_on_oa_id", unique: true
   end
 
+  create_table "companies", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "domain"
+    t.text "description"
+    t.bigint "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_companies_on_account_id"
+    t.index ["domain", "account_id"], name: "index_companies_on_domain_and_account_id"
+    t.index ["name", "account_id"], name: "index_companies_on_name_and_account_id"
+  end
+
   create_table "contact_inboxes", force: :cascade do |t|
     t.bigint "contact_id"
     t.bigint "inbox_id"
@@ -585,6 +636,21 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_16_024703) do
     t.index ["inbox_id"], name: "index_contact_inboxes_on_inbox_id"
     t.index ["pubsub_token"], name: "index_contact_inboxes_on_pubsub_token", unique: true
     t.index ["source_id"], name: "index_contact_inboxes_on_source_id"
+  end
+
+  create_table "contact_transactions", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "contact_id", null: false
+    t.bigint "product_id", null: false
+    t.datetime "po_date"
+    t.float "po_value"
+    t.string "po_note"
+    t.jsonb "custom_attributes", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_contact_transactions_on_account_id"
+    t.index ["contact_id"], name: "index_contact_transactions_on_contact_id"
+    t.index ["product_id"], name: "index_contact_transactions_on_product_id"
   end
 
   create_table "contacts", id: :serial, force: :cascade do |t|
@@ -604,6 +670,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_16_024703) do
     t.string "location", default: ""
     t.string "country_code", default: ""
     t.boolean "blocked", default: false, null: false
+    t.bigint "company_id"
     t.index "lower((email)::text), account_id", name: "index_contacts_on_lower_email_account_id"
     t.index ["account_id", "contact_type"], name: "index_contacts_on_account_id_and_contact_type"
     t.index ["account_id", "email", "phone_number", "identifier"], name: "index_contacts_on_nonempty_fields", where: "(((email)::text <> ''::text) OR ((phone_number)::text <> ''::text) OR ((identifier)::text <> ''::text))"
@@ -611,6 +678,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_16_024703) do
     t.index ["account_id"], name: "index_contacts_on_account_id"
     t.index ["account_id"], name: "index_resolved_contact_account_id", where: "(((email)::text <> ''::text) OR ((phone_number)::text <> ''::text) OR ((identifier)::text <> ''::text))"
     t.index ["blocked"], name: "index_contacts_on_blocked"
+    t.index ["company_id"], name: "index_contacts_on_company_id"
     t.index ["email", "account_id"], name: "uniq_email_per_account_contact", unique: true
     t.index ["identifier", "account_id"], name: "uniq_identifier_per_account_contact", unique: true
     t.index ["name", "email", "phone_number", "identifier"], name: "index_contacts_on_name_email_phone_number_identifier", opclass: :gin_trgm_ops, using: :gin
@@ -1067,6 +1135,20 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_16_024703) do
     t.index ["user_id"], name: "index_portals_members_on_user_id"
   end
 
+  create_table "products", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.string "name", null: false
+    t.string "sku", null: false
+    t.string "short_name", null: false
+    t.float "price"
+    t.boolean "disabled", default: false, null: false
+    t.jsonb "custom_attributes", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "sku"], name: "index_product_on_account_id_and_sku", unique: true
+    t.index ["account_id"], name: "index_products_on_account_id"
+  end
+
   create_table "related_categories", force: :cascade do |t|
     t.bigint "category_id"
     t.bigint "related_category_id"
@@ -1125,6 +1207,20 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_16_024703) do
     t.string "description"
     t.float "resolution_time_threshold"
     t.index ["account_id"], name: "index_sla_policies_on_account_id"
+  end
+
+  create_table "stages", force: :cascade do |t|
+    t.integer "account_id", null: false
+    t.integer "stage_type", null: false
+    t.string "code", null: false
+    t.string "name", null: false
+    t.string "description"
+    t.integer "status", null: false
+    t.boolean "disabled", default: false, null: false
+    t.boolean "allow_disabled", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "code"], name: "index_stages_on_account_id_and_code", unique: true
   end
 
   create_table "taggings", id: :serial, force: :cascade do |t|
@@ -1243,6 +1339,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_16_024703) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "captain_scenarios", "captain_assistants", column: "assistant_id"
   add_foreign_key "inboxes", "portals"
   create_trigger("accounts_after_insert_row_tr", :generated => true, :compatibility => 1).
       on("accounts").

@@ -51,6 +51,7 @@
     },
     "DATE_RANGE_OPTIONS": {
       "LAST_7_DAYS": "Last 7 days",
+      "LAST_14_DAYS": "Last 14 days",
       "LAST_30_DAYS": "Last 30 days",
       "LAST_3_MONTHS": "Last 3 months",
       "LAST_6_MONTHS": "Last 6 months",
@@ -271,21 +272,8 @@
     "DOWNLOAD_INBOX_REPORTS": "Download inbox reports",
     "DOWNLOAD_VOICE_REPORTS": "Download voice reports",
     "FILTER_DROPDOWN_LABEL": "Select Inbox",
-    "VOICE_METRICS": {
-      "TOTAL_CALLS": "Total Calls",
-      "INCOMING_CALLS": "Incoming Calls",
-      "OUTGOING_CALLS": "Outgoing Calls",
-      "MISSED_CALLS": "Missed Calls",
-      "AVG_DURATION": "Average Call Duration",
-      "AVG_WAITING_TIME": "Average Waiting Time",
-      "SUCCESS_RATE": "Call Success Rate"
-    },
-    "VOICE_CHARTS": {
-      "CALLS_BY_TYPE": "Calls by Type",
-      "CALL_DURATION": "Average Call Duration",
-      "WAITING_TIME": "Average Waiting Time",
-      "SUCCESS_RATE": "Call Success Rate"
-    },
+    "ALL_INBOXES": "All Inboxes",
+    "SEARCH_INBOX": "Search Inbox",
     "METRICS": {
       "CONVERSATIONS": {
         "NAME": "Conversations",
@@ -482,6 +470,13 @@
     },
     "CONVERSATION_HEATMAP": {
       "HEADER": "Conversation Traffic",
+      "NO_CONVERSATIONS": "No conversations",
+      "CONVERSATION": "{count} conversation",
+      "CONVERSATIONS": "{count} conversations",
+      "DOWNLOAD_REPORT": "Download report"
+    },
+    "RESOLUTION_HEATMAP": {
+      "HEADER": "Resolutions",
       "NO_CONVERSATIONS": "No conversations",
       "CONVERSATION": "{count} conversation",
       "CONVERSATIONS": "{count} conversations",

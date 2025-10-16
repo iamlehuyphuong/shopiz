@@ -1,10 +1,12 @@
 {
   "INBOX_MGMT": {
     "HEADER": "Hộp thư đến",
-    "DESCRIPTION": "Một kênh là phương thức giao tiếp mà khách hàng của bạn chọn để tương tác với bạn. Hộp thư đến là nơi bạn quản lý các tương tác của một kênh cụ thể. Nó có thể bao gồm thông tin liên lạc từ nhiều nguồn khác nhau như email, trò chuyện trực tiếp, và mạng xã hội.",
-    "LEARN_MORE": "Tìm hiểu thêm về hộp thư đến",
-    "RECONNECTION_REQUIRED": "Hộp thư của bạn đã bị ngắt kết nối. Bạn sẽ không nhận được tin nhắn mới cho đến khi bạn kết nối lại.",
-    "CLICK_TO_RECONNECT": "Nhấp vào đây để kết nối lại.",
+    "DESCRIPTION": "A channel is the mode of communication your customer chooses to interact with you. An inbox is where you manage interactions for a specific channel. It can include communications from various sources such as email, live chat, and social media.",
+    "LEARN_MORE": "Learn more about inboxes",
+    "RECONNECTION_REQUIRED": "Your inbox is disconnected. You won't receive new messages until you reauthorize it.",
+    "CLICK_TO_RECONNECT": "Click here to reconnect.",
+    "WHATSAPP_REGISTRATION_INCOMPLETE": "Your WhatsApp Business registration isn’t complete. Please check your display name status in Meta Business Manager before reconnecting.",
+    "COMPLETE_REGISTRATION": "Complete Registration",
     "LIST": {
       "404": "Không có hộp thư nào được gắn với tài khoản này."
     },
@@ -319,8 +321,8 @@
         },
         "SUBMIT_BUTTON": "Tạo kênh WhatsApp",
         "EMBEDDED_SIGNUP": {
-          "TITLE": "Kết nối với WhatsApp Business",
-          "DESC": "Bạn sẽ được chuyển hướng đến Meta để đăng nhập vào tài khoản WhatsApp Business của mình. Quyền truy cập quản trị sẽ giúp việc thiết lập diễn ra suôn sẻ và dễ dàng.",
+          "TITLE": "Quick setup with Meta",
+          "DESC": "Use the WhatsApp Embedded Signup flow to quickly connect new numbers. You will be redirected to Meta to log into your WhatsApp Business account. Having admin access will help make the setup smooth and easy.",
           "BENEFITS": {
             "TITLE": "Lợi ích của việc đăng ký nhúng:",
             "EASY_SETUP": "Không cần cấu hình thủ công",
@@ -328,22 +330,23 @@
             "AUTO_CONFIG": "Cấu hình webhook và số điện thoại tự động"
           },
           "LEARN_MORE": {
-            "TEXT": "Để tìm hiểu thêm về đăng ký nhúng, giá cả và giới hạn, hãy truy cập",
-            "LINK_TEXT": "liên kết này.",
-            "LINK_URL": "https://developers.facebook.com/docs/whatsapp/embedded-signup/custom-flows/onboarding-business-app-users#limitations"
+            "TEXT": "To learn more about integrated signup, pricing, and limitations, visit {link}.",
+            "LINK_TEXT": "this link"
           },
-          "SUBMIT_BUTTON": "Kết nối với WhatsApp Business",
-          "AUTH_PROCESSING": "Đang xác thực với Meta",
-          "WAITING_FOR_BUSINESS_INFO": "Vui lòng hoàn tất thiết lập doanh nghiệp trong cửa sổ Meta...",
-          "PROCESSING": "Đang thiết lập tài khoản WhatsApp Business của bạn",
-          "LOADING_SDK": "Đang tải Facebook SDK...",
-          "CANCELLED": "Đăng ký WhatsApp đã bị hủy",
-          "SUCCESS_TITLE": "Tài khoản WhatsApp Business đã được kết nối!",
-          "WAITING_FOR_AUTH": "Đang chờ xác thực...",
-          "INVALID_BUSINESS_DATA": "Dữ liệu doanh nghiệp không hợp lệ nhận được từ Facebook. Vui lòng thử lại.",
-          "SIGNUP_ERROR": "Đã xảy ra lỗi đăng ký",
-          "AUTH_NOT_COMPLETED": "Xác thực chưa hoàn tất. Vui lòng khởi động lại quá trình.",
-          "SUCCESS_FALLBACK": "Tài khoản WhatsApp Business đã được cấu hình thành công"
+          "SUBMIT_BUTTON": "Connect with WhatsApp Business",
+          "AUTH_PROCESSING": "Authenticating with Meta",
+          "WAITING_FOR_BUSINESS_INFO": "Please complete business setup in the Meta window...",
+          "PROCESSING": "Setting up your WhatsApp Business Account",
+          "LOADING_SDK": "Loading Facebook SDK...",
+          "CANCELLED": "WhatsApp Signup was cancelled",
+          "SUCCESS_TITLE": "WhatsApp Business Account Connected!",
+          "WAITING_FOR_AUTH": "Waiting for authentication...",
+          "INVALID_BUSINESS_DATA": "Invalid business data received from Facebook. Please try again.",
+          "SIGNUP_ERROR": "Signup error occurred",
+          "AUTH_NOT_COMPLETED": "Authentication not completed. Please restart the process.",
+          "SUCCESS_FALLBACK": "WhatsApp Business Account has been successfully configured",
+          "MANUAL_FALLBACK": "If your number is already connected to the WhatsApp Business Platform (API), or if you’re a tech provider onboarding your own number, please use the {link} flow",
+          "MANUAL_LINK_TEXT": "manual setup flow"
         },
         "API": {
           "ERROR_MESSAGE": "Chúng tôi không thể lưu kênh WhatsApp"
@@ -663,7 +666,63 @@
       "BUSINESS_HOURS": "Giờ làm việc",
       "WIDGET_BUILDER": "Trình tạo widget",
       "BOT_CONFIGURATION": "Cấu hình Bot",
+      "ACCOUNT_HEALTH": "Account Health",
       "CSAT": "CSAT"
+    },
+    "ACCOUNT_HEALTH": {
+      "TITLE": "Manage your WhatsApp account",
+      "DESCRIPTION": "Review your WhatsApp account status, messaging limits, and quality. Update settings or resolve issues if needed",
+      "GO_TO_SETTINGS": "Go to Meta Business Manager",
+      "NO_DATA": "Health data is not available",
+      "FIELDS": {
+        "DISPLAY_PHONE_NUMBER": {
+          "LABEL": "Display phone number",
+          "TOOLTIP": "Phone number displayed to customers"
+        },
+        "VERIFIED_NAME": {
+          "LABEL": "Business name",
+          "TOOLTIP": "Business name verified by WhatsApp"
+        },
+        "DISPLAY_NAME_STATUS": {
+          "LABEL": "Display name status",
+          "TOOLTIP": "Status of your business name verification"
+        },
+        "QUALITY_RATING": {
+          "LABEL": "Quality rating",
+          "TOOLTIP": "WhatsApp quality rating for your account"
+        },
+        "MESSAGING_LIMIT_TIER": {
+          "LABEL": "Messaging limit tier",
+          "TOOLTIP": "Daily messaging limit for your account"
+        },
+        "ACCOUNT_MODE": {
+          "LABEL": "Account mode",
+          "TOOLTIP": "Current operating mode of your WhatsApp account"
+        }
+      },
+      "VALUES": {
+        "TIERS": {
+          "TIER_250": "250 customers per 24h",
+          "TIER_1000": "1K customers per 24h",
+          "TIER_1K": "1K customers per 24h",
+          "TIER_10K": "10K customers per 24h",
+          "TIER_100K": "100K customers per 24h",
+          "TIER_UNLIMITED": "Unlimited customers per 24h",
+          "UNKNOWN": "Rating not available"
+        },
+        "STATUSES": {
+          "APPROVED": "Approved",
+          "PENDING_REVIEW": "Pending Review",
+          "AVAILABLE_WITHOUT_REVIEW": "Available Without Review",
+          "REJECTED": "Rejected",
+          "DECLINED": "Declined",
+          "NON_EXISTS": "Non exists"
+        },
+        "MODES": {
+          "SANDBOX": "Sandbox",
+          "LIVE": "Trực tuyến"
+        }
+      }
     },
     "SETTINGS": "Cài đặt",
     "FEATURES": {
@@ -676,6 +735,11 @@
     "SETTINGS_POPUP": {
       "MESSENGER_HEADING": "Tập lệnh Messenger",
       "MESSENGER_SUB_HEAD": "Đặt nút này bên trong thẻ body của bạn",
+      "ALLOWED_DOMAINS": {
+        "TITLE": "Allowed Domains",
+        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.chatwoot.dev, chatwoot.com.",
+        "PLACEHOLDER": "Enter domains separated by commas (eg: *.chatwoot.dev, chatwoot.com)"
+      },
       "INBOX_AGENTS": "Nhà cung cấp",
       "INBOX_AGENTS_SUB_TEXT": "Thêm hoặc xóa tác nhân khỏi hộp thư đến này",
       "AGENT_ASSIGNMENT": "Phân công cuộc trò chuyện",
