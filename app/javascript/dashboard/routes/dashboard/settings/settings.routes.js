@@ -23,6 +23,7 @@ import sla from './sla/sla.routes';
 import teams from './teams/teams.routes';
 import customRoles from './customRoles/customRole.routes';
 import profile from './profile/profile.routes';
+import templates from './templates/templates.routes';
 import security from './security/security.routes';
 import workflows from './workflows/workflows.routes';
 
@@ -63,6 +64,7 @@ export default {
     ...teams.routes,
     ...customRoles.routes,
     ...profile.routes,
+    ...templates.routes,
     ...security.routes,
     ...workflows.routes
   ],
