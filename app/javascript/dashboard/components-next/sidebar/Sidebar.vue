@@ -73,7 +73,7 @@ const conversationCustomViews = useMapGetter(
 );
 
 // Check if there are any voice inboxes
-const hasVoiceInbox = computed(() => 
+const hasVoiceInbox = computed(() =>
   inboxes.value.some(inbox => inbox.channel_type === INBOX_TYPES.VOICE)
 );
 

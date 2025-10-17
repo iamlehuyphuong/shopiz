@@ -427,7 +427,7 @@
       },
       "AUTH": {
         "TITLE": "Wählen Sie einen Kanal",
-        "DESC": "Chatwoot unterstützt Live-Chat-Widgets, Facebook Messenger, Twitter-Profile, WhatsApp, E-Mails usw. als Kanäle. Wenn Sie einen benutzerdefinierten Kanal erstellen möchten, können Sie ihn mithilfe des API-Kanals erstellen. Wählen Sie zunächst einen der folgenden Kanäle aus.",
+        "DESC": "Shopiz unterstützt Live-Chat-Widgets, Facebook Messenger, Twitter-Profile, WhatsApp, E-Mails usw. als Kanäle. Wenn Sie einen benutzerdefinierten Kanal erstellen möchten, können Sie ihn mithilfe des API-Kanals erstellen. Wählen Sie zunächst einen der folgenden Kanäle aus.",
         "TITLE_NEXT": "Complete the setup",
         "TITLE_FINISH": "Voilà!",
         "CHANNEL": {
@@ -678,8 +678,8 @@
       "MESSENGER_SUB_HEAD": "Platzieren Sie diese Schaltfläche in Ihrem Body-Tag",
       "ALLOWED_DOMAINS": {
         "TITLE": "Allowed Domains",
-        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.chatwoot.dev, chatwoot.com.",
-        "PLACEHOLDER": "Enter domains separated by commas (eg: *.chatwoot.dev, chatwoot.com)"
+        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.shopiz.dev, shopiz.pro.",
+        "PLACEHOLDER": "Enter domains separated by commas (eg: *.shopiz.dev, shopiz.pro)"
       },
       "INBOX_AGENTS": "Agenten",
       "INBOX_AGENTS_SUB_TEXT": "Hinzufügen oder Entfernen von Agenten zu diesem Posteingang",

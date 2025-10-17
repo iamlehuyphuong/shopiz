@@ -810,56 +810,56 @@
       }
     },
     "PDF_UPLOAD": {
-      "TITLE": "Upload PDF Document",
-      "DESCRIPTION": "Upload a PDF document to automatically generate FAQs using AI",
-      "DRAG_DROP_TEXT": "Drag and drop your PDF file here, or click to select",
-      "SELECT_FILE": "Select PDF File",
-      "ADDITIONAL_CONTEXT_LABEL": "Additional Context (Optional)",
-      "ADDITIONAL_CONTEXT_PLACEHOLDER": "Provide any additional context or instructions for FAQ generation...",
+      "TITLE": "Tải lên tài liệu PDF",
+      "DESCRIPTION": "Tải lên tài liệu PDF để tự động tạo các câu hỏi thường gặp (FAQ) bằng AI",
+      "DRAG_DROP_TEXT": "Kéo và thả tệp PDF của bạn vào đây, hoặc nhấn để chọn",
+      "SELECT_FILE": "Chọn tệp PDF",
+      "ADDITIONAL_CONTEXT_LABEL": "Ngữ cảnh bổ sung (Không bắt buộc)",
+      "ADDITIONAL_CONTEXT_PLACEHOLDER": "Cung cấp thêm ngữ cảnh hoặc hướng dẫn cho việc tạo FAQ...",
       "UPLOADING": "Đang tải lên...",
-      "UPLOAD": "Upload & Process",
+      "UPLOAD": "Tải lên & Xử lý",
       "CANCEL": "Huỷ",
-      "ERROR_INVALID_TYPE": "Please select a valid PDF file",
-      "ERROR_FILE_TOO_LARGE": "File size must be less than 512MB",
-      "ERROR_UPLOAD_FAILED": "Failed to upload PDF. Please try again."
+      "ERROR_INVALID_TYPE": "Vui lòng chọn tệp PDF hợp lệ",
+      "ERROR_FILE_TOO_LARGE": "Kích thước tệp phải nhỏ hơn 512MB",
+      "ERROR_UPLOAD_FAILED": "Tải lên PDF thất bại. Vui lòng thử lại."
     },
     "PDF_DOCUMENTS": {
-      "TITLE": "PDF Documents",
-      "DESCRIPTION": "Manage uploaded PDF documents and generate FAQs from them",
-      "UPLOAD_PDF": "Upload PDF",
-      "UPLOAD_FIRST_PDF": "Upload your first PDF",
-      "UPLOADED_BY": "Uploaded by",
-      "GENERATE_FAQS": "Generate FAQs",
-      "GENERATING": "Generating...",
-      "CONFIRM_DELETE": "Are you sure you want to delete {filename}?",
+      "TITLE": "Tài liệu PDF",
+      "DESCRIPTION": "Quản lý các tài liệu PDF đã tải lên và tạo FAQ từ chúng",
+      "UPLOAD_PDF": "Tải lên PDF",
+      "UPLOAD_FIRST_PDF": "Tải lên PDF đầu tiên của bạn",
+      "UPLOADED_BY": "Được tải lên bởi",
+      "GENERATE_FAQS": "Tạo FAQ",
+      "GENERATING": "Đang tạo...",
+      "CONFIRM_DELETE": "Bạn có chắc chắn muốn xoá {filename}?",
       "EMPTY_STATE": {
-        "TITLE": "No PDF documents yet",
-        "DESCRIPTION": "Upload PDF documents to automatically generate FAQs using AI"
+        "TITLE": "Chưa có tài liệu PDF nào",
+        "DESCRIPTION": "Tải lên tài liệu PDF để tự động tạo FAQ bằng AI"
       },
       "STATUS": {
-        "UPLOADED": "Ready",
-        "PROCESSING": "Processing",
+        "UPLOADED": "Sẵn sàng",
+        "PROCESSING": "Đang xử lý",
         "PROCESSED": "Hoàn tất",
-        "FAILED": "Failed"
+        "FAILED": "Thất bại"
       }
     },
     "CONTENT_GENERATION": {
-      "TITLE": "Content Generation",
-      "DESCRIPTION": "Upload PDF documents to automatically generate FAQ content using AI",
-      "UPLOAD_TITLE": "Upload PDF Document",
-      "DRAG_DROP": "Drag and drop your PDF file here, or click to select",
-      "SELECT_FILE": "Select PDF File",
-      "UPLOADING": "Processing document...",
-      "UPLOAD_SUCCESS": "Document processed successfully!",
-      "UPLOAD_ERROR": "Failed to upload document. Please try again.",
-      "INVALID_FILE_TYPE": "Please select a valid PDF file",
-      "FILE_TOO_LARGE": "File size must be less than 512MB",
-      "GENERATED_CONTENT": "Generated FAQ Content",
-      "PUBLISH_SELECTED": "Publish Selected",
-      "PUBLISHING": "Publishing...",
-      "FROM_DOCUMENT": "From document",
-      "NO_CONTENT": "No generated content available. Upload a PDF document to get started.",
-      "LOADING": "Loading generated content..."
+      "TITLE": "Tạo nội dung",
+      "DESCRIPTION": "Tải lên tài liệu PDF để tự động tạo nội dung FAQ bằng AI",
+      "UPLOAD_TITLE": "Tải lên tài liệu PDF",
+      "DRAG_DROP": "Kéo và thả tệp PDF của bạn vào đây, hoặc nhấn để chọn",
+      "SELECT_FILE": "Chọn tệp PDF",
+      "UPLOADING": "Đang xử lý tài liệu...",
+      "UPLOAD_SUCCESS": "Xử lý tài liệu thành công!",
+      "UPLOAD_ERROR": "Tải lên tài liệu thất bại. Vui lòng thử lại.",
+      "INVALID_FILE_TYPE": "Vui lòng chọn tệp PDF hợp lệ",
+      "FILE_TOO_LARGE": "Kích thước tệp phải nhỏ hơn 512MB",
+      "GENERATED_CONTENT": "Nội dung FAQ đã tạo",
+      "PUBLISH_SELECTED": "Xuất bản đã chọn",
+      "PUBLISHING": "Đang xuất bản...",
+      "FROM_DOCUMENT": "Từ tài liệu",
+      "NO_CONTENT": "Chưa có nội dung được tạo. Tải lên tài liệu PDF để bắt đầu.",
+      "LOADING": "Đang tải nội dung đã tạo..."
     }
   }
 }

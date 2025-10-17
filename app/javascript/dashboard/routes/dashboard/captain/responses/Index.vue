@@ -287,7 +287,7 @@ onMounted(() => {
         :note="$t('CAPTAIN.RESPONSES.EMPTY_STATE.FEATURE_SPOTLIGHT.NOTE')"
         fallback-thumbnail="/assets/images/dashboard/captain/faqs-popover-light.svg"
         fallback-thumbnail-dark="/assets/images/dashboard/captain/faqs-popover-dark.svg"
-        learn-more-url="https://www.shopiz.pro/captain-faq"
+        learn-more-url="https://docs.shopiz.pro/features/shopiz-ai/faq"
       />
     </template>
 

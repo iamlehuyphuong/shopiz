@@ -68,10 +68,10 @@
       "REMOVE": "{agentName} đã loại bỏ {user} khỏi đội ngũ (#{team_id})"
     },
     "ACCOUNT": {
-      "EDIT": "{agentName} updated the account configuration (#{id})"
+      "EDIT": "{agentName} đã cập nhật cấu hình tài khoản (#{id})"
     },
     "CONVERSATION": {
-      "DELETE": "{agentName} deleted conversation #{id}"
+      "DELETE": "{agentName} đã xóa cuộc trò chuyện #{id}"
     }
   }
 }

@@ -678,8 +678,8 @@
       "MESSENGER_SUB_HEAD": "מקם את הכפתור הזה בתוך תג הגוף שלך",
       "ALLOWED_DOMAINS": {
         "TITLE": "Allowed Domains",
-        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.chatwoot.dev, chatwoot.com.",
-        "PLACEHOLDER": "Enter domains separated by commas (eg: *.chatwoot.dev, chatwoot.com)"
+        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.shopiz.dev, shopiz.pro.",
+        "PLACEHOLDER": "Enter domains separated by commas (eg: *.shopiz.dev, shopiz.pro)"
       },
       "INBOX_AGENTS": "סוכנים",
       "INBOX_AGENTS_SUB_TEXT": "הוסף או הסר נציגים מתיבת הדואר הנכנס הזו",

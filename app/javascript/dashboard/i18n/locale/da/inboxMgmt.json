@@ -427,7 +427,7 @@
       },
       "AUTH": {
         "TITLE": "Vælg en kanal",
-        "DESC": "Chatwoot understøtter live-chat-widgets, Facebook Messenger, Twitter-profiler, WhatsApp, E-mails, osv., som kanaler. Hvis du ønsker at bygge en brugerdefineret kanal, kan du oprette den ved hjælp af API-kanalen. For at komme i gang, vælg en af kanalerne nedenfor.",
+        "DESC": "Shopiz understøtter live-chat-widgets, Facebook Messenger, Twitter-profiler, WhatsApp, E-mails, osv., som kanaler. Hvis du ønsker at bygge en brugerdefineret kanal, kan du oprette den ved hjælp af API-kanalen. For at komme i gang, vælg en af kanalerne nedenfor.",
         "TITLE_NEXT": "Complete the setup",
         "TITLE_FINISH": "Voilà!",
         "CHANNEL": {
@@ -678,8 +678,8 @@
       "MESSENGER_SUB_HEAD": "Placer denne knap inde i din body tag",
       "ALLOWED_DOMAINS": {
         "TITLE": "Allowed Domains",
-        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.chatwoot.dev, chatwoot.com.",
-        "PLACEHOLDER": "Enter domains separated by commas (eg: *.chatwoot.dev, chatwoot.com)"
+        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.shopiz.dev, shopiz.pro.",
+        "PLACEHOLDER": "Enter domains separated by commas (eg: *.shopiz.dev, shopiz.pro)"
       },
       "INBOX_AGENTS": "Agenter",
       "INBOX_AGENTS_SUB_TEXT": "Tilføj eller fjern agenter fra denne indbakke",

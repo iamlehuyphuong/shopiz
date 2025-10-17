@@ -160,7 +160,7 @@ export default {
     <div v-if="!hasLoginStarted" class="login-init h-full">
       <a href="#" @click="startLogin()">
         <img
-          src="~dashboard/assets/images/channels/zalo_login.jpg"
+          :src="`/assets/images/dashboard/channels/zalo_login.svg`"
           alt="Zalo-logo"
         />
       </a>

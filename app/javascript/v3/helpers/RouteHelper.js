@@ -44,7 +44,7 @@ export const validateRouteAccess = (to, next, shopizConfig = {}) => {
   // Disable navigation to SAML login if enterprise is not enabled
   // SAML route has an attribute (requireEnterprise) in it's definition
   const isEnterpriseOnlyPath =
-    chatwootConfig.isEnterprise !== 'true' &&
+    shopizConfig.isEnterprise !== 'true' &&
     to.meta &&
     to.meta.requireEnterprise;
 

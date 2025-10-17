@@ -427,7 +427,7 @@
       },
       "AUTH": {
         "TITLE": "Izvēlieties kanālu",
-        "DESC": "Chatwoot atbalsta tiešraides tērzēšanas logrīkus, Facebook Messenger, Twitter profilus, WhatsApp, e-pastus kā kanālus. Ja vēlaties izveidot pielāgotu kanālu, varat to izveidot, izmantojot API kanālu. Lai sāktu, izvēlieties vienu no tālāk norādītajiem kanāliem.",
+        "DESC": "Shopiz atbalsta tiešraides tērzēšanas logrīkus, Facebook Messenger, Twitter profilus, WhatsApp, e-pastus kā kanālus. Ja vēlaties izveidot pielāgotu kanālu, varat to izveidot, izmantojot API kanālu. Lai sāktu, izvēlieties vienu no tālāk norādītajiem kanāliem.",
         "TITLE_NEXT": "Complete the setup",
         "TITLE_FINISH": "Gatavs!",
         "CHANNEL": {
@@ -678,8 +678,8 @@
       "MESSENGER_SUB_HEAD": "Ievietojiet šo pogu savā body tagā",
       "ALLOWED_DOMAINS": {
         "TITLE": "Allowed Domains",
-        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.chatwoot.dev, chatwoot.com.",
-        "PLACEHOLDER": "Enter domains separated by commas (eg: *.chatwoot.dev, chatwoot.com)"
+        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.shopiz.dev, shopiz.pro.",
+        "PLACEHOLDER": "Enter domains separated by commas (eg: *.shopiz.dev, shopiz.pro)"
       },
       "INBOX_AGENTS": "Aģenti",
       "INBOX_AGENTS_SUB_TEXT": "Pievienot vai noņemt aģentus no šīs iesūtnes",

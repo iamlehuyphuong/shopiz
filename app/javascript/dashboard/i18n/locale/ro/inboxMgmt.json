@@ -427,7 +427,7 @@
       },
       "AUTH": {
         "TITLE": "Alege un canal",
-        "DESC": "Chatwoot acceptă widget-uri live-chat, Facebook Messenger, profiluri Twitter, WhatsApp, e-mailuri etc., ca canale. Dacă doriți să construiți un canal personalizat, îl puteți crea folosind canalul API. Pentru a începe, alegeți unul dintre canalele de mai jos.",
+        "DESC": "Shopiz acceptă widget-uri live-chat, Facebook Messenger, profiluri Twitter, WhatsApp, e-mailuri etc., ca canale. Dacă doriți să construiți un canal personalizat, îl puteți crea folosind canalul API. Pentru a începe, alegeți unul dintre canalele de mai jos.",
         "TITLE_NEXT": "Complete the setup",
         "TITLE_FINISH": "Voilà!",
         "CHANNEL": {
@@ -678,8 +678,8 @@
       "MESSENGER_SUB_HEAD": "Plasează acest buton în interiorul interiorul paginii web",
       "ALLOWED_DOMAINS": {
         "TITLE": "Allowed Domains",
-        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.chatwoot.dev, chatwoot.com.",
-        "PLACEHOLDER": "Enter domains separated by commas (eg: *.chatwoot.dev, chatwoot.com)"
+        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.shopiz.dev, shopiz.pro.",
+        "PLACEHOLDER": "Enter domains separated by commas (eg: *.shopiz.dev, shopiz.pro)"
       },
       "INBOX_AGENTS": "Agenți",
       "INBOX_AGENTS_SUB_TEXT": "Adaugă sau elimină agenți din acest inbox",

@@ -427,7 +427,7 @@
       },
       "AUTH": {
         "TITLE": "Bir Kanal Seçin",
-        "DESC": "Chatwoot, canlı sohbet widget'ları, Facebook Messenger, Twitter profilleri, WhatsApp, E-postalar vb. olarak kanalları destekler. Özel bir kanal oluşturmak istiyorsanız, API kanalını kullanarak bunu oluşturabilirsiniz. Başlamak için aşağıdaki kanallardan birini seçin.",
+        "DESC": "Shopiz, canlı sohbet widget'ları, Facebook Messenger, Twitter profilleri, WhatsApp, E-postalar vb. olarak kanalları destekler. Özel bir kanal oluşturmak istiyorsanız, API kanalını kullanarak bunu oluşturabilirsiniz. Başlamak için aşağıdaki kanallardan birini seçin.",
         "TITLE_NEXT": "Kurulumu tamamlayın",
         "TITLE_FINISH": "Voilà!",
         "CHANNEL": {
@@ -678,8 +678,8 @@
       "MESSENGER_SUB_HEAD": "Bu düğmeyi gövde etiketinizin içine yerleştirin",
       "ALLOWED_DOMAINS": {
         "TITLE": "İzin Verilen Alan Adları",
-        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.chatwoot.dev, chatwoot.com.",
-        "PLACEHOLDER": "Enter domains separated by commas (eg: *.chatwoot.dev, chatwoot.com)"
+        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.shopiz.dev, shopiz.pro.",
+        "PLACEHOLDER": "Enter domains separated by commas (eg: *.shopiz.dev, shopiz.pro)"
       },
       "INBOX_AGENTS": "Kullanıcılar",
       "INBOX_AGENTS_SUB_TEXT": "Bu gelen kutusuna aracı ekleyin veya aracıları kaldırın",

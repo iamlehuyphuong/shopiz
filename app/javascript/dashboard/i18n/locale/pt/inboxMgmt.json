@@ -427,7 +427,7 @@
       },
       "AUTH": {
         "TITLE": "Escolher um canal",
-        "DESC": "O Chatwoot suporta widgets de live-chat, Facebook Messenger, perfis do Twitter, WhatsApp, E-mails, etc., como canais. Se pretende criar um canal personalizado, pode fazê-lo usando o canal API. Para começar, escolha um dos canais abaixo.",
+        "DESC": "O Shopiz suporta widgets de live-chat, Facebook Messenger, perfis do Twitter, WhatsApp, E-mails, etc., como canais. Se pretende criar um canal personalizado, pode fazê-lo usando o canal API. Para começar, escolha um dos canais abaixo.",
         "TITLE_NEXT": "Complete the setup",
         "TITLE_FINISH": "Pronto!",
         "CHANNEL": {
@@ -678,8 +678,8 @@
       "MESSENGER_SUB_HEAD": "Coloque este botão no corpo da sua tag ",
       "ALLOWED_DOMAINS": {
         "TITLE": "Allowed Domains",
-        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.chatwoot.dev, chatwoot.com.",
-        "PLACEHOLDER": "Enter domains separated by commas (eg: *.chatwoot.dev, chatwoot.com)"
+        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.shopiz.dev, shopiz.pro.",
+        "PLACEHOLDER": "Enter domains separated by commas (eg: *.shopiz.dev, shopiz.pro)"
       },
       "INBOX_AGENTS": "Agentes",
       "INBOX_AGENTS_SUB_TEXT": "Adicionar ou remover agentes desta caixa de entrada",

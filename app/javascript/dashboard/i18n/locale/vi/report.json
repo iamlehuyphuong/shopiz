@@ -3,12 +3,12 @@
     "HEADER": "Các cuộc hội thoại",
     "LOADING_CHART": "Đang tải các biểu đồ dữ liệu...",
     "NO_ENOUGH_DATA": "Chúng tôi không nhận được đủ điểm dữ liệu để tạo báo cáo, vui lòng thử lại sau.",
-    "DOWNLOAD_AGENT_REPORTS": "Tải xuống báo cáo tổng đài viên",
+    "DOWNLOAD_AGENT_REPORTS": "Tải xuống báo cáo nhân viên",
     "DATA_FETCHING_FAILED": "Không thể lấy dữ liệu, vui lòng thử lại sau.",
     "SUMMARY_FETCHING_FAILED": "Không thể lấy bản tóm tắt, vui lòng thử lại sau.",
     "METRICS": {
       "CONVERSATIONS": {
-        "NAME": "Các cuộc trò chuyện",
+        "NAME": "Các cuộc hội thoại",
         "DESC": "( Tổng cộng )"
       },
       "INCOMING_MESSAGES": {
@@ -421,7 +421,7 @@
     "DOWNLOAD_FAILED": "Không thể tải xuống Báo cáo CSAT",
     "FILTERS": {
       "AGENTS": {
-        "PLACEHOLDER": "Chọn tổng đài viên"
+        "PLACEHOLDER": "Chọn nhân viên"
       }
     },
     "TABLE": {
@@ -475,7 +475,7 @@
       "HEADER": "Mở cuộc hội thoại",
       "LOADING_MESSAGE": "Đang tải số liệu cuộc hội thoại...",
       "OPEN": "Mở",
-      "UNATTENDED": "Không giám sát",
+      "UNATTENDED": "Chưa phản hồi",
       "UNASSIGNED": "Chưa được phân công",
       "PENDING": "Chờ giải quyết"
     },
@@ -493,7 +493,7 @@
       "TABLE_HEADER": {
         "AGENT": "Tổng đài viên",
         "OPEN": "Mở",
-        "UNATTENDED": "Không giám sát",
+        "UNATTENDED": "Chưa phản hồi",
         "STATUS": "Trạng thái"
       }
     },
@@ -505,7 +505,7 @@
       "TABLE_HEADER": {
         "TEAM": "Nhóm",
         "OPEN": "Mở",
-        "UNATTENDED": "Không giám sát",
+        "UNATTENDED": "Chưa phản hồi",
         "STATUS": "Trạng thái"
       }
     },
@@ -580,9 +580,9 @@
     "AGENT": "Nhân viên",
     "TEAM": "Nhóm",
     "LABEL": "Nhãn",
-    "AVG_RESOLUTION_TIME": "Avg. Resolution Time",
-    "AVG_FIRST_RESPONSE_TIME": "Avg. First Response Time",
-    "AVG_REPLY_TIME": "Avg. Customer Waiting Time",
+    "AVG_RESOLUTION_TIME": "Thời gian giải quyết trung bình",
+    "AVG_FIRST_RESPONSE_TIME": "Thời gian phản hồi đầu tiên trung bình",
+    "AVG_REPLY_TIME": "Thời gian chờ khách hàng trung bình",
     "RESOLUTION_COUNT": "Số lượng giải quyết",
     "CONVERSATIONS": "Số hội thoại"
   }

@@ -92,7 +92,7 @@ const conversationDynamicScroller = ref(null);
 
 provide('contextMenuElementTarget', conversationDynamicScroller);
 
-const activeAssigneeTab = ref(wootConstants.ASSIGNEE_TYPE.ME);
+const activeAssigneeTab = ref(wootConstants.ASSIGNEE_TYPE.ALL);
 const activeStatus = ref(wootConstants.STATUS_TYPE.OPEN);
 const activeSortBy = ref(wootConstants.SORT_BY_TYPE.LAST_ACTIVITY_AT_DESC);
 const showAdvancedFilters = ref(false);
@@ -357,7 +357,7 @@ const currentInbox = computed(() => {
 
 const showLoadHistoryConversation = computed(() => {
   return currentInbox.value.channel_type === 'Channel::FacebookPage' &&
-    !conversationStats.value['isLoadAllConversation'];
+    !conversationStats.value['isLoadAllConversation'] && !hasAppliedFiltersOrActiveFolders.value;
 })
 
 const allConversationsSelected = computed(() => {
@@ -911,10 +911,11 @@ watch(conversationFilters, (newVal, oldVal) => {
     <template v-if="!chatListLoading && !conversationList.length">
       <div v-if="showLoadHistoryConversation" class="flex justify-center my-4">
         <button
-          class="w-48 text-center px-2 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-indigo-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 transition w-32"
+          class="conversation-load-more bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full dark:hover:bg-gray-700"
           @click="onClickLoadHistoryConversation"
         >
-          {{ $t('CHAT_LIST.LOAD_MORE_CONVERSATIONS') }}
+          <span class="i-lucide-chevron-down"></span>
+          {{ $t('CHAT_LIST.LOAD_MORE') }}
         </button>
       </div>
       <p
@@ -985,10 +986,11 @@ watch(conversationFilters, (newVal, oldVal) => {
           <template v-else-if="showEndOfListMessage">
             <div v-if="showLoadHistoryConversation" class="flex justify-center my-4">
               <button
-                class="w-48 text-center px-2 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-indigo-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 transition w-32"
+                class="conversation-load-more bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full dark:hover:bg-gray-700"
                 @click="onClickLoadHistoryConversation"
               >
-                {{ $t('CHAT_LIST.LOAD_MORE_CONVERSATIONS') }}
+                <span class="i-lucide-chevron-down"></span>
+                {{ $t('CHAT_LIST.LOAD_MORE') }}
               </button>
             </div>
             <p
@@ -1035,3 +1037,8 @@ watch(conversationFilters, (newVal, oldVal) => {
     </TeleportWithDirection>
   </div>
 </template>
+<style lang="scss" scoped>
+.conversation-load-more {
+  @apply w-48 text-center px-2 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition w-32 flex items-center gap-1 justify-center;
+}
+</style>

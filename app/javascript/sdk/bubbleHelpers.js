@@ -27,26 +27,7 @@ export const setBubbleText = bubbleText => {
 
 export const createBubbleIcon = ({ className, path, target }) => {
   let bubbleClassName = `${className} woot-elements--${window.$shopiz.position}`;
-  const bubbleIcon = document.createElementNS(
-    'http://www.w3.org/2000/svg',
-    'svg'
-  );
-  bubbleIcon.setAttributeNS(null, 'id', 'woot-widget-bubble-icon');
-  bubbleIcon.setAttributeNS(null, 'width', '24');
-  bubbleIcon.setAttributeNS(null, 'height', '24');
-  bubbleIcon.setAttributeNS(null, 'viewBox', '0 0 240 240');
-  bubbleIcon.setAttributeNS(null, 'fill', 'none');
-  bubbleIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-
-  const bubblePath = document.createElementNS(
-    'http://www.w3.org/2000/svg',
-    'path'
-  );
-  bubblePath.setAttributeNS(null, 'd', path);
-  bubblePath.setAttributeNS(null, 'fill', '#FFFFFF');
-
-  bubbleIcon.appendChild(bubblePath);
-  target.appendChild(bubbleIcon);
+  addImageToButton({ target, imageName: 'bubble_chat_icon.svg' });
 
   if (isExpandedView(window.$shopiz.type)) {
     const textNode = document.createElement('div');
@@ -60,6 +41,13 @@ export const createBubbleIcon = ({ className, path, target }) => {
   target.title = 'Open chat window';
   return target;
 };
+
+export const addImageToButton = ({ target, imageName }) => {
+  const img = document.createElement('img');
+  img.className = 'bubble-icon';
+  img.setAttribute('src', window.$shopiz.baseUrl + '/assets/images/' + imageName);
+  target.appendChild(img);
+}
 
 export const createBubbleHolder = hideMessageBubble => {
   if (hideMessageBubble) {

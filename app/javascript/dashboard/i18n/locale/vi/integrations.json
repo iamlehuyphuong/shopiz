@@ -107,7 +107,7 @@
       },
       "HELP_TEXT": {
         "TITLE": "Cách sử dụng tích hợp Slack?",
-        "BODY": "Với tích hợp này, tất cả cuộc đối thoại đến sẽ được đồng bộ vào kênh ***{selectedChannelName}*** trên workspace Slack của bạn. Bạn có thể quản lý các cuộc đối thoại khách hàng ngay trong kênh mà không bỏ sót tin nhắn nào.\n\nCác tính năng chính:\n\n**Trả lời từ Slack:** Để trả lời một đối thoại trong kênh ***{selectedChannelName}***, chỉ cần gõ và gửi dưới dạng chuỗi. Điều này sẽ tạo phản hồi gửi trở lại khách hàng thông qua Shopiz. Đơn giản như vậy!\n\n**Tạo ghi chú riêng:** Nếu muốn tạo ghi chú thay vì trả lời, hãy bắt đầu tin nhắn với ***`note:`***. Như vậy, tin nhắn sẽ được giữ riêng tư và không hiển thị cho khách hàng.\n\n**Liên kết hồ sơ đại lý:** Nếu người trả lời trên Slack có hồ sơ đại lý trong Shopiz với cùng email, câu trả lời sẽ tự động được liên kết với hồ sơ đó. Ngược lại, nếu không có hồ sơ liên kết, các phản hồi sẽ hiển thị từ hồ sơ bot.",
+        "BODY": "Với tích hợp này, tất cả cuộc đối thoại đến sẽ được đồng bộ vào kênh ***{selectedChannelName}*** trên workspace Slack của bạn. Bạn có thể quản lý các cuộc đối thoại khách hàng ngay trong kênh mà không bỏ sót tin nhắn nào.\n\nCác tính năng chính:\n\n**Trả lời từ Slack:** Để trả lời một đối thoại trong kênh ***{selectedChannelName}***, chỉ cần gõ và gửi dưới dạng chuỗi. Điều này sẽ tạo phản hồi gửi trở lại khách hàng thông qua Shopiz. Đơn giản như vậy!\n\n**Tạo ghi chú riêng:** Nếu muốn tạo ghi chú thay vì trả lời, hãy bắt đầu tin nhắn với ***`note:`***. Như vậy, tin nhắn sẽ được giữ riêng tư và không hiển thị cho khách hàng.\n\n**Liên kết hồ sơ nhân viên:** Nếu người trả lời trên Slack có hồ sơ nhân viên trong Shopiz với cùng email, câu trả lời sẽ tự động được liên kết với hồ sơ đó. Ngược lại, nếu không có hồ sơ liên kết, các phản hồi sẽ hiển thị từ hồ sơ bot.",
         "SELECTED": "đã chọn"
       },
       "SELECT_CHANNEL": {
@@ -479,9 +479,9 @@
         },
         "FEATURES": {
           "TITLE": "Các tính năng",
-          "ALLOW_CONVERSATION_FAQS": "Generate FAQs from resolved conversations",
-          "ALLOW_MEMORIES": "Capture key details as memories from customer interactions.",
-          "ALLOW_CITATIONS": "Include source citations in responses"
+          "ALLOW_CONVERSATION_FAQS": "Truy cập vào các bài hướng dẫn và câu hỏi thường gặp để cung cấp phản hồi chính xác.",
+          "ALLOW_MEMORIES": "Ghi lại các chi tiết quan trọng từ các tương tác của khách hàng.",
+          "ALLOW_CITATIONS": "Bao gồm các trích dẫn nguồn trong phản hồi"
         }
       },
       "EDIT": {
@@ -489,37 +489,6 @@
         "SUCCESS_MESSAGE": "Trợ lý đã được cập nhật thành công",
         "ERROR_MESSAGE": "Có lỗi khi cập nhật trợ lý, vui lòng thử lại",
         "NOT_FOUND": "Không tìm thấy trợ lý. Vui lòng thử lại."
-      },
-      "SETTINGS": {
-        "BREADCRUMB": {
-          "ASSISTANT": "Trợ lý"
-        },
-        "BASIC_SETTINGS": {
-          "TITLE": "Cài đặt cơ bản",
-          "DESCRIPTION": "Tùy chỉnh những gì trợ lý nói khi kết thúc cuộc trò chuyện hoặc chuyển giao cho con người."
-        },
-        "SYSTEM_SETTINGS": {
-          "TITLE": "Cài đặt hệ thống",
-          "DESCRIPTION": "Tùy chỉnh những gì trợ lý nói khi kết thúc cuộc trò chuyện hoặc chuyển giao cho con người."
-        },
-        "CONTROL_ITEMS": {
-          "TITLE": "Những điều thú vị",
-          "DESCRIPTION": "Thêm nhiều điều khiển hơn cho trợ lý. (hơi hình ảnh hơn như một câu chuyện: Rào cản truy vấn → kịch bản → đầu ra) Thúc đẩy người dùng thực sự sử dụng những điều này.",
-          "OPTIONS": {
-            "GUARDRAILS": {
-              "TITLE": "Rào cản",
-              "DESCRIPTION": "Giữ mọi thứ đi đúng hướng - chỉ những loại câu hỏi mà bạn muốn trợ lý của mình trả lời, không có gì ngoài giới hạn hoặc không liên quan."
-            },
-            "SCENARIOS": {
-              "TITLE": "Kịch bản",
-              "DESCRIPTION": "Cung cấp cho trợ lý của bạn một số ngữ cảnh - như “phải làm gì khi người dùng bị kẹt,” hoặc “cách hành động trong trường hợp yêu cầu hoàn tiền.”"
-            },
-            "RESPONSE_GUIDELINES": {
-              "TITLE": "Hướng dẫn phản hồi",
-              "DESCRIPTION": "Bầu không khí và cấu trúc của các phản hồi của trợ lý—rõ ràng và thân thiện? Ngắn gọn và súc tích? Chi tiết và trang trọng?"
-            }
-          }
-        }
       },
       "SETTINGS": {
         "BREADCRUMB": {
@@ -727,169 +696,6 @@
             "ERROR": "Đã có lỗi xảy ra khi xóa kịch bản, vui lòng thử lại."
           }
         }
-      },
-      "GUARDRAILS": {
-        "TITLE": "Rào cản",
-        "DESCRIPTION": "Giữ mọi thứ đi đúng hướng—chỉ những loại câu hỏi mà bạn muốn trợ lý của mình trả lời, không có gì ngoài giới hạn hoặc không liên quan.",
-        "BREADCRUMB": {
-          "TITLE": "Rào cản"
-        },
-        "BULK_ACTION": {
-          "SELECTED": "{count} item selected | {count} items selected",
-          "SELECT_ALL": "Chọn tất cả ({count})",
-          "UNSELECT_ALL": "Bỏ chọn tất cả ({count})",
-          "BULK_DELETE_BUTTON": "Xoá"
-        },
-        "ADD": {
-          "SUGGESTED": {
-            "TITLE": "Ví dụ về rào cản",
-            "ADD": "Thêm tất cả",
-            "ADD_SINGLE": "Thêm cái này",
-            "SAVE": "Thêm và lưu (↵)",
-            "PLACEHOLDER": "Nhập một rào cản khác..."
-          },
-          "NEW": {
-            "TITLE": "Thêm một rào cản",
-            "CREATE": "Tạo",
-            "CANCEL": "Huỷ",
-            "PLACEHOLDER": "Nhập một rào cản khác...",
-            "TEST_ALL": "Kiểm tra tất cả"
-          }
-        },
-        "LIST": {
-          "SEARCH_PLACEHOLDER": "Tìm kiếm..."
-        },
-        "EMPTY_MESSAGE": "Không tìm thấy rào cản nào. Tạo hoặc thêm ví dụ để bắt đầu.",
-        "SEARCH_EMPTY_MESSAGE": "Không tìm thấy rào cản nào cho tìm kiếm này.",
-        "API": {
-          "ADD": {
-            "SUCCESS": "Rào cản đã được thêm thành công",
-            "ERROR": "Đã có lỗi xảy ra khi thêm rào cản, vui lòng thử lại."
-          },
-          "UPDATE": {
-            "SUCCESS": "Rào cản đã được cập nhật thành công",
-            "ERROR": "Đã có lỗi xảy ra khi cập nhật rào cản, vui lòng thử lại."
-          },
-          "DELETE": {
-            "SUCCESS": "Rào cản đã được xóa thành công",
-            "ERROR": "Đã có lỗi xảy ra khi xóa rào cản, vui lòng thử lại."
-          }
-        }
-      },
-      "RESPONSE_GUIDELINES": {
-        "TITLE": "Hướng dẫn phản hồi",
-        "DESCRIPTION": "Bầu không khí và cấu trúc của các phản hồi của trợ lý của bạn—rõ ràng và thân thiện? Ngắn gọn và súc tích? Chi tiết và trang trọng?",
-        "BREADCRUMB": {
-          "TITLE": "Hướng dẫn phản hồi"
-        },
-        "BULK_ACTION": {
-          "SELECTED": "{count} item selected | {count} items selected",
-          "SELECT_ALL": "Chọn tất cả ({count})",
-          "UNSELECT_ALL": "Bỏ chọn tất cả ({count})",
-          "BULK_DELETE_BUTTON": "Xoá"
-        },
-        "ADD": {
-          "SUGGESTED": {
-            "TITLE": "Ví dụ về hướng dẫn phản hồi",
-            "ADD": "Thêm tất cả",
-            "ADD_SINGLE": "Thêm cái này",
-            "SAVE": "Thêm và lưu (↵)",
-            "PLACEHOLDER": "Nhập một hướng dẫn phản hồi khác..."
-          },
-          "NEW": {
-            "TITLE": "Thêm một hướng dẫn phản hồi",
-            "CREATE": "Tạo",
-            "CANCEL": "Huỷ",
-            "PLACEHOLDER": "Nhập một hướng dẫn phản hồi khác...",
-            "TEST_ALL": "Kiểm tra tất cả"
-          }
-        },
-        "LIST": {
-          "SEARCH_PLACEHOLDER": "Tìm kiếm..."
-        },
-        "EMPTY_MESSAGE": "Không tìm thấy hướng dẫn phản hồi nào. Tạo hoặc thêm ví dụ để bắt đầu.",
-        "SEARCH_EMPTY_MESSAGE": "Không tìm thấy hướng dẫn phản hồi nào cho tìm kiếm này.",
-        "API": {
-          "ADD": {
-            "SUCCESS": "Hướng dẫn phản hồi đã được thêm thành công",
-            "ERROR": "Đã có lỗi xảy ra khi thêm hướng dẫn phản hồi, vui lòng thử lại."
-          },
-          "UPDATE": {
-            "SUCCESS": "Hướng dẫn phản hồi đã được cập nhật thành công",
-            "ERROR": "Đã có lỗi xảy ra khi cập nhật hướng dẫn phản hồi, vui lòng thử lại."
-          },
-          "DELETE": {
-            "SUCCESS": "Hướng dẫn phản hồi đã được xóa thành công",
-            "ERROR": "Đã có lỗi xảy ra khi xóa hướng dẫn phản hồi, vui lòng thử lại."
-          }
-        }
-      },
-      "SCENARIOS": {
-        "TITLE": "Kịch bản",
-        "DESCRIPTION": "Cung cấp cho trợ lý của bạn một số ngữ cảnh—như “phải làm gì khi người dùng bị kẹt,” hoặc “cách hành động trong trường hợp yêu cầu hoàn tiền.”",
-        "BREADCRUMB": {
-          "TITLE": "Kịch bản"
-        },
-        "BULK_ACTION": {
-          "SELECTED": "{count} item selected | {count} items selected",
-          "SELECT_ALL": "Chọn tất cả ({count})",
-          "UNSELECT_ALL": "Bỏ chọn tất cả ({count})",
-          "BULK_DELETE_BUTTON": "Xoá"
-        },
-        "ADD": {
-          "SUGGESTED": {
-            "TITLE": "Ví dụ về kịch bản",
-            "ADD": "Thêm tất cả",
-            "ADD_SINGLE": "Thêm cái này",
-            "TOOLS_USED": "Công cụ đã sử dụng:"
-          },
-          "NEW": {
-            "CREATE": "Thêm một kịch bản",
-            "TITLE": "Tạo một kịch bản",
-            "FORM": {
-              "TITLE": {
-                "LABEL": "Tiêu đề",
-                "PLACEHOLDER": "Nhập tên cho kịch bản",
-                "ERROR": "Tên kịch bản là bắt buộc"
-              },
-              "DESCRIPTION": {
-                "LABEL": "Mô tả",
-                "PLACEHOLDER": "Mô tả cách và nơi kịch bản này sẽ được sử dụng",
-                "ERROR": "Mô tả kịch bản là bắt buộc"
-              },
-              "INSTRUCTION": {
-                "LABEL": "Cách xử lý",
-                "PLACEHOLDER": "Mô tả cách và nơi kịch bản này sẽ được xử lý",
-                "ERROR": "Nội dung kịch bản là bắt buộc"
-              },
-              "CREATE": "Tạo",
-              "CANCEL": "Huỷ"
-            }
-          }
-        },
-        "UPDATE": {
-          "CANCEL": "Huỷ",
-          "UPDATE": "Cập nhật thay đổi"
-        },
-        "LIST": {
-          "SEARCH_PLACEHOLDER": "Tìm kiếm..."
-        },
-        "EMPTY_MESSAGE": "Không tìm thấy kịch bản nào. Tạo hoặc thêm ví dụ để bắt đầu.",
-        "SEARCH_EMPTY_MESSAGE": "Không tìm thấy kịch bản nào cho tìm kiếm này.",
-        "API": {
-          "ADD": {
-            "SUCCESS": "Kịch bản đã được thêm thành công",
-            "ERROR": "Đã có lỗi xảy ra khi thêm kịch bản, vui lòng thử lại."
-          },
-          "UPDATE": {
-            "SUCCESS": "Kịch bản đã được cập nhật thành công",
-            "ERROR": "Đã có lỗi xảy ra khi cập nhật kịch bản, vui lòng thử lại."
-          },
-          "DELETE": {
-            "SUCCESS": "Kịch bản đã được xóa thành công",
-            "ERROR": "Đã có lỗi xảy ra khi xóa kịch bản, vui lòng thử lại."
-          }
-        }
       }
     },
     "DOCUMENTS": {
@@ -949,64 +755,64 @@
         "TITLE": "Không có tài liệu",
         "SUBTITLE": "Tài liệu được dùng bởi trợ lý để tạo các FAQ. Bạn có thể nhập tài liệu để cung cấp ngữ cảnh cho trợ lý.",
         "FEATURE_SPOTLIGHT": {
-          "TITLE": "Captain Document",
-          "NOTE": "A document in Captain serves as a knowledge resource for the assistant. By connecting your help center or guides, Captain can analyze the content and provide accurate responses for customer inquiries."
+          "TITLE": "Tài liệu",
+          "NOTE": "Tài liệu trong Captain phục vụ như một nguồn kiến thức cho trợ lý. Bằng cách kết nối trung tâm trợ giúp hoặc hướng dẫn của bạn, Captain có thể phân tích nội dung và cung cấp phản hồi chính xác cho các yêu cầu của khách hàng."
         }
       }
     },
     "CUSTOM_TOOLS": {
-      "HEADER": "Tools",
-      "ADD_NEW": "Create a new tool",
+      "HEADER": "Công cụ",
+      "ADD_NEW": "Tạo công cụ mới",
       "EMPTY_STATE": {
-        "TITLE": "No custom tools available",
-        "SUBTITLE": "Create custom tools to connect your assistant with external APIs and services, enabling it to fetch data and perform actions on your behalf.",
+        "TITLE": "Chưa có công cụ tuỳ chỉnh",
+        "SUBTITLE": "Tạo công cụ tuỳ chỉnh để kết nối trợ lý của bạn với các API và dịch vụ bên ngoài, cho phép lấy dữ liệu và thực hiện hành động thay bạn.",
         "FEATURE_SPOTLIGHT": {
-          "TITLE": "Custom Tools",
-          "NOTE": "Custom tools allow your assistant to interact with external APIs and services. Create tools to fetch data, perform actions, or integrate with your existing systems to enhance your assistant's capabilities."
+          "TITLE": "Công cụ tuỳ chỉnh",
+          "NOTE": "Công cụ tuỳ chỉnh cho phép trợ lý của bạn tương tác với các API và dịch vụ bên ngoài. Tạo công cụ để lấy dữ liệu, thực hiện hành động hoặc tích hợp với hệ thống hiện tại nhằm nâng cao khả năng của trợ lý."
         }
       },
-      "FORM_DESCRIPTION": "Configure your custom tool to connect with external APIs",
+      "FORM_DESCRIPTION": "Cấu hình công cụ tuỳ chỉnh để kết nối với API bên ngoài",
       "OPTIONS": {
-        "EDIT_TOOL": "Edit tool",
-        "DELETE_TOOL": "Delete tool"
+        "EDIT_TOOL": "Chỉnh sửa công cụ",
+        "DELETE_TOOL": "Xoá công cụ"
       },
       "CREATE": {
-        "TITLE": "Create Custom Tool",
-        "SUCCESS_MESSAGE": "Custom tool created successfully",
-        "ERROR_MESSAGE": "Failed to create custom tool"
+        "TITLE": "Tạo công cụ tuỳ chỉnh",
+        "SUCCESS_MESSAGE": "Đã tạo công cụ tuỳ chỉnh thành công",
+        "ERROR_MESSAGE": "Không thể tạo công cụ tuỳ chỉnh"
       },
       "EDIT": {
-        "TITLE": "Edit Custom Tool",
-        "SUCCESS_MESSAGE": "Custom tool updated successfully",
-        "ERROR_MESSAGE": "Failed to update custom tool"
+        "TITLE": "Chỉnh sửa công cụ tuỳ chỉnh",
+        "SUCCESS_MESSAGE": "Đã cập nhật công cụ tuỳ chỉnh thành công",
+        "ERROR_MESSAGE": "Không thể cập nhật công cụ tuỳ chỉnh"
       },
       "DELETE": {
-        "TITLE": "Delete Custom Tool",
-        "DESCRIPTION": "Are you sure you want to delete this custom tool? This action cannot be undone.",
+        "TITLE": "Xoá công cụ tuỳ chỉnh",
+        "DESCRIPTION": "Bạn có chắc chắn muốn xoá công cụ tuỳ chỉnh này? Hành động này không thể hoàn tác.",
         "CONFIRM": "Có, xoá",
-        "SUCCESS_MESSAGE": "Custom tool deleted successfully",
-        "ERROR_MESSAGE": "Failed to delete custom tool"
+        "SUCCESS_MESSAGE": "Đã xoá công cụ tuỳ chỉnh thành công",
+        "ERROR_MESSAGE": "Không thể xoá công cụ tuỳ chỉnh"
       },
       "FORM": {
         "TITLE": {
-          "LABEL": "Tool Name",
-          "PLACEHOLDER": "Order Lookup",
-          "ERROR": "Tool name is required"
+          "LABEL": "Tên công cụ",
+          "PLACEHOLDER": "Tra cứu đơn hàng",
+          "ERROR": "Tên công cụ là bắt buộc"
         },
         "DESCRIPTION": {
           "LABEL": "Mô tả",
-          "PLACEHOLDER": "Looks up order details by order ID"
+          "PLACEHOLDER": "Tra cứu chi tiết đơn hàng theo mã đơn"
         },
         "HTTP_METHOD": {
-          "LABEL": "Method"
+          "LABEL": "Phương thức"
         },
         "ENDPOINT_URL": {
-          "LABEL": "Endpoint URL",
+          "LABEL": "URL endpoint",
           "PLACEHOLDER": "https://api.example.com/orders/{'{{'} order_id {'}}'}",
-          "ERROR": "Valid URL is required"
+          "ERROR": "URL hợp lệ là bắt buộc"
         },
         "AUTH_TYPE": {
-          "LABEL": "Authentication Type"
+          "LABEL": "Loại xác thực"
         },
         "AUTH_TYPES": {
           "NONE": "Không có",
@@ -1016,50 +822,50 @@
         },
         "AUTH_CONFIG": {
           "BEARER_TOKEN": "Bearer Token",
-          "BEARER_TOKEN_PLACEHOLDER": "Enter your bearer token",
-          "USERNAME": "Username",
-          "USERNAME_PLACEHOLDER": "Enter username",
+          "BEARER_TOKEN_PLACEHOLDER": "Nhập bearer token",
+          "USERNAME": "Tên đăng nhập",
+          "USERNAME_PLACEHOLDER": "Nhập tên đăng nhập",
           "PASSWORD": "Mật khẩu",
-          "PASSWORD_PLACEHOLDER": "Enter password",
-          "API_KEY": "Header Name",
+          "PASSWORD_PLACEHOLDER": "Nhập mật khẩu",
+          "API_KEY": "Tên Header",
           "API_KEY_PLACEHOLDER": "X-API-Key",
-          "API_VALUE": "Header Value",
-          "API_VALUE_PLACEHOLDER": "Enter API key value"
+          "API_VALUE": "Giá trị Header",
+          "API_VALUE_PLACEHOLDER": "Nhập giá trị khoá API"
         },
         "PARAMETERS": {
-          "LABEL": "Parameters",
-          "HELP_TEXT": "Define the parameters that will be extracted from user queries"
+          "LABEL": "Tham số",
+          "HELP_TEXT": "Định nghĩa các tham số sẽ được lấy từ truy vấn của người dùng"
         },
-        "ADD_PARAMETER": "Add Parameter",
+        "ADD_PARAMETER": "Thêm tham số",
         "PARAM_NAME": {
-          "PLACEHOLDER": "Parameter name (e.g., order_id)"
+          "PLACEHOLDER": "Tên tham số (ví dụ: order_id)"
         },
         "PARAM_TYPE": {
           "PLACEHOLDER": "Kiểu"
         },
         "PARAM_TYPES": {
-          "STRING": "String",
+          "STRING": "Chuỗi",
           "NUMBER": "Số",
           "BOOLEAN": "Boolean",
-          "ARRAY": "Array",
-          "OBJECT": "Object"
+          "ARRAY": "Mảng",
+          "OBJECT": "Đối tượng"
         },
         "PARAM_DESCRIPTION": {
-          "PLACEHOLDER": "Description of the parameter"
+          "PLACEHOLDER": "Mô tả tham số"
         },
         "PARAM_REQUIRED": {
           "LABEL": "Bắt buộc"
         },
         "REQUEST_TEMPLATE": {
-          "LABEL": "Request Body Template (Optional)",
+          "LABEL": "Mẫu nội dung gửi (tuỳ chọn)",
           "PLACEHOLDER": "{'{'}\n  \"order_id\": \"{'{{'} order_id {'}}'}\"\n{'}'}"
         },
         "RESPONSE_TEMPLATE": {
-          "LABEL": "Response Template (Optional)",
-          "PLACEHOLDER": "Order {'{{'} order_id {'}}'} status: {'{{'} status {'}}'}"
+          "LABEL": "Mẫu phản hồi (tuỳ chọn)",
+          "PLACEHOLDER": "Trạng thái đơn hàng {'{{'} order_id {'}}'}: {'{{'} status {'}}'}"
         },
         "ERRORS": {
-          "PARAM_NAME_REQUIRED": "Parameter name is required"
+          "PARAM_NAME_REQUIRED": "Tên tham số là bắt buộc"
         }
       }
     },
@@ -1069,11 +875,11 @@
       "DOCUMENTABLE": {
         "CONVERSATION": "Cuộc đối thoại #{id}"
       },
-      "SELECTED": "{count} selected",
-      "SELECT_ALL": "Select all ({count})",
-      "UNSELECT_ALL": "Unselect all ({count})",
-      "SEARCH_PLACEHOLDER": "Search FAQs...",
-      "BULK_APPROVE_BUTTON": "Approve",
+      "SELECTED": "{count} đã chọn",
+      "SELECT_ALL": "Chọn tất cả ({count})",
+      "UNSELECT_ALL": "Bỏ chọn tất cả ({count})",
+      "SEARCH_PLACEHOLDER": "Tìm kiếm FAQs...",
+      "BULK_APPROVE_BUTTON": "Phê duyệt",
       "BULK_DELETE_BUTTON": "Xoá",
       "BULK_APPROVE": {
         "SUCCESS_MESSAGE": "FAQ đã được phê duyệt thành công",

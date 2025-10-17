@@ -7,6 +7,7 @@
     "CLICK_TO_RECONNECT": "Click here to reconnect.",
     "WHATSAPP_REGISTRATION_INCOMPLETE": "Your WhatsApp Business registration isn’t complete. Please check your display name status in Meta Business Manager before reconnecting.",
     "COMPLETE_REGISTRATION": "Complete Registration",
+    "CLICK_TO_RECONNECT": "Nhấp vào đây để kết nối lại.",
     "LIST": {
       "404": "Không có hộp thư nào được gắn với tài khoản này."
     },
@@ -474,7 +475,7 @@
       },
       "AUTH": {
         "TITLE": "Chọn kênh",
-        "DESC": "Chatwoot hỗ trợ các tiện ích trò chuyện trực tiếp, Facebook Messenger, hồ sơ Twitter, WhatsApp, Email, v. v., dưới dạng các kênh. Nếu bạn muốn xây dựng một kênh tùy chỉnh, bạn có thể tạo kênh này bằng cách sử dụng kênh API. Để bắt đầu, hãy chọn một trong các kênh bên dưới.",
+        "DESC": "Shopiz hỗ trợ các tiện ích trò chuyện trực tiếp, Facebook Messenger, hồ sơ Twitter, WhatsApp, Email, v. v., dưới dạng các kênh. Nếu bạn muốn xây dựng một kênh tùy chỉnh, bạn có thể tạo kênh này bằng cách sử dụng kênh API. Để bắt đầu, hãy chọn một trong các kênh bên dưới.",
         "TITLE_NEXT": "Complete the setup",
         "TITLE_FINISH": "Voilà!",
         "CHANNEL": {
@@ -576,8 +577,8 @@
       "DESC": ""
     },
     "AGENTS": {
-      "BUTTON_TEXT": "Thêm các nhà cung cấp",
-      "ADD_AGENTS": "Thêm các nhà cung cấp vào hộp thư đến của bạn..."
+      "BUTTON_TEXT": "Thêm nhân viên",
+      "ADD_AGENTS": "Thêm nhân viên vào hộp thư đến của bạn..."
     },
     "FINISH": {
       "TITLE": "Hộp thư đến của bạn đã sẵn sàng!",
@@ -607,12 +608,12 @@
       },
       "SENDER_NAME_SECTION": {
         "TITLE": "Tên người gửi",
-        "SUB_TEXT": "Chọn tên hiển thị cho khách hàng của bạn khi họ nhận email từ các đại lý của bạn.",
+        "SUB_TEXT": "Chọn tên hiển thị cho khách hàng của bạn khi họ nhận email từ các nhân viên của bạn.",
         "FOR_EG": "Ví dụ:",
         "FRIENDLY": {
           "TITLE": "Thân thiện",
           "FROM": "từ",
-          "SUBTITLE": "Thêm tên của đại lý đã gửi phản hồi vào tên người gửi để làm cho nó thân thiện hơn."
+          "SUBTITLE": "Thêm tên của nhân viên đã gửi phản hồi vào tên người gửi để làm cho nó thân thiện hơn."
         },
         "PROFESSIONAL": {
           "TITLE": "Chuyên nghiệp",
@@ -737,8 +738,8 @@
       "MESSENGER_SUB_HEAD": "Đặt nút này bên trong thẻ body của bạn",
       "ALLOWED_DOMAINS": {
         "TITLE": "Allowed Domains",
-        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.chatwoot.dev, chatwoot.com.",
-        "PLACEHOLDER": "Enter domains separated by commas (eg: *.chatwoot.dev, chatwoot.com)"
+        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.shopiz.dev, shopiz.pro.",
+        "PLACEHOLDER": "Enter domains separated by commas (eg: *.shopiz.dev, shopiz.pro)"
       },
       "INBOX_AGENTS": "Nhà cung cấp",
       "INBOX_AGENTS_SUB_TEXT": "Thêm hoặc xóa tác nhân khỏi hộp thư đến này",
@@ -803,11 +804,11 @@
       "UPDATE_PRE_CHAT_FORM_SETTINGS": "Update Pre Chat Form Settings"
     },
     "HELP_CENTER": {
-      "LABEL": "Help Center",
-      "PLACEHOLDER": "Select Help Center",
-      "SELECT_PLACEHOLDER": "Select Help Center",
-      "REMOVE": "Remove Help Center",
-      "SUB_TEXT": "Attach a Help Center with the inbox"
+      "LABEL": "Trung tâm trợ giúp",
+      "PLACEHOLDER": "Chọn trung tâm trợ giúp",
+      "SELECT_PLACEHOLDER": "Chọn trung tâm trợ giúp",
+      "REMOVE": "Xoá trung tâm trợ giúp",
+      "SUB_TEXT": "Gắn Trung tâm trợ giúp vào hộp thư"
     },
     "AUTO_ASSIGNMENT": {
       "MAX_ASSIGNMENT_LIMIT": "Giới hạn tự động phân công tối đa",

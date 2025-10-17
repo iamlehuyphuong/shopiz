@@ -541,7 +541,7 @@ export default {
       <template v-if="showEndOfListMessage" #loadMoreHistory>
         <div v-if="showLoadHistoryMessage" class="flex justify-center my-4">
           <button
-            class="w-48 text-center px-2 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-indigo-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 transition w-32"
+            class="w-48 text-center px-2 py-2 text-sm font-medium bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 transition w-32"
             @click="onClickLoadHistoryMessages"
           >
             {{ $t('CONVERSATION.LOAD_MORE_MESSAGES') }}

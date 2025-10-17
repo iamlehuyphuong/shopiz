@@ -427,7 +427,7 @@
       },
       "AUTH": {
         "TITLE": "Escull un canal",
-        "DESC": "Chatwoot admet widgets de xat en directe, Facebook Messenger, WhatsApp, correus electrònics, etc., com a canals. Si voleu crear un canal personalitzat, podeu crear-lo mitjançant el canal API. Per començar, tria un dels canals següents.",
+        "DESC": "Shopiz admet widgets de xat en directe, Facebook Messenger, WhatsApp, correus electrònics, etc., com a canals. Si voleu crear un canal personalitzat, podeu crear-lo mitjançant el canal API. Per començar, tria un dels canals següents.",
         "TITLE_NEXT": "Complete the setup",
         "TITLE_FINISH": "Voilà!",
         "CHANNEL": {
@@ -678,8 +678,8 @@
       "MESSENGER_SUB_HEAD": "Col·loca aquest botó dins de l'etiqueta body",
       "ALLOWED_DOMAINS": {
         "TITLE": "Allowed Domains",
-        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.chatwoot.dev, chatwoot.com.",
-        "PLACEHOLDER": "Enter domains separated by commas (eg: *.chatwoot.dev, chatwoot.com)"
+        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.shopiz.dev, shopiz.pro.",
+        "PLACEHOLDER": "Enter domains separated by commas (eg: *.shopiz.dev, shopiz.pro)"
       },
       "INBOX_AGENTS": "Agents",
       "INBOX_AGENTS_SUB_TEXT": "Afegir o eliminar agents d'aquesta safata d'entrada",

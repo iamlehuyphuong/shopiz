@@ -204,6 +204,20 @@ class Conversation < ApplicationRecord
     inbox.channel.instance_of?(::Channel::FacebookPage) && !is_load_all_message
   end
 
+  def zalo_group?
+    additional_attributes['type'] == 1
+  end
+
+  def status_display
+    return :bot if pending_bot?
+
+    status.to_sym
+  end
+
+  def pending_bot?
+    pending? && inbox.active_bot?
+  end
+
   private
 
   def execute_after_update_commit_callbacks

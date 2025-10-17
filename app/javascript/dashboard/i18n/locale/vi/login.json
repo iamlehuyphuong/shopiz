@@ -24,17 +24,17 @@
     "CREATE_NEW_ACCOUNT": "Tạo mới tài khoản",
     "SUBMIT": "Đăng nhập",
     "SAML": {
-      "LABEL": "Login via SSO",
-      "TITLE": "Initiate Single Sign-on (SSO)",
-      "SUBTITLE": "Enter your work email to access your organization",
-      "BACK_TO_LOGIN": "Login via Password",
+      "LABEL": "Đăng nhập qua SSO",
+      "TITLE": "Bắt đầu đăng nhập một lần (SSO)",
+      "SUBTITLE": "Nhập email công việc của bạn để truy cập tổ chức",
+      "BACK_TO_LOGIN": "Đăng nhập bằng mật khẩu",
       "WORK_EMAIL": {
-        "LABEL": "Work Email",
-        "PLACEHOLDER": "Enter your work email"
+        "LABEL": "Email công việc",
+        "PLACEHOLDER": "Nhập email công việc của bạn"
       },
-      "SUBMIT": "Continue with SSO",
+      "SUBMIT": "Tiếp tục với SSO",
       "API": {
-        "ERROR_MESSAGE": "SSO authentication failed. Please check your credentials and try again."
+        "ERROR_MESSAGE": "Xác thực SSO thất bại. Vui lòng kiểm tra thông tin và thử lại."
       }
     }
   }

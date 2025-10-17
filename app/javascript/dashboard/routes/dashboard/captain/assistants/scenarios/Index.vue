@@ -57,13 +57,31 @@ const renderInstruction = instruction => () =>
 const scenariosExample = [
   {
     id: 1,
-    title: 'Prospective Buyer',
+    title: t('Prospective Buyer'),
     description:
-      'Handle customers who are showing interest in purchasing a license',
+      t('Handle customers who are showing interest in purchasing a license'),
     instruction:
-      'If someone is interested in purchasing a license, ask them for following:\n\n1. How many licenses are they willing to purchase?\n2. Are they migrating from another platform?\n. Once these details are collected, do the following steps\n1. add a private note to with the information you collected using [Add Private Note](tool://add_private_note)\n2. Add label "sales" to the contact using [Add Label to Conversation](tool://add_label_to_conversation)\n3. Reply saying "one of us will reach out soon" and provide an estimated timeline for the response and [Handoff to Human](tool://handoff)',
+      t('If someone is interested in purchasing a license, ask them for following:\n\n1. How many licenses are they willing to purchase?\n2. Are they migrating from another platform?\n. Once these details are collected, do the following steps\n1. add a private note to with the information you collected using [Add Private Note](tool://add_private_note)\n2. Add label "sales" to the contact using [Add Label to Conversation](tool://add_label_to_conversation)\n3. Reply saying "one of us will reach out soon" and provide an estimated timeline for the response and [Handoff to Human](tool://handoff)'),
     tools: ['add_private_note', 'add_label_to_conversation', 'handoff'],
   },
+  {
+    id: 2,
+    title: t('Technical Issue'),
+    description:
+      t('Assist customers who report a technical problem or bug with the product'),
+    instruction:
+      t('If a customer reports a technical issue, follow these steps:\n\n1. Ask for a detailed description of the problem and any error messages.\n2. Request screenshots or screen recordings if possible.\n3. Add a private note summarizing the issue using [Add Private Note](tool://add_private_note).\n4. Assign the conversation to the "technical support" team using [Add Label to Conversation](tool://add_label_to_conversation).\n5. Inform the customer that the issue has been escalated and provide an estimated response time.'),
+    tools: ['add_private_note', 'add_label_to_conversation'],
+  },
+  {
+    id: 3,
+    title: t('Feature Request'),
+    description:
+      t('Handle customers who suggest new features or improvements'),
+    instruction:
+      t('When a customer requests a new feature, do the following:\n\n1. Thank them for their suggestion.\n2. Add a private note with the feature details using [Add Private Note](tool://add_private_note).\n3. Tag the conversation with "feature-request" using [Add Label to Conversation](tool://add_label_to_conversation).\n4. Let the customer know their feedback has been shared with the product team.'),
+    tools: ['add_private_note', 'add_label_to_conversation'],
+  }
 ];
 
 const filteredScenarios = computed(() => {
@@ -74,6 +92,7 @@ const filteredScenarios = computed(() => {
 });
 
 const shouldShowSuggestedRules = computed(() => {
+  return true;
   return uiSettings.value?.show_scenarios_suggestions !== false;
 });
 
@@ -213,100 +232,102 @@ onMounted(() => {
         :heading="$t('CAPTAIN.ASSISTANTS.SCENARIOS.TITLE')"
         :description="$t('CAPTAIN.ASSISTANTS.SCENARIOS.DESCRIPTION')"
       />
-      <div v-if="shouldShowSuggestedRules" class="flex mt-7 flex-col gap-4">
-        <SuggestedScenarios
-          :title="$t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.SUGGESTED.TITLE')"
-          :items="scenariosExample"
-          @close="closeSuggestedRules"
-          @add="addAllExampleScenarios"
-        >
-          <template #default="{ item }">
-            <div class="flex items-center gap-3 justify-between">
-              <span class="text-sm text-n-slate-12">
-                {{ item.title }}
-              </span>
-              <Button
-                :label="
-                  $t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.SUGGESTED.ADD_SINGLE')
-                "
-                ghost
-                xs
-                slate
-                class="!text-sm !text-n-slate-11 flex-shrink-0"
-                @click="addScenario(item)"
-              />
-            </div>
-            <div class="flex flex-col">
-              <span class="text-sm text-n-slate-11 mt-2">
-                {{ item.description }}
-              </span>
-              <component
-                :is="renderInstruction(formatMessage(item.instruction, false))"
-              />
-              <span class="text-sm text-n-slate-11 font-medium mb-1">
-                {{ t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.SUGGESTED.TOOLS_USED') }}
-                {{ item.tools?.map(tool => `@${tool}`).join(', ') }}
-              </span>
-            </div>
-          </template>
-        </SuggestedScenarios>
-      </div>
-      <div class="flex mt-7 flex-col gap-4">
-        <div class="flex justify-between items-center">
-          <BulkSelectBar
-            v-model="bulkSelectedIds"
-            :all-items="scenarios"
-            :select-all-label="buildSelectedCountLabel"
-            :selected-count-label="selectedCountLabel"
-            :delete-label="
-              $t('CAPTAIN.ASSISTANTS.SCENARIOS.BULK_ACTION.BULK_DELETE_BUTTON')
-            "
-            @bulk-delete="bulkDeleteScenarios"
+      <div class="grid grid-cols-2 gap-4">
+        <div v-if="shouldShowSuggestedRules" class="flex mt-7 flex-col gap-4">
+          <SuggestedScenarios
+            :title="$t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.SUGGESTED.TITLE')"
+            :items="scenariosExample"
+            @close="closeSuggestedRules"
+            @add="addAllExampleScenarios"
           >
-            <template #default-actions>
-              <AddNewScenariosDialog @add="addScenario" />
+            <template #default="{ item }">
+              <div class="flex items-center gap-3 justify-between">
+                <span class="text-sm text-n-slate-12">
+                  {{ item.title }}
+                </span>
+                <Button
+                  :label="
+                    $t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.SUGGESTED.ADD_SINGLE')
+                  "
+                  ghost
+                  xs
+                  slate
+                  class="!text-sm !text-n-slate-11 flex-shrink-0"
+                  @click="addScenario(item)"
+                />
+              </div>
+              <div class="flex flex-col">
+                <span class="text-sm text-n-slate-11 mt-2">
+                  {{ item.description }}
+                </span>
+                <component
+                  :is="renderInstruction(formatMessage(item.instruction, false))"
+                />
+                <span class="text-sm text-n-slate-11 font-medium mb-1">
+                  {{ t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.SUGGESTED.TOOLS_USED') }}
+                  {{ item.tools?.map(tool => `@${tool}`).join(', ') }}
+                </span>
+              </div>
             </template>
-          </BulkSelectBar>
-          <div
-            v-if="scenarios.length && bulkSelectedIds.size === 0"
-            class="max-w-[22.5rem] w-full min-w-0"
-          >
-            <Input
-              v-model="searchQuery"
-              :placeholder="
-                t('CAPTAIN.ASSISTANTS.SCENARIOS.LIST.SEARCH_PLACEHOLDER')
+          </SuggestedScenarios>
+        </div>
+        <div class="flex mt-7 flex-col gap-4">
+          <div class="flex justify-between items-center">
+            <BulkSelectBar
+              v-model="bulkSelectedIds"
+              :all-items="scenarios"
+              :select-all-label="buildSelectedCountLabel"
+              :selected-count-label="selectedCountLabel"
+              :delete-label="
+                $t('CAPTAIN.ASSISTANTS.SCENARIOS.BULK_ACTION.BULK_DELETE_BUTTON')
               "
+              @bulk-delete="bulkDeleteScenarios"
+            >
+              <template #default-actions>
+                <AddNewScenariosDialog @add="addScenario" />
+              </template>
+            </BulkSelectBar>
+            <div
+              v-if="scenarios.length && bulkSelectedIds.size === 0"
+              class="max-w-[22.5rem] w-full min-w-0"
+            >
+              <Input
+                v-model="searchQuery"
+                :placeholder="
+                  t('CAPTAIN.ASSISTANTS.SCENARIOS.LIST.SEARCH_PLACEHOLDER')
+                "
+              />
+            </div>
+          </div>
+          <div v-if="scenarios.length === 0" class="mt-1 mb-2">
+            <span class="text-n-slate-11 text-sm">
+              {{ t('CAPTAIN.ASSISTANTS.SCENARIOS.EMPTY_MESSAGE') }}
+            </span>
+          </div>
+          <div v-else-if="filteredScenarios.length === 0" class="mt-1 mb-2">
+            <span class="text-n-slate-11 text-sm">
+              {{ t('CAPTAIN.ASSISTANTS.SCENARIOS.SEARCH_EMPTY_MESSAGE') }}
+            </span>
+          </div>
+          <div v-else class="flex flex-col gap-2">
+            <ScenariosCard
+              v-for="scenario in filteredScenarios"
+              :id="scenario.id"
+              :key="scenario.id"
+              :title="scenario.title"
+              :description="scenario.description"
+              :instruction="scenario.instruction"
+              :tools="scenario.tools"
+              :is-selected="bulkSelectedIds.has(scenario.id)"
+              :selectable="
+                hoveredCard === scenario.id || bulkSelectedIds.size > 0
+              "
+              @select="handleRuleSelect"
+              @delete="deleteScenario(scenario.id)"
+              @update="updateScenario"
+              @hover="isHovered => handleRuleHover(isHovered, scenario.id)"
             />
           </div>
-        </div>
-        <div v-if="scenarios.length === 0" class="mt-1 mb-2">
-          <span class="text-n-slate-11 text-sm">
-            {{ t('CAPTAIN.ASSISTANTS.SCENARIOS.EMPTY_MESSAGE') }}
-          </span>
-        </div>
-        <div v-else-if="filteredScenarios.length === 0" class="mt-1 mb-2">
-          <span class="text-n-slate-11 text-sm">
-            {{ t('CAPTAIN.ASSISTANTS.SCENARIOS.SEARCH_EMPTY_MESSAGE') }}
-          </span>
-        </div>
-        <div v-else class="flex flex-col gap-2">
-          <ScenariosCard
-            v-for="scenario in filteredScenarios"
-            :id="scenario.id"
-            :key="scenario.id"
-            :title="scenario.title"
-            :description="scenario.description"
-            :instruction="scenario.instruction"
-            :tools="scenario.tools"
-            :is-selected="bulkSelectedIds.has(scenario.id)"
-            :selectable="
-              hoveredCard === scenario.id || bulkSelectedIds.size > 0
-            "
-            @select="handleRuleSelect"
-            @delete="deleteScenario(scenario.id)"
-            @update="updateScenario"
-            @hover="isHovered => handleRuleHover(isHovered, scenario.id)"
-          />
         </div>
       </div>
     </template>

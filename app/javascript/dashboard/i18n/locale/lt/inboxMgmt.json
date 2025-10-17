@@ -427,7 +427,7 @@
       },
       "AUTH": {
         "TITLE": "Pasirinkti Kanalą",
-        "DESC": "Chatwoot palaiko tiesioginio pokalbio valdiklius, Facebook Messenger, Twitter profilius, WhatsApp, el. laiškus ir kt. kaip kanalus. Jei norite sukurti personalizuotą kanalą, galite jį sukurti naudodami API kanalą. Norėdami pradėti, pasirinkite vieną iš toliau pateiktų kanalų.",
+        "DESC": "Shopiz palaiko tiesioginio pokalbio valdiklius, Facebook Messenger, Twitter profilius, WhatsApp, el. laiškus ir kt. kaip kanalus. Jei norite sukurti personalizuotą kanalą, galite jį sukurti naudodami API kanalą. Norėdami pradėti, pasirinkite vieną iš toliau pateiktų kanalų.",
         "TITLE_NEXT": "Complete the setup",
         "TITLE_FINISH": "Voilà!",
         "CHANNEL": {
@@ -678,8 +678,8 @@
       "MESSENGER_SUB_HEAD": "Įdėkite šį mygtuką savo <body> žymos viduje",
       "ALLOWED_DOMAINS": {
         "TITLE": "Allowed Domains",
-        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.chatwoot.dev, chatwoot.com.",
-        "PLACEHOLDER": "Enter domains separated by commas (eg: *.chatwoot.dev, chatwoot.com)"
+        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.shopiz.dev, shopiz.pro.",
+        "PLACEHOLDER": "Enter domains separated by commas (eg: *.shopiz.dev, shopiz.pro)"
       },
       "INBOX_AGENTS": "Agentai",
       "INBOX_AGENTS_SUB_TEXT": "Pridėti ar pašalinti agentus iš gautų laiškų aplanko",

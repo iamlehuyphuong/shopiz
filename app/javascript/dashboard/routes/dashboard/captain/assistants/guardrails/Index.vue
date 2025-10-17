@@ -55,17 +55,17 @@ const guardrailsExample = [
   {
     id: 1,
     content:
-      'Block queries that share or request sensitive personal information (e.g. phone numbers, passwords).',
+      t('Block queries that share or request sensitive personal information (e.g. phone numbers, passwords).'),
   },
   {
     id: 2,
     content:
-      'Reject queries that include offensive, discriminatory, or threatening language.',
+      t('Reject queries that include offensive, discriminatory, or threatening language.'),
   },
   {
     id: 3,
     content:
-      'Deflect when the assistant is asked for legal or medical diagnosis or treatment.',
+      t('Deflect when the assistant is asked for legal or medical diagnosis or treatment.'),
   },
 ];
 
@@ -76,6 +76,7 @@ const filteredGuardrails = computed(() => {
 });
 
 const shouldShowSuggestedRules = computed(() => {
+  return true;
   return uiSettings.value?.show_guardrails_suggestions !== false;
 });
 

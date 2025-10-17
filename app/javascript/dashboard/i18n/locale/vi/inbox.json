@@ -1,7 +1,7 @@
 {
   "INBOX": {
     "LIST": {
-      "TITLE": "Hộp thư đến của tôi",
+      "TITLE": "Thông báo",
       "DISPLAY_DROPDOWN": "Hiển thị",
       "LOADING": "Đang tải thông báo",
       "404": "Không có thông báo nào đang hoạt động trong nhóm này.",
@@ -58,7 +58,7 @@
         "PRIORITY": "Mức độ ưu tiên"
       },
       "DISPLAY_OPTIONS": {
-        "SNOOZED": "Đã tạm hoãn",
+        "SNOOZED": "Tạm hoãn",
         "READ": "Đã đọc",
         "LABELS": "Nhãn",
         "CONVERSATION_ID": "ID cuộc trò chuyện"

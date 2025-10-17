@@ -145,9 +145,9 @@ const renderInstruction = instruction => () =>
     <div v-if="!isEditing" class="flex flex-col w-full">
       <div class="flex items-start justify-between w-full gap-2">
         <div class="flex flex-col items-start">
-          <span class="text-sm text-n-slate-12 font-medium">{{ title }}</span>
+          <span class="text-sm text-n-slate-12 font-medium">{{ t(title) }}</span>
           <span class="text-sm text-n-slate-11 mt-2">
-            {{ description }}
+            {{ t(description) }}
           </span>
         </div>
         <div class="flex items-center gap-2">

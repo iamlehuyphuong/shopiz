@@ -490,6 +490,7 @@ Rails.application.routes.draw do
       post 'webhooks/firecrawl', to: 'webhooks/firecrawl#process_payload'
       post 'webhooks/polar', to: 'webhooks/polar#process_payload'
       get 'webhooks/vnpay', to: 'webhooks/vnpay#process_payload'
+      post 'webhooks/payos', to: 'webhooks/payos#process_payload'
     end
   end
 

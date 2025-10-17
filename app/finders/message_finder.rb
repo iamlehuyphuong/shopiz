@@ -41,7 +41,7 @@ class MessageFinder
   def messages_before(before_id)
     before_time = Message.find(before_id).created_at
 
-    messages.reorder('created_at desc').where('created_at < ?', before_time).limit(20).reverse
+    messages.reorder('created_at desc').where('created_at <= ?', before_time).where.not(id: before_id).limit(20).reverse
   end
 
   def messages_between(after_id, before_id)

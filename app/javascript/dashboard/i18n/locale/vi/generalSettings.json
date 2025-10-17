@@ -15,9 +15,9 @@
       "SUCCESS": "Đã cập nhật thành công cài đặt tài khoản"
     },
     "ACCOUNT_DELETE_SECTION": {
-      "TITLE": "Xóa tài khoản của bạn",
-      "NOTE": "Khi bạn xóa tài khoản, tất cả dữ liệu của bạn sẽ bị xóa.",
-      "BUTTON_TEXT": "Xóa tài khoản của bạn",
+      "TITLE": "Xóa tài khoản",
+      "NOTE": "Một khi bạn xoá tài khoản, tất cả dữ liệu của bạn cũng sẽ bị xoá. ",
+      "BUTTON_TEXT": "Xóa tài khoản",
       "CONFIRM": {
         "TITLE": "Xóa tài khoản",
         "MESSAGE": "Việc xóa tài khoản là không thể khôi phục. Nhập tên tài khoản của bạn bên dưới để xác nhận bạn muốn xóa vĩnh viễn.",
@@ -164,7 +164,7 @@
       "conversation_assignment": "Hội thoại đã được phân công",
       "assigned_conversation_new_message": "Tin nhắn mới",
       "participating_conversation_new_message": "Tin nhắn mới",
-      "conversation_mention": "Nhắc đến",
+      "conversation_mention": "Được nhắc đến",
       "sla_missed_first_response": "Không đáp ứng SLA phản hồi đầu tiên",
       "sla_missed_next_response": "Không đáp ứng SLA phản hồi tiếp theo",
       "sla_missed_resolution": "Không đáp ứng SLA giải quyết"

@@ -112,14 +112,14 @@ class Captain::Document < ApplicationRecord
 
   def detect_document_type
     return unless external_link.present?
-    
+
     # Check if URL points to a PDF file
     uri = URI.parse(external_link)
-    if uri.path.downcase.end_with?('.pdf') || external_link.downcase.include?('.pdf')
-      self.document_type = :pdf
-    else
-      self.document_type = :url
-    end
+    self.document_type = if uri.path.downcase.end_with?('.pdf') || external_link.downcase.include?('.pdf')
+                           :pdf
+                         else
+                           :url
+                         end
   rescue URI::InvalidURIError
     self.document_type = :url
   end

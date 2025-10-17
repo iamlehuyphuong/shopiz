@@ -100,7 +100,7 @@ export default {
     <div v-if="!hasLoginStarted" class="login-init h-full">
       <a href="#" @click="startLogin()">
         <img
-          src="~dashboard/assets/images/channels/tiktok_login.png"
+          :src="`/assets/images/dashboard/channels/tiktok_login.svg`"
           alt="Tiktok-logo"
         />
       </a>
