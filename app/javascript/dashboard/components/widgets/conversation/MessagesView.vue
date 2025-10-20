@@ -286,9 +286,9 @@ export default {
       return { incoming, outgoing };
     },
     showEndOfListMessage() {
-      return this.listLoadingStatus && !this.isLoadingPrevious;
+      return this.listLoadingStatus && !this.isLoadingPrevious && !this.allowLoadHistory;
     },
-    showLoadHistoryMessage() {
+    allowLoadHistory() {
       return this.currentChat.meta.show_load_more_history;
     }
   },
@@ -442,58 +442,34 @@ export default {
 
     async fetchPreviousMessages(scrollTop = 0) {
       this.setScrollParams();
-      const shouldLoadMoreMessages =
-        this.currentChat.dataFetched === true &&
-        !this.listLoadingStatus &&
-        !this.isLoadingPrevious;
 
-      if (
-        scrollTop < 100 &&
-        !this.isLoadingPrevious &&
-        shouldLoadMoreMessages
-      ) {
-        this.isLoadingPrevious = true;
-        try {
-          await this.$store.dispatch('fetchPreviousMessages', {
-            conversationId: this.currentChat.id,
-            before: this.currentChat.messages[0].id,
-          });
-          const heightDifference =
-            this.conversationPanel.scrollHeight - this.heightBeforeLoad;
-          this.conversationPanel.scrollTop =
-            this.scrollTopBeforeLoad + heightDifference;
-          this.setScrollParams();
-        } catch (error) {
-          // Ignore Error
-        } finally {
-          this.isLoadingPrevious = false;
-        }
-      }
-    },
+      const { dataFetched, id, messages } = this.currentChat;
+      const canFetch = dataFetched && !this.isLoadingPrevious && scrollTop < 100;
+      if (!canFetch) return;
 
-    async onClickLoadHistoryMessages() {
-      this.setScrollParams();
-      const shouldLoadHistoryMessages =
-        this.currentChat.dataFetched === true &&
-        this.listLoadingStatus &&
-        !this.isLoadingPrevious;
+      const isLoadMore = !this.listLoadingStatus;
+      const isLoadMoreHistory = this.listLoadingStatus && this.allowLoadHistory;
+      const action =
+        isLoadMore ? 'fetchPreviousMessages'
+        : isLoadMoreHistory ? 'fetchHistoryMessages'
+        : null;
+      if (!action) return;
 
-      if (shouldLoadHistoryMessages) {
-        this.isLoadingPrevious = true;
-        try {
-          await this.$store.dispatch('fetchHistoryMessages', {
-            conversationId: this.currentChat.id,
-          });
-          const heightDifference =
-            this.conversationPanel.scrollHeight - this.heightBeforeLoad;
-          this.conversationPanel.scrollTop =
-            this.scrollTopBeforeLoad + heightDifference;
-          this.setScrollParams();
-        } catch (error) {
-          // Ignore Error
-        } finally {
-          this.isLoadingPrevious = false;
-        }
+      const payload = {
+        conversationId: id,
+        ...(isLoadMore && { before: messages[0].id }),
+      };
+
+      this.isLoadingPrevious = true;
+      try {
+        await this.$store.dispatch(action, payload);
+        const heightDifference = this.conversationPanel.scrollHeight - this.heightBeforeLoad;
+        this.conversationPanel.scrollTop = this.scrollTopBeforeLoad + heightDifference;
+        this.setScrollParams();
+      } catch {
+        // Ignore error
+      } finally {
+        this.isLoadingPrevious = false;
       }
     },
 
@@ -577,17 +553,8 @@ export default {
           :conversation-id="currentChat.id"
         />
       </template>
-      <template v-if="showEndOfListMessage" #loadMoreHistory>
-        <div v-if="showLoadHistoryMessage" class="flex justify-center my-4">
-          <button
-            class="w-48 text-center px-2 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-indigo-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 transition w-32"
-            @click="onClickLoadHistoryMessages"
-          >
-            {{ $t('CONVERSATION.LOAD_MORE_MESSAGES') }}
-          </button>
-        </div>
+      <template v-if="showEndOfListMessage" #endList>
         <p
-          v-else
           class="p-4 text-center text-slate-400 dark:text-slate-300"
         >
           {{ $t('CONVERSATION.ALL_MESSAGE_LOADED') }}
@@ -602,16 +569,7 @@ export default {
         </li>
       </transition>
       <template v-if="showEndOfListMessage">
-        <div v-if="showLoadHistoryMessage" class="flex justify-center my-4">
-          <button
-            class="w-48 text-center px-2 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-indigo-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 transition w-32"
-            @click="onClickLoadHistoryMessages"
-          >
-            {{ $t('CONVERSATION.LOAD_MORE_MESSAGES') }}
-          </button>
-        </div>
         <p
-          v-else
           class="p-4 text-center text-slate-400 dark:text-slate-300"
         >
           {{ $t('CONVERSATION.ALL_MESSAGE_LOADED') }}

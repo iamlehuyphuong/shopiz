@@ -345,7 +345,8 @@ const showEndOfListMessage = computed(() => {
   return (
     conversationList.value.length &&
     hasCurrentPageEndReached.value &&
-    !chatListLoading.value
+    !chatListLoading.value &&
+    !allowLoadHistoryConversation.value
   );
 });
 
@@ -354,7 +355,7 @@ const currentInbox = computed(() => {
   return store.getters['inboxes/getInbox'](inboxId);
 });
 
-const showLoadHistoryConversation = computed(() => {
+const allowLoadHistoryConversation = computed(() => {
   return currentInbox.value.channel_type === 'Channel::FacebookPage' &&
     !conversationStats.value['isLoadAllConversation'] && !hasAppliedFiltersOrActiveFolders.value;
 })
@@ -465,7 +466,7 @@ function onCloseDeleteFoldersModal() {
   showDeleteFoldersModal.value = false;
 }
 
-function onClickLoadHistoryConversation() {
+function fetchHistoryConversation() {
   store.dispatch('updateChatListFilters', conversationFilters.value);
   store.dispatch('fetchHistoryConversations').then(emitConversationLoaded);
 }
@@ -600,11 +601,13 @@ function resetAndFetchData() {
 }
 
 function loadMoreConversations() {
-  if (hasCurrentPageEndReached.value || chatListLoading.value) {
+  if ((hasCurrentPageEndReached.value && !allowLoadHistoryConversation.value) || chatListLoading.value) {
     return;
   }
 
-  if (!hasAppliedFiltersOrActiveFolders.value) {
+  if (hasCurrentPageEndReached.value && allowLoadHistoryConversation.value) {
+    fetchHistoryConversation()
+  } else if (!hasAppliedFiltersOrActiveFolders.value) {
     fetchConversations();
   } else if (hasActiveFolders.value) {
     const payload = activeFolder.value.query;
@@ -908,17 +911,7 @@ watch(conversationFilters, (newVal, oldVal) => {
     />
 
     <template v-if="!chatListLoading && !conversationList.length">
-      <div v-if="showLoadHistoryConversation" class="flex justify-center my-4">
-        <button
-          class="conversation-load-more dark:text-indigo-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-indigo-50 dark:hover:bg-gray-700"
-          @click="onClickLoadHistoryConversation"
-        >
-          <span class="i-lucide-chevron-down"></span>
-          {{ $t('CHAT_LIST.LOAD_MORE') }}
-        </button>
-      </div>
-      <p
-        v-else
+      <p v-if="!allowLoadHistoryConversation"
         class="flex items-center justify-center p-4 overflow-auto"
       >
         {{ $t('CHAT_LIST.LIST.404') }}
@@ -983,17 +976,7 @@ watch(conversationFilters, (newVal, oldVal) => {
             <span class="mt-4 mb-4 spinner" />
           </div>
           <template v-else-if="showEndOfListMessage">
-            <div v-if="showLoadHistoryConversation" class="flex justify-center my-4">
-              <button
-                class="conversation-load-more dark:text-indigo-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-indigo-50 dark:hover:bg-gray-700"
-                @click="onClickLoadHistoryConversation"
-              >
-                <span class="i-lucide-chevron-down"></span>
-                {{ $t('CHAT_LIST.LOAD_MORE') }}
-              </button>
-            </div>
             <p
-              v-else
               class="p-4 text-center text-slate-400 dark:text-slate-300"
             >
               {{ $t('CHAT_LIST.EOF') }}
