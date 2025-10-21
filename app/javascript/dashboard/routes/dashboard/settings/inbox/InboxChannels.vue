@@ -28,6 +28,9 @@ const ALL_CHANNEL_ICONS = [
   'i-woot-twilio',
   'i-woot-gmail',
   'i-woot-outlook',
+  'i-ri-tiktok-fill',
+  'i-ri-zalo-oa-fill',
+  'i-ri-zalo-fill'
 ];
 
 const createFlowSteps = computed(() => {

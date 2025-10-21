@@ -77,19 +77,19 @@ const channelList = computed(() => {
       key: 'zalo',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO.DESCRIPTION'),
-      icon: 'i-woot-zalo',
+      icon: 'i-ri-zalo-oa-fill',
     },
     {
       key: 'zalopersonal',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALOPERSONAL.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALOPERSONAL.DESCRIPTION'),
-      icon: 'i-woot-zalopersonal',
+      icon: 'i-ri-zalo-fill',
     },
     {
       key: 'tiktok',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK.DESCRIPTION'),
-      icon: 'i-woot-tiktok',
+      icon: 'i-ri-tiktok-fill',
     },
     {
       key: 'voice',

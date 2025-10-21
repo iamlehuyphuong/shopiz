@@ -195,7 +195,7 @@ gem 'reverse_markdown'
 
 gem 'iso-639'
 gem 'ruby-openai'
-gem 'ai-agents', '>= 0.4.3'
+gem 'ai-agents', '>= 0.6.0'
 
 # TODO: Move this gem as a dependency of ai-agents
 gem 'ruby_llm-schema'
@@ -269,4 +269,4 @@ group :development, :test do
   gem 'spring-watcher-listen'
 end
 
-gem "polar_sh", "~> 0.1.1"
+gem 'polar_sh', '~> 0.1.1'

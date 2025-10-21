@@ -11,8 +11,8 @@ if [ "$#" -ne 1 ]; then
 fi
 
 BRANCH=$1
-REPO_URL="https://github.com/chatwoot/chatwoot.git"
-CLONE_DIR="/tmp/chatwoot-sync"
+REPO_URL="https://github.com/Aman-14/chatwoot.git"
+CLONE_DIR="/tmp/chatwoot-2-sync"
 
 # Clone repository if the directory doesn't exist; otherwise, update tags.
 if [ -d "$CLONE_DIR" ]; then
