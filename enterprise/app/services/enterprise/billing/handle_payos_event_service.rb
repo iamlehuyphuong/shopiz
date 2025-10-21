@@ -12,7 +12,6 @@ class Enterprise::Billing::HandlePayosEventService
     channel_line
     channel_telegram
     channel_whatsapp
-    channel_sms
     captain_integration
   ].freeze
 
