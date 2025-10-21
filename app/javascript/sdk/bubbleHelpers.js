@@ -27,18 +27,15 @@ export const setBubbleText = bubbleText => {
 
 export const createBubbleIcon = ({ className, path, target }) => {
   let bubbleClassName = `${className} woot-elements--${window.$shopiz.position}`;
+  const text = document.createElement('div');
+  text.className = 'woot-widget--bubble__text';
+  text.innerText = 'Chat với AI agent';
+  target.appendChild(text);
+
   addImageToButton({ target, imageName: 'bubble_chat_icon.svg' });
 
-  if (isExpandedView(window.$shopiz.type)) {
-    const textNode = document.createElement('div');
-    textNode.id = 'woot-widget--expanded__text';
-    textNode.innerText = '';
-    target.appendChild(textNode);
-    bubbleClassName += ' woot-widget--expanded';
-  }
-
   target.className = bubbleClassName;
-  target.title = 'Open chat window';
+  // target.title = 'Open chat window';
   return target;
 };
 

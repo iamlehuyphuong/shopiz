@@ -44,12 +44,35 @@ export const SDK_CSS = `
   border-width: 0px;
   bottom: 20px;
   cursor: pointer;
-  height: 90px;
+  height: 100px;
   padding: 0px;
   position: fixed;
   user-select: none;
-  width: 90px;
+  width: 100px;
   z-index: 2147483000 !important;
+}
+
+.woot-widget-bubble .woot-widget--bubble__text {
+  position: absolute;
+  left: -139%;
+  padding: 9px 11px 8px 11px;
+  border-radius: 20px;
+  top: 50%;
+  transform: translateY(-33%);
+  font-size: 16px;
+  box-shadow: 0 0 10px rgba(42, 88, 230, 0.2);
+  transition: all 0.3s ease;
+  color: #f7f9fc;
+  text-shadow: 0 1px 2px rgba(42, 88, 230, 0.25), 0 0 8px rgba(86, 130, 196, 0.15);
+  background: linear-gradient(#28307f, #363c70) padding-box, linear-gradient(180deg, #386BB7, #799DD2) border-box;
+  border: 1px solid transparent;
+}
+
+@media only screen and (min-width: 1441px) {
+  .woot-widget-bubble .woot-widget--bubble__text {
+    padding: 12px 23px 11px 23px;
+    left: calc(-100% + -36px);
+  }
 }
 
 .woot-widget-bubble .bubble-icon {
@@ -99,7 +122,7 @@ export const SDK_CSS = `
 .woot-widget-bubble.woot-widget--expanded {
   bottom: 24px;
   display: flex;
-  height: 48px !important;
+  height: 100px !important;
   width: auto !important;
   align-items: center;
 }
@@ -162,10 +185,18 @@ export const SDK_CSS = `
     right: 40px;
  }
 
+ .woot-widget-bubble.woot-elements--left {
+    left: 40px;
+  }
+
+  .woot-widget-bubble.woot-elements--right {
+    right: 40px;
+  }
+
   .woot-widget-bubble {
     bottom: 40px;
-    height: 115px;
-    width: 115px;
+    height: 125px;
+    width: 125px;
   }
 }
 
@@ -284,7 +315,7 @@ export const SDK_CSS = `
 @media only screen and (min-width: 667px) {
   .woot-widget-holder {
     border-radius: 16px;
-    bottom: 114px;
+    bottom: 124px;
     height: calc(90% - 64px - 20px);
     max-height: 640px !important;
     min-height: 250px !important;
@@ -294,11 +325,14 @@ export const SDK_CSS = `
 
 @media only screen and (min-width: 1441px) {
   .woot-widget-holder {
-    bottom: 150px;
+    bottom: 170px;
  }
 }
 
 .woot-hidden {
   display: none !important;
+}
+
+.woot-widget--bubble__text {
 }
 `;
