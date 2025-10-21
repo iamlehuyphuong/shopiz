@@ -8,7 +8,7 @@ class SuperAdmin::ApplicationController < Administrate::ApplicationController
   include ActionView::Helpers::TagHelper
   include ActionView::Context
 
-  helper_method :render_vue_component
+  helper_method :render_vue_component, :load_plans
   # authenticiation done via devise : SuperAdmin Model
   before_action :authenticate_super_admin!
 
@@ -36,6 +36,24 @@ class SuperAdmin::ApplicationController < Administrate::ApplicationController
       }
     }
     content_tag(:div, '', html_options)
+  end
+
+  def load_plans
+    Polar.configure do |config|
+      config.access_token = ENV.fetch('POLAR_ACCESS_TOKEN')
+      config.sandbox = ENV.fetch('POLAR_ENV') == 'sandbox'
+    end
+
+    products = Polar::Product.list({ limit: 50 })
+    @plans = products.map(&:table).map do |product|
+      name = if %w[Trial Enterprise].include?(product[:name])
+               product[:name]
+             else
+               "#{product[:name]} #{Enterprise::Billing::PlanMapper.get_duration(product[:id])}"
+             end
+
+      [name, product[:id]]
+    end
   end
 
   def invalid_action_perfomed
