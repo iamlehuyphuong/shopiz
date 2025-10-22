@@ -45,7 +45,7 @@ class SuperAdmin::ApplicationController < Administrate::ApplicationController
     end
 
     products = Polar::Product.list({ limit: 50 })
-    @plans = products.map(&:table).map do |product|
+    products.map(&:table).map do |product|
       name = if %w[Trial Enterprise].include?(product[:name])
                product[:name]
              else
@@ -54,6 +54,8 @@ class SuperAdmin::ApplicationController < Administrate::ApplicationController
 
       [name, product[:id]]
     end
+  rescue StandardError
+    []
   end
 
   def invalid_action_perfomed
