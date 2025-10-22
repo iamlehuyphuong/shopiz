@@ -1,6 +1,6 @@
 class Enterprise::Billing::PlanMapper
   DURATIONS = { 0 => '1T', 1 => '6T', 2 => '12T' }.freeze
-  PLAN_MAPPING = { 'STARTER' => 'Startups', 'PRO' => 'Pro', 'BUSINESS' => 'Business', 'ENTERPRISE' => 'Enterprise'}
+  PLAN_MAPPING = { 'STARTER' => 'Startups', 'PRO' => 'Pro', 'BUSINESS' => 'Business', 'ENTERPRISE' => 'Enterprise'}.freeze
 
   class << self
     def get_duration(product_id)

@@ -1,0 +1,23 @@
+<section class="main-content__body mt-4">
+  <%= form_with url: assign_plan_super_admin_account_path(page.resource),
+                method: :post,
+                html: { class: "form card p-4 shadow-sm bg-light" } do |f| %>
+
+    <div class="field-unit field-unit--select">
+      <div class="field-unit__label">
+        <%= f.label :plan_id, "Select Plan" %>
+      </div>
+      <div class="field-unit__field">
+        <%= f.select :plan_id,
+                     load_plans,
+                     { include_blank: "Choose a plan" },
+                     class: "form__control" %>
+      </div>
+    </div>
+
+    <div class="form-actions mt-3">
+      <%= f.submit "Assign Plan",
+                   class: "button button--primary" %>
+    </div>
+  <% end %>
+</section>

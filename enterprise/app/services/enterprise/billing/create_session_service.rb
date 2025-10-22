@@ -42,7 +42,7 @@ class Enterprise::Billing::CreateSessionService
     end
     product = Polar::Product.get(product_id)
     price = product.table[:prices].first
-    price_amount = price["price_amount"]
+    price_amount = price['price_amount']
     order_code = "#{Time.now.to_i.to_s[-10..]}#{customer_id}".to_i
     description = "TT SHOPIZ #{product_name} #{Enterprise::Billing::PlanMapper.get_duration(product_id)}".upcase
     return_url = ENV.fetch('FRONTEND_URL')
