@@ -21,7 +21,6 @@ class Account::AssignPlanService
     @account = account
     @plan_id = plan_id
     @plan = load_plan
-    binding.pry
   end
 
   def execute
