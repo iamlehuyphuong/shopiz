@@ -283,6 +283,219 @@
   "SETTINGS": {
     "INBOXES": {
       "NEW_INBOX": "Thêm Hộp thư đến"
+    },
+    "TEMPLATES": {
+      "HEADER": {
+        "TITLE": "Mẫu tin nhắn",
+        "DESCRIPTION": "Tạo và quản lý các mẫu tin nhắn để tối ưu hóa phản hồi hỗ trợ khách hàng."
+      },
+      "EMPTY_STATE": {
+        "TITLE": "Chưa có mẫu nào",
+        "DESCRIPTION": "Bắt đầu bằng cách tạo mẫu đầu tiên. Mẫu giúp bạn phản hồi nhanh hơn với nội dung nhất quán."
+      },
+      "ACTIONS": {
+        "CREATE_TEMPLATE": "Tạo mẫu",
+        "NEW_TEMPLATE": "Mẫu mới",
+        "DELETE": "Xóa mẫu"
+      },
+      "FILTERS": {
+        "CONTENT": "Nội dung",
+        "CHANNEL": "Kênh",
+        "ALL_STATUSES": "Tất cả trạng thái",
+        "APPROVED": "Đã duyệt",
+        "PENDING": "Chờ duyệt",
+        "REJECTED": "Bị từ chối",
+        "ALL_CHANNELS": "Tất cả kênh",
+        "ALL_LANGUAGES": "Tất cả ngôn ngữ"
+      },
+      "LIST": {
+        "404": "Không tìm thấy mẫu nào",
+        "PAGINATION": "Hiển thị {start} - {end} trên tổng số {total} mục",
+        "TABLE_HEADER": {
+          "NAME": "Tên",
+          "CATEGORY": "Danh mục",
+          "CHANNEL": "Kênh",
+          "STATUS": "Trạng thái",
+          "ACTIONS": "Thao tác"
+        }
+      },
+      "ADD": {
+        "TITLE": "Tạo mẫu nội dung",
+        "DESC": "Tạo các mẫu tin nhắn dùng lại để giao tiếp với khách hàng nhanh hơn.",
+        "CANCEL": "Huỷ",
+        "CREATE": "Tạo",
+        "CONTINUE": "Tiếp tục",
+        "BACK": "Quay lại",
+        "STEPS": {
+          "BASIC": "Thông tin cơ bản",
+          "BUILDER": "Trình tạo mẫu"
+        },
+        "FORM": {
+          "NAME": {
+            "LABEL": "Tên mẫu",
+            "PLACEHOLDER": "Nhập tên mẫu",
+            "HELP": "Chỉ sử dụng chữ thường, số và dấu gạch dưới",
+            "VALIDATION": {
+              "PATTERN": "Tên mẫu chỉ được chứa chữ thường, số và dấu gạch dưới",
+              "NO_LEADING_UNDERSCORE": "Tên mẫu không được bắt đầu bằng dấu gạch dưới",
+              "NO_TRAILING_UNDERSCORE": "Tên mẫu không được kết thúc bằng dấu gạch dưới"
+            }
+          },
+          "LANGUAGE": {
+            "LABEL": "Ngôn ngữ"
+          },
+          "CHANNEL_TYPE": {
+            "LABEL": "Kênh"
+          },
+          "CATEGORY": {
+            "LABEL": "Danh mục",
+            "PLACEHOLDER": "Chọn danh mục",
+            "ERROR": "Vui lòng chọn danh mục",
+            "OPTIONS": {
+              "MARKETING": "Tiếp thị",
+              "UTILITY": "Tiện ích",
+              "AUTHENTICATION": "Xác thực - Sắp ra mắt"
+            }
+          },
+          "INBOX": {
+            "LABEL": "Hộp thư WhatsApp",
+            "PLACEHOLDER": "Chọn hộp thư WhatsApp",
+            "ERROR": "Vui lòng chọn hộp thư WhatsApp",
+            "NO_WHATSAPP_INBOX": "Không tìm thấy hộp thư WhatsApp nào. Vui lòng tạo hộp thư WhatsApp trước."
+          }
+        }
+      },
+      "DELETE": {
+        "CONFIRM": {
+          "TITLE": "Xóa {templateName}",
+          "MESSAGE": "Bạn có chắc chắn muốn xóa mẫu này không? Hành động này không thể hoàn tác.",
+          "YES": "Xóa",
+          "NO": "Huỷ",
+          "PLACE_HOLDER": "Nhập {templateName} để xác nhận"
+        },
+        "API": {
+          "SUCCESS_MESSAGE": "Xóa mẫu thành công",
+          "ERROR_MESSAGE": "Xóa mẫu thất bại"
+        }
+      },
+      "BUILDER": {
+        "TITLE": "Trình tạo mẫu",
+        "DESC": "Thiết kế mẫu WhatsApp với tiêu đề, nội dung, chân trang và nút.",
+        "NEW_TITLE": "Tạo mẫu mới",
+        "EDIT_TITLE": "Chỉnh sửa mẫu",
+        "BUILD_TEMPLATE": "Tạo mẫu",
+        "EDIT_TEMPLATE": "Chỉnh sửa mẫu",
+        "CREATE": "Tạo mẫu",
+        "UPDATE": "Cập nhật mẫu",
+        "OPTIONAL": "Tuỳ chọn",
+        "REQUIRED": "Bắt buộc",
+        "HEADER": {
+          "TITLE": "Tiêu đề",
+          "TYPE": "Loại tiêu đề",
+          "TEXT_LABEL": "Nội dung tiêu đề",
+          "TEXT_PLACEHOLDER": "Nhập nội dung tiêu đề",
+          "TEXT_HELP": "Giữ ngắn gọn và hấp dẫn (tối đa 60 ký tự)",
+          "MEDIA_UPLOAD": "Tải lên tệp của bạn",
+          "DISABLED_TEXT": "Thêm tiêu đề tuỳ chọn để mẫu hấp dẫn hơn"
+        },
+        "BODY": {
+          "TITLE": "Nội dung",
+          "TEXT_LABEL": "Nội dung tin nhắn",
+          "TEXT_PLACEHOLDER": "Nhập nội dung tin nhắn...",
+          "TEXT_HELP": "Sử dụng *in đậm* và _nghiêng_. Thêm biến với {{1}}, {{2}}, v.v.",
+          "VARIABLES_TITLE": "Ví dụ biến",
+          "VARIABLE_PLACEHOLDER": "Giá trị ví dụ",
+          "VARIABLES_HELP": "Cung cấp giá trị ví dụ cho biến để hỗ trợ duyệt mẫu",
+          "INSERT_VARIABLE_HELP": "Nhấn nút + để chèn biến như {{1}}, {{2}} cho nội dung động"
+        },
+        "FOOTER": {
+          "TITLE": "Chân trang",
+          "TEXT_LABEL": "Nội dung chân trang",
+          "TEXT_PLACEHOLDER": "Nhập nội dung chân trang",
+          "TEXT_HELP": "Thông tin bổ sung hoặc chú thích (tối đa 60 ký tự)",
+          "GUIDELINES": "Chân trang không được chứa biến hoặc định dạng",
+          "DISABLED_TEXT": "Thêm chân trang tuỳ chọn với thông tin bổ sung"
+        },
+        "BUTTONS": {
+          "TITLE": "Nút kêu gọi hành động",
+          "TYPE": "Loại nút",
+          "BUTTONS_LABEL": "Các nút",
+          "ADD_BUTTON": "Thêm nút",
+          "BUTTON_TEXT": "Nội dung nút",
+          "TEXT_PLACEHOLDER": "Nhập nội dung nút",
+          "PHONE_NUMBER": "Số điện thoại",
+          "PHONE_PLACEHOLDER": "+1234567890",
+          "URL": "Địa chỉ website",
+          "URL_PLACEHOLDER": "https://example.com",
+          "DESCRIPTION": "Tạo nút cho phép khách hàng phản hồi hoặc thực hiện hành động. Có thể thêm tối đa mười nút. Nếu thêm hơn ba nút, chúng sẽ hiển thị dạng danh sách.",
+          "SEE_ALL_OPTIONS": "Xem tất cả tuỳ chọn",
+          "TYPE_LABEL": "Loại",
+          "EXAMPLE_CODE_LABEL": "Mã ví dụ",
+          "EXAMPLE_CODE_PLACEHOLDER": "SAVE20",
+          "DROPDOWN": {
+            "VISIT_WEBSITE": "Truy cập website",
+            "CALL_PHONE": "Gọi số điện thoại",
+            "QUICK_REPLY": "Phản hồi nhanh",
+            "COPY_CODE": "Sao chép mã ưu đãi"
+          },
+          "PLACEHOLDERS": {
+            "PHONE_NUMBER": "Nhập số điện thoại",
+            "BUTTON_TEXT": "Nội dung nút",
+            "QUICK_REPLY": "Phản hồi nhanh"
+          },
+          "QUICK_REPLY_HELP": "Nút phản hồi nhanh cho phép khách hàng trả lời với tuỳ chọn có sẵn (tối đa 3 nút)",
+          "CALL_TO_ACTION_HELP": "Nút kêu gọi hành động cho phép khách hàng gọi doanh nghiệp (tối đa 2 nút)",
+          "URL_HELP": "Nút URL cho phép khách hàng truy cập website (tối đa 2 nút)",
+          "DISABLED_TEXT": "Thêm nút tuỳ chọn để khuyến khích khách hàng hành động"
+        },
+        "VARIABLES": {
+          "TITLE": "Biến",
+          "POSITIONAL_HELP": "Cung cấp giá trị ví dụ cho tham số vị trí ({example1}, {example2}, v.v.)",
+          "NAMED_HELP": "Cung cấp giá trị ví dụ cho tham số tên ({example_param})",
+          "EXAMPLE_PLACEHOLDER": "Ví dụ {index}",
+          "NAMED_EXAMPLE_PLACEHOLDER": "Ví dụ cho {name}",
+          "ERRORS": {
+            "NAMED_IN_POSITIONAL": "Không được dùng biến tên",
+            "POSITIONAL_IN_NAMED": "Không được dùng biến vị trí",
+            "DUPLICATE_VARIABLES": "Nội dung không được chứa biến trùng lặp",
+            "MAX_VARIABLES_EXCEEDED": "Tối đa {count} biến được phép"
+          }
+        },
+        "PREVIEW": {
+          "TITLE": "Xem trước",
+          "NO_CONTENT": "Bắt đầu tạo mẫu để xem trước",
+          "IMAGE_HEADER": "Xem trước tiêu đề hình ảnh",
+          "VIDEO_HEADER": "Xem trước tiêu đề video",
+          "DOCUMENT_HEADER": "Xem trước tiêu đề tài liệu"
+        },
+        "PARAMETER_TYPES": {
+          "TITLE": "Loại tham số",
+          "OPTIONS": {
+            "POSITIONAL": "Vị trí",
+            "NAMED": "Tên"
+          }
+        }
+      },
+      "MEDIA": {
+        "UPLOAD_LABEL": "Chọn tệp",
+        "UPLOADING": "Đang tải lên...",
+        "UPLOADED": "Đã tải lên",
+        "UPLOAD_ERROR": "Tải lên thất bại",
+        "IMAGE": "Hình ảnh",
+        "VIDEO": "Video",
+        "DOCUMENT": "Tài liệu",
+        "SIZE_ERROR": "Kích thước tệp vượt quá giới hạn {size}MB",
+        "TYPE_ERROR": "Loại tệp không hợp lệ",
+        "UPLOAD_FAILED": "Tải lên thất bại. Vui lòng thử lại.",
+        "HINT": "Kích thước tệp tối đa: {size}MB"
+      },
+      "LOADING": "Đang tải mẫu...",
+      "API": {
+        "FETCH_ERROR": "Tải mẫu thất bại. Vui lòng thử lại.",
+        "SUCCESS_MESSAGE": "Tạo mẫu thành công",
+        "UPDATE_SUCCESS": "Cập nhật mẫu thành công",
+        "ERROR_MESSAGE": "Lưu mẫu thất bại. Vui lòng thử lại."
+      }
     }
   },
   "SIDEBAR": {

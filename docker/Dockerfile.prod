@@ -1,5 +1,5 @@
 # pre-build stage
-FROM chatwoot/chatwoot:v4.6.0
+FROM chatwoot/chatwoot:v4.7.0
 
 ENV NODE_OPTIONS="--max-old-space-size=8192"
 ENV CW_EDITION=ee
