@@ -247,9 +247,9 @@ export default {
       return { incoming, outgoing };
     },
     showEndOfListMessage() {
-      return this.listLoadingStatus && !this.isLoadingPrevious;
+      return this.listLoadingStatus && !this.isLoadingPrevious && !this.allowLoadHistory;
     },
-    showLoadHistoryMessage() {
+    allowLoadHistory() {
       return this.currentChat.meta.show_load_more_history;
     }
   },
@@ -403,58 +403,34 @@ export default {
 
     async fetchPreviousMessages(scrollTop = 0) {
       this.setScrollParams();
-      const shouldLoadMoreMessages =
-        this.currentChat.dataFetched === true &&
-        !this.listLoadingStatus &&
-        !this.isLoadingPrevious;
 
-      if (
-        scrollTop < 100 &&
-        !this.isLoadingPrevious &&
-        shouldLoadMoreMessages
-      ) {
-        this.isLoadingPrevious = true;
-        try {
-          await this.$store.dispatch('fetchPreviousMessages', {
-            conversationId: this.currentChat.id,
-            before: this.currentChat.messages[0].id,
-          });
-          const heightDifference =
-            this.conversationPanel.scrollHeight - this.heightBeforeLoad;
-          this.conversationPanel.scrollTop =
-            this.scrollTopBeforeLoad + heightDifference;
-          this.setScrollParams();
-        } catch (error) {
-          // Ignore Error
-        } finally {
-          this.isLoadingPrevious = false;
-        }
-      }
-    },
+      const { dataFetched, id, messages } = this.currentChat;
+      const canFetch = dataFetched && !this.isLoadingPrevious && scrollTop < 100;
+      if (!canFetch) return;
 
-    async onClickLoadHistoryMessages() {
-      this.setScrollParams();
-      const shouldLoadHistoryMessages =
-        this.currentChat.dataFetched === true &&
-        this.listLoadingStatus &&
-        !this.isLoadingPrevious;
+      const isLoadMore = !this.listLoadingStatus;
+      const isLoadMoreHistory = this.listLoadingStatus && this.allowLoadHistory;
+      const action =
+        isLoadMore ? 'fetchPreviousMessages'
+        : isLoadMoreHistory ? 'fetchHistoryMessages'
+        : null;
+      if (!action) return;
 
-      if (shouldLoadHistoryMessages) {
-        this.isLoadingPrevious = true;
-        try {
-          await this.$store.dispatch('fetchHistoryMessages', {
-            conversationId: this.currentChat.id,
-          });
-          const heightDifference =
-            this.conversationPanel.scrollHeight - this.heightBeforeLoad;
-          this.conversationPanel.scrollTop =
-            this.scrollTopBeforeLoad + heightDifference;
-          this.setScrollParams();
-        } catch (error) {
-          // Ignore Error
-        } finally {
-          this.isLoadingPrevious = false;
-        }
+      const payload = {
+        conversationId: id,
+        ...(isLoadMore && { before: messages[0].id }),
+      };
+
+      this.isLoadingPrevious = true;
+      try {
+        await this.$store.dispatch(action, payload);
+        const heightDifference = this.conversationPanel.scrollHeight - this.heightBeforeLoad;
+        this.conversationPanel.scrollTop = this.scrollTopBeforeLoad + heightDifference;
+        this.setScrollParams();
+      } catch {
+        // Ignore error
+      } finally {
+        this.isLoadingPrevious = false;
       }
     },
 
@@ -538,7 +514,7 @@ export default {
           :conversation-id="currentChat.id"
         />
       </template>
-      <template v-if="showEndOfListMessage" #loadMoreHistory>
+      <template v-if="showEndOfListMessage" #endList>
         <div v-if="showLoadHistoryMessage" class="flex justify-center my-4">
           <button
             class="w-48 text-center px-2 py-2 text-sm font-medium bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 transition w-32"

@@ -346,7 +346,8 @@ const showEndOfListMessage = computed(() => {
   return (
     conversationList.value.length &&
     hasCurrentPageEndReached.value &&
-    !chatListLoading.value
+    !chatListLoading.value &&
+    !allowLoadHistoryConversation.value
   );
 });
 
@@ -355,7 +356,7 @@ const currentInbox = computed(() => {
   return store.getters['inboxes/getInbox'](inboxId);
 });
 
-const showLoadHistoryConversation = computed(() => {
+const allowLoadHistoryConversation = computed(() => {
   return currentInbox.value.channel_type === 'Channel::FacebookPage' &&
     !conversationStats.value['isLoadAllConversation'] && !hasAppliedFiltersOrActiveFolders.value;
 })
@@ -466,7 +467,7 @@ function onCloseDeleteFoldersModal() {
   showDeleteFoldersModal.value = false;
 }
 
-function onClickLoadHistoryConversation() {
+function fetchHistoryConversation() {
   store.dispatch('updateChatListFilters', conversationFilters.value);
   store.dispatch('fetchHistoryConversations').then(emitConversationLoaded);
 }
@@ -601,11 +602,13 @@ function resetAndFetchData() {
 }
 
 function loadMoreConversations() {
-  if (hasCurrentPageEndReached.value || chatListLoading.value) {
+  if ((hasCurrentPageEndReached.value && !allowLoadHistoryConversation.value) || chatListLoading.value) {
     return;
   }
 
-  if (!hasAppliedFiltersOrActiveFolders.value) {
+  if (hasCurrentPageEndReached.value && allowLoadHistoryConversation.value) {
+    fetchHistoryConversation()
+  } else if (!hasAppliedFiltersOrActiveFolders.value) {
     fetchConversations();
   } else if (hasActiveFolders.value) {
     const payload = activeFolder.value.query;
