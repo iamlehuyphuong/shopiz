@@ -6,7 +6,7 @@ module Enterprise::Account::PlanUsageAndLimits
 
   def usage_limits
     {
-      agents: agent_limits.to_i,
+      agents: get_limits(:agents).to_i,
       inboxes: get_limits(:inboxes).to_i,
       captain: {
         documents: get_captain_limits(:documents),
