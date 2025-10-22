@@ -2,6 +2,7 @@
 import { defineComponent, h } from 'vue';
 import Facebook from './channels/Facebook.vue';
 import Zalo from './channels/Zalo.vue';
+import ZaloPersonal from './channels/ZaloPersonal.vue';
 import Website from './channels/Website.vue';
 import Twitter from './channels/Twitter.vue';
 import Api from './channels/Api.vue';
@@ -11,6 +12,7 @@ import Whatsapp from './channels/Whatsapp.vue';
 import Line from './channels/Line.vue';
 import Telegram from './channels/Telegram.vue';
 import Instagram from './channels/Instagram.vue';
+import Voice from './channels/Voice.vue';
 import TikTok from './channels/TikTok.vue';
 
 const channelViewList = {
@@ -24,7 +26,9 @@ const channelViewList = {
   line: Line,
   telegram: Telegram,
   instagram: Instagram,
+  voice: Voice,
   zalo: Zalo,
+  zalopersonal: ZaloPersonal,
   tiktok: TikTok,
 };
 

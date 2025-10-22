@@ -1,0 +1,90 @@
+{
+  "SALES": {
+    "BADGE": {
+      "ACTIVE": "Đang hoạt động",
+      "COMPLETED": "Đã hoàn thành"
+    },
+    "CATALOG": {
+      "HEADER_TITLE": "Danh mục",
+      "NEW_PRODUCT": "Tạo sản phẩm",
+      "EMPTY_STATE": {
+        "TITLE": "Không có sản phẩm nào",
+        "SUBTITLE": "Cá nhân hóa việc tiếp cận khách hàng với khảo sát được hỗ trợ bởi AI. Hoàn hảo cho nhắc nhở cuộc hẹn, xác minh và theo dõi mà vẫn tự nhiên. Trợ lý AI của bạn có thể thích ứng với phản hồi của khách hàng, thu thập thông tin và làm giàu khách hàng tiềm năng—giúp đội nhóm tiết kiệm thời gian quý báu."
+      },
+      "CARD": {
+        "STATUS": {
+          "COMPLETED": "Đã hoàn thành",
+          "SCHEDULED": "Đã lên lịch"
+        },
+        "CAMPAIGN_DETAILS": {
+          "SENT_BY": "Gửi bởi ",
+          "FROM": " từ ",
+          "ON": " vào ",
+          "BOT": "Bot"
+        }
+      },
+      "EMPTY_STATE_BADGE": {
+        "ENABLED": "Đã bật",
+        "DISABLED": "Đã tắt"
+      },
+      "DETAILS": {
+        "MESSAGE": "Tin nhắn",
+        "INBOX": "Hộp thư",
+        "AUDIENCE": "Khán giả",
+        "SCHEDULED_AT": "Lên lịch lúc"
+      },
+      "CREATE": {
+        "TITLE": "Tạo sản phẩm",
+        "FORM": {
+          "TITLE": {
+            "LABEL": "Tiêu đề",
+            "PLACEHOLDER": "Nhập tiêu đề sản phẩm",
+            "ERROR": "Tiêu đề là bắt buộc"
+          },
+          "MESSAGE": {
+            "LABEL": "Kịch bản cuộc gọi",
+            "PLACEHOLDER": "Thêm hướng dẫn để dẫn dắt AI trong cuộc gọi này. Hãy cụ thể về giọng điệu, thông tin cần thu thập và cách xử lý các phản hồi khác nhau.",
+            "ERROR": "Kịch bản cuộc gọi là bắt buộc"
+          },
+          "INBOX": {
+            "LABEL": "Hộp thư khảo sát",
+            "PLACEHOLDER": "Chọn hộp thư khảo sát",
+            "ERROR": "Hộp thư khảo sát là bắt buộc"
+          },
+          "SENT_BY": {
+            "LABEL": "Gửi bởi",
+            "PLACEHOLDER": "Chọn người gửi",
+            "ERROR": "Người gửi là bắt buộc"
+          },
+          "AUDIENCE": {
+            "LABEL": "Khán giả",
+            "PLACEHOLDER": "Chọn nhãn khán giả",
+            "ERROR": "Khán giả là bắt buộc"
+          },
+          "SCHEDULED_AT": {
+            "LABEL": "Thời gian lên lịch",
+            "PLACEHOLDER": "Chọn thời gian bắt đầu chiến dịch",
+            "ERROR": "Thời gian lên lịch là bắt buộc"
+          },
+          "BUTTONS": {
+            "CREATE": "Tạo",
+            "CANCEL": "Hủy"
+          },
+          "API": {
+            "SUCCESS_MESSAGE": "Tạo sản phẩm thành công",
+            "ERROR_MESSAGE": "Có lỗi xảy ra. Vui lòng thử lại."
+          }
+        }
+      }
+    },
+    "CONFIRM_DELETE": {
+      "TITLE": "Bạn có chắc muốn xóa?",
+      "DESCRIPTION": "Hành động xóa là vĩnh viễn và không thể hoàn tác.",
+      "CONFIRM": "Xóa",
+      "API": {
+        "SUCCESS_MESSAGE": "Xóa chiến dịch thành công",
+        "ERROR_MESSAGE": "Có lỗi xảy ra. Vui lòng thử lại."
+      }
+    }
+  }
+}

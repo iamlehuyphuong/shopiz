@@ -12,6 +12,10 @@ class ShopifyAPI extends ApiClient {
       params: { contact_id: contactId },
     });
   }
+
+  getProducts() {
+    return axios.get(`${this.url}/products`);
+  }
 }
 
 export default new ShopifyAPI();

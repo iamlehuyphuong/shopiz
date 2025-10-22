@@ -1,7 +1,7 @@
 {
   "AUTOMATION": {
     "HEADER": "Tự động hoá",
-    "DESCRIPTION": "Tự động hoá có thể thay thế và tối ưu hóa các quy trình hiện có yêu cầu công sức thủ công, chẳng hạn như thêm nhãn và gán các cuộc hội thoại cho đại lý phù hợp nhất. Điều này cho phép nhóm tập trung vào thế mạnh của mình trong khi giảm thiểu thời gian dành cho các công việc lặp đi lặp lại.",
+    "DESCRIPTION": "Tự động hoá có thể thay thế và tối ưu hóa các quy trình hiện có yêu cầu công sức thủ công, chẳng hạn như thêm nhãn và gán các cuộc hội thoại cho nhân viên phù hợp nhất. Điều này cho phép nhóm tập trung vào thế mạnh của mình trong khi giảm thiểu thời gian dành cho các công việc lặp đi lặp lại.",
     "LEARN_MORE": "Tìm hiểu thêm về tự động hoá",
     "HEADER_BTN_TXT": "Thêm luật Tự động hoá",
     "LOADING": "Đang lấy luật tự động hoá",
@@ -126,6 +126,59 @@
       "ATLEAST_ONE_CONDITION_REQUIRED": "Cần ít nhất một điều kiện",
       "ATLEAST_ONE_ACTION_REQUIRED": "Cần ít nhất một hành động"
     },
-    "NONE_OPTION": "Không có"
+    "NONE_OPTION": "Không có",
+    "EVENTS": {
+      "CONVERSATION_CREATED": "Cuộc trò chuyện đã được tạo",
+      "CONVERSATION_UPDATED": "Cuộc trò chuyện đã được cập nhật",
+      "MESSAGE_CREATED": "Message Created",
+      "CONVERSATION_RESOLVED": "Conversation Resolved",
+      "CONVERSATION_OPENED": "Conversation Opened"
+    },
+    "ACTIONS": {
+      "ASSIGN_AGENT": "Assign to Agent",
+      "ASSIGN_TEAM": "Assign a Team",
+      "ADD_LABEL": "Add a Label",
+      "REMOVE_LABEL": "Remove a Label",
+      "SEND_EMAIL_TO_TEAM": "Send an Email to Team",
+      "SEND_EMAIL_TRANSCRIPT": "Send an Email Transcript",
+      "MUTE_CONVERSATION": "Tắt tiếng cuộc trò chuyện",
+      "SNOOZE_CONVERSATION": "Tạm dừng \bhội thoại",
+      "RESOLVE_CONVERSATION": "Giải quyết cuộc trò chuyện",
+      "SEND_WEBHOOK_EVENT": "Send Webhook Event",
+      "SEND_ATTACHMENT": "Send Attachment",
+      "SEND_MESSAGE": "Send a Message",
+      "ADD_PRIVATE_NOTE": "Add a Private Note",
+      "CHANGE_PRIORITY": "Change Priority",
+      "ADD_SLA": "Add SLA",
+      "OPEN_CONVERSATION": "Mở cuộc trò chuyện"
+    },
+    "MESSAGE_TYPES": {
+      "INCOMING": "Incoming Message",
+      "OUTGOING": "Outgoing Message"
+    },
+    "PRIORITY_TYPES": {
+      "NONE": "Không có",
+      "LOW": "Thấp",
+      "MEDIUM": "Trung bình",
+      "HIGH": "Cao",
+      "URGENT": "Cấp bách"
+    },
+    "ATTRIBUTES": {
+      "MESSAGE_TYPE": "Message Type",
+      "MESSAGE_CONTAINS": "Message Contains",
+      "EMAIL": "Email",
+      "INBOX": "Hộp thư đến",
+      "CONVERSATION_LANGUAGE": "Conversation Language",
+      "PHONE_NUMBER": "Số điện thoại",
+      "STATUS": "Trạng thái",
+      "BROWSER_LANGUAGE": "Ngôn ngữ của Trình duyệt",
+      "MAIL_SUBJECT": "Email Subject",
+      "COUNTRY_NAME": "Quốc gia",
+      "REFERER_LINK": "Referrer Link",
+      "ASSIGNEE_NAME": "Assignee",
+      "TEAM_NAME": "Nhóm",
+      "PRIORITY": "Mức độ ưu tiên",
+      "LABELS": "Nhãn"
+    }
   }
 }

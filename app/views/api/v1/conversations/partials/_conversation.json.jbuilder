@@ -18,6 +18,7 @@ json.meta do
     end
   end
   json.hmac_verified conversation.contact_inbox&.hmac_verified
+  json.show_load_more_history conversation.show_load_more_history
 end
 
 json.id conversation.display_id
@@ -42,7 +43,7 @@ json.inbox_id conversation.inbox_id
 json.labels conversation.cached_label_list_array
 json.muted conversation.muted?
 json.snoozed_until conversation.snoozed_until
-json.status conversation.status
+json.status conversation.status_display
 json.created_at conversation.created_at.to_i
 json.updated_at conversation.updated_at.to_f
 json.timestamp conversation.last_activity_at.to_i

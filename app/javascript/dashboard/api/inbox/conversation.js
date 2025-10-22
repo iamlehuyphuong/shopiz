@@ -134,12 +134,38 @@ class ConversationApi extends ApiClient {
     return axios.get(`${this.url}/${conversationId}/attachments`);
   }
 
-  requestCopilot(conversationId, body) {
-    return axios.post(`${this.url}/${conversationId}/copilot`, body);
-  }
-
   getInboxAssistant(conversationId) {
     return axios.get(`${this.url}/${conversationId}/inbox_assistant`);
+  }
+
+  delete(conversationId) {
+    return axios.delete(`${this.url}/${conversationId}`);
+  }
+
+  getHistories({
+    inboxId,
+    status,
+    assigneeType,
+    page,
+    labels,
+    teamId,
+    conversationType,
+    sortBy,
+    updatedWithin,
+  }) {
+    return axios.get(`${this.url}/load_more_history`, {
+      params: {
+        inbox_id: inboxId,
+        team_id: teamId,
+        status,
+        assignee_type: assigneeType,
+        page,
+        labels,
+        conversation_type: conversationType,
+        sort_by: sortBy,
+        updated_within: updatedWithin,
+      },
+    });
   }
 }
 

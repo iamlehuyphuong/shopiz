@@ -1,5 +1,8 @@
 class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::Conversations::BaseController
+  before_action :ensure_api_inbox, only: :update
+
   def index
+    load_init_history_messages
     @messages = message_finder.perform
   end
 
@@ -9,6 +12,11 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
     @message = mb.perform
   rescue StandardError => e
     render_could_not_create_error(e.message)
+  end
+
+  def update
+    Messages::StatusUpdateService.new(message, permitted_params[:status], permitted_params[:external_error]).perform
+    @message = message
   end
 
   def destroy
@@ -21,7 +29,9 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
   def retry
     return if message.blank?
 
-    message.update!(status: :sent, content_attributes: {})
+    service = Messages::StatusUpdateService.new(message, 'sent')
+    service.perform
+    message.update!(content_attributes: {})
     ::SendReplyJob.perform_later(message.id)
   rescue StandardError => e
     render_could_not_create_error(e.message)
@@ -45,6 +55,10 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
     render json: { content: translated_content }
   end
 
+  def load_more_history
+    @messages = Messages::LoadMoreHistoryService.new(@conversation).perform
+  end
+
   private
 
   def message
@@ -56,10 +70,23 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
   end
 
   def permitted_params
-    params.permit(:id, :target_language)
+    params.permit(:id, :target_language, :status, :external_error)
   end
 
   def already_translated_content_available?
     message.translations.present? && message.translations[permitted_params[:target_language]].present?
+  end
+
+  # API inbox check
+  def ensure_api_inbox
+    # Only API inboxes can update messages
+    render json: { error: 'Message status update is only allowed for API inboxes' }, status: :forbidden unless @conversation.inbox.api?
+  end
+
+  def load_init_history_messages
+    return if @conversation.next_cursor.present? || @conversation.is_load_all_message
+    return unless @conversation.messages.count == 1
+
+    Messages::LoadMoreHistoryService.new(@conversation).perform
   end
 end

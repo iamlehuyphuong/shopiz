@@ -13,7 +13,7 @@
 %>
 <script>
 
-window.salesmanSettings = {
+window.shopizSettings = {
   hideMessageBubble: false,
   // showUnreadMessagesDialog: false,
   // baseDomain: '.loca.lt',
@@ -30,11 +30,10 @@ window.salesmanSettings = {
   var BASE_URL = '';
   var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
   g.src= BASE_URL + "/packs/js/sdk.js";
-  g.defer = true;
   g.async = true;
   s.parentNode.insertBefore(g,s);
   g.onload=function(){
-    window.salesmanSDK.run({
+    window.shopizSDK.run({
       websiteToken: '<%= @web_widget.website_token %>',
       baseUrl: BASE_URL
     })
@@ -42,9 +41,9 @@ window.salesmanSettings = {
 })(document,"script");
 
 window.addEventListener('chatwoot:ready', function() {
-  console.log('chatwoot:ready', window.$chatwoot);
+  console.log('chatwoot:ready', window.$shopiz);
   if (window.location.search.includes('setUser')) {
-    window.$chatwoot.setUser('<%= user_id %>', {
+    window.$shopiz.setUser('<%= user_id %>', {
       identifier_hash: '<%= user_hash %>',
       email: 'jane@example.com',
       name: 'Jane Doe',
@@ -66,6 +65,13 @@ window.addEventListener('chatwoot:postback', function(e) {
   console.log('chatwoot:postback', e.detail)
 })
 
+window.addEventListener('chatwoot:opened', function() {
+  console.log('chatwoot:opened')
+})
+
+window.addEventListener('chatwoot:closed', function() {
+  console.log('chatwoot:closed')
+})
 
 window.addEventListener('chatwoot:on-start-conversation', function(e) {
   console.log('chatwoot:on-start-conversation', e.detail)

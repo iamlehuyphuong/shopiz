@@ -27,9 +27,9 @@ export default {
   methods: {
     runFBInit() {
       FB.init({
-        appId: window.salesmanConfig.fbAppId,
+        appId: window.shopizConfig.fbAppId,
         xfbml: true,
-        version: window.salesmanConfig.fbApiVersion,
+        version: window.shopizConfig.fbApiVersion,
         status: true,
       });
       window.fbSDKLoaded = true;
@@ -103,12 +103,10 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import 'dashboard/assets/scss/variables';
-
 .fb--login {
   img {
     max-width: 240px;
-    padding: $space-normal 0;
+    padding: 1rem 0;
   }
 }
 </style>

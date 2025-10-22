@@ -8,14 +8,11 @@ import { mapGetters } from 'vuex';
 import axios from 'axios';
 import PageHeader from '../../SettingsSubPageHeader.vue';
 import router from '../../../../index';
-import globalConfigMixin from 'shared/mixins/globalConfigMixin';
-// import accountMixin from '../../../../../mixins/account';
 export default {
   components: {
     LoadingState,
     PageHeader,
   },
-  mixins: [globalConfigMixin],
   setup() {
     const { accountId } = useAccount();
     return {
@@ -35,7 +32,7 @@ export default {
       pageName: '',
       avatar: '',
       channel: 'zalo',
-      emptyStateMessage: this.$t('INBOX_MGMT.DETAILS.LOADING_ZALO'),
+      emptyStateMessage: this.$t('INBOX_MGMT.ADD.ZALO.LOADING'),
       errorStateMessage: '',
       errorStateDescription: '',
       hasLoginStarted: false,
@@ -63,10 +60,10 @@ export default {
       this.hasLoginStarted = true;
       window.location.replace(
         'https://oauth.zaloapp.com/v4/oa/permission?app_id=' +
-          window.salesmanConfig.zaloAppId +
+          window.shopizConfig.zaloAppId +
           '&redirect_uri=' +
-          window.salesmanConfig.hostURL +
-          '/zalo/callback&state=' +
+          encodeURIComponent(window.shopizConfig.hostURL + '/zalo/callback/') +
+          '&state=' +
           encodeURIComponent(this.accountId)
       );
     },
@@ -75,12 +72,12 @@ export default {
       const url = 'https://oauth.zaloapp.com/v4/oa/access_token';
       const data = new URLSearchParams();
       data.append('code', this.$route.query.code);
-      data.append('app_id', window.salesmanConfig.zaloAppId);
+      data.append('app_id', window.shopizConfig.zaloAppId);
       data.append('grant_type', 'authorization_code');
       const config = {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          secret_key: window.salesmanConfig.zaloAppSecret,
+          secret_key: window.shopizConfig.zaloAppSecret,
         },
       };
       axios
@@ -163,16 +160,13 @@ export default {
     <div v-if="!hasLoginStarted" class="login-init h-full">
       <a href="#" @click="startLogin()">
         <img
-          src="~dashboard/assets/images/channels/zalo_login.jpg"
+          :src="`/assets/images/dashboard/channels/zalo_login.svg`"
           alt="Zalo-logo"
         />
       </a>
       <p>
         {{
-          useInstallationName(
-            $t('INBOX_MGMT.ADD.ZALO.HELP'),
-            globalConfig.installationName
-          )
+          $t('INBOX_MGMT.ADD.ZALO.HELP')
         }}
       </p>
     </div>
@@ -192,10 +186,10 @@ export default {
       >
         <div class="w-full">
           <PageHeader
-            :header-title="$t('INBOX_MGMT.DETAILS.TITLE')"
+            :header-title="$t('INBOX_MGMT.ADD.ZALO.TITLE')"
             :header-content="
               useInstallationName(
-                $t('INBOX_MGMT.DETAILS.DESC_ZALO'),
+                $t('INBOX_MGMT.ADD.ZALO.TITLE'),
                 globalConfig.installationName
               )
             "

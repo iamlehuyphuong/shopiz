@@ -72,7 +72,7 @@ describe Integrations::Slack::IncomingMessageBuilder do
         allow(builder).to receive(:sender).and_return(nil)
         2.times.each { builder.perform }
         expect(conversation.messages.count).to eql(messages_count + 1)
-        expect(conversation.messages.last.content).to eql('this is test https://salesman.effiai.pro Hey @Sojan Test again')
+        expect(conversation.messages.last.content).to eql('this is test https://www.shopiz.pro Hey @Sojan Test again')
       end
 
       it 'creates message' do
@@ -82,7 +82,7 @@ describe Integrations::Slack::IncomingMessageBuilder do
         allow(builder).to receive(:sender).and_return(nil)
         builder.perform
         expect(conversation.messages.count).to eql(messages_count + 1)
-        expect(conversation.messages.last.content).to eql('this is test https://salesman.effiai.pro Hey @Sojan Test again')
+        expect(conversation.messages.last.content).to eql('this is test https://www.shopiz.pro Hey @Sojan Test again')
       end
 
       it 'creates a private note' do
@@ -142,7 +142,7 @@ describe Integrations::Slack::IncomingMessageBuilder do
         allow(builder).to receive(:sender).and_return(nil)
         builder.perform
         expect(conversation.messages.count).to eql(messages_count + 1)
-        expect(conversation.messages.last.content).to eql('this is test https://salesman.effiai.pro Hey @Sojan Test again')
+        expect(conversation.messages.last.content).to eql('this is test https://www.shopiz.pro Hey @Sojan Test again')
         expect(conversation.messages.last.attachments).to be_any
       end
 
@@ -157,6 +157,19 @@ describe Integrations::Slack::IncomingMessageBuilder do
 
         expect(conversation.messages.count).to eql(messages_count)
       end
+
+      it 'handles different file types correctly' do
+        expect(hook).not_to be_nil
+        video_attachment_params = message_with_attachments.deep_dup
+        video_attachment_params[:event][:files][0][:filetype] = 'mp4'
+        video_attachment_params[:event][:files][0][:mimetype] = 'video/mp4'
+
+        builder = described_class.new(video_attachment_params)
+        allow(builder).to receive(:sender).and_return(nil)
+
+        expect { builder.perform }.not_to raise_error
+        expect(conversation.messages.last.attachments).to be_any
+      end
     end
 
     context 'when link shared' do
@@ -164,8 +177,8 @@ describe Integrations::Slack::IncomingMessageBuilder do
         {
           team_id: 'TLST3048H',
           api_app_id: 'A012S5UETV4',
-          event: link_shared_event.merge({ links: [{ url: "https://qa.salesman.effiai.pro/app/accounts/1/conversations/#{conversation.display_id}",
-                                                     domain: 'qa.salesman.effiai.pro' }] }),
+          event: link_shared_event.merge({ links: [{ url: "https://qa.shopiz.pro/app/accounts/1/conversations/#{conversation.display_id}",
+                                                     domain: 'qa.shopiz.pro' }] }),
           type: 'event_callback',
           event_time: 1_588_623_033
         }

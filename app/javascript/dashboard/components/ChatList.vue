@@ -22,6 +22,7 @@ import {
 // https://tanstack.com/virtual/latest/docs/framework/vue/examples/variable
 import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller';
 import ChatListHeader from './ChatListHeader.vue';
+import Dialog from 'dashboard/components-next/dialog/Dialog.vue';
 import ConversationFilter from 'next/filter/ConversationFilter.vue';
 import SaveCustomView from 'next/filter/SaveCustomView.vue';
 import ChatTypeTabs from './widgets/ChatTypeTabs.vue';
@@ -29,6 +30,8 @@ import ConversationItem from './ConversationItem.vue';
 import DeleteCustomViews from 'dashboard/routes/dashboard/customviews/DeleteCustomViews.vue';
 import ConversationBulkActions from './widgets/conversation/conversationBulkActions/Index.vue';
 import IntersectionObserver from './IntersectionObserver.vue';
+import TeleportWithDirection from 'dashboard/components-next/TeleportWithDirection.vue';
+import Spinner from 'dashboard/components-next/spinner/Spinner.vue';
 
 import { useUISettings } from 'dashboard/composables/useUISettings';
 import { useAlert } from 'dashboard/composables';
@@ -81,12 +84,15 @@ const emit = defineEmits(['conversationLoad']);
 const { uiSettings } = useUISettings();
 const { t } = useI18n();
 const router = useRouter();
+const route = useRoute();
 const store = useStore();
 
 const conversationListRef = ref(null);
 const conversationDynamicScroller = ref(null);
 
-const activeAssigneeTab = ref(wootConstants.ASSIGNEE_TYPE.ME);
+provide('contextMenuElementTarget', conversationDynamicScroller);
+
+const activeAssigneeTab = ref(wootConstants.ASSIGNEE_TYPE.ALL);
 const activeStatus = ref(wootConstants.STATUS_TYPE.OPEN);
 const activeSortBy = ref(wootConstants.SORT_BY_TYPE.LAST_ACTIVITY_AT_DESC);
 const showAdvancedFilters = ref(false);
@@ -340,9 +346,20 @@ const showEndOfListMessage = computed(() => {
   return (
     conversationList.value.length &&
     hasCurrentPageEndReached.value &&
-    !chatListLoading.value
+    !chatListLoading.value &&
+    !allowLoadHistoryConversation.value
   );
 });
+
+const currentInbox = computed(() => {
+  const { inbox_id: inboxId } = router.currentRoute.value.params;
+  return store.getters['inboxes/getInbox'](inboxId);
+});
+
+const allowLoadHistoryConversation = computed(() => {
+  return currentInbox.value.channel_type === 'Channel::FacebookPage' &&
+    !conversationStats.value['isLoadAllConversation'] && !hasAppliedFiltersOrActiveFolders.value;
+})
 
 const allConversationsSelected = computed(() => {
   return (
@@ -448,6 +465,11 @@ function onClickOpenDeleteFoldersModal() {
 
 function onCloseDeleteFoldersModal() {
   showDeleteFoldersModal.value = false;
+}
+
+function fetchHistoryConversation() {
+  store.dispatch('updateChatListFilters', conversationFilters.value);
+  store.dispatch('fetchHistoryConversations').then(emitConversationLoaded);
 }
 
 function setParamsForEditFolderModal() {
@@ -580,11 +602,13 @@ function resetAndFetchData() {
 }
 
 function loadMoreConversations() {
-  if (hasCurrentPageEndReached.value || chatListLoading.value) {
+  if ((hasCurrentPageEndReached.value && !allowLoadHistoryConversation.value) || chatListLoading.value) {
     return;
   }
 
-  if (!hasAppliedFiltersOrActiveFolders.value) {
+  if (hasCurrentPageEndReached.value && allowLoadHistoryConversation.value) {
+    fetchHistoryConversation()
+  } else if (!hasAppliedFiltersOrActiveFolders.value) {
     fetchConversations();
   } else if (hasActiveFolders.value) {
     const payload = activeFolder.value.query;
@@ -643,6 +667,30 @@ function openLastItemAfterDeleteInFolder() {
   }
 }
 
+function redirectToConversationList() {
+  const {
+    params: { accountId, inbox_id: inboxId, label, teamId },
+    name,
+  } = route;
+
+  let conversationType = '';
+  if (isOnMentionsView({ route: { name } })) {
+    conversationType = 'mention';
+  } else if (isOnUnattendedView({ route: { name } })) {
+    conversationType = 'unattended';
+  }
+  router.push(
+    conversationListPageURL({
+      accountId,
+      conversationType: conversationType,
+      customViewId: props.foldersId,
+      inboxId,
+      label,
+      teamId,
+    })
+  );
+}
+
 async function assignPriority(priority, conversationId = null) {
   store.dispatch('setCurrentChatPriority', {
     priority,
@@ -667,26 +715,7 @@ async function markAsUnread(conversationId) {
     await store.dispatch('markMessagesUnread', {
       id: conversationId,
     });
-    const {
-      params: { accountId, inbox_id: inboxId, label, teamId },
-      name,
-    } = useRoute();
-    let conversationType = '';
-    if (isOnMentionsView({ route: { name } })) {
-      conversationType = 'mention';
-    } else if (isOnUnattendedView({ route: { name } })) {
-      conversationType = 'unattended';
-    }
-    router.push(
-      conversationListPageURL({
-        accountId,
-        conversationType: conversationType,
-        customViewId: props.foldersId,
-        inboxId,
-        label,
-        teamId,
-      })
-    );
+    redirectToConversationList();
   } catch (error) {
     // Ignore error
   }
@@ -700,6 +729,7 @@ async function markAsRead(conversationId) {
     // Ignore error
   }
 }
+
 async function onAssignTeam(team, conversationId = null) {
   try {
     await store.dispatch('assignTeam', {
@@ -745,6 +775,7 @@ function toggleSelectAll(check) {
 }
 
 useEmitter('fetch_conversation_stats', () => {
+  if (hasAppliedFiltersOrActiveFolders.value) return;
   store.dispatch('conversationStats/get', conversationFilters.value);
 });
 
@@ -761,6 +792,26 @@ onMounted(() => {
   }
 });
 
+const deleteConversationDialogRef = ref(null);
+const selectedConversationId = ref(null);
+
+async function deleteConversation() {
+  try {
+    await store.dispatch('deleteConversation', selectedConversationId.value);
+    redirectToConversationList();
+    selectedConversationId.value = null;
+    deleteConversationDialogRef.value.close();
+    useAlert(t('CONVERSATION.SUCCESS_DELETE_CONVERSATION'));
+  } catch (error) {
+    useAlert(t('CONVERSATION.FAIL_DELETE_CONVERSATION'));
+  }
+}
+
+const handleDelete = conversationId => {
+  selectedConversationId.value = conversationId;
+  deleteConversationDialogRef.value.open();
+};
+
 provide('selectConversation', selectConversation);
 provide('deSelectConversation', deSelectConversation);
 provide('assignAgent', onAssignAgent);
@@ -772,6 +823,7 @@ provide('markAsUnread', markAsUnread);
 provide('markAsRead', markAsRead);
 provide('assignPriority', assignPriority);
 provide('isConversationSelected', isConversationSelected);
+provide('deleteConversation', handleDelete);
 
 watch(activeTeam, () => resetAndFetchData());
 
@@ -811,7 +863,7 @@ watch(conversationFilters, (newVal, oldVal) => {
     class="flex flex-col flex-shrink-0 bg-n-solid-1 conversations-list-wrap"
     :class="[
       { hidden: !showConversationList },
-      isOnExpandedLayout ? 'basis-full' : 'w-[360px] 2xl:w-[420px]',
+      isOnExpandedLayout ? 'basis-full' : 'w-[340px] 2xl:w-[412px]',
     ]"
   >
     <slot />
@@ -821,6 +873,8 @@ watch(conversationFilters, (newVal, oldVal) => {
       :has-active-folders="hasActiveFolders"
       :active-status="activeStatus"
       :is-on-expanded-layout="isOnExpandedLayout"
+      :conversation-stats="conversationStats"
+      :is-list-loading="chatListLoading && !conversationList.length"
       @add-folders="onClickOpenAddFoldersModal"
       @delete-folders="onClickOpenDeleteFoldersModal"
       @filters-modal="onToggleAdvanceFiltersModal"
@@ -828,14 +882,17 @@ watch(conversationFilters, (newVal, oldVal) => {
       @basic-filter-change="onBasicFilterChange"
     />
 
-    <Teleport v-if="showAddFoldersModal" to="#saveFilterTeleportTarget">
+    <TeleportWithDirection
+      v-if="showAddFoldersModal"
+      to="#saveFilterTeleportTarget"
+    >
       <SaveCustomView
         v-model="appliedFilter"
         :custom-views-query="foldersQuery"
         :open-last-saved-item="openLastSavedItemInFolder"
         @close="onCloseAddFoldersModal"
       />
-    </Teleport>
+    </TeleportWithDirection>
 
     <DeleteCustomViews
       v-if="showDeleteFoldersModal"
@@ -854,12 +911,23 @@ watch(conversationFilters, (newVal, oldVal) => {
       @chat-tab-change="updateAssigneeTab"
     />
 
-    <p
-      v-if="!chatListLoading && !conversationList.length"
-      class="flex items-center justify-center p-4 overflow-auto"
-    >
-      {{ $t('CHAT_LIST.LIST.404') }}
-    </p>
+    <template v-if="!chatListLoading && !conversationList.length">
+      <div v-if="showLoadHistoryConversation" class="flex justify-center my-4">
+        <button
+          class="conversation-load-more bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full dark:hover:bg-gray-700"
+          @click="onClickLoadHistoryConversation"
+        >
+          <span class="i-lucide-chevron-down"></span>
+          {{ $t('CHAT_LIST.LOAD_MORE') }}
+        </button>
+      </div>
+      <p
+        v-else
+        class="flex items-center justify-center p-4 overflow-auto"
+      >
+        {{ $t('CHAT_LIST.LIST.404') }}
+      </p>
+    </template>
     <ConversationBulkActions
       v-if="selectedConversations.length"
       :conversations="selectedConversations"
@@ -915,15 +983,27 @@ watch(conversationFilters, (newVal, oldVal) => {
           </DynamicScrollerItem>
         </template>
         <template #after>
-          <div v-if="chatListLoading" class="text-center">
-            <span class="mt-4 mb-4 spinner" />
+          <div v-if="chatListLoading" class="flex justify-center my-4">
+            <Spinner class="text-n-brand" />
           </div>
-          <p
-            v-else-if="showEndOfListMessage"
-            class="p-4 text-center text-slate-400 dark:text-slate-300"
-          >
-            {{ $t('CHAT_LIST.EOF') }}
-          </p>
+          <template v-else-if="showEndOfListMessage">
+            <div v-if="showLoadHistoryConversation" class="flex justify-center my-4">
+              <button
+                class="conversation-load-more bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full dark:hover:bg-gray-700"
+                @click="onClickLoadHistoryConversation"
+              >
+                <span class="i-lucide-chevron-down"></span>
+                {{ $t('CHAT_LIST.LOAD_MORE') }}
+              </button>
+            </div>
+            <p
+              v-else
+              class="p-4 text-center text-slate-400 dark:text-slate-300"
+            >
+              {{ $t('CHAT_LIST.EOF') }}
+            </p>
+          </template>
+
           <IntersectionObserver
             v-else
             :options="intersectionObserverOptions"
@@ -932,7 +1012,23 @@ watch(conversationFilters, (newVal, oldVal) => {
         </template>
       </DynamicScroller>
     </div>
-    <Teleport v-if="showAdvancedFilters" to="#conversationFilterTeleportTarget">
+    <Dialog
+      ref="deleteConversationDialogRef"
+      type="alert"
+      :title="
+        $t('CONVERSATION.DELETE_CONVERSATION.TITLE', {
+          conversationId: selectedConversationId,
+        })
+      "
+      :description="$t('CONVERSATION.DELETE_CONVERSATION.DESCRIPTION')"
+      :confirm-button-label="$t('CONVERSATION.DELETE_CONVERSATION.CONFIRM')"
+      @confirm="deleteConversation"
+      @close="selectedConversationId = null"
+    />
+    <TeleportWithDirection
+      v-if="showAdvancedFilters"
+      to="#conversationFilterTeleportTarget"
+    >
       <ConversationFilter
         v-model="appliedFilter"
         :folder-name="activeFolderName"
@@ -941,6 +1037,11 @@ watch(conversationFilters, (newVal, oldVal) => {
         @update-folder="onUpdateSavedFilter"
         @close="closeAdvanceFiltersModal"
       />
-    </Teleport>
+    </TeleportWithDirection>
   </div>
 </template>
+<style lang="scss" scoped>
+.conversation-load-more {
+  @apply w-48 text-center px-2 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition w-32 flex items-center gap-1 justify-center;
+}
+</style>

@@ -65,4 +65,13 @@ class SuperAdmin::AccountsController < SuperAdmin::ApplicationController
     redirect_back(fallback_location: [namespace, requested_resource], notice: 'Account deletion is in progress.')
     # rubocop:enable Rails/I18nLocaleTexts
   end
+
+  def assign_plan
+    account = Account.find(params[:id])
+    status = Account::AssignPlanService.new(account, params[:plan_id]).execute
+    message = status ? 'Plan assigned successfully!' : 'Failed to assign plan.'
+    redirect_to super_admin_account_path(account), notice: message
+  end
 end
+
+SuperAdmin::AccountsController.prepend_mod_with('SuperAdmin::AccountsController')

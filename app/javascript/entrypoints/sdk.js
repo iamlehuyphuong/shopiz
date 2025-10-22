@@ -19,16 +19,22 @@ import { setCookieWithDomain } from '../sdk/cookieHelpers';
 import { SDK_SET_BUBBLE_VISIBILITY } from 'shared/constants/sharedFrameEvents';
 
 const runSDK = ({ baseUrl, websiteToken }) => {
-  if (window.$chatwoot) {
+  if (window.$shopiz) {
     return;
   }
 
-  if (window.Turbo) {
-    // if this is a Rails Turbo app
-    document.addEventListener('turbo:before-render', event =>
-      restoreWidgetInDOM(event.detail.newBody)
-    );
-  }
+  // if this is a Rails Turbo app
+  document.addEventListener('turbo:before-render', event => {
+    // when morphing the page, this typically happens on reload like events
+    // say you update a "Customer" on a form and it reloads the page
+    // We have already added data-turbo-permananent to true. This
+    // will ensure that the widget it preserved
+    // Read more about morphing here: https://turbo.hotwired.dev/handbook/page_refreshes#morphing
+    // and peristing elements here: https://turbo.hotwired.dev/handbook/building#persisting-elements-across-page-loads
+    if (event.detail.renderMethod === 'morph') return;
+
+    restoreWidgetInDOM(event.detail.newBody);
+  });
 
   if (window.Turbolinks) {
     document.addEventListener('turbolinks:before-render', event => {
@@ -41,31 +47,38 @@ const runSDK = ({ baseUrl, websiteToken }) => {
     restoreWidgetInDOM(event.newDocument.body)
   );
 
-  const salesmanSettings = window.salesmanSettings || {};
-  let locale = salesmanSettings.locale;
-  let baseDomain = salesmanSettings.baseDomain;
+  const shopizSettings = window.shopizSettings || {};
+  let locale = shopizSettings.locale;
+  let baseDomain = shopizSettings.baseDomain;
 
-  if (salesmanSettings.useBrowserLanguage) {
+  if (shopizSettings.useBrowserLanguage) {
     locale = window.navigator.language.replace('-', '_');
   }
 
-  window.$chatwoot = {
+  window.$shopiz = {
     baseUrl,
     baseDomain,
     hasLoaded: false,
-    hideMessageBubble: salesmanSettings.hideMessageBubble || false,
+    hideMessageBubble: shopizSettings.hideMessageBubble || false,
     isOpen: false,
-    position: salesmanSettings.position === 'left' ? 'left' : 'right',
+    position: shopizSettings.position === 'left' ? 'left' : 'right',
     websiteToken,
     locale,
-    useBrowserLanguage: salesmanSettings.useBrowserLanguage || false,
-    type: getBubbleView(salesmanSettings.type),
-    launcherTitle: salesmanSettings.launcherTitle || '',
-    showPopoutButton: salesmanSettings.showPopoutButton || false,
-    showUnreadMessagesDialog: salesmanSettings.showUnreadMessagesDialog ?? true,
-    widgetStyle: getWidgetStyle(salesmanSettings.widgetStyle) || 'standard',
+    useBrowserLanguage: shopizSettings.useBrowserLanguage || false,
+    type: getBubbleView(shopizSettings.type),
+    launcherTitle: shopizSettings.launcherTitle || '',
+    showPopoutButton: shopizSettings.showPopoutButton || false,
+    showUnreadMessagesDialog: shopizSettings.showUnreadMessagesDialog ?? true,
+    widgetStyle: getWidgetStyle(shopizSettings.widgetStyle) || 'standard',
     resetTriggered: false,
-    darkMode: getDarkMode(salesmanSettings.darkMode),
+    darkMode: getDarkMode(shopizSettings.darkMode),
+    welcomeTitle: shopizSettings.welcomeTitle || '',
+    welcomeDescription: shopizSettings.welcomeDescription || '',
+    availableMessage: shopizSettings.availableMessage || '',
+    unavailableMessage: shopizSettings.unavailableMessage || '',
+    enableFileUpload: shopizSettings.enableFileUpload ?? true,
+    enableEmojiPicker: shopizSettings.enableEmojiPicker ?? true,
+    enableEndConversation: shopizSettings.enableEndConversation ?? true,
 
     toggle(state) {
       IFrameHelper.events.toggleBubble(state);
@@ -77,21 +90,21 @@ const runSDK = ({ baseUrl, websiteToken }) => {
       if (visibility === 'hide') {
         addClasses(widgetHolder, 'woot-widget--without-bubble');
         addClasses(widgetElm, 'woot-hidden');
-        window.$chatwoot.hideMessageBubble = true;
+        window.$shopiz.hideMessageBubble = true;
       } else if (visibility === 'show') {
         removeClasses(widgetElm, 'woot-hidden');
         removeClasses(widgetHolder, 'woot-widget--without-bubble');
-        window.$chatwoot.hideMessageBubble = false;
+        window.$shopiz.hideMessageBubble = false;
       }
       IFrameHelper.sendMessage(SDK_SET_BUBBLE_VISIBILITY, {
-        hideMessageBubble: window.$chatwoot.hideMessageBubble,
+        hideMessageBubble: window.$shopiz.hideMessageBubble,
       });
     },
 
     popoutChatWindow() {
       IFrameHelper.events.popoutChatWindow({
-        baseUrl: window.$chatwoot.baseUrl,
-        websiteToken: window.$chatwoot.websiteToken,
+        baseUrl: window.$shopiz.baseUrl,
+        websiteToken: window.$shopiz.websiteToken,
         locale,
       });
     },
@@ -114,8 +127,8 @@ const runSDK = ({ baseUrl, websiteToken }) => {
         return;
       }
 
-      window.$chatwoot.identifier = identifier;
-      window.$chatwoot.user = user;
+      window.$shopiz.identifier = identifier;
+      window.$shopiz.user = user;
       IFrameHelper.sendMessage('set-user', { identifier, user });
 
       setCookieWithDomain(userCookieName, hashToBeStored, {
@@ -180,7 +193,7 @@ const runSDK = ({ baseUrl, websiteToken }) => {
     },
 
     reset() {
-      if (window.$chatwoot.isOpen) {
+      if (window.$shopiz.isOpen) {
         IFrameHelper.events.toggleBubble();
       }
 
@@ -189,11 +202,11 @@ const runSDK = ({ baseUrl, websiteToken }) => {
 
       const iframe = IFrameHelper.getAppFrame();
       iframe.src = IFrameHelper.getUrl({
-        baseUrl: window.$chatwoot.baseUrl,
-        websiteToken: window.$chatwoot.websiteToken,
+        baseUrl: window.$shopiz.baseUrl,
+        websiteToken: window.$shopiz.websiteToken,
       });
 
-      window.$chatwoot.resetTriggered = true;
+      window.$shopiz.resetTriggered = true;
     },
   };
 
@@ -203,6 +216,6 @@ const runSDK = ({ baseUrl, websiteToken }) => {
   });
 };
 
-window.salesmanSDK = {
+window.shopizSDK = {
   run: runSDK,
 };

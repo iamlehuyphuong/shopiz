@@ -1,51 +1,29 @@
 <script setup>
-import { computed, ref, onMounted, nextTick } from 'vue';
+import { computed, ref, onMounted, nextTick, getCurrentInstance } from 'vue';
 const props = defineProps({
-  modelValue: {
-    type: [String, Number],
-    default: '',
-  },
-  type: {
+  modelValue: { type: [String, Number], default: '' },
+  type: { type: String, default: 'text' },
+  customInputClass: { type: [String, Object, Array], default: '' },
+  placeholder: { type: String, default: '' },
+  label: { type: String, default: '' },
+  id: { type: String, default: '' },
+  size: {
     type: String,
-    default: 'text',
+    default: 'md',
+    validator: value => ['sm', 'md'].includes(value),
   },
-  customInputClass: {
-    type: [String, Object, Array],
-    default: '',
-  },
-  placeholder: {
-    type: String,
-    default: '',
-  },
-  label: {
-    type: String,
-    default: '',
-  },
-  id: {
-    type: String,
-    default: '',
-  },
-  message: {
-    type: String,
-    default: '',
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
+  message: { type: String, default: '' },
+  disabled: { type: Boolean, default: false },
   messageType: {
     type: String,
     default: 'info',
     validator: value => ['info', 'error', 'success'].includes(value),
   },
-  min: {
-    type: String,
-    default: '',
-  },
-  autofocus: {
-    type: Boolean,
-    default: false,
-  },
+  min: { type: String, default: '' },
+  max: { type: String, default: '' },
+  autofocus: { type: Boolean, default: false },
+  showCharacterCount: { type: Boolean, default: false },
+  maxLength: { type: Number, default: null },
 });
 
 const emit = defineEmits([
@@ -56,6 +34,10 @@ const emit = defineEmits([
   'enter',
 ]);
 
+// Generate a unique ID per component instance when `id` prop is not provided.
+const { uid } = getCurrentInstance();
+const uniqueId = computed(() => props.id || `input-${uid}`);
+
 const isFocused = ref(false);
 const inputRef = ref(null);
 
@@ -64,7 +46,7 @@ const messageClass = computed(() => {
     case 'error':
       return 'text-n-ruby-9 dark:text-n-ruby-9';
     case 'success':
-      return 'text-green-500 dark:text-green-400';
+      return 'text-n-teal-10 dark:text-n-teal-10';
     default:
       return 'text-n-slate-11 dark:text-n-slate-11';
   }
@@ -79,8 +61,15 @@ const inputOutlineClass = computed(() => {
   }
 });
 
+const characterCount = computed(() => String(props.modelValue).length);
+
 const handleInput = event => {
-  emit('update:modelValue', event.target.value);
+  let value = event.target.value;
+  // Convert to number if type is number and value is not empty
+  if (props.type === 'number' && value !== '') {
+    value = Number(value);
+  }
+  emit('update:modelValue', value);
   emit('input', event);
 };
 
@@ -88,6 +77,17 @@ const handleFocus = event => {
   emit('focus', event);
   isFocused.value = true;
 };
+
+const sizeClass = computed(() => {
+  switch (props.size) {
+    case 'sm':
+      return 'h-8 !px-3 !py-2';
+    case 'md':
+      return 'h-10 !px-3 !py-2.5';
+    default:
+      return 'h-10 !px-3 !py-2.5';
+  }
+});
 
 const handleBlur = event => {
   emit('blur', event);
@@ -111,35 +111,57 @@ onMounted(() => {
   <div class="relative flex flex-col min-w-0 gap-1">
     <label
       v-if="label"
-      :for="id"
+      :for="uniqueId"
       class="mb-0.5 text-sm font-medium text-n-slate-12"
     >
       {{ label }}
     </label>
     <!-- Added prefix slot to allow adding icons to the input -->
     <slot name="prefix" />
-    <input
-      :id="id"
-      ref="inputRef"
-      :value="modelValue"
-      :class="[
-        customInputClass,
-        inputOutlineClass,
-        {
-          error: messageType === 'error',
-          focus: isFocused,
-        },
-      ]"
-      :type="type"
-      :placeholder="placeholder"
-      :disabled="disabled"
-      :min="['date', 'datetime-local', 'time'].includes(type) ? min : undefined"
-      class="block w-full reset-base text-sm h-10 !px-3 !py-2.5 !mb-0 outline outline-1 border-none border-0 outline-offset-[-1px] rounded-lg bg-n-alpha-black2 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-n-slate-10 dark:placeholder:text-n-slate-10 disabled:cursor-not-allowed disabled:opacity-50 text-n-slate-12 transition-all duration-500 ease-in-out"
-      @input="handleInput"
-      @focus="handleFocus"
-      @blur="handleBlur"
-      @keyup.enter="handleEnter"
-    />
+    <div class="relative">
+      <input
+        :id="uniqueId"
+        v-bind="$attrs"
+        ref="inputRef"
+        :value="modelValue"
+        :class="[
+          customInputClass,
+          inputOutlineClass,
+          sizeClass,
+          {
+            error: messageType === 'error',
+            focus: isFocused,
+          },
+          showCharacterCount ? 'pr-16' : '',
+        ]"
+        :type="type"
+        :placeholder="placeholder"
+        :disabled="disabled"
+        :min="
+          ['date', 'datetime-local', 'time'].includes(type) ? min : undefined
+        "
+        :maxlength="showCharacterCount && maxLength ? maxLength : undefined"
+        :max="
+          ['date', 'datetime-local', 'time', 'number'].includes(type)
+            ? max
+            : undefined
+        "
+        class="block w-full reset-base text-sm !mb-0 outline outline-1 border-none border-0 outline-offset-[-1px] rounded-lg bg-n-alpha-black2 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-n-slate-10 dark:placeholder:text-n-slate-10 disabled:cursor-not-allowed disabled:opacity-50 text-n-slate-12 transition-all duration-500 ease-in-out [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+        @input="handleInput"
+        @focus="handleFocus"
+        @blur="handleBlur"
+        @keyup.enter="handleEnter"
+      />
+      <!-- Character Count Display -->
+      <div
+        v-if="showCharacterCount"
+        class="absolute top-1/2 transform -translate-y-1/2 right-3 pointer-events-none"
+      >
+        <span class="text-xs tabular-nums text-n-slate-10">
+          {{ characterCount }}<span v-if="maxLength"> / {{ maxLength }}</span>
+        </span>
+      </div>
+    </div>
     <p
       v-if="message"
       class="min-w-0 mt-1 mb-0 text-xs truncate transition-all duration-500 ease-in-out"

@@ -3,6 +3,9 @@ import { frontendURL } from 'dashboard/helper/URLHelper.js';
 import CampaignsPageRouteView from './pages/CampaignsPageRouteView.vue';
 import LiveChatCampaignsPage from './pages/LiveChatCampaignsPage.vue';
 import SMSCampaignsPage from './pages/SMSCampaignsPage.vue';
+import WhatsAppCampaignsPage from './pages/WhatsAppCampaignsPage.vue';
+import VoiceCampaignsPage from './pages/VoiceCampaignsPage.vue';
+import SurveyCampaignsPage from './pages/SurveyCampaignsPage.vue';
 import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 
 const meta = {
@@ -49,6 +52,27 @@ const campaignsRoutes = {
           name: 'campaigns_sms_index',
           meta,
           component: SMSCampaignsPage,
+        },
+        {
+          path: 'whatsapp',
+          name: 'campaigns_whatsapp_index',
+          meta: {
+            ...meta,
+            featureFlag: FEATURE_FLAGS.WHATSAPP_CAMPAIGNS,
+          },
+          component: WhatsAppCampaignsPage,
+        },
+        {
+          path: 'voice',
+          name: 'campaigns_voice_index',
+          meta,
+          component: VoiceCampaignsPage,
+        },
+        {
+          path: 'surveys',
+          name: 'campaigns_survey_index',
+          component: SurveyCampaignsPage,
+          meta: meta,
         },
       ],
     },

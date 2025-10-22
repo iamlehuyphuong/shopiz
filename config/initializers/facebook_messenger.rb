@@ -39,6 +39,16 @@ Rails.application.reloader.to_prepare do
   end
 
   Facebook::Messenger::Bot.on :message_echo do |message|
-    Webhooks::FacebookEventsJob.perform_later(message.to_json)
+    # Add delay to prevent race condition where echo arrives before send message API completes
+    # This avoids duplicate messages when echo comes early during API processing
+    Webhooks::FacebookEventsJob.set(wait: 2.seconds).perform_later(message.to_json)
+  end
+
+  Facebook::Messenger::Bot.on :postback do |postback|
+    Webhooks::FacebookPostbackJob.perform_later(postback.to_json)
+  end
+
+  Facebook::Messenger::Bot.on :postback do |postback|
+    Webhooks::FacebookPostbackJob.perform_later(postback.to_json)
   end
 end

@@ -11,6 +11,7 @@ export default {
     PENDING: 'pending',
     SNOOZED: 'snoozed',
     ALL: 'all',
+    BOT: 'bot',
   },
   SORT_BY_TYPE: {
     LAST_ACTIVITY_AT_ASC: 'last_activity_at_asc',
@@ -31,11 +32,13 @@ export default {
     CONDENSED: 'condensed',
     EXPANDED: 'expanded',
   },
-  DOCS_URL: 'https://salesman.effiai.pro/docs/product/',
+  DOCS_URL: 'https://www.shopiz.pro/docs/product/',
   HELP_CENTER_DOCS_URL:
-    'https://salesman.effiai.pro/docs/product/others/help-center',
-  TESTIMONIAL_URL: 'https://testimonials.cdn.salesman.effiai.pro/content.json',
-  SMALL_SCREEN_BREAKPOINT: 1200,
+    'https://www.chatwoot.com/docs/product/others/help-center',
+  TESTIMONIAL_URL: 'https://testimonials.cdn.chatwoot.com/content.json',
+  WHATSAPP_EMBEDDED_SIGNUP_DOCS_URL:
+    'https://developers.facebook.com/docs/whatsapp/embedded-signup/custom-flows/onboarding-business-app-users#limitations',
+  SMALL_SCREEN_BREAKPOINT: 768,
   AVAILABILITY_STATUS_KEYS: ['online', 'busy', 'offline'],
   SNOOZE_OPTIONS: {
     UNTIL_NEXT_REPLY: 'until_next_reply',

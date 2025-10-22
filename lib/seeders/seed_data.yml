@@ -61,41 +61,49 @@ users:
     email: 'karn@paperlayer.test'
     team:
       - 'Sales'
+    custom_role: 'Sales Representative'
   - name: 'Danny Cordray'
     gender: female
     email: 'danny@paperlayer.test'
     team:
       - 'Sales'
+    custom_role: 'Customer Support Lead'
   - name: 'Ben Nugent'
     gender: male
     email: 'ben@paperlayer.test'
     team:
       - 'Sales'
+    custom_role: 'Junior Agent'
   - name: 'Todd Packer'
     gender: male
     email: 'todd@paperlayer.test'
     team:
       - 'Sales'
+    custom_role: 'Sales Representative'
   - name: 'Cathy Simms'
     gender: female
     email: 'cathy@paperlayer.test'
     team:
       - 'Administration'
+    custom_role: 'Knowledge Manager'
   - name: 'Hunter Jo'
     gender: male
     email: 'hunter@paperlayer.test'
     team:
       - 'Administration'
+    custom_role: 'Analytics Specialist'
   - name: 'Rolando Silva'
     gender: male
     email: 'rolando@paperlayer.test'
     team:
       - 'Administration'
+    custom_role: 'Junior Agent'
   - name: 'Stephanie Wilson'
     gender: female
     email: 'stephanie@paperlayer.test'
     team:
       - 'Administration'
+    custom_role: 'Escalation Handler'
   - name: 'Jordan Garfield'
     gender: male
     email: 'jorodan@paperlayer.test'
@@ -111,6 +119,7 @@ users:
     email: 'lonny@paperlayer.test'
     team:
       - 'Warehouse'
+    custom_role: 'Customer Support Lead'
   - name: 'Madge Madsen'
     gender: female
     email: 'madge@paperlayer.test'
@@ -162,6 +171,7 @@ users:
   - name: 'Devon White'
     gender: male
     email: 'devon@paperlayer.test'
+    custom_role: 'Escalation Handler'
   - name: 'Kendall'
     gender: male
     email: 'kendall@paperlayer.test'
@@ -173,6 +183,39 @@ teams:
   - '💼 Management'
   - '👩‍💼 Administration'
   - '🚛 Warehouse'
+custom_roles:
+  - name: 'Customer Support Lead'
+    description: 'Lead support agent with full conversation and contact management'
+    permissions:
+      - 'conversation_manage'
+      - 'contact_manage'
+      - 'report_manage'
+  - name: 'Sales Representative'
+    description: 'Sales team member with conversation and contact access'
+    permissions:
+      - 'conversation_unassigned_manage'
+      - 'conversation_participating_manage'
+      - 'contact_manage'
+  - name: 'Knowledge Manager'
+    description: 'Manages knowledge base and participates in conversations'
+    permissions:
+      - 'knowledge_base_manage'
+      - 'conversation_participating_manage'
+  - name: 'Junior Agent'
+    description: 'Entry-level agent with basic conversation access'
+    permissions:
+      - 'conversation_participating_manage'
+  - name: 'Analytics Specialist'
+    description: 'Focused on reports and data analysis'
+    permissions:
+      - 'report_manage'
+      - 'conversation_participating_manage'
+  - name: 'Escalation Handler'
+    description: 'Handles unassigned conversations and escalations'
+    permissions:
+      - 'conversation_unassigned_manage'
+      - 'conversation_participating_manage'
+      - 'contact_manage'
 labels:
     - title: 'billing'
       color: '#28AD21'
@@ -434,4 +477,55 @@ contacts:
             - message_type: outgoing
               sender: michael_scott@paperlayer.test
               content: How may i help you ?
-              sender: michael_scott@paperlayer.test
+    - name: "Robert Maxwell"
+      email: "rmaxwell@example.test"
+      gender: 'male'
+      conversations:
+        - channel: Channel::WebWidget
+          assignee: karn@paperlayer.test
+          messages:
+            - message_type: incoming
+              content: "Hi, I need help with my account settings."
+            - message_type: outgoing
+              sender: karn@paperlayer.test
+              content: "I'd be happy to help you with your account settings. What specifically would you like to change?"
+            - message_type: incoming
+              content: "I want to update my billing information."
+            - message_type: outgoing
+              sender: karn@paperlayer.test
+              content: "Perfect! I've sent you a secure link to update your billing information. Please check your email."
+    - name: "Sarah Johnson"
+      email: "sjohnson@demo.test"
+      gender: 'female'
+      conversations:
+        - channel: Channel::FacebookPage
+          assignee: danny@paperlayer.test
+          messages:
+            - message_type: incoming
+              content: "Hello, I'm having trouble with the mobile app."
+            - message_type: outgoing
+              sender: danny@paperlayer.test
+              content: "Sorry to hear that! Can you tell me what specific issue you're experiencing?"
+            - message_type: incoming
+              content: "The app keeps crashing when I try to upload a document."
+            - message_type: outgoing
+              sender: danny@paperlayer.test
+              content: "I understand how frustrating that must be. Let me help you troubleshoot this issue right away."
+    - name: "David Chen"
+      email: "dchen@sample.test"
+      gender: 'male'
+      conversations:
+        - channel: Channel::Email
+          source_id: "dchen@sample.test"
+          assignee: ben@paperlayer.test
+          messages:
+            - message_type: incoming
+              content: "I need assistance with integrating your API."
+            - message_type: outgoing
+              sender: ben@paperlayer.test
+              content: "I'll be happy to help with the API integration. What programming language are you using?"
+            - message_type: incoming
+              content: "We're using Python for our backend."
+            - message_type: outgoing
+              sender: ben@paperlayer.test
+              content: "Great! I'll send you our Python SDK documentation and some sample code to get you started."

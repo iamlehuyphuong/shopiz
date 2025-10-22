@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Platform Users API', type: :request do
-  let!(:user) { create(:user, email: 'dev+testing@salesman.effiai.pro', custom_attributes: { test: 'test' }) }
+  let!(:user) { create(:user, email: 'dev+testing@shopiz.pro', custom_attributes: { test: 'test' }) }
 
   describe 'GET /platform/api/v1/users/{user_id}' do
     context 'when it is an unauthenticated platform app' do
@@ -71,7 +71,55 @@ RSpec.describe 'Platform Users API', type: :request do
 
         expect(response).to have_http_status(:success)
         data = response.parsed_body
-        expect(data['url']).to include('email=dev%2Btesting%40salesman.effiai.pro&sso_auth_token=')
+        expect(data['url']).to include('email=dev%2Btesting%40shopiz.pro&sso_auth_token=')
+      end
+    end
+  end
+
+  describe 'POST /platform/api/v1/users/{user_id}/token' do
+    context 'when it is an unauthenticated platform app' do
+      it 'returns unauthorized' do
+        post "/platform/api/v1/users/#{user.id}/token"
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context 'when it is an invalid platform app token' do
+      it 'returns unauthorized' do
+        post "/platform/api/v1/users/#{user.id}/token", headers: { api_access_token: 'invalid' }, as: :json
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context 'when it is an authenticated platform app' do
+      let(:platform_app) { create(:platform_app) }
+
+      it 'returns unauthorized when its not a permissible object' do
+        post "/platform/api/v1/users/#{user.id}/token", headers: { api_access_token: platform_app.access_token.token }, as: :json
+        expect(response).to have_http_status(:unauthorized)
+      end
+
+      it 'returns access token for the user with expiry and user info' do
+        create(:platform_app_permissible, platform_app: platform_app, permissible: user)
+
+        post "/platform/api/v1/users/#{user.id}/token",
+             headers: { api_access_token: platform_app.access_token.token }, as: :json
+
+        expect(response).to have_http_status(:success)
+        data = response.parsed_body
+
+        # Check access token and expiry
+        expect(data['access_token']).to eq(user.access_token.token)
+        expect(data['expiry']).to be_nil
+
+        # Check user info
+        expect(data['user']).to include(
+          'id' => user.id,
+          'name' => user.name,
+          'display_name' => user.display_name,
+          'email' => user.email,
+          'pubsub_token' => user.pubsub_token
+        )
       end
     end
   end

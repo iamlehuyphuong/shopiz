@@ -17,6 +17,11 @@
     "IP_ADDRESS": "Địa chỉ IP",
     "CREATED_AT_LABEL": "Đã tạo",
     "NEW_MESSAGE": "Tin nhắn mới",
+    "CALL": "Gọi",
+    "CALL_UNDER_DEVELOPMENT": "Chức năng gọi điện đang được phát triển",
+    "VOICE_INBOX_PICKER": {
+      "TITLE": "Chọn hộp thư thoại"
+    },
     "CONVERSATIONS": {
       "NO_RECORDS_FOUND": "Không có cuộc trò chuyện trước đó được liên kết với liên hệ này.",
       "TITLE": "Cuộc trò chuyện trước đó"
@@ -283,10 +288,11 @@
   },
   "CONTACTS_LAYOUT": {
     "HEADER": {
-      "TITLE": "Liên hệ",
+      "TITLE": "Danh bạ",
       "SEARCH_TITLE": "Tìm kiếm liên hệ",
+      "ACTIVE_TITLE": "Đang hoạt động",
       "SEARCH_PLACEHOLDER": "Tìm kiếm...",
-      "MESSAGE_BUTTON": "Tin nhắn",
+      "MESSAGE_BUTTON": "Nhắn tin",
       "SEND_MESSAGE": "Gửi tin nhắn",
       "BLOCK_CONTACT": "Chặn liên hệ",
       "UNBLOCK_CONTACT": "Bỏ chặn liên hệ",
@@ -457,6 +463,10 @@
             "PLACEHOLDER": "Thêm Twitter"
           }
         }
+      },
+      "DELETE_CONTACT": {
+        "MESSAGE": "Hành động này là vĩnh viễn và không thể đảo ngược.",
+        "BUTTON": "Xoá ngay"
       }
     },
     "DETAILS": {
@@ -466,8 +476,8 @@
       "DELETE_CONTACT": "Xoá liên hệ",
       "DELETE_DIALOG": {
         "TITLE": "Xác nhận xoá",
-        "DESCRIPTION": "Bạn có chắc chắn muốn xoá liên hệ {contactName} này?",
-        "CONFIRM": "Có, xoá",
+        "DESCRIPTION": "Bạn có chắc chắn muốn xoá liên hệ này không?",
+        "CONFIRM": "Có, Xoá",
         "API": {
           "SUCCESS_MESSAGE": "Liên hệ đã được xóa thành công",
           "ERROR_MESSAGE": "Không thể xoá liên hệ. Vui lòng thử lại sau."
@@ -544,15 +554,21 @@
         "WROTE": "đã viết",
         "YOU": "Bạn",
         "SAVE": "Lưu ghi chú",
-        "EMPTY_STATE": "Không có ghi chú liên quan đến liên hệ này. Bạn có thể thêm ghi chú bằng cách nhập vào ô phía trên."
+        "ADD_NOTE": "Thêm ghi chú liên hệ",
+        "EXPAND": "Mở rộng",
+        "COLLAPSE": "Thu gọn",
+        "NO_NOTES": "Không có ghi chú nào, bạn có thể thêm ghi chú từ trang chi tiết liên hệ.",
+        "EMPTY_STATE": "Không có ghi chú nào liên quan đến liên hệ này. Bạn có thể thêm ghi chú bằng cách nhập vào ô bên trên.",
+        "CONVERSATION_EMPTY_STATE": "Chưa có ghi chú nào. Sử dụng nút Thêm ghi chú để tạo một ghi chú."
       }
     },
     "EMPTY_STATE": {
-      "TITLE": "Không có liên hệ nào trong tài khoản này",
+      "TITLE": "Không tìm thấy liên hệ nào trong tài khoản này",
       "SUBTITLE": "Bắt đầu thêm liên hệ mới bằng cách nhấn vào nút bên dưới",
       "BUTTON_LABEL": "Thêm liên hệ",
-      "SEARCH_EMPTY_STATE_TITLE": "Không có liên hệ nào phù hợp với tìm kiếm của bạn 🔍",
-      "LIST_EMPTY_STATE_TITLE": "Không có liên hệ nào trong danh sách 📋"
+      "SEARCH_EMPTY_STATE_TITLE": "Không có liên hệ nào khớp với tìm kiếm của bạn 🔍",
+      "LIST_EMPTY_STATE_TITLE": "Không có liên hệ nào trong chế độ xem này 📋",
+      "ACTIVE_EMPTY_STATE_TITLE": "Hiện tại không có liên hệ nào đang hoạt động 🌙"
     }
   },
   "COMPOSE_NEW_CONVERSATION": {
@@ -590,15 +606,25 @@
         "SEARCH_PLACEHOLDER": "Tìm kiếm mẫu",
         "EMPTY_STATE": "Không tìm thấy mẫu nào",
         "TEMPLATE_PARSER": {
-          "TEMPLATE_NAME": "Mẫu WhatsApp: {templateName}",
+          "TEMPLATE_NAME": "Mẫu tin nhắn WhatsApp: {templateName}",
           "VARIABLES": "Biến",
+          "BACK": "Trở về",
+          "SEND_MESSAGE": "Gửi tin nhắn"
+        }
+      },
+      "TWILIO_OPTIONS": {
+        "LABEL": "Chọn mẫu",
+        "SEARCH_PLACEHOLDER": "Tìm kiếm mẫu",
+        "EMPTY_STATE": "Không tìm thấy mẫu nào",
+        "TEMPLATE_PARSER": {
           "BACK": "Trở về",
           "SEND_MESSAGE": "Gửi tin nhắn"
         }
       },
       "ACTION_BUTTONS": {
         "DISCARD": "Hủy bỏ",
-        "SEND": "Gửi ({keyCode})"
+        "SEND": "Gửi ({keyCode})",
+        "MAKE_CALL": "Tạo cuộc gọi"
       }
     }
   }

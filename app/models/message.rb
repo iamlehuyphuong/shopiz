@@ -24,6 +24,7 @@
 #
 # Indexes
 #
+#  idx_messages_account_content_created                 (account_id,content_type,created_at)
 #  index_messages_on_account_created_type               (account_id,created_at,message_type)
 #  index_messages_on_account_id                         (account_id)
 #  index_messages_on_account_id_and_inbox_id            (account_id,inbox_id)
@@ -38,6 +39,8 @@
 #
 
 class Message < ApplicationRecord
+  searchkick callbacks: false if ChatwootApp.advanced_search_allowed?
+
   include MessageFilterHelpers
   include Liquidable
   NUMBER_OF_PERMITTED_ATTACHMENTS = 15
@@ -77,7 +80,7 @@ class Message < ApplicationRecord
   validates :processed_message_content, length: { maximum: 150_000 }
 
   # when you have a temperory id in your frontend and want it echoed back via action cable
-  attr_accessor :echo_id
+  attr_accessor :echo_id, :loaded_from_history
 
   enum message_type: { incoming: 0, outgoing: 1, activity: 2, template: 3 }
   enum content_type: {
@@ -92,7 +95,8 @@ class Message < ApplicationRecord
     incoming_email: 8,
     input_csat: 9,
     integrations: 10,
-    sticker: 11
+    sticker: 11,
+    voice_call: 12
   }
   enum status: { sent: 0, delivered: 1, read: 2, failed: 3 }
   # [:submitted_email, :items, :submitted_values] : Used for bot message types
@@ -101,16 +105,18 @@ class Message < ApplicationRecord
   # [:deleted] : Used to denote whether the message was deleted by the agent
   # [:external_created_at] : Can specify if the message was created at a different timestamp externally
   # [:external_error : Can specify if the message creation failed due to an error at external API
+  # [:data] : Used for structured content types such as voice_call
   store :content_attributes, accessors: [:submitted_email, :items, :submitted_values, :email, :in_reply_to, :deleted,
                                          :external_created_at, :story_sender, :story_id, :external_error,
-                                         :translations, :in_reply_to_external_id, :is_unsupported], coder: JSON
+                                         :translations, :in_reply_to_external_id, :is_unsupported, :data], coder: JSON
 
   store :external_source_ids, accessors: [:slack], coder: JSON, prefix: :external_source_id
 
   scope :created_since, ->(datetime) { where('created_at > ?', datetime) }
   scope :chat, -> { where.not(message_type: :activity).where(private: false) }
-  scope :non_activity_messages, -> { where.not(message_type: :activity).reorder('id desc') }
+  scope :non_activity_messages, -> { where.not(message_type: :activity).reorder('created_at desc') }
   scope :today, -> { where("date_trunc('day', created_at) = ?", Date.current) }
+  scope :voice_calls, -> { where(content_type: :voice_call) }
 
   # TODO: Get rid of default scope
   # https://stackoverflow.com/a/1834250/939299
@@ -126,9 +132,10 @@ class Message < ApplicationRecord
   has_one :csat_survey_response, dependent: :destroy_async
   has_many :notifications, as: :primary_actor, dependent: :destroy_async
 
-  after_create_commit :execute_after_create_commit_callbacks
+  after_create_commit :execute_after_create_commit_callbacks, unless: :loaded_from_history
 
   after_update_commit :dispatch_update_event
+  after_commit :reindex_for_search, if: :should_index?, on: [:create, :update]
 
   def channel_token
     @token ||= inbox.channel.try(:page_access_token)
@@ -138,12 +145,21 @@ class Message < ApplicationRecord
     data = attributes.symbolize_keys.merge(
       created_at: created_at.to_i,
       message_type: message_type_before_type_cast,
-      conversation_id: conversation.display_id,
-      conversation: conversation_push_event_data
+      conversation_id: conversation&.display_id,
+      conversation: conversation.present? ? conversation_push_event_data : nil
     )
     data[:echo_id] = echo_id if echo_id.present?
     data[:attachments] = attachments.map(&:push_event_data) if attachments.present?
     merge_sender_attributes(data)
+  end
+
+  def search_data
+    data = attributes.symbolize_keys
+    data[:conversation] = conversation.present? ? conversation_push_event_data : nil
+    data[:attachments] = attachments.map(&:push_event_data) if attachments.present?
+    data[:sender] = sender.push_event_data if sender
+    data[:inbox] = inbox
+    data
   end
 
   def conversation_push_event_data
@@ -158,7 +174,18 @@ class Message < ApplicationRecord
   def merge_sender_attributes(data)
     data[:sender] = sender.push_event_data if sender && !sender.is_a?(AgentBot)
     data[:sender] = sender.push_event_data(inbox) if sender.is_a?(AgentBot)
+    data[:sender] && data[:sender].merge!(sender_in_group)
+
     data
+  end
+
+  def sender_in_group
+    return {} unless additional_attributes["type"] == 1 && additional_attributes["sender"].present?
+
+    {
+      name: additional_attributes["sender"],
+      thumbnail: additional_attributes["thumbnail"]
+    }
   end
 
   def webhook_data
@@ -167,7 +194,7 @@ class Message < ApplicationRecord
       additional_attributes: additional_attributes,
       content_attributes: content_attributes,
       content_type: content_type,
-      content: content,
+      content: outgoing_content,
       conversation: conversation.webhook_data,
       created_at: created_at,
       id: id,
@@ -181,11 +208,9 @@ class Message < ApplicationRecord
     data
   end
 
-  def content
-    # move this to a presenter
-    return self[:content] if !input_csat? || inbox.web_widget?
-
-    I18n.t('conversations.survey.response', link: "#{ENV.fetch('FRONTEND_URL', nil)}/survey/responses/#{conversation.uuid}")
+  # Method to get content with survey URL for outgoing channel delivery
+  def outgoing_content
+    MessageContentPresenter.new(self).outgoing_content
   end
 
   def email_notifiable_message?
@@ -196,11 +221,17 @@ class Message < ApplicationRecord
     true
   end
 
+  def auto_reply_email?
+    return false unless incoming_email? || inbox.email?
+
+    content_attributes.dig(:email, :auto_reply) == true
+  end
+
   def valid_first_reply?
-    return false unless outgoing? && human_response? && !private?
+    return false unless human_response? && !private?
     return false if conversation.first_reply_created_at.present?
     return false if conversation.messages.outgoing
-                                .where.not(sender_type: 'AgentBot')
+                                .where.not(sender_type: ['AgentBot', 'Captain::Assistant'])
                                 .where.not(private: true)
                                 .where("(additional_attributes->'campaign_id') is null").count > 1
 
@@ -216,6 +247,37 @@ class Message < ApplicationRecord
       }
     )
     save!
+  end
+
+  # For voice calls - convenience method to get status from content attributes
+  def voice_call_status
+    content_attributes.dig('data', 'status')
+  end
+
+  # For voice calls - check if this is an active call
+  def active_voice_call?
+    voice_call? && !%w[completed failed busy no-answer canceled missed ended].include?(voice_call_status)
+  end
+
+  def send_update_event
+    Rails.configuration.dispatcher.dispatch(MESSAGE_UPDATED, Time.zone.now, message: self, performed_by: Current.executed_by,
+                                                                            previous_changes: previous_changes)
+  end
+
+  def should_index?
+    return false unless ChatwootApp.advanced_search_allowed?
+    return false unless incoming? || outgoing?
+    # For Chatwoot Cloud:
+    #   - Enable indexing only if the account is paid.
+    #   - The `advanced_search_indexing` feature flag is used only in the cloud.
+    #
+    # For Self-hosted:
+    #   - Adding an extra feature flag here would cause confusion.
+    #   - If the user has configured Elasticsearch, enabling `advanced_search`
+    #     should automatically work without any additional flags.
+    return false if ChatwootApp.chatwoot_cloud? && !account.feature_enabled?('advanced_search_indexing')
+
+    true
   end
 
   def source_conversation_id
@@ -311,8 +373,7 @@ class Message < ApplicationRecord
     # we want to skip the update event if the message is not updated
     return if previous_changes.blank?
 
-    Rails.configuration.dispatcher.dispatch(MESSAGE_UPDATED, Time.zone.now, message: self, performed_by: Current.executed_by,
-                                                                            previous_changes: previous_changes)
+    send_update_event
   end
 
   def send_reply
@@ -400,6 +461,10 @@ class Message < ApplicationRecord
     # rubocop:disable Rails/SkipsModelValidations
     conversation.update_columns(last_activity_at: created_at)
     # rubocop:enable Rails/SkipsModelValidations
+  end
+
+  def reindex_for_search
+    reindex(mode: :async)
   end
 end
 

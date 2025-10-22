@@ -11,26 +11,41 @@ class Whatsapp::Providers::WhatsappCloudService < Whatsapp::Providers::BaseServi
     end
   end
 
-  def send_template(phone_number, template_info)
+  def send_template(phone_number, template_info, message)
+    template_body = template_body_parameters(template_info)
+
+    request_body = {
+      messaging_product: 'whatsapp',
+      recipient_type: 'individual', # Only individual messages supported (not group messages)
+      to: phone_number,
+      type: 'template',
+      template: template_body
+    }
+
     response = HTTParty.post(
       "#{phone_id_path}/messages",
       headers: api_headers,
-      body: {
-        messaging_product: 'whatsapp',
-        to: phone_number,
-        template: template_body_parameters(template_info),
-        type: 'template'
-      }.to_json
+      body: request_body.to_json
     )
 
-    process_response(response)
+    process_response(response, message)
   end
 
   def sync_templates
     # ensuring that channels with wrong provider config wouldn't keep trying to sync templates
     whatsapp_channel.mark_message_templates_updated
     templates = fetch_whatsapp_templates("#{business_account_path}/message_templates?access_token=#{whatsapp_channel.provider_config['api_key']}")
-    whatsapp_channel.update(message_templates: templates, message_templates_last_updated: Time.now.utc) if templates.present?
+
+    return if templates.blank?
+
+    whatsapp_channel.update(message_templates: templates, message_templates_last_updated: Time.now.utc)
+
+    return true unless whatsapp_channel.account.feature_enabled?('template_builder')
+
+    Whatsapp::TemplateSyncService.new(
+      channel: whatsapp_channel,
+      templates: templates
+    ).call
   end
 
   def fetch_whatsapp_templates(url)
@@ -57,8 +72,10 @@ class Whatsapp::Providers::WhatsappCloudService < Whatsapp::Providers::BaseServi
     { 'Authorization' => "Bearer #{whatsapp_channel.provider_config['api_key']}", 'Content-Type' => 'application/json' }
   end
 
-  def media_url(media_id)
-    "#{api_base_path}/v13.0/#{media_id}"
+  def media_url(media_id, phone_number_id = nil)
+    url = "#{api_base_path}/v13.0/#{media_id}"
+    url += "?phone_number_id=#{phone_number_id}" if phone_number_id
+    url
   end
 
   def api_base_path
@@ -82,12 +99,12 @@ class Whatsapp::Providers::WhatsappCloudService < Whatsapp::Providers::BaseServi
         messaging_product: 'whatsapp',
         context: whatsapp_reply_context(message),
         to: phone_number,
-        text: { body: message.content },
+        text: { body: message.outgoing_content },
         type: 'text'
       }.to_json
     )
 
-    process_response(response)
+    process_response(response, message)
   end
 
   def send_attachment_message(phone_number, message)
@@ -96,7 +113,7 @@ class Whatsapp::Providers::WhatsappCloudService < Whatsapp::Providers::BaseServi
     type_content = {
       'link': attachment.download_url
     }
-    type_content['caption'] = message.content unless %w[audio sticker].include?(type)
+    type_content['caption'] = message.outgoing_content unless %w[audio sticker].include?(type)
     type_content['filename'] = attachment.file.filename if type == 'document'
     response = HTTParty.post(
       "#{phone_id_path}/messages",
@@ -110,7 +127,7 @@ class Whatsapp::Providers::WhatsappCloudService < Whatsapp::Providers::BaseServi
       }.to_json
     )
 
-    process_response(response)
+    process_response(response, message)
   end
 
   def error_message(response)
@@ -119,17 +136,40 @@ class Whatsapp::Providers::WhatsappCloudService < Whatsapp::Providers::BaseServi
   end
 
   def template_body_parameters(template_info)
-    {
+    template_body = {
       name: template_info[:name],
       language: {
         policy: 'deterministic',
         code: template_info[:lang_code]
-      },
-      components: [{
-        type: 'body',
-        parameters: template_info[:parameters]
-      }]
+      }
     }
+
+    # Enhanced template parameters structure
+    # Note: Legacy format support (simple parameter arrays) has been removed
+    # in favor of the enhanced component-based structure that supports
+    # headers, buttons, and authentication templates.
+    #
+    # Expected payload format from frontend:
+    # {
+    #   processed_params: {
+    #     body: { '1': 'John', '2': '123 Main St' },
+    #     header: {
+    #       media_url: 'https://...',
+    #       media_type: 'image',
+    #       media_name: 'filename.pdf' # Optional, for document templates only
+    #     },
+    #     buttons: [{ type: 'url', parameter: 'otp123456' }]
+    #   }
+    # }
+    # This gets transformed into WhatsApp API component format:
+    # [
+    #   { type: 'body', parameters: [...] },
+    #   { type: 'header', parameters: [...] },
+    #   { type: 'button', sub_type: 'url', parameters: [...] }
+    # ]
+    template_body[:components] = template_info[:parameters] || []
+
+    template_body
   end
 
   def whatsapp_reply_context(message)
@@ -155,6 +195,47 @@ class Whatsapp::Providers::WhatsappCloudService < Whatsapp::Providers::BaseServi
       }.to_json
     )
 
-    process_response(response)
+    process_response(response, message)
+  end
+
+  def create_message_template(template_params)
+    response = HTTParty.post(
+      "#{api_base_path}/v18.0/#{whatsapp_channel.provider_config['business_account_id']}/message_templates",
+      headers: api_headers,
+      body: template_params.to_json
+    )
+    parsed_response = response.parsed_response
+
+    return parsed_response if response.success? && parsed_response['error'].blank?
+
+    handle_template_error(response, parsed_response)
+  end
+
+  def delete_message_template(whatsapp_template_id, template_name)
+    params = { name: template_name, hsm_id: whatsapp_template_id }
+
+    response = HTTParty.delete(
+      "#{api_base_path}/v18.0/#{whatsapp_channel.provider_config['business_account_id']}/message_templates",
+      headers: api_headers,
+      query: params
+    )
+    parsed_response = response.parsed_response
+
+    return parsed_response if response.success? && parsed_response['error'].blank?
+
+    handle_template_error(response, parsed_response)
+  end
+
+  private
+
+  def handle_template_error(response, parsed_response)
+    error = parsed_response['error'] || {}
+    error_message =
+      error['error_user_msg'] ||
+      error['error_user_title'] ||
+      error['message'] ||
+      'Template operation failed on meta'
+    Rails.logger.error "WhatsApp API error: #{response.code} - #{error}"
+    raise StandardError, error_message
   end
 end

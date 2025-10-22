@@ -4,9 +4,9 @@ const commit = vi.fn();
 describe('#actions', () => {
   describe('#setReferrerHost', () => {
     it('creates actions properly', () => {
-      actions.setReferrerHost({ commit }, 'salesman.effiai.pro');
+      actions.setReferrerHost({ commit }, 'shopiz.pro');
       expect(commit.mock.calls).toEqual([
-        ['SET_REFERRER_HOST', 'salesman.effiai.pro'],
+        ['SET_REFERRER_HOST', 'shopiz.pro'],
       ]);
     });
   });

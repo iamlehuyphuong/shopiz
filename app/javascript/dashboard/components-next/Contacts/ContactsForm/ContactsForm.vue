@@ -218,10 +218,13 @@ const resetForm = () => {
   Object.assign(state, defaultState);
 };
 
-watch(() => props.contactData, prepareStateBasedOnProps, {
-  immediate: true,
-  deep: true,
-});
+watch(
+  () => props.contactData?.id,
+  id => {
+    if (id) prepareStateBasedOnProps();
+  },
+  { immediate: true }
+);
 
 // Expose state to parent component for avatar upload
 defineExpose({
@@ -272,11 +275,11 @@ defineExpose({
             class="w-full"
             @input="
               isValidationField(item.key) &&
-                v$[getValidationKey(item.key)].$touch()
+              v$[getValidationKey(item.key)].$touch()
             "
             @blur="
               isValidationField(item.key) &&
-                v$[getValidationKey(item.key)].$touch()
+              v$[getValidationKey(item.key)].$touch()
             "
           />
         </template>

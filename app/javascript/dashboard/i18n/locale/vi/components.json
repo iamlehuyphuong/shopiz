@@ -43,5 +43,14 @@
   "FEATURE_SPOTLIGHT": {
     "LEARN_MORE": "Tìm hiểu thêm",
     "WATCH_VIDEO": "Xem video"
+  },
+  "DURATION_INPUT": {
+    "MINUTES": "Phút",
+    "HOURS": "Giờ",
+    "DAYS": "Ngày",
+    "PLACEHOLDER": "Nhập thời gian"
+  },
+  "CHANNEL_SELECTOR": {
+    "COMING_SOON": "Sắp có!"
   }
 }

@@ -10,7 +10,7 @@ class Conversations::EventDataPresenter < SimpleDelegator
       messages: push_messages,
       labels: label_list,
       meta: push_meta,
-      status: status,
+      status: status_display,
       custom_attributes: custom_attributes,
       snoozed_until: snoozed_until,
       unread_count: unread_incoming_messages.count,
@@ -32,7 +32,8 @@ class Conversations::EventDataPresenter < SimpleDelegator
       sender: contact.push_event_data,
       assignee: assignee&.push_event_data,
       team: team&.push_event_data,
-      hmac_verified: contact_inbox&.hmac_verified
+      hmac_verified: contact_inbox&.hmac_verified,
+      channel: inbox.try(:channel_type)
     }
   end
 

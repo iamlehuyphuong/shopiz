@@ -15,6 +15,7 @@ class SendReplyJob < ApplicationJob
       'Channel::Sms' => ::Sms::SendOnSmsService,
       'Channel::Instagram' => ::Instagram::SendOnInstagramService,
       'Channel::ZaloOa' => ::Zalo::SendOnZaloService,
+      'Channel::ZaloPersonal' => ::ZaloPersonal::SendOnZaloService,
       'Channel::Tiktok' => ::Tiktok::SendOnTiktokService,
     }
 

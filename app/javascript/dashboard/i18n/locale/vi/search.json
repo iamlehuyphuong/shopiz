@@ -4,12 +4,14 @@
       "ALL": "Tất cả",
       "CONTACTS": "Danh bạ",
       "CONVERSATIONS": "Các cuộc hội thoại",
-      "MESSAGES": "Tin nhắn"
+      "MESSAGES": "Tin nhắn",
+      "ARTICLES": "Bài viết"
     },
     "SECTION": {
       "CONTACTS": "Danh bạ",
       "CONVERSATIONS": "Các cuộc hội thoại",
-      "MESSAGES": "Tin nhắn"
+      "MESSAGES": "Tin nhắn",
+      "ARTICLES": "Bài viết"
     },
     "VIEW_MORE": "Xem thêm",
     "LOAD_MORE": "Tải thêm",

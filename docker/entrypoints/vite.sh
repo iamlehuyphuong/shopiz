@@ -3,7 +3,7 @@ set -x
 
 rm -rf /app/tmp/pids/server.pid
 rm -rf /app/tmp/cache/*
-
+bundle install --with development test
 pnpm store prune
 pnpm install --force
 

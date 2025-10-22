@@ -59,8 +59,6 @@ module Featurable
     all_features.select { |_feature, enabled| enabled == false }
   end
 
-  private
-
   def enable_default_features
     config = InstallationConfig.find_by(name: 'ACCOUNT_LEVEL_FEATURE_DEFAULTS')
     return true if config.blank?

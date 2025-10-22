@@ -9,14 +9,17 @@
 #  auto_assignment_config        :jsonb
 #  business_name                 :string
 #  channel_type                  :string
+#  csat_config                   :jsonb            not null
 #  csat_survey_enabled           :boolean          default(FALSE)
 #  email_address                 :string
 #  enable_auto_assignment        :boolean          default(TRUE)
 #  enable_email_collect          :boolean          default(TRUE)
 #  greeting_enabled              :boolean          default(FALSE)
 #  greeting_message              :string
+#  is_load_all_conversation      :boolean
 #  lock_to_single_conversation   :boolean          default(FALSE), not null
 #  name                          :string           not null
+#  next_cursor                   :string
 #  out_of_office_message         :string
 #  sender_name_type              :integer          default("friendly"), not null
 #  timezone                      :string           default("UTC")
@@ -44,10 +47,10 @@ class Inbox < ApplicationRecord
   include OutOfOffisable
   include AccountCacheRevalidator
 
+  ENABLE_LOAD_HISTORY_CONVERSATION = ['Channel::FacebookPage'].freeze
+
   # Not allowing characters:
   validates :name, presence: true
-  validates :name, if: :check_channel_type?, format: { with: %r{^^\b[^/\\<>@]*\b$}, multiline: true,
-                                                       message: I18n.t('errors.inboxes.validations.name') }
   validates :account_id, presence: true
   validates :timezone, inclusion: { in: TZInfo::Timezone.all_identifiers }
   validates :out_of_office_message, length: { maximum: Limits::OUT_OF_OFFICE_MESSAGE_MAX_LENGTH }
@@ -68,6 +71,8 @@ class Inbox < ApplicationRecord
   has_many :conversations, dependent: :destroy_async
   has_many :messages, dependent: :destroy_async
 
+  has_one :inbox_assignment_policy, dependent: :destroy
+  has_one :assignment_policy, through: :inbox_assignment_policy
   has_one :agent_bot_inbox, dependent: :destroy_async
   has_one :agent_bot, through: :agent_bot_inbox
   has_many :webhooks, dependent: :destroy_async
@@ -79,6 +84,7 @@ class Inbox < ApplicationRecord
 
   after_create_commit :dispatch_create_event
   after_update_commit :dispatch_update_event
+  after_create_commit :auto_load_old_conversation
 
   scope :order_by_name, -> { order('lower(name) ASC') }
 
@@ -96,6 +102,16 @@ class Inbox < ApplicationRecord
   def remove_members(user_ids)
     inbox_members.where(user_id: user_ids).destroy_all
     update_account_cache
+  end
+
+  # Sanitizes inbox name for balanced email provider compatibility
+  # ALLOWS: /'._- and Unicode letters/numbers/emojis
+  # REMOVES: Forbidden chars (\<>@") + spam-trigger symbols (!#$%&*+=?^`{|}~)
+  def sanitized_name
+    return default_name_for_blank_name if name.blank?
+
+    sanitized = apply_sanitization_rules(name)
+    sanitized.blank? && email? ? display_name_from_email : sanitized
   end
 
   def sms?
@@ -134,8 +150,16 @@ class Inbox < ApplicationRecord
     channel_type == 'Channel::TwitterProfile'
   end
 
+  def telegram?
+    channel_type == 'Channel::Telegram'
+  end
+
   def whatsapp?
     channel_type == 'Channel::Whatsapp'
+  end
+
+  def zalo_personal?
+    channel_type == 'Channel::ZaloPersonal'
   end
 
   def assignable_agents
@@ -177,6 +201,22 @@ class Inbox < ApplicationRecord
 
   private
 
+  def default_name_for_blank_name
+    email? ? display_name_from_email : ''
+  end
+
+  def apply_sanitization_rules(name)
+    name.gsub(/[\\<>@"!#$%&*+=?^`{|}~:;]/, '')         # Remove forbidden chars
+        .gsub(/[\x00-\x1F\x7F]/, ' ')                   # Replace control chars with spaces
+        .gsub(/\A[[:punct:]]+|[[:punct:]]+\z/, '')      # Remove leading/trailing punctuation
+        .gsub(/\s+/, ' ')                               # Normalize spaces
+        .strip
+  end
+
+  def display_name_from_email
+    channel.email.split('@').first.parameterize.titleize
+  end
+
   def dispatch_create_event
     return if ENV['ENABLE_INBOX_EVENTS'].blank?
 
@@ -199,6 +239,12 @@ class Inbox < ApplicationRecord
 
   def check_channel_type?
     ['Channel::Email', 'Channel::Api', 'Channel::WebWidget'].include?(channel_type)
+  end
+
+  def auto_load_old_conversation
+    return if ENABLE_LOAD_HISTORY_CONVERSATION.exclude?(channel.class.to_s)
+
+    ::Facebook::LoadHistoryConversationService.new(self).perform
   end
 end
 

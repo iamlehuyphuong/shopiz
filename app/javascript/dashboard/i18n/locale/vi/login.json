@@ -1,6 +1,6 @@
 {
   "LOGIN": {
-    "TITLE": "Đăng nhập Salesman",
+    "TITLE": "Đăng nhập Shopiz",
     "EMAIL": {
       "LABEL": "Email",
       "PLACEHOLDER": "example{'@'}companyname.com",
@@ -22,6 +22,20 @@
     },
     "FORGOT_PASSWORD": "Quên mật khẩu?",
     "CREATE_NEW_ACCOUNT": "Tạo mới tài khoản",
-    "SUBMIT": "Đăng nhập"
+    "SUBMIT": "Đăng nhập",
+    "SAML": {
+      "LABEL": "Đăng nhập qua SSO",
+      "TITLE": "Bắt đầu đăng nhập một lần (SSO)",
+      "SUBTITLE": "Nhập email công việc của bạn để truy cập tổ chức",
+      "BACK_TO_LOGIN": "Đăng nhập bằng mật khẩu",
+      "WORK_EMAIL": {
+        "LABEL": "Email công việc",
+        "PLACEHOLDER": "Nhập email công việc của bạn"
+      },
+      "SUBMIT": "Tiếp tục với SSO",
+      "API": {
+        "ERROR_MESSAGE": "Xác thực SSO thất bại. Vui lòng kiểm tra thông tin và thử lại."
+      }
+    }
   }
 }

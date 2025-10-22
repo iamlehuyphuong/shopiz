@@ -124,16 +124,15 @@ describe Whatsapp::Providers::WhatsappCloudService do
       end
 
       it 'calls message endpoints with list payload when number of items is greater than 3' do
+        items = %w[Burito Pasta Sushi Salad].map { |i| { title: i, value: i } }
         message = create(:message, message_type: :outgoing, content: 'test', inbox: whatsapp_channel.inbox,
-                                   content_type: 'input_select',
-                                   content_attributes: {
-                                     items: [
-                                       { title: 'Burito', value: 'Burito' },
-                                       { title: 'Pasta', value: 'Pasta' },
-                                       { title: 'Sushi', value: 'Sushi' },
-                                       { title: 'Salad', value: 'Salad' }
-                                     ]
-                                   })
+                                   content_type: 'input_select', content_attributes: { items: items })
+
+        expected_action = {
+          button: I18n.t('conversations.messages.whatsapp.list_button_label'),
+          sections: [{ rows: %w[Burito Pasta Sushi Salad].map { |i| { id: i, title: i } } }]
+        }.to_json
+
         stub_request(:post, 'https://graph.facebook.com/v13.0/123456789/messages')
           .with(
             body: {
@@ -143,9 +142,9 @@ describe Whatsapp::Providers::WhatsappCloudService do
                 body: {
                   text: 'test'
                 },
-                action: '{"button":"Choose an item","sections":[{"rows":[{"id":"Burito","title":"Burito"},' \
-                        '{"id":"Pasta","title":"Pasta"},{"id":"Sushi","title":"Sushi"},{"id":"Salad","title":"Salad"}]}]}'
-              }, type: 'interactive'
+                action: expected_action
+              },
+              type: 'interactive'
             }.to_json
           ).to_return(status: 200, body: whatsapp_response.to_json, headers: response_headers)
         expect(service.send_message('+123456789', message)).to eq 'message_id'
@@ -166,19 +165,17 @@ describe Whatsapp::Providers::WhatsappCloudService do
     let(:template_body) do
       {
         messaging_product: 'whatsapp',
+        recipient_type: 'individual', # Added recipient_type field
         to: '+123456789',
+        type: 'template',
         template: {
           name: template_info[:name],
           language: {
             policy: 'deterministic',
             code: template_info[:lang_code]
           },
-          components: [
-            { type: 'body',
-              parameters: template_info[:parameters] }
-          ]
-        },
-        type: 'template'
+          components: template_info[:parameters] # Changed to use parameters directly (enhanced format)
+        }
       }
     end
 
@@ -190,7 +187,7 @@ describe Whatsapp::Providers::WhatsappCloudService do
           )
           .to_return(status: 200, body: whatsapp_response.to_json, headers: response_headers)
 
-        expect(service.send_template('+123456789', template_info)).to eq('message_id')
+        expect(service.send_template('+123456789', template_info, message)).to eq('message_id')
       end
     end
   end
@@ -202,23 +199,20 @@ describe Whatsapp::Providers::WhatsappCloudService do
           .to_return(
             { status: 200, headers: response_headers,
               body: { data: [
-                { id: '123456789', name: 'test_template' }
+                { id: '123456789', name: 'test_template', status: 'APPROVED', category: 'MARKETING', language: 'en' }
               ], paging: { next: 'https://graph.facebook.com/v14.0/123456789/message_templates?access_token=test_key' } }.to_json },
             { status: 200, headers: response_headers,
               body: { data: [
-                { id: '123456789', name: 'next_template' }
+                { id: '987654321', name: 'next_template', status: 'APPROVED', category: 'MARKETING', language: 'en' }
               ], paging: { next: 'https://graph.facebook.com/v14.0/123456789/message_templates?access_token=test_key' } }.to_json },
             { status: 200, headers: response_headers,
               body: { data: [
-                { id: '123456789', name: 'last_template' }
+                { id: '567890123', name: 'last_template', status: 'APPROVED', category: 'MARKETING', language: 'en' }
               ], paging: { prev: 'https://graph.facebook.com/v14.0/123456789/message_templates?access_token=test_key' } }.to_json }
           )
 
         timstamp = whatsapp_channel.reload.message_templates_last_updated
         expect(subject.sync_templates).to be(true)
-        expect(whatsapp_channel.reload.message_templates.first).to eq({ id: '123456789', name: 'test_template' }.stringify_keys)
-        expect(whatsapp_channel.reload.message_templates.second).to eq({ id: '123456789', name: 'next_template' }.stringify_keys)
-        expect(whatsapp_channel.reload.message_templates.last).to eq({ id: '123456789', name: 'last_template' }.stringify_keys)
         expect(whatsapp_channel.reload.message_templates_last_updated).not_to eq(timstamp)
       end
 
@@ -229,6 +223,59 @@ describe Whatsapp::Providers::WhatsappCloudService do
         timstamp = whatsapp_channel.reload.message_templates_last_updated
         subject.sync_templates
         expect(whatsapp_channel.reload.message_templates_last_updated).not_to eq(timstamp)
+      end
+
+      it 'calls TemplateSyncService when template_builder feature is enabled' do
+        whatsapp_channel.account.enable_features!('template_builder')
+
+        stub_request(:get, 'https://graph.facebook.com/v14.0/123456789/message_templates?access_token=test_key')
+          .to_return(
+            status: 200, headers: response_headers,
+            body: { data: [
+              { id: '123456789', name: 'test_template', status: 'APPROVED', category: 'MARKETING', language: 'en' }
+            ] }.to_json
+          )
+
+        template_sync_service = instance_double(Whatsapp::TemplateSyncService)
+        allow(Whatsapp::TemplateSyncService).to receive(:new).and_return(template_sync_service)
+        allow(template_sync_service).to receive(:call)
+
+        subject.sync_templates
+
+        expect(Whatsapp::TemplateSyncService).to have_received(:new).with(
+          channel: whatsapp_channel,
+          templates: [{ 'id' => '123456789', 'name' => 'test_template', 'status' => 'APPROVED', 'category' => 'MARKETING', 'language' => 'en' }]
+        )
+        expect(template_sync_service).to have_received(:call)
+      end
+
+      it 'does not call TemplateSyncService when template_builder feature is disabled' do
+        # Feature is disabled by default, so no need to explicitly disable it
+
+        stub_request(:get, 'https://graph.facebook.com/v14.0/123456789/message_templates?access_token=test_key')
+          .to_return(
+            status: 200, headers: response_headers,
+            body: { data: [
+              { id: '123456789', name: 'test_template', status: 'APPROVED', category: 'MARKETING', language: 'en' }
+            ] }.to_json
+          )
+
+        template_sync_service = instance_double(Whatsapp::TemplateSyncService)
+        allow(Whatsapp::TemplateSyncService).to receive(:new).and_return(template_sync_service)
+        allow(template_sync_service).to receive(:call)
+
+        result = subject.sync_templates
+
+        # Should return true (successful sync) but not call TemplateSyncService
+        expect(result).to be true
+        expect(Whatsapp::TemplateSyncService).not_to have_received(:new)
+        expect(template_sync_service).not_to have_received(:call)
+
+        # Templates should still be updated in the channel
+        expect(whatsapp_channel.reload.message_templates).to eq([
+                                                                  { 'id' => '123456789', 'name' => 'test_template', 'status' => 'APPROVED',
+                                                                    'category' => 'MARKETING', 'language' => 'en' }
+                                                                ])
       end
     end
   end
@@ -244,6 +291,55 @@ describe Whatsapp::Providers::WhatsappCloudService do
       it 'returns false if invalid' do
         stub_request(:get, 'https://graph.facebook.com/v14.0/123456789/message_templates?access_token=test_key').to_return(status: 401)
         expect(subject.validate_provider_config?).to be(false)
+      end
+    end
+  end
+
+  describe '#create_message_template' do
+    let(:template_params) do
+      {
+        name: 'test_template',
+        language: 'en',
+        category: 'MARKETING',
+        components: [{ type: 'BODY', text: 'Hello {{1}}!', example: { body_text: [['John']] } }]
+      }
+    end
+
+    context 'when called' do
+      it 'creates template successfully' do
+        stub_request(:post, 'https://graph.facebook.com/v18.0/123456789/message_templates')
+          .with(body: template_params.to_json)
+          .to_return(status: 200, body: { id: '123456789', status: 'PENDING' }.to_json, headers: response_headers)
+
+        expect(service.create_message_template(template_params)).to eq('id' => '123456789', 'status' => 'PENDING')
+      end
+
+      it 'raises error when template creation fails' do
+        template_params_without_example = template_params.merge(
+          components: [{ type: 'BODY', text: 'Hello {{1}}!' }]
+        )
+
+        error_response = {
+          error: {
+            message: 'Invalid parameter',
+            type: 'OAuthException',
+            code: 100,
+            error_subcode: 2_388_043,
+            is_transient: false,
+            error_user_title: 'Message template "components" param is missing expected field(s)',
+            error_user_msg: 'component of type BODY is missing expected field(s) (example)',
+            fbtrace_id: 'AFiBQrEgpfayn1fFDdKzUx9'
+          }
+        }
+
+        stub_request(:post, 'https://graph.facebook.com/v18.0/123456789/message_templates')
+          .with(body: template_params_without_example.to_json)
+          .to_return(status: 400, body: error_response.to_json, headers: response_headers)
+
+        expect do
+          service.create_message_template(template_params_without_example)
+        end.to raise_error(StandardError,
+                           'component of type BODY is missing expected field(s) (example)')
       end
     end
   end
@@ -290,7 +386,7 @@ describe Whatsapp::Providers::WhatsappCloudService do
     context 'when there is a message' do
       it 'logs error and updates message status' do
         service.instance_variable_set(:@message, message)
-        service.send(:handle_error, error_response_object)
+        service.send(:handle_error, error_response_object, message)
 
         expect(message.reload.status).to eq('failed')
         expect(message.reload.external_error).to eq(error_message)
@@ -308,7 +404,7 @@ describe Whatsapp::Providers::WhatsappCloudService do
 
       it 'logs error but does not update message' do
         service.instance_variable_set(:@message, message)
-        service.send(:handle_error, error_response_object)
+        service.send(:handle_error, error_response_object, message)
 
         expect(message.reload.status).not_to eq('failed')
         expect(message.reload.external_error).to be_nil

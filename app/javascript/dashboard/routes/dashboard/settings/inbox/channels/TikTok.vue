@@ -8,13 +8,11 @@ import { mapGetters } from 'vuex';
 import axios from 'axios';
 import PageHeader from '../../SettingsSubPageHeader.vue';
 import router from '../../../../index';
-import globalConfigMixin from 'shared/mixins/globalConfigMixin';
 export default {
   components: {
     LoadingState,
     PageHeader,
   },
-  mixins: [globalConfigMixin],
   setup() {
     const { accountId } = useAccount();
     return {
@@ -62,9 +60,9 @@ export default {
       this.hasLoginStarted = true;
       window.location.replace(
         'https://auth.tiktok-shops.com/oauth/authorize?app_key=' +
-          window.salesmanConfig.tiktokAppId +
+          window.shopizConfig.tiktokAppId +
           '&redirect_uri=' +
-          window.salesmanConfig.hostURL +
+          window.shopizConfig.hostURL +
           '/tiktok/callback&state=' +
           encodeURIComponent(this.accountId)
       );
@@ -102,18 +100,11 @@ export default {
     <div v-if="!hasLoginStarted" class="login-init h-full">
       <a href="#" @click="startLogin()">
         <img
-          src="~dashboard/assets/images/channels/tiktok_login.png"
+          :src="`/assets/images/dashboard/channels/tiktok_login.svg`"
           alt="Tiktok-logo"
         />
       </a>
-      <p>
-        {{
-          useInstallationName(
-            $t('INBOX_MGMT.ADD.TIKTOK.HELP'),
-            globalConfig.installationName
-          )
-        }}
-      </p>
+      <p>{{$t('INBOX_MGMT.ADD.TIKTOK.HELP')}}</p>
     </div>
     <div v-else>
       <div v-if="hasError" class="max-w-lg mx-auto text-center">

@@ -70,6 +70,24 @@ const actions = {
     }
   },
 
+  fetchHistoryConversations: async ({ commit, state, dispatch }) => {
+    commit(types.SET_LIST_LOADING_STATUS);
+    try {
+      const params = state.conversationFilters;
+      const {
+        data: { data },
+      } = await ConversationApi.getHistories(params);
+      buildConversationList(
+        { commit, dispatch },
+        params,
+        data,
+        params.assigneeType
+      );
+    } catch (error) {
+      // Handle error
+    }
+  },
+
   emptyAllConversations({ commit }) {
     commit(types.EMPTY_ALL_CONVERSATION);
   },
@@ -91,9 +109,25 @@ const actions = {
         id: data.conversationId,
         data: payload,
       });
-      if (!payload.length) {
+      if (!payload.length || (!data.after && payload.length < 20)) {
         commit(types.SET_ALL_MESSAGES_LOADED);
       }
+    } catch (error) {
+      // Handle error
+    }
+  },
+
+  fetchHistoryMessages: async ({ commit }, data) => {
+    try {
+      const {
+        data: { meta, payload },
+      } = await MessageApi.getHistoryMessages(data);
+      commit(types.SET_PREVIOUS_CONVERSATIONS, {
+        id: data.conversationId,
+        data: payload,
+      });
+      commit(types.SET_ALL_MESSAGES_LOADED);
+      commit(types.SHOW_LOAD_HISTORY, meta.show_load_more_history);
     } catch (error) {
       // Handle error
     }
@@ -187,7 +221,9 @@ const actions = {
 
   async setActiveChat({ commit, dispatch }, { data, after }) {
     commit(types.SET_CURRENT_CHAT_WINDOW, data);
-    commit(types.CLEAR_ALL_MESSAGES_LOADED);
+    if (data.dataFetched !== true || !data.allMessagesLoaded) {
+      commit(types.CLEAR_ALL_MESSAGES_LOADED);
+    }
     if (data.dataFetched === undefined) {
       try {
         await dispatch('fetchPreviousMessages', {
@@ -322,6 +358,16 @@ const actions = {
       const { data } = await MessageApi.delete(conversationId, messageId);
       commit(types.ADD_MESSAGE, data);
       commit(types.DELETE_CONVERSATION_ATTACHMENTS, data);
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
+
+  deleteConversation: async ({ commit, dispatch }, conversationId) => {
+    try {
+      await ConversationApi.delete(conversationId);
+      commit(types.DELETE_CONVERSATION, conversationId);
+      dispatch('conversationStats/get', {}, { root: true });
     } catch (error) {
       throw new Error(error);
     }

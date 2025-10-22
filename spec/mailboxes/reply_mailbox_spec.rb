@@ -12,7 +12,8 @@ RSpec.describe ReplyMailbox do
     let(:conversation) { create(:conversation, assignee: agent, inbox: create(:inbox, account: account, greeting_enabled: false), account: account) }
     let(:described_subject) { described_class.receive reply_mail }
     let(:serialized_attributes) do
-      %w[bcc cc content_type date from html_content in_reply_to message_id multipart number_of_attachments subject text_content to]
+      %w[bcc cc content_type date from html_content in_reply_to message_id multipart number_of_attachments references subject text_content to
+         auto_reply]
     end
 
     context 'with reply uuid present' do
@@ -189,7 +190,7 @@ RSpec.describe ReplyMailbox do
       end
 
       it 'find channel with in message source id stated in in_reply_to' do
-        conversation_1.messages.new(source_id: '0CB459E0-0336-41DA-BC88-E6E28C697DDB@salesman.effiai.pro', account_id: account.id, message_type: 'incoming',
+        conversation_1.messages.new(source_id: '0CB459E0-0336-41DA-BC88-E6E28C697DDB@shopiz.pro', account_id: account.id, message_type: 'incoming',
                                     inbox_id: email_channel.inbox.id).save!
         described_class.receive in_reply_to_email
         expect(conversation_1.messages.last.content).to eq("Let's talk about these images:")
@@ -212,7 +213,7 @@ RSpec.describe ReplyMailbox do
           <<~BODY.chomp
             Yes, I am providing you step how to reproduce this issue
 
-            On Thu, Aug 19, 2021 at 2:07 PM Tejaswini from Email sender test < tejaswini@salesman.effiai.pro> wrote:
+            On Thu, Aug 19, 2021 at 2:07 PM Tejaswini from Email sender test < tejaswini@shopiz.pro> wrote:
 
             > Any update on this?
             >
@@ -233,7 +234,7 @@ RSpec.describe ReplyMailbox do
           <<~BODY.chomp
             Yes, I am providing you step how to reproduce this issue
 
-            On Thu, Aug 19, 2021 at 2:07 PM Tejaswini from Email sender test < tejaswini@salesman.effiai.pro> wrote:
+            On Thu, Aug 19, 2021 at 2:07 PM Tejaswini from Email sender test < tejaswini@shopiz.pro> wrote:
 
             > Any update on this?
             >

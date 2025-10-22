@@ -3,9 +3,8 @@ import SettingsLayout from '../SettingsLayout.vue';
 import { frontendURL } from 'dashboard/helper/URLHelper';
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-onMounted(() => {
-  const router = useRouter();
-  const { accountId } = router.currentRoute.value.params;
+
+const initActivepieces = ({accountId}) => {
   window.addEventListener('popstate', () => {
     const route = window.activepieces.extractActivepiecesRouteFromUrl({
       vendorUrl: window.location.href,
@@ -20,8 +19,8 @@ onMounted(() => {
   });
   window.activepieces.configure({
     prefix: frontendURL(`accounts/${accountId}/settings/agent-bots`),
-    instanceUrl: window.salesmanConfig.activepiecesInstanceUrl,
-    jwtToken: window.salesmanConfig.activepiecesJwtSecret,
+    instanceUrl: window.shopizConfig.activepiecesInstanceUrl,
+    jwtToken: window.shopizConfig.activepiecesJwtSecret,
     embedding: {
       containerId: 'workflow-container',
       builder: {
@@ -47,6 +46,24 @@ onMounted(() => {
       },
     },
   });
+}
+
+onMounted(() => {
+  const router = useRouter();
+  const { accountId } = router.currentRoute.value.params;
+  if (!document.querySelector('script[src="https://cdn.activepieces.com/sdk/embed/0.4.0.js"]')) {
+    const activepiecesEmbedScript = document.createElement("script");
+    activepiecesEmbedScript.setAttribute(
+      "src",
+      "https://cdn.activepieces.com/sdk/embed/0.4.0.js"
+    );
+    activepiecesEmbedScript.onload = () => {
+      initActivepieces({accountId});
+    };
+    document.head.appendChild(activepiecesEmbedScript);
+  } else {
+    initActivepieces({accountId});
+  }
 });
 </script>
 

@@ -22,6 +22,9 @@ const PortalsLocalesIndexPage = () =>
 const PortalsSettingsIndexPage = () =>
   import('./pages/PortalsSettingsIndexPage.vue');
 
+const PortalsLandingPagesNewPage = () =>
+  import('./pages/PortalsLandingPagesNewPage.vue');
+
 const meta = {
   featureFlag: FEATURE_FLAGS.HELP_CENTER,
   permissions: ['administrator', 'agent', 'knowledge_base_manage'],
@@ -47,7 +50,12 @@ const portalRoutes = [
     meta,
     component: PortalsArticlesEditPage,
   },
-
+  {
+    path: getPortalRoute(':portalSlug/:locale/landing-pages'),
+    name: 'portals_landing_pages_index',
+    meta,
+    component: PortalsLandingPagesNewPage,
+  },
   {
     path: getPortalRoute(':portalSlug/:locale/categories'),
     name: 'portals_categories_index',

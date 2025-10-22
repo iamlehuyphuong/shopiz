@@ -6,6 +6,7 @@ export const CONVERSATION_EVENTS = Object.freeze({
   TRANSLATE_A_MESSAGE: 'Translated a message',
   INSERTED_A_VARIABLE: 'Inserted a variable',
   INSERTED_AN_EMOJI: 'Inserted an emoji',
+  INSERTED_A_TOOL: 'Inserted a tool',
   USED_MENTIONS: 'Used mentions',
   SEARCH_CONVERSATION: 'Searched conversations',
   APPLY_FILTER: 'Applied filters in the conversation list',
@@ -28,6 +29,18 @@ export const LABEL_EVENTS = Object.freeze({
   UPDATE: 'Updated a label',
   DELETED: 'Deleted a label',
   APPLY_LABEL: 'Applied a label',
+});
+
+export const PRODUCT_EVENTS = Object.freeze({
+  CREATE: 'Created a product',
+  UPDATE: 'Updated a product',
+  DELETED: 'Deleted a product',
+});
+
+export const ORDER_EVENTS = Object.freeze({
+  CREATE: 'Created a order',
+  UPDATE: 'Updated a order',
+  DELETED: 'Deleted a order',
 });
 
 // REPORTS EVENTS

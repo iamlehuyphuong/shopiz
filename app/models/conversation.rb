@@ -11,7 +11,9 @@
 #  custom_attributes      :jsonb
 #  first_reply_created_at :datetime
 #  identifier             :string
+#  is_load_all_message    :boolean
 #  last_activity_at       :datetime         not null
+#  next_cursor            :string
 #  priority               :integer
 #  snoozed_until          :datetime
 #  status                 :integer          default("open"), not null
@@ -70,6 +72,8 @@ class Conversation < ApplicationRecord
   validates :uuid, uniqueness: true
   validate :validate_referer_url
 
+  attr_accessor :loaded_from_history
+
   enum status: { open: 0, resolved: 1, pending: 2, snoozed: 3 }
   enum priority: { low: 0, medium: 1, high: 2, urgent: 3 }
 
@@ -77,10 +81,15 @@ class Conversation < ApplicationRecord
   scope :assigned, -> { where.not(assignee_id: nil) }
   scope :assigned_to, ->(agent) { where(assignee_id: agent.id) }
   scope :unattended, -> { where(first_reply_created_at: nil).or(where.not(waiting_since: nil)) }
-  scope :resolvable, lambda { |auto_resolve_duration|
-    return none if auto_resolve_duration.to_i.zero?
+  scope :resolvable_not_waiting, lambda { |auto_resolve_after|
+    return none if auto_resolve_after.to_i.zero?
 
-    open.where('last_activity_at < ? ', Time.now.utc - auto_resolve_duration.days)
+    open.where('last_activity_at < ? AND waiting_since IS NULL', Time.now.utc - auto_resolve_after.minutes)
+  }
+  scope :resolvable_all, lambda { |auto_resolve_after|
+    return none if auto_resolve_after.to_i.zero?
+
+    open.where('last_activity_at < ?', Time.now.utc - auto_resolve_after.minutes)
   }
 
   scope :last_user_message_at, lambda {
@@ -104,16 +113,17 @@ class Conversation < ApplicationRecord
   has_many :conversation_participants, dependent: :destroy_async
   has_many :notifications, as: :primary_actor, dependent: :destroy_async
   has_many :attachments, through: :messages
+  has_many :reporting_events, dependent: :destroy_async
 
   before_save :ensure_snooze_until_reset
   before_create :determine_conversation_status
   before_create :ensure_waiting_since
 
   after_update_commit :execute_after_update_commit_callbacks
-  after_create_commit :notify_conversation_creation
-  after_create_commit :load_attributes_created_by_db_triggers
+  after_create_commit :notify_conversation_creation, unless: :loaded_from_history
+  after_create_commit :load_attributes_created_by_db_triggers, unless: :loaded_from_history
 
-  delegate :auto_resolve_duration, to: :account
+  delegate :auto_resolve_after, to: :account
 
   def can_reply?
     Conversations::MessageWindowService.new(self).can_reply?
@@ -123,6 +133,12 @@ class Conversation < ApplicationRecord
     additional_attributes&.dig('conversation_language')
   end
 
+  # Be aware: The precision of created_at and last_activity_at may differ from Ruby's Time precision.
+  # Our DB column (see schema) stores timestamps with second-level precision (no microseconds), so
+  # if you assign a Ruby Time with microseconds, the DB will truncate it. This may cause subtle differences
+  # if you compare or copy these values in Ruby, also in our specs
+  # So in specs rely on to be_with(1.second) instead of to eq()
+  # TODO: Migrate to use a timestamp with microsecond precision
   def last_activity_at
     self[:last_activity_at] || created_at
   end
@@ -184,12 +200,40 @@ class Conversation < ApplicationRecord
     dispatcher_dispatch(CONVERSATION_UPDATED, previous_changes)
   end
 
+  def show_load_more_history
+    inbox.channel.instance_of?(::Channel::FacebookPage) && !is_load_all_message
+  end
+
+  def zalo_group?
+    additional_attributes['type'] == 1
+  end
+
+  def status_display
+    return :bot if pending_bot?
+
+    status.to_sym
+  end
+
+  def pending_bot?
+    pending? && inbox.active_bot?
+  end
+
   private
 
   def execute_after_update_commit_callbacks
+    handle_resolved_status_change
     notify_status_change
     create_activity
     notify_conversation_updation
+  end
+
+  def handle_resolved_status_change
+    # When conversation is resolved, clear waiting_since using update_column to avoid callbacks
+    return unless saved_change_to_status? && status == 'resolved'
+
+    # rubocop:disable Rails/SkipsModelValidations
+    update_column(:waiting_since, nil)
+    # rubocop:enable Rails/SkipsModelValidations
   end
 
   def ensure_snooze_until_reset
@@ -233,7 +277,8 @@ class Conversation < ApplicationRecord
   def allowed_keys?
     (
       previous_changes.keys.intersect?(list_of_keys) ||
-      (previous_changes['additional_attributes'].present? && previous_changes['additional_attributes'][1].keys.intersect?(%w[conversation_language]))
+      (previous_changes['additional_attributes'].present? &&
+        (previous_changes['additional_attributes'][1].keys.intersect?(%w[conversation_language call_status call_duration])))
     )
   end
 
@@ -276,8 +321,6 @@ class Conversation < ApplicationRecord
     previous_labels, current_labels = previous_changes[:label_list]
     return unless (previous_labels.is_a? Array) && (current_labels.is_a? Array)
 
-    dispatcher_dispatch(CONVERSATION_UPDATED, previous_changes)
-
     create_label_added(user_name, current_labels - previous_labels)
     create_label_removed(user_name, previous_labels - current_labels)
   end
@@ -294,5 +337,6 @@ class Conversation < ApplicationRecord
   end
 end
 
+Conversation.include_mod_with('Audit::Conversation')
 Conversation.include_mod_with('Concerns::Conversation')
 Conversation.prepend_mod_with('Conversation')

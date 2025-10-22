@@ -1,4 +1,4 @@
-name: Run Chatwoot CE spec
+name: Run Shopiz CE spec
 on:
   push:
     branches:

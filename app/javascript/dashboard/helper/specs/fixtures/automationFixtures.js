@@ -2,6 +2,11 @@ import allLanguages from 'dashboard/components/widgets/conversation/advancedFilt
 
 import allCountries from 'shared/constants/countries.js';
 
+import {
+  MESSAGE_CONDITION_VALUES,
+  PRIORITY_CONDITION_VALUES,
+} from 'dashboard/constants/automation';
+
 export const customAttributes = [
   {
     id: 1,
@@ -468,7 +473,7 @@ export const inboxes = [
     welcome_title: '',
     welcome_tagline: '',
     web_widget_script:
-      '\n    <script>\n      (function(d,t) {\n        var BASE_URL="http://localhost:3000";\n        var g=d.createElement(t),s=d.getElementsByTagName(t)[0];\n        g.src=BASE_URL+"/packs/js/sdk.js";\n        g.defer = true;\n        g.async = true;\n        s.parentNode.insertBefore(g,s);\n        g.onload=function(){\n          window.salesmanSDK.run({\n            websiteToken: \'yZ7USzaEs7hrwUAHLGwjbxJ1\',\n            baseUrl: BASE_URL\n          })\n        }\n      })(document,"script");\n    </script>\n    ',
+      '\n    <script>\n      (function(d,t) {\n        var BASE_URL="http://localhost:3000";\n        var g=d.createElement(t),s=d.getElementsByTagName(t)[0];\n        g.src=BASE_URL+"/packs/js/sdk.js";\n        g.defer = true;\n        g.async = true;\n        s.parentNode.insertBefore(g,s);\n        g.onload=function(){\n          window.shopizSDK.run({\n            websiteToken: \'yZ7USzaEs7hrwUAHLGwjbxJ1\',\n            baseUrl: BASE_URL\n          })\n        }\n      })(document,"script");\n    </script>\n    ',
     website_token: 'yZ7USzaEs7hrwUAHLGwjbxJ1',
     selected_feature_flags: ['attachments', 'emoji_picker', 'end_conversation'],
     reply_time: 'in_a_few_minutes',
@@ -598,7 +603,7 @@ export const inboxes = [
     reply_time: null,
     phone_number: null,
     forward_to_email: '9ae8ebb96c7f2d6705009f5add6d1a2d@false',
-    email: 'fayaz@salesman.effiai.pro',
+    email: 'fayaz@shopiz.pro',
     imap_login: '',
     imap_password: '',
     imap_address: '',
@@ -636,16 +641,16 @@ export const statusFilterOptions = [
 ];
 export const languages = allLanguages;
 export const countries = allCountries;
-export const MESSAGE_CONDITION_VALUES = [
-  {
-    id: 'incoming',
-    name: 'Incoming Message',
-  },
-  {
-    id: 'outgoing',
-    name: 'Outgoing Message',
-  },
-];
+
+export const messageTypeOptions = MESSAGE_CONDITION_VALUES.map(item => ({
+  id: item.id,
+  name: `AUTOMATION.MESSAGE_TYPES.${item.i18nKey}`,
+}));
+
+export const priorityOptions = PRIORITY_CONDITION_VALUES.map(item => ({
+  id: item.id,
+  name: `AUTOMATION.PRIORITY_TYPES.${item.i18nKey}`,
+}));
 
 export const automationToSubmit = {
   name: 'Fayaz',

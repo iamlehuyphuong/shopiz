@@ -1,7 +1,7 @@
 {
   "MACROS": {
     "HEADER": "Macro",
-    "DESCRIPTION": "Macro là một tập hợp các hành động đã được lưu giúp đại diện chăm sóc khách hàng hoàn thành công việc một cách dễ dàng. Đại diện có thể định nghĩa một tập hợp các hành động như gắn nhãn hội thoại, gửi bản sao email, cập nhật thuộc tính tùy chỉnh, vv và họ có thể thực hiện các hành động này chỉ với một cú nhấp chuột.",
+    "DESCRIPTION": "Macro là một tập hợp các hành động đã được lưu giúp đại diện chăm sóc khách hàng hoàn thành công việc một cách dễ dàng. Bạn có thể định nghĩa một tập hợp các hành động như gắn nhãn hội thoại, gửi bản sao email, cập nhật thuộc tính tùy chỉnh, vv và họ có thể thực hiện các hành động này chỉ với một cú nhấp chuột.",
     "LEARN_MORE": "Tìm hiểu thêm về macro",
     "HEADER_BTN_TXT": "Thêm macro mới",
     "HEADER_BTN_TXT_SAVE": "Lưu macro",
@@ -76,13 +76,36 @@
       "EXECUTED_SUCCESSFULLY": "Macro được thực thi thành công"
     },
     "ERRORS": {
-      "ATTRIBUTE_KEY_REQUIRED": "Yêu cầu cung cấp khóa thuộc tính",
-      "FILTER_OPERATOR_REQUIRED": "Yêu cầu có toán tử lọc",
-      "VALUE_REQUIRED": "Giá trị là bắt buộc",
+      "ATTRIBUTE_KEY_REQUIRED": "Cần có khóa thuộc tính",
+      "FILTER_OPERATOR_REQUIRED": "Cần có toán tử bộ lọc",
+      "VALUE_REQUIRED": "Giá trị bắt buộc có",
       "VALUE_MUST_BE_BETWEEN_1_AND_998": "Giá trị phải nằm trong khoảng từ 1 đến 998",
-      "ACTION_PARAMETERS_REQUIRED": "Yêu cầu có tham số hành động",
-      "ATLEAST_ONE_CONDITION_REQUIRED": "Cần ít nhất một điều kiện",
-      "ATLEAST_ONE_ACTION_REQUIRED": "Cần ít nhất một hành động"
+      "ACTION_PARAMETERS_REQUIRED": "Cần có tham số hành động",
+      "ATLEAST_ONE_CONDITION_REQUIRED": "Cần có ít nhất một điều kiện",
+      "ATLEAST_ONE_ACTION_REQUIRED": "Cần có ít nhất một hành động"
+    },
+    "ACTIONS": {
+      "ASSIGN_TEAM": "Gán một nhóm",
+      "ASSIGN_AGENT": "Gán một nhân viên",
+      "ADD_LABEL": "Thêm nhãn",
+      "REMOVE_LABEL": "Xóa nhãn",
+      "REMOVE_ASSIGNED_TEAM": "Xóa nhóm được gán",
+      "SEND_EMAIL_TRANSCRIPT": "Gửi bản sao email",
+      "MUTE_CONVERSATION": "Tắt tiếng cuộc trò chuyện",
+      "SNOOZE_CONVERSATION": "Tạm dừng cuộc trò chuyện",
+      "RESOLVE_CONVERSATION": "Giải quyết cuộc trò chuyện",
+      "SEND_ATTACHMENT": "Gửi tệp đính kèm",
+      "SEND_MESSAGE": "Gửi tin nhắn",
+      "CHANGE_PRIORITY": "Thay đổi độ ưu tiên",
+      "ADD_PRIVATE_NOTE": "Thêm ghi chú riêng tư",
+      "SEND_WEBHOOK_EVENT": "Gửi sự kiện Webhook"
+    },
+    "PRIORITY_TYPES": {
+      "NONE": "Không có",
+      "LOW": "Thấp",
+      "MEDIUM": "Trung bình",
+      "HIGH": "Cao",
+      "URGENT": "Cấp bách"
     }
   }
 }

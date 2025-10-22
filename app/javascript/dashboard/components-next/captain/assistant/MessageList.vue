@@ -3,6 +3,7 @@ import { useI18n } from 'vue-i18n';
 import { ref, watch, nextTick } from 'vue';
 import Avatar from 'dashboard/components-next/avatar/Avatar.vue';
 import { useMessageFormatter } from 'shared/composables/useMessageFormatter';
+
 const props = defineProps({
   messages: {
     type: Array,
@@ -13,28 +14,37 @@ const props = defineProps({
     default: false,
   },
 });
+
 const messageContainer = ref(null);
+
 const { t } = useI18n();
 const { formatMessage } = useMessageFormatter();
+
 const isUserMessage = sender => sender === 'user';
+
 const getMessageAlignment = sender =>
   isUserMessage(sender) ? 'justify-end' : 'justify-start';
+
 const getMessageDirection = sender =>
   isUserMessage(sender) ? 'flex-row-reverse' : 'flex-row';
+
 const getAvatarName = sender =>
   isUserMessage(sender)
     ? t('CAPTAIN.PLAYGROUND.USER')
     : t('CAPTAIN.PLAYGROUND.ASSISTANT');
+
 const getMessageStyle = sender =>
   isUserMessage(sender)
     ? 'bg-n-strong text-n-white'
     : 'bg-n-solid-iris text-n-slate-12';
+
 const scrollToBottom = async () => {
   await nextTick();
   if (messageContainer.value) {
     messageContainer.value.scrollTop = messageContainer.value.scrollHeight;
   }
 };
+
 watch(() => props.messages.length, scrollToBottom);
 </script>
 
@@ -55,7 +65,7 @@ watch(() => props.messages.length, scrollToBottom);
           class="max-w-[80%] rounded-lg p-3 text-sm"
           :class="getMessageStyle(message.sender)"
         >
-          <div v-html="formatMessage(message.content)" />
+          <div class="break-words" v-html="formatMessage(message.content)" />
         </div>
       </div>
     </div>

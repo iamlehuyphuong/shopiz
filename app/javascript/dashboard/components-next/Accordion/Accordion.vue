@@ -1,13 +1,17 @@
 <script setup>
 import { ref, watch } from 'vue';
+
 const props = defineProps({
   title: { type: String, required: true },
   isOpen: { type: Boolean, default: false },
 });
+
 const isExpanded = ref(props.isOpen);
+
 const toggleAccordion = () => {
   isExpanded.value = !isExpanded.value;
 };
+
 watch(
   () => props.isOpen,
   newValue => {

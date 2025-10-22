@@ -1,8 +1,8 @@
 {
   "HELP_CENTER": {
-    "TITLE": "Trung tâm trợ giúp",
+    "TITLE": "Cổng thông tin",
     "NEW_PAGE": {
-      "DESCRIPTION": "Tạo các cổng tự phục vụ trung tâm trợ giúp cho khách hàng của bạn. Giúp họ nhanh chóng tìm được câu trả lời mà không phải chờ đợi. Tinh gọn các yêu cầu, tăng hiệu quả cho nhân viên và nâng cao chất lượng hỗ trợ khách hàng.",
+      "DESCRIPTION": "Tạo các cổng thông tin trợ giúp cho khách hàng của bạn. Giúp họ nhanh chóng tìm được câu trả lời mà không phải chờ đợi. Tinh gọn các yêu cầu, tăng hiệu quả cho nhân viên và nâng cao chất lượng hỗ trợ khách hàng.",
       "CREATE_PORTAL_BUTTON": "Tạo cổng"
     },
     "HEADER": {
@@ -156,6 +156,12 @@
           "API": {
             "DELETE_SUCCESS": "Đã xóa cổng thông tin thành công",
             "DELETE_ERROR": "Lỗi khi xóa cổng thông tin"
+          }
+        },
+        "SEND_CNAME_INSTRUCTIONS": {
+          "API": {
+            "SUCCESS_MESSAGE": "CNAME instructions sent successfully",
+            "ERROR_MESSAGE": "Error while sending CNAME instructions"
           }
         }
       },
@@ -391,7 +397,7 @@
         "SLUG": {
           "LABEL": "Slug",
           "PLACEHOLDER": "Slug danh mục cho URL",
-          "HELP_TEXT": "salesman.effiai.pro/hc/my-portal/en-US/categories/my-slug",
+          "HELP_TEXT": "shopiz.pro/hc/my-portal/en-US/categories/my-slug",
           "ERROR": "Phải có Slug"
         },
         "DESCRIPTION": {
@@ -422,7 +428,7 @@
         "SLUG": {
           "LABEL": "Slug",
           "PLACEHOLDER": "Slug danh mục cho URL",
-          "HELP_TEXT": "salesman.effiai.pro/hc/my-portal/en-US/categories/my-slug",
+          "HELP_TEXT": "shopiz.pro/hc/my-portal/en-US/categories/my-slug",
           "ERROR": "Phải có Slug"
         },
         "DESCRIPTION": {
@@ -454,7 +460,7 @@
       "SEARCH_BUTTON": "Tìm kiếm",
       "INSERT_ARTICLE": "Chèn liên kết",
       "IFRAME_ERROR": "URL rỗng hoặc không hợp lệ. Không thể hiển thị nội dung.",
-      "OPEN_ARTICLE_SEARCH": "Chèn bài viết từ Trung tâm trợ giúp",
+      "OPEN_ARTICLE_SEARCH": "Chèn bài viết từ Cổng thông tin",
       "SUCCESS_ARTICLE_INSERTED": "Bài viết đã được chèn thành công",
       "PREVIEW_LINK": "Xem trước bài viết",
       "CANCEL": "Đóng",
@@ -462,7 +468,7 @@
       "BACK_RESULTS": "Quay lại kết quả"
     },
     "UPGRADE_PAGE": {
-      "TITLE": "Trung tâm trợ giúp",
+      "TITLE": "Cổng thông tin",
       "DESCRIPTION": "Tạo các cổng tự phục vụ thân thiện với người dùng. Giúp người dùng truy cập bài viết và nhận hỗ trợ 24/7. Nâng cấp gói dịch vụ của bạn để kích hoạt tính năng này.",
       "SELF_HOSTED_DESCRIPTION": "Tạo các cổng tự phục vụ thân thiện với người dùng. Giúp người dùng truy cập bài viết và nhận hỗ trợ 24/7. Vui lòng liên hệ quản trị viên của bạn để kích hoạt tính năng này.",
       "BUTTON": {
@@ -606,7 +612,7 @@
             "LABEL": "Slug",
             "PLACEHOLDER": "Slug danh mục cho URL",
             "ERROR": "Phải có Slug",
-            "HELP_TEXT": "salesman.effiai.pro/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
+            "HELP_TEXT": "shopiz.pro/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
           },
           "DESCRIPTION": {
             "LABEL": "Mô tả",
@@ -689,14 +695,15 @@
       "CONFIRM_BUTTON_LABEL": "Tạo",
       "NAME": {
         "LABEL": "Tên",
-        "PLACEHOLDER": "Hướng dẫn sử dụng | Salesman",
+        "PLACEHOLDER": "Hướng dẫn sử dụng | Shopiz",
         "MESSAGE": "Chọn một tên cho cổng của bạn.",
         "ERROR": "Tên bắt buộc có"
       },
       "SLUG": {
         "LABEL": "Slug",
         "PLACEHOLDER": "user-guide",
-        "ERROR": "Phải có Slug"
+        "ERROR": "Phải có Slug",
+        "FORMAT_ERROR": "Vui lòng nhập một slug hợp lệ, ví dụ: user-guide"
       }
     },
     "PORTAL_SETTINGS": {
@@ -725,7 +732,7 @@
         "HOME_PAGE_LINK": {
           "LABEL": "Liên kết trang chủ",
           "PLACEHOLDER": "Liên kết trang chủ cổng thông tin",
-          "ERROR": "URL không hợp lệ. Liên kết trang chủ phải bắt đầu bằng 'http://' hoặc 'https://'."
+          "ERROR": "Nhập một URL hợp lệ. Liên kết trang chủ phải bắt đầu bằng 'http://' hoặc 'https://'."
         },
         "SLUG": {
           "LABEL": "Slug",
@@ -734,7 +741,8 @@
         "LIVE_CHAT_WIDGET": {
           "LABEL": "Tiện ích chat trực tiếp",
           "PLACEHOLDER": "Chọn tiện ích chat trực tiếp",
-          "HELP_TEXT": "Chọn tiện ích chat trực tiếp sẽ hiển thị trên trung tâm trợ giúp của bạn."
+          "HELP_TEXT": "Chọn tiện ích chat trực tiếp sẽ hiển thị trên trung tâm trợ giúp của bạn.",
+          "NONE_OPTION": "No widget"
         },
         "BRAND_COLOR": {
           "LABEL": "Màu thương hiệu"
@@ -745,24 +753,37 @@
         "CUSTOM_DOMAIN": {
           "HEADER": "Tên miền tuỳ chỉnh",
           "LABEL": "Tên miền tuỳ chỉnh:",
-          "DESCRIPTION": "Bạn có thể lưu trữ cổng của bạn trên một tên miền tùy chỉnh. Ví dụ, nếu trang web của bạn là yourdomain.com và bạn muốn cổng của mình có sẵn tại docs.yourdomain.com, chỉ cần nhập vào trường này.",
+          "DESCRIPTION": "Sử dụng tên miền tuỳ chỉnh để cung cấp trải nghiệm thương hiệu liền mạch cho khách hàng của bạn. Ví dụ: support.yourdomain.com",
+          "STATUS_DESCRIPTION": "Cổng thông tin tuỳ chỉnh của bạn sẽ bắt đầu hoạt động ngay khi được xác minh.",
           "PLACEHOLDER": "Tên miền tuỳ biến cổng",
-          "EDIT_BUTTON": "Chỉnh sửa tên miền tùy chỉnh",
-          "ADD_BUTTON": "Thêm tên miền tùy chỉnh",
+          "EDIT_BUTTON": "Chỉnh sửa",
+          "ADD_BUTTON": "Thêm tên miền tuỳ chỉnh",
+          "STATUS": {
+            "LIVE": "Trực tuyến",
+            "PENDING": "Đang chờ xác minh",
+            "ERROR": "Xác minh không thành công"
+          },
           "DIALOG": {
-            "ADD_HEADER": "Thêm tên miền tùy chỉnh",
-            "EDIT_HEADER": "Chỉnh sửa tên miền tùy chỉnh",
+            "ADD_HEADER": "Thêm tên miền tuỳ chỉnh",
+            "EDIT_HEADER": "Chỉnh sửa tên miền tuỳ chỉnh",
             "ADD_CONFIRM_BUTTON_LABEL": "Thêm tên miền",
             "EDIT_CONFIRM_BUTTON_LABEL": "Cập nhật tên miền",
-            "LABEL": "Tên miền tùy chỉnh",
-            "PLACEHOLDER": "Tên miền tùy biến cổng",
-            "ERROR": "Bắt buộc phải có tên miền tùy chỉnh"
+            "LABEL": "Tên miền tuỳ chỉnh",
+            "PLACEHOLDER": "Tên miền tuỳ biến cổng",
+            "ERROR": "Phải có tên miền",
+            "FORMAT_ERROR": "Vui lòng nhập một URL tên miền hợp lệ, ví dụ: docs.yourdomain.com"
           },
           "DNS_CONFIGURATION_DIALOG": {
             "HEADER": "Cấu hình DNS",
-            "DESCRIPTION": "Đăng nhập vào tài khoản của bạn với nhà cung cấp DNS, và thêm một bản ghi CNAME cho miền phụ trỏ đến salesman.help",
-            "HELP_TEXT": "Khi hoàn tất, bạn có thể liên hệ với bộ phận hỗ trợ của chúng tôi để yêu cầu chứng chỉ SSL tự động tạo ra.",
-            "CONFIRM_BUTTON_LABEL": "Đã hiểu!"
+            "DESCRIPTION": "Đăng nhập vào tài khoản của bạn với nhà cung cấp DNS và thêm một bản ghi CNAME cho tên miền phụ trỏ đến shopiz.help",
+            "COPY": "Đã sao chép CNAME thành công",
+            "SEND_INSTRUCTIONS": {
+              "HEADER": "Gửi hướng dẫn",
+              "DESCRIPTION": "Nếu bạn muốn có ai đó từ nhóm phát triển của mình xử lý bước này, bạn có thể nhập địa chỉ email bên dưới và chúng tôi sẽ gửi cho họ các hướng dẫn cần thiết.",
+              "PLACEHOLDER": "Nhập địa chỉ email của họ",
+              "ERROR": "Nhập một địa chỉ email hợp lệ",
+              "SEND_BUTTON": "Gửi"
+            }
           }
         },
         "DELETE_PORTAL": {
@@ -787,6 +808,58 @@
           "ERROR_MESSAGE": "Không thể cập nhật cổng thông tin"
         }
       }
+    },
+    "PDF_UPLOAD": {
+      "TITLE": "Tải lên tài liệu PDF",
+      "DESCRIPTION": "Tải lên tài liệu PDF để tự động tạo các câu hỏi thường gặp (FAQ) bằng AI",
+      "DRAG_DROP_TEXT": "Kéo và thả tệp PDF của bạn vào đây, hoặc nhấn để chọn",
+      "SELECT_FILE": "Chọn tệp PDF",
+      "ADDITIONAL_CONTEXT_LABEL": "Ngữ cảnh bổ sung (Không bắt buộc)",
+      "ADDITIONAL_CONTEXT_PLACEHOLDER": "Cung cấp thêm ngữ cảnh hoặc hướng dẫn cho việc tạo FAQ...",
+      "UPLOADING": "Đang tải lên...",
+      "UPLOAD": "Tải lên & Xử lý",
+      "CANCEL": "Huỷ",
+      "ERROR_INVALID_TYPE": "Vui lòng chọn tệp PDF hợp lệ",
+      "ERROR_FILE_TOO_LARGE": "Kích thước tệp phải nhỏ hơn 512MB",
+      "ERROR_UPLOAD_FAILED": "Tải lên PDF thất bại. Vui lòng thử lại."
+    },
+    "PDF_DOCUMENTS": {
+      "TITLE": "Tài liệu PDF",
+      "DESCRIPTION": "Quản lý các tài liệu PDF đã tải lên và tạo FAQ từ chúng",
+      "UPLOAD_PDF": "Tải lên PDF",
+      "UPLOAD_FIRST_PDF": "Tải lên PDF đầu tiên của bạn",
+      "UPLOADED_BY": "Được tải lên bởi",
+      "GENERATE_FAQS": "Tạo FAQ",
+      "GENERATING": "Đang tạo...",
+      "CONFIRM_DELETE": "Bạn có chắc chắn muốn xoá {filename}?",
+      "EMPTY_STATE": {
+        "TITLE": "Chưa có tài liệu PDF nào",
+        "DESCRIPTION": "Tải lên tài liệu PDF để tự động tạo FAQ bằng AI"
+      },
+      "STATUS": {
+        "UPLOADED": "Sẵn sàng",
+        "PROCESSING": "Đang xử lý",
+        "PROCESSED": "Hoàn tất",
+        "FAILED": "Thất bại"
+      }
+    },
+    "CONTENT_GENERATION": {
+      "TITLE": "Tạo nội dung",
+      "DESCRIPTION": "Tải lên tài liệu PDF để tự động tạo nội dung FAQ bằng AI",
+      "UPLOAD_TITLE": "Tải lên tài liệu PDF",
+      "DRAG_DROP": "Kéo và thả tệp PDF của bạn vào đây, hoặc nhấn để chọn",
+      "SELECT_FILE": "Chọn tệp PDF",
+      "UPLOADING": "Đang xử lý tài liệu...",
+      "UPLOAD_SUCCESS": "Xử lý tài liệu thành công!",
+      "UPLOAD_ERROR": "Tải lên tài liệu thất bại. Vui lòng thử lại.",
+      "INVALID_FILE_TYPE": "Vui lòng chọn tệp PDF hợp lệ",
+      "FILE_TOO_LARGE": "Kích thước tệp phải nhỏ hơn 512MB",
+      "GENERATED_CONTENT": "Nội dung FAQ đã tạo",
+      "PUBLISH_SELECTED": "Xuất bản đã chọn",
+      "PUBLISHING": "Đang xuất bản...",
+      "FROM_DOCUMENT": "Từ tài liệu",
+      "NO_CONTENT": "Chưa có nội dung được tạo. Tải lên tài liệu PDF để bắt đầu.",
+      "LOADING": "Đang tải nội dung đã tạo..."
     }
   }
 }

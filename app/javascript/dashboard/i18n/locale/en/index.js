@@ -5,6 +5,7 @@ import attributesMgmt from './attributesMgmt.json';
 import auditLogs from './auditLogs.json';
 import automation from './automation.json';
 import bulkActions from './bulkActions.json';
+import callModal from './callModal.json';
 import campaign from './campaign.json';
 import cannedMgmt from './cannedMgmt.json';
 import chatlist from './chatlist.json';
@@ -35,6 +36,9 @@ import signup from './signup.json';
 import sla from './sla.json';
 import teamsSettings from './teamsSettings.json';
 import whatsappTemplates from './whatsappTemplates.json';
+import contentTemplates from './contentTemplates.json';
+import mfa from './mfa.json';
+import sales from './sales.json';
 
 export default {
   ...advancedFilters,
@@ -44,6 +48,7 @@ export default {
   ...auditLogs,
   ...automation,
   ...bulkActions,
+  ...callModal,
   ...campaign,
   ...cannedMgmt,
   ...chatlist,
@@ -74,4 +79,7 @@ export default {
   ...sla,
   ...teamsSettings,
   ...whatsappTemplates,
+  ...contentTemplates,
+  ...mfa,
+  ...sales,
 };

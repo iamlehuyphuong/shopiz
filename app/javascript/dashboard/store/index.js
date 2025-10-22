@@ -2,13 +2,16 @@ import { createStore } from 'vuex';
 
 import accounts from './modules/accounts';
 import agentBots from './modules/agentBots';
+import agentCapacityPolicies from './modules/agentCapacityPolicies';
 import agents from './modules/agents';
+import assignmentPolicies from './modules/assignmentPolicies';
 import articles from './modules/helpCenterArticles';
 import attributes from './modules/attributes';
 import auditlogs from './modules/auditlogs';
 import auth from './modules/auth';
 import automations from './modules/automations';
 import bulkActions from './modules/bulkActions';
+import calls from './modules/calls';
 import campaigns from './modules/campaigns';
 import cannedResponse from './modules/cannedResponse';
 import categories from './modules/helpCenterCategories';
@@ -36,6 +39,7 @@ import inboxMembers from './modules/inboxMembers';
 import integrations from './modules/integrations';
 import labels from './modules/labels';
 import macros from './modules/macros';
+import messageTemplates from './modules/messageTemplates';
 import notifications from './modules/notifications';
 import portals from './modules/helpCenterPortals';
 import reports from './modules/reports';
@@ -51,19 +55,30 @@ import captainDocuments from './captain/document';
 import captainResponses from './captain/response';
 import captainInboxes from './captain/inboxes';
 import captainBulkActions from './captain/bulkActions';
+import copilotThreads from './captain/copilotThreads';
+import copilotMessages from './captain/copilotMessages';
+import captainScenarios from './captain/scenarios';
+import captainTools from './captain/tools';
+import captainCustomTools from './captain/customTools';
+import salesProducts from './modules/sales/products';
+import salesOrders from './modules/sales/orders';
+
 const plugins = [];
 
 export default createStore({
   modules: {
     accounts,
     agentBots,
+    agentCapacityPolicies,
     agents,
+    assignmentPolicies,
     articles,
     attributes,
     auditlogs,
     auth,
     automations,
     bulkActions,
+    calls,
     campaigns,
     cannedResponse,
     categories,
@@ -91,6 +106,7 @@ export default createStore({
     integrations,
     labels,
     macros,
+    messageTemplates,
     notifications,
     portals,
     reports,
@@ -106,6 +122,13 @@ export default createStore({
     captainResponses,
     captainInboxes,
     captainBulkActions,
+    copilotThreads,
+    copilotMessages,
+    captainScenarios,
+    captainTools,
+    captainCustomTools,
+    salesProducts,
+    salesOrders,
   },
   plugins,
 });
