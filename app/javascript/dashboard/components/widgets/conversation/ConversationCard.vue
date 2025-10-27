@@ -258,7 +258,9 @@ const deleteConversation = () => {
       <Avatar
         v-if="!hideThumbnail"
         :name="chat?.additional_attributes?.group?.name ?? currentContact.name"
-        :src="chat?.additional_attributes?.group?.avt ?? currentContact.thumbnail"
+        :src="
+          chat?.additional_attributes?.group?.avt ?? currentContact.thumbnail
+        "
         :size="32"
         :status="currentContact.availability_status"
         :class="!showInboxName ? 'mt-4' : 'mt-8'"
@@ -311,12 +313,22 @@ const deleteConversation = () => {
           <PriorityMark :priority="chat.priority" class="flex-shrink-0" />
         </div>
       </div>
-      <h4
-        class="conversation--user text-sm my-0 mx-2 capitalize pt-0.5 text-ellipsis overflow-hidden whitespace-nowrap flex-1 min-w-0 ltr:pr-16 rtl:pl-16 text-n-slate-12"
-        :class="hasUnread ? 'font-semibold' : 'font-medium'"
-      >
-        {{ chat?.additional_attributes?.group?.name || currentContact.name }}
-      </h4>
+      <div class="flex items-center gap-2">
+        <h4
+          class="conversation--title my-0 mx-2 capitalize pt-0.5 max-w-[96%] text-ellipsis overflow-hidden whitespace-nowrap min-w-0 text-n-slate-12"
+          :class="hasUnread ? 'font-semibold' : 'font-medium'"
+        >
+          {{ chat?.additional_attributes?.group?.name || currentContact.name }}
+        </h4>
+        <span
+          class="conversation--status text-white text-xxs font-medium leading-4 py-0.5 px-2 rounded-lg border border-solid border-n-strong text-n-slate-10 bg-n-slate-1 text-ellipsis overflow-hidden whitespace-nowrap"
+          :class="chat.status"
+        >
+          {{
+            $t(`CHAT_LIST.CHAT_STATUS_FILTER_ITEMS.${props.chat.status}.TEXT`)
+          }}
+        </span>
+      </div>
       <div
         v-if="callStatus"
         key="voice-status-row"
@@ -407,3 +419,22 @@ const deleteConversation = () => {
     </ContextMenu>
   </div>
 </template>
+<style lang="scss" scoped>
+.conversation--status {
+  &.bot {
+    @apply bg-[#4077f1];
+  }
+  &.open {
+    @apply bg-[#22c55e];
+  }
+  &.pending {
+    @apply bg-[#f59e08];
+  }
+  &.resolved {
+    @apply bg-[#00c0e8];
+  }
+  &.snoozed {
+    @apply bg-[#6155f5];
+  }
+}
+</style>

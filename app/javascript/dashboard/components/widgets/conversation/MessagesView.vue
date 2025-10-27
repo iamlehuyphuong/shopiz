@@ -160,7 +160,8 @@ export default {
     },
     shouldShowSpinner() {
       return (
-        (this.currentChat && this.currentChat.dataFetched === undefined) || this.isLoadingPrevious
+        (this.currentChat && this.currentChat.dataFetched === undefined) ||
+        this.isLoadingPrevious
       );
     },
     // Check there is a instagram inbox exists with the same instagram_id
@@ -247,11 +248,15 @@ export default {
       return { incoming, outgoing };
     },
     showEndOfListMessage() {
-      return this.listLoadingStatus && !this.isLoadingPrevious && !this.allowLoadHistory;
+      return (
+        this.listLoadingStatus &&
+        !this.isLoadingPrevious &&
+        !this.allowLoadHistory
+      );
     },
     allowLoadHistory() {
       return this.currentChat.meta.show_load_more_history;
-    }
+    },
   },
 
   watch: {
@@ -405,14 +410,16 @@ export default {
       this.setScrollParams();
 
       const { dataFetched, id, messages } = this.currentChat;
-      const canFetch = dataFetched && !this.isLoadingPrevious && scrollTop < 100;
+      const canFetch =
+        dataFetched && !this.isLoadingPrevious && scrollTop < 100;
       if (!canFetch) return;
 
       const isLoadMore = !this.listLoadingStatus;
       const isLoadMoreHistory = this.listLoadingStatus && this.allowLoadHistory;
-      const action =
-        isLoadMore ? 'fetchPreviousMessages'
-        : isLoadMoreHistory ? 'fetchHistoryMessages'
+      const action = isLoadMore
+        ? 'fetchPreviousMessages'
+        : isLoadMoreHistory
+        ? 'fetchHistoryMessages'
         : null;
       if (!action) return;
 
@@ -424,8 +431,10 @@ export default {
       this.isLoadingPrevious = true;
       try {
         await this.$store.dispatch(action, payload);
-        const heightDifference = this.conversationPanel.scrollHeight - this.heightBeforeLoad;
-        this.conversationPanel.scrollTop = this.scrollTopBeforeLoad + heightDifference;
+        const heightDifference =
+          this.conversationPanel.scrollHeight - this.heightBeforeLoad;
+        this.conversationPanel.scrollTop =
+          this.scrollTopBeforeLoad + heightDifference;
         this.setScrollParams();
       } catch {
         // Ignore error
@@ -523,10 +532,7 @@ export default {
             {{ $t('CONVERSATION.LOAD_MORE_MESSAGES') }}
           </button>
         </div>
-        <p
-          v-else
-          class="p-4 text-center text-slate-400 dark:text-slate-300"
-        >
+        <p v-else class="p-4 text-center text-slate-400 dark:text-slate-300">
           {{ $t('CONVERSATION.ALL_MESSAGE_LOADED') }}
         </p>
       </template>

@@ -64,7 +64,7 @@ class ZaloPersonal::BaseService
     if user_info['phoneNumber'].present?
       phone = user_info['phoneNumber']
       phone = "+#{phone}" unless phone.start_with?('+')
-      attributes.merge!(phone_number: phone)
+      attributes[:phone_number] = phone
     end
 
     attributes
@@ -81,7 +81,7 @@ class ZaloPersonal::BaseService
     lock_key = format(Redis::RedisKeys::CONVERSATION_SOURCE_KEY, id: params[:threadId])
 
     wait_if_locked(lock_key)
-    Redis::Alfred.setex(lock_key, true, 1.minutes)
+    Redis::Alfred.setex(lock_key, true, 1.minute)
 
     begin
       @conversation = active_conversation || create_conversation
@@ -93,7 +93,7 @@ class ZaloPersonal::BaseService
   end
 
   def active_conversation
-    @contact_inbox.conversations.where.not(status: :resolved).last
+    @contact_inbox.conversations.where.not(status: :resolved).where(external_source_id: params[:threadId]).last
   end
 
   def create_conversation
@@ -337,7 +337,7 @@ class ZaloPersonal::BaseService
     if user_info['phoneNumber'].present?
       phone = user_info['phoneNumber']
       phone = "+#{phone}" unless phone.start_with?('+')
-      update_params.merge!(phone_number: phone)
+      update_params[:phone_number] = phone
     end
     @contact.update!(update_params)
 
@@ -398,7 +398,7 @@ class ZaloPersonal::BaseService
       sender: incoming_message? ? @contact : nil,
       additional_attributes: additional_attributes,
       source_id: params[:data][:msgId],
-      created_at: created_time,
+      created_at: created_time
     }
   end
 
@@ -411,11 +411,11 @@ class ZaloPersonal::BaseService
   end
 
   def created_time
-    Time.at(params[:data][:ts].to_i / 1000)
+    Time.zone.at(params[:data][:ts].to_i / 1000)
   end
 
   def find_exist_message
     inbox.messages.find_by("source_id = :source_id OR additional_attributes ->> 'attachment_msg_id' = :source_id",
-      source_id: params.dig(:data, :msgId).to_s)
+                           source_id: params.dig(:data, :msgId).to_s)
   end
 end
