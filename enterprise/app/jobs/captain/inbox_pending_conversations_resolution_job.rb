@@ -1,10 +1,13 @@
 class Captain::InboxPendingConversationsResolutionJob < ApplicationJob
   queue_as :low
 
-  def perform(inbox)
+  def perform(inbox, resolve_after = 60)
     Current.executed_by = inbox.captain_assistant
 
-    resolvable_conversations = inbox.conversations.pending.where('last_activity_at < ? ', Time.now.utc - 1.hour).limit(Limits::BULK_ACTIONS_LIMIT)
+    resolvable_conversations = inbox.conversations.pending.where(
+      'last_activity_at < ? ', Time.now.utc - resolve_after.minutes
+    ).limit(Limits::BULK_ACTIONS_LIMIT)
+
     resolvable_conversations.each do |conversation|
       create_outgoing_message(conversation, inbox)
       conversation.resolved!

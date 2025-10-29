@@ -156,19 +156,16 @@ export default {
 </script>
 
 <template>
-  <div class="wizard-body w-[75%] flex-shrink-0 flex-grow-0 max-w-[75%]">
-    <div v-if="!hasLoginStarted" class="login-init h-full">
+  <div class="wizard-body w-[90%] flex-shrink-0 flex-grow-0 max-w-[90%] p-6">
+    <div v-if="!hasLoginStarted" class="flex flex-col items-center justify-center pt-36">
       <a href="#" @click="startLogin()">
         <img
           :src="`/assets/images/dashboard/channels/zalo_login.svg`"
           alt="Zalo-logo"
         />
       </a>
-      <p>
-        {{
-          $t('INBOX_MGMT.ADD.ZALO.HELP')
-        }}
-      </p>
+      <p class="pt-6 mb-0 text-center">{{ $t('INBOX_MGMT.ADD.ZALO.HELP') }}</p>
+      <p class="text-center">{{ $t('INBOX_MGMT.ADD.ZALO.HELP_2') }}</p>
     </div>
     <div v-else>
       <div v-if="hasError" class="max-w-lg mx-auto text-center">
@@ -187,12 +184,7 @@ export default {
         <div class="w-full">
           <PageHeader
             :header-title="$t('INBOX_MGMT.ADD.ZALO.TITLE')"
-            :header-content="
-              useInstallationName(
-                $t('INBOX_MGMT.ADD.ZALO.TITLE'),
-                globalConfig.installationName
-              )
-            "
+            :header-content="$t('INBOX_MGMT.ADD.ZALO.TITLE')"
           />
         </div>
         <div class="w-[60%]">

@@ -6,6 +6,19 @@ module Featurable
     check_for_column: false
   }.freeze
 
+  DISABLED_FEATURES = %w[
+    help_center
+    template_builder
+    integrations
+    channel_whatsapp
+    channel_email
+    channel_api
+    channel_telegram
+    channel_line
+    channel_instagram
+    channel_voice
+  ].freeze
+
   FEATURE_LIST = YAML.safe_load(Rails.root.join('config/features.yml').read).freeze
 
   FEATURES = FEATURE_LIST.each_with_object({}) do |feature, result|
@@ -63,7 +76,7 @@ module Featurable
     config = InstallationConfig.find_by(name: 'ACCOUNT_LEVEL_FEATURE_DEFAULTS')
     return true if config.blank?
 
-    features_to_enabled = config.value.select { |f| f[:enabled] }.pluck(:name)
+    features_to_enabled = config.value.select { |f| f[:enabled] }.pluck(:name) - DISABLED_FEATURES
     enable_features(*features_to_enabled)
   end
 end

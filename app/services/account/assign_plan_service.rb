@@ -70,6 +70,7 @@ class Account::AssignPlanService
       @account.disable_features(*FEATURES_TO_UPDATE)
     else
       features = @plan.dig(:metadata, 'features')&.split(',')&.map(&:strip) || []
+      features -= Featurable::DISABLED_FEATURES
       @account.enable_features(*features)
     end
     @account.save!

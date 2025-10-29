@@ -40,21 +40,21 @@ export const SDK_CSS = `
 
 .woot-widget-bubble {
   background: transparent !important;
-  border-radius: 100px;
+  border-radius: 90px;
   border-width: 0px;
   bottom: 20px;
   cursor: pointer;
-  height: 100px;
+  height: 90px;
   padding: 0px;
   position: fixed;
   user-select: none;
-  width: 100px;
+  width: 90px;
   z-index: 2147483000 !important;
 }
 
 .woot-widget-bubble .woot-widget--bubble__text {
   position: absolute;
-  left: -139%;
+  left: -158%;
   padding: 9px 11px 8px 11px;
   border-radius: 20px;
   top: 50%;
@@ -71,7 +71,7 @@ export const SDK_CSS = `
 @media only screen and (min-width: 1441px) {
   .woot-widget-bubble .woot-widget--bubble__text {
     padding: 12px 23px 11px 23px;
-    left: calc(-100% + -36px);
+    left: calc(-100% + -76px);
   }
 }
 
@@ -150,11 +150,11 @@ export const SDK_CSS = `
 }
 
 .woot-widget-bubble.woot-elements--left {
-  left: 30px;
+  left: 20px;
 }
 
 .woot-widget-bubble.woot-elements--right {
-  right: 30px;
+  right: 20px;
 }
 
 .woot-widget-bubble svg {
@@ -191,12 +191,6 @@ export const SDK_CSS = `
 
   .woot-widget-bubble.woot-elements--right {
     right: 40px;
-  }
-
-  .woot-widget-bubble {
-    bottom: 40px;
-    height: 125px;
-    width: 125px;
   }
 }
 
@@ -325,7 +319,7 @@ export const SDK_CSS = `
 
 @media only screen and (min-width: 1441px) {
   .woot-widget-holder {
-    bottom: 170px;
+    bottom: 140px;
  }
 }
 

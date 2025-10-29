@@ -96,8 +96,8 @@ export default {
 </script>
 
 <template>
-  <div class="wizard-body w-[75%] flex-shrink-0 flex-grow-0 max-w-[75%]">
-    <div v-if="!hasLoginStarted" class="login-init h-full">
+  <div class="wizard-body w-[90%] flex-shrink-0 flex-grow-0 max-w-[90%] p-6">
+    <div v-if="!hasLoginStarted" class="flex flex-col items-center justify-center pt-36">
       <a href="#" @click="startLogin()">
         <img
           :src="`/assets/images/dashboard/channels/tiktok_login.svg`"
@@ -123,12 +123,7 @@ export default {
         <div class="w-full">
           <PageHeader
             :header-title="$t('INBOX_MGMT.DETAILS.TITLE')"
-            :header-content="
-              useInstallationName(
-                $t('INBOX_MGMT.DETAILS.DESC_TIKTOK'),
-                globalConfig.installationName
-              )
-            "
+            :header-content="$t('INBOX_MGMT.DETAILS.DESC_TIKTOK')"
           />
         </div>
         <div class="w-[60%]">

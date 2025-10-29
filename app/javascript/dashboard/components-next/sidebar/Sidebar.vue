@@ -357,26 +357,26 @@ const menuItems = computed(() => {
           label: t('SIDEBAR.LIVE_CHAT'),
           to: accountScopedRoute('campaigns_livechat_index'),
         },
-        {
-          name: 'SMS',
-          label: t('SIDEBAR.SMS'),
-          to: accountScopedRoute('campaigns_sms_index'),
-        },
-        {
-          name: 'WhatsApp',
-          label: t('SIDEBAR.WHATSAPP'),
-          to: accountScopedRoute('campaigns_whatsapp_index'),
-        },
-        {
-          name: 'Voice',
-          label: t('SIDEBAR.VOICE'),
-          to: accountScopedRoute('campaigns_voice_index'),
-        },
-        {
-          name: 'Survey',
-          label: t('SIDEBAR.SURVEY'),
-          to: accountScopedRoute('campaigns_survey_index'),
-        },
+        // {
+        //   name: 'SMS',
+        //   label: t('SIDEBAR.SMS'),
+        //   to: accountScopedRoute('campaigns_sms_index'),
+        // },
+        // {
+        //   name: 'WhatsApp',
+        //   label: t('SIDEBAR.WHATSAPP'),
+        //   to: accountScopedRoute('campaigns_whatsapp_index'),
+        // },
+        // {
+        //   name: 'Voice',
+        //   label: t('SIDEBAR.VOICE'),
+        //   to: accountScopedRoute('campaigns_voice_index'),
+        // },
+        // {
+        //   name: 'Survey',
+        //   label: t('SIDEBAR.SURVEY'),
+        //   to: accountScopedRoute('campaigns_survey_index'),
+        // },
       ],
     },
     {
@@ -401,65 +401,65 @@ const menuItems = computed(() => {
         },
       ],
     },
-    {
-      name: 'Portals',
-      label: t('SIDEBAR.HELP_CENTER.TITLE'),
-      icon: 'i-lucide-library-big',
-      children: [
-        {
-          name: 'Landing Pages',
-          label: t('SIDEBAR.HELP_CENTER.LANDING_PAGE'),
-          activeOn: [
-            'portals_pages_index',
-            'portals_pages_new',
-            'portals_pages_edit',
-          ],
-          to: accountScopedRoute('portals_index', {
-            navigationPath: 'portals_pages_index',
-          }),
-        },
-        {
-          name: 'Articles',
-          label: t('SIDEBAR.HELP_CENTER.ARTICLES'),
-          activeOn: [
-            'portals_articles_index',
-            'portals_articles_new',
-            'portals_articles_edit',
-          ],
-          to: accountScopedRoute('portals_index', {
-            navigationPath: 'portals_articles_index',
-          }),
-        },
-        {
-          name: 'Categories',
-          label: t('SIDEBAR.HELP_CENTER.CATEGORIES'),
-          activeOn: [
-            'portals_categories_index',
-            'portals_categories_articles_index',
-            'portals_categories_articles_edit',
-          ],
-          to: accountScopedRoute('portals_index', {
-            navigationPath: 'portals_categories_index',
-          }),
-        },
-        {
-          name: 'Locales',
-          label: t('SIDEBAR.HELP_CENTER.LOCALES'),
-          activeOn: ['portals_locales_index'],
-          to: accountScopedRoute('portals_index', {
-            navigationPath: 'portals_locales_index',
-          }),
-        },
-        {
-          name: 'Settings',
-          label: t('SIDEBAR.HELP_CENTER.SETTINGS'),
-          activeOn: ['portals_settings_index'],
-          to: accountScopedRoute('portals_index', {
-            navigationPath: 'portals_settings_index',
-          }),
-        },
-      ],
-    },
+    // {
+    //   name: 'Portals',
+    //   label: t('SIDEBAR.HELP_CENTER.TITLE'),
+    //   icon: 'i-lucide-library-big',
+    //   children: [
+    //     {
+    //       name: 'Landing Pages',
+    //       label: t('SIDEBAR.HELP_CENTER.LANDING_PAGE'),
+    //       activeOn: [
+    //         'portals_pages_index',
+    //         'portals_pages_new',
+    //         'portals_pages_edit',
+    //       ],
+    //       to: accountScopedRoute('portals_index', {
+    //         navigationPath: 'portals_pages_index',
+    //       }),
+    //     },
+    //     {
+    //       name: 'Articles',
+    //       label: t('SIDEBAR.HELP_CENTER.ARTICLES'),
+    //       activeOn: [
+    //         'portals_articles_index',
+    //         'portals_articles_new',
+    //         'portals_articles_edit',
+    //       ],
+    //       to: accountScopedRoute('portals_index', {
+    //         navigationPath: 'portals_articles_index',
+    //       }),
+    //     },
+    //     {
+    //       name: 'Categories',
+    //       label: t('SIDEBAR.HELP_CENTER.CATEGORIES'),
+    //       activeOn: [
+    //         'portals_categories_index',
+    //         'portals_categories_articles_index',
+    //         'portals_categories_articles_edit',
+    //       ],
+    //       to: accountScopedRoute('portals_index', {
+    //         navigationPath: 'portals_categories_index',
+    //       }),
+    //     },
+    //     {
+    //       name: 'Locales',
+    //       label: t('SIDEBAR.HELP_CENTER.LOCALES'),
+    //       activeOn: ['portals_locales_index'],
+    //       to: accountScopedRoute('portals_index', {
+    //         navigationPath: 'portals_locales_index',
+    //       }),
+    //     },
+    //     {
+    //       name: 'Settings',
+    //       label: t('SIDEBAR.HELP_CENTER.SETTINGS'),
+    //       activeOn: ['portals_settings_index'],
+    //       to: accountScopedRoute('portals_index', {
+    //         navigationPath: 'portals_settings_index',
+    //       }),
+    //     },
+    //   ],
+    // },
     {
       name: 'Settings',
       label: t('SIDEBAR.SETTINGS'),
@@ -531,18 +531,18 @@ const menuItems = computed(() => {
           icon: 'i-lucide-message-square-quote',
           to: accountScopedRoute('canned_list'),
         },
-        {
-          name: 'Settings Templates',
-          label: t('SIDEBAR.TEMPLATES'),
-          icon: 'i-lucide-file-text',
-          to: accountScopedRoute('templates_list'),
-        },
-        {
-          name: 'Settings Integrations',
-          label: t('SIDEBAR.INTEGRATIONS'),
-          icon: 'i-lucide-blocks',
-          to: accountScopedRoute('settings_applications'),
-        },
+        // {
+        //   name: 'Settings Templates',
+        //   label: t('SIDEBAR.TEMPLATES'),
+        //   icon: 'i-lucide-file-text',
+        //   to: accountScopedRoute('templates_list'),
+        // },
+        // {
+        //   name: 'Settings Integrations',
+        //   label: t('SIDEBAR.INTEGRATIONS'),
+        //   icon: 'i-lucide-blocks',
+        //   to: accountScopedRoute('settings_applications'),
+        // },
         {
           name: 'Settings Audit Logs',
           label: t('SIDEBAR.AUDIT_LOGS'),
