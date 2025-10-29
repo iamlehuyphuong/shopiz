@@ -511,9 +511,9 @@
     "UNATTENDED_CONVERSATIONS": "Chưa phản hồi",
     "REPORTS": "Báo cáo",
     "SETTINGS": "Cài đặt",
-    "CONTACTS": "Liên hệ",
+    "CONTACTS": "Danh bạ",
     "ACTIVE": "Đang hoạt động",
-    "CAPTAIN": "Captain",
+    "CAPTAIN": "ShopizAI",
     "CAPTAIN_ASSISTANTS": "Trợ lý",
     "CAPTAIN_DOCUMENTS": "Tài liệu",
     "CAPTAIN_RESPONSES": "Câu hỏi thường gặp",
@@ -527,7 +527,7 @@
     "CANNED_RESPONSES": "Tin nhắn mẫu",
     "INTEGRATIONS": "Tích hợp",
     "PROFILE_SETTINGS": "Cài Đặt Hồ Sơ",
-    "ACCOUNT_SETTINGS": "Cài Đặt Tài Khoản",
+    "ACCOUNT_SETTINGS": "Tài Khoản",
     "APPLICATIONS": "Ứng dụng",
     "LABELS": "Nhãn",
     "CUSTOM_ATTRIBUTES": "Thuộc tính tùy chỉnh",
@@ -542,7 +542,7 @@
     "NEW_LABEL": "Nhãn mới",
     "NEW_TEAM": "Nhóm mới",
     "NEW_INBOX": "Thêm hộp thư",
-    "REPORTS_CONVERSATION": "Tất cả hội thoại",
+    "REPORTS_CONVERSATION": "Hội thoại",
     "CSAT": "CSAT",
     "LIVE_CHAT": "Livechat",
     "SMS": "SMS",
@@ -731,7 +731,7 @@
     "INDEX": {
       "HEADER": {
         "TITLE": "Phân công tác vụ",
-        "DESCRIPTION": "Định nghĩa các chính sách để quản lý hiệu quả khối lượng công việc và định tuyến các cuộc trò chuyện dựa trên nhu cầu của hộp thư và nhân viên. Tìm hiểu thêm tại đây"
+        "DESCRIPTION": "Định nghĩa các chính sách để quản lý hiệu quả khối lượng công việc và định tuyến các cuộc trò chuyện dựa trên nhu cầu của hộp thư và nhân viên."
       },
       "ASSIGNMENT_POLICY": {
         "TITLE": "Chính sách phân công",

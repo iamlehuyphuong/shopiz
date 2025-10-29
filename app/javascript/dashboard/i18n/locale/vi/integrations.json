@@ -756,7 +756,7 @@
         "SUBTITLE": "Tài liệu được dùng bởi trợ lý để tạo các FAQ. Bạn có thể nhập tài liệu để cung cấp ngữ cảnh cho trợ lý.",
         "FEATURE_SPOTLIGHT": {
           "TITLE": "Tài liệu",
-          "NOTE": "Tài liệu trong Captain phục vụ như một nguồn kiến thức cho trợ lý. Bằng cách kết nối trung tâm trợ giúp hoặc hướng dẫn của bạn, Captain có thể phân tích nội dung và cung cấp phản hồi chính xác cho các yêu cầu của khách hàng."
+          "NOTE": "Tài liệu trong ShopizAI phục vụ như một nguồn kiến thức cho trợ lý. Bằng cách kết nối trung tâm trợ giúp hoặc hướng dẫn của bạn, ShopizAI có thể phân tích nội dung và cung cấp phản hồi chính xác cho các yêu cầu của khách hàng."
         }
       }
     },
@@ -949,7 +949,7 @@
         "SUBTITLE": "FAQ giúp trợ lý của bạn cung cấp câu trả lời nhanh chóng và chính xác cho các câu hỏi khách hàng. Chúng có thể được tạo tự động từ nội dung của bạn hoặc được thêm thủ công.",
         "FEATURE_SPOTLIGHT": {
           "TITLE": "FAQ Trợ lý AI",
-          "NOTE": "FAQ Trợ lý AI phát hiện các câu hỏi thường gặp — dù chưa có trong cơ sở kiến thức hoặc được hỏi nhiều — và tạo ra các FAQ phù hợp giúp cải thiện hỗ trợ. Bạn có thể xem xét và quyết định phê duyệt hay từ chối từng gợi ý."
+          "NOTE": "FAQ trong ShopizAI phát hiện các câu hỏi thường gặp dù chưa có trong cơ sở kiến thức hoặc được hỏi nhiều, và tạo ra các FAQ phù hợp giúp cải thiện hỗ trợ. Bạn có thể xem xét và quyết định phê duyệt hay từ chối từng gợi ý."
         }
       }
     },
