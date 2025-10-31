@@ -114,7 +114,7 @@ const tableHeaders = computed(() => {
                 {{
                   messageTimestamp(
                     auditLogItem.created_at,
-                    'MMM dd, yyyy hh:mm a'
+                    'dd/MM/yyyy HH:mm'
                   )
                 }}
               </td>

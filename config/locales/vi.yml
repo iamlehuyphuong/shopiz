@@ -392,3 +392,5 @@ vi:
       subject: 'Hoàn tất thiết lập %{custom_domain}'
     ssl_status:
       custom_domain_not_configured: 'Tùy chỉnh tên miền chưa được cấu hình.'
+  common:
+    over_limit: "Đã vượt quá giới hạn tài khoản. Nâng cấp lên gói cao hơn"

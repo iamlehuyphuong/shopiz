@@ -1,12 +1,11 @@
 {
   "INBOX_MGMT": {
     "HEADER": "Hộp thư đến",
-    "DESCRIPTION": "A channel is the mode of communication your customer chooses to interact with you. An inbox is where you manage interactions for a specific channel. It can include communications from various sources such as email, live chat, and social media.",
-    "LEARN_MORE": "Learn more about inboxes",
-    "RECONNECTION_REQUIRED": "Your inbox is disconnected. You won't receive new messages until you reauthorize it.",
-    "CLICK_TO_RECONNECT": "Click here to reconnect.",
-    "WHATSAPP_REGISTRATION_INCOMPLETE": "Your WhatsApp Business registration isn’t complete. Please check your display name status in Meta Business Manager before reconnecting.",
-    "COMPLETE_REGISTRATION": "Complete Registration",
+    "DESCRIPTION": "Kênh là phương thức giao tiếp mà khách hàng của bạn chọn để tương tác với bạn. Hộp thư đến là nơi bạn quản lý các tương tác cho một kênh cụ thể. Nó có thể bao gồm thông tin liên lạc từ nhiều nguồn khác nhau như email, trò chuyện trực tiếp và phương tiện truyền thông xã hội.",
+    "LEARN_MORE": "Tìm hiểu thêm về các hộp thư",
+    "RECONNECTION_REQUIRED": "Hộp thư của bạn đã bị ngắt kết nối. Bạn sẽ không nhận được tin nhắn mới cho đến khi cấp quyền lại.",
+    "WHATSAPP_REGISTRATION_INCOMPLETE": "Việc đăng ký WhatsApp Business của bạn chưa hoàn tất. Vui lòng kiểm tra trạng thái tên hiển thị trong Meta Business Manager trước khi kết nối lại.",
+    "COMPLETE_REGISTRATION": "Hoàn thành việc thiết lập",
     "CLICK_TO_RECONNECT": "Nhấp vào đây để kết nối lại.",
     "LIST": {
       "404": "Không có hộp thư nào được gắn với tài khoản này."
@@ -61,7 +60,7 @@
         "CHOOSE_PLACEHOLDER": "Chọn một trang từ danh sách",
         "INBOX_NAME": "Tên hộp thư đến",
         "ADD_NAME": "Thêm tên cho hộp thư đến của bạn",
-        "PICK_NAME": "Pick a Name for your Inbox",
+        "PICK_NAME": "Chọn tên cho Hộp thư đến của bạn",
         "PICK_A_VALUE": "Chọn một giá trị",
         "CREATE_INBOX": "Tạo Hộp thư đến"
       },
@@ -476,60 +475,60 @@
       "AUTH": {
         "TITLE": "Chọn kênh",
         "DESC": "Shopiz hỗ trợ các tiện ích trò chuyện trực tiếp, Facebook Messenger, hồ sơ Twitter, WhatsApp, Email, v. v., dưới dạng các kênh. Nếu bạn muốn xây dựng một kênh tùy chỉnh, bạn có thể tạo kênh này bằng cách sử dụng kênh API. Để bắt đầu, hãy chọn một trong các kênh bên dưới.",
-        "TITLE_NEXT": "Complete the setup",
+        "TITLE_NEXT": "Hoàn thành việc thiết lập",
         "TITLE_FINISH": "Voilà!",
         "CHANNEL": {
           "WEBSITE": {
             "TITLE": "Website",
-            "DESCRIPTION": "Create a live-chat widget"
+            "DESCRIPTION": "Tạo widget live-chat"
           },
           "FACEBOOK": {
             "TITLE": "Facebook",
-            "DESCRIPTION": "Connect your Facebook page"
+            "DESCRIPTION": "Kết nối trang Facebook của bạn"
           },
           "WHATSAPP": {
             "TITLE": "WhatsApp",
-            "DESCRIPTION": "Support your customers on WhatsApp"
+            "DESCRIPTION": "Hỗ trợ khách hàng qua WhatsApp"
           },
           "EMAIL": {
             "TITLE": "Email",
-            "DESCRIPTION": "Connect with Gmail, Outlook, or other providers"
+            "DESCRIPTION": "Kết nối với Gmail, Outlook hoặc các nhà cung cấp khác"
           },
           "SMS": {
             "TITLE": "SMS",
-            "DESCRIPTION": "Integrate SMS channel with Twilio or bandwidth"
+            "DESCRIPTION": "Tích hợp kênh SMS với Twilio hoặc Bandwidth"
           },
           "API": {
             "TITLE": "API",
-            "DESCRIPTION": "Make a custom channel using our API"
+            "DESCRIPTION": "Tạo kênh tùy chỉnh bằng API của chúng tôi"
           },
           "TELEGRAM": {
             "TITLE": "Telegram",
-            "DESCRIPTION": "Configure Telegram channel using Bot token"
+            "DESCRIPTION": "Cấu hình kênh Telegram bằng Bot Token"
           },
           "LINE": {
             "TITLE": "Line",
-            "DESCRIPTION": "Integrate your Line channel"
+            "DESCRIPTION": "Tích hợp kênh Line của bạn"
           },
           "INSTAGRAM": {
             "TITLE": "Instagram",
-            "DESCRIPTION": "Connect your instagram account"
+            "DESCRIPTION": "Kết nối tài khoản Instagram của bạn"
           },
           "VOICE": {
             "TITLE": "Voice",
-            "DESCRIPTION": "Integrate with Twilio Voice"
+            "DESCRIPTION": "Tích hợp với Twilio Voice"
           },
           "ZALO": {
             "TITLE": "Zalo",
-            "DESCRIPTION": "Integrate with Zalo OA"
+            "DESCRIPTION": "Tích hợp với Zalo OA"
           },
           "ZALOPERSONAL": {
             "TITLE": "Zalo User",
-            "DESCRIPTION": "Integrate with Zalo User"
+            "DESCRIPTION": "Tích hợp với tài khoản Zalo cá nhân"
           },
           "TIKTOK": {
             "TITLE": "Tiktok",
-            "DESCRIPTION": "Integrate with Tiktok Shop"
+            "DESCRIPTION": "Tích hợp với Tiktok Shop"
           }
         }
       },

@@ -51,6 +51,7 @@
     },
     "DATE_RANGE_OPTIONS": {
       "LAST_7_DAYS": "7 ngày cuối",
+      "LAST_14_DAYS": "14 ngày cuối",
       "LAST_30_DAYS": "30 ngày cuối",
       "LAST_3_MONTHS": "3 tháng vừa qua",
       "LAST_6_MONTHS": "6 tháng vừa qua",
@@ -270,6 +271,8 @@
     "DOWNLOAD_INBOX_REPORTS": "Tải xuống báo cáo hộp thư đến",
     "DOWNLOAD_VOICE_REPORTS": "Tải xuống báo cáo thoại",
     "FILTER_DROPDOWN_LABEL": "Chọn Hộp thư đến",
+    "ALL_INBOXES": "Tất cả",
+    "SEARCH_INBOX": "Tìm hôp thư",
     "VOICE_METRICS": {
       "TOTAL_CALLS": "Tổng số cuộc gọi",
       "INCOMING_CALLS": "Cuộc gọi đến",
@@ -427,7 +430,7 @@
     "TABLE": {
       "HEADER": {
         "CONTACT_NAME": "Liên hệ",
-        "AGENT_NAME": "Nhân viên được phân công",
+        "AGENT_NAME": "Nhân viên",
         "RATING": "Đánh giá",
         "FEEDBACK_TEXT": "Bình luận phản hồi"
       }
@@ -472,7 +475,7 @@
     "HEADER": "Tổng quan",
     "LIVE": "Online",
     "ACCOUNT_CONVERSATIONS": {
-      "HEADER": "Mở cuộc hội thoại",
+      "HEADER": "Trạng thái hội thoại",
       "LOADING_MESSAGE": "Đang tải số liệu cuộc hội thoại...",
       "OPEN": "Mở",
       "UNATTENDED": "Chưa phản hồi",
@@ -486,12 +489,19 @@
       "CONVERSATIONS": "{count} cuộc hội thoại",
       "DOWNLOAD_REPORT": "Tải báo cáo"
     },
+    "RESOLUTION_HEATMAP": {
+      "HEADER": "Đã giải quyết",
+      "NO_CONVERSATIONS": "Không có cuộc hội thoại",
+      "CONVERSATION": "{count} cuộc hội thoại",
+      "CONVERSATIONS": "{count} cuộc hội thoại",
+      "DOWNLOAD_REPORT": "Tải báo cáo"
+    },
     "AGENT_CONVERSATIONS": {
-      "HEADER": "Cuộc hội thoại của các tổng đài viên",
-      "LOADING_MESSAGE": "Đang tải chỉ số tổng đài viên...",
-      "NO_AGENTS": "Không có cuộc hội thoại nào của các tổng đài viên",
+      "HEADER": "Nhân viên",
+      "LOADING_MESSAGE": "Đang tải chỉ số nhân viên...",
+      "NO_AGENTS": "Không có cuộc hội thoại nào của các nhân viên",
       "TABLE_HEADER": {
-        "AGENT": "Tổng đài viên",
+        "AGENT": "Nhân viên",
         "OPEN": "Mở",
         "UNATTENDED": "Chưa phản hồi",
         "STATUS": "Trạng thái"
@@ -499,7 +509,7 @@
     },
     "TEAM_CONVERSATIONS": {
       "ALL_TEAMS": "Tất cả nhóm",
-      "HEADER": "Cuộc hội thoại theo nhóm",
+      "HEADER": "Nhóm",
       "LOADING_MESSAGE": "Đang tải chỉ số nhóm...",
       "NO_TEAMS": "Không có dữ liệu",
       "TABLE_HEADER": {
@@ -510,7 +520,7 @@
       }
     },
     "AGENT_STATUS": {
-      "HEADER": "Trạng thái tổng đài viên",
+      "HEADER": "Trạng thái nhân viên",
       "ONLINE": "Online",
       "BUSY": "Bận",
       "OFFLINE": "Không Trực Tuyến"
@@ -540,14 +550,14 @@
       "SEARCH": "Tìm kiếm bộ lọc",
       "INPUT_PLACEHOLDER": {
         "SLA": "Tên SLA",
-        "AGENTS": "Tên tổng đài viên",
+        "AGENTS": "Tên nhân viên",
         "INBOXES": "Tên kênh",
         "LABELS": "Tên nhãn",
         "TEAMS": "Tên nhóm"
       },
       "SLA": "Chính sách SLA",
       "INBOXES": "Hộp thư đến",
-      "AGENTS": "Tổng đài viên",
+      "AGENTS": "Nhân viên",
       "LABELS": "Nhãn",
       "TEAMS": "Nhóm"
     },
@@ -562,15 +572,15 @@
         "TOOLTIP": "Tổng số lần trượt SLA trong một khoảng thời gian nhất định"
       },
       "NO_OF_CONVERSATIONS": {
-        "LABEL": "Số cuộc hội thoại",
-        "TOOLTIP": "Tổng số cuộc hội thoại có SLA"
+        "LABEL": "Số hội thoại",
+        "TOOLTIP": "Tổng số hội thoại có SLA"
       }
     },
     "TABLE": {
       "HEADER": {
         "POLICY": "Chính sách",
-        "CONVERSATION": "Cuộc hội thoại",
-        "AGENT": "Tổng đài viên"
+        "CONVERSATION": "Hội thoại",
+        "AGENT": "Nhân viên"
       },
       "VIEW_DETAILS": "Xem chi tiết"
     }
