@@ -149,13 +149,20 @@ export default {
 </script>
 
 <template>
-  <div class="wizard-body w-[75%] flex-shrink-0 flex-grow-0 max-w-[75%]">
-    <div v-if="!hasLoginStarted" class="login-init h-full">
+  <div class="wizard-body w-full flex-shrink-0 flex-grow-0">
+    <div v-if="!hasLoginStarted" class="flex flex-col login-init items-center justify-center pt-20">
+      <div class="text-center w-[300px]">
+        <p class="font-bold mb-0 text-lg">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.DESC') }}<span class="text-n-blue-text">Zalo</span></p>
+        <p class="font-bold text-lg">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.DESC_2') }} <span class="text-n-blue-text">Shopiz</span></p>
+      </div>
       <img
         v-if="qrCode"
         :src="qrCode"
         alt="Zalo-Login-QR"
+        class="text-center w-[300px] h-[300px]"
       />
+      <p class="pt-6 mb-0 text-center">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.HELP') }}</p>
+      <p class="text-center">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.HELP_2') }}</p>
     </div>
     <div v-else>
       <div v-if="hasError" class="max-w-lg mx-auto text-center">

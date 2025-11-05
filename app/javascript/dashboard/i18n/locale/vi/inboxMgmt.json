@@ -55,7 +55,8 @@
         "DESC": "CHÚ Ý: Bằng cách đăng nhập, chúng tôi chỉ có quyền truy cập tin nhắn của Zalo OA của bạn. Tin nhắn riêng tư của bạn sẽ không bao giờ bị Shopiz truy cập.",
         "LOADING": "Đang xác thực qua Zalo...",
         "RELOGIN": "Đăng nhập lại",
-        "HELP": "CHÚ Ý: Bằng cách đăng nhập, chúng tôi chỉ có quyền truy cập tin nhắn của Zalo OA của bạn. Tin nhắn riêng tư của bạn sẽ không bao giờ bị Shopiz truy cập.",
+        "HELP": "CHÚ Ý: Bằng cách đăng nhập, chúng tôi chỉ có quyền truy cập tin nhắn của Zalo OA của bạn.",
+        "HELP_2": "Tin nhắn riêng tư của bạn sẽ không bao giờ bị Shopiz truy cập.",
         "CHOOSE_PAGE": "Chọn Trang",
         "CHOOSE_PLACEHOLDER": "Chọn một trang từ danh sách",
         "INBOX_NAME": "Tên hộp thư đến",
@@ -63,6 +64,12 @@
         "PICK_NAME": "Chọn tên cho Hộp thư đến của bạn",
         "PICK_A_VALUE": "Chọn một giá trị",
         "CREATE_INBOX": "Tạo Hộp thư đến"
+      },
+      "ZALO_PERSONAL": {
+        "HELP": "Chú ý: Bằng cách đăng nhập, chúng tôi chỉ có quyền truy cập tin nhắn Zalo user của bạn.",
+        "HELP_2": "Không đăng nhập tài khoản trên zalo web để đảm bảo tin nhắn được đồng bộ liên tục.",
+        "DESC": "Đăng nhập tài khoản ",
+        "DESC_2": "để kết nối với ứng dụng "
       },
       "INSTAGRAM": {
         "CONTINUE_WITH_INSTAGRAM": "Continue with Instagram",

@@ -55,7 +55,8 @@
         "LOADING": "Authenticating you with Zalo...",
         "RELOGIN": "Reauthorize",
         "DESC": "PS: By signing in, we only get access to your Zalo OA's messages. Your private messages can never be accessed by Shopiz.",
-        "HELP": "PS: By signing in, we only get access to your Zalo OA's messages. Your private messages can never be accessed by Shopiz.",
+        "HELP": "PS: By signing in, we only get access to your Zalo OA's messages.",
+        "HELP_2": "Your private messages can never be accessed by Shopiz.",
         "CHOOSE_PAGE": "Choose Page",
         "CHOOSE_PLACEHOLDER": "Select a page from the list",
         "INBOX_NAME": "Inbox Name",
@@ -63,6 +64,12 @@
         "PICK_NAME": "Pick A Name Your Inbox",
         "PICK_A_VALUE": "Pick a value",
         "CREATE_INBOX": "Create Inbox"
+      },
+      "ZALO_PERSONAL": {
+        "HELP": "PS: By logging in, we only have access to Zalo messages of Zalo users.",
+        "HELP_2": "Do not log in to your account on zalo web to ensure messages are continuously synchronized.",
+        "DESC": "Log in to your ",
+        "DESC_2": "to connect to the"
       },
       "TIKTOK": {
         "HELP": "PS: By signing in, we only get access to your Tiktok messages. Your private messages can never be accessed by Salesman.",

@@ -48,6 +48,14 @@ module Enterprise::Account::PlanUsageAndLimits
     }.with_indifferent_access
   end
 
+  def plan_name
+    custom_attributes['plan_name']
+  end
+
+  def subscription_end_at
+    custom_attributes['subscription_ends_on']
+  end
+
   private
 
   def get_captain_limits(type)
@@ -89,10 +97,6 @@ module Enterprise::Account::PlanUsageAndLimits
       # this is to ensure that we don't block the user from using the product
       max_limits
     end
-  end
-
-  def plan_name
-    custom_attributes['plan_name']
   end
 
   def agent_limits
