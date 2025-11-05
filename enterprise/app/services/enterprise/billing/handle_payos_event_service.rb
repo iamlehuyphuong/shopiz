@@ -1,18 +1,13 @@
 class Enterprise::Billing::HandlePayosEventService
-  FEATURES_TO_UPDATE = %w[
-    inbound_emails
-    help_center
-    campaigns
-    team_management
-    channel_twitter
+  DEFAULT_PLAN_FEATURES = %w[
     channel_facebook
-    channel_email
-    channel_api
-    channel_zalopersonal
-    channel_line
-    channel_telegram
-    channel_whatsapp
-    captain_integration
+    inbox_view
+    inbox_management
+    labels
+    reports
+    report_v4
+    chatwoot_v4
+    channel_website
   ].freeze
 
   def perform(payload)
@@ -82,12 +77,14 @@ class Enterprise::Billing::HandlePayosEventService
   end
 
   def change_plan_features
+    account.disable_features(*Featurable::MAPPING.values)
+
     if default_plan?
-      account.disable_features(*FEATURES_TO_UPDATE)
+      account.enable_features(*DEFAULT_PLAN_FEATURES)
     else
       features = @plan['features'] || []
-      features -= Featurable::DISABLED_FEATURES
-      account.enable_features(*features)
+      mapping_features = features.map { |item| Featurable::MAPPING[item.to_sym] }
+      account.enable_features(*mapping_features)
     end
     account.save!
   end

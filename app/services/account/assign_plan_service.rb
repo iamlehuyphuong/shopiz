@@ -1,22 +1,6 @@
 # frozen_string_literal: true
 
 class Account::AssignPlanService
-  FEATURES_TO_UPDATE = %w[
-    inbound_emails
-    help_center
-    campaigns
-    team_management
-    channel_twitter
-    channel_facebook
-    channel_email
-    channel_api
-    channel_zalopersonal
-    channel_line
-    channel_telegram
-    channel_whatsapp
-    captain_integration
-  ].freeze
-
   def initialize(account, plan_id)
     @account = account
     @plan_id = plan_id
@@ -66,12 +50,14 @@ class Account::AssignPlanService
   end
 
   def change_plan_features
+    @account.disable_features(*Featurable::MAPPING.values)
+
     if default_plan?
-      @account.disable_features(*FEATURES_TO_UPDATE)
+      @account.enable_features(*Enterprise::Billing::HandlePayosEventService::DEFAULT_PLAN_FEATURES)
     else
       features = @plan.dig(:metadata, 'features')&.split(',')&.map(&:strip) || []
-      features -= Featurable::DISABLED_FEATURES
-      @account.enable_features(*features)
+      mapping_features = features.map { |item| Featurable::MAPPING[item.to_sym] }
+      @account.enable_features(*mapping_features)
     end
     @account.save!
   end
