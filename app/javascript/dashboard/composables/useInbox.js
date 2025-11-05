@@ -57,6 +57,10 @@ export const useInbox = (inboxId = null) => {
     return channelType.value === INBOX_TYPES.FB;
   });
 
+  const isAZaloPersonal = computed(() => {
+    return channelType.value === INBOX_TYPES.ZALOPERSONAL;
+  });
+
   const isAWebWidgetInbox = computed(() => {
     return channelType.value === INBOX_TYPES.WEB;
   });
@@ -135,6 +139,7 @@ export const useInbox = (inboxId = null) => {
   return {
     inbox,
     isAFacebookInbox,
+    isAZaloPersonal,
     isALineChannel,
     isAPIInbox,
     isASmsInbox,

@@ -8,7 +8,7 @@ class ZaloPersonal::OutgoingMessageService < ZaloPersonal::BaseService
   end
 
   def zalo_user?
-    get_user_info.present?
+    params[:type].zero?
   end
 
   def target_user

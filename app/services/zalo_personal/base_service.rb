@@ -385,7 +385,7 @@ class ZaloPersonal::BaseService
       type: zalo_user? ? 0 : 1,
       msgId: params[:data][:msgId]
     }
-    unless zalo_user?
+    if incoming_message? && !zalo_user?
       sender_info = get_user_info(params[:data][:uidFrom])
       additional_attributes.merge!(sender: sender_info['displayName'], thumbnail: sender_info['avatar']) if sender_info
     end

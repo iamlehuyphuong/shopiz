@@ -7,7 +7,7 @@ class ZaloPersonal::IncomingMessageService < ZaloPersonal::BaseService
   end
 
   def zalo_user?
-    params[:data][:idTo] == params[:_accountId]
+    params[:type].zero?
   end
 
   def target_user
