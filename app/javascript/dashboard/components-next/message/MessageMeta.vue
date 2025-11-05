@@ -11,6 +11,7 @@ import { MESSAGE_STATUS, MESSAGE_TYPES } from './constants';
 
 const {
   isAFacebookInbox,
+  isAZaloPersonal,
   isALineChannel,
   isAPIInbox,
   isASmsInbox,
@@ -81,7 +82,8 @@ const isDelivered = computed(() => {
     isAWhatsAppChannel.value ||
     isATwilioChannel.value ||
     isASmsInbox.value ||
-    isAFacebookInbox.value
+    isAFacebookInbox.value ||
+    isAZaloPersonal.value
   ) {
     return sourceId.value && status.value === MESSAGE_STATUS.DELIVERED;
   }
