@@ -9,6 +9,7 @@ import Button from 'dashboard/components-next/button/Button.vue';
 import LiveChatCampaignDetails from './LiveChatCampaignDetails.vue';
 import SMSCampaignDetails from './SMSCampaignDetails.vue';
 import VoiceCampaignDetails from './VoiceCampaignDetails.vue';
+import ZaloPersonalCampaignDetails from './ZaloPersonalCampaignDetails.vue';
 
 const props = defineProps({
   title: {
@@ -24,6 +25,10 @@ const props = defineProps({
     default: false,
   },
   isVoiceType: {
+    type: Boolean,
+    default: false,
+  },
+  isZaloPersonalType: {
     type: Boolean,
     default: false,
   },
@@ -72,7 +77,7 @@ const campaignStatus = computed(() => {
       ? t('CAMPAIGN.LIVE_CHAT.CARD.STATUS.ENABLED')
       : t('CAMPAIGN.LIVE_CHAT.CARD.STATUS.DISABLED');
   }
-  
+
   if (props.isVoiceType) {
     return props.status === STATUS_COMPLETED
       ? t('CAMPAIGN.VOICE.CARD.STATUS.COMPLETED')
@@ -124,6 +129,13 @@ const inboxIcon = computed(() => {
           :sender="sender"
           :inbox-name="inboxName"
           :inbox-icon="inboxIcon"
+        />
+        <ZaloPersonalCampaignDetails
+          v-else-if="isZaloPersonalType"
+          :sender="sender"
+          :inbox-name="inboxName"
+          :inbox-icon="inboxIcon"
+          :scheduled-at="scheduledAt"
         />
         <SMSCampaignDetails
           v-else
