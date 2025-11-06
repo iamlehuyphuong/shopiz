@@ -1,15 +1,4 @@
 class Enterprise::Billing::HandlePayosEventService
-  DEFAULT_PLAN_FEATURES = %w[
-    channel_facebook
-    inbox_view
-    inbox_management
-    labels
-    reports
-    report_v4
-    chatwoot_v4
-    channel_website
-  ].freeze
-
   def perform(payload)
     prepare_data(payload)
     process_subscription_updated
@@ -80,7 +69,7 @@ class Enterprise::Billing::HandlePayosEventService
     account.disable_features(*Featurable::MAPPING.values)
 
     if default_plan?
-      account.enable_features(*DEFAULT_PLAN_FEATURES)
+      account.enable_features(*Featurable::DEFAULT_PLAN_FEATURES)
     else
       features = @plan['features'] || []
       mapping_features = features.map { |item| Featurable::MAPPING[item.to_sym] }

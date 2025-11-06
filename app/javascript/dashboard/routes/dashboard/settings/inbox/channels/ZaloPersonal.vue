@@ -175,13 +175,13 @@ export default {
       <LoadingState v-else-if="showLoader" :message="emptyStateMessage" />
       <form
         v-else
-        class="mx-0 flex flex-wrap"
+        class="mx-0 flex flex-wrap p-5"
         @submit.prevent="createChannel()"
       >
         <div class="w-full">
           <PageHeader
-            :header-title="$t('INBOX_MGMT.ADD.ZALO.TITLE')"
-            :header-content="$t('INBOX_MGMT.ADD.ZALO.TITLE')"
+            :header-title="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.TITLE')"
+            :header-content="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.TITLE')"
           />
         </div>
         <div class="w-[60%]">

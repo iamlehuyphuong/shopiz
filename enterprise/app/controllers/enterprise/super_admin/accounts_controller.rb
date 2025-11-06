@@ -1,4 +1,9 @@
 module Enterprise::SuperAdmin::AccountsController
+  def create
+    params[:account].delete(:manually_managed_features)
+    super
+  end
+
   def update
     # Handle manually managed features from form submission
     if params[:account] && params[:account][:manually_managed_features].present?

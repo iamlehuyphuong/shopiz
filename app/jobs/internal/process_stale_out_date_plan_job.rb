@@ -12,16 +12,15 @@
 
 class Internal::ProcessStaleOutDatePlanJob < ApplicationJob
   queue_as :scheduled_jobs
-
   def perform
-    Account.find_in_batches do |accounts|
-      accounts.each do |account|
-        subscription_ends_on = account.custom_attributes['subscription_ends_on']
-        next if subscription_ends_on.blank?
-        if Date.parse(subscription_ends_on.to_s) > Date.today
-          account.enable_default_features
-        end
-      end
-    end
+    # Account.find_in_batches do |accounts|
+    #   accounts.each do |account|
+    #     subscription_ends_on = account.custom_attributes['subscription_ends_on']
+    #     next if subscription_ends_on.blank?
+    #     if Date.parse(subscription_ends_on.to_s) > Date.today
+    #       account.enable_default_features
+    #     end
+    #   end
+    # end
   end
 end

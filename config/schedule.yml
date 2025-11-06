@@ -54,8 +54,8 @@ bulk_auto_assignment_job:
   class: 'Inboxes::BulkAutoAssignmentJob'
   queue: scheduled_jobs
 
-# executed At every minute..
-remove_stale_out_date_plan_job:
-  cron: '*/1 * * * *'
-  class: 'Internal::ProcessStaleOutDatePlanJob'
-  queue: scheduled_jobs
+# executed daily at 0000 UTC..
+# remove_stale_out_date_plan_job:
+#   cron: '0 0 * * *'
+#   class: 'Internal::ProcessStaleOutDatePlanJob'
+#   queue: scheduled_jobs

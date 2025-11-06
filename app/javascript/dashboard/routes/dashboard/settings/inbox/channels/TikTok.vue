@@ -117,7 +117,7 @@ export default {
       <LoadingState v-if="showLoader" :message="emptyStateMessage" />
       <form
         v-else
-        class="mx-0 flex flex-wrap"
+        class="mx-0 flex flex-wrap p-5"
         @submit.prevent="createChannel()"
       >
         <div class="w-full">

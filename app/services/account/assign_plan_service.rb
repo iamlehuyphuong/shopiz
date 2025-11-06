@@ -35,7 +35,7 @@ class Account::AssignPlanService
   end
 
   def update_account_attributes
-    days = (@plan.dig(:metadata, 'months').to_i || 0) * 30
+    month = @plan.dig(:metadata, 'months').to_i
     custom_attributes = {
       stripe_customer_id: @account.id,
       stripe_price_id: @plan[:prices][0]['id'],
@@ -43,7 +43,7 @@ class Account::AssignPlanService
       plan_name: @plan[:name],
       subscribed_quantity: @plan.dig(:metadata, 'agents'),
       subscription_status: 'active',
-      subscription_ends_on: Time.zone.at(Time.now.to_i + days.days),
+      subscription_ends_on: (Time.zone.now + month.months)
     }
 
     @account.update(custom_attributes: custom_attributes)
@@ -53,7 +53,7 @@ class Account::AssignPlanService
     @account.disable_features(*Featurable::MAPPING.values)
 
     if default_plan?
-      @account.enable_features(*Enterprise::Billing::HandlePayosEventService::DEFAULT_PLAN_FEATURES)
+      @account.enable_features(*Featurable::DEFAULT_PLAN_FEATURES)
     else
       features = @plan.dig(:metadata, 'features')&.split(',')&.map(&:strip) || []
       mapping_features = features.map { |item| Featurable::MAPPING[item.to_sym] }

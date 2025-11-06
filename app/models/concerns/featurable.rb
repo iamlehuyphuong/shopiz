@@ -6,6 +6,21 @@ module Featurable
     check_for_column: false
   }.freeze
 
+  DEFAULT_PLAN_FEATURES = %w[
+    canned_responses
+    crm
+    crm_v2
+    channel_facebook
+    inbox_view
+    inbox_management
+    labels
+    macros
+    reports
+    report_v4
+    chatwoot_v4
+    channel_website
+  ].freeze
+
   DISABLED_FEATURES = %w[
     help_center
     template_builder
@@ -101,6 +116,7 @@ module Featurable
     has_flags FEATURES.merge(column: 'feature_flags').merge(QUERY_MODE)
 
     before_create :enable_default_features
+    after_create_commit :assign_free_plan
   end
 
   def enable_features(*names)
@@ -144,10 +160,14 @@ module Featurable
   end
 
   def enable_default_features
-    config = InstallationConfig.find_by(name: 'ACCOUNT_LEVEL_FEATURE_DEFAULTS')
-    return true if config.blank?
+    enable_features(*DEFAULT_PLAN_FEATURES)
+  end
 
-    features_to_enabled = config.value.select { |f| f[:enabled] }.pluck(:name) - DISABLED_FEATURES
-    enable_features(*features_to_enabled)
+  def assign_free_plan
+    plans = InstallationConfig.find_by(name: 'CHATWOOT_CLOUD_PLANS').value
+    trial_plan_id = plans.find { |item| item['name'] == 'Trial' }.dig('product_id', 0)
+    return unless trial_plan_id
+
+    ::Account::AssignPlanService.new(self, trial_plan_id).execute
   end
 end
