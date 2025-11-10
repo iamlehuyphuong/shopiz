@@ -83,15 +83,6 @@ const items = computed(() => {
     <PageHeader class="block lg:hidden !mb-0" :header-title="pageTitle" />
     <div class="hidden lg:grid grid-cols-1 lg:grid-cols-8 items-center gap-2">
       <div class="col-span-2 w-full" />
-      <div class="flex items-center gap-2 col-span-6 ltr:ml-8 rtl:mr-8">
-        <div
-          v-for="icon in ALL_CHANNEL_ICONS"
-          :key="icon"
-          class="size-8 bg-n-alpha-2 flex items-center flex-shrink-0 justify-center rounded-full"
-        >
-          <Icon :icon="icon" class="size-4 text-n-slate-10" />
-        </div>
-      </div>
     </div>
     <div
       class="grid grid-cols-1 lg:grid-cols-8 lg:divide-x lg:divide-n-weak rounded-xl border border-n-weak min-h-[52rem]"

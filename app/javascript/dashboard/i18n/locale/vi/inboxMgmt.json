@@ -66,6 +66,7 @@
         "CREATE_INBOX": "Tạo Hộp thư đến"
       },
       "ZALO_PERSONAL": {
+        "TITLE": "Kênh Zalo Personal",
         "HELP": "Chú ý: Bằng cách đăng nhập, chúng tôi chỉ có quyền truy cập tin nhắn Zalo user của bạn.",
         "HELP_2": "Không đăng nhập tài khoản trên zalo web để đảm bảo tin nhắn được đồng bộ liên tục.",
         "DESC": "Đăng nhập tài khoản ",
