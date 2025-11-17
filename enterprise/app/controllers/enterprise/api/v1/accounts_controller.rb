@@ -2,7 +2,7 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
   include BillingHelper
   before_action :fetch_account
   before_action :check_authorization
-  before_action :check_cloud_env, only: [:plans, :limits, :toggle_deletion]
+  before_action :check_cloud_env, only: [:billings, :limits, :toggle_deletion]
 
   def subscription
     if stripe_customer_id.blank? && @account.custom_attributes['is_creating_customer'].blank?
@@ -37,31 +37,10 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
     render json: { id: @account.id, limits: limits }, status: :ok
   end
 
-  def plans
-    installation_config = InstallationConfig.find_by(name: 'CHATWOOT_CLOUD_PLANS')
-    Polar.configure do |config|
-      config.access_token = ENV['POLAR_ACCESS_TOKEN']
-      config.sandbox = ENV['POLAR_ENV'] == 'sandbox'
-      #config.webhook_secret = ENV['POLAR_WEBHOOK_SECRET']
-    end
-    plans = []
-    installation_config.value.each do |plan|
-      next if plan['name'] == 'Trial'
-      plan['products'] = []
-      plan['product_id'].each do |product_id|
-        product = Polar::Product.get(product_id)
-        plan['products'] << product.table
-      end
-      plans << plan
-    end
-    render json: { id: @account.id, plans: plans}, status: :ok
+  def billings
+    data = ::BillingPresenter.new(@account).json_data
+    render json: { id: @account.id, data: data }, status: :ok
   end
-
-  # def checkout
-  #   return create_stripe_billing_session(stripe_customer_id) if stripe_customer_id.present?
-
-  #   render_invalid_billing_details
-  # end
 
   def checkout
     case params[:payment_method]

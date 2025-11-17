@@ -111,3 +111,18 @@ export const formatToTitleCase = str => {
       .trim() || ''
   );
 };
+
+export const formatCurrency = (price) => {
+  if (!price) return '';
+
+  const { amount_type, price_amount } = price;
+  if (amount_type === 'free') return 'Free';
+  if (amount_type === 'custom') return 'Contact for consultation';
+
+  const amount = (price_amount / 100) * 25000;
+  return new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+    maximumFractionDigits: 0,
+  }).format(amount);
+};

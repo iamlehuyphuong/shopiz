@@ -149,9 +149,9 @@ export const actions = {
     }
   },
 
-  plans: async ({ commit }) => {
+  billings: async ({ commit }) => {
     try {
-      const response = await EnterpriseAccountAPI.getPlans();
+      const response = await EnterpriseAccountAPI.getBillings();
       commit(types.default.SET_ACCOUNT_PLANS, response.data);
     } catch (error) {
       // silent error
@@ -173,7 +173,10 @@ export const mutations = {
   [types.default.ADD_ACCOUNT]: MutationHelpers.setSingleRecord,
   [types.default.EDIT_ACCOUNT]: MutationHelpers.update,
   [types.default.SET_ACCOUNT_LIMITS]: MutationHelpers.updateAttributes,
-  [types.default.SET_ACCOUNT_PLANS]: MutationHelpers.updateAttributes,
+  [types.default.SET_ACCOUNT_PLANS]($state, { id, data }) {
+    const account = $state.records.find(record => record.id === Number(id));
+    account.billing = { ...account.billing, ...data };
+  }
 };
 
 export default {

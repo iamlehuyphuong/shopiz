@@ -596,7 +596,18 @@
       "TITLE": "Gói hiện tại",
       "PLAN_NOTE": "Bạn đang đăng ký gói **{plan}** với **{quantity}** giấy phép",
       "SEAT_COUNT": "Số lượng nhân viên",
-      "RENEWS_ON": "Gia hạn vào"
+      "RENEWS_ON": "Gia hạn vào",
+      "AI_ADDON_MESSAGE": "Tin nhắn AI mua thêm",
+      "RESOURCE": "Tài nguyên",
+      "AGENT": "Nhân viên",
+      "INBOX": "Hộp thư",
+      "CONTACT": "Danh bạ",
+      "AUTOMATION": "Tự động hoá",
+      "AI_RESOURCE": "Tài nguyên AI",
+      "AI_DOCUMENT": "ShopizAI Tài liệu",
+      "AI_FAQ": "ShopizAI FAQs",
+      "AI_ASSISTANT": "ShopizAI Trợ lý ảo",
+      "AI_RESPONSE": "Tin nhắn AI mỗi tháng"
     },
     "VIEW_PRICING": "Xem bảng giá",
     "MANAGE_SUBSCRIPTION": {
@@ -610,6 +621,8 @@
       "BUTTON_TXT": "Mua thêm",
       "DOCUMENTS": "Tài liệu",
       "RESPONSES": "Câu trả lời",
+      "GET_MORE": "Mua thêm tin nhắn AI",
+      "NO_EXPIRATION": "Không có hạn sử dụng",
       "UPGRADE": "Trợ lý AI không khả dụng trên gói miễn phí, nâng cấp ngay để truy cập trợ lý, copilot và nhiều tính năng khác."
     },
     "CHAT_WITH_US": {
@@ -617,7 +630,22 @@
       "DESCRIPTION": "Bạn gặp vấn đề về thanh toán? Hãy cho chúng tôi biết.",
       "BUTTON_TXT": "Trò chuyện với chúng tôi"
     },
-    "NO_BILLING_USER": "Tài khoản thanh toán của bạn đang được định cấu hình. Hãy làm mới trang và thử lại."
+    "NO_BILLING_USER": "Tài khoản thanh toán của bạn đang được định cấu hình. Hãy làm mới trang và thử lại.",
+    "PRICING_PACKAGES": {
+      "HEADING": {
+        "TITLE": "Gói dịch vụ",
+        "DESCRIPTION": "Tùy chọn linh hoạt cho mọi quy mô doanh nghiệp, thanh toán đơn giản, nâng cấp dễ dàng",
+        "FEATURES": "Danh sách tính năng"
+      },
+      "BUTTONS": {
+        "CURRENT_PACKAGE": "Gói hiện tại",
+        "UPGRADE_NOW": "Đăng ký ngay",
+        "SUBCRIBE_NOW": "Đăng ký ngay",
+        "BUY_NOW": "Mua ngay"
+      },
+      "HALF-YEAR": "6 Tháng",
+      "YEAR": "1 Năm"
+    }
   },
   "SECURITY_SETTINGS": {
     "TITLE": "Bảo mật",
