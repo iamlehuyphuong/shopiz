@@ -1,15 +1,4 @@
 class BillingPresenter
-  MAPPING_SKU_NAME = {
-    'pro6' => 'PRO',
-    'pro12' => 'PRO',
-    'starter6' => 'STARTER',
-    'starter12' => 'STARTER',
-    'biz6' => 'BUSINESS',
-    'biz12' => 'BUSINESS',
-    'premium' => 'ENTERPRISE',
-    'trial' => 'TRIAL'
-  }.freeze
-
   def initialize(account)
     @account = account
   end
@@ -30,10 +19,8 @@ class BillingPresenter
   private
 
   def common_data
-    sku = custom_attributes['sku']
-
     {
-      current_plan: custom_attributes['plan_name'] || MAPPING_SKU_NAME[sku] || sku,
+      current_plan: custom_attributes['plan_name'],
       captain_responses_credit: @account.limits['captain_responses_credit'],
       plan_end_date: custom_attributes['subscription_ends_on']
     }
@@ -68,7 +55,7 @@ class BillingPresenter
     sku = plan.dig('metadata', 'sku')
     {
       id: plan['id'],
-      name: MAPPING_SKU_NAME[sku] || sku,
+      name: plan['name'],
       sku: sku,
       price: plan['prices'][0],
       description: plan['description'],
@@ -101,8 +88,7 @@ class BillingPresenter
   end
 
   def disabled_register_trial
-    # TODO
-    true
+    @account.billing_histories.exists?(sku: 'trial')
   end
 
   def usage_agent
@@ -135,7 +121,7 @@ class BillingPresenter
 
   def usage_captain_credit
     # TBD
-    0
+    @account.limits['captain_responses_credit']
   end
 
   def format_percent(usage, limit)

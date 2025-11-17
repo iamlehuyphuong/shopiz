@@ -196,7 +196,6 @@ onMounted(fetchAccountDetails);
                 @click="onClickBillingPortal({
                   product_id: trialPlan.id,
                   payment_method: 'payos',
-                  product_name: trialPlan.sku
                 })">
               {{ planId === trialPlan.id ? $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.CURRENT_PACKAGE') : $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.UPGRADE_NOW') }}
               </ButtonV4>
@@ -232,7 +231,6 @@ onMounted(fetchAccountDetails);
                     @click="onClickBillingPortal({
                       product_id: plan[index].id,
                       payment_method: 'payos',
-                      product_name: plan[index].sku
                     })">
                   {{ planId === plan[index].id ? $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.CURRENT_PACKAGE') : $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.UPGRADE_NOW') }}
                   </ButtonV4>
@@ -256,7 +254,6 @@ onMounted(fetchAccountDetails);
                   @click="onClickBillingPortal({
                     product_id: credit.id,
                     payment_method: 'payos',
-                    product_name: credit.name
                   })">
                   {{ $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.BUY_NOW') }}
                   </ButtonV4>

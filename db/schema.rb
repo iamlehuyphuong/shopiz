@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_10_28_191612) do
+ActiveRecord::Schema[7.1].define(version: 2025_11_17_061911) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -258,6 +258,23 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_28_191612) do
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "active", default: true, null: false
     t.index ["account_id"], name: "index_automation_rules_on_account_id"
+  end
+
+  create_table "billing_histories", force: :cascade do |t|
+    t.string "product_id", null: false
+    t.string "product_name"
+    t.string "sku"
+    t.integer "status"
+    t.bigint "price_amount"
+    t.string "price_currency"
+    t.string "transaction_id"
+    t.jsonb "metadata", default: {}
+    t.string "description"
+    t.string "transaction_date_time"
+    t.bigint "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_billing_histories_on_account_id"
   end
 
   create_table "campaigns", force: :cascade do |t|

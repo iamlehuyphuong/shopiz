@@ -40,20 +40,9 @@ class SuperAdmin::ApplicationController < Administrate::ApplicationController
   end
 
   def load_plans
-    Polar.configure do |config|
-      config.access_token = ENV.fetch('POLAR_ACCESS_TOKEN')
-      config.sandbox = ENV.fetch('POLAR_ENV') == 'sandbox'
-    end
-
-    products = Polar::Product.list({ limit: 50 })
-    products.map(&:table).map do |product|
-      name = if %w[Trial Enterprise].include?(product[:name])
-               product[:name]
-             else
-               "#{product[:name]} #{Enterprise::Billing::PlanMapper.get_duration(product[:id])}"
-             end
-
-      [name, product[:id]]
+    products = Polar::ProductService.by_type('package')
+    products.map do |product|
+      [product['metadata']['sku'], product['id']]
     end
   rescue StandardError
     []

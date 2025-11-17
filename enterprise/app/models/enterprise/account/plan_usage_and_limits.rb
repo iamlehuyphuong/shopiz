@@ -123,7 +123,12 @@ module Enterprise::Account::PlanUsageAndLimits
         'inboxes' => { 'type': 'number' },
         'agents' => { 'type': 'number' },
         'captain_responses' => { 'type': 'number' },
-        'captain_documents' => { 'type': 'number' }
+        'captain_documents' => { 'type': 'number' },
+        'captain_assistants' => { 'type': 'number' },
+        'captain_faqs' => { 'type': 'number' },
+        'contacts' => { 'type': 'number' },
+        'automations' => { 'type': 'number' },
+        'captain_responses_credit' => { 'type': 'number' }
       },
       'required' => [],
       'additionalProperties' => false
