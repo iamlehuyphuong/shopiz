@@ -647,7 +647,8 @@
       "MONTH": "1 month",
       "HALF-YEAR": "6 months",
       "YEAR": "1 year"
-    }
+    },
+    "BILLING_HISTORY": "Package purchase histories"
   },
   "SECURITY_SETTINGS": {
     "TITLE": "Security",

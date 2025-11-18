@@ -11,6 +11,7 @@ import DetailItem from './components/DetailItem.vue';
 import SpecialItem from './components/SpecialPlanItem.vue';
 import NormalItem from './components/NormalPlanItem.vue';
 import CreditItem from './components/CreditItem.vue';
+import BillingHistoryItem from './components/BillingHistoryItem.vue';
 import BaseSettingsHeader from '../components/BaseSettingsHeader.vue';
 import SettingsLayout from '../SettingsLayout.vue';
 import ButtonV4 from 'next/button/Button.vue';
@@ -45,6 +46,10 @@ const plans = computed(() => {
 
 const credits = computed(() => {
   return currentAccount.value?.billing?.credits || [];
+})
+
+const billingHistories = computed(() => {
+  return currentAccount.value?.billing?.billing_histories || [];
 })
 
 const subscriptionRenewsOn = computed(() => {
@@ -280,20 +285,23 @@ onMounted(fetchAccountDetails);
           </template>
         </BillingCard>
 
+        <BillingCard
+          v-if="billingHistories"
+          :title="$t('BILLING_SETTINGS.BILLING_HISTORY')"
+        >
+          <div class="p-8 pt-0 space-y-3">
+            <template v-for="item in billingHistories" :key="item.id">
+              <BillingHistoryItem :item="item">
+              </BillingHistoryItem>
+            </template>
+          </div>
+        </BillingCard>
+
         <BillingHeader
           class="px-1 mt-5"
           :title="$t('BILLING_SETTINGS.CHAT_WITH_US.TITLE')"
           :description="$t('BILLING_SETTINGS.CHAT_WITH_US.DESCRIPTION')"
         >
-          <ButtonV4
-            sm
-            solid
-            slate
-            icon="i-lucide-life-buoy"
-            @click="onToggleChatWindow"
-          >
-            {{ $t('BILLING_SETTINGS.CHAT_WITH_US.BUTTON_TXT') }}
-          </ButtonV4>
         </BillingHeader>
       </section>
     </template>

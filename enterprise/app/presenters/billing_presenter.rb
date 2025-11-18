@@ -74,8 +74,12 @@ class BillingPresenter
   end
 
   def billing_histories_data
-    # TODO
-    []
+    I18n.with_locale(@account.locale || :en) do
+      @account.billing_histories.order(id: :asc).as_json(
+        only: [:id, :status],
+        methods: [:status_text, :amount_formatted, :created_date_formatted, :content]
+      )
+    end
   end
 
   def disabled_register_trial
@@ -119,8 +123,6 @@ class BillingPresenter
     usage = usage.to_i
     limit = limit.to_i
     return 0 if limit.blank?
-
-    return [limit, limit].join(' / ') if usage > limit
 
     [usage, limit].join(' / ')
   end

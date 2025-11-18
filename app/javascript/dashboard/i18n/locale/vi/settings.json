@@ -646,7 +646,8 @@
       },
       "HALF-YEAR": "6 Tháng",
       "YEAR": "1 Năm"
-    }
+    },
+    "BILLING_HISTORY": "Lịch sử mua hàng"
   },
   "SECURITY_SETTINGS": {
     "TITLE": "Bảo mật",
