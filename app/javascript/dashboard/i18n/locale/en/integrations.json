@@ -400,8 +400,9 @@
       "ASK_ADMIN": "Please reach out to your administrator for the upgrade."
     },
     "BANNER": {
-      "RESPONSES": "You've used over 80% of your response limit. To continue using AI Agent, please upgrade.",
-      "DOCUMENTS": "Document limit reached. Upgrade to continue using AI Agent."
+      "RESPONSES": "You have reached your response limit. To continue using ShopizAI Agent, please upgrade.",
+      "DOCUMENTS": "Document limit reached. Upgrade to continue using ShopizAI Agent.",
+      "ASSISTANTS": "Assistant limit reached. Upgrade to continue using ShopizAI Agent."
     },
     "FORM": {
       "CANCEL": "Cancel",

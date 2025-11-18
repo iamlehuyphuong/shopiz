@@ -2,8 +2,10 @@
   "GENERAL_SETTINGS": {
     "LIMIT_MESSAGES": {
       "CONVERSATION": "Bạn đã vượt quá giới hạn hội thoại. Gói Basic chỉ cho phép 500 hội thoại.",
-      "INBOXES": "Bạn đã vượt quá giới hạn kênh. Gói Basic chỉ hỗ trợ live-chat trên website. Các kênh bổ sung như email, WhatsApp v.v. yêu cầu nâng cấp gói.",
-      "AGENTS": "Bạn đã vượt quá giới hạn tổng đài viên. Gói Basic chỉ cho phép {allowedAgents} tổng đài viên.",
+      "INBOXES": "Bạn đã vượt quá giới hạn Hộp thư đến. Gói dịch vụ của bạn chỉ hỗ trợ tối đa {allowed} hoặc hộp thư.",
+      "AGENTS": "Bạn đã vượt quá giới hạn Nhân viên hỗ trợ. Gói dịch vụ của bạn chỉ cho phép {allowed} nhân viên.",
+      "CONTACTS": "Bạn đã vượt quá giới hạn Danh bạ. Gói dịch vụ của bạn chỉ cho phép tối đa {allowed} liên hệ.",
+      "AUTOMATIONS": "Bạn đã vượt quá giới hạn số Tự động hóa. Gói dịch vụ của bạn chỉ cho phép tạo tối đa {allowed} quy tắc tự động hóa.",
       "NON_ADMIN": "Vui lòng liên hệ quản trị viên để nâng cấp gói và tiếp tục sử dụng đầy đủ tính năng."
     },
     "TITLE": "Tài khoản",

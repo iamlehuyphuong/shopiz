@@ -26,6 +26,7 @@ const showBanner = computed(() => {
 });
 
 onMounted(fetchLimits);
+defineExpose({ showBanner });
 </script>
 
 <template>

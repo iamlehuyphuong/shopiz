@@ -56,6 +56,10 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  disableBtnCreate: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const emit = defineEmits(['click', 'close', 'update:currentPage']);
@@ -107,6 +111,7 @@ const handlePageChange = event => {
                 :label="buttonLabel"
                 icon="i-lucide-plus"
                 size="sm"
+                :disabled="disableBtnCreate"
                 class="group-hover/campaign-button:brightness-110"
                 @click="handleButtonClick"
               />

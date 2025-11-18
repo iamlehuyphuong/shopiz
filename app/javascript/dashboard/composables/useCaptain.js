@@ -34,6 +34,22 @@ export function useCaptain() {
     return null;
   });
 
+  const faqLimits = computed(() => {
+    if (captainLimits.value?.faqs) {
+      return useCamelCase(captainLimits.value.faqs);
+    }
+
+    return null;
+  });
+
+  const assistantLimits = computed(() => {
+    if (captainLimits.value?.assistants) {
+      return useCamelCase(captainLimits.value.assistants);
+    }
+
+    return null;
+  });
+
   const fetchLimits = () => {
     if (isEnterprise) {
       store.dispatch('accounts/limits');
@@ -45,6 +61,8 @@ export function useCaptain() {
     captainLimits,
     documentLimits,
     responseLimits,
+    faqLimits,
+    assistantLimits,
     fetchLimits,
   };
 }

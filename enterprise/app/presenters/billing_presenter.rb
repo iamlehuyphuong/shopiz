@@ -115,8 +115,7 @@ class BillingPresenter
   end
 
   def usage_captain_credit
-    # TBD
-    @account.limits['captain_responses_credit']
+    format_percent(@account.custom_attributes['captain_responses_usage'], @account.limits['captain_responses_credit'])
   end
 
   def format_percent(usage, limit)

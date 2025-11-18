@@ -48,20 +48,31 @@ const limitExceededMessage = computed(() => {
   if (!account?.limits) return '';
 
   const {
-    conversation,
-    non_web_inboxes: nonWebInboxes,
     agents,
+    inboxes,
+    contacts,
+    automations
   } = account.limits;
 
   let message = '';
 
-  if (testLimit(conversation)) {
-    message = t('GENERAL_SETTINGS.LIMIT_MESSAGES.CONVERSATION');
-  } else if (testLimit(nonWebInboxes)) {
-    message = t('GENERAL_SETTINGS.LIMIT_MESSAGES.INBOXES');
-  } else if (testLimit(agents)) {
+  if (testLimit(agents)) {
     message = t('GENERAL_SETTINGS.LIMIT_MESSAGES.AGENTS', {
-      allowedAgents: agents.allowed,
+      allowed: agents.allowed,
+    });
+  } else if (testLimit(inboxes)) {
+    message = t('GENERAL_SETTINGS.LIMIT_MESSAGES.INBOXES', {
+      allowed: automations.allowed,
+    });
+  }
+  else if (testLimit(contacts)) {
+    message = t('GENERAL_SETTINGS.LIMIT_MESSAGES.CONTACTS', {
+      allowed: contacts.allowed,
+    });
+  }
+   else if (testLimit(automations)) {
+    message = t('GENERAL_SETTINGS.LIMIT_MESSAGES.AUTOMATIONS', {
+      allowed: automations.allowed,
     });
   }
 
@@ -73,13 +84,14 @@ const isLimitExceeded = computed(() => {
   if (!account?.limits) return false;
 
   const {
-    conversation,
-    non_web_inboxes: nonWebInboxes,
     agents,
+    inboxes,
+    contacts,
+    automations
   } = account.limits;
 
   return (
-    testLimit(conversation) || testLimit(nonWebInboxes) || testLimit(agents)
+    testLimit(agents) || testLimit(inboxes) || testLimit(contacts) || testLimit(automations)
   );
 });
 
@@ -88,7 +100,6 @@ const shouldShowUpgradePage = computed(() => {
   // Skip upgrade page in Billing, Inbox, and Agent pages
   if (props.bypassUpgradePage) return false;
   if (!isOnChatwootCloud.value) return false;
-  if (isTrialAccount.value) return false;
   return isLimitExceeded.value;
 });
 
