@@ -5,7 +5,6 @@ class BillingPresenter
 
   def json_data
     {
-      common: common_data,
       usage: usage_data,
       plans: plans_data,
       trial_plan: trial_data,
@@ -17,14 +16,6 @@ class BillingPresenter
   end
 
   private
-
-  def common_data
-    {
-      current_plan: custom_attributes['plan_name'],
-      captain_responses_credit: @account.limits['captain_responses_credit'],
-      plan_end_date: custom_attributes['subscription_ends_on']
-    }
-  end
 
   def custom_attributes
     @custom_attributes ||= @account.custom_attributes

@@ -44,17 +44,17 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
 
   def checkout
     case params[:payment_method]
-      when 'stripe'
-        return create_stripe_billing_session(stripe_customer_id) if stripe_customer_id.present?
-      when 'vnpay'
-        return create_vnpay_billing_session(@account.id, params[:product_id]) if @account.id.present?
-      when 'polar'
-        return create_polar_billing_session(@account.id, params[:product_id]) if @account.id.present?
-      when 'payos'
-        return create_payos_billing_session
-      else
-        render_invalid_billing_details
-      end
+    when 'stripe'
+      return create_stripe_billing_session(stripe_customer_id) if stripe_customer_id.present?
+    when 'vnpay'
+      return create_vnpay_billing_session(@account.id, params[:product_id]) if @account.id.present?
+    when 'polar'
+      return create_polar_billing_session(@account.id, params[:product_id]) if @account.id.present?
+    when 'payos'
+      return create_payos_billing_session
+    else
+      render_invalid_billing_details
+    end
   end
 
   def toggle_deletion

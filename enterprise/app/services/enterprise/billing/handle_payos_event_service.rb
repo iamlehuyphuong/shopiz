@@ -1,7 +1,7 @@
 class Enterprise::Billing::HandlePayosEventService
   def perform(payload)
     prepare_data(payload)
-    return if @account.blank?
+    return if @account.blank? || @product.blank?
 
     ActiveRecord::Base.transaction do
       @product[:metadata]['type'] == 'package' ? update_plan : update_credit
@@ -13,9 +13,7 @@ class Enterprise::Billing::HandlePayosEventService
 
   def prepare_data(payload)
     name = payload.dig('data', 'description').to_s.split.last
-    @product = Polar::ProductService.by_name(name)
-    raise 'Product not found' unless @product
-
+    @product = Polar::ProductService.by_name(name&.downcase)&.with_indifferent_access
     @customer_id = payload['data']['orderCode'].to_s[10..].to_s
     @account = Account.find_by(id: @customer_id)
   end
@@ -64,7 +62,7 @@ class Enterprise::Billing::HandlePayosEventService
   def change_plan_features
     @account.disable_features(*Featurable::MAPPING.values)
 
-    features = @product[:metadata]['features'] || []
+    features = @product[:metadata]['features']&.split(',')&.map(&:strip) || []
     mapping_features = features.map { |item| Featurable::MAPPING[item.to_sym] }
     @account.enable_features(*mapping_features)
     @account.save!

@@ -28,8 +28,12 @@ const customAttributes = computed(() => {
 });
 
 const planName = computed(() => {
-  return currentAccount.value?.billing?.common?.current_plan;
+  return customAttributes.value.plan_name;
 });
+
+const captainResponseCredit = computed(() => {
+  return customAttributes.value.captain_responses_credit;
+})
 
 const planId = computed(() => {
   return customAttributes.value.stripe_product_id;
@@ -65,6 +69,10 @@ const trialPlan = computed(() => {
 
 const usageData = computed(() => {
   return currentAccount.value?.billing?.usage;
+})
+
+const disabledRegisterTrial = computed(() => {
+  return currentAccount.value?.billing?.disabled_register_trial;
 })
 
 const onClickBillingPortal = (paymentInfo) => {
@@ -129,7 +137,7 @@ onMounted(fetchAccountDetails);
             />
             <DetailItem
               :label="$t('BILLING_SETTINGS.CURRENT_PLAN.AI_ADDON_MESSAGE')"
-              :value="'0'"
+              :value="captainResponseCredit"
             />
           </div>
         </BillingCard>
@@ -192,7 +200,7 @@ onMounted(fetchAccountDetails);
                 md
                 solid
                 ruby
-                @disabled="trialPlan.disabled_register_trial"
+                :disabled="disabledRegisterTrial"
                 @click="onClickBillingPortal({
                   product_id: trialPlan.id,
                   payment_method: 'payos',
@@ -206,14 +214,14 @@ onMounted(fetchAccountDetails);
                 solid
                 blue
                 >
-              {{ $t('CONTACTS_LAYOUT.HEADER.TITLE') }}
+              {{ $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.CONTACT') }}
               </ButtonV4>
             </SpecialItem>
           </div>
           <TabBar
             :tabs="tabs"
             :initial-active-tab="activeTab"
-            class="w-[500px] mx-auto mt-5 [&>button]:w-full"
+            class="min-w-[500px] mx-auto mt-5 [&>button]:w-full"
             @tab-changed="handleTabChange"
           />
           <template v-for="(tab, index) in tabs" :key="tab.key">
@@ -227,7 +235,6 @@ onMounted(fetchAccountDetails);
                     md
                     solid
                     ruby
-                    @disabled="planId === plan[index].id"
                     @click="onClickBillingPortal({
                       product_id: plan[index].id,
                       payment_method: 'payos',
