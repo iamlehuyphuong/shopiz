@@ -62,7 +62,7 @@ const limitExceededMessage = computed(() => {
     });
   } else if (testLimit(inboxes)) {
     message = t('GENERAL_SETTINGS.LIMIT_MESSAGES.INBOXES', {
-      allowed: automations.allowed,
+      allowed: inboxes.allowed,
     });
   }
   else if (testLimit(contacts)) {

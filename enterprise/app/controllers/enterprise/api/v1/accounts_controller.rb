@@ -16,11 +16,11 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
   def limits
     limits = {
       inboxes: {
-        allowed: @account.limits['agents'].to_i,
+        allowed: @account.limits['inboxes'].to_i,
         consumed: @account.inboxes.count
       },
       agents: {
-        allowed: @account.limits['inboxes'].to_i,
+        allowed: @account.limits['agents'].to_i,
         consumed: @account.users.count
       },
       contacts: {

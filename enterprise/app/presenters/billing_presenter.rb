@@ -83,7 +83,7 @@ class BillingPresenter
   end
 
   def disabled_register_trial
-    @account.billing_histories.exists?(sku: 'trial')
+    @account.billing_histories.where("metadata->>'type' = 'package'").exists?
   end
 
   def usage_agent
@@ -107,15 +107,18 @@ class BillingPresenter
   end
 
   def usage_captain_faq
-    format_percent(@account.captain_assistant_responses.count, @account.limits['captain_responses'])
+    format_percent(@account.captain_assistant_responses.count, @account.limits['captain_faqs'])
   end
 
   def usage_captain_assistant
-    format_percent(@account.captain_assistants.count, @account.limits['captain_responses'])
+    format_percent(@account.captain_assistants.count, @account.limits['captain_assistants'])
   end
 
   def usage_captain_credit
-    format_percent(@account.custom_attributes['captain_responses_usage'], @account.limits['captain_responses_credit'])
+    format_percent(
+      @account.custom_attributes['captain_responses_usage'],
+      @account.limits['captain_responses'].to_i + @account.limits['captain_responses_credit'].to_i
+    )
   end
 
   def format_percent(usage, limit)
