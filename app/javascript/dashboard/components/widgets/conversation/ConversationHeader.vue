@@ -106,8 +106,8 @@ const hasSlaPolicyId = computed(() => props.chat?.sla_policy_id);
         class="ltr:mr-2 rtl:ml-2"
       />
       <Avatar
-        :name="currentContact.name"
-        :src="currentContact.thumbnail"
+        :name="currentChat?.additional_attributes?.group?.name ?? currentContact.name"
+        :src="currentChat?.additional_attributes?.group?.avt ?? currentContact.thumbnail"
         :size="32"
         :status="currentContact.availability_status"
         hide-offline-status
@@ -120,7 +120,7 @@ const hasSlaPolicyId = computed(() => props.chat?.sla_policy_id);
           <span
             class="text-sm font-medium truncate leading-tight text-n-slate-12"
           >
-            {{ currentContact.name }}
+            {{ currentChat?.additional_attributes?.group?.name || currentContact.name }}
           </span>
           <fluent-icon
             v-if="!isHMACVerified"
