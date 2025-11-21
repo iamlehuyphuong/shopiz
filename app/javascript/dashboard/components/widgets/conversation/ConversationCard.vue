@@ -257,8 +257,10 @@ const deleteConversation = () => {
     >
       <Avatar
         v-if="!hideThumbnail"
-        :name="currentContact.name"
-        :src="currentContact.thumbnail"
+        :name="chat?.additional_attributes?.group?.name ?? currentContact.name"
+        :src="
+          chat?.additional_attributes?.group?.avt ?? currentContact.thumbnail
+        "
         :size="32"
         :status="currentContact.availability_status"
         :class="!showInboxName ? 'mt-4' : 'mt-8'"
@@ -316,7 +318,7 @@ const deleteConversation = () => {
           class="conversation--title my-0 mx-2 capitalize pt-0.5 max-w-[96%] text-ellipsis overflow-hidden whitespace-nowrap min-w-0 text-n-slate-12"
           :class="hasUnread ? 'font-semibold' : 'font-medium'"
         >
-          {{ currentContact.name }}
+          {{ chat?.additional_attributes?.group?.name || currentContact.name }}
         </h4>
         <span
           class="conversation--status text-white text-xxs font-medium leading-4 py-0.5 px-2 rounded-lg border border-solid border-n-strong text-n-slate-10 bg-n-slate-1 text-ellipsis overflow-hidden whitespace-nowrap"
