@@ -10,8 +10,39 @@ module Enterprise::Account::PlanUsageAndLimits
       inboxes: get_limits(:inboxes).to_i,
       captain: {
         documents: get_captain_limits(:documents),
-        responses: get_captain_limits(:responses)
+        responses: captain_response_summary
       }
+    }
+  end
+
+  def usage_captain_summary
+    {
+      documents: get_captain_limits(:documents),
+      responses: captain_response_summary,
+      faqs: captain_summary(limits['captain_faqs'], captain_assistant_responses.count),
+      assistants: captain_summary(limits['captain_assistants'], captain_assistants.count)
+    }
+  end
+
+  def captain_response_summary
+    total_count = limits['captain_responses'].to_i + limits['captain_responses_credit'].to_i
+    consumed = custom_attributes[CAPTAIN_RESPONSES_USAGE].to_i
+
+    {
+      total_count: total_count,
+      current_available: (total_count - consumed).clamp(0, total_count),
+      consumed: consumed
+    }
+  end
+
+  def captain_summary(total_count, consumed)
+    total_count = total_count.to_i
+    consumed = consumed.to_i
+
+    {
+      total_count: total_count,
+      current_available: (total_count - consumed).clamp(0, total_count),
+      consumed: consumed
     }
   end
 
@@ -68,7 +99,6 @@ module Enterprise::Account::PlanUsageAndLimits
                end
 
     consumed = 0 if consumed.negative?
-
     {
       total_count: total_count,
       current_available: (total_count - consumed).clamp(0, total_count),
@@ -123,7 +153,12 @@ module Enterprise::Account::PlanUsageAndLimits
         'inboxes' => { 'type': 'number' },
         'agents' => { 'type': 'number' },
         'captain_responses' => { 'type': 'number' },
-        'captain_documents' => { 'type': 'number' }
+        'captain_documents' => { 'type': 'number' },
+        'captain_assistants' => { 'type': 'number' },
+        'captain_faqs' => { 'type': 'number' },
+        'contacts' => { 'type': 'number' },
+        'automations' => { 'type': 'number' },
+        'captain_responses_credit' => { 'type': 'number' }
       },
       'required' => [],
       'additionalProperties' => false

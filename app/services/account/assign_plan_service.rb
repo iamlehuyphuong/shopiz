@@ -14,7 +14,6 @@ class Account::AssignPlanService
       update_account_attributes
       change_plan_features
       update_limits
-      reset_captain_usage
     end
     true
   rescue StandardError
@@ -24,29 +23,36 @@ class Account::AssignPlanService
   private
 
   def load_plan
-    Polar.configure do |config|
-      config.access_token = ENV.fetch('POLAR_ACCESS_TOKEN')
-      config.sandbox = ENV.fetch('POLAR_ENV') == 'sandbox'
-    end
-
-    Polar::Product.get(@plan_id).table
+    Polar::ProductService.find(@plan_id)
   rescue StandardError
     nil
   end
 
   def update_account_attributes
-    month = @plan.dig(:metadata, 'months').to_i
     custom_attributes = {
       stripe_customer_id: @account.id,
       stripe_price_id: @plan[:prices][0]['id'],
       stripe_product_id: @plan_id,
       plan_name: @plan[:name],
+      sku: @plan[:metadata]['sku'],
       subscribed_quantity: @plan.dig(:metadata, 'agents'),
       subscription_status: 'active',
-      subscription_ends_on: (Time.zone.now + month.months)
+      subscription_ends_on: subscription_ends_on
     }
 
     @account.update(custom_attributes: custom_attributes)
+  end
+
+  def subscription_ends_on
+    current_plan = @account.custom_attributes['plan_name']
+    number_of_months = @plan[:metadata]['months'].to_i
+
+    if current_plan == @plan[:name]
+      base_time = [Time.zone.now, Time.zone.parse(@account.custom_attributes['subscription_ends_on'])].max
+      base_time + number_of_months.months
+    else
+      Time.zone.now + number_of_months.months
+    end
   end
 
   def change_plan_features
@@ -63,14 +69,23 @@ class Account::AssignPlanService
   end
 
   def update_limits
-    limits = {
-      'inboxes' => @plan.dig(:metadata, 'inboxes') || 1,
-      'agents' => @plan.dig(:metadata, 'agents') || 1,
-      'captain_responses' => @plan.dig(:metadata, 'captain_responses') || 0,
-      'captain_documents' => @plan.dig(:metadata, 'captain_documents') || 0
-    }
-    @account.limits = limits
+    @account.limits = build_limits
     @account.save!
+  end
+
+  def build_limits
+    metadata = @plan[:metadata]
+
+    {
+      captain_assistants: metadata['captain_assistants'].to_i,
+      captain_responses: metadata['captain_responses'].to_i,
+      captain_documents: metadata['captain_documents'].to_i,
+      captain_faqs: metadata['captain_faqs'].to_i,
+      contacts: metadata['contacts'].to_i,
+      inboxes: metadata['inboxes'].to_i,
+      agents: metadata['agents'].to_i,
+      automations: metadata['automations'].to_i
+    }
   end
 
   def reset_captain_usage
@@ -78,8 +93,6 @@ class Account::AssignPlanService
   end
 
   def default_plan?
-    installation_config = InstallationConfig.find_by(name: 'CHATWOOT_CLOUD_PLANS')
-    default_plan = installation_config.value.first
-    @account.custom_attributes['plan_name'] == default_plan['name']
+    @account.custom_attributes['plan_name'] == 'free'
   end
 end

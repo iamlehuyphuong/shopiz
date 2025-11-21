@@ -35,16 +35,13 @@ class Enterprise::Billing::CreateSessionService
     payment_url.generate
   end
 
-  def create_payos_session(customer_id, product_id, product_name)
-    Polar.configure do |config|
-      config.access_token = ENV['POLAR_ACCESS_TOKEN']
-      config.sandbox = ENV['POLAR_ENV'] == 'sandbox'
-    end
-    product = Polar::Product.get(product_id)
-    price = product.table[:prices].first
+  def create_payos_session(customer_id, product_id)
+    product = Polar::ProductService.find(product_id)
+    price = product[:prices].first
+    sku = product[:metadata]['sku']
     price_amount = price['price_amount']
     order_code = "#{Time.now.to_i.to_s[-10..]}#{customer_id}".to_i
-    description = "TT SHOPIZ #{product_name} #{Enterprise::Billing::PlanMapper.get_duration(product_id)}".upcase
+    description = "TT SHOPIZ #{sku}".upcase
     return_url = ENV.fetch('FRONTEND_URL')
 
     res = Payos::PaymentService.new.create_order(
@@ -56,7 +53,7 @@ class Enterprise::Billing::CreateSessionService
     )
 
     res.dig(:data, :checkoutUrl)
-  rescue StandardError => e
+  rescue StandardError
     nil
   end
 end

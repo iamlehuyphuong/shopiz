@@ -394,3 +394,11 @@ vi:
       custom_domain_not_configured: 'Tùy chỉnh tên miền chưa được cấu hình.'
   common:
     over_limit: "Đã vượt quá giới hạn tài khoản. Nâng cấp lên gói cao hơn"
+  billing_histories:
+    statuses:
+      pending: "Xuất hoá đơn"
+      invoiced: "Đã xuất"
+      overdue: "Quá hạn"
+    content:
+      package: "Gói %{product_name} %{month} Tháng"
+      credit: "Gói %{product_name}"

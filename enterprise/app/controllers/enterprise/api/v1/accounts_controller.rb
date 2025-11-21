@@ -2,7 +2,7 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
   include BillingHelper
   before_action :fetch_account
   before_action :check_authorization
-  before_action :check_cloud_env, only: [:plans, :limits, :toggle_deletion]
+  before_action :check_cloud_env, only: [:billings, :limits, :toggle_deletion]
 
   def subscription
     if stripe_customer_id.blank? && @account.custom_attributes['is_creating_customer'].blank?
@@ -14,68 +14,48 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
   end
 
   def limits
-    limits = if default_plan?(@account)
-               {
-                 'conversation' => {
-                   'allowed' => 500,
-                   'consumed' => conversations_this_month(@account)
-                 },
-                 'non_web_inboxes' => {
-                   'allowed' => 0,
-                   'consumed' => non_web_inboxes(@account)
-                 },
-                 'agents' => {
-                   'allowed' => 2,
-                   'consumed' => agents(@account)
-                 }
-               }
-             else
-               default_limits
-             end
+    limits = {
+      inboxes: {
+        allowed: @account.limits['inboxes'].to_i,
+        consumed: @account.inboxes.count
+      },
+      agents: {
+        allowed: @account.limits['agents'].to_i,
+        consumed: @account.users.count
+      },
+      contacts: {
+        allowed: @account.limits['contacts'].to_i,
+        consumed: @account.contacts.count
+      },
+      automations: {
+        allowed: @account.limits['automations'].to_i,
+        consumed: @account.automation_rules.count
+      },
+      captain: @account.usage_captain_summary
+    }
 
     # include id in response to ensure that the store can be updated on the frontend
     render json: { id: @account.id, limits: limits }, status: :ok
   end
 
-  def plans
-    installation_config = InstallationConfig.find_by(name: 'CHATWOOT_CLOUD_PLANS')
-    Polar.configure do |config|
-      config.access_token = ENV['POLAR_ACCESS_TOKEN']
-      config.sandbox = ENV['POLAR_ENV'] == 'sandbox'
-      #config.webhook_secret = ENV['POLAR_WEBHOOK_SECRET']
-    end
-    plans = []
-    installation_config.value.each do |plan|
-      next if plan['name'] == 'Trial'
-      plan['products'] = []
-      plan['product_id'].each do |product_id|
-        product = Polar::Product.get(product_id)
-        plan['products'] << product.table
-      end
-      plans << plan
-    end
-    render json: { id: @account.id, plans: plans}, status: :ok
+  def billings
+    data = ::BillingPresenter.new(@account).json_data
+    render json: { id: @account.id, data: data }, status: :ok
   end
-
-  # def checkout
-  #   return create_stripe_billing_session(stripe_customer_id) if stripe_customer_id.present?
-
-  #   render_invalid_billing_details
-  # end
 
   def checkout
     case params[:payment_method]
-      when 'stripe'
-        return create_stripe_billing_session(stripe_customer_id) if stripe_customer_id.present?
-      when 'vnpay'
-        return create_vnpay_billing_session(@account.id, params[:product_id]) if @account.id.present?
-      when 'polar'
-        return create_polar_billing_session(@account.id, params[:product_id]) if @account.id.present?
-      when 'payos'
-        return create_payos_billing_session(@account.id, params[:product_id], params[:product_name]) if @account.id.present?
-      else
-        render_invalid_billing_details
-      end
+    when 'stripe'
+      return create_stripe_billing_session(stripe_customer_id) if stripe_customer_id.present?
+    when 'vnpay'
+      return create_vnpay_billing_session(@account.id, params[:product_id]) if @account.id.present?
+    when 'polar'
+      return create_polar_billing_session(@account.id, params[:product_id]) if @account.id.present?
+    when 'payos'
+      return create_payos_billing_session
+    else
+      render_invalid_billing_details
+    end
   end
 
   def toggle_deletion
@@ -155,8 +135,11 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
     render_redirect_url(url)
   end
 
-  def create_payos_billing_session(customer_id, product_id, product_name)
-    url = Enterprise::Billing::CreateSessionService.new.create_payos_session(customer_id, product_id, product_name)
+  def create_payos_billing_session
+    url = Enterprise::Billing::CreateSessionService.new.create_payos_session(
+      @account.id,
+      params[:product_id]
+    )
     return if url.blank?
 
     render_redirect_url(url)

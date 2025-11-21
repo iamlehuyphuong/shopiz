@@ -18,8 +18,8 @@ class EnterpriseAccountAPI extends ApiClient {
     return axios.get(`${this.url}limits`);
   }
 
-  getPlans() {
-    return axios.get(`${this.url}plans`);
+  getBillings() {
+    return axios.get(`${this.url}billings`);
   }
 
   toggleDeletion(action) {

@@ -480,7 +480,7 @@ Rails.application.routes.draw do
               post :checkout
               post :subscription
               get :limits
-              get :plans
+              get :billings
               post :toggle_deletion
             end
           end

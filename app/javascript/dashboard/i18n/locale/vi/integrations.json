@@ -408,8 +408,9 @@
       "ASK_ADMIN": "Vui lòng liên hệ với quản trị viên để nâng cấp."
     },
     "BANNER": {
-      "RESPONSES": "Bạn đã sử dụng quá 80% hạn mức phản hồi. Để tiếp tục sử dụng Trợ lý AI, vui lòng nâng cấp.",
-      "DOCUMENTS": "Hạn mức tài liệu đã đạt mức giới hạn. Hãy nâng cấp để tiếp tục sử dụng Trợ lý AI."
+      "RESPONSES": "Bạn đã sử dụng quá hạn mức phản hồi. Để tiếp tục sử dụng Trợ lý AI, vui lòng nâng cấp.",
+      "DOCUMENTS": "Hạn mức tài liệu đã đạt mức giới hạn. Hãy nâng cấp để tiếp tục sử dụng Trợ lý AI.",
+      "ASSISTANTS": "Hạn mức trợ lý đã đạt mức giới hạn. Hãy nâng cấp để tiếp tục sử dụng Trợ lý AI."
     },
     "FORM": {
       "CANCEL": "Hủy",

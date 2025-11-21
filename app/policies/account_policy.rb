@@ -11,7 +11,7 @@ class AccountPolicy < ApplicationPolicy
     @account_user.administrator? || @account_user.agent?
   end
 
-  def plans?
+  def billings?
     @account_user.administrator?
   end
 

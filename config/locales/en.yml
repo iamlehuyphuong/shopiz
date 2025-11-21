@@ -436,3 +436,11 @@ en:
       custom_domain_not_configured: 'Custom domain is not configured'
   common:
     over_limit: "Account limit exceeded. Upgrade to a higher plan"
+  billing_histories:
+    statuses:
+      pending: "Pending"
+      invoiced: "Invoiced"
+      overdue: "Overdue"
+    content:
+      package: "%{product_name} Package - %{month} months"
+      credit: "%{product_name} Package"

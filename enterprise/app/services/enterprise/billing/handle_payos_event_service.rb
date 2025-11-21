@@ -1,139 +1,111 @@
 class Enterprise::Billing::HandlePayosEventService
   def perform(payload)
     prepare_data(payload)
-    process_subscription_updated
+    return if @account.blank? || @product.blank?
+
+    ActiveRecord::Base.transaction do
+      @product[:metadata]['type'] == 'package' ? update_plan : update_credit
+      save_billing_history(payload)
+    end
   end
 
   private
 
   def prepare_data(payload)
-    name, duration = payload.dig('data', 'description').to_s.split[2..]
-    return if name.blank? || duration.blank?
-
-    @product_id = Enterprise::Billing::PlanMapper.get_product_id(name, duration)
-    raise 'Invalid description format' unless @product_id
-
-    @plan = find_and_build_plan(@product_id)
-    raise 'Plan not found' if @plan.blank?
-
+    name = payload.dig('data', 'description').to_s.split.last
+    @product = Polar::ProductService.by_name(name&.downcase)&.with_indifferent_access
     @customer_id = payload['data']['orderCode'].to_s[10..].to_s
-    build_event_data
+    @account = Account.find_by(id: @customer_id)
   end
 
-  def build_event_data
-    product_info = load_product_info(@product_id)
-    days = (@plan['months'].to_i || 0) * 30
-
-    event = {
-      type: 'customer.subscription.updated',
-      data: {
-        object: {
-          customer: @customer_id,
-          plan: {
-            id: product_info[:prices][0]['id'],
-            product: product_info[:id]
-          },
-          quantity: @plan['limits']['agents'],
-          status: 'active',
-          current_period_end: Time.now.to_i + days.days
-        }
-      }
-    }
-    @event = JSON.parse(event.to_json, object_class: OpenStruct)
-  end
-
-  def process_subscription_updated
-    return if @plan.blank? || account.blank?
-
-    update_account_attributes
+  def update_plan
+    update_custom_attributes
     change_plan_features
     update_limits
-    reset_captain_usage
   end
 
-  def update_account_attributes
-    account.update(
-      custom_attributes: {
-        stripe_customer_id: subscription.customer,
-        stripe_price_id: subscription['plan']['id'],
-        stripe_product_id: subscription['plan']['product'],
-        plan_name: @plan['name'],
-        subscribed_quantity: subscription['quantity'],
-        subscription_status: subscription['status'],
-        subscription_ends_on: Time.zone.at(subscription['current_period_end'])
-      }
-    )
+  def update_credit
+    new_credit = @account.limits['captain_responses_credit'].to_i + @product[:metadata]['captain_responses_credit'].to_i
+    @account.limits['captain_responses_credit'] = new_credit
+    @account.save
+  end
+
+  def update_custom_attributes
+    @account.update(custom_attributes: build_custom_attributes)
+  end
+
+  def build_custom_attributes
+    {
+      stripe_customer_id: @customer_id,
+      stripe_price_id: @product[:prices][0]['id'],
+      stripe_product_id: @product[:id],
+      plan_name: @product[:name],
+      sku: @product[:metadata]['sku'],
+      subscribed_quantity: @product[:metadata]['agents'],
+      subscription_status: :active,
+      subscription_ends_on: subscription_ends_on
+    }
+  end
+
+  def subscription_ends_on
+    current_plan = @account.custom_attributes['plan_name']
+    number_of_months = @product[:metadata]['months'].to_i
+
+    if current_plan == @product[:name]
+      base_time = [Time.zone.now, Time.zone.parse(@account.custom_attributes['subscription_ends_on'])].max
+      base_time + number_of_months.months
+    else
+      Time.zone.now + number_of_months.months
+    end
   end
 
   def change_plan_features
-    account.disable_features(*Featurable::MAPPING.values)
+    @account.disable_features(*Featurable::MAPPING.values)
 
-    if default_plan?
-      account.enable_features(*Featurable::DEFAULT_PLAN_FEATURES)
-    else
-      features = @plan['features'] || []
-      mapping_features = features.map { |item| Featurable::MAPPING[item.to_sym] }
-      account.enable_features(*mapping_features)
-    end
-    account.save!
+    features = @product[:metadata]['features']&.split(',')&.map(&:strip) || []
+    mapping_features = features.map { |item| Featurable::MAPPING[item.to_sym] }
+    @account.enable_features(*mapping_features)
+    @account.save!
   end
 
   def update_limits
-    account.limits = @plan['limits'] || {}
-    account.save!
+    @account.limits = build_limits
+    @account.save!
+  end
+
+  def build_limits
+    metadata = @product[:metadata]
+
+    {
+      captain_assistants: metadata['captain_assistants'].to_i,
+      captain_responses: metadata['captain_responses'].to_i,
+      captain_documents: metadata['captain_documents'].to_i,
+      captain_faqs: metadata['captain_faqs'].to_i,
+      contacts: metadata['contacts'].to_i,
+      inboxes: metadata['inboxes'].to_i,
+      agents: metadata['agents'].to_i,
+      automations: metadata['automations'].to_i
+    }
   end
 
   def reset_captain_usage
-    account.reset_response_usage
+    @account.reset_response_usage
   end
 
-  def find_and_build_plan(product_id)
-    installation_config = InstallationConfig.find_by(name: 'CHATWOOT_CLOUD_PLANS')
-    plan = installation_config.value.find { |config| config['product_id'].include?(product_id) }
-    return if plan.blank?
+  def save_billing_history(payload)
+    data = payload['data']
 
-    product = load_product_info(product_id)
-    metadata = product[:metadata]
-    if metadata.present?
-      plan['features'] = metadata['features'].split(',').map(&:strip) if metadata['features'].present?
-      plan['months'] = metadata['months'] if metadata['months'].present?
-      plan['inboxes'] = metadata['inboxes'] if metadata['inboxes'].present?
-      plan['limits'] = {
-        'inboxes' => metadata['inboxes'] || 1,
-        'agents' => metadata['agents'] || 1,
-        'captain_responses' => metadata['captain_responses'] || 0,
-        'captain_documents' => metadata['captain_documents'] || 0
-      }
-    end
-
-    plan
-  end
-
-  def load_product_info(product_id)
-    return @product if defined?(@product) && @product[:id] == product_id
-
-    Polar.configure do |config|
-      config.access_token = ENV.fetch('POLAR_ACCESS_TOKEN', nil)
-      config.sandbox = ENV['POLAR_ENV'] == 'sandbox'
-    end
-    product = Polar::Product.get(product_id)
-    @product = product.table
-  rescue StandardError => e
-    Rails.logger.error { "Error fetching product for ID: #{product_id}, Error: #{e.message}" }
-    {}
-  end
-
-  def default_plan?
-    installation_config = InstallationConfig.find_by(name: 'CHATWOOT_CLOUD_PLANS')
-    default_plan = installation_config.value.first
-    account.custom_attributes['plan_name'] == default_plan['name']
-  end
-
-  def subscription
-    @subscription ||= @event.data.object
-  end
-
-  def account
-    @account ||= Account.find_by(id: subscription.customer)
+    @account.billing_histories.create!(
+      price_amount: data['amount'],
+      price_currency: data['currency'],
+      product_name: @product[:name],
+      sku: @product[:metadata]['sku'],
+      status: 0,
+      product_id: @product[:id],
+      metadata: @product[:metadata],
+      transaction_id: data['reference'],
+      description: data['description'],
+      transaction_date_time: data['transactionDateTime']
+    )
   end
 end

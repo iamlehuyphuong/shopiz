@@ -596,7 +596,18 @@
       "TITLE": "Current Plan",
       "PLAN_NOTE": "You are currently subscribed to the **{plan}** plan with **{quantity}** licenses",
       "SEAT_COUNT": "Number of seats",
-      "RENEWS_ON": "Renews on"
+      "RENEWS_ON": "Renews on",
+      "AI_ADDON_MESSAGE": "AI add-on message",
+      "RESOURCE": "Resource",
+      "AGENT": "Agent",
+      "INBOX": "Inbox",
+      "CONTACT": "Contact",
+      "AUTOMATION": "Automation",
+      "AI_RESOURCE": "AI Resource",
+      "AI_DOCUMENT": "ShopizAI Document",
+      "AI_FAQ": "ShopizAI FAQs",
+      "AI_ASSISTANT": "ShopizAI Assistant",
+      "AI_RESPONSE": "AI messages per month"
     },
     "VIEW_PRICING": "View Pricing",
     "MANAGE_SUBSCRIPTION": {
@@ -610,6 +621,8 @@
       "BUTTON_TXT": "Buy more credits",
       "DOCUMENTS": "Documents",
       "RESPONSES": "Responses",
+      "GET_MORE": "Get more AI messages",
+      "NO_EXPIRATION": "No expiration",
       "UPGRADE": "AI Agent is not available on the free plan, upgrade now to get access to assistants, copilot and more."
     },
     "CHAT_WITH_US": {
@@ -626,12 +639,16 @@
       },
       "BUTTONS": {
         "CURRENT_PACKAGE": "Current Package",
-        "UPGRADE_NOW": "Upgrade Now"
+        "UPGRADE_NOW": "Upgrade Now",
+        "SUBCRIBE_NOW": "Subscribe Now",
+        "BUY_NOW": "Buy Now",
+        "CONTACT": "Contact"
       },
       "MONTH": "1 month",
       "HALF-YEAR": "6 months",
       "YEAR": "1 year"
-    }
+    },
+    "BILLING_HISTORY": "Package purchase histories"
   },
   "SECURITY_SETTINGS": {
     "TITLE": "Security",

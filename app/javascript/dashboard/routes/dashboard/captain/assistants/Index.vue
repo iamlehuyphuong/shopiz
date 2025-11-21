@@ -10,7 +10,7 @@ import CaptainPaywall from 'dashboard/components-next/captain/pageComponents/Pay
 import CreateAssistantDialog from 'dashboard/components-next/captain/pageComponents/assistant/CreateAssistantDialog.vue';
 import AssistantPageEmptyState from 'dashboard/components-next/captain/pageComponents/emptyStates/AssistantPageEmptyState.vue';
 import FeatureSpotlightPopover from 'dashboard/components-next/feature-spotlight/FeatureSpotlightPopover.vue';
-import LimitBanner from 'dashboard/components-next/captain/pageComponents/response/LimitBanner.vue';
+import LimitBanner from 'dashboard/components-next/captain/pageComponents/assistant/LimitBanner.vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -23,10 +23,15 @@ const isFetching = computed(() => uiFlags.value.fetchingList);
 
 const selectedAssistant = ref(null);
 const deleteAssistantDialog = ref(null);
+const limitBannerRef = ref(null);
 
 const handleDelete = () => {
   deleteAssistantDialog.value.dialogRef.open();
 };
+
+const isOverAssistant = computed(() => {
+  return limitBannerRef.value?.overAssistant;
+})
 
 const createAssistantDialog = ref(null);
 
@@ -83,6 +88,7 @@ onMounted(() => store.dispatch('captainAssistants/get'));
     :is-fetching="isFetching"
     :is-empty="!assistants.length"
     :feature-flag="FEATURE_FLAGS.CAPTAIN"
+    :disable-btn-create="isOverAssistant"
     @click="handleCreate"
   >
     <template #knowMore>
@@ -104,7 +110,7 @@ onMounted(() => store.dispatch('captainAssistants/get'));
     </template>
 
     <template #body>
-      <LimitBanner class="mb-5" />
+      <LimitBanner class="mb-5" ref="limitBannerRef" />
 
       <div class="flex flex-col gap-4">
         <AssistantCard

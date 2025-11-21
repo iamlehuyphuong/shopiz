@@ -164,10 +164,9 @@ module Featurable
   end
 
   def assign_free_plan
-    plans = InstallationConfig.find_by(name: 'CHATWOOT_CLOUD_PLANS').value
-    trial_plan_id = plans.find { |item| item['name'] == 'Trial' }.dig('product_id', 0)
-    return unless trial_plan_id
+    free_plan = Polar::ProductService.by_name('free')
+    return unless free_plan
 
-    ::Account::AssignPlanService.new(self, trial_plan_id).execute
+    ::Account::AssignPlanService.new(self, free_plan['id']).execute
   end
 end

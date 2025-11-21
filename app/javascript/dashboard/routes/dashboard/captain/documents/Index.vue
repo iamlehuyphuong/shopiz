@@ -34,6 +34,7 @@ const showRelatedResponses = ref(false);
 const showCreateDialog = ref(false);
 const createDocumentDialog = ref(null);
 const relationQuestionDialog = ref(null);
+const limitBannerRef = ref(null);
 
 const shouldShowAssistantSelector = computed(() => {
   if (assistants.value.length === 0) return false;
@@ -45,6 +46,7 @@ const handleShowRelatedDocument = () => {
   showRelatedResponses.value = true;
   nextTick(() => relationQuestionDialog.value.dialogRef.open());
 };
+
 const handleCreateDocument = () => {
   showCreateDialog.value = true;
   nextTick(() => createDocumentDialog.value.dialogRef.open());
@@ -57,6 +59,10 @@ const handleRelatedResponseClose = () => {
 const handleCreateDialogClose = () => {
   showCreateDialog.value = false;
 };
+
+const isOverDocument = computed(() => {
+  return limitBannerRef.value?.showBanner;
+})
 
 const handleAction = ({ action, id }) => {
   selectedDocument.value = documents.value.find(
@@ -113,6 +119,7 @@ onMounted(() => {
     :is-fetching="isFetching"
     :is-empty="!documents.length"
     :feature-flag="FEATURE_FLAGS.CAPTAIN"
+    :disable-btn-create="isOverDocument"
     @update:current-page="onPageChange"
     @click="handleCreateDocument"
   >
@@ -145,7 +152,7 @@ onMounted(() => {
     </template>
 
     <template #body>
-      <LimitBanner class="mb-5" />
+      <LimitBanner class="mb-5" ref="limitBannerRef" />
 
       <div class="flex flex-col gap-4">
         <DocumentCard
