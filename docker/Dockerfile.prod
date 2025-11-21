@@ -3,6 +3,7 @@ FROM chatwoot/chatwoot:v4.7.0
 
 ENV NODE_OPTIONS="--max-old-space-size=8192"
 ENV CW_EDITION=ee
+ENV POLAR_ACCESS_TOKEN=""
 
 RUN apk update && apk add --no-cache \
   poppler-utils \
