@@ -75,7 +75,7 @@ class Campaign < ApplicationRecord
     when 'Whatsapp'
       Whatsapp::OneoffCampaignService.new(campaign: self).perform if account.feature_enabled?(:whatsapp_campaign)
     when 'ZaloPersonal'
-      # TODO
+      ZaloPersonal::OneoffCampaignService.new(campaign: self).perform if account.feature_enabled?(:channel_zalopersonal)
     end
   end
 
