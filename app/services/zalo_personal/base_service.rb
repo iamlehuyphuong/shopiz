@@ -6,9 +6,14 @@ class ZaloPersonal::BaseService
 
   def perform
     return if VALID_TYPE.exclude?(params[:type])
+    return if params.dig(:data, :subType).to_i == 1
     if exist_message = find_exist_message
       return update_timestamp(exist_message)
     end
+
+    @is_user = zalo_user?
+    @user_info = load_user_info
+    @group_info = load_group_info unless @is_user
 
     set_contact
     update_contact
@@ -53,16 +58,15 @@ class ZaloPersonal::BaseService
   end
 
   def contact_attributes
-    zalo_user? ? user_contact_attributes : group_contact_attributes
+    @is_user ? user_contact_attributes : group_contact_attributes
   end
 
   def user_contact_attributes
-    user_info = get_user_info
-    return {} unless user_info
+    return {} unless @user_info
 
-    attributes = { name: user_info['displayName'] }
-    if user_info['phoneNumber'].present?
-      phone = user_info['phoneNumber']
+    attributes = { name: @user_info['displayName'] }
+    if @user_info['phoneNumber'].present?
+      phone = @user_info['phoneNumber']
       phone = "+#{phone}" unless phone.start_with?('+')
       attributes[:phone_number] = phone
     end
@@ -71,10 +75,9 @@ class ZaloPersonal::BaseService
   end
 
   def group_contact_attributes
-    group_info = get_group_info
-    return {} unless group_info
+    return {} unless @group_info
 
-    { name: group_info['name'] }
+    { name: @group_info['name'] }
   end
 
   def set_conversation
@@ -115,24 +118,24 @@ class ZaloPersonal::BaseService
       contact_inbox_id: @contact_inbox.id,
       external_source_id: params[:threadId],
       additional_attributes: {
-        type: zalo_user? ? 0 : 1,
-        group: zalo_user? ? nil : group_addition_attributes
+        type: @is_user ? 0 : 1,
+        group: @is_user ? nil : group_addition_attributes
       }
     }
   end
 
   def update_addition_attributes
     additional_attributes = @conversation.additional_attributes || {}
-    additional_attributes[:type] = zalo_user? ? 0 : 1
-    additional_attributes[:group] = zalo_user? ? nil : group_addition_attributes
-    @conversation.update!(additional_attributes: additional_attributes)
+    additional_attributes[:type] = @is_user ? 0 : 1
+    additional_attributes[:group] = @is_user ? nil : group_addition_attributes
+    @conversation.update(additional_attributes: additional_attributes)
   end
 
   def group_addition_attributes
-    group_info = get_group_info
-    return {} unless group_info
+    attrs = { group_id: params[:data][:idTo] }
+    return attrs if @group_info.blank?
 
-    group_info.slice('name', 'avt')
+    @group_info.slice('name', 'avt').merge(attrs)
   end
 
   def build_message
@@ -326,68 +329,70 @@ class ZaloPersonal::BaseService
   end
 
   def update_contact
-    zalo_user? ? update_user_info : update_group_info
+    @is_user ? update_user_info : update_group_info
   end
 
   def update_user_info
-    user_info = get_user_info
-    return unless user_info
+    return if @user_info.blank?
 
-    update_params = { name: user_info['displayName'] }
-    if user_info['phoneNumber'].present?
-      phone = user_info['phoneNumber']
+    update_params = { name: @user_info['displayName'] }
+    if @user_info['phoneNumber'].present?
+      phone = @user_info['phoneNumber']
       phone = "+#{phone}" unless phone.start_with?('+')
       update_params[:phone_number] = phone
     end
     @contact.update!(update_params)
 
-    ::Avatar::AvatarFromUrlJob.perform_later(@contact, user_info['avatar'])
+    ::Avatar::AvatarFromUrlJob.perform_later(@contact, @user_info['avatar']) if @user_info['avatar'].present?
   end
 
   def update_group_info
-    group_info = get_group_info
-    return unless group_info
+    return if @group_info.blank?
 
-    @contact.update!(name: group_info['name'])
-    ::Avatar::AvatarFromUrlJob.perform_later(@contact, group_info['fullAvt'])
+    @contact.update!(name: @group_info['name'])
+    ::Avatar::AvatarFromUrlJob.perform_later(@contact, @group_info['fullAvt']) if @group_info['fullAvt'].present?
   end
 
-  def get_user_info(user_id = nil)
-    return @user_info if defined?(@user_info)
-
-    user_id ||= target_user
+  def load_user_info
+    user_id = target_user
     response = HTTParty.post(
       "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/getUserInfo",
       :body => { :userId => user_id, :ownId => channel.oa_access_token }.to_json,
       :headers => { 'Content-Type' => 'application/json' }
     )
-    return @user_info = nil if response['error']
+    return if response['error']
 
-    @user_info = response['data']['changed_profiles'][user_id]
+    response.dig('data', 'changed_profiles', user_id)
+  rescue StandardError
+    nil
   end
 
-  def get_group_info
-    return @group_info if defined?(@group_info)
-
+  def load_group_info
     group_id = params[:data][:idTo]
     response = HTTParty.post(
       "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/getGroupInfo",
       :body => { :groupId => group_id, :ownId => channel.oa_access_token }.to_json,
       :headers => { 'Content-Type' => 'application/json' }
     )
-    return @group_info = nil if response['error']
+    return if response['error']
 
-    @group_info = response['data']['gridInfoMap'][group_id]
+    response.dig('data', 'gridInfoMap', group_id)
+  rescue StandardError
+    nil
   end
 
   def message_params
     additional_attributes = {
-      type: zalo_user? ? 0 : 1,
-      msgId: params[:data][:msgId]
+      type: @is_user ? 0 : 1,
+      msgId: params[:data][:msgId],
+      user_id: params[:data][:uidFrom]
     }
-    if incoming_message? && !zalo_user?
-      sender_info = get_user_info(params[:data][:uidFrom])
-      additional_attributes.merge!(sender: sender_info['displayName'], thumbnail: sender_info['avatar']) if sender_info
+    if incoming_message? && !@is_user
+      if @user_info
+        additional_attributes.merge!(sender: @user_info['displayName'], thumbnail: @user_info['avatar'])
+      else
+        additional_attributes.merge!(sender: params[:data][:dName], thumbnail: nil)
+      end
     end
 
     {
@@ -398,7 +403,8 @@ class ZaloPersonal::BaseService
       sender: incoming_message? ? @contact : nil,
       additional_attributes: additional_attributes,
       source_id: params[:data][:msgId],
-      created_at: created_time
+      created_at: created_time,
+      status: :delivered
     }
   end
 

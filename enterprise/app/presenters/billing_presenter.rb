@@ -87,7 +87,7 @@ class BillingPresenter
   end
 
   def usage_agent
-    format_percent(@account.agents.count, @account.limits['agents'])
+    format_percent(@account.account_users.count, @account.limits['agents'])
   end
 
   def usage_inbox
