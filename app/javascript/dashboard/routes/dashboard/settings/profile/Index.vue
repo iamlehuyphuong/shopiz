@@ -62,6 +62,12 @@ export default {
       name: '',
       displayName: '',
       email: '',
+      address: '',
+      typeId: null,
+      companyName: '',
+      companyAddress: '',
+      companyEmail: '',
+      companyTaxId: '',
       messageSignature: '',
       hotKeys: [
         {
@@ -113,6 +119,12 @@ export default {
       this.email = this.currentUser.email;
       this.avatarUrl = this.currentUser.avatar_url;
       this.displayName = this.currentUser.display_name;
+      this.address = this.currentUser.address;
+      this.typeId = this.currentUser.type_id;
+      this.companyName = this.currentUser.company_name;
+      this.companyAddress = this.currentUser.company_address;
+      this.companyEmail = this.currentUser.company_email;
+      this.companyTaxId = this.currentUser.company_tax_id;
       this.messageSignature = this.currentUser.message_signature;
     },
     async dispatchUpdate(payload, successMessage, errorMessage) {
@@ -131,7 +143,17 @@ export default {
       }
     },
     async updateProfile(userAttributes) {
-      const { name, email, displayName } = userAttributes;
+      const {
+        name,
+        email,
+        displayName,
+        address,
+        typeId,
+        companyName,
+        companyAddress,
+        companyEmail,
+        companyTaxId
+      } = userAttributes;
       const hasEmailChanged = this.currentUser.email !== email;
       this.name = name || this.name;
       this.email = email || this.email;
@@ -142,6 +164,12 @@ export default {
         email: this.email,
         displayName: this.displayName,
         avatar: this.avatarFile,
+        address: address,
+        type_id: typeId,
+        company_name: companyName,
+        company_address: companyAddress,
+        company_email: companyEmail,
+        company_tax_id: companyTaxId,
       };
 
       const success = await this.dispatchUpdate(
@@ -218,6 +246,12 @@ export default {
         :name="name"
         :display-name="displayName"
         :email="email"
+        :address="address"
+        :type-id="typeId"
+        :company-name="companyName"
+        :company-address="companyAddress"
+        :company-email="companyEmail"
+        :company-tax-id="companyTaxId"
         :email-enabled="!globalConfig.disableUserProfileUpdate"
         @update-user="updateProfile"
       />
