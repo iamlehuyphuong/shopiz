@@ -54,6 +54,17 @@ class Channel::ZaloPersonal < ApplicationRecord
     }
   end
 
+  def send_text_message(user_id, content)
+    body = {
+      threadId: user_id,
+      message: content,
+      type: 0,
+      ownId: oa_id
+    }
+
+    send_message_cs(body)
+  end
+
   def send_message_cs(body)
     res = HTTParty.post(
       url_message_cs,

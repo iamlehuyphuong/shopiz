@@ -6,6 +6,8 @@ import SMSCampaignsPage from './pages/SMSCampaignsPage.vue';
 import WhatsAppCampaignsPage from './pages/WhatsAppCampaignsPage.vue';
 import VoiceCampaignsPage from './pages/VoiceCampaignsPage.vue';
 import SurveyCampaignsPage from './pages/SurveyCampaignsPage.vue';
+import ZaloPersonalCampaignsPage from './pages/ZaloPersonalCampaignsPage.vue';
+
 import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 
 const meta = {
@@ -46,6 +48,15 @@ const campaignsRoutes = {
           name: 'campaigns_livechat_index',
           meta,
           component: LiveChatCampaignsPage,
+        },
+        {
+          path: 'zalo_personal',
+          name: 'campaigns_zalo_personal_index',
+          meta: {
+            ...meta,
+            featureFlag: FEATURE_FLAGS.CHANNEL_ZALOPERSONAL,
+          },
+          component: ZaloPersonalCampaignsPage,
         },
         // {
         //   path: 'sms',

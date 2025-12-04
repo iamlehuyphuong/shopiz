@@ -205,6 +205,71 @@
         }
       }
     },
+    "ZALO_PERSONAL": {
+      "HEADER_TITLE": "Zalo Personal campaigns",
+      "NEW_CAMPAIGN": "Create campaign",
+      "EMPTY_STATE": {
+        "TITLE": "Zalo Personal campaigns are available",
+        "SUBTITLE": "Use AI-personalized templates to send offers, reminders, and updates in 1-to-1 chats. Set up in minutes, scale across your team. Click 'Create campaign' to get started."
+      },
+      "CARD": {
+        "STATUS": {
+          "COMPLETED": "Completed",
+          "SCHEDULED": "Scheduled"
+        },
+        "CAMPAIGN_DETAILS": {
+          "SENT_FROM": "Sent from",
+          "ON": "on",
+          "SENT_BY": "Sent by",
+          "BOT": "BOT"
+        }
+      },
+      "CREATE": {
+        "TITLE": "Create Zalo Personal campaign",
+        "CANCEL_BUTTON_TEXT": "Cancel",
+        "CREATE_BUTTON_TEXT": "Create",
+        "FORM": {
+          "TITLE": {
+            "LABEL": "Title",
+            "PLACEHOLDER": "Please enter the title of campaign",
+            "ERROR": "Title is required"
+          },
+          "MESSAGE": {
+            "LABEL": "Message",
+            "PLACEHOLDER": "Please enter the message template used to personalize each customer’s message",
+            "ERROR": "Message is required"
+          },
+          "INBOX": {
+            "LABEL": "Select Inbox",
+            "PLACEHOLDER": "Select Inbox",
+            "ERROR": "Inbox is required"
+          },
+          "SENT_BY": {
+            "LABEL": "Sent by",
+            "PLACEHOLDER": "Please select sender",
+            "ERROR": "Sender is required"
+          },
+          "AUDIENCE": {
+            "LABEL": "Audience",
+            "PLACEHOLDER": "Select the customer labels",
+            "ERROR": "Audience is required"
+          },
+          "SCHEDULED_AT": {
+            "LABEL": "Scheduled time",
+            "PLACEHOLDER": "Please select the time",
+            "ERROR": "Scheduled time is required"
+          },
+          "BUTTONS": {
+            "CREATE": "Create",
+            "CANCEL": "Cancel"
+          },
+          "API": {
+            "SUCCESS_MESSAGE": "Zalo Personal campaign created successfully",
+            "ERROR_MESSAGE": "There was an error. Please try again."
+          }
+        }
+      }
+    },
     "VOICE": {
       "HEADER_TITLE": "Voice campaigns",
       "NEW_CAMPAIGN": "Create campaign",
