@@ -1,29 +1,29 @@
 {
   "AUTOMATION": {
-    "HEADER": "Tự động hoá",
-    "DESCRIPTION": "Tự động hoá có thể thay thế và tối ưu hóa các quy trình hiện có yêu cầu công sức thủ công, chẳng hạn như thêm nhãn và gán các cuộc hội thoại cho nhân viên phù hợp nhất. Điều này cho phép nhóm tập trung vào thế mạnh của mình trong khi giảm thiểu thời gian dành cho các công việc lặp đi lặp lại.",
-    "LEARN_MORE": "Tìm hiểu thêm về tự động hoá",
-    "HEADER_BTN_TXT": "Thêm luật Tự động hoá",
-    "LOADING": "Đang lấy luật tự động hoá",
+    "HEADER": "Tự động hóa",
+    "DESCRIPTION": "Tự động hóa giúp thay thế và tối ưu các quy trình thủ công, chẳng hạn như thêm nhãn hoặc phân công cuộc hội thoại cho nhân viên phù hợp nhất. Điều này giúp đội ngũ tập trung vào các nhiệm vụ quan trọng, đồng thời giảm thời gian xử lý các tác vụ lặp lại.",
+    "LEARN_MORE": "Tìm hiểu thêm về tự động hóa",
+    "HEADER_BTN_TXT": "Thêm quy tắc tự động",
+    "LOADING": "Đang tải quy tắc tự động",
     "ADD": {
-      "TITLE": "Thêm Quy tắc Tự động hoá",
+      "TITLE": "Thêm quy tắc tự động",
       "SUBMIT": "Tạo",
-      "CANCEL_BUTTON_TEXT": "Huỷ",
+      "CANCEL_BUTTON_TEXT": "Hủy",
       "FORM": {
         "NAME": {
-          "LABEL": "Tên luật",
-          "PLACEHOLDER": "Nhập tên luật",
-          "ERROR": "Cần phải có tên"
+          "LABEL": "Tên quy tắc",
+          "PLACEHOLDER": "Nhập tên quy tắc",
+          "ERROR": "Tên là bắt buộc"
         },
         "DESC": {
           "LABEL": "Mô tả",
-          "PLACEHOLDER": "Nhập mô tả luật",
-          "ERROR": "Cần phải có mô tả"
+          "PLACEHOLDER": "Nhập mô tả quy tắc",
+          "ERROR": "Mô tả là bắt buộc"
         },
         "EVENT": {
           "LABEL": "Sự kiện",
-          "PLACEHOLDER": "Vui lòng chọn một",
-          "ERROR": "Cần phải có sự kiện"
+          "PLACEHOLDER": "Vui lòng chọn",
+          "ERROR": "Sự kiện là bắt buộc"
         },
         "CONDITIONS": {
           "LABEL": "Điều kiện"
@@ -32,150 +32,150 @@
           "LABEL": "Hành động"
         }
       },
-      "CONDITION_BUTTON_LABEL": "Thêm Điều kiện",
-      "ACTION_BUTTON_LABEL": "Thêm Hành động",
+      "CONDITION_BUTTON_LABEL": "Thêm điều kiện",
+      "ACTION_BUTTON_LABEL": "Thêm hành động",
       "API": {
-        "SUCCESS_MESSAGE": "Luật tự động hoá thêm thành công",
-        "ERROR_MESSAGE": "Không thể tạo luật tự động hoá, Vui lòng thử lại sau"
+        "SUCCESS_MESSAGE": "Thêm quy tắc tự động thành công",
+        "ERROR_MESSAGE": "Không thể tạo quy tắc tự động, vui lòng thử lại sau"
       }
     },
     "LIST": {
       "TABLE_HEADER": {
         "NAME": "Tên",
         "DESCRIPTION": "Mô tả",
-        "ACTIVE": "Có hiệu lực",
-        "CREATED_ON": "Được tạo trên"
+        "ACTIVE": "Kích hoạt",
+        "CREATED_ON": "Ngày tạo"
       },
-      "404": "Không tìm thấy luật tự động hoá"
+      "404": "Không tìm thấy quy tắc tự động nào"
     },
     "DELETE": {
-      "TITLE": "Xoá luật Tự động hoá",
-      "SUBMIT": "Xoá",
-      "CANCEL_BUTTON_TEXT": "Huỷ",
+      "TITLE": "Xóa quy tắc tự động",
+      "SUBMIT": "Xóa",
+      "CANCEL_BUTTON_TEXT": "Hủy",
       "CONFIRM": {
-        "TITLE": "Xác nhận xoá",
-        "MESSAGE": "Bạn có chắc muốn xoá ",
-        "YES": "Có, xoá ",
-        "NO": "Không, giữ "
+        "TITLE": "Xác nhận xóa",
+        "MESSAGE": "Bạn có chắc chắn muốn xóa ",
+        "YES": "Đồng ý xóa ",
+        "NO": "Không xóa "
       },
       "API": {
-        "SUCCESS_MESSAGE": "Luật tự động hoá được xoá thành công",
-        "ERROR_MESSAGE": "Không thể xoá luật tự động hoá, Vui lòng thử lại sau"
+        "SUCCESS_MESSAGE": "Xóa quy tắc tự động thành công",
+        "ERROR_MESSAGE": "Không thể xóa quy tắc tự động, vui lòng thử lại sau"
       }
     },
     "EDIT": {
-      "TITLE": "Sửa Luật Tự động hoá",
+      "TITLE": "Chỉnh sửa quy tắc tự động",
       "SUBMIT": "Cập nhật",
-      "CANCEL_BUTTON_TEXT": "Huỷ",
+      "CANCEL_BUTTON_TEXT": "Hủy",
       "API": {
-        "SUCCESS_MESSAGE": "Luật tự động hoá được cập nhật thành công",
-        "ERROR_MESSAGE": "Không thể cập nhật luật tự động hoá, Vui lòng thử lại sau"
+        "SUCCESS_MESSAGE": "Cập nhật quy tắc tự động thành công",
+        "ERROR_MESSAGE": "Không thể cập nhật quy tắc tự động, vui lòng thử lại sau"
       }
     },
     "CLONE": {
       "TOOLTIP": "Nhân bản",
       "API": {
-        "SUCCESS_MESSAGE": "Luật tự động hoá đã được nhân bản thành công",
-        "ERROR_MESSAGE": "Không thể nhân bản luật tự động hoá, Vui lòng thử lại sau"
+        "SUCCESS_MESSAGE": "Nhân bản quy tắc tự động thành công",
+        "ERROR_MESSAGE": "Không thể nhân bản quy tắc tự động, vui lòng thử lại sau"
       }
     },
     "FORM": {
       "EDIT": "Chỉnh sửa",
       "CREATE": "Tạo",
-      "DELETE": "Xoá",
-      "CANCEL": "Huỷ",
-      "RESET_MESSAGE": "Thay đổi loại sự kiện sẽ đặt lại điều kiện và sự kiện mà bạn đã thêm bên dưới"
+      "DELETE": "Xóa",
+      "CANCEL": "Hủy",
+      "RESET_MESSAGE": "Thay đổi loại sự kiện sẽ đặt lại toàn bộ điều kiện và hành động bên dưới"
     },
     "CONDITION": {
-      "DELETE_MESSAGE": "Bạn cần có ít nhất một điều kiện để lưu",
-      "CONTACT_CUSTOM_ATTR_LABEL": "Thuộc tính Liên hệ Tùy chỉnh",
-      "CONVERSATION_CUSTOM_ATTR_LABEL": "Tùy chỉnh Thuộc tính cuộc hội thoại"
+      "DELETE_MESSAGE": "Bạn phải có ít nhất một điều kiện để lưu",
+      "CONTACT_CUSTOM_ATTR_LABEL": "Thuộc tính tùy chỉnh của liên hệ",
+      "CONVERSATION_CUSTOM_ATTR_LABEL": "Thuộc tính tùy chỉnh của cuộc hội thoại"
     },
     "ACTION": {
-      "DELETE_MESSAGE": "Bạn cần có ít nhất một hành động để lưu",
-      "TEAM_MESSAGE_INPUT_PLACEHOLDER": "Viết tin nhắn ở đây",
+      "DELETE_MESSAGE": "Bạn phải có ít nhất một hành động để lưu",
+      "TEAM_MESSAGE_INPUT_PLACEHOLDER": "Nhập tin nhắn tại đây",
       "TEAM_DROPDOWN_PLACEHOLDER": "Chọn nhóm",
       "EMAIL_INPUT_PLACEHOLDER": "Nhập email",
       "URL_INPUT_PLACEHOLDER": "Nhập URL"
     },
     "TOGGLE": {
-      "ACTIVATION_TITLE": "Kích hoạt Luật Tự động hoá",
-      "DEACTIVATION_TITLE": "Vô hiệu hoá Luật Tự động hoá",
-      "ACTIVATION_DESCRIPTION": "Thao tác này sẽ kích hoạt luật tự động hoá tên '{automationName}'. Bạn có chắc là muốn tiếp tục?",
-      "DEACTIVATION_DESCRIPTION": "Thao tác này sẽ vô hiệu hoá luật tự động hoá tên '{automationName}'. Bạn có chắc là muốn tiếp tục?",
-      "ACTIVATION_SUCCESFUL": "Luật tự động hoá đã được kích hoạt thành công",
-      "DEACTIVATION_SUCCESFUL": "Luật tự động hoá đã vô hiệu hoá thành công",
-      "ACTIVATION_ERROR": "Không thể kích hoạt luật tự động hoá, Vui lòng thử lại sau",
-      "DEACTIVATION_ERROR": "Không thể vô hiệu hoá luật tự động hoá, Vui lòng thử lại sau",
-      "CONFIRMATION_LABEL": "Có",
-      "CANCEL_LABEL": "Không"
+      "ACTIVATION_TITLE": "Kích hoạt quy tắc tự động",
+      "DEACTIVATION_TITLE": "Tắt quy tắc tự động",
+      "ACTIVATION_DESCRIPTION": "Hành động này sẽ kích hoạt quy tắc '{automationName}'. Bạn có chắc chắn muốn tiếp tục?",
+      "DEACTIVATION_DESCRIPTION": "Hành động này sẽ tắt quy tắc '{automationName}'. Bạn có chắc chắn muốn tiếp tục?",
+      "ACTIVATION_SUCCESFUL": "Kích hoạt quy tắc thành công",
+      "DEACTIVATION_SUCCESFUL": "Tắt quy tắc thành công",
+      "ACTIVATION_ERROR": "Không thể kích hoạt quy tắc, vui lòng thử lại sau",
+      "DEACTIVATION_ERROR": "Không thể tắt quy tắc, vui lòng thử lại sau",
+      "CONFIRMATION_LABEL": "Đồng ý",
+      "CANCEL_LABEL": "Hủy"
     },
     "ATTACHMENT": {
-      "UPLOAD_ERROR": "Không thể tải tập tin đính kèm, Vui lòng thử lại sau",
-      "LABEL_IDLE": "Tải tập tin đính kèm",
-      "LABEL_UPLOADING": "Đang tải lên...",
-      "LABEL_UPLOADED": "Đã tải lên thành công",
-      "LABEL_UPLOAD_FAILED": "Không tải lên được"
+      "UPLOAD_ERROR": "Không thể tải tệp đính kèm lên, vui lòng thử lại",
+      "LABEL_IDLE": "Tải tệp đính kèm",
+      "LABEL_UPLOADING": "Đang tải...",
+      "LABEL_UPLOADED": "Tải lên thành công",
+      "LABEL_UPLOAD_FAILED": "Tải lên thất bại"
     },
     "ERRORS": {
-      "ATTRIBUTE_KEY_REQUIRED": "Yêu cầu có khóa thuộc tính",
-      "FILTER_OPERATOR_REQUIRED": "Yêu cầu có toán tử lọc",
+      "ATTRIBUTE_KEY_REQUIRED": "Key thuộc tính là bắt buộc",
+      "FILTER_OPERATOR_REQUIRED": "Toán tử lọc là bắt buộc",
       "VALUE_REQUIRED": "Giá trị là bắt buộc",
-      "VALUE_MUST_BE_BETWEEN_1_AND_998": "Giá trị phải nằm trong khoảng từ 1 đến 998",
-      "ACTION_PARAMETERS_REQUIRED": "Yêu cầu có tham số hành động",
-      "ATLEAST_ONE_CONDITION_REQUIRED": "Cần ít nhất một điều kiện",
-      "ATLEAST_ONE_ACTION_REQUIRED": "Cần ít nhất một hành động"
+      "VALUE_MUST_BE_BETWEEN_1_AND_998": "Giá trị phải từ 1 đến 998",
+      "ACTION_PARAMETERS_REQUIRED": "Tham số hành động là bắt buộc",
+      "ATLEAST_ONE_CONDITION_REQUIRED": "Yêu cầu ít nhất một điều kiện",
+      "ATLEAST_ONE_ACTION_REQUIRED": "Yêu cầu ít nhất một hành động"
     },
     "NONE_OPTION": "Không có",
     "EVENTS": {
-      "CONVERSATION_CREATED": "Hội thoại được tạo",
-      "CONVERSATION_UPDATED": "Hội thoại được cập nhật",
+      "CONVERSATION_CREATED": "Cuộc hội thoại được tạo",
+      "CONVERSATION_UPDATED": "Cuộc hội thoại được cập nhật",
       "MESSAGE_CREATED": "Tin nhắn được tạo",
-      "CONVERSATION_RESOLVED": "Hội thoại được giải quyết",
-      "CONVERSATION_OPENED": "Hội thoại mở lại"
+      "CONVERSATION_RESOLVED": "Cuộc hội thoại đã được giải quyết",
+      "CONVERSATION_OPENED": "Cuộc hội thoại được mở"
     },
     "ACTIONS": {
-      "ASSIGN_AGENT": "Giao cho nhân viên",
-      "ASSIGN_TEAM": "Giao cho nhóm",
+      "ASSIGN_AGENT": "Phân công cho nhân viên",
+      "ASSIGN_TEAM": "Phân công cho nhóm",
       "ADD_LABEL": "Thêm nhãn",
-      "REMOVE_LABEL": "Xoá nhãn",
+      "REMOVE_LABEL": "Xóa nhãn",
       "SEND_EMAIL_TO_TEAM": "Gửi email cho nhóm",
-      "SEND_EMAIL_TRANSCRIPT": "Gửi bản ghi email",
-      "MUTE_CONVERSATION": "Tắt tiếng hội thoại",
-      "SNOOZE_CONVERSATION": "Tạm dừng \bhội thoại",
-      "RESOLVE_CONVERSATION": "Giải quyết hội thoại",
-      "SEND_WEBHOOK_EVENT": "Gửi sự kiện webhook",
+      "SEND_EMAIL_TRANSCRIPT": "Gửi bản sao hội thoại qua email",
+      "MUTE_CONVERSATION": "Tắt thông báo cuộc hội thoại",
+      "SNOOZE_CONVERSATION": "Tạm ẩn cuộc hội thoại",
+      "RESOLVE_CONVERSATION": "Đánh dấu đã giải quyết",
+      "SEND_WEBHOOK_EVENT": "Gửi sự kiện Webhook",
       "SEND_ATTACHMENT": "Gửi tệp đính kèm",
       "SEND_MESSAGE": "Gửi tin nhắn",
       "ADD_PRIVATE_NOTE": "Thêm ghi chú nội bộ",
       "CHANGE_PRIORITY": "Thay đổi mức độ ưu tiên",
       "ADD_SLA": "Thêm SLA",
-      "OPEN_CONVERSATION": "Mở hội thoại"
+      "OPEN_CONVERSATION": "Mở cuộc hội thoại"
     },
     "MESSAGE_TYPES": {
-      "INCOMING": "Incoming Message",
-      "OUTGOING": "Outgoing Message"
+      "INCOMING": "Tin nhắn đến",
+      "OUTGOING": "Tin nhắn gửi đi"
     },
     "PRIORITY_TYPES": {
       "NONE": "Không có",
       "LOW": "Thấp",
       "MEDIUM": "Trung bình",
       "HIGH": "Cao",
-      "URGENT": "Cấp bách"
+      "URGENT": "Khẩn cấp"
     },
     "ATTRIBUTES": {
       "MESSAGE_TYPE": "Loại tin nhắn",
-      "MESSAGE_CONTAINS": "Tin nhắn có chứa",
+      "MESSAGE_CONTAINS": "Nội dung tin nhắn chứa",
       "EMAIL": "Email",
-      "INBOX": "Hộp thư đến",
-      "CONVERSATION_LANGUAGE": "Ngôn ngữ cuộc hội thoại",
+      "INBOX": "Hộp thư",
+      "CONVERSATION_LANGUAGE": "Ngôn ngữ hội thoại",
       "PHONE_NUMBER": "Số điện thoại",
       "STATUS": "Trạng thái",
-      "BROWSER_LANGUAGE": "Ngôn ngữ của Trình duyệt",
+      "BROWSER_LANGUAGE": "Ngôn ngữ trình duyệt",
       "MAIL_SUBJECT": "Tiêu đề email",
       "COUNTRY_NAME": "Quốc gia",
-      "REFERER_LINK": "Liên kết người giới thiệu",
-      "ASSIGNEE_NAME": "Tên người được phân công",
+      "REFERER_LINK": "Link nguồn",
+      "ASSIGNEE_NAME": "Người được giao",
       "TEAM_NAME": "Nhóm",
       "PRIORITY": "Mức độ ưu tiên",
       "LABELS": "Nhãn"

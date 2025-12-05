@@ -1,48 +1,48 @@
 {
   "PROFILE_SETTINGS": {
-    "LINK": "Cài Đặt Hồ Sơ",
-    "TITLE": "Cài Đặt Hồ Sơ",
-    "BTN_TEXT": "Cập Nhật Hồ Sơ",
-    "DELETE_AVATAR": "Xoá hình đại diện",
-    "AVATAR_DELETE_SUCCESS": "Ảnh đại diện đã được xoá thành công",
-    "AVATAR_DELETE_FAILED": "Đã xảy ra lỗi khi xoá ảnh đại diện, vui lòng thử lại",
+    "LINK": "Cài đặt hồ sơ",
+    "TITLE": "Cài đặt hồ sơ",
+    "BTN_TEXT": "Cập nhật hồ sơ",
+    "DELETE_AVATAR": "Xóa ảnh đại diện",
+    "AVATAR_DELETE_SUCCESS": "Ảnh đại diện đã được xóa thành công",
+    "AVATAR_DELETE_FAILED": "Đã xảy ra lỗi khi xóa ảnh đại diện, vui lòng thử lại",
     "UPDATE_SUCCESS": "Hồ sơ của bạn đã được cập nhật thành công",
     "PASSWORD_UPDATE_SUCCESS": "Mật khẩu của bạn đã được thay đổi thành công",
     "AFTER_EMAIL_CHANGED": "Hồ sơ của bạn đã được cập nhật, vui lòng đăng nhập lại vì thông tin đăng nhập đã thay đổi",
     "FORM": {
       "PICTURE": "Ảnh hồ sơ",
-      "AVATAR": "Hình ảnh hồ sơ cá nhân",
-      "ERROR": "Vui lòng sửa lỗi trên biểu mẫu",
-      "REMOVE_IMAGE": "Xoá",
-      "UPLOAD_IMAGE": "Tải lên hình ảnh",
-      "UPDATE_IMAGE": "Cập nhật hình ảnh",
+      "AVATAR": "Ảnh đại diện",
+      "ERROR": "Vui lòng sửa lỗi trong biểu mẫu",
+      "REMOVE_IMAGE": "Xóa",
+      "UPLOAD_IMAGE": "Tải ảnh lên",
+      "UPDATE_IMAGE": "Cập nhật ảnh",
       "PROFILE_SECTION": {
-        "TITLE": "Hồ sơ cá nhân",
-        "NOTE": "Địa chỉ email của bạn là danh tính và được dùng để đăng nhập."
+        "TITLE": "Hồ sơ",
+        "NOTE": "Địa chỉ email là định danh và được dùng để đăng nhập."
       },
       "SEND_MESSAGE": {
-        "TITLE": "Phím nóng để gửi tin nhắn",
-        "NOTE": "Bạn có thể chọn phím nóng (Enter hoặc Cmd/Ctrl+Enter) theo sở thích của mình.",
+        "TITLE": "Phím tắt gửi tin nhắn",
+        "NOTE": "Bạn có thể chọn phím tắt (Enter hoặc Cmd/Ctrl + Enter) tùy theo thói quen gõ của bạn.",
         "UPDATE_SUCCESS": "Cài đặt của bạn đã được cập nhật thành công",
         "CARD": {
           "ENTER_KEY": {
             "HEADING": "Enter (↵)",
-            "CONTENT": "Gửi tin nhắn bằng cách nhấn Enter thay vì nhấp nút gửi."
+            "CONTENT": "Gửi tin nhắn bằng phím Enter thay vì nhấn nút gửi."
           },
           "CMD_ENTER_KEY": {
             "HEADING": "Cmd/Ctrl + Enter (⌘ + ↵)",
-            "CONTENT": "Gửi tin nhắn bằng cách nhấn Cmd/Ctrl+Enter thay vì nhấp nút gửi."
+            "CONTENT": "Gửi tin nhắn bằng tổ hợp Cmd/Ctrl + Enter thay vì nhấn nút gửi."
           }
         }
       },
       "INTERFACE_SECTION": {
         "TITLE": "Giao diện",
-        "NOTE": "Tùy chỉnh giao diện bảng điều khiển Shopiz của bạn.",
+        "NOTE": "Tùy chỉnh giao diện và trải nghiệm của bảng điều khiển Shopiz.",
         "FONT_SIZE": {
           "TITLE": "Kích thước chữ",
-          "NOTE": "Điều chỉnh kích thước văn bản trên toàn bộ bảng điều khiển theo sở thích của bạn.",
-          "UPDATE_SUCCESS": "Cài đặt phông chữ đã được cập nhật thành công",
-          "UPDATE_ERROR": "Có lỗi khi cập nhật cài đặt phông chữ, vui lòng thử lại",
+          "NOTE": "Điều chỉnh kích thước chữ trên toàn bộ bảng điều khiển theo nhu cầu của bạn.",
+          "UPDATE_SUCCESS": "Cài đặt kích thước chữ đã được cập nhật thành công",
+          "UPDATE_ERROR": "Đã xảy ra lỗi khi cập nhật kích thước chữ, vui lòng thử lại",
           "OPTIONS": {
             "SMALLER": "Nhỏ hơn",
             "SMALL": "Nhỏ",
@@ -53,98 +53,98 @@
           }
         },
         "LANGUAGE": {
-          "TITLE": "Ngôn ngữ ưa thích",
+          "TITLE": "Ngôn ngữ ưu tiên",
           "NOTE": "Chọn ngôn ngữ bạn muốn sử dụng.",
           "UPDATE_SUCCESS": "Cài đặt ngôn ngữ đã được cập nhật thành công",
-          "UPDATE_ERROR": "Có lỗi khi cập nhật cài đặt ngôn ngữ, vui lòng thử lại",
-          "USE_ACCOUNT_DEFAULT": "Sử dụng mặc định của tài khoản"
+          "UPDATE_ERROR": "Đã xảy ra lỗi khi cập nhật ngôn ngữ, vui lòng thử lại",
+          "USE_ACCOUNT_DEFAULT": "Dùng mặc định của tài khoản"
         }
       },
       "MESSAGE_SIGNATURE_SECTION": {
         "TITLE": "Chữ ký tin nhắn cá nhân",
-        "NOTE": "Tạo chữ ký độc đáo xuất hiện ở cuối mỗi tin nhắn bạn gửi qua bất kỳ hộp thư nào. Bạn cũng có thể chèn hình ảnh, được hỗ trợ trong live chat, email và API inbox.",
-        "BTN_TEXT": "Lưu chữ ký tin nhắn",
-        "API_ERROR": "Không thể lưu chữ ký, vui lòng thử lại",
-        "API_SUCCESS": "Chữ ký đã được lưu thành công",
-        "IMAGE_UPLOAD_ERROR": "Không thể tải lên hình ảnh, vui lòng thử lại",
-        "IMAGE_UPLOAD_SUCCESS": "Thêm hình ảnh thành công. Vui lòng nhấp lưu để lưu chữ ký",
+        "NOTE": "Tạo chữ ký tin nhắn hiển thị ở cuối mỗi tin nhắn bạn gửi từ bất kỳ hộp thư nào. Bạn có thể thêm hình ảnh inline, hỗ trợ trên live-chat, email và API inbox.",
+        "BTN_TEXT": "Lưu chữ ký",
+        "API_ERROR": "Không thể lưu chữ ký! Vui lòng thử lại",
+        "API_SUCCESS": "Lưu chữ ký thành công",
+        "IMAGE_UPLOAD_ERROR": "Không thể tải ảnh lên! Vui lòng thử lại",
+        "IMAGE_UPLOAD_SUCCESS": "Ảnh đã được thêm thành công. Vui lòng nhấn lưu để hoàn tất",
         "IMAGE_UPLOAD_SIZE_ERROR": "Kích thước ảnh phải nhỏ hơn {size}MB"
       },
       "MESSAGE_SIGNATURE": {
         "LABEL": "Chữ ký tin nhắn",
         "ERROR": "Chữ ký tin nhắn không được để trống",
-        "PLACEHOLDER": "Thêm chữ ký tin nhắn cá nhân của bạn tại đây."
+        "PLACEHOLDER": "Nhập chữ ký cá nhân của bạn tại đây."
       },
       "PASSWORD_SECTION": {
         "TITLE": "Mật khẩu",
-        "NOTE": "Cập nhật mật khẩu sẽ đặt lại thông tin đăng nhập trên nhiều thiết bị.",
-        "BTN_TEXT": "Thay đổi mật khẩu"
+        "NOTE": "Việc cập nhật mật khẩu sẽ đăng xuất các phiên đăng nhập trên nhiều thiết bị.",
+        "BTN_TEXT": "Đổi mật khẩu"
       },
       "SECURITY_SECTION": {
         "TITLE": "Bảo mật",
-        "NOTE": "Quản lý các tính năng bảo mật bổ sung cho tài khoản của bạn.",
-        "MFA_BUTTON": "Quản lý xác thực hai yếu tố"
+        "NOTE": "Quản lý các tính năng bảo mật bổ sung cho tài khoản.",
+        "MFA_BUTTON": "Quản lý xác thực hai lớp"
       },
       "ACCESS_TOKEN": {
-        "TITLE": "Token truy cập",
-        "NOTE": "Có thể sử dụng Token này nếu bạn đang xây dựng tích hợp dựa trên API",
-        "COPY": "Sao Chép",
-        "RESET": "Đặt lại",
-        "CONFIRM_RESET": "Bạn có chắc chắn không?",
-        "CONFIRM_HINT": "Nhấp lại để xác nhận",
-        "RESET_SUCCESS": "Token truy cập đã được tạo lại thành công",
-        "RESET_ERROR": "Không thể tạo lại token truy cập. Vui lòng thử lại"
+        "TITLE": "Access Token",
+        "NOTE": "Token này được sử dụng khi bạn xây dựng tích hợp dựa trên API",
+        "COPY": "Sao chép",
+        "RESET": "Làm mới",
+        "CONFIRM_RESET": "Bạn có chắc không?",
+        "CONFIRM_HINT": "Nhấn lại để xác nhận",
+        "RESET_SUCCESS": "Access token đã được tạo lại thành công",
+        "RESET_ERROR": "Không thể tạo lại access token. Vui lòng thử lại"
       },
       "AUDIO_NOTIFICATIONS_SECTION": {
-        "TITLE": "Cảnh báo âm thanh",
-        "NOTE": "Bật cảnh báo âm thanh trên bảng điều khiển cho tin nhắn và cuộc trò chuyện mới.",
-        "PLAY": "Phát âm",
+        "TITLE": "Thông báo âm thanh",
+        "NOTE": "Bật thông báo âm thanh cho tin nhắn và cuộc hội thoại mới.",
+        "PLAY": "Phát âm thanh",
         "ALERT_TYPES": {
           "NONE": "Không có",
           "MINE": "Được giao",
           "ALL": "Tất cả",
-          "ASSIGNED": "Cuộc trò chuyện của tôi",
-          "UNASSIGNED": "Chưa được giao",
-          "NOTME": "Giao cho người khác"
+          "ASSIGNED": "Cuộc hội thoại được giao cho tôi",
+          "UNASSIGNED": "Cuộc hội thoại chưa được giao",
+          "NOTME": "Cuộc hội thoại được giao cho người khác"
         },
         "ALERT_COMBINATIONS": {
-          "NONE": "Bạn chưa chọn bất kỳ tùy chọn nào, bạn sẽ không nhận được cảnh báo âm thanh.",
-          "ASSIGNED": "Bạn sẽ nhận cảnh báo cho các cuộc trò chuyện được giao cho bạn.",
-          "UNASSIGNED": "Bạn sẽ nhận cảnh báo cho các cuộc trò chuyện chưa được giao.",
-          "NOTME": "Bạn sẽ nhận cảnh báo cho các cuộc trò chuyện giao cho người khác.",
-          "ASSIGNED+UNASSIGNED": "Bạn sẽ nhận cảnh báo cho cuộc trò chuyện của bạn và những cuộc chưa được giao.",
-          "ASSIGNED+NOTME": "Bạn sẽ nhận cảnh báo cho cuộc trò chuyện của bạn và của người khác, nhưng không cho những chưa được giao.",
-          "NOTME+UNASSIGNED": "Bạn sẽ nhận cảnh báo cho các cuộc chưa được giao và của người khác.",
-          "ASSIGNED+NOTME+UNASSIGNED": "Bạn sẽ nhận cảnh báo cho tất cả các cuộc trò chuyện."
+          "NONE": "Bạn chưa chọn tùy chọn nào, sẽ không có cảnh báo âm thanh.",
+          "ASSIGNED": "Bạn sẽ nhận cảnh báo cho các cuộc hội thoại được giao cho bạn.",
+          "UNASSIGNED": "Bạn sẽ nhận cảnh báo cho các cuộc hội thoại chưa được giao.",
+          "NOTME": "Bạn sẽ nhận cảnh báo cho các cuộc hội thoại giao cho người khác.",
+          "ASSIGNED+UNASSIGNED": "Bạn sẽ nhận cảnh báo cho cuộc hội thoại được giao cho bạn và các cuộc hội thoại chưa có người xử lý.",
+          "ASSIGNED+NOTME": "Bạn sẽ nhận cảnh báo cho cuộc hội thoại được giao cho bạn và cho người khác.",
+          "NOTME+UNASSIGNED": "Bạn sẽ nhận cảnh báo cho cuộc hội thoại chưa được giao và được giao cho người khác.",
+          "ASSIGNED+NOTME+UNASSIGNED": "Bạn sẽ nhận cảnh báo cho tất cả cuộc hội thoại."
         },
         "ALERT_TYPE": {
-          "TITLE": "Sự kiện cảnh báo cho cuộc trò chuyện",
+          "TITLE": "Loại sự kiện gửi cảnh báo",
           "NONE": "Không có",
-          "ASSIGNED": "Cuộc trò chuyện được giao",
-          "ALL_CONVERSATIONS": "Tất cả cuộc trò chuyện"
+          "ASSIGNED": "Cuộc hội thoại được giao",
+          "ALL_CONVERSATIONS": "Tất cả cuộc hội thoại"
         },
         "DEFAULT_TONE": {
           "TITLE": "Âm báo:"
         },
         "CONDITIONS": {
-          "TITLE": "Điều kiện cảnh báo:",
-          "CONDITION_ONE": "Chỉ gửi cảnh báo âm thanh khi trình duyệt không hoạt động",
-          "CONDITION_TWO": "Gửi cảnh báo cứ sau 30 giây cho đến khi tất cả cuộc trò chuyện được giao đều được đọc"
+          "TITLE": "Điều kiện gửi cảnh báo:",
+          "CONDITION_ONE": "Chỉ gửi thông báo âm thanh nếu cửa sổ trình duyệt không hoạt động",
+          "CONDITION_TWO": "Gửi cảnh báo mỗi 30 giây cho đến khi tất cả cuộc hội thoại được giao được đọc"
         },
-        "SOUND_PERMISSION_ERROR": "Tự động phát đã bị vô hiệu hóa trong trình duyệt. Để nghe cảnh báo, hãy bật quyền âm thanh hoặc tương tác với trang.",
+        "SOUND_PERMISSION_ERROR": "Trình duyệt đã chặn tự động phát âm thanh. Hãy bật quyền âm thanh hoặc tương tác với trang để nghe thông báo.",
         "READ_MORE": "Xem thêm"
       },
       "EMAIL_NOTIFICATIONS_SECTION": {
         "TITLE": "Thông báo email",
-        "NOTE": "Cập nhật tùy chọn thông báo qua email của bạn tại đây",
-        "CONVERSATION_ASSIGNMENT": "Gửi email khi cuộc trò chuyện được giao cho tôi",
-        "CONVERSATION_CREATION": "Gửi email khi có cuộc trò chuyện mới",
-        "CONVERSATION_MENTION": "Gửi email khi bạn được nhắc đến",
-        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Gửi email khi có tin nhắn mới trong cuộc trò chuyện của bạn",
-        "PARTICIPATING_CONVERSATION_NEW_MESSAGE": "Gửi email khi có tin nhắn mới trong cuộc trò chuyện bạn tham gia",
-        "SLA_MISSED_FIRST_RESPONSE": "Gửi email khi cuộc trò chuyện không đáp ứng SLA phản hồi đầu tiên",
-        "SLA_MISSED_NEXT_RESPONSE": "Gửi email khi cuộc trò chuyện không đáp ứng SLA phản hồi tiếp theo",
-        "SLA_MISSED_RESOLUTION": "Gửi email khi cuộc trò chuyện không đáp ứng SLA giải quyết"
+        "NOTE": "Cập nhật tùy chọn thông báo email",
+        "CONVERSATION_ASSIGNMENT": "Gửi email khi có cuộc hội thoại được giao cho tôi",
+        "CONVERSATION_CREATION": "Gửi email khi có cuộc hội thoại mới",
+        "CONVERSATION_MENTION": "Gửi email khi tôi được nhắc đến",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Gửi email khi có tin nhắn mới trong cuộc hội thoại được giao",
+        "PARTICIPATING_CONVERSATION_NEW_MESSAGE": "Gửi email khi có tin nhắn mới trong cuộc hội thoại tôi đang tham gia",
+        "SLA_MISSED_FIRST_RESPONSE": "Gửi email khi vi phạm SLA phản hồi đầu tiên",
+        "SLA_MISSED_NEXT_RESPONSE": "Gửi email khi vi phạm SLA phản hồi tiếp theo",
+        "SLA_MISSED_RESOLUTION": "Gửi email khi vi phạm SLA xử lý"
       },
       "NOTIFICATIONS": {
         "TITLE": "Tùy chọn thông báo",
@@ -152,63 +152,63 @@
         "EMAIL": "Email",
         "PUSH": "Thông báo đẩy",
         "TYPES": {
-          "CONVERSATION_CREATED": "Cuộc trò chuyện mới được tạo",
-          "CONVERSATION_ASSIGNED": "Cuộc trò chuyện được giao cho bạn",
-          "CONVERSATION_MENTION": "Bạn được nhắc đến trong cuộc trò chuyện",
-          "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Tin nhắn mới trong cuộc trò chuyện được giao",
-          "PARTICIPATING_CONVERSATION_NEW_MESSAGE": "Tin nhắn mới trong cuộc trò chuyện bạn tham gia",
-          "SLA_MISSED_FIRST_RESPONSE": "Cuộc trò chuyện không đáp ứng SLA phản hồi đầu tiên",
-          "SLA_MISSED_NEXT_RESPONSE": "Cuộc trò chuyện không đáp ứng SLA phản hồi tiếp theo",
-          "SLA_MISSED_RESOLUTION": "Cuộc trò chuyện không đáp ứng SLA giải quyết"
+          "CONVERSATION_CREATED": "Có cuộc hội thoại mới",
+          "CONVERSATION_ASSIGNED": "Cuộc hội thoại được giao cho bạn",
+          "CONVERSATION_MENTION": "Bạn được nhắc đến trong cuộc hội thoại",
+          "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Tin nhắn mới trong cuộc hội thoại được giao",
+          "PARTICIPATING_CONVERSATION_NEW_MESSAGE": "Tin nhắn mới trong cuộc hội thoại tham gia",
+          "SLA_MISSED_FIRST_RESPONSE": "Vi phạm SLA phản hồi đầu tiên",
+          "SLA_MISSED_NEXT_RESPONSE": "Vi phạm SLA phản hồi tiếp theo",
+          "SLA_MISSED_RESOLUTION": "Vi phạm SLA xử lý"
         },
-        "BROWSER_PERMISSION": "Bật thông báo đẩy cho trình duyệt để nhận thông báo"
+        "BROWSER_PERMISSION": "Bật thông báo đẩy trong trình duyệt để nhận thông báo"
       },
       "API": {
-        "UPDATE_SUCCESS": "Tùy chọn thông báo đã được cập nhật thành công",
-        "UPDATE_ERROR": "Có lỗi khi cập nhật tùy chọn, vui lòng thử lại"
+        "UPDATE_SUCCESS": "Tùy chọn thông báo đã được cập nhật",
+        "UPDATE_ERROR": "Có lỗi xảy ra khi cập nhật, vui lòng thử lại"
       },
       "PUSH_NOTIFICATIONS_SECTION": {
-        "TITLE": "Thông báo",
-        "NOTE": "Cập nhật tùy chọn thông báo của bạn tại đây",
-        "CONVERSATION_ASSIGNMENT": "Gửi thông báo khi cuộc trò chuyện được giao cho tôi",
-        "CONVERSATION_CREATION": "Gửi thông báo khi có cuộc trò chuyện mới",
-        "CONVERSATION_MENTION": "Gửi thông báo đẩy khi bạn được nhắc đến",
-        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Gửi thông báo đẩy khi có tin nhắn mới trong cuộc trò chuyện của bạn",
-        "PARTICIPATING_CONVERSATION_NEW_MESSAGE": "Gửi thông báo đẩy khi có tin nhắn mới trong cuộc trò chuyện bạn tham gia",
-        "HAS_ENABLED_PUSH": "Bạn đã bật thông báo cho trình duyệt này.",
-        "REQUEST_PUSH": "Bật thông báo",
-        "SLA_MISSED_FIRST_RESPONSE": "Gửi thông báo đẩy khi không đáp ứng SLA phản hồi đầu tiên",
-        "SLA_MISSED_NEXT_RESPONSE": "Gửi thông báo đẩy khi không đáp ứng SLA phản hồi tiếp theo",
-        "SLA_MISSED_RESOLUTION": "Gửi thông báo đẩy khi không đáp ứng SLA giải quyết"
+        "TITLE": "Thông báo đẩy",
+        "NOTE": "Cập nhật tùy chọn thông báo đẩy",
+        "CONVERSATION_ASSIGNMENT": "Gửi thông báo đẩy khi có cuộc hội thoại được giao cho tôi",
+        "CONVERSATION_CREATION": "Gửi thông báo đẩy khi có cuộc hội thoại mới",
+        "CONVERSATION_MENTION": "Gửi thông báo đẩy khi tôi được nhắc đến",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Gửi thông báo đẩy khi có tin nhắn mới trong cuộc hội thoại được giao",
+        "PARTICIPATING_CONVERSATION_NEW_MESSAGE": "Gửi thông báo đẩy khi có tin nhắn mới trong cuộc hội thoại tham gia",
+        "HAS_ENABLED_PUSH": "Bạn đã bật thông báo đẩy cho trình duyệt này.",
+        "REQUEST_PUSH": "Bật thông báo đẩy",
+        "SLA_MISSED_FIRST_RESPONSE": "Thông báo khi vi phạm SLA phản hồi đầu tiên",
+        "SLA_MISSED_NEXT_RESPONSE": "Thông báo khi vi phạm SLA phản hồi tiếp theo",
+        "SLA_MISSED_RESOLUTION": "Thông báo khi vi phạm SLA xử lý"
       },
       "PROFILE_IMAGE": {
-        "LABEL": "Hình ảnh hồ sơ cá nhân"
+        "LABEL": "Ảnh hồ sơ"
       },
       "NAME": {
-        "LABEL": "Tên đầy đủ của bạn",
-        "ERROR": "Vui lòng nhập tên đầy đủ hợp lệ",
-        "PLACEHOLDER": "Vui lòng nhập tên đầy đủ của bạn"
+        "LABEL": "Họ tên",
+        "ERROR": "Vui lòng nhập họ tên hợp lệ",
+        "PLACEHOLDER": "Nhập họ tên của bạn"
       },
       "DISPLAY_NAME": {
         "LABEL": "Tên hiển thị",
         "ERROR": "Vui lòng nhập tên hiển thị hợp lệ",
-        "PLACEHOLDER": "Vui lòng nhập tên hiển thị, tên này sẽ hiển thị trong cuộc trò chuyện"
+        "PLACEHOLDER": "Tên hiển thị trong cuộc hội thoại"
       },
       "AVAILABILITY": {
-        "LABEL": "Khả dụng",
+        "LABEL": "Trạng thái hoạt động",
         "STATUS": {
           "ONLINE": "Online",
           "BUSY": "Bận",
           "OFFLINE": "Offline"
         },
-        "SET_AVAILABILITY_SUCCESS": "Tính khả dụng đã được thiết lập thành công",
-        "SET_AVAILABILITY_ERROR": "Không thể đặt, vui lòng thử lại",
-        "IMPERSONATING_ERROR": "Cannot change availability while impersonating a user"
+        "SET_AVAILABILITY_SUCCESS": "Cập nhật trạng thái thành công",
+        "SET_AVAILABILITY_ERROR": "Không thể cập nhật trạng thái, vui lòng thử lại",
+        "IMPERSONATING_ERROR": "Không thể đổi trạng thái khi đang dùng chế độ thay mặt người khác"
       },
       "EMAIL": {
-        "LABEL": "Địa chỉ email của bạn",
-        "ERROR": "Vui lòng nhập địa chỉ email hợp lệ",
-        "PLACEHOLDER": "Vui lòng nhập email của bạn, địa chỉ này sẽ hiển thị trong cuộc trò chuyện"
+        "LABEL": "Email của bạn",
+        "ERROR": "Vui lòng nhập email hợp lệ",
+        "PLACEHOLDER": "Nhập email sẽ hiển thị trong cuộc hội thoại"
       },
       "ADDRESS": {
         "LABEL": "Địa chỉ của bạn",
@@ -242,41 +242,41 @@
       "CURRENT_PASSWORD": {
         "LABEL": "Mật khẩu hiện tại",
         "ERROR": "Vui lòng nhập mật khẩu hiện tại",
-        "PLACEHOLDER": "Vui lòng nhập mật khẩu hiện tại"
+        "PLACEHOLDER": "Nhập mật khẩu hiện tại"
       },
       "PASSWORD": {
         "LABEL": "Mật khẩu mới",
-        "ERROR": "Vui lòng nhập mật khẩu từ 6 ký tự trở lên",
-        "PLACEHOLDER": "Vui lòng nhập mật khẩu mới"
+        "ERROR": "Mật khẩu phải có ít nhất 6 ký tự",
+        "PLACEHOLDER": "Nhập mật khẩu mới"
       },
       "PASSWORD_CONFIRMATION": {
         "LABEL": "Xác nhận mật khẩu mới",
-        "ERROR": "Xác nhận mật khẩu không khớp",
-        "PLACEHOLDER": "Vui lòng nhập lại mật khẩu mới"
+        "ERROR": "Mật khẩu xác nhận phải trùng khớp",
+        "PLACEHOLDER": "Nhập lại mật khẩu mới"
       }
     }
   },
   "SIDEBAR_ITEMS": {
-    "CHANGE_AVAILABILITY_STATUS": "Đổi trạng thái khả dụng",
-    "CHANGE_ACCOUNTS": "Chuyển đổi tài khoản",
-    "SWITCH_ACCOUNT": "Chuyển đổi tài khoản",
+    "CHANGE_AVAILABILITY_STATUS": "Thay đổi",
+    "CHANGE_ACCOUNTS": "Chuyển tài khoản",
+    "SWITCH_ACCOUNT": "Chuyển tài khoản",
     "CONTACT_SUPPORT": "Liên hệ hỗ trợ",
-    "SELECTOR_SUBTITLE": "Chọn một tài khoản từ danh sách dưới đây",
-    "PROFILE_SETTINGS": "Cài Đặt Hồ Sơ",
+    "SELECTOR_SUBTITLE": "Chọn một tài khoản từ danh sách",
+    "PROFILE_SETTINGS": "Cài đặt hồ sơ",
     "KEYBOARD_SHORTCUTS": "Phím tắt",
-    "APPEARANCE": "Giao diện",
-    "SUPER_ADMIN_CONSOLE": "Quản trị hệ thống",
-    "DOCS": "Đọc tài liệu",
-    "CHANGELOG": "Nhật ký thay đổi",
+    "APPEARANCE": "Đổi giao diện",
+    "SUPER_ADMIN_CONSOLE": "Bảng quản trị cao cấp",
+    "DOCS": "Xem tài liệu",
+    "CHANGELOG": "Nhật ký phiên bản",
     "LOGOUT": "Đăng xuất"
   },
   "APP_GLOBAL": {
     "TRIAL_MESSAGE": "ngày dùng thử còn lại.",
-    "TRAIL_BUTTON": "Mua Ngay",
-    "DELETED_USER": "Người dùng đã bị xoá",
-    "EMAIL_VERIFICATION_PENDING": "Có vẻ bạn chưa xác nhận email. Vui lòng kiểm tra hộp thư đến.",
-    "RESEND_VERIFICATION_MAIL": "Gửi lại email xác nhận",
-    "EMAIL_VERIFICATION_SENT": "Email xác nhận đã được gửi. Vui lòng kiểm tra hộp thư đến.",
+    "TRAIL_BUTTON": "Mua ngay",
+    "DELETED_USER": "Người dùng đã bị xóa",
+    "EMAIL_VERIFICATION_PENDING": "Có vẻ bạn chưa xác minh email. Vui lòng kiểm tra hộp thư để xác minh.",
+    "RESEND_VERIFICATION_MAIL": "Gửi lại email xác minh",
+    "EMAIL_VERIFICATION_SENT": "Email xác minh đã được gửi. Vui lòng kiểm tra hộp thư.",
     "ACCOUNT_SUSPENDED": {
       "TITLE": "Tài khoản bị ngưng",
       "MESSAGE": "Tài khoản của bạn đã bị tạm ngưng. Vui lòng liên hệ hỗ trợ để biết thêm chi tiết."
@@ -296,12 +296,12 @@
     },
     "SHOW_MORE_BLOCK": {
       "SHOW_MORE": "Xem thêm",
-      "SHOW_LESS": "Xem ít"
+      "SHOW_LESS": "Thu gọn"
     },
     "FILE_BUBBLE": {
       "DOWNLOAD": "Tải xuống",
       "UPLOADING": "Đang tải lên...",
-      "INSTAGRAM_STORY_UNAVAILABLE": "Cuộc trò chuyện này không còn tồn tại."
+      "INSTAGRAM_STORY_UNAVAILABLE": "Story này không còn khả dụng."
     },
     "LOCATION_BUBBLE": {
       "SEE_ON_MAP": "Xem trên bản đồ"
@@ -310,23 +310,23 @@
       "SUBMIT": "Gửi"
     },
     "MEDIA": {
-      "IMAGE_UNAVAILABLE": "Hình ảnh không còn khả dụng.",
-      "LOADING_FAILED": "Tải không thành công"
+      "IMAGE_UNAVAILABLE": "Hình ảnh này không còn khả dụng.",
+      "LOADING_FAILED": "Tải thất bại"
     }
   },
-  "CONFIRM_EMAIL": "Đang xác thực...",
+  "CONFIRM_EMAIL": "Đang xác minh...",
   "SETTINGS": {
     "INBOXES": {
-      "NEW_INBOX": "Thêm Hộp thư đến"
+      "NEW_INBOX": "Thêm hộp thư"
     },
     "TEMPLATES": {
       "HEADER": {
         "TITLE": "Mẫu tin nhắn",
-        "DESCRIPTION": "Tạo và quản lý các mẫu tin nhắn để tối ưu hóa phản hồi hỗ trợ khách hàng."
+        "DESCRIPTION": "Tạo và quản lý các mẫu tin nhắn để tối ưu tốc độ hỗ trợ khách hàng."
       },
       "EMPTY_STATE": {
-        "TITLE": "Chưa có mẫu nào",
-        "DESCRIPTION": "Bắt đầu bằng cách tạo mẫu đầu tiên. Mẫu giúp bạn phản hồi nhanh hơn với nội dung nhất quán."
+        "TITLE": "Chưa có mẫu tin nào",
+        "DESCRIPTION": "Hãy bắt đầu bằng cách tạo mẫu đầu tiên. Mẫu tin giúp bạn trả lời nhanh hơn và nhất quán hơn."
       },
       "ACTIONS": {
         "CREATE_TEMPLATE": "Tạo mẫu",
@@ -338,26 +338,26 @@
         "CHANNEL": "Kênh",
         "ALL_STATUSES": "Tất cả trạng thái",
         "APPROVED": "Đã duyệt",
-        "PENDING": "Chờ duyệt",
-        "REJECTED": "Bị từ chối",
+        "PENDING": "Đang chờ",
+        "REJECTED": "Từ chối",
         "ALL_CHANNELS": "Tất cả kênh",
         "ALL_LANGUAGES": "Tất cả ngôn ngữ"
       },
       "LIST": {
-        "404": "Không tìm thấy mẫu nào",
-        "PAGINATION": "Hiển thị {start} - {end} trên tổng số {total} mục",
+        "404": "Không tìm thấy mẫu",
+        "PAGINATION": "Hiển thị {start} - {end} trên tổng {total} mục",
         "TABLE_HEADER": {
           "NAME": "Tên",
           "CATEGORY": "Danh mục",
           "CHANNEL": "Kênh",
           "STATUS": "Trạng thái",
-          "ACTIONS": "Thao tác"
+          "ACTIONS": "Hành động"
         }
       },
       "ADD": {
         "TITLE": "Tạo mẫu nội dung",
-        "DESC": "Tạo các mẫu tin nhắn dùng lại để giao tiếp với khách hàng nhanh hơn.",
-        "CANCEL": "Huỷ",
+        "DESC": "Tạo mẫu tin nhắn tái sử dụng để gửi nhanh hơn.",
+        "CANCEL": "Hủy",
         "CREATE": "Tạo",
         "CONTINUE": "Tiếp tục",
         "BACK": "Quay lại",
@@ -371,9 +371,9 @@
             "PLACEHOLDER": "Nhập tên mẫu",
             "HELP": "Chỉ sử dụng chữ thường, số và dấu gạch dưới",
             "VALIDATION": {
-              "PATTERN": "Tên mẫu chỉ được chứa chữ thường, số và dấu gạch dưới",
-              "NO_LEADING_UNDERSCORE": "Tên mẫu không được bắt đầu bằng dấu gạch dưới",
-              "NO_TRAILING_UNDERSCORE": "Tên mẫu không được kết thúc bằng dấu gạch dưới"
+              "PATTERN": "Tên mẫu chỉ được chứa chữ thường, số và gạch dưới",
+              "NO_LEADING_UNDERSCORE": "Tên mẫu không được bắt đầu bằng gạch dưới",
+              "NO_TRAILING_UNDERSCORE": "Tên mẫu không được kết thúc bằng gạch dưới"
             }
           },
           "LANGUAGE": {
@@ -387,7 +387,7 @@
             "PLACEHOLDER": "Chọn danh mục",
             "ERROR": "Vui lòng chọn danh mục",
             "OPTIONS": {
-              "MARKETING": "Tiếp thị",
+              "MARKETING": "Marketing",
               "UTILITY": "Tiện ích",
               "AUTHENTICATION": "Xác thực - Sắp ra mắt"
             }
@@ -396,118 +396,118 @@
             "LABEL": "Hộp thư WhatsApp",
             "PLACEHOLDER": "Chọn hộp thư WhatsApp",
             "ERROR": "Vui lòng chọn hộp thư WhatsApp",
-            "NO_WHATSAPP_INBOX": "Không tìm thấy hộp thư WhatsApp nào. Vui lòng tạo hộp thư WhatsApp trước."
+            "NO_WHATSAPP_INBOX": "Không có hộp thư WhatsApp nào. Vui lòng tạo trước."
           }
         }
       },
       "DELETE": {
         "CONFIRM": {
           "TITLE": "Xóa {templateName}",
-          "MESSAGE": "Bạn có chắc chắn muốn xóa mẫu này không? Hành động này không thể hoàn tác.",
+          "MESSAGE": "Bạn có chắc chắn muốn xóa mẫu này? Hành động này không thể hoàn tác.",
           "YES": "Xóa",
-          "NO": "Huỷ",
+          "NO": "Hủy",
           "PLACE_HOLDER": "Nhập {templateName} để xác nhận"
         },
         "API": {
-          "SUCCESS_MESSAGE": "Xóa mẫu thành công",
+          "SUCCESS_MESSAGE": "Đã xóa mẫu thành công",
           "ERROR_MESSAGE": "Xóa mẫu thất bại"
         }
       },
       "BUILDER": {
         "TITLE": "Trình tạo mẫu",
-        "DESC": "Thiết kế mẫu WhatsApp với tiêu đề, nội dung, chân trang và nút.",
+        "DESC": "Thiết kế mẫu WhatsApp với header, nội dung, footer và nút bấm.",
         "NEW_TITLE": "Tạo mẫu mới",
         "EDIT_TITLE": "Chỉnh sửa mẫu",
         "BUILD_TEMPLATE": "Tạo mẫu",
         "EDIT_TEMPLATE": "Chỉnh sửa mẫu",
         "CREATE": "Tạo mẫu",
         "UPDATE": "Cập nhật mẫu",
-        "OPTIONAL": "Tuỳ chọn",
+        "OPTIONAL": "Tùy chọn",
         "REQUIRED": "Bắt buộc",
         "HEADER": {
-          "TITLE": "Tiêu đề",
-          "TYPE": "Loại tiêu đề",
-          "TEXT_LABEL": "Nội dung tiêu đề",
-          "TEXT_PLACEHOLDER": "Nhập nội dung tiêu đề",
-          "TEXT_HELP": "Giữ ngắn gọn và hấp dẫn (tối đa 60 ký tự)",
-          "MEDIA_UPLOAD": "Tải lên tệp của bạn",
-          "DISABLED_TEXT": "Thêm tiêu đề tuỳ chọn để mẫu hấp dẫn hơn"
+          "TITLE": "Header",
+          "TYPE": "Loại header",
+          "TEXT_LABEL": "Text header",
+          "TEXT_PLACEHOLDER": "Nhập nội dung header",
+          "TEXT_HELP": "Giữ nội dung ngắn gọn (tối đa 60 ký tự)",
+          "MEDIA_UPLOAD": "Tải tệp lên",
+          "DISABLED_TEXT": "Thêm header để tăng sức hấp dẫn cho mẫu"
         },
         "BODY": {
           "TITLE": "Nội dung",
           "TEXT_LABEL": "Nội dung tin nhắn",
           "TEXT_PLACEHOLDER": "Nhập nội dung tin nhắn...",
-          "TEXT_HELP": "Sử dụng *in đậm* và _nghiêng_. Thêm biến với {{1}}, {{2}}, v.v.",
+          "TEXT_HELP": "Dùng *in đậm*, _in nghiêng_. Thêm biến bằng {{1}}, {{2}}...",
           "VARIABLES_TITLE": "Ví dụ biến",
           "VARIABLE_PLACEHOLDER": "Giá trị ví dụ",
-          "VARIABLES_HELP": "Cung cấp giá trị ví dụ cho biến để hỗ trợ duyệt mẫu",
-          "INSERT_VARIABLE_HELP": "Nhấn nút + để chèn biến như {{1}}, {{2}} cho nội dung động"
+          "VARIABLES_HELP": "Cung cấp giá trị ví dụ giúp duyệt mẫu dễ hơn",
+          "INSERT_VARIABLE_HELP": "Nhấn + để chèn biến {{1}}, {{2}}..."
         },
         "FOOTER": {
-          "TITLE": "Chân trang",
-          "TEXT_LABEL": "Nội dung chân trang",
-          "TEXT_PLACEHOLDER": "Nhập nội dung chân trang",
-          "TEXT_HELP": "Thông tin bổ sung hoặc chú thích (tối đa 60 ký tự)",
-          "GUIDELINES": "Chân trang không được chứa biến hoặc định dạng",
-          "DISABLED_TEXT": "Thêm chân trang tuỳ chọn với thông tin bổ sung"
+          "TITLE": "Footer",
+          "TEXT_LABEL": "Nội dung footer",
+          "TEXT_PLACEHOLDER": "Nhập nội dung footer",
+          "TEXT_HELP": "Thêm thông tin bổ sung (tối đa 60 ký tự)",
+          "GUIDELINES": "Footer không được chứa biến hoặc định dạng",
+          "DISABLED_TEXT": "Thêm footer tùy chọn"
         },
         "BUTTONS": {
           "TITLE": "Nút kêu gọi hành động",
           "TYPE": "Loại nút",
-          "BUTTONS_LABEL": "Các nút",
+          "BUTTONS_LABEL": "Danh sách nút",
           "ADD_BUTTON": "Thêm nút",
           "BUTTON_TEXT": "Nội dung nút",
           "TEXT_PLACEHOLDER": "Nhập nội dung nút",
           "PHONE_NUMBER": "Số điện thoại",
           "PHONE_PLACEHOLDER": "+1234567890",
-          "URL": "Địa chỉ website",
+          "URL": "Đường dẫn website",
           "URL_PLACEHOLDER": "https://example.com",
-          "DESCRIPTION": "Tạo nút cho phép khách hàng phản hồi hoặc thực hiện hành động. Có thể thêm tối đa mười nút. Nếu thêm hơn ba nút, chúng sẽ hiển thị dạng danh sách.",
-          "SEE_ALL_OPTIONS": "Xem tất cả tuỳ chọn",
+          "DESCRIPTION": "Tạo các nút cho khách hàng phản hồi hoặc thực hiện hành động. Tối đa 10 nút.",
+          "SEE_ALL_OPTIONS": "Xem tất cả tùy chọn",
           "TYPE_LABEL": "Loại",
           "EXAMPLE_CODE_LABEL": "Mã ví dụ",
           "EXAMPLE_CODE_PLACEHOLDER": "SAVE20",
           "DROPDOWN": {
             "VISIT_WEBSITE": "Truy cập website",
-            "CALL_PHONE": "Gọi số điện thoại",
-            "QUICK_REPLY": "Phản hồi nhanh",
+            "CALL_PHONE": "Gọi điện",
+            "QUICK_REPLY": "Trả lời nhanh",
             "COPY_CODE": "Sao chép mã ưu đãi"
           },
           "PLACEHOLDERS": {
             "PHONE_NUMBER": "Nhập số điện thoại",
             "BUTTON_TEXT": "Nội dung nút",
-            "QUICK_REPLY": "Phản hồi nhanh"
+            "QUICK_REPLY": "Nội dung trả lời nhanh"
           },
-          "QUICK_REPLY_HELP": "Nút phản hồi nhanh cho phép khách hàng trả lời với tuỳ chọn có sẵn (tối đa 3 nút)",
-          "CALL_TO_ACTION_HELP": "Nút kêu gọi hành động cho phép khách hàng gọi doanh nghiệp (tối đa 2 nút)",
-          "URL_HELP": "Nút URL cho phép khách hàng truy cập website (tối đa 2 nút)",
-          "DISABLED_TEXT": "Thêm nút tuỳ chọn để khuyến khích khách hàng hành động"
+          "QUICK_REPLY_HELP": "Nút trả lời nhanh cho phép phản hồi với tối đa 3 lựa chọn.",
+          "CALL_TO_ACTION_HELP": "Nút kêu gọi hành động cho phép khách gọi cho bạn.",
+          "URL_HELP": "Nút URL dẫn khách đến website.",
+          "DISABLED_TEXT": "Thêm nút để tăng tương tác"
         },
         "VARIABLES": {
           "TITLE": "Biến",
-          "POSITIONAL_HELP": "Cung cấp giá trị ví dụ cho tham số vị trí ({example1}, {example2}, v.v.)",
-          "NAMED_HELP": "Cung cấp giá trị ví dụ cho tham số tên ({example_param})",
+          "POSITIONAL_HELP": "Cung cấp ví dụ cho biến vị trí ({example1}, {example2}, ...)",
+          "NAMED_HELP": "Cung cấp ví dụ cho biến tên ({example_param})",
           "EXAMPLE_PLACEHOLDER": "Ví dụ {index}",
           "NAMED_EXAMPLE_PLACEHOLDER": "Ví dụ cho {name}",
           "ERRORS": {
-            "NAMED_IN_POSITIONAL": "Không được dùng biến tên",
-            "POSITIONAL_IN_NAMED": "Không được dùng biến vị trí",
-            "DUPLICATE_VARIABLES": "Nội dung không được chứa biến trùng lặp",
-            "MAX_VARIABLES_EXCEEDED": "Tối đa {count} biến được phép"
+            "NAMED_IN_POSITIONAL": "Không được dùng biến tên trong dạng biến vị trí",
+            "POSITIONAL_IN_NAMED": "Không được dùng biến vị trí trong dạng biến tên",
+            "DUPLICATE_VARIABLES": "Không được trùng biến",
+            "MAX_VARIABLES_EXCEEDED": "Tối đa {count} biến"
           }
         },
         "PREVIEW": {
           "TITLE": "Xem trước",
-          "NO_CONTENT": "Bắt đầu tạo mẫu để xem trước",
-          "IMAGE_HEADER": "Xem trước tiêu đề hình ảnh",
-          "VIDEO_HEADER": "Xem trước tiêu đề video",
-          "DOCUMENT_HEADER": "Xem trước tiêu đề tài liệu"
+          "NO_CONTENT": "Hãy bắt đầu soạn mẫu để xem trước",
+          "IMAGE_HEADER": "Xem trước header dạng ảnh",
+          "VIDEO_HEADER": "Xem trước header dạng video",
+          "DOCUMENT_HEADER": "Xem trước header dạng tài liệu"
         },
         "PARAMETER_TYPES": {
           "TITLE": "Loại tham số",
           "OPTIONS": {
-            "POSITIONAL": "Vị trí",
-            "NAMED": "Tên"
+            "POSITIONAL": "Theo vị trí",
+            "NAMED": "Theo tên"
           }
         }
       },
@@ -516,17 +516,17 @@
         "UPLOADING": "Đang tải lên...",
         "UPLOADED": "Đã tải lên",
         "UPLOAD_ERROR": "Tải lên thất bại",
-        "IMAGE": "Hình ảnh",
+        "IMAGE": "Ảnh",
         "VIDEO": "Video",
         "DOCUMENT": "Tài liệu",
-        "SIZE_ERROR": "Kích thước tệp vượt quá giới hạn {size}MB",
-        "TYPE_ERROR": "Loại tệp không hợp lệ",
-        "UPLOAD_FAILED": "Tải lên thất bại. Vui lòng thử lại.",
-        "HINT": "Kích thước tệp tối đa: {size}MB"
+        "SIZE_ERROR": "Tệp vượt quá giới hạn {size}MB",
+        "TYPE_ERROR": "Định dạng tệp không hợp lệ",
+        "UPLOAD_FAILED": "Tải thất bại. Vui lòng thử lại.",
+        "HINT": "Dung lượng tối đa: {size}MB"
       },
       "LOADING": "Đang tải mẫu...",
       "API": {
-        "FETCH_ERROR": "Tải mẫu thất bại. Vui lòng thử lại.",
+        "FETCH_ERROR": "Không thể tải mẫu. Vui lòng thử lại.",
         "SUCCESS_MESSAGE": "Tạo mẫu thành công",
         "UPDATE_SUCCESS": "Cập nhật mẫu thành công",
         "ERROR_MESSAGE": "Lưu mẫu thất bại. Vui lòng thử lại."
@@ -535,23 +535,23 @@
   },
   "SIDEBAR": {
     "NO_ITEMS": "Không có mục nào",
-    "CURRENTLY_VIEWING_ACCOUNT": "Hiện đang xem:",
+    "CURRENTLY_VIEWING_ACCOUNT": "Đang xem:",
     "SWITCH": "Chuyển",
-    "INBOX_VIEW": "Chế độ Hộp thư đến",
-    "CONVERSATIONS": "Hội thoại",
-    "INBOX": "Thông báo",
-    "ALL_CONVERSATIONS": "Tất cả hội thoại",
+    "INBOX_VIEW": "Xem hộp thư",
+    "CONVERSATIONS": "Cuộc hội thoại",
+    "INBOX": "Hộp thư của tôi",
+    "ALL_CONVERSATIONS": "Tất cả cuộc hội thoại",
     "MENTIONED_CONVERSATIONS": "Được nhắc đến",
-    "PARTICIPATING_CONVERSATIONS": "Được phân công",
-    "UNATTENDED_CONVERSATIONS": "Chưa phản hồi",
+    "PARTICIPATING_CONVERSATIONS": "Đang tham gia",
+    "UNATTENDED_CONVERSATIONS": "Chưa xử lý",
     "REPORTS": "Báo cáo",
     "SETTINGS": "Cài đặt",
-    "CONTACTS": "Danh bạ",
+    "CONTACTS": "Liên hệ",
     "ACTIVE": "Đang hoạt động",
     "CAPTAIN": "ShopizAI",
     "CAPTAIN_ASSISTANTS": "Trợ lý",
     "CAPTAIN_DOCUMENTS": "Tài liệu",
-    "CAPTAIN_RESPONSES": "Câu hỏi thường gặp",
+    "CAPTAIN_RESPONSES": "FAQ",
     "CAPTAIN_TOOLS": "Công cụ",
     "CAPTAIN_SCENARIOS": "Scenarios",
     "CAPTAIN_PLAYGROUND": "Playground",
@@ -560,41 +560,41 @@
     "HOME": "Trang Chủ",
     "AGENTS": "Nhân viên",
     "AGENT_BOTS": "Bot",
-    "AUDIT_LOGS": "Nhật ký kiểm tra",
-    "INBOXES": "Hộp thư đến",
+    "AUDIT_LOGS": "Nhật ký hệ thống",
+    "INBOXES": "Hộp thư",
     "NOTIFICATIONS": "Thông báo",
-    "CANNED_RESPONSES": "Tin nhắn mẫu",
+    "CANNED_RESPONSES": "Câu trả lời nhanh",
+    "TEMPLATES": "Mẫu",
     "INTEGRATIONS": "Tích hợp",
-    "PROFILE_SETTINGS": "Cài Đặt Hồ Sơ",
-    "ACCOUNT_SETTINGS": "Tài Khoản",
+    "PROFILE_SETTINGS": "Cài đặt hồ sơ",
+    "ACCOUNT_SETTINGS": "Cài đặt tài khoản",
     "APPLICATIONS": "Ứng dụng",
     "LABELS": "Nhãn",
     "CUSTOM_ATTRIBUTES": "Thuộc tính tùy chỉnh",
-    "AUTOMATION": "Tự động hoá",
-    "MACROS": "Macro",
+    "AUTOMATION": "Tự động hóa",
+    "MACROS": "Macros",
     "TEAMS": "Nhóm",
-    "BILLING": "Phí",
+    "BILLING": "Thanh toán",
     "CUSTOM_VIEWS_FOLDER": "Thư mục",
-    "CUSTOM_VIEWS_SEGMENTS": "Phân khúc",
-    "ALL_CONTACTS": "Danh bạ",
-    "TAGGED_WITH": "Lọc theo thẻ",
-    "NEW_LABEL": "Nhãn mới",
-    "NEW_TEAM": "Nhóm mới",
-    "NEW_INBOX": "Thêm hộp thư",
-    "REPORTS_CONVERSATION": "Hội thoại",
+    "CUSTOM_VIEWS_SEGMENTS": "Phân đoạn",
+    "ALL_CONTACTS": "Tất cả liên hệ",
+    "TAGGED_WITH": "Gắn nhãn",
+    "NEW_LABEL": "Tạo nhãn",
+    "NEW_TEAM": "Tạo nhóm",
+    "NEW_INBOX": "Tạo hộp thư",
+    "REPORTS_CONVERSATION": "Cuộc hội thoại",
     "CSAT": "CSAT",
-    "LIVE_CHAT": "Livechat",
+    "LIVE_CHAT": "Live Chat",
     "SMS": "SMS",
     "WHATSAPP": "WhatsApp",
     "VOICE": "Voice",
     "SURVEY": "Khảo sát",
     "ZALO_PERSONAL": "Zalo Personal",
     "LANDING_PAGE": "Landing Page",
-    "FORM": "Biểu mẫu",
     "CAMPAIGNS": "Chiến dịch",
     "SALES": "Bán hàng",
-    "SALES_PIPELINE": "Cơ hội bán hàng",
-    "SALES_CATALOG": "Sản phẩm",
+    "SALES_PIPELINE": "Pipeline",
+    "SALES_CATALOG": "Danh mục",
     "SALES_ORDERS": "Đơn hàng",
     "ONGOING": "Đang diễn ra",
     "ONE_OFF": "Một lần",
@@ -602,19 +602,19 @@
     "REPORTS_BOT": "Bot",
     "REPORTS_AGENT": "Nhân viên",
     "REPORTS_LABEL": "Nhãn",
-    "REPORTS_INBOX": "Kênh",
+    "REPORTS_INBOX": "Hộp thư",
     "REPORTS_TEAM": "Nhóm",
     "AGENT_ASSIGNMENT": "Phân công nhân viên",
-    "SET_AVAILABILITY_TITLE": "Đặt chính mình như",
-    "SET_YOUR_AVAILABILITY": "Đặt tính khả dụng của bạn",
+    "SET_AVAILABILITY_TITLE": "Đặt trạng thái:",
+    "SET_YOUR_AVAILABILITY": "Đặt trạng thái hoạt động",
     "SLA": "SLA",
     "CUSTOM_ROLES": "Vai trò tùy chỉnh",
     "BETA": "Beta",
     "REPORTS_OVERVIEW": "Tổng quan",
-    "REAUTHORIZE": "Kết nối hộp thư của bạn đã hết hạn, vui lòng kết nối lại để tiếp tục nhận và gửi tin nhắn",
+    "REAUTHORIZE": "Kết nối hộp thư đã hết hạn, hãy kết nối lại để tiếp tục nhận và gửi tin nhắn",
     "HELP_CENTER": {
-      "TITLE": "Cổng thông tin",
-      "LANDING_PAGE": "Trang chủ",
+      "TITLE": "Trung tâm trợ giúp",
+      "LANDING_PAGE": "Trang chính",
       "ARTICLES": "Bài viết",
       "CATEGORIES": "Danh mục",
       "LOCALES": "Ngôn ngữ",
@@ -622,20 +622,20 @@
     },
     "CHANNELS": "Kênh",
     "SET_AUTO_OFFLINE": {
-      "TEXT": "Tự động chuyển sang offline",
-      "INFO_TEXT": "Hệ thống sẽ tự động chuyển bạn sang trạng thái offline khi không sử dụng ứng dụng hoặc bảng điều khiển.",
-      "INFO_SHORT": "Tự động chuyển sang offline khi không sử dụng ứng dụng."
+      "TEXT": "Tự động chuyển offline",
+      "INFO_TEXT": "Hệ thống sẽ tự đặt bạn offline khi bạn không sử dụng ứng dụng hoặc dashboard.",
+      "INFO_SHORT": "Tự động offline khi không hoạt động."
     },
-    "DOCS": "Đọc tài liệu",
+    "DOCS": "Xem tài liệu",
     "SECURITY": "Bảo mật"
   },
   "BILLING_SETTINGS": {
-    "TITLE": "Phí",
-    "DESCRIPTION": "Quản lý đăng ký của bạn tại đây, nâng cấp gói và nhận thêm lợi ích cho nhóm của bạn.",
+    "TITLE": "Thanh toán",
+    "DESCRIPTION": "Quản lý gói đăng ký của bạn tại đây, nâng cấp gói và mở rộng lợi ích cho đội của bạn.",
     "CURRENT_PLAN": {
       "TITLE": "Gói hiện tại",
       "PLAN_NOTE": "Bạn đang đăng ký gói **{plan}** với **{quantity}** giấy phép",
-      "SEAT_COUNT": "Số lượng nhân viên",
+      "SEAT_COUNT": "Số lượng nhân sự",
       "RENEWS_ON": "Gia hạn vào",
       "AI_ADDON_MESSAGE": "Tin nhắn AI mua thêm",
       "RESOURCE": "Tài nguyên",
@@ -644,138 +644,139 @@
       "CONTACT": "Danh bạ",
       "AUTOMATION": "Tự động hoá",
       "AI_RESOURCE": "Tài nguyên AI",
-      "AI_DOCUMENT": "ShopizAI Tài liệu",
-      "AI_FAQ": "ShopizAI FAQs",
-      "AI_ASSISTANT": "ShopizAI Trợ lý ảo",
+      "AI_DOCUMENT": "Tài liệu ShopizAI",
+      "AI_FAQ": "FAQ ShopizAI",
+      "AI_ASSISTANT": "Trợ lý ShopizAI",
       "AI_RESPONSE": "Tin nhắn AI mỗi tháng"
     },
     "VIEW_PRICING": "Xem bảng giá",
     "MANAGE_SUBSCRIPTION": {
-      "TITLE": "Quản lý thuê bao của bạn",
-      "DESCRIPTION": "Xem các hóa đơn trước đây, chỉnh sửa thông tin thanh toán hoặc hủy thuê bao.",
-      "BUTTON_TXT": "Đăng ký ngay"
+      "TITLE": "Quản lý đăng ký",
+      "DESCRIPTION": "Xem hóa đơn trước đây, chỉnh sửa thông tin thanh toán hoặc hủy đăng ký.",
+      "BUTTON_TXT": "Đi tới cổng thanh toán"
     },
     "CAPTAIN": {
-      "TITLE": "Tài nguyên AI",
-      "DESCRIPTION": "Quản lý mức sử dụng AI.",
-      "BUTTON_TXT": "Mua thêm",
+      "TITLE": "AI Agent",
+      "DESCRIPTION": "Quản lý mức sử dụng và tín dụng AI.",
+      "BUTTON_TXT": "Mua thêm tín dụng",
       "DOCUMENTS": "Tài liệu",
       "RESPONSES": "Câu trả lời",
       "GET_MORE": "Mua thêm tin nhắn AI",
       "NO_EXPIRATION": "Không có hạn sử dụng",
-      "UPGRADE": "Trợ lý AI không khả dụng trên gói miễn phí, nâng cấp ngay để truy cập trợ lý, copilot và nhiều tính năng khác."
+      "UPGRADE": "AI Agent không khả dụng trên gói miễn phí. Hãy nâng cấp để truy cập trợ lý, copilot và nhiều tính năng nâng cao."
     },
     "CHAT_WITH_US": {
       "TITLE": "Cần hỗ trợ?",
-      "DESCRIPTION": "Bạn gặp vấn đề về thanh toán? Hãy cho chúng tôi biết.",
+      "DESCRIPTION": "Gặp vấn đề thanh toán? Chúng tôi luôn sẵn sàng hỗ trợ.",
       "BUTTON_TXT": "Trò chuyện với chúng tôi"
     },
-    "NO_BILLING_USER": "Tài khoản thanh toán của bạn đang được định cấu hình. Hãy làm mới trang và thử lại.",
+    "NO_BILLING_USER": "Tài khoản thanh toán của bạn đang được thiết lập. Hãy tải lại trang và thử lại.",
     "PRICING_PACKAGES": {
       "HEADING": {
         "TITLE": "Gói dịch vụ",
-        "DESCRIPTION": "Tùy chọn linh hoạt cho mọi quy mô doanh nghiệp, thanh toán đơn giản, nâng cấp dễ dàng",
-        "FEATURES": "Danh sách tính năng"
+        "DESCRIPTION": "Tùy chọn linh hoạt cho mọi quy mô doanh nghiệp, thanh toán dễ dàng, nâng cấp nhanh chóng",
+        "FEATURES": "Tính năng"
       },
       "BUTTONS": {
         "CURRENT_PACKAGE": "Gói hiện tại",
-        "UPGRADE_NOW": "Đăng ký ngay",
+        "UPGRADE_NOW": "Nâng cấp ngay",
         "SUBCRIBE_NOW": "Đăng ký ngay",
         "BUY_NOW": "Mua ngay",
         "CONTACT": "Liên hệ"
       },
-      "HALF-YEAR": "6 Tháng",
-      "YEAR": "1 Năm"
+      "MONTH": "1 tháng",
+      "HALF-YEAR": "6 tháng",
+      "YEAR": "1 năm"
     },
-    "BILLING_HISTORY": "Lịch sử mua hàng"
+    "BILLING_HISTORY": "Lịch sử mua gói"
   },
   "SECURITY_SETTINGS": {
     "TITLE": "Bảo mật",
-    "DESCRIPTION": "Quản lý cài đặt bảo mật tài khoản của bạn.",
+    "DESCRIPTION": "Quản lý các cài đặt bảo mật tài khoản.",
     "LINK_TEXT": "Tìm hiểu thêm về SAML SSO",
     "SAML": {
       "TITLE": "SAML SSO",
-      "NOTE": "Cấu hình xác thực một lần SAML cho tài khoản của bạn. Người dùng sẽ xác thực thông qua nhà cung cấp danh tính của bạn thay vì sử dụng email/mật khẩu.",
+      "NOTE": "Cấu hình đăng nhập một lần SAML cho tài khoản. Người dùng sẽ đăng nhập thông qua nhà cung cấp danh tính thay vì email/mật khẩu.",
       "ACS_URL": {
         "LABEL": "ACS URL",
-        "TOOLTIP": "Assertion Consumer Service URL - Sử dụng URL này trong cấu hình IdP của bạn"
+        "TOOLTIP": "Assertion Consumer Service URL - cấu hình URL này trong IdP để nhận phản hồi SAML"
       },
       "SSO_URL": {
         "LABEL": "SSO URL",
-        "HELP": "URL đăng nhập một lần từ nhà cung cấp danh tính của bạn",
+        "HELP": "URL nơi gửi yêu cầu xác thực SAML",
         "PLACEHOLDER": "https://your-idp.com/saml/sso"
       },
       "CERTIFICATE": {
-        "LABEL": "Chứng thực ký ở định dạng PEM",
-        "HELP": "Chứng thực công khai từ nhà cung cấp danh tính của bạn dùng để xác minh phản hồi SAML",
+        "LABEL": "Chứng chỉ ký (PEM)",
+        "HELP": "Chứng chỉ công khai từ IdP của bạn để xác minh phản hồi SAML",
         "PLACEHOLDER": "-----BEGIN CERTIFICATE-----\nMIIC..."
       },
       "FINGERPRINT": {
-        "LABEL": "Dấu vân tay chứng thực",
-        "TOOLTIP": "Dấu vân tay SHA-1 của chứng thực - Sử dụng điều này để xác minh chứng thực trong cấu hình IdP của bạn"
+        "LABEL": "Dấu vân tay chứng chỉ",
+        "TOOLTIP": "Dấu vân tay SHA-1 dùng để xác minh chứng chỉ trong IdP"
       },
       "COPY_SUCCESS": "Đã sao chép vào clipboard",
       "SP_ENTITY_ID": {
         "LABEL": "SP Entity ID",
-        "HELP": "Định danh duy nhất cho Shopiz với tư cách là Nhà cung cấp Dịch vụ - Cấu hình điều này trong cài đặt IdP của bạn",
-        "TOOLTIP": "Định danh duy nhất cho Shopiz với tư cách là Nhà cung cấp Dịch vụ - Cấu hình điều này trong cài đặt IdP của bạn"
+        "HELP": "Mã định danh duy nhất của Shopiz với vai trò Service Provider.",
+        "TOOLTIP": "Định danh duy nhất của Shopiz với tư cách Nhà cung cấp Dịch vụ"
       },
       "IDP_ENTITY_ID": {
-        "LABEL": "Định danh Nhà cung cấp danh tính",
-        "HELP": "Định danh duy nhất cho nhà cung cấp danh tính của bạn (thường có trong cấu hình IdP)",
+        "LABEL": "Định danh IdP",
+        "HELP": "Định danh duy nhất của nhà cung cấp danh tính (IdP)",
         "PLACEHOLDER": "https://your-idp.com/saml"
       },
       "UPDATE_BUTTON": "Cập nhật cài đặt SAML",
       "API": {
-        "SUCCESS": "Cài đặt SAML đã được cập nhật thành công",
+        "SUCCESS": "Cập nhật cài đặt SAML thành công",
         "ERROR": "Không thể cập nhật cài đặt SAML",
         "ERROR_LOADING": "Không thể tải cài đặt SAML",
-        "DISABLED": "Cài đặt SAML đã bị vô hiệu hóa thành công"
+        "DISABLED": "Đã tắt SAML thành công"
       },
       "VALIDATION": {
-        "REQUIRED_FIELDS": "SSO URL, Định danh Nhà cung cấp danh tính và Chứng thực là các trường bắt buộc",
+        "REQUIRED_FIELDS": "SSO URL, Định danh IdP và Chứng chỉ là bắt buộc",
         "SSO_URL_ERROR": "Vui lòng nhập SSO URL hợp lệ",
-        "CERTIFICATE_ERROR": "Chứng thực là trường bắt buộc",
-        "IDP_ENTITY_ID_ERROR": "Định danh Nhà cung cấp danh tính là trường bắt buộc"
+        "CERTIFICATE_ERROR": "Chứng chỉ là bắt buộc",
+        "IDP_ENTITY_ID_ERROR": "Định danh IdP là bắt buộc"
       },
       "ENTERPRISE_PAYWALL": {
-        "AVAILABLE_ON": "Tính năng SAML SSO chỉ khả dụng trên các gói Enterprise.",
-        "UPGRADE_PROMPT": "Nâng cấp lên gói Enterprise để truy cập đăng nhập một lần SAML và các tính năng bảo mật nâng cao khác.",
-        "ASK_ADMIN": "Vui lòng liên hệ quản trị viên của bạn để được nâng cấp."
+        "AVAILABLE_ON": "Tính năng SAML SSO chỉ khả dụng trên gói Enterprise.",
+        "UPGRADE_PROMPT": "Nâng cấp lên gói Enterprise để dùng SAML SSO và các tính năng bảo mật nâng cao.",
+        "ASK_ADMIN": "Liên hệ quản trị viên để nâng cấp."
       },
       "PAYWALL": {
         "TITLE": "Nâng cấp để bật SAML SSO",
-        "AVAILABLE_ON": "Tính năng SAML SSO chỉ khả dụng trên các gói Enterprise.",
-        "UPGRADE_PROMPT": "Nâng cấp gói của bạn để truy cập đăng nhập một lần SAML và các tính năng nâng cao khác.",
+        "AVAILABLE_ON": "Tính năng chỉ có trên gói Enterprise.",
+        "UPGRADE_PROMPT": "Nâng cấp để sử dụng SAML SSO và tính năng nâng cao.",
         "UPGRADE_NOW": "Nâng cấp ngay",
-        "CANCEL_ANYTIME": "Bạn có thể thay đổi hoặc huỷ gói bất cứ lúc nào"
+        "CANCEL_ANYTIME": "Bạn có thể thay đổi hoặc hủy gói bất kỳ lúc nào"
       },
       "ATTRIBUTE_MAPPING": {
         "TITLE": "Thiết lập thuộc tính SAML",
-        "DESCRIPTION": "Các ánh xạ thuộc tính sau phải được cấu hình trong nhà cung cấp danh tính của bạn"
+        "DESCRIPTION": "Các ánh xạ thuộc tính sau phải được cấu hình trong IdP của bạn"
       },
       "INFO_SECTION": {
         "TITLE": "Thông tin Nhà cung cấp dịch vụ",
-        "TOOLTIP": "Sao chép các giá trị này và cấu hình trong Nhà cung cấp danh tính của bạn để thiết lập kết nối SAML"
+        "TOOLTIP": "Sao chép các giá trị này và cấu hình trong IdP của bạn"
       }
     }
   },
   "CREATE_ACCOUNT": {
-    "NO_ACCOUNT_WARNING": "Ồ ồ! Chúng tôi không tìm thấy tài khoản Shopiz nào. Vui lòng tạo tài khoản mới để tiếp tục.",
+    "NO_ACCOUNT_WARNING": "Không tìm thấy tài khoản Shopiz. Vui lòng tạo tài khoản mới để tiếp tục.",
     "NEW_ACCOUNT": "Tạo tài khoản mới",
     "SELECTOR_SUBTITLE": "Tạo tài khoản mới",
     "API": {
-      "SUCCESS_MESSAGE": "Tài khoản đã được tạo thành công",
+      "SUCCESS_MESSAGE": "Tạo tài khoản thành công",
       "EXIST_MESSAGE": "Tài khoản đã tồn tại",
-      "ERROR_MESSAGE": "Không thể kết nối với máy chủ, vui lòng thử lại sau"
+      "ERROR_MESSAGE": "Không thể kết nối đến máy chủ, vui lòng thử lại"
     },
     "FORM": {
       "NAME": {
         "LABEL": "Tên công ty",
-        "PLACEHOLDER": "Công ty cổ phần ABC"
+        "PLACEHOLDER": "Wayne Enterprises"
       },
       "SUBMIT": "Gửi",
-      "CANCEL": "Huỷ"
+      "CANCEL": "Hủy"
     }
   },
   "KEYBOARD_SHORTCUTS": {
@@ -783,42 +784,42 @@
     "TITLE": {
       "OPEN_CONVERSATION": "Mở cuộc trò chuyện",
       "RESOLVE_AND_NEXT": "Giải quyết và chuyển sang cuộc tiếp theo",
-      "NAVIGATE_DROPDOWN": "Điều hướng danh sách thả xuống",
+      "NAVIGATE_DROPDOWN": "Điều hướng mục trong danh sách thả xuống",
       "RESOLVE_CONVERSATION": "Giải quyết cuộc trò chuyện",
-      "GO_TO_CONVERSATION_DASHBOARD": "Đi tới bảng điều khiển cuộc trò chuyện",
+      "GO_TO_CONVERSATION_DASHBOARD": "Đi đến bảng điều khiển hội thoại",
       "ADD_ATTACHMENT": "Thêm tệp đính kèm",
-      "GO_TO_CONTACTS_DASHBOARD": "Đi tới bảng điều khiển liên hệ",
-      "TOGGLE_SIDEBAR": "Chuyển đổi thanh bên",
-      "GO_TO_REPORTS_SIDEBAR": "Đi đến thanh bên Báo cáo",
-      "MOVE_TO_NEXT_TAB": "Di chuyển đến tab tiếp theo trong danh sách cuộc trò chuyện",
+      "GO_TO_CONTACTS_DASHBOARD": "Đi đến trang quản lý liên hệ",
+      "TOGGLE_SIDEBAR": "Ẩn/hiện thanh bên",
+      "GO_TO_REPORTS_SIDEBAR": "Đi đến mục báo cáo",
+      "MOVE_TO_NEXT_TAB": "Di chuyển đến tab tiếp theo",
       "GO_TO_SETTINGS": "Đi đến Cài đặt",
-      "SWITCH_TO_PRIVATE_NOTE": "Chuyển sang Ghi chú Riêng tư",
-      "SWITCH_TO_REPLY": "Chuyển sang phản hồi",
-      "TOGGLE_SNOOZE_DROPDOWN": "Chuyển đổi thả xuống tạm dừng"
+      "SWITCH_TO_PRIVATE_NOTE": "Chuyển sang Ghi chú nội bộ",
+      "SWITCH_TO_REPLY": "Chuyển sang Trả lời",
+      "TOGGLE_SNOOZE_DROPDOWN": "Mở menu tạm ẩn"
     }
   },
   "ASSIGNMENT_POLICY": {
     "INDEX": {
       "HEADER": {
-        "TITLE": "Phân công tác vụ",
-        "DESCRIPTION": "Định nghĩa các chính sách để quản lý hiệu quả khối lượng công việc và định tuyến các cuộc trò chuyện dựa trên nhu cầu của hộp thư và nhân viên."
+        "TITLE": "Phân công nhân viên",
+        "DESCRIPTION": "Định nghĩa chính sách để quản lý khối lượng công việc và định tuyến hội thoại theo hộp thư và nhân viên."
       },
       "ASSIGNMENT_POLICY": {
         "TITLE": "Chính sách phân công",
-        "DESCRIPTION": "Quản lý cách các cuộc trò chuyện được phân công trong hộp thư.",
+        "DESCRIPTION": "Quản lý cách hội thoại được phân công trong hộp thư.",
         "FEATURES": [
-          "Phân công các cuộc trò chuyện một cách đồng đều hoặc theo khả năng sẵn có",
-          "Thêm quy tắc phân phối công bằng để tránh quá tải cho bất kỳ nhân viên nào",
-          "Thêm hộp thư vào một chính sách - một chính sách cho mỗi hộp thư"
+          "Phân công đều hoặc theo năng lực hiện có",
+          "Thêm quy tắc phân phối công bằng để tránh quá tải",
+          "Mỗi hộp thư chỉ thuộc một chính sách"
         ]
       },
       "AGENT_CAPACITY_POLICY": {
         "TITLE": "Chính sách năng lực nhân viên",
-        "DESCRIPTION": "Quản lý khối lượng công việc cho các nhân viên.",
+        "DESCRIPTION": "Quản lý khối lượng công việc cho từng nhân viên.",
         "FEATURES": [
-          "Định nghĩa số lượng cuộc trò chuyện tối đa cho mỗi hộp thư",
-          "Tạo ngoại lệ dựa trên nhãn và thời gian",
-          "Thêm nhân viên vào một chính sách - một chính sách cho mỗi nhân viên"
+          "Đặt số lượng hội thoại tối đa cho mỗi hộp thư",
+          "Tạo ngoại lệ dựa trên nhãn hoặc thời gian",
+          "Mỗi nhân viên chỉ thuộc một chính sách"
         ]
       }
     },
@@ -826,17 +827,17 @@
       "INDEX": {
         "HEADER": {
           "TITLE": "Chính sách phân công",
-          "CREATE_POLICY": "Chính sách mới"
+          "CREATE_POLICY": "Tạo chính sách"
         },
         "CARD": {
           "ORDER": "Thứ tự",
-          "PRIORITY": "Mức độ ưu tiên",
-          "ACTIVE": "Có hiệu lực",
-          "INACTIVE": "Không có hiệu lực",
+          "PRIORITY": "Ưu tiên",
+          "ACTIVE": "Hoạt động",
+          "INACTIVE": "Không hoạt động",
           "POPOVER": "Hộp thư đã thêm",
           "EDIT": "Chỉnh sửa"
         },
-        "NO_RECORDS_FOUND": "Không tìm thấy chính sách phân công nào"
+        "NO_RECORDS_FOUND": "Không tìm thấy chính sách phân công"
       },
       "CREATE": {
         "HEADER": {
@@ -855,22 +856,22 @@
         "EDIT_BUTTON": "Cập nhật chính sách",
         "CONFIRM_ADD_INBOX_DIALOG": {
           "TITLE": "Thêm hộp thư",
-          "DESCRIPTION": "{inboxName} hộp thư đã được liên kết với một chính sách khác. Bạn có chắc chắn muốn liên kết nó với chính sách này không? Nó sẽ bị ngắt liên kết khỏi chính sách khác.",
+          "DESCRIPTION": "{inboxName} đã được gán vào chính sách khác. Bạn có muốn chuyển sang chính sách này không? Nó sẽ bị gỡ khỏi chính sách cũ.",
           "CONFIRM_BUTTON_LABEL": "Tiếp tục",
-          "CANCEL_BUTTON_LABEL": "Huỷ"
+          "CANCEL_BUTTON_LABEL": "Hủy"
         },
         "API": {
-          "SUCCESS_MESSAGE": "Cập nhật chính sách phân công thành công",
-          "ERROR_MESSAGE": "Cập nhật chính sách phân công thất bại"
+          "SUCCESS_MESSAGE": "Cập nhật chính sách thành công",
+          "ERROR_MESSAGE": "Cập nhật chính sách thất bại"
         },
         "INBOX_API": {
           "ADD": {
-            "SUCCESS_MESSAGE": "Hộp thư đã được thêm vào chính sách thành công",
-            "ERROR_MESSAGE": "Thêm hộp thư vào chính sách thất bại"
+            "SUCCESS_MESSAGE": "Thêm hộp thư thành công",
+            "ERROR_MESSAGE": "Thêm hộp thư thất bại"
           },
           "REMOVE": {
-            "SUCCESS_MESSAGE": "Hộp thư đã được gỡ bỏ khỏi chính sách thành công",
-            "ERROR_MESSAGE": "Gỡ bỏ hộp thư khỏi chính sách thất bại"
+            "SUCCESS_MESSAGE": "Gỡ hộp thư thành công",
+            "ERROR_MESSAGE": "Gỡ hộp thư thất bại"
           }
         }
       },
@@ -886,68 +887,68 @@
         "STATUS": {
           "LABEL": "Trạng thái:",
           "PLACEHOLDER": "Chọn trạng thái",
-          "ACTIVE": "Chính sách đang hoạt động",
-          "INACTIVE": "Chính sách không hoạt động"
+          "ACTIVE": "Đang hoạt động",
+          "INACTIVE": "Không hoạt động"
         },
         "ASSIGNMENT_ORDER": {
           "LABEL": "Thứ tự phân công",
           "ROUND_ROBIN": {
-            "LABEL": "Round robin",
-            "DESCRIPTION": "Phân công cuộc trò chuyện đều giữa các nhân viên."
+            "LABEL": "Luân phiên",
+            "DESCRIPTION": "Phân công hội thoại đều giữa các nhân viên."
           },
           "BALANCED": {
-            "LABEL": "Balanced",
-            "DESCRIPTION": "Phân công cuộc trò chuyện dựa trên năng lực sẵn có."
+            "LABEL": "Cân bằng",
+            "DESCRIPTION": "Phân công dựa trên năng lực sẵn có."
           }
         },
         "ASSIGNMENT_PRIORITY": {
-          "LABEL": "Mức độ ưu tiên phân công",
+          "LABEL": "Ưu tiên phân công",
           "EARLIEST_CREATED": {
             "LABEL": "Tạo sớm nhất",
-            "DESCRIPTION": "Cuộc trò chuyện được tạo đầu tiên sẽ được phân công trước."
+            "DESCRIPTION": "Hội thoại được tạo đầu tiên sẽ được phân công trước."
           },
           "LONGEST_WAITING": {
-            "LABEL": "Chờ đợi lâu nhất",
-            "DESCRIPTION": "Cuộc trò chuyện chờ đợi lâu nhất sẽ được phân công trước."
+            "LABEL": "Chờ lâu nhất",
+            "DESCRIPTION": "Hội thoại chờ lâu nhất sẽ được phân công trước."
           }
         },
         "FAIR_DISTRIBUTION": {
-          "LABEL": "Chính sách phân phối công bằng",
-          "DESCRIPTION": "Đặt số lượng tối đa cuộc trò chuyện có thể được phân công cho mỗi nhân viên trong một khoảng thời gian để tránh quá tải cho bất kỳ nhân viên nào. Trường bắt buộc này mặc định là 100 cuộc trò chuyện mỗi giờ.",
-          "INPUT_MAX": "Phân công tối đa",
-          "DURATION": "Cuộc trò chuyện mỗi nhân viên trong mỗi giờ"
+          "LABEL": "Phân phối công bằng",
+          "DESCRIPTION": "Đặt số hội thoại tối đa có thể phân công cho mỗi nhân viên trong một khung thời gian (mặc định 100 cuộc/giờ).",
+          "INPUT_MAX": "Tối đa",
+          "DURATION": "Cuộc/nhân viên mỗi"
         },
         "INBOXES": {
           "LABEL": "Hộp thư đã thêm",
-          "DESCRIPTION": "Thêm hộp thư mà chính sách này sẽ áp dụng.",
+          "DESCRIPTION": "Thêm hộp thư áp dụng chính sách.",
           "ADD_BUTTON": "Thêm hộp thư",
           "DROPDOWN": {
-            "SEARCH_PLACEHOLDER": "Tìm kiếm và chọn hộp thư để thêm",
+            "SEARCH_PLACEHOLDER": "Tìm và chọn hộp thư",
             "ADD_BUTTON": "Thêm"
           },
-          "EMPTY_STATE": "Chưa có hộp thư nào được thêm vào chính sách này, hãy thêm một hộp thư để bắt đầu",
+          "EMPTY_STATE": "Chưa có hộp thư nào. Hãy thêm để bắt đầu.",
           "API": {
-            "SUCCESS_MESSAGE": "Hộp thư đã được thêm vào chính sách",
-            "ERROR_MESSAGE": "Thêm hộp thư vào chính sách thất bại"
+            "SUCCESS_MESSAGE": "Thêm hộp thư thành công",
+            "ERROR_MESSAGE": "Thêm hộp thư thất bại"
           }
         }
       },
       "DELETE_POLICY": {
-        "SUCCESS_MESSAGE": "Xóa chính sách phân công thành công",
-        "ERROR_MESSAGE": "Xóa chính sách phân công thất bại"
+        "SUCCESS_MESSAGE": "Xóa chính sách thành công",
+        "ERROR_MESSAGE": "Xóa chính sách thất bại"
       }
     },
     "AGENT_CAPACITY_POLICY": {
       "INDEX": {
         "HEADER": {
           "TITLE": "Năng lực nhân viên",
-          "CREATE_POLICY": "Chính sách mới"
+          "CREATE_POLICY": "Tạo chính sách"
         },
         "CARD": {
           "POPOVER": "Nhân viên đã thêm",
           "EDIT": "Chỉnh sửa"
         },
-        "NO_RECORDS_FOUND": "Chưa có chính sách năng lực nhân viên nào được tìm thấy"
+        "NO_RECORDS_FOUND": "Không tìm thấy chính sách năng lực"
       },
       "CREATE": {
         "HEADER": {
@@ -955,33 +956,33 @@
         },
         "CREATE_BUTTON": "Tạo chính sách",
         "API": {
-          "SUCCESS_MESSAGE": "Tạo chính sách năng lực nhân viên thành công",
-          "ERROR_MESSAGE": "Tạo chính sách năng lực nhân viên thất bại"
+          "SUCCESS_MESSAGE": "Tạo chính sách năng lực thành công",
+          "ERROR_MESSAGE": "Tạo chính sách năng lực thất bại"
         }
       },
       "EDIT": {
         "HEADER": {
-          "TITLE": "Chỉnh sửa chính sách năng lực nhân viên"
+          "TITLE": "Chỉnh sửa chính sách năng lực"
         },
         "EDIT_BUTTON": "Cập nhật chính sách",
         "CONFIRM_ADD_AGENT_DIALOG": {
           "TITLE": "Thêm nhân viên",
-          "DESCRIPTION": "{agentName} đã được liên kết với một chính sách khác. Bạn có chắc chắn muốn liên kết nó với chính sách này không? Nó sẽ bị ngắt liên kết khỏi chính sách khác.",
+          "DESCRIPTION": "{agentName} đã thuộc chính sách khác. Bạn có muốn chuyển họ sang chính sách này không?",
           "CONFIRM_BUTTON_LABEL": "Tiếp tục",
-          "CANCEL_BUTTON_LABEL": "Huỷ"
+          "CANCEL_BUTTON_LABEL": "Hủy"
         },
         "API": {
-          "SUCCESS_MESSAGE": "Cập nhật chính sách năng lực nhân viên thành công",
-          "ERROR_MESSAGE": "Cập nhật chính sách năng lực nhân viên thất bại"
+          "SUCCESS_MESSAGE": "Cập nhật chính sách năng lực thành công",
+          "ERROR_MESSAGE": "Cập nhật chính sách năng lực thất bại"
         },
         "AGENT_API": {
           "ADD": {
-            "SUCCESS_MESSAGE": "Nhân viên đã được thêm vào chính sách thành công",
-            "ERROR_MESSAGE": "Thêm nhân viên vào chính sách thất bại"
+            "SUCCESS_MESSAGE": "Thêm nhân viên thành công",
+            "ERROR_MESSAGE": "Thêm nhân viên thất bại"
           },
           "REMOVE": {
-            "SUCCESS_MESSAGE": "Nhân viên đã được gỡ bỏ khỏi chính sách thành công",
-            "ERROR_MESSAGE": "Gỡ bỏ nhân viên khỏi chính sách thất bại"
+            "SUCCESS_MESSAGE": "Gỡ nhân viên thành công",
+            "ERROR_MESSAGE": "Gỡ nhân viên thất bại"
           }
         }
       },
@@ -995,56 +996,56 @@
           "PLACEHOLDER": "Nhập mô tả"
         },
         "INBOX_CAPACITY_LIMIT": {
-          "LABEL": "Giới hạn năng lực hộp thư",
+          "LABEL": "Giới hạn theo hộp thư",
           "ADD_BUTTON": "Thêm hộp thư",
           "FIELD": {
             "SELECT_INBOX": "Chọn hộp thư",
-            "MAX_CONVERSATIONS": "Số cuộc trò chuyện tối đa",
+            "MAX_CONVERSATIONS": "Số hội thoại tối đa",
             "SET_LIMIT": "Đặt giới hạn"
           },
-          "EMPTY_STATE": "Chưa có giới hạn hộp thư nào được đặt"
+          "EMPTY_STATE": "Chưa có giới hạn nào"
         },
         "EXCLUSION_RULES": {
           "LABEL": "Quy tắc loại trừ",
-          "DESCRIPTION": "Các cuộc hội thoại thỏa mãn các điều kiện sau sẽ không được tính vào năng lực của nhân viên",
+          "DESCRIPTION": "Hội thoại dưới đây sẽ không tính vào năng lực:",
           "TAGS": {
-            "LABEL": "Loại trừ các cuộc hội thoại được gán thẻ cụ thể",
-            "ADD_TAG": "Thêm thẻ",
+            "LABEL": "Loại trừ hội thoại theo nhãn",
+            "ADD_TAG": "Thêm nhãn",
             "DROPDOWN": {
-              "SEARCH_PLACEHOLDER": "Tìm kiếm và chọn thẻ để thêm"
+              "SEARCH_PLACEHOLDER": "Tìm và chọn nhãn"
             },
-            "EMPTY_STATE": "Chưa có thẻ nào được thêm vào chính sách này."
+            "EMPTY_STATE": "Chưa có nhãn nào được thêm."
           },
           "DURATION": {
-            "LABEL": "Loại trừ các cuộc hội thoại cũ hơn một khoảng thời gian nhất định",
+            "LABEL": "Loại trừ hội thoại cũ hơn",
             "PLACEHOLDER": "Đặt thời gian"
           }
         },
         "USERS": {
-          "LABEL": "Nhân viên được chỉ định",
-          "DESCRIPTION": "Thêm nhân viên mà chính sách này sẽ áp dụng.",
+          "LABEL": "Nhân viên áp dụng",
+          "DESCRIPTION": "Thêm nhân viên áp dụng chính sách.",
           "ADD_BUTTON": "Thêm nhân viên",
           "DROPDOWN": {
-            "SEARCH_PLACEHOLDER": "Tìm kiếm và chọn nhân viên để thêm",
+            "SEARCH_PLACEHOLDER": "Tìm và chọn nhân viên",
             "ADD_BUTTON": "Thêm"
           },
-          "EMPTY_STATE": "Chưa có nhân viên nào được thêm",
+          "EMPTY_STATE": "Chưa có nhân viên nào",
           "API": {
-            "SUCCESS_MESSAGE": "Nhân viên đã được thêm vào chính sách thành công",
-            "ERROR_MESSAGE": "Thêm nhân viên vào chính sách thất bại"
+            "SUCCESS_MESSAGE": "Thêm nhân viên thành công",
+            "ERROR_MESSAGE": "Thêm nhân viên thất bại"
           }
         }
       },
       "DELETE_POLICY": {
-        "SUCCESS_MESSAGE": "Xóa chính sách năng lực nhân viên thành công",
-        "ERROR_MESSAGE": "Xóa chính sách năng lực nhân viên thất bại"
+        "SUCCESS_MESSAGE": "Xóa chính sách năng lực thành công",
+        "ERROR_MESSAGE": "Xóa chính sách năng lực thất bại"
       }
     },
     "DELETE_POLICY": {
       "TITLE": "Xóa chính sách",
-      "DESCRIPTION": "Bạn có chắc chắn muốn xóa chính sách này không? Hành động này không thể hoàn tác.",
-      "CONFIRM_BUTTON_LABEL": "Xoá",
-      "CANCEL_BUTTON_LABEL": "Huỷ"
+      "DESCRIPTION": "Bạn có chắc muốn xóa chính sách này? Hành động này không thể hoàn tác.",
+      "CONFIRM_BUTTON_LABEL": "Xóa",
+      "CANCEL_BUTTON_LABEL": "Hủy"
     }
   }
 }

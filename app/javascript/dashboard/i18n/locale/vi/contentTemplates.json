@@ -6,27 +6,27 @@
       "TEMPLATE_SELECTED_SUBTITLE": "Cấu hình mẫu: {templateName}"
     },
     "PICKER": {
-      "SEARCH_PLACEHOLDER": "Tìm kiếm Mẫu",
-      "NO_TEMPLATES_FOUND": "Không tìm thấy mẫu nào cho",
+      "SEARCH_PLACEHOLDER": "Tìm kiếm mẫu",
+      "NO_TEMPLATES_FOUND": "Không tìm thấy mẫu cho",
       "NO_CONTENT": "Không có nội dung",
-      "HEADER": "Tiêu đề",
-      "BODY": "Nội dung",
-      "FOOTER": "Chân trang",
+      "HEADER": "Header",
+      "BODY": "Body",
+      "FOOTER": "Footer",
       "BUTTONS": "Nút",
-      "CATEGORY": "Loại",
-      "MEDIA_CONTENT": "Nội dung đa phương tiện",
-      "MEDIA_CONTENT_FALLBACK": "nội dung đa phương tiện",
-      "NO_TEMPLATES_AVAILABLE": "Không có mẫu Twilio nào. Nhấn làm mới để đồng bộ mẫu từ Twilio.",
+      "CATEGORY": "Danh mục",
+      "MEDIA_CONTENT": "Nội dung media",
+      "MEDIA_CONTENT_FALLBACK": "nội dung media",
+      "NO_TEMPLATES_AVAILABLE": "Không có mẫu Twilio nào. Nhấn 'Làm mới' để đồng bộ mẫu từ Twilio.",
       "REFRESH_BUTTON": "Làm mới mẫu",
-      "REFRESH_SUCCESS": "Đã bắt đầu làm mới mẫu. Có thể mất vài phút để cập nhật.",
-      "REFRESH_ERROR": "Làm mới mẫu thất bại. Vui lòng thử lại.",
+      "REFRESH_SUCCESS": "Đã bắt đầu làm mới danh sách mẫu. Có thể mất vài phút để cập nhật.",
+      "REFRESH_ERROR": "Không thể làm mới mẫu. Vui lòng thử lại.",
       "LABELS": {
         "LANGUAGE": "Ngôn ngữ",
-        "TEMPLATE_BODY": "Nội dung của Mẫu",
-        "CATEGORY": "Loại"
+        "TEMPLATE_BODY": "Nội dung mẫu",
+        "CATEGORY": "Danh mục"
       },
       "TYPES": {
-        "MEDIA": "Đa phương tiện",
+        "MEDIA": "Media",
         "QUICK_REPLY": "Trả lời nhanh",
         "TEXT": "Văn bản"
       }
@@ -34,17 +34,17 @@
     "PARSER": {
       "VARIABLES_LABEL": "Biến",
       "LANGUAGE": "Ngôn ngữ",
-      "CATEGORY": "Loại",
-      "VARIABLE_PLACEHOLDER": "Nhập giá trị {variable}",
+      "CATEGORY": "Danh mục",
+      "VARIABLE_PLACEHOLDER": "Nhập giá trị cho {variable}",
       "GO_BACK_LABEL": "Quay lại",
       "SEND_MESSAGE_LABEL": "Gửi tin nhắn",
-      "FORM_ERROR_MESSAGE": "Vui lòng điền vào tất cả các biến trước khi gửi",
-      "MEDIA_HEADER_LABEL": "Tiêu đề {type}",
-      "MEDIA_URL_LABEL": "Nhập URL đầy đủ của media",
+      "FORM_ERROR_MESSAGE": "Vui lòng nhập đầy đủ giá trị các biến trước khi gửi",
+      "MEDIA_HEADER_LABEL": "{type} Header",
+      "MEDIA_URL_LABEL": "Nhập URL media đầy đủ",
       "MEDIA_URL_PLACEHOLDER": "https://example.com/image.jpg"
     },
     "FORM": {
-      "BACK_BUTTON": "Trở về",
+      "BACK_BUTTON": "Quay lại",
       "SEND_MESSAGE_BUTTON": "Gửi tin nhắn"
     }
   }

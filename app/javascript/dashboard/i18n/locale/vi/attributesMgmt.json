@@ -1,10 +1,10 @@
 {
   "ATTRIBUTES_MGMT": {
     "HEADER": "Thuộc tính tùy chỉnh",
-    "HEADER_BTN_TXT": "Thêm thuộc tính Tùy chỉnh",
-    "LOADING": "Đang lấy thuộc tính tuỳ chỉnh",
-    "DESCRIPTION": "Thuộc tính tùy chỉnh theo dõi các thông tin bổ sung về liên hệ hoặc cuộc hội thoại của bạn — chẳng hạn như gói đăng ký hoặc ngày mua hàng đầu tiên. Bạn có thể thêm nhiều loại thuộc tính tùy chỉnh, như văn bản, danh sách hoặc số, để thu thập thông tin cụ thể mà bạn cần.",
-    "LEARN_MORE": "Tìm hiểu thêm về các thuộc tính tùy chỉnh",
+    "HEADER_BTN_TXT": "Thêm thuộc tính tùy chỉnh",
+    "LOADING": "Đang tải danh sách thuộc tính tùy chỉnh",
+    "DESCRIPTION": "Thuộc tính tùy chỉnh giúp bạn theo dõi thêm các thông tin bổ sung về liên hệ hoặc cuộc hội thoại — ví dụ như gói đăng ký hoặc ngày mua hàng đầu tiên. Bạn có thể thêm nhiều loại thuộc tính khác nhau như văn bản, danh sách hoặc số để thu thập thông tin phù hợp với nhu cầu.",
+    "LEARN_MORE": "Tìm hiểu thêm về thuộc tính tùy chỉnh",
     "ATTRIBUTE_MODELS": {
       "CONVERSATION": "Cuộc hội thoại",
       "CONTACT": "Liên hệ"
@@ -13,14 +13,14 @@
       "TEXT": "Văn bản",
       "NUMBER": "Số",
       "LINK": "Liên kết",
-      "DATE": "Date",
+      "DATE": "Ngày",
       "LIST": "Danh sách",
-      "CHECKBOX": "Hộp kiểm"
+      "CHECKBOX": "Checkbox"
     },
     "ADD": {
       "TITLE": "Thêm thuộc tính tùy chỉnh",
       "SUBMIT": "Tạo",
-      "CANCEL_BUTTON_TEXT": "Huỷ",
+      "CANCEL_BUTTON_TEXT": "Hủy",
       "FORM": {
         "NAME": {
           "LABEL": "Tên hiển thị",
@@ -29,102 +29,102 @@
         },
         "DESC": {
           "LABEL": "Mô tả",
-          "PLACEHOLDER": "Điền mô tả của thuộc tính tùy chỉnh",
+          "PLACEHOLDER": "Nhập mô tả cho thuộc tính tùy chỉnh",
           "ERROR": "Mô tả là bắt buộc"
         },
         "MODEL": {
           "LABEL": "Áp dụng cho",
-          "PLACEHOLDER": "Vui lòng chọn một",
-          "ERROR": "Mô hình là bắt buộc"
+          "PLACEHOLDER": "Vui lòng chọn",
+          "ERROR": "Vui lòng chọn mục áp dụng"
         },
         "TYPE": {
-          "LABEL": "Kiểu",
-          "PLACEHOLDER": "Vui lòng chọn một kiểu",
-          "ERROR": "Kiểu là bắt buộc",
+          "LABEL": "Loại",
+          "PLACEHOLDER": "Vui lòng chọn loại",
+          "ERROR": "Loại là bắt buộc",
           "LIST": {
-            "LABEL": "Giá trị của danh sách",
-            "PLACEHOLDER": "Vui lòng nhập giá trị và nhấn phím enter",
-            "ERROR": "Phải có ít nhất 1 giá trị"
+            "LABEL": "Giá trị danh sách",
+            "PLACEHOLDER": "Nhập giá trị và nhấn Enter",
+            "ERROR": "Phải có ít nhất một giá trị"
           }
         },
         "KEY": {
-          "LABEL": "Khoá",
-          "PLACEHOLDER": "Nhập khoá của thuộc tính tùy chỉnh",
-          "ERROR": "Khoá là bắt buộc",
-          "IN_VALID": "Khoá không hợp lệ"
+          "LABEL": "Key",
+          "PLACEHOLDER": "Nhập key cho thuộc tính tùy chỉnh",
+          "ERROR": "Key là bắt buộc",
+          "IN_VALID": "Key không hợp lệ"
         },
         "REGEX_PATTERN": {
-          "LABEL": "Mẫu Regex",
-          "PLACEHOLDER": "Vui lòng nhập mẫu regex cho thuộc tính tùy chỉnh. (Tùy chọn)"
+          "LABEL": "Regex Pattern",
+          "PLACEHOLDER": "Nhập mẫu regex (không bắt buộc)"
         },
         "REGEX_CUE": {
           "LABEL": "Gợi ý Regex",
-          "PLACEHOLDER": "Vui lòng nhập gợi ý cho mẫu regex. (Tùy chọn)"
+          "PLACEHOLDER": "Nhập gợi ý Regex (không bắt buộc)"
         },
         "ENABLE_REGEX": {
           "LABEL": "Bật kiểm tra regex"
         }
       },
       "API": {
-        "SUCCESS_MESSAGE": "Thuộc tính tùy chỉnh được thêm thành công!",
+        "SUCCESS_MESSAGE": "Thêm thuộc tính tùy chỉnh thành công!",
         "ERROR_MESSAGE": "Không thể tạo thuộc tính tùy chỉnh. Vui lòng thử lại sau."
       }
     },
     "DELETE": {
-      "BUTTON_TEXT": "Xoá",
+      "BUTTON_TEXT": "Xóa",
       "API": {
-        "SUCCESS_MESSAGE": "Thuộc tính tùy chỉnh bị xoá thành công.",
-        "ERROR_MESSAGE": "Không thể xoá thuộc tính tùy chỉnh. Thử lại."
+        "SUCCESS_MESSAGE": "Xóa thuộc tính tùy chỉnh thành công.",
+        "ERROR_MESSAGE": "Không thể xóa thuộc tính tùy chỉnh. Vui lòng thử lại."
       },
       "CONFIRM": {
-        "TITLE": "Bạn có chắc muốn xoá - {attributeName}",
-        "PLACE_HOLDER": "Vui lòng điền {attributeName} để xác nhận",
-        "MESSAGE": "Xoá sẽ loại bỏ thuộc tính tùy chỉnh",
-        "YES": "Xoá",
-        "NO": "Huỷ"
+        "TITLE": "Bạn có chắc muốn xóa - {attributeName}",
+        "PLACE_HOLDER": "Vui lòng nhập {attributeName} để xác nhận",
+        "MESSAGE": "Xóa thuộc tính tùy chỉnh sẽ loại bỏ dữ liệu liên quan",
+        "YES": "Xóa",
+        "NO": "Hủy"
       }
     },
     "EDIT": {
-      "TITLE": "Sửa thuộc tính tùy chỉnh",
+      "TITLE": "Chỉnh sửa thuộc tính tùy chỉnh",
       "UPDATE_BUTTON_TEXT": "Cập nhật",
       "TYPE": {
         "LIST": {
-          "LABEL": "Giá trị của danh sách",
-          "PLACEHOLDER": "Vui lòng nhập giá trị và nhấn phím enter"
+          "LABEL": "Giá trị danh sách",
+          "PLACEHOLDER": "Nhập giá trị và nhấn Enter"
         }
       },
       "API": {
-        "SUCCESS_MESSAGE": "Thuộc tính tùy chỉnh được sửa thành công",
-        "ERROR_MESSAGE": "Đã xảy ra lỗi khi cập nhật thuộc tính tùy chỉnh, vui lòng thử lại"
+        "SUCCESS_MESSAGE": "Cập nhật thuộc tính tùy chỉnh thành công",
+        "ERROR_MESSAGE": "Có lỗi xảy ra khi cập nhật thuộc tính tùy chỉnh, vui lòng thử lại"
       }
     },
     "TABS": {
       "HEADER": "Thuộc tính tùy chỉnh",
       "CONVERSATION": "Cuộc hội thoại",
-      "CONTACT": "Liên lạc"
+      "CONTACT": "Liên hệ"
     },
     "LIST": {
       "TABLE_HEADER": {
         "NAME": "Tên",
         "DESCRIPTION": "Mô tả",
-        "TYPE": "Kiểu",
-        "KEY": "Khoá"
+        "TYPE": "Loại",
+        "KEY": "Key"
       },
       "BUTTONS": {
         "EDIT": "Chỉnh sửa",
-        "DELETE": "Xoá"
+        "DELETE": "Xóa"
       },
       "EMPTY_RESULT": {
-        "404": "Không có thuộc tính tùy chỉnh nào được tạo",
+        "404": "Chưa có thuộc tính tùy chỉnh nào được tạo",
         "NOT_FOUND": "Không có thuộc tính tùy chỉnh nào được cấu hình"
       },
       "REGEX_PATTERN": {
-        "LABEL": "Mẫu Regex",
-        "PLACEHOLDER": "Vui lòng nhập mẫu regex cho thuộc tính tùy chỉnh. (Tùy chọn)"
+        "LABEL": "Regex Pattern",
+        "PLACEHOLDER": "Nhập mẫu regex (không bắt buộc)"
       },
       "REGEX_CUE": {
         "LABEL": "Gợi ý Regex",
-        "PLACEHOLDER": "Vui lòng nhập gợi ý cho mẫu regex. (Tùy chọn)"
+        "PLACEHOLDER": "Nhập gợi ý regex (không bắt buộc)"
       },
       "ENABLE_REGEX": {
         "LABEL": "Bật kiểm tra regex"

@@ -1,12 +1,12 @@
 {
   "GENERAL": {
-    "SHOWING_RESULTS": "Hiển thị từ {firstIndex} đến {lastIndex} trên {totalCount} mục",
+    "SHOWING_RESULTS": "Hiển thị {firstIndex}-{lastIndex} trên tổng {totalCount} mục",
     "PHONE_INPUT": {
       "PLACEHOLDER": "Tìm kiếm",
       "EMPTY_STATE": "Không tìm thấy kết quả"
     },
     "CLOSE": "Đóng",
     "BETA": "Beta",
-    "BETA_DESCRIPTION": "Tính năng này đang trong giai đoạn beta và có thể thay đổi khi chúng tôi cải thiện nó."
+    "BETA_DESCRIPTION": "Tính năng này đang trong giai đoạn thử nghiệm và có thể thay đổi khi chúng tôi cải tiến."
   }
 }

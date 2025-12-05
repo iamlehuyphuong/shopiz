@@ -1,29 +1,29 @@
 {
   "AGENT_BOTS": {
-    "HEADER": "Bot",
+    "HEADER": "Bots",
     "LOADING_EDITOR": "Đang tải trình chỉnh sửa...",
-    "DESCRIPTION": "Bot nhân viên giống như những thành viên tuyệt vời nhất trong nhóm của bạn. Chúng có thể xử lý những việc nhỏ, để bạn tập trung vào những việc quan trọng hơn. Hãy thử sử dụng chúng. Bạn có thể quản lý các bot từ trang này hoặc tạo bot mới bằng nút 'Thêm Bot'.",
-    "LEARN_MORE": "Tìm hiểu về bot nhân viên",
+    "DESCRIPTION": "Agent Bot hoạt động như những thành viên hỗ trợ tuyệt vời nhất trong đội của bạn. Chúng xử lý những tác vụ nhỏ, giúp bạn tập trung vào công việc quan trọng hơn. Hãy thử trải nghiệm! Bạn có thể quản lý bot từ trang này hoặc tạo bot mới bằng nút 'Thêm Bot'.",
+    "LEARN_MORE": "Tìm hiểu về Agent Bot",
     "GLOBAL_BOT": "Bot hệ thống",
     "GLOBAL_BOT_BADGE": "Hệ thống",
     "AVATAR": {
       "SUCCESS_DELETE": "Xoá ảnh đại diện bot thành công",
-      "ERROR_DELETE": "Lỗi khi xoá ảnh đại diện bot, vui lòng thử lại"
+      "ERROR_DELETE": "Không thể xoá ảnh đại diện bot, vui lòng thử lại"
     },
     "BOT_CONFIGURATION": {
-      "TITLE": "Chọn một bot nhân viên",
-      "DESC": "Gán một bot nhân viên cho hộp thư đến của bạn. Chúng có thể xử lý các cuộc trò chuyện ban đầu và chuyển tiếp đến nhân viên trực tiếp khi cần.",
+      "TITLE": "Chọn Agent Bot",
+      "DESC": "Gán một Agent Bot cho hộp thư của bạn. Bot có thể xử lý các cuộc hội thoại ban đầu và chuyển cho nhân viên khi cần thiết.",
       "SUBMIT": "Cập nhật",
       "DISCONNECT": "Ngắt kết nối bot",
-      "SUCCESS_MESSAGE": "Cập nhật bot nhân viên thành công.",
-      "DISCONNECTED_SUCCESS_MESSAGE": "Ngắt kết nối bot nhân viên thành công.",
-      "ERROR_MESSAGE": "Không thể cập nhật bot nhân viên. Vui lòng thử lại.",
-      "DISCONNECTED_ERROR_MESSAGE": "Không thể ngắt kết nối bot nhân viên. Vui lòng thử lại.",
+      "SUCCESS_MESSAGE": "Cập nhật Agent Bot thành công.",
+      "DISCONNECTED_SUCCESS_MESSAGE": "Ngắt kết nối bot thành công.",
+      "ERROR_MESSAGE": "Không thể cập nhật Agent Bot. Vui lòng thử lại.",
+      "DISCONNECTED_ERROR_MESSAGE": "Không thể ngắt kết nối bot. Vui lòng thử lại.",
       "SELECT_PLACEHOLDER": "Chọn bot"
     },
     "ADD": {
       "TITLE": "Thêm Bot",
-      "CANCEL_BUTTON_TEXT": "Huỷ",
+      "CANCEL_BUTTON_TEXT": "Hủy",
       "API": {
         "SUCCESS_MESSAGE": "Thêm bot thành công.",
         "ERROR_MESSAGE": "Không thể thêm bot. Vui lòng thử lại sau."
@@ -31,20 +31,20 @@
     },
     "LIST": {
       "404": "Không tìm thấy bot nào. Bạn có thể tạo bot bằng cách nhấn nút 'Thêm Bot'.",
-      "LOADING": "Đang lấy danh sách bot...",
+      "LOADING": "Đang tải danh sách bot...",
       "TABLE_HEADER": {
-        "DETAILS": "Chi tiết Bot",
+        "DETAILS": "Thông tin Bot",
         "URL": "Webhook URL"
       }
     },
     "DELETE": {
-      "BUTTON_TEXT": "Xoá",
+      "BUTTON_TEXT": "Xóa",
       "TITLE": "Xoá bot",
       "CONFIRM": {
         "TITLE": "Xác nhận xoá",
-        "MESSAGE": "Bạn có chắc chắn muốn xoá {name} không?",
-        "YES": "Có, Xoá",
-        "NO": "Không, giữ lại"
+        "MESSAGE": "Bạn có chắc chắn muốn xoá {name}?",
+        "YES": "Đồng ý xoá",
+        "NO": "Không xoá"
       },
       "API": {
         "SUCCESS_MESSAGE": "Xoá bot thành công.",
@@ -60,11 +60,11 @@
       }
     },
     "ACCESS_TOKEN": {
-      "TITLE": "Token truy cập",
-      "DESCRIPTION": "Sao chép token truy cập và lưu trữ an toàn",
-      "COPY_SUCCESSFUL": "Đã sao chép token truy cập vào clipboard",
-      "RESET_SUCCESS": "Tạo lại token truy cập thành công",
-      "RESET_ERROR": "Không thể tạo lại token truy cập. Vui lòng thử lại"
+      "TITLE": "Access Token",
+      "DESCRIPTION": "Sao chép Access Token và lưu trữ an toàn",
+      "COPY_SUCCESSFUL": "Đã sao chép Access Token",
+      "RESET_SUCCESS": "Tạo lại Access Token thành công",
+      "RESET_ERROR": "Không thể tạo lại Access Token. Vui lòng thử lại"
     },
     "FORM": {
       "AVATAR": {
@@ -77,7 +77,7 @@
       },
       "DESCRIPTION": {
         "LABEL": "Mô tả",
-        "PLACEHOLDER": "Bot này sẽ làm gì?"
+        "PLACEHOLDER": "Bot này dùng để làm gì?"
       },
       "WEBHOOK_URL": {
         "LABEL": "Webhook URL",
@@ -89,15 +89,15 @@
         "URL": "Webhook URL là bắt buộc",
         "VALID_URL": "Vui lòng nhập URL hợp lệ bắt đầu bằng http:// hoặc https://"
       },
-      "CANCEL": "Huỷ",
+      "CANCEL": "Hủy",
       "CREATE": "Tạo Bot",
       "UPDATE": "Cập nhật Bot"
     },
     "WEBHOOK": {
-      "DESCRIPTION": "Cấu hình một bot webhook để tích hợp với các dịch vụ tuỳ chỉnh của bạn. Bot sẽ nhận và xử lý các sự kiện từ cuộc trò chuyện và có thể phản hồi lại."
+      "DESCRIPTION": "Cấu hình Webhook Bot để tích hợp với dịch vụ tùy chỉnh của bạn. Bot sẽ nhận và xử lý các sự kiện từ cuộc hội thoại và phản hồi lại."
     },
     "TYPES": {
-      "WEBHOOK": "Bot webhook"
+      "WEBHOOK": "Webhook Bot"
     }
   }
 }

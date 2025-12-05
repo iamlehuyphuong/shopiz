@@ -2,14 +2,14 @@
   "LABEL_MGMT": {
     "HEADER": "Nhãn",
     "HEADER_BTN_TXT": "Thêm nhãn",
-    "LOADING": "Tải về các nhãn",
-    "DESCRIPTION": "Nhãn giúp bạn phân loại và ưu tiên các cuộc trò chuyện và khách hàng tiềm năng. Bạn có thể gán nhãn cho cuộc trò chuyện hoặc liên hệ thông qua bảng điều khiển bên.",
+    "LOADING": "Đang tải nhãn",
+    "DESCRIPTION": "Nhãn giúp bạn phân loại và ưu tiên các cuộc hội thoại và khách hàng tiềm năng. Bạn có thể gán nhãn cho cuộc hội thoại hoặc liên hệ thông qua bảng bên.",
     "LEARN_MORE": "Tìm hiểu thêm về nhãn",
-    "SEARCH_404": "Không có kết quả nào phù hợp",
+    "SEARCH_404": "Không có mục nào khớp với từ khóa tìm kiếm",
     "LIST": {
-      "404": "Không có nhãn nào có sẵn trong tài khoản này.",
+      "404": "Không có nhãn nào trong tài khoản này.",
       "TITLE": "Quản lý nhãn",
-      "DESC": "Nhãn cho phép bạn nhóm các cuộc trò chuyện lại với nhau.",
+      "DESC": "Nhãn cho phép bạn nhóm các cuộc hội thoại lại với nhau.",
       "TABLE_HEADER": {
         "NAME": "Tên",
         "DESCRIPTION": "Mô tả",
@@ -21,27 +21,27 @@
         "LABEL": "Tên nhãn",
         "PLACEHOLDER": "Tên nhãn",
         "REQUIRED_ERROR": "Tên nhãn là bắt buộc",
-        "MINIMUM_LENGTH_ERROR": "Bắt buộc độ dài tối thiểu là 2",
-        "VALID_ERROR": "Chỉ cho phép Chữ cái, Chữ số, Dấu gạch ngang và Dấu gạch dưới"
+        "MINIMUM_LENGTH_ERROR": "Yêu cầu tối thiểu 2 ký tự",
+        "VALID_ERROR": "Chỉ cho phép chữ cái, số, dấu gạch ngang và dấu gạch dưới"
       },
       "DESCRIPTION": {
         "LABEL": "Mô tả",
-        "PLACEHOLDER": "Mô tả cho nhãn"
+        "PLACEHOLDER": "Mô tả nhãn"
       },
       "COLOR": {
         "LABEL": "Màu sắc"
       },
       "SHOW_ON_SIDEBAR": {
-        "LABEL": "Hiển thị nhãn trên sidebar"
+        "LABEL": "Hiển thị nhãn trên thanh bên"
       },
       "EDIT": "Chỉnh sửa",
-      "CREATE": "Tạo",
-      "DELETE": "Xoá",
-      "CANCEL": "Huỷ"
+      "CREATE": "Tạo mới",
+      "DELETE": "Xóa",
+      "CANCEL": "Hủy"
     },
     "SUGGESTIONS": {
       "TOOLTIP": {
-        "SINGLE_SUGGESTION": "Thêm nhãn cho cuộc trò chuyện",
+        "SINGLE_SUGGESTION": "Thêm nhãn vào cuộc hội thoại",
         "MULTIPLE_SUGGESTION": "Chọn nhãn này",
         "DESELECT": "Bỏ chọn nhãn",
         "DISMISS": "Bỏ qua gợi ý"
@@ -50,35 +50,35 @@
       "DISMISS": "Bỏ qua",
       "ADD_SELECTED_LABELS": "Thêm các nhãn đã chọn",
       "ADD_SELECTED_LABEL": "Thêm nhãn đã chọn",
-      "ADD_ALL_LABELS": "Thêm tất cả các nhãn",
-      "SUGGESTED_LABELS": "Các nhãn được gợi ý"
+      "ADD_ALL_LABELS": "Thêm tất cả nhãn",
+      "SUGGESTED_LABELS": "Nhãn được đề xuất"
     },
     "ADD": {
       "TITLE": "Thêm nhãn",
-      "DESC": "Nhãn cho phép bạn nhóm các cuộc trò chuyện lại với nhau.",
+      "DESC": "Nhãn giúp bạn nhóm các cuộc hội thoại lại với nhau.",
       "API": {
         "SUCCESS_MESSAGE": "Thêm nhãn thành công",
-        "ERROR_MESSAGE": "Đã có lỗi, vui lòng thử lại"
+        "ERROR_MESSAGE": "Có lỗi xảy ra, vui lòng thử lại"
       }
     },
     "EDIT": {
       "TITLE": "Chỉnh sửa nhãn",
       "API": {
-        "SUCCESS_MESSAGE": "Nhãn được cập nhật thành công",
-        "ERROR_MESSAGE": "Đã có lỗi, vui lòng thử lại"
+        "SUCCESS_MESSAGE": "Cập nhật nhãn thành công",
+        "ERROR_MESSAGE": "Có lỗi xảy ra, vui lòng thử lại"
       }
     },
     "DELETE": {
-      "BUTTON_TEXT": "Xoá",
+      "BUTTON_TEXT": "Xóa",
       "API": {
-        "SUCCESS_MESSAGE": "Nhãn đã được xoá thành công",
-        "ERROR_MESSAGE": "Đã có lỗi, vui lòng thử lại"
+        "SUCCESS_MESSAGE": "Xóa nhãn thành công",
+        "ERROR_MESSAGE": "Có lỗi xảy ra, vui lòng thử lại"
       },
       "CONFIRM": {
-        "TITLE": "Xác Nhận Xoá",
-        "MESSAGE": "Bạn có chắc muốn xoá? ",
-        "YES": "Có, xoá ",
-        "NO": "Không, giữ "
+        "TITLE": "Xác nhận xóa",
+        "MESSAGE": "Bạn có chắc chắn muốn xóa ",
+        "YES": "Có, Xóa ",
+        "NO": "Không, Giữ lại "
       }
     }
   }

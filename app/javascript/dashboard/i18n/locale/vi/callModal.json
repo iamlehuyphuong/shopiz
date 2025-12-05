@@ -1,18 +1,18 @@
 {
   "CALL_MODAL": {
     "START_CALL": "Bắt đầu cuộc gọi",
-    "MAKE_CALL_FROM": "Thực hiện cuộc gọi từ",
+    "MAKE_CALL_FROM": "Gọi từ",
     "TO": "Đến",
     "VIA": "Qua",
-    "SELECT_INBOX": "Chọn hộp thư đến",
+    "SELECT_INBOX": "Chọn hộp thư",
     "ENTER_NUMBER_OR_NAME": "Nhập tên hoặc số điện thoại...",
     "CALL": "Gọi",
     "CANCEL": "Hủy",
     "CALL_DIRECTLY": "Gọi trực tiếp số này",
-    "SUCCESS_MESSAGE": "Cuộc gọi được khởi tạo thành công",
-    "ERROR_MESSAGE": "Khởi tạo cuộc gọi thất bại. Vui lòng thử lại.",
-    "CONTACT_SEARCH_ERROR": "Lỗi tìm kiếm danh bạ. Vui lòng thử lại.",
-    "VALIDATION_ERROR": "Vui lòng chọn cả hộp thư và danh bạ hoặc số điện thoại."
+    "SUCCESS_MESSAGE": "Bắt đầu cuộc gọi thành công",
+    "ERROR_MESSAGE": "Không thể bắt đầu cuộc gọi. Vui lòng thử lại.",
+    "CONTACT_SEARCH_ERROR": "Lỗi khi tìm kiếm liên hệ. Vui lòng thử lại.",
+    "VALIDATION_ERROR": "Vui lòng chọn hộp thư và số điện thoại hoặc liên hệ."
   },
   "CALL_BUTTON": {
     "TOOLTIP": "Thực hiện cuộc gọi"

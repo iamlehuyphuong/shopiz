@@ -206,11 +206,11 @@
       }
     },
     "ZALO_PERSONAL": {
-      "HEADER_TITLE": "Zalo Personal campaigns",
+      "HEADER_TITLE": "Zalo Personal Campaign",
       "NEW_CAMPAIGN": "Create campaign",
       "EMPTY_STATE": {
-        "TITLE": "Zalo Personal campaigns are available",
-        "SUBTITLE": "Use AI-personalized templates to send offers, reminders, and updates in 1-to-1 chats. Set up in minutes, scale across your team. Click 'Create campaign' to get started."
+        "TITLE": "No Zalo Personal campaigns are available",
+        "SUBTITLE": "Use AI-personalized message templates to send offers, reminders, and updates in 1-on-1 conversations. Set up in minutes and scale across your entire team. Click ‘Create campaign’ to get started."
       },
       "CARD": {
         "STATUS": {
@@ -225,13 +225,13 @@
         }
       },
       "CREATE": {
-        "TITLE": "Create Zalo Personal campaign",
+        "TITLE": "Create Zalo Personal Campaign",
         "CANCEL_BUTTON_TEXT": "Cancel",
         "CREATE_BUTTON_TEXT": "Create",
         "FORM": {
           "TITLE": {
             "LABEL": "Title",
-            "PLACEHOLDER": "Please enter the title of campaign",
+            "PLACEHOLDER": "Please enter the campaign title",
             "ERROR": "Title is required"
           },
           "MESSAGE": {
@@ -240,23 +240,23 @@
             "ERROR": "Message is required"
           },
           "INBOX": {
-            "LABEL": "Select Inbox",
-            "PLACEHOLDER": "Select Inbox",
+            "LABEL": "Inbox",
+            "PLACEHOLDER": "Select inbox",
             "ERROR": "Inbox is required"
           },
           "SENT_BY": {
-            "LABEL": "Sent by",
-            "PLACEHOLDER": "Please select sender",
+            "LABEL": "Sender",
+            "PLACEHOLDER": "Select sender",
             "ERROR": "Sender is required"
           },
           "AUDIENCE": {
             "LABEL": "Audience",
-            "PLACEHOLDER": "Select the customer labels",
+            "PLACEHOLDER": "Select customer labels",
             "ERROR": "Audience is required"
           },
           "SCHEDULED_AT": {
             "LABEL": "Scheduled time",
-            "PLACEHOLDER": "Please select the time",
+            "PLACEHOLDER": "Select campaign start time",
             "ERROR": "Scheduled time is required"
           },
           "BUTTONS": {
@@ -264,8 +264,8 @@
             "CANCEL": "Cancel"
           },
           "API": {
-            "SUCCESS_MESSAGE": "Zalo Personal campaign created successfully",
-            "ERROR_MESSAGE": "There was an error. Please try again."
+            "SUCCESS_MESSAGE": "Voice campaign created successfully",
+            "ERROR_MESSAGE": "An error occurred. Please try again."
           }
         }
       }

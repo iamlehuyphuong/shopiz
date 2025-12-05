@@ -1,10 +1,10 @@
 {
   "LOGIN": {
-    "TITLE": "Đăng nhập Shopiz",
+    "TITLE": "Đăng nhập vào Shopiz",
     "EMAIL": {
       "LABEL": "Email",
       "PLACEHOLDER": "example{'@'}companyname.com",
-      "ERROR": "Vui lòng nhập một địa chỉ email hợp lệ"
+      "ERROR": "Vui lòng nhập địa chỉ email hợp lệ"
     },
     "PASSWORD": {
       "LABEL": "Mật khẩu",
@@ -13,28 +13,28 @@
     "API": {
       "SUCCESS_MESSAGE": "Đăng nhập thành công",
       "ERROR_MESSAGE": "Không thể kết nối đến máy chủ. Vui lòng thử lại.",
-      "UNAUTH": "Tên đăng nhập hoặc mật khẩu không chính xác. Vui lòng thử lại."
+      "UNAUTH": "Tên đăng nhập hoặc mật khẩu không đúng. Vui lòng thử lại."
     },
     "OAUTH": {
-      "GOOGLE_LOGIN": "Đăng nhập bằng Google",
-      "BUSINESS_ACCOUNTS_ONLY": "Vui lòng sử dụng địa chỉ email công ty của bạn để đăng nhập",
-      "NO_ACCOUNT_FOUND": "Chúng tôi không tìm thấy tài khoản cho địa chỉ email của bạn."
+      "GOOGLE_LOGIN": "Đăng nhập với Google",
+      "BUSINESS_ACCOUNTS_ONLY": "Vui lòng sử dụng email công ty của bạn để đăng nhập",
+      "NO_ACCOUNT_FOUND": "Chúng tôi không tìm thấy tài khoản nào cho địa chỉ email này."
     },
     "FORGOT_PASSWORD": "Quên mật khẩu?",
-    "CREATE_NEW_ACCOUNT": "Tạo mới tài khoản",
+    "CREATE_NEW_ACCOUNT": "Tạo tài khoản mới",
     "SUBMIT": "Đăng nhập",
     "SAML": {
       "LABEL": "Đăng nhập qua SSO",
       "TITLE": "Bắt đầu đăng nhập một lần (SSO)",
-      "SUBTITLE": "Nhập email công việc của bạn để truy cập tổ chức",
+      "SUBTITLE": "Nhập email của bạn để truy cập vào tổ chức",
       "BACK_TO_LOGIN": "Đăng nhập bằng mật khẩu",
       "WORK_EMAIL": {
-        "LABEL": "Email công việc",
-        "PLACEHOLDER": "Nhập email công việc của bạn"
+        "LABEL": "Email",
+        "PLACEHOLDER": "Nhập email của bạn"
       },
       "SUBMIT": "Tiếp tục với SSO",
       "API": {
-        "ERROR_MESSAGE": "Xác thực SSO thất bại. Vui lòng kiểm tra thông tin và thử lại."
+        "ERROR_MESSAGE": "Xác thực SSO không thành công. Vui lòng kiểm tra thông tin và thử lại."
       }
     }
   }

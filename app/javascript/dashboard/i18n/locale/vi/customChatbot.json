@@ -1,0 +1,73 @@
+{
+  "CUSTOMIZE_CHATBOT_PRODUCT": {
+    "TITLE": "Sản phẩm",
+    "BUTTON": "Thêm sản phẩm mới",
+    "SHOW_PRODUCT": "Hiển thị: Tất cả sản phẩm",
+    "SOFT_BY": "Sắp xếp theo: Mặc định",
+    "SEARCH": "Tìm kiếm sản phẩm",
+    "TABLE": {
+      "PRODUCT_NAME": "Tên sản phẩm",
+      "CATEGORY": "Danh mục",
+      "SALES": "Doanh số",
+      "UNIT_PRICE": "Giá bán",
+      "QUANTITY": "Số lượng",
+      "STATUS": "Trạng thái",
+      "ACTIVE": "Đang bán",
+      "INACTIVE": "Ngừng bán"
+    },
+    "CUSTOMIZE_CHATBOT_PAGINATION": {
+      "PREVIOUS": "Trước",
+      "NEXT": "Sau",
+      "ITEM_PER_PAGE": "Số mục mỗi trang",
+      "COUNT": "Trang {page}",
+      "TOTAL": "{number} mục trên tổng {total}"
+    }
+  },
+  "CUSTOMIZE_CHATBOT_COMPANY": {
+    "TITLE": "Thiết lập công ty",
+    "BUTTON": "Cập nhật cài đặt",
+    "COMPANY_NAME": {
+      "LABEL": "Tên công ty",
+      "PLACEHOLDER": "Tên công ty của bạn",
+      "DESCRIPTION": "Nhập tên pháp lý/ chính thức của công ty"
+    },
+    "COMPANY_DESCRIPTION": {
+      "LABEL": "Mô tả công ty",
+      "PLACEHOLDER": "Mô tả",
+      "DESCRIPTION": "Mô tả ngắn gọn về hoạt động của công ty"
+    },
+    "PHONE_NUMBER": {
+      "LABEL": "Số điện thoại",
+      "PLACEHOLDER": "0123456789",
+      "DESCRIPTION": "Nhập số điện thoại liên hệ hợp lệ"
+    },
+    "ADDRESS": {
+      "LABEL": "Địa chỉ",
+      "DESCRIPTION": "Chọn vị trí công ty của bạn",
+      "PLACEHOLDER": "Mã bưu điện",
+      "SELECT_COUNTRY": "Chọn quốc gia",
+      "SELECT_CITY": "Chọn thành phố",
+      "SELECT_DISTRICT": "Chọn quận/huyện"
+    },
+    "WEBSITE": {
+      "LABEL": "Website",
+      "PLACEHOLDER": "Nhập URL Website",
+      "DESCRIPTION": "Nhập địa chỉ website chính thức của công ty"
+    },
+    "INDUSTRY": {
+      "LABEL": "Ngành nghề",
+      "DEFAULT_OPTION": "CNTT & Dịch vụ công nghệ",
+      "DESCRIPTION": "Chọn lĩnh vực kinh doanh của công ty"
+    },
+    "LANGUAGE": {
+      "LABEL": "Ngôn ngữ",
+      "DEFAULT_OPTION": "Tiếng Anh",
+      "DESCRIPTION": "Chọn ngôn ngữ chính sử dụng"
+    },
+    "TIME_ZONE": {
+      "LABEL": "Múi giờ",
+      "DEFAULT_OPTION": "Asia/Hanoi",
+      "DESCRIPTION": "Chọn múi giờ hoạt động"
+    }
+  }
+}

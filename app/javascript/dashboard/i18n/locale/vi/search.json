@@ -2,14 +2,14 @@
   "SEARCH": {
     "TABS": {
       "ALL": "Tất cả",
-      "CONTACTS": "Danh bạ",
-      "CONVERSATIONS": "Các cuộc hội thoại",
+      "CONTACTS": "Liên hệ",
+      "CONVERSATIONS": "Cuộc hội thoại",
       "MESSAGES": "Tin nhắn",
       "ARTICLES": "Bài viết"
     },
     "SECTION": {
-      "CONTACTS": "Danh bạ",
-      "CONVERSATIONS": "Các cuộc hội thoại",
+      "CONTACTS": "Liên hệ",
+      "CONVERSATIONS": "Cuộc hội thoại",
       "MESSAGES": "Tin nhắn",
       "ARTICLES": "Bài viết"
     },
@@ -18,15 +18,15 @@
     "SEARCHING_DATA": "Đang tìm kiếm",
     "LOADING_DATA": "Đang tải",
     "EMPTY_STATE": "Không tìm thấy {item} cho truy vấn '{query}'",
-    "EMPTY_STATE_FULL": "Không tìm thấy kết quả nào cho truy vấn '{query}'",
-    "PLACEHOLDER_KEYBINDING": "Nhấn / để tìm kiếm",
-    "INPUT_PLACEHOLDER": "Nhập 3 ký tự trở lên để tìm kiếm",
-    "EMPTY_STATE_DEFAULT": "Tìm kiếm theo id cuộc hội thoại, email, số điện thoại, tin nhắn để có kết quả tìm kiếm tốt hơn.",
+    "EMPTY_STATE_FULL": "Không có kết quả nào cho truy vấn '{query}'",
+    "PLACEHOLDER_KEYBINDING": "/ để tìm kiếm",
+    "INPUT_PLACEHOLDER": "Nhập từ 3 ký tự trở lên để tìm kiếm",
+    "EMPTY_STATE_DEFAULT": "Tìm theo ID cuộc hội thoại, email, số điện thoại hoặc nội dung tin nhắn để có kết quả chính xác hơn.",
     "BOT_LABEL": "Bot",
-    "READ_MORE": "Đọc thêm",
-    "WROTE": "viết:",
+    "READ_MORE": "Xem thêm",
+    "WROTE": "đã viết:",
     "FROM": "từ",
     "EMAIL": "email",
-    "EMAIL_SUBJECT": "chủ đề"
+    "EMAIL_SUBJECT": "tiêu đề"
   }
 }

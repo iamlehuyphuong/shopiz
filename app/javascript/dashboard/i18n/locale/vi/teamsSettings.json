@@ -1,121 +1,121 @@
 {
   "TEAMS_SETTINGS": {
-    "NEW_TEAM": "Tạo nhóm mới",
-    "HEADER": "Nhóm",
-    "LOADING": "Đang tải các nhóm",
-    "DESCRIPTION": "Các nhóm cho phép bạn sắp xếp các nhân viên theo nhiệm vụ của họ. Một nhân viên có thể thuộc nhiều nhóm. Khi làm việc cộng tác, bạn có thể gán các cuộc trò chuyện cho các nhóm cụ thể.",
-    "LEARN_MORE": "Tìm hiểu thêm về các nhóm",
+    "NEW_TEAM": "Tạo đội nhóm mới",
+    "HEADER": "Đội nhóm",
+    "LOADING": "Đang tải danh sách đội nhóm",
+    "DESCRIPTION": "Đội nhóm cho phép bạn tổ chức các agent theo nhiệm vụ của họ. Một agent có thể thuộc nhiều đội nhóm. Khi cộng tác, bạn có thể gán các cuộc hội thoại cho từng đội nhóm cụ thể.",
+    "LEARN_MORE": "Tìm hiểu thêm về đội nhóm",
     "LIST": {
-      "404": "Không có nhóm nào được tạo đối với tài khoản này.",
-      "EDIT_TEAM": "Sửa nhóm",
+      "404": "Không có đội nhóm nào được tạo trong tài khoản này.",
+      "EDIT_TEAM": "Chỉnh sửa đội nhóm",
       "NONE": "Không có"
     },
     "CREATE_FLOW": {
       "CREATE": {
-        "TITLE": "Tạo nhóm mới",
-        "DESC": "Thêm tiêu đề và mô tả cho nhóm mới."
+        "TITLE": "Tạo đội nhóm mới",
+        "DESC": "Thêm tên và mô tả cho đội nhóm mới của bạn."
       },
       "AGENTS": {
-        "BUTTON_TEXT": "Thêm nhân viên",
-        "TITLE": "Thêm nhân viên vào nhóm - {teamName}",
-        "DESC": "Nhân viên là thành viên của đội hỗ trợ khách hàng của bạn, có thể xem và trả lời tin nhắn của người dùng. Danh sách bên dưới hiển thị tất cả các nhân viên trong tài khoản của bạn."
+        "BUTTON_TEXT": "Thêm agent vào đội nhóm",
+        "TITLE": "Thêm agent vào đội nhóm - {teamName}",
+        "DESC": "Thêm agent vào đội nhóm vừa tạo. Điều này giúp bạn cộng tác theo đội, nhận thông báo khi có sự kiện mới trong cùng cuộc hội thoại."
       },
       "WIZARD_CREATE": {
-        "TITLE": "Tạo",
-        "BODY": "Tạo ra một nhóm nhân viên mới."
+        "TITLE": "Tạo mới",
+        "BODY": "Tạo đội nhóm agent mới."
       },
       "WIZARD_ADD_AGENTS": {
-        "TITLE": "Thêm nhân viên",
-        "BODY": "Thêm nhân viên vào nhóm."
+        "TITLE": "Thêm agent",
+        "BODY": "Thêm agent vào đội nhóm."
       },
       "WIZARD_FINISH": {
         "TITLE": "Hoàn tất",
-        "BODY": "Bạn đã sẵn sàng để đi!"
+        "BODY": "Mọi thứ đã sẵn sàng!"
       }
     },
     "EDIT_FLOW": {
       "CREATE": {
-        "TITLE": "Sửa chi tiết nhóm",
-        "DESC": "Sửa tiêu đề và mô tả cho nhóm.",
-        "BUTTON_TEXT": "Cập nhật nhóm"
+        "TITLE": "Chỉnh sửa thông tin đội nhóm",
+        "DESC": "Chỉnh sửa tên và mô tả đội nhóm.",
+        "BUTTON_TEXT": "Cập nhật đội nhóm"
       },
       "AGENTS": {
-        "BUTTON_TEXT": "Cập nhật nhân viên trong nhóm",
-        "TITLE": "Thêm nhân viên vào nhóm - {teamName}",
-        "DESC": "Thêm nhân viên vào nhóm của bạn. Tất cả các nhân viên được thêm vào sẽ nhận thông báo khi có cuộc trò chuyện được phân công cho nhóm này."
+        "BUTTON_TEXT": "Cập nhật agent trong đội nhóm",
+        "TITLE": "Thêm agent vào đội nhóm - {teamName}",
+        "DESC": "Thêm agent vào đội nhóm của bạn. Tất cả agent được thêm sẽ nhận thông báo khi cuộc hội thoại được gán cho đội nhóm này."
       },
       "EDIT_WIZARD_DETAILS": {
-        "TITLE": "Chi tiết nhóm",
+        "TITLE": "Chi tiết đội nhóm",
         "ROUTE": "settings_teams_edit",
-        "BODY": "Đổi tên, mô tả và các chi tiết khác."
+        "BODY": "Thay đổi tên, mô tả và các thông tin khác."
       },
       "EDIT_WIZARD_AGENTS": {
-        "TITLE": "Sửa nhân viên",
+        "TITLE": "Chỉnh sửa agent",
         "ROUTE": "settings_teams_edit_members",
-        "BODY": "Sửa nhân viên trong nhóm của bạn."
+        "BODY": "Chỉnh sửa danh sách agent trong đội nhóm."
       },
       "EDIT_WIZARD_FINISH": {
         "TITLE": "Hoàn tất",
         "ROUTE": "settings_teams_edit_finish",
-        "BODY": "Bạn đã sẵn sàng để đi!"
+        "BODY": "Mọi thứ đã sẵn sàng!"
       }
     },
     "TEAM_FORM": {
-      "ERROR_MESSAGE": "Không thể lưu chi tiết nhóm. Thử lại."
+      "ERROR_MESSAGE": "Không thể lưu thông tin đội nhóm. Vui lòng thử lại."
     },
     "AGENTS": {
-      "AGENT": "Nhân viên",
+      "AGENT": "AGENT",
       "EMAIL": "EMAIL",
-      "BUTTON_TEXT": "Thêm nhân viên",
-      "ADD_AGENTS": "Thêm nhân viên vào nhóm của bạn...",
+      "BUTTON_TEXT": "Thêm agent",
+      "ADD_AGENTS": "Đang thêm agent vào đội nhóm...",
       "SELECT": "chọn",
-      "SELECT_ALL": "chọn tất cả nhân viên",
-      "SELECTED_COUNT": "{selected} trên {total} nhân viên được chọn."
+      "SELECT_ALL": "chọn tất cả agent",
+      "SELECTED_COUNT": "{selected} trên tổng {total} agent đã được chọn."
     },
     "ADD": {
-      "TITLE": "Thêm nhân viên vào nhóm - {teamName}",
-      "DESC": "Nhân viên là thành viên của đội hỗ trợ khách hàng của bạn, có thể xem và trả lời tin nhắn của người dùng. Danh sách bên dưới hiển thị tất cả các nhân viên trong tài khoản của bạn.",
+      "TITLE": "Thêm agent vào đội nhóm - {teamName}",
+      "DESC": "Thêm agent vào đội nhóm mới tạo. Điều này giúp bạn cộng tác theo đội và nhận thông báo khi có sự kiện mới trong cùng cuộc hội thoại.",
       "SELECT": "chọn",
-      "SELECT_ALL": "chọn tất cả nhân viên",
-      "SELECTED_COUNT": "{selected} trên {total} nhân viên được chọn.",
-      "BUTTON_TEXT": "Thêm nhân viên",
-      "AGENT_VALIDATION_ERROR": "Vui lòng chọn ít nhất một nhân viên."
+      "SELECT_ALL": "chọn tất cả agent",
+      "SELECTED_COUNT": "{selected} trên tổng {total} agent đã được chọn.",
+      "BUTTON_TEXT": "Thêm agent",
+      "AGENT_VALIDATION_ERROR": "Vui lòng chọn ít nhất một agent."
     },
     "FINISH": {
-      "TITLE": "Nhóm của bạn đã sẵn sàng!",
-      "MESSAGE": "Giờ đây, bạn có thể cộng tác như một nhóm trong các cuộc trò chuyện. Chúc bạn vui vẻ!",
+      "TITLE": "Đội nhóm của bạn đã sẵn sàng!",
+      "MESSAGE": "Giờ đây bạn có thể cộng tác theo đội trong các cuộc hội thoại. Chúc làm việc hiệu quả ",
       "BUTTON_TEXT": "Hoàn tất"
     },
     "DELETE": {
-      "BUTTON_TEXT": "Xoá",
+      "BUTTON_TEXT": "Xóa",
       "API": {
-        "SUCCESS_MESSAGE": "Nhóm được xoá thành công.",
-        "ERROR_MESSAGE": "Không thể xoá nhóm. Thử lại."
+        "SUCCESS_MESSAGE": "Xóa đội nhóm thành công.",
+        "ERROR_MESSAGE": "Không thể xóa đội nhóm. Vui lòng thử lại."
       },
       "CONFIRM": {
-        "TITLE": "Bạn có chắc chắn muốn xoá nhóm không?",
-        "PLACE_HOLDER": "Vui lòng điền {teamName} để xác nhận",
-        "MESSAGE": "Xóa nhóm sẽ xóa phân công nhóm khỏi các cuộc trò chuyện được phân công cho nhóm này.",
-        "YES": "Xoá",
-        "NO": "Huỷ"
+        "TITLE": "Bạn có chắc muốn xóa đội nhóm?",
+        "PLACE_HOLDER": "Vui lòng nhập {teamName} để xác nhận",
+        "MESSAGE": "Xóa đội nhóm sẽ xóa phần gán đội khỏi tất cả các cuộc hội thoại thuộc đội này.",
+        "YES": "Xóa ",
+        "NO": "Hủy"
       }
     },
     "SETTINGS": "Cài đặt",
     "FORM": {
-      "UPDATE": "Cập nhật nhóm",
-      "CREATE": "Tạo nhóm",
+      "UPDATE": "Cập nhật đội nhóm",
+      "CREATE": "Tạo đội nhóm",
       "NAME": {
-        "LABEL": "Tên nhóm",
-        "PLACEHOLDER": "Ví dụ: Bán hàng, Hỗ trợ khách hàng"
+        "LABEL": "Tên đội nhóm",
+        "PLACEHOLDER": "Ví dụ: Sales, Customer Support"
       },
       "DESCRIPTION": {
-        "LABEL": "Mô tả nhóm",
-        "PLACEHOLDER": "Mô tả ngắn về nhóm này."
+        "LABEL": "Mô tả đội nhóm",
+        "PLACEHOLDER": "Mô tả ngắn gọn về đội nhóm này."
       },
       "AUTO_ASSIGN": {
-        "LABEL": "Cho phép tự động phân công đối với nhóm này."
+        "LABEL": "Cho phép tự động phân công cho đội nhóm này."
       },
-      "SUBMIT_CREATE": "Tạo nhóm"
+      "SUBMIT_CREATE": "Tạo đội nhóm"
     }
   }
 }

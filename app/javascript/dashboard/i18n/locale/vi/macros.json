@@ -1,26 +1,26 @@
 {
   "MACROS": {
     "HEADER": "Macro",
-    "DESCRIPTION": "Macro là một tập hợp các hành động đã được lưu giúp đại diện chăm sóc khách hàng hoàn thành công việc một cách dễ dàng. Bạn có thể định nghĩa một tập hợp các hành động như gắn nhãn hội thoại, gửi bản sao email, cập nhật thuộc tính tùy chỉnh, vv và họ có thể thực hiện các hành động này chỉ với một cú nhấp chuột.",
+    "DESCRIPTION": "Macro là một tập hợp các hành động được lưu sẵn giúp nhân viên hỗ trợ khách hàng hoàn thành tác vụ dễ dàng hơn. Nhân viên có thể định nghĩa nhiều hành động như gắn nhãn cuộc hội thoại, gửi bản ghi email, cập nhật thuộc tính tùy chỉnh,… và có thể chạy tất cả chỉ với một lần nhấp.",
     "LEARN_MORE": "Tìm hiểu thêm về macro",
     "HEADER_BTN_TXT": "Thêm macro mới",
     "HEADER_BTN_TXT_SAVE": "Lưu macro",
-    "LOADING": "Đang lấy macro",
-    "ERROR": "Đã xảy ra sự cố. Vui lòng thử lại",
-    "ORDER_INFO": "Macro sẽ chạy theo thứ tự hành động của bạn. Bạn có thể sắp xếp lại chúng bằng cách kéo chúng bằng tay cầm bên cạnh mỗi nút.",
+    "LOADING": "Đang tải macro",
+    "ERROR": "Đã xảy ra lỗi. Vui lòng thử lại",
+    "ORDER_INFO": "Các macro sẽ chạy theo thứ tự bạn thêm hành động. Bạn có thể sắp xếp lại bằng cách kéo thả từng hành động.",
     "ADD": {
       "FORM": {
         "NAME": {
-          "LABEL": "Tên Macro",
-          "PLACEHOLDER": "Nhập tên cho macro của bạn",
-          "ERROR": "Cần có tên để tạo macro"
+          "LABEL": "Tên macro",
+          "PLACEHOLDER": "Nhập tên cho macro",
+          "ERROR": "Tên là bắt buộc khi tạo macro"
         },
         "ACTIONS": {
           "LABEL": "Hành động"
         }
       },
       "API": {
-        "SUCCESS_MESSAGE": "Đã thêm macro thành công",
+        "SUCCESS_MESSAGE": "Thêm macro thành công",
         "ERROR_MESSAGE": "Không thể tạo macro, vui lòng thử lại sau"
       }
     },
@@ -31,81 +31,81 @@
         "LAST_UPDATED_BY": "Cập nhật lần cuối bởi",
         "VISIBILITY": "Hiển thị"
       },
-      "404": "Không tìm thấy macro"
+      "404": "Không tìm thấy macro nào"
     },
     "DELETE": {
-      "TOOLTIP": "Xóa Macro",
+      "TOOLTIP": "Xóa macro",
       "CONFIRM": {
-        "MESSAGE": "Bạn có muốn xoá?",
-        "YES": "Có, Xoá",
+        "MESSAGE": "Bạn có chắc muốn xóa ",
+        "YES": "Đúng, xóa",
         "NO": "Không"
       },
       "API": {
-        "SUCCESS_MESSAGE": "Xóa Macro thành công",
-        "ERROR_MESSAGE": "Đã xảy ra lỗi khi xóa macro. Vui lòng thử lại sau"
+        "SUCCESS_MESSAGE": "Xóa macro thành công",
+        "ERROR_MESSAGE": "Lỗi khi xóa macro. Vui lòng thử lại"
       }
     },
     "EDIT": {
-      "TOOLTIP": "Sửa Macro",
+      "TOOLTIP": "Chỉnh sửa macro",
       "API": {
-        "SUCCESS_MESSAGE": "Đã cập nhật macro thành công",
-        "ERROR_MESSAGE": "Không thể cập nhật Macro, vui lòng thử lại sau"
+        "SUCCESS_MESSAGE": "Cập nhật macro thành công",
+        "ERROR_MESSAGE": "Không thể cập nhật macro, vui lòng thử lại sau"
       }
     },
     "EDITOR": {
-      "START_FLOW": "Bắt đầu quy trình",
-      "END_FLOW": "Kết thúc quy trình",
-      "LOADING": "Đang tìm nạp macro",
+      "START_FLOW": "Bắt đầu luồng",
+      "END_FLOW": "Kết thúc luồng",
+      "LOADING": "Đang tải macro",
       "ADD_BTN_TOOLTIP": "Thêm hành động mới",
       "DELETE_BTN_TOOLTIP": "Xóa hành động",
       "VISIBILITY": {
-        "LABEL": "Hiển thị Macro",
+        "LABEL": "Quyền hiển thị macro",
         "GLOBAL": {
           "LABEL": "Công khai",
-          "DESCRIPTION": "Macro này có sẵn công khai cho tất cả các tác nhân trong tài khoản này."
+          "DESCRIPTION": "Macro này sẽ hiển thị cho tất cả nhân viên trong tài khoản."
         },
         "PERSONAL": {
           "LABEL": "Riêng tư",
-          "DESCRIPTION": "Macro này sẽ là riêng tư đối với bạn và không có sẵn đối với những người khác."
+          "DESCRIPTION": "Macro này chỉ mình bạn thấy, người khác không thể truy cập."
         }
       }
     },
     "EXECUTE": {
       "BUTTON_TOOLTIP": "Thực thi",
-      "PREVIEW": "Xem trước Macro",
-      "EXECUTED_SUCCESSFULLY": "Macro được thực thi thành công"
+      "PREVIEW": "Xem trước macro",
+      "EXECUTED_SUCCESSFULLY": "Thực thi macro thành công"
     },
     "ERRORS": {
-      "ATTRIBUTE_KEY_REQUIRED": "Cần có khóa thuộc tính",
-      "FILTER_OPERATOR_REQUIRED": "Cần có toán tử bộ lọc",
-      "VALUE_REQUIRED": "Giá trị bắt buộc có",
-      "VALUE_MUST_BE_BETWEEN_1_AND_998": "Giá trị phải nằm trong khoảng từ 1 đến 998",
-      "ACTION_PARAMETERS_REQUIRED": "Cần có tham số hành động",
-      "ATLEAST_ONE_CONDITION_REQUIRED": "Cần có ít nhất một điều kiện",
-      "ATLEAST_ONE_ACTION_REQUIRED": "Cần có ít nhất một hành động"
+      "ATTRIBUTE_KEY_REQUIRED": "Cần nhập khóa thuộc tính",
+      "FILTER_OPERATOR_REQUIRED": "Cần chọn toán tử lọc",
+      "VALUE_REQUIRED": "Giá trị là bắt buộc",
+      "VALUE_MUST_BE_BETWEEN_1_AND_998": "Giá trị phải nằm trong khoảng 1 đến 998",
+      "ACTION_PARAMETERS_REQUIRED": "Cần tham số hành động",
+      "ATLEAST_ONE_CONDITION_REQUIRED": "Cần ít nhất một điều kiện",
+      "ATLEAST_ONE_ACTION_REQUIRED": "Cần ít nhất một hành động"
     },
     "ACTIONS": {
-      "ASSIGN_TEAM": "Gán một nhóm",
-      "ASSIGN_AGENT": "Gán một nhân viên",
+      "ASSIGN_TEAM": "Gán cho nhóm",
+      "ASSIGN_AGENT": "Gán cho nhân viên",
       "ADD_LABEL": "Thêm nhãn",
       "REMOVE_LABEL": "Xóa nhãn",
-      "REMOVE_ASSIGNED_TEAM": "Xóa nhóm được gán",
-      "SEND_EMAIL_TRANSCRIPT": "Gửi bản sao email",
-      "MUTE_CONVERSATION": "Tắt tiếng cuộc trò chuyện",
-      "SNOOZE_CONVERSATION": "Tạm dừng cuộc trò chuyện",
-      "RESOLVE_CONVERSATION": "Giải quyết cuộc trò chuyện",
+      "REMOVE_ASSIGNED_TEAM": "Xóa nhóm đã gán",
+      "SEND_EMAIL_TRANSCRIPT": "Gửi bản ghi email",
+      "MUTE_CONVERSATION": "Tắt thông báo cuộc hội thoại",
+      "SNOOZE_CONVERSATION": "Tạm ẩn cuộc hội thoại",
+      "RESOLVE_CONVERSATION": "Đánh dấu đã xử lý",
       "SEND_ATTACHMENT": "Gửi tệp đính kèm",
       "SEND_MESSAGE": "Gửi tin nhắn",
-      "CHANGE_PRIORITY": "Thay đổi độ ưu tiên",
-      "ADD_PRIVATE_NOTE": "Thêm ghi chú riêng tư",
+      "CHANGE_PRIORITY": "Thay đổi mức ưu tiên",
+      "ADD_PRIVATE_NOTE": "Thêm ghi chú nội bộ",
       "SEND_WEBHOOK_EVENT": "Gửi sự kiện Webhook"
     },
     "PRIORITY_TYPES": {
-      "NONE": "Không có",
+      "NONE": "Không",
       "LOW": "Thấp",
       "MEDIUM": "Trung bình",
       "HIGH": "Cao",
-      "URGENT": "Cấp bách"
+      "URGENT": "Khẩn cấp"
     }
   }
 }

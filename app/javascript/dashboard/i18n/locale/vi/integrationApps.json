@@ -1,52 +1,52 @@
 {
   "INTEGRATION_APPS": {
-    "FETCHING": "Đang lấy Tích hợp",
-    "NO_HOOK_CONFIGURED": "Không có tích hợp {integrationId} được cấu hình đối với tài khoản này.",
+    "FETCHING": "Đang tải tích hợp",
+    "NO_HOOK_CONFIGURED": "Không có tích hợp {integrationId} nào được cấu hình trong tài khoản này.",
     "HEADER": "Ứng dụng",
     "STATUS": {
       "ENABLED": "Bật",
-      "DISABLED": "Không bật"
+      "DISABLED": "Tắt"
     },
     "CONFIGURE": "Cấu hình",
-    "ADD_BUTTON": "Thêm một hook mới",
+    "ADD_BUTTON": "Thêm hook mới",
     "DELETE": {
       "TITLE": {
-        "INBOX": "Xác nhận xoá",
+        "INBOX": "Xác nhận xóa",
         "ACCOUNT": "Ngắt kết nối"
       },
       "MESSAGE": {
-        "INBOX": "Bạn có chắc muốn xoá?",
-        "ACCOUNT": "Bạn có chắc muốn ngắt kết nối?"
+        "INBOX": "Bạn có chắc chắn muốn xóa?",
+        "ACCOUNT": "Bạn có chắc chắn muốn ngắt kết nối?"
       },
       "CONFIRM_BUTTON_TEXT": {
-        "INBOX": "Có, Xoá",
-        "ACCOUNT": "Có, ngắt kết nối"
+        "INBOX": "Có, Xóa",
+        "ACCOUNT": "Có, Ngắt kết nối"
       },
-      "CANCEL_BUTTON_TEXT": "Huỷ",
+      "CANCEL_BUTTON_TEXT": "Hủy",
       "API": {
-        "SUCCESS_MESSAGE": "Hook đã được xoá thành công",
-        "ERROR_MESSAGE": "Không thể kết nối với Máy chủ, Vui lòng thử lại sau"
+        "SUCCESS_MESSAGE": "Xóa hook thành công",
+        "ERROR_MESSAGE": "Không thể kết nối tới máy chủ, vui lòng thử lại sau"
       }
     },
     "LIST": {
-      "FETCHING": "Đang lấy hook tích hợp",
-      "INBOX": "Hộp thư đến",
+      "FETCHING": "Đang tải danh sách integration hook",
+      "INBOX": "Hộp thư",
       "DELETE": {
-        "BUTTON_TEXT": "Xoá"
+        "BUTTON_TEXT": "Xóa"
       }
     },
     "ADD": {
       "FORM": {
         "INBOX": {
-          "LABEL": "Chọn Hộp thư đến",
-          "PLACEHOLDER": "Chọn Hộp thư đến"
+          "LABEL": "Chọn hộp thư",
+          "PLACEHOLDER": "Chọn hộp thư"
         },
         "SUBMIT": "Tạo",
-        "CANCEL": "Huỷ"
+        "CANCEL": "Hủy"
       },
       "API": {
-        "SUCCESS_MESSAGE": "Hook tích hợp đã được thêm thành công",
-        "ERROR_MESSAGE": "Không thể kết nối với Máy chủ, Vui lòng thử lại sau"
+        "SUCCESS_MESSAGE": "Thêm integration hook thành công",
+        "ERROR_MESSAGE": "Không thể kết nối tới máy chủ, vui lòng thử lại sau"
       }
     },
     "CONNECT": {
@@ -56,7 +56,7 @@
       "BUTTON_TEXT": "Ngắt kết nối"
     },
     "SIDEBAR_DESCRIPTION": {
-      "DIALOGFLOW": "Dialogflow là một nền tảng xử lý ngôn ngữ tự nhiên để xây dựng giao diện đối thoại. Việc tích hợp nó với {installationName} cho phép bot xử lý các truy vấn trước và chuyển giao cho nhân viên khi cần thiết. Nó giúp xác định khách hàng tiềm năng và giảm tải cho nhân viên khi trả lời các câu hỏi thường gặp. Để thêm Dialogflow, hãy tạo một Tài khoản Dịch vụ trong Google Console và chia sẻ thông tin xác thực. Vui lòng tham khảo tài liệu để biết thêm chi tiết."
+      "DIALOGFLOW": "Dialogflow là nền tảng xử lý ngôn ngữ tự nhiên dùng để xây dựng giao diện hội thoại. Khi tích hợp với {installationName}, bot sẽ xử lý câu hỏi trước và chuyển cho nhân viên khi cần. Điều này giúp đánh giá khách hàng tiềm năng và giảm tải cho nhân viên bằng cách trả lời các câu hỏi thường gặp. Để thêm Dialogflow, hãy tạo một Service Account trong Google Console và chia sẻ thông tin xác thực. Tham khảo tài liệu hướng dẫn để biết chi tiết."
     }
   }
 }

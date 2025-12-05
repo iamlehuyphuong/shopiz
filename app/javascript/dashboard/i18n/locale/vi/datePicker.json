@@ -7,13 +7,13 @@
       "END": "Ngày kết thúc"
     },
     "DATE_RANGE_OPTIONS": {
-      "TITLE": "Khoảng ngày",
-      "LAST_7_DAYS": "7 ngày cuối",
-      "LAST_30_DAYS": "30 ngày cuối",
-      "LAST_3_MONTHS": "3 tháng vừa qua",
-      "LAST_6_MONTHS": "6 tháng vừa qua",
-      "LAST_YEAR": "Năm ngoái",
-      "CUSTOM_RANGE": "Phạm vi ngày tùy chỉnh"
+      "TITLE": "KHOẢNG THỜI GIAN",
+      "LAST_7_DAYS": "7 ngày gần nhất",
+      "LAST_30_DAYS": "30 ngày gần nhất",
+      "LAST_3_MONTHS": "3 tháng gần nhất",
+      "LAST_6_MONTHS": "6 tháng gần nhất",
+      "LAST_YEAR": "Năm trước",
+      "CUSTOM_RANGE": "Tùy chọn khoảng thời gian"
     }
   }
 }

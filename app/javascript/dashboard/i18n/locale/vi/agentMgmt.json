@@ -2,62 +2,62 @@
   "AGENT_MGMT": {
     "HEADER": "Nhân viên",
     "HEADER_BTN_TXT": "Thêm nhân viên",
-    "LOADING": "Tải danh sách nhân viên",
-    "DESCRIPTION": "Một nhân viên là thành viên của đội hỗ trợ khách hàng của bạn, có thể xem và trả lời tin nhắn của người dùng. Danh sách bên dưới hiển thị tất cả các nhân viên trong tài khoản của bạn.",
+    "LOADING": "Đang tải danh sách nhân viên",
+    "DESCRIPTION": "Nhân viên (Agent) là thành viên trong đội hỗ trợ khách hàng của bạn, người có thể xem và trả lời tin nhắn từ người dùng. Danh sách bên dưới hiển thị toàn bộ nhân viên trong tài khoản của bạn.",
     "LEARN_MORE": "Tìm hiểu về vai trò người dùng",
     "AGENT_TYPES": {
       "ADMINISTRATOR": "Quản trị viên",
       "AGENT": "Nhân viên"
     },
     "LIST": {
-      "404": "Không có tác nhân nào được liên kết với tài khoản này",
-      "TITLE": "Quản lý các nhân viên trong nhóm của bạn",
-      "DESC": "Bạn có thể thêm / bớt nhân viên vào / trong nhóm của mình.",
+      "404": "Không có nhân viên nào trong tài khoản này",
+      "TITLE": "Quản lý nhân viên trong đội của bạn",
+      "DESC": "Bạn có thể thêm hoặc xoá nhân viên khỏi đội.",
       "NAME": "Tên",
-      "EMAIL": "EMAIL",
+      "EMAIL": "Email",
       "STATUS": "Trạng thái",
       "ACTIONS": "Hành động",
       "VERIFIED": "Đã xác minh",
       "VERIFICATION_PENDING": "Đang chờ xác minh",
-      "AVAILABLE_CUSTOM_ROLE": "Quyền vai trò tùy chỉnh có sẵn"
+      "AVAILABLE_CUSTOM_ROLE": "Các quyền của vai trò tuỳ chỉnh khả dụng"
     },
     "ADD": {
-      "TITLE": "Thêm nhân viên vào nhóm của bạn",
-      "DESC": "Bạn có thể thêm những người có thể xử lý hỗ trợ cho hộp thư đến của bạn.",
-      "CANCEL_BUTTON_TEXT": "Huỷ",
+      "TITLE": "Thêm nhân viên vào đội",
+      "DESC": "Bạn có thể thêm những người sẽ tham gia hỗ trợ các hộp thư của bạn.",
+      "CANCEL_BUTTON_TEXT": "Hủy",
       "FORM": {
         "NAME": {
           "LABEL": "Tên nhân viên",
-          "PLACEHOLDER": "Vui lòng nhập tên nhân viên"
+          "PLACEHOLDER": "Nhập tên nhân viên"
         },
         "AGENT_TYPE": {
-          "LABEL": "Loại nhân viên",
-          "PLACEHOLDER": "Vui lòng chọn loại",
-          "ERROR": "Loại nhân viên là bắt buộc"
+          "LABEL": "Vai trò",
+          "PLACEHOLDER": "Vui lòng chọn vai trò",
+          "ERROR": "Vai trò là bắt buộc"
         },
         "EMAIL": {
-          "LABEL": "Email",
-          "PLACEHOLDER": "Vui lòng nhập email"
+          "LABEL": "Địa chỉ Email",
+          "PLACEHOLDER": "Nhập email của nhân viên"
         },
         "SUBMIT": "Thêm nhân viên"
       },
       "API": {
-        "SUCCESS_MESSAGE": "Nhân viên được thêm thành công",
-        "EXIST_MESSAGE": "Email đã được sử dụng, vui lòng chọn email khác.",
-        "ERROR_MESSAGE": "Không thể kết nối với Máy chủ, Vui lòng thử lại sau"
+        "SUCCESS_MESSAGE": "Thêm nhân viên thành công",
+        "EXIST_MESSAGE": "Email này đã được dùng, vui lòng dùng email khác",
+        "ERROR_MESSAGE": "Không thể kết nối máy chủ, vui lòng thử lại sau"
       }
     },
     "DELETE": {
-      "BUTTON_TEXT": "Xoá",
+      "BUTTON_TEXT": "Xóa",
       "API": {
-        "SUCCESS_MESSAGE": "Nhân viên được xoá thành công",
-        "ERROR_MESSAGE": "Không thể kết nối với Máy chủ, Vui lòng thử lại sau"
+        "SUCCESS_MESSAGE": "Xóa nhân viên thành công",
+        "ERROR_MESSAGE": "Không thể kết nối máy chủ, vui lòng thử lại sau"
       },
       "CONFIRM": {
-        "TITLE": "Xác nhận xoá",
-        "MESSAGE": "Bạn có muốn xoá? ",
-        "YES": "Có, xoá ",
-        "NO": "Không, giữ "
+        "TITLE": "Xác nhận xóa",
+        "MESSAGE": "Bạn có chắc chắn muốn xóa ",
+        "YES": "Đồng ý xóa ",
+        "NO": "Không xóa "
       }
     },
     "EDIT": {
@@ -65,35 +65,35 @@
       "FORM": {
         "NAME": {
           "LABEL": "Tên nhân viên",
-          "PLACEHOLDER": "Vui lòng nhập tên nhân viên"
+          "PLACEHOLDER": "Nhập tên nhân viên"
         },
         "AGENT_TYPE": {
-          "LABEL": "Loại nhân viên",
-          "PLACEHOLDER": "Vui lòng chọn loại",
-          "ERROR": "Loại nhân viên là bắt buộc"
+          "LABEL": "Vai trò",
+          "PLACEHOLDER": "Vui lòng chọn vai trò",
+          "ERROR": "Vai trò là bắt buộc"
         },
         "EMAIL": {
-          "LABEL": "Emails",
-          "PLACEHOLDER": "Vui lòng nhập email"
+          "LABEL": "Địa chỉ Email",
+          "PLACEHOLDER": "Nhập email của nhân viên"
         },
         "AGENT_AVAILABILITY": {
-          "LABEL": "Khả dụng",
-          "PLACEHOLDER": "Vui lòng chọn trạng thái khả dụng",
-          "ERROR": "Cần phải có trạng thái khả dụng"
+          "LABEL": "Trạng thái hoạt động",
+          "PLACEHOLDER": "Chọn trạng thái hoạt động",
+          "ERROR": "Trạng thái hoạt động là bắt buộc"
         },
-        "SUBMIT": "Chỉnh sửa nhân viên"
+        "SUBMIT": "Cập nhật nhân viên"
       },
       "BUTTON_TEXT": "Chỉnh sửa",
-      "CANCEL_BUTTON_TEXT": "Huỷ",
+      "CANCEL_BUTTON_TEXT": "Hủy",
       "API": {
-        "SUCCESS_MESSAGE": "Nhân viên được cập nhật thành công",
-        "ERROR_MESSAGE": "Không thể kết nối với Máy chủ, Vui lòng thử lại sau"
+        "SUCCESS_MESSAGE": "Cập nhật nhân viên thành công",
+        "ERROR_MESSAGE": "Không thể kết nối máy chủ, vui lòng thử lại sau"
       },
       "PASSWORD_RESET": {
         "ADMIN_RESET_BUTTON": "Đặt lại mật khẩu",
-        "ADMIN_SUCCESS_MESSAGE": "Một email với hướng dẫn đặt lại mật khẩu đã được gửi đến nhân viên",
-        "SUCCESS_MESSAGE": "Đặt lại mật khẩu nhân viên thành công",
-        "ERROR_MESSAGE": "Không thể kết nối với Máy chủ, Vui lòng thử lại sau"
+        "ADMIN_SUCCESS_MESSAGE": "Email hướng dẫn đặt lại mật khẩu đã được gửi đến nhân viên",
+        "SUCCESS_MESSAGE": "Đặt lại mật khẩu thành công",
+        "ERROR_MESSAGE": "Không thể kết nối máy chủ, vui lòng thử lại sau"
       }
     },
     "SEARCH": {
@@ -102,7 +102,7 @@
     "MULTI_SELECTOR": {
       "PLACEHOLDER": "Không có",
       "TITLE": {
-        "AGENT": "Chọn thành viên",
+        "AGENT": "Chọn nhân viên",
         "TEAM": "Chọn nhóm"
       },
       "LIST": {
@@ -111,12 +111,12 @@
       "SEARCH": {
         "NO_RESULTS": {
           "AGENT": "Không tìm thấy nhân viên",
-          "TEAM": "Không tìm thấy nhóm nào"
+          "TEAM": "Không tìm thấy nhóm"
         },
         "PLACEHOLDER": {
-          "AGENT": "Tìm kiếm nhân viên",
-          "TEAM": "Tìm kiếm nhóm",
-          "INPUT": "Tìm nhân viên"
+          "AGENT": "Tìm nhân viên",
+          "TEAM": "Tìm nhóm",
+          "INPUT": "Tìm kiếm nhân viên"
         }
       }
     }

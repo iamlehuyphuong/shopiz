@@ -1,498 +1,505 @@
 {
   "INBOX_MGMT": {
-    "HEADER": "Hộp thư đến",
-    "DESCRIPTION": "Kênh là phương thức giao tiếp mà khách hàng của bạn chọn để tương tác với bạn. Hộp thư đến là nơi bạn quản lý các tương tác cho một kênh cụ thể. Nó có thể bao gồm thông tin liên lạc từ nhiều nguồn khác nhau như email, trò chuyện trực tiếp và phương tiện truyền thông xã hội.",
-    "LEARN_MORE": "Tìm hiểu thêm về các hộp thư",
+    "HEADER": "Hộp thư",
+    "DESCRIPTION": "Kênh là phương thức giao tiếp mà khách hàng sử dụng để tương tác với bạn. Hộp thư là nơi bạn quản lý các cuộc trao đổi của một kênh cụ thể. Hộp thư có thể bao gồm nhiều nguồn như email, live chat và mạng xã hội.",
+    "LEARN_MORE": "Tìm hiểu thêm về hộp thư",
     "RECONNECTION_REQUIRED": "Hộp thư của bạn đã bị ngắt kết nối. Bạn sẽ không nhận được tin nhắn mới cho đến khi cấp quyền lại.",
-    "WHATSAPP_REGISTRATION_INCOMPLETE": "Việc đăng ký WhatsApp Business của bạn chưa hoàn tất. Vui lòng kiểm tra trạng thái tên hiển thị trong Meta Business Manager trước khi kết nối lại.",
-    "COMPLETE_REGISTRATION": "Hoàn thành việc thiết lập",
-    "CLICK_TO_RECONNECT": "Nhấp vào đây để kết nối lại.",
+    "CLICK_TO_RECONNECT": "Nhấp để kết nối lại.",
+    "WHATSAPP_REGISTRATION_INCOMPLETE": "Quy trình đăng ký WhatsApp Business chưa hoàn tất. Vui lòng kiểm tra trạng thái tên hiển thị trong Meta Business Manager trước khi kết nối lại.",
+    "COMPLETE_REGISTRATION": "Hoàn tất thiết lập",
     "LIST": {
-      "404": "Không có hộp thư nào được gắn với tài khoản này."
+      "404": "Không có hộp thư nào được liên kết với tài khoản này."
     },
     "CREATE_FLOW": {
       "CHANNEL": {
-        "TITLE": "Chọn Kênh",
-        "BODY": "Chọn nhà cung cấp mà bạn muốn tích hợp với Shopiz."
+        "TITLE": "Chọn kênh",
+        "BODY": "Chọn nhà cung cấp bạn muốn tích hợp với Shopiz."
       },
       "INBOX": {
-        "TITLE": "Tạo Hộp Thư",
-        "BODY": "Xác thực tài khoản của bạn và tạo hộp thư."
+        "TITLE": "Tạo hộp thư",
+        "BODY": "Xác thực tài khoản và tạo hộp thư mới."
       },
       "AGENT": {
-        "TITLE": "Thêm Nhân Viên",
-        "BODY": "Thêm nhân viên vào hộp thư đã tạo."
+        "TITLE": "Thêm nhân viên",
+        "BODY": "Thêm nhân viên vào hộp thư vừa tạo."
       },
       "FINISH": {
-        "TITLE": "Xong Rồi!",
+        "TITLE": "Hoàn tất!",
         "BODY": "Bạn đã sẵn sàng để bắt đầu!"
       }
     },
     "ADD": {
       "CHANNEL_NAME": {
-        "LABEL": "Tên Hộp Thư",
-        "PLACEHOLDER": "Nhập tên hộp thư của bạn (ví dụ: Acme Inc)",
+        "LABEL": "Tên hộp thư",
+        "PLACEHOLDER": "Nhập tên hộp thư (ví dụ: Acme Inc)",
         "ERROR": "Vui lòng nhập tên hộp thư hợp lệ"
       },
       "WEBSITE_NAME": {
-        "LABEL": "Tên Website",
-        "PLACEHOLDER": "Nhập tên website của bạn (ví dụ: Acme Inc)"
+        "LABEL": "Tên website",
+        "PLACEHOLDER": "Nhập tên website (ví dụ: Acme Inc)"
       },
       "FB": {
         "TITLE": "Kênh Facebook",
-        "DESC": "Kết nối Facebook của bạn với Shopiz để quản lý tin nhắn từ khách hàng của bạn.",
-        "HELP": "CHÚ Ý: Bằng cách đăng nhập, chúng tôi chỉ có quyền truy cập tin nhắn của Trang của bạn. Tin nhắn riêng tư của bạn sẽ không bao giờ bị Shopiz truy cập.",
+        "DESC": "Lưu ý: Khi đăng nhập, Shopiz chỉ có quyền truy cập tin nhắn từ Trang của bạn. Tin nhắn cá nhân sẽ không bao giờ bị truy cập.",
+        "HELP": "Chúng tôi chỉ có quyền truy cập tin nhắn của Trang, không phải tin nhắn cá nhân.",
         "CHOOSE_PAGE": "Chọn Trang",
-        "CHOOSE_PLACEHOLDER": "Chọn một trang từ danh sách",
-        "INBOX_NAME": "Tên Hộp Thư",
-        "ADD_NAME": "Thêm tên cho hộp thư của bạn",
-        "PICK_NAME": "Chọn tên cho Hộp Thư của bạn",
-        "PICK_A_VALUE": "Chọn một giá trị",
-        "CREATE_INBOX": "Tạo Hộp Thư"
+        "CHOOSE_PLACEHOLDER": "Chọn một Trang từ danh sách",
+        "INBOX_NAME": "Tên hộp thư",
+        "ADD_NAME": "Nhập tên hộp thư",
+        "PICK_NAME": "Chọn tên hộp thư",
+        "PICK_A_VALUE": "Chọn giá trị",
+        "CREATE_INBOX": "Tạo hộp thư"
       },
       "ZALO": {
         "TITLE": "Kênh Zalo OA",
-        "DESC": "CHÚ Ý: Bằng cách đăng nhập, chúng tôi chỉ có quyền truy cập tin nhắn của Zalo OA của bạn. Tin nhắn riêng tư của bạn sẽ không bao giờ bị Shopiz truy cập.",
-        "LOADING": "Đang xác thực qua Zalo...",
-        "RELOGIN": "Đăng nhập lại",
-        "HELP": "CHÚ Ý: Bằng cách đăng nhập, chúng tôi chỉ có quyền truy cập tin nhắn của Zalo OA của bạn.",
-        "HELP_2": "Tin nhắn riêng tư của bạn sẽ không bao giờ bị Shopiz truy cập.",
-        "CHOOSE_PAGE": "Chọn Trang",
-        "CHOOSE_PLACEHOLDER": "Chọn một trang từ danh sách",
-        "INBOX_NAME": "Tên hộp thư đến",
-        "ADD_NAME": "Thêm tên cho hộp thư đến của bạn",
-        "PICK_NAME": "Chọn tên cho Hộp thư đến của bạn",
-        "PICK_A_VALUE": "Chọn một giá trị",
-        "CREATE_INBOX": "Tạo Hộp thư đến"
+        "LOADING": "Đang xác thực với Zalo...",
+        "RELOGIN": "Kết nối lại",
+        "DESC": "Lưu ý: Shopiz chỉ có quyền truy cập tin nhắn Zalo OA của bạn. Tin nhắn cá nhân không được truy cập.",
+        "HELP": "Chúng tôi chỉ truy cập tin nhắn OA.",
+        "HELP_2": "Tin nhắn cá nhân không bao giờ bị truy cập.",
+        "CHOOSE_PAGE": "Chọn OA",
+        "CHOOSE_PLACEHOLDER": "Chọn OA từ danh sách",
+        "INBOX_NAME": "Tên hộp thư",
+        "ADD_NAME": "Nhập tên hộp thư",
+        "PICK_NAME": "Chọn tên hộp thư",
+        "PICK_A_VALUE": "Chọn giá trị",
+        "CREATE_INBOX": "Tạo hộp thư"
       },
       "ZALO_PERSONAL": {
-        "TITLE": "Kênh Zalo Personal",
-        "HELP": "Chú ý: Bằng cách đăng nhập, chúng tôi chỉ có quyền truy cập tin nhắn Zalo user của bạn.",
-        "HELP_2": "Không đăng nhập tài khoản trên zalo web để đảm bảo tin nhắn được đồng bộ liên tục.",
+        "TITLE": "Kênh Zalo Cá Nhân",
+        "HELP": "Lưu ý: Shopiz chỉ có quyền truy cập tin nhắn của người dùng Zalo.",
+        "HELP_2": "Không đăng nhập Zalo Web để tránh gián đoạn đồng bộ tin nhắn.",
         "DESC": "Đăng nhập tài khoản ",
-        "DESC_2": "để kết nối với ứng dụng "
+        "DESC_2": "để kết nối với"
+      },
+      "TIKTOK": {
+        "HELP": "Lưu ý: Shopiz chỉ truy cập tin nhắn Tiktok. Tin nhắn riêng tư không bao giờ được truy cập.",
+        "INBOX_NAME": "Tên hộp thư",
+        "ADD_NAME": "Nhập tên hộp thư",
+        "PICK_NAME": "Chọn tên hộp thư",
+        "PICK_A_VALUE": "Chọn giá trị"
       },
       "INSTAGRAM": {
-        "CONTINUE_WITH_INSTAGRAM": "Continue with Instagram",
-        "CONNECT_YOUR_INSTAGRAM_PROFILE": "Connect your Instagram Profile",
-        "HELP": "To add your Instagram profile as a channel, you need to authenticate your Instagram Profile by clicking on 'Continue with Instagram' ",
-        "ERROR_MESSAGE": "There was an error connecting to Instagram, please try again",
-        "ERROR_AUTH": "There was an error connecting to Instagram, please try again",
-        "NEW_INBOX_SUGGESTION": "This Instagram account was previously linked to a different inbox and has now been migrated here. All new messages will appear here. The old inbox will no longer be able to send or receive messages for this account.",
-        "DUPLICATE_INBOX_BANNER": "This Instagram account was migrated to the new Instagram channel inbox. You won’t be able to send/receive Instagram messages from this inbox anymore."
+        "CONTINUE_WITH_INSTAGRAM": "Tiếp tục với Instagram",
+        "CONNECT_YOUR_INSTAGRAM_PROFILE": "Kết nối tài khoản Instagram",
+        "HELP": "Để thêm kênh Instagram, bạn cần xác thực bằng cách nhấn 'Tiếp tục với Instagram'.",
+        "ERROR_MESSAGE": "Không thể kết nối với Instagram, vui lòng thử lại.",
+        "ERROR_AUTH": "Không thể kết nối với Instagram, vui lòng thử lại.",
+        "NEW_INBOX_SUGGESTION": "Tài khoản Instagram này trước đó đã gắn với hộp thư khác và đã được chuyển sang hộp thư này. Tin nhắn mới sẽ hiển thị tại đây.",
+        "DUPLICATE_INBOX_BANNER": "Tài khoản Instagram này đã được chuyển sang hộp thư mới. Bạn không thể gửi/nhận tin nhắn từ hộp thư cũ."
       },
       "TWITTER": {
-        "HELP": "Để thêm hồ sơ Twitter của bạn làm kênh, bạn cần xác thực Hồ Sơ Twitter của bạn bằng cách nhấp vào 'Đăng nhập với Twitter'",
-        "ERROR_MESSAGE": "Có lỗi khi kết nối với Twitter, vui lòng thử lại",
+        "HELP": "Để thêm Twitter, hãy xác thực bằng cách nhấn 'Đăng nhập với Twitter'.",
+        "ERROR_MESSAGE": "Không thể kết nối với Twitter, vui lòng thử lại.",
         "TWEETS": {
-          "ENABLE": "Tạo cuộc trò chuyện từ các Tweet được nhắc tới"
+          "ENABLE": "Tạo cuộc trò chuyện từ các Tweet được nhắc đến"
         }
       },
       "WEBSITE_CHANNEL": {
         "TITLE": "Kênh Website",
-        "DESC": "Tạo một kênh cho website của bạn và bắt đầu hỗ trợ khách hàng qua tiện ích website của chúng tôi.",
-        "LOADING_MESSAGE": "Đang tạo Kênh Hỗ Trợ Website",
+        "DESC": "Tạo kênh website và hỗ trợ khách hàng qua widget chat.",
+        "LOADING_MESSAGE": "Đang tạo kênh hỗ trợ website...",
         "CHANNEL_AVATAR": {
-          "LABEL": "Ảnh đại diện Kênh"
+          "LABEL": "Ảnh đại diện kênh"
         },
         "CHANNEL_WEBHOOK_URL": {
-          "LABEL": "URL Webhook",
-          "PLACEHOLDER": "Vui lòng nhập URL Webhook của bạn",
+          "LABEL": "Webhook URL",
+          "PLACEHOLDER": "Nhập Webhook URL",
           "ERROR": "Vui lòng nhập URL hợp lệ"
         },
         "CHANNEL_DOMAIN": {
-          "LABEL": "Miền Website",
-          "PLACEHOLDER": "Nhập miền website của bạn (ví dụ: acme.com)"
+          "LABEL": "Tên miền website",
+          "PLACEHOLDER": "Nhập tên miền (ví dụ: acme.com)"
         },
         "CHANNEL_WELCOME_TITLE": {
-          "LABEL": "Tiêu đề Chào mừng",
+          "LABEL": "Tiêu đề chào mừng",
           "PLACEHOLDER": "Xin chào!"
         },
         "CHANNEL_WELCOME_TAGLINE": {
-          "LABEL": "Câu chào mừng",
-          "PLACEHOLDER": "Chúng tôi giúp bạn dễ dàng kết nối. Hãy hỏi chúng tôi điều gì đó, hoặc chia sẻ phản hồi của bạn."
+          "LABEL": "Thông điệp chào mừng",
+          "PLACEHOLDER": "Chúng tôi luôn sẵn sàng hỗ trợ bạn."
         },
         "CHANNEL_GREETING_MESSAGE": {
-          "LABEL": "Tin nhắn chào mừng của kênh",
-          "PLACEHOLDER": "Acme Inc thường trả lời trong vài giờ."
+          "LABEL": "Tin nhắn chào mừng",
+          "PLACEHOLDER": "Acme Inc thường phản hồi trong vài giờ."
         },
         "CHANNEL_GREETING_TOGGLE": {
-          "LABEL": "Bật tin nhắn chào mừng kênh",
-          "HELP_TEXT": "Tự động gửi tin nhắn chào mừng khi khách hàng bắt đầu cuộc trò chuyện và gửi tin nhắn đầu tiên.",
+          "LABEL": "Bật tin nhắn chào mừng",
+          "HELP_TEXT": "Tự động gửi tin nhắn chào mừng khi khách bắt đầu trò chuyện.",
           "ENABLED": "Bật",
           "DISABLED": "Tắt"
         },
         "REPLY_TIME": {
-          "TITLE": "Đặt thời gian phản hồi",
+          "TITLE": "Thời gian phản hồi",
           "IN_A_FEW_MINUTES": "Trong vài phút",
           "IN_A_FEW_HOURS": "Trong vài giờ",
           "IN_A_DAY": "Trong một ngày",
-          "HELP_TEXT": "Thời gian phản hồi này sẽ được hiển thị trên tiện ích trò chuyện trực tiếp"
+          "HELP_TEXT": "Thời gian phản hồi này sẽ hiển thị trên widget chat."
         },
         "WIDGET_COLOR": {
-          "LABEL": "Màu của Tiện ích",
-          "PLACEHOLDER": "Cập nhật màu của tiện ích"
+          "LABEL": "Màu widget",
+          "PLACEHOLDER": "Chọn màu widget"
         },
-        "SUBMIT_BUTTON": "Tạo Hộp Thư",
+        "SUBMIT_BUTTON": "Tạo hộp thư",
         "API": {
-          "ERROR_MESSAGE": "Không thể tạo kênh website, vui lòng thử lại"
+          "ERROR_MESSAGE": "Không thể tạo kênh website, vui lòng thử lại."
         }
       },
       "TWILIO": {
         "TITLE": "Kênh Twilio SMS/WhatsApp",
-        "DESC": "Tích hợp Twilio và bắt đầu hỗ trợ khách hàng qua SMS hoặc WhatsApp.",
+        "DESC": "Tích hợp Twilio để hỗ trợ khách qua SMS hoặc WhatsApp.",
         "ACCOUNT_SID": {
-          "LABEL": "Mã định danh Tài khoản (SID)",
-          "PLACEHOLDER": "Vui lòng nhập Mã SID Tài khoản Twilio của bạn",
+          "LABEL": "Account SID",
+          "PLACEHOLDER": "Nhập Twilio Account SID",
           "ERROR": "Trường này là bắt buộc"
         },
         "API_KEY": {
-          "USE_API_KEY": "Sử dụng xác thực bằng API Key",
-          "LABEL": "Mã định danh API Key (SID)",
-          "PLACEHOLDER": "Vui lòng nhập Mã SID của API Key của bạn",
+          "USE_API_KEY": "Sử dụng API Key Authentication",
+          "LABEL": "API Key SID",
+          "PLACEHOLDER": "Nhập API Key SID",
           "ERROR": "Trường này là bắt buộc"
         },
         "API_KEY_SECRET": {
-          "LABEL": "Bí mật API Key",
-          "PLACEHOLDER": "Vui lòng nhập Bí mật API Key của bạn",
+          "LABEL": "API Key Secret",
+          "PLACEHOLDER": "Nhập API Key Secret",
           "ERROR": "Trường này là bắt buộc"
         },
         "MESSAGING_SERVICE_SID": {
-          "LABEL": "Mã định danh Dịch vụ Tin nhắn (SID)",
-          "PLACEHOLDER": "Vui lòng nhập Mã SID Dịch vụ Tin nhắn Twilio của bạn",
+          "LABEL": "Messaging Service SID",
+          "PLACEHOLDER": "Nhập Messaging Service SID",
           "ERROR": "Trường này là bắt buộc",
-          "USE_MESSAGING_SERVICE": "Sử dụng Dịch vụ Tin nhắn Twilio"
+          "USE_MESSAGING_SERVICE": "Sử dụng dịch vụ nhắn tin Twilio"
         },
         "CHANNEL_TYPE": {
-          "LABEL": "Loại Kênh",
-          "ERROR": "Vui lòng chọn loại kênh của bạn"
+          "LABEL": "Loại kênh",
+          "ERROR": "Vui lòng chọn loại kênh"
         },
         "AUTH_TOKEN": {
-          "LABEL": "Token Xác Thực",
-          "PLACEHOLDER": "Vui lòng nhập Token Xác Thực Twilio của bạn",
+          "LABEL": "Auth Token",
+          "PLACEHOLDER": "Nhập Auth Token",
           "ERROR": "Trường này là bắt buộc"
         },
         "CHANNEL_NAME": {
-          "LABEL": "Tên Hộp Thư",
-          "PLACEHOLDER": "Vui lòng nhập tên hộp thư",
+          "LABEL": "Tên hộp thư",
+          "PLACEHOLDER": "Nhập tên hộp thư",
           "ERROR": "Trường này là bắt buộc"
         },
         "PHONE_NUMBER": {
-          "LABEL": "Số Điện Thoại",
-          "PLACEHOLDER": "Vui lòng nhập số điện thoại mà từ đó tin nhắn sẽ được gửi.",
-          "ERROR": "Vui lòng cung cấp số điện thoại hợp lệ bắt đầu bằng dấu `+` và không có khoảng trắng."
+          "LABEL": "Số điện thoại",
+          "PLACEHOLDER": "Nhập số điện thoại gửi tin nhắn",
+          "ERROR": "Vui lòng nhập số theo chuẩn E.164 bắt đầu bằng dấu '+'."
         },
         "API_CALLBACK": {
-          "TITLE": "URL Callback",
-          "SUBTITLE": "Bạn cần cấu hình URL callback tin nhắn trong Twilio với URL được đề cập ở đây."
+          "TITLE": "Callback URL",
+          "SUBTITLE": "Cấu hình Callback URL trong Twilio theo URL này."
         },
-        "SUBMIT_BUTTON": "Tạo Kênh Twilio",
+        "SUBMIT_BUTTON": "Tạo kênh Twilio",
         "API": {
-          "ERROR_MESSAGE": "Không thể xác thực thông tin Twilio, vui lòng thử lại"
+          "ERROR_MESSAGE": "Không thể xác thực thông tin Twilio, vui lòng thử lại."
         }
       },
       "SMS": {
         "TITLE": "Kênh SMS",
-        "DESC": "Bắt đầu hỗ trợ khách hàng qua SMS.",
+        "DESC": "Hỗ trợ khách hàng qua SMS.",
         "PROVIDERS": {
           "LABEL": "Nhà cung cấp API",
           "TWILIO": "Twilio",
           "BANDWIDTH": "Bandwidth"
         },
         "API": {
-          "ERROR_MESSAGE": "Không thể lưu kênh SMS"
+          "ERROR_MESSAGE": "Không thể lưu kênh SMS."
         },
         "BANDWIDTH": {
           "ACCOUNT_ID": {
-            "LABEL": "Mã Tài Khoản",
-            "PLACEHOLDER": "Vui lòng nhập Mã Tài Khoản Bandwidth của bạn",
+            "LABEL": "Account ID",
+            "PLACEHOLDER": "Nhập Bandwidth Account ID",
             "ERROR": "Trường này là bắt buộc"
           },
           "API_KEY": {
             "LABEL": "API Key",
-            "PLACEHOLDER": "Vui lòng nhập API Key Bandwidth của bạn",
+            "PLACEHOLDER": "Nhập Bandwidth API Key",
             "ERROR": "Trường này là bắt buộc"
           },
           "API_SECRET": {
-            "LABEL": "Bí mật API",
-            "PLACEHOLDER": "Vui lòng nhập Bí mật API Bandwidth của bạn",
+            "LABEL": "API Secret",
+            "PLACEHOLDER": "Nhập Bandwidth API Secret",
             "ERROR": "Trường này là bắt buộc"
           },
           "APPLICATION_ID": {
-            "LABEL": "Mã Ứng Dụng",
-            "PLACEHOLDER": "Vui lòng nhập Mã Ứng Dụng Bandwidth của bạn",
+            "LABEL": "Application ID",
+            "PLACEHOLDER": "Nhập Bandwidth Application ID",
             "ERROR": "Trường này là bắt buộc"
           },
           "INBOX_NAME": {
-            "LABEL": "Tên Hộp Thư",
-            "PLACEHOLDER": "Vui lòng nhập tên hộp thư",
+            "LABEL": "Tên hộp thư",
+            "PLACEHOLDER": "Nhập tên hộp thư",
             "ERROR": "Trường này là bắt buộc"
           },
           "PHONE_NUMBER": {
             "LABEL": "Số điện thoại",
-            "PLACEHOLDER": "Vui lòng nhập số điện thoại mà từ đó tin nhắn sẽ được gửi.",
-            "ERROR": "Vui lòng cung cấp số điện thoại hợp lệ bắt đầu bằng dấu `+` và không chứa khoảng trắng."
+            "PLACEHOLDER": "Nhập số điện thoại gửi tin nhắn",
+            "ERROR": "Vui lòng nhập số hợp lệ theo chuẩn E.164"
           },
-          "SUBMIT_BUTTON": "Tạo Kênh Bandwidth",
+          "SUBMIT_BUTTON": "Tạo kênh Bandwidth",
           "API": {
-            "ERROR_MESSAGE": "Không thể xác thực thông tin Bandwidth, vui lòng thử lại"
+            "ERROR_MESSAGE": "Không thể xác thực Bandwidth, vui lòng thử lại."
           },
           "API_CALLBACK": {
-            "TITLE": "URL Callback",
-            "SUBTITLE": "Bạn cần cấu hình URL callback tin nhắn trong Bandwidth với URL được đề cập ở đây."
+            "TITLE": "Callback URL",
+            "SUBTITLE": "Cấu hình Callback URL trong Bandwidth theo URL này."
           }
         }
       },
       "VOICE": {
-        "TITLE": "Kênh Thoại",
-        "DESC": "Tích hợp khả năng gọi thoại với nhà cung cấp ưa thích của bạn.",
+        "TITLE": "Kênh thoại",
+        "DESC": "Tích hợp gọi thoại với nhà cung cấp bạn chọn.",
         "PROVIDER": {
-          "LABEL": "Nhà Cung Cấp",
-          "PLACEHOLDER": "Chọn một nhà cung cấp thoại"
+          "LABEL": "Nhà cung cấp",
+          "PLACEHOLDER": "Chọn nhà cung cấp"
         },
         "PHONE_NUMBER": {
-          "LABEL": "Số Điện Thoại",
-          "PLACEHOLDER": "Vui lòng nhập số điện thoại từ đó cuộc gọi sẽ được thực hiện.",
+          "LABEL": "Số điện thoại",
+          "PLACEHOLDER": "Nhập số điện thoại thực hiện cuộc gọi",
           "REQUIRED": "Trường này là bắt buộc",
-          "ERROR": "Vui lòng nhập số điện thoại hợp lệ bắt đầu bằng dấu `+` và không chứa khoảng trắng."
+          "ERROR": "Vui lòng nhập số điện thoại hợp lệ theo chuẩn E.164"
         },
         "TWILIO": {
           "ACCOUNT_SID": {
-            "LABEL": "SID Tài Khoản",
-            "PLACEHOLDER": "Vui lòng nhập SID Tài Khoản Twilio của bạn",
+            "LABEL": "Account SID",
+            "PLACEHOLDER": "Nhập Twilio Account SID",
             "REQUIRED": "Trường này là bắt buộc"
           },
           "AUTH_TOKEN": {
-            "LABEL": "Mã Xác Thực",
-            "PLACEHOLDER": "Vui lòng nhập Mã Xác Thực Twilio của bạn",
+            "LABEL": "Auth Token",
+            "PLACEHOLDER": "Nhập Auth Token",
             "REQUIRED": "Trường này là bắt buộc"
           }
         },
-        "SUBMIT_BUTTON": "Tạo Kênh Thoại",
+        "SUBMIT_BUTTON": "Tạo kênh thoại",
         "API": {
-          "SUCCESS_MESSAGE": "Đăng ký kênh thoại thành công",
-          "ERROR_MESSAGE": "Không thể tạo kênh thoại. Vui lòng thử lại."
+          "SUCCESS_MESSAGE": "Tạo kênh thoại thành công",
+          "ERROR_MESSAGE": "Không thể tạo kênh thoại, vui lòng thử lại."
         }
       },
       "WHATSAPP": {
         "TITLE": "Kênh WhatsApp",
-        "DESC": "Bắt đầu hỗ trợ khách hàng qua WhatsApp.",
+        "DESC": "Hỗ trợ khách hàng qua WhatsApp.",
         "PROVIDERS": {
           "LABEL": "Nhà cung cấp API",
           "WHATSAPP_EMBEDDED": "WhatsApp Business",
           "TWILIO": "Twilio",
           "WHATSAPP_CLOUD": "WhatsApp Cloud",
-          "WHATSAPP_CLOUD_DESC": "Cài đặt qua WhatsApp Cloud",
-          "TWILIO_DESC": "Kết nối qua thông tin xác thực Twilio",
+          "WHATSAPP_CLOUD_DESC": "Thiết lập nhanh qua Meta",
+          "TWILIO_DESC": "Kết nối bằng thông tin Twilio",
           "360_DIALOG": "360Dialog"
         },
         "SELECT_PROVIDER": {
-          "TITLE": "Chọn nhà cung cấp API của bạn",
-          "DESCRIPTION": "Chọn nhà cung cấp WhatsApp của bạn. Bạn có thể kết nối trực tiếp qua Meta mà không cần cấu hình, hoặc kết nối qua Twilio bằng thông tin tài khoản của bạn."
+          "TITLE": "Chọn nhà cung cấp API",
+          "DESCRIPTION": "Chọn nhà cung cấp WhatsApp. Bạn có thể kết nối trực tiếp qua Meta hoặc sử dụng Twilio."
         },
         "INBOX_NAME": {
-          "LABEL": "Tên Hộp Thư",
-          "PLACEHOLDER": "Vui lòng nhập tên hộp thư",
+          "LABEL": "Tên hộp thư",
+          "PLACEHOLDER": "Nhập tên hộp thư",
           "ERROR": "Trường này là bắt buộc"
         },
         "PHONE_NUMBER": {
           "LABEL": "Số điện thoại",
-          "PLACEHOLDER": "Vui lòng nhập số điện thoại để gửi tin nhắn.",
-          "ERROR": "Vui lòng cung cấp số điện thoại hợp lệ bắt đầu bằng dấu `+` và không chứa khoảng trắng."
+          "PLACEHOLDER": "Nhập số điện thoại gửi tin nhắn",
+          "ERROR": "Vui lòng nhập số theo chuẩn E.164"
         },
         "PHONE_NUMBER_ID": {
-          "LABEL": "ID Số điện thoại",
-          "PLACEHOLDER": "Vui lòng nhập ID số điện thoại nhận được từ bảng điều khiển nhà phát triển Facebook.",
-          "ERROR": "Vui lòng nhập giá trị hợp lệ."
+          "LABEL": "Phone Number ID",
+          "PLACEHOLDER": "Nhập Phone Number ID từ Facebook Developer",
+          "ERROR": "Vui lòng nhập giá trị hợp lệ"
         },
         "BUSINESS_ACCOUNT_ID": {
-          "LABEL": "ID Tài khoản Doanh nghiệp",
-          "PLACEHOLDER": "Vui lòng nhập ID tài khoản doanh nghiệp từ bảng điều khiển nhà phát triển Facebook.",
-          "ERROR": "Vui lòng nhập giá trị hợp lệ."
+          "LABEL": "Business Account ID",
+          "PLACEHOLDER": "Nhập Business Account ID",
+          "ERROR": "Vui lòng nhập giá trị hợp lệ"
         },
         "WEBHOOK_VERIFY_TOKEN": {
-          "LABEL": "Token Xác Thực Webhook",
-          "PLACEHOLDER": "Nhập token xác thực mà bạn muốn cấu hình cho webhook của Facebook.",
-          "ERROR": "Vui lòng nhập giá trị hợp lệ."
+          "LABEL": "Webhook Verify Token",
+          "PLACEHOLDER": "Nhập verify token",
+          "ERROR": "Vui lòng nhập giá trị hợp lệ"
         },
         "API_KEY": {
-          "LABEL": "API key",
-          "SUBTITLE": "Cấu hình API key cho WhatsApp.",
-          "PLACEHOLDER": "API key",
-          "ERROR": "Vui lòng nhập giá trị hợp lệ."
+          "LABEL": "API Key",
+          "SUBTITLE": "Cấu hình API Key WhatsApp.",
+          "PLACEHOLDER": "API Key",
+          "ERROR": "Vui lòng nhập giá trị hợp lệ"
         },
         "API_CALLBACK": {
-          "TITLE": "URL Callback",
-          "SUBTITLE": "Bạn cần cấu hình URL webhook và token xác thực trong cổng thông tin nhà phát triển Facebook với các giá trị hiển thị bên dưới.",
-          "WEBHOOK_URL": "URL Webhook",
-          "WEBHOOK_VERIFICATION_TOKEN": "Token Xác Thực Webhook"
+          "TITLE": "Callback URL",
+          "SUBTITLE": "Cấu hình Webhook URL và Verify Token trong Facebook Developer.",
+          "WEBHOOK_URL": "Webhook URL",
+          "WEBHOOK_VERIFICATION_TOKEN": "Verification Token"
         },
         "SUBMIT_BUTTON": "Tạo kênh WhatsApp",
         "EMBEDDED_SIGNUP": {
-          "TITLE": "Quick setup with Meta",
-          "DESC": "Use the WhatsApp Embedded Signup flow to quickly connect new numbers. You will be redirected to Meta to log into your WhatsApp Business account. Having admin access will help make the setup smooth and easy.",
+          "TITLE": "Thiết lập nhanh với Meta",
+          "DESC": "Sử dụng quy trình Embedded Signup của WhatsApp để kết nối số điện thoại nhanh chóng.",
           "BENEFITS": {
-            "TITLE": "Lợi ích của việc đăng ký nhúng:",
+            "TITLE": "Lợi ích:",
             "EASY_SETUP": "Không cần cấu hình thủ công",
-            "SECURE_AUTH": "Xác thực dựa trên OAuth an toàn",
-            "AUTO_CONFIG": "Cấu hình webhook và số điện thoại tự động"
+            "SECURE_AUTH": "Xác thực OAuth an toàn",
+            "AUTO_CONFIG": "Tự động cấu hình webhook và số điện thoại"
           },
           "LEARN_MORE": {
-            "TEXT": "To learn more about integrated signup, pricing, and limitations, visit {link}.",
-            "LINK_TEXT": "this link"
+            "TEXT": "Để tìm hiểu thêm, xem tại {link}.",
+            "LINK_TEXT": "liên kết này"
           },
-          "SUBMIT_BUTTON": "Connect with WhatsApp Business",
-          "AUTH_PROCESSING": "Authenticating with Meta",
-          "WAITING_FOR_BUSINESS_INFO": "Please complete business setup in the Meta window...",
-          "PROCESSING": "Setting up your WhatsApp Business Account",
-          "LOADING_SDK": "Loading Facebook SDK...",
-          "CANCELLED": "WhatsApp Signup was cancelled",
-          "SUCCESS_TITLE": "WhatsApp Business Account Connected!",
-          "WAITING_FOR_AUTH": "Waiting for authentication...",
-          "INVALID_BUSINESS_DATA": "Invalid business data received from Facebook. Please try again.",
-          "SIGNUP_ERROR": "Signup error occurred",
-          "AUTH_NOT_COMPLETED": "Authentication not completed. Please restart the process.",
-          "SUCCESS_FALLBACK": "WhatsApp Business Account has been successfully configured",
-          "MANUAL_FALLBACK": "If your number is already connected to the WhatsApp Business Platform (API), or if you’re a tech provider onboarding your own number, please use the {link} flow",
-          "MANUAL_LINK_TEXT": "manual setup flow"
+          "SUBMIT_BUTTON": "Kết nối với WhatsApp Business",
+          "AUTH_PROCESSING": "Đang xác thực với Meta",
+          "WAITING_FOR_BUSINESS_INFO": "Vui lòng hoàn tất thiết lập trong cửa sổ Meta...",
+          "PROCESSING": "Đang cấu hình WhatsApp Business",
+          "LOADING_SDK": "Đang tải Facebook SDK...",
+          "CANCELLED": "Quy trình bị hủy",
+          "SUCCESS_TITLE": "Đã kết nối thành công!",
+          "WAITING_FOR_AUTH": "Đang chờ xác thực...",
+          "INVALID_BUSINESS_DATA": "Dữ liệu không hợp lệ, vui lòng thử lại.",
+          "SIGNUP_ERROR": "Xảy ra lỗi khi đăng ký",
+          "AUTH_NOT_COMPLETED": "Xác thực chưa hoàn tất. Vui lòng thử lại.",
+          "SUCCESS_FALLBACK": "Cấu hình WhatsApp thành công",
+          "MANUAL_FALLBACK": "Nếu số đã kết nối trước đó, vui lòng dùng quy trình {link}",
+          "MANUAL_LINK_TEXT": "thiết lập thủ công"
         },
         "API": {
-          "ERROR_MESSAGE": "Chúng tôi không thể lưu kênh WhatsApp"
+          "ERROR_MESSAGE": "Không thể lưu kênh WhatsApp."
         }
       },
       "VOICE": {
-        "TITLE": "Kênh Giọng Nói",
-        "DESC": "Tích hợp Twilio Voice và bắt đầu hỗ trợ khách hàng của bạn qua các cuộc gọi điện thoại.",
+        "TITLE": "Kênh thoại",
+        "DESC": "Tích hợp Twilio Voice để hỗ trợ khách hàng qua cuộc gọi.",
         "PHONE_NUMBER": {
           "LABEL": "Số điện thoại",
-          "PLACEHOLDER": "Nhập số điện thoại của bạn (ví dụ: +1234567890)",
-          "ERROR": "Vui lòng cung cấp số điện thoại hợp lệ theo định dạng E.164 (ví dụ: +1234567890)"
+          "PLACEHOLDER": "Nhập số điện thoại (ví dụ: +1234567890)",
+          "ERROR": "Vui lòng nhập số theo chuẩn E.164"
         },
         "TWILIO": {
           "ACCOUNT_SID": {
-            "LABEL": "Tài khoản SID",
-            "PLACEHOLDER": "Nhập Tài khoản SID của bạn",
-            "REQUIRED": "Tài khoản SID là bắt buộc"
+            "LABEL": "Account SID",
+            "PLACEHOLDER": "Nhập Account SID",
+            "REQUIRED": "Bắt buộc"
           },
           "AUTH_TOKEN": {
-            "LABEL": "Token xác thực",
-            "PLACEHOLDER": "Nhập Token xác thực của bạn",
-            "REQUIRED": "Token xác thực là bắt buộc"
+            "LABEL": "Auth Token",
+            "PLACEHOLDER": "Nhập Auth Token",
+            "REQUIRED": "Bắt buộc"
           },
           "API_KEY_SID": {
             "LABEL": "API Key SID",
-            "PLACEHOLDER": "Nhập API Key SID của bạn",
-            "REQUIRED": "API Key SID là bắt buộc"
+            "PLACEHOLDER": "Nhập API Key SID",
+            "REQUIRED": "Bắt buộc"
           },
           "API_KEY_SECRET": {
             "LABEL": "API Key Secret",
-            "PLACEHOLDER": "Enter your Twilio API Key Secret",
-            "REQUIRED": "API Key Secret is required"
+            "PLACEHOLDER": "Nhập API Key Secret",
+            "REQUIRED": "Bắt buộc"
           }
         },
         "CONFIGURATION": {
           "TWILIO_VOICE_URL_TITLE": "Twilio Voice URL",
-          "TWILIO_VOICE_URL_SUBTITLE": "Configure this URL as the Voice URL on your Twilio phone number and TwiML App.",
-          "TWILIO_STATUS_URL_TITLE": "Twilio Status Callback URL",
-          "TWILIO_STATUS_URL_SUBTITLE": "Configure this URL as the Status Callback URL on your Twilio phone number."
+          "TWILIO_VOICE_URL_SUBTITLE": "Cấu hình URL này trong phần Voice URL của Twilio.",
+          "TWILIO_STATUS_URL_TITLE": "Status Callback URL",
+          "TWILIO_STATUS_URL_SUBTITLE": "Cấu hình Status Callback URL trong Twilio."
         },
-        "SUBMIT_BUTTON": "Tạo Kênh Giọng Nói",
+        "SUBMIT_BUTTON": "Tạo kênh thoại",
         "API": {
-          "ERROR_MESSAGE": "Chúng tôi không thể tạo kênh giọng nói"
+          "ERROR_MESSAGE": "Không thể tạo kênh thoại."
         }
       },
       "API_CHANNEL": {
         "TITLE": "Kênh API",
-        "DESC": "Tích hợp kênh API và bắt đầu hỗ trợ khách hàng.",
+        "DESC": "Tích hợp kênh API để nhận/gửi tin nhắn.",
         "CHANNEL_NAME": {
-          "LABEL": "Tên Kênh",
-          "PLACEHOLDER": "Vui lòng nhập tên kênh",
-          "ERROR": "Trường này là bắt buộc"
+          "LABEL": "Tên kênh",
+          "PLACEHOLDER": "Nhập tên kênh",
+          "ERROR": "Bắt buộc"
         },
         "WEBHOOK_URL": {
-          "LABEL": "URL Webhook",
-          "SUBTITLE": "Cấu hình URL nơi bạn muốn nhận callback về các sự kiện.",
-          "PLACEHOLDER": "URL Webhook"
+          "LABEL": "Webhook URL",
+          "SUBTITLE": "Đặt URL để nhận callback sự kiện.",
+          "PLACEHOLDER": "Webhook URL"
         },
-        "SUBMIT_BUTTON": "Tạo Kênh API",
+        "SUBMIT_BUTTON": "Tạo kênh API",
         "API": {
-          "ERROR_MESSAGE": "Không thể lưu kênh API"
+          "ERROR_MESSAGE": "Không thể lưu kênh API."
         }
       },
       "EMAIL_CHANNEL": {
         "TITLE": "Kênh Email",
         "DESC": "Tích hợp hộp thư email của bạn.",
         "CHANNEL_NAME": {
-          "LABEL": "Tên Kênh",
-          "PLACEHOLDER": "Vui lòng nhập tên kênh",
-          "ERROR": "Trường này là bắt buộc"
+          "LABEL": "Tên kênh",
+          "PLACEHOLDER": "Nhập tên kênh",
+          "ERROR": "Bắt buộc"
         },
         "EMAIL": {
           "LABEL": "Email",
-          "SUBTITLE": "Cung cấp địa chỉ email mà khách hàng gửi yêu cầu hỗ trợ.",
+          "SUBTITLE": "Nhập email khách hàng sẽ gửi yêu cầu hỗ trợ.",
           "PLACEHOLDER": "Email"
         },
-        "SUBMIT_BUTTON": "Tạo Kênh Email",
+        "SUBMIT_BUTTON": "Tạo kênh Email",
         "API": {
-          "ERROR_MESSAGE": "Không thể lưu kênh email"
+          "ERROR_MESSAGE": "Không thể lưu kênh Email."
         },
-        "FINISH_MESSAGE": "Bắt đầu chuyển tiếp email của bạn đến địa chỉ email sau."
+        "FINISH_MESSAGE": "Hãy chuyển tiếp email về địa chỉ sau:"
       },
       "LINE_CHANNEL": {
         "TITLE": "Kênh LINE",
-        "DESC": "Tích hợp kênh LINE và bắt đầu hỗ trợ khách hàng.",
+        "DESC": "Tích hợp LINE để hỗ trợ khách hàng.",
         "CHANNEL_NAME": {
-          "LABEL": "Tên Kênh",
-          "PLACEHOLDER": "Vui lòng nhập tên kênh",
-          "ERROR": "Trường này là bắt buộc"
+          "LABEL": "Tên kênh",
+          "PLACEHOLDER": "Nhập tên kênh",
+          "ERROR": "Bắt buộc"
         },
         "LINE_CHANNEL_ID": {
-          "LABEL": "ID Kênh LINE",
-          "PLACEHOLDER": "ID Kênh LINE"
+          "LABEL": "LINE Channel ID",
+          "PLACEHOLDER": "LINE Channel ID"
         },
         "LINE_CHANNEL_SECRET": {
-          "LABEL": "Mật khẩu Kênh LINE",
-          "PLACEHOLDER": "Mật khẩu Kênh LINE"
+          "LABEL": "LINE Channel Secret",
+          "PLACEHOLDER": "LINE Channel Secret"
         },
         "LINE_CHANNEL_TOKEN": {
-          "LABEL": "Token Kênh LINE",
-          "PLACEHOLDER": "Token Kênh LINE"
+          "LABEL": "LINE Channel Token",
+          "PLACEHOLDER": "LINE Channel Token"
         },
-        "SUBMIT_BUTTON": "Tạo Kênh LINE",
+        "SUBMIT_BUTTON": "Tạo kênh LINE",
         "API": {
-          "ERROR_MESSAGE": "Không thể lưu kênh LINE"
+          "ERROR_MESSAGE": "Không thể lưu kênh LINE."
         },
         "API_CALLBACK": {
-          "TITLE": "URL Callback",
-          "SUBTITLE": "Bạn cần cấu hình URL webhook trong ứng dụng LINE với URL được đề cập ở đây."
+          "TITLE": "Callback URL",
+          "SUBTITLE": "Cấu hình URL webhook trong LINE App."
         }
       },
       "TELEGRAM_CHANNEL": {
         "TITLE": "Kênh Telegram",
-        "DESC": "Tích hợp kênh Telegram và bắt đầu hỗ trợ khách hàng.",
+        "DESC": "Tích hợp Telegram để hỗ trợ khách hàng.",
         "BOT_TOKEN": {
-          "LABEL": "Token Bot",
-          "SUBTITLE": "Cấu hình token bot bạn đã nhận được từ Telegram BotFather.",
-          "PLACEHOLDER": "Token Bot"
+          "LABEL": "Bot Token",
+          "SUBTITLE": "Dùng token tạo từ BotFather.",
+          "PLACEHOLDER": "Bot Token"
         },
-        "SUBMIT_BUTTON": "Tạo Kênh Telegram",
+        "SUBMIT_BUTTON": "Tạo kênh Telegram",
         "API": {
-          "ERROR_MESSAGE": "Không thể lưu kênh Telegram"
+          "ERROR_MESSAGE": "Không thể lưu kênh Telegram."
         }
       },
       "AUTH": {
         "TITLE": "Chọn kênh",
-        "DESC": "Shopiz hỗ trợ các tiện ích trò chuyện trực tiếp, Facebook Messenger, hồ sơ Twitter, WhatsApp, Email, v. v., dưới dạng các kênh. Nếu bạn muốn xây dựng một kênh tùy chỉnh, bạn có thể tạo kênh này bằng cách sử dụng kênh API. Để bắt đầu, hãy chọn một trong các kênh bên dưới.",
-        "TITLE_NEXT": "Hoàn thành việc thiết lập",
-        "TITLE_FINISH": "Voilà!",
+        "DESC": "Shopiz hỗ trợ Live Chat, Facebook Messenger, WhatsApp, Email, SMS, API, Telegram, Line, Instagram, Voice, Zalo, Tiktok và nhiều hơn nữa. Chọn một kênh để bắt đầu.",
+        "TITLE_NEXT": "Hoàn tất thiết lập",
+        "TITLE_FINISH": "Hoàn tất!",
         "CHANNEL": {
           "WEBSITE": {
             "TITLE": "Website",
-            "DESCRIPTION": "Tạo widget live-chat"
+            "DESCRIPTION": "Tạo widget live chat"
           },
           "FACEBOOK": {
             "TITLE": "Facebook",
-            "DESCRIPTION": "Kết nối trang Facebook của bạn"
+            "DESCRIPTION": "Kết nối Trang Facebook"
           },
           "WHATSAPP": {
             "TITLE": "WhatsApp",
@@ -500,169 +507,171 @@
           },
           "EMAIL": {
             "TITLE": "Email",
-            "DESCRIPTION": "Kết nối với Gmail, Outlook hoặc các nhà cung cấp khác"
+            "DESCRIPTION": "Kết nối Gmail, Outlook hoặc nhà cung cấp khác"
           },
           "SMS": {
             "TITLE": "SMS",
-            "DESCRIPTION": "Tích hợp kênh SMS với Twilio hoặc Bandwidth"
+            "DESCRIPTION": "Tích hợp SMS qua Twilio hoặc Bandwidth"
           },
           "API": {
             "TITLE": "API",
-            "DESCRIPTION": "Tạo kênh tùy chỉnh bằng API của chúng tôi"
+            "DESCRIPTION": "Tạo kênh tùy chỉnh bằng API"
           },
           "TELEGRAM": {
             "TITLE": "Telegram",
-            "DESCRIPTION": "Cấu hình kênh Telegram bằng Bot Token"
+            "DESCRIPTION": "Tích hợp bằng Bot Token"
           },
           "LINE": {
             "TITLE": "Line",
-            "DESCRIPTION": "Tích hợp kênh Line của bạn"
+            "DESCRIPTION": "Kết nối kênh Line"
           },
           "INSTAGRAM": {
             "TITLE": "Instagram",
-            "DESCRIPTION": "Kết nối tài khoản Instagram của bạn"
+            "DESCRIPTION": "Kết nối tài khoản Instagram"
           },
           "VOICE": {
             "TITLE": "Voice",
-            "DESCRIPTION": "Tích hợp với Twilio Voice"
+            "DESCRIPTION": "Tích hợp Twilio Voice"
           },
           "ZALO": {
             "TITLE": "Zalo",
-            "DESCRIPTION": "Tích hợp với Zalo OA"
+            "DESCRIPTION": "Kết nối Zalo OA"
           },
           "ZALOPERSONAL": {
-            "TITLE": "Zalo User",
-            "DESCRIPTION": "Tích hợp với tài khoản Zalo cá nhân"
+            "TITLE": "Zalo cá nhân",
+            "DESCRIPTION": "Kết nối Zalo cá nhân"
           },
           "TIKTOK": {
             "TITLE": "Tiktok",
-            "DESCRIPTION": "Tích hợp với Tiktok Shop"
+            "DESCRIPTION": "Kết nối Tiktok Shop"
           }
         }
       },
       "AGENTS": {
-        "TITLE": "Nhân Viên",
-        "DESC": "Tại đây, bạn có thể thêm nhân viên để quản lý hộp thư mới tạo của bạn. Chỉ những nhân viên được chọn mới có quyền truy cập hộp thư. Nhân viên không thuộc hộp thư này sẽ không thể xem hoặc trả lời tin nhắn khi họ đăng nhập. <br> <b>Lưu ý:</b> Với vai trò quản trị, nếu bạn cần truy cập tất cả các hộp thư, hãy thêm chính bạn vào tất cả các hộp thư mà bạn tạo.",
-        "VALIDATION_ERROR": "Thêm ít nhất một nhân viên vào hộp thư mới của bạn",
+        "TITLE": "Nhân viên",
+        "DESC": "Tại đây bạn có thể thêm nhân viên để quản lý hộp thư vừa tạo. Chỉ những nhân viên được chọn mới có quyền truy cập hộp thư này. Những nhân viên không thuộc hộp thư sẽ không thể xem hoặc phản hồi tin nhắn khi đăng nhập. <br><b>Lưu ý:</b> Nếu bạn là quản trị viên và muốn truy cập tất cả hộp thư, hãy thêm chính bạn vào mọi hộp thư bạn tạo.",
+        "VALIDATION_ERROR": "Vui lòng thêm ít nhất một nhân viên vào hộp thư",
         "PICK_AGENTS": "Chọn nhân viên cho hộp thư"
       },
       "DETAILS": {
-        "TITLE": "Chi tiết Hộp Thư",
-        "DESC": "Từ danh sách bên dưới, chọn Trang Facebook mà bạn muốn kết nối với Shopiz. Bạn cũng có thể đặt tên tùy chỉnh cho hộp thư của mình để nhận dạng dễ dàng hơn."
+        "TITLE": "Chi tiết hộp thư",
+        "DESC": "Từ danh sách thả xuống bên dưới, hãy chọn Trang Facebook bạn muốn kết nối với Shopiz. Bạn cũng có thể đặt tên tuỳ chỉnh để dễ nhận diện hơn."
       },
       "FINISH": {
-        "TITLE": "Đúng rồi!",
-        "DESC": "Bạn đã tích hợp thành công Trang Facebook của mình với Shopiz. Lần tới khi khách hàng nhắn tin cho Trang của bạn, cuộc trò chuyện sẽ tự động xuất hiện trong hộp thư đến của bạn.<br>Chúng tôi cũng đang cung cấp cho bạn tập lệnh widget mà bạn có thể dễ dàng thêm vào trang web của mình. Khi điều này xuất hiện trên trang web của bạn, khách hàng có thể nhắn tin cho bạn ngay từ trang web của bạn mà không cần sự trợ giúp của bất kỳ công cụ bên ngoài nào và cuộc trò chuyện sẽ xuất hiện ngay tại đây, trên Shopiz.<br>Cool, huh? Well :)"
+        "TITLE": "Hoàn tất!",
+        "DESC": "Bạn đã kết nối Trang Facebook thành công. Khi khách hàng nhắn tin Trang, cuộc trò chuyện sẽ xuất hiện ngay trong hộp thư của bạn.<br>Chúng tôi cũng cung cấp đoạn mã widget để bạn gắn vào website. Khi widget hoạt động, khách có thể nhắn tin trực tiếp từ website và hội thoại sẽ xuất hiện ngay tại Shopiz.<br>Tuyệt đúng không? Chúng tôi luôn cố gắng mang lại trải nghiệm tốt nhất :)"
       },
       "EMAIL_PROVIDER": {
-        "TITLE": "Chọn Nhà Cung Cấp Email",
-        "DESCRIPTION": "Chọn một nhà cung cấp email từ danh sách bên dưới. Nếu bạn không thấy nhà cung cấp email của mình trong danh sách, bạn có thể chọn tùy chọn nhà cung cấp khác và cung cấp thông tin xác thực IMAP và SMTP."
+        "TITLE": "Chọn nhà cung cấp email",
+        "DESCRIPTION": "Chọn một nhà cung cấp email từ danh sách bên dưới. Nếu không thấy trong danh sách, hãy chọn tùy chọn 'khác' và nhập thông tin IMAP/SMTP."
       },
       "MICROSOFT": {
-        "TITLE": "Microsoft Email",
-        "DESCRIPTION": "Nhấp vào nút Đăng nhập với Microsoft để bắt đầu. Bạn sẽ được chuyển hướng đến trang đăng nhập email. Khi bạn chấp nhận các quyền được yêu cầu, bạn sẽ được chuyển hướng trở lại bước tạo hộp thư.",
+        "TITLE": "Email Microsoft",
+        "DESCRIPTION": "Nhấp 'Đăng nhập với Microsoft' để bắt đầu. Bạn sẽ được chuyển tới trang đăng nhập email và sau khi cấp quyền, hệ thống sẽ đưa bạn trở lại bước tạo hộp thư.",
         "EMAIL_PLACEHOLDER": "Nhập địa chỉ email",
         "SIGN_IN": "Đăng nhập với Microsoft",
-        "ERROR_MESSAGE": "Đã xảy ra lỗi khi kết nối với Microsoft, vui lòng thử lại"
+        "ERROR_MESSAGE": "Không thể kết nối với Microsoft, vui lòng thử lại"
       },
       "GOOGLE": {
-        "TITLE": "Google Email",
-        "DESCRIPTION": "Nhấp vào nút Đăng nhập với Google để bắt đầu. Bạn sẽ được chuyển hướng đến trang đăng nhập email. Khi bạn chấp nhận các quyền được yêu cầu, bạn sẽ được chuyển hướng trở lại bước tạo hộp thư.",
+        "TITLE": "Email Google",
+        "DESCRIPTION": "Nhấp 'Đăng nhập với Google' để bắt đầu. Sau khi chấp thuận quyền truy cập, bạn sẽ được đưa trở lại bước tạo hộp thư.",
         "SIGN_IN": "Đăng nhập với Google",
         "EMAIL_PLACEHOLDER": "Nhập địa chỉ email",
-        "ERROR_MESSAGE": "Đã xảy ra lỗi khi kết nối với Google, vui lòng thử lại"
+        "ERROR_MESSAGE": "Không thể kết nối với Google, vui lòng thử lại"
       }
     },
     "DETAILS": {
-      "LOADING_FB": "Xác thực bạn bằng Facebook...",
-      "ERROR_FB_LOADING": "Lỗi khi tải Facebook SDK. Vui lòng tắt bất kỳ trình chặn quảng cáo nào và thử lại từ trình duyệt khác.",
-      "ERROR_FB_AUTH": "Đã xảy ra sự cố, Vui lòng làm mới trang...",
-      "ERROR_FB_UNAUTHORIZED": "Bạn không được phép thực hiện hành động này.",
-      "ERROR_FB_UNAUTHORIZED_HELP": "Vui lòng đảm bảo bạn có quyền truy cập vào trang Facebook với quyền kiểm soát đầy đủ. Bạn có thể đọc thêm về vai trò của Facebook <a href=\" https://www.facebook.com/help/187316341316631\">tại đây</a>.",
-      "CREATING_CHANNEL": "Tạo Hộp thư đến của bạn...",
-      "TITLE": "Cấu hình chi tiết hộp thư đến",
+      "LOADING_FB": "Đang xác thực Facebook...",
+      "ERROR_FB_LOADING": "Lỗi tải Facebook SDK. Vui lòng tắt trình chặn quảng cáo hoặc thử trình duyệt khác.",
+      "ERROR_FB_AUTH": "Đã xảy ra lỗi, vui lòng tải lại trang...",
+      "ERROR_FB_UNAUTHORIZED": "Bạn không có quyền thực hiện hành động này.",
+      "ERROR_FB_UNAUTHORIZED_HELP": "Hãy đảm bảo bạn có quyền kiểm soát đầy đủ Trang Facebook. Đọc thêm về phân quyền tại <a href=\" https://www.facebook.com/help/187316341316631\">đây</a>.",
+      "CREATING_CHANNEL": "Đang tạo hộp thư...",
+      "TITLE": "Cấu hình chi tiết hộp thư",
+      "LOADING_TIKTOK": "Đang xác thực với Tiktok...",
+      "DESC_TIKTOK": "TIKTOK",
       "DESC": ""
     },
     "AGENTS": {
       "BUTTON_TEXT": "Thêm nhân viên",
-      "ADD_AGENTS": "Thêm nhân viên vào hộp thư đến của bạn..."
+      "ADD_AGENTS": "Đang thêm nhân viên vào hộp thư..."
     },
     "FINISH": {
-      "TITLE": "Hộp thư đến của bạn đã sẵn sàng!",
-      "MESSAGE": "Giờ đây, bạn có thể tương tác với khách hàng thông qua Kênh mới của mình. Chúc vui vẻ ủng hộ",
-      "BUTTON_TEXT": "Đưa cho tôi",
-      "MORE_SETTINGS": "Nhiều tuỳ chọn hơn",
-      "WEBSITE_SUCCESS": "Bạn đã hoàn thành việc tạo kênh trang web thành công. Sao chép mã được hiển thị bên dưới và dán vào trang web của bạn. Lần tới khi khách hàng sử dụng cuộc trò chuyện trực tiếp, cuộc trò chuyện sẽ tự động xuất hiện trong hộp thư đến của bạn.",
-      "WHATSAPP_QR_INSTRUCTION": "Scan the QR code above to quickly test your WhatsApp inbox",
-      "MESSENGER_QR_INSTRUCTION": "Scan the QR code above to quickly test your Facebook Messenger inbox",
-      "TELEGRAM_QR_INSTRUCTION": "Scan the QR code above to quickly test your Telegram inbox"
+      "TITLE": "Hộp thư của bạn đã sẵn sàng!",
+      "MESSAGE": "Bạn có thể bắt đầu hỗ trợ khách hàng qua kênh mới. Chúc bạn hỗ trợ hiệu quả!",
+      "BUTTON_TEXT": "Đi đến hộp thư",
+      "MORE_SETTINGS": "Cài đặt thêm",
+      "WEBSITE_SUCCESS": "Bạn đã tạo thành công kênh Website. Sao chép đoạn mã bên dưới và dán vào website của bạn. Khi khách nhắn tin qua live chat, hội thoại sẽ hiển thị tại hộp thư này.",
+      "WHATSAPP_QR_INSTRUCTION": "Quét mã QR để kiểm tra nhanh kênh WhatsApp",
+      "MESSENGER_QR_INSTRUCTION": "Quét mã QR để kiểm tra nhanh kênh Facebook Messenger",
+      "TELEGRAM_QR_INSTRUCTION": "Quét mã QR để kiểm tra nhanh kênh Telegram"
     },
-    "REAUTH": "Ủy quyền lại",
+    "REAUTH": "Kết nối lại",
     "VIEW": "Xem",
     "EDIT": {
       "API": {
-        "SUCCESS_MESSAGE": "Đã cập nhật cài đặt hộp thư đến thành công",
-        "AUTO_ASSIGNMENT_SUCCESS_MESSAGE": "Đã cập nhật thành công bài tập tự động",
-        "ERROR_MESSAGE": "Chúng tôi không thể cập nhật cài đặt hộp thư. Vui lòng thử lại sau."
+        "SUCCESS_MESSAGE": "Cập nhật cài đặt hộp thư thành công",
+        "AUTO_ASSIGNMENT_SUCCESS_MESSAGE": "Cập nhật tự động phân công thành công",
+        "ERROR_MESSAGE": "Không thể cập nhật cài đặt. Vui lòng thử lại sau."
       },
       "EMAIL_COLLECT_BOX": {
         "ENABLED": "Bật",
-        "DISABLED": "Không bật"
+        "DISABLED": "Tắt"
       },
       "ENABLE_CSAT": {
         "ENABLED": "Bật",
-        "DISABLED": "Không bật"
+        "DISABLED": "Tắt"
       },
       "SENDER_NAME_SECTION": {
         "TITLE": "Tên người gửi",
-        "SUB_TEXT": "Chọn tên hiển thị cho khách hàng của bạn khi họ nhận email từ các nhân viên của bạn.",
+        "SUB_TEXT": "Chọn tên hiển thị với khách khi họ nhận email từ nhân viên.",
         "FOR_EG": "Ví dụ:",
         "FRIENDLY": {
           "TITLE": "Thân thiện",
           "FROM": "từ",
-          "SUBTITLE": "Thêm tên của nhân viên đã gửi phản hồi vào tên người gửi để làm cho nó thân thiện hơn."
+          "SUBTITLE": "Thêm tên nhân viên vào tên người gửi để tạo sự gần gũi."
         },
         "PROFESSIONAL": {
           "TITLE": "Chuyên nghiệp",
-          "SUBTITLE": "Chỉ sử dụng tên doanh nghiệp đã cấu hình làm tên người gửi trong tiêu đề email."
+          "SUBTITLE": "Chỉ hiển thị tên doanh nghiệp trong phần người gửi."
         },
         "BUSINESS_NAME": {
-          "BUTTON_TEXT": "+ Cấu hình tên doanh nghiệp của bạn",
-          "PLACEHOLDER": "Nhập tên doanh nghiệp của bạn",
+          "BUTTON_TEXT": "+ Cấu hình tên doanh nghiệp",
+          "PLACEHOLDER": "Nhập tên doanh nghiệp",
           "SAVE_BUTTON_TEXT": "Lưu"
         }
       },
       "ALLOW_MESSAGES_AFTER_RESOLVED": {
         "ENABLED": "Bật",
-        "DISABLED": "Không bật"
+        "DISABLED": "Tắt"
       },
       "ENABLE_CONTINUITY_VIA_EMAIL": {
         "ENABLED": "Bật",
-        "DISABLED": "Không bật"
+        "DISABLED": "Tắt"
       },
       "LOCK_TO_SINGLE_CONVERSATION": {
         "ENABLED": "Bật",
-        "DISABLED": "Không bật"
+        "DISABLED": "Tắt"
       },
       "ENABLE_HMAC": {
         "LABEL": "Bật"
       }
     },
     "DELETE": {
-      "BUTTON_TEXT": "Xoá",
-      "AVATAR_DELETE_BUTTON_TEXT": "Xoá hình đại diện",
+      "BUTTON_TEXT": "Xóa",
+      "AVATAR_DELETE_BUTTON_TEXT": "Xóa ảnh đại diện",
       "CONFIRM": {
-        "TITLE": "Xác nhận xoá",
-        "MESSAGE": "Bạn có muốn xoá? ",
-        "PLACE_HOLDER": "Vui lòng điền {inboxName} để xác nhận",
-        "YES": "Có, Xoá ",
-        "NO": "Không, Giữ "
+        "TITLE": "Xác nhận xóa",
+        "MESSAGE": "Bạn có chắc chắn muốn xóa ",
+        "PLACE_HOLDER": "Nhập {inboxName} để xác nhận",
+        "YES": "Có, xóa ",
+        "NO": "Không, giữ lại "
       },
       "API": {
-        "SUCCESS_MESSAGE": "Hộp thư đến đã được xóa thành công",
-        "ERROR_MESSAGE": "Không thể xóa hộp thư đến. Vui lòng thử lại sau.",
-        "AVATAR_SUCCESS_MESSAGE": "Hình đại diện của hộp thư đến đã được xoá thành công",
-        "AVATAR_ERROR_MESSAGE": "Không thể xoá hình đại diện của hộp thư đến. Vui lòng thử lại sau."
+        "SUCCESS_MESSAGE": "Xóa hộp thư thành công",
+        "ERROR_MESSAGE": "Không thể xóa hộp thư. Vui lòng thử lại sau.",
+        "AVATAR_SUCCESS_MESSAGE": "Xóa ảnh đại diện thành công",
+        "AVATAR_ERROR_MESSAGE": "Không thể xóa ảnh đại diện, vui lòng thử lại."
       }
     },
     "TABS": {
@@ -670,360 +679,360 @@
       "COLLABORATORS": "Cộng tác viên",
       "CONFIGURATION": "Cấu hình",
       "CAMPAIGN": "Chiến dịch",
-      "PRE_CHAT_FORM": "Biểu mẫu trước khi trò chuyện",
+      "PRE_CHAT_FORM": "Form trước chat",
       "BUSINESS_HOURS": "Giờ làm việc",
-      "WIDGET_BUILDER": "Trình tạo widget",
-      "BOT_CONFIGURATION": "Cấu hình Bot",
-      "ACCOUNT_HEALTH": "Account Health",
+      "WIDGET_BUILDER": "Tùy chỉnh widget",
+      "BOT_CONFIGURATION": "Cấu hình bot",
+      "ACCOUNT_HEALTH": "Sức khỏe tài khoản",
       "CSAT": "CSAT"
     },
     "ACCOUNT_HEALTH": {
-      "TITLE": "Manage your WhatsApp account",
-      "DESCRIPTION": "Review your WhatsApp account status, messaging limits, and quality. Update settings or resolve issues if needed",
-      "GO_TO_SETTINGS": "Go to Meta Business Manager",
-      "NO_DATA": "Health data is not available",
+      "TITLE": "Quản lý tài khoản WhatsApp",
+      "DESCRIPTION": "Xem trạng thái, giới hạn nhắn tin và chất lượng tài khoản WhatsApp. Cập nhật cài đặt hoặc xử lý vấn đề nếu cần.",
+      "GO_TO_SETTINGS": "Đi đến Meta Business Manager",
+      "NO_DATA": "Không có dữ liệu sức khỏe",
       "FIELDS": {
         "DISPLAY_PHONE_NUMBER": {
-          "LABEL": "Display phone number",
-          "TOOLTIP": "Phone number displayed to customers"
+          "LABEL": "Số điện thoại hiển thị",
+          "TOOLTIP": "Số điện thoại hiển thị với khách hàng"
         },
         "VERIFIED_NAME": {
-          "LABEL": "Business name",
-          "TOOLTIP": "Business name verified by WhatsApp"
+          "LABEL": "Tên doanh nghiệp",
+          "TOOLTIP": "Tên doanh nghiệp được WhatsApp xác minh"
         },
         "DISPLAY_NAME_STATUS": {
-          "LABEL": "Display name status",
-          "TOOLTIP": "Status of your business name verification"
+          "LABEL": "Trạng thái tên hiển thị",
+          "TOOLTIP": "Tiến trình xác minh tên doanh nghiệp"
         },
         "QUALITY_RATING": {
-          "LABEL": "Quality rating",
-          "TOOLTIP": "WhatsApp quality rating for your account"
+          "LABEL": "Chất lượng",
+          "TOOLTIP": "Điểm chất lượng tài khoản WhatsApp"
         },
         "MESSAGING_LIMIT_TIER": {
-          "LABEL": "Messaging limit tier",
-          "TOOLTIP": "Daily messaging limit for your account"
+          "LABEL": "Giới hạn nhắn tin",
+          "TOOLTIP": "Số lượng khách tối đa bạn có thể nhắn trong 24 giờ"
         },
         "ACCOUNT_MODE": {
-          "LABEL": "Account mode",
-          "TOOLTIP": "Current operating mode of your WhatsApp account"
+          "LABEL": "Chế độ tài khoản",
+          "TOOLTIP": "Trạng thái hoạt động của tài khoản WhatsApp"
         }
       },
       "VALUES": {
         "TIERS": {
-          "TIER_250": "250 customers per 24h",
-          "TIER_1000": "1K customers per 24h",
-          "TIER_1K": "1K customers per 24h",
-          "TIER_10K": "10K customers per 24h",
-          "TIER_100K": "100K customers per 24h",
-          "TIER_UNLIMITED": "Unlimited customers per 24h",
-          "UNKNOWN": "Rating not available"
+          "TIER_250": "250 khách/24h",
+          "TIER_1000": "1.000 khách/24h",
+          "TIER_1K": "1.000 khách/24h",
+          "TIER_10K": "10.000 khách/24h",
+          "TIER_100K": "100.000 khách/24h",
+          "TIER_UNLIMITED": "Không giới hạn",
+          "UNKNOWN": "Không xác định"
         },
         "STATUSES": {
-          "APPROVED": "Approved",
-          "PENDING_REVIEW": "Pending Review",
-          "AVAILABLE_WITHOUT_REVIEW": "Available Without Review",
-          "REJECTED": "Rejected",
-          "DECLINED": "Declined",
-          "NON_EXISTS": "Non exists"
+          "APPROVED": "Đã duyệt",
+          "PENDING_REVIEW": "Đang chờ duyệt",
+          "AVAILABLE_WITHOUT_REVIEW": "Dùng được không cần duyệt",
+          "REJECTED": "Bị từ chối",
+          "DECLINED": "Không được chấp thuận",
+          "NON_EXISTS": "Không tồn tại"
         },
         "MODES": {
           "SANDBOX": "Sandbox",
-          "LIVE": "Trực tuyến"
+          "LIVE": "Live"
         }
       }
     },
     "SETTINGS": "Cài đặt",
     "FEATURES": {
-      "LABEL": "Các tính năng",
-      "DISPLAY_FILE_PICKER": "Hiển thị bộ chọn tệp trên tiện ích con",
-      "DISPLAY_EMOJI_PICKER": "Hiển thị bộ chọn biểu tượng cảm xúc trên tiện ích con",
-      "ALLOW_END_CONVERSATION": "Cho phép người dùng kết thúc cuộc trò chuyện từ công cụ chat",
-      "USE_INBOX_AVATAR_FOR_BOT": "Use inbox name and avatar for the bot"
+      "LABEL": "Tính năng",
+      "DISPLAY_FILE_PICKER": "Hiển thị chọn tệp trên widget",
+      "DISPLAY_EMOJI_PICKER": "Hiển thị bảng emoji",
+      "ALLOW_END_CONVERSATION": "Cho phép khách kết thúc hội thoại",
+      "USE_INBOX_AVATAR_FOR_BOT": "Dùng tên & avatar hộp thư cho bot"
     },
     "SETTINGS_POPUP": {
-      "MESSENGER_HEADING": "Tập lệnh Messenger",
-      "MESSENGER_SUB_HEAD": "Đặt nút này bên trong thẻ body của bạn",
+      "MESSENGER_HEADING": "Mã Messenger",
+      "MESSENGER_SUB_HEAD": "Đặt đoạn mã này trong thẻ <body>",
       "ALLOWED_DOMAINS": {
-        "TITLE": "Allowed Domains",
-        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.shopiz.dev, shopiz.pro.",
-        "PLACEHOLDER": "Enter domains separated by commas (eg: *.shopiz.dev, shopiz.pro)"
+        "TITLE": "Tên miền cho phép",
+        "SUBTITLE": "Thêm tên miền hoặc wildcard, phân tách bằng dấu phẩy (để trống nếu cho phép tất cả).",
+        "PLACEHOLDER": "Nhập danh sách tên miền (ví dụ: *.shopiz.dev, shopiz.pro)"
       },
-      "INBOX_AGENTS": "Nhà cung cấp",
-      "INBOX_AGENTS_SUB_TEXT": "Thêm hoặc xóa tác nhân khỏi hộp thư đến này",
-      "AGENT_ASSIGNMENT": "Phân công cuộc trò chuyện",
-      "AGENT_ASSIGNMENT_SUB_TEXT": "Cập nhật phân công cuộc trò chuyện",
+      "INBOX_AGENTS": "Nhân viên",
+      "INBOX_AGENTS_SUB_TEXT": "Thêm hoặc xóa nhân viên khỏi hộp thư này",
+      "AGENT_ASSIGNMENT": "Phân công hội thoại",
+      "AGENT_ASSIGNMENT_SUB_TEXT": "Cập nhật cài đặt phân công hội thoại",
       "VOICE_CALL_ROUTING": "Định tuyến cuộc gọi",
-      "VOICE_CALL_ROUTING_SUB_TEXT": "Cấu hình cách xử lý cuộc gọi khi các nhân viên không online",
-      "PERSONAL_PHONE_ROUTING": "Bật định tuyến đến điện thoại cá nhân",
-      "PERSONAL_PHONE_ROUTING_SUB_TEXT": "Khi một nhân viên không online trên Shopiz, định tuyến cuộc gọi đến số điện thoại cá nhân của họ",
-      "AGENT_PHONE_SETTINGS_INFO": "Mỗi nhân viên có thể cấu hình số điện thoại cá nhân của họ trên trang cài đặt hồ sơ",
+      "VOICE_CALL_ROUTING_SUB_TEXT": "Cấu hình cách xử lý cuộc gọi khi nhân viên không khả dụng",
+      "PERSONAL_PHONE_ROUTING": "Cho phép chuyển tiếp vào số cá nhân",
+      "PERSONAL_PHONE_ROUTING_SUB_TEXT": "Khi nhân viên không online, cuộc gọi sẽ được chuyển tiếp đến số cá nhân của họ",
+      "AGENT_PHONE_SETTINGS_INFO": "Nhân viên có thể cấu hình số cá nhân tại trang hồ sơ",
       "UPDATE": "Cập nhật",
-      "ENABLE_EMAIL_COLLECT_BOX": "Bật hộp thu thập email",
-      "ENABLE_EMAIL_COLLECT_BOX_SUB_TEXT": "Bật hoặc tắt hộp thu thập email trên cuộc trò chuyện mới",
-      "AUTO_ASSIGNMENT": "Bật tự động chuyển nhượng",
-      "SENDER_NAME_SECTION": "Enable Agent Name in Email",
-      "SENDER_NAME_SECTION_TEXT": "Enable/Disable showing Agent's name in email, if disabled it will show business name",
-      "ENABLE_CONTINUITY_VIA_EMAIL": "Bật tiếp tục cuộc trò chuyện qua email",
-      "ENABLE_CONTINUITY_VIA_EMAIL_SUB_TEXT": "Cuộc trò chuyện sẽ tiếp tục qua email nếu có địa chỉ email liên lạc.",
-      "LOCK_TO_SINGLE_CONVERSATION": "Khóa cuộc trò chuyện duy nhất",
-      "LOCK_TO_SINGLE_CONVERSATION_SUB_TEXT": "Bật hoặc tắt nhiều cuộc trò chuyện cho cùng một liên hệ trong hộp thư đến này",
-      "INBOX_UPDATE_TITLE": "Cài đặt Hộp thư đến",
-      "INBOX_UPDATE_SUB_TEXT": "Cập nhật cài đặt hộp thư đến của bạn",
-      "AUTO_ASSIGNMENT_SUB_TEXT": "Bật hoặc tắt tính năng tự động gán các cuộc hội thoại mới cho các tác nhân được thêm vào hộp thư đến này.",
+      "ENABLE_EMAIL_COLLECT_BOX": "Thu thập email khách",
+      "ENABLE_EMAIL_COLLECT_BOX_SUB_TEXT": "Bật/tắt thu thập email khi mở hội thoại mới",
+      "AUTO_ASSIGNMENT": "Tự động phân công",
+      "SENDER_NAME_SECTION": "Tên người gửi email",
+      "SENDER_NAME_SECTION_TEXT": "Bật/tắt hiển thị tên nhân viên trong email. Nếu tắt, hệ thống sẽ dùng tên doanh nghiệp.",
+      "ENABLE_CONTINUITY_VIA_EMAIL": "Duy trì hội thoại qua email",
+      "ENABLE_CONTINUITY_VIA_EMAIL_SUB_TEXT": "Hội thoại sẽ tiếp tục qua email nếu có email người liên hệ.",
+      "LOCK_TO_SINGLE_CONVERSATION": "Chỉ 1 hội thoại/kênh",
+      "LOCK_TO_SINGLE_CONVERSATION_SUB_TEXT": "Bật/tắt cho phép nhiều hội thoại cho cùng 1 khách",
+      "INBOX_UPDATE_TITLE": "Cài đặt hộp thư",
+      "INBOX_UPDATE_SUB_TEXT": "Cập nhật cài đặt hộp thư của bạn",
+      "AUTO_ASSIGNMENT_SUB_TEXT": "Bật/tắt tự động phân công hội thoại mới.",
       "HMAC_VERIFICATION": "Xác thực danh tính người dùng",
-      "HMAC_DESCRIPTION": "With this key you can generate a secret token that can be used to verify the identity of your users.",
-      "HMAC_LINK_TO_DOCS": "You can read more here.",
-      "HMAC_MANDATORY_VERIFICATION": "Bắt buộc Xác thực danh tính người dùng",
-      "HMAC_MANDATORY_DESCRIPTION": "If enabled, requests that cannot be verified will be rejected.",
-      "INBOX_IDENTIFIER": "Định danh hộp thư đến",
-      "INBOX_IDENTIFIER_SUB_TEXT": "Dùng token định danh hộp thư đến hiện ở đây để xác thực các ứng dụng khách API của bạn.",
-      "FORWARD_EMAIL_TITLE": "Chuyển tiếp đến Email",
-      "FORWARD_EMAIL_SUB_TEXT": "Bắt đầu chuyển tiếp email của bạn tới địa chỉ email sau.",
-      "ALLOW_MESSAGES_AFTER_RESOLVED": "Cho phép nhắn tin sau khi cuộc trò chuyện được giải quyết",
-      "ALLOW_MESSAGES_AFTER_RESOLVED_SUB_TEXT": "Cho phép người dùng cuối nhắn tin sau khi cuộc trò chuyện được giải quyết.",
-      "WHATSAPP_SECTION_SUBHEADER": "Khóa API này được sử dụng để tích hợp với các API WhatsApp.",
-      "WHATSAPP_SECTION_UPDATE_SUBHEADER": "Enter the new API key to be used for the integration with the WhatsApp APIs.",
-      "WHATSAPP_SECTION_TITLE": "Khoá API",
-      "WHATSAPP_SECTION_UPDATE_TITLE": "Update API Key",
-      "WHATSAPP_SECTION_UPDATE_PLACEHOLDER": "Enter the new API Key here",
+      "HMAC_DESCRIPTION": "Khoá này dùng để tạo mã xác thực nhằm kiểm tra danh tính người dùng.",
+      "HMAC_LINK_TO_DOCS": "Xem thêm tại đây.",
+      "HMAC_MANDATORY_VERIFICATION": "Bắt buộc xác thực",
+      "HMAC_MANDATORY_DESCRIPTION": "Nếu bật, các yêu cầu không hợp lệ sẽ bị từ chối.",
+      "INBOX_IDENTIFIER": "Mã định danh hộp thư",
+      "INBOX_IDENTIFIER_SUB_TEXT": "Dùng mã này để xác thực API client.",
+      "FORWARD_EMAIL_TITLE": "Chuyển tiếp email",
+      "FORWARD_EMAIL_SUB_TEXT": "Chuyển tiếp email của bạn đến địa chỉ sau.",
+      "ALLOW_MESSAGES_AFTER_RESOLVED": "Cho phép nhắn sau khi đóng hội thoại",
+      "ALLOW_MESSAGES_AFTER_RESOLVED_SUB_TEXT": "Khách vẫn có thể nhắn tiếp ngay cả khi hội thoại đã được đánh dấu hoàn tất.",
+      "WHATSAPP_SECTION_SUBHEADER": "API key dùng để tích hợp với WhatsApp APIs.",
+      "WHATSAPP_SECTION_UPDATE_SUBHEADER": "Nhập API key mới để cập nhật kết nối WhatsApp.",
+      "WHATSAPP_SECTION_TITLE": "API Key",
+      "WHATSAPP_SECTION_UPDATE_TITLE": "Cập nhật API Key",
+      "WHATSAPP_SECTION_UPDATE_PLACEHOLDER": "Nhập API Key mới",
       "WHATSAPP_SECTION_UPDATE_BUTTON": "Cập nhật",
       "WHATSAPP_EMBEDDED_SIGNUP_TITLE": "WhatsApp Embedded Signup",
-      "WHATSAPP_EMBEDDED_SIGNUP_SUBHEADER": "This inbox is connected through WhatsApp embedded signup.",
-      "WHATSAPP_EMBEDDED_SIGNUP_DESCRIPTION": "You can reconfigure this inbox to update your WhatsApp Business settings.",
-      "WHATSAPP_RECONFIGURE_BUTTON": "Reconfigure",
-      "WHATSAPP_CONNECT_TITLE": "Connect to WhatsApp Business",
-      "WHATSAPP_CONNECT_SUBHEADER": "Upgrade to WhatsApp embedded signup for easier management.",
-      "WHATSAPP_CONNECT_DESCRIPTION": "Connect this inbox to WhatsApp Business for enhanced features and easier management.",
+      "WHATSAPP_EMBEDDED_SIGNUP_SUBHEADER": "Hộp thư này được kết nối bằng Embedded Signup.",
+      "WHATSAPP_EMBEDDED_SIGNUP_DESCRIPTION": "Bạn có thể cấu hình lại để cập nhật thiết lập WhatsApp Business.",
+      "WHATSAPP_RECONFIGURE_BUTTON": "Cấu hình lại",
+      "WHATSAPP_CONNECT_TITLE": "Kết nối WhatsApp Business",
+      "WHATSAPP_CONNECT_SUBHEADER": "Nâng cấp lên Embedded Signup để quản lý dễ hơn.",
+      "WHATSAPP_CONNECT_DESCRIPTION": "Kết nối hộp thư này với WhatsApp Business để có nhiều tính năng hơn.",
       "WHATSAPP_CONNECT_BUTTON": "Kết nối",
-      "WHATSAPP_CONNECT_SUCCESS": "Successfully connected to WhatsApp Business!",
-      "WHATSAPP_CONNECT_ERROR": "Failed to connect to WhatsApp Business. Please try again.",
-      "WHATSAPP_RECONFIGURE_SUCCESS": "Successfully reconfigured WhatsApp Business!",
-      "WHATSAPP_RECONFIGURE_ERROR": "Failed to reconfigure WhatsApp Business. Please try again.",
-      "WHATSAPP_APP_ID_MISSING": "WhatsApp App ID is not configured. Please contact your administrator.",
-      "WHATSAPP_CONFIG_ID_MISSING": "WhatsApp Configuration ID is not configured. Please contact your administrator.",
-      "WHATSAPP_LOGIN_CANCELLED": "WhatsApp login was cancelled. Please try again.",
-      "WHATSAPP_WEBHOOK_TITLE": "Mã xác minh Webhook",
-      "WHATSAPP_WEBHOOK_SUBHEADER": "This token is used to verify the authenticity of the webhook endpoint.",
-      "WHATSAPP_TEMPLATES_SYNC_TITLE": "Sync Templates",
-      "WHATSAPP_TEMPLATES_SYNC_SUBHEADER": "Manually sync message templates from WhatsApp to update your available templates.",
-      "WHATSAPP_TEMPLATES_SYNC_BUTTON": "Sync Templates",
-      "WHATSAPP_TEMPLATES_SYNC_SUCCESS": "Templates sync initiated successfully. It may take a couple of minutes to update.",
-      "UPDATE_PRE_CHAT_FORM_SETTINGS": "Update Pre Chat Form Settings"
+      "WHATSAPP_CONNECT_SUCCESS": "Kết nối WhatsApp Business thành công!",
+      "WHATSAPP_CONNECT_ERROR": "Không thể kết nối. Vui lòng thử lại.",
+      "WHATSAPP_RECONFIGURE_SUCCESS": "Cấu hình lại thành công!",
+      "WHATSAPP_RECONFIGURE_ERROR": "Không thể cấu hình lại. Vui lòng thử lại.",
+      "WHATSAPP_APP_ID_MISSING": "Thiếu WhatsApp App ID. Vui lòng liên hệ quản trị viên.",
+      "WHATSAPP_CONFIG_ID_MISSING": "Thiếu WhatsApp Configuration ID. Vui lòng liên hệ quản trị viên.",
+      "WHATSAPP_LOGIN_CANCELLED": "Đăng nhập bị hủy. Vui lòng thử lại.",
+      "WHATSAPP_WEBHOOK_TITLE": "Mã xác thực webhook",
+      "WHATSAPP_WEBHOOK_SUBHEADER": "Mã này dùng để xác thực endpoint webhook.",
+      "WHATSAPP_TEMPLATES_SYNC_TITLE": "Đồng bộ template",
+      "WHATSAPP_TEMPLATES_SYNC_SUBHEADER": "Đồng bộ template WhatsApp thủ công.",
+      "WHATSAPP_TEMPLATES_SYNC_BUTTON": "Đồng bộ",
+      "WHATSAPP_TEMPLATES_SYNC_SUCCESS": "Đã bắt đầu đồng bộ template. Quá trình có thể mất vài phút.",
+      "UPDATE_PRE_CHAT_FORM_SETTINGS": "Cập nhật form trước chat"
     },
     "HELP_CENTER": {
       "LABEL": "Trung tâm trợ giúp",
-      "PLACEHOLDER": "Chọn trung tâm trợ giúp",
-      "SELECT_PLACEHOLDER": "Chọn trung tâm trợ giúp",
-      "REMOVE": "Xoá trung tâm trợ giúp",
-      "SUB_TEXT": "Gắn Trung tâm trợ giúp vào hộp thư"
+      "PLACEHOLDER": "Chọn Help Center",
+      "SELECT_PLACEHOLDER": "Chọn Help Center",
+      "REMOVE": "Gỡ Help Center",
+      "SUB_TEXT": "Gắn Help Center vào hộp thư này"
     },
     "AUTO_ASSIGNMENT": {
-      "MAX_ASSIGNMENT_LIMIT": "Giới hạn tự động phân công tối đa",
-      "MAX_ASSIGNMENT_LIMIT_RANGE_ERROR": "Xin nhập vào một số lớn hơn 0",
-      "MAX_ASSIGNMENT_LIMIT_SUB_TEXT": "Giới hạn số cuộc trò chuyện tối đa từ hộp thư này mà có thể được tự động phân công cho một hỗ trợ viên"
+      "MAX_ASSIGNMENT_LIMIT": "Giới hạn phân công tự động",
+      "MAX_ASSIGNMENT_LIMIT_RANGE_ERROR": "Vui lòng nhập giá trị lớn hơn 0",
+      "MAX_ASSIGNMENT_LIMIT_SUB_TEXT": "Giới hạn số hội thoại tối đa được phân công tự động cho một nhân viên"
     },
     "FACEBOOK_REAUTHORIZE": {
-      "TITLE": "Ủy quyền lại",
-      "SUBTITLE": "Kết nối Facebook của bạn đã hết hạn, vui lòng kết nối lại trang Facebook của bạn để tiếp tục dịch vụ",
+      "TITLE": "Kết nối lại",
+      "SUBTITLE": "Kết nối Facebook đã hết hạn, vui lòng kết nối lại để tiếp tục sử dụng",
       "MESSAGE_SUCCESS": "Kết nối lại thành công",
-      "MESSAGE_ERROR": "Đã có lỗi, vui lòng thử lại"
+      "MESSAGE_ERROR": "Có lỗi xảy ra, vui lòng thử lại"
     },
     "PRE_CHAT_FORM": {
-      "DESCRIPTION": "Biểu mẫu trước khi trò chuyện cho phép bạn nắm bắt thông tin người dùng trước khi họ bắt đầu cuộc trò chuyện với bạn.",
-      "SET_FIELDS": "Những ô cần điền vào trước cuộc trò chuyện",
+      "DESCRIPTION": "Form trước chat giúp bạn thu thập thông tin khách hàng trước khi họ bắt đầu trò chuyện.",
+      "SET_FIELDS": "Trường trong form",
       "SET_FIELDS_HEADER": {
-        "FIELDS": "Ô cần điền",
+        "FIELDS": "Trường",
         "LABEL": "Nhãn",
-        "PLACE_HOLDER": "Cụm từ hiện nền trong ô",
-        "KEY": "Khoá",
-        "TYPE": "Kiểu",
+        "PLACE_HOLDER": "Placeholder",
+        "KEY": "Key",
+        "TYPE": "Loại",
         "REQUIRED": "Bắt buộc"
       },
       "ENABLE": {
-        "LABEL": "Bật biểu mẫu trước khi trò chuyện",
+        "LABEL": "Bật form trước chat",
         "OPTIONS": {
-          "ENABLED": "Có",
-          "DISABLED": "Không"
+          "ENABLED": "Bật",
+          "DISABLED": "Tắt"
         }
       },
       "PRE_CHAT_MESSAGE": {
-        "LABEL": "Tin nhắn trước khi trò chuyện",
-        "PLACEHOLDER": "Tin nhắn này sẽ hiện cho những người dùng cùng với biểu mẫu"
+        "LABEL": "Tin nhắn giới thiệu",
+        "PLACEHOLDER": "Tin nhắn hiển thị cùng với form"
       },
       "REQUIRE_EMAIL": {
-        "LABEL": "Khách truy cập nên cung cấp tên và địa chỉ email của họ trước khi bắt đầu trò chuyện"
+        "LABEL": "Khách phải cung cấp tên và email trước khi bắt đầu trò chuyện"
       }
     },
     "CSAT": {
-      "TITLE": "Bật chỉ số đo lường sự hài lòng khách hàng",
-      "SUBTITLE": "Automatically trigger CSAT surveys at the end of conversations to understand how customers feel about their support experience. Track satisfaction trends and identify areas for improvement over time.",
+      "TITLE": "Bật khảo sát CSAT",
+      "SUBTITLE": "Tự động gửi khảo sát CSAT khi kết thúc hội thoại để hiểu mức độ hài lòng của khách hàng.",
       "DISPLAY_TYPE": {
-        "LABEL": "Display type"
+        "LABEL": "Kiểu hiển thị"
       },
       "MESSAGE": {
         "LABEL": "Tin nhắn",
-        "PLACEHOLDER": "Please enter a message to show users with the form"
+        "PLACEHOLDER": "Nhập nội dung hiển thị kèm khảo sát"
       },
       "SURVEY_RULE": {
-        "LABEL": "Survey rule",
-        "DESCRIPTION_PREFIX": "Send the survey if the conversation",
-        "DESCRIPTION_SUFFIX": "any of the labels",
+        "LABEL": "Quy tắc gửi khảo sát",
+        "DESCRIPTION_PREFIX": "Gửi khảo sát nếu hội thoại",
+        "DESCRIPTION_SUFFIX": "bất kỳ nhãn nào sau đây",
         "OPERATOR": {
           "CONTAINS": "chứa",
-          "DOES_NOT_CONTAINS": "không bao gồm"
+          "DOES_NOT_CONTAINS": "không chứa"
         },
-        "SELECT_PLACEHOLDER": "select labels"
+        "SELECT_PLACEHOLDER": "chọn nhãn"
       },
-      "NOTE": "Note: CSAT surveys are sent only once per conversation",
+      "NOTE": "Lưu ý: Mỗi hội thoại chỉ được gửi khảo sát một lần",
       "API": {
-        "SUCCESS_MESSAGE": "CSAT settings updated successfully",
-        "ERROR_MESSAGE": "We couldn't update CSAT settings. Please try again later."
+        "SUCCESS_MESSAGE": "Cập nhật CSAT thành công",
+        "ERROR_MESSAGE": "Không thể cập nhật CSAT, vui lòng thử lại"
       }
     },
     "BUSINESS_HOURS": {
-      "TITLE": "Đặt tính khả dụng của bạn",
-      "SUBTITLE": "Đặt tính khả dụng của bạn trên tiện ích trò chuyện trực tiếp",
-      "WEEKLY_TITLE": "Đặt giờ hàng tuần của bạn",
+      "TITLE": "Cài đặt giờ làm việc",
+      "SUBTITLE": "Hiển thị giờ làm việc trên widget live chat",
+      "WEEKLY_TITLE": "Cài đặt giờ làm việc theo tuần",
       "TIMEZONE_LABEL": "Chọn múi giờ",
-      "UPDATE": "Cập nhật tuỳ chỉnh giờ làm việc",
-      "TOGGLE_AVAILABILITY": "Kích hoạt tính khả dụng của doanh nghiệp cho hộp thư đến này",
-      "UNAVAILABLE_MESSAGE_LABEL": "Thông báo không có sẵn cho khách truy cập",
-      "TOGGLE_HELP": "Enabling business availability will show the available hours on live chat widget even if all the agents are offline. Outside available hours visitors can be warned with a message and a pre-chat form.",
+      "UPDATE": "Cập nhật giờ làm việc",
+      "TOGGLE_AVAILABILITY": "Bật khung giờ làm việc cho hộp thư",
+      "UNAVAILABLE_MESSAGE_LABEL": "Tin nhắn khi không trực tuyến",
+      "TOGGLE_HELP": "Khi bật, widget sẽ hiển thị giờ làm việc ngay cả khi tất cả nhân viên đang offline.",
       "DAY": {
-        "ENABLE": "Kích hoạt tính khả dụng cho hôm nay",
-        "UNAVAILABLE": "Không có sẵn",
+        "ENABLE": "Bật ngày làm việc",
+        "UNAVAILABLE": "Không làm việc",
         "HOURS": "giờ",
-        "VALIDATION_ERROR": "Giờ bắt đầu nên trước giờ đóng cửa.",
+        "VALIDATION_ERROR": "Giờ mở phải trước giờ đóng",
         "CHOOSE": "Chọn"
       },
       "ALL_DAY": "Cả ngày"
     },
     "IMAP": {
       "TITLE": "IMAP",
-      "SUBTITLE": "Đặt chi tiết IMAP",
-      "NOTE_TEXT": "Để bật chế độ SMTP, xin hãy cấu hình IMAP.",
-      "UPDATE": "Cập nhật chi tiết IMAP",
-      "TOGGLE_AVAILABILITY": "Kích hoạt cấu hình IMAP cho hộp thư đến này",
-      "TOGGLE_HELP": "Enabling IMAP will help the user to receive email",
+      "SUBTITLE": "Cấu hình IMAP",
+      "NOTE_TEXT": "Để bật SMTP, bạn phải cấu hình IMAP.",
+      "UPDATE": "Cập nhật IMAP",
+      "TOGGLE_AVAILABILITY": "Bật IMAP cho hộp thư",
+      "TOGGLE_HELP": "IMAP cho phép hộp thư nhận email",
       "EDIT": {
-        "SUCCESS_MESSAGE": "Tuỳ chỉnh IMAP được cập nhật thành công",
-        "ERROR_MESSAGE": "Không thể cập nhật tuỳ chỉnh IMAP"
+        "SUCCESS_MESSAGE": "Cập nhật IMAP thành công",
+        "ERROR_MESSAGE": "Không thể cập nhật IMAP"
       },
       "ADDRESS": {
         "LABEL": "Địa chỉ",
-        "PLACE_HOLDER": "Địa chỉ (Ví dụ: imap.gmail.com)"
+        "PLACE_HOLDER": "Ví dụ: imap.gmail.com"
       },
       "PORT": {
-        "LABEL": "Port",
+        "LABEL": "Cổng",
         "PLACE_HOLDER": "Port"
       },
       "LOGIN": {
         "LABEL": "Đăng nhập",
-        "PLACE_HOLDER": "Đăng nhập"
+        "PLACE_HOLDER": "Email hoặc username"
       },
       "PASSWORD": {
         "LABEL": "Mật khẩu",
-        "PLACE_HOLDER": "Mật khẩu"
+        "PLACE_HOLDER": "Password"
       },
-      "ENABLE_SSL": "Kích hoạt SSL"
+      "ENABLE_SSL": "Bật SSL"
     },
-    "MICROSOFT": {
+    "MICROSOFT_AUTH": {
       "TITLE": "Microsoft",
-      "SUBTITLE": "Reauthorize your MICROSOFT account"
+      "SUBTITLE": "Kết nối lại tài khoản MICROSOFT"
     },
     "SMTP": {
-      "TITLE": "STMP",
-      "SUBTITLE": "Đặt chi tiết SMTP",
-      "UPDATE": "Cập nhật tuỳ chỉnh SMTP",
-      "TOGGLE_AVAILABILITY": "Kích hoạt cấu hình SMTP cho hộp thư đến này",
-      "TOGGLE_HELP": "Kích hoạt SMTP sẽ giúp cho người dùng gửi email",
+      "TITLE": "SMTP",
+      "SUBTITLE": "Cấu hình SMTP",
+      "UPDATE": "Cập nhật SMTP",
+      "TOGGLE_AVAILABILITY": "Bật SMTP cho hộp thư",
+      "TOGGLE_HELP": "SMTP cho phép gửi email",
       "EDIT": {
-        "SUCCESS_MESSAGE": "Tuỳ chỉnh SMTP được cập nhật thành công",
-        "ERROR_MESSAGE": "Không thể cập nhật tuỳ chỉnh SMTP"
+        "SUCCESS_MESSAGE": "Cập nhật SMTP thành công",
+        "ERROR_MESSAGE": "Không thể cập nhật SMTP"
       },
       "ADDRESS": {
         "LABEL": "Địa chỉ",
-        "PLACE_HOLDER": "Địa chỉ (Ví dụ: smtp.gmail.com)"
+        "PLACE_HOLDER": "Ví dụ: smtp.gmail.com"
       },
       "PORT": {
-        "LABEL": "Port",
+        "LABEL": "Cổng",
         "PLACE_HOLDER": "Port"
       },
       "LOGIN": {
         "LABEL": "Đăng nhập",
-        "PLACE_HOLDER": "Đăng nhập"
+        "PLACE_HOLDER": "Email hoặc username"
       },
       "PASSWORD": {
         "LABEL": "Mật khẩu",
-        "PLACE_HOLDER": "Mật khẩu"
+        "PLACE_HOLDER": "Password"
       },
       "DOMAIN": {
-        "LABEL": "Miền",
-        "PLACE_HOLDER": "Miền"
+        "LABEL": "Domain",
+        "PLACE_HOLDER": "Domain"
       },
-      "ENCRYPTION": "Mã hoá",
+      "ENCRYPTION": "Mã hóa",
       "SSL_TLS": "SSL/TLS",
       "START_TLS": "STARTTLS",
-      "OPEN_SSL_VERIFY_MODE": "Mở Chế độ xác minh SSL",
-      "AUTH_MECHANISM": "Xác minh"
+      "OPEN_SSL_VERIFY_MODE": "Open SSL Verify Mode",
+      "AUTH_MECHANISM": "Authentication"
     },
-    "NOTE": "Ghi chú: ",
+    "NOTE": "Lưu ý: ",
     "WIDGET_BUILDER": {
       "WIDGET_OPTIONS": {
         "AVATAR": {
-          "LABEL": "Hình đại diện trang web",
+          "LABEL": "Ảnh đại diện Website",
           "DELETE": {
             "API": {
-              "SUCCESS_MESSAGE": "Hình đại diện đã được xóa thành công",
-              "ERROR_MESSAGE": "Đã có lỗi, vui lòng thử lại"
+              "SUCCESS_MESSAGE": "Xóa ảnh đại diện thành công",
+              "ERROR_MESSAGE": "Có lỗi xảy ra, vui lòng thử lại"
             }
           }
         },
         "WEBSITE_NAME": {
-          "LABEL": "Tên trang web",
-          "PLACE_HOLDER": "Nhập tên trang web của bạn (ví dụ: Acme Inc)",
-          "ERROR": "Vui lòng nhập tên trang web hợp lệ"
+          "LABEL": "Tên website",
+          "PLACE_HOLDER": "Nhập tên website (vd: Acme Inc)",
+          "ERROR": "Vui lòng nhập tên website hợp lệ"
         },
         "WELCOME_HEADING": {
           "LABEL": "Tiêu đề chào mừng",
-          "PLACE_HOLDER": "Chào bạn!"
+          "PLACE_HOLDER": "Xin chào!"
         },
         "WELCOME_TAGLINE": {
-          "LABEL": "Dòng giới thiệu chào mừng",
-          "PLACE_HOLDER": "Chúng tôi làm cho việc kết nối với chúng tôi trở nên đơn giản. Hỏi chúng tôi bất cứ điều gì hoặc chia sẻ phản hồi của bạn."
+          "LABEL": "Câu chào mừng",
+          "PLACE_HOLDER": "Hãy hỏi chúng tôi bất cứ điều gì hoặc chia sẻ phản hồi của bạn."
         },
         "REPLY_TIME": {
-          "LABEL": "Thời gian trả lời",
-          "IN_A_FEW_MINUTES": "Trong một vài phút",
-          "IN_A_FEW_HOURS": "Trong một vài giờ",
+          "LABEL": "Thời gian phản hồi",
+          "IN_A_FEW_MINUTES": "Trong vài phút",
+          "IN_A_FEW_HOURS": "Trong vài giờ",
           "IN_A_DAY": "Trong một ngày"
         },
-        "WIDGET_COLOR_LABEL": "Màu tiện ích",
-        "WIDGET_BUBBLE_POSITION_LABEL": "Vị trí bong bóng widget",
-        "WIDGET_BUBBLE_TYPE_LABEL": "Kiểu bong bóng widget",
+        "WIDGET_COLOR_LABEL": "Màu widget",
+        "WIDGET_BUBBLE_POSITION_LABEL": "Vị trí bong bóng",
+        "WIDGET_BUBBLE_TYPE_LABEL": "Loại bong bóng",
         "WIDGET_BUBBLE_LAUNCHER_TITLE": {
-          "DEFAULT": "Trò chuyện với chúng tôi",
-          "LABEL": "Tiêu đề trình khởi chạy bong bóng widget",
-          "PLACE_HOLDER": "Trò chuyện với chúng tôi"
+          "DEFAULT": "Chat với chúng tôi",
+          "LABEL": "Tiêu đề bong bóng widget",
+          "PLACE_HOLDER": "Chat với chúng tôi"
         },
         "UPDATE": {
           "BUTTON_TEXT": "Cập nhật cài đặt widget",
           "API": {
-            "SUCCESS_MESSAGE": "Đã cập nhật cài đặt widget thành công",
-            "ERROR_MESSAGE": "Không thể cập nhật cài đặt widget"
+            "SUCCESS_MESSAGE": "Cập nhật widget thành công",
+            "ERROR_MESSAGE": "Không thể cập nhật widget"
           }
         },
         "WIDGET_VIEW_OPTION": {
           "PREVIEW": "Xem trước",
-          "SCRIPT": "Kịch bản"
+          "SCRIPT": "Mã nhúng"
         },
         "WIDGET_BUBBLE_POSITION": {
           "LEFT": "Trái",
           "RIGHT": "Phải"
         },
         "WIDGET_BUBBLE_TYPE": {
-          "STANDARD": "Chuẩn",
-          "EXPANDED_BUBBLE": "Mở rộng bong bóng"
+          "STANDARD": "Tiêu chuẩn",
+          "EXPANDED_BUBBLE": "Bong bóng mở rộng"
         }
       },
       "WIDGET_SCREEN": {
@@ -1031,37 +1040,37 @@
         "CHAT": "Chat"
       },
       "REPLY_TIME": {
-        "IN_A_FEW_MINUTES": "Thường trả lời sau vài phút",
-        "IN_A_FEW_HOURS": "Thường trả lời sau vài giờ",
-        "IN_A_DAY": "Thường trả lời trong một ngày"
+        "IN_A_FEW_MINUTES": "Thường phản hồi trong vài phút",
+        "IN_A_FEW_HOURS": "Thường phản hồi trong vài giờ",
+        "IN_A_DAY": "Thường phản hồi trong một ngày"
       },
       "FOOTER": {
-        "START_CONVERSATION_BUTTON_TEXT": "Bắt đầu một cuộc trò chuyện",
-        "CHAT_INPUT_PLACEHOLDER": "Gõ tin nhắn của bạn"
+        "START_CONVERSATION_BUTTON_TEXT": "Bắt đầu trò chuyện",
+        "CHAT_INPUT_PLACEHOLDER": "Nhập tin nhắn..."
       },
       "BODY": {
         "TEAM_AVAILABILITY": {
           "ONLINE": "Chúng tôi đang online",
-          "OFFLINE": "Hiện tại chúng tôi đang bận chút"
+          "OFFLINE": "Hiện chưa sẵn sàng hỗ trợ"
         },
         "USER_MESSAGE": "Xin chào",
-        "AGENT_MESSAGE": "Xin chào"
+        "AGENT_MESSAGE": "Chào bạn"
       },
-      "BRANDING_TEXT": "CC bởi Shopiz",
+      "BRANDING_TEXT": "Powered by Shopiz",
       "SCRIPT_SETTINGS": "\nwindow.shopizSettings = {options};"
     },
     "EMAIL_PROVIDERS": {
       "MICROSOFT": {
         "TITLE": "Microsoft",
-        "DESCRIPTION": "Connect with Microsoft"
+        "DESCRIPTION": "Kết nối với Microsoft"
       },
       "GOOGLE": {
         "TITLE": "Google",
-        "DESCRIPTION": "Connect with Google"
+        "DESCRIPTION": "Kết nối với Google"
       },
       "OTHER_PROVIDERS": {
-        "TITLE": "Other Providers",
-        "DESCRIPTION": "Connect with Other Providers"
+        "TITLE": "Nhà cung cấp khác",
+        "DESCRIPTION": "Kết nối với nhà cung cấp khác"
       }
     },
     "CHANNELS": {
@@ -1078,7 +1087,7 @@
       "API": "Kênh API",
       "INSTAGRAM": "Instagram",
       "ZALO": "Zalo OA",
-      "ZALOPERSONAL": "Zalo User",
+      "ZALOPERSONAL": "Zalo cá nhân",
       "TIKTOK": "Tiktok Shop"
     }
   }
