@@ -6,7 +6,6 @@ import { useMapGetter } from 'dashboard/composables/store';
 import { useBranding } from 'shared/composables/useBranding';
 
 import PageHeader from '../SettingsSubPageHeader.vue';
-import Icon from 'next/icon/Icon.vue';
 
 const { t } = useI18n();
 const route = useRoute();

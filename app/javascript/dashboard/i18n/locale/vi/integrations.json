@@ -46,6 +46,14 @@
             "CONVERSATION_TYPING_OFF": "Ngừng soạn thảo cuộc trò chuyện"
           }
         },
+        "NAME": {
+          "LABEL": "Webhook Name",
+          "PLACEHOLDER": "Enter the name of the webhook"
+        },
+        "NAME": {
+          "LABEL": "Webhook Name",
+          "PLACEHOLDER": "Enter the name of the webhook"
+        },
         "END_POINT": {
           "LABEL": "URL webhook",
           "PLACEHOLDER": "Ví dụ: {webhookExampleURL}",
@@ -352,6 +360,12 @@
   "CAPTAIN": {
     "NAME": "Trợ lý AI",
     "HEADER_KNOW_MORE": "Tìm hiểu thêm",
+    "ASSISTANT_SWITCHER": {
+      "ASSISTANTS": "Assistants",
+      "SWITCH_ASSISTANT": "Switch between assistants",
+      "NEW_ASSISTANT": "Create Assistant",
+      "EMPTY_LIST": "No assistants found, please create one to get started"
+    },
     "COPILOT": {
       "TITLE": "Shopiz AI",
       "TRY_THESE_PROMPTS": "Thử các mẫu sau",
@@ -492,6 +506,7 @@
         "NOT_FOUND": "Không tìm thấy trợ lý. Vui lòng thử lại."
       },
       "SETTINGS": {
+        "HEADER": "Cài đặt",
         "BREADCRUMB": {
           "ASSISTANT": "Trợ lý"
         },
@@ -511,15 +526,16 @@
               "TITLE": "Rào cản",
               "DESCRIPTION": "Giữ mọi thứ đi đúng hướng - chỉ những loại câu hỏi mà bạn muốn trợ lý của mình trả lời, không có gì ngoài giới hạn hoặc không liên quan."
             },
-            "SCENARIOS": {
-              "TITLE": "Kịch bản",
-              "DESCRIPTION": "Cung cấp cho trợ lý của bạn một số ngữ cảnh—như “phải làm gì khi người dùng bị kẹt,” hoặc “cách hành động trong trường hợp yêu cầu hoàn tiền.”"
-            },
             "RESPONSE_GUIDELINES": {
               "TITLE": "Hướng dẫn phản hồi",
               "DESCRIPTION": "Bầu không khí và cấu trúc của các phản hồi của trợ lý—rõ ràng và thân thiện? Ngắn gọn và súc tích? Chi tiết và trang trọng?"
             }
           }
+        },
+        "DELETE": {
+          "TITLE": "Delete Assistant",
+          "DESCRIPTION": "This action is permanent. Deleting this assistant will remove it from all connected inboxes and permanently erase all generated knowledge.",
+          "BUTTON_TEXT": "Delete {assistantName}"
         }
       },
       "OPTIONS": {
@@ -734,11 +750,6 @@
         "NAME": {
           "LABEL": "Document Name (Optional)",
           "PLACEHOLDER": "Enter a name for the document"
-        },
-        "ASSISTANT": {
-          "LABEL": "Trợ lý",
-          "PLACEHOLDER": "Chọn trợ lý",
-          "ERROR": "Trường trợ lý là bắt buộc"
         }
       },
       "DELETE": {
@@ -872,6 +883,7 @@
     },
     "RESPONSES": {
       "HEADER": "FAQ",
+      "PENDING_FAQS": "Pending FAQs",
       "ADD_NEW": "Tạo FAQ mới",
       "DOCUMENTABLE": {
         "CONVERSATION": "Cuộc đối thoại #{id}"
@@ -911,6 +923,10 @@
         "APPROVED": "Đã phê duyệt",
         "ALL": "Tất cả"
       },
+      "PENDING_BANNER": {
+        "TITLE": "Captain has found some FAQs your customers were looking for.",
+        "ACTION": "Click here to review"
+      },
       "FORM_DESCRIPTION": "Thêm câu hỏi và câu trả lời tương ứng vào cơ sở kiến thức và chọn trợ lý liên kết.",
       "CREATE": {
         "TITLE": "Thêm FAQ",
@@ -924,14 +940,9 @@
           "ERROR": "Vui lòng cung cấp câu hỏi hợp lệ."
         },
         "ANSWER": {
-          "LABEL": "Câu trả lời",
-          "PLACEHOLDER": "Nhập câu trả lời ở đây",
-          "ERROR": "Vui lòng cung cấp câu trả lời hợp lệ."
-        },
-        "ASSISTANT": {
-          "LABEL": "Trợ lý",
-          "PLACEHOLDER": "Chọn trợ lý",
-          "ERROR": "Vui lòng chọn trợ lý."
+          "LABEL": "Answer",
+          "PLACEHOLDER": "Enter the answer here",
+          "ERROR": "Please provide a valid answer."
         }
       },
       "EDIT": {
@@ -947,7 +958,9 @@
       },
       "EMPTY_STATE": {
         "TITLE": "Không tìm thấy FAQ",
+        "NO_PENDING_TITLE": "There are no more pending FAQs to review",
         "SUBTITLE": "FAQ giúp trợ lý của bạn cung cấp câu trả lời nhanh chóng và chính xác cho các câu hỏi khách hàng. Chúng có thể được tạo tự động từ nội dung của bạn hoặc được thêm thủ công.",
+        "CLEAR_SEARCH": "Clear active filters",
         "FEATURE_SPOTLIGHT": {
           "TITLE": "FAQ Trợ lý AI",
           "NOTE": "FAQ trong ShopizAI phát hiện các câu hỏi thường gặp dù chưa có trong cơ sở kiến thức hoặc được hỏi nhiều, và tạo ra các FAQ phù hợp giúp cải thiện hỗ trợ. Bạn có thể xem xét và quyết định phê duyệt hay từ chối từng gợi ý."

@@ -1,4 +1,5 @@
 <script setup>
+import { useAccount } from 'dashboard/composables/useAccount';
 import EmptyStateLayout from 'dashboard/components-next/EmptyStateLayout.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 import DocumentCard from 'dashboard/components-next/captain/assistant/DocumentCard.vue';
@@ -6,6 +7,7 @@ import FeatureSpotlight from 'dashboard/components-next/feature-spotlight/Featur
 import { documentsList } from 'dashboard/components-next/captain/pageComponents/emptyStates/captainEmptyStateContent.js';
 
 const emit = defineEmits(['click']);
+const { isOnChatwootCloud } = useAccount();
 
 const onClick = () => {
   emit('click');

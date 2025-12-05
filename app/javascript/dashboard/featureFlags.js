@@ -45,6 +45,7 @@ export const FEATURE_FLAGS = {
   TEMPLATE_BUILDER: 'template_builder',
   SAML: 'saml',
   QUOTED_EMAIL_REPLY: 'quoted_email_reply',
+  COMPANIES: 'companies',
   WORKFLOWS: 'workflows',
   DATABASE: 'database',
 };
