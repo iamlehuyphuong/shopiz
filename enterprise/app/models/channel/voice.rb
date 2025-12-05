@@ -13,6 +13,7 @@
 #
 # Indexes
 #
+#  index_channel_voice_on_account_id    (account_id)
 #  index_channel_voice_on_phone_number  (phone_number) UNIQUE
 #
 class Channel::Voice < ApplicationRecord

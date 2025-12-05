@@ -635,15 +635,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_17_061911) do
     t.bigint "account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "contacts_count", default: 0, null: false
+    t.index ["account_id", "domain"], name: "index_companies_on_account_and_domain", unique: true, where: "(domain IS NOT NULL)"
     t.index ["account_id"], name: "index_companies_on_account_id"
-    t.index ["domain", "account_id"], name: "index_companies_on_domain_and_account_id"
     t.index ["name", "account_id"], name: "index_companies_on_name_and_account_id"
   end
 
   create_table "contact_inboxes", force: :cascade do |t|
     t.bigint "contact_id"
     t.bigint "inbox_id"
-    t.string "source_id", null: false
+    t.text "source_id", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "hmac_verified", default: false
@@ -743,6 +744,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_17_061911) do
     t.string "external_source_id"
     t.boolean "is_load_all_message"
     t.string "next_cursor"
+    t.bigint "assignee_agent_bot_id"
     t.index ["account_id", "display_id"], name: "index_conversations_on_account_id_and_display_id", unique: true
     t.index ["account_id", "id"], name: "index_conversations_on_id_and_account_id"
     t.index ["account_id", "inbox_id", "status", "assignee_id"], name: "conv_acid_inbid_stat_asgnid_idx"
@@ -752,6 +754,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_17_061911) do
     t.index ["contact_id"], name: "index_conversations_on_contact_id"
     t.index ["contact_inbox_id"], name: "index_conversations_on_contact_inbox_id"
     t.index ["first_reply_created_at"], name: "index_conversations_on_first_reply_created_at"
+    t.index ["identifier", "account_id"], name: "index_conversations_on_identifier_and_account_id"
     t.index ["inbox_id"], name: "index_conversations_on_inbox_id"
     t.index ["priority"], name: "index_conversations_on_priority"
     t.index ["status", "account_id"], name: "index_conversations_on_status_and_account_id"
@@ -1361,6 +1364,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_17_061911) do
     t.datetime "updated_at", precision: nil, null: false
     t.integer "webhook_type", default: 0
     t.jsonb "subscriptions", default: ["conversation_status_changed", "conversation_updated", "conversation_created", "contact_created", "contact_updated", "message_created", "message_updated", "webwidget_triggered"]
+    t.string "name"
     t.index ["account_id", "url"], name: "index_webhooks_on_account_id_and_url", unique: true
   end
 

@@ -4,10 +4,11 @@
 #
 #  id            :bigint           not null, primary key
 #  content       :text
-#  document_type :integer          default("url"), not null
+#  document_type :integer          default(0), not null
 #  external_link :string           not null
 #  metadata      :jsonb
 #  name          :string
+#  source_type   :string           default("url")
 #  status        :integer          default("in_progress"), not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
@@ -21,6 +22,7 @@
 #  index_captain_documents_on_assistant_id                    (assistant_id)
 #  index_captain_documents_on_assistant_id_and_external_link  (assistant_id,external_link) UNIQUE
 #  index_captain_documents_on_document_type                   (document_type)
+#  index_captain_documents_on_source_type                     (source_type)
 #  index_captain_documents_on_status                          (status)
 #  index_captain_documents_unique_external_id                 (assistant_id,external_id,document_type) UNIQUE
 #
@@ -41,24 +43,18 @@ class Captain::Document < ApplicationRecord
   validate :validate_file_attachment, if: -> { pdf_file.attached? }
   before_validation :ensure_account_id
   before_validation :set_external_link_for_pdf
+  before_validation :normalize_external_link
 
   enum status: {
     in_progress: 0,
     available: 1
   }
 
-  enum document_type: {
-    url: 0,
-    pdf: 1,
-    notion: 2
-  }
-
   before_create :ensure_within_plan_limit
-  before_create :detect_document_type
   after_create_commit :enqueue_crawl_job
   after_create_commit :update_document_usage
   after_destroy :update_document_usage
-  after_commit :enqueue_response_builder_job, on: :update, if: :should_enqueue_response_builder?
+  after_commit :enqueue_response_builder_job
   scope :ordered, -> { order(created_at: :desc) }
 
   scope :for_account, ->(account_id) { where(account_id: account_id) }
@@ -101,37 +97,22 @@ class Captain::Document < ApplicationRecord
   def enqueue_crawl_job
     return if status != 'in_progress'
 
-    if pdf_document?
-      Captain::Documents::PdfProcessingJob.perform_later(self)
-    else
-      Captain::Documents::CrawlJob.perform_later(self)
-    end
-  end
-
-  def detect_document_type
-    return unless external_link.present?
-
-    # Check if URL points to a PDF file
-    uri = URI.parse(external_link)
-    self.document_type = if uri.path.downcase.end_with?('.pdf') || external_link.downcase.include?('.pdf')
-                           :pdf
-                         else
-                           :url
-                         end
-  rescue URI::InvalidURIError
-    self.document_type = :url
+    Captain::Documents::CrawlJob.perform_later(self)
   end
 
   def enqueue_response_builder_job
-    return if status != 'available'
+    return unless should_enqueue_response_builder?
 
     Captain::Documents::ResponseBuilderJob.perform_later(self)
   end
 
   def should_enqueue_response_builder?
-    # Only enqueue when status changes to available
-    # Avoid re-enqueueing when metadata is updated by the job itself
-    saved_change_to_status? && status == 'available'
+    return false if destroyed?
+    return false unless available?
+
+    return saved_change_to_status? if pdf_document?
+
+    (saved_change_to_status? || saved_change_to_content?) && content.present?
   end
 
   def update_document_usage
@@ -168,5 +149,12 @@ class Captain::Document < ApplicationRecord
     # Format: PDF: filename_timestamp (without extension)
     timestamp = Time.current.strftime('%Y%m%d%H%M%S')
     self.external_link = "PDF: #{pdf_file.filename.base}_#{timestamp}"
+  end
+
+  def normalize_external_link
+    return if external_link.blank?
+    return if pdf_document?
+
+    self.external_link = external_link.delete_suffix('/')
   end
 end

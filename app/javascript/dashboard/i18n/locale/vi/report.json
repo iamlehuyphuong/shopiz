@@ -52,7 +52,10 @@
     "DATE_RANGE_OPTIONS": {
       "LAST_7_DAYS": "7 ngày cuối",
       "LAST_14_DAYS": "14 ngày cuối",
+      "LAST_14_DAYS": "14 ngày cuối",
       "LAST_30_DAYS": "30 ngày cuối",
+      "THIS_MONTH": "This month",
+      "LAST_MONTH": "Last month",
       "LAST_3_MONTHS": "3 tháng vừa qua",
       "LAST_6_MONTHS": "6 tháng vừa qua",
       "LAST_YEAR": "Năm ngoái",
@@ -271,23 +274,8 @@
     "DOWNLOAD_INBOX_REPORTS": "Tải xuống báo cáo hộp thư đến",
     "DOWNLOAD_VOICE_REPORTS": "Tải xuống báo cáo thoại",
     "FILTER_DROPDOWN_LABEL": "Chọn Hộp thư đến",
-    "ALL_INBOXES": "Tất cả",
-    "SEARCH_INBOX": "Tìm hôp thư",
-    "VOICE_METRICS": {
-      "TOTAL_CALLS": "Tổng số cuộc gọi",
-      "INCOMING_CALLS": "Cuộc gọi đến",
-      "OUTGOING_CALLS": "Cuộc gọi đi",
-      "MISSED_CALLS": "Cuộc gọi nhỡ",
-      "AVG_DURATION": "Thời lượng cuộc gọi trung bình",
-      "AVG_WAITING_TIME": "Thời gian chờ trung bình",
-      "SUCCESS_RATE": "Tỷ lệ thành công cuộc gọi"
-    },
-    "VOICE_CHARTS": {
-      "CALLS_BY_TYPE": "Cuộc gọi theo loại",
-      "CALL_DURATION": "Thời lượng cuộc gọi trung bình",
-      "WAITING_TIME": "Thời gian chờ trung bình",
-      "SUCCESS_RATE": "Tỷ lệ thành công cuộc gọi"
-    },
+    "ALL_INBOXES": "All Inboxes",
+    "SEARCH_INBOX": "Search Inbox",
     "METRICS": {
       "CONVERSATIONS": {
         "NAME": "Các cuộc hội thoại",
@@ -495,6 +483,13 @@
       "CONVERSATION": "{count} cuộc hội thoại",
       "CONVERSATIONS": "{count} cuộc hội thoại",
       "DOWNLOAD_REPORT": "Tải báo cáo"
+    },
+    "RESOLUTION_HEATMAP": {
+      "HEADER": "Resolutions",
+      "NO_CONVERSATIONS": "No conversations",
+      "CONVERSATION": "{count} conversation",
+      "CONVERSATIONS": "{count} conversations",
+      "DOWNLOAD_REPORT": "Download report"
     },
     "AGENT_CONVERSATIONS": {
       "HEADER": "Nhân viên",
