@@ -99,7 +99,7 @@ export default {
       return '';
     },
     allowedLoginMethods() {
-      return window.chatwootConfig.allowedLoginMethods || ['email'];
+      return window.shopizConfig.allowedLoginMethods || ['email'];
     },
     showGoogleOAuth() {
       return (

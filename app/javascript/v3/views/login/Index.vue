@@ -85,7 +85,7 @@ export default {
   computed: {
     ...mapGetters({ globalConfig: 'globalConfig/get' }),
     allowedLoginMethods() {
-      return window.chatwootConfig.allowedLoginMethods || ['email'];
+      return window.shopizConfig.allowedLoginMethods || ['email'];
     },
     showGoogleOAuth() {
       return (
