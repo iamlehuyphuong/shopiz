@@ -3,7 +3,11 @@
 # Table name: users
 #
 #  id                     :integer          not null, primary key
+#  address                :string
 #  availability           :integer          default("online")
+#  company_address        :string
+#  company_email          :string
+#  company_name           :string
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :string
 #  confirmed_at           :datetime
@@ -34,6 +38,8 @@
 #  unconfirmed_email      :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  company_tax_id         :string
+#  type_id                :integer          default("personal")
 #
 # Indexes
 #

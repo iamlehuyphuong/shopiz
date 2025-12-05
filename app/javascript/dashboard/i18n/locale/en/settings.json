@@ -210,6 +210,35 @@
         "ERROR": "Please enter a valid email address",
         "PLACEHOLDER": "Please enter your email address, this would be displayed in conversations"
       },
+      "ADDRESS": {
+        "LABEL": "Your address",
+        "ERROR": "Please enter a valid address",
+        "PLACEHOLDER": "Please enter your address"
+      },
+      "TYPE_IDS": {
+        "PERSONAL": "Personal",
+        "COMPANY": "Company"
+      },
+      "COMPANY_EMAIL": {
+        "LABEL": "Your company email address",
+        "ERROR": "Please enter a valid email address",
+        "PLACEHOLDER": "Please enter your company email address"
+      },
+      "COMPANY_NAME": {
+        "LABEL": "Your company name",
+        "ERROR": "Please enter a valid company name",
+        "PLACEHOLDER": "Please enter your company name"
+      },
+      "COMPANY_ADDRESS": {
+        "LABEL": "Your company address",
+        "ERROR": "Please enter a valid company address",
+        "PLACEHOLDER": "Please enter your company address"
+      },
+      "COMPANY_TAX": {
+        "LABEL": "Your company tax ID",
+        "ERROR": "Please enter a valid tax",
+        "PLACEHOLDER": "Please enter your company tax ID"
+      },
       "CURRENT_PASSWORD": {
         "LABEL": "Current password",
         "ERROR": "Please enter the current password",
@@ -562,6 +591,7 @@
     "WHATSAPP": "WhatsApp",
     "VOICE": "Voice",
     "SURVEY": "Survey",
+    "ZALO_PERSONAL": "Zalo Personal",
     "LANDING_PAGE": "Landing Page",
     "CAMPAIGNS": "Campaigns",
     "SALES": "Sales",

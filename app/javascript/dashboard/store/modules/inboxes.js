@@ -155,6 +155,12 @@ export const getters = {
         item.channel_type === INBOX_TYPES.VOICE
     );
   },
+  getZaloPersonalInboxes($state) {
+    return $state.records.filter(
+      item =>
+        item.channel_type === INBOX_TYPES.ZALOPERSONAL
+    );
+  },
   getSurveyInboxes($state) {
     return $state.records.filter(
       item =>
@@ -297,7 +303,7 @@ export const actions = {
   createVoiceChannel: async ({ commit }, params) => {
     try {
       commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: true });
-      
+
       // Create a formatted payload for the voice channel
       const inboxParams = {
         name: params.voice.name || `Voice (${params.voice.phone_number})`,
@@ -308,10 +314,10 @@ export const actions = {
           provider_config: params.voice.provider_config,
         },
       };
-      
+
       // Use InboxesAPI to create the channel which handles authentication properly
       const response = await InboxesAPI.create(inboxParams);
-      
+
       commit(types.default.ADD_INBOXES, response.data);
       commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
       sendAnalyticsEvent('voice');

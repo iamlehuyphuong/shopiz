@@ -14,6 +14,10 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  isZaloPersonalType: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['edit', 'delete']);
@@ -36,6 +40,7 @@ const handleDelete = campaign => emit('delete', campaign);
       :scheduled-at="campaign.scheduled_at"
       :is-live-chat-type="isLiveChatType"
       :is-voice-type="isVoiceType"
+      :is-zalo-personal-type="isZaloPersonalType"
       @edit="handleEdit(campaign)"
       @delete="handleDelete(campaign)"
     />

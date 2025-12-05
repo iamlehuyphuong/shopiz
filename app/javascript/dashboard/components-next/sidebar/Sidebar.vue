@@ -423,6 +423,11 @@ const menuItems = computed(() => {
           label: t('SIDEBAR.LIVE_CHAT'),
           to: accountScopedRoute('campaigns_livechat_index'),
         },
+        {
+          name: 'Zalo Personal',
+          label: t('SIDEBAR.ZALO_PERSONAL'),
+          to: accountScopedRoute('campaigns_zalo_personal_index'),
+        },
         // {
         //   name: 'SMS',
         //   label: t('SIDEBAR.SMS'),

@@ -349,6 +349,71 @@
         }
       }
     },
+    "ZALO_PERSONAL": {
+      "HEADER_TITLE": "Chiến dịch Zalo Personal",
+      "NEW_CAMPAIGN": "Tạo chiến dịch",
+      "EMPTY_STATE": {
+        "TITLE": "Không có chiến dịch Zalo Personal nào khả dụng  campaigns are available",
+        "SUBTITLE": "Sử dụng các mẫu tin nhắn được cá nhân hóa bằng AI để gửi ưu đãi, nhắc nhở và cập nhật trong các cuộc trò chuyện 1-1. Thiết lập chỉ trong vài phút và mở rộng cho toàn bộ đội ngũ. Nhấn ‘Tạo chiến dịch’ để bắt đầu."
+      },
+      "CARD": {
+        "STATUS": {
+          "COMPLETED": "Hoàn tất",
+          "SCHEDULED": "Đã lên lịch"
+        },
+        "CAMPAIGN_DETAILS": {
+          "SENT_FROM": "Gửi từ",
+          "ON": "vào",
+          "SENT_BY": "Gửi bởi",
+          "BOT": "BOT"
+        }
+      },
+      "CREATE": {
+        "TITLE": "Tạo chiến dịch Zalo Personal",
+        "CANCEL_BUTTON_TEXT": "Huỷ",
+        "CREATE_BUTTON_TEXT": "Tạo",
+        "FORM": {
+          "TITLE": {
+            "LABEL": "Tiêu đề",
+            "PLACEHOLDER": "Vui lòng điền tiêu đề của chiến dịch",
+            "ERROR": "Title is required"
+          },
+          "MESSAGE": {
+            "LABEL": "Message",
+            "PLACEHOLDER": "Please enter the message template used to personalize each customer’s message",
+            "ERROR": "Message is required"
+          },
+          "INBOX": {
+            "LABEL": "Hộp thư thoại",
+            "PLACEHOLDER": "Chọn hộp thư thoại",
+            "ERROR": "Hộp thư thoại là bắt buộc"
+          },
+          "SENT_BY": {
+            "LABEL": "Người gửi",
+            "PLACEHOLDER": "Chọn người gửi",
+            "ERROR": "Người gửi là bắt buộc"
+          },
+          "AUDIENCE": {
+            "LABEL": "Tập khách hàng",
+            "PLACEHOLDER": "Chọn nhãn khách hàng",
+            "ERROR": "Tập khách hàng là bắt buộc"
+          },
+          "SCHEDULED_AT": {
+            "LABEL": "Thời gian dự kiến",
+            "PLACEHOLDER": "Chọn thời điểm bắt đầu chiến dịch",
+            "ERROR": "Thời gian dự kiến là bắt buộc"
+          },
+          "BUTTONS": {
+            "CREATE": "Tạo",
+            "CANCEL": "Huỷ"
+          },
+          "API": {
+            "SUCCESS_MESSAGE": "Chiến dịch thoại được tạo thành công",
+            "ERROR_MESSAGE": "Đã có lỗi. Vui lòng thử lại."
+          }
+        }
+      }
+    },
     "CONFIRM_DELETE": {
       "TITLE": "Bạn có chắc muốn xoá?",
       "DESCRIPTION": "Hành động xoá là vĩnh viễn và không thể hoàn tác.",
