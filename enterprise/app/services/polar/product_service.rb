@@ -1,5 +1,6 @@
 class Polar::ProductService
   CACHE_KEY = 'polar:products:list'.freeze
+  CACHE_KEYS_EXPIRY = 2.hours
 
   class << self
     def find(id)
@@ -37,7 +38,7 @@ class Polar::ProductService
       return JSON.parse(result).pluck('table') if result
 
       products = ::Polar::Product.list(limit: 50)
-      Redis::Alfred.setex(CACHE_KEY, products.to_json)
+      Redis::Alfred.setex(CACHE_KEY, products.to_json, CACHE_KEYS_EXPIRY)
       products
     rescue StandardError => e
       log_error('list', e)

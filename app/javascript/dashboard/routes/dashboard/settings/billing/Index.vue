@@ -244,7 +244,7 @@ onMounted(fetchAccountDetails);
                       product_id: plan[index].id,
                       payment_method: 'payos',
                     })">
-                  {{ planId === plan[index].id ? $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.CURRENT_PACKAGE') : $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.UPGRADE_NOW') }}
+                  {{ (planName || '').toUpperCase() === plan[index].name ? $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.CURRENT_PACKAGE') : $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.UPGRADE_NOW') }}
                   </ButtonV4>
                 </NormalItem>
               </template>
