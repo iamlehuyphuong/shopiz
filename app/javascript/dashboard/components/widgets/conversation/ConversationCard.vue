@@ -65,6 +65,8 @@ const assignee = computed(() => chatMetadata.value.assignee || {});
 
 const senderId = computed(() => chatMetadata.value.sender?.id);
 
+const sender = computed(() => chatMetadata.value.sender)
+
 const currentContact = computed(() => {
   return senderId.value
     ? store.getters['contacts/getContact'](senderId.value)
@@ -313,6 +315,20 @@ const deleteConversation = () => {
           <PriorityMark :priority="chat.priority" class="flex-shrink-0" />
         </div>
       </div>
+      <div class="flex gap-2 ltr:ml-2 rtl:mr-2 mt-1 items-center">
+        <span
+          class="conversation--status text-white text-xxs font-medium leading-4 py-1 px-2 rounded-lg border border-solid border-n-strong text-n-slate-10 bg-n-slate-1 text-ellipsis overflow-hidden whitespace-nowrap"
+          :class="chat.status"
+        >
+          {{ $t(`CHAT_LIST.CHAT_STATUS_FILTER_ITEMS.${props.chat.status}.TEXT`) }}
+        </span>
+        <div class="inline-flex items-center justify-center w-6 h-6 bg-n-blue-11 rounded-md" v-if="sender.phone_number">
+          <span class="i-ri-phone-line text-white text-sm"></span>
+        </div>
+        <div class="inline-flex items-center justify-center w-6 h-6 bg-n-blue-11 rounded-md" v-if="sender.email">
+          <span class="i-lucide-mail text-white text-sm"></span>
+        </div>
+      </div>
       <div class="flex items-center gap-2">
         <h4
           class="conversation--title my-0 mx-2 capitalize pt-0.5 max-w-[96%] text-ellipsis overflow-hidden whitespace-nowrap min-w-0 text-n-slate-12"
@@ -320,14 +336,6 @@ const deleteConversation = () => {
         >
           {{ chat?.additional_attributes?.group?.name || currentContact.name }}
         </h4>
-        <span
-          class="conversation--status text-white text-xxs font-medium leading-4 py-0.5 px-2 rounded-lg border border-solid border-n-strong text-n-slate-10 bg-n-slate-1 text-ellipsis overflow-hidden whitespace-nowrap"
-          :class="chat.status"
-        >
-          {{
-            $t(`CHAT_LIST.CHAT_STATUS_FILTER_ITEMS.${props.chat.status}.TEXT`)
-          }}
-        </span>
       </div>
       <div
         v-if="callStatus"
