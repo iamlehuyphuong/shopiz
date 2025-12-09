@@ -1,37 +1,37 @@
 {
   "SLA": {
-    "HEADER": "Thỏa thuận về dịch vụ",
+    "HEADER": "Thỏa thuận Mức độ Dịch vụ (SLA)",
     "ADD_ACTION": "Thêm SLA",
-    "ADD_ACTION_LONG": "Tạo chính sách SLA mới",
-    "DESCRIPTION": "Thỏa thuận về mức dịch vụ (SLA) là các hợp đồng xác định các kỳ vọng rõ ràng giữa đội ngũ của bạn và khách hàng. Chúng thiết lập tiêu chuẩn về thời gian phản hồi và giải quyết, tạo nền tảng cho sự chịu trách nhiệm và đảm bảo trải nghiệm nhất quán, chất lượng cao.",
+    "ADD_ACTION_LONG": "Tạo Chính sách SLA mới",
+    "DESCRIPTION": "Service Level Agreements (SLAs) là các thỏa thuận xác định rõ kỳ vọng giữa đội ngũ của bạn và khách hàng. SLA thiết lập tiêu chuẩn về thời gian phản hồi và thời gian xử lý, tạo ra một khuôn khổ trách nhiệm và đảm bảo trải nghiệm nhất quán, chất lượng cao.",
     "LEARN_MORE": "Tìm hiểu thêm về SLA",
-    "LOADING": "Đang lấy SLA",
+    "LOADING": "Đang tải danh sách SLA",
     "PAYWALL": {
       "TITLE": "Nâng cấp để tạo SLA",
-      "AVAILABLE_ON": "Tính năng SLA chỉ có sẵn trong các gói Business và Enterprise.",
-      "UPGRADE_PROMPT": "Nâng cấp gói của bạn để sử dụng các tính năng nâng cao như quản lý nhóm, tự động hóa, thuộc tính tùy chỉnh và nhiều hơn nữa.",
+      "AVAILABLE_ON": "Tính năng SLA chỉ khả dụng trong gói Business và Enterprise.",
+      "UPGRADE_PROMPT": "Nâng cấp gói của bạn để truy cập các tính năng nâng cao như quản lý đội nhóm, tự động hóa, thuộc tính tùy chỉnh và nhiều hơn nữa.",
       "UPGRADE_NOW": "Nâng cấp ngay",
-      "CANCEL_ANYTIME": "Bạn có thể thay đổi hoặc hủy gói bất cứ lúc nào"
+      "CANCEL_ANYTIME": "Bạn có thể thay đổi hoặc hủy gói bất kỳ lúc nào"
     },
     "ENTERPRISE_PAYWALL": {
-      "AVAILABLE_ON": "Tính năng SLA chỉ có sẵn trong các gói trả phí.",
-      "UPGRADE_PROMPT": "Nâng cấp lên gói trả phí để truy cập các tính năng nâng cao như nhật ký kiểm toán, sức chứa của nhân viên và nhiều tính năng khác.",
-      "ASK_ADMIN": "Hãy liên hệ với quản trị viên của bạn để được nâng cấp."
+      "AVAILABLE_ON": "Tính năng SLA chỉ khả dụng trong các gói trả phí.",
+      "UPGRADE_PROMPT": "Nâng cấp lên gói trả phí để truy cập các tính năng nâng cao như nhật ký kiểm tra, năng lực agent và nhiều hơn nữa.",
+      "ASK_ADMIN": "Vui lòng liên hệ quản trị viên để được nâng cấp."
     },
     "LIST": {
       "404": "Không có SLA nào trong tài khoản này.",
       "EMPTY": {
-        "TITLE_1": "Doanh nghiệp P0",
-        "DESC_1": "Các vấn đề được nêu ra bởi khách hàng doanh nghiệp, cần được chú ý ngay lập tức.",
-        "TITLE_2": "Doanh nghiệp P1",
-        "DESC_2": "Các vấn đề được nêu ra bởi khách hàng doanh nghiệp, cần được giải quyết nhanh chóng."
+        "TITLE_1": "Enterprise P0",
+        "DESC_1": "Sự cố được báo bởi khách hàng doanh nghiệp và cần được xử lý ngay lập tức.",
+        "TITLE_2": "Enterprise P1",
+        "DESC_2": "Sự cố được báo bởi khách hàng doanh nghiệp và cần được phản hồi nhanh chóng."
       },
-      "BUSINESS_HOURS_ON": "Giờ làm việc bật",
-      "BUSINESS_HOURS_OFF": "Giờ làm việc tắt",
+      "BUSINESS_HOURS_ON": "Trong giờ làm việc",
+      "BUSINESS_HOURS_OFF": "Ngoài giờ làm việc",
       "RESPONSE_TYPES": {
         "FRT": "Ngưỡng thời gian phản hồi đầu tiên",
         "NRT": "Ngưỡng thời gian phản hồi tiếp theo",
-        "RT": "Ngưỡng thời gian giải quyết",
+        "RT": "Ngưỡng thời gian xử lý",
         "SHORT_HAND": {
           "FRT": "FRT",
           "NRT": "NRT",
@@ -44,8 +44,8 @@
         "LABEL": "Tên SLA",
         "PLACEHOLDER": "Tên SLA",
         "REQUIRED_ERROR": "Tên SLA là bắt buộc",
-        "MINIMUM_LENGTH_ERROR": "Bắt buộc độ dài tối thiểu là 2",
-        "VALID_ERROR": "Chỉ cho phép Chữ cái, Chữ số, Dấu gạch ngang và Dấu gạch dưới"
+        "MINIMUM_LENGTH_ERROR": "Yêu cầu tối thiểu 2 ký tự",
+        "VALID_ERROR": "Chỉ cho phép chữ cái, số, dấu gạch ngang và gạch dưới"
       },
       "DESCRIPTION": {
         "LABEL": "Mô tả",
@@ -60,7 +60,7 @@
         "PLACEHOLDER": "5"
       },
       "RESOLUTION_TIME": {
-        "LABEL": "Thời gian giải quyết",
+        "LABEL": "Thời gian xử lý",
         "PLACEHOLDER": "60"
       },
       "BUSINESS_HOURS": {
@@ -68,40 +68,40 @@
         "PLACEHOLDER": "Chỉ trong giờ làm việc"
       },
       "THRESHOLD_TIME": {
-        "INVALID_FORMAT_ERROR": "Ngưỡng phải là số và lớn hơn không"
+        "INVALID_FORMAT_ERROR": "Ngưỡng phải là số và lớn hơn 0"
       },
       "EDIT": "Chỉnh sửa",
       "CREATE": "Tạo",
-      "DELETE": "Xoá",
-      "CANCEL": "Huỷ"
+      "DELETE": "Xóa",
+      "CANCEL": "Hủy"
     },
     "ADD": {
       "TITLE": "Thêm SLA",
-      "DESC": "Lời hứa thân thiện cho dịch vụ tuyệt vời!",
+      "DESC": "Cam kết thân thiện cho dịch vụ tuyệt vời!",
       "API": {
         "SUCCESS_MESSAGE": "Thêm SLA thành công",
-        "ERROR_MESSAGE": "Đã có lỗi, vui lòng thử lại"
+        "ERROR_MESSAGE": "Có lỗi xảy ra, vui lòng thử lại"
       }
     },
     "DELETE": {
-      "TITLE": "Xoá SLA",
+      "TITLE": "Xóa SLA",
       "API": {
-        "SUCCESS_MESSAGE": "Xoá SLA thành công",
-        "ERROR_MESSAGE": "Đã có lỗi, vui lòng thử lại"
+        "SUCCESS_MESSAGE": "Xóa SLA thành công",
+        "ERROR_MESSAGE": "Có lỗi xảy ra, vui lòng thử lại"
       },
       "CONFIRM": {
-        "TITLE": "Xác nhận xoá",
-        "MESSAGE": "Bạn có chắc chắn muốn xoá ",
-        "YES": "Có, xoá ",
-        "NO": "Không, giữ "
+        "TITLE": "Xác nhận xóa",
+        "MESSAGE": "Bạn có chắc muốn xóa ",
+        "YES": "Có, xóa ",
+        "NO": "Không, giữ lại "
       }
     },
     "EVENTS": {
-      "TITLE": "Những lần không đạt SLA",
+      "TITLE": "Các lần vi phạm SLA",
       "FRT": "Thời gian phản hồi đầu tiên",
       "NRT": "Thời gian phản hồi tiếp theo",
-      "RT": "Thời gian giải quyết",
-      "SHOW_MORE": "{count} hơn nữa",
+      "RT": "Thời gian xử lý",
+      "SHOW_MORE": "Thêm {count}",
       "HIDE": "Ẩn {count} dòng"
     }
   }

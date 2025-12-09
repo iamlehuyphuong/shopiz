@@ -1,76 +1,76 @@
 {
   "CANNED_MGMT": {
-    "HEADER": "Tin nhắn mẫu",
-    "LEARN_MORE": "Tìm hiểu thêm về các thư mẫu",
-    "DESCRIPTION": "Các thư mẫu là các phản hồi được soạn sẵn giúp bạn trả lời nhanh chóng trong cuộc hội thoại. Nhân viên có thể gõ ký tự '/' theo sau là mã ngắn để chèn thư mẫu vào cuộc trò chuyện.",
-    "HEADER_BTN_TXT": "Thêm tin nhắn mẫu",
-    "LOADING": "Đang lấy thư mẫu...",
-    "SEARCH_404": "Không có kết quả nào phù hợp.",
+    "HEADER": "Canned Responses",
+    "LEARN_MORE": "Learn more about canned responses",
+    "DESCRIPTION": "Canned Responses are pre-written reply templates that help you quickly respond to a conversation. Agents can type the '/' character followed by the shortcode to insert a canned response during a conversation. ",
+    "HEADER_BTN_TXT": "Add canned response",
+    "LOADING": "Fetching canned responses...",
+    "SEARCH_404": "There are no items matching this query.",
     "LIST": {
-      "404": "Không có câu trả lời soạn trước nào có sẵn trong tài khoản này.",
-      "TITLE": "Quản lý tin nhắn mẫu",
-      "DESC": "Tin nhắn mẫu là các phản hồi được soạn sẵn giúp bạn trả lời nhanh chóng trong cuộc hội thoại. Bạn có thể gõ ký tự '/' theo sau là mã ngắn để chèn thư mẫu vào cuộc trò chuyện.",
+      "404": "There are no canned responses available in this account.",
+      "TITLE": "Manage canned responses",
+      "DESC": "Canned Responses are predefined reply templates which can be used to quickly send out replies to conversations.",
       "TABLE_HEADER": {
-        "SHORT_CODE": "Mã ngắn",
-        "CONTENT": "Nội dung",
-        "ACTIONS": "Hành động"
+        "SHORT_CODE": "Short code",
+        "CONTENT": "Content",
+        "ACTIONS": "Actions"
       }
     },
     "ADD": {
-      "TITLE": "Thêm tin nhắn mẫu",
-      "DESC": "Tin nhắn mẫu là các phản hồi được soạn sẵn giúp bạn trả lời nhanh chóng trong cuộc hội thoại. Bạn có thể gõ ký tự '/' theo sau là mã ngắn để chèn thư mẫu vào cuộc trò chuyện.",
-      "CANCEL_BUTTON_TEXT": "Huỷ",
+      "TITLE": "Add canned response",
+      "DESC": "Canned Responses are predefined reply templates which can be used to quickly send out replies to conversations.",
+      "CANCEL_BUTTON_TEXT": "Cancel",
       "FORM": {
         "SHORT_CODE": {
-          "LABEL": "Mã ngắn",
-          "PLACEHOLDER": "Vui lòng nhập mã ngắn.",
-          "ERROR": "Bắt buộc nhập mã ngắn."
+          "LABEL": "Short code",
+          "PLACEHOLDER": "Please enter a short code.",
+          "ERROR": "Short Code is required."
         },
         "CONTENT": {
-          "LABEL": "Tin nhắn",
-          "PLACEHOLDER": "Vui lòng nhập tin nhắn bạn muốn lưu làm mẫu để sử dụng sau.",
-          "ERROR": "Bắt buộc nhập tin nhắn."
+          "LABEL": "Message",
+          "PLACEHOLDER": "Please write the message you want to save as a template to use later.",
+          "ERROR": "Message is required."
         },
-        "SUBMIT": "Gửi"
+        "SUBMIT": "Submit"
       },
       "API": {
-        "SUCCESS_MESSAGE": "Thêm tin nhắn mẫu thành công.",
-        "ERROR_MESSAGE": "Không thể kết nối đến máy chủ. Vui lòng thử lại."
+        "SUCCESS_MESSAGE": "Canned response added successfully.",
+        "ERROR_MESSAGE": "Could not connect to server. Please try again."
       }
     },
     "EDIT": {
-      "TITLE": "Chỉnh sửa tin nhắn mẫu",
-      "CANCEL_BUTTON_TEXT": "Huỷ",
+      "TITLE": "Edit canned response",
+      "CANCEL_BUTTON_TEXT": "Cancel",
       "FORM": {
         "SHORT_CODE": {
-          "LABEL": "Mã ngắn",
-          "PLACEHOLDER": "Vui lòng nhập mã ngắn.",
-          "ERROR": "Bắt buộc nhập mã ngắn."
+          "LABEL": "Short code",
+          "PLACEHOLDER": "Please enter a shortcode.",
+          "ERROR": "Short code is required."
         },
         "CONTENT": {
-          "LABEL": "Tin nhắn",
-          "PLACEHOLDER": "Vui lòng nhập tin nhắn bạn muốn lưu làm mẫu để sử dụng sau.",
-          "ERROR": "Bắt buộc nhập tin nhắn."
+          "LABEL": "Message",
+          "PLACEHOLDER": "Please write the message you want to save as a template to use later.",
+          "ERROR": "Message is required."
         },
-        "SUBMIT": "Gửi"
+        "SUBMIT": "Submit"
       },
-      "BUTTON_TEXT": "Chỉnh sửa",
+      "BUTTON_TEXT": "Edit",
       "API": {
-        "SUCCESS_MESSAGE": "Chỉnh sửa thư mẫu thành công.",
-        "ERROR_MESSAGE": "Không thể kết nối đến máy chủ. Vui lòng thử lại."
+        "SUCCESS_MESSAGE": "Canned response is updated successfully.",
+        "ERROR_MESSAGE": "Could not connect to server. Please try again."
       }
     },
     "DELETE": {
-      "BUTTON_TEXT": "Xoá",
+      "BUTTON_TEXT": "Delete",
       "API": {
-        "SUCCESS_MESSAGE": "Xoá thư mẫu thành công.",
-        "ERROR_MESSAGE": "Không thể kết nối đến máy chủ. Vui lòng thử lại."
+        "SUCCESS_MESSAGE": "Canned response deleted successfully.",
+        "ERROR_MESSAGE": "Could not connect to server. Please try again."
       },
       "CONFIRM": {
-        "TITLE": "Xác nhận xoá",
-        "MESSAGE": "Bạn có chắc muốn xoá? ",
-        "YES": "Vâng, xoá",
-        "NO": "Không, giữ lại"
+        "TITLE": "Confirm deletion",
+        "MESSAGE": "Are you sure to delete ",
+        "YES": "Yes, delete ",
+        "NO": "No, keep "
       }
     }
   }

@@ -1,18 +1,18 @@
 {
   "CHAT_LIST": {
-    "LOADING": "Đang tải các cuộc trò chuyện",
-    "LOAD_MORE_CONVERSATIONS": "Tải thêm các cuộc trò chuyện",
+    "LOADING": "Đang tải cuộc hội thoại",
+    "LOAD_MORE_CONVERSATIONS": "Tải thêm cuộc hội thoại",
     "LOAD_MORE": "Tải thêm",
-    "EOF": "Tất cả các cuộc trò chuyện đã được tải 🎉",
+    "EOF": "Đã tải tất cả cuộc hội thoại 🎉",
     "LIST": {
-      "404": "Không có bất kỳ hoạt động trò chuyện nào trong nhóm."
+      "404": "Không có cuộc hội thoại nào trong nhóm này."
     },
     "FAILED_TO_SEND": "Gửi thất bại",
-    "TAB_HEADING": "Tất cả hội thoại",
-    "MENTION_HEADING": "Được nhắc đến",
-    "UNATTENDED_HEADING": "Chưa phản hồi",
+    "TAB_HEADING": "Cuộc hội thoại",
+    "MENTION_HEADING": "Nhắc đến",
+    "UNATTENDED_HEADING": "Chưa xử lý",
     "SEARCH": {
-      "INPUT": "Tìm kiếm cho người, đoạn chat, lưu trữ trả lời .."
+      "INPUT": "Tìm người, cuộc chat, tin nhắn mẫu..."
     },
     "FILTER_ALL": "Tất cả",
     "ASSIGNEE_TYPE_TABS": {
@@ -22,16 +22,16 @@
     },
     "CHAT_STATUS_FILTER_ITEMS": {
       "open": {
-        "TEXT": "Mở"
+        "TEXT": "Đang mở"
       },
       "resolved": {
-        "TEXT": "Đã được giải quyết"
+        "TEXT": "Đã giải quyết"
       },
       "pending": {
-        "TEXT": "Chờ giải quyết"
+        "TEXT": "Đang chờ"
       },
       "snoozed": {
-        "TEXT": "Tạm dừng"
+        "TEXT": "Tạm ẩn"
       },
       "bot": {
         "TEXT": "Bot"
@@ -41,33 +41,33 @@
       }
     },
     "VIEW_FILTER": "Xem",
-    "SORT_TOOLTIP_LABEL": "Sắp xếp các cuộc trò chuyện",
+    "SORT_TOOLTIP_LABEL": "Sắp xếp cuộc hội thoại",
     "CHAT_SORT": {
       "STATUS": "Trạng thái",
       "ORDER_BY": "Sắp xếp theo"
     },
     "CHAT_TIME_STAMP": {
       "CREATED": {
-        "LATEST": "Đã tạo",
-        "OLDEST": "Cũ nhất"
+        "LATEST": "Được tạo",
+        "OLDEST": "Tạo lúc:"
       },
       "LAST_ACTIVITY": {
-        "NOT_ACTIVE": "Hoạt động cuối:",
-        "ACTIVE": "Hoạt động cuối"
+        "NOT_ACTIVE": "Hoạt động gần nhất:",
+        "ACTIVE": "Hoạt động gần nhất"
       }
     },
     "SORT_ORDER_ITEMS": {
       "last_activity_at_asc": {
-        "TEXT": "Hoạt động cuối: Cũ nhất trước"
+        "TEXT": "Hoạt động gần nhất: Cũ nhất trước"
       },
       "last_activity_at_desc": {
-        "TEXT": "Hoạt động cuối: Mới nhất trước"
+        "TEXT": "Hoạt động gần nhất: Mới nhất trước"
       },
       "created_at_desc": {
-        "TEXT": "Ngày tạo: Mới nhất trước"
+        "TEXT": "Thời gian tạo: Mới nhất trước"
       },
       "created_at_asc": {
-        "TEXT": "Ngày tạo: Cũ nhất trước"
+        "TEXT": "Thời gian tạo: Cũ nhất trước"
       },
       "priority_desc": {
         "TEXT": "Ưu tiên: Cao nhất trước"
@@ -87,57 +87,57 @@
         "CONTENT": "Tin nhắn hình ảnh"
       },
       "audio": {
-        "CONTENT": "Tin nhắn thoại"
+        "CONTENT": "Tin nhắn âm thanh"
       },
       "video": {
         "CONTENT": "Tin nhắn video"
       },
       "file": {
-        "CONTENT": "Tập tin đính kèm"
+        "CONTENT": "Tệp đính kèm"
       },
       "location": {
-        "CONTENT": "Địa điểm"
+        "CONTENT": "Vị trí"
       },
       "ig_reel": {
         "CONTENT": "Instagram Reel"
       },
       "fallback": {
-        "CONTENT": "Có một đường dẫn chia sẻ"
+        "CONTENT": "Đã chia sẻ một URL"
       },
       "contact": {
-        "CONTENT": "Liên hệ được chia sẻ"
+        "CONTENT": "Chia sẻ liên hệ"
       }
     },
     "CHAT_SORT_BY_FILTER": {
       "TITLE": "Sắp xếp cuộc hội thoại",
-      "DROPDOWN_TITLE": "Sắp xếp bởi",
+      "DROPDOWN_TITLE": "Sắp xếp theo",
       "ITEMS": {
         "LATEST": {
-          "NAME": "Hoạt động cuối lúc",
-          "LABEL": "Hoạt động cuối"
+          "NAME": "Hoạt động gần nhất",
+          "LABEL": "Hoạt động gần nhất"
         },
         "CREATED_AT": {
-          "NAME": "Tạo vào lúc",
-          "LABEL": "Tạo vào lúc"
+          "NAME": "Thời gian tạo",
+          "LABEL": "Thời gian tạo"
         },
         "LAST_USER_MESSAGE_AT": {
-          "NAME": "Tin nhắn cuối của người dùng tại",
+          "NAME": "Tin nhắn cuối của khách",
           "LABEL": "Tin nhắn cuối"
         }
       }
     },
-    "RECEIVED_VIA_EMAIL": "Nhận được từ email",
+    "RECEIVED_VIA_EMAIL": "Nhận qua email",
     "VIEW_TWEET_IN_TWITTER": "Xem tweet trên Twitter",
-    "REPLY_TO_TWEET": "Trả lời cho tweet này",
-    "LINK_TO_STORY": "Xem câu chuyện trên Instagram",
+    "REPLY_TO_TWEET": "Trả lời tweet này",
+    "LINK_TO_STORY": "Tới Instagram Story",
     "SENT": "Gửi thành công",
-    "READ": "Đọc thành công",
-    "DELIVERED": "Đã gửi thành công",
+    "READ": "Đã đọc",
+    "DELIVERED": "Đã gửi",
     "NO_MESSAGES": "Không có tin nhắn",
     "NO_CONTENT": "Không có nội dung",
-    "HIDE_QUOTED_TEXT": "Ẩn văn bản được trích dẫn",
-    "SHOW_QUOTED_TEXT": "Hiện văn bản được trích dẫn",
-    "MESSAGE_READ": "\bĐọc",
+    "HIDE_QUOTED_TEXT": "Ẩn nội dung trích dẫn",
+    "SHOW_QUOTED_TEXT": "Hiện nội dung trích dẫn",
+    "MESSAGE_READ": "Đã đọc",
     "SENDING": "Đang gửi"
   }
 }

@@ -2,13 +2,9 @@
   "openapi": "3.0.4",
   "info": {
     "title": "Shopiz",
-<<<<<<< HEAD
-    "termsOfService": "https://www.shopiz.pro/terms-of-service/",
-=======
     "description": "This is the API documentation for Shopiz server.",
     "version": "1.1.0",
     "termsOfService": "https://www.shopiz.pro/terms-of-service/",
->>>>>>> shopiz/sync-v4.3.0
     "contact": {
       "email": "hello@shopiz.pro"
     },
@@ -17,7 +13,6 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-<<<<<<< HEAD
   "host": "shopiz.pro",
   "basePath": "/",
   "schemes": [
@@ -50,9 +45,6 @@
     }
   },
   "security": [
-=======
-  "servers": [
->>>>>>> shopiz/sync-v4.3.0
     {
       "url": "https://app.shopiz.pro/"
     }
@@ -10873,246 +10865,6 @@
             }
           }
         }
-<<<<<<< HEAD
-      }
-    },
-    "portal_create_update_payload": {
-      "type": "object",
-      "properties": {
-        "archived": {
-          "type": "boolean",
-          "description": "Status to check if portal is live"
-        },
-        "color": {
-          "type": "string",
-          "description": "Header color for help-center",
-          "example": "add color HEX string, \"#fffff\""
-        },
-        "config": {
-          "type": "object",
-          "description": "Configuration about supporting locales",
-          "example": {
-            "allowed_locales": [
-              "en",
-              "es"
-            ],
-            "default_locale": "en"
-          }
-        },
-        "custom_domain": {
-          "type": "string",
-          "description": "Custom domain to  display help center.",
-          "example": "https://shopiz.help/."
-        },
-        "header_text": {
-          "type": "string",
-          "description": "Help center header",
-          "example": "Handbook"
-        },
-        "homepage_link": {
-          "type": "string",
-          "description": "link to main dashboard",
-          "example": "https://www.shopiz.pro/"
-        },
-        "name": {
-          "type": "string",
-          "description": "Name for the portal"
-        },
-        "slug": {
-          "type": "string",
-          "description": "Slug for the portal to display in link"
-        },
-        "page_title": {
-          "type": "string",
-          "description": "Page title for the portal"
-        },
-        "account_id": {
-          "type": "integer"
-        }
-      }
-    },
-    "category_create_update_payload": {
-      "type": "object",
-      "properties": {
-        "description": {
-          "type": "string",
-          "description": "Category description"
-        },
-        "locale": {
-          "type": "string",
-          "description": "Category locale",
-          "example": "en/es"
-        },
-        "name": {
-          "type": "string",
-          "description": "Category name"
-        },
-        "slug": {
-          "type": "string",
-          "description": "Category slug"
-        },
-        "position": {
-          "type": "integer",
-          "description": "Category position in the portal list to sort"
-        },
-        "portal_id": {
-          "type": "integer"
-        },
-        "account_id": {
-          "type": "integer"
-        },
-        "associated_category_id": {
-          "type": "integer",
-          "description": "To associate similar categories to each other, e.g same category of product documentation in different languages"
-        },
-        "parent_category_id": {
-          "type": "integer",
-          "description": "To define parent category, e.g product documentation has multiple level features in sales category or in engineering category."
-        }
-      }
-    },
-    "article_create_update_payload": {
-      "type": "object",
-      "properties": {
-        "content": {
-          "type": "string",
-          "description": "The text content."
-        },
-        "meta": {
-          "type": "object",
-          "description": "Use for search",
-          "example": {
-            "tags": [
-              "article_name"
-            ],
-            "title": "article title",
-            "description": "article description"
-          }
-        },
-        "position": {
-          "type": "integer",
-          "description": "article position in category"
-        },
-        "status": {
-          "type": "integer",
-          "example": [
-            "draft",
-            "published",
-            "archived"
-          ]
-        },
-        "title": {
-          "type": "string"
-        },
-        "slug": {
-          "type": "string"
-        },
-        "views": {
-          "type": "integer"
-        },
-        "portal_id": {
-          "type": "integer"
-        },
-        "account_id": {
-          "type": "integer"
-        },
-        "author_id": {
-          "type": "integer"
-        },
-        "category_id": {
-          "type": "integer"
-        },
-        "folder_id": {
-          "type": "integer"
-        },
-        "associated_article_id": {
-          "type": "integer",
-          "description": "To associate similar articles to each other, e.g to provide the link for the reference."
-        }
-      }
-    },
-    "public_contact_create_update_payload": {
-      "type": "object",
-      "properties": {
-        "identifier": {
-          "type": "string",
-          "description": "External identifier of the contact"
-        },
-        "identifier_hash": {
-          "type": "string",
-          "description": "Identifier hash prepared for HMAC authentication"
-        },
-        "email": {
-          "type": "string",
-          "description": "Email of the contact"
-        },
-        "name": {
-          "type": "string",
-          "description": "Name of the contact"
-        },
-        "phone_number": {
-          "type": "string",
-          "description": "Phone number of the contact"
-        },
-        "avatar_url": {
-          "type": "string",
-          "description": "The url to a jpeg, png file for the user avatar"
-        },
-        "custom_attributes": {
-          "type": "object",
-          "description": "Custom attributes of the customer"
-        }
-      }
-    },
-    "public_message_create_payload": {
-      "type": "object",
-      "properties": {
-        "content": {
-          "type": "string",
-          "description": "Content for the message"
-        },
-        "echo_id": {
-          "type": "string",
-          "description": "Temporary identifier which will be passed back via websockets"
-        }
-      }
-    },
-    "public_message_update_payload": {
-      "type": "object",
-      "properties": {
-        "submitted_values": {
-          "type": "object",
-          "description": "Replies to the Bot Message Types"
-        }
-      }
-    },
-    "public_conversation_create_payload": {
-      "type": "object",
-      "properties": {
-        "custom_attributes": {
-          "type": "object",
-          "description": "Custom attributes of the conversation"
-        }
-      }
-    },
-    "extended_contact": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/contact"
-        },
-        {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "number",
-              "description": "Id of the user"
-            },
-            "availability_status": {
-              "type": "string",
-              "enum": [
-                "online",
-                "offline"
-=======
       },
       "portal_create_update_payload": {
         "type": "object",
@@ -11164,7 +10916,6 @@
               "allowed_locales": [
                 "en",
                 "es"
->>>>>>> shopiz/sync-v4.3.0
               ],
               "default_locale": "en"
             }

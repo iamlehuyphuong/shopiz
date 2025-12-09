@@ -1,50 +1,50 @@
 {
   "REPORT": {
-    "HEADER": "Các cuộc hội thoại",
-    "LOADING_CHART": "Đang tải các biểu đồ dữ liệu...",
-    "NO_ENOUGH_DATA": "Chúng tôi không nhận được đủ điểm dữ liệu để tạo báo cáo, vui lòng thử lại sau.",
-    "DOWNLOAD_AGENT_REPORTS": "Tải xuống báo cáo nhân viên",
+    "HEADER": "Cuộc hội thoại",
+    "LOADING_CHART": "Đang tải dữ liệu biểu đồ...",
+    "NO_ENOUGH_DATA": "Chúng tôi chưa nhận đủ dữ liệu để tạo báo cáo. Vui lòng thử lại sau.",
+    "DOWNLOAD_AGENT_REPORTS": "Tải báo cáo theo nhân viên",
     "DATA_FETCHING_FAILED": "Không thể lấy dữ liệu, vui lòng thử lại sau.",
-    "SUMMARY_FETCHING_FAILED": "Không thể lấy bản tóm tắt, vui lòng thử lại sau.",
+    "SUMMARY_FETCHING_FAILED": "Không thể lấy dữ liệu tổng quan, vui lòng thử lại sau.",
     "METRICS": {
       "CONVERSATIONS": {
-        "NAME": "Các cuộc hội thoại",
-        "DESC": "( Tổng cộng )"
+        "NAME": "Cuộc hội thoại",
+        "DESC": "( Tổng )"
       },
       "INCOMING_MESSAGES": {
-        "NAME": "Tin nhắn nhận được",
-        "DESC": "( Tổng cộng )"
+        "NAME": "Tin nhắn nhận",
+        "DESC": "( Tổng )"
       },
       "OUTGOING_MESSAGES": {
-        "NAME": "Tin nhắn gửi đi",
-        "DESC": "( Tổng cộng )"
+        "NAME": "Tin nhắn gửi",
+        "DESC": "( Tổng )"
       },
       "FIRST_RESPONSE_TIME": {
         "NAME": "Thời gian phản hồi đầu tiên",
         "DESC": "( Trung bình )",
-        "INFO_TEXT": "Tổng số cuộc hội thoại được sử dụng để tính toán:",
+        "INFO_TEXT": "Tổng số cuộc hội thoại được dùng để tính toán:",
         "TOOLTIP_TEXT": "Thời gian phản hồi đầu tiên là {metricValue} (dựa trên {conversationCount} cuộc hội thoại)"
       },
       "RESOLUTION_TIME": {
-        "NAME": "Thời gian giải quyết",
+        "NAME": "Thời gian xử lý",
         "DESC": "( Trung bình )",
-        "INFO_TEXT": "Tổng số cuộc hội thoại được sử dụng để tính toán:",
-        "TOOLTIP_TEXT": "Thời gian giải quyết là {metricValue} (dựa trên {conversationCount} hội thoại)"
+        "INFO_TEXT": "Tổng số cuộc hội thoại được dùng để tính toán:",
+        "TOOLTIP_TEXT": "Thời gian xử lý là {metricValue} (dựa trên {conversationCount} cuộc hội thoại)"
       },
       "RESOLUTION_COUNT": {
-        "NAME": "Số lượng giải quyết",
-        "DESC": "( Tổng cộng )"
+        "NAME": "Số lượng xử lý",
+        "DESC": "( Tổng )"
       },
       "BOT_RESOLUTION_COUNT": {
-        "NAME": "Số lượng giải quyết",
-        "DESC": "( Tổng cộng )"
+        "NAME": "Số lượng xử lý",
+        "DESC": "( Tổng )"
       },
       "BOT_HANDOFF_COUNT": {
-        "NAME": "Số lượng chuyển giao",
-        "DESC": "( Tổng cộng )"
+        "NAME": "Số cuộc chuyển giao",
+        "DESC": "( Tổng )"
       },
       "REPLY_TIME": {
-        "NAME": "Thời gian chờ của khách hàng",
+        "NAME": "Thời gian chờ của khách",
         "TOOLTIP_TEXT": "Thời gian chờ là {metricValue} (dựa trên {conversationCount} phản hồi)",
         "DESC": ""
       }
@@ -66,7 +66,7 @@
       "PLACEHOLDER": "Chọn phạm vi ngày"
     },
     "GROUP_BY_FILTER_DROPDOWN_LABEL": "Nhóm theo",
-    "DURATION_FILTER_LABEL": "Thời lượng",
+    "DURATION_FILTER_LABEL": "Khoảng thời gian",
     "GROUPING_OPTIONS": {
       "DAY": "Ngày",
       "WEEK": "Tuần",
@@ -105,16 +105,16 @@
     ],
     "GROUP_BY_YEAR_OPTIONS": [
       {
-        "id": 1,
-        "groupBy": "Ngày"
-      },
-      {
         "id": 2,
         "groupBy": "Tuần"
       },
       {
         "id": 3,
         "groupBy": "Tháng"
+      },
+      {
+        "id": 4,
+        "groupBy": "Năm"
       }
     ],
     "BUSINESS_HOURS": "Giờ làm việc",
@@ -123,71 +123,71 @@
       "EMPTY_LIST": "Không tìm thấy kết quả"
     },
     "PAGINATION": {
-      "RESULTS": "Hiển thị từ {start} đến {end} trong số {total} kết quả",
+      "RESULTS": "Hiển thị {start} đến {end} trên tổng {total} kết quả",
       "PER_PAGE_TEMPLATE": "{size} / trang"
     }
   },
   "AGENT_REPORTS": {
     "HEADER": "Tổng quan nhân viên",
-    "DESCRIPTION": "Theo dõi hiệu suất của nhân viên dễ dàng với các chỉ số chính như cuộc hội thoại, thời gian phản hồi, thời gian giải quyết và số lượng giải quyết. Nhấp vào tên nhân viên để biết thêm chi tiết.",
-    "LOADING_CHART": "Đang tải các biểu đồ dữ liệu...",
-    "NO_ENOUGH_DATA": "Chúng tôi không nhận được đủ điểm dữ liệu để tạo báo cáo, vui lòng thử lại sau.",
-    "DOWNLOAD_AGENT_REPORTS": "Tải xuống báo cáo nhân viên",
+    "DESCRIPTION": "Theo dõi hiệu suất nhân viên với các chỉ số như số cuộc hội thoại, thời gian phản hồi, thời gian xử lý và số cuộc xử lý. Nhấp vào tên nhân viên để xem chi tiết.",
+    "LOADING_CHART": "Đang tải dữ liệu biểu đồ...",
+    "NO_ENOUGH_DATA": "Chưa đủ dữ liệu để tạo báo cáo. Vui lòng thử lại sau.",
+    "DOWNLOAD_AGENT_REPORTS": "Tải báo cáo nhân viên",
     "FILTER_DROPDOWN_LABEL": "Chọn nhân viên",
     "METRICS": {
       "CONVERSATIONS": {
-        "NAME": "Các cuộc hội thoại",
-        "DESC": "( Tổng cộng )"
+        "NAME": "Cuộc hội thoại",
+        "DESC": "( Tổng )"
       },
       "INCOMING_MESSAGES": {
-        "NAME": "Tin nhắn nhận được",
-        "DESC": "( Tổng cộng )"
+        "NAME": "Tin nhắn nhận",
+        "DESC": "( Tổng )"
       },
       "OUTGOING_MESSAGES": {
-        "NAME": "Tin nhắn gửi đi",
-        "DESC": "( Tổng cộng )"
+        "NAME": "Tin nhắn gửi",
+        "DESC": "( Tổng )"
       },
       "FIRST_RESPONSE_TIME": {
         "NAME": "Thời gian phản hồi đầu tiên",
         "DESC": "( Trung bình )",
-        "INFO_TEXT": "Tổng số cuộc hội thoại được sử dụng để tính toán:",
+        "INFO_TEXT": "Tổng số cuộc hội thoại được dùng để tính toán:",
         "TOOLTIP_TEXT": "Thời gian phản hồi đầu tiên là {metricValue} (dựa trên {conversationCount} cuộc hội thoại)"
       },
       "RESOLUTION_TIME": {
-        "NAME": "Thời gian giải quyết",
+        "NAME": "Thời gian xử lý",
         "DESC": "( Trung bình )",
-        "INFO_TEXT": "Tổng số cuộc hội thoại được sử dụng để tính toán:",
-        "TOOLTIP_TEXT": "Thời gian giải quyết là {metricValue} (dựa trên {conversationCount} hội thoại)"
+        "INFO_TEXT": "Tổng số cuộc hội thoại được dùng để tính toán:",
+        "TOOLTIP_TEXT": "Thời gian xử lý là {metricValue} (dựa trên {conversationCount} cuộc hội thoại)"
       },
       "RESOLUTION_COUNT": {
-        "NAME": "Số lượng giải quyết",
-        "DESC": "( Tổng cộng )"
+        "NAME": "Số lượng xử lý",
+        "DESC": "( Tổng )"
       }
     },
     "DATE_RANGE": [
       {
         "id": 0,
-        "name": "7 ngày cuối"
+        "name": "7 ngày qua"
       },
       {
         "id": 1,
-        "name": "30 ngày cuối"
+        "name": "30 ngày qua"
       },
       {
         "id": 2,
-        "name": "3 tháng vừa qua"
+        "name": "3 tháng qua"
       },
       {
         "id": 3,
-        "name": "6 tháng vừa qua"
+        "name": "6 tháng qua"
       },
       {
         "id": 4,
-        "name": "Năm ngoái"
+        "name": "1 năm qua"
       },
       {
         "id": 5,
-        "name": "Phạm vi ngày tùy chỉnh"
+        "name": "Chọn ngày tùy chỉnh"
       }
     ],
     "CUSTOM_DATE_RANGE": {
@@ -197,65 +197,65 @@
   },
   "LABEL_REPORTS": {
     "HEADER": "Tổng quan nhãn",
-    "DESCRIPTION": "Track label performance with key metrics including conversations, response times, resolution times, and resolved cases. Click a label name for detailed insights.",
-    "LOADING_CHART": "Đang tải các biểu đồ dữ liệu...",
-    "NO_ENOUGH_DATA": "Chúng tôi không nhận được đủ điểm dữ liệu để tạo báo cáo, vui lòng thử lại sau.",
-    "DOWNLOAD_LABEL_REPORTS": "Tải xuống báo cáo nhãn",
-    "FILTER_DROPDOWN_LABEL": "Chọn Nhãn",
+    "DESCRIPTION": "Theo dõi hiệu suất nhãn với các chỉ số như số cuộc hội thoại, thời gian phản hồi, thời gian xử lý và số cuộc xử lý. Nhấp vào tên nhãn để xem chi tiết.",
+    "LOADING_CHART": "Đang tải dữ liệu biểu đồ...",
+    "NO_ENOUGH_DATA": "Chưa đủ dữ liệu để tạo báo cáo. Vui lòng thử lại sau.",
+    "DOWNLOAD_LABEL_REPORTS": "Tải báo cáo nhãn",
+    "FILTER_DROPDOWN_LABEL": "Chọn nhãn",
     "METRICS": {
       "CONVERSATIONS": {
-        "NAME": "Các cuộc hội thoại",
-        "DESC": "( Tổng cộng )"
+        "NAME": "Cuộc hội thoại",
+        "DESC": "( Tổng )"
       },
       "INCOMING_MESSAGES": {
-        "NAME": "Tin nhắn nhận được",
-        "DESC": "( Tổng cộng )"
+        "NAME": "Tin nhắn nhận",
+        "DESC": "( Tổng )"
       },
       "OUTGOING_MESSAGES": {
-        "NAME": "Tin nhắn gửi đi",
-        "DESC": "( Tổng cộng )"
+        "NAME": "Tin nhắn gửi",
+        "DESC": "( Tổng )"
       },
       "FIRST_RESPONSE_TIME": {
         "NAME": "Thời gian phản hồi đầu tiên",
         "DESC": "( Trung bình )",
-        "INFO_TEXT": "Tổng số cuộc hội thoại được sử dụng để tính toán:",
+        "INFO_TEXT": "Tổng số cuộc hội thoại được dùng để tính toán:",
         "TOOLTIP_TEXT": "Thời gian phản hồi đầu tiên là {metricValue} (dựa trên {conversationCount} cuộc hội thoại)"
       },
       "RESOLUTION_TIME": {
-        "NAME": "Thời gian giải quyết",
+        "NAME": "Thời gian xử lý",
         "DESC": "( Trung bình )",
-        "INFO_TEXT": "Tổng số cuộc hội thoại được sử dụng để tính toán:",
-        "TOOLTIP_TEXT": "Thời gian giải quyết là {metricValue} (dựa trên {conversationCount} hội thoại)"
+        "INFO_TEXT": "Tổng số cuộc hội thoại được dùng để tính toán:",
+        "TOOLTIP_TEXT": "Thời gian xử lý là {metricValue} (dựa trên {conversationCount} cuộc hội thoại)"
       },
       "RESOLUTION_COUNT": {
-        "NAME": "Số lượng giải quyết",
-        "DESC": "( Tổng cộng )"
+        "NAME": "Số lượng xử lý",
+        "DESC": "( Tổng )"
       }
     },
     "DATE_RANGE": [
       {
         "id": 0,
-        "name": "7 ngày cuối"
+        "name": "7 ngày qua"
       },
       {
         "id": 1,
-        "name": "30 ngày cuối"
+        "name": "30 ngày qua"
       },
       {
         "id": 2,
-        "name": "3 tháng vừa qua"
+        "name": "3 tháng qua"
       },
       {
         "id": 3,
-        "name": "6 tháng vừa qua"
+        "name": "6 tháng qua"
       },
       {
         "id": 4,
-        "name": "Năm ngoái"
+        "name": "1 năm qua"
       },
       {
         "id": 5,
-        "name": "Phạm vi ngày tùy chỉnh"
+        "name": "Chọn ngày tùy chỉnh"
       }
     ],
     "CUSTOM_DATE_RANGE": {
@@ -264,11 +264,12 @@
     }
   },
   "INBOX_REPORTS": {
-    "HEADER": "Tổng quan hộp thư đến",
+    "HEADER": "Tổng quan hộp thư",
     "VOICE_HEADER": "Tổng quan kênh thoại",
-    "DESCRIPTION": "Xem hiệu suất hộp thư đến của bạn một cách nhanh chóng với các chỉ số chính như cuộc hội thoại, thời gian phản hồi, thời gian giải quyết và số lượng giải quyết - tất cả trong một nơi. Nhấp vào tên hộp thư đến để biết thêm chi tiết.",
-    "LOADING_CHART": "Đang tải các biểu đồ dữ liệu...",
-    "NO_ENOUGH_DATA": "Chúng tôi không nhận được đủ điểm dữ liệu để tạo báo cáo, vui lòng thử lại sau.",
+    "DESCRIPTION": "Xem nhanh hiệu suất hộp thư với các chỉ số: số cuộc hội thoại, thời gian phản hồi, thời gian xử lý và số cuộc xử lý. Nhấp vào tên hộp thư để xem thêm.",
+    "VOICE_DESCRIPTION": "Theo dõi các chỉ số cuộc gọi như tổng số cuộc gọi, thời lượng trung bình, thời gian chờ và nhiều hơn nữa.",
+    "LOADING_CHART": "Đang tải dữ liệu biểu đồ...",
+    "NO_ENOUGH_DATA": "Chưa đủ dữ liệu để tạo báo cáo. Vui lòng thử lại sau.",
     "NO_VOICE_INBOXES": "Không tìm thấy kênh thoại",
     "CREATE_VOICE_INBOX_PROMPT": "Tạo kênh thoại trước để xem báo cáo",
     "DOWNLOAD_INBOX_REPORTS": "Tải xuống báo cáo hộp thư đến",
@@ -276,60 +277,75 @@
     "FILTER_DROPDOWN_LABEL": "Chọn Hộp thư đến",
     "ALL_INBOXES": "All Inboxes",
     "SEARCH_INBOX": "Search Inbox",
+    "VOICE_METRICS": {
+      "TOTAL_CALLS": "Tổng số cuộc gọi",
+      "INCOMING_CALLS": "Cuộc gọi đến",
+      "OUTGOING_CALLS": "Cuộc gọi đi",
+      "MISSED_CALLS": "Cuộc gọi nhỡ",
+      "AVG_DURATION": "Thời lượng cuộc gọi trung bình",
+      "AVG_WAITING_TIME": "Thời gian chờ trung bình",
+      "SUCCESS_RATE": "Tỷ lệ thành công cuộc gọi"
+    },
+    "VOICE_CHARTS": {
+      "CALLS_BY_TYPE": "Cuộc gọi theo loại",
+      "CALL_DURATION": "Thời lượng cuộc gọi trung bình",
+      "WAITING_TIME": "Thời gian chờ trung bình",
+      "SUCCESS_RATE": "Tỷ lệ thành công cuộc gọi"
+    },
     "METRICS": {
       "CONVERSATIONS": {
-        "NAME": "Các cuộc hội thoại",
-        "DESC": "( Tổng cộng )"
+        "NAME": "Cuộc hội thoại",
+        "DESC": "( Tổng )"
       },
       "INCOMING_MESSAGES": {
-        "NAME": "Tin nhắn nhận được",
-        "DESC": "( Tổng cộng )"
+        "NAME": "Tin nhắn nhận",
+        "DESC": "( Tổng )"
       },
       "OUTGOING_MESSAGES": {
-        "NAME": "Tin nhắn gửi đi",
-        "DESC": "( Tổng cộng )"
+        "NAME": "Tin nhắn gửi",
+        "DESC": "( Tổng )"
       },
       "FIRST_RESPONSE_TIME": {
         "NAME": "Thời gian phản hồi đầu tiên",
         "DESC": "( Trung bình )",
-        "INFO_TEXT": "Tổng số cuộc hội thoại được sử dụng để tính toán:",
+        "INFO_TEXT": "Tổng số cuộc hội thoại được dùng để tính toán:",
         "TOOLTIP_TEXT": "Thời gian phản hồi đầu tiên là {metricValue} (dựa trên {conversationCount} cuộc hội thoại)"
       },
       "RESOLUTION_TIME": {
-        "NAME": "Thời gian giải quyết",
+        "NAME": "Thời gian xử lý",
         "DESC": "( Trung bình )",
-        "INFO_TEXT": "Tổng số cuộc hội thoại được sử dụng để tính toán:",
-        "TOOLTIP_TEXT": "Thời gian giải quyết là {metricValue} (dựa trên {conversationCount} hội thoại)"
+        "INFO_TEXT": "Tổng số cuộc hội thoại được dùng để tính toán:",
+        "TOOLTIP_TEXT": "Thời gian xử lý là {metricValue} (dựa trên {conversationCount} cuộc hội thoại)"
       },
       "RESOLUTION_COUNT": {
-        "NAME": "Số lượng giải quyết",
-        "DESC": "( Tổng cộng )"
+        "NAME": "Số lượng xử lý",
+        "DESC": "( Tổng )"
       }
     },
     "DATE_RANGE": [
       {
         "id": 0,
-        "name": "7 ngày cuối"
+        "name": "7 ngày qua"
       },
       {
         "id": 1,
-        "name": "30 ngày cuối"
+        "name": "30 ngày qua"
       },
       {
         "id": 2,
-        "name": "3 tháng vừa qua"
+        "name": "3 tháng qua"
       },
       {
         "id": 3,
-        "name": "6 tháng vừa qua"
+        "name": "6 tháng qua"
       },
       {
         "id": 4,
-        "name": "Năm ngoái"
+        "name": "1 năm qua"
       },
       {
         "id": 5,
-        "name": "Phạm vi ngày tùy chỉnh"
+        "name": "Chọn ngày tùy chỉnh"
       }
     ],
     "CUSTOM_DATE_RANGE": {
@@ -339,65 +355,65 @@
   },
   "TEAM_REPORTS": {
     "HEADER": "Tổng quan nhóm",
-    "DESCRIPTION": "Nhận một cái nhìn tổng quan về hiệu suất của nhóm bạn với các chỉ số thiết yếu, bao gồm cuộc hội thoại, thời gian phản hồi, thời gian giải quyết và số lượng giải quyết. Nhấp vào tên nhóm để biết thêm chi tiết.",
-    "LOADING_CHART": "Đang tải các biểu đồ dữ liệu...",
-    "NO_ENOUGH_DATA": "Chúng tôi không nhận được đủ điểm dữ liệu để tạo báo cáo, vui lòng thử lại sau.",
-    "DOWNLOAD_TEAM_REPORTS": "Tải xuống báo cáo nhóm",
+    "DESCRIPTION": "Xem nhanh hiệu suất của nhóm với các chỉ số quan trọng như số cuộc hội thoại, thời gian phản hồi, thời gian xử lý và số lượng xử lý. Nhấn vào tên nhóm để xem thêm.",
+    "LOADING_CHART": "Đang tải dữ liệu biểu đồ...",
+    "NO_ENOUGH_DATA": "Chưa đủ dữ liệu để tạo báo cáo. Vui lòng thử lại sau.",
+    "DOWNLOAD_TEAM_REPORTS": "Tải báo cáo nhóm",
     "FILTER_DROPDOWN_LABEL": "Chọn nhóm",
     "METRICS": {
       "CONVERSATIONS": {
-        "NAME": "Các cuộc hội thoại",
-        "DESC": "( Tổng cộng )"
+        "NAME": "Cuộc hội thoại",
+        "DESC": "( Tổng )"
       },
       "INCOMING_MESSAGES": {
-        "NAME": "Tin nhắn nhận được",
-        "DESC": "( Tổng cộng )"
+        "NAME": "Tin nhắn nhận",
+        "DESC": "( Tổng )"
       },
       "OUTGOING_MESSAGES": {
-        "NAME": "Tin nhắn gửi đi",
-        "DESC": "( Tổng cộng )"
+        "NAME": "Tin nhắn gửi",
+        "DESC": "( Tổng )"
       },
       "FIRST_RESPONSE_TIME": {
         "NAME": "Thời gian phản hồi đầu tiên",
         "DESC": "( Trung bình )",
-        "INFO_TEXT": "Tổng số cuộc hội thoại được sử dụng để tính toán:",
-        "TOOLTIP_TEXT": "Thời gian phản hồi đầu tiên là {metricValue} (dựa trên {conversationCount} cuộc hội thoại)"
+        "INFO_TEXT": "Tổng số cuộc hội thoại được dùng để tính:",
+        "TOOLTIP_TEXT": "Thời gian phản hồi đầu tiên: {metricValue} (dựa trên {conversationCount} cuộc hội thoại)"
       },
       "RESOLUTION_TIME": {
-        "NAME": "Thời gian giải quyết",
+        "NAME": "Thời gian xử lý",
         "DESC": "( Trung bình )",
-        "INFO_TEXT": "Tổng số cuộc hội thoại được sử dụng để tính toán:",
-        "TOOLTIP_TEXT": "Thời gian giải quyết là {metricValue} (dựa trên {conversationCount} hội thoại)"
+        "INFO_TEXT": "Tổng số cuộc hội thoại được dùng để tính:",
+        "TOOLTIP_TEXT": "Thời gian xử lý: {metricValue} (dựa trên {conversationCount} cuộc hội thoại)"
       },
       "RESOLUTION_COUNT": {
-        "NAME": "Số lượng giải quyết",
-        "DESC": "( Tổng cộng )"
+        "NAME": "Số lượng xử lý",
+        "DESC": "( Tổng )"
       }
     },
     "DATE_RANGE": [
       {
         "id": 0,
-        "name": "7 ngày cuối"
+        "name": "7 ngày qua"
       },
       {
         "id": 1,
-        "name": "30 ngày cuối"
+        "name": "30 ngày qua"
       },
       {
         "id": 2,
-        "name": "3 tháng vừa qua"
+        "name": "3 tháng qua"
       },
       {
         "id": 3,
-        "name": "6 tháng vừa qua"
+        "name": "6 tháng qua"
       },
       {
         "id": 4,
-        "name": "Năm ngoái"
+        "name": "1 năm qua"
       },
       {
         "id": 5,
-        "name": "Phạm vi ngày tùy chỉnh"
+        "name": "Chọn ngày tùy chỉnh"
       }
     ],
     "CUSTOM_DATE_RANGE": {
@@ -407,9 +423,9 @@
   },
   "CSAT_REPORTS": {
     "HEADER": "Báo cáo CSAT",
-    "NO_RECORDS": "Không có phản hồi báo cáo CSAT có sẵn.",
-    "DOWNLOAD": "Tải về các báo cáo CSAT",
-    "DOWNLOAD_FAILED": "Không thể tải xuống Báo cáo CSAT",
+    "NO_RECORDS": "Không có phản hồi khảo sát CSAT nào.",
+    "DOWNLOAD": "Tải báo cáo CSAT",
+    "DOWNLOAD_FAILED": "Không thể tải báo cáo CSAT",
     "FILTERS": {
       "AGENTS": {
         "PLACEHOLDER": "Chọn nhân viên"
@@ -417,10 +433,10 @@
     },
     "TABLE": {
       "HEADER": {
-        "CONTACT_NAME": "Liên hệ",
-        "AGENT_NAME": "Nhân viên",
+        "CONTACT_NAME": "Khách hàng",
+        "AGENT_NAME": "Nhân viên phụ trách",
         "RATING": "Đánh giá",
-        "FEEDBACK_TEXT": "Bình luận phản hồi"
+        "FEEDBACK_TEXT": "Phản hồi"
       }
     },
     "METRIC": {
@@ -429,12 +445,12 @@
         "TOOLTIP": "Tổng số phản hồi thu thập được"
       },
       "SATISFACTION_SCORE": {
-        "LABEL": "Mức độ hài lòng",
-        "TOOLTIP": "Tổng số phản hồi tích cực / Tổng số phản hồi * 100"
+        "LABEL": "Điểm hài lòng",
+        "TOOLTIP": "Số phản hồi tích cực / Tổng phản hồi * 100"
       },
       "RESPONSE_RATE": {
         "LABEL": "Tỷ lệ phản hồi",
-        "TOOLTIP": "Tổng số phản hồi / Tổng số tin nhắn khảo sát CSAT đã gửi * 100"
+        "TOOLTIP": "Tổng phản hồi / Tổng khảo sát CSAT gửi * 100"
       }
     }
   },
@@ -442,43 +458,43 @@
     "HEADER": "Báo cáo Bot",
     "METRIC": {
       "TOTAL_CONVERSATIONS": {
-        "LABEL": "Số lượng cuộc hội thoại",
-        "TOOLTIP": "Tổng số cuộc hội thoại mà bot đã xử lý"
+        "LABEL": "Số cuộc hội thoại",
+        "TOOLTIP": "Tổng số cuộc hội thoại được bot xử lý"
       },
       "TOTAL_RESPONSES": {
         "LABEL": "Tổng số phản hồi",
-        "TOOLTIP": "Tổng số phản hồi mà bot đã gửi"
+        "TOOLTIP": "Tổng số phản hồi bot đã gửi"
       },
       "RESOLUTION_RATE": {
-        "LABEL": "Tỷ lệ giải quyết",
-        "TOOLTIP": "Tỷ lệ cuộc hội thoại được bot giải quyết = (Số cuộc hội thoại được giải quyết bởi bot / Tổng số cuộc hội thoại mà bot xử lý) * 100"
+        "LABEL": "Tỷ lệ xử lý",
+        "TOOLTIP": "Số cuộc xử lý / Tổng cuộc hội thoại của bot * 100"
       },
       "HANDOFF_RATE": {
         "LABEL": "Tỷ lệ chuyển giao",
-        "TOOLTIP": "Tỷ lệ chuyển giao = (Số cuộc hội thoại chuyển giao cho nhân viên / Tổng số cuộc hội thoại mà bot xử lý) * 100"
+        "TOOLTIP": "Số cuộc chuyển sang nhân viên / Tổng cuộc hội thoại của bot * 100"
       }
     }
   },
   "OVERVIEW_REPORTS": {
     "HEADER": "Tổng quan",
-    "LIVE": "Online",
+    "LIVE": "Thời gian thực",
     "ACCOUNT_CONVERSATIONS": {
-      "HEADER": "Trạng thái hội thoại",
-      "LOADING_MESSAGE": "Đang tải số liệu cuộc hội thoại...",
-      "OPEN": "Mở",
-      "UNATTENDED": "Chưa phản hồi",
-      "UNASSIGNED": "Chưa được phân công",
-      "PENDING": "Chờ giải quyết"
+      "HEADER": "Cuộc hội thoại đang mở",
+      "LOADING_MESSAGE": "Đang tải số liệu...",
+      "OPEN": "Đang mở",
+      "UNATTENDED": "Chưa được xử lý",
+      "UNASSIGNED": "Chưa phân công",
+      "PENDING": "Đang chờ"
     },
     "CONVERSATION_HEATMAP": {
-      "HEADER": "Lưu lượng cuộc hội thoại",
+      "HEADER": "Lưu lượng hội thoại",
       "NO_CONVERSATIONS": "Không có cuộc hội thoại",
       "CONVERSATION": "{count} cuộc hội thoại",
       "CONVERSATIONS": "{count} cuộc hội thoại",
       "DOWNLOAD_REPORT": "Tải báo cáo"
     },
     "RESOLUTION_HEATMAP": {
-      "HEADER": "Đã giải quyết",
+      "HEADER": "Xử lý",
       "NO_CONVERSATIONS": "Không có cuộc hội thoại",
       "CONVERSATION": "{count} cuộc hội thoại",
       "CONVERSATIONS": "{count} cuộc hội thoại",
@@ -492,33 +508,33 @@
       "DOWNLOAD_REPORT": "Download report"
     },
     "AGENT_CONVERSATIONS": {
-      "HEADER": "Nhân viên",
-      "LOADING_MESSAGE": "Đang tải chỉ số nhân viên...",
-      "NO_AGENTS": "Không có cuộc hội thoại nào của các nhân viên",
+      "HEADER": "Cuộc hội thoại theo nhân viên",
+      "LOADING_MESSAGE": "Đang tải dữ liệu...",
+      "NO_AGENTS": "Không có cuộc hội thoại theo nhân viên",
       "TABLE_HEADER": {
         "AGENT": "Nhân viên",
-        "OPEN": "Mở",
-        "UNATTENDED": "Chưa phản hồi",
+        "OPEN": "Đang mở",
+        "UNATTENDED": "Chưa xử lý",
         "STATUS": "Trạng thái"
       }
     },
     "TEAM_CONVERSATIONS": {
       "ALL_TEAMS": "Tất cả nhóm",
-      "HEADER": "Nhóm",
-      "LOADING_MESSAGE": "Đang tải chỉ số nhóm...",
+      "HEADER": "Cuộc hội thoại theo nhóm",
+      "LOADING_MESSAGE": "Đang tải dữ liệu...",
       "NO_TEAMS": "Không có dữ liệu",
       "TABLE_HEADER": {
         "TEAM": "Nhóm",
-        "OPEN": "Mở",
-        "UNATTENDED": "Chưa phản hồi",
+        "OPEN": "Đang mở",
+        "UNATTENDED": "Chưa xử lý",
         "STATUS": "Trạng thái"
       }
     },
     "AGENT_STATUS": {
       "HEADER": "Trạng thái nhân viên",
-      "ONLINE": "Online",
+      "ONLINE": "Trực tuyến",
       "BUSY": "Bận",
-      "OFFLINE": "Không Trực Tuyến"
+      "OFFLINE": "Ngoại tuyến"
     }
   },
   "DAYS_OF_WEEK": {
@@ -532,26 +548,26 @@
   },
   "SLA_REPORTS": {
     "HEADER": "Báo cáo SLA",
-    "NO_RECORDS": "Không có cuộc hội thoại áp dụng SLA.",
+    "NO_RECORDS": "Không có cuộc hội thoại liên quan SLA.",
     "LOADING": "Đang tải dữ liệu SLA...",
-    "DOWNLOAD_SLA_REPORTS": "Tải xuống báo cáo SLA",
-    "DOWNLOAD_FAILED": "Không thể tải xuống báo cáo SLA",
+    "DOWNLOAD_SLA_REPORTS": "Tải báo cáo SLA",
+    "DOWNLOAD_FAILED": "Không thể tải báo cáo SLA",
     "DROPDOWN": {
       "ADD_FIlTER": "Thêm bộ lọc",
       "CLEAR_ALL": "Xóa tất cả",
       "CLEAR_FILTER": "Xóa bộ lọc",
       "EMPTY_LIST": "Không tìm thấy kết quả",
-      "NO_FILTER": "Không có bộ lọc khả dụng",
-      "SEARCH": "Tìm kiếm bộ lọc",
+      "NO_FILTER": "Không có bộ lọc",
+      "SEARCH": "Tìm bộ lọc",
       "INPUT_PLACEHOLDER": {
         "SLA": "Tên SLA",
         "AGENTS": "Tên nhân viên",
-        "INBOXES": "Tên kênh",
+        "INBOXES": "Tên hộp thư",
         "LABELS": "Tên nhãn",
         "TEAMS": "Tên nhóm"
       },
       "SLA": "Chính sách SLA",
-      "INBOXES": "Hộp thư đến",
+      "INBOXES": "Hộp thư",
       "AGENTS": "Nhân viên",
       "LABELS": "Nhãn",
       "TEAMS": "Nhóm"
@@ -559,36 +575,36 @@
     "WITH": "với",
     "METRICS": {
       "HIT_RATE": {
-        "LABEL": "Tỷ lệ thành công",
-        "TOOLTIP": "Phần trăm SLA được tạo đã được hoàn thành thành công"
+        "LABEL": "Tỷ lệ đạt SLA",
+        "TOOLTIP": "Phần trăm SLA được hoàn thành thành công"
       },
       "NO_OF_MISSES": {
-        "LABEL": "Số lần trượt",
-        "TOOLTIP": "Tổng số lần trượt SLA trong một khoảng thời gian nhất định"
+        "LABEL": "Số lần trượt SLA",
+        "TOOLTIP": "Tổng số lần SLA không hoàn thành"
       },
       "NO_OF_CONVERSATIONS": {
-        "LABEL": "Số hội thoại",
-        "TOOLTIP": "Tổng số hội thoại có SLA"
+        "LABEL": "Số cuộc hội thoại",
+        "TOOLTIP": "Tổng số cuộc hội thoại có SLA"
       }
     },
     "TABLE": {
       "HEADER": {
         "POLICY": "Chính sách",
-        "CONVERSATION": "Hội thoại",
+        "CONVERSATION": "Cuộc hội thoại",
         "AGENT": "Nhân viên"
       },
       "VIEW_DETAILS": "Xem chi tiết"
     }
   },
   "SUMMARY_REPORTS": {
-    "INBOX": "Hộp thư đến",
+    "INBOX": "Hộp thư",
     "AGENT": "Nhân viên",
     "TEAM": "Nhóm",
     "LABEL": "Nhãn",
-    "AVG_RESOLUTION_TIME": "Thời gian giải quyết trung bình",
+    "AVG_RESOLUTION_TIME": "Thời gian xử lý trung bình",
     "AVG_FIRST_RESPONSE_TIME": "Thời gian phản hồi đầu tiên trung bình",
-    "AVG_REPLY_TIME": "Thời gian chờ khách hàng trung bình",
-    "RESOLUTION_COUNT": "Số lượng giải quyết",
-    "CONVERSATIONS": "Số hội thoại"
+    "AVG_REPLY_TIME": "Thời gian chờ trung bình",
+    "RESOLUTION_COUNT": "Số lượng xử lý",
+    "CONVERSATIONS": "Số cuộc hội thoại"
   }
 }

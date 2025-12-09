@@ -1,25 +1,25 @@
 {
   "AUDIT_LOGS": {
-    "HEADER": "Nhật ký kiểm tra",
-    "HEADER_BTN_TXT": "Thêm nhật ký kiểm tra",
-    "LOADING": "Đang lấy nhật ký kiểm tra",
-    "DESCRIPTION": "Nhật ký kiểm tra lưu trữ các hoạt động trong tài khoản của bạn, giúp bạn theo dõi và kiểm tra tài khoản, đội ngũ hoặc dịch vụ của mình.",
-    "LEARN_MORE": "Tìm hiểu thêm về nhật ký kiểm tra",
-    "SEARCH_404": "Không có kết quả nào được tìm thấy",
-    "SIDEBAR_TXT": "<p><b>Nhật ký kiểm tra</b></p><p>Nhật ký kiểm tra là dấu vết của các sự kiện và hành động trong hệ thống Shopiz.</p>",
+    "HEADER": "Nhật ký hoạt động",
+    "HEADER_BTN_TXT": "Thêm nhật ký hoạt động",
+    "LOADING": "Đang tải nhật ký hoạt động",
+    "DESCRIPTION": "Nhật ký hoạt động lưu lại toàn bộ hành động trong tài khoản của bạn, giúp bạn theo dõi và kiểm tra hoạt động của tài khoản, đội ngũ hoặc các dịch vụ.",
+    "LEARN_MORE": "Tìm hiểu thêm về nhật ký hoạt động",
+    "SEARCH_404": "Không có mục nào khớp với tìm kiếm",
+    "SIDEBAR_TXT": "<p><b>Nhật ký hoạt động</b></p><p> Nhật ký hoạt động là dấu vết của các sự kiện và hành động trong hệ thống Shopiz. </p>",
     "LIST": {
-      "404": "Không có nhật ký kiểm tra nào trong tài khoản này.",
-      "TITLE": "Quản lý nhật ký kiểm tra",
-      "DESC": "Nhật ký kiểm tra là dấu vết của các sự kiện và hành động trong hệ thống Shopiz.",
+      "404": "Không có nhật ký hoạt động nào trong tài khoản này.",
+      "TITLE": "Quản lý nhật ký hoạt động",
+      "DESC": "Nhật ký hoạt động là dấu vết của các sự kiện và hành động trong hệ thống Shopiz.",
       "TABLE_HEADER": {
-        "ACTIVITY": "Người dùng",
-        "TIME": "Hành động",
+        "ACTIVITY": "Hoạt động",
+        "TIME": "Thời gian",
         "IP_ADDRESS": "Địa chỉ IP"
       }
     },
     "API": {
-      "SUCCESS_MESSAGE": "Lấy dữ liệu nhật ký kiểm tra thành công",
-      "ERROR_MESSAGE": "Không thể kết nối với Máy chủ, Vui lòng thử lại sau"
+      "SUCCESS_MESSAGE": "Lấy dữ liệu nhật ký thành công",
+      "ERROR_MESSAGE": "Không thể kết nối máy chủ, vui lòng thử lại sau"
     },
     "DEFAULT_USER": "Hệ thống",
     "AUTOMATION_RULE": {
@@ -30,7 +30,7 @@
     "ACCOUNT_USER": {
       "ADD": "{agentName} đã mời {invitee} vào tài khoản với vai trò {role}",
       "EDIT": {
-        "SELF": "{agentName} đã thay đổi {attributes} của mình thành {values}",
+        "SELF": "{agentName} đã thay đổi {attributes} của chính họ thành {values}",
         "OTHER": "{agentName} đã thay đổi {attributes} của {user} thành {values}",
         "DELETED": "{agentName} đã thay đổi {attributes} của một người dùng đã bị xóa thành {values}"
       }
@@ -50,28 +50,28 @@
       "SIGN_OUT": "{agentName} đã đăng xuất"
     },
     "TEAM": {
-      "ADD": "{agentName} đã tạo một đội ngũ mới (#{id})",
-      "EDIT": "{agentName} đã cập nhật đội ngũ (#{id})",
-      "DELETE": "{agentName} đã xóa đội ngũ (#{id})"
+      "ADD": "{agentName} đã tạo một nhóm mới (#{id})",
+      "EDIT": "{agentName} đã cập nhật nhóm (#{id})",
+      "DELETE": "{agentName} đã xóa nhóm (#{id})"
     },
     "MACRO": {
-      "ADD": "{agentName} đã tạo một macro mới (#{id})",
+      "ADD": "{agentName} đã tạo macro mới (#{id})",
       "EDIT": "{agentName} đã cập nhật macro (#{id})",
       "DELETE": "{agentName} đã xóa macro (#{id})"
     },
     "INBOX_MEMBER": {
       "ADD": "{agentName} đã thêm {user} vào hộp thư (#{inbox_id})",
-      "REMOVE": "{agentName} đã loại bỏ {user} khỏi hộp thư (#{inbox_id})"
+      "REMOVE": "{agentName} đã xóa {user} khỏi hộp thư (#{inbox_id})"
     },
     "TEAM_MEMBER": {
-      "ADD": "{agentName} đã thêm {user} vào đội ngũ (#{team_id})",
-      "REMOVE": "{agentName} đã loại bỏ {user} khỏi đội ngũ (#{team_id})"
+      "ADD": "{agentName} đã thêm {user} vào nhóm (#{team_id})",
+      "REMOVE": "{agentName} đã xóa {user} khỏi nhóm (#{team_id})"
     },
     "ACCOUNT": {
       "EDIT": "{agentName} đã cập nhật cấu hình tài khoản (#{id})"
     },
     "CONVERSATION": {
-      "DELETE": "{agentName} đã xóa cuộc trò chuyện #{id}"
+      "DELETE": "{agentName} đã xóa cuộc hội thoại #{id}"
     }
   }
 }

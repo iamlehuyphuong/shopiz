@@ -1,10 +1,10 @@
 {
   "REGISTER": {
     "TRY_WOOT": "Tạo tài khoản",
-    "TITLE": "Đăng kí",
-    "TESTIMONIAL_HEADER": "Tất cả chỉ cần một bước để tiến về phía trước",
-    "TESTIMONIAL_CONTENT": "Bạn chỉ còn một bước nữa là có thể thu hút khách hàng của mình, giữ chân họ và tìm kiếm những khách hàng mới.",
-    "TERMS_ACCEPT": "Khi tạo tài khoản, bạn đồng ý với <a href=\"https://www.shopiz.pro/terms\">Điều khoản sử dụng</a> và <a href=\"https://www.shopiz.pro/privacy-policy\">Chính sách bảo mật</a>",
+    "TITLE": "Đăng ký",
+    "TESTIMONIAL_HEADER": "Chỉ cần một bước để tiến về phía trước",
+    "TESTIMONIAL_CONTENT": "Bạn chỉ còn một bước nữa để bắt đầu tương tác, giữ chân và tìm thêm khách hàng.",
+    "TERMS_ACCEPT": "Bằng việc tạo tài khoản, bạn đồng ý với <a href=\"https://www.shopiz.pro/terms\">Điều khoản sử dụng</a> và <a href=\"https://www.shopiz.pro/privacy-policy\">Chính sách bảo mật</a> của chúng tôi",
     "OAUTH": {
       "GOOGLE_SIGNUP": "Đăng ký với Google"
     },
@@ -14,13 +14,13 @@
       "ERROR": "Tên công ty quá ngắn."
     },
     "FULL_NAME": {
-      "LABEL": "Tên đầy đủ",
+      "LABEL": "Họ và tên",
       "PLACEHOLDER": "Nhập họ và tên của bạn. Ví dụ: Bruce Wayne",
-      "ERROR": "Tên đầy đủ quá ngắn."
+      "ERROR": "Họ và tên quá ngắn."
     },
     "EMAIL": {
       "LABEL": "Email công việc",
-      "PLACEHOLDER": "Nhập địa chỉ email công việc của bạn. Ví dụ: bruce{'@'}wayne{'.'}enterprises",
+      "PLACEHOLDER": "Nhập email công việc của bạn. Ví dụ: bruce@wayne.enterprises",
       "ERROR": "Vui lòng nhập địa chỉ email công việc hợp lệ."
     },
     "PASSWORD": {
@@ -28,11 +28,11 @@
       "PLACEHOLDER": "Mật khẩu",
       "ERROR": "Mật khẩu quá ngắn.",
       "IS_INVALID_PASSWORD": "Mật khẩu phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt.",
-      "REQUIREMENTS_LENGTH": "Ít nhất 6 ký tự",
-      "REQUIREMENTS_UPPERCASE": "Ít nhất 1 chữ hoa",
-      "REQUIREMENTS_LOWERCASE": "Ít nhất 1 chữ thường",
-      "REQUIREMENTS_NUMBER": "Ít nhất 1 số",
-      "REQUIREMENTS_SPECIAL": "Ít nhất 1 ký tự đặc biệt"
+      "REQUIREMENTS_LENGTH": "Tối thiểu 6 ký tự",
+      "REQUIREMENTS_UPPERCASE": "Ít nhất một chữ hoa",
+      "REQUIREMENTS_LOWERCASE": "Ít nhất một chữ thường",
+      "REQUIREMENTS_NUMBER": "Ít nhất một chữ số",
+      "REQUIREMENTS_SPECIAL": "Ít nhất một ký tự đặc biệt"
     },
     "CONFIRM_PASSWORD": {
       "LABEL": "Xác nhận mật khẩu",
@@ -41,9 +41,9 @@
     },
     "API": {
       "SUCCESS_MESSAGE": "Đăng ký thành công",
-      "ERROR_MESSAGE": "Không thể kết nối với máy chủ Woot. Vui lòng thử lại."
+      "ERROR_MESSAGE": "Không thể kết nối đến máy chủ. Vui lòng thử lại."
     },
     "SUBMIT": "Tạo tài khoản",
-    "HAVE_AN_ACCOUNT": "Đã có tài khoản?"
+    "HAVE_AN_ACCOUNT": "Bạn đã có tài khoản?"
   }
 }

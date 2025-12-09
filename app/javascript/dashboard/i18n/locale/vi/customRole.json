@@ -1,91 +1,91 @@
 {
   "CUSTOM_ROLE": {
-    "HEADER": "Vai trò tùy chỉnh",
-    "LEARN_MORE": "Tìm hiểu thêm về vai trò tùy chỉnh",
-    "DESCRIPTION": "Vai trò tùy chỉnh là những vai trò được tạo ra bởi chủ tài khoản hoặc quản trị viên. Những vai trò này có thể được giao cho nhân viên để xác định quyền truy cập và quyền hạn trong tài khoản. Vai trò tùy chỉnh có thể được tạo với các quyền cụ thể và mức độ truy cập phù hợp với yêu cầu của tổ chức.",
-    "HEADER_BTN_TXT": "Thêm vai trò tùy chỉnh",
-    "LOADING": "Đang tải vai trò tùy chỉnh...",
-    "SEARCH_404": "Không có kết quả nào phù hợp.",
+    "HEADER": "Vai trò tuỳ chỉnh",
+    "LEARN_MORE": "Tìm hiểu thêm về vai trò tuỳ chỉnh",
+    "DESCRIPTION": "Vai trò tuỳ chỉnh là các vai trò được tạo bởi chủ tài khoản hoặc quản trị viên. Những vai trò này có thể được gán cho nhân viên (agent) để xác định quyền truy cập và quyền hạn trong tài khoản. Vai trò tuỳ chỉnh có thể được tạo với các quyền và mức truy cập cụ thể phù hợp với nhu cầu của doanh nghiệp.",
+    "HEADER_BTN_TXT": "Thêm vai trò tuỳ chỉnh",
+    "LOADING": "Đang tải danh sách vai trò tuỳ chỉnh...",
+    "SEARCH_404": "Không có mục nào khớp với tìm kiếm.",
     "PAYWALL": {
-      "TITLE": "Nâng cấp để tạo vai trò tùy chỉnh",
-      "AVAILABLE_ON": "Tính năng vai trò tùy chỉnh chỉ có sẵn trong các gói Kinh doanh và Doanh nghiệp.",
-      "UPGRADE_PROMPT": "Nâng cấp gói của bạn để truy cập các tính năng nâng cao như quản lý nhóm, tự động hóa, thuộc tính tùy chỉnh và nhiều hơn nữa.",
+      "TITLE": "Nâng cấp để tạo vai trò tuỳ chỉnh",
+      "AVAILABLE_ON": "Tính năng vai trò tuỳ chỉnh chỉ có trong gói Business và Enterprise.",
+      "UPGRADE_PROMPT": "Nâng cấp gói để sử dụng các tính năng nâng cao như quản lý nhóm, tự động hoá, thuộc tính tuỳ chỉnh và nhiều hơn nữa.",
       "UPGRADE_NOW": "Nâng cấp ngay",
-      "CANCEL_ANYTIME": "Bạn có thể thay đổi hoặc huỷ gói của mình bất cứ lúc nào"
+      "CANCEL_ANYTIME": "Bạn có thể thay đổi hoặc huỷ gói bất cứ lúc nào"
     },
     "ENTERPRISE_PAYWALL": {
-      "AVAILABLE_ON": "Tính năng vai trò tùy chỉnh chỉ có sẵn trong các gói trả phí.",
-      "UPGRADE_PROMPT": "Nâng cấp lên gói trả phí để truy cập các tính năng nâng cao như nhật ký kiểm tra, khả năng của nhân viên, và nhiều hơn nữa.",
-      "ASK_ADMIN": "Vui lòng liên hệ với quản trị viên của bạn để nâng cấp."
+      "AVAILABLE_ON": "Tính năng vai trò tuỳ chỉnh chỉ có trong các gói trả phí.",
+      "UPGRADE_PROMPT": "Nâng cấp lên gói trả phí để truy cập các tính năng nâng cao như nhật ký hoạt động, giới hạn công suất agent và nhiều hơn nữa.",
+      "ASK_ADMIN": "Vui lòng liên hệ quản trị viên của bạn để nâng cấp."
     },
     "LIST": {
-      "404": "Không có vai trò tùy chỉnh nào có sẵn trong tài khoản này.",
-      "TITLE": "Quản lý vai trò tùy chỉnh",
-      "DESC": "Các vai trò tùy chỉnh là những vai trò được tạo ra bởi chủ tài khoản hoặc quản trị viên. Các vai trò này có thể được giao cho nhân viên để xác định quyền truy cập và quyền hạn trong tài khoản. Vai trò tùy chỉnh có thể được thiết lập với các quyền cụ thể và mức độ truy cập phù hợp với yêu cầu của tổ chức.",
+      "404": "Không có vai trò tuỳ chỉnh nào trong tài khoản này.",
+      "TITLE": "Quản lý vai trò tuỳ chỉnh",
+      "DESC": "Vai trò tuỳ chỉnh được tạo bởi chủ tài khoản hoặc quản trị viên. Chúng được dùng để phân quyền và cho phép agent truy cập các chức năng phù hợp trong hệ thống.",
       "TABLE_HEADER": {
         "NAME": "Tên",
         "DESCRIPTION": "Mô tả",
-        "PERMISSIONS": "Quyền",
+        "PERMISSIONS": "Quyền hạn",
         "ACTIONS": "Hành động"
       }
     },
     "PERMISSIONS": {
-      "CONVERSATION_MANAGE": "Quản lý tất cả các cuộc hội thoại",
-      "CONVERSATION_UNASSIGNED_MANAGE": "Quản lý các cuộc hội thoại chưa được giao và các cuộc hội thoại được giao cho họ",
-      "CONVERSATION_PARTICIPATING_MANAGE": "Quản lý các cuộc hội thoại tham gia và các cuộc hội thoại được giao cho họ",
-      "CONTACT_MANAGE": "Quản lý danh bạ",
+      "CONVERSATION_MANAGE": "Quản lý tất cả cuộc hội thoại",
+      "CONVERSATION_UNASSIGNED_MANAGE": "Quản lý các cuộc hội thoại chưa phân công và các hội thoại được phân cho họ",
+      "CONVERSATION_PARTICIPATING_MANAGE": "Quản lý các cuộc hội thoại mà họ đang tham gia hoặc được phân công",
+      "CONTACT_MANAGE": "Quản lý liên hệ",
       "REPORT_MANAGE": "Quản lý báo cáo",
-      "KNOWLEDGE_BASE_MANAGE": "Quản lý cơ sở tri thức",
+      "KNOWLEDGE_BASE_MANAGE": "Quản lý kho kiến thức",
       "SALES_MANAGE": "Quản lý bán hàng"
     },
     "FORM": {
       "NAME": {
         "LABEL": "Tên",
-        "PLACEHOLDER": "Vui lòng nhập tên.",
-        "ERROR": "Cần phải có tên."
+        "PLACEHOLDER": "Nhập tên vai trò",
+        "ERROR": "Tên là bắt buộc."
       },
       "DESCRIPTION": {
         "LABEL": "Mô tả",
-        "PLACEHOLDER": "Vui lòng nhập mô tả.",
-        "ERROR": "Cần phải có mô tả."
+        "PLACEHOLDER": "Nhập mô tả vai trò",
+        "ERROR": "Mô tả là bắt buộc."
       },
       "PERMISSIONS": {
-        "LABEL": "Quyền",
-        "ERROR": "Yêu cầu có quyền."
+        "LABEL": "Quyền hạn",
+        "ERROR": "Quyền hạn là bắt buộc."
       },
-      "CANCEL_BUTTON_TEXT": "Huỷ",
+      "CANCEL_BUTTON_TEXT": "Hủy",
       "API": {
-        "ERROR_MESSAGE": "Không thể kết nối đến máy chủ. Vui lòng thử lại."
+        "ERROR_MESSAGE": "Không thể kết nối máy chủ. Vui lòng thử lại."
       }
     },
     "ADD": {
-      "TITLE": "Thêm vai trò tùy chỉnh",
-      "DESC": "Vai trò tùy chỉnh cho phép bạn tạo ra các vai trò với các quyền cụ thể và mức độ truy cập phù hợp với yêu cầu của tổ chức.",
-      "SUBMIT": "Gửi",
+      "TITLE": "Thêm vai trò tuỳ chỉnh",
+      "DESC": "Vai trò tuỳ chỉnh cho phép bạn tạo các quyền truy cập phù hợp với nhu cầu của tổ chức.",
+      "SUBMIT": "Xác nhận",
       "API": {
-        "SUCCESS_MESSAGE": "Thêm vai trò tùy chỉnh thành công."
+        "SUCCESS_MESSAGE": "Thêm vai trò tuỳ chỉnh thành công."
       }
     },
     "EDIT": {
       "BUTTON_TEXT": "Chỉnh sửa",
-      "TITLE": "Chỉnh sửa vai trò tùy chỉnh",
-      "DESC": "Vai trò tùy chỉnh cho phép bạn tạo ra các vai trò với các quyền cụ thể và mức độ truy cập phù hợp với yêu cầu của tổ chức.",
+      "TITLE": "Chỉnh sửa vai trò tuỳ chỉnh",
+      "DESC": "Vai trò tuỳ chỉnh cho phép bạn tạo các quyền truy cập phù hợp với nhu cầu của tổ chức.",
       "SUBMIT": "Cập nhật",
       "API": {
-        "SUCCESS_MESSAGE": "Cập nhật vai trò tùy chỉnh thành công."
+        "SUCCESS_MESSAGE": "Cập nhật vai trò tuỳ chỉnh thành công."
       }
     },
     "DELETE": {
-      "BUTTON_TEXT": "Xoá",
+      "BUTTON_TEXT": "Xóa",
       "API": {
-        "SUCCESS_MESSAGE": "Xoá vai trò tùy chỉnh thành công.",
-        "ERROR_MESSAGE": "Không thể kết nối đến máy chủ. Vui lòng thử lại."
+        "SUCCESS_MESSAGE": "Xóa vai trò tuỳ chỉnh thành công.",
+        "ERROR_MESSAGE": "Không thể kết nối máy chủ. Vui lòng thử lại."
       },
       "CONFIRM": {
-        "TITLE": "Xác nhận xoá",
-        "MESSAGE": "Bạn có muốn xoá? ",
-        "YES": "Có, xoá ",
-        "NO": "Không, giữ lại"
+        "TITLE": "Xác nhận xóa",
+        "MESSAGE": "Bạn có chắc chắn muốn xóa ",
+        "YES": "Đồng ý xoá ",
+        "NO": "Không xoá "
       }
     }
   }

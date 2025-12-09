@@ -1,44 +1,47 @@
 {
   "PAGINATION_FOOTER": {
-    "SHOWING": "Hiển thị {startItem} - {endItem} trong số {totalItems} mục",
-    "CURRENT_PAGE_INFO": "{currentPage} trong số {totalPages} trang"
+    "SHOWING": "Hiển thị {startItem} - {endItem} trên tổng {totalItems} mục",
+    "CURRENT_PAGE_INFO": "{currentPage} trên {totalPages} trang"
   },
   "COMBOBOX": {
     "PLACEHOLDER": "Chọn một tùy chọn...",
-    "EMPTY_SEARCH_RESULTS": "Không tìm thấy mục với từ khóa `{searchTerm}`",
-    "EMPTY_STATE": "Không tìm thấy kết quả.",
+    "EMPTY_SEARCH_RESULTS": "Không tìm thấy mục nào với từ khóa `{searchTerm}`",
+    "EMPTY_STATE": "Không có kết quả.",
     "SEARCH_PLACEHOLDER": "Tìm kiếm...",
-    "MORE": "+{count} nữa"
+    "MORE": "+{count} thêm"
   },
   "DROPDOWN_MENU": {
     "SEARCH_PLACEHOLDER": "Tìm kiếm...",
-    "EMPTY_STATE": "Không tìm thấy kết quả.",
-    "SEARCHING": "Đang tìm kiếm..."
+    "EMPTY_STATE": "Không có kết quả.",
+    "SEARCHING": "Đang tìm..."
+  },
+  "LANGUAGE_DROPDOWN": {
+    "NO_RESULTS": "Không tìm thấy ngôn ngữ nào"
   },
   "DIALOG": {
     "BUTTONS": {
-      "CANCEL": "Huỷ",
+      "CANCEL": "Hủy",
       "CONFIRM": "Xác nhận"
     }
   },
   "PHONE_INPUT": {
-    "SEARCH_PLACEHOLDER": "Tìm kiếm quốc gia",
-    "ERROR": "Số điện thoại phải để trống hoặc theo định dạng E.164",
+    "SEARCH_PLACEHOLDER": "Tìm quốc gia",
+    "ERROR": "Số điện thoại phải để trống hoặc đúng định dạng E.164",
     "DIAL_CODE_ERROR": "Vui lòng chọn mã quốc gia từ danh sách"
   },
   "THUMBNAIL": {
     "AUTHOR": {
-      "NOT_AVAILABLE": "Tác giả không có sẵn"
+      "NOT_AVAILABLE": "Không có thông tin tác giả"
     }
   },
   "BREADCRUMB": {
-    "ARIA_LABEL": "Đường dẫn"
+    "ARIA_LABEL": "Đường dẫn điều hướng"
   },
   "SWITCH": {
-    "TOGGLE": "Bật/tắt"
+    "TOGGLE": "Chuyển đổi"
   },
   "LABEL": {
-    "TAG_BUTTON": "Thẻ"
+    "TAG_BUTTON": "nhãn"
   },
   "FEATURE_SPOTLIGHT": {
     "LEARN_MORE": "Tìm hiểu thêm",
@@ -48,9 +51,9 @@
     "MINUTES": "Phút",
     "HOURS": "Giờ",
     "DAYS": "Ngày",
-    "PLACEHOLDER": "Nhập thời gian"
+    "PLACEHOLDER": "Nhập thời lượng"
   },
   "CHANNEL_SELECTOR": {
-    "COMING_SOON": "Sắp có!"
+    "COMING_SOON": "Sắp ra mắt!"
   }
 }
