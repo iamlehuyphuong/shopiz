@@ -1,4 +1,7 @@
 class BillingPresenter
+  PRODUCT_TYPES = %w[starter pro biz ai-start ai-pro ai-biz].freeze
+  MONTH_OPTIONS = %w[6 12].freeze
+
   def initialize(account)
     @account = account
   end
@@ -35,8 +38,8 @@ class BillingPresenter
   end
 
   def plans_data
-    %w[starter pro biz].index_with do |tier|
-      %w[6 12].map { |m| normalize_plan(Polar::ProductService.by_name("#{tier}#{m}")) }
+    PRODUCT_TYPES.index_with do |tier|
+      MONTH_OPTIONS.map { |m| normalize_plan(Polar::ProductService.by_name("#{tier}#{m}")) }
     end
   end
 
