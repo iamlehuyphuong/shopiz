@@ -8,7 +8,8 @@ class ConversationBuilder
   private
 
   def look_up_exising_conversation
-    return unless @contact_inbox.inbox.lock_to_single_conversation?
+    inbox = @contact_inbox.inbox
+    return if !inbox.lock_to_single_conversation? && !inbox.zalo_personal?
 
     @contact_inbox.conversations.last
   end

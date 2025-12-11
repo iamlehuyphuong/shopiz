@@ -10,6 +10,8 @@ class Contacts::ContactableInboxesService
 
   def get_contactable_inbox(inbox)
     case inbox.channel_type
+    when 'Channel::ZaloPersonal'
+      zalo_personal_contactable_inbox(inbox)
     when 'Channel::TwilioSms'
       twilio_contactable_inbox(inbox)
     when 'Channel::Whatsapp'
@@ -62,6 +64,12 @@ class Contacts::ContactableInboxesService
     { source_id: @contact.phone_number, inbox: inbox }
   end
 
+  def zalo_personal_contactable_inbox(inbox)
+    return if @contact.phone_number.blank?
+
+    { source_id: @contact.phone_number, inbox: inbox }
+  end
+
   def twilio_contactable_inbox(inbox)
     return if @contact.phone_number.blank?
 
@@ -72,10 +80,10 @@ class Contacts::ContactableInboxesService
       { source_id: "whatsapp:#{@contact.phone_number}", inbox: inbox }
     end
   end
-  
+
   def voice_contactable_inbox(inbox)
     return if @contact.phone_number.blank?
-    
+
     { source_id: @contact.phone_number, inbox: inbox }
   end
 end

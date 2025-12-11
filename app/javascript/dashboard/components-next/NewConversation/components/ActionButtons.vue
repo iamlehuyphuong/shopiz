@@ -20,6 +20,7 @@ const props = defineProps({
   isEmailOrWebWidgetInbox: { type: Boolean, default: false },
   isTwilioSmsInbox: { type: Boolean, default: false },
   isTwilioWhatsAppInbox: { type: Boolean, default: false },
+  isZaloPersonalInbox: { type: Boolean, default: false },
   messageTemplates: { type: Array, default: () => [] },
   channelType: { type: String, default: '' },
   isLoading: { type: Boolean, default: false },
@@ -40,6 +41,7 @@ const emit = defineEmits([
   'addSignature',
   'removeSignature',
   'attachFile',
+  'addFriend'
 ]);
 
 const { t } = useI18n();
@@ -135,7 +137,7 @@ const sendButtonLabel = computed(() => {
   if (props.isVoiceInbox) {
     return t('COMPOSE_NEW_CONVERSATION.FORM.ACTION_BUTTONS.MAKE_CALL');
   }
-  
+
   // For all other inboxes, show the standard "Send" label
   const keyCode = isEditorHotKeyEnabled('cmd_enter') ? '⌘ + ↵' : '↵';
   return t('COMPOSE_NEW_CONVERSATION.FORM.ACTION_BUTTONS.SEND', {
@@ -253,6 +255,15 @@ useKeyboardEvents(keyboardEvents);
         :disabled="isLoading || disableSendButton"
         :is-loading="isLoading"
         @click="emit('sendMessage')"
+      />
+      <Button
+        v-if="hasSelectedInbox && isZaloPersonalInbox"
+        :label="t('COMPOSE_REQUEST_FRIEND.FORM.BUTTON')"
+        :disabled="isLoading || disableSendButton"
+        :is-loading="isLoading"
+        size="sm"
+        class="!text-xs font-medium"
+        @click="emit('addFriend')"
       />
     </div>
   </div>
