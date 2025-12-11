@@ -182,6 +182,24 @@ const createConversation = async ({ payload, isFromWhatsApp }) => {
   }
 };
 
+const requestFriend = async ({ payload }) => {
+  try {
+    const data = await store.dispatch('contactConversations/requestFriend', {
+      params: payload,
+    });
+    closeCompose();
+    useAlert(t('COMPOSE_REQUEST_FRIEND.FORM.SUCCESS_MESSAGE'));
+    return true;
+  } catch (error) {
+    useAlert(
+      error instanceof ExceptionWithMessage
+        ? error.data
+        : t('COMPOSE_REQUEST_FRIEND.FORM.ERROR_MESSAGE')
+    );
+    return false; // Return failure
+  }
+}
+
 const toggle = () => {
   showComposeNewConversation.value = !showComposeNewConversation.value;
 };
@@ -281,6 +299,7 @@ useKeyboardEvents(keyboardEvents);
         @update-target-inbox="handleTargetInbox"
         @clear-selected-contact="clearSelectedContact"
         @create-conversation="createConversation"
+        @request-friend="requestFriend"
         @discard="closeCompose"
       />
     </div>

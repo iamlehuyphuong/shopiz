@@ -648,5 +648,12 @@
         "MAKE_CALL": "Gọi điện"
       }
     }
+  },
+  "COMPOSE_REQUEST_FRIEND": {
+    "FORM": {
+      "SUCCESS_MESSAGE": "Gửi yêu cầu kết bạn thành công.",
+      "ERROR_MESSAGE": "Gửi yêu cầu thất bại, vui lòng thử lại sau.",
+      "BUTTON": "Kết bạn"
+    }
   }
 }

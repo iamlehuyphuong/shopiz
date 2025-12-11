@@ -72,11 +72,12 @@ const contactsList = computed(() => {
 
 const selectedContactLabel = computed(() => {
   const { name, email = '', phoneNumber = '' } = props.selectedContact || {};
-  if (email) {
-    return `${name} (${email})`;
-  }
   if (phoneNumber) {
     return `${name} (${phoneNumber})`;
+  }
+
+  if (email) {
+    return `${name} (${email})`;
   }
   return name || '';
 });

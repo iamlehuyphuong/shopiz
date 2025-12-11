@@ -4,13 +4,14 @@ import camelcaseKeys from 'camelcase-keys';
 import ContactAPI from 'dashboard/api/contacts';
 
 const CHANNEL_PRIORITY = {
-  'Channel::Email': 1,
-  'Channel::Whatsapp': 2,
-  'Channel::Sms': 3,
-  'Channel::TwilioSms': 4,
-  'Channel::Voice': 5,
-  'Channel::WebWidget': 6,
-  'Channel::Api': 7,
+  'Channel::ZaloPersonal': 1,
+  'Channel::Email': 2,
+  'Channel::Whatsapp': 3,
+  'Channel::Sms': 4,
+  'Channel::TwilioSms': 5,
+  'Channel::Voice': 6,
+  'Channel::WebWidget': 7,
+  'Channel::Api': 8,
 };
 
 export const generateLabelForContactableInboxesList = ({
@@ -25,7 +26,8 @@ export const generateLabelForContactableInboxesList = ({
   if (
     channelType === INBOX_TYPES.TWILIO ||
     channelType === INBOX_TYPES.WHATSAPP ||
-    channelType === INBOX_TYPES.VOICE
+    channelType === INBOX_TYPES.VOICE ||
+    channelType === INBOX_TYPES.ZALOPERSONAL
   ) {
     return phoneNumber ? `${name} (${phoneNumber})` : name;
   }

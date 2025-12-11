@@ -136,6 +136,23 @@ export const actions = {
       });
     }
   },
+  requestFriend: async ({ commit }, { params }) => {
+    commit(types.default.SET_CONTACT_CONVERSATIONS_UI_FLAG, {
+      isCreating: true,
+    });
+    const { contactId, inboxId, sourceId } = params;
+    const payload = { contact_id: contactId, inbox_id: inboxId, source_id: sourceId };
+    try {
+      const response = await ContactAPI.requestFriend(payload);
+      return response.data;;
+    } catch (error) {
+      throw new Error(error);
+    } finally {
+      commit(types.default.SET_CONTACT_CONVERSATIONS_UI_FLAG, {
+        isCreating: false,
+      });
+    }
+  },
   get: async ({ commit }, contactId) => {
     commit(types.default.SET_CONTACT_CONVERSATIONS_UI_FLAG, {
       isFetching: true,

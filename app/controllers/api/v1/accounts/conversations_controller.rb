@@ -4,8 +4,8 @@ class Api::V1::Accounts::ConversationsController < Api::V1::Accounts::BaseContro
   include HmacConcern
 
   before_action :conversation, except: [:index, :meta, :search, :create, :filter, :load_more_history]
-  before_action :inbox, :contact, :contact_inbox, only: [:create]
-  before_action :inbox, only: [:index, :filter, :load_more_history]
+  before_action :inbox, only: [:index, :filter, :load_more_history, :create]
+  before_action :contact, :contact_inbox, only: [:create]
 
   ATTACHMENT_RESULTS_PER_PAGE = 100
 
@@ -187,10 +187,12 @@ class Api::V1::Accounts::ConversationsController < Api::V1::Accounts::BaseContro
 
   def contact_inbox
     @contact_inbox = build_contact_inbox
+    return if @inbox&.zalo_personal?
 
     # fallback for the old case where we do look up only using source id
     # In future we need to change this and make sure we do look up on combination of inbox_id and source_id
     # and deprecate the support of passing only source_id as the param
+
     @contact_inbox ||= ::ContactInbox.find_by!(source_id: params[:source_id])
     authorize @contact_inbox.inbox, :show?
   rescue ActiveRecord::RecordNotUnique
@@ -199,6 +201,7 @@ class Api::V1::Accounts::ConversationsController < Api::V1::Accounts::BaseContro
 
   def build_contact_inbox
     return if @inbox.blank? || @contact.blank?
+    return ZaloPersonal::ContactInboxBuilder.new(@contact, @inbox, params[:source_id]).execute if @inbox.zalo_personal?
 
     ContactInboxBuilder.new(
       contact: @contact,

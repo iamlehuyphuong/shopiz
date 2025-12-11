@@ -286,7 +286,6 @@
       "ID": "(ID: {identifier})"
     }
   },
-
   "CONTACTS_LAYOUT": {
     "HEADER": {
       "TITLE": "Contacts",
@@ -593,7 +592,6 @@
       "CONFIRM_SINGLE": "Delete contact"
     }
   },
-
   "COMPOSE_NEW_CONVERSATION": {
     "CONTACT_SEARCH": {
       "ERROR_MESSAGE": "We couldn’t complete the search. Please try again."
@@ -649,6 +647,13 @@
         "SEND": "Send ({keyCode})",
         "MAKE_CALL": "Make a Call"
       }
+    }
+  },
+  "COMPOSE_REQUEST_FRIEND": {
+    "FORM": {
+      "SUCCESS_MESSAGE": "Request friend successfully!",
+      "ERROR_MESSAGE": "An error occurred while requesting friend. Please try again later.",
+      "BUTTON": "Request friend"
     }
   }
 }

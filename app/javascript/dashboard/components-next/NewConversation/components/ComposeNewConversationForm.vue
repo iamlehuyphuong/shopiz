@@ -45,6 +45,7 @@ const emit = defineEmits([
   'updateTargetInbox',
   'clearSelectedContact',
   'createConversation',
+  'requestFriend'
 ]);
 
 const showContactsDropdown = ref(false);
@@ -69,6 +70,7 @@ const inboxTypes = computed(() => ({
   isWebWidget: props.targetInbox?.channelType === INBOX_TYPES.WEB,
   isApi: props.targetInbox?.channelType === INBOX_TYPES.API,
   isVoice: props.targetInbox?.channelType === INBOX_TYPES.VOICE,
+  isZaloPersonal: props.targetInbox?.channelType == INBOX_TYPES.ZALOPERSONAL,
   isEmailOrWebWidget:
     props.targetInbox?.channelType === INBOX_TYPES.EMAIL ||
     props.targetInbox?.channelType === INBOX_TYPES.WEB,
@@ -268,6 +270,18 @@ const handleSendMessage = async () => {
   }
 };
 
+const handleRequestFriend = async () => {
+  try {
+    const success = await emit('requestFriend', {
+      payload: newMessagePayload(),
+    });
+    if (success) {
+      clearForm();
+    }
+  } catch (error) {
+  }
+}
+
 const handleSendWhatsappMessage = async ({ message, templateParams }) => {
   const whatsappMessagePayload = prepareWhatsAppMessagePayload({
     targetInbox: props.targetInbox,
@@ -376,6 +390,7 @@ const shouldShowMessageEditor = computed(() => {
       :is-email-or-web-widget-inbox="inboxTypes.isEmailOrWebWidget"
       :is-twilio-sms-inbox="inboxTypes.isTwilioSMS"
       :is-twilio-whats-app-inbox="inboxTypes.isTwilioWhatsapp"
+      :is-zalo-personal-inbox="inboxTypes.isZaloPersonal"
       :message-templates="whatsappMessageTemplates"
       :channel-type="inboxChannelType"
       :is-loading="isCreating"
@@ -391,6 +406,7 @@ const shouldShowMessageEditor = computed(() => {
       @attach-file="handleAttachFile"
       @discard="$emit('discard')"
       @send-message="handleSendMessage"
+      @add-friend="handleRequestFriend"
       @send-whatsapp-message="handleSendWhatsappMessage"
       @send-twilio-message="handleSendTwilioMessage"
     />
