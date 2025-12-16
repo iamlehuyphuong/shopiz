@@ -1,0 +1,32 @@
+{
+  "COMPANIES": {
+    "HEADER": "Công ty",
+    "SORT_BY": {
+      "LABEL": "Sắp xếp theo",
+      "OPTIONS": {
+        "NAME": "Tên",
+        "DOMAIN": "Tên miền",
+        "CREATED_AT": "Ngày tạo"
+      }
+    },
+    "ORDER": {
+      "LABEL": "Thứ tự",
+      "OPTIONS": {
+        "ASCENDING": "Tăng dần",
+        "DESCENDING": "Giảm dần"
+      }
+    },
+    "SEARCH_PLACEHOLDER": "Tìm kiếm công ty...",
+    "LOADING": "Đang tải danh sách công ty...",
+    "UNNAMED": "Công ty không tên",
+    "CONTACTS_COUNT": "{count} liên hệ",
+    "EMPTY_STATE": {
+      "TITLE": "Không tìm thấy công ty nào"
+    }
+  },
+  "COMPANIES_LAYOUT": {
+    "PAGINATION_FOOTER": {
+      "SHOWING": "Hiển thị {startItem} - {endItem} trên tổng {totalItems} công ty"
+    }
+  }
+}

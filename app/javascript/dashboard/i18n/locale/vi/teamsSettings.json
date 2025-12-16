@@ -106,7 +106,7 @@
       "CREATE": "Tạo đội nhóm",
       "NAME": {
         "LABEL": "Tên đội nhóm",
-        "PLACEHOLDER": "Ví dụ: Sales, Customer Support"
+        "PLACEHOLDER": "Ví dụ: Sales, CSKH"
       },
       "DESCRIPTION": {
         "LABEL": "Mô tả đội nhóm",
