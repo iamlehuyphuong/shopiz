@@ -17,7 +17,6 @@ class ZaloPersonal::BaseService
 
     set_contact
     update_contact
-    first_message_processing if first_message?
     set_conversation
     build_message
     @message.save!
@@ -62,7 +61,7 @@ class ZaloPersonal::BaseService
   end
 
   def user_contact_attributes
-    return {} unless @user_info
+    return {} if @user_info.blank?
 
     attributes = { name: @user_info['displayName'] }
     if @user_info['phoneNumber'].present?
@@ -96,7 +95,7 @@ class ZaloPersonal::BaseService
   end
 
   def active_conversation
-    @contact_inbox.conversations.where.not(status: :resolved).where(external_source_id: params[:threadId]).last
+    @contact_inbox.conversations.where(external_source_id: params[:threadId]).last
   end
 
   def create_conversation
@@ -301,33 +300,6 @@ class ZaloPersonal::BaseService
     file_type(media[:payload][:type])
   end
 
-  def first_message_processing
-    return if @contact.name != params[:data][:dName]
-
-    channel.send_message_cs(request_user_info_body)
-  end
-
-  def request_user_info_body
-    {
-      recipient: {
-        user_id: params[:data][:uidFrom]
-      },
-      message: {
-        attachment: {
-          type: 'template',
-          payload: {
-            template_type: 'request_user_info',
-            elements: [{
-              title: 'Shopiz cảm ơn bạn đã liên hệ',
-              subtitle: 'Nhấp vào đây để cung cấp thông tin của bạn',
-              image_url: 'https://noventiq.si/uploads/resizer/images/2b68b5/ed7a86/d2b6d2/origin-mode1-760x362.jpg'
-            }]
-          }
-        }
-      }
-    }
-  end
-
   def update_contact
     @is_user ? update_user_info : update_group_info
   end
@@ -364,7 +336,7 @@ class ZaloPersonal::BaseService
 
     response.dig('data', 'changed_profiles', user_id)
   rescue StandardError
-    nil
+    {}
   end
 
   def load_group_info
@@ -387,25 +359,51 @@ class ZaloPersonal::BaseService
       msgId: params[:data][:msgId],
       user_id: params[:data][:uidFrom]
     }
-    if incoming_message? && !@is_user
-      if @user_info
-        additional_attributes.merge!(sender: @user_info['displayName'], thumbnail: @user_info['avatar'])
-      else
-        additional_attributes.merge!(sender: params[:data][:dName], thumbnail: nil)
-      end
-    end
+
+    sender = if incoming_message?
+               @is_user ? @contact : find_or_create_sender
+             end
 
     {
       content: params[:data][:content],
       account_id: @inbox.account_id,
       inbox_id: @inbox.id,
       message_type: message_type,
-      sender: incoming_message? ? @contact : nil,
+      sender: sender,
       additional_attributes: additional_attributes,
       source_id: params[:data][:msgId],
       created_at: created_time,
       status: :delivered
     }
+  end
+
+  def find_or_create_sender
+    contact = if @user_info['phoneNumber'].present?
+                contact_from_phone_number
+              else
+                contact_from_source_id
+              end
+
+    ::Avatar::AvatarFromUrlJob.perform_later(contact, @user_info['avatar']) if @user_info['avatar'].present?
+    contact
+  end
+
+  def contact_from_phone_number
+    phone_number = @user_info['phoneNumber']
+    phone_number = "+#{phone_number}" unless phone_number.start_with?('+')
+
+    account.contacts.find_or_create_by!(phone_number: phone_number) do |contact|
+      contact.name = @user_info['displayName']
+      contact.additional_attributes = { source_id: params[:data][:uidFrom] }
+    end
+  end
+
+  def contact_from_source_id
+    account.contacts.where(
+      "additional_attributes ->> 'source_id' = :source_id", source_id: params[:data][:uidFrom]
+    ).first_or_create do |contact|
+      contact.name = @user_info['displayName'] || params[:data][:dName]
+    end
   end
 
   def incoming_message?

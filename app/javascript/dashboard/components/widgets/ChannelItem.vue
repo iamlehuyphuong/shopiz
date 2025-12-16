@@ -24,7 +24,7 @@ const hasInstagramConfigured = computed(() => {
 });
 
 const hasZaloPersonalConfigured = computed(() => {
-  return window.shopizConfig?.zaloAppId;
+  return window.shopizConfig?.zaloApiUrl;
 });
 
 const hasZaloConfigured = computed(() => {
