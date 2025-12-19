@@ -74,7 +74,7 @@ class ZaloPersonal::BaseService
   end
 
   def group_contact_attributes
-    return {} unless @group_info
+    return {} if @group_info.blank?
 
     { name: @group_info['name'] }
   end
@@ -332,7 +332,7 @@ class ZaloPersonal::BaseService
       :body => { :userId => user_id, :ownId => channel.oa_access_token }.to_json,
       :headers => { 'Content-Type' => 'application/json' }
     )
-    return if response['error']
+    return {} if response['error']
 
     response.dig('data', 'changed_profiles', user_id)
   rescue StandardError
@@ -346,23 +346,25 @@ class ZaloPersonal::BaseService
       :body => { :groupId => group_id, :ownId => channel.oa_access_token }.to_json,
       :headers => { 'Content-Type' => 'application/json' }
     )
-    return if response['error']
+    return {} if response['error']
 
     response.dig('data', 'gridInfoMap', group_id)
   rescue StandardError
-    nil
+    {}
   end
 
   def message_params
-    additional_attributes = {
-      type: @is_user ? 0 : 1,
-      msgId: params[:data][:msgId],
-      user_id: params[:data][:uidFrom]
-    }
-
     sender = if incoming_message?
                @is_user ? @contact : find_or_create_sender
              end
+
+    additional_attributes = {
+      type: @is_user ? 0 : 1,
+      msgId: params[:data][:msgId],
+      user_id: params[:data][:uidFrom],
+      sender_id: sender&.id,
+      conversation_contact_id: @conversation.contact.id
+    }
 
     {
       content: params[:data][:content],
