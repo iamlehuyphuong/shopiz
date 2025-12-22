@@ -30,6 +30,7 @@ const props = defineProps({
   isDropdownActive: { type: Boolean, default: false },
   messageSignature: { type: String, default: '' },
   inboxId: { type: Number, default: null },
+  isRequestFriend: { type: Boolean, default: false },
 });
 
 const emit = defineEmits([
@@ -248,7 +249,7 @@ useKeyboardEvents(keyboardEvents);
         @click="emit('discard')"
       />
       <Button
-        v-if="isRegularMessageMode"
+        v-if="isRegularMessageMode && !isRequestFriend"
         :label="sendButtonLabel"
         size="sm"
         class="!text-xs font-medium"
@@ -257,9 +258,9 @@ useKeyboardEvents(keyboardEvents);
         @click="emit('sendMessage')"
       />
       <Button
-        v-if="hasSelectedInbox && isZaloPersonalInbox"
+        v-if="isRequestFriend"
         :label="t('COMPOSE_REQUEST_FRIEND.FORM.BUTTON')"
-        :disabled="isLoading || disableSendButton"
+        :disabled="isLoading || disableSendButton || !(hasSelectedInbox && isZaloPersonalInbox)"
         :is-loading="isLoading"
         size="sm"
         class="!text-xs font-medium"

@@ -18,6 +18,7 @@ const props = defineProps({
   sendWithSignature: { type: Boolean, default: false },
   messageSignature: { type: String, default: '' },
   channelType: { type: String, default: '' },
+  isRequestFriend: { type: Boolean, default: false },
 });
 
 const { t } = useI18n();
@@ -101,7 +102,7 @@ const replaceText = async message => {
       <TextArea
         v-model="modelValue"
         :placeholder="
-          t('COMPOSE_NEW_CONVERSATION.FORM.MESSAGE_EDITOR.PLACEHOLDER')
+          t(`COMPOSE_NEW_CONVERSATION.FORM.MESSAGE_EDITOR.${isRequestFriend ? 'REQUEST_FRIEND_PLACEHOLDER' : 'PLACEHOLDER'}`)
         "
         class="!px-0 [&>div]:!px-4 [&>div]:!border-transparent [&>div]:!bg-transparent"
         :custom-text-area-class="
@@ -113,6 +114,7 @@ const replaceText = async message => {
         allow-signature
         :signature="messageSignature"
         :send-with-signature="sendWithSignature"
+        :disable="isRequestFriend"
       >
         <CannedResponse
           v-if="state.showMentions && state.hasSlashCommand"

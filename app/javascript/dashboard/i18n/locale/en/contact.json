@@ -19,6 +19,7 @@
     "NEW_MESSAGE": "New message",
     "CALL": "Call",
     "CALL_UNDER_DEVELOPMENT": "Calling is under development",
+    "REQUEST_FRIEND": "Send a friend request",
     "VOICE_INBOX_PICKER": {
       "TITLE": "Choose a voice inbox"
     },
@@ -620,7 +621,8 @@
         "BCC_BUTTON": "Bcc"
       },
       "MESSAGE_EDITOR": {
-        "PLACEHOLDER": "Write your message here..."
+        "PLACEHOLDER": "Write your message here...",
+        "REQUEST_FRIEND_PLACEHOLDER": "Hello, I’d like to add you as a friend."
       },
       "WHATSAPP_OPTIONS": {
         "LABEL": "Select template",

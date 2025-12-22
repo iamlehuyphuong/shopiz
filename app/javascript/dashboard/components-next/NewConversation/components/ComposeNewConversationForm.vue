@@ -36,6 +36,7 @@ const props = defineProps({
   contactsUiFlags: { type: Object, default: null },
   messageSignature: { type: String, default: '' },
   sendWithSignature: { type: Boolean, default: false },
+  isRequestFriend: { type: Boolean, default: false },
 });
 
 const emit = defineEmits([
@@ -375,6 +376,7 @@ const shouldShowMessageEditor = computed(() => {
       :has-errors="validationStates.isMessageInvalid"
       :has-attachments="state.attachedFiles.length > 0"
       :channel-type="inboxChannelType"
+      :is-request-friend="isRequestFriend"
     />
 
     <AttachmentPreviews
@@ -400,6 +402,7 @@ const shouldShowMessageEditor = computed(() => {
       :has-no-inbox="showNoInboxAlert"
       :is-dropdown-active="isAnyDropdownActive"
       :message-signature="messageSignature"
+      :is-request-friend="isRequestFriend"
       @insert-emoji="onClickInsertEmoji"
       @add-signature="handleAddSignature"
       @remove-signature="handleRemoveSignature"
