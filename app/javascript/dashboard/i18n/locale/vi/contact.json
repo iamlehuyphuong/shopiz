@@ -17,6 +17,7 @@
     "IP_ADDRESS": "Địa chỉ IP",
     "CREATED_AT_LABEL": "Tạo lúc",
     "NEW_MESSAGE": "Tin nhắn mới",
+    "REQUEST_FRIEND": "Gửi yêu cầu kết bạn",
     "CALL": "Gọi",
     "CALL_UNDER_DEVELOPMENT": "Tính năng gọi đang được phát triển",
     "VOICE_INBOX_PICKER": {
@@ -620,7 +621,8 @@
         "BCC_BUTTON": "Bcc"
       },
       "MESSAGE_EDITOR": {
-        "PLACEHOLDER": "Nhập tin nhắn..."
+        "PLACEHOLDER": "Nhập tin nhắn...",
+        "REQUEST_FRIEND_PLACEHOLDER": "Xin chào, hãy kết bạn với tôi!"
       },
       "WHATSAPP_OPTIONS": {
         "LABEL": "Chọn mẫu",

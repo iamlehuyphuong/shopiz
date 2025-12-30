@@ -34,10 +34,6 @@ class ZaloPersonal::BaseService
     @channel ||= @inbox.channel
   end
 
-  def first_message?
-    @contact.messages.empty?
-  end
-
   def set_contact
     @contact_inbox = find_exist_contact_inbox || build_contact_inbox
 
@@ -405,6 +401,7 @@ class ZaloPersonal::BaseService
       "additional_attributes ->> 'source_id' = :source_id", source_id: params[:data][:uidFrom]
     ).first_or_create do |contact|
       contact.name = @user_info['displayName'] || params[:data][:dName]
+      contact.additional_attributes = { source_id: params[:data][:uidFrom] }
     end
   end
 

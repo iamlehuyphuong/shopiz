@@ -600,6 +600,24 @@ export default {
             />
           </template>
         </ComposeConversation>
+        <ComposeConversation
+          v-if="contact.phone_number"
+          :contact-id="String(contact.id)"
+          is-modal
+          @close="closeComposeConversationModal"
+          is-request-friend
+        >
+          <template #trigger="{ toggle }">
+            <NextButton
+              v-tooltip.top-end="$t('CONTACT_PANEL.REQUEST_FRIEND')"
+              icon="i-ph-user-plus"
+              slate
+              faded
+              sm
+              @click="openComposeConversationModal(toggle)"
+            />
+          </template>
+        </ComposeConversation>
         <VoiceCallButton
           :phone="contact.phone_number"
           icon="i-ri-phone-fill"
