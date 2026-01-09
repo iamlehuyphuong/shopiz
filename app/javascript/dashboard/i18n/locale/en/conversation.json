@@ -62,6 +62,8 @@
     "UNSUPPORTED_MESSAGE_INSTAGRAM": "This message is unsupported. You can view this message on the Instagram app.",
     "SUCCESS_DELETE_MESSAGE": "Message deleted successfully",
     "FAIL_DELETE_MESSSAGE": "Couldn't delete message! Try again",
+    "SUCCESS_UNDO_MESSAGE": "Message recalled",
+    "FAIL_UNDO_MESSSAGE": "Can't recall this message",
     "NO_RESPONSE": "No response",
     "RESPONSE": "Response",
     "RATING_TITLE": "Rating",
@@ -259,6 +261,7 @@
     },
     "CONTEXT_MENU": {
       "COPY": "Copy",
+      "UNDO": "Recall this message",
       "REPLY_TO": "Reply to this message",
       "DELETE": "Delete",
       "CREATE_A_CANNED_RESPONSE": "Add to canned responses",

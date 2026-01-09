@@ -145,6 +145,7 @@ Rails.application.routes.draw do
                 member do
                   post :translate
                   post :retry
+                  put :undo
                 end
                 collection do
                   get :load_more_history

@@ -129,6 +129,7 @@ const props = defineProps({
   senderId: { type: Number, default: null },
   senderType: { type: String, default: null },
   sourceId: { type: String, default: '' }, // eslint-disable-line vue/no-unused-properties
+  canUndo: { type: Boolean, default: false },
 });
 
 const emit = defineEmits(['retry']);
@@ -375,6 +376,7 @@ const contextMenuEnabledOptions = computed(() => {
       !props.private &&
       props.inboxSupportsReplyTo.outgoing &&
       !isFailedOrProcessing,
+    undo: props.canUndo
   };
 });
 

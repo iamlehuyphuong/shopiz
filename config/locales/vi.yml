@@ -163,6 +163,7 @@ vi:
       instagram_story_content: '%{story_sender} đã đề cập đến bạn trong hội thoại: '
       instagram_deleted_story_content: 'Hội thoại này không còn nữa.'
       deleted: 'Tin nhắn đã bị xoá'
+      undo: 'Tin nhắn đã bị thu hồi'
       whatsapp:
         list_button_label: 'Chọn một mục'
       delivery_status:

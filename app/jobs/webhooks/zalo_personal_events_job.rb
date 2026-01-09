@@ -23,7 +23,9 @@ class Webhooks::ZaloPersonalEventsJob < ApplicationJob
   end
 
   def process_event_params(channel, params)
-    if delivery_event?(params)
+    if undo_message?(params)
+      handle_undo_message(channel, params)
+    elsif delivery_event?(params)
       ZaloPersonal::DeliveryStatusService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
     elsif outgoing_event?(params)
       ZaloPersonal::OutgoingMessageService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
@@ -36,7 +38,40 @@ class Webhooks::ZaloPersonalEventsJob < ApplicationJob
     params[:data][:msgType] == 'chat.reaction'
   end
 
+  def undo_message?(params)
+    params[:data][:msgType] == 'chat.undo'
+  end
+
   def outgoing_event?(params)
     params[:isSelf] == true
+  end
+
+  def handle_undo_message(channel, params)
+    message = find_message(channel, params)
+    return unless message
+
+    message.update!(content: I18n.t('conversations.messages.undo'), content_type: :text, content_attributes: { undo: true })
+    message.attachments.destroy_all
+  end
+
+  def find_message(channel, params)
+    global_msg_id = params.dig(:data, :content, :globalMsgId).to_s
+    client_msg_id = params.dig(:data, :content, :cliMsgId).to_s
+    conditions = []
+    query_params = {}
+
+    if global_msg_id != '0'
+      conditions << <<~SQL.squish
+        source_id = :global_msg_id OR additional_attributes ->> 'msgId' = :global_msg_id
+      SQL
+      query_params[:global_msg_id] = global_msg_id
+    end
+
+    if client_msg_id != '0'
+      conditions << "additional_attributes ->> 'cliMsgId' = :client_msg_id"
+      query_params[:client_msg_id] = client_msg_id
+    end
+
+    channel.inbox.messages.find_by(conditions.join(' OR '), query_params) if conditions.any?
   end
 end

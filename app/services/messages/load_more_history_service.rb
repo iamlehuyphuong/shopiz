@@ -8,7 +8,7 @@ class Messages::LoadMoreHistoryService
   end
 
   def perform
-    service = SERVICES[@conversation.inbox.channel.class.to_s]
+    service = SERVICES[@conversation.inbox.channel_type]
     return [] unless service
 
     message_ids = service.new(@conversation).perform
