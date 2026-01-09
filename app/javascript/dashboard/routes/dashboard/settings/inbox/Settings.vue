@@ -952,7 +952,7 @@ export default {
       <div v-if="selectedTabKey === 'zaloPersonalLogin'">
         <ZaloReauthorize :inbox="inbox" />
       </div>
-      <div v-if="selectedTabKey === 'botConfiguration'">
+      <div v-if="selectedTabKey === 'bot-configuration'">
         <BotConfiguration :inbox="inbox" />
       </div>
       <div v-if="selectedTabKey === 'whatsapp-health'">
