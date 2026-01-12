@@ -117,7 +117,7 @@ class Api::V1::Accounts::ContactsController < Api::V1::Accounts::BaseController
   end
 
   def request_friend
-    result = ZaloPersonal::RequestFriend.new(params[:inbox_id], params[:source_id]).execute
+    result = ZaloPersonal::RequestFriend.new(params).execute
     render json: result
   end
 

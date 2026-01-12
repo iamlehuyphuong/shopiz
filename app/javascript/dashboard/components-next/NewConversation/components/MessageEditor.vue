@@ -114,7 +114,6 @@ const replaceText = async message => {
         allow-signature
         :signature="messageSignature"
         :send-with-signature="sendWithSignature"
-        :disable="isRequestFriend"
       >
         <CannedResponse
           v-if="state.showMentions && state.hasSlashCommand"

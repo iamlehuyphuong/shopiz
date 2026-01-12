@@ -1,7 +1,8 @@
 class ZaloPersonal::RequestFriend
-  def initialize(inbox_id, phone_number)
-    @inbox = Inbox.find_by(id: inbox_id)
-    @phone_number = phone_number
+  def initialize(params)
+    @inbox = Inbox.find_by(id: params[:inbox_id])
+    @phone_number = params[:source_id]
+    @message = params[:message]
   end
 
   def execute
@@ -10,7 +11,8 @@ class ZaloPersonal::RequestFriend
 
     body = {
       userId: uid,
-      ownId: @inbox.channel.oa_id
+      ownId: @inbox.channel.oa_id,
+      message: @message
     }
 
     response = HTTParty.post(
@@ -19,7 +21,7 @@ class ZaloPersonal::RequestFriend
       body: body.to_json
     )
 
-    { status: true || response['success'] }
+    { status: response['success'] }
   end
 
   def load_user_id

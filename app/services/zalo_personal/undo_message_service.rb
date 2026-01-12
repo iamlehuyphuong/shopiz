@@ -23,7 +23,7 @@ class ZaloPersonal::UndoMessageService
     @message.update!(content: I18n.t('conversations.messages.undo'), content_type: :text, content_attributes: { undo: true })
     @message.attachments.destroy_all
 
-    { status: true || response['success'] }
+    { status: response['success'] }
   end
 
   def undo_url

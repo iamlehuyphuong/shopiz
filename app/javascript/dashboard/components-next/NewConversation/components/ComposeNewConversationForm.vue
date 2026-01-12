@@ -396,7 +396,7 @@ const shouldShowMessageEditor = computed(() => {
       :message-templates="whatsappMessageTemplates"
       :channel-type="inboxChannelType"
       :is-loading="isCreating"
-      :disable-send-button="isCreating"
+      :disable-send-button="isCreating || !state.message"
       :has-selected-inbox="!!targetInbox"
       :inbox-id="targetInbox?.id"
       :has-no-inbox="showNoInboxAlert"
