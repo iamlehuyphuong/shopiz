@@ -44,6 +44,6 @@ const handleClose = () => emit('close');
     <h3 class="text-base font-medium text-n-slate-12">
       {{ t(`CAMPAIGN.ZALO_PERSONAL.CREATE.TITLE`) }}
     </h3>
-    <ZaloPersonalCampaignForm @submit="handleSubmit" @cancel="handleClose" />
+    <ZaloPersonalCampaignForm @submit="handleSubmit" @cancel="handleClose" mode="create" />
   </div>
 </template>

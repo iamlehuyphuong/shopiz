@@ -147,7 +147,7 @@ const inboxIcon = computed(() => {
     </div>
     <div class="flex items-center justify-end w-20 gap-2">
       <Button
-        v-if="isLiveChatType || isVoiceType"
+        v-if="isLiveChatType || isVoiceType || (isZaloPersonalType && status == 'active')"
         variant="faded"
         size="sm"
         color="slate"
