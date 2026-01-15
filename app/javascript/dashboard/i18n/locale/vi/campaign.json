@@ -354,6 +354,15 @@
             "ERROR_MESSAGE": "Đã có lỗi. Vui lòng thử lại."
           }
         }
+      },
+      "EDIT": {
+        "TITLE": "Sửa chiến dịch Zalo cá nhân",
+        "FORM": {
+          "API": {
+            "SUCCESS_MESSAGE": "Cập nhật thành công",
+            "ERROR_MESSAGE": "Đã có lỗi. Vui lòng thử lại."
+          }
+        }
       }
     },
     "SURVEY": {

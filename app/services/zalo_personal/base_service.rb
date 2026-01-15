@@ -8,7 +8,7 @@ class ZaloPersonal::BaseService
     return if VALID_TYPE.exclude?(params[:type])
     return if params.dig(:data, :subType).to_i == 1
     if exist_message = find_exist_message
-      return update_timestamp(exist_message)
+      return update_extra_info(exist_message)
     end
 
     @is_user = zalo_user?
@@ -21,7 +21,7 @@ class ZaloPersonal::BaseService
     build_message
     @message.save!
   rescue ArgumentError
-    Rails.logger.error "Unexpected format for params[:data][:content]: #{params[:data][:content]}"
+    # Rails.logger.error "Unexpected format for params[:data][:content]: #{params[:data][:content]}"
   end
 
   private
@@ -200,7 +200,12 @@ class ZaloPersonal::BaseService
     rescue StandardError
       {}
     end
-    params[:data][:content] = "#{data_content['title']} - #{description['phone']}"
+
+    if call_action?
+      params[:data][:content] = build_message_calling
+    else
+      params[:data][:content] = "#{data_content['title']} - #{description['phone']}"
+    end
     @message = @conversation.messages.build(message_params)
     params[:data][:attachments] ||= []
 
@@ -227,6 +232,48 @@ class ZaloPersonal::BaseService
     end
 
     attach_media
+  end
+
+  def call_action?
+    ['recommened.misscall', 'recommened.calltime'].include?(params.dig(:data, :content, :action))
+  end
+
+  def build_message_calling
+    payload = JSON.parse(params.dig(:data, :content, :params))
+    action =  if miss_call? && payload['isCaller'].zero? && payload['reason'] == 3
+                'Bạn đã từ chối'
+              elsif miss_call? && payload['isCaller'].zero? && payload['reason'] == 2
+                'Bạn bị nhỡ'
+              elsif miss_call? && payload['isCaller'] == 1 && [4, 5].include?(payload['reason'])
+                'Bạn đã huỷ'
+              elsif miss_call? && payload['isCaller'] == 1 && payload['reason'] == 3
+                'Người nhận từ chối'
+              end
+
+    type_call = if payload['calltype'] == 1 && miss_call?
+                  'Cuộc gọi video'
+                elsif payload['calltype'] == 1 && payload['isCaller'] == 1
+                  'Cuộc gọi video đi'
+                elsif payload['calltype'] == 1 && payload['isCaller'].zero?
+                  'Cuộc gọi video đến'
+                elsif miss_call?
+                  'Cuộc gọi thoại'
+                elsif payload['isCaller'] == 1
+                  'Cuộc gọi thoại đi'
+                elsif payload['isCaller'].zero?
+                  'Cuộc gọi thoại đến'
+                end
+    duration_text = nil
+    if (duration = payload['duration'].to_i) > 0
+      mins, seconds = duration.divmod(60)
+      duration_text = "#{mins} phút #{seconds} giây"
+    end
+
+    [action, type_call, duration_text].compact.join("\n")
+  end
+
+  def miss_call?
+    params.dig(:data, :content, :action) == 'recommened.misscall'
   end
 
   def process_file_message
@@ -359,7 +406,8 @@ class ZaloPersonal::BaseService
       msgId: params[:data][:msgId],
       user_id: params[:data][:uidFrom],
       sender_id: sender&.id,
-      conversation_contact_id: @conversation.contact.id
+      conversation_contact_id: @conversation.contact.id,
+      cliMsgId: params[:data][:cliMsgId]
     }
 
     {
@@ -409,8 +457,11 @@ class ZaloPersonal::BaseService
     message_type == :incoming
   end
 
-  def update_timestamp(message)
-    message.update_columns(created_at: created_time)
+  def update_extra_info(message)
+    attrs = message.additional_attributes || {}
+    attrs[:cliMsgId] = params.dig(:data, :cliMsgId)
+    attrs[:msgId] = params.dig(:data, :msgId)
+    message.update(additional_attributes: attrs, created_at: created_time)
   end
 
   def created_time

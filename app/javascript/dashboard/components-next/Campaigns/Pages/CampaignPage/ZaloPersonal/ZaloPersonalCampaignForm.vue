@@ -17,6 +17,22 @@ const emit = defineEmits(['submit', 'cancel']);
 const { t } = useI18n();
 const store = useStore();
 
+const props = defineProps({
+  mode: {
+    type: String,
+    required: true,
+    validator: value => ['edit', 'create'].includes(value),
+  },
+  selectedCampaign: {
+    type: Object,
+    default: () => ({}),
+  },
+  showActionButtons: {
+    type: Boolean,
+    default: true,
+  },
+});
+
 const formState = {
   uiFlags: useMapGetter('campaigns/getUIFlags'),
   labels: useMapGetter('labels/getLabels'),
@@ -125,6 +141,32 @@ const resetState = () => {
   Object.assign(state, initialState);
 };
 
+const updateStateFromCampaign = campaign => {
+  if (!campaign) return;
+
+  const {
+    title,
+    message,
+    inbox: { id: inboxId },
+    sender,
+    scheduled_at,
+    audience
+  } = campaign;
+  const selectedAudience = audience.map(item => item.id);
+  const scheduled = new Date(scheduled_at * 1000 - new Date().getTimezoneOffset() * 60000)
+    .toISOString()
+    .slice(0, 16);
+
+  Object.assign(state, {
+    title,
+    message,
+    inboxId,
+    senderId: sender?.id ?? 0,
+    scheduledAt: scheduled,
+    selectedAudience
+  });
+};
+
 const handleCancel = () => emit('cancel');
 
 const prepareCampaignDetails = () => ({
@@ -147,6 +189,18 @@ const handleSubmit = async () => {
   resetState();
   handleCancel();
 };
+
+watch(
+  () => props.selectedCampaign,
+  newCampaign => {
+    if (props.mode === 'edit' && newCampaign) {
+      updateStateFromCampaign(newCampaign);
+    }
+  },
+  { immediate: true }
+);
+
+defineExpose({ prepareCampaignDetails, isSubmitDisabled });
 </script>
 
 <template>
@@ -224,7 +278,9 @@ const handleSubmit = async () => {
       :message-type="formErrors.scheduledAt ? 'error' : 'info'"
     />
 
-    <div class="flex items-center justify-between w-full gap-3">
+    <div v-if="showActionButtons"
+      class="flex items-center justify-between w-full gap-3"
+    >
       <Button
         variant="faded"
         color="slate"

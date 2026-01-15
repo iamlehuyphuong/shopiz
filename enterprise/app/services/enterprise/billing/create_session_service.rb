@@ -42,7 +42,7 @@ class Enterprise::Billing::CreateSessionService
     price_amount = price['price_amount']
     order_code = "#{Time.now.to_i.to_s[-10..]}#{customer_id}".to_i
     description = "TT SHOPIZ #{sku}".upcase
-    return_url = ENV.fetch('FRONTEND_URL')
+    return_url = "#{ENV.fetch('FRONTEND_URL')}/app/accounts/#{customer_id}/settings/billing"
 
     res = Payos::PaymentService.new.create_order(
       amount: price_amount * 250,

@@ -65,8 +65,6 @@ const assignee = computed(() => chatMetadata.value.assignee || {});
 
 const senderId = computed(() => chatMetadata.value.sender?.id);
 
-const sender = computed(() => chatMetadata.value.sender)
-
 const currentContact = computed(() => {
   return senderId.value
     ? store.getters['contacts/getContact'](senderId.value)
@@ -322,10 +320,10 @@ const deleteConversation = () => {
         >
           {{ $t(`CHAT_LIST.CHAT_STATUS_FILTER_ITEMS.${props.chat.status}.TEXT`) }}
         </span>
-        <div class="inline-flex items-center justify-center w-6 h-6 bg-n-blue-11 rounded-md" v-if="sender.phone_number">
+        <div class="inline-flex items-center justify-center w-6 h-6 bg-n-blue-11 rounded-md" v-if="currentContact.phone_number">
           <span class="i-ri-phone-line text-white text-sm"></span>
         </div>
-        <div class="inline-flex items-center justify-center w-6 h-6 bg-n-blue-11 rounded-md" v-if="sender.email">
+        <div class="inline-flex items-center justify-center w-6 h-6 bg-n-blue-11 rounded-md" v-if="currentContact.email">
           <span class="i-lucide-mail text-white text-sm"></span>
         </div>
       </div>

@@ -109,6 +109,10 @@ class MessageApi extends ApiClient {
     );
   }
 
+  undoMessage(conversationID, messageId) {
+    return axios.put(`${this.url}/${conversationID}/messages/${messageId}/undo`);
+  }
+
   getHistoryMessages({ conversationId }) {
     return axios.get(`${this.url}/${conversationId}/messages/load_more_history`);
   }

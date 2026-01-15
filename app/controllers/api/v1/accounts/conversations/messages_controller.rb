@@ -55,6 +55,14 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
     render json: { content: translated_content }
   end
 
+  def undo
+    return unless message.can_undo?
+
+    Messages::UndoService.new(message).perform
+  rescue StandardError => e
+    render_could_not_create_error(e.message)
+  end
+
   def load_more_history
     @messages = Messages::LoadMoreHistoryService.new(@conversation).perform
   end

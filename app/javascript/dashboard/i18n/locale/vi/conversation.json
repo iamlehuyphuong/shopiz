@@ -62,6 +62,8 @@
     "UNSUPPORTED_MESSAGE_INSTAGRAM": "Tin nhắn này không được hỗ trợ. Hãy xem trên ứng dụng Instagram.",
     "SUCCESS_DELETE_MESSAGE": "Xóa tin nhắn thành công",
     "FAIL_DELETE_MESSSAGE": "Không thể xóa tin nhắn! Thử lại",
+    "SUCCESS_UNDO_MESSAGE": "Thu hồi tin nhắn thành công",
+    "FAIL_UNDO_MESSSAGE": "Không thể thu hồi tin nhắn! Thử lại",
     "NO_RESPONSE": "Chưa có phản hồi",
     "RESPONSE": "Phản hồi",
     "RATING_TITLE": "Đánh giá",
@@ -259,6 +261,7 @@
     },
     "CONTEXT_MENU": {
       "COPY": "Sao chép",
+      "UNDO": "Thu hồi tin nhắn",
       "REPLY_TO": "Trả lời tin nhắn này",
       "DELETE": "Xóa",
       "CREATE_A_CANNED_RESPONSE": "Thêm vào tin nhắn mẫu",

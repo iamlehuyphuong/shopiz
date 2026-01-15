@@ -130,6 +130,18 @@ export default {
       this.$emit('replyTo', this.message);
       this.handleClose();
     },
+    async handleUndo() {
+      try {
+        await this.$store.dispatch('undoMessage', {
+          conversationId: this.conversationId,
+          messageId: this.messageId,
+        });
+        useAlert(this.$t('CONVERSATION.SUCCESS_UNDO_MESSAGE'));
+      } catch (error) {
+        useAlert(this.$t('CONVERSATION.FAIL_UNDO_MESSSAGE'));
+      }
+      this.handleClose();
+    },
     openDeleteModal() {
       this.handleClose();
       this.showDeleteModal = true;
@@ -194,6 +206,15 @@ export default {
       @close="handleClose"
     >
       <div class="menu-container">
+        <MenuItem
+          v-if="enabledOptions['undo']"
+          :option="{
+            icon: 'arrow-reply',
+            label: $t('CONVERSATION.CONTEXT_MENU.UNDO'),
+          }"
+          variant="icon"
+          @click.stop="handleUndo"
+        />
         <MenuItem
           v-if="enabledOptions['replyTo']"
           :option="{

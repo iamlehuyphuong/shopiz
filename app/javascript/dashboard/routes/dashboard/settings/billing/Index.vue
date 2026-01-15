@@ -214,13 +214,18 @@ onMounted(fetchAccountDetails);
               </ButtonV4>
             </SpecialItem>
             <SpecialItem :plan="enterpisePlan">
-              <ButtonV4
-                md
-                solid
-                blue
-                >
-              {{ $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.CONTACT') }}
-              </ButtonV4>
+              <a
+                href="https://shopiz.pro/contact-us"
+                target="_blank"
+              >
+                <ButtonV4
+                  md
+                  solid
+                  blue
+                  >
+                  {{ $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.CONTACT') }}
+                </ButtonV4>
+              </a>
             </SpecialItem>
           </div>
           <TabBar

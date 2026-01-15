@@ -10,6 +10,7 @@ import CampaignList from 'dashboard/components-next/Campaigns/Pages/CampaignPage
 import ZaloPersonalCampaignDialog from 'dashboard/components-next/Campaigns/Pages/CampaignPage/ZaloPersonal/ZaloPersonalCampaignDialog.vue';
 import ConfirmDeleteCampaignDialog from 'dashboard/components-next/Campaigns/Pages/CampaignPage/ConfirmDeleteCampaignDialog.vue';
 import ZaloPersonalCampaignEmptyState from 'dashboard/components-next/Campaigns/EmptyState/ZaloPersonalCampaignEmptyState.vue';
+import EditZaloPersonalCampaignDialog from 'dashboard/components-next/Campaigns/Pages/CampaignPage/ZaloPersonal/EditZaloPersonalCampaignDialog.vue';
 
 const { t } = useI18n();
 const getters = useStoreGetters();
@@ -21,6 +22,7 @@ const uiFlags = useMapGetter('campaigns/getUIFlags');
 const isFetchingCampaigns = computed(() => uiFlags.value.isFetching);
 
 const confirmDeleteCampaignDialogRef = ref(null);
+const editZaloPersonalCampaignDialogRef = ref(null);
 
 const ZaloPersonalCampaigns = computed(
   () => getters['campaigns/getZaloPersonalCampaigns'].value
@@ -34,6 +36,12 @@ const handleDelete = campaign => {
   selectedCampaign.value = campaign;
   confirmDeleteCampaignDialogRef.value.dialogRef.open();
 };
+
+const handleEdit = campaign => {
+  selectedCampaign.value = campaign;
+  editZaloPersonalCampaignDialogRef.value.dialogRef.open();
+};
+
 </script>
 
 <template>
@@ -60,6 +68,7 @@ const handleDelete = campaign => {
       :campaigns="ZaloPersonalCampaigns"
       :is-zalo-personal-type="true"
       @delete="handleDelete"
+      @edit="handleEdit"
     />
     <ZaloPersonalCampaignEmptyState
       v-else
@@ -69,6 +78,10 @@ const handleDelete = campaign => {
     />
     <ConfirmDeleteCampaignDialog
       ref="confirmDeleteCampaignDialogRef"
+      :selected-campaign="selectedCampaign"
+    />
+    <EditZaloPersonalCampaignDialog
+      ref="editZaloPersonalCampaignDialogRef"
       :selected-campaign="selectedCampaign"
     />
   </CampaignLayout>

@@ -363,6 +363,19 @@ const actions = {
     }
   },
 
+  undoMessage: async function undoLabels(
+    { commit },
+    { conversationId, messageId }
+  ) {
+    try {
+      const { data } = await MessageApi.undoMessage(conversationId, messageId);
+      commit(types.ADD_MESSAGE, data);
+      commit(types.DELETE_CONVERSATION_ATTACHMENTS, data);
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
+
   deleteConversation: async ({ commit, dispatch }, conversationId) => {
     try {
       await ConversationApi.delete(conversationId);

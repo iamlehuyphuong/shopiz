@@ -1,5 +1,6 @@
 json.id message.id
 json.content message.content
+json.can_undo message.can_undo?
 json.inbox_id message.inbox_id
 json.echo_id message.echo_id if message.echo_id
 json.conversation_id message.conversation.display_id

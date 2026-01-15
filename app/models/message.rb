@@ -107,7 +107,7 @@ class Message < ApplicationRecord
   # [:external_error : Can specify if the message creation failed due to an error at external API
   # [:data] : Used for structured content types such as voice_call
   store :content_attributes, accessors: [:submitted_email, :items, :submitted_values, :email, :in_reply_to, :deleted,
-                                         :external_created_at, :story_sender, :story_id, :external_error,
+                                         :external_created_at, :story_sender, :story_id, :external_error, :undo,
                                          :translations, :in_reply_to_external_id, :is_unsupported, :data], coder: JSON
 
   store :external_source_ids, accessors: [:slack], coder: JSON, prefix: :external_source_id
@@ -150,6 +150,7 @@ class Message < ApplicationRecord
     )
     data[:echo_id] = echo_id if echo_id.present?
     data[:attachments] = attachments.map(&:push_event_data) if attachments.present?
+    data[:can_undo] = can_undo?
     merge_sender_attributes(data)
   end
 
@@ -277,6 +278,15 @@ class Message < ApplicationRecord
 
   def source_conversation_id
     conversation.external_source_id
+  end
+
+  def can_undo?
+    if inbox.zalo_personal?
+      return  outgoing? && !private? && !content_attributes[:undo] &&
+              additional_attributes['cliMsgId'].present? && additional_attributes['msgId'].present?
+    end
+
+    false
   end
 
   private
