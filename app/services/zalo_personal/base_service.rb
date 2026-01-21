@@ -176,7 +176,7 @@ class ZaloPersonal::BaseService
     rescue StandardError
       {}
     end
-    params[:data][:content] = nil
+    params[:data][:content] = data_content['title']
 
     @message = @conversation.messages.build(message_params)
     @media = {

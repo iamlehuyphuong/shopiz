@@ -130,6 +130,7 @@ const props = defineProps({
   senderType: { type: String, default: null },
   sourceId: { type: String, default: '' }, // eslint-disable-line vue/no-unused-properties
   canUndo: { type: Boolean, default: false },
+  additionalAttributes: { type: Object, default: () => ({}) },
 });
 
 const emit = defineEmits(['retry']);
