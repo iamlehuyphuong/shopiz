@@ -8,7 +8,6 @@
 #  external_link :string           not null
 #  metadata      :jsonb
 #  name          :string
-#  source_type   :string           default("url")
 #  status        :integer          default("in_progress"), not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
@@ -22,7 +21,6 @@
 #  index_captain_documents_on_assistant_id                    (assistant_id)
 #  index_captain_documents_on_assistant_id_and_external_link  (assistant_id,external_link) UNIQUE
 #  index_captain_documents_on_document_type                   (document_type)
-#  index_captain_documents_on_source_type                     (source_type)
 #  index_captain_documents_on_status                          (status)
 #  index_captain_documents_unique_external_id                 (assistant_id,external_id,document_type) UNIQUE
 #

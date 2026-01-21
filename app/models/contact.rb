@@ -6,11 +6,14 @@
 #
 #  id                    :integer          not null, primary key
 #  additional_attributes :jsonb
+#  biography             :text
+#  birthday              :date
 #  blocked               :boolean          default(FALSE), not null
 #  contact_type          :integer          default("visitor")
 #  country_code          :string           default("")
 #  custom_attributes     :jsonb
 #  email                 :string
+#  gender                :integer
 #  identifier            :string
 #  last_activity_at      :datetime
 #  last_name             :string           default("")
@@ -69,6 +72,7 @@ class Contact < ApplicationRecord
   before_save :sync_contact_attributes
 
   enum contact_type: { visitor: 0, lead: 1, customer: 2 }
+  enum gender_id: { male: 0, female: 1 }
 
   scope :order_on_last_activity_at, lambda { |direction|
     order(
