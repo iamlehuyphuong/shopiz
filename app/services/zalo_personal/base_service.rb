@@ -350,10 +350,12 @@ class ZaloPersonal::BaseService
   def update_user_info
     return if @user_info.blank?
 
+    attributes = @contact.additional_attributes || {}
+    attributes[:description] = @user_info['status']
     update_params = {
       name: @user_info['displayName'],
       gender_id: @user_info['gender'],
-      biography: @user_info['status'],
+      additional_attributes: attributes,
       birthday: (Date.parse(@user_info['sdob']) rescue nil)
     }
 

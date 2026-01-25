@@ -6,14 +6,13 @@
 #
 #  id                    :integer          not null, primary key
 #  additional_attributes :jsonb
-#  biography             :text
 #  birthday              :date
 #  blocked               :boolean          default(FALSE), not null
 #  contact_type          :integer          default("visitor")
 #  country_code          :string           default("")
 #  custom_attributes     :jsonb
 #  email                 :string
-#  gender                :integer
+#  gender_id             :integer
 #  identifier            :string
 #  last_activity_at      :datetime
 #  last_name             :string           default("")
@@ -162,7 +161,10 @@ class Contact < ApplicationRecord
       phone_number: phone_number,
       thumbnail: avatar_url,
       blocked: blocked,
-      type: 'contact'
+      type: 'contact',
+      gender_id: gender_id,
+      birthday: birthday,
+      biography: additional_attributes['description']
     }
   end
 
@@ -178,7 +180,10 @@ class Contact < ApplicationRecord
       name: name,
       phone_number: phone_number,
       thumbnail: avatar_url,
-      blocked: blocked
+      blocked: blocked,
+      gender_id: gender_id,
+      birthday: birthday,
+      biography: additional_attributes['description']
     }
   end
 

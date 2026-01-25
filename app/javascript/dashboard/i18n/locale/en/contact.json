@@ -23,6 +23,13 @@
     "VOICE_INBOX_PICKER": {
       "TITLE": "Choose a voice inbox"
     },
+    "GENDERS": {
+      "male": "Male",
+      "female": "Female"
+    },
+    "BIRTHDAY": "Birthday",
+    "GENDER": "Gender",
+    "BIOGRAPHY": "Biography",
     "CONVERSATIONS": {
       "NO_RECORDS_FOUND": "There are no previous conversations associated to this contact.",
       "TITLE": "Previous Conversations"
