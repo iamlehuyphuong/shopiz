@@ -176,7 +176,7 @@ class ZaloPersonal::BaseService
     rescue StandardError
       {}
     end
-    params[:data][:content] = nil
+    params[:data][:content] = data_content['title']
 
     @message = @conversation.messages.build(message_params)
     @media = {
@@ -350,7 +350,15 @@ class ZaloPersonal::BaseService
   def update_user_info
     return if @user_info.blank?
 
-    update_params = { name: @user_info['displayName'] }
+    attributes = @contact.additional_attributes || {}
+    attributes[:description] = @user_info['status']
+    update_params = {
+      name: @user_info['displayName'],
+      gender_id: @user_info['gender'],
+      additional_attributes: attributes,
+      birthday: (Date.parse(@user_info['sdob']) rescue nil)
+    }
+
     if @user_info['phoneNumber'].present?
       phone = @user_info['phoneNumber']
       phone = "+#{phone}" unless phone.start_with?('+')

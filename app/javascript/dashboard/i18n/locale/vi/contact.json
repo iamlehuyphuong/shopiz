@@ -23,6 +23,13 @@
     "VOICE_INBOX_PICKER": {
       "TITLE": "Chọn voice inbox"
     },
+    "GENDERS": {
+      "male": "Name",
+      "female": "Nữ"
+    },
+    "BIRTHDAY": "Ngày sinh",
+    "GENDER": "Giới tính",
+    "BIOGRAPHY": "Tiểu sử",
     "CONVERSATIONS": {
       "NO_RECORDS_FOUND": "Không có cuộc hội thoại trước đó với liên hệ này.",
       "TITLE": "Cuộc hội thoại trước"

@@ -14,7 +14,7 @@ const props = defineProps({
   hideMeta: { type: Boolean, default: false },
 });
 
-const { variant, orientation, inReplyTo, shouldGroupWithNext } =
+const { variant, orientation, inReplyTo, shouldGroupWithNext, sender, additionalAttributes } =
   useMessageContext();
 const { t } = useI18n();
 
@@ -109,6 +109,11 @@ const replyToPreview = computed(() => {
     >
       <span class="break-all line-clamp-2">
         {{ replyToPreview }}
+      </span>
+    </div>
+    <div class="gap-3 flex flex-col">
+      <span v-if="!shouldGroupWithNext && additionalAttributes['type'] == 1" class="text-n-slate-11">
+        {{ sender.name }}
       </span>
     </div>
     <slot />

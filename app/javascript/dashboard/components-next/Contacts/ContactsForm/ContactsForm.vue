@@ -9,6 +9,7 @@ import Input from 'dashboard/components-next/input/Input.vue';
 import ComboBox from 'dashboard/components-next/combobox/ComboBox.vue';
 import Icon from 'dashboard/components-next/icon/Icon.vue';
 import PhoneNumberInput from 'dashboard/components-next/phonenumberinput/PhoneNumberInput.vue';
+import InputRadioGroup from 'dashboard/routes/dashboard/settings/inbox/components/InputRadioGroup.vue';
 
 const props = defineProps({
   contactData: {
@@ -34,6 +35,8 @@ const FORM_CONFIG = {
   LAST_NAME: { field: 'lastName' },
   EMAIL_ADDRESS: { field: 'email' },
   PHONE_NUMBER: { field: 'phoneNumber' },
+  GENDER_ID: { field: 'gender_id' },
+  BIRTHDAY: { field: 'birthday' },
   CITY: { field: 'additionalAttributes.city' },
   COUNTRY: { field: 'additionalAttributes.countryCode' },
   BIO: { field: 'additionalAttributes.description' },
@@ -55,6 +58,8 @@ const defaultState = {
   firstName: '',
   lastName: '',
   phoneNumber: '',
+  birthday: '',
+  genderId: '',
   additionalAttributes: {
     description: '',
     companyName: '',
@@ -92,6 +97,8 @@ const prepareStateBasedOnProps = () => {
     name = '',
     email: emailAddress,
     phoneNumber,
+    birthday,
+    genderId,
     additionalAttributes = {},
   } = props.contactData || {};
   const { firstName, lastName } = splitName(name || '');
@@ -111,6 +118,8 @@ const prepareStateBasedOnProps = () => {
     lastName,
     email: emailAddress,
     phoneNumber,
+    birthday,
+    genderId,
     additionalAttributes: {
       description,
       companyName,
@@ -121,6 +130,21 @@ const prepareStateBasedOnProps = () => {
     },
   });
 };
+
+const genderOptions = computed(() => {
+  return [
+    {
+      id: 'male',
+      title: t(`CONTACT_PANEL.GENDERS.male`),
+      checked: state.genderId == 'male',
+    },
+    {
+      id: 'female',
+      title: t(`CONTACT_PANEL.GENDERS.female`),
+      checked: state.genderId == 'female',
+    }
+  ]
+});
 
 const countryOptions = computed(() =>
   countries.map(({ name, id }) => ({ label: name, value: id }))
@@ -210,6 +234,11 @@ const handleCountrySelection = value => {
   emit('update', state);
 };
 
+const handleGenderSelection = value => {
+  state.genderId = value.id;
+  emit('update', state);
+};
+
 const resetValidation = () => {
   v$.value.$reset();
 };
@@ -261,6 +290,22 @@ defineExpose({
             v-model="getFormBinding(item.key).value"
             :placeholder="item.placeholder"
             :show-border="isDetailsView"
+          />
+          <InputRadioGroup
+            v-else-if="item.key === 'GENDER_ID'"
+            v-model="state.genderId"
+            :placeholder="item.placeholder"
+            name="gender_id"
+            :items="genderOptions"
+            :action="handleGenderSelection"
+            class="[&_div]:!mb-0"
+          />
+          <input
+            v-else-if="item.key === 'BIRTHDAY'"
+            v-model="getFormBinding(item.key).value"
+            type="date"
+            :editable="true"
+            class="!mb-0 !text-sm !h-8 datepicker"
           />
           <Input
             v-else
