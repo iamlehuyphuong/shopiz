@@ -14,7 +14,7 @@ const props = defineProps({
   hideMeta: { type: Boolean, default: false },
 });
 
-const { variant, orientation, inReplyTo, shouldGroupWithNext, sender, additionalAttributes } =
+const { variant, orientation, inReplyTo, shouldGroupWithNext, sender, additionalAttributes, messageType } =
   useMessageContext();
 const { t } = useI18n();
 
@@ -90,6 +90,15 @@ const replyToPreview = computed(() => {
 
   return t('CONVERSATION.REPLY_MESSAGE_NOT_FOUND');
 });
+
+const showSenderInGroup = computed(() => {
+  return (
+    messageType.value != 1 &&
+    sender.value &&
+    !shouldGroupWithNext.value &&
+    additionalAttributes.value['type'] == 1
+  );
+});
 </script>
 
 <template>
@@ -112,7 +121,7 @@ const replyToPreview = computed(() => {
       </span>
     </div>
     <div class="gap-3 flex flex-col">
-      <span v-if="!shouldGroupWithNext && additionalAttributes['type'] == 1" class="text-n-slate-11">
+      <span v-if="showSenderInGroup" class="text-n-slate-11">
         {{ sender.name }}
       </span>
     </div>

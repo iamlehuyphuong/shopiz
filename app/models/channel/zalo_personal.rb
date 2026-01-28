@@ -141,11 +141,28 @@ class Channel::ZaloPersonal < ApplicationRecord
   end
 
   def message_body(user_id, message)
-    {
+    payload = {
       threadId: user_id,
       message: message.content,
       type: message.conversation.additional_attributes['type'] || 0,
       ownId: oa_id
     }
+    return payload unless message.in_reply_to
+
+    message_reply = Message.find_by(id: message.in_reply_to)
+    return payload if message_reply.blank? || message_reply.additional_attributes['ttl'].blank?
+
+    payload[:quoteMessage] = {
+      content: message_reply.content,
+      msgType: message_reply.additional_attributes['msgType'],
+      propertyExt: message_reply.additional_attributes['propertyExt'],
+      uidFrom: message_reply.additional_attributes['user_id'],
+      msgId: message_reply.additional_attributes['msgId'],
+      cliMsgId: message_reply.additional_attributes['cliMsgId'],
+      ts: message_reply.additional_attributes['ts'],
+      ttl: message_reply.additional_attributes['ttl']
+    }
+
+    payload
   end
 end
