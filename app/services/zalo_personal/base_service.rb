@@ -415,7 +415,11 @@ class ZaloPersonal::BaseService
       user_id: params[:data][:uidFrom],
       sender_id: sender&.id,
       conversation_contact_id: @conversation.contact.id,
-      cliMsgId: params[:data][:cliMsgId]
+      cliMsgId: params[:data][:cliMsgId],
+      msgType: params.dig(:data, :msgType),
+      ts: params.dig(:data, :ts),
+      ttl: params.dig(:data, :ttl),
+      propertyExt: params.dig(:data, :propertyExt)
     }
 
     {
@@ -469,6 +473,13 @@ class ZaloPersonal::BaseService
     attrs = message.additional_attributes || {}
     attrs[:cliMsgId] = params.dig(:data, :cliMsgId)
     attrs[:msgId] = params.dig(:data, :msgId)
+    attrs[:msgType] = params.dig(:data, :msgType)
+    attrs[:ts] = params.dig(:data, :ts)
+    attrs[:propertyExt] = params.dig(:data, :propertyExt)
+    attrs[:user_id] = params.dig(:data, :uidFrom)
+    attrs[:type] = params[:type]
+    attrs[:ttl] = params.dig(:data, :ttl)
+
     message.update(additional_attributes: attrs, created_at: created_time)
   end
 

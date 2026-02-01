@@ -209,7 +209,7 @@ export default {
         <MenuItem
           v-if="enabledOptions['undo']"
           :option="{
-            icon: 'arrow-reply',
+            icon: 'arrow-redo',
             label: $t('CONVERSATION.CONTEXT_MENU.UNDO'),
           }"
           variant="icon"
