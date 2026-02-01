@@ -25,26 +25,21 @@ export const setBubbleText = bubbleText => {
   }
 };
 
-export const createBubbleIcon = ({ className, path, target }) => {
-  let bubbleClassName = `${className} woot-elements--${window.$shopiz.position}`;
-  const text = document.createElement('div');
-  text.className = 'woot-widget--bubble__text';
-  text.innerText = 'Chat với AI agent';
-  target.appendChild(text);
-
-  addImageToButton({ target, imageName: 'bubble_chat_icon.svg' });
-
-  target.className = bubbleClassName;
-  // target.title = 'Open chat window';
-  return target;
-};
-
 export const addImageToButton = ({ target, imageName }) => {
   const img = document.createElement('img');
   img.className = 'bubble-icon';
   img.setAttribute('src', window.$shopiz.baseUrl + '/assets/images/' + imageName);
   target.appendChild(img);
 }
+
+export const createBubbleIcon = ({ className, path, target }) => {
+  let bubbleClassName = `${className} woot-elements--${window.$shopiz.position}`;
+  addImageToButton({ target, imageName: 'bubble_chat_icon.svg' });
+
+  target.className = bubbleClassName;
+  // target.title = 'Open chat window';
+  return target;
+};
 
 export const createBubbleHolder = hideMessageBubble => {
   if (hideMessageBubble) {
