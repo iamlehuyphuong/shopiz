@@ -1,6 +1,6 @@
 <script>
 import { mapGetters } from 'vuex';
-import { format, parseISO } from 'date-fns';
+import { format, parseISO, isValid } from 'date-fns';
 import { useAlert } from 'dashboard/composables';
 import { dynamicTime } from 'shared/helpers/timeHelper';
 import { useAdmin } from 'dashboard/composables/useAdmin';
@@ -76,7 +76,11 @@ export default {
       return `/app/accounts/${this.$route.params.accountId}/contacts/${this.contact.id}`;
     },
     formattedBirthday() {
-      return format(parseISO(this.contact.birthday), 'dd-MM-yyyy');
+      const birthday = this.contact.birthday;
+      if (!birthday) return '';
+
+      const date = parseISO(birthday);
+      return isValid(date) ? format(date, 'dd-MM-yyyy') : '';
     },
     additionalAttributes() {
       return this.contact.additional_attributes || {};
@@ -570,14 +574,9 @@ export default {
             :title="$t('CONTACT_PANEL.BIRTHDAY')"
           />
           <ContactInfoRow
-            :value="$t(`CONTACT_PANEL.GENDERS.${contact.gender_id}`)"
+            :value="contact.gender_id ? $t(`CONTACT_PANEL.GENDERS.${contact.gender_id}`) : ''"
             icon="person"
             :title="$t('CONTACT_PANEL.GENDER')"
-          />
-          <ContactInfoRow
-            :value="contact.additional_attributes.description"
-            icon="document"
-            :title="$t('CONTACT_PANEL.BIOGRAPHY')"
           />
           <ContactInfoRow
             v-if="contact.identifier"
