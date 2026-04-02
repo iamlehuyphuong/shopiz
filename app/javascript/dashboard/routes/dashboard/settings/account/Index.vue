@@ -17,6 +17,7 @@ import AccountDelete from './components/AccountDelete.vue';
 import AutoResolve from './components/AutoResolve.vue';
 import AudioTranscription from './components/AudioTranscription.vue';
 import SectionLayout from './components/SectionLayout.vue';
+import NextSwitch from 'dashboard/components-next/switch/Switch.vue';
 
 export default {
   components: {
@@ -30,6 +31,7 @@ export default {
     SectionLayout,
     WithLabel,
     NextInput,
+    NextSwitch,
   },
   setup() {
     const { updateUISettings, uiSettings } = useUISettings();
@@ -43,7 +45,7 @@ export default {
     return {
       id: '',
       name: '',
-      locale: 'en',
+      locale: window.navigator?.language?.startsWith('vi') ? 'vi' : 'en',
       domain: '',
       supportEmail: '',
       features: {},
@@ -100,6 +102,14 @@ export default {
     },
     currentAccount() {
       return this.getAccount(this.accountId) || {};
+    },
+    isVietnamese: {
+      get() {
+        return this.locale === 'vi';
+      },
+      set(value) {
+        this.locale = value ? 'vi' : 'en';
+      },
     },
   },
   mounted() {
@@ -184,15 +194,23 @@ export default {
             :label="$t('GENERAL_SETTINGS.FORM.LANGUAGE.LABEL')"
             :error-message="$t('GENERAL_SETTINGS.FORM.LANGUAGE.ERROR')"
           >
-            <select v-model="locale" class="!mb-0 text-sm">
-              <option
-                v-for="lang in languagesSortedByCode"
-                :key="lang.iso_639_1_code"
-                :value="lang.iso_639_1_code"
+            <div
+              class="flex items-center gap-3 h-10 w-full rounded-lg bg-n-alpha-black2 px-3 border border-n-weak outline-n-weak"
+            >
+              <span
+                class="text-sm font-medium"
+                :class="!isVietnamese ? 'text-n-slate-12' : 'text-n-slate-10'"
               >
-                {{ lang.name }}
-              </option>
-            </select>
+                {{ 'English' }}
+              </span>
+              <NextSwitch v-model="isVietnamese" />
+              <span
+                class="text-sm font-medium"
+                :class="isVietnamese ? 'text-n-slate-12' : 'text-n-slate-10'"
+              >
+                {{ 'Tiếng Việt' }}
+              </span>
+            </div>
           </WithLabel>
           <WithLabel
             v-if="featureCustomReplyDomainEnabled"
