@@ -49,7 +49,7 @@ registerCreatorTheme(
 
 const setColorTheme = isOSOnDarkMode => {
   const selectedColorScheme =
-    LocalStorage.get(LOCAL_STORAGE_KEYS.COLOR_SCHEME) || 'auto';
+    LocalStorage.get(LOCAL_STORAGE_KEYS.COLOR_SCHEME) || 'light';
   if (
     (selectedColorScheme === 'auto' && isOSOnDarkMode) ||
     selectedColorScheme === 'dark'

@@ -4,7 +4,7 @@ import { LOCAL_STORAGE_KEYS } from 'dashboard/constants/localStorage';
 export const setColorTheme = isOSOnDarkMode => {
   const kanbanCss = document.getElementById('kanban-css');
   const selectedColorScheme =
-    LocalStorage.get(LOCAL_STORAGE_KEYS.COLOR_SCHEME) || 'auto';
+    LocalStorage.get(LOCAL_STORAGE_KEYS.COLOR_SCHEME) || 'light';
   if (
     (selectedColorScheme === 'auto' && isOSOnDarkMode) ||
     selectedColorScheme === 'dark'
