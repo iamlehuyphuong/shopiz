@@ -14,6 +14,20 @@ export const afterSanitizeAttributes = currentNode => {
 };
 
 export const domPurifyConfig = {
+  ALLOWED_ATTR: [
+    'style',
+    'class',
+    'id',
+    'target',
+    'href',
+    'src',
+    'width',
+    'height',
+    'data-type',
+    'data-value',
+    'data-copy-text',
+    'rel',
+  ],
   hooks: {
     afterSanitizeAttributes,
   },
