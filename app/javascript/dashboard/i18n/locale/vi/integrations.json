@@ -394,7 +394,7 @@
       "USER": "Bạn",
       "ASSISTANT": "Trợ lý",
       "MESSAGE_PLACEHOLDER": "Nhập tin nhắn...",
-      "HEADER": "Playground",
+      "HEADER": "Thử nghiệm",
       "DESCRIPTION": "Dùng khu vực này để gửi tin nhắn đến trợ lý và kiểm tra độ chính xác, tốc độ và giọng văn phản hồi.",
       "CREDIT_NOTE": "Tin nhắn tại đây sẽ tính vào hạn mức ShopizAI của bạn."
     },
@@ -504,7 +504,7 @@
           "DESCRIPTION": "Tùy chỉnh hành vi hệ thống liên quan tới trợ lý."
         },
         "CONTROL_ITEMS": {
-          "TITLE": "Phần điều khiển nâng cao",
+          "TITLE": "Cài đặt nâng cao",
           "DESCRIPTION": "Thêm các quy tắc để hướng dẫn trợ lý theo ngữ cảnh.",
           "OPTIONS": {
             "GUARDRAILS": {

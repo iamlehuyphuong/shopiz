@@ -91,7 +91,7 @@ export default {
           :title="$t('MACROS.EDITOR.ADD_BTN_TOOLTIP')"
           class="shadow-sm"
           solid
-          teal
+          blue
           icon="i-lucide-plus-circle"
           @click="$emit('addNewNode')"
         >
