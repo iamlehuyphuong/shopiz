@@ -35,7 +35,7 @@ export default {
       pageName: '',
       avatar: '',
       channel: 'zalopersonal',
-      emptyStateMessage: this.$t('INBOX_MGMT.ADD.ZALO.LOADING'),
+      emptyStateMessage: this.$t('INBOX_MGMT.ADD.ZALO_OA.LOADING'),
       errorStateMessage: '',
       errorStateDescription: '',
       hasLoginStarted: false,
@@ -187,15 +187,15 @@ export default {
         <div class="w-[60%]">
           <div class="w-full">
             <label :class="{ error: v$.pageName.$error }">
-              {{ $t('INBOX_MGMT.ADD.ZALO.INBOX_NAME') }}
+              {{ $t('INBOX_MGMT.ADD.ZALO_OA.INBOX_NAME') }}
               <input
                 v-model.trim="pageName"
                 type="text"
-                :placeholder="$t('INBOX_MGMT.ADD.ZALO.PICK_NAME')"
+                :placeholder="$t('INBOX_MGMT.ADD.ZALO_OA.PICK_NAME')"
                 @input="v$.pageName.$touch"
               />
               <span v-if="v$.pageName.$error" class="message">
-                {{ $t('INBOX_MGMT.ADD.ZALO.ADD_NAME') }}
+                {{ $t('INBOX_MGMT.ADD.ZALO_OA.ADD_NAME') }}
               </span>
             </label>
           </div>

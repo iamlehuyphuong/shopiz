@@ -27,7 +27,7 @@ export const generateLabelForContactableInboxesList = ({
     channelType === INBOX_TYPES.TWILIO ||
     channelType === INBOX_TYPES.WHATSAPP ||
     channelType === INBOX_TYPES.VOICE ||
-    channelType === INBOX_TYPES.ZALOPERSONAL
+    channelType === INBOX_TYPES.ZALO_PERSONAL
   ) {
     return phoneNumber ? `${name} (${phoneNumber})` : name;
   }

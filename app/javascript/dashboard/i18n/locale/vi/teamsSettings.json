@@ -3,7 +3,7 @@
     "NEW_TEAM": "Tạo đội nhóm mới",
     "HEADER": "Đội nhóm",
     "LOADING": "Đang tải danh sách đội nhóm",
-    "DESCRIPTION": "Đội nhóm cho phép bạn tổ chức các agent theo nhiệm vụ của họ. Một agent có thể thuộc nhiều đội nhóm. Khi cộng tác, bạn có thể gán các cuộc hội thoại cho từng đội nhóm cụ thể.",
+    "DESCRIPTION": "Đội nhóm cho phép bạn tổ chức các nhân viên theo nhiệm vụ của họ. Một nhân viên có thể thuộc nhiều đội nhóm. Khi cộng tác, bạn có thể gán các cuộc hội thoại cho từng đội nhóm cụ thể.",
     "LEARN_MORE": "Tìm hiểu thêm về đội nhóm",
     "LIST": {
       "404": "Không có đội nhóm nào được tạo trong tài khoản này.",
@@ -16,17 +16,17 @@
         "DESC": "Thêm tên và mô tả cho đội nhóm mới của bạn."
       },
       "AGENTS": {
-        "BUTTON_TEXT": "Thêm agent vào đội nhóm",
-        "TITLE": "Thêm agent vào đội nhóm - {teamName}",
-        "DESC": "Thêm agent vào đội nhóm vừa tạo. Điều này giúp bạn cộng tác theo đội, nhận thông báo khi có sự kiện mới trong cùng cuộc hội thoại."
+        "BUTTON_TEXT": "Thêm nhân viên vào đội nhóm",
+        "TITLE": "Thêm nhân viên vào đội nhóm - {teamName}",
+        "DESC": "Thêm nhân viên vào đội nhóm vừa tạo. Điều này giúp bạn cộng tác theo đội, nhận thông báo khi có sự kiện mới trong cùng cuộc hội thoại."
       },
       "WIZARD_CREATE": {
         "TITLE": "Tạo mới",
-        "BODY": "Tạo đội nhóm agent mới."
+        "BODY": "Tạo đội nhóm nhân viên mới."
       },
       "WIZARD_ADD_AGENTS": {
-        "TITLE": "Thêm agent",
-        "BODY": "Thêm agent vào đội nhóm."
+        "TITLE": "Thêm nhân viên",
+        "BODY": "Thêm nhân viên vào đội nhóm."
       },
       "WIZARD_FINISH": {
         "TITLE": "Hoàn tất",
@@ -40,9 +40,9 @@
         "BUTTON_TEXT": "Cập nhật đội nhóm"
       },
       "AGENTS": {
-        "BUTTON_TEXT": "Cập nhật agent trong đội nhóm",
-        "TITLE": "Thêm agent vào đội nhóm - {teamName}",
-        "DESC": "Thêm agent vào đội nhóm của bạn. Tất cả agent được thêm sẽ nhận thông báo khi cuộc hội thoại được gán cho đội nhóm này."
+        "BUTTON_TEXT": "Cập nhật nhân viên trong đội nhóm",
+        "TITLE": "Thêm nhân viên vào đội nhóm - {teamName}",
+        "DESC": "Thêm nhân viên vào đội nhóm của bạn. Tất cả nhân viên được thêm sẽ nhận thông báo khi cuộc hội thoại được gán cho đội nhóm này."
       },
       "EDIT_WIZARD_DETAILS": {
         "TITLE": "Chi tiết đội nhóm",
@@ -50,9 +50,9 @@
         "BODY": "Thay đổi tên, mô tả và các thông tin khác."
       },
       "EDIT_WIZARD_AGENTS": {
-        "TITLE": "Chỉnh sửa agent",
+        "TITLE": "Chỉnh sửa nhân viên",
         "ROUTE": "settings_teams_edit_members",
-        "BODY": "Chỉnh sửa danh sách agent trong đội nhóm."
+        "BODY": "Chỉnh sửa danh sách nhân viên trong đội nhóm."
       },
       "EDIT_WIZARD_FINISH": {
         "TITLE": "Hoàn tất",
@@ -64,22 +64,22 @@
       "ERROR_MESSAGE": "Không thể lưu thông tin đội nhóm. Vui lòng thử lại."
     },
     "AGENTS": {
-      "AGENT": "AGENT",
+      "AGENT": "NHÂN VIÊN",
       "EMAIL": "EMAIL",
-      "BUTTON_TEXT": "Thêm agent",
-      "ADD_AGENTS": "Đang thêm agent vào đội nhóm...",
+      "BUTTON_TEXT": "Thêm nhân viên",
+      "ADD_AGENTS": "Đang thêm nhân viên vào đội nhóm...",
       "SELECT": "chọn",
-      "SELECT_ALL": "chọn tất cả agent",
-      "SELECTED_COUNT": "{selected} trên tổng {total} agent đã được chọn."
+      "SELECT_ALL": "chọn tất cả nhân viên",
+      "SELECTED_COUNT": "{selected} trên tổng {total} nhân viên đã được chọn."
     },
     "ADD": {
-      "TITLE": "Thêm agent vào đội nhóm - {teamName}",
-      "DESC": "Thêm agent vào đội nhóm mới tạo. Điều này giúp bạn cộng tác theo đội và nhận thông báo khi có sự kiện mới trong cùng cuộc hội thoại.",
+      "TITLE": "Thêm nhân viên vào đội nhóm - {teamName}",
+      "DESC": "Thêm nhân viên vào đội nhóm mới tạo. Điều này giúp bạn cộng tác theo đội và nhận thông báo khi có sự kiện mới trong cùng cuộc hội thoại.",
       "SELECT": "chọn",
-      "SELECT_ALL": "chọn tất cả agent",
-      "SELECTED_COUNT": "{selected} trên tổng {total} agent đã được chọn.",
-      "BUTTON_TEXT": "Thêm agent",
-      "AGENT_VALIDATION_ERROR": "Vui lòng chọn ít nhất một agent."
+      "SELECT_ALL": "chọn tất cả nhân viên",
+      "SELECTED_COUNT": "{selected} trên tổng {total} nhân viên đã được chọn.",
+      "BUTTON_TEXT": "Thêm nhân viên",
+      "AGENT_VALIDATION_ERROR": "Vui lòng chọn ít nhất một nhân viên."
     },
     "FINISH": {
       "TITLE": "Đội nhóm của bạn đã sẵn sàng!",

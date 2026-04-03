@@ -71,7 +71,7 @@ const inboxTypes = computed(() => ({
   isWebWidget: props.targetInbox?.channelType === INBOX_TYPES.WEB,
   isApi: props.targetInbox?.channelType === INBOX_TYPES.API,
   isVoice: props.targetInbox?.channelType === INBOX_TYPES.VOICE,
-  isZaloPersonal: props.targetInbox?.channelType == INBOX_TYPES.ZALOPERSONAL,
+  isZaloPersonal: props.targetInbox?.channelType == INBOX_TYPES.ZALO_PERSONAL,
   isEmailOrWebWidget:
     props.targetInbox?.channelType === INBOX_TYPES.EMAIL ||
     props.targetInbox?.channelType === INBOX_TYPES.WEB,

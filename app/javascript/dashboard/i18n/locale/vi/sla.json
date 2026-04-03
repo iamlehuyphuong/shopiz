@@ -15,7 +15,7 @@
     },
     "ENTERPRISE_PAYWALL": {
       "AVAILABLE_ON": "Tính năng SLA chỉ khả dụng trong các gói trả phí.",
-      "UPGRADE_PROMPT": "Nâng cấp lên gói trả phí để truy cập các tính năng nâng cao như nhật ký kiểm tra, năng lực agent và nhiều hơn nữa.",
+      "UPGRADE_PROMPT": "Nâng cấp lên gói trả phí để truy cập các tính năng nâng cao như nhật ký kiểm tra, năng lực nhân viên và nhiều hơn nữa.",
       "ASK_ADMIN": "Vui lòng liên hệ quản trị viên để được nâng cấp."
     },
     "LIST": {

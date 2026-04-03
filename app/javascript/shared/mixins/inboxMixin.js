@@ -17,8 +17,8 @@ export const INBOX_FEATURE_MAP = {
     INBOX_TYPES.TELEGRAM,
     INBOX_TYPES.API,
     INBOX_TYPES.VOICE,
-    INBOX_TYPES.TIKTOK,
-    INBOX_TYPES.ZALOPERSONAL,
+    INBOX_TYPES.TIKTOK_SHOP,
+    INBOX_TYPES.ZALO_PERSONAL,
   ],
   [INBOX_FEATURES.REPLY_TO_OUTGOING]: [
     INBOX_TYPES.WEB,
@@ -27,8 +27,8 @@ export const INBOX_FEATURE_MAP = {
     INBOX_TYPES.TELEGRAM,
     INBOX_TYPES.API,
     INBOX_TYPES.VOICE,
-    INBOX_TYPES.TIKTOK,
-    INBOX_TYPES.ZALOPERSONAL,
+    INBOX_TYPES.TIKTOK_SHOP,
+    INBOX_TYPES.ZALO_PERSONAL,
   ],
   [INBOX_FEATURES.VOICE_CALL]: [INBOX_TYPES.VOICE],
 };
@@ -57,13 +57,13 @@ export default {
       return this.channelType === INBOX_TYPES.FB;
     },
     isAZaloOaChannel() {
-      return this.channelType === INBOX_TYPES.ZALO;
+      return this.channelType === INBOX_TYPES.ZALO_OA;
     },
     isAZaloPersonalChannel() {
-      return this.channelType === INBOX_TYPES.ZALOPERSONAL;
+      return this.channelType === INBOX_TYPES.ZALO_PERSONAL;
     },
     isATiktokChannel() {
-      return this.channelType === INBOX_TYPES.TIKTOK;
+      return this.channelType === INBOX_TYPES.TIKTOK_SHOP;
     },
     isAWebWidgetInbox() {
       return this.channelType === INBOX_TYPES.WEB;

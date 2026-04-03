@@ -142,7 +142,7 @@
       "SEND_EMAIL_TO_TEAM": "Gửi email cho nhóm",
       "SEND_EMAIL_TRANSCRIPT": "Gửi bản sao hội thoại qua email",
       "MUTE_CONVERSATION": "Tắt thông báo cuộc hội thoại",
-      "SNOOZE_CONVERSATION": "Tạm ẩn cuộc hội thoại",
+      "SNOOZE_CONVERSATION": "Tạm hoãn cuộc hội thoại",
       "RESOLVE_CONVERSATION": "Đánh dấu đã giải quyết",
       "SEND_WEBHOOK_EVENT": "Gửi sự kiện Webhook",
       "SEND_ATTACHMENT": "Gửi tệp đính kèm",

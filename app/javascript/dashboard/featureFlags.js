@@ -27,7 +27,7 @@ export const FEATURE_FLAGS = {
   CHANNEL_FACEBOOK: 'channel_facebook',
   CHANNEL_TWITTER: 'channel_twitter',
   CHANNEL_WEBSITE: 'channel_website',
-  CHANNEL_ZALOPERSONAL: 'channel_zalopersonal',
+  CHANNEL_ZALO_PERSONAL: 'channel_zalopersonal',
   CUSTOM_REPLY_DOMAIN: 'custom_reply_domain',
   CUSTOM_REPLY_EMAIL: 'custom_reply_email',
   DISABLE_BRANDING: 'disable_branding',

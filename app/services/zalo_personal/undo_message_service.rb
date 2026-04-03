@@ -27,6 +27,6 @@ class ZaloPersonal::UndoMessageService
   end
 
   def undo_url
-    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/undoMessage"
+    "#{GlobalConfigService.load('ZALO_OA_API_URL', nil)}/api/undoMessage"
   end
 end

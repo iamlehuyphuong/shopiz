@@ -12,13 +12,13 @@
     "ASSIGN_TEAM_TOOLTIP": "Phân công nhóm",
     "ASSIGN_SUCCESFUL": "Phân công cuộc hội thoại thành công.",
     "ASSIGN_FAILED": "Phân công thất bại. Vui lòng thử lại.",
-    "RESOLVE_SUCCESFUL": "Đã xử lý các cuộc hội thoại thành công.",
-    "RESOLVE_FAILED": "Không thể xử lý cuộc hội thoại. Vui lòng thử lại.",
+    "RESOLVE_SUCCESFUL": "Đã giải quyết các cuộc hội thoại thành công.",
+    "RESOLVE_FAILED": "Không thể giải quyết cuộc hội thoại. Vui lòng thử lại.",
     "ALL_CONVERSATIONS_SELECTED_ALERT": "Chỉ các cuộc hội thoại hiển thị trên trang này được chọn.",
     "AGENT_LIST_LOADING": "Đang tải danh sách nhân viên",
     "UPDATE": {
       "CHANGE_STATUS": "Thay đổi trạng thái",
-      "SNOOZE_UNTIL": "Tạm ẩn đến",
+      "SNOOZE_UNTIL": "Tạm hoãn đến",
       "UPDATE_SUCCESFUL": "Cập nhật trạng thái cuộc hội thoại thành công.",
       "UPDATE_FAILED": "Không thể cập nhật cuộc hội thoại. Vui lòng thử lại."
     },

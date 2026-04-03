@@ -160,8 +160,8 @@
         },
         "SEND_CNAME_INSTRUCTIONS": {
           "API": {
-            "SUCCESS_MESSAGE": "CNAME instructions sent successfully",
-            "ERROR_MESSAGE": "Error while sending CNAME instructions"
+            "SUCCESS_MESSAGE": "Gửi hướng dẫn CNAME thành công",
+            "ERROR_MESSAGE": "Lỗi khi gửi hướng dẫn CNAME"
           }
         }
       },
@@ -779,9 +779,9 @@
             "COPY": "Đã sao chép CNAME thành công",
             "SEND_INSTRUCTIONS": {
               "HEADER": "Gửi hướng dẫn",
-              "DESCRIPTION": "Nếu bạn muốn có ai đó từ nhóm phát triển của mình xử lý bước này, bạn có thể nhập địa chỉ email bên dưới và chúng tôi sẽ gửi cho họ các hướng dẫn cần thiết.",
-              "PLACEHOLDER": "Nhập địa chỉ email của họ",
-              "ERROR": "Nhập một địa chỉ email hợp lệ",
+              "DESCRIPTION": "Nếu bạn muốn người phụ trách kỹ thuật thực hiện bước này, hãy nhập địa chỉ email của họ bên dưới để chúng tôi gửi hướng dẫn cần thiết.",
+              "PLACEHOLDER": "Nhập địa chỉ email",
+              "ERROR": "Vui lòng nhập địa chỉ email hợp lệ",
               "SEND_BUTTON": "Gửi"
             }
           }

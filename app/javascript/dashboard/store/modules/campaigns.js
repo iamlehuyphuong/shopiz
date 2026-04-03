@@ -49,7 +49,7 @@ export const getters = {
     return _getters.getCampaigns(CAMPAIGN_TYPES.ONGOING, liveChatChannelTypes);
   },
   getZaloPersonalCampaigns: (_state, _getters) => {
-    const zaloPersonalChannelTypes = [INBOX_TYPES.ZALOPERSONAL];
+    const zaloPersonalChannelTypes = [INBOX_TYPES.ZALO_PERSONAL];
     return _getters.getCampaigns(CAMPAIGN_TYPES.ONE_OFF, zaloPersonalChannelTypes);
   },
   getAllCampaigns: _state => {

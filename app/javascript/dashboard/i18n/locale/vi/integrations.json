@@ -47,12 +47,8 @@
           }
         },
         "NAME": {
-          "LABEL": "Webhook Name",
-          "PLACEHOLDER": "Enter the name of the webhook"
-        },
-        "NAME": {
-          "LABEL": "Webhook Name",
-          "PLACEHOLDER": "Enter the name of the webhook"
+          "LABEL": "Tên Webhook",
+          "PLACEHOLDER": "Nhập tên của Webhook"
         },
         "END_POINT": {
           "LABEL": "URL webhook",
@@ -82,7 +78,7 @@
         "TITLE": "Chỉnh sửa webhook",
         "API": {
           "SUCCESS_MESSAGE": "Cấu hình webhook đã được cập nhật thành công",
-          "ERROR_MESSAGE": "Không thể kết nối với máy chủ Woot, vui lòng thử lại sau"
+          "ERROR_MESSAGE": "Không thể kết nối với máy chủ Shopiz, vui lòng thử lại sau"
         }
       },
       "ADD": {
@@ -90,7 +86,7 @@
         "TITLE": "Thêm webhook mới",
         "API": {
           "SUCCESS_MESSAGE": "Cấu hình webhook đã được thêm thành công",
-          "ERROR_MESSAGE": "Không thể kết nối với máy chủ Woot, vui lòng thử lại sau"
+          "ERROR_MESSAGE": "Không thể kết nối với máy chủ Shopiz, vui lòng thử lại sau"
         }
       },
       "DELETE": {
@@ -444,7 +440,7 @@
         "UPDATE": "Cập nhật",
         "SECTIONS": {
           "BASIC_INFO": "Thông tin cơ bản",
-          "SYSTEM_MESSAGES": "System Messages",
+          "SYSTEM_MESSAGES": "Tin nhắn hệ thống",
           "INSTRUCTIONS": "Hướng dẫn",
           "FEATURES": "Tính năng",
           "TOOLS": "Công cụ"
@@ -504,7 +500,7 @@
           "DESCRIPTION": "Tùy chỉnh nội dung trợ lý nói khi kết thúc cuộc trò chuyện hoặc chuyển cho nhân viên."
         },
         "SYSTEM_SETTINGS": {
-          "TITLE": "System settings",
+          "TITLE": "Cài đặt hệ thống",
           "DESCRIPTION": "Tùy chỉnh hành vi hệ thống liên quan tới trợ lý."
         },
         "CONTROL_ITEMS": {

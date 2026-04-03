@@ -14,7 +14,7 @@
         },
         "CAMPAIGN_DETAILS": {
           "SENT_BY": "Gửi bởi",
-          "BOT": "Bot",
+          "BOT": "Trợ lý ảo",
           "FROM": "từ",
           "URL": "URL:"
         }
@@ -99,7 +99,7 @@
           "SENT_FROM": "Gửi từ",
           "ON": "vào",
           "FROM": " từ ",
-          "BOT": "Bot"
+          "BOT": "Trợ lý ảo"
         }
       },
       "EMPTY_STATE_BADGE": {
@@ -234,7 +234,7 @@
           "SENT_BY": "Gửi bởi ",
           "FROM": " từ ",
           "ON": " vào ",
-          "BOT": "Bot"
+          "BOT": "Trợ lý ảo"
         }
       },
       "EMPTY_STATE_BADGE": {
@@ -261,9 +261,9 @@
             "ERROR": "Kịch bản cuộc gọi là bắt buộc"
           },
           "INBOX": {
-            "LABEL": "Voice Inbox",
-            "PLACEHOLDER": "Chọn Voice Inbox",
-            "ERROR": "Voice Inbox là bắt buộc"
+            "LABEL": "Hộp thư thoại",
+            "PLACEHOLDER": "Chọn Hộp thư thoại",
+            "ERROR": "Hộp thư thoại là bắt buộc"
           },
           "SENT_BY": {
             "LABEL": "Gửi bởi",
@@ -307,7 +307,7 @@
           "SENT_FROM": "Gửi từ",
           "ON": "vào",
           "SENT_BY": "Gửi bởi",
-          "BOT": "BOT"
+          "BOT": "ShopizAI"
         }
       },
       "CREATE": {
@@ -382,7 +382,7 @@
           "SENT_BY": "Gửi bởi ",
           "FROM": " từ ",
           "ON": " vào ",
-          "BOT": "Bot"
+          "BOT": "Trợ lý ảo"
         }
       },
       "EMPTY_STATE_BADGE": {
@@ -409,9 +409,9 @@
             "ERROR": "Kịch bản khảo sát là bắt buộc"
           },
           "INBOX": {
-            "LABEL": "Survey Inbox",
-            "PLACEHOLDER": "Chọn Survey Inbox",
-            "ERROR": "Survey Inbox là bắt buộc"
+            "LABEL": "Hộp thư khảo sát",
+            "PLACEHOLDER": "Chọn Hộp thư khảo sát",
+            "ERROR": "Hộp thư khảo sát là bắt buộc"
           },
           "SENT_BY": {
             "LABEL": "Gửi bởi",

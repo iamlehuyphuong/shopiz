@@ -25,7 +25,7 @@ class Webhooks::TiktokController < ActionController::API
     return false unless timestamp && signature_value
 
     payload = "#{timestamp}.#{body}"
-    app_secret = GlobalConfigService.load('TIKTOK_APP_SECRET', '')
+    app_secret = GlobalConfigService.load('TIKTOK_SHOP_APP_SECRET', '')
     expected_signature = OpenSSL::HMAC.hexdigest("SHA256", app_secret, payload)
 
     ActiveSupport::SecurityUtils.secure_compare(expected_signature, signature_value)

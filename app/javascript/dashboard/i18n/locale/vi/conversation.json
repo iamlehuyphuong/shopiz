@@ -15,7 +15,7 @@
     "VIEW_ORIGINAL": "Xem bản gốc",
     "VIEW_TRANSLATED": "Xem bản dịch",
     "EMPTY_STATE": {
-      "CMD_BAR": "để mở menu lệnh",
+      "CMD_BAR": "để mở thanh lệnh",
       "KEYBOARD_SHORTCUTS": "để xem phím tắt"
     },
     "SEARCH": {
@@ -35,10 +35,10 @@
     "API_HOURS_WINDOW": "Bạn chỉ có thể trả lời trong vòng {hours} giờ",
     "NOT_ASSIGNED_TO_YOU": "Cuộc hội thoại này chưa được giao cho bạn. Bạn có muốn tự giao cho mình không?",
     "ASSIGN_TO_ME": "Giao cho tôi",
-    "BOT_HANDOFF_MESSAGE": "Bạn đang trả lời cuộc hội thoại đang được xử lý bởi bot hoặc trợ lý.",
+    "BOT_HANDOFF_MESSAGE": "Bạn đang trả lời cuộc hội thoại đang được xử lý bởi trợ lý ảo.",
     "BOT_HANDOFF_ACTION": "Đánh dấu mở và giao cho bạn",
-    "BOT_HANDOFF_REOPEN_ACTION": "Mở lại cuộc hội thoại",
-    "BOT_HANDOFF_SUCCESS": "Cuộc hội thoại đã được chuyển giao cho bạn",
+    "BOT_HANDOFF_REOPEN_ACTION": "Mở lại hội thoại",
+    "BOT_HANDOFF_SUCCESS": "Đã chuyển giao cuộc hội thoại cho bạn",
     "BOT_HANDOFF_ERROR": "Không thể tiếp quản cuộc hội thoại. Vui lòng thử lại.",
     "TWILIO_WHATSAPP_CAN_REPLY": "Bạn chỉ có thể trả lời bằng mẫu tin nhắn do",
     "TWILIO_WHATSAPP_24_HOURS_WINDOW": "giới hạn cửa sổ 24 giờ",
@@ -73,17 +73,7 @@
       "SHOW_LABELS": "Hiện nhãn",
       "HIDE_LABELS": "Ẩn nhãn"
     },
-    "VOICE_CALL": {
-      "INCOMING_CALL": "Cuộc gọi đến",
-      "OUTGOING_CALL": "Cuộc gọi đi",
-      "CALL_IN_PROGRESS": "Đang gọi",
-      "NO_ANSWER": "Không trả lời",
-      "MISSED_CALL": "Cuộc gọi nhỡ",
-      "CALL_ENDED": "Đã kết thúc",
-      "NOT_ANSWERED_YET": "Chưa trả lời",
-      "THEY_ANSWERED": "Họ đã trả lời",
-      "YOU_ANSWERED": "Bạn đã trả lời"
-    },
+
     "HEADER": {
       "RESOLVE_ACTION": "Giải quyết",
       "REOPEN_ACTION": "Mở lại",
@@ -92,23 +82,23 @@
       "OPEN": "Xem thêm",
       "CLOSE": "Đóng",
       "DETAILS": "chi tiết",
-      "SNOOZED_UNTIL": "Tạm ẩn đến",
-      "SNOOZED_UNTIL_TOMORROW": "Tạm ẩn đến ngày mai",
-      "SNOOZED_UNTIL_NEXT_WEEK": "Tạm ẩn đến tuần sau",
-      "SNOOZED_UNTIL_NEXT_REPLY": "Tạm ẩn đến khi có phản hồi",
+      "SNOOZED_UNTIL": "Tạm hoãn đến",
+      "SNOOZED_UNTIL_TOMORROW": "Tạm hoãn đến ngày mai",
+      "SNOOZED_UNTIL_NEXT_WEEK": "Tạm hoãn đến tuần sau",
+      "SNOOZED_UNTIL_NEXT_REPLY": "Tạm hoãn đến khi có phản hồi",
       "SLA_STATUS": {
         "FRT": "FRT {status}",
         "NRT": "NRT {status}",
         "RT": "RT {status}",
-        "MISSED": "trễ",
+        "MISSED": "quá hạn",
         "DUE": "sắp đến hạn"
       }
     },
     "RESOLVE_DROPDOWN": {
       "MARK_PENDING": "Đánh dấu đang chờ",
-      "SNOOZE_UNTIL": "Tạm ẩn",
+      "SNOOZE_UNTIL": "Tạm hoãn",
       "SNOOZE": {
-        "TITLE": "Tạm ẩn đến",
+        "TITLE": "Tạm hoãn đến",
         "NEXT_REPLY": "Khi có phản hồi",
         "TOMORROW": "Ngày mai",
         "NEXT_WEEK": "Tuần sau"
@@ -119,8 +109,8 @@
       "TEAMS": "Nhóm"
     },
     "CUSTOM_SNOOZE": {
-      "TITLE": "Tạm ẩn đến",
-      "APPLY": "Tạm ẩn",
+      "TITLE": "Tạm hoãn đến",
+      "APPLY": "Tạm hoãn",
       "CANCEL": "Hủy"
     },
     "PRIORITY": {
@@ -152,16 +142,16 @@
       "MARK_AS_READ": "Đánh dấu đã đọc",
       "REOPEN": "Mở lại cuộc hội thoại",
       "SNOOZE": {
-        "TITLE": "Tạm ẩn",
+        "TITLE": "Tạm hoãn",
         "NEXT_REPLY": "Đến khi phản hồi",
         "TOMORROW": "Đến ngày mai",
         "NEXT_WEEK": "Đến tuần sau"
       },
-      "ASSIGN_AGENT": "Gán cho nhân viên",
+      "ASSIGN_AGENT": "Phân công nhân viên",
       "ASSIGN_LABEL": "Gán nhãn",
       "AGENTS_LOADING": "Đang tải nhân viên...",
-      "ASSIGN_TEAM": "Gán nhóm",
-      "DELETE": "Xóa cuộc hội thoại",
+      "ASSIGN_TEAM": "Phân công nhóm",
+      "DELETE": "Xóa hội thoại",
       "OPEN_IN_NEW_TAB": "Mở trong tab mới",
       "COPY_LINK": "Sao chép link cuộc hội thoại",
       "COPY_LINK_SUCCESS": "Đã sao chép link vào clipboard",
@@ -379,14 +369,14 @@
     "ACCORDION": {
       "CONTACT_DETAILS": "Thông tin liên hệ",
       "CONVERSATION_ACTIONS": "Hành động",
-      "CONVERSATION_LABELS": "Nhãn của cuộc hội thoại",
+      "CONVERSATION_LABELS": "Nhãn hội thoại",
       "CONVERSATION_INFO": "Thông tin hội thoại",
       "CONTACT_NOTES": "Ghi chú liên hệ",
-      "CONTACT_ATTRIBUTES": "Thuộc tính của liên hệ",
-      "PREVIOUS_CONVERSATION": "Cuộc trò chuyện trước đó",
+      "CONTACT_ATTRIBUTES": "Thuộc tính liên hệ",
+      "PREVIOUS_CONVERSATION": "Hội thoại trước đó",
       "MACROS": "Macros",
-      "LINEAR_ISSUES": "Linked Linear Issues",
-      "SHOPIFY_ORDERS": "Shopify Orders"
+      "LINEAR_ISSUES": "Vấn đề Linear liên kết",
+      "SHOPIFY_ORDERS": "Đơn hàng Shopify"
     },
     "SHOPIFY": {
       "ORDER_ID": "Đơn hàng #{id}",

@@ -46,7 +46,7 @@ vi:
         invalid: 'Sai định dạng, nên theo chuẩn E.164'
     companies:
       domain:
-        invalid: must be a valid domain name
+        invalid: phải là một tên miền hợp lệ
     categories:
       locale:
         unique: 'phải là duy nhất trong danh mục và cổng thông tin'
@@ -58,7 +58,7 @@ vi:
       token_exchange_failed: 'Không thể trao đổi mã để lấy mã thông báo truy cập. Vui lòng thử lại.'
       invalid_token_permissions: 'Mã thông báo truy cập không có quyền cần thiết cho WhatsApp.'
       phone_info_fetch_failed: 'Không thể lấy thông tin số điện thoại. Vui lòng thử lại.'
-      phone_number_already_exists: 'Channel already exists for this phone number: %{phone_number}, please contact support if the error persists'
+      phone_number_already_exists: 'Kênh đã tồn tại cho số điện thoại này: %{phone_number}, vui lòng liên hệ bộ phận hỗ trợ nếu lỗi vẫn tiếp diễn'
       reauthorization:
         generic: 'Không thể cấp lại quyền truy cập cho WhatsApp. Vui lòng thử lại.'
         not_supported: 'Cấp lại quyền truy cập không được hỗ trợ cho loại kênh WhatsApp này.'
@@ -173,7 +173,7 @@ vi:
         resolved: 'Cuộc trò chuyện đã được đánh dấu là đã giải quyết bởi %{user_name} do không có hoạt động'
         open: 'Cuộc trò chuyện đã được mở lại bởi %{user_name}'
       agent_bot:
-        error_moved_to_open: 'Conversation was marked open by system due to an error with the agent bot.'
+        error_moved_to_open: 'Hội thoại được hệ thống đánh dấu là mở do lỗi trợ lý ảo.'
       status:
         resolved: 'Cuộc trò chuyện được đánh dấu là đã giải quyết bởi %{user_name}'
         contact_resolved: 'Hội thoại đã được giải quyết bởi %{contact_name}'
@@ -267,8 +267,8 @@ vi:
       description: 'Khai thác sức mạnh của các mô hình ngôn ngữ lớn từ OpenAI với các tính năng như gợi ý trả lời, tóm tắt, diễn đạt lại tin nhắn, kiểm tra chính tả và phân loại nhãn.'
     linear:
       name: 'Linear'
-      short_description: 'Create and link Linear issues directly from conversations.'
-      description: 'Create issues in Linear directly from your conversation window. Alternatively, link existing Linear issues for a more streamlined and efficient issue tracking process.'
+      short_description: 'Tạo và liên kết các vấn đề Linear trực tiếp từ cuộc hội thoại.'
+      description: 'Tạo các vấn đề trong Linear trực tiếp từ cửa sổ hội thoại. Ngoài ra, hãy liên kết các vấn đề Linear hiện có để quy trình theo dõi vấn đề hiệu quả và hợp lý hơn.'
     notion:
       name: 'Notion'
       short_description: 'Tích hợp cơ sở dữ liệu, tài liệu và trang trực tiếp với Shopiz AI.'

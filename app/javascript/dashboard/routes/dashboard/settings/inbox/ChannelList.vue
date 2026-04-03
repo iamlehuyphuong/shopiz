@@ -75,20 +75,20 @@ const channelList = computed(() => {
     // },
     {
       key: 'zalo',
-      title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO.TITLE'),
-      description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO.DESCRIPTION'),
+      title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO_OA.TITLE'),
+      description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO_OA.DESCRIPTION'),
       icon: 'i-ri-zalo-oa-fill',
     },
     {
       key: 'zalopersonal',
-      title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALOPERSONAL.TITLE'),
-      description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALOPERSONAL.DESCRIPTION'),
+      title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO_PERSONAL.TITLE'),
+      description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO_PERSONAL.DESCRIPTION'),
       icon: 'i-ri-zalo-fill',
     },
     {
       key: 'tiktok',
-      title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK.TITLE'),
-      description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK.DESCRIPTION'),
+      title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK_SHOP.TITLE'),
+      description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK_SHOP.DESCRIPTION'),
       icon: 'i-ri-tiktok-fill',
     },
     // {

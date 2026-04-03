@@ -54,7 +54,7 @@ const campaignsRoutes = {
           name: 'campaigns_zalo_personal_index',
           meta: {
             ...meta,
-            featureFlag: FEATURE_FLAGS.CHANNEL_ZALOPERSONAL,
+            featureFlag: FEATURE_FLAGS.CHANNEL_ZALO_PERSONAL,
           },
           component: ZaloPersonalCampaignsPage,
         },

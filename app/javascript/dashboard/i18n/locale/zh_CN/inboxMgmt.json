@@ -436,7 +436,7 @@
             "DESCRIPTION": "创建在线聊天小部件"
           },
           "FACEBOOK": {
-            "TITLE": "Facebook",
+            "TITLE": "Messenger",
             "DESCRIPTION": "连接您的 Facebook 页面"
           },
           "WHATSAPP": {
@@ -1005,8 +1005,8 @@
       "API": "API 频道",
       "INSTAGRAM": "Instagram",
       "VOICE": "语音",
-      "ZALO": "Zalo OA",
-      "ZALOPERSONAL": "Zalo 个人"
+      "ZALO_OA": "Zalo OA",
+      "ZALO_PERSONAL": "Zalo 个人"
     }
   }
 }

@@ -32,7 +32,7 @@ export default {
       pageName: '',
       avatar: '',
       channel: 'zalo',
-      emptyStateMessage: this.$t('INBOX_MGMT.ADD.ZALO.LOADING'),
+      emptyStateMessage: this.$t('INBOX_MGMT.ADD.ZALO_OA.LOADING'),
       errorStateMessage: '',
       errorStateDescription: '',
       hasLoginStarted: false,
@@ -164,8 +164,8 @@ export default {
           alt="Zalo-logo"
         />
       </a>
-      <p class="pt-6 mb-0 text-center">{{ $t('INBOX_MGMT.ADD.ZALO.HELP') }}</p>
-      <p class="text-center">{{ $t('INBOX_MGMT.ADD.ZALO.HELP_2') }}</p>
+      <p class="pt-6 mb-0 text-center">{{ $t('INBOX_MGMT.ADD.ZALO_OA.HELP') }}</p>
+      <p class="text-center">{{ $t('INBOX_MGMT.ADD.ZALO_OA.HELP_2') }}</p>
     </div>
     <div v-else>
       <div v-if="hasError" class="max-w-lg mx-auto text-center">
@@ -183,22 +183,22 @@ export default {
       >
         <div class="w-full">
           <PageHeader
-            :header-title="$t('INBOX_MGMT.ADD.ZALO.TITLE')"
-            :header-content="$t('INBOX_MGMT.ADD.ZALO.TITLE')"
+            :header-title="$t('INBOX_MGMT.ADD.ZALO_OA.TITLE')"
+            :header-content="$t('INBOX_MGMT.ADD.ZALO_OA.TITLE')"
           />
         </div>
         <div class="w-[60%]">
           <div class="w-full">
             <label :class="{ error: v$.pageName.$error }">
-              {{ $t('INBOX_MGMT.ADD.ZALO.INBOX_NAME') }}
+              {{ $t('INBOX_MGMT.ADD.ZALO_OA.INBOX_NAME') }}
               <input
                 v-model.trim="pageName"
                 type="text"
-                :placeholder="$t('INBOX_MGMT.ADD.ZALO.PICK_NAME')"
+                :placeholder="$t('INBOX_MGMT.ADD.ZALO_OA.PICK_NAME')"
                 @input="v$.pageName.$touch"
               />
               <span v-if="v$.pageName.$error" class="message">
-                {{ $t('INBOX_MGMT.ADD.ZALO.ADD_NAME') }}
+                {{ $t('INBOX_MGMT.ADD.ZALO_OA.ADD_NAME') }}
               </span>
             </label>
           </div>
