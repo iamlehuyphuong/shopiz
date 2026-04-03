@@ -8,6 +8,7 @@ const {
 } = require('@egoist/tailwindcss-icons');
 
 const defaultSansFonts = [
+  "'Nunito Sans'",
   '-apple-system',
   'system-ui',
   'BlinkMacSystemFont',
@@ -39,8 +40,8 @@ const tailwindConfig = {
     extend: {
       fontFamily: {
         sans: defaultSansFonts,
-        inter: ['Inter', ...defaultSansFonts],
-        interDisplay: ['Inter Display', ...defaultSansFonts],
+        inter: defaultSansFonts,
+        interDisplay: defaultSansFonts,
       },
       typography: {
         bubble: {

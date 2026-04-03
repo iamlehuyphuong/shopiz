@@ -57,8 +57,17 @@ export default {
 
 html,
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  font-family:
+    'Nunito Sans',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Oxygen-Sans',
+    'Ubuntu',
+    'Cantarell',
+    'Helvetica Neue',
+    sans-serif;
   @apply h-full w-full;
 
   input,

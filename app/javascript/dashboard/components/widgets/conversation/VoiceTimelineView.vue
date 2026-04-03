@@ -254,12 +254,16 @@ export default defineComponent({
       ];
       
       console.log('Found call events and tool calls:', eventTypes.join(', '));
-      
+
       // The actual markers we're showing in the UI simulate these events
       console.log('Processing tool calls:');
       console.log('- Tool call: Customer account verified (customer_id: 57482)');
-      console.log('- Tool call: Address updated (new_address: 1234 Main St, Apt 5B)');
-      console.log('- Tool call: Confirmation email sent (template: address_update)');
+      console.log(
+        '- Tool call: Address updated (new_address: 1234 Main St, Apt 5B)'
+      );
+      console.log(
+        '- Tool call: Confirmation email sent (template: address_update)'
+      );
     },
     
     // Determine the active speaker at the current time
@@ -399,7 +403,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .voice-timeline-view {
   @apply relative flex flex-col px-5 pt-3 pb-5 mb-4 mx-4 h-[220px] border border-n-slate-3 dark:border-n-slate-7 rounded-lg bg-n-solid-2 shadow-sm;
-  font-family: Inter, system-ui, -apple-system, sans-serif;
+  font-family: 'Nunito Sans', system-ui, -apple-system, sans-serif;
 }
 
 .timeline-header {
@@ -513,25 +517,25 @@ export default defineComponent({
   @apply absolute w-0 z-30;
   /* All event markers are positioned at the bottom in the events timeline */
   bottom: 15px;
-  
+
   .marker-dot {
     @apply absolute -translate-x-1/2 size-8 rounded-full flex items-center justify-center shadow-lg;
     top: -16px;
   }
-  
+
   .marker-icon {
     @apply text-[16px] font-bold;
   }
-  
+
   /* Apply bright Tailwind color classes to each marker icon type */
   .marker--systemEvent .marker-icon {
     @apply text-n-slate-1;
   }
-  
+
   .marker--agentMessage .marker-icon {
     @apply text-n-slate-1;
   }
-  
+
   .marker--userResponse .marker-icon {
     @apply text-n-slate-12;
   }
@@ -543,11 +547,11 @@ export default defineComponent({
   .marker-tooltip {
     @apply absolute -translate-x-1/2 p-3 rounded-md shadow-xl text-n-slate-1 text-sm min-w-[150px] max-w-[250px] transition-all duration-200 z-50 opacity-0 invisible bg-n-slate-12;
     bottom: 40px;
-    
+
     &.marker-tooltip-visible {
       @apply opacity-100 visible;
     }
-    
+
     .marker-text {
       @apply text-sm whitespace-normal font-normal text-n-slate-1;
     }
@@ -559,7 +563,7 @@ export default defineComponent({
     &:after {
       content: '';
       @apply absolute w-0 h-0 border-l-[6px] border-l-transparent border-t-[6px] left-1/2 -translate-x-1/2;
-      border-top-color: #1E293B; /* Consistent color for both light/dark modes */
+      border-top-color: #1e293b; /* Consistent color for both light/dark modes */
       bottom: -6px;
     }
     

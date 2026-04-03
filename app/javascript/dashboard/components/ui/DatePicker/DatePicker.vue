@@ -209,7 +209,7 @@ const emitDateRange = () => {
 </script>
 
 <template>
-  <div class="relative font-inter">
+  <div class="relative">
     <DatePickerButton
       :selected-start-date="selectedStartDate"
       :selected-end-date="selectedEndDate"
