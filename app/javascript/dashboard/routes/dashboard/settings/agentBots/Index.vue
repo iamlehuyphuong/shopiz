@@ -119,6 +119,7 @@ onMounted(() => {
                   :name="bot.name"
                   :src="bot.thumbnail"
                   :size="40"
+                  branded
                   rounded-full
                 />
                 <div>

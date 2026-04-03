@@ -46,6 +46,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  branded: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['upload', 'delete']);
@@ -57,22 +61,22 @@ const fileInput = ref(null);
 
 const AVATAR_COLORS = {
   dark: [
+    ['#452109', '#FFB381'], // Adjusted for branding orange
     ['#4B143D', '#FF8DCC'],
-    ['#3F220D', '#FFA366'],
     ['#2A2A2A', '#ADB1B8'],
     ['#023B37', '#0BD8B6'],
     ['#27264D', '#A19EFF'],
     ['#1D2E62', '#9EB1FF'],
   ],
   light: [
+    ['#FFF0E5', '#E06720'], // Branding Orange: Background Light (50% mix/light), Text Primary
     ['#FBDCEF', '#C2298A'],
-    ['#FFE0BB', '#99543A'],
     ['#E8E8E8', '#60646C'],
     ['#CCF3EA', '#008573'],
     ['#EBEBFE', '#4747C2'],
     ['#E1E9FF', '#3A5BC7'],
   ],
-  default: { bg: '#E8E8E8', text: '#60646C' },
+  default: { bg: '#FFF0E5', text: '#E06720' },
 };
 
 const STATUS_CLASSES = computed(() => ({
@@ -98,7 +102,9 @@ const initials = computed(() => {
 const getColorsByNameLength = computed(() => {
   if (!props.name) return AVATAR_COLORS.default;
 
-  const index = props.name.length % AVATAR_COLORS.light.length;
+  const index = props.branded
+    ? 0
+    : props.name.length % AVATAR_COLORS.light.length;
   return {
     bg: AVATAR_COLORS.light[index][0],
     darkBg: AVATAR_COLORS.dark[index][0],

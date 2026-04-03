@@ -97,6 +97,7 @@ const { t } = useI18n();
           :name="selectedContact.name || ''"
           :src="selectedContact.thumbnail || ''"
           :size="32"
+          branded
           rounded-full
         />
         <div class="flex flex-col w-full min-w-0 gap-1">

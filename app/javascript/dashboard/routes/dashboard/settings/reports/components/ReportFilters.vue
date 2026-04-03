@@ -190,6 +190,7 @@ export default {
               :name="props.option.name"
               :size="22"
               hide-offline-status
+              branded
               rounded-full
             />
             <span class="my-0 text-n-slate-12 truncate">{{
@@ -205,6 +206,7 @@ export default {
               :name="props.option.name"
               :size="22"
               hide-offline-status
+              branded
               rounded-full
             />
             <p class="my-0 text-n-slate-12">

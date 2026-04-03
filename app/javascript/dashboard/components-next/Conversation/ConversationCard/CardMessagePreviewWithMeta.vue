@@ -229,6 +229,7 @@ defineExpose({
         :src="assignee.thumbnail"
         :size="20"
         :status="assignee.status"
+        branded
         rounded-full
       />
     </div>

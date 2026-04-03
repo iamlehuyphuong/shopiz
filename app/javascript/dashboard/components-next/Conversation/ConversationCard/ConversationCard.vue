@@ -226,6 +226,7 @@ const onCardClick = e => {
       :src="currentContactThumbnail"
       :size="24"
       :status="currentContactStatus"
+      branded
       rounded-full
     />
     <div class="flex flex-col w-full gap-1 min-w-0">

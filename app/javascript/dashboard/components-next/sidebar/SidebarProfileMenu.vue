@@ -147,6 +147,7 @@ const dropdownBodyClass = computed(() => {
           :src="currentUser.avatar_url"
           :status="currentUserAvailability"
           class="flex-shrink-0"
+          branded
           rounded-full
         />
         <div class="min-w-0">

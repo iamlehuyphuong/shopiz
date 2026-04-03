@@ -191,6 +191,7 @@ onMounted(() => {
               :name="senderDetails.name"
               :src="senderDetails.avatar"
               :size="40"
+              branded
               rounded-full
               class="flex-shrink-0"
             />

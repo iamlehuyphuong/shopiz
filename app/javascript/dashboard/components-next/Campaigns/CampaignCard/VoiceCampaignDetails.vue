@@ -44,6 +44,7 @@ const senderThumbnail = computed(() => props.sender?.thumbnail || '');
         :name="senderName"
         :src="senderThumbnail"
         :size="16"
+        branded
         rounded-full
       />
       <span class="text-sm font-medium text-n-slate-12">

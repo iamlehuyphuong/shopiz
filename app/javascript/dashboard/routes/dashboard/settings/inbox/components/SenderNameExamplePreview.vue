@@ -86,7 +86,7 @@ export default {
             {{ $t('INBOX_MGMT.EDIT.SENDER_NAME_SECTION.FOR_EG') }}
           </span>
           <div class="flex flex-row items-center gap-2">
-            <Avatar :name="userName(keyOption)" :size="32" rounded-full />
+            <Avatar :name="userName(keyOption)" :size="32" branded rounded-full />
             <div class="flex flex-col items-start gap-1">
               <div class="items-center flex flex-row gap-0.5 max-w-[18rem]">
                 <span

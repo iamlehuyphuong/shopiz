@@ -45,6 +45,7 @@ const navigateTo = computed(() => {
       :name="name"
       :src="thumbnail"
       :size="24"
+      branded
       rounded-full
       class="mt-0.5"
     />

@@ -143,6 +143,7 @@ const handleClickOutside = () => {
             :src="item.avatarUrl"
             :name="item.name"
             :size="20"
+            branded
             rounded-full
           />
           <div class="flex flex-col items-start gap-2 min-w-0 flex-1">

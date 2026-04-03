@@ -290,6 +290,7 @@ export default {
                 icon-name="i-ri-global-fill"
                 name=""
                 allow-upload
+                branded
                 rounded-full
                 @upload="handleImageUpload"
                 @delete="handleAvatarDelete"

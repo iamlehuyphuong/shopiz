@@ -21,6 +21,7 @@ import Avatar from './Avatar.vue';
           src="https://api.dicebear.com/9.x/thumbs/svg?seed=Amaya"
           name=""
           allow-upload
+          branded
           rounded-full
           :size="48"
         />

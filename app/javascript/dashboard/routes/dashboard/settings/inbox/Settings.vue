@@ -564,6 +564,7 @@ export default {
               :icon-name="inboxIcon"
               name=""
               allow-upload
+              branded
               rounded-full
               @upload="handleImageUpload"
               @delete="handleAvatarDelete"

@@ -170,6 +170,7 @@ const confirmDeletion = () => {
                   :status="agent.availability_status"
                   :size="40"
                   hide-offline-status
+                  branded
                   rounded-full
                 />
                 <div>

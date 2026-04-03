@@ -265,6 +265,7 @@ const deleteConversation = () => {
         :status="currentContact.availability_status"
         :class="!showInboxName ? 'mt-4' : 'mt-8'"
         hide-offline-status
+        branded
         rounded-full
       >
         <template #overlay="{ size }">

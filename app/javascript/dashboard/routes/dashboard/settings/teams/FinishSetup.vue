@@ -23,7 +23,7 @@ export default {
             name: 'settings_teams_list',
           }"
         >
-          <NextButton teal :label="$t('TEAMS_SETTINGS.FINISH.BUTTON_TEXT')" />
+          <NextButton :label="$t('TEAMS_SETTINGS.FINISH.BUTTON_TEXT')" />
         </router-link>
       </div>
     </EmptyState>

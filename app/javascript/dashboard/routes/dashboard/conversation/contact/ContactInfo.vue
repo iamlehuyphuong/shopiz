@@ -516,6 +516,7 @@ export default {
           :status="contact.availability_status"
           :size="48"
           hide-offline-status
+          branded
           rounded-full
         />
       </div>

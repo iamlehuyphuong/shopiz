@@ -459,6 +459,7 @@ const menuItems = computed(() => {
       name: 'Companies',
       label: t('SIDEBAR.COMPANIES'),
       icon: 'i-lucide-building-2',
+      activeOn: ['companies_dashboard_index'],
       children: [
         {
           name: 'All Companies',

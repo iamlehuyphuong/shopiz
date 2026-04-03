@@ -56,6 +56,7 @@ const moreThumbnailsClass = computed(() => {
       :size="size"
       class="[&>span]:outline [&>span]:outline-1 [&>span]:outline-n-background [&>span]:shadow"
       :class="gapClass"
+      branded
       rounded-full
     />
     <span
