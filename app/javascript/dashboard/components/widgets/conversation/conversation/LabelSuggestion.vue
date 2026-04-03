@@ -233,6 +233,7 @@ export default {
             hideOnClick: true,
           }"
           :size="16"
+          branded
           name="chatwoot-ai"
           icon-name="i-lucide-sparkles"
         />

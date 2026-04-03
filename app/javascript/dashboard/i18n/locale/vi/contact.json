@@ -1,6 +1,11 @@
 {
   "CONTACT_PANEL": {
     "NOT_AVAILABLE": "Không khả dụng",
+    "NOT_AVAILABLE_PHONE": "Chưa có số điện thoại",
+    "NOT_AVAILABLE_EMAIL": "Chưa có email",
+    "NOT_AVAILABLE_BIRTHDAY": "Chưa có ngày sinh",
+    "NOT_AVAILABLE_GENDER": "Chưa có giới tính",
+    "NOT_AVAILABLE_COMPANY": "Chưa có công ty",
     "EMAIL_ADDRESS": "Địa chỉ email",
     "PHONE_NUMBER": "Số điện thoại",
     "IDENTIFIER": "Định danh",

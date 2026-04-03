@@ -559,6 +559,7 @@ export default {
             icon="mail"
             emoji="✉️"
             :title="$t('CONTACT_PANEL.EMAIL_ADDRESS')"
+            :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_EMAIL')"
             show-copy
           />
           <ContactInfoRow
@@ -567,17 +568,20 @@ export default {
             icon="call"
             emoji="📞"
             :title="$t('CONTACT_PANEL.PHONE_NUMBER')"
+            :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_PHONE')"
             show-copy
           />
           <ContactInfoRow
             :value="formattedBirthday"
             icon="calendar"
             :title="$t('CONTACT_PANEL.BIRTHDAY')"
+            :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_BIRTHDAY')"
           />
           <ContactInfoRow
             :value="contact.gender_id ? $t(`CONTACT_PANEL.GENDERS.${contact.gender_id}`) : ''"
             icon="person"
             :title="$t('CONTACT_PANEL.GENDER')"
+            :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_GENDER')"
           />
           <ContactInfoRow
             v-if="contact.identifier"
@@ -588,9 +592,10 @@ export default {
           />
           <ContactInfoRow
             :value="additionalAttributes.company_name"
-            icon="building-bank"
+            icon="i-lucide-building-2"
             emoji="🏢"
             :title="$t('CONTACT_PANEL.COMPANY')"
+            :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_COMPANY')"
           />
           <ContactInfoRow
             v-if="location || additionalAttributes.location"
@@ -611,7 +616,7 @@ export default {
           <template #trigger="{ toggle }">
             <NextButton
               v-tooltip.top-end="$t('CONTACT_PANEL.NEW_MESSAGE')"
-              icon="i-ph-chat-circle-dots"
+              icon="i-lucide-message-circle-plus"
               slate
               faded
               sm

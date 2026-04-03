@@ -1,6 +1,11 @@
 {
   "CONTACT_PANEL": {
     "NOT_AVAILABLE": "Not Available",
+    "NOT_AVAILABLE_PHONE": "Phone number not available",
+    "NOT_AVAILABLE_EMAIL": "Email address not available",
+    "NOT_AVAILABLE_BIRTHDAY": "Birthday not available",
+    "NOT_AVAILABLE_GENDER": "Gender not available",
+    "NOT_AVAILABLE_COMPANY": "Company not available",
     "EMAIL_ADDRESS": "Email Address",
     "PHONE_NUMBER": "Phone number",
     "IDENTIFIER": "Identifier",

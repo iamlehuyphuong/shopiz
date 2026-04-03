@@ -89,6 +89,7 @@ const hasValue = computed(() => {
           :name="selectedItem.name"
           :size="24"
           hide-offline-status
+          branded
           rounded-full
         />
       </Button>

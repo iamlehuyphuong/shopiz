@@ -32,6 +32,7 @@ defineProps({
       :src="option.thumbnail"
       :status="option.status === 'online' ? option.status : null"
       :size="20"
+      branded
       class="flex-shrink-0"
     />
     <p class="menu-label truncate min-w-0 flex-1">
