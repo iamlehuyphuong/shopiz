@@ -1,9 +1,9 @@
 {
   "SLA": {
-    "HEADER": "Thỏa thuận Mức độ Dịch vụ (SLA)",
+    "HEADER": "Cam kết chất lượng dịch vụ (SLA)",
     "ADD_ACTION": "Thêm SLA",
     "ADD_ACTION_LONG": "Tạo Chính sách SLA mới",
-    "DESCRIPTION": "Service Level Agreements (SLAs) là các thỏa thuận xác định rõ kỳ vọng giữa đội ngũ của bạn và khách hàng. SLA thiết lập tiêu chuẩn về thời gian phản hồi và thời gian xử lý, tạo ra một khuôn khổ trách nhiệm và đảm bảo trải nghiệm nhất quán, chất lượng cao.",
+    "DESCRIPTION": "Cam kết chất lượng dịch vụ (SLA) là các thỏa thuận xác định rõ kỳ vọng giữa đội ngũ của bạn và khách hàng. SLA thiết lập tiêu chuẩn về thời gian phản hồi và thời gian xử lý, tạo ra một khuôn khổ trách nhiệm và đảm bảo trải nghiệm nhất quán, chất lượng cao.",
     "LEARN_MORE": "Tìm hiểu thêm về SLA",
     "LOADING": "Đang tải danh sách SLA",
     "PAYWALL": {

@@ -1,4 +1,7 @@
 {
+  "HOME": {
+    "START_CONVERSATION": "Hội thoại"
+  },
   "CONVERSATION": {
     "SELECT_A_CONVERSATION": "Vui lòng chọn một cuộc hội thoại ở bảng bên trái",
     "CSAT_REPLY_MESSAGE": "Vui lòng đánh giá cuộc hội thoại",

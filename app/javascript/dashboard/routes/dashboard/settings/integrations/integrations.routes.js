@@ -18,15 +18,15 @@ export default {
       component: SettingsWrapper,
       props: {},
       children: [
-        // {
-        //   path: '',
-        //   name: 'settings_applications',
-        //   component: Index,
-        //   meta: {
-        //     featureFlag: FEATURE_FLAGS.INTEGRATIONS,
-        //     permissions: ['administrator'],
-        //   },
-        // },
+        {
+          path: '',
+          name: 'settings_applications',
+          component: Index,
+          meta: {
+            featureFlag: FEATURE_FLAGS.INTEGRATIONS,
+            permissions: ['administrator'],
+          },
+        },
         {
           path: 'dashboard_apps',
           component: DashboardApps,
@@ -110,18 +110,18 @@ export default {
           },
           props: route => ({ error: route.query.error }),
         },
-        // {
-        //   path: ':integration_id',
-        //   name: 'settings_applications_integration',
-        //   component: IntegrationHooks,
-        //   meta: {
-        //     featureFlag: FEATURE_FLAGS.INTEGRATIONS,
-        //     permissions: ['administrator'],
-        //   },
-        //   props: route => ({
-        //     integrationId: route.params.integration_id,
-        //   }),
-        // },
+        {
+          path: ':integration_id',
+          name: 'settings_applications_integration',
+          component: IntegrationHooks,
+          meta: {
+            featureFlag: FEATURE_FLAGS.INTEGRATIONS,
+            permissions: ['administrator'],
+          },
+          props: route => ({
+            integrationId: route.params.integration_id,
+          }),
+        },
       ],
     },
   ],

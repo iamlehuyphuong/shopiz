@@ -2,7 +2,7 @@
   "CUSTOM_ROLE": {
     "HEADER": "Vai trò tuỳ chỉnh",
     "LEARN_MORE": "Tìm hiểu thêm về vai trò tuỳ chỉnh",
-    "DESCRIPTION": "Vai trò tuỳ chỉnh là các vai trò được tạo bởi chủ tài khoản hoặc quản trị viên. Những vai trò này có thể được gán cho nhân viên (agent) để xác định quyền truy cập và quyền hạn trong tài khoản. Vai trò tuỳ chỉnh có thể được tạo với các quyền và mức truy cập cụ thể phù hợp với nhu cầu của doanh nghiệp.",
+    "DESCRIPTION": "Vai trò tuỳ chỉnh là các vai trò được tạo bởi chủ tài khoản hoặc quản trị viên. Những vai trò này có thể được gán cho nhân viên để xác định quyền truy cập và quyền hạn trong tài khoản. Vai trò tuỳ chỉnh có thể được tạo với các quyền và mức truy cập cụ thể phù hợp với nhu cầu của doanh nghiệp.",
     "HEADER_BTN_TXT": "Thêm vai trò tuỳ chỉnh",
     "LOADING": "Đang tải danh sách vai trò tuỳ chỉnh...",
     "SEARCH_404": "Không có mục nào khớp với tìm kiếm.",

@@ -12,6 +12,10 @@ defineProps({
     type: String,
     default: 'body',
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const isRTL = useMapGetter('accounts/isRTL');
@@ -20,8 +24,8 @@ const contentDirection = computed(() => (isRTL.value ? 'rtl' : 'ltr'));
 </script>
 
 <template>
-  <Teleport :to="to">
-    <div :dir="contentDirection">
+  <Teleport :to="to" :disabled="disabled">
+    <div :dir="contentDirection" class="contents">
       <slot />
     </div>
   </Teleport>

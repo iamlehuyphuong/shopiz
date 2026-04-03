@@ -2,23 +2,18 @@
 import { h, computed, onMounted } from 'vue';
 import { provideSidebarContext } from './provider';
 import { useAccount } from 'dashboard/composables/useAccount';
-import { useKbd } from 'dashboard/composables/utils/useKbd';
 import { useMapGetter } from 'dashboard/composables/store';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import { useStorage } from '@vueuse/core';
-import { useSidebarKeyboardShortcuts } from './useSidebarKeyboardShortcuts';
 import { vOnClickOutside } from '@vueuse/components';
-import { INBOX_TYPES } from 'dashboard/helper/inbox';
+import { useRouter, useRoute } from 'vue-router';
+import { watch } from 'vue';
+import { usePolicy } from 'dashboard/composables/usePolicy';
 
-import Button from 'dashboard/components-next/button/Button.vue';
 import SidebarGroup from './SidebarGroup.vue';
-import SidebarProfileMenu from './SidebarProfileMenu.vue';
 import SidebarChangelogCard from './SidebarChangelogCard.vue';
 import ChannelLeaf from './ChannelLeaf.vue';
-import SidebarAccountSwitcher from './SidebarAccountSwitcher.vue';
-import Logo from 'next/icon/Logo.vue';
-import ComposeConversation from 'dashboard/components-next/NewConversation/ComposeConversation.vue';
 
 const props = defineProps({
   isMobileSidebarOpen: {
@@ -27,35 +22,23 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits([
-  'closeKeyShortcutModal',
-  'openKeyShortcutModal',
-  'showCreateAccountModal',
-  'closeMobileSidebar',
-]);
+const emit = defineEmits(['closeMobileSidebar']);
 
 const { accountScopedRoute, isOnChatwootCloud } = useAccount();
 const store = useStore();
-const searchShortcut = useKbd([`$mod`, 'k']);
 const { t } = useI18n();
+const router = useRouter();
 
 const isACustomBrandedInstance = useMapGetter(
   'globalConfig/isACustomBrandedInstance'
 );
 
-const toggleShortcutModalFn = show => {
-  if (show) {
-    emit('openKeyShortcutModal');
-  } else {
-    emit('closeKeyShortcutModal');
-  }
-};
+const activeCategory = useStorage(
+  'next-sidebar-active-category',
+  null,
+  sessionStorage
+);
 
-useSidebarKeyboardShortcuts(toggleShortcutModalFn);
-
-// We're using localStorage to store the expanded item in the sidebar
-// This helps preserve context when navigating between portal and dashboard layouts
-// and also when the user refreshes the page
 const expandedItem = useStorage(
   'next-sidebar-expanded-item',
   null,
@@ -65,10 +48,104 @@ const expandedItem = useStorage(
 const setExpandedItem = name => {
   expandedItem.value = expandedItem.value === name ? null : name;
 };
+
 provideSidebarContext({
   expandedItem,
   setExpandedItem,
 });
+
+const { shouldShow } = usePolicy();
+
+const findRouteByName = name => {
+  const routes = router.getRoutes();
+  return routes.find(r => r.name === name);
+};
+
+const resolvePermissions = to => {
+  if (!to) return [];
+  if (to.params?.navigationPath) {
+    const targetRoute = findRouteByName(to.params.navigationPath);
+    return targetRoute?.meta?.permissions ?? [];
+  }
+  return router.resolve(to)?.meta?.permissions ?? [];
+};
+
+const resolveFeatureFlag = to => {
+  if (!to) return '';
+  if (to.params?.navigationPath) {
+    const targetRoute = findRouteByName(to.params.navigationPath);
+    return targetRoute?.meta?.featureFlag || '';
+  }
+  return router.resolve(to)?.meta?.featureFlag || '';
+};
+
+const resolveInstallationType = to => {
+  if (!to) return [];
+  if (to.params?.navigationPath) {
+    const targetRoute = findRouteByName(to.params.navigationPath);
+    return targetRoute?.meta?.installationTypes || [];
+  }
+  return router.resolve(to)?.meta?.installationTypes || [];
+};
+
+const isAllowed = to => {
+  const permissions = resolvePermissions(to);
+  const featureFlag = resolveFeatureFlag(to);
+  const installationType = resolveInstallationType(to);
+  return shouldShow(featureFlag, permissions, installationType);
+};
+
+const getFirstNavigableChild = item => {
+  if (item.to && isAllowed(item.to)) return item.to;
+  if (!item.children) return null;
+  let found = null;
+  item.children.some(child => {
+    const navigable = getFirstNavigableChild(child);
+    if (navigable) {
+      found = navigable;
+      return true;
+    }
+    return false;
+  });
+  return found;
+};
+
+const route = useRoute();
+
+const resolvePath = to => {
+  if (to) return router.resolve(to)?.path || '/';
+  return '/';
+};
+
+const isRouteActive = item => {
+  if (item.to && route.path === resolvePath(item.to)) return true;
+  if (item.activeOn?.includes(route.name)) return true;
+  if (item.children) {
+    return item.children.some(child => isRouteActive(child));
+  }
+  return false;
+};
+
+const syncActiveCategory = () => {
+  const activeItem = menuItems.value.find(item => isRouteActive(item));
+  if (activeItem) {
+    activeCategory.value = activeItem.name;
+    // Set first child as expanded if not already
+    if (activeItem.children && !expandedItem.value) {
+      const activeChild = activeItem.children.find(child =>
+        isRouteActive(child)
+      );
+      if (activeChild) expandedItem.value = activeChild.name;
+    }
+  }
+};
+
+watch(
+  () => route.fullPath,
+  () => {
+    syncActiveCategory();
+  }
+);
 
 const inboxes = useMapGetter('inboxes/getInboxes');
 const labels = useMapGetter('labels/getLabelsOnSidebar');
@@ -78,12 +155,8 @@ const conversationCustomViews = useMapGetter(
   'customViews/getConversationCustomViews'
 );
 
-// Check if there are any voice inboxes
-const hasVoiceInbox = computed(() =>
-  inboxes.value.some(inbox => inbox.channel_type === INBOX_TYPES.VOICE)
-);
-
 onMounted(() => {
+  syncActiveCategory();
   store.dispatch('labels/get');
   store.dispatch('inboxes/get');
   store.dispatch('notifications/unReadCount');
@@ -106,23 +179,27 @@ const newReportRoutes = () => [
   {
     name: 'Reports Agent',
     label: t('SIDEBAR.REPORTS_AGENT'),
+    icon: 'i-lucide-user',
     to: accountScopedRoute('agent_reports_index'),
     activeOn: ['agent_reports_show'],
   },
   {
     name: 'Reports Label',
     label: t('SIDEBAR.REPORTS_LABEL'),
+    icon: 'i-lucide-tag',
     to: accountScopedRoute('label_reports_index'),
   },
   {
     name: 'Reports Inbox',
     label: t('SIDEBAR.REPORTS_INBOX'),
+    icon: 'i-lucide-inbox',
     to: accountScopedRoute('inbox_reports_index'),
     activeOn: ['inbox_reports_show'],
   },
   {
     name: 'Reports Team',
     label: t('SIDEBAR.REPORTS_TEAM'),
+    icon: 'i-lucide-users',
     to: accountScopedRoute('team_reports_index'),
     activeOn: ['team_reports_show'],
   },
@@ -150,18 +227,21 @@ const menuItems = computed(() => {
         {
           name: 'All',
           label: t('SIDEBAR.ALL_CONVERSATIONS'),
+          icon: 'i-lucide-list',
           activeOn: ['inbox_conversation'],
           to: accountScopedRoute('home'),
         },
         {
           name: 'Mentions',
           label: t('SIDEBAR.MENTIONED_CONVERSATIONS'),
+          icon: 'i-lucide-at-sign',
           activeOn: ['conversation_through_mentions'],
           to: accountScopedRoute('conversation_mentions'),
         },
         {
           name: 'Participating',
           label: t('SIDEBAR.PARTICIPATING_CONVERSATIONS'),
+          icon: 'i-lucide-user-check',
           activeOn: ['conversation_through_participating'],
           to: accountScopedRoute('conversation_participating'),
         },
@@ -169,6 +249,7 @@ const menuItems = computed(() => {
           name: 'Unattended',
           activeOn: ['conversation_through_unattended'],
           label: t('SIDEBAR.UNATTENDED_CONVERSATIONS'),
+          icon: 'i-lucide-clock-3',
           to: accountScopedRoute('conversation_unattended'),
         },
         {
@@ -179,6 +260,7 @@ const menuItems = computed(() => {
           children: conversationCustomViews.value.map(view => ({
             name: `${view.name}-${view.id}`,
             label: view.name,
+            icon: 'i-lucide-hash',
             to: accountScopedRoute('folder_conversations', { id: view.id }),
           })),
         },
@@ -190,6 +272,7 @@ const menuItems = computed(() => {
           children: teams.value.map(team => ({
             name: `${team.name}-${team.id}`,
             label: team.name,
+            icon: 'i-lucide-users',
             to: accountScopedRoute('team_conversations', { teamId: team.id }),
           })),
         },
@@ -231,13 +314,14 @@ const menuItems = computed(() => {
     },
     {
       name: 'Captain',
-      icon: 'i-woot-captain',
+      icon: 'i-lucide-bot-message-square',
       label: t('SIDEBAR.CAPTAIN'),
       activeOn: ['captain_assistants_create_index'],
       children: [
         {
           name: 'FAQs',
           label: t('SIDEBAR.CAPTAIN_RESPONSES'),
+          icon: 'i-lucide-help-circle',
           activeOn: [
             'captain_assistants_responses_index',
             'captain_assistants_responses_pending',
@@ -249,6 +333,7 @@ const menuItems = computed(() => {
         {
           name: 'Documents',
           label: t('SIDEBAR.CAPTAIN_DOCUMENTS'),
+          icon: 'i-lucide-file-text',
           activeOn: ['captain_assistants_documents_index'],
           to: accountScopedRoute('captain_assistants_index', {
             navigationPath: 'captain_assistants_documents_index',
@@ -257,6 +342,7 @@ const menuItems = computed(() => {
         {
           name: 'Scenarios',
           label: t('SIDEBAR.CAPTAIN_SCENARIOS'),
+          icon: 'i-lucide-route',
           activeOn: ['captain_assistants_scenarios_index'],
           to: accountScopedRoute('captain_assistants_index', {
             navigationPath: 'captain_assistants_scenarios_index',
@@ -265,6 +351,7 @@ const menuItems = computed(() => {
         {
           name: 'Playground',
           label: t('SIDEBAR.CAPTAIN_PLAYGROUND'),
+          icon: 'i-lucide-terminal',
           activeOn: ['captain_assistants_playground_index'],
           to: accountScopedRoute('captain_assistants_index', {
             navigationPath: 'captain_assistants_playground_index',
@@ -273,6 +360,7 @@ const menuItems = computed(() => {
         {
           name: 'Inboxes',
           label: t('SIDEBAR.CAPTAIN_INBOXES'),
+          icon: 'i-lucide-inbox',
           activeOn: ['captain_assistants_inboxes_index'],
           to: accountScopedRoute('captain_assistants_index', {
             navigationPath: 'captain_assistants_inboxes_index',
@@ -281,6 +369,7 @@ const menuItems = computed(() => {
         {
           name: 'Tools',
           label: t('SIDEBAR.CAPTAIN_TOOLS'),
+          icon: 'i-lucide-wrench',
           activeOn: ['captain_tools_index'],
           to: accountScopedRoute('captain_assistants_index', {
             navigationPath: 'captain_tools_index',
@@ -289,6 +378,7 @@ const menuItems = computed(() => {
         {
           name: 'Settings',
           label: t('SIDEBAR.CAPTAIN_SETTINGS'),
+          icon: 'i-lucide-settings-2',
           activeOn: [
             'captain_assistants_settings_index',
             'captain_assistants_guidelines_index',
@@ -308,6 +398,7 @@ const menuItems = computed(() => {
         {
           name: 'All Contacts',
           label: t('SIDEBAR.ALL_CONTACTS'),
+          icon: 'i-lucide-users',
           to: accountScopedRoute(
             'contacts_dashboard_index',
             {},
@@ -318,6 +409,7 @@ const menuItems = computed(() => {
         {
           name: 'Active',
           label: t('SIDEBAR.ACTIVE'),
+          icon: 'i-lucide-user-round-check',
           to: accountScopedRoute('contacts_dashboard_active'),
           activeOn: ['contacts_dashboard_active'],
         },
@@ -371,6 +463,7 @@ const menuItems = computed(() => {
         {
           name: 'All Companies',
           label: t('SIDEBAR.ALL_COMPANIES'),
+          icon: 'i-lucide-building-2',
           to: accountScopedRoute(
             'companies_dashboard_index',
             {},
@@ -388,27 +481,32 @@ const menuItems = computed(() => {
         {
           name: 'Report Overview',
           label: t('SIDEBAR.REPORTS_OVERVIEW'),
+          icon: 'i-lucide-layout-dashboard',
           to: accountScopedRoute('account_overview_reports'),
         },
         {
           name: 'Report Conversation',
           label: t('SIDEBAR.REPORTS_CONVERSATION'),
+          icon: 'i-lucide-message-square',
           to: accountScopedRoute('conversation_reports'),
         },
         ...reportRoutes.value,
         {
           name: 'Reports CSAT',
           label: t('SIDEBAR.CSAT'),
+          icon: 'i-lucide-smile',
           to: accountScopedRoute('csat_reports'),
         },
         {
           name: 'Reports SLA',
           label: t('SIDEBAR.REPORTS_SLA'),
+          icon: 'i-lucide-timer',
           to: accountScopedRoute('sla_reports'),
         },
         {
           name: 'Reports Bot',
           label: t('SIDEBAR.REPORTS_BOT'),
+          icon: 'i-lucide-bot',
           to: accountScopedRoute('bot_reports'),
         },
       ],
@@ -421,116 +519,66 @@ const menuItems = computed(() => {
         {
           name: 'Live chat',
           label: t('SIDEBAR.LIVE_CHAT'),
+          icon: 'i-lucide-message-circle',
           to: accountScopedRoute('campaigns_livechat_index'),
         },
         {
           name: 'Zalo Personal',
           label: t('SIDEBAR.ZALO_PERSONAL'),
+          icon: 'i-lucide-message-square-text',
           to: accountScopedRoute('campaigns_zalo_personal_index'),
         },
-        // {
-        //   name: 'SMS',
-        //   label: t('SIDEBAR.SMS'),
-        //   to: accountScopedRoute('campaigns_sms_index'),
-        // },
-        // {
-        //   name: 'WhatsApp',
-        //   label: t('SIDEBAR.WHATSAPP'),
-        //   to: accountScopedRoute('campaigns_whatsapp_index'),
-        // },
-        // {
-        //   name: 'Voice',
-        //   label: t('SIDEBAR.VOICE'),
-        //   to: accountScopedRoute('campaigns_voice_index'),
-        // },
-        // {
-        //   name: 'Survey',
-        //   label: t('SIDEBAR.SURVEY'),
-        //   to: accountScopedRoute('campaigns_survey_index'),
-        // },
+        {
+          name: 'SMS',
+          label: t('SIDEBAR.SMS'),
+          icon: 'i-lucide-phone',
+          to: accountScopedRoute('campaigns_sms_index'),
+        },
+        {
+          name: 'WhatsApp',
+          label: t('SIDEBAR.WHATSAPP'),
+          icon: 'i-lucide-message-square',
+          to: accountScopedRoute('campaigns_whatsapp_index'),
+        },
+        {
+          name: 'Voice',
+          label: t('SIDEBAR.VOICE'),
+          icon: 'i-lucide-mic',
+          to: accountScopedRoute('campaigns_voice_index'),
+        },
+        {
+          name: 'Survey',
+          label: t('SIDEBAR.SURVEY'),
+          icon: 'i-lucide-clipboard-check',
+          to: accountScopedRoute('campaigns_survey_index'),
+        },
       ],
     },
     {
       name: 'Sales',
       label: t('SIDEBAR.SALES'),
-      icon: 'i-lucide-sales',
+      icon: 'i-lucide-shopping-cart',
       children: [
         {
           name: 'pipeline',
           label: t('SIDEBAR.SALES_PIPELINE'),
+          icon: 'i-lucide-kanban',
           to: accountScopedRoute('sales_pipeline_index'),
         },
         {
           name: 'orders',
           label: t('SIDEBAR.SALES_ORDERS'),
+          icon: 'i-lucide-shopping-bag',
           to: accountScopedRoute('sales_orders_index'),
         },
         {
           name: 'catalog',
           label: t('SIDEBAR.SALES_CATALOG'),
+          icon: 'i-lucide-layout-grid',
           to: accountScopedRoute('sales_catalog_index'),
         },
       ],
     },
-    // {
-    //   name: 'Portals',
-    //   label: t('SIDEBAR.HELP_CENTER.TITLE'),
-    //   icon: 'i-lucide-library-big',
-    //   children: [
-    //     {
-    //       name: 'Landing Pages',
-    //       label: t('SIDEBAR.HELP_CENTER.LANDING_PAGE'),
-    //       activeOn: [
-    //         'portals_pages_index',
-    //         'portals_pages_new',
-    //         'portals_pages_edit',
-    //       ],
-    //       to: accountScopedRoute('portals_index', {
-    //         navigationPath: 'portals_pages_index',
-    //       }),
-    //     },
-    //     {
-    //       name: 'Articles',
-    //       label: t('SIDEBAR.HELP_CENTER.ARTICLES'),
-    //       activeOn: [
-    //         'portals_articles_index',
-    //         'portals_articles_new',
-    //         'portals_articles_edit',
-    //       ],
-    //       to: accountScopedRoute('portals_index', {
-    //         navigationPath: 'portals_articles_index',
-    //       }),
-    //     },
-    //     {
-    //       name: 'Categories',
-    //       label: t('SIDEBAR.HELP_CENTER.CATEGORIES'),
-    //       activeOn: [
-    //         'portals_categories_index',
-    //         'portals_categories_articles_index',
-    //         'portals_categories_articles_edit',
-    //       ],
-    //       to: accountScopedRoute('portals_index', {
-    //         navigationPath: 'portals_categories_index',
-    //       }),
-    //     },
-    //     {
-    //       name: 'Locales',
-    //       label: t('SIDEBAR.HELP_CENTER.LOCALES'),
-    //       activeOn: ['portals_locales_index'],
-    //       to: accountScopedRoute('portals_index', {
-    //         navigationPath: 'portals_locales_index',
-    //       }),
-    //     },
-    //     {
-    //       name: 'Settings',
-    //       label: t('SIDEBAR.HELP_CENTER.SETTINGS'),
-    //       activeOn: ['portals_settings_index'],
-    //       to: accountScopedRoute('portals_index', {
-    //         navigationPath: 'portals_settings_index',
-    //       }),
-    //     },
-    //   ],
-    // },
     {
       name: 'Settings',
       label: t('SIDEBAR.SETTINGS'),
@@ -593,7 +641,7 @@ const menuItems = computed(() => {
         {
           name: 'Settings Macros',
           label: t('SIDEBAR.MACROS'),
-          icon: 'i-lucide-toy-brick',
+          icon: 'i-lucide-zap',
           to: accountScopedRoute('macros_wrapper'),
         },
         {
@@ -602,22 +650,22 @@ const menuItems = computed(() => {
           icon: 'i-lucide-message-square-quote',
           to: accountScopedRoute('canned_list'),
         },
-        // {
-        //   name: 'Settings Templates',
-        //   label: t('SIDEBAR.TEMPLATES'),
-        //   icon: 'i-lucide-file-text',
-        //   to: accountScopedRoute('templates_list'),
-        // },
-        // {
-        //   name: 'Settings Integrations',
-        //   label: t('SIDEBAR.INTEGRATIONS'),
-        //   icon: 'i-lucide-blocks',
-        //   to: accountScopedRoute('settings_applications'),
-        // },
+        {
+          name: 'Settings Templates',
+          label: t('SIDEBAR.TEMPLATES'),
+          icon: 'i-lucide-file-text',
+          to: accountScopedRoute('templates_list'),
+        },
+        {
+          name: 'Settings Integrations',
+          label: t('SIDEBAR.INTEGRATIONS'),
+          icon: 'i-lucide-blocks',
+          to: accountScopedRoute('settings_applications'),
+        },
         {
           name: 'Settings Audit Logs',
           label: t('SIDEBAR.AUDIT_LOGS'),
-          icon: 'i-lucide-briefcase',
+          icon: 'i-lucide-clipboard-list',
           to: accountScopedRoute('auditlogs_list'),
         },
         {
@@ -648,6 +696,24 @@ const menuItems = computed(() => {
     },
   ];
 });
+
+// Calculate active menu items
+const activeMainMenuName = computed(() => {
+  return activeCategory.value || menuItems.value[0]?.name;
+});
+
+const activeMainMenuItem = computed(() => {
+  return menuItems.value.find(item => item.name === activeMainMenuName.value);
+});
+
+const handleMainMenuClick = item => {
+  activeCategory.value = item.name;
+
+  const navigableChild = getFirstNavigableChild(item);
+  if (navigableChild) {
+    router.push(navigableChild);
+  }
+};
 </script>
 
 <template>
@@ -656,7 +722,7 @@ const menuItems = computed(() => {
       closeMobileSidebar,
       { ignore: ['#mobile-sidebar-launcher'] },
     ]"
-    class="bg-n-solid-2 rtl:border-l ltr:border-r border-n-weak flex flex-col text-sm pb-1 fixed top-0 ltr:left-0 rtl:right-0 h-full z-40 transition-transform duration-200 ease-in-out md:static w-[200px] basis-[200px] md:flex-shrink-0 md:ltr:translate-x-0 md:rtl:-translate-x-0"
+    class="flex h-full flex-shrink-0 fixed top-0 ltr:left-0 rtl:right-0 z-40 transition-transform duration-200 ease-in-out md:static md:ltr:translate-x-0 md:rtl:translate-x-0"
     :class="[
       {
         'shadow-lg md:shadow-none': isMobileSidebarOpen,
@@ -664,71 +730,62 @@ const menuItems = computed(() => {
       },
     ]"
   >
-    <section class="grid gap-2 mt-2 mb-4">
-      <div class="flex gap-2 items-center px-2 min-w-0">
-        <div class="grid flex-shrink-0 place-content-center size-6">
-          <Logo class="size-4" />
-        </div>
-        <div class="flex-shrink-0 w-px h-3 bg-n-strong" />
-        <SidebarAccountSwitcher
-          class="flex-grow -mx-1 min-w-0"
-          @show-create-account-modal="emit('showCreateAccountModal')"
-        />
-      </div>
-      <div class="flex gap-2 px-2">
-        <RouterLink
-          :to="{ name: 'search' }"
-          class="flex gap-2 items-center px-2 py-1 w-full h-7 rounded-lg outline outline-1 outline-n-weak bg-n-solid-3 dark:bg-n-black/30"
-        >
-          <span class="flex-shrink-0 i-lucide-search size-4 text-n-slate-11" />
-          <span class="flex-grow text-left">
-            {{ t('COMBOBOX.SEARCH_PLACEHOLDER') }}
-          </span>
-          <span
-            class="hidden tracking-wide pointer-events-none select-none text-n-slate-10"
-          >
-            {{ searchShortcut }}
-          </span>
-        </RouterLink>
-        <CallButton v-if="hasVoiceInbox" class="flex-shrink-0" />
-        <ComposeConversation align-position="right">
-          <template #trigger="{ toggle }">
-            <Button
-              icon="i-lucide-pen-line"
-              color="slate"
-              size="sm"
-              class="!h-7 !bg-n-solid-3 dark:!bg-n-black/30 !outline-n-weak !text-n-slate-11"
-              @click="toggle"
-            />
-          </template>
-        </ComposeConversation>
-      </div>
-    </section>
-    <nav class="grid overflow-y-scroll flex-grow gap-2 px-2 pb-5 no-scrollbar">
-      <ul class="flex flex-col gap-1.5 m-0 list-none">
-        <SidebarGroup
+    <!-- Column 1: Main Menu Icons -->
+    <nav
+      class="flex flex-col items-center py-4 w-16 bg-n-solid-2 border-r border-n-weak flex-shrink-0 relative h-full overflow-y-auto no-scrollbar"
+    >
+      <ul class="flex flex-col gap-2 w-full px-2 list-none m-0" role="menu">
+        <li
           v-for="item in menuItems"
           :key="item.name"
-          v-bind="item"
-        />
+          class="w-full flex justify-center relative"
+        >
+          <button
+            v-tooltip.right="item.label"
+            class="flex items-center justify-center rounded-xl transition-all w-10 h-10 relative flex-shrink-0 outline-none"
+            :class="[
+              activeMainMenuName === item.name
+                ? 'bg-[#E06720] text-white shadow-sm dark:bg-[#E06720]'
+                : 'bg-transparent text-n-slate-12 hover:bg-[#E06720]/10 dark:text-n-slate-11 hover:text-n-slate-12 dark:hover:bg-[#E06720]/20 dark:hover:text-white',
+            ]"
+            @click="handleMainMenuClick(item)"
+          >
+            <span :class="item.icon" class="size-4" />
+          </button>
+        </li>
       </ul>
-    </nav>
-    <section
-      class="flex flex-col flex-shrink-0 relative gap-1 justify-between items-center"
-    >
-      <div
-        class="pointer-events-none absolute inset-x-0 -top-[31px] h-8 bg-gradient-to-t from-n-solid-2 to-transparent"
-      />
-      <SidebarChangelogCard
-        v-if="isOnChatwootCloud && !isACustomBrandedInstance"
-      />
-      <div
-        class="p-1 flex-shrink-0 flex w-full justify-between z-10 gap-2 items-center border-t border-n-weak shadow-[0px_-2px_4px_0px_rgba(27,28,29,0.02)]"
-      >
-        <SidebarProfileMenu
-          @open-key-shortcut-modal="emit('openKeyShortcutModal')"
+      <div class="mt-auto flex flex-col gap-2 w-full px-2 items-center pb-2">
+        <SidebarChangelogCard
+          v-if="isOnChatwootCloud && !isACustomBrandedInstance"
         />
       </div>
-    </section>
+    </nav>
+
+    <!-- Column 2: Secondary Menu Items -->
+    <div
+      class="w-[200px] bg-n-solid-1 md:bg-[#F9FAFB] dark:md:bg-n-solid-1 border-r border-n-weak flex flex-col flex-shrink-0 h-full overflow-y-auto no-scrollbar"
+    >
+      <div
+        class="px-4 pt-5 pb-3 sticky top-0 md:bg-[#F9FAFB] dark:md:bg-n-solid-1 z-10 flex items-center justify-between"
+      >
+        <h2 class="text-base font-semibold text-n-slate-12">
+          {{ activeMainMenuItem?.label || '' }}
+        </h2>
+      </div>
+      <ul class="flex flex-col gap-1.5 px-3 pb-5 m-0 list-none">
+        <template v-if="activeMainMenuItem && activeMainMenuItem.children">
+          <SidebarGroup
+            v-for="child in activeMainMenuItem.children"
+            :key="child.name"
+            v-bind="child"
+          />
+        </template>
+        <!-- Render single item if no children -->
+        <SidebarGroup
+          v-else-if="activeMainMenuItem && !activeMainMenuItem.children"
+          v-bind="activeMainMenuItem"
+        />
+      </ul>
+    </div>
   </aside>
 </template>

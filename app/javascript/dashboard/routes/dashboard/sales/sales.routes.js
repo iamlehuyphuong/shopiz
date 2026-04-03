@@ -6,7 +6,6 @@ import Catalog from './components/Catalog/Index.vue';
 import Orders from './components/Orders/Index.vue';
 
 const meta = {
-  featureFlag: FEATURE_FLAGS.SALES,
   permissions: ['administrator', 'agent', 'custom_role', 'sales_manage'],
 };
 
