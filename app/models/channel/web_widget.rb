@@ -32,7 +32,7 @@ class Channel::WebWidget < ApplicationRecord
 
   self.table_name = 'channel_web_widgets'
   EDITABLE_ATTRS = [:website_url, :widget_color, :welcome_title, :welcome_tagline, :reply_time, :pre_chat_form_enabled,
-                    :continuity_via_email, :hmac_mandatory, :allowed_domains,
+                    :continuity_via_email, :hmac_mandatory, :allowed_domains, :bubble_avatar, :close_bubble_avatar,
                     { pre_chat_form_options: [:pre_chat_message, :require_email,
                                               { pre_chat_fields:
                                                 [:field_type, :label, :placeholder, :name, :enabled, :type, :enabled, :required,
@@ -43,6 +43,9 @@ class Channel::WebWidget < ApplicationRecord
   validates :website_url, presence: true
   validates :widget_color, presence: true
   has_many :portals, foreign_key: 'channel_web_widget_id', dependent: :nullify, inverse_of: :channel_web_widget
+
+  has_one_attached :bubble_avatar
+  has_one_attached :close_bubble_avatar
 
   has_secure_token :website_token
   has_secure_token :hmac_token
@@ -55,6 +58,18 @@ class Channel::WebWidget < ApplicationRecord
             :check_for_column => false
 
   enum reply_time: { in_a_few_minutes: 0, in_a_few_hours: 1, in_a_day: 2 }
+
+  def bubble_avatar_url
+    return Rails.application.routes.url_helpers.url_for(bubble_avatar.representation(resize_to_fill: [250, nil])) if bubble_avatar.attached? && bubble_avatar.representable?
+
+    ''
+  end
+
+  def close_bubble_avatar_url
+    return Rails.application.routes.url_helpers.url_for(close_bubble_avatar.representation(resize_to_fill: [250, nil])) if close_bubble_avatar.attached? && close_bubble_avatar.representable?
+
+    ''
+  end
 
   def name
     'Website'

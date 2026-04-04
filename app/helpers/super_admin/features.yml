@@ -140,7 +140,7 @@ shopify:
   icon: 'icon-shopify'
   config_key: 'shopify'
 zalo:
-  name: 'Zalo'
+  name: 'Zalo OA'
   description: 'Stay connected with your customers on Zalo Official Account.'
   enabled: true
   icon: 'icon-zalo'
@@ -164,8 +164,8 @@ google:
   icon: 'icon-google'
   config_key: 'google'
 tiktok:
-  name: 'Tiktok'
-  description: 'Stay connected with your customers on Tiktok.'
+  name: 'Tiktok Shop'
+  description: 'Stay connected with your customers on Tiktok Shop.'
   enabled: true
   icon: 'icon-tiktok'
   config_key: 'tiktok'

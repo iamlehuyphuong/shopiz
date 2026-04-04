@@ -40,47 +40,79 @@ export const SDK_CSS = `
 
 .woot-widget-bubble {
   background: transparent !important;
-  border-radius: 90px;
-  border-width: 0px;
+  border-radius: 0px !important;
+  border: none !important;
   bottom: 20px;
   cursor: pointer;
-  height: 90px;
-  padding: 0px;
+  height: 90px !important;
+  width: 90px !important;
+  min-width: 90px !important;
+  min-height: 90px !important;
+  max-width: 90px !important;
+  max-height: 90px !important;
+  padding: 0px !important;
   position: fixed;
   user-select: none;
-  width: 90px;
   z-index: 2147483000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  outline: none !important;
+  aspect-ratio: 1 / 1 !important;
+  flex-shrink: 0 !important;
 }
 
 .woot-widget-bubble .woot-widget--bubble__text {
-  position: absolute;
-  left: -158%;
-  padding: 9px 11px 8px 11px;
-  border-radius: 20px;
-  top: 50%;
-  transform: translateY(-33%);
-  font-size: 16px;
-  box-shadow: 0 0 10px rgba(42, 88, 230, 0.2);
+  position: absolute !important;
+  right: calc(100% + 16px) !important;
+  white-space: nowrap !important;
+  padding: 10px 18px !important;
+  border-radius: 12px;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
-  color: #f7f9fc;
-  text-shadow: 0 1px 2px rgba(42, 88, 230, 0.25), 0 0 8px rgba(86, 130, 196, 0.15);
-  background: linear-gradient(#28307f, #363c70) padding-box, linear-gradient(180deg, #386BB7, #799DD2) border-box;
-  border: 1px solid transparent;
+  color: #fff !important;
+  background: linear-gradient(135deg, #28307f, #363c70) !important;
+  pointer-events: none;
+  display: block !important;
+}
+
+.woot-elements--left .woot-widget--bubble__text {
+  right: auto !important;
+  left: calc(100% + 16px) !important;
 }
 
 @media only screen and (min-width: 1441px) {
   .woot-widget-bubble .woot-widget--bubble__text {
-    padding: 12px 23px 11px 23px;
-    left: calc(-100% + -76px);
+    right: calc(100% + 16px);
+  }
+  .woot-elements--left .woot-widget--bubble__text {
+    left: calc(100% + 16px);
   }
 }
 
-.woot-widget-bubble .bubble-icon {
-  display: inline-block !important;
+.woot-widget-bubble .bubble-icon-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   width: 100% !important;
   height: 100% !important;
-  object-fit: contain;
-  scale: 1.1;
+  overflow: hidden !important;
+  border-radius: inherit !important;
+  pointer-events: none;
+}
+
+.woot-widget-bubble .bubble-icon {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: 50% !important;
+  pointer-events: none;
 }
 
 .woot-widget-bubble.woot-widget-bubble--flat {
@@ -92,8 +124,8 @@ export const SDK_CSS = `
 }
 
 .woot-widget-bubble.woot-widget-bubble--flat {
-  height: 56px;
-  width: 56px;
+  height: 56px !important;
+  width: 56px !important;
 }
 
 .woot-widget-bubble.woot-widget-bubble--flat svg {
@@ -121,22 +153,17 @@ export const SDK_CSS = `
 
 .woot-widget-bubble.woot-widget--expanded {
   bottom: 24px;
-  display: flex;
-  height: 100px !important;
-  width: auto !important;
-  align-items: center;
+  display: flex !important;
+  height: 90px !important;
+  width: 90px !important;
+  min-width: 90px !important;
+  min-height: 90px !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 .woot-widget-bubble.woot-widget--expanded div {
-  align-items: center;
-  color: #fff;
-  display: flex;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, Arial, sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  justify-content: center;
-  padding-right: 20px;
-  width: auto !important;
+  display: none !important;
 }
 
 .woot-widget-bubble.woot-widget--expanded.woot-widget-bubble-color--lighter div{
@@ -194,6 +221,17 @@ export const SDK_CSS = `
   }
 }
 
+.woot--close::before,
+.woot--close::after {
+  background: #fff;
+  content: "";
+  height: 2px;
+  left: 31px;
+  position: absolute;
+  top: 44px;
+  width: 28px;
+}
+
 .woot--close::before {
   transform: rotate(45deg);
 }
@@ -231,40 +269,6 @@ export const SDK_CSS = `
   will-change: transform, opacity;
   transform: translateX(0) scale(1) rotate(0deg);
   transition: transform 300ms ease, opacity 100ms ease, visibility 0ms linear 0ms, bottom 0ms linear 0ms;
-}
-
-.woot-widget-bubble.woot--close .bubble-icon {
-  scale: 1;
-}
-
-.woot-widget-bubble.woot--hide {
-  transform: translateX(8px) scale(.75) rotate(-30deg);
-  transition: transform 300ms ease, opacity 200ms ease, visibility 0ms linear 500ms, bottom 0ms ease 200ms;
-}
-
-.woot-widget-bubble.woot-widget--expanded {
-  transform: translateX(0px);
-  transition: transform 300ms ease, opacity 100ms ease, visibility 0ms linear 0ms, bottom 0ms linear 0ms;
-}
-.woot-widget-bubble.woot-widget--expanded.woot--hide {
-  transform: translateX(8px);
-  transition: transform 300ms ease, opacity 200ms ease, visibility 0ms linear 500ms, bottom 0ms ease 200ms;
-}
-.woot-widget-bubble.woot-widget-bubble--flat.woot--close {
-  transform: translateX(0px);
-  transition: transform 300ms ease, opacity 10ms ease, visibility 0ms linear 0ms, bottom 0ms linear 0ms;
-}
-.woot-widget-bubble.woot-widget-bubble--flat.woot--close.woot--hide {
-  transform: translateX(8px);
-  transition: transform 300ms ease, opacity 200ms ease, visibility 0ms linear 500ms, bottom 0ms ease 200ms;
-}
-.woot-widget-bubble.woot-widget--expanded.woot-widget-bubble--flat {
-  transform: translateX(0px);
-  transition: transform 300ms ease, opacity 200ms ease, visibility 0ms linear 0ms, bottom 0ms linear 0ms;
-}
-.woot-widget-bubble.woot-widget--expanded.woot-widget-bubble--flat.woot--hide {
-  transform: translateX(8px);
-  transition: transform 300ms ease, opacity 200ms ease, visibility 0ms linear 500ms, bottom 0ms ease 200ms;
 }
 
 @media only screen and (max-width: 667px) {

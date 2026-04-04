@@ -993,6 +993,24 @@
             }
           }
         },
+        "BUBBLE_AVATAR": {
+          "LABEL": "Bubble Icon",
+          "DELETE": {
+            "API": {
+              "SUCCESS_MESSAGE": "Bubble icon deleted successfully",
+              "ERROR_MESSAGE": "There was an error, please try again"
+            }
+          }
+        },
+        "CLOSE_BUBBLE_AVATAR": {
+          "LABEL": "Close Icon",
+          "DELETE": {
+            "API": {
+              "SUCCESS_MESSAGE": "Close icon deleted successfully",
+              "ERROR_MESSAGE": "There was an error, please try again"
+            }
+          }
+        },
         "WEBSITE_NAME": {
           "LABEL": "Website Name",
           "PLACE_HOLDER": "Enter your website name (eg: Acme Inc)",
