@@ -164,6 +164,7 @@ vi:
       instagram_deleted_story_content: 'Hội thoại này không còn nữa.'
       deleted: 'Tin nhắn đã bị xoá'
       undo: 'Tin nhắn đã bị thu hồi'
+      deleted_or_retracted: 'Tin nhắn đã được xoá hoặc thu hồi'
       whatsapp:
         list_button_label: 'Chọn một mục'
       delivery_status:
@@ -400,12 +401,12 @@ vi:
     ssl_status:
       custom_domain_not_configured: 'Tùy chỉnh tên miền chưa được cấu hình.'
   common:
-    over_limit: "Đã vượt quá giới hạn tài khoản. Nâng cấp lên gói cao hơn"
+    over_limit: 'Đã vượt quá giới hạn tài khoản. Nâng cấp lên gói cao hơn'
   billing_histories:
     statuses:
-      pending: "Xuất hoá đơn"
-      invoiced: "Đã xuất"
-      overdue: "Quá hạn"
+      pending: 'Xuất hoá đơn'
+      invoiced: 'Đã xuất'
+      overdue: 'Quá hạn'
     content:
-      package: "Gói %{product_name} %{month} Tháng"
-      credit: "Gói %{product_name}"
+      package: 'Gói %{product_name} %{month} Tháng'
+      credit: 'Gói %{product_name}'

@@ -198,7 +198,8 @@ en:
       instagram_story_content: '%{story_sender} mentioned you in the story: '
       instagram_deleted_story_content: This story is no longer available.
       deleted: This message was deleted
-      undo: 'Tin nhắn đã bị thu hồi'
+      undo: 'Message has been retracted'
+      deleted_or_retracted: 'Message has been deleted or retracted'
       whatsapp:
         list_button_label: 'Choose an item'
       delivery_status:
@@ -440,12 +441,12 @@ en:
     ssl_status:
       custom_domain_not_configured: 'Custom domain is not configured'
   common:
-    over_limit: "Account limit exceeded. Upgrade to a higher plan"
+    over_limit: 'Account limit exceeded. Upgrade to a higher plan'
   billing_histories:
     statuses:
-      pending: "Pending"
-      invoiced: "Invoiced"
-      overdue: "Overdue"
+      pending: 'Pending'
+      invoiced: 'Invoiced'
+      overdue: 'Overdue'
     content:
-      package: "%{product_name} Package - %{month} months"
-      credit: "%{product_name} Package"
+      package: '%{product_name} Package - %{month} months'
+      credit: '%{product_name} Package'

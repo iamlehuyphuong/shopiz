@@ -71,7 +71,10 @@ const currentConversationMetaData = computed(() =>
   conversationMetadataGetter.value(conversationId.value)
 );
 const conversationAdditionalAttributes = computed(
-  () => currentConversationMetaData.value.additional_attributes || {}
+  () =>
+    currentChat.value.additional_attributes ||
+    currentConversationMetaData.value.additional_attributes ||
+    {}
 );
 
 const channelType = computed(() => currentChat.value.meta?.channel);
@@ -184,6 +187,9 @@ onMounted(() => {
               <ConversationInfo
                 :conversation-attributes="conversationAdditionalAttributes"
                 :contact-attributes="contactAdditionalAttributes"
+                :empty-state-message="
+                  $t('CONVERSATION_CUSTOM_ATTRIBUTES.NO_RECORDS_FOUND')
+                "
               />
             </AccordionItem>
           </div>

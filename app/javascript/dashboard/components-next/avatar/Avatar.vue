@@ -50,6 +50,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  colorIndex: {
+    type: Number,
+    default: null,
+  },
 });
 
 const emit = defineEmits(['upload', 'delete']);
@@ -100,11 +104,17 @@ const initials = computed(() => {
 });
 
 const getColorsByNameLength = computed(() => {
-  if (!props.name) return AVATAR_COLORS.default;
+  if (!props.name && props.colorIndex === null) return AVATAR_COLORS.default;
 
-  const index = props.branded
-    ? 0
-    : props.name.length % AVATAR_COLORS.light.length;
+  let index = 0;
+  if (props.colorIndex !== null) {
+    index = props.colorIndex % AVATAR_COLORS.light.length;
+  } else if (props.branded) {
+    index = 0;
+  } else {
+    index = props.name.length % AVATAR_COLORS.light.length;
+  }
+
   return {
     bg: AVATAR_COLORS.light[index][0],
     darkBg: AVATAR_COLORS.dark[index][0],

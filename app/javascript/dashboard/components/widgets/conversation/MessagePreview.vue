@@ -185,6 +185,12 @@ export default {
     isMessageSticker() {
       return this.message && this.message.content_type === 'sticker';
     },
+    isMessageDeleted() {
+      return (
+        this.message?.content_attributes?.deleted ||
+        this.message?.content_attributes?.undo
+      );
+    },
   },
 };
 </script>
@@ -211,7 +217,10 @@ export default {
         icon="info"
       />
     </template>
-    <span v-if="message.content && isMessageSticker">
+    <span
+      v-if="message.content && isMessageSticker"
+      :class="{ 'line-through opacity-60': isMessageDeleted }"
+    >
       <fluent-icon
         size="16"
         class="-mt-0.5 align-middle inline-block text-n-slate-11"
@@ -219,10 +228,16 @@ export default {
       />
       {{ $t('CHAT_LIST.ATTACHMENTS.image.CONTENT') }}
     </span>
-    <span v-else-if="message.content">
+    <span
+      v-else-if="message.content"
+      :class="{ 'line-through opacity-60': isMessageDeleted }"
+    >
       {{ parsedLastMessage }}
     </span>
-    <span v-else-if="message.attachments">
+    <span
+      v-else-if="message.attachments"
+      :class="{ 'line-through opacity-60': isMessageDeleted }"
+    >
       <fluent-icon
         v-if="attachmentIcon && showMessageType"
         size="16"
@@ -231,7 +246,7 @@ export default {
       />
       {{ $t(`${attachmentMessageContent}`) }}
     </span>
-    <span v-else>
+    <span v-else :class="{ 'line-through opacity-60': isMessageDeleted }">
       {{ defaultEmptyMessage || $t('CHAT_LIST.NO_CONTENT') }}
     </span>
   </div>
