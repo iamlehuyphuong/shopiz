@@ -10,7 +10,6 @@ import {
   widgetHolder,
   createBubbleHolder,
   createBubbleIcon,
-  bubbleSVG,
   chatBubble,
   closeBubble,
   bubbleHolder,
@@ -186,7 +185,7 @@ export const IFrameHelper = {
         IFrameHelper.sendMessage('set-user', window.$shopiz.user);
       }
 
-      window.playAudioAlert = () => { };
+      window.playAudioAlert = () => {};
 
       initOnEvents.forEach(e => {
         document.addEventListener(e, IFrameHelper.setupAudioListeners, false);
@@ -325,15 +324,12 @@ export const IFrameHelper = {
 
     const chatIcon = createBubbleIcon({
       className,
-      path: bubbleSVG,
       target: chatBubble,
+      widgetColor,
     });
 
     addClasses(closeBubble, closeBtnClassName);
     addImageToButton({ target: closeBubble, imageName: 'bubble_off_chat.svg' });
-    chatIcon.style.background = widgetColor;
-    closeBubble.style.background = widgetColor;
-
     bubbleHolder.appendChild(chatIcon);
     bubbleHolder.appendChild(closeBubble);
     onClickChatBubble();

@@ -55,6 +55,10 @@ export default {
       type: String,
       default: '',
     },
+    bubbleLogo: {
+      type: String,
+      default: '',
+    },
   },
   setup() {
     const { replaceInstallationName } = useBranding();
@@ -113,13 +117,13 @@ export default {
     },
     isBubbleExpanded() {
       return (
-        !this.isWidgetVisible && this.widgetBubbleType === 'expanded_bubble'
+        !this.isWidgetVisible &&
+        (this.widgetBubbleType === 'expanded_bubble' ||
+          this.widgetBubbleLauncherTitle)
       );
     },
     getWidgetBubbleLauncherTitle() {
-      return this.isWidgetVisible || this.widgetBubbleType === 'standard'
-        ? ' '
-        : this.widgetBubbleLauncherTitle;
+      return this.isWidgetVisible ? ' ' : this.widgetBubbleLauncherTitle;
     },
   },
   methods: {
@@ -175,8 +179,7 @@ export default {
     </div>
     <div class="flex mt-4 w-[320px]" :style="getBubblePositionStyle">
       <button
-        class="relative flex items-center justify-center rounded-full cursor-pointer"
-        :style="{ background: color }"
+        class="relative flex items-center justify-center rounded-full cursor-pointer bg-transparent"
         :class="
           isBubbleExpanded
             ? 'w-auto font-medium text-base text-white dark:text-white h-12 px-4'
@@ -184,16 +187,26 @@ export default {
         "
         @click="toggleWidget"
       >
+        <div
+          v-if="isBubbleExpanded"
+          class="ltr:pr-4 rtl:pl-4 order-first whitespace-nowrap p-2 px-4 rounded-2xl text-white text-base font-medium"
+          :style="{ background: color }"
+        >
+          {{ widgetBubbleLauncherTitle }}
+        </div>
         <img
           v-if="!isWidgetVisible"
-          src="~dashboard/assets/images/bubble-logo.svg"
+          :src="
+            bubbleLogo || require('dashboard/assets/images/bubble-logo.svg')
+          "
           alt=""
           draggable="false"
-          class="w-16 h-16 mx-auto"
+          :class="
+            bubbleLogo
+              ? 'w-full h-full object-cover rounded-full'
+              : 'w-16 h-16 mx-auto'
+          "
         />
-        <div v-if="isBubbleExpanded" class="ltr:pl-2.5 rtl:pr-2.5">
-          {{ getWidgetBubbleLauncherTitle }}
-        </div>
         <div v-if="isWidgetVisible" class="relative">
           <div class="absolute w-0.5 h-8 rotate-45 -translate-y-1/2 bg-white" />
           <div

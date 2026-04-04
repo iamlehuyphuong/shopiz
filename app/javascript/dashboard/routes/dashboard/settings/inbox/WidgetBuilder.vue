@@ -39,6 +39,8 @@ export default {
       replyTime: 'in_a_few_minutes',
       avatarFile: null,
       avatarUrl: '',
+      bubbleAvatarFile: null,
+      bubbleAvatarUrl: '',
       widgetBubblePosition: 'right',
       widgetBubbleLauncherTitle: this.$t(
         'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_LAUNCHER_TITLE.DEFAULT'
@@ -166,6 +168,7 @@ export default {
         widget_color,
         reply_time,
         avatar_url,
+        bubble_avatar_url,
       } = this.inbox;
       this.websiteName = name;
       this.welcomeHeading = welcome_title;
@@ -173,6 +176,7 @@ export default {
       this.color = widget_color;
       this.replyTime = reply_time;
       this.avatarUrl = avatar_url;
+      this.bubbleAvatarUrl = bubble_avatar_url;
 
       const savedInformation = this.getSavedInboxInformation();
       if (savedInformation) {
@@ -206,6 +210,32 @@ export default {
     handleImageUpload({ file, url }) {
       this.avatarFile = file;
       this.avatarUrl = url;
+    },
+    handleBubbleImageUpload({ file, url }) {
+      this.bubbleAvatarFile = file;
+      this.bubbleAvatarUrl = url;
+    },
+    async handleBubbleAvatarDelete() {
+      try {
+        // We'll need to implement this delete logic if we want to support deleting bubble avatar separately
+        // For now, we'll just clear the local state until we have a backend delete endpoint for channel attachments
+        this.bubbleAvatarFile = null;
+        this.bubbleAvatarUrl = '';
+        // If we want to persist the deletion immediately:
+        await this.updateWidget();
+        useAlert(
+          this.$t(
+            'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.BUBBLE_AVATAR.DELETE.API.SUCCESS_MESSAGE'
+          )
+        );
+      } catch (error) {
+        useAlert(
+          error.message ||
+            this.$t(
+              'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.BUBBLE_AVATAR.DELETE.API.ERROR_MESSAGE'
+            )
+        );
+      }
     },
     async handleAvatarDelete() {
       try {
@@ -249,6 +279,11 @@ export default {
         };
         if (this.avatarFile) {
           payload.avatar = this.avatarFile;
+        }
+        if (this.bubbleAvatarFile) {
+          payload.channel.bubble_avatar = this.bubbleAvatarFile;
+        } else if (this.bubbleAvatarUrl === '') {
+          // Handle explicit deletion if needed, but for MVP we'll focus on upload
         }
         await this.$store.dispatch('inboxes/updateInbox', payload);
         useAlert(
@@ -383,6 +418,26 @@ export default {
               :items="widgetBubbleTypes"
               :action="handleWidgetBubbleTypeChange"
             />
+            <div class="flex flex-col mb-4 items-start gap-1 w-full">
+              <label class="mb-0.5 text-sm font-medium text-n-slate-12">
+                {{
+                  $t(
+                    'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.BUBBLE_AVATAR.LABEL'
+                  )
+                }}
+              </label>
+              <Avatar
+                :src="bubbleAvatarUrl"
+                :size="72"
+                icon-name="i-ri-chat-smile-2-fill"
+                name=""
+                allow-upload
+                branded
+                rounded-full
+                @upload="handleBubbleImageUpload"
+                @delete="handleBubbleAvatarDelete"
+              />
+            </div>
             <woot-input
               v-model="widgetBubbleLauncherTitle"
               :label="
@@ -432,6 +487,7 @@ export default {
             :widget-bubble-position="widgetBubblePosition"
             :widget-bubble-launcher-title="widgetBubbleLauncherTitle"
             :widget-bubble-type="widgetBubbleType"
+            :bubble-logo="bubbleAvatarUrl"
           />
         </div>
         <div
