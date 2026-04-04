@@ -215,6 +215,12 @@
         "ERROR": "Please enter a valid address",
         "PLACEHOLDER": "Please enter your address"
       },
+      "ID_NUMBER": {
+        "LABEL": "ID card number / CCCD",
+        "ERROR": "Please enter a valid ID number",
+        "PLACEHOLDER": "Please enter your ID card number or CCCD"
+      },
+      "IS_COMPANY": "Company account?",
       "TYPE_IDS": {
         "PERSONAL": "Personal",
         "COMPANY": "Company"

@@ -68,6 +68,7 @@ export default {
       companyAddress: '',
       companyEmail: '',
       companyTaxId: '',
+      idNumber: '',
       messageSignature: '',
       hotKeys: [
         {
@@ -125,6 +126,7 @@ export default {
       this.companyAddress = this.currentUser.company_address;
       this.companyEmail = this.currentUser.company_email;
       this.companyTaxId = this.currentUser.company_tax_id;
+      this.idNumber = this.currentUser.id_number;
       this.messageSignature = this.currentUser.message_signature;
     },
     async dispatchUpdate(payload, successMessage, errorMessage) {
@@ -153,6 +155,7 @@ export default {
         companyAddress,
         companyEmail,
         companyTaxId,
+        idNumber,
       } = userAttributes;
       const hasEmailChanged = this.currentUser.email !== email;
       this.name = name || this.name;
@@ -170,6 +173,7 @@ export default {
         company_address: companyAddress,
         company_email: companyEmail,
         company_tax_id: companyTaxId,
+        id_number: idNumber,
       };
 
       const success = await this.dispatchUpdate(
@@ -252,6 +256,7 @@ export default {
         :company-address="companyAddress"
         :company-email="companyEmail"
         :company-tax-id="companyTaxId"
+        :id-number="idNumber"
         :email-enabled="!globalConfig.disableUserProfileUpdate"
         @update-user="updateProfile"
       />

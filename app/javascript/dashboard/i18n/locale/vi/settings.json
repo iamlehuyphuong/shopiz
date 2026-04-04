@@ -215,6 +215,12 @@
         "ERROR": "Vui lòng nhập địa chỉ hợp lệ",
         "PLACEHOLDER": "Vui lòng nhập địa chỉ"
       },
+      "ID_NUMBER": {
+        "LABEL": "Số CMND / Căn cước công dân",
+        "ERROR": "Vui lòng nhập số định danh hợp lệ",
+        "PLACEHOLDER": "Vui lòng nhập số CMND hoặc thẻ CCCD"
+      },
+      "IS_COMPANY": "Tài khoản công ty?",
       "TYPE_IDS": {
         "PERSONAL": "Cá nhân",
         "COMPANY": "Công ty"

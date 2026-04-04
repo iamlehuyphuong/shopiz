@@ -3,9 +3,11 @@ import { useAlert } from 'dashboard/composables';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import { useVuelidate } from '@vuelidate/core';
 import { required, minLength, email } from '@vuelidate/validators';
+import WootSwitch from 'dashboard/components-next/switch/Switch.vue';
 export default {
   components: {
     NextButton,
+    WootSwitch,
   },
   props: {
     name: {
@@ -48,6 +50,10 @@ export default {
       type: String,
       default: '',
     },
+    idNumber: {
+      type: String,
+      default: '',
+    },
   },
   emits: ['updateUser'],
   setup() {
@@ -64,6 +70,7 @@ export default {
       modelCompanyAddress: this.companyAddress,
       modelCompanyEmail: this.companyEmail,
       modelCompanyTaxId: this.companyTaxId,
+      userIdNumber: this.idNumber,
       inputStyles: {
         borderRadius: '0.75rem',
         padding: '0.375rem 0.75rem',
@@ -89,6 +96,17 @@ export default {
       email,
     },
     modelCompanyTaxId: {},
+    userIdNumber: {},
+  },
+  computed: {
+    isCompany: {
+      get() {
+        return this.userTypeId === 'company';
+      },
+      set(value) {
+        this.userTypeId = value ? 'company' : 'personal';
+      },
+    },
   },
   watch: {
     name: {
@@ -139,14 +157,20 @@ export default {
       },
       immediate: true,
     },
+    idNumber: {
+      handler(value) {
+        this.userIdNumber = value;
+      },
+      immediate: true,
+    },
     typeId: {
       handler(value) {
         if (value === 'personal' || value === 'company') {
-          this.userTypeId = value
+          this.userTypeId = value;
         }
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   methods: {
     async updateUser() {
@@ -165,6 +189,7 @@ export default {
         companyAddress: this.modelCompanyAddress,
         companyEmail: this.modelCompanyEmail,
         companyTaxId: this.modelCompanyTaxId,
+        idNumber: this.userIdNumber,
       });
     },
   },
@@ -187,34 +212,7 @@ export default {
       @input="v$.userDisplayName.$touch"
       @blur="v$.userDisplayName.$touch"
     />
-    <div class="flex gap-2">
-      <div class="flex items-center gap-2">
-        <input
-          id="personal"
-          v-model="userTypeId"
-          type="radio"
-          name="userTypeId"
-          value="personal"
-        />
-        <label for="personal">{{
-          $t('PROFILE_SETTINGS.FORM.TYPE_IDS.PERSONAL')
-        }}</label>
-      </div>
-      <div class="flex items-center gap-2">
-        <input
-          id="company"
-          v-model="userTypeId"
-          type="radio"
-          name="userTypeId"
-          value="company"
-        />
-        <label for="company">{{
-          $t('PROFILE_SETTINGS.FORM.TYPE_IDS.COMPANY')
-        }}</label>
-      </div>
-    </div>
     <woot-input
-      v-if="userTypeId === 'personal'"
       v-model="userName"
       :styles="inputStyles"
       :class="{ error: v$.userName.$error }"
@@ -227,7 +225,20 @@ export default {
       @blur="v$.userName.$touch"
     />
     <woot-input
-      v-if="userTypeId === 'personal'"
+      v-model="userIdNumber"
+      :styles="inputStyles"
+      :class="{ error: v$.userIdNumber.$error }"
+      :label="$t('PROFILE_SETTINGS.FORM.ID_NUMBER.LABEL')"
+      :placeholder="$t('PROFILE_SETTINGS.FORM.ID_NUMBER.PLACEHOLDER')"
+      :error="
+        v$.userIdNumber.$error
+          ? $t('PROFILE_SETTINGS.FORM.ID_NUMBER.ERROR')
+          : ''
+      "
+      @input="v$.userIdNumber.$touch"
+      @blur="v$.userIdNumber.$touch"
+    />
+    <woot-input
       v-model="userAddress"
       :styles="inputStyles"
       :label="$t('PROFILE_SETTINGS.FORM.ADDRESS.LABEL')"
@@ -236,7 +247,7 @@ export default {
       @blur="v$.userAddress.$touch"
     />
     <woot-input
-      v-if="userTypeId === 'personal' && emailEnabled"
+      v-if="emailEnabled"
       v-model="userEmail"
       :styles="inputStyles"
       :class="{ error: v$.userEmail.$error }"
@@ -248,6 +259,13 @@ export default {
       @input="v$.userEmail.$touch"
       @blur="v$.userEmail.$touch"
     />
+
+    <div class="flex items-center gap-2 my-2">
+      <WootSwitch v-model="isCompany" />
+      <span class="text-sm font-medium text-n-slate-12">
+        {{ $t('PROFILE_SETTINGS.FORM.IS_COMPANY') }}
+      </span>
+    </div>
 
     <woot-input
       v-if="userTypeId === 'company'"
@@ -283,9 +301,11 @@ export default {
       :styles="inputStyles"
       :label="$t('PROFILE_SETTINGS.FORM.COMPANY_EMAIL.LABEL')"
       :placeholder="$t('PROFILE_SETTINGS.FORM.COMPANY_EMAIL.PLACEHOLDER')"
-      :error="`${
-        v$.modelCompanyEmail.$error ? $t('PROFILE_SETTINGS.FORM.COMPANY_EMAIL.ERROR') : ''
-      }`"
+      :error="
+        v$.modelCompanyEmail.$error
+          ? $t('PROFILE_SETTINGS.FORM.COMPANY_EMAIL.ERROR')
+          : ''
+      "
       @input="v$.modelCompanyEmail.$touch"
       @blur="v$.modelCompanyEmail.$touch"
     />

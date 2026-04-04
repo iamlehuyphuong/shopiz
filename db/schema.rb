@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_01_21_152014) do
+ActiveRecord::Schema[7.1].define(version: 2026_04_04_125651) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -1310,6 +1310,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_01_21_152014) do
     t.string "company_address"
     t.string "company_email"
     t.string "company_tax_id"
+    t.string "id_number"
     t.index ["email"], name: "index_users_on_email"
     t.index ["otp_required_for_login"], name: "index_users_on_otp_required_for_login"
     t.index ["otp_secret"], name: "index_users_on_otp_secret", unique: true

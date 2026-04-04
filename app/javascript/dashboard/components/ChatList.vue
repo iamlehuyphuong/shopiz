@@ -357,9 +357,12 @@ const currentInbox = computed(() => {
 });
 
 const allowLoadHistoryConversation = computed(() => {
-  return currentInbox.value.channel_type === 'Channel::FacebookPage' &&
-    !conversationStats.value['isLoadAllConversation'] && !hasAppliedFiltersOrActiveFolders.value;
-})
+  return (
+    currentInbox.value.channel_type === 'Channel::FacebookPage' &&
+    !conversationStats.value.isLoadAllConversation &&
+    !hasAppliedFiltersOrActiveFolders.value
+  );
+});
 
 const allConversationsSelected = computed(() => {
   return (
@@ -602,12 +605,15 @@ function resetAndFetchData() {
 }
 
 function loadMoreConversations() {
-  if ((hasCurrentPageEndReached.value && !allowLoadHistoryConversation.value) || chatListLoading.value) {
+  if (
+    (hasCurrentPageEndReached.value && !allowLoadHistoryConversation.value) ||
+    chatListLoading.value
+  ) {
     return;
   }
 
   if (hasCurrentPageEndReached.value && allowLoadHistoryConversation.value) {
-    fetchHistoryConversation()
+    fetchHistoryConversation();
   } else if (!hasAppliedFiltersOrActiveFolders.value) {
     fetchConversations();
   } else if (hasActiveFolders.value) {
@@ -917,14 +923,11 @@ watch(conversationFilters, (newVal, oldVal) => {
           class="conversation-load-more bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full dark:hover:bg-gray-700"
           @click="onClickLoadHistoryConversation"
         >
-          <span class="i-lucide-chevron-down"></span>
+          <span class="i-lucide-chevron-down" />
           {{ $t('CHAT_LIST.LOAD_MORE') }}
         </button>
       </div>
-      <p
-        v-else
-        class="flex items-center justify-center p-4 overflow-auto"
-      >
+      <p v-else class="flex items-center justify-center p-4 overflow-auto">
         {{ $t('CHAT_LIST.LIST.404') }}
       </p>
     </template>
@@ -987,12 +990,15 @@ watch(conversationFilters, (newVal, oldVal) => {
             <Spinner class="text-n-brand" />
           </div>
           <template v-else-if="showEndOfListMessage">
-            <div v-if="showLoadHistoryConversation" class="flex justify-center my-4">
+            <div
+              v-if="showLoadHistoryConversation"
+              class="flex justify-center my-4"
+            >
               <button
                 class="conversation-load-more bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full dark:hover:bg-gray-700"
                 @click="onClickLoadHistoryConversation"
               >
-                <span class="i-lucide-chevron-down"></span>
+                <span class="i-lucide-chevron-down" />
                 {{ $t('CHAT_LIST.LOAD_MORE') }}
               </button>
             </div>
@@ -1040,6 +1046,7 @@ watch(conversationFilters, (newVal, oldVal) => {
     </TeleportWithDirection>
   </div>
 </template>
+
 <style lang="scss" scoped>
 .conversation-load-more {
   @apply w-48 text-center px-2 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition w-32 flex items-center gap-1 justify-center;
