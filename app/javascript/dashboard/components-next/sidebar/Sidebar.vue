@@ -455,25 +455,25 @@ const menuItems = computed(() => {
         },
       ],
     },
-    {
-      name: 'Companies',
-      label: t('SIDEBAR.COMPANIES'),
-      icon: 'i-lucide-building-2',
-      activeOn: ['companies_dashboard_index'],
-      children: [
-        {
-          name: 'All Companies',
-          label: t('SIDEBAR.ALL_COMPANIES'),
-          icon: 'i-lucide-building-2',
-          to: accountScopedRoute(
-            'companies_dashboard_index',
-            {},
-            { page: 1, search: undefined }
-          ),
-          activeOn: ['companies_dashboard_index'],
-        },
-      ],
-    },
+    // {
+    //   name: 'Companies',
+    //   label: t('SIDEBAR.COMPANIES'),
+    //   icon: 'i-lucide-building-2',
+    //   activeOn: ['companies_dashboard_index'],
+    //   children: [
+    //     {
+    //       name: 'All Companies',
+    //       label: t('SIDEBAR.ALL_COMPANIES'),
+    //       icon: 'i-lucide-building-2',
+    //       to: accountScopedRoute(
+    //         'companies_dashboard_index',
+    //         {},
+    //         { page: 1, search: undefined }
+    //       ),
+    //       activeOn: ['companies_dashboard_index'],
+    //     },
+    //   ],
+    // },
     {
       name: 'Reports',
       label: t('SIDEBAR.REPORTS'),
