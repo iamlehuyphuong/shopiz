@@ -59,6 +59,10 @@ export default {
       type: String,
       default: '',
     },
+    closeBubbleLogo: {
+      type: String,
+      default: '',
+    },
   },
   setup() {
     const { replaceInstallationName } = useBranding();
@@ -207,11 +211,23 @@ export default {
               : 'w-16 h-16 mx-auto'
           "
         />
-        <div v-if="isWidgetVisible" class="relative">
-          <div class="absolute w-0.5 h-8 rotate-45 -translate-y-1/2 bg-white" />
-          <div
-            class="absolute w-0.5 h-8 -rotate-45 -translate-y-1/2 bg-white"
+        <div
+          v-if="isWidgetVisible"
+          class="relative flex items-center justify-center w-full h-full"
+        >
+          <img
+            v-if="closeBubbleLogo"
+            :src="closeBubbleLogo"
+            class="w-full h-full object-cover rounded-full"
           />
+          <template v-else>
+            <div
+              class="absolute w-0.5 h-8 rotate-45 -translate-y-1/2 bg-white"
+            />
+            <div
+              class="absolute w-0.5 h-8 -rotate-45 -translate-y-1/2 bg-white"
+            />
+          </template>
         </div>
       </button>
     </div>
