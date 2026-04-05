@@ -1,5 +1,10 @@
 vi:
   hello: 'Chào thế giới'
+  activerecord:
+    models:
+      billing_histories:
+        one: Lịch sử mua bán
+        other: Lịch sử mua bán
   inbox:
     reauthorization:
       success: 'Kênh đã được cấp lại quyền truy cập thành công'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_04_04_125651) do
+ActiveRecord::Schema[7.1].define(version: 2026_04_05_050341) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -28,6 +28,21 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_04_125651) do
     t.index ["token"], name: "index_access_tokens_on_token", unique: true
   end
 
+  create_table "account_addons", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "addon_package_id", null: false
+    t.integer "addon_type", null: false
+    t.integer "quantity", null: false
+    t.datetime "purchased_at", null: false
+    t.datetime "expired_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_account_addons_on_account_id"
+    t.index ["addon_package_id"], name: "index_account_addons_on_addon_package_id"
+    t.index ["addon_type"], name: "index_account_addons_on_addon_type"
+    t.index ["expired_at"], name: "index_account_addons_on_expired_at"
+  end
+
   create_table "account_saml_settings", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.string "sso_url"
@@ -38,6 +53,19 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_04_125651) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_account_saml_settings_on_account_id"
+  end
+
+  create_table "account_subscriptions", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "subscription_plan_id", null: false
+    t.datetime "starts_at", null: false
+    t.datetime "ends_at", null: false
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_account_subscriptions_on_account_id"
+    t.index ["status"], name: "index_account_subscriptions_on_status"
+    t.index ["subscription_plan_id"], name: "index_account_subscriptions_on_subscription_plan_id"
   end
 
   create_table "account_users", force: :cascade do |t|
@@ -73,6 +101,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_04_125651) do
     t.integer "status", default: 0
     t.jsonb "internal_attributes", default: {}, null: false
     t.jsonb "settings", default: {}
+    t.bigint "feature_flags_2", default: 0, null: false
     t.index ["status"], name: "index_accounts_on_status"
   end
 
@@ -111,6 +140,18 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_04_125651) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "addon_packages", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "addon_type", null: false
+    t.integer "quantity", null: false
+    t.decimal "price_amount", precision: 15, scale: 2, default: "0.0"
+    t.string "currency", default: "vnd"
+    t.integer "duration_days"
+    t.boolean "visible", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "agent_bot_inboxes", force: :cascade do |t|
@@ -1225,6 +1266,23 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_04_125651) do
     t.index ["account_id"], name: "index_sla_policies_on_account_id"
   end
 
+  create_table "subscription_plans", force: :cascade do |t|
+    t.string "name_en", null: false
+    t.string "name_vi", null: false
+    t.text "description_en"
+    t.text "description_vi"
+    t.decimal "price_amount", precision: 15, scale: 2, default: "0.0"
+    t.string "currency", default: "vnd"
+    t.integer "duration_days", null: false
+    t.jsonb "limits", default: {}
+    t.jsonb "features", default: {}
+    t.boolean "visible", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "is_free"
+    t.index ["is_free"], name: "index_subscription_plans_on_is_free"
+  end
+
   create_table "taggings", id: :serial, force: :cascade do |t|
     t.integer "tag_id"
     t.string "taggable_type"
@@ -1347,6 +1405,10 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_04_125651) do
     t.index ["inbox_id"], name: "index_working_hours_on_inbox_id"
   end
 
+  add_foreign_key "account_addons", "accounts"
+  add_foreign_key "account_addons", "addon_packages"
+  add_foreign_key "account_subscriptions", "accounts"
+  add_foreign_key "account_subscriptions", "subscription_plans"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "inboxes", "portals"

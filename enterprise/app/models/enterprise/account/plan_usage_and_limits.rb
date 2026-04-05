@@ -2,6 +2,7 @@ module Enterprise::Account::PlanUsageAndLimits
   CAPTAIN_RESPONSES = 'captain_responses'.freeze
   CAPTAIN_DOCUMENTS = 'captain_documents'.freeze
   CAPTAIN_RESPONSES_USAGE = 'captain_responses_usage'.freeze
+  CAPTAIN_RESPONSES_CREDIT_USAGE = 'captain_responses_credit_usage'.freeze
   CAPTAIN_DOCUMENTS_USAGE = 'captain_documents_usage'.freeze
 
   def usage_limits
@@ -25,13 +26,23 @@ module Enterprise::Account::PlanUsageAndLimits
   end
 
   def captain_response_summary
-    total_count = limits['captain_responses'].to_i + limits['captain_responses_credit'].to_i
-    consumed = custom_attributes[CAPTAIN_RESPONSES_USAGE].to_i
+    monthly_limit = limits['captain_responses'].to_i
+    credit_limit = limits['captain_responses_credit'].to_i
+    
+    monthly_consumed = custom_attributes[CAPTAIN_RESPONSES_USAGE].to_i
+    credit_consumed = custom_attributes[CAPTAIN_RESPONSES_CREDIT_USAGE].to_i
+
+    monthly_available = (monthly_limit - monthly_consumed).clamp(0, monthly_limit)
+    credit_available = (credit_limit - credit_consumed).clamp(0, credit_limit)
 
     {
-      total_count: total_count,
-      current_available: (total_count - consumed).clamp(0, total_count),
-      consumed: consumed
+      monthly_limit: monthly_limit,
+      monthly_consumed: monthly_consumed,
+      monthly_available: monthly_available,
+      credit_limit: credit_limit,
+      credit_consumed: credit_consumed,
+      credit_available: credit_available,
+      total_available: monthly_available + credit_available
     }
   end
 
@@ -47,8 +58,15 @@ module Enterprise::Account::PlanUsageAndLimits
   end
 
   def increment_response_usage
-    current_usage = custom_attributes[CAPTAIN_RESPONSES_USAGE].to_i || 0
-    custom_attributes[CAPTAIN_RESPONSES_USAGE] = current_usage + 1
+    summary = captain_response_summary
+    
+    if summary[:monthly_available] > 0
+      current_usage = custom_attributes[CAPTAIN_RESPONSES_USAGE].to_i || 0
+      custom_attributes[CAPTAIN_RESPONSES_USAGE] = current_usage + 1
+    elsif summary[:credit_available] > 0
+      current_credit_usage = custom_attributes[CAPTAIN_RESPONSES_CREDIT_USAGE].to_i || 0
+      custom_attributes[CAPTAIN_RESPONSES_CREDIT_USAGE] = current_credit_usage + 1
+    end
     save
   end
 

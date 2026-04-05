@@ -66,10 +66,19 @@ class SuperAdmin::AccountsController < SuperAdmin::ApplicationController
     # rubocop:enable Rails/I18nLocaleTexts
   end
 
-  def assign_plan
+  def subscribe
     account = Account.find(params[:id])
-    status = Account::AssignPlanService.new(account, params[:plan_id]).execute
-    message = status ? 'Plan assigned successfully!' : 'Failed to assign plan.'
+    plan = SubscriptionPlan.find(params[:plan_id])
+    status = Subscriptions::SubscribeService.new(account, plan).execute
+    message = status ? 'Plan subscribed successfully!' : 'Failed to subscribe plan.'
+    redirect_to super_admin_account_path(account), notice: message
+  end
+
+  def purchase_addon
+    account = Account.find(params[:id])
+    addon_package = AddonPackage.find(params[:addon_package_id])
+    status = Addons::PurchaseService.new(account, addon_package).execute
+    message = status ? 'Addon purchased successfully!' : 'Failed to purchase addon.'
     redirect_to super_admin_account_path(account), notice: message
   end
 end

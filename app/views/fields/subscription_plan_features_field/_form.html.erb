@@ -1,0 +1,28 @@
+<div class="field-unit__label">
+  <%= f.label field.attribute %>
+</div>
+<div class="field-unit__field !max-w-none">
+  <div class="space-y-6">
+    <% field.grouped_features.each do |group_name, features| %>
+      <div>
+        <div class="flex items-center mb-2 px-1">
+          <span class="text-xs font-bold text-slate-400 uppercase tracking-widest"><%= group_name %></span>
+          <div class="flex-grow border-t border-slate-100 ml-3"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+          <% features.each do |feature| %>
+            <div class="flex items-center border border-slate-100 p-2 rounded hover:bg-slate-25 transition-colors group">
+              <%= hidden_field_tag "#{f.object_name}[features][#{feature['name']}]", "false" %>
+              <%= check_box_tag "#{f.object_name}[features][#{feature['name']}]", "true", field.feature_enabled?(feature['name']), 
+                  id: "#{f.object_name}_features_#{feature['name']}",
+                  class: "rounded border-slate-300 text-woot-500 focus:ring-woot-500 mr-2 cursor-pointer" %>
+              <label for="<%= f.object_name %>_features_<%= feature['name'] %>" class="text-sm text-slate-700 cursor-pointer select-none group-hover:text-slate-900">
+                <%= feature['display_name'] %>
+              </label>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

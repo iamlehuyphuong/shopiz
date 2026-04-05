@@ -645,8 +645,12 @@ Rails.application.routes.draw do
       resources :accounts, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
         post :seed, on: :member
         post :reset_cache, on: :member
-        post :assign_plan, on: :member
+        post :subscribe, on: :member
+        post :purchase_addon, on: :member
       end
+      resources :subscription_plans
+      resources :addon_packages
+      resources :billing_histories, only: [:index, :show]
       resources :users, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
         delete :avatar, on: :member, action: :destroy_avatar
       end

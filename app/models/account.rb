@@ -7,6 +7,7 @@
 #  custom_attributes     :jsonb
 #  domain                :string(100)
 #  feature_flags         :bigint           default(0), not null
+#  feature_flags_2       :bigint           default(0), not null
 #  internal_attributes   :jsonb            not null
 #  limits                :jsonb
 #  locale                :integer          default("en")
@@ -103,6 +104,9 @@ class Account < ApplicationRecord
   has_many :whatsapp_channels, dependent: :destroy_async, class_name: '::Channel::Whatsapp'
   has_many :working_hours, dependent: :destroy_async
   has_many :billing_histories, dependent: :destroy_async, class_name: '::BillingHistories'
+  has_many :account_subscriptions, dependent: :destroy_async
+  has_many :account_addons, dependent: :destroy_async
+  has_one :active_subscription, -> { active.order(ends_at: :desc) }, class_name: 'AccountSubscription'
 
   has_one_attached :contacts_export
 
@@ -112,7 +116,15 @@ class Account < ApplicationRecord
   scope :with_auto_resolve, -> { where("(settings ->> 'auto_resolve_after')::int IS NOT NULL") }
 
   before_validation :validate_limit_keys
-  after_create_commit :notify_creation
+  after_create_commit :notify_creation, :assign_default_plan
+
+  def assign_default_plan
+    default_plan = SubscriptionPlan.free_plan.first
+    return unless default_plan
+
+    # Use SubscribeService to handle the full subscription logic (creating record and provisioning)
+    Subscriptions::SubscribeService.new(self, default_plan).execute
+  end
   after_destroy :remove_account_sequences
 
   def agents

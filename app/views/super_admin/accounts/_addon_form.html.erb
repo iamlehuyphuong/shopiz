@@ -1,0 +1,47 @@
+<hr class="my-8 border-n-weak">
+
+<div class="main-content__body">
+  <div class="flex items-center mb-6">
+    <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Resource Addons</h2>
+    <div class="flex-grow border-t border-slate-100 ml-4"></div>
+  </div>
+
+  <div class="space-y-4">
+    <div class="flex flex-col md:flex-row mb-4">
+      <div class="attribute-label md:w-1/4">Active Addons</div>
+      <div class="attribute-data md:w-3/4">
+        <% if page.resource.account_addons.active.any? %>
+          <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 inline-block min-w-[300px]">
+            <ul class="space-y-2">
+              <% page.resource.account_addons.active.each do |addon| %>
+                <li class="flex items-center text-sm">
+                  <div class="w-2 h-2 rounded-full bg-woot-400 mr-2"></div>
+                  <span class="font-medium text-slate-700"><%= addon.addon_package.name %></span>
+                  <span class="mx-2 text-slate-300">|</span>
+                  <span class="text-slate-600"><%= addon.quantity %> <%= addon.addon_type.to_s.humanize %></span>
+                  <% if addon.expired_at %>
+                    <span class="ml-2 text-xs text-slate-400 italic">(Expires: <%= addon.expired_at.strftime('%d %b %Y') %>)</span>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        <% else %>
+          <p class="text-slate-400 italic text-sm">No active addons</p>
+        <% end %>
+      </div>
+    </div>
+
+    <%= form_with url: purchase_addon_super_admin_account_path(page.resource), method: :post, local: true, class: "space-y-4" do |f| %>
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="attribute-label md:w-1/4"><%= f.label :addon_package_id, "Choose Addon Package" %></div>
+        <div class="attribute-data md:w-3/4 flex items-center space-x-3">
+          <div class="flex-grow max-w-md">
+            <%= f.select :addon_package_id, AddonPackage.all.map { |p| ["#{p.name} - #{p.quantity} #{p.addon_type.to_s.humanize} (#{p.price_amount} #{p.currency})", p.id] }, { include_blank: "Select a package" }, class: "select border-slate-300 focus:ring-woot-500 focus:border-woot-500 rounded-md w-full" %>
+          </div>
+          <%= f.submit "Purchase", class: "button button--primary", data: { confirm: "Purchase this addon for the account?" } %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
