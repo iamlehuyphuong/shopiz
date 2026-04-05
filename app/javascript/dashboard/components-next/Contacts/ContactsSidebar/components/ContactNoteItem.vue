@@ -59,6 +59,7 @@ onMounted(() => {
               : '/assets/images/chatwoot_bot.png'
           "
           :size="16"
+          branded
           rounded-full
         />
         <div class="min-w-0 truncate">

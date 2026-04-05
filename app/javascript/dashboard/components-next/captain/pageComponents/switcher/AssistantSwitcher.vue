@@ -135,6 +135,7 @@ const openCreateAssistantDialog = () => {
           :name="assistant.name"
           :size="20"
           icon-name="i-lucide-bot"
+          branded
           rounded-full
         />
       </Button>

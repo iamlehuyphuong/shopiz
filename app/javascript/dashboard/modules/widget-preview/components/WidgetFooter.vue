@@ -40,7 +40,7 @@ const getStatusText = computed(() => {
             {{ config.replyTime }}
           </div>
         </div>
-        <Avatar name="C" :size="34" rounded-full />
+        <Avatar name="C" :size="34" branded rounded-full />
       </div>
       <button
         v-if="config.isDefaultScreen"

@@ -25,6 +25,7 @@ defineProps({
       :name="user.name"
       :status="user.availability_status"
       hide-offline-status
+      branded
       rounded-full
     />
     <span class="my-0 truncate text-capitalize" :class="textClass">

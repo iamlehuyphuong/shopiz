@@ -6,7 +6,7 @@ captain:
   name: 'Captain'
   description: 'Enable AI-powered conversations with your customers.'
   enabled: <%= (ChatwootHub.pricing_plan != 'community') %>
-  icon: 'icon-captain'
+  icon: 'i-lucide-bot-message-square'
   config_key: 'captain'
   enterprise: true
 saml:

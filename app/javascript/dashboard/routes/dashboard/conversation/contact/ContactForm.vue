@@ -285,6 +285,7 @@ export default {
         :size="72"
         :name="contact.name"
         allow-upload
+        branded
         rounded-full
         @upload="handleImageUpload"
         @delete="handleAvatarDelete"

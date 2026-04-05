@@ -31,7 +31,7 @@ export default {
       shopName: '',
       avatar: '',
       channel: 'tiktok',
-      emptyStateMessage: this.$t('INBOX_MGMT.DETAILS.LOADING_TIKTOK'),
+      emptyStateMessage: this.$t('INBOX_MGMT.DETAILS.LOADING_TIKTOK_SHOP'),
       errorStateMessage: '',
       errorStateDescription: '',
       hasLoginStarted: false,
@@ -104,7 +104,7 @@ export default {
           alt="Tiktok-logo"
         />
       </a>
-      <p>{{$t('INBOX_MGMT.ADD.TIKTOK.HELP')}}</p>
+      <p>{{$t('INBOX_MGMT.ADD.TIKTOK_SHOP.HELP')}}</p>
     </div>
     <div v-else>
       <div v-if="hasError" class="max-w-lg mx-auto text-center">
@@ -123,21 +123,21 @@ export default {
         <div class="w-full">
           <PageHeader
             :header-title="$t('INBOX_MGMT.DETAILS.TITLE')"
-            :header-content="$t('INBOX_MGMT.DETAILS.DESC_TIKTOK')"
+            :header-content="$t('INBOX_MGMT.DETAILS.DESC_TIKTOK_SHOP')"
           />
         </div>
         <div class="w-[60%]">
           <div class="w-full">
             <label :class="{ error: v$.shopName.$error }">
-              {{ $t('INBOX_MGMT.ADD.TIKTOK.INBOX_NAME') }}
+              {{ $t('INBOX_MGMT.ADD.TIKTOK_SHOP.INBOX_NAME') }}
               <input
                 v-model.trim="shopName"
                 type="text"
-                :placeholder="$t('INBOX_MGMT.ADD.TIKTOK.PICK_NAME')"
+                :placeholder="$t('INBOX_MGMT.ADD.TIKTOK_SHOP.PICK_NAME')"
                 @input="v$.shopName.$touch"
               />
               <span v-if="v$.shopName.$error" class="message">
-                {{ $t('INBOX_MGMT.ADD.TIKTOK.ADD_NAME') }}
+                {{ $t('INBOX_MGMT.ADD.TIKTOK_SHOP.ADD_NAME') }}
               </span>
             </label>
           </div>

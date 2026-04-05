@@ -284,6 +284,7 @@ defineExpose({ dialogRef });
             :name="formState.botName"
             :size="68"
             allow-upload
+            branded
             icon-name="i-lucide-bot-message-square"
             @upload="handleImageUpload"
             @delete="handleAvatarDelete"

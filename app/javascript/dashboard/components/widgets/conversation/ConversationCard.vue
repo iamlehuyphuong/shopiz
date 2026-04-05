@@ -265,6 +265,7 @@ const deleteConversation = () => {
         :status="currentContact.availability_status"
         :class="!showInboxName ? 'mt-4' : 'mt-8'"
         hide-offline-status
+        branded
         rounded-full
       >
         <template #overlay="{ size }">
@@ -320,11 +321,17 @@ const deleteConversation = () => {
         >
           {{ $t(`CHAT_LIST.CHAT_STATUS_FILTER_ITEMS.${props.chat.status}.TEXT`) }}
         </span>
-        <div class="inline-flex items-center justify-center w-6 h-6 bg-n-blue-11 rounded-md" v-if="currentContact.phone_number">
-          <span class="i-ri-phone-line text-white text-sm"></span>
+        <div
+          v-if="currentContact.phone_number"
+          class="inline-flex items-center justify-center size-6 bg-n-brand rounded-md"
+        >
+          <span class="i-lucide-phone text-white size-3"></span>
         </div>
-        <div class="inline-flex items-center justify-center w-6 h-6 bg-n-blue-11 rounded-md" v-if="currentContact.email">
-          <span class="i-lucide-mail text-white text-sm"></span>
+        <div
+          v-if="currentContact.email"
+          class="inline-flex items-center justify-center size-6 bg-n-brand rounded-md"
+        >
+          <span class="i-lucide-mail text-white size-3"></span>
         </div>
       </div>
       <div class="flex items-center gap-2">
@@ -342,7 +349,7 @@ const deleteConversation = () => {
         :class="messagePreviewClass"
       >
         <span
-          class="inline-block -mt-0.5 align-middle text-[16px] i-ph-phone-incoming"
+          class="inline-block -mt-0.5 align-middle text-[16px] i-lucide-phone-incoming"
           :class="[voiceIconColor]"
         />
         <span class="mx-1">

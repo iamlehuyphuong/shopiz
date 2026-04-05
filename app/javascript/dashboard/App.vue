@@ -22,6 +22,8 @@ import {
 } from './helper/pushHelper';
 import ReconnectService from 'dashboard/helper/ReconnectService';
 import { useUISettings } from 'dashboard/composables/useUISettings';
+import ContextMenu from 'dashboard/components/ui/ContextMenu.vue';
+import DropdownMenu from 'dashboard/components-next/dropdown-menu/DropdownMenu.vue';
 
 export default {
   name: 'App',
@@ -34,6 +36,8 @@ export default {
     PaymentPendingBanner,
     WootSnackbarBox,
     PendingEmailVerificationBanner,
+    ContextMenu,
+    DropdownMenu,
   },
   setup() {
     const router = useRouter();
@@ -56,6 +60,13 @@ export default {
       latestChatwootVersion: null,
       reconnectService: null,
       showCallWidget: false, // Will be set to true when calls are active
+      contactMenuConfig: {
+        show: false,
+        x: 0,
+        y: 0,
+        type: '',
+        value: '',
+      },
     };
   },
   computed: {
@@ -72,6 +83,48 @@ export default {
     }),
     hideOnOnboardingView() {
       return !isOnOnboardingView(this.$route);
+    },
+    contactMenuItems() {
+      const { type } = this.contactMenuConfig;
+      if (type === 'email') {
+        return [
+          {
+            label: this.$t('CONTACT_PANEL.COPY_EMAIL'),
+            action: 'copy',
+            value: 'copy',
+            icon: 'i-lucide-copy',
+          },
+          {
+            label: this.$t('CONTACT_PANEL.SEND_EMAIL'),
+            action: 'email',
+            value: 'email',
+            icon: 'i-lucide-mail',
+          },
+        ];
+      }
+      if (type === 'phone') {
+        return [
+          {
+            label: this.$t('CONTACT_PANEL.COPY_PHONE'),
+            action: 'copy',
+            value: 'copy',
+            icon: 'i-lucide-copy',
+          },
+          {
+            label: this.$t('CONTACT_PANEL.CALL'),
+            action: 'call',
+            value: 'call',
+            icon: 'i-lucide-phone',
+          },
+          {
+            label: this.$t('CONTACT_PANEL.LOOKUP_ZALO'),
+            action: 'zalo',
+            value: 'zalo',
+            icon: 'i-lucide-search',
+          },
+        ];
+      }
+      return [];
     },
   },
 
@@ -94,7 +147,7 @@ export default {
         } else {
           this.showCallWidget = false;
         }
-      }
+      },
     },
     hasActiveCall: {
       immediate: true,
@@ -106,7 +159,7 @@ export default {
         } else {
           this.showCallWidget = false;
         }
-      }
+      },
     },
   },
   mounted() {
@@ -116,11 +169,13 @@ export default {
     this.setLocale(
       this.uiSettings?.locale || window.shopizConfig.selectedLocale
     );
+    document.addEventListener('click', this.handleGlobalClick);
   },
   unmounted() {
     if (this.reconnectService) {
       this.reconnectService.disconnect();
     }
+    document.removeEventListener('click', this.handleGlobalClick);
   },
   methods: {
     initializeColorTheme() {
@@ -140,11 +195,14 @@ export default {
 
       // Clear the activeCallConversation state in all ContactInfo components
       this.$nextTick(() => {
-        const clearContactInfoCallState = (components) => {
+        const clearContactInfoCallState = components => {
           if (!components) return;
 
           components.forEach(component => {
-            if (component.$options && component.$options.name === 'ContactInfo') {
+            if (
+              component.$options &&
+              component.$options.name === 'ContactInfo'
+            ) {
               if (component.activeCallConversation) {
                 component.activeCallConversation = null;
                 component.$forceUpdate();
@@ -190,10 +248,8 @@ export default {
             .catch(error => {
               setTimeout(() => {
                 VoiceAPI.endCall(savedCallSid, savedConversationId)
-                  .then(retryResponse => {
-                  })
-                  .catch(retryError => {
-                  });
+                  .then(retryResponse => {})
+                  .catch(retryError => {});
               }, 1000);
               useAlert({ message: 'Call UI has been reset', type: 'info' });
             });
@@ -227,6 +283,46 @@ export default {
         })
       );
     },
+    handleGlobalClick(event) {
+      const target = event.target.closest('.highlight-link');
+      const isInsideMenu = event.target.closest('.js-contact-context-menu');
+
+      if (target) {
+        event.preventDefault();
+        event.stopPropagation();
+        const type = target.getAttribute('data-type');
+        const value = target.getAttribute('data-value');
+
+        this.contactMenuConfig = {
+          show: true,
+          x: event.clientX,
+          y: event.clientY,
+          type,
+          value,
+        };
+      } else if (this.contactMenuConfig.show && !isInsideMenu) {
+        this.closeContactMenu();
+      }
+    },
+    closeContactMenu() {
+      this.contactMenuConfig.show = false;
+    },
+    handleContactMenuAction({ action }) {
+      const { value } = this.contactMenuConfig;
+      if (action === 'copy') {
+        navigator.clipboard.writeText(value).then(() => {
+          useAlert(this.$t('CONTACT_PANEL.COPY_SUCCESSFUL'));
+        });
+      } else if (action === 'email') {
+        window.location.href = `mailto:${value}`;
+      } else if (action === 'call') {
+        window.location.href = `tel:${value}`;
+      } else if (action === 'zalo') {
+        const cleanPhone = value.replace(/\D/g, '').replace(/^84/, '0');
+        window.open(`https://zalo.me/${cleanPhone}`, '_blank');
+      }
+      this.closeContactMenu();
+    },
   },
 };
 </script>
@@ -253,22 +349,100 @@ export default {
     <!-- Floating call widget that appears during active calls -->
     <FloatingCallWidget
       v-if="showCallWidget || hasActiveCall || hasIncomingCall"
-      :key="activeCall ? activeCall.callSid : (incomingCall ? incomingCall.callSid : 'no-call')"
-      :call-sid="activeCall ? activeCall.callSid : (incomingCall ? incomingCall.callSid : '')"
-      :inbox-name="activeCall ? (activeCall.inboxName || 'Primary') : (incomingCall ? incomingCall.inboxName : 'Primary')"
-      :conversation-id="activeCall ? activeCall.conversationId : (incomingCall ? incomingCall.conversationId : null)"
-      :contact-name="activeCall ? activeCall.contactName : (incomingCall ? incomingCall.contactName : '')"
-      :contact-id="activeCall ? activeCall.contactId : (incomingCall ? incomingCall.contactId : null)"
-      :inbox-id="activeCall ? activeCall.inboxId : (incomingCall ? incomingCall.inboxId : null)"
-      :inbox-avatar-url="activeCall ? activeCall.inboxAvatarUrl : (incomingCall ? incomingCall.inboxAvatarUrl : '')"
-      :inbox-phone-number="activeCall ? activeCall.inboxPhoneNumber : (incomingCall ? incomingCall.inboxPhoneNumber : '')"
-      :avatar-url="activeCall ? activeCall.avatarUrl : (incomingCall ? incomingCall.avatarUrl : '')"
-      :phone-number="activeCall ? activeCall.phoneNumber : (incomingCall ? incomingCall.phoneNumber : '')"
+      :key="
+        activeCall
+          ? activeCall.callSid
+          : incomingCall
+            ? incomingCall.callSid
+            : 'no-call'
+      "
+      :call-sid="
+        activeCall
+          ? activeCall.callSid
+          : incomingCall
+            ? incomingCall.callSid
+            : ''
+      "
+      :inbox-name="
+        activeCall
+          ? activeCall.inboxName || 'Primary'
+          : incomingCall
+            ? incomingCall.inboxName
+            : 'Primary'
+      "
+      :conversation-id="
+        activeCall
+          ? activeCall.conversationId
+          : incomingCall
+            ? incomingCall.conversationId
+            : null
+      "
+      :contact-name="
+        activeCall
+          ? activeCall.contactName
+          : incomingCall
+            ? incomingCall.contactName
+            : ''
+      "
+      :contact-id="
+        activeCall
+          ? activeCall.contactId
+          : incomingCall
+            ? incomingCall.contactId
+            : null
+      "
+      :inbox-id="
+        activeCall
+          ? activeCall.inboxId
+          : incomingCall
+            ? incomingCall.inboxId
+            : null
+      "
+      :inbox-avatar-url="
+        activeCall
+          ? activeCall.inboxAvatarUrl
+          : incomingCall
+            ? incomingCall.inboxAvatarUrl
+            : ''
+      "
+      :inbox-phone-number="
+        activeCall
+          ? activeCall.inboxPhoneNumber
+          : incomingCall
+            ? incomingCall.inboxPhoneNumber
+            : ''
+      "
+      :avatar-url="
+        activeCall
+          ? activeCall.avatarUrl
+          : incomingCall
+            ? incomingCall.avatarUrl
+            : ''
+      "
+      :phone-number="
+        activeCall
+          ? activeCall.phoneNumber
+          : incomingCall
+            ? incomingCall.phoneNumber
+            : ''
+      "
       :use-web-rtc="true"
-      @callEnded="handleCallEnded"
-      @callJoined="handleCallJoined"
-      @callRejected="handleCallRejected"
+      @call-ended="handleCallEnded"
+      @call-joined="handleCallJoined"
+      @call-rejected="handleCallRejected"
     />
+    <ContextMenu
+      v-if="contactMenuConfig.show"
+      class="js-contact-context-menu"
+      :x="contactMenuConfig.x"
+      :y="contactMenuConfig.y"
+      @close="closeContactMenu"
+    >
+      <DropdownMenu
+        :menu-items="contactMenuItems"
+        @action="handleContactMenuAction"
+      />
+    </ContextMenu>
   </div>
   <LoadingState v-else />
 </template>

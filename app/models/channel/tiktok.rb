@@ -51,8 +51,8 @@ class Channel::Tiktok < ApplicationRecord
   def refresh_access_token
     refresh_url = 'https://auth.tiktok-shops.com/api/v2/token/refresh'
     params = {
-      app_key: GlobalConfigService.load('TIKTOK_APP_ID', ''),
-      app_secret: GlobalConfigService.load('TIKTOK_APP_SECRET', ''),
+      app_key: GlobalConfigService.load('TIKTOK_SHOP_APP_ID', ''),
+      app_secret: GlobalConfigService.load('TIKTOK_SHOP_APP_SECRET', ''),
       refresh_token: refresh_token,
       grant_type: 'refresh_token'
     }
@@ -151,7 +151,7 @@ class Channel::Tiktok < ApplicationRecord
 
   def default_params
     {
-      app_key: GlobalConfigService.load('TIKTOK_APP_ID', ''),
+      app_key: GlobalConfigService.load('TIKTOK_SHOP_APP_ID', ''),
       shop_cipher: shop_cipher,
       timestamp: Time.now.to_i
     }

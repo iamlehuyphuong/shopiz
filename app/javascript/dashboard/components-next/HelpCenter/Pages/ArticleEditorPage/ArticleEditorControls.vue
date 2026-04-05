@@ -191,6 +191,7 @@ onMounted(() => {
             :name="authorName"
             :src="authorThumbnailSrc"
             :size="20"
+            branded
             rounded-full
           />
           <span class="text-sm text-n-slate-12 hover:text-n-slate-11">

@@ -3,7 +3,7 @@
     "HEADER": "Nhân viên",
     "HEADER_BTN_TXT": "Thêm nhân viên",
     "LOADING": "Đang tải danh sách nhân viên",
-    "DESCRIPTION": "Nhân viên (Agent) là thành viên trong đội hỗ trợ khách hàng của bạn, người có thể xem và trả lời tin nhắn từ người dùng. Danh sách bên dưới hiển thị toàn bộ nhân viên trong tài khoản của bạn.",
+    "DESCRIPTION": "Nhân viên là thành viên trong đội hỗ trợ khách hàng của bạn, người có thể xem và trả lời tin nhắn từ người dùng. Danh sách bên dưới hiển thị toàn bộ nhân viên trong tài khoản của bạn.",
     "LEARN_MORE": "Tìm hiểu về vai trò người dùng",
     "AGENT_TYPES": {
       "ADMINISTRATOR": "Quản trị viên",

@@ -1,4 +1,7 @@
 {
+  "HOME": {
+    "START_CONVERSATION": "Conversation"
+  },
   "CONVERSATION": {
     "SELECT_A_CONVERSATION": "Please select a conversation from left pane",
     "CSAT_REPLY_MESSAGE": "Please rate the conversation",
@@ -64,6 +67,7 @@
     "FAIL_DELETE_MESSSAGE": "Couldn't delete message! Try again",
     "SUCCESS_UNDO_MESSAGE": "Message recalled",
     "FAIL_UNDO_MESSSAGE": "Can't recall this message",
+    "DELETED_OR_RETRACTED": "Message has been deleted or retracted",
     "NO_RESPONSE": "No response",
     "RESPONSE": "Response",
     "RATING_TITLE": "Rating",

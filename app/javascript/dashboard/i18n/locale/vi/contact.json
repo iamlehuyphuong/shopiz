@@ -1,10 +1,19 @@
 {
   "CONTACT_PANEL": {
     "NOT_AVAILABLE": "Không khả dụng",
+    "NOT_AVAILABLE_PHONE": "Chưa có số điện thoại",
+    "NOT_AVAILABLE_EMAIL": "Chưa có email",
+    "NOT_AVAILABLE_BIRTHDAY": "Chưa có ngày sinh",
+    "NOT_AVAILABLE_GENDER": "Chưa có giới tính",
+    "NOT_AVAILABLE_COMPANY": "Chưa có công ty",
     "EMAIL_ADDRESS": "Địa chỉ email",
     "PHONE_NUMBER": "Số điện thoại",
     "IDENTIFIER": "Định danh",
     "COPY_SUCCESSFUL": "Sao chép thành công",
+    "COPY_EMAIL": "Sao chép email",
+    "SEND_EMAIL": "Gửi email",
+    "COPY_PHONE": "Sao chép số điện thoại",
+    "LOOKUP_ZALO": "Tìm kiếm Zalo",
     "COMPANY": "Công ty",
     "LOCATION": "Vị trí",
     "BROWSER_LANGUAGE": "Ngôn ngữ trình duyệt",
@@ -24,7 +33,7 @@
       "TITLE": "Chọn voice inbox"
     },
     "GENDERS": {
-      "male": "Name",
+      "male": "Nam",
       "female": "Nữ"
     },
     "BIRTHDAY": "Ngày sinh",
@@ -581,23 +590,23 @@
   },
   "CONTACTS_BULK_ACTIONS": {
     "ASSIGN_LABELS": "Gán nhãn",
-    "ASSIGN_LABELS_SUCCESS": "Các nhãn được gán thành công.",
-    "ASSIGN_LABELS_FAILED": "Failed to assign labels",
-    "DESCRIPTION": "Select the labels you want to add to the selected contacts.",
-    "NO_LABELS_FOUND": "No labels available yet.",
-    "SELECTED_COUNT": "{count} selected",
-    "CLEAR_SELECTION": "Clear selection",
-    "SELECT_ALL": "Select all ({count})",
-    "DELETE_CONTACTS": "Xoá",
-    "DELETE_SUCCESS": "Contacts deleted successfully.",
-    "DELETE_FAILED": "Failed to delete contacts.",
+    "ASSIGN_LABELS_SUCCESS": "Các nhãn đã được gán thành công.",
+    "ASSIGN_LABELS_FAILED": "Không thể gán nhãn",
+    "DESCRIPTION": "Chọn các nhãn bạn muốn thêm vào các liên hệ đã chọn.",
+    "NO_LABELS_FOUND": "Chưa có nhãn nào khả dụng.",
+    "SELECTED_COUNT": "Đã chọn {count}",
+    "CLEAR_SELECTION": "Xóa lựa chọn",
+    "SELECT_ALL": "Chọn tất cả ({count})",
+    "DELETE_CONTACTS": "Xóa",
+    "DELETE_SUCCESS": "Xóa liên hệ thành công.",
+    "DELETE_FAILED": "Xóa liên hệ thất bại.",
     "DELETE_DIALOG": {
-      "TITLE": "Delete selected contacts",
-      "SINGULAR_TITLE": "Delete selected contact",
-      "DESCRIPTION": "This will permanently delete {count} selected contacts. This action cannot be undone.",
-      "SINGULAR_DESCRIPTION": "This will permanently delete the selected contact. This action cannot be undone.",
-      "CONFIRM_MULTIPLE": "Delete contacts",
-      "CONFIRM_SINGLE": "Xoá liên hệ"
+      "TITLE": "Xóa các liên hệ đã chọn",
+      "SINGULAR_TITLE": "Xóa liên hệ đã chọn",
+      "DESCRIPTION": "Hành động này sẽ xóa vĩnh viễn {count} liên hệ đã chọn. Hành động này không thể hoàn tác.",
+      "SINGULAR_DESCRIPTION": "Hành động này sẽ xóa vĩnh viễn liên hệ đã chọn. Hành động này không thể hoàn tác.",
+      "CONFIRM_MULTIPLE": "Xóa các liên hệ",
+      "CONFIRM_SINGLE": "Xóa liên hệ"
     }
   },
   "COMPOSE_NEW_CONVERSATION": {

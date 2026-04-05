@@ -14,6 +14,14 @@ import {
   DropdownItem,
 } from 'next/dropdown-menu/base';
 import CustomBrandPolicyWrapper from '../../components/CustomBrandPolicyWrapper.vue';
+import TeleportWithDirection from '../TeleportWithDirection.vue';
+
+const props = defineProps({
+  position: {
+    type: String,
+    default: 'bottom',
+  },
+});
 
 const emit = defineEmits(['close', 'openKeyShortcutModal']);
 
@@ -117,6 +125,12 @@ const menuItems = computed(() => {
 const allowedMenuItems = computed(() => {
   return menuItems.value.filter(item => item.show);
 });
+
+const dropdownBodyClass = computed(() => {
+  return props.position === 'top'
+    ? 'fixed top-16 z-50 ltr:right-4 rtl:left-4'
+    : 'bottom-12 z-50 mb-2 ltr:left-0 rtl:right-0';
+});
 </script>
 
 <template>
@@ -133,6 +147,7 @@ const allowedMenuItems = computed(() => {
           :src="currentUser.avatar_url"
           :status="currentUserAvailability"
           class="flex-shrink-0"
+          branded
           rounded-full
         />
         <div class="min-w-0">
@@ -145,16 +160,18 @@ const allowedMenuItems = computed(() => {
         </div>
       </button>
     </template>
-    <DropdownBody class="bottom-12 z-50 mb-2 w-80 ltr:left-0 rtl:right-0">
-      <SidebarProfileMenuStatus />
-      <DropdownSeparator />
-      <template v-for="item in allowedMenuItems" :key="item.label">
-        <CustomBrandPolicyWrapper
-          :show-on-custom-branded-instance="item.showOnCustomBrandedInstance"
-        >
-          <DropdownItem v-if="item.show" v-bind="item" />
-        </CustomBrandPolicyWrapper>
-      </template>
-    </DropdownBody>
+    <TeleportWithDirection to="body" :disabled="position !== 'top'">
+      <DropdownBody :class="['z-50 w-80', dropdownBodyClass]">
+        <SidebarProfileMenuStatus />
+        <DropdownSeparator />
+        <template v-for="item in allowedMenuItems" :key="item.label">
+          <CustomBrandPolicyWrapper
+            :show-on-custom-branded-instance="item.showOnCustomBrandedInstance"
+          >
+            <DropdownItem v-if="item.show" v-bind="item" />
+          </CustomBrandPolicyWrapper>
+        </template>
+      </DropdownBody>
+    </TeleportWithDirection>
   </DropdownContainer>
 </template>

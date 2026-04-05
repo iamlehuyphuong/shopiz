@@ -25,6 +25,7 @@ const isRTL = useMapGetter('accounts/isRTL');
         :status="row.original.status"
         :size="32"
         hide-offline-status
+        branded
         rounded-full
       />
       <div class="items-start flex flex-col min-w-0 my-0 mx-2">

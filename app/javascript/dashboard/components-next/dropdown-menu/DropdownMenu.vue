@@ -164,6 +164,7 @@ onMounted(() => {
               :name="item.thumbnail.name"
               :src="item.thumbnail.src"
               :size="thumbnailSize"
+              branded
               rounded-full
             />
           </slot>
@@ -207,6 +208,7 @@ onMounted(() => {
             :name="item.thumbnail.name"
             :src="item.thumbnail.src"
             :size="thumbnailSize"
+            branded
             rounded-full
           />
         </slot>

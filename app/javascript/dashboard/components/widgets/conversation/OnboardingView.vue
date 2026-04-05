@@ -28,12 +28,10 @@ const greetingMessage = computed(() => {
 
 <template>
   <div
-    class="min-h-screen lg:max-w-5xl max-w-4xl mx-auto grid grid-cols-2 grid-rows-[auto_1fr_1fr] auto-rows-min gap-4 p-8 w-full font-inter overflow-auto"
+    class="min-h-screen lg:max-w-5xl max-w-4xl mx-auto grid grid-cols-2 grid-rows-[auto_1fr_1fr] auto-rows-min gap-4 p-8 w-full overflow-auto"
   >
     <div class="col-span-full self-start">
-      <p
-        class="text-xl font-semibold text-n-slate-12 font-interDisplay tracking-[0.3px]"
-      >
+      <p class="text-xl font-semibold text-n-slate-12 tracking-[0.3px]">
         {{ greetingMessage }}
       </p>
       <p class="text-n-slate-11 max-w-2xl text-base">

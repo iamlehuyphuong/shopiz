@@ -159,7 +159,7 @@ export default {
           ...visibleToAllChannelTabs,
           {
             key: 'zaloPersonalLogin',
-            name: this.$t('INBOX_MGMT.ADD.ZALO.RELOGIN'),
+            name: this.$t('INBOX_MGMT.ADD.ZALO_OA.RELOGIN'),
           },
         ];
       }
@@ -564,6 +564,7 @@ export default {
               :icon-name="inboxIcon"
               name=""
               allow-upload
+              branded
               rounded-full
               @upload="handleImageUpload"
               @delete="handleAvatarDelete"

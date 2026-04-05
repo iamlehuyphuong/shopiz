@@ -180,7 +180,7 @@ export default {
             <woot-label
               variant="dashed"
               v-bind="label"
-              :bg-color="selectedLabels.includes(label.title) ? '#2781F6' : ''"
+              :bg-color="selectedLabels.includes(label.title) ? '#E06720' : ''"
             />
           </button>
           <NextButton
@@ -233,6 +233,7 @@ export default {
             hideOnClick: true,
           }"
           :size="16"
+          branded
           name="chatwoot-ai"
           icon-name="i-lucide-sparkles"
         />

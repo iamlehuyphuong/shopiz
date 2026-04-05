@@ -13,6 +13,10 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
+  emptyStateMessage: {
+    type: String,
+    default: '',
+  },
 });
 
 const referer = computed(() => props.conversationAttributes.referer);
@@ -91,6 +95,7 @@ const staticElements = computed(() =>
       attribute-class="conversation--attribute"
       attribute-from="conversation_panel"
       attribute-type="conversation_attribute"
+      :empty-state-message="emptyStateMessage"
     >
       <template #staticItem="{ element }">
         <ContactDetailsItem

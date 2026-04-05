@@ -112,6 +112,7 @@ export default {
               :src="notificationItem.primary_actor.meta.assignee.thumbnail"
               :size="28"
               :name="notificationItem.primary_actor.meta.assignee.name"
+              branded
               rounded-full
             />
           </td>

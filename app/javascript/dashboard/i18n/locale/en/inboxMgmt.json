@@ -50,7 +50,7 @@
         "PICK_A_VALUE": "Pick a value",
         "CREATE_INBOX": "Create Inbox"
       },
-      "ZALO": {
+      "ZALO_OA": {
         "TITLE": "Zalo OA Channel",
         "LOADING": "Authenticating you with Zalo...",
         "RELOGIN": "Reauthorize",
@@ -72,7 +72,7 @@
         "DESC": "Log in to your ",
         "DESC_2": "to connect to the"
       },
-      "TIKTOK": {
+      "TIKTOK_SHOP": {
         "HELP": "PS: By signing in, we only get access to your Tiktok messages. Your private messages can never be accessed by Salesman.",
         "INBOX_NAME": "Inbox Name",
         "ADD_NAME": "Add a name for your inbox",
@@ -502,7 +502,7 @@
             "DESCRIPTION": "Create a live-chat widget"
           },
           "FACEBOOK": {
-            "TITLE": "Facebook",
+            "TITLE": "Messenger",
             "DESCRIPTION": "Connect your Facebook page"
           },
           "WHATSAPP": {
@@ -537,16 +537,16 @@
             "TITLE": "Voice",
             "DESCRIPTION": "Integrate with Twilio Voice"
           },
-          "ZALO": {
-            "TITLE": "Zalo",
+          "ZALO_OA": {
+            "TITLE": "Zalo OA",
             "DESCRIPTION": "Connect your Zalo OA"
           },
-          "ZALOPERSONAL": {
+          "ZALO_PERSONAL": {
             "TITLE": "Zalo Personal",
             "DESCRIPTION": "Connect your Zalo Personal account"
           },
-          "TIKTOK": {
-            "TITLE": "Tiktok",
+          "TIKTOK_SHOP": {
+            "TITLE": "Tiktok Shop",
             "DESCRIPTION": "Connect your Tiktok Shop"
           }
         }
@@ -592,8 +592,8 @@
       "ERROR_FB_UNAUTHORIZED_HELP": "Please ensure you have access to the Facebook page with full control. You can read more about Facebook roles <a href=\" https://www.facebook.com/help/187316341316631\">here</a>.",
       "CREATING_CHANNEL": "Creating your Inbox...",
       "TITLE": "Configure Inbox Details",
-      "LOADING_TIKTOK": "Authenticating you with Tiktok...",
-      "DESC_TIKTOK": "TIKTOK",
+      "LOADING_TIKTOK_SHOP": "Authenticating you with Tiktok...",
+      "DESC_TIKTOK_SHOP": "TIKTOK_SHOP",
       "DESC": ""
     },
     "AGENTS": {
@@ -1091,9 +1091,9 @@
       "LINE": "Line",
       "API": "API Channel",
       "INSTAGRAM": "Instagram",
-      "ZALO": "Zalo OA",
-      "ZALOPERSONAL": "Zalo Personal",
-      "TIKTOK": "Tiktok Shop"
+      "ZALO_OA": "Zalo OA",
+      "ZALO_PERSONAL": "Zalo Personal",
+      "TIKTOK_SHOP": "Tiktok Shop"
     }
   }
 }

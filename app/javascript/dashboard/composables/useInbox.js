@@ -18,7 +18,7 @@ export const INBOX_FEATURE_MAP = {
     INBOX_TYPES.WHATSAPP,
     INBOX_TYPES.TELEGRAM,
     INBOX_TYPES.API,
-    INBOX_TYPES.ZALOPERSONAL,
+    INBOX_TYPES.ZALO_PERSONAL,
   ],
   [INBOX_FEATURES.REPLY_TO_OUTGOING]: [
     INBOX_TYPES.WEB,
@@ -26,7 +26,7 @@ export const INBOX_FEATURE_MAP = {
     INBOX_TYPES.WHATSAPP,
     INBOX_TYPES.TELEGRAM,
     INBOX_TYPES.API,
-    INBOX_TYPES.ZALOPERSONAL,
+    INBOX_TYPES.ZALO_PERSONAL,
   ],
 };
 
@@ -60,7 +60,7 @@ export const useInbox = (inboxId = null) => {
   });
 
   const isAZaloPersonal = computed(() => {
-    return channelType.value === INBOX_TYPES.ZALOPERSONAL;
+    return channelType.value === INBOX_TYPES.ZALO_PERSONAL;
   });
 
   const isAWebWidgetInbox = computed(() => {

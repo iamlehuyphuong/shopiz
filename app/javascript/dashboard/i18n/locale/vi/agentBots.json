@@ -1,45 +1,45 @@
 {
   "AGENT_BOTS": {
-    "HEADER": "Bots",
+    "HEADER": "Trợ lý ảo",
     "LOADING_EDITOR": "Đang tải trình chỉnh sửa...",
-    "DESCRIPTION": "Agent Bot hoạt động như những thành viên hỗ trợ tuyệt vời nhất trong đội của bạn. Chúng xử lý những tác vụ nhỏ, giúp bạn tập trung vào công việc quan trọng hơn. Hãy thử trải nghiệm! Bạn có thể quản lý bot từ trang này hoặc tạo bot mới bằng nút 'Thêm Bot'.",
-    "LEARN_MORE": "Tìm hiểu về Agent Bot",
-    "GLOBAL_BOT": "Bot hệ thống",
+    "DESCRIPTION": "Trợ lý ảo hoạt động như những cộng sự đắc lực trong đội ngũ của bạn. Chúng xử lý các tác vụ lặp đi lặp lại, giúp bạn tập trung vào những việc quan trọng hơn. Hãy thử bắt đầu ngay! Bạn có thể quản lý trợ lý ảo tại đây hoặc tạo mới bằng nút 'Thêm Trợ lý ảo'.",
+    "LEARN_MORE": "Tìm hiểu về Trợ lý ảo",
+    "GLOBAL_BOT": "Trợ lý ảo hệ thống",
     "GLOBAL_BOT_BADGE": "Hệ thống",
     "AVATAR": {
-      "SUCCESS_DELETE": "Xoá ảnh đại diện bot thành công",
-      "ERROR_DELETE": "Không thể xoá ảnh đại diện bot, vui lòng thử lại"
+      "SUCCESS_DELETE": "Xoá ảnh đại diện Trợ lý ảo thành công",
+      "ERROR_DELETE": "Không thể xoá ảnh đại diện Trợ lý ảo, vui lòng thử lại"
     },
     "BOT_CONFIGURATION": {
-      "TITLE": "Chọn Agent Bot",
-      "DESC": "Gán một Agent Bot cho hộp thư của bạn. Bot có thể xử lý các cuộc hội thoại ban đầu và chuyển cho nhân viên khi cần thiết.",
+      "TITLE": "Chọn Trợ lý ảo",
+      "DESC": "Giao một Trợ lý ảo cho hộp thư của bạn. Trợ lý này có thể xử lý các cuộc hội thoại ban đầu và chuyển cho nhân viên khi cần thiết.",
       "SUBMIT": "Cập nhật",
-      "DISCONNECT": "Ngắt kết nối bot",
-      "SUCCESS_MESSAGE": "Cập nhật Agent Bot thành công.",
-      "DISCONNECTED_SUCCESS_MESSAGE": "Ngắt kết nối bot thành công.",
-      "ERROR_MESSAGE": "Không thể cập nhật Agent Bot. Vui lòng thử lại.",
-      "DISCONNECTED_ERROR_MESSAGE": "Không thể ngắt kết nối bot. Vui lòng thử lại.",
-      "SELECT_PLACEHOLDER": "Chọn bot"
+      "DISCONNECT": "Ngắt kết nối",
+      "SUCCESS_MESSAGE": "Cập nhật Trợ lý ảo thành công.",
+      "DISCONNECTED_SUCCESS_MESSAGE": "Ngắt kết nối thành công.",
+      "ERROR_MESSAGE": "Không thể cập nhật Trợ lý ảo. Vui lòng thử lại.",
+      "DISCONNECTED_ERROR_MESSAGE": "Không thể ngắt kết nối. Vui lòng thử lại.",
+      "SELECT_PLACEHOLDER": "Chọn trợ lý ảo"
     },
     "ADD": {
-      "TITLE": "Thêm Bot",
+      "TITLE": "Thêm Trợ lý ảo",
       "CANCEL_BUTTON_TEXT": "Hủy",
       "API": {
-        "SUCCESS_MESSAGE": "Thêm bot thành công.",
-        "ERROR_MESSAGE": "Không thể thêm bot. Vui lòng thử lại sau."
+        "SUCCESS_MESSAGE": "Thêm Trợ lý ảo thành công.",
+        "ERROR_MESSAGE": "Không thể thêm Trợ lý ảo. Vui lòng thử lại sau."
       }
     },
     "LIST": {
-      "404": "Không tìm thấy bot nào. Bạn có thể tạo bot bằng cách nhấn nút 'Thêm Bot'.",
-      "LOADING": "Đang tải danh sách bot...",
+      "404": "Không tìm thấy trợ lý ảo nào. Bạn có thể bắt đầu bằng cách nhấn nút 'Thêm Trợ lý ảo'.",
+      "LOADING": "Đang tải danh sách...",
       "TABLE_HEADER": {
-        "DETAILS": "Thông tin Bot",
+        "DETAILS": "Thông tin Trợ lý ảo",
         "URL": "Webhook URL"
       }
     },
     "DELETE": {
       "BUTTON_TEXT": "Xóa",
-      "TITLE": "Xoá bot",
+      "TITLE": "Xoá trợ lý ảo",
       "CONFIRM": {
         "TITLE": "Xác nhận xoá",
         "MESSAGE": "Bạn có chắc chắn muốn xoá {name}?",
@@ -47,16 +47,16 @@
         "NO": "Không xoá"
       },
       "API": {
-        "SUCCESS_MESSAGE": "Xoá bot thành công.",
-        "ERROR_MESSAGE": "Không thể xoá bot. Vui lòng thử lại."
+        "SUCCESS_MESSAGE": "Xoá Trợ lý ảo thành công.",
+        "ERROR_MESSAGE": "Không thể xoá Trợ lý ảo. Vui lòng thử lại."
       }
     },
     "EDIT": {
       "BUTTON_TEXT": "Chỉnh sửa",
-      "TITLE": "Chỉnh sửa bot",
+      "TITLE": "Chỉnh sửa Trợ lý ảo",
       "API": {
-        "SUCCESS_MESSAGE": "Cập nhật bot thành công.",
-        "ERROR_MESSAGE": "Không thể cập nhật bot. Vui lòng thử lại."
+        "SUCCESS_MESSAGE": "Cập nhật Trợ lý ảo thành công.",
+        "ERROR_MESSAGE": "Không thể cập nhật Trợ lý ảo. Vui lòng thử lại."
       }
     },
     "ACCESS_TOKEN": {
@@ -68,16 +68,16 @@
     },
     "FORM": {
       "AVATAR": {
-        "LABEL": "Ảnh đại diện bot"
+        "LABEL": "Ảnh đại diện"
       },
       "NAME": {
-        "LABEL": "Tên bot",
-        "PLACEHOLDER": "Nhập tên bot",
-        "REQUIRED": "Tên bot là bắt buộc"
+        "LABEL": "Tên",
+        "PLACEHOLDER": "Nhập tên",
+        "REQUIRED": "Vui lòng nhập tên"
       },
       "DESCRIPTION": {
         "LABEL": "Mô tả",
-        "PLACEHOLDER": "Bot này dùng để làm gì?"
+        "PLACEHOLDER": "Trợ lý này dùng để làm gì?"
       },
       "WEBHOOK_URL": {
         "LABEL": "Webhook URL",
@@ -85,16 +85,16 @@
         "REQUIRED": "Webhook URL là bắt buộc"
       },
       "ERRORS": {
-        "NAME": "Tên bot là bắt buộc",
+        "NAME": "Vui lòng nhập tên",
         "URL": "Webhook URL là bắt buộc",
         "VALID_URL": "Vui lòng nhập URL hợp lệ bắt đầu bằng http:// hoặc https://"
       },
       "CANCEL": "Hủy",
-      "CREATE": "Tạo Bot",
-      "UPDATE": "Cập nhật Bot"
+      "CREATE": "Tạo mới",
+      "UPDATE": "Cập nhật"
     },
     "WEBHOOK": {
-      "DESCRIPTION": "Cấu hình Webhook Bot để tích hợp với dịch vụ tùy chỉnh của bạn. Bot sẽ nhận và xử lý các sự kiện từ cuộc hội thoại và phản hồi lại."
+      "DESCRIPTION": "Cấu hình Webhook để tích hợp với dịch vụ tùy chỉnh của bạn. Trợ lý này sẽ nhận và xử lý các sự kiện từ cuộc hội thoại và phản hồi lại."
     },
     "TYPES": {
       "WEBHOOK": "Webhook Bot"

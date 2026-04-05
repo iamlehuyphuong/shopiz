@@ -14,12 +14,20 @@ const props = defineProps({
   hideMeta: { type: Boolean, default: false },
 });
 
-const { variant, orientation, inReplyTo, shouldGroupWithNext, sender, additionalAttributes, messageType } =
-  useMessageContext();
+const {
+  variant,
+  orientation,
+  inReplyTo,
+  shouldGroupWithNext,
+  sender,
+  additionalAttributes,
+  messageType,
+  contentAttributes,
+} = useMessageContext();
 const { t } = useI18n();
 
 const varaintBaseMap = {
-  [MESSAGE_VARIANTS.AGENT]: 'bg-n-solid-blue text-n-slate-12',
+  [MESSAGE_VARIANTS.AGENT]: 'bg-n-iris-3 text-n-slate-12',
   [MESSAGE_VARIANTS.PRIVATE]:
     'bg-n-solid-amber text-n-amber-12 [&_.prosemirror-mention-node]:font-semibold',
   [MESSAGE_VARIANTS.USER]: 'bg-n-slate-4 text-n-slate-12',
@@ -50,8 +58,16 @@ const flexOrientationClass = computed(() => {
   return map[orientation.value];
 });
 
+const isDeletedOrUndone = computed(() => {
+  return contentAttributes.value?.deleted || contentAttributes.value?.undo;
+});
+
 const messageClass = computed(() => {
-  const classToApply = [varaintBaseMap[variant.value]];
+  let classToApply = [varaintBaseMap[variant.value]];
+
+  if (isDeletedOrUndone.value) {
+    classToApply = ['bg-n-ruby-2 border border-n-ruby-5 border-dashed'];
+  }
 
   if (variant.value !== MESSAGE_VARIANTS.ACTIVITY) {
     classToApply.push(orientationMap[orientation.value]);
@@ -93,10 +109,10 @@ const replyToPreview = computed(() => {
 
 const showSenderInGroup = computed(() => {
   return (
-    messageType.value != 1 &&
+    messageType.value !== 1 &&
     sender.value &&
     !shouldGroupWithNext.value &&
-    additionalAttributes.value['type'] == 1
+    additionalAttributes.value.type === 1
   );
 });
 </script>
@@ -124,6 +140,12 @@ const showSenderInGroup = computed(() => {
       <span v-if="showSenderInGroup" class="text-n-slate-11">
         {{ sender.name }}
       </span>
+    </div>
+    <div
+      v-if="isDeletedOrUndone"
+      class="mb-1 text-xxs font-medium text-n-ruby-11 uppercase tracking-wider"
+    >
+      {{ t('CONVERSATION.DELETED_OR_RETRACTED') }}
     </div>
     <slot />
     <MessageMeta

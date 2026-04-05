@@ -27,7 +27,7 @@ defineProps({
 
 <template>
   <div class="option-item--user">
-    <Avatar :src="thumbnail" :size="28" :name="name" rounded-full />
+    <Avatar :src="thumbnail" :size="28" :name="name" branded rounded-full />
     <div class="option__user-data">
       <h5 class="option__title">
         {{ name }}

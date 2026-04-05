@@ -436,7 +436,7 @@
             "DESCRIPTION": "Create a live-chat widget"
           },
           "FACEBOOK": {
-            "TITLE": "Facebook",
+            "TITLE": "Messenger",
             "DESCRIPTION": "Connect your Facebook page"
           },
           "WHATSAPP": {
@@ -1001,8 +1001,8 @@
       "SMS": "SMS",
       "EMAIL": "E-mail",
       "TELEGRAM": "Telegram",
-      "ZALO": "Zalo OA",
-      "ZALOPERSONAL": "Zalo Personal",
+      "ZALO_OA": "Zalo OA",
+      "ZALO_PERSONAL": "Zalo Personal",
       "LINE": "Line",
       "API": "Canal API",
       "INSTAGRAM": "Instagram",

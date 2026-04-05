@@ -70,7 +70,7 @@
           "PLACEHOLDER": "Chọn nhãn"
         },
         "IGNORE_WAITING": {
-          "LABEL": "Bỏ qua hội thoại đang chờ phản hồi từ agent"
+          "LABEL": "Bỏ qua hội thoại đang chờ phản hồi từ nhân viên"
         },
         "UPDATE_BUTTON": "Lưu thay đổi"
       },
@@ -96,7 +96,7 @@
       },
       "AUTO_RESOLVE_IGNORE_WAITING": {
         "LABEL": "Loại trừ hội thoại chưa được xử lý",
-        "HELP": "Khi bật, hệ thống sẽ bỏ qua các hội thoại vẫn đang chờ phản hồi từ agent."
+        "HELP": "Khi bật, hệ thống sẽ bỏ qua các hội thoại vẫn đang chờ phản hồi từ nhân viên."
       },
       "AUDIO_TRANSCRIPTION": {
         "TITLE": "Chuyển đổi âm thanh thành văn bản",
@@ -125,7 +125,7 @@
         "CUSTOM_EMAIL_DOMAIN_ENABLED": "Bạn đã có thể nhận email từ tên miền tùy chỉnh."
       }
     },
-    "UPDATE_CHATWOOT": "Có bản cập nhật {latestShopizVersion} cho Shopiz. Vui lòng cập nhật phiên bản.",
+    "UPDATE_CHATWOOT": "Có bản cập nhật mới ({latestShopizVersion}) cho Shopiz. Vui lòng cập nhật ngay.",
     "LEARN_MORE": "Tìm hiểu thêm",
     "PAYMENT_PENDING": "Thanh toán của bạn đang chờ xử lý. Vui lòng cập nhật thông tin để tiếp tục sử dụng Shopiz.",
     "UPGRADE": "Nâng cấp để tiếp tục sử dụng Shopiz",
@@ -192,13 +192,13 @@
       "CHANGE_ASSIGNEE": "Thay đổi người phụ trách",
       "CHANGE_PRIORITY": "Thay đổi ưu tiên",
       "CHANGE_TEAM": "Thay đổi nhóm",
-      "SNOOZE_CONVERSATION": "Tạm ẩn hội thoại",
+      "SNOOZE_CONVERSATION": "Tạm hoãn hội thoại",
       "ADD_LABEL": "Thêm nhãn",
       "REMOVE_LABEL": "Xóa nhãn",
       "SETTINGS": "Cài đặt",
       "AI_ASSIST": "AI Assist",
       "APPEARANCE": "Giao diện",
-      "SNOOZE_NOTIFICATION": "Tạm ẩn thông báo"
+      "SNOOZE_NOTIFICATION": "Tạm hoãn thông báo"
     },
     "COMMANDS": {
       "GO_TO_CONVERSATION_DASHBOARD": "Đi đến bảng hội thoại",
@@ -229,7 +229,7 @@
       "REOPEN_CONVERSATION": "Mở lại hội thoại",
       "RESOLVE_CONVERSATION": "Giải quyết hội thoại",
       "SEND_TRANSCRIPT": "Gửi bản sao hội thoại",
-      "SNOOZE_CONVERSATION": "Tạm ẩn hội thoại",
+      "SNOOZE_CONVERSATION": "Tạm hoãn hội thoại",
       "UNTIL_NEXT_REPLY": "Đến khi có phản hồi",
       "UNTIL_NEXT_WEEK": "Đến tuần sau",
       "UNTIL_TOMORROW": "Đến ngày mai",
@@ -240,7 +240,7 @@
       "LIGHT_MODE": "Sáng",
       "DARK_MODE": "Tối",
       "SYSTEM_MODE": "Theo hệ thống",
-      "SNOOZE_NOTIFICATION": "Tạm ẩn thông báo"
+      "SNOOZE_NOTIFICATION": "Tạm hoãn thông báo"
     }
   },
   "DASHBOARD_APPS": {

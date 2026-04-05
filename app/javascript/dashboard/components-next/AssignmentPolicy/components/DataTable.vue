@@ -59,6 +59,7 @@ const handleDelete = itemId => {
           :src="item.avatarUrl"
           :name="item.name"
           :size="20"
+          branded
           rounded-full
         />
         <span class="text-sm text-n-slate-12 truncate min-w-0">

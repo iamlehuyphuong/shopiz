@@ -38,14 +38,14 @@ const visibilityLabel = computed(() => {
     <td class="py-4 ltr:pr-4 rtl:pl-4 truncate">{{ macro.name }}</td>
     <td class="py-4 ltr:pr-4 rtl:pl-4">
       <div v-if="macro.created_by" class="flex items-center">
-        <Avatar :name="createdByName" :size="24" rounded-full />
+        <Avatar :name="createdByName" :size="24" branded rounded-full />
         <span class="mx-2">{{ createdByName }}</span>
       </div>
       <div v-else>--</div>
     </td>
     <td class="py-4 ltr:pr-4 rtl:pl-4">
       <div v-if="macro.updated_by" class="flex items-center">
-        <Avatar :name="updatedByName" :size="24" rounded-full />
+        <Avatar :name="updatedByName" :size="24" branded rounded-full />
         <span class="mx-2">{{ updatedByName }}</span>
       </div>
       <div v-else>--</div>

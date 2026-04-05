@@ -172,6 +172,7 @@ export default {
             :size="24"
             :name="agentName"
             rounded-full
+            branded
           />
         </div>
       </div>

@@ -34,6 +34,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    notAvailableText: {
+      type: String,
+      default: '',
+    },
   },
   methods: {
     async onCopy(e) {
@@ -66,7 +70,7 @@ export default {
         {{ value }}
       </span>
       <span v-else class="text-sm text-n-slate-11">
-        {{ $t('CONTACT_PANEL.NOT_AVAILABLE') }}
+        {{ notAvailableText || $t('CONTACT_PANEL.NOT_AVAILABLE') }}
       </span>
       <div class="flex items-center">
         <NextButton
@@ -95,7 +99,7 @@ export default {
         class="overflow-hidden text-sm whitespace-nowrap text-ellipsis"
       />
       <span v-else class="text-sm text-n-slate-11">
-        {{ $t('CONTACT_PANEL.NOT_AVAILABLE') }}
+        {{ notAvailableText || $t('CONTACT_PANEL.NOT_AVAILABLE') }}
       </span>
     </div>
   </div>

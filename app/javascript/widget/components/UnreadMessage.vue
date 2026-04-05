@@ -100,6 +100,7 @@ export default {
           :size="20"
           :name="agentName"
           :status="availabilityStatus"
+          branded
           rounded-full
         />
         <span v-dompurify-html="agentName" class="agent--name" />

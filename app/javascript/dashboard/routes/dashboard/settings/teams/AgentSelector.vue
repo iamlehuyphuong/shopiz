@@ -121,6 +121,7 @@ export default {
                 :status="agent.availability_status"
                 :size="24"
                 hide-offline-status
+                branded
                 rounded-full
               />
               <h4 class="text-base mb-0 text-n-slate-12">

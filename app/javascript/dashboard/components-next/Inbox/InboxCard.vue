@@ -163,6 +163,7 @@ onBeforeMount(contextMenuActions.close);
         :name="assigneeMeta.name"
         :src="assigneeMeta.thumbnail"
         :size="20"
+        branded
         rounded-full
         class="mt-1"
       />

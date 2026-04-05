@@ -104,81 +104,76 @@ const handleDeleteSuccess = () => {
 
 <template>
   <PageLayout
+    :header-title="$t('CAPTAIN.ASSISTANTS.SETTINGS.HEADER')"
     :is-fetching="isFetching"
     :show-pagination-footer="false"
     :show-know-more="false"
-    :class="{
-      '[&>header>div]:max-w-[80rem] [&>main>div]:max-w-[80rem]':
-        isCaptainV2Enabled,
-    }"
   >
     <template #body>
-      <div
-        class="gap-6 lg:gap-16 pb-8"
-        :class="{ 'grid grid-cols-2': isCaptainV2Enabled }"
-      >
+      <div class="flex flex-col gap-12 pb-12">
         <div class="flex flex-col gap-6">
+          <SettingsHeader
+            :heading="t('CAPTAIN.ASSISTANTS.SETTINGS.BASIC_SETTINGS.TITLE')"
+            :description="
+              t('CAPTAIN.ASSISTANTS.SETTINGS.BASIC_SETTINGS.DESCRIPTION')
+            "
+          />
+          <AssistantBasicSettingsForm
+            :assistant="assistant"
+            @submit="handleSubmit"
+          />
+        </div>
+        <span class="h-px w-full bg-n-weak" />
+        <div class="flex flex-col gap-6">
+          <SettingsHeader
+            :heading="t('CAPTAIN.ASSISTANTS.SETTINGS.SYSTEM_SETTINGS.TITLE')"
+            :description="
+              t('CAPTAIN.ASSISTANTS.SETTINGS.SYSTEM_SETTINGS.DESCRIPTION')
+            "
+          />
+          <AssistantSystemSettingsForm
+            :assistant="assistant"
+            @submit="handleSubmit"
+          />
+        </div>
+        <template v-if="isCaptainV2Enabled">
+          <span class="h-px w-full bg-n-weak" />
           <div class="flex flex-col gap-6">
             <SettingsHeader
-              :heading="t('CAPTAIN.ASSISTANTS.SETTINGS.BASIC_SETTINGS.TITLE')"
+              :heading="t('CAPTAIN.ASSISTANTS.SETTINGS.CONTROL_ITEMS.TITLE')"
               :description="
-                t('CAPTAIN.ASSISTANTS.SETTINGS.BASIC_SETTINGS.DESCRIPTION')
+                t('CAPTAIN.ASSISTANTS.SETTINGS.CONTROL_ITEMS.DESCRIPTION')
               "
             />
-            <AssistantBasicSettingsForm
-              :assistant="assistant"
-              @submit="handleSubmit"
-            />
-          </div>
-          <span class="h-px w-full bg-n-weak mt-2" />
-          <div class="flex flex-col gap-6">
-            <SettingsHeader
-              :heading="t('CAPTAIN.ASSISTANTS.SETTINGS.SYSTEM_SETTINGS.TITLE')"
-              :description="
-                t('CAPTAIN.ASSISTANTS.SETTINGS.SYSTEM_SETTINGS.DESCRIPTION')
-              "
-            />
-            <AssistantSystemSettingsForm
-              :assistant="assistant"
-              @submit="handleSubmit"
-            />
-          </div>
-          <span class="h-px w-full bg-n-weak mt-2" />
-          <div class="flex items-end justify-between w-full gap-4">
-            <div class="flex flex-col gap-2">
-              <h6 class="text-n-slate-12 text-base font-medium">
-                {{ t('CAPTAIN.ASSISTANTS.SETTINGS.DELETE.TITLE') }}
-              </h6>
-              <span class="text-n-slate-11 text-sm">
-                {{ t('CAPTAIN.ASSISTANTS.SETTINGS.DELETE.DESCRIPTION') }}
-              </span>
-            </div>
-            <div class="flex-shrink-0">
-              <Button
-                :label="
-                  t('CAPTAIN.ASSISTANTS.SETTINGS.DELETE.BUTTON_TEXT', {
-                    assistantName: assistant.name,
-                  })
-                "
-                color="ruby"
-                class="max-w-56 !w-fit"
-                @click="handleDelete"
+            <div class="flex flex-col gap-6">
+              <AssistantControlItems
+                v-for="item in controlItems"
+                :key="item.name"
+                :control-item="item"
               />
             </div>
           </div>
-        </div>
-        <div v-if="isCaptainV2Enabled" class="flex flex-col gap-6">
-          <SettingsHeader
-            :heading="t('CAPTAIN.ASSISTANTS.SETTINGS.CONTROL_ITEMS.TITLE')"
-            :description="
-              t('CAPTAIN.ASSISTANTS.SETTINGS.CONTROL_ITEMS.DESCRIPTION')
-            "
-          />
-          <div class="flex flex-col gap-6">
-            <AssistantControlItems
-              v-for="item in controlItems"
-              :key="item.name"
-              :control-item="item"
+        </template>
+        <span class="h-px w-full bg-n-weak" />
+        <div class="flex items-end justify-between w-full gap-4">
+          <div class="flex flex-col gap-2">
+            <h6 class="text-n-slate-12 text-base font-medium">
+              {{ t('CAPTAIN.ASSISTANTS.SETTINGS.DELETE.TITLE') }}
+            </h6>
+            <span class="text-n-slate-11 text-sm">
+              {{ t('CAPTAIN.ASSISTANTS.SETTINGS.DELETE.DESCRIPTION') }}
+            </span>
+          </div>
+          <div class="flex-shrink-0">
+            <Button
+              :label="
+                t('CAPTAIN.ASSISTANTS.SETTINGS.DELETE.BUTTON_TEXT', {
+                  assistantName: assistant.name,
+                })
+              "
+              color="ruby"
+              class="max-w-56 !w-fit"
+              @click="handleDelete"
             />
           </div>
         </div>

@@ -49,10 +49,10 @@ class SuperAdmin::AppConfigsController < SuperAdmin::ApplicationController
       'whatsapp_embedded' => %w[WHATSAPP_APP_ID WHATSAPP_APP_SECRET WHATSAPP_CONFIGURATION_ID WHATSAPP_API_VERSION],
       'notion' => %w[NOTION_CLIENT_ID NOTION_CLIENT_SECRET],
       'google' => %w[GOOGLE_OAUTH_CLIENT_ID GOOGLE_OAUTH_CLIENT_SECRET GOOGLE_OAUTH_REDIRECT_URI ENABLE_GOOGLE_OAUTH_LOGIN],
-      'zalo' => %w[ZALO_APP_ID ZALO_APP_SECRET ZALO_OA_SECRET_KEY],
-      'zalo_personal' => %w[ZALO_API_URL],
+      'zalo' => %w[ZALO_OA_APP_ID ZALO_OA_APP_SECRET ZALO_OA_SECRET_KEY],
+      'zalo_personal' => %w[ZALO_OA_API_URL],
       'activepieces' => %w[ACTIVE_PIECES_INSTANCE_URL ACTIVE_PIECES_JWT_SECRET],
-      'tiktok' => %w[TIKTOK_APP_ID TIKTOK_APP_SECRET],
+      'tiktok' => %w[TIKTOK_SHOP_APP_ID TIKTOK_SHOP_APP_SECRET],
     }
 
     @allowed_configs = mapping.fetch(

@@ -2,6 +2,7 @@
 import { defineAsyncComponent, ref } from 'vue';
 
 import NextSidebar from 'next/sidebar/Sidebar.vue';
+import TopHeader from 'next/TopHeader.vue';
 import WootKeyShortcutModal from 'dashboard/components/widgets/modal/WootKeyShortcutModal.vue';
 import AddAccountModal from 'dashboard/components/app/AddAccountModal.vue';
 import UpgradePage from 'dashboard/routes/dashboard/upgrade/UpgradePage.vue';
@@ -23,6 +24,7 @@ import MobileSidebarLauncher from 'dashboard/components-next/sidebar/MobileSideb
 
 export default {
   components: {
+    TopHeader,
     NextSidebar,
     CommandBar,
     WootKeyShortcutModal,
@@ -121,46 +123,52 @@ export default {
 </script>
 
 <template>
-  <div class="flex flex-grow overflow-hidden text-n-slate-12">
-    <NextSidebar
+  <div
+    class="flex flex-col flex-grow overflow-hidden text-n-slate-12 h-screen w-full"
+  >
+    <TopHeader
       :is-mobile-sidebar-open="isMobileSidebarOpen"
-      @toggle-account-modal="toggleAccountModal"
+      @toggle-mobile-sidebar="toggleMobileSidebar"
       @open-key-shortcut-modal="toggleKeyShortcutModal"
-      @close-key-shortcut-modal="closeKeyShortcutModal"
       @show-create-account-modal="openCreateAccountModal"
-      @close-mobile-sidebar="closeMobileSidebar"
     />
+    <div class="flex flex-1 overflow-hidden min-h-0">
+      <NextSidebar
+        :is-mobile-sidebar-open="isMobileSidebarOpen"
+        @close-mobile-sidebar="closeMobileSidebar"
+      />
 
-    <main class="flex flex-1 h-full w-full min-h-0 px-0 overflow-hidden">
-      <UpgradePage
-        v-show="showUpgradePage"
-        ref="upgradePageRef"
-        :bypass-upgrade-page="bypassUpgradePage"
-      >
-        <MobileSidebarLauncher
-          :is-mobile-sidebar-open="isMobileSidebarOpen"
-          @toggle="toggleMobileSidebar"
+      <main class="flex flex-1 h-full w-full min-h-0 px-0 overflow-hidden">
+        <UpgradePage
+          v-show="showUpgradePage"
+          ref="upgradePageRef"
+          :bypass-upgrade-page="bypassUpgradePage"
+        >
+          <MobileSidebarLauncher
+            :is-mobile-sidebar-open="isMobileSidebarOpen"
+            @toggle="toggleMobileSidebar"
+          />
+        </UpgradePage>
+        <template v-if="!showUpgradePage">
+          <router-view />
+          <CommandBar />
+          <CopilotLauncher />
+          <MobileSidebarLauncher
+            :is-mobile-sidebar-open="isMobileSidebarOpen"
+            @toggle="toggleMobileSidebar"
+          />
+          <CopilotContainer />
+        </template>
+        <AddAccountModal
+          :show="showCreateAccountModal"
+          @close-account-create-modal="closeCreateAccountModal"
         />
-      </UpgradePage>
-      <template v-if="!showUpgradePage">
-        <router-view />
-        <CommandBar />
-        <CopilotLauncher />
-        <MobileSidebarLauncher
-          :is-mobile-sidebar-open="isMobileSidebarOpen"
-          @toggle="toggleMobileSidebar"
+        <WootKeyShortcutModal
+          v-model:show="showShortcutModal"
+          @close="closeKeyShortcutModal"
+          @clickaway="closeKeyShortcutModal"
         />
-        <CopilotContainer />
-      </template>
-      <AddAccountModal
-        :show="showCreateAccountModal"
-        @close-account-create-modal="closeCreateAccountModal"
-      />
-      <WootKeyShortcutModal
-        v-model:show="showShortcutModal"
-        @close="closeKeyShortcutModal"
-        @clickaway="closeKeyShortcutModal"
-      />
-    </main>
+      </main>
+    </div>
   </div>
 </template>

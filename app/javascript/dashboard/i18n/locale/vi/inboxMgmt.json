@@ -21,7 +21,7 @@
       },
       "AGENT": {
         "TITLE": "Thêm nhân viên",
-        "BODY": "Thêm nhân viên vào hộp thư vừa tạo."
+        "BODY": "Phân công nhân viên vào hộp thư vừa tạo."
       },
       "FINISH": {
         "TITLE": "Hoàn tất!",
@@ -50,7 +50,7 @@
         "PICK_A_VALUE": "Chọn giá trị",
         "CREATE_INBOX": "Tạo hộp thư"
       },
-      "ZALO": {
+      "ZALO_OA": {
         "TITLE": "Kênh Zalo OA",
         "LOADING": "Đang xác thực với Zalo...",
         "RELOGIN": "Kết nối lại",
@@ -72,7 +72,7 @@
         "DESC": "Đăng nhập tài khoản ",
         "DESC_2": "để kết nối với"
       },
-      "TIKTOK": {
+      "TIKTOK_SHOP": {
         "HELP": "Lưu ý: Shopiz chỉ truy cập tin nhắn Tiktok. Tin nhắn riêng tư không bao giờ được truy cập.",
         "INBOX_NAME": "Tên hộp thư",
         "ADD_NAME": "Nhập tên hộp thư",
@@ -250,37 +250,7 @@
           }
         }
       },
-      "VOICE": {
-        "TITLE": "Kênh thoại",
-        "DESC": "Tích hợp gọi thoại với nhà cung cấp bạn chọn.",
-        "PROVIDER": {
-          "LABEL": "Nhà cung cấp",
-          "PLACEHOLDER": "Chọn nhà cung cấp"
-        },
-        "PHONE_NUMBER": {
-          "LABEL": "Số điện thoại",
-          "PLACEHOLDER": "Nhập số điện thoại thực hiện cuộc gọi",
-          "REQUIRED": "Trường này là bắt buộc",
-          "ERROR": "Vui lòng nhập số điện thoại hợp lệ theo chuẩn E.164"
-        },
-        "TWILIO": {
-          "ACCOUNT_SID": {
-            "LABEL": "Account SID",
-            "PLACEHOLDER": "Nhập Twilio Account SID",
-            "REQUIRED": "Trường này là bắt buộc"
-          },
-          "AUTH_TOKEN": {
-            "LABEL": "Auth Token",
-            "PLACEHOLDER": "Nhập Auth Token",
-            "REQUIRED": "Trường này là bắt buộc"
-          }
-        },
-        "SUBMIT_BUTTON": "Tạo kênh thoại",
-        "API": {
-          "SUCCESS_MESSAGE": "Tạo kênh thoại thành công",
-          "ERROR_MESSAGE": "Không thể tạo kênh thoại, vui lòng thử lại."
-        }
-      },
+
       "WHATSAPP": {
         "TITLE": "Kênh WhatsApp",
         "DESC": "Hỗ trợ khách hàng qua WhatsApp.",
@@ -382,8 +352,8 @@
             "REQUIRED": "Bắt buộc"
           },
           "AUTH_TOKEN": {
-            "LABEL": "Auth Token",
-            "PLACEHOLDER": "Nhập Auth Token",
+            "LABEL": "Mã xác thực (Auth Token)",
+            "PLACEHOLDER": "Nhập mã xác thực",
             "REQUIRED": "Bắt buộc"
           },
           "API_KEY_SID": {
@@ -498,7 +468,7 @@
             "DESCRIPTION": "Tạo widget live chat"
           },
           "FACEBOOK": {
-            "TITLE": "Facebook",
+            "TITLE": "Messenger",
             "DESCRIPTION": "Kết nối Trang Facebook"
           },
           "WHATSAPP": {
@@ -533,16 +503,16 @@
             "TITLE": "Voice",
             "DESCRIPTION": "Tích hợp Twilio Voice"
           },
-          "ZALO": {
-            "TITLE": "Zalo",
+          "ZALO_OA": {
+            "TITLE": "Zalo OA",
             "DESCRIPTION": "Kết nối Zalo OA"
           },
-          "ZALOPERSONAL": {
+          "ZALO_PERSONAL": {
             "TITLE": "Zalo cá nhân",
             "DESCRIPTION": "Kết nối Zalo cá nhân"
           },
-          "TIKTOK": {
-            "TITLE": "Tiktok",
+          "TIKTOK_SHOP": {
+            "TITLE": "Tiktok Shop",
             "DESCRIPTION": "Kết nối Tiktok Shop"
           }
         }
@@ -588,8 +558,8 @@
       "ERROR_FB_UNAUTHORIZED_HELP": "Hãy đảm bảo bạn có quyền kiểm soát đầy đủ Trang Facebook. Đọc thêm về phân quyền tại <a href=\" https://www.facebook.com/help/187316341316631\">đây</a>.",
       "CREATING_CHANNEL": "Đang tạo hộp thư...",
       "TITLE": "Cấu hình chi tiết hộp thư",
-      "LOADING_TIKTOK": "Đang xác thực với Tiktok...",
-      "DESC_TIKTOK": "TIKTOK",
+      "LOADING_TIKTOK_SHOP": "Đang xác thực với Tiktok...",
+      "DESC_TIKTOK_SHOP": "TIKTOK_SHOP",
       "DESC": ""
     },
     "AGENTS": {
@@ -682,7 +652,7 @@
       "PRE_CHAT_FORM": "Form trước chat",
       "BUSINESS_HOURS": "Giờ làm việc",
       "WIDGET_BUILDER": "Tùy chỉnh widget",
-      "BOT_CONFIGURATION": "Cấu hình bot",
+      "BOT_CONFIGURATION": "Cấu hình trợ lý ảo",
       "ACCOUNT_HEALTH": "Sức khỏe tài khoản",
       "CSAT": "CSAT"
     },
@@ -747,10 +717,10 @@
       "DISPLAY_FILE_PICKER": "Hiển thị chọn tệp trên widget",
       "DISPLAY_EMOJI_PICKER": "Hiển thị bảng emoji",
       "ALLOW_END_CONVERSATION": "Cho phép khách kết thúc hội thoại",
-      "USE_INBOX_AVATAR_FOR_BOT": "Dùng tên & avatar hộp thư cho bot"
+      "USE_INBOX_AVATAR_FOR_BOT": "Dùng tên & avatar hộp thư cho trợ lý ảo"
     },
     "SETTINGS_POPUP": {
-      "MESSENGER_HEADING": "Mã Messenger",
+      "MESSENGER_HEADING": "Mã nhúng",
       "MESSENGER_SUB_HEAD": "Đặt đoạn mã này trong thẻ <body>",
       "ALLOWED_DOMAINS": {
         "TITLE": "Tên miền cho phép",
@@ -760,11 +730,11 @@
       "INBOX_AGENTS": "Nhân viên",
       "INBOX_AGENTS_SUB_TEXT": "Thêm hoặc xóa nhân viên khỏi hộp thư này",
       "AGENT_ASSIGNMENT": "Phân công hội thoại",
-      "AGENT_ASSIGNMENT_SUB_TEXT": "Cập nhật cài đặt phân công hội thoại",
+      "AGENT_ASSIGNMENT_SUB_TEXT": "Cấu hình quy tắc phân công hội thoại cho nhân viên",
       "VOICE_CALL_ROUTING": "Định tuyến cuộc gọi",
-      "VOICE_CALL_ROUTING_SUB_TEXT": "Cấu hình cách xử lý cuộc gọi khi nhân viên không khả dụng",
+      "VOICE_CALL_ROUTING_SUB_TEXT": "Cấu hình cách xử lý cuộc gọi khi nhân viên không sẵn sàng",
       "PERSONAL_PHONE_ROUTING": "Cho phép chuyển tiếp vào số cá nhân",
-      "PERSONAL_PHONE_ROUTING_SUB_TEXT": "Khi nhân viên không online, cuộc gọi sẽ được chuyển tiếp đến số cá nhân của họ",
+      "PERSONAL_PHONE_ROUTING_SUB_TEXT": "Khi nhân viên đang bận hoặc offline, cuộc gọi sẽ được chuyển tiếp đến số cá nhân của họ",
       "AGENT_PHONE_SETTINGS_INFO": "Nhân viên có thể cấu hình số cá nhân tại trang hồ sơ",
       "UPDATE": "Cập nhật",
       "ENABLE_EMAIL_COLLECT_BOX": "Thu thập email khách",
@@ -843,7 +813,7 @@
       "SET_FIELDS_HEADER": {
         "FIELDS": "Trường",
         "LABEL": "Nhãn",
-        "PLACE_HOLDER": "Placeholder",
+        "PLACE_HOLDER": "Văn bản giữ chỗ",
         "KEY": "Key",
         "TYPE": "Loại",
         "REQUIRED": "Bắt buộc"
@@ -974,7 +944,7 @@
       "SSL_TLS": "SSL/TLS",
       "START_TLS": "STARTTLS",
       "OPEN_SSL_VERIFY_MODE": "Open SSL Verify Mode",
-      "AUTH_MECHANISM": "Authentication"
+      "AUTH_MECHANISM": "Xác thực (Authentication)"
     },
     "NOTE": "Lưu ý: ",
     "WIDGET_BUILDER": {
@@ -1086,9 +1056,9 @@
       "LINE": "Line",
       "API": "Kênh API",
       "INSTAGRAM": "Instagram",
-      "ZALO": "Zalo OA",
-      "ZALOPERSONAL": "Zalo cá nhân",
-      "TIKTOK": "Tiktok Shop"
+      "ZALO_OA": "Zalo OA",
+      "ZALO_PERSONAL": "Zalo cá nhân",
+      "TIKTOK_SHOP": "Tiktok Shop"
     }
   }
 }

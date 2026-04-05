@@ -435,6 +435,7 @@ const avatarInfo = computed(() => {
     return {
       name: t('CONVERSATION.BOT'),
       src: '',
+      colorIndex: 4, // Iris
     };
   }
 
@@ -446,10 +447,20 @@ const avatarInfo = computed(() => {
     return {
       name: name ?? '',
       src: avatarUrl ?? '',
+      colorIndex: 4, // Iris
     };
   }
 
-  // For all other senders, use thumbnail
+  // Agent (Employee) color
+  if (type === SENDER_TYPES.USER) {
+    return {
+      name: name ?? '',
+      src: thumbnail ?? '',
+      colorIndex: 5, // Blue
+    };
+  }
+
+  // For all other senders (e.g. Contact/Customer)
   return {
     name: name ?? '',
     src: thumbnail ?? '',

@@ -94,6 +94,7 @@ const handleClickOutside = () => {
               :src="item.avatarUrl"
               :name="item.name"
               :size="20"
+              branded
               rounded-full
             />
             <div class="flex items-center gap-1 min-w-0 flex-1">

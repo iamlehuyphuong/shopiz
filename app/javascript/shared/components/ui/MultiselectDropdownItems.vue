@@ -112,6 +112,7 @@ export default {
                 :status="option.availability_status"
                 :size="24"
                 hide-offline-status
+                branded
                 rounded-full
               />
             </NextButton>

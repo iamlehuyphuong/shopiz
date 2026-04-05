@@ -5,11 +5,11 @@
       "COMPLETED": "Hoàn thành"
     },
     "CATALOG": {
-      "HEADER_TITLE": "Danh mục",
+      "HEADER_TITLE": "Cửa hàng",
       "NEW_PRODUCT": "Tạo sản phẩm",
       "EMPTY_STATE": {
         "TITLE": "Không có sản phẩm nào",
-        "SUBTITLE": "Làm cho việc tiếp cận khách hàng trở nên cá nhân hóa hơn với khảo sát được hỗ trợ bởi AI. Hoàn hảo cho lời nhắc lịch hẹn, xác minh và theo dõi — tất cả theo cách tự nhiên. Trợ lý AI của bạn có thể thích ứng với phản hồi của khách hàng, thu thập thông tin và làm giàu dữ liệu khách hàng tiềm năng — giúp tiết kiệm thời gian cho đội ngũ của bạn."
+        "SUBTITLE": "Làm cho việc tiếp cận khách hàng trở nên cá nhân hóa hơn với khảo sát được hỗ trợ bởi AI. Hoàn hảo cho lời nhắc lịch hẹn, xác minh và theo dõi — tất cả theo cách tự nhiên. Trợ lý ảo của bạn có thể thích ứng với phản hồi của khách hàng, thu thập thông tin và làm giàu dữ liệu khách hàng tiềm năng — giúp tiết kiệm thời gian cho đội ngũ của bạn."
       },
       "CARD": {
         "STATUS": {
@@ -20,7 +20,7 @@
           "SENT_BY": "Gửi bởi ",
           "FROM": " từ ",
           "ON": " vào ",
-          "BOT": "Bot"
+          "BOT": "Trợ lý ảo"
         }
       },
       "EMPTY_STATE_BADGE": {
@@ -82,7 +82,7 @@
       "NEW_ORDER": "Tạo đơn hàng",
       "EMPTY_STATE": {
         "TITLE": "Không có đơn hàng nào",
-        "SUBTITLE": "Làm cho việc tiếp cận khách hàng trở nên cá nhân hóa hơn với khảo sát được hỗ trợ bởi AI. Hoàn hảo cho lời nhắc lịch hẹn, xác minh và theo dõi — tất cả theo cách tự nhiên. Trợ lý AI của bạn có thể thích ứng với phản hồi của khách hàng, thu thập thông tin và làm giàu dữ liệu khách hàng tiềm năng — giúp tiết kiệm thời gian cho đội ngũ của bạn."
+        "SUBTITLE": "Làm cho việc tiếp cận khách hàng trở nên cá nhân hóa hơn với khảo sát được hỗ trợ bởi AI. Hoàn hảo cho lời nhắc lịch hẹn, xác minh và theo dõi — tất cả theo cách tự nhiên. Trợ lý ảo của bạn có thể thích ứng với phản hồi của khách hàng, thu thập thông tin và làm giàu dữ liệu khách hàng tiềm năng — giúp tiết kiệm thời gian cho đội ngũ của bạn."
       },
       "CARD": {
         "STATUS": {
@@ -93,7 +93,7 @@
           "SENT_BY": "Gửi bởi ",
           "FROM": " từ ",
           "ON": " vào ",
-          "BOT": "Bot"
+          "BOT": "Trợ lý ảo"
         }
       },
       "EMPTY_STATE_BADGE": {

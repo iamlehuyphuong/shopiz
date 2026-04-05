@@ -33,7 +33,7 @@ export default {
       pageName: '',
       avatar: '',
       channel: 'zalopersonal',
-      emptyStateMessage: this.$t('INBOX_MGMT.ADD.ZALO.LOADING'),
+      emptyStateMessage: this.$t('INBOX_MGMT.ADD.ZALO_OA.LOADING'),
       errorStateMessage: '',
       errorStateDescription: '',
       successStateDescription: this.$t('LOGIN.API.SUCCESS_MESSAGE'),
