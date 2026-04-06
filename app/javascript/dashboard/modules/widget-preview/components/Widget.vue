@@ -52,14 +52,14 @@ const props = defineProps({
     type: String,
     default: '',
   },
-    bubbleLogo: {
-      type: String,
-      default: '',
-    },
-    closeBubbleLogo: {
-      type: String,
-      default: '',
-    },
+  bubbleLogo: {
+    type: String,
+    default: '',
+  },
+  closeBubbleLogo: {
+    type: String,
+    default: '',
+  },
   webWidgetScript: {
     type: String,
     default: '',

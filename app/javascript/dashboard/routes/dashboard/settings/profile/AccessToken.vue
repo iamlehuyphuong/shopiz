@@ -33,7 +33,7 @@ const onReset = () => {
   <div class="flex flex-row justify-between gap-4">
     <woot-input
       name="access_token"
-      class="flex-1 [&>input]:!py-1.5 ltr:[&>input]:!pr-9 ltr:[&>input]:!pl-3 rtl:[&>input]:!pl-9 rtl:[&>input]:!pr-3 focus:[&>input]:!border-n-weak [&>input]:cursor-not-allowed relative"
+      class="flex-1 [&_input]:!py-1.5 ltr:[&_input]:!pr-9 ltr:[&_input]:!pl-3 rtl:[&_input]:!pl-9 rtl:[&_input]:!pr-3 focus:[&_input]:!border-n-weak [&_input]:cursor-not-allowed relative"
       :styles="{
         borderRadius: '12px',
         fontSize: '14px',

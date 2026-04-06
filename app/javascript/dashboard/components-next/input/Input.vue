@@ -81,11 +81,11 @@ const handleFocus = event => {
 const sizeClass = computed(() => {
   switch (props.size) {
     case 'sm':
-      return 'h-8 !px-3 !py-2';
+      return 'h-8 px-3 py-2';
     case 'md':
-      return 'h-10 !px-3 !py-2.5';
+      return 'h-10 px-3 py-2.5';
     default:
-      return 'h-10 !px-3 !py-2.5';
+      return 'h-10 px-3 py-2.5';
   }
 });
 
@@ -117,15 +117,14 @@ onMounted(() => {
       {{ label }}
     </label>
     <!-- Added prefix slot to allow adding icons to the input -->
-    <slot name="prefix" />
     <div class="relative">
+      <slot name="prefix" />
       <input
         :id="uniqueId"
         v-bind="$attrs"
         ref="inputRef"
         :value="modelValue"
         :class="[
-          customInputClass,
           inputOutlineClass,
           sizeClass,
           {
@@ -133,6 +132,7 @@ onMounted(() => {
             focus: isFocused,
           },
           showCharacterCount ? 'pr-16' : '',
+          customInputClass,
         ]"
         :type="type"
         :placeholder="placeholder"

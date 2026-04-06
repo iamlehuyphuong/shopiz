@@ -682,7 +682,7 @@ export default {
                 name=""
                 allow-upload
                 branded
-              rounded-full
+                rounded-full
                 @upload="handleImageUpload"
                 @delete="handleAvatarDelete"
               />
@@ -690,7 +690,7 @@ export default {
             <SettingsFieldSection :label="inboxNameLabel">
               <woot-input
                 v-model="selectedInboxName"
-                class="[&>input]:!mb-0"
+                class="[&_input]:!mb-0"
                 :class="{ error: v$.selectedInboxName.$error }"
                 :placeholder="inboxNamePlaceHolder"
                 :error="
@@ -709,7 +709,7 @@ export default {
             >
               <woot-input
                 v-model="webhookUrl"
-                class="[&>input]:!mb-0"
+                class="[&_input]:!mb-0"
                 :class="{ error: v$.webhookUrl.$error }"
                 :placeholder="
                   $t(
@@ -733,7 +733,7 @@ export default {
             >
               <woot-input
                 v-model="channelWebsiteUrl"
-                class="[&>input]:!mb-0"
+                class="[&_input]:!mb-0"
                 :placeholder="
                   $t(
                     'INBOX_MGMT.ADD.WEBSITE_CHANNEL.CHANNEL_DOMAIN.PLACEHOLDER'
@@ -853,7 +853,7 @@ export default {
               >
                 <woot-input
                   v-model="channelWelcomeTitle"
-                  class="[&>input]:!mb-0"
+                  class="[&_input]:!mb-0"
                   :placeholder="
                     $t(
                       'INBOX_MGMT.ADD.WEBSITE_CHANNEL.CHANNEL_WELCOME_TITLE.PLACEHOLDER'
@@ -967,7 +967,7 @@ export default {
                       'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_LAUNCHER_TITLE.PLACE_HOLDER'
                     )
                   "
-                  class="[&>input]:!mb-0"
+                  class="[&_input]:!mb-0"
                 />
               </SettingsFieldSection>
               <SettingsFieldSection
@@ -1193,9 +1193,9 @@ export default {
           <WeeklyAvailability :inbox="inbox" />
         </div>
         <div v-if="selectedTabKey === 'zaloPersonalLogin'">
-        <ZaloReauthorize :inbox="inbox" />
-      </div>
-      <div v-if="selectedTabKey === 'bot-configuration'">
+          <ZaloReauthorize :inbox="inbox" />
+        </div>
+        <div v-if="selectedTabKey === 'bot-configuration'">
           <BotConfiguration :inbox="inbox" />
         </div>
         <div v-if="selectedTabKey === 'whatsapp-health'">

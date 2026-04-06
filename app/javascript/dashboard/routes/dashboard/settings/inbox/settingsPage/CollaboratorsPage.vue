@@ -645,7 +645,7 @@ onMounted(() => {
                 :class="{ error: v$.maxAssignmentLimit.$error }"
                 :error="maxAssignmentLimitErrors"
                 :label="$t('INBOX_MGMT.AUTO_ASSIGNMENT.MAX_ASSIGNMENT_LIMIT')"
-                class="[&>input]:!mb-0"
+                class="[&_input]:!mb-0"
                 @blur="v$.maxAssignmentLimit.$touch"
               />
 
@@ -722,7 +722,6 @@ onMounted(() => {
         <p class="pb-4 italic text-sm text-n-slate-11">
           {{ $t('INBOX_MGMT.SETTINGS_POPUP.AGENT_PHONE_SETTINGS_INFO') }}
         </p>
-        
         <NextButton
           :label="$t('INBOX_MGMT.SETTINGS_POPUP.UPDATE')"
           :is-loading="isVoiceRoutingUpdating"

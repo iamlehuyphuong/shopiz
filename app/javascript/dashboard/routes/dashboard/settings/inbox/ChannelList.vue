@@ -13,9 +13,9 @@ const { accountId, currentAccount } = useAccount();
 
 const enabledFeatures = ref({});
 
-const hasTiktokConfigured = computed(() => {
-  return window.chatwootConfig?.tiktokAppId;
-});
+// const hasTiktokConfigured = computed(() => {
+//   return window.chatwootConfig?.tiktokAppId;
+// });
 
 const channelList = computed(() => {
   const channels = [
@@ -24,6 +24,18 @@ const channelList = computed(() => {
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.WEBSITE.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.WEBSITE.DESCRIPTION'),
       icon: 'i-woot-website',
+    },
+    {
+      key: 'zalo',
+      title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO_OA.TITLE'),
+      description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO_OA.DESCRIPTION'),
+      icon: 'i-ri-zalo-oa-fill',
+    },
+    {
+      key: 'zalopersonal',
+      title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO_PERSONAL.TITLE'),
+      description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO_PERSONAL.DESCRIPTION'),
+      icon: 'i-ri-zalo-fill',
     },
     {
       key: 'facebook',
@@ -36,6 +48,12 @@ const channelList = computed(() => {
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.WHATSAPP.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.WHATSAPP.DESCRIPTION'),
       icon: 'i-woot-whatsapp',
+    },
+    {
+      key: 'instagram',
+      title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.INSTAGRAM.TITLE'),
+      description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.INSTAGRAM.DESCRIPTION'),
+      icon: 'i-woot-instagram',
     },
     // {
     //   key: 'sms',
@@ -68,42 +86,18 @@ const channelList = computed(() => {
       icon: 'i-woot-line',
     },
     {
-      key: 'instagram',
-      title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.INSTAGRAM.TITLE'),
-      description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.INSTAGRAM.DESCRIPTION'),
-      icon: 'i-woot-instagram',
-    },
-  ];
-
-  if (hasTiktokConfigured.value) {
-    channels.push({
       key: 'tiktok',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK.DESCRIPTION'),
       icon: 'i-woot-tiktok',
-    });
-  }
-
-  channels.push(
-    {
-      key: 'zalo',
-      title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO_OA.TITLE'),
-      description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO_OA.DESCRIPTION'),
-      icon: 'i-ri-zalo-oa-fill',
-    },
-    {
-      key: 'zalopersonal',
-      title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO_PERSONAL.TITLE'),
-      description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO_PERSONAL.DESCRIPTION'),
-      icon: 'i-ri-zalo-fill',
     },
     {
       key: 'tiktok_shop',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK_SHOP.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK_SHOP.DESCRIPTION'),
       icon: 'i-ri-tiktok-fill',
-    }
-  );
+    },
+  ];
 
   return channels;
 });

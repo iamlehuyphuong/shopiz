@@ -3,9 +3,9 @@
     "HEADER": "Hộp thư",
     "DESCRIPTION": "Kênh là phương thức giao tiếp mà khách hàng sử dụng để tương tác với bạn. Hộp thư là nơi bạn quản lý các cuộc trao đổi của một kênh cụ thể. Hộp thư có thể bao gồm nhiều nguồn như email, live chat và mạng xã hội.",
     "LEARN_MORE": "Tìm hiểu thêm về hộp thư",
-    "COUNT": "{n} inbox | {n} inboxes",
-    "SEARCH_PLACEHOLDER": "Search inboxes...",
-    "NO_RESULTS": "No inboxes found matching your search",
+    "COUNT": "Có {n} hộp thư",
+    "SEARCH_PLACEHOLDER": "Tìm kiếm hộp thư...",
+    "NO_RESULTS": "Không tìm thấy hộp thư nào khớp với tìm kiếm của bạn",
     "RECONNECTION_REQUIRED": "Hộp thư của bạn đã bị ngắt kết nối. Bạn sẽ không nhận được tin nhắn mới cho đến khi cấp quyền lại.",
     "CLICK_TO_RECONNECT": "Nhấp để kết nối lại.",
     "WHATSAPP_REGISTRATION_INCOMPLETE": "Quy trình đăng ký WhatsApp Business chưa hoàn tất. Vui lòng kiểm tra trạng thái tên hiển thị trong Meta Business Manager trước khi kết nối lại.",
@@ -92,18 +92,11 @@
         "DUPLICATE_INBOX_BANNER": "Tài khoản Instagram này đã được chuyển sang hộp thư mới. Bạn không thể gửi/nhận tin nhắn từ hộp thư cũ."
       },
       "TIKTOK": {
-        "CONTINUE_WITH_TIKTOK": "Continue with TikTok",
-        "CONNECT_YOUR_TIKTOK_PROFILE": "Connect your TikTok Profile",
-        "HELP": "To add your TikTok profile as a channel, you need to authenticate your TikTok Profile by clicking on 'Continue with TikTok' ",
-        "ERROR_MESSAGE": "There was an error connecting to TikTok, please try again",
-        "ERROR_AUTH": "There was an error connecting to TikTok, please try again"
-      },
-      "TIKTOK": {
-        "CONTINUE_WITH_TIKTOK": "Continue with TikTok",
-        "CONNECT_YOUR_TIKTOK_PROFILE": "Connect your TikTok Profile",
-        "HELP": "To add your TikTok profile as a channel, you need to authenticate your TikTok Profile by clicking on 'Continue with TikTok' ",
-        "ERROR_MESSAGE": "There was an error connecting to TikTok, please try again",
-        "ERROR_AUTH": "There was an error connecting to TikTok, please try again"
+        "CONTINUE_WITH_TIKTOK": "Tiếp tục với TikTok",
+        "CONNECT_YOUR_TIKTOK_PROFILE": "Kết nối tài khoản TikTok",
+        "HELP": "Để thêm tài khoản TikTok làm kênh hỗ trợ, bạn cần xác thực bằng cách nhấn 'Tiếp tục với TikTok'.",
+        "ERROR_MESSAGE": "Đã xảy ra lỗi khi kết nối với TikTok, vui lòng thử lại.",
+        "ERROR_AUTH": "Đã xảy ra lỗi khi xác thực TikTok, vui lòng thử lại."
       },
       "TWITTER": {
         "HELP": "Để thêm Twitter, hãy xác thực bằng cách nhấn 'Đăng nhập với Twitter'.",
@@ -522,11 +515,7 @@
           },
           "TIKTOK": {
             "TITLE": "TikTok",
-            "DESCRIPTION": "Connect your TikTok account"
-          },
-          "TIKTOK": {
-            "TITLE": "TikTok",
-            "DESCRIPTION": "Connect your TikTok account"
+            "DESCRIPTION": "Kết nối tài khoản TikTok"
           },
           "VOICE": {
             "TITLE": "Voice",

@@ -330,9 +330,9 @@ vi:
     copilot_message_required: Thông điệp bắt buộc
     copilot_error: 'Đã xảy ra lỗi với Copilot. Vui lòng thử lại.'
     copilot_limit: 'Bạn đã hết tín dụng Copilot. Bạn có thể mua thêm tín dụng từ phần thanh toán.'
-    upgrade: 'Nâng cấp gói để bật Captain AI'
-    disabled: 'Captain AI đã bị vô hiệu hóa cho tài khoản này.'
-    api_key_missing: 'Khóa API Captain AI chưa được cấu hình.'
+    upgrade: 'Nâng cấp gói để bật ShopizAI'
+    disabled: 'ShopizAI đã bị vô hiệu hóa cho tài khoản này.'
+    api_key_missing: 'Khóa API ShopizAI chưa được cấu hình.'
     copilot:
       using_tool: 'Đang sử dụng công cụ %{function_name}'
       completed_tool_call: 'Đã hoàn thành cuộc gọi công cụ %{function_name}'

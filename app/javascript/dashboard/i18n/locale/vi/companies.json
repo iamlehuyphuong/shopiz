@@ -1,33 +1,33 @@
 {
   "COMPANIES": {
-    "HEADER": "Companies",
+    "HEADER": "Công ty",
     "SORT_BY": {
-      "LABEL": "Sắp bởi",
+      "LABEL": "Sắp xếp theo",
       "OPTIONS": {
         "NAME": "Tên",
         "DOMAIN": "Miền",
         "CREATED_AT": "Tạo vào lúc",
-        "CONTACTS_COUNT": "Contacts count"
+        "CONTACTS_COUNT": "Số lượng liên hệ"
       }
     },
     "ORDER": {
-      "LABEL": "Order",
+      "LABEL": "Thứ tự",
       "OPTIONS": {
-        "ASCENDING": "Ascending",
-        "DESCENDING": "Descending"
+        "ASCENDING": "Tăng dần",
+        "DESCENDING": "Giảm dần"
       }
     },
-    "SEARCH_PLACEHOLDER": "Search companies...",
-    "LOADING": "Loading companies...",
-    "UNNAMED": "Unnamed Company",
-    "CONTACTS_COUNT": "{n} contact | {n} contacts",
+    "SEARCH_PLACEHOLDER": "Tìm kiếm công ty...",
+    "LOADING": "Đang tải danh sách công ty...",
+    "UNNAMED": "Công ty chưa đặt tên",
+    "CONTACTS_COUNT": "{n} liên hệ",
     "EMPTY_STATE": {
-      "TITLE": "No companies found"
+      "TITLE": "Không tìm thấy công ty nào"
     }
   },
   "COMPANIES_LAYOUT": {
     "PAGINATION_FOOTER": {
-      "SHOWING": "Showing {startItem} – {endItem} of {totalItems} company | Showing {startItem} – {endItem} of {totalItems} companies"
+      "SHOWING": "Hiển thị {startItem} – {endItem} trong tổng số {totalItems} công ty"
     }
   }
 }

@@ -1,13 +1,13 @@
 {
   "AUTOMATION": {
     "HEADER": "Tự động hoá",
-    "DESCRIPTION": "Automation can replace and streamline existing processes that require manual effort, such as adding labels and assigning conversations to the most suitable agent. This allows the team to focus on their strengths while reducing time spent on routine tasks.",
-    "LEARN_MORE": "Learn more about automation",
-    "COUNT": "{n} automation | {n} automations",
-    "HEADER_BTN_TXT": "Create Automation",
+    "DESCRIPTION": "Quy tắc tự động có thể thay thế và hợp lý hóa các quy trình hiện có đòi hỏi nỗ lực thủ công, chẳng hạn như thêm nhãn và phân công cuộc trò chuyện cho đại lý phù hợp nhất. Điều này cho phép nhóm tập trung vào điểm mạnh của họ trong khi giảm thời gian dành cho các nhiệm vụ thông thường.",
+    "LEARN_MORE": "Tìm hiểu thêm về quy tắc tự động",
+    "COUNT": "{n} quy tắc tự động | {n} quy tắc tự động",
+    "HEADER_BTN_TXT": "Tạo quy tắc tự động",
     "LOADING": "Đang lấy luật tự động hoá",
-    "SEARCH_PLACEHOLDER": "Search automation rules...",
-    "NO_RESULTS": "No automation rules found matching your search",
+    "SEARCH_PLACEHOLDER": "Tìm kiếm quy tắc tự động...",
+    "NO_RESULTS": "Không tìm thấy quy tắc tự động nào",
     "ADD": {
       "TITLE": "Thêm quy tắc tự động",
       "SUBMIT": "Tạo",
@@ -154,7 +154,7 @@
       "CHANGE_PRIORITY": "Thay đổi mức độ ưu tiên",
       "ADD_SLA": "Thêm SLA",
       "OPEN_CONVERSATION": "Mở cuộc hội thoại",
-      "PENDING_CONVERSATION": "Mark conversation as pending"
+      "PENDING_CONVERSATION": "Đánh dấu cuộc hội thoại là đang chờ"
     },
     "MESSAGE_TYPES": {
       "INCOMING": "Tin nhắn đến",

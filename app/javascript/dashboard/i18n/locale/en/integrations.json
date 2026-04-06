@@ -449,7 +449,7 @@
       "CANCEL_ANYTIME": "You can change or cancel your plan anytime"
     },
     "ENTERPRISE_PAYWALL": {
-      "AVAILABLE_ON": "Captain AI is only available in the Enterprise plans.",
+      "AVAILABLE_ON": "ShopizAI is only available in the Enterprise plans.",
       "UPGRADE_PROMPT": "Upgrade your plan to get access to our assistants, copilot and more.",
       "ASK_ADMIN": "Please reach out to your administrator for the upgrade."
     },
@@ -945,7 +945,7 @@
         "ALL": "All"
       },
       "PENDING_BANNER": {
-        "TITLE": "Captain has found some FAQs your customers were looking for.",
+        "TITLE": "ShopizAI has found some FAQs your customers were looking for.",
         "ACTION": "Click here to review"
       },
       "FORM_DESCRIPTION": "Add a question and its corresponding answer to the knowledge base and select the assistant it should be associated with.",

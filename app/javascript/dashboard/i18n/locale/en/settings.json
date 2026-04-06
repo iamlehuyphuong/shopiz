@@ -638,15 +638,15 @@
     },
     "DOCS": "Read docs",
     "SECURITY": "Security",
-    "CAPTAIN_AI": "Captain",
+    "CAPTAIN_AI": "ShopizAI",
     "CONVERSATION_WORKFLOW": "Conversation Workflow"
   },
   "CAPTAIN_SETTINGS": {
-    "TITLE": "Captain Settings",
-    "DESCRIPTION": "Configure your AI models and features for Captain. Captain follows a credit based billing, you will be charged credits for every action Captain takes based on the model selected.",
-    "LOADING": "Loading Captain configuration...",
-    "LINK_TEXT": "Learn more about Captain Credits",
-    "NOT_ENABLED": "Captain is not enabled for your account. Please upgrade your plan to access Captain features.",
+    "TITLE": "ShopizAI Settings",
+    "DESCRIPTION": "Configure your AI models and features for ShopizAI. ShopizAI follows a credit based billing, you will be charged credits for every action ShopizAI takes based on the model selected.",
+    "LOADING": "Loading ShopizAI configuration...",
+    "LINK_TEXT": "Learn more about ShopizAI Credits",
+    "NOT_ENABLED": "ShopizAI is not enabled for your account. Please upgrade your plan to access ShopizAI features.",
     "MODEL_CONFIG": {
       "TITLE": "Model Configuration",
       "DESCRIPTION": "Select AI models for different features.",
@@ -685,8 +685,8 @@
       }
     },
     "API": {
-      "SUCCESS": "Captain settings updated successfully.",
-      "ERROR": "Failed to update Captain settings. Please try again."
+      "SUCCESS": "ShopizAI settings updated successfully.",
+      "ERROR": "Failed to update ShopizAI settings. Please try again."
     }
   },
   "BILLING_SETTINGS": {
@@ -739,7 +739,7 @@
     "TOPUP": {
       "BUY_CREDITS": "Buy more credits",
       "MODAL_TITLE": "Buy AI Credits",
-      "MODAL_DESCRIPTION": "Purchase additional credits for Captain AI.",
+      "MODAL_DESCRIPTION": "Purchase additional credits for ShopizAI.",
       "CREDITS": "CREDITS",
       "ONE_TIME": "one-time",
       "POPULAR": "Most Popular",

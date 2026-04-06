@@ -129,7 +129,7 @@ const openDelete = inbox => {
                 :src="inbox.avatar_url"
                 :name="inbox.name"
                 :size="24"
-                    branded
+                branded
                 rounded-full
               />
             </div>

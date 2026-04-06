@@ -238,9 +238,9 @@
       "SIDEBAR_TXT": "<p><b>Ứng dụng Dashboard</b></p><p>Ứng dụng Dashboard cho phép tổ chức nhúng một ứng dụng bên trong bảng điều khiển của Shopiz để cung cấp ngữ cảnh cho nhân viên hỗ trợ khách hàng. Tính năng này cho phép bạn tạo ứng dụng độc lập và nhúng nó để hiển thị thông tin người dùng, đơn hàng hoặc lịch sử thanh toán.</p><p>Khi bạn nhúng ứng dụng vào bảng điều khiển Shopiz, ứng dụng sẽ nhận ngữ cảnh của cuộc đối thoại và thông tin liên hệ qua các sự kiện. Hãy triển khai trình lắng nghe sự kiện message trên trang của bạn để nhận dữ liệu ngữ cảnh.</p><p>Để thêm ứng dụng dashboard mới, nhấp vào nút 'Thêm ứng dụng dashboard mới'.</p>",
       "DESCRIPTION": "Ứng dụng Dashboard cho phép tổ chức nhúng một ứng dụng vào bảng điều khiển để cung cấp ngữ cảnh cho nhân viên hỗ trợ khách hàng. Tính năng này cho phép bạn tạo ứng dụng độc lập và nhúng nó để hiển thị thông tin người dùng, đơn hàng hoặc lịch sử thanh toán.",
       "LEARN_MORE": "Tìm hiểu thêm về ứng dụng Dashboard",
-      "COUNT": "{n} dashboard app | {n} dashboard apps",
-      "SEARCH_PLACEHOLDER": "Search dashboard apps...",
-      "NO_RESULTS": "No dashboard apps found matching your search",
+      "COUNT": "Có {n} ứng dụng bảng điều khiển",
+      "SEARCH_PLACEHOLDER": "Tìm kiếm ứng dụng dashboard...",
+      "NO_RESULTS": "Không tìm thấy ứng dụng dashboard nào khớp với tìm kiếm của bạn",
       "LIST": {
         "404": "Chưa có ứng dụng dashboard nào được cấu hình cho tài khoản này",
         "LOADING": "Đang lấy ứng dụng dashboard...",
@@ -449,7 +449,7 @@
       "CANCEL_ANYTIME": "Bạn có thể thay đổi hoặc hủy gói bất cứ lúc nào"
     },
     "ENTERPRISE_PAYWALL": {
-      "AVAILABLE_ON": "Captain AI is only available in the Enterprise plans.",
+      "AVAILABLE_ON": "ShopizAI is only available in the Enterprise plans.",
       "UPGRADE_PROMPT": "Nâng cấp để dùng trợ lý, copilot và nhiều tính năng khác.",
       "ASK_ADMIN": "Vui lòng liên hệ quản trị viên để được nâng cấp."
     },

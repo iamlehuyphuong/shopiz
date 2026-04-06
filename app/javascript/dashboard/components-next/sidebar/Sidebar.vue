@@ -8,20 +8,13 @@ import { useI18n } from 'vue-i18n';
 import { vOnClickOutside } from '@vueuse/components';
 import { useRouter, useRoute } from 'vue-router';
 import { watch } from 'vue';
-import { usePolicy } from 'dashboard/composables/usePolicy';
 import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 import { useWindowSize, useEventListener } from '@vueuse/core';
-import { emitter } from 'shared/helpers/mitt';
-import { BUS_EVENTS } from 'shared/constants/busEvents';
 
 import SidebarGroup from './SidebarGroup.vue';
 import SidebarChangelogCard from './SidebarChangelogCard.vue';
-import SidebarChangelogButton from './SidebarChangelogButton.vue';
 import ChannelLeaf from './ChannelLeaf.vue';
 import ChannelIcon from 'next/icon/ChannelIcon.vue';
-import SidebarAccountSwitcher from './SidebarAccountSwitcher.vue';
-import Logo from 'next/icon/Logo.vue';
-import ComposeConversation from 'dashboard/components-next/NewConversation/ComposeConversation.vue';
 import { useSidebarKeyboardShortcuts } from './useSidebarKeyboardShortcuts';
 
 const props = defineProps({
@@ -31,7 +24,11 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['closeMobileSidebar']);
+const emit = defineEmits([
+  'closeMobileSidebar',
+  'openKeyShortcutModal',
+  'closeKeyShortcutModal',
+]);
 
 const { accountScopedRoute, isOnChatwootCloud } = useAccount();
 const store = useStore();
@@ -87,16 +84,15 @@ const {
   COLLAPSED_THRESHOLD,
 } = useSidebarResize();
 
-// On mobile, sidebar is always expanded (flyout mode)
-const isEffectivelyCollapsed = computed(
-  () => !isMobile.value && isCollapsed.value
-);
-
 // Resize handle logic
 const isResizing = ref(false);
 const startX = ref(0);
 const startWidth = ref(0);
 
+// On mobile, sidebar is always expanded (flyout mode)
+const isEffectivelyCollapsed = computed(
+  () => !isMobile.value && isCollapsed.value
+);
 
 provideSidebarContext({
   expandedItem,
@@ -114,91 +110,6 @@ const getFirstNavigableChild = item => {
   }
   return null;
 };
-
-const syncActiveCategory = () => {
-  const currentRouteName = route.name;
-  const activeItem = menuItems.value.find(item => {
-    if (item.activeOn?.includes(currentRouteName)) return true;
-    if (item.to?.name === currentRouteName) return true;
-    if (item.children) {
-      return item.children.some(child => {
-        if (child.activeOn?.includes(currentRouteName)) return true;
-        if (child.to?.name === currentRouteName) return true;
-        if (child.children) {
-          return child.children.some(grandChild => {
-            if (grandChild.activeOn?.includes(currentRouteName)) return true;
-            if (grandChild.to?.name === currentRouteName) return true;
-            return false;
-          });
-        }
-        return false;
-      });
-    }
-    return false;
-  });
-
-  if (activeItem) {
-    activeCategory.value = activeItem.name;
-  }
-};
-
-watch(
-  () => route.path,
-  () => {
-    syncActiveCategory();
-  }
-);
-
-// Get clientX from mouse or touch event
-const getClientX = event =>
-  event.touches ? event.touches[0].clientX : event.clientX;
-
-const onResizeStart = event => {
-  isResizing.value = true;
-  startX.value = getClientX(event);
-  startWidth.value = sidebarWidth.value;
-  Object.assign(document.body.style, {
-    cursor: 'col-resize',
-    userSelect: 'none',
-  });
-  // Prevent default to avoid scrolling on touch
-  event.preventDefault();
-};
-
-const onResizeMove = event => {
-  if (!isResizing.value) return;
-
-  const delta = isRTL.value
-    ? startX.value - getClientX(event)
-    : getClientX(event) - startX.value;
-  setSidebarWidth(startWidth.value + delta);
-};
-
-const onResizeEnd = () => {
-  if (!isResizing.value) return;
-
-  isResizing.value = false;
-  Object.assign(document.body.style, { cursor: '', userSelect: '' });
-
-  // Snap to collapsed state if below threshold
-  if (sidebarWidth.value < COLLAPSED_THRESHOLD) {
-    snapToCollapsed();
-  } else {
-    saveWidth();
-  }
-};
-
-const onResizeHandleDoubleClick = () => {
-  if (isCollapsed.value) snapToExpanded();
-  else snapToCollapsed();
-};
-
-// Support both mouse and touch events
-useEventListener(document, 'mousemove', onResizeMove);
-useEventListener(document, 'mouseup', onResizeEnd);
-useEventListener(document, 'touchmove', onResizeMove, { passive: false });
-useEventListener(document, 'touchend', onResizeEnd);
-
 const inboxes = useMapGetter('inboxes/getInboxes');
 const labels = useMapGetter('labels/getLabelsOnSidebar');
 const teams = useMapGetter('teams/getMyTeams');
@@ -207,34 +118,9 @@ const conversationCustomViews = useMapGetter(
   'customViews/getConversationCustomViews'
 );
 
-onMounted(() => {
-  syncActiveCategory();
-  store.dispatch('labels/get');
-  store.dispatch('inboxes/get');
-  store.dispatch('notifications/unReadCount');
-  store.dispatch('teams/get');
-  store.dispatch('attributes/get');
-  store.dispatch('customViews/get', 'conversation');
-  store.dispatch('customViews/get', 'contact');
-});
-
 const sortedInboxes = computed(() =>
   inboxes.value.slice().sort((a, b) => a.name.localeCompare(b.name))
 );
-
-const closeMobileSidebar = () => {
-  if (!props.isMobileSidebarOpen) return;
-  emit('closeMobileSidebar');
-};
-
-const onComposeOpen = toggleFn => {
-  toggleFn();
-  emitter.emit(BUS_EVENTS.NEW_CONVERSATION_MODAL, true);
-};
-
-const onComposeClose = () => {
-  emitter.emit(BUS_EVENTS.NEW_CONVERSATION_MODAL, false);
-};
 
 const newReportRoutes = () => [
   {
@@ -517,25 +403,6 @@ const menuItems = computed(() => {
         },
       ],
     },
-    // {
-    //   name: 'Companies',
-    //   label: t('SIDEBAR.COMPANIES'),
-    //   icon: 'i-lucide-building-2',
-    //   activeOn: ['companies_dashboard_index'],
-    //   children: [
-    //     {
-    //       name: 'All Companies',
-    //       label: t('SIDEBAR.ALL_COMPANIES'),
-    //       icon: 'i-lucide-building-2',
-    //       to: accountScopedRoute(
-    //         'companies_dashboard_index',
-    //         {},
-    //         { page: 1, search: undefined }
-    //       ),
-    //       activeOn: ['companies_dashboard_index'],
-    //     },
-    //   ],
-    // },
     {
       name: 'Reports',
       label: t('SIDEBAR.REPORTS'),
@@ -653,12 +520,6 @@ const menuItems = computed(() => {
           icon: 'i-lucide-briefcase',
           to: accountScopedRoute('general_settings_index'),
         },
-        // {
-        //   name: 'Settings Captain',
-        //   label: t('SIDEBAR.CAPTAIN_AI'),
-        //   icon: 'i-woot-captain',
-        //   to: accountScopedRoute('captain_settings_index'),
-        // },
         {
           name: 'Settings Agents',
           label: t('SIDEBAR.AGENTS'),
@@ -803,6 +664,107 @@ const menuItems = computed(() => {
   ];
 });
 
+const syncActiveCategory = () => {
+  const currentRouteName = route.name;
+  const activeItem = menuItems.value.find(item => {
+    if (item.activeOn?.includes(currentRouteName)) return true;
+    if (item.to?.name === currentRouteName) return true;
+    if (item.children) {
+      return item.children.some(child => {
+        if (child.activeOn?.includes(currentRouteName)) return true;
+        if (child.to?.name === currentRouteName) return true;
+        if (child.children) {
+          return child.children.some(grandChild => {
+            if (grandChild.activeOn?.includes(currentRouteName)) return true;
+            if (grandChild.to?.name === currentRouteName) return true;
+            return false;
+          });
+        }
+        return false;
+      });
+    }
+    return false;
+  });
+
+  if (activeItem) {
+    activeCategory.value = activeItem.name;
+  }
+};
+
+watch(
+  () => route.path,
+  () => {
+    syncActiveCategory();
+  }
+);
+
+// Get clientX from mouse or touch event
+const getClientX = event =>
+  event.touches ? event.touches[0].clientX : event.clientX;
+
+const onResizeStart = event => {
+  isResizing.value = true;
+  startX.value = getClientX(event);
+  startWidth.value = sidebarWidth.value;
+  Object.assign(document.body.style, {
+    cursor: 'col-resize',
+    userSelect: 'none',
+  });
+  // Prevent default to avoid scrolling on touch
+  event.preventDefault();
+};
+
+const onResizeMove = event => {
+  if (!isResizing.value) return;
+
+  const delta = isRTL.value
+    ? startX.value - getClientX(event)
+    : getClientX(event) - startX.value;
+  setSidebarWidth(startWidth.value + delta);
+};
+
+const onResizeEnd = () => {
+  if (!isResizing.value) return;
+
+  isResizing.value = false;
+  Object.assign(document.body.style, { cursor: '', userSelect: '' });
+
+  // Snap to collapsed state if below threshold
+  if (sidebarWidth.value < COLLAPSED_THRESHOLD) {
+    snapToCollapsed();
+  } else {
+    saveWidth();
+  }
+};
+
+const onResizeHandleDoubleClick = () => {
+  if (isCollapsed.value) snapToExpanded();
+  else snapToCollapsed();
+};
+
+// Support both mouse and touch events
+useEventListener(document, 'mousemove', onResizeMove);
+useEventListener(document, 'mouseup', onResizeEnd);
+useEventListener(document, 'touchmove', onResizeMove, { passive: false });
+useEventListener(document, 'touchend', onResizeEnd);
+
+onMounted(() => {
+  syncActiveCategory();
+  store.dispatch('labels/get');
+  store.dispatch('inboxes/get');
+  store.dispatch('notifications/unReadCount');
+  store.dispatch('teams/get');
+  store.dispatch('attributes/get');
+  store.dispatch('customViews/get', 'conversation');
+  store.dispatch('customViews/get', 'contact');
+});
+
+const closeMobileSidebar = () => {
+  if (!props.isMobileSidebarOpen) return;
+  emit('closeMobileSidebar');
+};
+
+
 // Calculate active menu items
 const activeMainMenuName = computed(() => {
   return activeCategory.value || menuItems.value[0]?.name;
@@ -872,7 +834,8 @@ const handleMainMenuClick = item => {
 
     <!-- Column 2: Secondary Menu Items -->
     <div
-      class="w-[200px] bg-n-solid-1 md:bg-[#F9FAFB] dark:md:bg-n-solid-1 border-r border-n-weak flex flex-col flex-shrink-0 h-full overflow-y-auto no-scrollbar"
+      v-show="!isEffectivelyCollapsed"
+      class="flex-1 bg-n-solid-1 md:bg-[#F9FAFB] dark:md:bg-n-solid-1 border-r border-n-weak flex flex-col flex-shrink-0 h-full overflow-y-auto no-scrollbar"
     >
       <div
         class="px-4 pt-5 pb-3 sticky top-0 md:bg-[#F9FAFB] dark:md:bg-n-solid-1 z-10 flex items-center justify-between"
@@ -895,6 +858,18 @@ const handleMainMenuClick = item => {
           v-bind="activeMainMenuItem"
         />
       </ul>
+    </div>
+    <!-- Resize Handle -->
+    <div
+      v-show="!isMobile"
+      class="absolute top-0 ltr:right-0 rtl:left-0 w-1 h-full cursor-col-resize hover:bg-n-brand/10 transition-colors z-[100] group hidden md:block"
+      @mousedown="onResizeStart"
+      @touchstart="onResizeStart"
+      @dblclick="onResizeHandleDoubleClick"
+    >
+      <div
+        class="absolute ltr:right-0 rtl:left-0 h-full w-[1px] bg-n-weak group-hover:bg-n-brand transition-colors"
+      />
     </div>
   </aside>
 </template>

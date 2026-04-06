@@ -99,7 +99,7 @@ const helpURL = getHelpUrlForFeature(props.featureName);
         v-if="searchPlaceholder"
         v-model="searchQuery"
         :placeholder="searchPlaceholder"
-        class="group w-56 min-w-0 hidden sm:flex [&>input]:ltr:!pl-8 [&>input]:rtl:!pr-8 [&>input]:!rounded-[0.625rem]"
+        class="group w-56 min-w-0 hidden sm:flex [&_input]:ltr:!pl-10 [&_input]:rtl:!pr-10 [&_input]:!rounded-[0.625rem]"
         size="sm"
         type="search"
       >

@@ -194,7 +194,7 @@ const confirmDeletion = () => {
               :status="agent.availability_status"
               :size="40"
               hide-offline-status
-                  branded
+              branded
             />
             <div class="flex flex-col gap-1.5 items-start">
               <span class="block text-heading-3 text-n-slate-12 capitalize">
