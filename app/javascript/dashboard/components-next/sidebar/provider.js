@@ -89,7 +89,7 @@ export function useSidebarContext() {
   }
 
   const router = useRouter();
-  const { shouldShow } = usePolicy();
+  const { shouldShow, shouldShowPaywall } = usePolicy();
 
   const resolvePath = to => {
     if (to) return router.resolve(to)?.path || '/';
@@ -146,12 +146,18 @@ export function useSidebarContext() {
     return shouldShow(featureFlag, permissions, installationType);
   };
 
+  const isLocked = to => {
+    const featureFlag = resolveFeatureFlag(to);
+    return shouldShowPaywall(featureFlag);
+  };
+
   return {
     ...context,
     resolvePath,
     resolvePermissions,
     resolveFeatureFlag,
     isAllowed,
+    isLocked,
   };
 }
 

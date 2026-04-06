@@ -16,7 +16,8 @@ const props = defineProps({
 const emit = defineEmits(['close', 'mouseenter', 'mouseleave']);
 
 const router = useRouter();
-const { isAllowed, sidebarWidth } = useSidebarContext();
+const { isAllowed, isLocked, sidebarWidth, openLockedModal } =
+  useSidebarContext();
 
 const expandedSubGroup = ref(null);
 const popoverRef = ref(null);
@@ -28,15 +29,19 @@ const toggleSubGroup = name => {
   expandedSubGroup.value = expandedSubGroup.value === name ? null : name;
 };
 
-const navigateAndClose = to => {
-  router.push(to);
+const navigateAndClose = child => {
+  if (isLocked(child.to)) {
+    openLockedModal(child.label, child.to?.featureFlag || '');
+    return;
+  }
+  router.push(child.to);
   emit('close');
 };
 
 const isActive = child => props.activeChild?.name === child.name;
 
 const getAccessibleSubChildren = children =>
-  children.filter(c => isAllowed(c.to));
+  children.filter(c => isAllowed(c.to) || isLocked(c.to));
 
 const renderIcon = icon => ({
   component: typeof icon === 'object' ? icon : Icon,
@@ -59,9 +64,11 @@ const transition = computed(() =>
 const accessibleChildren = computed(() => {
   return props.children.filter(child => {
     if (child.children) {
-      return child.children.some(subChild => isAllowed(subChild.to));
+      return child.children.some(
+        subChild => isAllowed(subChild.to) || isLocked(subChild.to)
+      );
     }
-    return child.to && isAllowed(child.to);
+    return child.to && (isAllowed(child.to) || isLocked(child.to));
   });
 });
 
@@ -153,11 +160,12 @@ onMounted(async () => {
                     <button
                       class="flex items-center gap-2 px-2 py-1.5 w-full rounded-lg text-sm text-left rtl:text-right transition-colors duration-150 ease-out"
                       :class="{
+                        'opacity-50 cursor-pointer': isLocked(subChild.to),
                         'text-n-slate-12 bg-n-alpha-2': isActive(subChild),
                         'text-n-slate-11 hover:bg-n-alpha-2':
                           !isActive(subChild),
                       }"
-                      @click="navigateAndClose(subChild.to)"
+                      @click="navigateAndClose(subChild)"
                     >
                       <component
                         :is="renderIcon(subChild.icon).component"
@@ -166,6 +174,11 @@ onMounted(async () => {
                         class="size-4 flex-shrink-0"
                       />
                       <span class="flex-1 truncate">{{ subChild.label }}</span>
+                      <Icon
+                        v-if="isLocked(subChild.to)"
+                        icon="i-lucide-lock-keyhole"
+                        class="size-3 text-n-slate-11 ml-auto"
+                      />
                     </button>
                   </li>
                 </ul>
@@ -176,10 +189,11 @@ onMounted(async () => {
               <button
                 class="flex items-center gap-2 px-2 py-1.5 w-full rounded-lg text-sm text-left rtl:text-right transition-colors duration-150 ease-out"
                 :class="{
+                  'opacity-50 cursor-pointer': isLocked(child.to),
                   'text-n-slate-12 bg-n-alpha-2': isActive(child),
                   'text-n-slate-11 hover:bg-n-alpha-2': !isActive(child),
                 }"
-                @click="navigateAndClose(child.to)"
+                @click="navigateAndClose(child)"
               >
                 <component
                   :is="renderIcon(child.icon).component"
@@ -188,6 +202,11 @@ onMounted(async () => {
                   class="size-4 flex-shrink-0"
                 />
                 <span class="flex-1 truncate">{{ child.label }}</span>
+                <Icon
+                  v-if="isLocked(child.to)"
+                  icon="i-lucide-lock-keyhole"
+                  class="size-3 text-n-slate-11 ml-auto"
+                />
               </button>
             </li>
           </template>

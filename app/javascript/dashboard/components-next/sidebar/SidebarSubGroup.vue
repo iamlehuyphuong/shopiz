@@ -14,14 +14,18 @@ const props = defineProps({
   activeChild: { type: Object, default: undefined },
 });
 
-const { isAllowed } = useSidebarContext();
+const { isAllowed, isLocked, openLockedModal } = useSidebarContext();
 const scrollableContainer = ref(null);
 
 const accessibleItems = computed(() =>
   props.children.filter(child => {
-    return child.to && isAllowed(child.to);
+    return child.to && (isAllowed(child.to) || isLocked(child.to));
   })
 );
+
+const onToggleLocked = (label, featureFlag = '') => {
+  openLockedModal(label, featureFlag);
+};
 
 const hasAccessibleItems = computed(() => {
   return accessibleItems.value.length > 0;
@@ -44,8 +48,8 @@ useEventListener(scrollableContainer, 'scroll', () => {
   <SidebarGroupSeparator
     v-if="hasAccessibleItems"
     v-show="isExpanded"
-    :label
-    :icon
+    :label="label"
+    :icon="icon"
     class="my-1"
   />
   <ul
@@ -62,11 +66,14 @@ useEventListener(scrollableContainer, 'scroll', () => {
       }"
     >
       <SidebarGroupLeaf
-        v-for="child in children"
+        v-for="child in accessibleItems"
         v-show="isExpanded || activeChild?.name === child.name"
         v-bind="child"
         :key="child.name"
         :active="activeChild?.name === child.name"
+        :is-locked="isLocked(child.to)"
+        :feature-flag="child.to?.featureFlag || ''"
+        @toggle-locked="onToggleLocked(child.label, $event)"
       />
     </div>
     <div

@@ -12,9 +12,11 @@ const props = defineProps({
   isActive: { type: Boolean, default: false },
   hasActiveChild: { type: Boolean, default: false },
   getterKeys: { type: Object, default: () => ({}) },
+  isLocked: { type: Boolean, default: false },
+  featureFlag: { type: String, default: '' },
 });
 
-const emit = defineEmits(['toggle']);
+const emit = defineEmits(['toggle', 'toggleLocked']);
 
 const showBadge = useMapGetter(props.getterKeys.badge);
 const dynamicCount = useMapGetter(props.getterKeys.count);
@@ -25,24 +27,30 @@ const count = computed(() =>
 
 <template>
   <component
-    :is="to ? 'router-link' : 'div'"
-    class="flex items-center gap-2 px-1.5 py-1 rounded-lg h-8 min-w-0"
+    :is="to && !isLocked ? 'router-link' : 'div'"
+    class="flex items-center gap-2 px-1.5 py-1 rounded-lg h-8 min-w-0 transition-opacity duration-200"
     role="button"
     draggable="false"
-    :to="to"
+    :to="to && !isLocked ? to : undefined"
     :title="label"
     :class="{
       'text-n-slate-12 bg-n-alpha-2 font-medium': isActive && !hasActiveChild,
       'text-n-slate-12 font-medium': hasActiveChild,
       'text-n-slate-11 hover:bg-n-alpha-2': !isActive && !hasActiveChild,
+      'opacity-50 pointer-events-auto cursor-pointer': isLocked,
     }"
-    @click.stop="emit('toggle')"
+    @click.stop="isLocked ? emit('toggleLocked', featureFlag) : emit('toggle')"
   >
     <div v-if="icon" class="relative flex items-center gap-2">
       <Icon v-if="icon" :icon="icon" class="size-4" />
       <span
         v-if="showBadge"
         class="size-2 -top-px ltr:-right-px rtl:-left-px bg-n-brand absolute rounded-full border border-n-solid-2"
+      />
+      <Icon
+        v-if="isLocked"
+        icon="i-lucide-lock-keyhole"
+        class="size-3 absolute -top-1 -right-1 text-n-slate-11 bg-n-background rounded-full p-0.5"
       />
     </div>
     <div class="flex items-center gap-1.5 flex-grow min-w-0 flex-1">

@@ -6,7 +6,12 @@
       "AGENTS": "You have exceeded the agent limit. Your plan only allows {allowed} agents.",
       "CONTACTS": "You have exceeded the contact limit. Your plan only allows {allowed} contacts.",
       "AUTOMATIONS": "You have exceeded the automation rule limit. Your plan only allows {allowed} automation rules.",
-      "NON_ADMIN": "Please contact your administrator to upgrade the plan and continue using all features."
+      "NON_ADMIN": "Please contact your administrator to upgrade the plan and continue using all features.",
+      "UPGRADE_PROMPT_GENERIC": "The {feature} feature is not available in your current plan. Please upgrade to access this and other premium features.",
+      "UPGRADE_PROMPT_CRM": "Upgrade to continue using Shopiz. You have exceeded the contact limit. Your plan only allows {allowed} contacts.",
+      "UPGRADE_PROMPT_CAMPAIGNS": "Campaigns are available on a higher plan. Upgrade to start reaching more customers with pro-active messaging.",
+      "UPGRADE_PROMPT_REPORTS": "Advanced reports and analytics are available on a higher plan. Upgrade to gain deeper insights into your business.",
+      "UPGRADE_PROMPT_AUTOMATIONS": "Automations and workflows are available on a higher plan. Upgrade to save time and scale your operations."
     },
     "TITLE": "Account settings",
     "SUBMIT": "Update settings",
@@ -130,7 +135,8 @@
     "PAYMENT_PENDING": "Your payment is pending. Please update your payment information to continue using Shopiz",
     "UPGRADE": "Upgrade to continue using Shopiz",
     "LIMITS_UPGRADE": "Your account has exceeded the usage limits, please upgrade your plan to continue using Shopiz",
-    "OPEN_BILLING": "Open billing"
+    "OPEN_BILLING": "Open billing",
+    "CLOSE": "Close"
   },
   "FORMS": {
     "MULTISELECT": {

@@ -8,7 +8,6 @@ import { useI18n } from 'vue-i18n';
 import { vOnClickOutside } from '@vueuse/components';
 import { useRouter, useRoute } from 'vue-router';
 import { watch } from 'vue';
-import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 import { useWindowSize, useEventListener } from '@vueuse/core';
 
 import SidebarGroup from './SidebarGroup.vue';
@@ -16,6 +15,7 @@ import SidebarChangelogCard from './SidebarChangelogCard.vue';
 import ChannelLeaf from './ChannelLeaf.vue';
 import ChannelIcon from 'next/icon/ChannelIcon.vue';
 import { useSidebarKeyboardShortcuts } from './useSidebarKeyboardShortcuts';
+import FeatureLockedModal from './FeatureLockedModal.vue';
 
 const props = defineProps({
   isMobileSidebarOpen: {
@@ -42,19 +42,6 @@ const isRTL = useMapGetter('accounts/isRTL');
 
 const { width: windowWidth } = useWindowSize();
 const isMobile = computed(() => windowWidth.value < 768);
-
-const accountId = useMapGetter('getCurrentAccountId');
-const isFeatureEnabledonAccount = useMapGetter(
-  'accounts/isFeatureEnabledonAccount'
-);
-
-const hasAdvancedAssignment = computed(() => {
-  return isFeatureEnabledonAccount.value(
-    accountId.value,
-    FEATURE_FLAGS.ADVANCED_ASSIGNMENT
-  );
-});
-
 const toggleShortcutModalFn = show => {
   if (show) {
     emit('openKeyShortcutModal');
@@ -73,6 +60,20 @@ const setExpandedItem = name => {
 
 const activeCategory = ref(null);
 const route = useRoute();
+
+const isLockedModalOpen = ref(false);
+const lockedFeatureName = ref('');
+const lockedFeatureFlag = ref('');
+
+const openLockedModal = (featureName, featureFlag = '') => {
+  lockedFeatureName.value = featureName;
+  lockedFeatureFlag.value = featureFlag;
+  isLockedModalOpen.value = true;
+};
+
+const closeLockedModal = () => {
+  isLockedModalOpen.value = false;
+};
 
 const {
   sidebarWidth,
@@ -101,6 +102,7 @@ provideSidebarContext({
   sidebarWidth,
   isResizing,
   activeCategory,
+  openLockedModal,
 });
 
 const getFirstNavigableChild = item => {
@@ -449,31 +451,31 @@ const menuItems = computed(() => {
         {
           name: 'Live chat',
           label: t('SIDEBAR.LIVE_CHAT'),
-          icon: 'i-lucide-message-circle',
+          icon: 'i-woot-website',
           to: accountScopedRoute('campaigns_livechat_index'),
         },
         {
           name: 'Zalo Personal',
           label: t('SIDEBAR.ZALO_PERSONAL'),
-          icon: 'i-lucide-message-square-text',
+          icon: 'i-ri-zalo-fill',
           to: accountScopedRoute('campaigns_zalo_personal_index'),
         },
         {
           name: 'SMS',
           label: t('SIDEBAR.SMS'),
-          icon: 'i-lucide-phone',
+          icon: 'i-woot-sms',
           to: accountScopedRoute('campaigns_sms_index'),
         },
         {
           name: 'WhatsApp',
           label: t('SIDEBAR.WHATSAPP'),
-          icon: 'i-lucide-message-square',
+          icon: 'i-woot-whatsapp',
           to: accountScopedRoute('campaigns_whatsapp_index'),
         },
         {
           name: 'Voice',
           label: t('SIDEBAR.VOICE'),
-          icon: 'i-lucide-mic',
+          icon: 'i-woot-voice',
           to: accountScopedRoute('campaigns_voice_index'),
         },
         {
@@ -542,25 +544,21 @@ const menuItems = computed(() => {
           ],
           to: accountScopedRoute('settings_teams_list'),
         },
-        ...(hasAdvancedAssignment.value
-          ? [
-              {
-                name: 'Settings Agent Assignment',
-                label: t('SIDEBAR.AGENT_ASSIGNMENT'),
-                icon: 'i-lucide-user-cog',
-                activeOn: [
-                  'assignment_policy_index',
-                  'agent_assignment_policy_index',
-                  'agent_assignment_policy_create',
-                  'agent_assignment_policy_edit',
-                  'agent_capacity_policy_index',
-                  'agent_capacity_policy_create',
-                  'agent_capacity_policy_edit',
-                ],
-                to: accountScopedRoute('assignment_policy_index'),
-              },
-            ]
-          : []),
+        {
+          name: 'Settings Agent Assignment',
+          label: t('SIDEBAR.AGENT_ASSIGNMENT'),
+          icon: 'i-lucide-user-cog',
+          activeOn: [
+            'assignment_policy_index',
+            'agent_assignment_policy_index',
+            'agent_assignment_policy_create',
+            'agent_assignment_policy_edit',
+            'agent_capacity_policy_index',
+            'agent_capacity_policy_create',
+            'agent_capacity_policy_edit',
+          ],
+          to: accountScopedRoute('assignment_policy_index'),
+        },
         {
           name: 'Settings Inboxes',
           label: t('SIDEBAR.INBOXES'),
@@ -871,5 +869,12 @@ const handleMainMenuClick = item => {
         class="absolute ltr:right-0 rtl:left-0 h-full w-[1px] bg-n-weak group-hover:bg-n-brand transition-colors"
       />
     </div>
+    <!-- Feature Locked Modal -->
+    <FeatureLockedModal
+      :show="isLockedModalOpen"
+      :feature-name="lockedFeatureName"
+      :feature-flag="lockedFeatureFlag"
+      @close="closeLockedModal"
+    />
   </aside>
 </template>

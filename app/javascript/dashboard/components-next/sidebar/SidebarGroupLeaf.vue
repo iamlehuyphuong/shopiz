@@ -1,8 +1,6 @@
 <script setup>
 import { isVNode, computed } from 'vue';
 import Icon from 'next/icon/Icon.vue';
-import Policy from 'dashboard/components/policy.vue';
-import { useSidebarContext } from './provider';
 
 const props = defineProps({
   label: { type: String, required: true },
@@ -10,9 +8,11 @@ const props = defineProps({
   icon: { type: [String, Object], default: null },
   active: { type: Boolean, default: false },
   component: { type: Function, default: null },
+  isLocked: { type: Boolean, default: false },
+  featureFlag: { type: String, default: '' },
 });
 
-const { resolvePermissions, resolveFeatureFlag } = useSidebarContext();
+const emit = defineEmits(['toggleLocked']);
 
 const shouldRenderComponent = computed(() => {
   return typeof props.component === 'function' || isVNode(props.component);
@@ -21,20 +21,24 @@ const shouldRenderComponent = computed(() => {
 
 <!-- eslint-disable-next-line vue/no-root-v-if -->
 <template>
-  <Policy
-    :permissions="resolvePermissions(to)"
-    :feature-flag="resolveFeatureFlag(to)"
-    as="li"
-    class="py-0.5 ltr:pl-2 rtl:pr-2 rtl:mr-3 ltr:ml-3 relative text-n-slate-11 child-item before:bg-n-slate-4 after:bg-transparent after:border-n-slate-4 before:left-0 rtl:before:right-0 min-w-0"
+  <li
+    class="py-0.5 ltr:pl-2 rtl:pr-2 rtl:mr-3 ltr:ml-3 relative text-n-slate-11 child-item before:bg-n-slate-4 after:bg-transparent after:border-n-slate-4 before:left-0 rtl:before:right-0 min-w-0 transition-opacity duration-200"
+    :class="{ 'opacity-50': isLocked }"
   >
     <component
-      :is="to ? 'router-link' : 'div'"
-      :to="to"
+      :is="to && !isLocked ? 'router-link' : 'div'"
+      :to="to && !isLocked ? to : undefined"
       :title="label"
-      class="flex h-8 items-center gap-2 px-2 py-1 rounded-lg w-full hover:bg-gradient-to-r from-transparent via-n-slate-3/70 to-n-slate-3/70 group"
+      class="flex h-8 items-center gap-2 px-2 py-1 rounded-lg w-full hover:bg-gradient-to-r from-transparent via-n-slate-3/70 to-n-slate-3/70 group relative"
       :class="{
         'text-n-slate-12 bg-n-alpha-2 active': active,
+        'cursor-pointer': isLocked,
       }"
+      @click="
+        isLocked
+          ? emit('toggleLocked', featureFlag || to?.featureFlag)
+          : undefined
+      "
     >
       <component
         :is="component"
@@ -49,6 +53,11 @@ const shouldRenderComponent = computed(() => {
         </span>
         <div class="flex-1 truncate min-w-0 text-sm">{{ label }}</div>
       </template>
+      <Icon
+        v-if="isLocked"
+        icon="i-lucide-lock-keyhole"
+        class="size-3 absolute top-1 right-1 text-n-slate-11 bg-n-background rounded-full p-0.5"
+      />
     </component>
-  </Policy>
+  </li>
 </template>

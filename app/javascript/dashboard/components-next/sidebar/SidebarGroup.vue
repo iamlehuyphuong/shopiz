@@ -2,7 +2,6 @@
 import { computed, onMounted, onUnmounted, watch, nextTick, ref } from 'vue';
 import { useSidebarContext, usePopoverState } from './provider';
 import { useRoute, useRouter } from 'vue-router';
-import Policy from 'dashboard/components/policy.vue';
 import Icon from 'next/icon/Icon.vue';
 import SidebarGroupHeader from './SidebarGroupHeader.vue';
 import SidebarGroupLeaf from './SidebarGroupLeaf.vue';
@@ -24,12 +23,16 @@ const {
   expandedItem,
   setExpandedItem,
   resolvePath,
-  resolvePermissions,
-  resolveFeatureFlag,
   isAllowed,
+  isLocked,
   isCollapsed,
   isResizing,
+  openLockedModal,
 } = useSidebarContext();
+
+const onToggleLocked = (label, featureFlag = '') => {
+  openLockedModal(label, featureFlag);
+};
 
 const {
   activePopover,
@@ -105,7 +108,7 @@ const accessibleItems = computed(() => {
     // If a item has no link, it means it's just a subgroup header
     // So we don't need to check for permissions here, because there's nothing to
     // access here anyway
-    return child.to && isAllowed(child.to);
+    return child.to && (isAllowed(child.to) || isLocked(child.to));
   });
 });
 
@@ -214,11 +217,8 @@ watch(
 
 <!-- eslint-disable-next-line vue/no-root-v-if -->
 <template>
-  <Policy
+  <li
     v-if="!hasChildren || hasAccessibleChildren"
-    :permissions="resolvePermissions(to)"
-    :feature-flag="resolveFeatureFlag(to)"
-    as="li"
     class="grid gap-1 text-sm cursor-pointer select-none min-w-0"
   >
     <!-- Collapsed State -->
@@ -242,6 +242,11 @@ watch(
           @click="hasChildren ? handleCollapsedClick() : undefined"
         >
           <Icon v-if="icon" :icon="icon" class="size-4" />
+          <Icon
+            v-if="isLocked(to)"
+            icon="i-lucide-lock-keyhole"
+            class="size-3 absolute -top-1 -right-1 text-n-slate-11 bg-n-background rounded-full p-0.5"
+          />
         </component>
         <SidebarCollapsedPopover
           v-if="hasChildren && isPopoverOpen"
@@ -258,16 +263,19 @@ watch(
     <!-- Expanded State -->
     <template v-else>
       <SidebarGroupHeader
-        :icon
-        :name
-        :label
-        :to
+        :icon="icon"
+        :name="name"
+        :label="label"
+        :to="to"
         :getter-keys="getterKeys"
         :is-active="isActive"
         :has-active-child="hasActiveChild"
         :expandable="hasChildren"
         :is-expanded="isExpanded"
+        :is-locked="isLocked(to)"
+        :feature-flag="to?.featureFlag || ''"
         @toggle="toggleTrigger"
+        @toggle-locked="onToggleLocked(label, $event)"
       />
       <ul
         v-if="hasChildren"
@@ -284,10 +292,13 @@ watch(
             :active-child="activeChild"
           />
           <SidebarGroupLeaf
-            v-else-if="isAllowed(child.to)"
+            v-else-if="isAllowed(child.to) || isLocked(child.to)"
             v-show="isExpanded || activeChild?.name === child.name"
             v-bind="child"
             :active="activeChild?.name === child.name"
+            :is-locked="isLocked(child.to)"
+            :feature-flag="child.to?.featureFlag || ''"
+            @toggle-locked="onToggleLocked(child.label, $event)"
           />
         </template>
       </ul>
@@ -295,7 +306,7 @@ watch(
         <SidebarGroupEmptyLeaf />
       </ul>
     </template>
-  </Policy>
+  </li>
 </template>
 
 <style>

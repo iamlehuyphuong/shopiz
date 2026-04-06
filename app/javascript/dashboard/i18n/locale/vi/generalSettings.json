@@ -6,7 +6,12 @@
       "AGENTS": "Bạn đã vượt quá giới hạn nhân viên. Gói của bạn chỉ cho phép {allowed} nhân viên.",
       "CONTACTS": "Bạn đã vượt quá giới hạn liên hệ. Gói của bạn chỉ cho phép {allowed} liên hệ.",
       "AUTOMATIONS": "Bạn đã vượt quá giới hạn số lượng luật tự động hoá. Gói của bạn chỉ cho phép {allowed} luật.",
-      "NON_ADMIN": "Vui lòng liên hệ quản trị viên để nâng cấp gói và tiếp tục sử dụng đầy đủ tính năng."
+      "NON_ADMIN": "Vui lòng liên hệ quản trị viên để nâng cấp gói và tiếp tục sử dụng đầy đủ tính năng.",
+      "UPGRADE_PROMPT_GENERIC": "Tính năng {feature} hiện không khả dụng trong gói hiện tại của bạn. Vui lòng nâng cấp để sử dụng tính năng này và các tính năng cao cấp khác.",
+      "UPGRADE_PROMPT_CRM": "Nâng cấp để tiếp tục sử dụng Shopiz. Bạn đã vượt quá giới hạn liên hệ. Gói của bạn chỉ cho phép {allowed} liên hệ.",
+      "UPGRADE_PROMPT_CAMPAIGNS": "Chiến dịch chỉ khả dụng ở gói cao hơn. Nâng cấp để bắt đầu tiếp cận thêm nhiều khách hàng bằng tin nhắn chủ động.",
+      "UPGRADE_PROMPT_REPORTS": "Báo cáo và phân tích chuyên sâu chỉ khả dụng ở gói cao hơn. Nâng cấp để hiểu rõ hơn về hoạt động kinh doanh của bạn.",
+      "UPGRADE_PROMPT_AUTOMATIONS": "Tự động hóa và quy trình làm việc chỉ khả dụng ở gói cao hơn. Nâng cấp để tiết kiệm thời gian và mở rộng quy mô vận hành."
     },
     "TITLE": "Cài đặt tài khoản",
     "SUBMIT": "Cập nhật cài đặt",
@@ -130,7 +135,8 @@
     "PAYMENT_PENDING": "Thanh toán của bạn đang chờ xử lý. Vui lòng cập nhật thông tin để tiếp tục sử dụng Shopiz.",
     "UPGRADE": "Nâng cấp để tiếp tục sử dụng Shopiz",
     "LIMITS_UPGRADE": "Tài khoản đã vượt hạn mức sử dụng. Vui lòng nâng cấp gói để tiếp tục.",
-    "OPEN_BILLING": "Mở trang thanh toán"
+    "OPEN_BILLING": "Mở trang thanh toán",
+    "CLOSE": "Đóng"
   },
   "FORMS": {
     "MULTISELECT": {
