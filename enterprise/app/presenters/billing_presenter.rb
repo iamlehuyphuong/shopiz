@@ -14,7 +14,10 @@ class BillingPresenter
       enterprise_plan: enterprise_data,
       credits: credit_data,
       billing_histories: billing_histories_data,
-      disabled_register_trial: disabled_register_trial
+      disabled_register_trial: disabled_register_trial,
+      current_subscription: current_subscription,
+      current_addons: current_addons,
+      all_addon_packages: all_addon_packages
     }
   end
 
@@ -22,6 +25,28 @@ class BillingPresenter
 
   def custom_attributes
     @custom_attributes ||= @account.custom_attributes
+  end
+  
+  def current_subscription
+    sub = @account.active_subscription
+    return nil unless sub
+
+    {
+      plan_name: sub.subscription_plan.name(@account.locale),
+      ends_at: sub.ends_at
+    }
+  end
+
+  def current_addons
+    @account.account_addons.active.includes(:addon_package).map do |addon|
+      {
+        id: addon.id,
+        addon_package_id: addon.addon_package_id,
+        name: addon.addon_package.name,
+        quantity: addon.quantity,
+        addon_type: addon.addon_type
+      }
+    end
   end
 
   def usage_data
@@ -38,31 +63,79 @@ class BillingPresenter
   end
 
   def plans_data
+    all_plans = SubscriptionPlan.visible.where.not(is_free: true).to_a
+
+    # Group by name_en (lowercase) to ensure matching with PRODUCT_TYPES
     PRODUCT_TYPES.index_with do |tier|
-      MONTH_OPTIONS.map { |m| normalize_plan(Polar::ProductService.by_name("#{tier}#{m}")) }
-    end
-  end
-
-  def normalize_plan(plan)
-    return {} unless plan
-
-    sku = plan.dig('metadata', 'sku')
-    {
-      id: plan['id'],
-      name: plan['name'],
-      sku: sku,
-      price: plan['prices'][0],
-      description: plan['description'],
-      benefits: plan['benefits']
-    }
+      MONTH_OPTIONS.map do |month|
+        days = month.to_i == 6 ? 180 : 365
+        plan = all_plans.find { |p| p.name_en.downcase == tier.downcase && p.duration_days == days }
+        plan ? normalize_subscription_plan(plan) : nil
+      end.compact
+    end.reject { |_tier, tier_plans| tier_plans.empty? }
   end
 
   def trial_data
-    normalize_plan(Polar::ProductService.by_name('trial'))
+    sub_plan = SubscriptionPlan.free_plan.first
+    normalize_subscription_plan(sub_plan) if sub_plan
   end
 
   def enterprise_data
-    normalize_plan(Polar::ProductService.by_name('premium'))
+    nil
+  end
+
+  def normalize_subscription_plan(plan)
+    return {} unless plan
+
+    {
+      id: plan.id,
+      name: plan.name(@account.locale),
+      price: {
+        price_amount: plan.price_amount.to_f,
+        currency: plan.currency,
+        amount_type: 'paid'
+      },
+      duration_days: plan.duration_days,
+      description: plan.description(@account.locale),
+      benefits: generate_benefits(plan)
+    }
+  end
+
+  def generate_benefits(plan)
+    benefits = []
+    
+    # Add limits as benefits
+    plan.limits.each do |key, value|
+      next if value.to_i <= 0
+      benefits << { id: "limit_#{key}", description: "#{value} #{key.titleize}" }
+    end
+
+    # Add enabled features as benefits
+    plan.features.each do |key, value|
+      next unless value == true
+      benefits << { id: "feature_#{key}", description: key.titlecase }
+    end
+
+    benefits
+  end
+  def all_addon_packages
+    AddonPackage.visible.where('price_amount > 0').order(:price_amount).map { |p| normalize_addon_package(p) }
+  end
+
+  def normalize_addon_package(addon)
+    return {} unless addon
+
+    {
+      id: addon.id,
+      name: addon.name,
+      price: {
+        price_amount: addon.price_amount.to_f,
+        currency: addon.currency,
+        amount_type: 'paid'
+      },
+      quantity: addon.quantity,
+      addon_type: addon.addon_type
+    }
   end
 
   def credit_data

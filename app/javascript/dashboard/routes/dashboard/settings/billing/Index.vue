@@ -1,8 +1,7 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useMapGetter, useStore } from 'dashboard/composables/store.js';
 import { useAccount } from 'dashboard/composables/useAccount';
-import { useCaptain } from 'dashboard/composables/useCaptain';
 import { format } from 'date-fns';
 import { useI18n } from 'vue-i18n';
 import BillingCard from './components/BillingCard.vue';
@@ -15,11 +14,9 @@ import BillingHistoryItem from './components/BillingHistoryItem.vue';
 import BaseSettingsHeader from '../components/BaseSettingsHeader.vue';
 import SettingsLayout from '../SettingsLayout.vue';
 import ButtonV4 from 'next/button/Button.vue';
-import TabBar from 'dashboard/components-next/tabbar/TabBar.vue';
 
-const { t } = useI18n();
+useI18n();
 const { currentAccount } = useAccount();
-const { captainEnabled } = useCaptain();
 
 const uiFlags = useMapGetter('accounts/getUIFlags');
 const store = useStore();
@@ -28,34 +25,45 @@ const customAttributes = computed(() => {
   return currentAccount.value.custom_attributes || {};
 });
 
-const planName = computed(() => {
-  return customAttributes.value.plan_name;
+const currentSubscription = computed(() => {
+  return currentAccount.value?.billing?.current_subscription || {};
 });
 
-const captainResponseCredit = computed(() => {
-  return customAttributes.value.captain_responses_credit;
-})
+const currentAddons = computed(() => {
+  return currentAccount.value?.billing?.current_addons || [];
+});
+
+const allAddonPackages = computed(() => {
+  return currentAccount.value?.billing?.all_addon_packages || [];
+});
+
+const getActiveAddon = addonPackageId => {
+  return currentAddons.value.find(
+    item => item.addon_package_id === addonPackageId
+  );
+};
+
+const planName = computed(() => {
+  return (
+    currentSubscription.value.plan_name || customAttributes.value.plan_name
+  );
+});
 
 const planId = computed(() => {
   return customAttributes.value.stripe_product_id;
 });
 
-const plans = computed(() => {
-  return currentAccount.value?.billing?.plans || [];
-});
-
-const credits = computed(() => {
-  return currentAccount.value?.billing?.credits || [];
-})
-
 const billingHistories = computed(() => {
   return currentAccount.value?.billing?.billing_histories || [];
-})
+});
 
 const subscriptionRenewsOn = computed(() => {
-  if (!customAttributes.value.subscription_ends_on) return '';
+  const endDateStr =
+    currentSubscription.value.ends_at ||
+    customAttributes.value.subscription_ends_on;
+  if (!endDateStr) return '';
 
-  const endDate = new Date(customAttributes.value.subscription_ends_on);
+  const endDate = new Date(endDateStr);
   // return date as 12 Jan, 2034
   return format(endDate, 'dd MMM, yyyy');
 });
@@ -70,40 +78,36 @@ const enterpisePlan = computed(() => {
 
 const trialPlan = computed(() => {
   return currentAccount.value?.billing?.trial_plan;
-})
+});
 
 const usageData = computed(() => {
   return currentAccount.value?.billing?.usage;
-})
+});
 
 const disabledRegisterTrial = computed(() => {
   return currentAccount.value?.billing?.disabled_register_trial;
-})
+});
 
-const onClickBillingPortal = (paymentInfo) => {
+const onClickBillingPortal = paymentInfo => {
   store.dispatch('accounts/checkout', paymentInfo);
 };
 
-const onToggleChatWindow = () => {
-  if (window.$shopiz) {
-    window.$shopiz.toggle();
-  }
+const isFreePlan = plan => {
+  return (plan?.price?.price_amount || 0) === 0 || plan?.is_free === true;
 };
 
-const tabs = computed(() => {
-  return ['HALF-YEAR', 'YEAR'].map(item => ({
-    label: t(`BILLING_SETTINGS.PRICING_PACKAGES.${item}`),
-    value: item,
-  }));
+const allVisiblePlans = computed(() => {
+  const result = [];
+  const planData = currentAccount.value?.billing?.plans || {};
+  Object.values(planData).forEach(tierPlans => {
+    tierPlans.forEach(plan => {
+      if (!isFreePlan(plan)) {
+        result.push(plan);
+      }
+    });
+  });
+  return result;
 });
-
-const activeTab = ref(0);
-
-const handleTabChange = selectedTab => {
-  activeTab.value = tabs.value.findIndex(
-    tabItem => tabItem.value === selectedTab.value
-  );
-};
 
 onMounted(fetchAccountDetails);
 </script>
@@ -129,9 +133,7 @@ onMounted(fetchAccountDetails);
           :title="$t('BILLING_SETTINGS.MANAGE_SUBSCRIPTION.TITLE')"
           :description="$t('BILLING_SETTINGS.MANAGE_SUBSCRIPTION.DESCRIPTION')"
         >
-          <div
-            class="grid sm:grid-cols-3 grid-cols-1 gap-2 divide-n-weak"
-          >
+          <div class="grid sm:grid-cols-3 grid-cols-1 gap-2 divide-n-weak">
             <DetailItem
               :label="$t('BILLING_SETTINGS.CURRENT_PLAN.TITLE')"
               :value="planName"
@@ -140,43 +142,18 @@ onMounted(fetchAccountDetails);
               :label="$t('BILLING_SETTINGS.CURRENT_PLAN.RENEWS_ON')"
               :value="subscriptionRenewsOn"
             />
-            <DetailItem
-              :label="$t('BILLING_SETTINGS.CURRENT_PLAN.AI_ADDON_MESSAGE')"
-              :value="captainResponseCredit"
-            />
           </div>
         </BillingCard>
+
         <BillingCard
           v-if="usageData"
-          :title="$t('BILLING_SETTINGS.CURRENT_PLAN.RESOURCE')"
+          :title="$t('BILLING_SETTINGS.CURRENT_PLAN.PLAN_RESOURCE')"
         >
-          <div
-            class="grid sm:grid-cols-4 grid-cols-1 gap-2 mt-0"
-          >
-            <DetailItem
-              :label="$t('BILLING_SETTINGS.CURRENT_PLAN.AGENT')"
-              :value="usageData.agents"
-            />
-            <DetailItem
-              :label="$t('BILLING_SETTINGS.CURRENT_PLAN.INBOX')"
-              :value="usageData.inboxes"
-            />
-            <DetailItem
-              :label="$t('BILLING_SETTINGS.CURRENT_PLAN.CONTACT')"
-              :value="usageData.contacts"
-            />
+          <div class="grid sm:grid-cols-4 grid-cols-1 gap-2 mt-0">
             <DetailItem
               :label="$t('BILLING_SETTINGS.CURRENT_PLAN.AUTOMATION')"
               :value="usageData.automations"
             />
-          </div>
-          <BillingHeader
-            class="px-5"
-            :title="$t('BILLING_SETTINGS.CURRENT_PLAN.AI_RESOURCE')"
-          />
-          <div
-            class="grid sm:grid-cols-4 grid-cols-1 gap-2 mt-0"
-          >
             <DetailItem
               :label="$t('BILLING_SETTINGS.CURRENT_PLAN.AI_DOCUMENT')"
               :value="usageData.captain_documents"
@@ -189,105 +166,145 @@ onMounted(fetchAccountDetails);
               :label="$t('BILLING_SETTINGS.CURRENT_PLAN.AI_ASSISTANT')"
               :value="usageData.captain_assistants"
             />
+          </div>
+        </BillingCard>
+
+        <BillingCard
+          v-if="usageData"
+          :title="$t('BILLING_SETTINGS.CURRENT_PLAN.ADDON_RESOURCE')"
+        >
+          <div class="grid sm:grid-cols-4 grid-cols-1 gap-2 mt-0">
             <DetailItem
               :label="$t('BILLING_SETTINGS.CURRENT_PLAN.AI_RESPONSE')"
               :value="usageData.captain_credit"
+            />
+            <DetailItem
+              :label="$t('BILLING_SETTINGS.CURRENT_PLAN.INBOX')"
+              :value="usageData.inboxes"
+            />
+            <DetailItem
+              :label="$t('BILLING_SETTINGS.CURRENT_PLAN.AGENT')"
+              :value="usageData.agents"
+            />
+            <DetailItem
+              :label="$t('BILLING_SETTINGS.CURRENT_PLAN.CONTACT')"
+              :value="usageData.contacts"
             />
           </div>
         </BillingCard>
         <BillingCard
           :title="$t('BILLING_SETTINGS.PRICING_PACKAGES.HEADING.TITLE')"
-          :description="$t('BILLING_SETTINGS.PRICING_PACKAGES.HEADING.DESCRIPTION')"
+          :description="
+            $t('BILLING_SETTINGS.PRICING_PACKAGES.HEADING.DESCRIPTION')
+          "
         >
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 px-8" v-if="trialPlan">
+          <div
+            v-if="trialPlan"
+            class="grid grid-cols-1 md:grid-cols-2 gap-6 px-8"
+          >
             <SpecialItem :plan="trialPlan">
               <ButtonV4
                 md
                 solid
                 ruby
                 :disabled="disabledRegisterTrial"
-                @click="onClickBillingPortal({
-                  product_id: trialPlan.id,
-                  payment_method: 'payos',
-                })">
-              {{ planId === trialPlan.id ? $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.CURRENT_PACKAGE') : $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.UPGRADE_NOW') }}
+                @click="
+                  onClickBillingPortal({
+                    product_id: trialPlan.id,
+                    payment_method: 'payos',
+                  })
+                "
+              >
+                {{
+                  planId === trialPlan.id
+                    ? $t(
+                        'BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.CURRENT_PACKAGE'
+                      )
+                    : $t(
+                        'BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.UPGRADE_NOW'
+                      )
+                }}
               </ButtonV4>
             </SpecialItem>
             <SpecialItem :plan="enterpisePlan">
               <a
                 href="https://shopiz.pro/contact-us"
                 target="_blank"
+                rel="noopener noreferrer"
               >
-                <ButtonV4
-                  md
-                  solid
-                  blue
-                  >
+                <ButtonV4 md solid blue>
                   {{ $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.CONTACT') }}
                 </ButtonV4>
               </a>
             </SpecialItem>
           </div>
-          <TabBar
-            :tabs="tabs"
-            :initial-active-tab="activeTab"
-            class="min-w-[500px] mx-auto mt-5 [&>button]:w-full"
-            @tab-changed="handleTabChange"
-          />
-          <template v-for="(tab, index) in tabs" :key="tab.key">
-            <div
-              v-show="activeTab === index"
-              class="grid grid-cols-3 gap-6 p-8 pt-0"
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-8">
+            <NormalItem
+              v-for="plan in allVisiblePlans"
+              :key="plan.id"
+              :plan="plan"
             >
-              <template v-for="plan in plans" :key="plan[index].id">
-                <NormalItem :plan="plan[index]">
-                  <ButtonV4
-                    md
-                    solid
-                    ruby
-                    @click="onClickBillingPortal({
-                      product_id: plan[index].id,
-                      payment_method: 'payos',
-                    })">
-                  {{ (planName || '').toUpperCase() === plan[index].name ? $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.CURRENT_PACKAGE') : $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.UPGRADE_NOW') }}
-                  </ButtonV4>
-                </NormalItem>
-              </template>
-            </div>
-          </template>
+              <ButtonV4
+                md
+                solid
+                ruby
+                @click="
+                  onClickBillingPortal({
+                    product_id: plan.id,
+                    payment_method: 'payos',
+                  })
+                "
+              >
+                {{
+                  planId === plan.id
+                    ? $t(
+                        'BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.CURRENT_PACKAGE'
+                      )
+                    : $t(
+                        'BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.UPGRADE_NOW'
+                      )
+                }}
+              </ButtonV4>
+            </NormalItem>
+          </div>
         </BillingCard>
 
         <BillingCard
-          v-if="captainEnabled && credits"
+          v-if="allAddonPackages.length"
           :title="$t('BILLING_SETTINGS.CAPTAIN.GET_MORE')"
         >
-          <div class="grid grid-cols-3 gap-6 p-8 pt-0">
-            <template v-for="credit in credits" :key="credit.id">
-              <CreditItem :creditItem="credit">
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-8 pt-0"
+          >
+            <template v-for="addon in allAddonPackages" :key="addon.id">
+              <CreditItem :credit-item="addon">
+                <div v-if="getActiveAddon(addon.id)" class="text-center mb-4">
+                  <span
+                    class="px-2 py-0.5 rounded text-xs font-bold bg-n-blue-4 text-n-blue-11"
+                  >
+                    {{
+                      $t('BILLING_SETTINGS.ADDON_QUANTITY', {
+                        quantity: getActiveAddon(addon.id).quantity,
+                      })
+                    }}
+                  </span>
+                </div>
                 <ButtonV4
                   md
                   solid
                   ruby
-                  @click="onClickBillingPortal({
-                    product_id: credit.id,
-                    payment_method: 'payos',
-                  })">
+                  @click="
+                    onClickBillingPortal({
+                      product_id: addon.id,
+                      payment_method: 'payos',
+                    })
+                  "
+                >
                   {{ $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.BUY_NOW') }}
-                  </ButtonV4>
+                </ButtonV4>
               </CreditItem>
             </template>
           </div>
-        </BillingCard>
-        <BillingCard
-          v-else
-          :title="$t('BILLING_SETTINGS.CAPTAIN.TITLE')"
-          :description="$t('BILLING_SETTINGS.CAPTAIN.UPGRADE')"
-        >
-          <template #action>
-            <ButtonV4 sm solid slate>
-              {{ $t('CAPTAIN.PAYWALL.UPGRADE_NOW') }}
-            </ButtonV4>
-          </template>
         </BillingCard>
 
         <BillingCard
@@ -296,8 +313,7 @@ onMounted(fetchAccountDetails);
         >
           <div class="p-8 pt-0 space-y-3">
             <template v-for="item in billingHistories" :key="item.id">
-              <BillingHistoryItem :item="item">
-              </BillingHistoryItem>
+              <BillingHistoryItem :item="item" />
             </template>
           </div>
         </BillingCard>
@@ -306,8 +322,7 @@ onMounted(fetchAccountDetails);
           class="px-1 mt-5"
           :title="$t('BILLING_SETTINGS.CHAT_WITH_US.TITLE')"
           :description="$t('BILLING_SETTINGS.CHAT_WITH_US.DESCRIPTION')"
-        >
-        </BillingHeader>
+        />
       </section>
     </template>
   </SettingsLayout>

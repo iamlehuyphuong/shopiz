@@ -1,6 +1,6 @@
 require 'administrate/base_dashboard'
 
-class BillingHistoriesDashboard < Administrate::BaseDashboard
+class BillingHistoryDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -14,7 +14,7 @@ class BillingHistoriesDashboard < Administrate::BaseDashboard
     product_name: Field::String,
     sku: Field::String,
     status: Field::Select.with_options(
-      collection: BillingHistories.statuses.keys.map { |s| [s.humanize, s] }
+      collection: BillingHistory.statuses.keys.map { |s| [s.humanize, s] }
     ),
     price_amount: Field::Number,
     price_currency: Field::String,

@@ -21,7 +21,7 @@
 #
 #  index_billing_histories_on_account_id  (account_id)
 #
-class BillingHistories < ApplicationRecord
+class BillingHistory < ApplicationRecord
   belongs_to :account
 
   enum status: { pending: 0, invoiced: 1, overdue: 2 }

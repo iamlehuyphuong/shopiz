@@ -647,6 +647,8 @@
       "RENEWS_ON": "Renews on",
       "AI_ADDON_MESSAGE": "AI add-on message",
       "RESOURCE": "Resource",
+      "PLAN_RESOURCE": "Plan Resource",
+      "ADDON_RESOURCE": "Addon Resource",
       "AGENT": "Agent",
       "INBOX": "Inbox",
       "CONTACT": "Contact",
@@ -655,7 +657,9 @@
       "AI_DOCUMENT": "ShopizAI Document",
       "AI_FAQ": "ShopizAI FAQs",
       "AI_ASSISTANT": "ShopizAI Assistant",
-      "AI_RESPONSE": "AI messages per month"
+      "AI_RESPONSE": "AI messages per month",
+      "ACTIVE_ADDONS": "Active Addons",
+      "ADDON_QUANTITY": "{name} (x{quantity})"
     },
     "VIEW_PRICING": "View Pricing",
     "MANAGE_SUBSCRIPTION": {
@@ -664,12 +668,12 @@
       "BUTTON_TXT": "Go to the billing portal"
     },
     "CAPTAIN": {
-      "TITLE": "AI Agent",
+      "TITLE": "Addon packages",
       "DESCRIPTION": "Manage usage and credits for AI Agent.",
       "BUTTON_TXT": "Buy more credits",
       "DOCUMENTS": "Documents",
       "RESPONSES": "Responses",
-      "GET_MORE": "Get more AI messages",
+      "GET_MORE": "Addon packages",
       "NO_EXPIRATION": "No expiration",
       "UPGRADE": "AI Agent is not available on the free plan, upgrade now to get access to assistants, copilot and more."
     },

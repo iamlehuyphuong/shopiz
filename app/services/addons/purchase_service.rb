@@ -38,8 +38,8 @@ class Addons::PurchaseService
   end
 
   def log_transaction
-    # Note: BillingHistories model expects product_id, product_name, sku, status, price_amount, price_currency, transaction_date_time, etc.
-    BillingHistories.create!(
+    # Note: BillingHistory model expects product_id, product_name, sku, status, price_amount, price_currency, transaction_date_time, etc.
+    BillingHistory.create!(
       account: @account,
       product_id: "ADDON_#{@addon_package.id}",
       product_name: @addon_package.name,

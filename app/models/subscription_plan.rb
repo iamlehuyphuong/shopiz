@@ -43,12 +43,6 @@ class SubscriptionPlan < ApplicationRecord
 
   before_validation :ensure_json_fields
 
-  private
-
-  def ensure_json_fields
-    self.features ||= {}
-    self.limits ||= {}
-  end
   validates :name_en, :name_vi, presence: true
   validates :duration_days, presence: true, numericality: { greater_than: 0 }
   validates :price_amount, presence: true, numericality: { greater_than_or_equal_to: 0 }
@@ -58,11 +52,11 @@ class SubscriptionPlan < ApplicationRecord
 
   validate :single_free_plan_allowed
 
-  def name(locale = I18n.locale)
+  def name(locale = :en)
     locale.to_s == 'vi' ? name_vi : name_en
   end
 
-  def description(locale = I18n.locale)
+  def description(locale = :en)
     locale.to_s == 'vi' ? description_vi : description_en
   end
 

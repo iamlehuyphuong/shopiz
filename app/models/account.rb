@@ -103,7 +103,7 @@ class Account < ApplicationRecord
   has_many :webhooks, dependent: :destroy_async
   has_many :whatsapp_channels, dependent: :destroy_async, class_name: '::Channel::Whatsapp'
   has_many :working_hours, dependent: :destroy_async
-  has_many :billing_histories, dependent: :destroy_async, class_name: '::BillingHistories'
+  has_many :billing_histories, dependent: :destroy_async, class_name: '::BillingHistory'
   has_many :account_subscriptions, dependent: :destroy_async
   has_many :account_addons, dependent: :destroy_async
   has_one :active_subscription, -> { active.order(ends_at: :desc) }, class_name: 'AccountSubscription'

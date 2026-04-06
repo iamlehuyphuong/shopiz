@@ -39,7 +39,7 @@ class Subscriptions::SubscribeService
   end
 
   def log_transaction
-    BillingHistories.create!(
+    BillingHistory.create!(
       account: @account,
       product_id: "PLAN_#{@plan.id}",
       product_name: @plan.name_en,

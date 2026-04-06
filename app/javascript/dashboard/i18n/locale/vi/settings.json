@@ -655,7 +655,9 @@
       "AI_DOCUMENT": "Tài liệu ShopizAI",
       "AI_FAQ": "FAQ ShopizAI",
       "AI_ASSISTANT": "Trợ lý ShopizAI",
-      "AI_RESPONSE": "Tin nhắn AI mỗi tháng"
+      "AI_RESPONSE": "Tin nhắn AI mỗi tháng",
+      "ACTIVE_ADDONS": "Gói mua thêm",
+      "ADDON_QUANTITY": "{name} (x{quantity})"
     },
     "VIEW_PRICING": "Xem bảng giá",
     "MANAGE_SUBSCRIPTION": {
@@ -664,14 +666,14 @@
       "BUTTON_TXT": "Đi tới cổng thanh toán"
     },
     "CAPTAIN": {
-      "TITLE": "AI Agent",
+      "TITLE": "Các gói tài nguyên (Addon package)",
       "DESCRIPTION": "Quản lý mức sử dụng và tín dụng AI.",
       "BUTTON_TXT": "Mua thêm tín dụng",
       "DOCUMENTS": "Tài liệu",
       "RESPONSES": "Câu trả lời",
-      "GET_MORE": "Mua thêm tin nhắn AI",
+      "GET_MORE": "Các gói tài nguyên (Addon package)",
       "NO_EXPIRATION": "Không có hạn sử dụng",
-      "UPGRADE": "AI Agent không khả dụng trên gói miễn phí. Hãy nâng cấp để truy cập trợ lý, copilot và nhiều tính năng nâng cao."
+      "UPGRADE": "AI Agent không khả dụng trên gói miễn phí. Hãy nâng cấp để truy cập trợ lý, chatbot và nhiều tính năng nâng cao."
     },
     "CHAT_WITH_US": {
       "TITLE": "Cần hỗ trợ?",
