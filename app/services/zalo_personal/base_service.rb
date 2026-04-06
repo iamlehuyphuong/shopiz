@@ -379,7 +379,7 @@ class ZaloPersonal::BaseService
   def load_user_info
     user_id = target_user
     response = HTTParty.post(
-      "#{GlobalConfigService.load('ZALO_OA_API_URL', nil)}/api/getUserInfo",
+      "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/getUserInfo",
       :body => { :userId => user_id, :ownId => channel.oa_access_token }.to_json,
       :headers => { 'Content-Type' => 'application/json' }
     )
@@ -393,7 +393,7 @@ class ZaloPersonal::BaseService
   def load_group_info
     group_id = params[:data][:idTo]
     response = HTTParty.post(
-      "#{GlobalConfigService.load('ZALO_OA_API_URL', nil)}/api/getGroupInfo",
+      "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/getGroupInfo",
       :body => { :groupId => group_id, :ownId => channel.oa_access_token }.to_json,
       :headers => { 'Content-Type' => 'application/json' }
     )

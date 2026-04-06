@@ -3,20 +3,16 @@
 import { useVuelidate } from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import LoadingState from 'dashboard/components/widgets/LoadingState.vue';
-import { useAccount } from 'dashboard/composables/useAccount';
-import { mapGetters } from 'vuex';
-import axios from 'axios';
 import PageHeader from '../../SettingsSubPageHeader.vue';
 import router from '../../../../index';
+
 export default {
   components: {
     LoadingState,
     PageHeader,
   },
   setup() {
-    const { accountId } = useAccount();
     return {
-      accountId,
       v$: useVuelidate(),
     };
   },
@@ -26,11 +22,12 @@ export default {
       hasError: false,
       omniauth_token: '',
       access_token: '',
+      initial_account_id: '',
       refresh_token: '',
       expires_in: '',
       shopName: '',
       avatar: '',
-      channel: 'tiktok',
+      channel: 'tiktok_shop',
       emptyStateMessage: this.$t('INBOX_MGMT.DETAILS.LOADING_TIKTOK_SHOP'),
       errorStateMessage: '',
       errorStateDescription: '',
@@ -46,13 +43,11 @@ export default {
     showLoader() {
       return this.isCreating;
     },
-    ...mapGetters({
-      globalConfig: 'globalConfig/get',
-    }),
   },
   created() {
     this.tiktokSessionId = this.$route.query.tiktok_session_id;
     this.shopName = this.$route.query.shop_name;
+    this.initial_account_id = this.$route.params.accountId;
     if (this.shopName) this.hasLoginStarted = true;
   },
   methods: {
@@ -63,8 +58,8 @@ export default {
           window.shopizConfig.tiktokAppId +
           '&redirect_uri=' +
           window.shopizConfig.hostURL +
-          '/tiktok/callback&state=' +
-          encodeURIComponent(this.accountId)
+          '/tiktok_shop/callback&state=' +
+          encodeURIComponent(this.initial_account_id)
       );
     },
     channelParams() {
@@ -79,7 +74,7 @@ export default {
         this.emptyStateMessage = this.$t('INBOX_MGMT.DETAILS.CREATING_CHANNEL');
         this.isCreating = true;
         this.$store
-          .dispatch('inboxes/createTiktokChannel', this.channelParams())
+          .dispatch('inboxes/createTiktokShopChannel', this.channelParams())
           .then(data => {
             router.replace({
               name: 'settings_inboxes_add_agents',
@@ -97,14 +92,17 @@ export default {
 
 <template>
   <div class="wizard-body w-[90%] flex-shrink-0 flex-grow-0 max-w-[90%] p-6">
-    <div v-if="!hasLoginStarted" class="flex flex-col items-center justify-center pt-36">
+    <div
+      v-if="!hasLoginStarted"
+      class="flex flex-col items-center justify-center pt-36"
+    >
       <a href="#" @click="startLogin()">
         <img
-          :src="`/assets/images/dashboard/channels/tiktok_login.svg`"
-          alt="Tiktok-logo"
+          src="/assets/images/dashboard/channels/tiktok_shop_login.png"
+          alt="TikTok-logo"
         />
       </a>
-      <p>{{$t('INBOX_MGMT.ADD.TIKTOK_SHOP.HELP')}}</p>
+      <p>{{ $t('INBOX_MGMT.ADD.TIKTOK_SHOP.HELP') }}</p>
     </div>
     <div v-else>
       <div v-if="hasError" class="max-w-lg mx-auto text-center">

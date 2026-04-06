@@ -16,7 +16,7 @@ export function useChannelIcon(inbox) {
     'Channel::Voice': 'i-ri-phone-fill',
     'Channel::ZaloOa': 'i-ri-zalo-oa-fill',
     'Channel::ZaloPersonal': 'i-ri-zalo-fill',
-    'Channel::Tiktok': 'i-ri-tiktok-fill',
+    'Channel::TiktokShop': 'i-ri-tiktok-fill',
   };
 
   const providerIconMap = {

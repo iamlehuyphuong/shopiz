@@ -163,9 +163,9 @@ google:
   enabled: true
   icon: 'icon-google'
   config_key: 'google'
-tiktok:
-  name: 'Tiktok'
-  description: 'Stay connected with your customers on Tiktok.'
+tiktok_shop:
+  name: 'TikTok Shop'
+  description: 'Stay connected with your customers on TikTok Shop.'
   enabled: true
   icon: 'icon-tiktok'
-  config_key: 'tiktok'
+  config_key: 'tiktok_shop'

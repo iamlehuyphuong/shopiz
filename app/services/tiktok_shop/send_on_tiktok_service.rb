@@ -1,13 +1,13 @@
-class Tiktok::SendOnTiktokService < Base::SendOnChannelService
+class TiktokShop::SendOnTiktokService < Base::SendOnChannelService
   private
 
   def channel_class
-    Channel::Tiktok
+    Channel::TiktokShop
   end
 
   def perform_reply
     response = send_message
-    return unless response['code'] == Channel::Tiktok::INVALID_ACCESS_TOKEN_CODE
+    return unless response['code'] == Channel::TiktokShop::INVALID_ACCESS_TOKEN_CODE
 
     result = channel.refresh_access_token
     if result['code']&.zero?

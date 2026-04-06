@@ -1,4 +1,4 @@
-class Tiktok::SignatureService
+class TiktokShop::SignatureService
   APP_SECRET = GlobalConfigService.load('TIKTOK_SHOP_APP_SECRET', '')
   EXCLUDE_KEYS = ["access_token", "sign"]
 

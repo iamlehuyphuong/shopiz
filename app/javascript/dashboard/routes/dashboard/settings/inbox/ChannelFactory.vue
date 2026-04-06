@@ -13,7 +13,7 @@ import Line from './channels/Line.vue';
 import Telegram from './channels/Telegram.vue';
 import Instagram from './channels/Instagram.vue';
 import Voice from './channels/Voice.vue';
-import TikTok from './channels/TikTok.vue';
+import TikTokShop from './channels/TikTokShop.vue';
 
 const channelViewList = {
   facebook: Facebook,
@@ -29,7 +29,7 @@ const channelViewList = {
   voice: Voice,
   zalo: Zalo,
   zalopersonal: ZaloPersonal,
-  tiktok: TikTok,
+  tiktok_shop: TikTokShop,
 };
 
 export default defineComponent({

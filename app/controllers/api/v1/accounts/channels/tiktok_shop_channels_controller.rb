@@ -1,10 +1,10 @@
-class Api::V1::Accounts::Channels::TiktokChannelsController < Api::V1::Accounts::BaseController
+class Api::V1::Accounts::Channels::TiktokShopChannelsController < Api::V1::Accounts::BaseController
   def create
     @channel_data = data_from_redis
     tiktok_inbox = nil
 
     ActiveRecord::Base.transaction do
-      channel = Current.account.tiktoks.create!(@channel_data)
+      channel = Current.account.tiktok_shops.create!(@channel_data)
       tiktok_inbox = Current.account.inboxes.create!(name: params[:shop_name], channel: channel)
     end
 
@@ -18,7 +18,7 @@ class Api::V1::Accounts::Channels::TiktokChannelsController < Api::V1::Accounts:
 
   def handle_exception(exception)
     ChatwootExceptionTracker.new(exception).capture_exception
-    Rails.logger.error "Error in create inbox for tiktok channel: #{exception.message}"
+    Rails.logger.error "Error in create inbox for TikTok Shop channel: #{exception.message}"
     log_additional_info
   end
 

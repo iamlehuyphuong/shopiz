@@ -41,10 +41,10 @@ class ZaloPersonal::RequestFriend
   end
 
   def info_url
-    "#{GlobalConfigService.load('ZALO_OA_API_URL', nil)}/api/findUser"
+    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/findUser"
   end
 
   def request_friend_url
-    "#{GlobalConfigService.load('ZALO_OA_API_URL', nil)}/api/sendFriendRequest"
+    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendFriendRequest"
   end
 end

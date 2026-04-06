@@ -1,4 +1,4 @@
-class Tiktok::AuthService
+class TiktokShop::AuthService
   AUTHORIZED_SHOPS_URL = "https://open-api.tiktokglobalshop.com/authorization/202309/shops"
   GET_ACCESS_TOKEN_URL = "https://auth.tiktok-shops.com/api/v2/token/get"
   APP_KEY = GlobalConfigService.load('TIKTOK_SHOP_APP_ID', '')
@@ -41,7 +41,7 @@ class Tiktok::AuthService
       timestamp: Time.now.to_i,
       access_token: access_token,
     }
-    url = ::Tiktok::SignatureService.signed_url(AUTHORIZED_SHOPS_URL, params: params)
+    url = ::TiktokShop::SignatureService.signed_url(AUTHORIZED_SHOPS_URL, params: params)
 
     res = HTTParty.get(url, headers: {"x-tts-access-token" => access_token})
     JSON.parse(res.body)
