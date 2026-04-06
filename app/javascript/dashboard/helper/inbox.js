@@ -13,7 +13,7 @@ export const INBOX_TYPES = {
   ZALO_OA: 'Channel::ZaloOa',
   ZALO_PERSONAL: 'Channel::ZaloPersonal',
   INSTAGRAM: 'Channel::Instagram',
-  VOICE: 'Channel::Voice',
+  // VOICE: 'Channel::Voice',
   TIKTOK_SHOP: 'Channel::TiktokShop',
 };
 
