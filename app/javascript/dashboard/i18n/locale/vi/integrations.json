@@ -1,6 +1,7 @@
 {
   "INTEGRATION_SETTINGS": {
     "SHOPIFY": {
+      "HEADER": "Shopify",
       "DELETE": {
         "TITLE": "Xóa tích hợp Shopify",
         "MESSAGE": "Bạn có chắc chắn muốn xóa tích hợp Shopify không?"
@@ -19,6 +20,8 @@
     "DESCRIPTION": "Shopiz tích hợp với nhiều công cụ và dịch vụ nhằm nâng cao hiệu quả cho đội ngũ của bạn. Khám phá danh sách bên dưới để cấu hình ứng dụng bạn yêu thích.",
     "LEARN_MORE": "Tìm hiểu thêm về tích hợp",
     "LOADING": "Đang lấy thông tin tích hợp",
+    "SEARCH_PLACEHOLDER": "Tìm kiếm tích hợp...",
+    "NO_RESULTS": "Không tìm thấy tích hợp nào khớp với tìm kiếm của bạn",
     "CAPTAIN": {
       "DISABLED": "Trợ lý AI không được kích hoạt trên tài khoản của bạn.",
       "CLICK_HERE_TO_CONFIGURE": "Nhấp vào đây để cấu hình",
@@ -28,6 +31,17 @@
     "WEBHOOK": {
       "SUBSCRIBED_EVENTS": "Sự kiện đã đăng ký",
       "LEARN_MORE": "Tìm hiểu thêm về webhook",
+      "SECRET": {
+        "LABEL": "Secret",
+        "COPY": "Sao chép secret vào bộ nhớ tạm",
+        "COPY_SUCCESS": "Đã sao chép secret vào bộ nhớ tạm",
+        "TOGGLE": "Hiển thị/Ẩn secret",
+        "CREATED_DESC": "Webhook của bạn đã được tạo. Sử dụng secret bên dưới để xác minh chữ ký webhook. Vui lòng sao chép nó ngay bây giờ — bạn cũng có thể tìm thấy nó sau trong biểu mẫu chỉnh sửa webhook.",
+        "DONE": "Xong"
+      },
+      "COUNT": "{n} webhook | {n} webhooks",
+      "SEARCH_PLACEHOLDER": "Tìm kiếm webhook...",
+      "NO_RESULTS": "Không tìm thấy webhook nào khớp với tìm kiếm của bạn",
       "FORM": {
         "CANCEL": "Hủy",
         "DESC": "Webhook cung cấp thông tin thời gian thực về những gì đang xảy ra trong tài khoản Shopiz của bạn. Vui lòng nhập URL hợp lệ để cấu hình callback.",
@@ -104,6 +118,7 @@
       }
     },
     "SLACK": {
+      "HEADER": "Slack",
       "DELETE": "Xóa",
       "DELETE_CONFIRMATION": {
         "TITLE": "Xóa tích hợp",
@@ -145,7 +160,29 @@
         "EXPAND": "Mở rộng",
         "MAKE_FRIENDLY": "Thay đổi giọng nói thân thiện",
         "MAKE_FORMAL": "Sử dụng giọng chính thức",
-        "SIMPLIFY": "Đơn giản hóa"
+        "SIMPLIFY": "Đơn giản hóa",
+        "CONFIDENT": "Use confident tone",
+        "PROFESSIONAL": "Use professional tone",
+        "CASUAL": "Use casual tone",
+        "STRAIGHTFORWARD": "Use straightforward tone"
+      },
+      "REPLY_OPTIONS": {
+        "IMPROVE_REPLY": "Improve reply",
+        "IMPROVE_REPLY_SELECTION": "Improve the selection",
+        "CHANGE_TONE": {
+          "TITLE": "Change tone",
+          "OPTIONS": {
+            "PROFESSIONAL": "Professional",
+            "CASUAL": "Casual",
+            "STRAIGHTFORWARD": "Straightforward",
+            "CONFIDENT": "Confident",
+            "FRIENDLY": "Friendly"
+          }
+        },
+        "GRAMMAR": "Fix grammar & spelling",
+        "SUGGESTION": "Suggest a reply",
+        "SUMMARIZE": "Summarize the conversation",
+        "ASK_COPILOT": "Ask Copilot"
       },
       "ASSISTANCE_MODAL": {
         "DRAFT_TITLE": "Nội dung nháp",
@@ -201,12 +238,16 @@
       "SIDEBAR_TXT": "<p><b>Ứng dụng Dashboard</b></p><p>Ứng dụng Dashboard cho phép tổ chức nhúng một ứng dụng bên trong bảng điều khiển của Shopiz để cung cấp ngữ cảnh cho nhân viên hỗ trợ khách hàng. Tính năng này cho phép bạn tạo ứng dụng độc lập và nhúng nó để hiển thị thông tin người dùng, đơn hàng hoặc lịch sử thanh toán.</p><p>Khi bạn nhúng ứng dụng vào bảng điều khiển Shopiz, ứng dụng sẽ nhận ngữ cảnh của cuộc đối thoại và thông tin liên hệ qua các sự kiện. Hãy triển khai trình lắng nghe sự kiện message trên trang của bạn để nhận dữ liệu ngữ cảnh.</p><p>Để thêm ứng dụng dashboard mới, nhấp vào nút 'Thêm ứng dụng dashboard mới'.</p>",
       "DESCRIPTION": "Ứng dụng Dashboard cho phép tổ chức nhúng một ứng dụng vào bảng điều khiển để cung cấp ngữ cảnh cho nhân viên hỗ trợ khách hàng. Tính năng này cho phép bạn tạo ứng dụng độc lập và nhúng nó để hiển thị thông tin người dùng, đơn hàng hoặc lịch sử thanh toán.",
       "LEARN_MORE": "Tìm hiểu thêm về ứng dụng Dashboard",
+      "COUNT": "{n} dashboard app | {n} dashboard apps",
+      "SEARCH_PLACEHOLDER": "Search dashboard apps...",
+      "NO_RESULTS": "No dashboard apps found matching your search",
       "LIST": {
         "404": "Chưa có ứng dụng dashboard nào được cấu hình cho tài khoản này",
         "LOADING": "Đang lấy ứng dụng dashboard...",
         "TABLE_HEADER": {
           "NAME": "Tên",
-          "ENDPOINT": "Đích"
+          "ENDPOINT": "Đích",
+          "ACTIONS": "Hành động"
         },
         "EDIT_TOOLTIP": "Chỉnh sửa ứng dụng",
         "DELETE_TOOLTIP": "Xóa ứng dụng"
@@ -243,6 +284,7 @@
       }
     },
     "LINEAR": {
+      "HEADER": "Linear",
       "ADD_OR_LINK_BUTTON": "Tạo/ Liên kết Vấn đề Linear",
       "LOADING": "Đang lấy các vấn đề Linear...",
       "LOADING_ERROR": "Có lỗi khi lấy các vấn đề Linear, vui lòng thử lại",
@@ -337,6 +379,7 @@
       }
     },
     "NOTION": {
+      "HEADER": "Notion",
       "DELETE": {
         "TITLE": "Bạn có chắc chắn muốn xoá tích hợp Notion?",
         "MESSAGE": "Việc xoá tích hợp này sẽ loại bỏ quyền truy cập vào không gian làm việc Notion của bạn và dừng tất cả các chức năng liên quan.",
@@ -406,6 +449,7 @@
       "CANCEL_ANYTIME": "Bạn có thể thay đổi hoặc hủy gói bất cứ lúc nào"
     },
     "ENTERPRISE_PAYWALL": {
+      "AVAILABLE_ON": "Captain AI is only available in the Enterprise plans.",
       "UPGRADE_PROMPT": "Nâng cấp để dùng trợ lý, copilot và nhiều tính năng khác.",
       "ASK_ADMIN": "Vui lòng liên hệ quản trị viên để được nâng cấp."
     },
@@ -484,7 +528,8 @@
           "TITLE": "Tính năng",
           "ALLOW_CONVERSATION_FAQS": "Tạo FAQ từ các cuộc trò chuyện đã giải quyết",
           "ALLOW_MEMORIES": "Ghi nhớ thông tin quan trọng từ tương tác khách hàng",
-          "ALLOW_CITATIONS": "Đính kèm nguồn tham khảo trong phản hồi"
+          "ALLOW_CITATIONS": "Đính kèm nguồn tham khảo trong phản hồi",
+          "ALLOW_CONTACT_ATTRIBUTES": "Allow access to contact information"
         }
       },
       "EDIT": {

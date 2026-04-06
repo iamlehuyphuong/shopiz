@@ -112,7 +112,7 @@ onMounted(() => {
     <label
       v-if="label"
       :for="uniqueId"
-      class="mb-0.5 text-sm font-medium text-n-slate-12"
+      class="mb-0.5 text-heading-3 text-n-slate-12"
     >
       {{ label }}
     </label>
@@ -164,7 +164,7 @@ onMounted(() => {
     </div>
     <p
       v-if="message"
-      class="min-w-0 mt-1 mb-0 text-xs truncate transition-all duration-500 ease-in-out"
+      class="min-w-0 mt-1 mb-0 text-label-small truncate transition-all duration-500 ease-in-out"
       :class="messageClass"
     >
       {{ message }}

@@ -5,7 +5,12 @@
     "ADD_ACTION_LONG": "Tạo Chính sách SLA mới",
     "DESCRIPTION": "Cam kết chất lượng dịch vụ (SLA) là các thỏa thuận xác định rõ kỳ vọng giữa đội ngũ của bạn và khách hàng. SLA thiết lập tiêu chuẩn về thời gian phản hồi và thời gian xử lý, tạo ra một khuôn khổ trách nhiệm và đảm bảo trải nghiệm nhất quán, chất lượng cao.",
     "LEARN_MORE": "Tìm hiểu thêm về SLA",
+    "COUNT": "{n} SLA | {n} SLAs",
     "LOADING": "Đang tải danh sách SLA",
+    "SEARCH_PLACEHOLDER": "Search SLA...",
+    "SEARCH": {
+      "NO_RESULTS": "No SLA found matching your search"
+    },
     "PAYWALL": {
       "TITLE": "Nâng cấp để tạo SLA",
       "AVAILABLE_ON": "Tính năng SLA chỉ khả dụng trong gói Business và Enterprise.",
@@ -20,6 +25,10 @@
     },
     "LIST": {
       "404": "Không có SLA nào trong tài khoản này.",
+      "TABLE_HEADER": {
+        "SLA": "SLA",
+        "BUSINESS_HOURS": "Business hours"
+      },
       "EMPTY": {
         "TITLE_1": "Enterprise P0",
         "DESC_1": "Sự cố được báo bởi khách hàng doanh nghiệp và cần được xử lý ngay lập tức.",

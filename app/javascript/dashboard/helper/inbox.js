@@ -13,8 +13,14 @@ export const INBOX_TYPES = {
   ZALO_OA: 'Channel::ZaloOa',
   ZALO_PERSONAL: 'Channel::ZaloPersonal',
   INSTAGRAM: 'Channel::Instagram',
+  TIKTOK: 'Channel::Tiktok',
   // VOICE: 'Channel::Voice',
   TIKTOK_SHOP: 'Channel::TiktokShop',
+};
+
+export const TWILIO_CHANNEL_MEDIUM = {
+  WHATSAPP: 'whatsapp',
+  SMS: 'sms',
 };
 
 const INBOX_ICON_MAP_FILL = {
@@ -29,6 +35,7 @@ const INBOX_ICON_MAP_FILL = {
   [INBOX_TYPES.ZALO_OA]: 'i-ri-zalo-oa-fill',
   [INBOX_TYPES.ZALO_PERSONAL]: 'i-ri-zalo-fill',
   [INBOX_TYPES.INSTAGRAM]: 'i-ri-instagram-fill',
+  [INBOX_TYPES.TIKTOK]: 'i-ri-tiktok-fill',
   [INBOX_TYPES.VOICE]: 'i-ri-phone-fill',
   [INBOX_TYPES.TIKTOK_SHOP]: 'i-ri-tiktok-fill',
 };
@@ -36,18 +43,19 @@ const INBOX_ICON_MAP_FILL = {
 const DEFAULT_ICON_FILL = 'i-ri-chat-1-fill';
 
 const INBOX_ICON_MAP_LINE = {
-  [INBOX_TYPES.WEB]: 'i-ri-global-line',
-  [INBOX_TYPES.FB]: 'i-ri-messenger-line',
-  [INBOX_TYPES.TWITTER]: 'i-ri-twitter-x-line',
-  [INBOX_TYPES.WHATSAPP]: 'i-ri-whatsapp-line',
-  [INBOX_TYPES.API]: 'i-ri-cloudy-line',
-  [INBOX_TYPES.EMAIL]: 'i-ri-mail-line',
-  [INBOX_TYPES.TELEGRAM]: 'i-ri-telegram-line',
-  [INBOX_TYPES.LINE]: 'i-ri-line-line',
+  [INBOX_TYPES.WEB]: 'i-woot-website',
+  [INBOX_TYPES.FB]: 'i-woot-messenger',
+  [INBOX_TYPES.TWITTER]: 'i-woot-x',
+  [INBOX_TYPES.WHATSAPP]: 'i-woot-whatsapp',
+  [INBOX_TYPES.API]: 'i-woot-api',
+  [INBOX_TYPES.EMAIL]: 'i-woot-mail',
+  [INBOX_TYPES.TELEGRAM]: 'i-woot-telegram',
+  [INBOX_TYPES.LINE]: 'i-woot-line',
   [INBOX_TYPES.ZALO_OA]: 'i-ri-zalo-oa-line',
   [INBOX_TYPES.ZALO_PERSONAL]: 'i-ri-zalo-line',
-  [INBOX_TYPES.INSTAGRAM]: 'i-ri-instagram-line',
-  [INBOX_TYPES.VOICE]: 'i-ri-phone-line',
+  [INBOX_TYPES.INSTAGRAM]: 'i-woot-instagram',
+  [INBOX_TYPES.VOICE]: 'i-woot-voice',
+  [INBOX_TYPES.TIKTOK]: 'i-woot-tiktok',
   [INBOX_TYPES.TIKTOK_SHOP]: 'i-ri-tiktok-line',
 };
 
@@ -155,6 +163,9 @@ export const getInboxClassByType = (type, phoneNumber) => {
 
     case INBOX_TYPES.INSTAGRAM:
       return 'brand-instagram';
+
+    case INBOX_TYPES.TIKTOK:
+      return 'brand-tiktok';
 
     // case INBOX_TYPES.VOICE:
     //   return 'phone';

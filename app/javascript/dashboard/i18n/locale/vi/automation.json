@@ -1,10 +1,13 @@
 {
   "AUTOMATION": {
-    "HEADER": "Tự động hóa",
-    "DESCRIPTION": "Tự động hóa giúp thay thế và tối ưu các quy trình thủ công, chẳng hạn như thêm nhãn hoặc phân công cuộc hội thoại cho nhân viên phù hợp nhất. Điều này giúp đội ngũ tập trung vào các nhiệm vụ quan trọng, đồng thời giảm thời gian xử lý các tác vụ lặp lại.",
-    "LEARN_MORE": "Tìm hiểu thêm về tự động hóa",
-    "HEADER_BTN_TXT": "Thêm quy tắc tự động",
-    "LOADING": "Đang tải quy tắc tự động",
+    "HEADER": "Tự động hoá",
+    "DESCRIPTION": "Automation can replace and streamline existing processes that require manual effort, such as adding labels and assigning conversations to the most suitable agent. This allows the team to focus on their strengths while reducing time spent on routine tasks.",
+    "LEARN_MORE": "Learn more about automation",
+    "COUNT": "{n} automation | {n} automations",
+    "HEADER_BTN_TXT": "Create Automation",
+    "LOADING": "Đang lấy luật tự động hoá",
+    "SEARCH_PLACEHOLDER": "Search automation rules...",
+    "NO_RESULTS": "No automation rules found matching your search",
     "ADD": {
       "TITLE": "Thêm quy tắc tự động",
       "SUBMIT": "Tạo",
@@ -42,9 +45,9 @@
     "LIST": {
       "TABLE_HEADER": {
         "NAME": "Tên",
-        "DESCRIPTION": "Mô tả",
         "ACTIVE": "Kích hoạt",
-        "CREATED_ON": "Ngày tạo"
+        "CREATED_ON": "Ngày tạo",
+        "ACTIONS": "Hành động"
       },
       "404": "Không tìm thấy quy tắc tự động nào"
     },
@@ -150,7 +153,8 @@
       "ADD_PRIVATE_NOTE": "Thêm ghi chú nội bộ",
       "CHANGE_PRIORITY": "Thay đổi mức độ ưu tiên",
       "ADD_SLA": "Thêm SLA",
-      "OPEN_CONVERSATION": "Mở cuộc hội thoại"
+      "OPEN_CONVERSATION": "Mở cuộc hội thoại",
+      "PENDING_CONVERSATION": "Mark conversation as pending"
     },
     "MESSAGE_TYPES": {
       "INCOMING": "Tin nhắn đến",

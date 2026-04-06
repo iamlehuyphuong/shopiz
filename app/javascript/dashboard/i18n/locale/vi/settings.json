@@ -269,6 +269,7 @@
     "CONTACT_SUPPORT": "Liên hệ hỗ trợ",
     "SELECTOR_SUBTITLE": "Chọn một tài khoản từ danh sách",
     "PROFILE_SETTINGS": "Cài đặt hồ sơ",
+    "YEAR_IN_REVIEW": "Tổng kết năm",
     "KEYBOARD_SHORTCUTS": "Phím tắt",
     "APPEARANCE": "Đổi giao diện",
     "SUPER_ADMIN_CONSOLE": "Bảng quản trị cao cấp",
@@ -307,7 +308,8 @@
     "FILE_BUBBLE": {
       "DOWNLOAD": "Tải xuống",
       "UPLOADING": "Đang tải lên...",
-      "INSTAGRAM_STORY_UNAVAILABLE": "Story này không còn khả dụng."
+      "INSTAGRAM_STORY_UNAVAILABLE": "Story này không còn khả dụng.",
+      "INSTAGRAM_STORY_REPLY": "Trả lời story của bạn:"
     },
     "LOCATION_BUBBLE": {
       "SEE_ON_MAP": "Xem trên bản đồ"
@@ -554,6 +556,8 @@
     "SETTINGS": "Cài đặt",
     "CONTACTS": "Liên hệ",
     "ACTIVE": "Đang hoạt động",
+    "COMPANIES": "Công ty",
+    "ALL_COMPANIES": "Tất cả công ty",
     "CAPTAIN": "ShopizAI",
     "CAPTAIN_ASSISTANTS": "Trợ lý",
     "CAPTAIN_DOCUMENTS": "Tài liệu",
@@ -635,7 +639,57 @@
       "INFO_SHORT": "Tự động offline khi không hoạt động."
     },
     "DOCS": "Xem tài liệu",
-    "SECURITY": "Bảo mật"
+    "SECURITY": "Bảo mật",
+    "CAPTAIN_AI": "Captain",
+    "CONVERSATION_WORKFLOW": "Conversation Workflow"
+  },
+  "CAPTAIN_SETTINGS": {
+    "TITLE": "Cài đặt Captain",
+    "DESCRIPTION": "Cấu hình các mô hình AI và tính năng cho Captain. Captain sử dụng hệ thống tính phí dựa trên tín dụng, bạn sẽ bị tính tín dụng cho mỗi hành động Captain thực hiện dựa trên mô hình đã chọn.",
+    "LOADING": "Đang tải cấu hình Captain...",
+    "LINK_TEXT": "Tìm hiểu thêm về Tín dụng Captain",
+    "NOT_ENABLED": "Captain chưa được bật cho tài khoản của bạn. Vui lòng nâng cấp gói để truy cập các tính năng của Captain.",
+    "MODEL_CONFIG": {
+      "TITLE": "Cấu hình mô hình",
+      "DESCRIPTION": "Chọn mô hình AI cho các tính năng khác nhau.",
+      "SELECT_MODEL": "Chọn mô hình",
+      "CREDITS_PER_MESSAGE": "{credits} tín dụng/tin nhắn",
+      "COMING_SOON": "Sắp ra mắt",
+      "EDITOR": {
+        "TITLE": "Tính năng soạn thảo",
+        "DESCRIPTION": "Tự động hoàn thiện thông minh, sửa lỗi ngữ pháp, điều chỉnh giọng điệu và nâng cao nội dung trong trình soạn thảo tin nhắn."
+      },
+      "ASSISTANT": {
+        "TITLE": "Trợ lý",
+        "DESCRIPTION": "Xử lý phản hồi tự động, tóm tắt cuộc hội thoại và đề xuất trả lời thông minh cho tương tác với khách hàng."
+      },
+      "COPILOT": {
+        "TITLE": "Co-pilot",
+        "DESCRIPTION": "Cung cấp đề xuất theo ngữ cảnh thời gian thực, gợi ý cơ sở tri thức và thông tin chi tiết chủ động trong các cuộc hội thoại."
+      }
+    },
+    "FEATURES": {
+      "TITLE": "Các tính năng",
+      "DESCRIPTION": "Bật hoặc tắt các tính năng hỗ trợ AI.",
+      "AUDIO_TRANSCRIPTION": {
+        "TITLE": "Audio Transcription",
+        "DESCRIPTION": "Tự động chuyển đổi tin nhắn thoại và bản ghi cuộc gọi thành văn bản có thể tìm kiếm."
+      },
+      "HELP_CENTER_SEARCH": {
+        "TITLE": "Help Center Search Indexing",
+        "DESCRIPTION": "Sử dụng AI để tìm kiếm theo ngữ cảnh bên trong các bài viết trong trung tâm trợ giúp của bạn."
+      },
+      "LABEL_SUGGESTION": {
+        "TITLE": "Label Suggestion",
+        "DESCRIPTION": "Tự động đề xuất nhãn và thẻ phù hợp cho các cuộc hội thoại dựa trên phân tích nội dung và ngữ cảnh.",
+        "MODEL_TITLE": "Label Suggestion Model",
+        "MODEL_DESCRIPTION": "Chọn mô hình AI để sử dụng cho việc phân tích các cuộc hội thoại và đề xuất nhãn phù hợp"
+      }
+    },
+    "API": {
+      "SUCCESS": "Captain settings updated successfully.",
+      "ERROR": "Failed to update Captain settings. Please try again."
+    }
   },
   "BILLING_SETTINGS": {
     "TITLE": "Thanh toán",
@@ -673,37 +727,44 @@
       "RESPONSES": "Câu trả lời",
       "GET_MORE": "Các gói tài nguyên (Addon package)",
       "NO_EXPIRATION": "Không có hạn sử dụng",
-      "UPGRADE": "AI Agent không khả dụng trên gói miễn phí. Hãy nâng cấp để truy cập trợ lý, chatbot và nhiều tính năng nâng cao."
+      "UPGRADE": "AI Agent không khả dụng trên gói miễn phí. Hãy nâng cấp để truy cập trợ lý, chatbot và nhiều tính năng nâng cao.",
+      "REFRESH_CREDITS": "Làm mới"
     },
     "CHAT_WITH_US": {
       "TITLE": "Cần hỗ trợ?",
       "DESCRIPTION": "Gặp vấn đề thanh toán? Chúng tôi luôn sẵn sàng hỗ trợ.",
       "BUTTON_TXT": "Trò chuyện với chúng tôi"
     },
-    "NO_BILLING_USER": "Tài khoản thanh toán của bạn đang được thiết lập. Hãy tải lại trang và thử lại.",
-    "PRICING_PACKAGES": {
-      "HEADING": {
-        "TITLE": "Gói dịch vụ",
-        "DESCRIPTION": "Tùy chọn linh hoạt cho mọi quy mô doanh nghiệp, thanh toán dễ dàng, nâng cấp nhanh chóng",
-        "FEATURES": "Tính năng"
-      },
-      "BUTTONS": {
-        "CURRENT_PACKAGE": "Gói hiện tại",
-        "UPGRADE_NOW": "Nâng cấp ngay",
-        "SUBCRIBE_NOW": "Đăng ký ngay",
-        "BUY_NOW": "Mua ngay",
-        "CONTACT": "Liên hệ"
-      },
-      "MONTH": "1 tháng",
-      "HALF-YEAR": "6 tháng",
-      "YEAR": "1 năm"
-    },
-    "BILLING_HISTORY": "Lịch sử mua gói"
+    "NO_BILLING_USER": "Tài khoản thanh toán của bạn đang được định cấu hình. Hãy làm mới trang và thử lại.",
+    "TOPUP": {
+      "BUY_CREDITS": "Buy more credits",
+      "MODAL_TITLE": "Buy AI Credits",
+      "MODAL_DESCRIPTION": "Purchase additional credits for Captain AI.",
+      "CREDITS": "CREDITS",
+      "ONE_TIME": "one-time",
+      "POPULAR": "Most Popular",
+      "NOTE_TITLE": "Ghi chú:",
+      "NOTE_DESCRIPTION": "Credits are added immediately and expire in 6 months. An active subscription is required to use credits. Purchased credits are consumed after your monthly plan credits.",
+      "CANCEL": "Huỷ",
+      "PURCHASE": "Purchase Credits",
+      "LOADING": "Loading options...",
+      "FETCH_ERROR": "Failed to load credit options. Please try again.",
+      "PURCHASE_ERROR": "Failed to process purchase. Please try again.",
+      "PURCHASE_SUCCESS": "Successfully added {credits} credits to your account",
+      "CONFIRM": {
+        "TITLE": "Confirm Purchase",
+        "DESCRIPTION": "You are about to purchase {credits} credits for {amount}.",
+        "INSTANT_DEDUCTION_NOTE": "Your saved card will be charged immediately upon confirmation.",
+        "GO_BACK": "Quay lại",
+        "CONFIRM_PURCHASE": "Confirm Purchase"
+      }
+    }
   },
   "SECURITY_SETTINGS": {
     "TITLE": "Bảo mật",
     "DESCRIPTION": "Quản lý các cài đặt bảo mật tài khoản.",
     "LINK_TEXT": "Tìm hiểu thêm về SAML SSO",
+    "SAML_DISABLED_MESSAGE": "SAML SSO is currently disabled. Please contact your administrator to enable this feature.",
     "SAML": {
       "TITLE": "SAML SSO",
       "NOTE": "Cấu hình đăng nhập một lần SAML cho tài khoản. Người dùng sẽ đăng nhập thông qua nhà cung cấp danh tính thay vì email/mật khẩu.",
@@ -768,6 +829,110 @@
       "INFO_SECTION": {
         "TITLE": "Thông tin Nhà cung cấp dịch vụ",
         "TOOLTIP": "Sao chép các giá trị này và cấu hình trong IdP của bạn"
+      }
+    }
+  },
+  "CONVERSATION_WORKFLOW": {
+    "INDEX": {
+      "HEADER": {
+        "TITLE": "Conversation Workflows",
+        "DESCRIPTION": "Configure rules and required fields for conversation resolution."
+      }
+    },
+    "REQUIRED_ATTRIBUTES": {
+      "TITLE": "Attributes required on resolution",
+      "DESCRIPTION": "When resolving a conversation, agents will be prompted to fill these attributes if they haven't yet.",
+      "NO_ATTRIBUTES": "No attributes added yet",
+      "ADD": {
+        "TITLE": "Add Attributes",
+        "SEARCH_PLACEHOLDER": "Tìm kiếm nhiều thuộc tính"
+      },
+      "SAVE": {
+        "SUCCESS": "Required attributes updated",
+        "ERROR": "Could not update required attributes, please try again"
+      },
+      "MODAL": {
+        "TITLE": "Giải quyết hội thoại",
+        "DESCRIPTION": "Please fill in the following custom attributes before resolving this conversation",
+        "ACTIONS": {
+          "RESOLVE": "Giải quyết hội thoại",
+          "CANCEL": "Huỷ"
+        },
+        "PLACEHOLDERS": {
+          "TEXT": "Write a note...",
+          "NUMBER": "Enter a number",
+          "LINK": "Add a link",
+          "DATE": "Pick a date",
+          "LIST": "Select an option"
+        },
+        "CHECKBOX": {
+          "YES": "Có",
+          "NO": "Không"
+        }
+      },
+      "PAYWALL": {
+        "TITLE": "Upgrade to use required attributes",
+        "AVAILABLE_ON": "The required conversation attributes feature is available on the Business and Enterprise plans.",
+        "UPGRADE_PROMPT": "Upgrade your plan to prompt agents to fill required attributes before conversation resolution.",
+        "UPGRADE_NOW": "Upgrade now",
+        "CANCEL_ANYTIME": "You can change or cancel your plan anytime"
+      },
+      "ENTERPRISE_PAYWALL": {
+        "AVAILABLE_ON": "The required conversation attributes feature is available on the paid plans.",
+        "UPGRADE_PROMPT": "Upgrade to a paid plan to enforce required attributes before conversation resolution.",
+        "ASK_ADMIN": "Please reach out to your administrator for the upgrade."
+      }
+    }
+  },
+  "CONVERSATION_WORKFLOW": {
+    "INDEX": {
+      "HEADER": {
+        "TITLE": "Conversation Workflows",
+        "DESCRIPTION": "Configure rules and required fields for conversation resolution."
+      }
+    },
+    "REQUIRED_ATTRIBUTES": {
+      "TITLE": "Attributes required on resolution",
+      "DESCRIPTION": "When resolving a conversation, agents will be prompted to fill these attributes if they haven't yet.",
+      "NO_ATTRIBUTES": "No attributes added yet",
+      "ADD": {
+        "TITLE": "Add Attributes",
+        "SEARCH_PLACEHOLDER": "Tìm kiếm nhiều thuộc tính"
+      },
+      "SAVE": {
+        "SUCCESS": "Required attributes updated",
+        "ERROR": "Could not update required attributes, please try again"
+      },
+      "MODAL": {
+        "TITLE": "Giải quyết hội thoại",
+        "DESCRIPTION": "Please fill in the following custom attributes before resolving this conversation",
+        "ACTIONS": {
+          "RESOLVE": "Giải quyết hội thoại",
+          "CANCEL": "Huỷ"
+        },
+        "PLACEHOLDERS": {
+          "TEXT": "Write a note...",
+          "NUMBER": "Enter a number",
+          "LINK": "Add a link",
+          "DATE": "Pick a date",
+          "LIST": "Select an option"
+        },
+        "CHECKBOX": {
+          "YES": "Có",
+          "NO": "Không"
+        }
+      },
+      "PAYWALL": {
+        "TITLE": "Upgrade to use required attributes",
+        "AVAILABLE_ON": "The required conversation attributes feature is available on the Business and Enterprise plans.",
+        "UPGRADE_PROMPT": "Upgrade your plan to prompt agents to fill required attributes before conversation resolution.",
+        "UPGRADE_NOW": "Upgrade now",
+        "CANCEL_ANYTIME": "You can change or cancel your plan anytime"
+      },
+      "ENTERPRISE_PAYWALL": {
+        "AVAILABLE_ON": "The required conversation attributes feature is available on the paid plans.",
+        "UPGRADE_PROMPT": "Upgrade to a paid plan to enforce required attributes before conversation resolution.",
+        "ASK_ADMIN": "Please reach out to your administrator for the upgrade."
       }
     }
   },
@@ -856,7 +1021,8 @@
         "CREATE_BUTTON": "Tạo chính sách",
         "API": {
           "SUCCESS_MESSAGE": "Tạo chính sách phân công thành công",
-          "ERROR_MESSAGE": "Tạo chính sách phân công thất bại"
+          "ERROR_MESSAGE": "Tạo chính sách phân công thất bại",
+          "INBOX_LINKED": "Inbox has been linked to the policy"
         }
       },
       "EDIT": {
@@ -869,6 +1035,18 @@
           "DESCRIPTION": "{inboxName} đã được gán vào chính sách khác. Bạn có muốn chuyển sang chính sách này không? Nó sẽ bị gỡ khỏi chính sách cũ.",
           "CONFIRM_BUTTON_LABEL": "Tiếp tục",
           "CANCEL_BUTTON_LABEL": "Hủy"
+        },
+        "INBOX_LINK_PROMPT": {
+          "TITLE": "Link inbox to policy",
+          "DESCRIPTION": "Would you like to link this inbox to the assignment policy?",
+          "LINK_BUTTON": "Link inbox",
+          "CANCEL_BUTTON": "Skip"
+        },
+        "INBOX_LINK_PROMPT": {
+          "TITLE": "Link inbox to policy",
+          "DESCRIPTION": "Would you like to link this inbox to the assignment policy?",
+          "LINK_BUTTON": "Link inbox",
+          "CANCEL_BUTTON": "Skip"
         },
         "API": {
           "SUCCESS_MESSAGE": "Cập nhật chính sách thành công",
@@ -908,7 +1086,9 @@
           },
           "BALANCED": {
             "LABEL": "Cân bằng",
-            "DESCRIPTION": "Phân công dựa trên năng lực sẵn có."
+            "DESCRIPTION": "Phân công dựa trên năng lực sẵn có.",
+            "PREMIUM_MESSAGE": "Upgrade to access balanced assignment and agent capacity management.",
+            "PREMIUM_BADGE": "Premium"
           }
         },
         "ASSIGNMENT_PRIORITY": {
@@ -993,6 +1173,20 @@
           "REMOVE": {
             "SUCCESS_MESSAGE": "Gỡ nhân viên thành công",
             "ERROR_MESSAGE": "Gỡ nhân viên thất bại"
+          }
+        },
+        "INBOX_LIMIT_API": {
+          "ADD": {
+            "SUCCESS_MESSAGE": "Inbox limit added successfully",
+            "ERROR_MESSAGE": "Failed to add inbox limit"
+          },
+          "UPDATE": {
+            "SUCCESS_MESSAGE": "Inbox limit updated successfully",
+            "ERROR_MESSAGE": "Failed to update inbox limit"
+          },
+          "DELETE": {
+            "SUCCESS_MESSAGE": "Inbox limit deleted successfully",
+            "ERROR_MESSAGE": "Failed to delete inbox limit"
           }
         }
       },

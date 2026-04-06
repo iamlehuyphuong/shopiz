@@ -1,19 +1,27 @@
 <script setup>
-import { h, computed, onMounted } from 'vue';
-import { provideSidebarContext } from './provider';
+import { h, ref, computed, onMounted } from 'vue';
+import { provideSidebarContext, useSidebarResize } from './provider';
 import { useAccount } from 'dashboard/composables/useAccount';
 import { useMapGetter } from 'dashboard/composables/store';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
-import { useStorage } from '@vueuse/core';
 import { vOnClickOutside } from '@vueuse/components';
 import { useRouter, useRoute } from 'vue-router';
 import { watch } from 'vue';
 import { usePolicy } from 'dashboard/composables/usePolicy';
+import { FEATURE_FLAGS } from 'dashboard/featureFlags';
+import { useWindowSize, useEventListener } from '@vueuse/core';
+import { emitter } from 'shared/helpers/mitt';
+import { BUS_EVENTS } from 'shared/constants/busEvents';
 
 import SidebarGroup from './SidebarGroup.vue';
 import SidebarChangelogCard from './SidebarChangelogCard.vue';
+import SidebarChangelogButton from './SidebarChangelogButton.vue';
 import ChannelLeaf from './ChannelLeaf.vue';
+import ChannelIcon from 'next/icon/ChannelIcon.vue';
+import SidebarAccountSwitcher from './SidebarAccountSwitcher.vue';
+import Logo from 'next/icon/Logo.vue';
+import ComposeConversation from 'dashboard/components-next/NewConversation/ComposeConversation.vue';
 
 const props = defineProps({
   isMobileSidebarOpen: {
@@ -32,120 +40,117 @@ const router = useRouter();
 const isACustomBrandedInstance = useMapGetter(
   'globalConfig/isACustomBrandedInstance'
 );
+const isRTL = useMapGetter('accounts/isRTL');
 
-const activeCategory = useStorage(
-  'next-sidebar-active-category',
-  null,
-  sessionStorage
+const { width: windowWidth } = useWindowSize();
+const isMobile = computed(() => windowWidth.value < 768);
+
+const accountId = useMapGetter('getCurrentAccountId');
+const isFeatureEnabledonAccount = useMapGetter(
+  'accounts/isFeatureEnabledonAccount'
 );
 
-const expandedItem = useStorage(
-  'next-sidebar-expanded-item',
-  null,
-  sessionStorage
-);
+const hasAdvancedAssignment = computed(() => {
+  return isFeatureEnabledonAccount.value(
+    accountId.value,
+    FEATURE_FLAGS.ADVANCED_ASSIGNMENT
+  );
+});
+
+const toggleShortcutModalFn = show => {
+  if (show) {
+    emit('openKeyShortcutModal');
+  } else {
+    emit('closeKeyShortcutModal');
+  }
+};
+
+useSidebarKeyboardShortcuts(toggleShortcutModalFn);
+
+const expandedItem = ref(null);
 
 const setExpandedItem = name => {
   expandedItem.value = expandedItem.value === name ? null : name;
 };
 
+const {
+  sidebarWidth,
+  isCollapsed,
+  setSidebarWidth,
+  saveWidth,
+  snapToCollapsed,
+  snapToExpanded,
+  COLLAPSED_THRESHOLD,
+} = useSidebarResize();
+
+// On mobile, sidebar is always expanded (flyout mode)
+const isEffectivelyCollapsed = computed(
+  () => !isMobile.value && isCollapsed.value
+);
+
+// Resize handle logic
+const isResizing = ref(false);
+const startX = ref(0);
+const startWidth = ref(0);
+
+
 provideSidebarContext({
   expandedItem,
   setExpandedItem,
+  isCollapsed: isEffectivelyCollapsed,
+  sidebarWidth,
+  isResizing,
 });
 
-const { shouldShow } = usePolicy();
+// Get clientX from mouse or touch event
+const getClientX = event =>
+  event.touches ? event.touches[0].clientX : event.clientX;
 
-const findRouteByName = name => {
-  const routes = router.getRoutes();
-  return routes.find(r => r.name === name);
-};
-
-const resolvePermissions = to => {
-  if (!to) return [];
-  if (to.params?.navigationPath) {
-    const targetRoute = findRouteByName(to.params.navigationPath);
-    return targetRoute?.meta?.permissions ?? [];
-  }
-  return router.resolve(to)?.meta?.permissions ?? [];
-};
-
-const resolveFeatureFlag = to => {
-  if (!to) return '';
-  if (to.params?.navigationPath) {
-    const targetRoute = findRouteByName(to.params.navigationPath);
-    return targetRoute?.meta?.featureFlag || '';
-  }
-  return router.resolve(to)?.meta?.featureFlag || '';
-};
-
-const resolveInstallationType = to => {
-  if (!to) return [];
-  if (to.params?.navigationPath) {
-    const targetRoute = findRouteByName(to.params.navigationPath);
-    return targetRoute?.meta?.installationTypes || [];
-  }
-  return router.resolve(to)?.meta?.installationTypes || [];
-};
-
-const isAllowed = to => {
-  const permissions = resolvePermissions(to);
-  const featureFlag = resolveFeatureFlag(to);
-  const installationType = resolveInstallationType(to);
-  return shouldShow(featureFlag, permissions, installationType);
-};
-
-const getFirstNavigableChild = item => {
-  if (item.to && isAllowed(item.to)) return item.to;
-  if (!item.children) return null;
-  let found = null;
-  item.children.some(child => {
-    const navigable = getFirstNavigableChild(child);
-    if (navigable) {
-      found = navigable;
-      return true;
-    }
-    return false;
+const onResizeStart = event => {
+  isResizing.value = true;
+  startX.value = getClientX(event);
+  startWidth.value = sidebarWidth.value;
+  Object.assign(document.body.style, {
+    cursor: 'col-resize',
+    userSelect: 'none',
   });
-  return found;
+  // Prevent default to avoid scrolling on touch
+  event.preventDefault();
 };
 
-const route = useRoute();
+const onResizeMove = event => {
+  if (!isResizing.value) return;
 
-const resolvePath = to => {
-  if (to) return router.resolve(to)?.path || '/';
-  return '/';
+  const delta = isRTL.value
+    ? startX.value - getClientX(event)
+    : getClientX(event) - startX.value;
+  setSidebarWidth(startWidth.value + delta);
 };
 
-const isRouteActive = item => {
-  if (item.to && route.path === resolvePath(item.to)) return true;
-  if (item.activeOn?.includes(route.name)) return true;
-  if (item.children) {
-    return item.children.some(child => isRouteActive(child));
-  }
-  return false;
-};
+const onResizeEnd = () => {
+  if (!isResizing.value) return;
 
-const syncActiveCategory = () => {
-  const activeItem = menuItems.value.find(item => isRouteActive(item));
-  if (activeItem) {
-    activeCategory.value = activeItem.name;
-    // Set first child as expanded if not already
-    if (activeItem.children && !expandedItem.value) {
-      const activeChild = activeItem.children.find(child =>
-        isRouteActive(child)
-      );
-      if (activeChild) expandedItem.value = activeChild.name;
-    }
+  isResizing.value = false;
+  Object.assign(document.body.style, { cursor: '', userSelect: '' });
+
+  // Snap to collapsed state if below threshold
+  if (sidebarWidth.value < COLLAPSED_THRESHOLD) {
+    snapToCollapsed();
+  } else {
+    saveWidth();
   }
 };
 
-watch(
-  () => route.fullPath,
-  () => {
-    syncActiveCategory();
-  }
-);
+const onResizeHandleDoubleClick = () => {
+  if (isCollapsed.value) snapToExpanded();
+  else snapToCollapsed();
+};
+
+// Support both mouse and touch events
+useEventListener(document, 'mousemove', onResizeMove);
+useEventListener(document, 'mouseup', onResizeEnd);
+useEventListener(document, 'touchmove', onResizeMove, { passive: false });
+useEventListener(document, 'touchend', onResizeEnd);
 
 const inboxes = useMapGetter('inboxes/getInboxes');
 const labels = useMapGetter('labels/getLabelsOnSidebar');
@@ -173,6 +178,15 @@ const sortedInboxes = computed(() =>
 const closeMobileSidebar = () => {
   if (!props.isMobileSidebarOpen) return;
   emit('closeMobileSidebar');
+};
+
+const onComposeOpen = toggleFn => {
+  toggleFn();
+  emitter.emit(BUS_EVENTS.NEW_CONVERSATION_MODAL, true);
+};
+
+const onComposeClose = () => {
+  emitter.emit(BUS_EVENTS.NEW_CONVERSATION_MODAL, false);
 };
 
 const newReportRoutes = () => [
@@ -284,6 +298,7 @@ const menuItems = computed(() => {
           children: sortedInboxes.value.map(inbox => ({
             name: `${inbox.name}-${inbox.id}`,
             label: inbox.name,
+            icon: h(ChannelIcon, { inbox, class: 'size-[16px]' }),
             to: accountScopedRoute('inbox_dashboard', { inbox_id: inbox.id }),
             component: leafProps =>
               h(ChannelLeaf, {
@@ -302,7 +317,7 @@ const menuItems = computed(() => {
             name: `${label.title}-${label.id}`,
             label: label.title,
             icon: h('span', {
-              class: `size-[12px] ring-1 ring-n-alpha-1 dark:ring-white/20 ring-inset rounded-sm`,
+              class: `size-[8px] rounded-sm`,
               style: { backgroundColor: label.color },
             }),
             to: accountScopedRoute('label_conversations', {
@@ -439,7 +454,7 @@ const menuItems = computed(() => {
             name: `${label.title}-${label.id}`,
             label: label.title,
             icon: h('span', {
-              class: `size-[12px] ring-1 ring-n-alpha-1 dark:ring-white/20 ring-inset rounded-sm`,
+              class: `size-[8px] rounded-sm`,
               style: { backgroundColor: label.color },
             }),
             to: accountScopedRoute(
@@ -591,6 +606,12 @@ const menuItems = computed(() => {
           icon: 'i-lucide-briefcase',
           to: accountScopedRoute('general_settings_index'),
         },
+        // {
+        //   name: 'Settings Captain',
+        //   label: t('SIDEBAR.CAPTAIN_AI'),
+        //   icon: 'i-woot-captain',
+        //   to: accountScopedRoute('captain_settings_index'),
+        // },
         {
           name: 'Settings Agents',
           label: t('SIDEBAR.AGENTS'),
@@ -601,18 +622,49 @@ const menuItems = computed(() => {
           name: 'Settings Teams',
           label: t('SIDEBAR.TEAMS'),
           icon: 'i-lucide-users',
+          activeOn: [
+            'settings_teams_list',
+            'settings_teams_new',
+            'settings_teams_finish',
+            'settings_teams_add_agents',
+            'settings_teams_show',
+            'settings_teams_edit',
+            'settings_teams_edit_members',
+            'settings_teams_edit_finish',
+          ],
           to: accountScopedRoute('settings_teams_list'),
         },
-        {
-          name: 'Settings Agent Assignment',
-          label: t('SIDEBAR.AGENT_ASSIGNMENT'),
-          icon: 'i-lucide-user-cog',
-          to: accountScopedRoute('assignment_policy_index'),
-        },
+        ...(hasAdvancedAssignment.value
+          ? [
+              {
+                name: 'Settings Agent Assignment',
+                label: t('SIDEBAR.AGENT_ASSIGNMENT'),
+                icon: 'i-lucide-user-cog',
+                activeOn: [
+                  'assignment_policy_index',
+                  'agent_assignment_policy_index',
+                  'agent_assignment_policy_create',
+                  'agent_assignment_policy_edit',
+                  'agent_capacity_policy_index',
+                  'agent_capacity_policy_create',
+                  'agent_capacity_policy_edit',
+                ],
+                to: accountScopedRoute('assignment_policy_index'),
+              },
+            ]
+          : []),
         {
           name: 'Settings Inboxes',
           label: t('SIDEBAR.INBOXES'),
           icon: 'i-lucide-inbox',
+          activeOn: [
+            'settings_inbox_list',
+            'settings_inbox_show',
+            'settings_inbox_new',
+            'settings_inbox_finish',
+            'settings_inboxes_page_channel',
+            'settings_inboxes_add_agents',
+          ],
           to: accountScopedRoute('settings_inbox_list'),
         },
         {
@@ -630,7 +682,7 @@ const menuItems = computed(() => {
         {
           name: 'Settings Automation',
           label: t('SIDEBAR.AUTOMATION'),
-          icon: 'i-lucide-workflow',
+          icon: 'i-lucide-repeat',
           to: accountScopedRoute('automation_list'),
         },
         {
@@ -682,6 +734,12 @@ const menuItems = computed(() => {
           to: accountScopedRoute('sla_list'),
         },
         {
+          name: 'Conversation Workflow',
+          label: t('SIDEBAR.CONVERSATION_WORKFLOW'),
+          icon: 'i-lucide-workflow',
+          to: accountScopedRoute('conversation_workflow_index'),
+        },
+        {
           name: 'Settings Security',
           label: t('SIDEBAR.SECURITY'),
           icon: 'i-lucide-shield',
@@ -728,8 +786,11 @@ const handleMainMenuClick = item => {
       {
         'shadow-lg md:shadow-none': isMobileSidebarOpen,
         'ltr:-translate-x-full rtl:translate-x-full': !isMobileSidebarOpen,
+        'transition-transform duration-200 ease-out md:transition-[width]':
+          !isResizing,
       },
     ]"
+    :style="isMobile ? undefined : { width: `${sidebarWidth}px` }"
   >
     <!-- Column 1: Main Menu Icons -->
     <nav

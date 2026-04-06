@@ -3,6 +3,9 @@
     "FETCHING": "Đang tải tích hợp",
     "NO_HOOK_CONFIGURED": "Không có tích hợp {integrationId} nào được cấu hình trong tài khoản này.",
     "HEADER": "Ứng dụng",
+    "COUNT": "{n} integration | {n} integrations",
+    "SEARCH_PLACEHOLDER": "Search...",
+    "NO_RESULTS": "No results found matching your search",
     "STATUS": {
       "ENABLED": "Bật",
       "DISABLED": "Tắt"
@@ -31,6 +34,7 @@
     "LIST": {
       "FETCHING": "Đang tải danh sách integration hook",
       "INBOX": "Hộp thư",
+      "ACTIONS": "Hành động",
       "DELETE": {
         "BUTTON_TEXT": "Xóa"
       }

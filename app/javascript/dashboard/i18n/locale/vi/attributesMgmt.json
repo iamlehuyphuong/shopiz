@@ -5,6 +5,9 @@
     "LOADING": "Đang tải danh sách thuộc tính tùy chỉnh",
     "DESCRIPTION": "Thuộc tính tùy chỉnh giúp bạn theo dõi thêm các thông tin bổ sung về liên hệ hoặc cuộc hội thoại - ví dụ như gói đăng ký hoặc ngày mua hàng đầu tiên. Bạn có thể thêm nhiều loại thuộc tính khác nhau như văn bản, danh sách hoặc số để thu thập thông tin phù hợp với nhu cầu.",
     "LEARN_MORE": "Tìm hiểu thêm về thuộc tính tùy chỉnh",
+    "COUNT": "{n} attribute | {n} attributes",
+    "SEARCH_PLACEHOLDER": "Tìm kiếm nhiều thuộc tính...",
+    "NO_RESULTS": "No attributes found matching your search",
     "ATTRIBUTE_MODELS": {
       "CONVERSATION": "Cuộc hội thoại",
       "CONTACT": "Liên hệ"
@@ -63,6 +66,10 @@
         },
         "ENABLE_REGEX": {
           "LABEL": "Bật kiểm tra regex"
+        },
+        "BADGES": {
+          "PRE_CHAT": "Pre-chat",
+          "RESOLUTION": "Resolution"
         }
       },
       "API": {
@@ -129,6 +136,10 @@
       "ENABLE_REGEX": {
         "LABEL": "Bật kiểm tra regex"
       }
+    },
+    "BADGES": {
+      "PRE_CHAT": "Pre-chat",
+      "RESOLUTION": "Resolution"
     }
   }
 }

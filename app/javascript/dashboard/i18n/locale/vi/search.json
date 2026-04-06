@@ -1,7 +1,7 @@
 {
   "SEARCH": {
     "TABS": {
-      "ALL": "Tất cả",
+      "ALL": "All results",
       "CONTACTS": "Liên hệ",
       "CONVERSATIONS": "Cuộc hội thoại",
       "MESSAGES": "Tin nhắn",
@@ -19,14 +19,50 @@
     "LOADING_DATA": "Đang tải",
     "EMPTY_STATE": "Không tìm thấy {item} cho truy vấn '{query}'",
     "EMPTY_STATE_FULL": "Không có kết quả nào cho truy vấn '{query}'",
+    "RECENT_SEARCHES": "Tìm kiếm gần đây",
+    "CLEAR_ALL": "Clear all",
+    "MOST_RECENT": "Most recent",
     "PLACEHOLDER_KEYBINDING": "/ để tìm kiếm",
     "INPUT_PLACEHOLDER": "Nhập từ 3 ký tự trở lên để tìm kiếm",
     "EMPTY_STATE_DEFAULT": "Tìm theo ID cuộc hội thoại, email, số điện thoại hoặc nội dung tin nhắn để có kết quả chính xác hơn.",
     "BOT_LABEL": "Bot",
-    "READ_MORE": "Xem thêm",
-    "WROTE": "đã viết:",
-    "FROM": "từ",
-    "EMAIL": "email",
-    "EMAIL_SUBJECT": "tiêu đề"
+    "READ_MORE": "Read more",
+    "READ_LESS": "Read less",
+    "WROTE": "wrote:",
+    "FROM": "Từ",
+    "EMAIL": "Email",
+    "EMAIL_SUBJECT": "Chủ đề",
+    "PRIVATE": "Private note",
+    "TRANSCRIPT": "Transcript",
+    "CREATED_AT": "created {time}",
+    "UPDATED_AT": "updated {time}",
+    "SORT_BY": {
+      "RELEVANCE": "Mức độ liên quan"
+    },
+    "DATE_RANGE": {
+      "LAST_7_DAYS": "7 ngày cuối",
+      "LAST_30_DAYS": "30 ngày cuối",
+      "LAST_60_DAYS": "60 ngày cuối",
+      "LAST_90_DAYS": "90 ngày cuối",
+      "CUSTOM_RANGE": "Custom range:",
+      "CREATED_BETWEEN": "Tạo trong khoảng",
+      "AND": "đến",
+      "APPLY": "Áp dụng",
+      "BEFORE_DATE": "Trước {date}",
+      "AFTER_DATE": "Sau {date}",
+      "TIME_RANGE": "Lọc theo thời gian",
+      "CLEAR_FILTER": "Xóa bộ lọc"
+    },
+    "FILTERS": {
+      "FILTER_MESSAGE": "Lọc tin nhắn theo:",
+      "FROM": "Người gửi",
+      "IN": "Hộp thư đến",
+      "AGENTS": "Nhân viên",
+      "CONTACTS": "Liên hệ",
+      "INBOXES": "Hộp thư đến",
+      "NO_AGENTS": "Không tìm thấy nhân viên",
+      "NO_CONTACTS": "Bắt đầu tìm kiếm để xem kết quả",
+      "NO_INBOXES": "Không tìm thấy hộp thư đến"
+    }
   }
 }

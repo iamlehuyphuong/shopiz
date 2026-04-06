@@ -3,9 +3,12 @@
     "HEADER": "Macro",
     "DESCRIPTION": "Macro là một tập hợp các hành động được lưu sẵn giúp nhân viên hỗ trợ khách hàng hoàn thành tác vụ dễ dàng hơn. Nhân viên có thể định nghĩa nhiều hành động như gắn nhãn cuộc hội thoại, gửi bản ghi email, cập nhật thuộc tính tùy chỉnh,… và có thể chạy tất cả chỉ với một lần nhấp.",
     "LEARN_MORE": "Tìm hiểu thêm về macro",
+    "COUNT": "{n} macro | {n} macros",
     "HEADER_BTN_TXT": "Thêm macro mới",
     "HEADER_BTN_TXT_SAVE": "Lưu macro",
     "LOADING": "Đang tải macro",
+    "SEARCH_PLACEHOLDER": "Tìm kiếm macro...",
+    "NO_RESULTS": "Không tìm thấy macro nào khớp với tìm kiếm của bạn",
     "ERROR": "Đã xảy ra lỗi. Vui lòng thử lại",
     "ORDER_INFO": "Các macro sẽ chạy theo thứ tự bạn thêm hành động. Bạn có thể sắp xếp lại bằng cách kéo thả từng hành động.",
     "ADD": {
@@ -29,7 +32,8 @@
         "NAME": "Tên",
         "CREATED BY": "Tạo bởi",
         "LAST_UPDATED_BY": "Cập nhật lần cuối bởi",
-        "VISIBILITY": "Hiển thị"
+        "VISIBILITY": "Hiển thị",
+        "ACTIONS": "Hành động"
       },
       "404": "Không tìm thấy macro nào"
     },

@@ -53,7 +53,7 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
       recipient: { id: contact.get_source_id(inbox.id) },
       message: fb_text_message_payload,
       messaging_type: 'MESSAGE_TAG',
-      tag: 'ACCOUNT_UPDATE'
+      tag: message_tag
     }
   end
 
@@ -94,7 +94,7 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
         }
       },
       messaging_type: 'MESSAGE_TAG',
-      tag: 'ACCOUNT_UPDATE'
+      tag: message_tag
     }
   end
 
@@ -207,6 +207,10 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
       messaging_type: 'MESSAGE_TAG',
       tag: 'ACCOUNT_UPDATE'
     }
+  end
+
+  def message_tag
+    @message_tag ||= GlobalConfigService.load('ENABLE_MESSENGER_CHANNEL_HUMAN_AGENT', nil) ? 'HUMAN_AGENT' : 'ACCOUNT_UPDATE'
   end
 
   def attachment_type(attachment)

@@ -35,6 +35,7 @@
     "LOADING_CONVERSATIONS": "Đang tải cuộc hội thoại",
     "CANNOT_REPLY": "Bạn không thể trả lời do",
     "24_HOURS_WINDOW": "giới hạn cửa sổ 24 giờ",
+    "48_HOURS_WINDOW": "Giới hạn thời lượng tin nhắn 48 giờ",
     "API_HOURS_WINDOW": "Bạn chỉ có thể trả lời trong vòng {hours} giờ",
     "NOT_ASSIGNED_TO_YOU": "Cuộc hội thoại này chưa được giao cho bạn. Bạn có muốn tự giao cho mình không?",
     "ASSIGN_TO_ME": "Giao cho tôi",
@@ -63,6 +64,7 @@
     "UNSUPPORTED_MESSAGE": "Tin nhắn này không được hỗ trợ. Bạn có thể xem tin nhắn trên ứng dụng Facebook / Instagram.",
     "UNSUPPORTED_MESSAGE_FACEBOOK": "Tin nhắn này không được hỗ trợ. Hãy xem trên ứng dụng Facebook Messenger.",
     "UNSUPPORTED_MESSAGE_INSTAGRAM": "Tin nhắn này không được hỗ trợ. Hãy xem trên ứng dụng Instagram.",
+    "UNSUPPORTED_MESSAGE_TIKTOK": "This message is unsupported. You can view this message on the TikTok app.",
     "SUCCESS_DELETE_MESSAGE": "Xóa tin nhắn thành công",
     "FAIL_DELETE_MESSSAGE": "Không thể xóa tin nhắn! Thử lại",
     "SUCCESS_UNDO_MESSAGE": "Thu hồi tin nhắn thành công",
@@ -168,6 +170,10 @@
           "SUCCESFUL": "Đã gán nhãn #{labelName} cho cuộc hội thoại {conversationId}",
           "FAILED": "Không thể gán nhãn. Vui lòng thử lại."
         },
+        "LABEL_REMOVAL": {
+          "SUCCESFUL": "Removed label #{labelName} from conversation id {conversationId}",
+          "FAILED": "Couldn't remove label. Please try again."
+        },
         "TEAM_ASSIGNMENT": {
           "SUCCESFUL": "Đã gán nhóm \"{team}\" cho cuộc hội thoại {conversationId}",
           "FAILED": "Không thể gán nhóm. Vui lòng thử lại."
@@ -180,7 +186,11 @@
       "DISABLE_SIGN_TOOLTIP": "Tắt chữ ký",
       "MSG_INPUT": "Shift + Enter để xuống dòng. Gõ '/' để chọn tin nhắn mẫu.",
       "PRIVATE_MSG_INPUT": "Shift + Enter để xuống dòng. Chỉ nhân viên mới thấy nội dung này.",
+      "MESSAGING_RESTRICTED": "You cannot reply to this conversation",
+      "MESSAGING_RESTRICTED_WHATSAPP": "You can only reply using a template message due to 24-hour message window restriction",
+      "MESSAGING_RESTRICTED_API": "You can only reply using a template message due to message window restriction",
       "MESSAGE_SIGNATURE_NOT_CONFIGURED": "Chưa cấu hình chữ ký tin nhắn. Hãy cấu hình trong cài đặt hồ sơ.",
+      "COPILOT_MSG_INPUT": "Give copilot additional prompts, or ask anything else... Press enter to send follow-up",
       "CLICK_HERE": "Nhấn vào đây để cập nhật",
       "WHATSAPP_TEMPLATES": "Mẫu WhatsApp"
     },
@@ -201,7 +211,7 @@
       "DRAG_DROP": "Kéo thả tệp vào đây để đính kèm",
       "START_AUDIO_RECORDING": "Bắt đầu ghi âm",
       "STOP_AUDIO_RECORDING": "Dừng ghi âm",
-      "": "",
+      "COPILOT_THINKING": "Copilot is thinking",
       "EMAIL_HEAD": {
         "TO": "Tới",
         "ADD_BCC": "Thêm BCC",
@@ -243,9 +253,12 @@
     "SUCCESS_DELETE_CONVERSATION": "Xóa cuộc hội thoại thành công",
     "FAIL_DELETE_CONVERSATION": "Không thể xóa! Thử lại",
     "FILE_SIZE_LIMIT": "Tệp vượt quá giới hạn {MAXIMUM_SUPPORTED_FILE_UPLOAD_SIZE} MB",
+    "FILE_TYPE_NOT_SUPPORTED": "This {fileName} file type is not supported in this conversation",
     "MESSAGE_ERROR": "Không thể gửi tin nhắn, vui lòng thử lại",
     "SENT_BY": "Gửi bởi:",
     "BOT": "Bot",
+    "NATIVE_APP": "Ứng dụng native",
+    "NATIVE_APP_ADVISORY": "Tin nhắn này được gửi từ ứng dụng native. Trả lời từ Chatwoot để duy trì cửa sổ tin nhắn.",
     "SEND_FAILED": "Không thể gửi! Thử lại",
     "TRY_AGAIN": "thử lại",
     "ASSIGNMENT": {
@@ -325,6 +338,7 @@
     "CANCEL": "Hủy",
     "SEND_EMAIL_SUCCESS": "Đã gửi bản sao hội thoại thành công",
     "SEND_EMAIL_ERROR": "Có lỗi xảy ra, vui lòng thử lại",
+    "SEND_EMAIL_PAYMENT_REQUIRED": "Email transcript is not available on your current plan. Please upgrade to use this feature.",
     "FORM": {
       "SEND_TO_CONTACT": "Gửi bản sao cho khách hàng",
       "SEND_TO_AGENT": "Gửi bản sao cho nhân viên được giao",

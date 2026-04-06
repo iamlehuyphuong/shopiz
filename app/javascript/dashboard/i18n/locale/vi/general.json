@@ -7,6 +7,13 @@
     },
     "CLOSE": "Đóng",
     "BETA": "Beta",
-    "BETA_DESCRIPTION": "Tính năng này đang trong giai đoạn thử nghiệm và có thể thay đổi khi chúng tôi cải tiến."
+    "BETA_DESCRIPTION": "Tính năng này đang trong giai đoạn thử nghiệm và có thể thay đổi khi chúng tôi cải tiến nó.",
+    "ACCEPT": "Chấp nhận",
+    "DISCARD": "Loại bỏ",
+    "PREFERRED": "Ưu tiên"
+  },
+  "CHOICE_TOGGLE": {
+    "YES": "Có",
+    "NO": "Không"
   }
 }

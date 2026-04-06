@@ -95,6 +95,8 @@ yarn-debug.log*
 .vscode
 .claude/settings.local.json
 .cursor
+.codex/
+.claude/
 CLAUDE.local.md
 
 # Histoire deployment
@@ -108,3 +110,6 @@ node_modules
 # https://vitejs.dev/guide/env-and-mode.html#env-files
 *.local
 
+.pnpm-store/*
+local/
+Procfile.worktree

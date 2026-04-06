@@ -29,6 +29,8 @@
     "REQUEST_FRIEND": "Gửi yêu cầu kết bạn",
     "CALL": "Gọi",
     "CALL_UNDER_DEVELOPMENT": "Tính năng gọi đang được phát triển",
+    "CALL_INITIATED": "Đang gọi liên hệ…",
+    "CALL_FAILED": "Không thể bắt đầu cuộc gọi. Vui lòng thử lại.",
     "VOICE_INBOX_PICKER": {
       "TITLE": "Chọn voice inbox"
     },
@@ -473,6 +475,12 @@
           "INSTAGRAM": {
             "PLACEHOLDER": "Thêm Instagram"
           },
+          "TELEGRAM": {
+            "PLACEHOLDER": "Add Telegram"
+          },
+          "TIKTOK": {
+            "PLACEHOLDER": "Add TikTok"
+          },
           "LINKEDIN": {
             "PLACEHOLDER": "Thêm LinkedIn"
           },
@@ -586,7 +594,8 @@
       "SEARCH_EMPTY_STATE_TITLE": "Không khớp kết quả tìm kiếm 🔍",
       "LIST_EMPTY_STATE_TITLE": "Không có liên hệ nào trong chế độ xem hiện tại 📋",
       "ACTIVE_EMPTY_STATE_TITLE": "Không có liên hệ nào đang hoạt động 🌙"
-    }
+    },
+    "LOAD_MORE": "Tải thêm"
   },
   "CONTACTS_BULK_ACTIONS": {
     "ASSIGN_LABELS": "Gán nhãn",

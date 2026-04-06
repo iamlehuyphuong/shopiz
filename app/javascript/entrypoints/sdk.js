@@ -76,7 +76,7 @@ const runSDK = ({ baseUrl, websiteToken }) => {
     welcomeDescription: shopizSettings.welcomeDescription || '',
     availableMessage: shopizSettings.availableMessage || '',
     unavailableMessage: shopizSettings.unavailableMessage || '',
-    enableFileUpload: shopizSettings.enableFileUpload ?? true,
+    enableFileUpload: shopizSettings.enableFileUpload,
     enableEmojiPicker: shopizSettings.enableEmojiPicker ?? true,
     enableEndConversation: shopizSettings.enableEndConversation ?? true,
 
