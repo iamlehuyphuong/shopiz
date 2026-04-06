@@ -70,13 +70,14 @@
       }
       window.errorLoggingConfig = '<%= ENV.fetch('SENTRY_FRONTEND_DSN', '') || ENV.fetch('SENTRY_DSN', '') %>'
     </script>
+    <% if ChatwootHub.support_config[:support_website_token].present? %>
     <script>
       window.shopizSettings = {
         hideMessageBubble: true,
       };
       window.addEventListener('DOMContentLoaded', function() {
         (function(d,t) {
-          var BASE_URL = '';
+          var BASE_URL = '<%= ChatwootHub.support_config[:support_website_url] %>';
           var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
           g.src= BASE_URL + "/packs/js/sdk.js";
           g.defer = true;
@@ -97,6 +98,7 @@
         })
       })
     </script>
+    <% end %>
     <% if @global_config['CLOUD_ANALYTICS_TOKEN'].present? %>
     <script>
       window.analyticsConfig = {

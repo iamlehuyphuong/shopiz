@@ -1,18 +1,18 @@
-<script setup>
-import { ref, computed, reactive } from 'vue';
+<script>
+import { mapGetters } from 'vuex';
 import { useVuelidate } from '@vuelidate/core';
-import { required, minLength, email } from '@vuelidate/validators';
-import { useStore } from 'vuex';
-import { useI18n } from 'vue-i18n';
+import { required, minLength, email, sameAs } from '@vuelidate/validators';
 import { useAlert } from 'dashboard/composables';
 import { DEFAULT_REDIRECT_URL } from 'dashboard/constants/globals';
 import VueHcaptcha from '@hcaptcha/vue3-hcaptcha';
-import FormInput from '../../../../../components/Form/Input.vue';
-import NextButton from 'dashboard/components-next/button/Button.vue';
+import FormInput from 'v3/components/Form/Input.vue';
+import NextButton from 'next/button/Button.vue';
 import PasswordRequirements from './PasswordRequirements.vue';
 import { isValidPassword } from 'shared/helpers/Validators';
-import GoogleOAuthButton from '../../../../../components/GoogleOauth/Button.vue';
-import { register } from '../../../../../api/auth';
+import GoogleOAuthButton from 'v3/components/GoogleOauth/Button.vue';
+import Icon from 'next/icon/Icon.vue';
+import SimpleDivider from 'v3/components/Divider/SimpleDivider.vue';
+import { register } from 'v3/api/auth';
 
 const MIN_PASSWORD_LENGTH = 6;
 const SPECIAL_CHAR_REGEX = /[!@#$%^&*()_+\-=[\]{}|'"/\\.,`<>:;?~]/;
@@ -25,6 +25,7 @@ export default {
     SimpleDivider,
     Icon,
     VueHcaptcha,
+    PasswordRequirements,
   },
   setup() {
     return { v$: useVuelidate() };
@@ -41,20 +42,13 @@ export default {
       },
       didCaptchaReset: false,
       isSignupInProgress: false,
+      isPasswordFocused: false,
       error: '',
     };
   },
   validations() {
     return {
       credentials: {
-        accountName: {
-          required,
-          minLength: minLength(2),
-        },
-        fullName: {
-          required,
-          minLength: minLength(2),
-        },
         email: {
           required,
           email,

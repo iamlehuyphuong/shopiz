@@ -22,6 +22,7 @@ import ChannelIcon from 'next/icon/ChannelIcon.vue';
 import SidebarAccountSwitcher from './SidebarAccountSwitcher.vue';
 import Logo from 'next/icon/Logo.vue';
 import ComposeConversation from 'dashboard/components-next/NewConversation/ComposeConversation.vue';
+import { useSidebarKeyboardShortcuts } from './useSidebarKeyboardShortcuts';
 
 const props = defineProps({
   isMobileSidebarOpen: {
@@ -73,6 +74,9 @@ const setExpandedItem = name => {
   expandedItem.value = expandedItem.value === name ? null : name;
 };
 
+const activeCategory = ref(null);
+const route = useRoute();
+
 const {
   sidebarWidth,
   isCollapsed,
@@ -100,7 +104,50 @@ provideSidebarContext({
   isCollapsed: isEffectivelyCollapsed,
   sidebarWidth,
   isResizing,
+  activeCategory,
 });
+
+const getFirstNavigableChild = item => {
+  if (item.to) return item.to;
+  if (item.children && item.children.length > 0) {
+    return getFirstNavigableChild(item.children[0]);
+  }
+  return null;
+};
+
+const syncActiveCategory = () => {
+  const currentRouteName = route.name;
+  const activeItem = menuItems.value.find(item => {
+    if (item.activeOn?.includes(currentRouteName)) return true;
+    if (item.to?.name === currentRouteName) return true;
+    if (item.children) {
+      return item.children.some(child => {
+        if (child.activeOn?.includes(currentRouteName)) return true;
+        if (child.to?.name === currentRouteName) return true;
+        if (child.children) {
+          return child.children.some(grandChild => {
+            if (grandChild.activeOn?.includes(currentRouteName)) return true;
+            if (grandChild.to?.name === currentRouteName) return true;
+            return false;
+          });
+        }
+        return false;
+      });
+    }
+    return false;
+  });
+
+  if (activeItem) {
+    activeCategory.value = activeItem.name;
+  }
+};
+
+watch(
+  () => route.path,
+  () => {
+    syncActiveCategory();
+  }
+);
 
 // Get clientX from mouse or touch event
 const getClientX = event =>

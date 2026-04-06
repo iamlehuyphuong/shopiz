@@ -327,13 +327,12 @@ vi:
       short_description: 'Đồng bộ hóa danh bạ và cuộc trò chuyện của bạn với CRM LeadSquared.'
       description: 'Đồng bộ hóa danh bạ và cuộc trò chuyện của bạn với CRM LeadSquared. Tính năng này tự động tạo khách hàng tiềm năng trong LeadSquared khi danh bạ mới được thêm và lưu lại các hoạt động cuộc trò chuyện để cung cấp bối cảnh đầy đủ cho đội ngũ bán hàng của bạn.'
   captain:
-    copilot_message_required: Thông điệp bắt buộc cóD
+    copilot_message_required: Thông điệp bắt buộc
     copilot_error: 'Đã xảy ra lỗi với Copilot. Vui lòng thử lại.'
     copilot_limit: 'Bạn đã hết tín dụng Copilot. Bạn có thể mua thêm tín dụng từ phần thanh toán.'
     upgrade: 'Nâng cấp gói để bật Captain AI'
-    disabled: 'Captain AI is disabled for this account.'
-    api_key_missing: 'Captain AI API key is not configured.'
-1
+    disabled: 'Captain AI đã bị vô hiệu hóa cho tài khoản này.'
+    api_key_missing: 'Khóa API Captain AI chưa được cấu hình.'
     copilot:
       using_tool: 'Đang sử dụng công cụ %{function_name}'
       completed_tool_call: 'Đã hoàn thành cuộc gọi công cụ %{function_name}'

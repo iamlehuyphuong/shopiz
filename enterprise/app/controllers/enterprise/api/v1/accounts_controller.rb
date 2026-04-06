@@ -168,7 +168,6 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
   rescue Stripe::StripeError => e
     Rails.logger.warn("Failed to cancel cloud subscriptions for account #{@account.id}: #{e.class} - #{e.message}")
   end
-  end
 
   def render_redirect_url(redirect_url)
     render json: { redirect_url: redirect_url }

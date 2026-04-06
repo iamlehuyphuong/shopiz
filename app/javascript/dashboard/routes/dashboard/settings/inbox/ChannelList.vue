@@ -84,8 +84,9 @@ const channelList = computed(() => {
     });
   }
 
-  channels.push({
-    key: 'zalo',
+  channels.push(
+    {
+      key: 'zalo',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO_OA.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO_OA.DESCRIPTION'),
       icon: 'i-ri-zalo-oa-fill',
@@ -101,13 +102,8 @@ const channelList = computed(() => {
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK_SHOP.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK_SHOP.DESCRIPTION'),
       icon: 'i-ri-tiktok-fill',
-    },
-    // {
-    //   key: 'voice',
-  //   title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.VOICE.TITLE'),
-  //   description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.VOICE.DESCRIPTION'),
-  //   icon: 'i-woot-voice',
-  // });
+    }
+  );
 
   return channels;
 });

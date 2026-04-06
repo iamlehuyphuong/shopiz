@@ -21,10 +21,10 @@ const props = defineProps({
     type: String,
     default: 'bottom',
   },
-});
-
-defineProps({
-  isCollapsed: { type: Boolean, default: false },
+  isCollapsed: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['close', 'openKeyShortcutModal']);
@@ -173,7 +173,7 @@ const dropdownBodyClass = computed(() => {
       </button>
     </template>
     <TeleportWithDirection to="body" :disabled="position !== 'top'">
-      <DropdownBody :class="['z-50 w-80', dropdownBodyClass]">
+      <DropdownBody class="z-50 w-80" :class="dropdownBodyClass">
         <SidebarProfileMenuStatus />
         <DropdownSeparator />
         <template v-for="item in allowedMenuItems" :key="item.label">

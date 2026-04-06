@@ -12,7 +12,6 @@ class Captain::InboxPendingConversationsResolutionJob < ApplicationJob
     else
       perform_time_based(inbox)
     end
-    end
   ensure
     Current.reset
   end
