@@ -762,7 +762,6 @@ const closeMobileSidebar = () => {
   emit('closeMobileSidebar');
 };
 
-
 // Calculate active menu items
 const activeMainMenuName = computed(() => {
   return activeCategory.value || menuItems.value[0]?.name;

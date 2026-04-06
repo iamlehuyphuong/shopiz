@@ -1,9 +1,9 @@
 <script setup>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useMapGetter, useStore } from 'dashboard/composables/store.js';
+import { useCaptain } from 'dashboard/composables/useCaptain';
 import { useAccount } from 'dashboard/composables/useAccount';
 import { format } from 'date-fns';
-import { useI18n } from 'vue-i18n';
 import BillingCard from './components/BillingCard.vue';
 import BillingHeader from './components/BillingHeader.vue';
 import DetailItem from './components/DetailItem.vue';
@@ -15,13 +15,12 @@ import BillingHistoryItem from './components/BillingHistoryItem.vue';
 import BaseSettingsHeader from '../components/BaseSettingsHeader.vue';
 import SettingsLayout from '../SettingsLayout.vue';
 import ButtonV4 from 'next/button/Button.vue';
+import BillingMeter from './components/BillingMeter.vue';
 
-const router = useRouter();
-const { currentAccount, isOnChatwootCloud } = useAccount();
+const { currentAccount } = useAccount();
 const {
   captainEnabled,
   captainLimits,
-  documentLimits,
   responseLimits,
   fetchLimits,
   isFetchingLimits,
@@ -30,10 +29,7 @@ const {
 const uiFlags = useMapGetter('accounts/getUIFlags');
 const store = useStore();
 
-const BILLING_REFRESH_ATTEMPTED = 'billing_refresh_attempted';
-
-// State for handling refresh attempts and loading
-const isWaitingForBilling = ref(false);
+// State for handling loading
 const purchaseCreditsModalRef = ref(null);
 
 const customAttributes = computed(() => {
@@ -146,6 +142,12 @@ const openPurchaseCreditsModal = () => {
 const handleTopupSuccess = () => {
   // Refresh limits to show updated credit balance
   fetchLimits();
+};
+
+const onToggleChatWindow = () => {
+  if (window.$chatwoot) {
+    window.$chatwoot.toggle();
+  }
 };
 
 onMounted(fetchAccountDetails);
