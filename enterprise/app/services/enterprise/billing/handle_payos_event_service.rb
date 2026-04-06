@@ -60,11 +60,18 @@ class Enterprise::Billing::HandlePayosEventService
   end
 
   def change_plan_features
-    @account.disable_features(*Featurable::MAPPING.values)
+    # Disable all current features before applying plan-specific ones
+    all_feature_names = Featurable::FEATURE_LIST.map { |f| f['name'] }
+    @account.disable_features(*all_feature_names)
 
+    # Metadata 'features' should ideally contain the full feature names.
+    # If they contain short codes, they will be ignored unless we maintain a local mapping.
     features = @product[:metadata]['features']&.split(',')&.map(&:strip) || []
-    mapping_features = features.map { |item| Featurable::MAPPING[item.to_sym] }
-    @account.enable_features(*mapping_features)
+    
+    # We attempt to enable features by name. If they were short codes, we might need a mapping later,
+    # but for now we're moving towards using full names as requested.
+    valid_features = features.select { |f| all_feature_names.include?(f) }
+    @account.enable_features(*valid_features)
     @account.save!
   end
 

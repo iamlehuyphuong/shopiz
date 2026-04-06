@@ -4,7 +4,7 @@ module Enterprise::Account
   def manually_managed_features; end
 
   # Auto-sync advanced_assignment with assignment_v2 when features are bulk-updated via admin UI
-  def selected_feature_flags=(features)
+  def feature_names=(names)
     super
     sync_assignment_features
   end

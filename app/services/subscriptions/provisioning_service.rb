@@ -67,8 +67,9 @@ class Subscriptions::ProvisioningService
     }
     
     @account.assign_attributes(limits: default_limits)
-    # Disable premium features
-    @account.disable_features(*Featurable::MAPPING.values)
+    # Disable all current features before applying default ones
+    all_feature_names = Featurable::FEATURE_LIST.map { |f| f['name'] }
+    @account.disable_features(*all_feature_names)
     @account.enable_features(*Featurable::DEFAULT_PLAN_FEATURES)
     
     current_attrs = @account.custom_attributes || {}
