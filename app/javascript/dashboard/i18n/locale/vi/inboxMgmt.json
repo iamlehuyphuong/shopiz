@@ -73,7 +73,7 @@
         "DESC_2": "để kết nối với"
       },
       "TIKTOK_SHOP": {
-        "HELP": "Lưu ý: Shopiz chỉ truy cập tin nhắn Tiktok. Tin nhắn riêng tư không bao giờ được truy cập.",
+        "HELP": "Lưu ý: Shopiz chỉ truy cập tin nhắn TikTok Shop. Tin nhắn riêng tư không bao giờ được truy cập.",
         "INBOX_NAME": "Tên hộp thư",
         "ADD_NAME": "Nhập tên hộp thư",
         "PICK_NAME": "Chọn tên hộp thư",
@@ -459,7 +459,7 @@
       },
       "AUTH": {
         "TITLE": "Chọn kênh",
-        "DESC": "Shopiz hỗ trợ Live Chat, Facebook Messenger, WhatsApp, Email, SMS, API, Telegram, Line, Instagram, Voice, Zalo, Tiktok và nhiều hơn nữa. Chọn một kênh để bắt đầu.",
+        "DESC": "Shopiz hỗ trợ Live Chat, Facebook Messenger, WhatsApp, Email, SMS, API, Telegram, Line, Instagram, Voice, Zalo, TikTok Shop và nhiều hơn nữa. Chọn một kênh để bắt đầu.",
         "TITLE_NEXT": "Hoàn tất thiết lập",
         "TITLE_FINISH": "Hoàn tất!",
         "CHANNEL": {
@@ -512,8 +512,8 @@
             "DESCRIPTION": "Kết nối Zalo cá nhân"
           },
           "TIKTOK_SHOP": {
-            "TITLE": "Tiktok Shop",
-            "DESCRIPTION": "Kết nối Tiktok Shop"
+            "TITLE": "TikTok Shop",
+            "DESCRIPTION": "Kết nối TikTok Shop"
           }
         }
       },

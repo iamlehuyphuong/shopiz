@@ -6,7 +6,7 @@ import WebChannel from '../../api/channel/webChannel';
 import FBChannel from '../../api/channel/fbChannel';
 import ZaloChannel from '../../api/channel/zaloChannel';
 import ZaloPersonalChannel from '../../api/channel/zalopersonalChannel';
-import TiktokChannel from '../../api/channel/tiktokChannel';
+import TiktokShopChannel from '../../api/channel/tiktokShopChannel';
 import TwilioChannel from '../../api/channel/twilioChannel';
 import WhatsappChannel from '../../api/channel/whatsappChannel';
 import { throwErrorMessage } from '../utils/api';
@@ -151,14 +151,12 @@ export const getters = {
   },
   getVoiceInboxes($state) {
     return $state.records.filter(
-      item =>
-        item.channel_type === INBOX_TYPES.VOICE
+      item => item.channel_type === INBOX_TYPES.VOICE
     );
   },
   getZaloPersonalInboxes($state) {
     return $state.records.filter(
-      item =>
-        item.channel_type === INBOX_TYPES.ZALO_PERSONAL
+      item => item.channel_type === INBOX_TYPES.ZALO_PERSONAL
     );
   },
   getSurveyInboxes($state) {
@@ -274,13 +272,13 @@ export const actions = {
       throw new Error(error);
     }
   },
-  createTiktokChannel: async ({ commit }, params) => {
+  createTiktokShopChannel: async ({ commit }, params) => {
     try {
       commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: true });
-      const response = await TiktokChannel.create(params);
+      const response = await TiktokShopChannel.create(params);
       commit(types.default.ADD_INBOXES, response.data);
       commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
-      sendAnalyticsEvent('tiktok');
+      sendAnalyticsEvent('tiktok_shop');
       return response.data;
     } catch (error) {
       commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });

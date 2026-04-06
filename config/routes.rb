@@ -131,7 +131,7 @@ Rails.application.routes.draw do
                 get :create
               end
             end
-            resource :tiktok_channel, only: [:show, :create]
+            resource :tiktok_shop_channel, only: [:show, :create]
           end
           resources :conversations, only: [:index, :create, :show, :update, :destroy] do
             collection do
@@ -588,8 +588,8 @@ Rails.application.routes.draw do
   post 'webhooks/zalo_personal', to: 'webhooks/zalo_personal#process_payload'
   get '/zalo/callback', to: 'zalo/callback#create'
   get '/zalo_personal/callback', to: 'zalo_personal/callback#create'
-  get '/tiktok/callback', to: 'tiktok/callback#create'
-  post 'webhooks/tiktok', to: 'webhooks/tiktok#process_payload'
+  get '/tiktok_shop/callback', to: 'tiktok_shop/callback#create'
+  post 'webhooks/tiktok_shop', to: 'webhooks/tiktok_shop#process_payload'
 
   namespace :twitter do
     resource :callback, only: [:show]

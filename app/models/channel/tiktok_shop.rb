@@ -18,10 +18,10 @@
 #  index_channel_tiktok_on_shop_id      (shop_id) UNIQUE
 #
 
-class Channel::Tiktok < ApplicationRecord
+class Channel::TiktokShop < ApplicationRecord
   include Channelable
 
-  self.table_name = 'channel_tiktok'
+  self.table_name = 'channel_tiktok_shop'
   EDITABLE_ATTRS = [:access_token, :refresh_token, :expires_in].freeze
   INVALID_ACCESS_TOKEN_CODE = 36_009_004
 
@@ -33,7 +33,7 @@ class Channel::Tiktok < ApplicationRecord
   validates :shop_cipher, presence: true, uniqueness: true
 
   def name
-    'Tiktok'
+    'Tiktok Shop'
   end
 
   def send_message(message)
@@ -75,7 +75,7 @@ class Channel::Tiktok < ApplicationRecord
     converstation_messages_url = "https://open-api.tiktokglobalshop.com/customer_service/202309/conversations/#{conversation_id}/messages"
     params = default_params.merge(options)
 
-    signed_url = ::Tiktok::SignatureService.signed_url(
+    signed_url = ::TiktokShop::SignatureService.signed_url(
       converstation_messages_url,
       params: params,
       content_type: 'application/json'
@@ -108,7 +108,7 @@ class Channel::Tiktok < ApplicationRecord
 
   def upload_image_to_tiktok(attachment)
     upload_image_url = 'https://open-api.tiktokglobalshop.com/customer_service/202309/images/upload'
-    signed_url = ::Tiktok::SignatureService.signed_url(
+    signed_url = ::TiktokShop::SignatureService.signed_url(
       upload_image_url,
       params: default_params,
       content_type: 'multipart/form-data'
@@ -134,7 +134,7 @@ class Channel::Tiktok < ApplicationRecord
 
   def call_api_send_message(conversation_id, body)
     send_message_url = "https://open-api.tiktokglobalshop.com/customer_service/202309/conversations/#{conversation_id}/messages"
-    signed_url = ::Tiktok::SignatureService.signed_url(
+    signed_url = ::TiktokShop::SignatureService.signed_url(
       send_message_url,
       params: default_params,
       body: body,

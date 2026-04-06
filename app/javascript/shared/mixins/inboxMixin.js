@@ -62,7 +62,7 @@ export default {
     isAZaloPersonalChannel() {
       return this.channelType === INBOX_TYPES.ZALO_PERSONAL;
     },
-    isATiktokChannel() {
+    isATiktokShopChannel() {
       return this.channelType === INBOX_TYPES.TIKTOK_SHOP;
     },
     isAWebWidgetInbox() {
@@ -76,9 +76,6 @@ export default {
     },
     isALineChannel() {
       return this.channelType === INBOX_TYPES.LINE;
-    },
-    isAVoiceChannel() {
-      return this.channelType === INBOX_TYPES.VOICE;
     },
     isAnEmailChannel() {
       return this.channelType === INBOX_TYPES.EMAIL;

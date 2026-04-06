@@ -79,7 +79,7 @@ class Account < ApplicationRecord
   has_many :facebook_pages, dependent: :destroy_async, class_name: '::Channel::FacebookPage'
   has_many :zalo_oas, dependent: :destroy_async, class_name: '::Channel::ZaloOa'
   has_many :zalo_personals, dependent: :destroy_async, class_name: '::Channel::ZaloPersonal'
-  has_many :tiktoks, dependent: :destroy_async, class_name: '::Channel::Tiktok'
+  has_many :tiktok_shops, dependent: :destroy_async, class_name: '::Channel::TiktokShop'
   has_many :instagram_channels, dependent: :destroy_async, class_name: '::Channel::Instagram'
   has_many :hooks, dependent: :destroy_async, class_name: 'Integrations::Hook'
   has_many :inboxes, dependent: :destroy_async

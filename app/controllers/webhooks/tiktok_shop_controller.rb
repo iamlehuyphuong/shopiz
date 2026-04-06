@@ -1,4 +1,4 @@
-class Webhooks::TiktokController < ActionController::API
+class Webhooks::TiktokShopController < ActionController::API
   def process_payload
     body = request.raw_post
 
@@ -10,7 +10,7 @@ class Webhooks::TiktokController < ActionController::API
     return render plain: "Invalid JSON", status: :bad_request unless payload
 
     Rails.logger.info "Verified TikTok webhook event: #{payload}"
-    Webhooks::TiktokMessagesJob.perform_later(payload)
+    Webhooks::TiktokShopMessagesJob.perform_later(payload)
 
     head :ok
   end

@@ -14,7 +14,7 @@ export const INBOX_TYPES = {
   ZALO_PERSONAL: 'Channel::ZaloPersonal',
   INSTAGRAM: 'Channel::Instagram',
   VOICE: 'Channel::Voice',
-  TIKTOK_SHOP: 'Channel::Tiktok',
+  TIKTOK_SHOP: 'Channel::TiktokShop',
 };
 
 const INBOX_ICON_MAP_FILL = {
@@ -85,7 +85,7 @@ export const getReadableInboxByType = (type, phoneNumber) => {
       return 'zalopersonal';
 
     case INBOX_TYPES.TIKTOK_SHOP:
-      return 'tiktok';
+      return 'tiktok_shop';
 
     case INBOX_TYPES.TWITTER:
       return 'twitter';
@@ -111,8 +111,8 @@ export const getReadableInboxByType = (type, phoneNumber) => {
     case INBOX_TYPES.LINE:
       return 'line';
 
-    case INBOX_TYPES.VOICE:
-      return 'voice';
+    // case INBOX_TYPES.VOICE:
+    //   return 'voice';
 
     default:
       return 'chat';
@@ -156,8 +156,8 @@ export const getInboxClassByType = (type, phoneNumber) => {
     case INBOX_TYPES.INSTAGRAM:
       return 'brand-instagram';
 
-    case INBOX_TYPES.VOICE:
-      return 'phone';
+    // case INBOX_TYPES.VOICE:
+    //   return 'phone';
 
     case INBOX_TYPES.ZALO_OA:
       return 'brand-zalo-oa';
@@ -166,7 +166,7 @@ export const getInboxClassByType = (type, phoneNumber) => {
       return 'brand-zalo';
 
     case INBOX_TYPES.TIKTOK_SHOP:
-      return 'brand-tiktok';
+      return 'brand-tiktok-shop';
 
     default:
       return 'chat';

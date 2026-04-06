@@ -2,7 +2,6 @@
 import { ref, computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
-import { useMapGetter } from 'dashboard/composables/store';
 
 import { useAccount } from 'dashboard/composables/useAccount';
 
@@ -12,12 +11,9 @@ const { t } = useI18n();
 const router = useRouter();
 const { accountId, currentAccount } = useAccount();
 
-const globalConfig = useMapGetter('globalConfig/get');
-
 const enabledFeatures = ref({});
 
 const channelList = computed(() => {
-  const { apiChannelName } = globalConfig.value;
   return [
     {
       key: 'website',
@@ -86,7 +82,7 @@ const channelList = computed(() => {
       icon: 'i-ri-zalo-fill',
     },
     {
-      key: 'tiktok',
+      key: 'tiktok_shop',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK_SHOP.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK_SHOP.DESCRIPTION'),
       icon: 'i-ri-tiktok-fill',

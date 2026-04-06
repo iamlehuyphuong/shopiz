@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_04_05_050341) do
+ActiveRecord::Schema[7.1].define(version: 2026_04_06_014621) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -559,7 +559,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_05_050341) do
     t.index ["bot_token"], name: "index_channel_telegram_on_bot_token", unique: true
   end
 
-  create_table "channel_tiktok", force: :cascade do |t|
+  create_table "channel_tiktok_shop", force: :cascade do |t|
     t.string "access_token", null: false
     t.string "refresh_token", null: false
     t.integer "expires_in", null: false
@@ -568,8 +568,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_05_050341) do
     t.string "shop_cipher", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["shop_cipher"], name: "index_channel_tiktok_on_shop_cipher", unique: true
-    t.index ["shop_id"], name: "index_channel_tiktok_on_shop_id", unique: true
+    t.index ["shop_cipher"], name: "index_channel_tiktok_shop_on_shop_cipher", unique: true
+    t.index ["shop_id"], name: "index_channel_tiktok_shop_on_shop_id", unique: true
   end
 
   create_table "channel_twilio_sms", force: :cascade do |t|

@@ -275,7 +275,7 @@ export default {
         this.isAnInstagramChannel ||
         this.isAZaloOaChannel ||
         this.isAZaloPersonalChannel ||
-        this.isATiktokChannel
+        this.isATiktokShopChannel
       );
     },
     replyButtonLabel() {

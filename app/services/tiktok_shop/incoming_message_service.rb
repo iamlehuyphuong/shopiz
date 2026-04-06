@@ -1,4 +1,4 @@
-class Tiktok::IncomingMessageService
+class TiktokShop::IncomingMessageService
   pattr_initialize [:inbox!, :params!]
 
   def perform
@@ -36,7 +36,7 @@ class Tiktok::IncomingMessageService
   def update_contact_info
     response = load_profile
 
-    if response['code'] == Channel::Tiktok::INVALID_ACCESS_TOKEN_CODE
+    if response['code'] == Channel::TiktokShop::INVALID_ACCESS_TOKEN_CODE
       channel.refresh_access_token
       response = load_profile
     end

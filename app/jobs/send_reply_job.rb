@@ -14,7 +14,7 @@ class SendReplyJob < ApplicationJob
     'Channel::Api' => ::Messages::SendEmailNotificationService,
     'Channel::ZaloOa' => ::Zalo::SendOnZaloService,
     'Channel::ZaloPersonal' => ::ZaloPersonal::SendOnZaloService,
-    'Channel::Tiktok' => ::Tiktok::SendOnTiktokService
+    'Channel::TiktokShop' => ::TiktokShop::SendOnTiktokService
   }.freeze
 
   def perform(message_id)

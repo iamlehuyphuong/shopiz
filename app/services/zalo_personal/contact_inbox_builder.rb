@@ -38,6 +38,6 @@ class ZaloPersonal::ContactInboxBuilder
   end
 
   def info_url
-    "#{GlobalConfigService.load('ZALO_OA_API_URL', nil)}/api/findUser"
+    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/findUser"
   end
 end

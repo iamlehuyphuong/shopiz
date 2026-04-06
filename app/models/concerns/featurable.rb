@@ -102,7 +102,7 @@ module Featurable
     whwa: :channel_whatsapp,
     wf: :workflow,
     sv: :survey,
-    chtk: :channel_tiktok
+    chtks: :channel_tiktok_shop
   }.freeze
 
   FEATURE_LIST = YAML.safe_load(Rails.root.join('config/features.yml').read).freeze

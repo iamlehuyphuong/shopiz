@@ -73,7 +73,7 @@
         "DESC_2": "to connect to the"
       },
       "TIKTOK_SHOP": {
-        "HELP": "PS: By signing in, we only get access to your Tiktok messages. Your private messages can never be accessed by Salesman.",
+        "HELP": "PS: By signing in, we only get access to your TikTok Shop messages. Your private messages can never be accessed by Shopiz.",
         "INBOX_NAME": "Inbox Name",
         "ADD_NAME": "Add a name for your inbox",
         "PICK_NAME": "Pick A Name Your Inbox",
@@ -546,8 +546,8 @@
             "DESCRIPTION": "Connect your Zalo Personal account"
           },
           "TIKTOK_SHOP": {
-            "TITLE": "Tiktok Shop",
-            "DESCRIPTION": "Connect your Tiktok Shop"
+            "TITLE": "TikTok Shop",
+            "DESCRIPTION": "Connect your TikTok Shop"
           }
         }
       },
@@ -592,8 +592,8 @@
       "ERROR_FB_UNAUTHORIZED_HELP": "Please ensure you have access to the Facebook page with full control. You can read more about Facebook roles <a href=\" https://www.facebook.com/help/187316341316631\">here</a>.",
       "CREATING_CHANNEL": "Creating your Inbox...",
       "TITLE": "Configure Inbox Details",
-      "LOADING_TIKTOK_SHOP": "Authenticating you with Tiktok...",
-      "DESC_TIKTOK_SHOP": "TIKTOK_SHOP",
+      "LOADING_TIKTOK_SHOP": "Authenticating you with TikTok Shop...",
+      "DESC_TIKTOK_SHOP": "Connect your TikTok Shop account to Shopiz to manage your conversations.",
       "DESC": ""
     },
     "AGENTS": {
@@ -1111,7 +1111,7 @@
       "INSTAGRAM": "Instagram",
       "ZALO_OA": "Zalo OA",
       "ZALO_PERSONAL": "Zalo Personal",
-      "TIKTOK_SHOP": "Tiktok Shop"
+      "TIKTOK_SHOP": "TikTok Shop"
     }
   }
 }
