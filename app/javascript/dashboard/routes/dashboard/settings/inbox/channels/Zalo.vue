@@ -4,7 +4,6 @@ import { useVuelidate } from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import LoadingState from 'dashboard/components/widgets/LoadingState.vue';
 import { useAccount } from 'dashboard/composables/useAccount';
-import { mapGetters } from 'vuex';
 import axios from 'axios';
 import PageHeader from '../../SettingsSubPageHeader.vue';
 import router from '../../../../index';
@@ -47,10 +46,6 @@ export default {
     showLoader() {
       return this.oa_id === '' || this.isCreating;
     },
-    ...mapGetters({
-      // currentUser: 'getCurrentUser',
-      globalConfig: 'globalConfig/get',
-    }),
   },
   created() {
     if (this.$route.query.code) this.getAccessToken();
@@ -157,14 +152,19 @@ export default {
 
 <template>
   <div class="wizard-body w-[90%] flex-shrink-0 flex-grow-0 max-w-[90%] p-6">
-    <div v-if="!hasLoginStarted" class="flex flex-col items-center justify-center pt-36">
+    <div
+      v-if="!hasLoginStarted"
+      class="flex flex-col items-center justify-center pt-36"
+    >
       <a href="#" @click="startLogin()">
         <img
-          :src="`/assets/images/dashboard/channels/zalo_login.svg`"
+          src="~dashboard/assets/images/channels/zalo_login.jpg"
           alt="Zalo-logo"
         />
       </a>
-      <p class="pt-6 mb-0 text-center">{{ $t('INBOX_MGMT.ADD.ZALO_OA.HELP') }}</p>
+      <p class="pt-6 mb-0 text-center">
+        {{ $t('INBOX_MGMT.ADD.ZALO_OA.HELP') }}
+      </p>
       <p class="text-center">{{ $t('INBOX_MGMT.ADD.ZALO_OA.HELP_2') }}</p>
     </div>
     <div v-else>

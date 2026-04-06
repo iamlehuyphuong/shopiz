@@ -98,7 +98,7 @@ export default {
     >
       <a href="#" @click="startLogin()">
         <img
-          src="/assets/images/dashboard/channels/tiktok_shop_login.png"
+          src="~dashboard/assets/images/channels/tiktok_shop_login.png"
           alt="TikTok-logo"
         />
       </a>
