@@ -84,10 +84,6 @@
   display_name: Campaigns
   enabled: false
   help_url: https://help.shopiz.pro/hc/campaigns
-- name: sales
-  display_name: Sales
-  enabled: false
-  help_url: https://help.shopiz.pro/hc/sales
 - name: reports
   display_name: Reports
   enabled: true

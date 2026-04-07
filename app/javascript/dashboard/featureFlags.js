@@ -8,7 +8,6 @@ export const FEATURE_FLAGS = {
   CAMPAIGNS: 'campaigns',
   WHATSAPP_CAMPAIGNS: 'whatsapp_campaign',
   ZALO_PERSONAL_CAMPAIGNS: 'zalo_personal_campaign',
-  SALES: 'sales',
   CANNED_RESPONSES: 'canned_responses',
   CRM: 'crm',
   CUSTOM_ATTRIBUTES: 'custom_attributes',
