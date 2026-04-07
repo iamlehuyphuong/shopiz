@@ -639,7 +639,8 @@
     "DOCS": "Xem tài liệu",
     "SECURITY": "Bảo mật",
     "CAPTAIN_AI": "ShopizAI",
-    "CONVERSATION_WORKFLOW": "Quy trình hội thoại"
+    "CONVERSATION_WORKFLOW": "Quy trình hội thoại",
+    "WORKFLOWS": "Workflows"
   },
   "CAPTAIN_SETTINGS": {
     "TITLE": "Cài đặt ShopizAI",

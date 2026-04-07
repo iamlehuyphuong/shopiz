@@ -615,6 +615,12 @@ const menuItems = computed(() => {
           to: accountScopedRoute('conversation_workflow_index'),
         },
         {
+          name: 'Workflows',
+          label: t('SIDEBAR.WORKFLOWS'),
+          icon: 'i-lucide-split',
+          to: accountScopedRoute('workflow_list'),
+        },
+        {
           name: 'Settings Security',
           label: t('SIDEBAR.SECURITY'),
           icon: 'i-lucide-shield',

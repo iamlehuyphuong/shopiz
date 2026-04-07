@@ -639,7 +639,8 @@
     "DOCS": "Read docs",
     "SECURITY": "Security",
     "CAPTAIN_AI": "ShopizAI",
-    "CONVERSATION_WORKFLOW": "Conversation Workflow"
+    "CONVERSATION_WORKFLOW": "Conversation Workflow",
+    "WORKFLOWS": "Workflows"
   },
   "CAPTAIN_SETTINGS": {
     "TITLE": "ShopizAI Settings",
