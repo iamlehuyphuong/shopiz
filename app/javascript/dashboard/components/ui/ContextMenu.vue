@@ -72,9 +72,12 @@ onMounted(() => {
   nextTick(() => menuRef.value?.focus());
 });
 
-const handleClose = () => {
-  isLocked.value = false;
-  emit('close');
+const handleFocusOut = event => {
+  // Only close if focus moved outside the menu container entirely
+  if (menuRef.value && !menuRef.value.contains(event.relatedTarget)) {
+    isLocked.value = false;
+    emit('close');
+  }
 };
 
 onUnmounted(() => {
@@ -86,10 +89,11 @@ onUnmounted(() => {
   <TeleportWithDirection to="body">
     <div
       ref="menuRef"
+      v-bind="$attrs"
       class="fixed outline-none z-[9999] cursor-pointer"
       :style="position"
-      tabindex="0"
-      @blur="handleClose"
+      tabindex="-1"
+      @focusout="handleFocusOut"
     >
       <slot />
     </div>
