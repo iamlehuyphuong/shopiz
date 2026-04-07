@@ -68,8 +68,8 @@ const props = defineProps({
   },
   disableBtnCreate: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
 const emit = defineEmits(['click', 'close', 'update:currentPage']);
@@ -199,6 +199,7 @@ const handleCreateAssistant = () => {
                   icon="i-lucide-plus"
                   size="sm"
                   class="group-hover/captain-button:brightness-110"
+                  :disabled="disableBtnCreate"
                   @click="handleButtonClick"
                 />
               </Policy>
@@ -218,7 +219,7 @@ const handleCreateAssistant = () => {
         >
           <Spinner />
         </div>
-        <div v-else-if="showPaywall">
+        <div v-else-if="showPaywall && $slots.paywall">
           <slot name="paywall" />
         </div>
         <div v-else-if="isEmpty">

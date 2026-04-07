@@ -108,6 +108,10 @@ export function usePolicy() {
     const flag = unref(featureFlag);
     if (!flag) return false;
 
+    if (!isFeatureFlagEnabled(flag)) {
+      return true;
+    }
+
     if (isACustomBrandedInstance.value) {
       // custom branded instances never show paywall
       return false;

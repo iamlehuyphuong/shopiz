@@ -13,10 +13,9 @@ const props = defineProps({
   hasActiveChild: { type: Boolean, default: false },
   getterKeys: { type: Object, default: () => ({}) },
   isLocked: { type: Boolean, default: false },
-  featureFlag: { type: String, default: '' },
 });
 
-const emit = defineEmits(['toggle', 'toggleLocked']);
+const emit = defineEmits(['toggle']);
 
 const showBadge = useMapGetter(props.getterKeys.badge);
 const dynamicCount = useMapGetter(props.getterKeys.count);
@@ -27,11 +26,11 @@ const count = computed(() =>
 
 <template>
   <component
-    :is="to && !isLocked ? 'router-link' : 'div'"
+    :is="to ? 'router-link' : 'div'"
     class="flex items-center gap-2 px-1.5 py-1 rounded-lg h-8 min-w-0 transition-opacity duration-200"
     role="button"
     draggable="false"
-    :to="to && !isLocked ? to : undefined"
+    :to="to ? to : undefined"
     :title="label"
     :class="{
       'text-n-slate-12 bg-n-alpha-2 font-medium': isActive && !hasActiveChild,
@@ -39,18 +38,13 @@ const count = computed(() =>
       'text-n-slate-11 hover:bg-n-alpha-2': !isActive && !hasActiveChild,
       'opacity-50 pointer-events-auto cursor-pointer': isLocked,
     }"
-    @click.stop="isLocked ? emit('toggleLocked', featureFlag) : emit('toggle')"
+    @click.stop="isLocked ? undefined : emit('toggle')"
   >
     <div v-if="icon" class="relative flex items-center gap-2">
       <Icon v-if="icon" :icon="icon" class="size-4" />
       <span
         v-if="showBadge"
         class="size-2 -top-px ltr:-right-px rtl:-left-px bg-n-brand absolute rounded-full border border-n-solid-2"
-      />
-      <Icon
-        v-if="isLocked"
-        icon="i-lucide-lock-keyhole"
-        class="size-3 absolute -top-1 -right-1 text-n-slate-11 bg-n-background rounded-full p-0.5"
       />
     </div>
     <div class="flex items-center gap-1.5 flex-grow min-w-0 flex-1">
@@ -63,6 +57,11 @@ const count = computed(() =>
       >
         {{ label }}
       </span>
+      <Icon
+        v-if="isLocked"
+        icon="i-lucide-lock-keyhole"
+        class="size-3 text-n-slate-11 shrink-0"
+      />
       <span
         v-if="dynamicCount && !expandable"
         class="rounded-md capitalize text-xs leading-5 font-medium text-center outline outline-1 px-1 flex-shrink-0"

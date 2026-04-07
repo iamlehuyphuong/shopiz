@@ -2,7 +2,6 @@
 import AddSLA from './AddSLA.vue';
 import SettingsLayout from '../SettingsLayout.vue';
 import BaseSettingsHeader from 'dashboard/routes/dashboard/settings/components/BaseSettingsHeader.vue';
-import SLAPaywallEnterprise from './SLAPaywallEnterprise.vue';
 import {
   BaseTable,
   BaseTableRow,
@@ -22,7 +21,6 @@ export default {
     AddSLA,
     SettingsLayout,
     BaseSettingsHeader,
-    SLAPaywallEnterprise,
     BaseTable,
     BaseTableRow,
     BaseTableCell,
@@ -41,8 +39,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      isOnChatwootCloud: 'globalConfig/isOnChatwootCloud',
-      isFeatureEnabledonAccount: 'accounts/isFeatureEnabledonAccount',
       records: 'sla/getSLA',
       currentUser: 'getCurrentUser',
       accountId: 'getCurrentAccountId',
@@ -54,11 +50,8 @@ export default {
     deleteRejectText() {
       return this.$t('SLA.DELETE.CONFIRM.NO');
     },
-    deleteMessage() {
-      return ` ${this.selectedResponse.name}`;
-    },
     isBehindAPaywall() {
-      return !this.isFeatureEnabledonAccount(this.accountId, 'sla');
+      return false;
     },
     isSuperAdmin() {
       return this.currentUser.type === 'SuperAdmin';
@@ -167,14 +160,7 @@ export default {
       </BaseSettingsHeader>
     </template>
     <template #body>
-      <SLAPaywallEnterprise
-        v-if="isBehindAPaywall"
-        :is-super-admin="isSuperAdmin"
-        :is-on-chatwoot-cloud="isOnChatwootCloud"
-        @upgrade="onClickCTA"
-      />
       <BaseTable
-        v-else
         :headers="tableHeaders"
         :items="filteredRecords"
         :no-data-message="

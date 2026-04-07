@@ -13,7 +13,6 @@ import BaseSettingsHeader from '../components/BaseSettingsHeader.vue';
 import SectionLayout from '../account/components/SectionLayout.vue';
 import ModelSelector from './components/ModelSelector.vue';
 import FeatureToggle from './components/FeatureToggle.vue';
-import CaptainPaywall from 'next/captain/pageComponents/Paywall.vue';
 
 const { t } = useI18n();
 const { captainEnabled } = useCaptain();
@@ -135,7 +134,10 @@ onMounted(() => {
       />
     </template>
     <template #body>
-      <div v-if="captainEnabled" class="flex flex-col gap-1">
+      <div
+        v-if="captainEnabled"
+        class="flex flex-col gap-1 text-slate-900 dark:text-slate-100"
+      >
         <!-- Model Configuration Section -->
         <SectionLayout
           :title="t('CAPTAIN_SETTINGS.MODEL_CONFIG.TITLE')"
@@ -173,9 +175,6 @@ onMounted(() => {
             />
           </div>
         </SectionLayout>
-      </div>
-      <div v-else>
-        <CaptainPaywall />
       </div>
     </template>
   </SettingsLayout>

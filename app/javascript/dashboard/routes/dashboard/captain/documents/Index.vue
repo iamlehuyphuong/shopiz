@@ -8,7 +8,6 @@ import { useAccount } from 'dashboard/composables/useAccount';
 import DeleteDialog from 'dashboard/components-next/captain/pageComponents/DeleteDialog.vue';
 import DocumentCard from 'dashboard/components-next/captain/assistant/DocumentCard.vue';
 import PageLayout from 'dashboard/components-next/captain/PageLayout.vue';
-import CaptainPaywall from 'dashboard/components-next/captain/pageComponents/Paywall.vue';
 import RelatedResponses from 'dashboard/components-next/captain/pageComponents/document/RelatedResponses.vue';
 import CreateDocumentDialog from 'dashboard/components-next/captain/pageComponents/document/CreateDocumentDialog.vue';
 import DocumentPageEmptyState from 'dashboard/components-next/captain/pageComponents/emptyStates/DocumentPageEmptyState.vue';
@@ -59,7 +58,7 @@ const handleCreateDialogClose = () => {
 
 const isOverDocument = computed(() => {
   return limitBannerRef.value?.showBanner;
-})
+});
 
 const handleAction = ({ action, id }) => {
   selectedDocument.value = documents.value.find(
@@ -129,12 +128,8 @@ onMounted(() => {
       <DocumentPageEmptyState @click="handleCreateDocument" />
     </template>
 
-    <template #paywall>
-      <CaptainPaywall />
-    </template>
-
     <template #body>
-      <LimitBanner class="mb-5" ref="limitBannerRef" />
+      <LimitBanner ref="limitBannerRef" class="mb-5" />
 
       <div class="flex flex-col gap-4">
         <DocumentCard

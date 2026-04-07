@@ -26,6 +26,9 @@ import CopilotContainer from 'dashboard/components/copilot/CopilotContainer.vue'
 
 import MobileSidebarLauncher from 'dashboard/components-next/sidebar/MobileSidebarLauncher.vue';
 import { useCallsStore } from 'dashboard/stores/calls';
+import { useRoute } from 'vue-router';
+import { usePolicy } from 'dashboard/composables/usePolicy';
+import FeatureLockOverlay from 'dashboard/routes/dashboard/upgrade/FeatureLockOverlay.vue';
 
 export default {
   components: {
@@ -39,6 +42,7 @@ export default {
     CopilotContainer,
     FloatingCallWidget,
     MobileSidebarLauncher,
+    FeatureLockOverlay,
   },
   setup() {
     const upgradePageRef = ref(null);
@@ -55,6 +59,14 @@ export default {
       windowWidth,
       hasActiveCall: computed(() => callsStore.hasActiveCall),
       hasIncomingCall: computed(() => callsStore.hasIncomingCall),
+      route: useRoute(),
+      isFeatureLocked: computed(() => {
+        const route = useRoute();
+        const { shouldShowPaywall } = usePolicy();
+        const featureFlag = route.meta?.featureFlag;
+        if (!featureFlag) return false;
+        return shouldShowPaywall(featureFlag);
+      }),
     };
   },
   data() {
@@ -161,7 +173,16 @@ export default {
           />
         </UpgradePage>
         <template v-if="!showUpgradePage">
-          <router-view />
+          <div
+            class="relative flex-1 overflow-hidden h-full flex flex-col min-w-0"
+          >
+            <router-view />
+            <FeatureLockOverlay
+              v-if="isFeatureLocked"
+              :feature-flag="route.meta?.featureFlag"
+              :feature-name="route.meta?.featureName || route.meta?.featureFlag"
+            />
+          </div>
           <CommandBar />
           <CopilotLauncher />
           <MobileSidebarLauncher

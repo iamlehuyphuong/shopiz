@@ -14,7 +14,6 @@ import BulkSelectBar from 'dashboard/components-next/captain/assistant/BulkSelec
 import DeleteDialog from 'dashboard/components-next/captain/pageComponents/DeleteDialog.vue';
 import BulkDeleteDialog from 'dashboard/components-next/captain/pageComponents/BulkDeleteDialog.vue';
 import PageLayout from 'dashboard/components-next/captain/PageLayout.vue';
-import CaptainPaywall from 'dashboard/components-next/captain/pageComponents/Paywall.vue';
 import ResponseCard from 'dashboard/components-next/captain/assistant/ResponseCard.vue';
 import CreateResponseDialog from 'dashboard/components-next/captain/pageComponents/response/CreateResponseDialog.vue';
 import ResponsePageEmptyState from 'dashboard/components-next/captain/pageComponents/emptyStates/ResponsePageEmptyState.vue';
@@ -316,10 +315,6 @@ onMounted(() => {
         :has-active-filters="hasActiveFilters"
         @clear-filters="clearFilters"
       />
-    </template>
-
-    <template #paywall>
-      <CaptainPaywall />
     </template>
 
     <template #body>

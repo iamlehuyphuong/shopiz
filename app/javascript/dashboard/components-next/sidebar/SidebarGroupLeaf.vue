@@ -9,10 +9,7 @@ const props = defineProps({
   active: { type: Boolean, default: false },
   component: { type: Function, default: null },
   isLocked: { type: Boolean, default: false },
-  featureFlag: { type: String, default: '' },
 });
-
-const emit = defineEmits(['toggleLocked']);
 
 const shouldRenderComponent = computed(() => {
   return typeof props.component === 'function' || isVNode(props.component);
@@ -26,19 +23,13 @@ const shouldRenderComponent = computed(() => {
     :class="{ 'opacity-50': isLocked }"
   >
     <component
-      :is="to && !isLocked ? 'router-link' : 'div'"
-      :to="to && !isLocked ? to : undefined"
+      :is="to ? 'router-link' : 'div'"
+      :to="to ? to : undefined"
       :title="label"
       class="flex h-8 items-center gap-2 px-2 py-1 rounded-lg w-full hover:bg-gradient-to-r from-transparent via-n-slate-3/70 to-n-slate-3/70 group relative"
       :class="{
         'text-n-slate-12 bg-n-alpha-2 active': active,
-        'cursor-pointer': isLocked,
       }"
-      @click="
-        isLocked
-          ? emit('toggleLocked', featureFlag || to?.featureFlag)
-          : undefined
-      "
     >
       <component
         :is="component"
@@ -52,12 +43,12 @@ const shouldRenderComponent = computed(() => {
           <Icon :icon="icon" class="size-4 inline-block" />
         </span>
         <div class="flex-1 truncate min-w-0 text-sm">{{ label }}</div>
+        <Icon
+          v-if="isLocked"
+          icon="i-lucide-lock-keyhole"
+          class="size-3 text-n-slate-11 shrink-0"
+        />
       </template>
-      <Icon
-        v-if="isLocked"
-        icon="i-lucide-lock-keyhole"
-        class="size-3 absolute top-1 right-1 text-n-slate-11 bg-n-background rounded-full p-0.5"
-      />
     </component>
   </li>
 </template>
