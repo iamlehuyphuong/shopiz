@@ -438,16 +438,16 @@
           "ERROR": "Bắt buộc"
         },
         "LINE_CHANNEL_ID": {
-          "LABEL": "LINE Channel ID",
-          "PLACEHOLDER": "LINE Channel ID"
+          "LABEL": "ID Kênh LINE",
+          "PLACEHOLDER": "Nhập ID Kênh LINE"
         },
         "LINE_CHANNEL_SECRET": {
-          "LABEL": "LINE Channel Secret",
-          "PLACEHOLDER": "LINE Channel Secret"
+          "LABEL": "Mã bảo mật Kênh LINE",
+          "PLACEHOLDER": "Nhập mã bảo mật Kênh LINE"
         },
         "LINE_CHANNEL_TOKEN": {
-          "LABEL": "LINE Channel Token",
-          "PLACEHOLDER": "LINE Channel Token"
+          "LABEL": "Mã thông báo Kênh LINE",
+          "PLACEHOLDER": "Nhập mã thông báo Kênh LINE"
         },
         "SUBMIT_BUTTON": "Tạo kênh LINE",
         "API": {
@@ -898,53 +898,6 @@
       "DELETE_SUCCESS": "Đã xóa chính sách phân công thành công",
       "DELETE_ERROR": "Failed to remove assignment policy"
     },
-    "ASSIGNMENT": {
-      "TITLE": "Phân công cuộc trò chuyện",
-      "DESCRIPTION": "Automatically assign incoming conversations to available agents based on assignment policies",
-      "ENABLE_AUTO_ASSIGNMENT": "Enable automatic conversation assignment",
-      "DEFAULT_RULES_TITLE": "Default assignment rules",
-      "DEFAULT_RULES_DESCRIPTION": "Using the default assignment behavior for all conversations",
-      "DEFAULT_RULE_1": "Earliest created conversations first",
-      "DEFAULT_RULE_2": "Round robin distribution",
-      "CUSTOMIZE_WITH_POLICY": "Customize with assignment policy",
-      "USING_POLICY": "Using custom assignment policy for this inbox",
-      "CUSTOMIZE_POLICY": "Customize with assignment policy",
-      "DELETE_POLICY": "Delete policy",
-      "POLICY_LABEL": "Assignment policy",
-      "ASSIGNMENT_ORDER_LABEL": "Assignment Order",
-      "ASSIGNMENT_METHOD_LABEL": "Assignment Method",
-      "POLICY_STATUS": {
-        "ACTIVE": "Có hiệu lực",
-        "INACTIVE": "Inactive"
-      },
-      "PRIORITY": {
-        "EARLIEST_CREATED": "Earliest created",
-        "LONGEST_WAITING": "Longest waiting"
-      },
-      "METHOD": {
-        "ROUND_ROBIN": "Round robin",
-        "BALANCED": "Balanced assignment"
-      },
-      "UPGRADE_PROMPT": "Custom assignment policies are available on the Business plan",
-      "UPGRADE_TO_BUSINESS": "Upgrade to Business",
-      "DEFAULT_POLICY_LINKED": "Default policy linked",
-      "DEFAULT_POLICY_DESCRIPTION": "Link a custom assignment policy to customize how conversations are assigned to agents in this inbox.",
-      "LINK_EXISTING_POLICY": "Link existing policy",
-      "CREATE_NEW_POLICY": "Create new policy",
-      "NO_POLICIES": "No assignment policies found",
-      "VIEW_ALL_POLICIES": "View all policies",
-      "CURRENT_BEHAVIOR": "Currently using default assignment behavior:",
-      "LINK_SUCCESS": "Assignment policy linked successfully",
-      "LINK_ERROR": "Failed to link assignment policy"
-    },
-    "ASSIGNMENT_POLICY": {
-      "DELETE_CONFIRM_TITLE": "Delete assignment policy?",
-      "DELETE_CONFIRM_MESSAGE": "Are you sure you want to remove this assignment policy from this inbox? The inbox will revert to default assignment rules.",
-      "CANCEL": "Huỷ",
-      "CONFIRM_DELETE": "Xoá",
-      "DELETE_SUCCESS": "Đã xóa chính sách phân công thành công",
-      "DELETE_ERROR": "Failed to remove assignment policy"
-    },
     "FACEBOOK_REAUTHORIZE": {
       "TITLE": "Kết nối lại",
       "SUBTITLE": "Kết nối Facebook đã hết hạn, vui lòng kết nối lại để tiếp tục sử dụng",
@@ -986,49 +939,6 @@
       "MESSAGE": {
         "LABEL": "Tin nhắn",
         "PLACEHOLDER": "Nhập nội dung hiển thị kèm khảo sát"
-      },
-      "BUTTON_TEXT": {
-        "LABEL": "Button text",
-        "PLACEHOLDER": "Please rate us"
-      },
-      "LANGUAGE": {
-        "LABEL": "Ngôn ngữ",
-        "PLACEHOLDER": "Select template language"
-      },
-      "MESSAGE_PREVIEW": {
-        "LABEL": "Message preview",
-        "TOOLTIP": "This may vary slightly when rendered on WhatsApp's platform."
-      },
-      "TEMPLATE_STATUS": {
-        "APPROVED": "Approved by WhatsApp",
-        "PENDING": "Pending WhatsApp approval",
-        "REJECTED": "Meta rejected the template",
-        "DEFAULT": "Needs WhatsApp approval",
-        "NOT_FOUND": "The template does not exist in the Meta platform."
-      },
-      "TEMPLATE_CREATION": {
-        "SUCCESS_MESSAGE": "WhatsApp template created successfully and sent for approval",
-        "ERROR_MESSAGE": "Failed to create WhatsApp template"
-      },
-      "TEMPLATE_UPDATE_DIALOG": {
-        "TITLE": "Edit survey details",
-        "DESCRIPTION": "We will delete the previous template and make a new one which will be sent again for WhatsApp approval",
-        "CONFIRM": "Create new template",
-        "CANCEL": "Trở về"
-      },
-      "UTILITY_ANALYZER": {
-        "ACTION": "Check utility fit",
-        "HELPER_NOTE": "Check this message before submission to improve Utility fit. The system creates a dedicated CSAT template with buttons for reporting and submits it as Utility; Meta may still reclassify it as Marketing based on content.",
-        "RESULT_LABEL": "Meta category prediction",
-        "GUIDANCE_NOTE": "This is a guidance check, not a guarantee of Meta approval.",
-        "SUGGESTION_LABEL": "Suggested utility-safe rewrite",
-        "APPLY": "Use this rewrite",
-        "ERROR_MESSAGE": "Couldn't analyze the message. Please try again.",
-        "CLASSIFICATION": {
-          "LIKELY_UTILITY": "Likely Utility",
-          "LIKELY_MARKETING": "Likely Marketing",
-          "UNCLEAR": "Needs clarification"
-        }
       },
       "BUTTON_TEXT": {
         "LABEL": "Button text",

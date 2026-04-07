@@ -50,8 +50,8 @@ as well as a link to its edit page.
                       <%= render_field attribute, page: page %>
                     </div>
                   </div>
-                  <div class="text-sm font-semibold truncate text-black" title="<%= page.resource.class.human_attribute_name(attribute.name) %>">
-                    <%= t(
+                  <div class="text-sm font-semibold truncate text-black" title="<%= SuperAdmin::AccountFeaturesHelper.feature_display_names[attribute.data.keys.first.to_s] || page.resource.class.human_attribute_name(attribute.name) %>">
+                    <%= SuperAdmin::AccountFeaturesHelper.feature_display_names[attribute.data.keys.first.to_s] || t(
                       "helpers.label.#{resource_name}.#{attribute.name}",
                       default: page.resource.class.human_attribute_name(attribute.name),
                     ) %>

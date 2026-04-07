@@ -63,7 +63,7 @@ module SuperAdmin::AccountFeaturesHelper
   end
 
   def self.sort_and_transform_features(features, display_names)
-    features.sort_by { |key, _| display_names[key] || key }
+    features.sort_by { |key, enabled| [enabled ? 0 : 1, display_names[key] || key] }
             .to_h
             .transform_keys { |key| [key, display_names[key]] }
   end
@@ -112,6 +112,17 @@ module SuperAdmin::AccountFeaturesHelper
       categorized['Chưa phân loại (Uncategorized)'] << attr unless category_found
     end
 
+    # Sort features within each category: enabled (data value is true) first, then by display name
+    display_names = feature_display_names
+    categorized.each do |category, category_attributes|
+      categorized[category] = category_attributes.sort_by do |attr|
+        feature_name = attr.data.keys.first.to_s
+        is_enabled = attr.data.values.first
+        display_name = display_names[feature_name] || feature_name
+        [is_enabled ? 0 : 1, display_name]
+      end
+    end
+
     categorized.reject { |_, v| v.empty? }
   end
 
@@ -131,6 +142,15 @@ module SuperAdmin::AccountFeaturesHelper
       end
 
       categorized['Chưa phân loại (Uncategorized)'] << [feature_name.to_s, enabled] unless category_found
+    end
+
+    # Sort features within each category: enabled first, then by display name
+    display_names = feature_display_names
+    categorized.each do |category, features|
+      categorized[category] = features.sort_by do |feature_name, enabled|
+        display_name = display_names[feature_name] || feature_name
+        [enabled ? 0 : 1, display_name]
+      end
     end
 
     categorized.reject { |_, v| v.empty? }

@@ -10,7 +10,7 @@
           <div class="flex-grow border-t border-n-weak ml-4"></div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          <% features.sort_by { |name, _| field.resource.class.human_attribute_name(name) }.each do |feature_name, enabled| %>
+          <% features.each do |feature_name, enabled| %>
             <div class="flex items-start p-3 border border-n-weak rounded-lg bg-white hover:border-n-brand transition-all duration-200 group relative">
               <div class="flex items-center h-5">
                 <%= check_box_tag "enabled_features[#{feature_name}]", "1", enabled, 
@@ -18,7 +18,7 @@
                     class: "h-4 w-4 rounded border-n-strong text-n-brand focus:ring-n-brand cursor-pointer" %>
               </div>
               <label for="enabled_features_<%= feature_name %>" class="ml-3 text-xs flex flex-col cursor-pointer select-none">
-                <span class="font-bold text-black group-hover:text-n-brand transition-colors"><%= field.resource.class.human_attribute_name(feature_name) %></span>
+                <span class="font-bold text-black group-hover:text-n-brand transition-colors"><%= SuperAdmin::AccountFeaturesHelper.feature_display_names[feature_name] || field.resource.class.human_attribute_name(feature_name) %></span>
                 <span class="mt-1 text-[10px] font-mono text-n-muted uppercase tracking-tighter"><%= feature_name %></span>
               </label>
             </div>
