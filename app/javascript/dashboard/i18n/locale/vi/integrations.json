@@ -22,6 +22,13 @@
     "LOADING": "Đang lấy thông tin tích hợp",
     "SEARCH_PLACEHOLDER": "Tìm kiếm tích hợp...",
     "NO_RESULTS": "Không tìm thấy tích hợp nào khớp với tìm kiếm của bạn",
+    "SECTION": {
+      "WORKSPACE_SYNC": "Đồng bộ không gian làm việc",
+      "SHOP_SALES": "Cửa hàng & Bán hàng",
+      "AI_AUTOMATION": "AI & Tự động hóa",
+      "CUSTOM_EXTENSIONS": "Tiện ích mở rộng",
+      "MORE_INTEGRATIONS": "Tích hợp khác"
+    },
     "CAPTAIN": {
       "DISABLED": "Trợ lý AI không được kích hoạt trên tài khoản của bạn.",
       "CLICK_HERE_TO_CONFIGURE": "Nhấp vào đây để cấu hình",

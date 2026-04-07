@@ -155,7 +155,7 @@
   chatwoot_internal: false
 - name: shopify_integration
   display_name: Shopify Integration
-  enabled: false
+  enabled: true
 - name: search_with_gin
   display_name: Search messages with GIN
   enabled: true
@@ -173,7 +173,7 @@
   help_url: https://help.shopiz.pro/hc/voice
 - name: notion_integration
   display_name: Notion Integration
-  enabled: false
+  enabled: true
 - name: captain_integration_v2
   display_name: Captain V2
   enabled: false

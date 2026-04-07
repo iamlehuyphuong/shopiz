@@ -22,6 +22,13 @@
     "LOADING": "Fetching integrations",
     "SEARCH_PLACEHOLDER": "Search integrations...",
     "NO_RESULTS": "No integrations found matching your search",
+    "SECTION": {
+      "WORKSPACE_SYNC": "Workspace Sync",
+      "SHOP_SALES": "Shop & Sales",
+      "AI_AUTOMATION": "AI & Automation",
+      "CUSTOM_EXTENSIONS": "Custom Extensions",
+      "MORE_INTEGRATIONS": "More Integrations"
+    },
     "CAPTAIN": {
       "DISABLED": "AI Agent is not enabled on your account.",
       "CLICK_HERE_TO_CONFIGURE": "Click here to configure",
