@@ -2,8 +2,8 @@ module SuperAdmin::AccountFeaturesHelper
   FEATURE_CATEGORIES = {
     'Kênh kết nối (Channels)' => %w[
       inbound_emails channel_email channel_facebook channel_twitter channel_website
-      channel_instagram channel_voice channel_zalo channel_zalopersonal channel_telegram
-      channel_api channel_line channel_whatsapp channel_tiktok_shop channel_tiktok
+      channel_instagram channel_zalo channel_zalopersonal channel_telegram
+      channel_line channel_whatsapp channel_tiktok_shop channel_tiktok
     ],
     'Quản lý & CRM (Management & CRM)' => %w[
       agent_management team_management inbox_management crm crm_v2 companies labels

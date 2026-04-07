@@ -170,6 +170,7 @@
   display_name: Voice Channel
   enabled: false
   premium: true
+  deprecated: true
   help_url: https://help.shopiz.pro/hc/voice
 - name: notion_integration
   display_name: Notion Integration
@@ -243,6 +244,7 @@
 - name: channel_api
   display_name: API Channel
   enabled: false
+  deprecated: true
   help_url: https://help.shopiz.pro/hc/api
 - name: deprecated_feature_64
   display_name: Deprecated Feature 64

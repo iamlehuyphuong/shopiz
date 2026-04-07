@@ -55,24 +55,12 @@ const channelList = computed(() => {
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.INSTAGRAM.DESCRIPTION'),
       icon: 'i-woot-instagram',
     },
-    // {
-    //   key: 'sms',
-    //   title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.SMS.TITLE'),
-    //   description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.SMS.DESCRIPTION'),
-    //   icon: 'i-woot-sms',
-    // },
     {
       key: 'email',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.EMAIL.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.EMAIL.DESCRIPTION'),
       icon: 'i-woot-mail',
     },
-    // {
-    //   key: 'api',
-    //   title: apiChannelName || t('INBOX_MGMT.ADD.AUTH.CHANNEL.API.TITLE'),
-    //   description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.API.DESCRIPTION'),
-    //   icon: 'i-woot-api',
-    // },
     {
       key: 'telegram',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TELEGRAM.TITLE'),

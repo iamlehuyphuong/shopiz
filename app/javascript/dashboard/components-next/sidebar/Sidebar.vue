@@ -461,22 +461,10 @@ const menuItems = computed(() => {
           to: accountScopedRoute('campaigns_zalo_personal_index'),
         },
         {
-          name: 'SMS',
-          label: t('SIDEBAR.SMS'),
-          icon: 'i-woot-sms',
-          to: accountScopedRoute('campaigns_sms_index'),
-        },
-        {
           name: 'WhatsApp',
           label: t('SIDEBAR.WHATSAPP'),
           icon: 'i-woot-whatsapp',
           to: accountScopedRoute('campaigns_whatsapp_index'),
-        },
-        {
-          name: 'Voice',
-          label: t('SIDEBAR.VOICE'),
-          icon: 'i-woot-voice',
-          to: accountScopedRoute('campaigns_voice_index'),
         },
       ],
     },
