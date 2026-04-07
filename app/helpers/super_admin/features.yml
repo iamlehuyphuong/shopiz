@@ -163,12 +163,6 @@ zalo_personal:
   enabled: true
   icon: 'icon-zalo'
   config_key: 'zalo_personal'
-activepieces:
-  name: 'Active Pieces'
-  description: 'Automation software that is AI-first.'
-  enabled: true
-  icon: 'icon-activepieces'
-  config_key: 'activepieces'
 google:
   name: 'Google'
   description: 'Configuration for setting up Google'

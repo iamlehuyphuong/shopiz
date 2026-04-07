@@ -255,10 +255,6 @@
   display_name: Whatsapp Channel
   enabled: false
   help_url: https://help.shopiz.pro/hc/whatsapp
-- name: workflow
-  display_name: Workflow
-  enabled: false
-  help_url: https://help.shopiz.pro/hc/workflows
 - name: channel_tiktok_shop
   display_name: TikTok Shop Channel
   enabled: false
