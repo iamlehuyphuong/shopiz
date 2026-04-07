@@ -478,12 +478,6 @@ const menuItems = computed(() => {
           icon: 'i-woot-voice',
           to: accountScopedRoute('campaigns_voice_index'),
         },
-        {
-          name: 'Survey',
-          label: t('SIDEBAR.SURVEY'),
-          icon: 'i-lucide-clipboard-check',
-          to: accountScopedRoute('campaigns_survey_index'),
-        },
       ],
     },
     {

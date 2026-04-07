@@ -250,18 +250,6 @@ importers:
       snakecase-keys:
         specifier: ^8.0.1
         version: 8.0.1
-      survey-core:
-        specifier: ^2.2.2
-        version: 2.2.2
-      survey-creator-core:
-        specifier: ^2.2.2
-        version: 2.2.2(survey-core@2.2.2)
-      survey-creator-vue:
-        specifier: ^2.2.2
-        version: 2.2.2(survey-core@2.2.2)(survey-creator-core@2.2.2(survey-core@2.2.2))(survey-vue3-ui@2.2.2(survey-core@2.2.2)(vue@3.5.12(typescript@5.6.2)))(vue@3.5.12(typescript@5.6.2))
-      survey-vue3-ui:
-        specifier: ^2.2.2
-        version: 2.2.2(survey-core@2.2.2)(vue@3.5.12(typescript@5.6.2))
       timezone-phone-codes:
         specifier: ^0.0.2
         version: 0.0.2
@@ -1797,11 +1785,6 @@ packages:
 
   acorn@8.14.0:
     resolution: {integrity: sha512-cl669nCJTZBsL97OF4kUQm5g5hC2uihk0NxY3WENAC0TYdILVkAyHymAntgxGkl7K+t0cXIrH5siy5S4XkFycA==}
-    engines: {node: '>=0.4.0'}
-    hasBin: true
-
-  acorn@8.15.0:
-    resolution: {integrity: sha512-NZyJarBfL7nWwIq+FDL6Zp/yHEhePMNnnJ0y3qfieCrmNvYct8uvtiV41UvlSe6apAfk0fY1FbWx+NwfmpvtTg==}
     engines: {node: '>=0.4.0'}
     hasBin: true
 
@@ -4480,33 +4463,6 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  survey-core@2.2.2:
-    resolution: {integrity: sha512-n6fIoFjsl4JlppLz5uBoqF0wTraNEkO1+OeoQ+iV6y6c/z//iFakF6vdGWISS3REcieNBvgYQb0X07FBsaJdsg==}
-
-  survey-creator-core@2.2.2:
-    resolution: {integrity: sha512-n+IF63Vko4Go6FeO9NxoQYFBVbCjdiCSvK5A/m8LqDuULGFu7X+QV7A4bdO6ipaLNg26cM7xH4tdpvHPoUSTJA==}
-    engines: {node: '>=0.10.0'}
-    peerDependencies:
-      ace-builds: ^1.4.12
-      survey-core: 2.2.2
-    peerDependenciesMeta:
-      ace-builds:
-        optional: true
-
-  survey-creator-vue@2.2.2:
-    resolution: {integrity: sha512-rVU/KbN3HoBYInGiCtk2I/Z3iaaqfeN88+ecFkEE5l5PN3OgUZX17nGG5ydUqtg7AcmbbyFTJhp+Ho5h2b0VkQ==}
-    peerDependencies:
-      survey-core: 2.2.2
-      survey-creator-core: 2.2.2
-      survey-vue3-ui: 2.2.2
-      vue: ^3.2.41
-
-  survey-vue3-ui@2.2.2:
-    resolution: {integrity: sha512-4m9AgY6kYuW2Lg1RgmylLqf6Z/Ug2G7woGMNoYqh/fbouZR6N17oyCl5Mlwbdx55WnmqyfbL3wjlDruk0VfrRw==}
-    peerDependencies:
-      survey-core: 2.2.2
-      vue: ^3.2.41
-
   symbol-tree@3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
 
@@ -6760,9 +6716,6 @@ snapshots:
   acorn@8.12.1: {}
 
   acorn@8.14.0: {}
-
-  acorn@8.15.0:
-    optional: true
 
   acorn@8.16.0: {}
 
@@ -9810,24 +9763,6 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  survey-core@2.2.2: {}
-
-  survey-creator-core@2.2.2(survey-core@2.2.2):
-    dependencies:
-      survey-core: 2.2.2
-
-  survey-creator-vue@2.2.2(survey-core@2.2.2)(survey-creator-core@2.2.2(survey-core@2.2.2))(survey-vue3-ui@2.2.2(survey-core@2.2.2)(vue@3.5.12(typescript@5.6.2)))(vue@3.5.12(typescript@5.6.2)):
-    dependencies:
-      survey-core: 2.2.2
-      survey-creator-core: 2.2.2(survey-core@2.2.2)
-      survey-vue3-ui: 2.2.2(survey-core@2.2.2)(vue@3.5.12(typescript@5.6.2))
-      vue: 3.5.12(typescript@5.6.2)
-
-  survey-vue3-ui@2.2.2(survey-core@2.2.2)(vue@3.5.12(typescript@5.6.2)):
-    dependencies:
-      survey-core: 2.2.2
-      vue: 3.5.12(typescript@5.6.2)
-
   symbol-tree@3.2.4: {}
 
   synckit@0.9.1:
@@ -9878,7 +9813,7 @@ snapshots:
   terser@5.33.0:
     dependencies:
       '@jridgewell/source-map': 0.3.11
-      acorn: 8.15.0
+      acorn: 8.16.0
       commander: 2.20.3
       source-map-support: 0.5.21
     optional: true

@@ -259,10 +259,6 @@
   display_name: Workflow
   enabled: false
   help_url: https://help.shopiz.pro/hc/workflows
-- name: survey
-  display_name: Survey
-  enabled: false
-  help_url: https://help.shopiz.pro/hc/survey
 - name: channel_tiktok_shop
   display_name: TikTok Shop Channel
   enabled: false

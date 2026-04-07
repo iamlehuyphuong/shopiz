@@ -167,16 +167,6 @@ export const getters = {
       item => item.channel_type === INBOX_TYPES.ZALO_PERSONAL
     );
   },
-  getSurveyInboxes($state) {
-    return $state.records.filter(
-      item =>
-        item.channel_type === INBOX_TYPES.SMS ||
-        item.channel_type === INBOX_TYPES.WEB ||
-        item.channel_type === INBOX_TYPES.ZALO_OA ||
-        item.channel_type === INBOX_TYPES.ZALO_PERSONAL ||
-        (item.channel_type === INBOX_TYPES.TWILIO && item.medium === 'sms')
-    );
-  },
   dialogFlowEnabledInboxes($state) {
     return $state.records.filter(
       item => item.channel_type !== INBOX_TYPES.EMAIL
