@@ -86,6 +86,12 @@ const isActive = computed(() => {
   if (key === 'voice') {
     return props.enabledFeatures.channel_voice;
   }
+  if (key === 'twitter') {
+    return (
+      props.enabledFeatures.channel_twitter &&
+      window.shopizConfig?.twitterConsumerKey
+    );
+  }
 
   return [
     'website',
@@ -96,6 +102,7 @@ const isActive = computed(() => {
     'telegram',
     'line',
     'instagram',
+    'twitter',
     'zalo',
     'zalopersonal',
     'tiktok_shop',

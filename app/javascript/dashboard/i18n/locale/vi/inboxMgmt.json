@@ -513,6 +513,10 @@
             "TITLE": "Instagram",
             "DESCRIPTION": "Kết nối tài khoản Instagram"
           },
+          "TWITTER": {
+            "TITLE": "Twitter",
+            "DESCRIPTION": "Kết nối tài khoản Twitter"
+          },
           "TIKTOK": {
             "TITLE": "TikTok",
             "DESCRIPTION": "Kết nối tài khoản TikTok"

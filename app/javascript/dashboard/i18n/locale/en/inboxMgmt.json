@@ -543,6 +543,10 @@
             "TITLE": "Instagram",
             "DESCRIPTION": "Connect your instagram account"
           },
+          "TWITTER": {
+            "TITLE": "Twitter",
+            "DESCRIPTION": "Connect your twitter account"
+          },
           "TIKTOK": {
             "TITLE": "TikTok",
             "DESCRIPTION": "Connect your TikTok account"

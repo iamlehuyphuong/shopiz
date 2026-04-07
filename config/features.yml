@@ -19,8 +19,8 @@
   help_url: https://help.shopiz.pro/hc/fb
 - name: channel_twitter
   display_name: Twitter Channel
-  enabled: false
-  deprecated: true
+  enabled: true
+  deprecated: false
 - name: ip_lookup
   display_name: IP Lookup
   enabled: false
