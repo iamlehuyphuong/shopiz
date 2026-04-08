@@ -28,7 +28,7 @@ const props = defineProps({
   colorScheme: {
     type: String,
     default: 'blue',
-    validator: value => ['blue', 'green'].includes(value),
+    validator: value => ['blue', 'green', 'brand'].includes(value),
   },
 });
 const { t } = useI18n();
@@ -86,6 +86,14 @@ const COLOR_SCHEMES = {
     'bg-n-teal-8 border border-n-teal-9/30',
     'bg-n-teal-10 border border-n-teal-8/30',
     'bg-n-teal-11 border border-n-teal-10/30',
+  ],
+  brand: [
+    'bg-n-amber-3 border border-n-amber-4/30',
+    'bg-n-amber-5 border border-n-amber-6/30',
+    'bg-n-amber-7 border border-n-amber-8/30',
+    'bg-n-amber-8 border border-n-amber-9/30',
+    'bg-n-amber-10 border border-n-amber-8/30',
+    'bg-n-amber-11 border border-n-amber-10/30',
   ],
 };
 
