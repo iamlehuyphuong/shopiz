@@ -3,7 +3,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useMapGetter, useStore } from 'dashboard/composables/store.js';
 import { useCaptain } from 'dashboard/composables/useCaptain';
 import { useAccount } from 'dashboard/composables/useAccount';
-import { format } from 'date-fns';
+import { format, differenceInDays } from 'date-fns';
 import BillingCard from './components/BillingCard.vue';
 import BillingHeader from './components/BillingHeader.vue';
 import DetailItem from './components/DetailItem.vue';
@@ -18,13 +18,7 @@ import ButtonV4 from 'next/button/Button.vue';
 import BillingMeter from './components/BillingMeter.vue';
 
 const { currentAccount } = useAccount();
-const {
-  captainEnabled,
-  captainLimits,
-  responseLimits,
-  fetchLimits,
-  isFetchingLimits,
-} = useCaptain();
+const { fetchLimits } = useCaptain();
 
 const uiFlags = useMapGetter('accounts/getUIFlags');
 const store = useStore();
@@ -36,6 +30,47 @@ const customAttributes = computed(() => {
   return currentAccount.value.custom_attributes || {};
 });
 
+const usageData = computed(() => {
+  return currentAccount.value?.billing?.usage;
+});
+
+const parseUsage = usageString => {
+  if (!usageString) return { consumed: 0, totalCount: 0 };
+  if (typeof usageString === 'number')
+    return { consumed: usageString, totalCount: 0 };
+  const [consumed, totalCount] = usageString.split(' / ').map(v => Number(v));
+  return { consumed: consumed || 0, totalCount: totalCount || 0 };
+};
+
+const registrationLimitations = computed(() => {
+  if (!usageData.value) return [];
+  return [
+    { key: 'agents', label: 'BILLING_SETTINGS.CURRENT_PLAN.AGENT' },
+    { key: 'inboxes', label: 'BILLING_SETTINGS.CURRENT_PLAN.INBOX' },
+    { key: 'contacts', label: 'BILLING_SETTINGS.CURRENT_PLAN.CONTACT' },
+    { key: 'automations', label: 'BILLING_SETTINGS.CURRENT_PLAN.AUTOMATION' },
+  ].filter(item => usageData.value[item.key]);
+});
+
+const aiLimitations = computed(() => {
+  if (!usageData.value) return [];
+  return [
+    {
+      key: 'captain_assistants',
+      label: 'BILLING_SETTINGS.CURRENT_PLAN.AI_ASSISTANT',
+    },
+    {
+      key: 'captain_credit',
+      label: 'BILLING_SETTINGS.CURRENT_PLAN.AI_RESPONSE',
+    },
+    {
+      key: 'captain_documents',
+      label: 'BILLING_SETTINGS.CURRENT_PLAN.AI_DOCUMENT',
+    },
+    { key: 'captain_faqs', label: 'BILLING_SETTINGS.CURRENT_PLAN.AI_FAQ' },
+  ].filter(item => usageData.value[item.key]);
+});
+
 const currentSubscription = computed(() => {
   return currentAccount.value?.billing?.current_subscription || {};
 });
@@ -45,7 +80,9 @@ const currentAddons = computed(() => {
 });
 
 const allAddonPackages = computed(() => {
-  return currentAccount.value?.billing?.all_addon_packages || [];
+  return (currentAccount.value?.billing?.all_addon_packages || []).filter(
+    addon => addon.visible
+  );
 });
 
 const getActiveAddon = addonPackageId => {
@@ -66,17 +103,14 @@ const hasABillingPlan = computed(() => {
   );
 });
 
-const canPurchaseCredits = computed(() => {
-  const plan = planName.value?.toLowerCase();
-  return plan && plan !== 'hacker';
-});
-
 const planId = computed(() => {
   return customAttributes.value.stripe_product_id;
 });
 
 const billingHistories = computed(() => {
-  return currentAccount.value?.billing?.billing_histories || [];
+  return (currentAccount.value?.billing?.billing_histories || []).filter(
+    history => history.price_amount > 0
+  );
 });
 
 const subscriptionRenewsOn = computed(() => {
@@ -90,24 +124,70 @@ const subscriptionRenewsOn = computed(() => {
   return format(endDate, 'dd MMM, yyyy');
 });
 
+const daysUntilRefresh = computed(() => {
+  const startsAtStr = currentSubscription.value.starts_at;
+  const endsAtStr =
+    currentSubscription.value.ends_at ||
+    customAttributes.value.subscription_ends_on;
+
+  if (!startsAtStr && !endsAtStr) return null;
+
+  const now = new Date();
+
+  // If we have starts_at, AI resources reset monthly on the same day of the month
+  if (startsAtStr) {
+    const startsAt = new Date(startsAtStr);
+    const resetDay = startsAt.getDate();
+
+    // Try current month first
+    let nextReset = new Date(now.getFullYear(), now.getMonth(), resetDay);
+
+    // If already passed or today, move to next month
+    if (nextReset <= now) {
+      nextReset = new Date(now.getFullYear(), now.getMonth() + 1, resetDay);
+    }
+
+    // Handle end-of-month overflow (e.g., reset on 31st but next month only has 30 days)
+    // If the date changed because of overflow (e.g. became 1st of following month),
+    // set it to the last day of the intended month.
+    if (nextReset.getDate() !== resetDay && resetDay > 28) {
+      nextReset = new Date(nextReset.getFullYear(), nextReset.getMonth(), 0);
+    }
+
+    const diff = differenceInDays(nextReset, now);
+    return diff >= 0 ? diff : 0;
+  }
+
+  // Fallback to subscription end date
+  const endDate = new Date(endsAtStr);
+  const diff = differenceInDays(endDate, now);
+  return diff > 0 ? diff : 0;
+});
+
+const isFreePlan = p => {
+  if (!p) return true;
+  const pAmount = p.price?.price_amount ?? 0;
+  return Number(pAmount) === 0 || p.is_free === true;
+};
+
 const fetchAccountDetails = async () => {
   if (!hasABillingPlan.value) {
     await store.dispatch('accounts/subscription');
   }
+  // Fetch available plans and other billing details
+  store.dispatch('accounts/billings');
   // Always fetch limits for billing page to show credit usage
   fetchLimits();
 };
 
 const enterpisePlan = computed(() => {
-  return currentAccount.value?.billing?.enterprise_plan;
+  const plan = currentAccount.value?.billing?.enterprise_plan;
+  return plan && !isFreePlan(plan) && plan.visible ? plan : null;
 });
 
 const trialPlan = computed(() => {
-  return currentAccount.value?.billing?.trial_plan;
-});
-
-const usageData = computed(() => {
-  return currentAccount.value?.billing?.usage;
+  const plan = currentAccount.value?.billing?.trial_plan;
+  return plan && !isFreePlan(plan) && plan.visible ? plan : null;
 });
 
 const disabledRegisterTrial = computed(() => {
@@ -118,36 +198,20 @@ const onClickBillingPortal = paymentInfo => {
   store.dispatch('accounts/checkout', paymentInfo);
 };
 
-const isFreePlan = plan => {
-  return (plan?.price?.price_amount || 0) === 0 || plan?.is_free === true;
-};
-
 const allVisiblePlans = computed(() => {
-  const result = [];
-  const planData = currentAccount.value?.billing?.plans || {};
-  Object.values(planData).forEach(tierPlans => {
-    tierPlans.forEach(plan => {
-      if (!isFreePlan(plan)) {
-        result.push(plan);
-      }
-    });
-  });
-  return result;
+  const billingObj = currentAccount.value?.billing || {};
+  const plansObj = billingObj.plans || {};
+  
+  return Object.keys(plansObj).reduce((acc, tier) => {
+    const tierPlans = plansObj[tier] || [];
+    const filtered = tierPlans.filter(p => !isFreePlan(p) && p.visible);
+    return [...acc, ...filtered];
+  }, []);
 });
-
-const openPurchaseCreditsModal = () => {
-  purchaseCreditsModalRef.value?.open();
-};
 
 const handleTopupSuccess = () => {
   // Refresh limits to show updated credit balance
   fetchLimits();
-};
-
-const onToggleChatWindow = () => {
-  if (window.$chatwoot) {
-    window.$chatwoot.toggle();
-  }
 };
 
 onMounted(fetchAccountDetails);
@@ -181,68 +245,82 @@ onMounted(fetchAccountDetails);
             />
             <DetailItem
               :label="$t('BILLING_SETTINGS.CURRENT_PLAN.RENEWS_ON')"
-              :value="subscriptionRenewsOn"
+              :value="
+                isFreePlan(currentSubscription) ? '---' : subscriptionRenewsOn
+              "
             />
-          </div>
-        </BillingCard>
-
-        <BillingCard
-          v-if="captainEnabled"
-          :title="$t('BILLING_SETTINGS.CAPTAIN.TITLE')"
-          :description="$t('BILLING_SETTINGS.CAPTAIN.DESCRIPTION')"
-        >
-          <template #action>
-            <div class="flex gap-2">
+            <div
+              v-if="!isFreePlan(currentSubscription)"
+              class="flex items-center justify-end"
+            >
               <ButtonV4
-                sm
-                flushed
-                slate
-                icon="i-lucide-refresh-cw"
-                :is-loading="isFetchingLimits"
-                @click="fetchLimits"
-              >
-                {{ $t('BILLING_SETTINGS.CAPTAIN.REFRESH_CREDITS') }}
-              </ButtonV4>
-              <ButtonV4
-                v-if="canPurchaseCredits"
                 sm
                 solid
-                blue
-                @click="openPurchaseCreditsModal"
+                ruby
+                @click="
+                  onClickBillingPortal({
+                    product_id: currentSubscription.plan_id,
+                    payment_method: 'payos',
+                  })
+                "
               >
-                {{ $t('BILLING_SETTINGS.TOPUP.BUY_CREDITS') }}
+                {{ $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.RENEW_NOW') }}
               </ButtonV4>
             </div>
-          </template>
-          <div v-if="captainLimits && responseLimits" class="px-5">
-            <BillingMeter
-              :title="$t('BILLING_SETTINGS.CAPTAIN.RESPONSES')"
-              v-bind="responseLimits"
-            />
+          </div>
+        </BillingCard>
+        <!-- Registration Management Section -->
+        <BillingCard
+          v-if="registrationLimitations.length"
+          :title="$t('BILLING_SETTINGS.REGISTRATION_MANAGEMENT.TITLE')"
+          :description="
+            $t('BILLING_SETTINGS.REGISTRATION_MANAGEMENT.DESCRIPTION')
+          "
+        >
+          <div class="grid sm:grid-cols-2 grid-cols-1 gap-x-12 gap-y-6 px-5">
+            <template v-for="item in registrationLimitations" :key="item.key">
+              <div v-if="usageData[item.key]">
+                <BillingMeter
+                  :title="$t(item.label)"
+                  v-bind="parseUsage(usageData[item.key])"
+                />
+              </div>
+            </template>
           </div>
         </BillingCard>
 
+        <!-- AI Resources Section -->
         <BillingCard
-          v-if="usageData"
-          :title="$t('BILLING_SETTINGS.CURRENT_PLAN.ADDON_RESOURCE')"
+          v-if="aiLimitations.length"
+          :title="$t('BILLING_SETTINGS.AI_RESOURCE_MANAGEMENT.TITLE')"
+          :description="
+            $t('BILLING_SETTINGS.AI_RESOURCE_MANAGEMENT.DESCRIPTION')
+          "
         >
-          <div class="grid sm:grid-cols-4 grid-cols-1 gap-2 mt-0">
-            <DetailItem
-              :label="$t('BILLING_SETTINGS.CURRENT_PLAN.AI_RESPONSE')"
-              :value="usageData.captain_credit"
-            />
-            <DetailItem
-              :label="$t('BILLING_SETTINGS.CURRENT_PLAN.INBOX')"
-              :value="usageData.inboxes"
-            />
-            <DetailItem
-              :label="$t('BILLING_SETTINGS.CURRENT_PLAN.AGENT')"
-              :value="usageData.agents"
-            />
-            <DetailItem
-              :label="$t('BILLING_SETTINGS.CURRENT_PLAN.CONTACT')"
-              :value="usageData.contacts"
-            />
+          <div class="grid sm:grid-cols-2 grid-cols-1 gap-x-12 gap-y-6 px-5">
+            <template v-for="item in aiLimitations" :key="item.key">
+              <div v-if="usageData[item.key]">
+                <BillingMeter
+                  :title="$t(item.label)"
+                  v-bind="parseUsage(usageData[item.key])"
+                />
+              </div>
+            </template>
+          </div>
+          <div
+            v-if="daysUntilRefresh !== null && !isFreePlan(currentSubscription)"
+            class="mt-6 px-5 border-t border-n-weak pt-4"
+          >
+            <span class="text-xs font-medium text-n-slate-11">
+              {{
+                $t(
+                  'BILLING_SETTINGS.AI_RESOURCE_MANAGEMENT.REFRESHES_IN_DAYS',
+                  {
+                    days: daysUntilRefresh,
+                  }
+                )
+              }}
+            </span>
           </div>
         </BillingCard>
         <BillingCard
@@ -251,11 +329,12 @@ onMounted(fetchAccountDetails);
             $t('BILLING_SETTINGS.PRICING_PACKAGES.HEADING.DESCRIPTION')
           "
         >
+          <!-- Special Plans (Trial / Enterprise) -->
           <div
-            v-if="trialPlan"
-            class="grid grid-cols-1 md:grid-cols-2 gap-6 px-8"
+            v-if="trialPlan || enterpisePlan"
+            class="grid grid-cols-1 md:grid-cols-2 gap-6 px-8 mb-8"
           >
-            <SpecialItem :plan="trialPlan">
+            <SpecialItem v-if="trialPlan" :plan="trialPlan">
               <ButtonV4
                 md
                 solid
@@ -279,7 +358,7 @@ onMounted(fetchAccountDetails);
                 }}
               </ButtonV4>
             </SpecialItem>
-            <SpecialItem :plan="enterpisePlan">
+            <SpecialItem v-if="enterpisePlan" :plan="enterpisePlan">
               <a
                 href="https://shopiz.pro/contact-us"
                 target="_blank"
@@ -291,7 +370,20 @@ onMounted(fetchAccountDetails);
               </a>
             </SpecialItem>
           </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-8">
+
+          <!-- Divider if needed -->
+          <div
+            v-if="(trialPlan || enterpisePlan) && allVisiblePlans.length"
+            class="px-8 pb-8"
+          >
+            <div class="border-t border-n-weak" />
+          </div>
+
+          <!-- Normal Plans -->
+          <div
+            v-if="allVisiblePlans.length"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8 pb-8"
+          >
             <NormalItem
               v-for="plan in allVisiblePlans"
               :key="plan.id"
@@ -325,9 +417,10 @@ onMounted(fetchAccountDetails);
         <BillingCard
           v-if="allAddonPackages.length"
           :title="$t('BILLING_SETTINGS.CAPTAIN.GET_MORE')"
+          description=""
         >
           <div
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-8 pt-0"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8 pb-8"
           >
             <template v-for="addon in allAddonPackages" :key="addon.id">
               <CreditItem :credit-item="addon">
@@ -361,8 +454,9 @@ onMounted(fetchAccountDetails);
         </BillingCard>
 
         <BillingCard
-          v-if="billingHistories"
+          v-if="billingHistories.length"
           :title="$t('BILLING_SETTINGS.BILLING_HISTORY')"
+          description=""
         >
           <div class="p-8 pt-0 space-y-3">
             <template v-for="item in billingHistories" :key="item.id">
@@ -376,15 +470,26 @@ onMounted(fetchAccountDetails);
           :title="$t('BILLING_SETTINGS.CHAT_WITH_US.TITLE')"
           :description="$t('BILLING_SETTINGS.CHAT_WITH_US.DESCRIPTION')"
         >
-          <ButtonV4
-            sm
-            solid
-            slate
-            icon="i-lucide-life-buoy"
-            @click="onToggleChatWindow"
-          >
-            {{ $t('BILLING_SETTINGS.CHAT_WITH_US.BUTTON_TXT') }}
-          </ButtonV4>
+          <div class="flex flex-wrap gap-3 mt-4">
+            <a
+              href="https://m.me/shopiz.pro"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <ButtonV4 sm solid blue icon="i-woot-messenger">
+                {{ $t('BILLING_SETTINGS.FACEBOOK_SUPPORT') }}
+              </ButtonV4>
+            </a>
+            <a
+              href="https://zalo.me/0878982525"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <ButtonV4 sm solid ruby icon="i-ri-zalo-fill">
+                {{ $t('BILLING_SETTINGS.ZALO_SUPPORT') }}
+              </ButtonV4>
+            </a>
+          </div>
         </BillingHeader>
       </section>
       <PurchaseCreditsModal

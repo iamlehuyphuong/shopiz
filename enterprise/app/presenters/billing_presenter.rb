@@ -32,8 +32,15 @@ class BillingPresenter
     return nil unless sub
 
     {
+      plan_id: sub.subscription_plan_id,
       plan_name: sub.subscription_plan.name(@account.locale),
-      ends_at: sub.ends_at
+      ends_at: sub.ends_at,
+      starts_at: sub.starts_at,
+      is_free: sub.subscription_plan.is_free,
+      price: {
+        price_amount: sub.subscription_plan.price_amount.to_f,
+        currency: sub.subscription_plan.currency
+      }
     }
   end
 
@@ -76,7 +83,7 @@ class BillingPresenter
   end
 
   def trial_data
-    sub_plan = SubscriptionPlan.free_plan.first
+    sub_plan = SubscriptionPlan.free_plan.visible.where.not(is_free: true).first
     normalize_subscription_plan(sub_plan) if sub_plan
   end
 
@@ -97,6 +104,8 @@ class BillingPresenter
       },
       duration_days: plan.duration_days,
       description: plan.description(@account.locale),
+      visible: plan.visible,
+      is_free: plan.is_free,
       benefits: generate_benefits(plan)
     }
   end
@@ -134,7 +143,8 @@ class BillingPresenter
         amount_type: 'paid'
       },
       quantity: addon.quantity,
-      addon_type: addon.addon_type
+      addon_type: addon.addon_type,
+      visible: addon.visible
     }
   end
 
@@ -151,8 +161,8 @@ class BillingPresenter
 
   def billing_histories_data
     I18n.with_locale(@account.locale || :en) do
-      @account.billing_histories.order(id: :asc).as_json(
-        only: [:id, :status],
+      @account.billing_histories.where('price_amount > 0').order(id: :asc).as_json(
+        only: [:id, :status, :price_amount],
         methods: [:status_text, :amount_formatted, :created_date_formatted, :content]
       )
     end

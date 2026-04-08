@@ -713,14 +713,24 @@
       "AI_FAQ": "ShopizAI FAQs",
       "AI_ASSISTANT": "ShopizAI Assistant",
       "AI_RESPONSE": "AI messages per month",
-      "ACTIVE_ADDONS": "Active Addons",
-      "ADDON_QUANTITY": "{name} (x{quantity})"
+      "LIMITATION_TITLE": "Resource Limitations",
+      "ACTIVE_ADDONS": "Active Addons"
     },
+    "ADDON_QUANTITY": "{name} (x{quantity})",
     "VIEW_PRICING": "View Pricing",
     "MANAGE_SUBSCRIPTION": {
-      "TITLE": "Manage your subscription",
+      "TITLE": "Current Subscription",
       "DESCRIPTION": "View your previous invoices, edit your billing details, or cancel your subscription.",
       "BUTTON_TXT": "Go to the billing portal"
+    },
+    "REGISTRATION_MANAGEMENT": {
+      "TITLE": "Registration Management",
+      "DESCRIPTION": "Manage your registration limits and resources."
+    },
+    "AI_RESOURCE_MANAGEMENT": {
+      "TITLE": "AI Resources",
+      "DESCRIPTION": "Manage your AI resource usage and limits.",
+      "REFRESHES_IN_DAYS": "Refreshes in {days} days"
     },
     "CAPTAIN": {
       "TITLE": "Addon packages",
@@ -735,9 +745,10 @@
     },
     "CHAT_WITH_US": {
       "TITLE": "Need help?",
-      "DESCRIPTION": "Do you face any issues in billing? We are here to help.",
-      "BUTTON_TXT": "Chat with us"
+      "DESCRIPTION": "Do you face any issues in billing? We are here to help."
     },
+    "FACEBOOK_SUPPORT": "Message on Facebook",
+    "ZALO_SUPPORT": "Message on Zalo",
     "NO_BILLING_USER": "Your billing account is being configured. Please refresh the page and try again.",
     "TOPUP": {
       "BUY_CREDITS": "Buy more credits",
@@ -767,9 +778,14 @@
         "TITLE": "Pricing Packages",
         "DESCRIPTION": "Choose the plan that best fits your business needs."
       },
+      "DURATIONS": {
+        "SIX_MONTHS": "6 months",
+        "YEAR": "year"
+      },
       "BUTTONS": {
         "CURRENT_PACKAGE": "Current Package",
         "UPGRADE_NOW": "Upgrade Now",
+        "RENEW_NOW": "Renew Now",
         "CONTACT": "Contact Us",
         "BUY_NOW": "Buy Now"
       }

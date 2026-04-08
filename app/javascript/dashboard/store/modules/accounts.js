@@ -178,9 +178,17 @@ export const mutations = {
   [types.default.EDIT_ACCOUNT]: MutationHelpers.update,
   [types.default.SET_ACCOUNT_LIMITS]: MutationHelpers.updateAttributes,
   [types.default.SET_ACCOUNT_PLANS]($state, { id, data }) {
-    const account = $state.records.find(record => record.id === Number(id));
-    account.billing = { ...account.billing, ...data };
-  }
+    const recordIndex = $state.records.findIndex(
+      record => record.id === Number(id)
+    );
+    if (recordIndex > -1) {
+      const account = $state.records[recordIndex];
+      $state.records[recordIndex] = {
+        ...account,
+        billing: { ...account.billing, ...data },
+      };
+    }
+  },
 };
 
 export default {

@@ -1,12 +1,24 @@
 <script setup>
+import { computed } from 'vue';
 import BenefitItem from './BenefitItem.vue';
 import { formatCurrency } from 'dashboard/helper/commons';
+import { useI18n } from 'vue-i18n';
 
-defineProps({
+const props = defineProps({
   plan: {
     type: Object,
     required: true,
   },
+});
+
+const { t } = useI18n();
+
+const durationLabel = computed(() => {
+  if (props.plan.duration_days === 180)
+    return `/ ${t('BILLING_SETTINGS.PRICING_PACKAGES.DURATIONS.SIX_MONTHS')}`;
+  if (props.plan.duration_days === 365)
+    return `/ ${t('BILLING_SETTINGS.PRICING_PACKAGES.DURATIONS.YEAR')}`;
+  return '';
 });
 
 </script>
@@ -19,6 +31,9 @@ defineProps({
       </span>
       <p class="text-base font-medium text-n-slate-12 mt-1">
         {{ formatCurrency(plan.price) }}
+        <span class="text-xs font-normal text-n-slate-11">
+          {{ durationLabel }}
+        </span>
       </p>
       <p class="text-sm text-n-slate-11 mt-1">
         {{ plan.description }}

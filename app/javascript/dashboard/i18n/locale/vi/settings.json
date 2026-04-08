@@ -693,7 +693,7 @@
     }
   },
   "BILLING_SETTINGS": {
-    "TITLE": "Thanh toán (test)",
+    "TITLE": "Thanh toán",
     "DESCRIPTION": "Quản lý gói đăng ký của bạn tại đây, nâng cấp gói và mở rộng lợi ích cho đội của bạn.",
     "CURRENT_PLAN": {
       "TITLE": "Gói hiện tại",
@@ -711,31 +711,42 @@
       "AI_FAQ": "FAQ ShopizAI",
       "AI_ASSISTANT": "Trợ lý ShopizAI",
       "AI_RESPONSE": "Tin nhắn AI mỗi tháng",
-      "ACTIVE_ADDONS": "Gói mua thêm",
-      "ADDON_QUANTITY": "{name} (x{quantity})"
+      "LIMITATION_TITLE": "Giới hạn tài nguyên",
+      "ACTIVE_ADDONS": "Gói mua thêm"
     },
+    "ADDON_QUANTITY": "{name} (x{quantity})",
     "VIEW_PRICING": "Xem bảng giá",
     "MANAGE_SUBSCRIPTION": {
-      "TITLE": "Quản lý đăng ký",
+      "TITLE": "Gói đăng ký hiện tại",
       "DESCRIPTION": "Xem hóa đơn trước đây, chỉnh sửa thông tin thanh toán hoặc hủy đăng ký.",
       "BUTTON_TXT": "Đi tới cổng thanh toán"
     },
+    "REGISTRATION_MANAGEMENT": {
+      "TITLE": "Quản lý đăng ký",
+      "DESCRIPTION": "Thông tin giới hạn tài nguyên đăng ký của bạn."
+    },
+    "AI_RESOURCE_MANAGEMENT": {
+      "TITLE": "Tài nguyên AI",
+      "DESCRIPTION": "Thông tin về hạn mức và và sử dụng tài nguyên AI.",
+      "REFRESHES_IN_DAYS": "Tự động làm mới sau {days} ngày"
+    },
     "CAPTAIN": {
-      "TITLE": "Các gói tài nguyên (Addon package)",
+      "TITLE": "Các gói tài nguyên",
       "DESCRIPTION": "Quản lý mức sử dụng và tín dụng AI.",
       "BUTTON_TXT": "Mua thêm tín dụng",
       "DOCUMENTS": "Tài liệu",
       "RESPONSES": "Câu trả lời",
-      "GET_MORE": "Các gói tài nguyên (Addon package)",
+      "GET_MORE": "Các gói tài nguyên",
       "NO_EXPIRATION": "Không có hạn sử dụng",
       "UPGRADE": "AI Agent không khả dụng trên gói miễn phí. Hãy nâng cấp để truy cập trợ lý, chatbot và nhiều tính năng nâng cao.",
       "REFRESH_CREDITS": "Làm mới"
     },
     "CHAT_WITH_US": {
       "TITLE": "Cần hỗ trợ?",
-      "DESCRIPTION": "Gặp vấn đề thanh toán? Chúng tôi luôn sẵn sàng hỗ trợ.",
-      "BUTTON_TXT": "Trò chuyện với chúng tôi"
+      "DESCRIPTION": "Gặp vấn đề thanh toán? Chúng tôi luôn sẵn sàng hỗ trợ."
     },
+    "FACEBOOK_SUPPORT": "Nhắn tin qua Facebook",
+    "ZALO_SUPPORT": "Nhắn tin qua Zalo",
     "NO_BILLING_USER": "Tài khoản thanh toán của bạn đang được định cấu hình. Hãy làm mới trang và thử lại.",
     "TOPUP": {
       "BUY_CREDITS": "Mua thêm tín dụng",
@@ -765,9 +776,14 @@
         "TITLE": "Gói dịch vụ",
         "DESCRIPTION": "Chọn gói dịch vụ phù hợp nhất với nhu cầu kinh doanh của bạn."
       },
+      "DURATIONS": {
+        "SIX_MONTHS": "6 tháng",
+        "YEAR": "năm"
+      },
       "BUTTONS": {
         "CURRENT_PACKAGE": "Gói hiện tại",
         "UPGRADE_NOW": "Nâng cấp ngay",
+        "RENEW_NOW": "Gia hạn ngay",
         "CONTACT": "Liên hệ với chúng tôi",
         "BUY_NOW": "Mua ngay"
       }

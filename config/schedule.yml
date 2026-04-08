@@ -82,3 +82,10 @@ remove_orphan_conversations_job:
   cron: '0 */12 * * *'
   class: 'Internal::RemoveOrphanConversationsJob'
   queue: housekeeping
+
+# executed daily at 0000 UTC
+# resets AI resource usage for accounts on their monthly anniversary
+account_monthly_reset_usage_job:
+  cron: '0 0 * * *'
+  class: 'Enterprise::Account::MonthlyResetUsageJob'
+  queue: scheduled_jobs
