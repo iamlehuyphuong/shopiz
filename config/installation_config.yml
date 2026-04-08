@@ -437,6 +437,18 @@
   type: secret
 # ------- End of TikTok Channel Related Config ------- #
 
+# ------- TikTok Shop Channel Related Config ------- #
+- name: TIKTOK_SHOP_APP_ID
+  display_title: 'TikTok Shop App ID'
+  description: 'The App Key provided by TikTok Shop Developer Platform'
+  locked: false
+- name: TIKTOK_SHOP_APP_SECRET
+  display_title: 'TikTok Shop App Secret'
+  description: 'The Client Secret provided by TikTok Shop Developer Platform'
+  locked: false
+  type: secret
+# ------- End of TikTok Shop Channel Related Config ------- #
+
 # ------- OG Image Related Config ------- #
 - name: OG_IMAGE_CDN_URL
   display_title: 'OG Image CDN URL'
