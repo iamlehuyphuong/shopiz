@@ -62,12 +62,6 @@ const channelList = computed(() => {
       icon: 'i-ri-twitter-x-fill',
     },
     {
-      key: 'email',
-      title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.EMAIL.TITLE'),
-      description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.EMAIL.DESCRIPTION'),
-      icon: 'i-woot-mail',
-    },
-    {
       key: 'telegram',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TELEGRAM.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TELEGRAM.DESCRIPTION'),

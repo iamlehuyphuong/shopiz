@@ -6,7 +6,6 @@ import ZaloPersonal from './channels/ZaloPersonal.vue';
 import Website from './channels/Website.vue';
 import Twitter from './channels/Twitter.vue';
 import Api from './channels/Api.vue';
-import Email from './channels/Email.vue';
 import Sms from './channels/Sms.vue';
 import Whatsapp from './channels/Whatsapp.vue';
 import Line from './channels/Line.vue';
@@ -21,7 +20,6 @@ const channelViewList = {
   website: Website,
   twitter: Twitter,
   api: Api,
-  email: Email,
   sms: Sms,
   whatsapp: Whatsapp,
   line: Line,
