@@ -55,7 +55,7 @@ export default {
       this.hasLoginStarted = true;
       window.location.replace(
         'https://auth.tiktok-shops.com/oauth/authorize?app_key=' +
-          window.shopizConfig.tiktokAppId +
+          window.shopizConfig.tiktokShopAppId +
           '&redirect_uri=' +
           window.shopizConfig.hostURL +
           '/tiktok_shop/callback&state=' +

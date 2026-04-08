@@ -32,13 +32,11 @@ const hasZaloConfigured = computed(() => {
 });
 
 const hasTiktokShopConfigured = computed(() => {
-  return (
-    window.shopizConfig?.tiktokShopAppId || window.shopizConfig?.tiktokAppId
-  );
+  return window.shopizConfig?.tiktokShopAppId;
 });
 
 const hasTiktokConfigured = computed(() => {
-  return window.chatwootConfig?.tiktokAppId;
+  return window.shopizConfig?.tiktokAppId;
 });
 
 const isActive = computed(() => {
