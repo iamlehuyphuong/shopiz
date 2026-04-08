@@ -761,7 +761,20 @@
         "GO_BACK": "Go Back",
         "CONFIRM_PURCHASE": "Confirm Purchase"
       }
-    }
+    },
+    "PRICING_PACKAGES": {
+      "HEADING": {
+        "TITLE": "Pricing Packages",
+        "DESCRIPTION": "Choose the plan that best fits your business needs."
+      },
+      "BUTTONS": {
+        "CURRENT_PACKAGE": "Current Package",
+        "UPGRADE_NOW": "Upgrade Now",
+        "CONTACT": "Contact Us",
+        "BUY_NOW": "Buy Now"
+      }
+    },
+    "BILLING_HISTORY": "Billing History"
   },
   "SECURITY_SETTINGS": {
     "TITLE": "Security",

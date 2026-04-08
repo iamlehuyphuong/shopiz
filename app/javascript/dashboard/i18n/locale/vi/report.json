@@ -3,7 +3,7 @@
     "HEADER": "Cuộc hội thoại",
     "LOADING_CHART": "Đang tải dữ liệu biểu đồ...",
     "NO_ENOUGH_DATA": "Chúng tôi chưa nhận đủ dữ liệu để tạo báo cáo. Vui lòng thử lại sau.",
-    "DOWNLOAD_AGENT_REPORTS": "Tải báo cáo theo nhân viên",
+    "DOWNLOAD_CONVERSATION_REPORTS": "Tải báo cáo cuộc hội thoại",
     "DATA_FETCHING_FAILED": "Không thể lấy dữ liệu, vui lòng thử lại sau.",
     "SUMMARY_FETCHING_FAILED": "Không thể lấy dữ liệu tổng quan, vui lòng thử lại sau.",
     "METRICS": {
@@ -668,5 +668,11 @@
     "AVG_REPLY_TIME": "Thời gian chờ trung bình",
     "RESOLUTION_COUNT": "Số lượng xử lý",
     "CONVERSATIONS": "Số cuộc hội thoại"
+  },
+  "REPORT_TIME_UNITS": {
+    "DAY": "Ngày",
+    "HOUR": "Giờ",
+    "MINUTE": "Phút",
+    "SECOND": "Giây"
   }
 }

@@ -651,5 +651,11 @@
     "AVG_REPLY_TIME": "Avg. Customer Waiting Time",
     "RESOLUTION_COUNT": "Resolution Count",
     "CONVERSATIONS": "No. of conversations"
+  },
+  "REPORT_TIME_UNITS": {
+    "DAY": "Day",
+    "HOUR": "Hr",
+    "MINUTE": "Min",
+    "SECOND": "Sec"
   }
 }

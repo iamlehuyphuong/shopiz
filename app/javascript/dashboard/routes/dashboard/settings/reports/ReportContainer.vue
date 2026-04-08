@@ -4,7 +4,7 @@ import { useReportMetrics } from 'dashboard/composables/useReportMetrics';
 import { GROUP_BY_FILTER, METRIC_CHART } from './constants';
 import fromUnixTime from 'date-fns/fromUnixTime';
 import format from 'date-fns/format';
-import { formatTime } from '@chatwoot/utils';
+import { formatTime } from 'dashboard/routes/dashboard/settings/reports/helper/reportTimeHelper';
 import ChartStats from './components/ChartElements/ChartStats.vue';
 import BarChart from 'shared/components/charts/BarChart.vue';
 
@@ -127,7 +127,7 @@ export default {
             callbacks: {
               label: ({ raw, dataIndex }) => {
                 return this.$t(metric.TOOLTIP_TEXT, {
-                  metricValue: formatTime(raw || 0),
+                  metricValue: formatTime(raw || 0, this.$t),
                   conversationCount:
                     this.accountReport.data[metric.KEY][dataIndex]?.count || 0,
                 });

@@ -693,7 +693,7 @@
     }
   },
   "BILLING_SETTINGS": {
-    "TITLE": "Thanh toán",
+    "TITLE": "Thanh toán (test)",
     "DESCRIPTION": "Quản lý gói đăng ký của bạn tại đây, nâng cấp gói và mở rộng lợi ích cho đội của bạn.",
     "CURRENT_PLAN": {
       "TITLE": "Gói hiện tại",
@@ -759,7 +759,20 @@
         "GO_BACK": "Quay lại",
         "CONFIRM_PURCHASE": "Xác nhận mua hàng"
       }
-    }
+    },
+    "PRICING_PACKAGES": {
+      "HEADING": {
+        "TITLE": "Gói dịch vụ",
+        "DESCRIPTION": "Chọn gói dịch vụ phù hợp nhất với nhu cầu kinh doanh của bạn."
+      },
+      "BUTTONS": {
+        "CURRENT_PACKAGE": "Gói hiện tại",
+        "UPGRADE_NOW": "Nâng cấp ngay",
+        "CONTACT": "Liên hệ với chúng tôi",
+        "BUY_NOW": "Mua ngay"
+      }
+    },
+    "BILLING_HISTORY": "Lịch sử thanh toán"
   },
   "SECURITY_SETTINGS": {
     "TITLE": "Bảo mật",
