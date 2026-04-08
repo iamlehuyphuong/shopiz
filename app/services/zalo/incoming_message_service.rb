@@ -12,6 +12,7 @@ class Zalo::IncomingMessageService
     @message.content_attributes[:in_reply_to_external_id] = params[:message][:quote_msg_id] if params[:message][:quote_msg_id]
 
     attach_media
+    @message.content ||= I18n.t('inboxes.zalo.unsupported_message') if @message.attachments.blank?
     @message.save!
   end
 
@@ -47,6 +48,9 @@ class Zalo::IncomingMessageService
     return unless (response['error']).zero?
 
     @contact.update!(name: response['data']['display_name'])
+    @contact.additional_attributes['zalo_user_id'] = response['data']['user_id']
+    @contact.additional_attributes['zalo_user_id_by_app'] = response['data']['user_id_by_app']
+    @contact.save!
     ::Avatar::AvatarFromUrlJob.perform_later(@contact, response['data']['avatars']['240'])
   end
 
