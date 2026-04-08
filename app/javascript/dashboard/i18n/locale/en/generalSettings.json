@@ -142,6 +142,7 @@
       }
     },
     "UPDATE_CHATWOOT": "An update {latestShopizVersion} for Shopiz is available. Please update your instance.",
+    "VERSION": "Version: {version}",
     "LEARN_MORE": "Learn more",
     "PAYMENT_PENDING": "Your payment is pending. Please update your payment information to continue using Shopiz",
     "UPGRADE": "Upgrade to continue using Shopiz",

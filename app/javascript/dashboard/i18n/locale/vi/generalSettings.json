@@ -142,6 +142,7 @@
       }
     },
     "UPDATE_CHATWOOT": "Có bản cập nhật mới ({latestShopizVersion}) cho Shopiz. Vui lòng cập nhật ngay.",
+    "VERSION": "Version: {version}",
     "LEARN_MORE": "Tìm hiểu thêm",
     "PAYMENT_PENDING": "Thanh toán của bạn đang chờ xử lý. Vui lòng cập nhật thông tin để tiếp tục sử dụng Shopiz.",
     "UPGRADE": "Nâng cấp để tiếp tục sử dụng Shopiz",
