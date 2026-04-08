@@ -19,6 +19,10 @@ const state = {
     isUpdating: false,
     isCheckoutInProcess: false,
     isFetchingLimits: false,
+    limitationModal: {
+      show: false,
+      resourceKey: '',
+    },
   },
 };
 
@@ -165,6 +169,10 @@ export const actions = {
   getCacheKeys: async () => {
     return AccountAPI.getCacheKeys();
   },
+
+  toggleLimitationModal: ({ commit }, data) => {
+    commit(types.default.SET_LIMITATION_MODAL, data);
+  },
 };
 
 export const mutations = {
@@ -188,6 +196,12 @@ export const mutations = {
         billing: { ...account.billing, ...data },
       };
     }
+  },
+  [types.default.SET_LIMITATION_MODAL]($state, data) {
+    $state.uiFlags.limitationModal = {
+      ...$state.uiFlags.limitationModal,
+      ...data,
+    };
   },
 };
 

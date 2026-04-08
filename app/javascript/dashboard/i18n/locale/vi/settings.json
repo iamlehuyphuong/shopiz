@@ -1224,5 +1224,21 @@
       "CONFIRM_BUTTON_LABEL": "Xóa",
       "CANCEL_BUTTON_LABEL": "Hủy"
     }
+  },
+  "LIMITATION": {
+    "USAGE_STATUS": "Sử dụng",
+    "MODAL": {
+      "TITLE": "Đã đạt giới hạn tài nguyên",
+      "DESCRIPTION": {
+        "AGENTS": "Tài khoản của bạn đã đạt giới hạn số lượng nhân viên. Vui lòng nâng cấp gói để tiếp tục.",
+        "INBOXES": "Bạn đã đạt số lượng hộp thư tối đa cho gói hiện tại. Vui lòng nâng cấp để thêm hộp thư mới.",
+        "AUTOMATIONS": "Bạn đã đạt số lượng tự động hóa tối đa cho gói hiện tại. Vui lòng nâng cấp để thêm tự động hóa mới.",
+        "CAPTAIN_ASSISTANTS": "Bạn đã đạt số lượng trợ lý AI tối đa cho gói hiện tại. Vui lòng nâng cấp để thêm trợ lý mới.",
+        "CAPTAIN_DOCUMENTS": "Bạn đã đạt số lượng tài liệu AI tối đa cho gói hiện tại. Vui lòng nâng cấp để thêm tài liệu mới.",
+        "CAPTAIN_FAQS": "Bạn đã đạt số lượng FAQ AI tối đa cho gói hiện tại. Vui lòng nâng cấp để thêm FAQ mới."
+      },
+      "UPGRADE_BUTTON": "Mở trang thanh toán",
+      "CANCEL_BUTTON": "Hủy"
+    }
   }
 }

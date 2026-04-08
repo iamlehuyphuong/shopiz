@@ -9,16 +9,20 @@ import {
   useStore,
   useMapGetter,
 } from 'dashboard/composables/store';
+import { useLimitation } from 'dashboard/composables/useLimitation';
 
 import AddAgent from './AddAgent.vue';
 import EditAgent from './EditAgent.vue';
 import BaseSettingsHeader from '../components/BaseSettingsHeader.vue';
 import SettingsLayout from '../SettingsLayout.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
+import BillingMeter from 'dashboard/routes/dashboard/settings/billing/components/BillingMeter.vue';
 
 const getters = useStoreGetters();
 const store = useStore();
 const { t } = useI18n();
+
+const { getUsage, checkLimitation } = useLimitation();
 
 const loading = ref({});
 const showAddPopup = ref(false);
@@ -107,7 +111,9 @@ const showAlertMessage = message => {
 };
 
 const openAddPopup = () => {
-  showAddPopup.value = true;
+  if (checkLimitation('agents')) {
+    showAddPopup.value = true;
+  }
 };
 const hideAddPopup = () => {
   showAddPopup.value = false;
@@ -161,9 +167,13 @@ const confirmDeletion = () => {
         feature-name="agents"
       >
         <template v-if="agentList?.length" #count>
-          <span class="text-body-main text-n-slate-11">
-            {{ $t('AGENT_MGMT.COUNT', { n: agentList.length }) }}
-          </span>
+          <BillingMeter
+            :consumed="getUsage('agents').consumed"
+            :total-count="getUsage('agents').totalCount"
+            :show-bar="false"
+            :show-title="false"
+            class="px-2 py-0.5 bg-slate-50 border border-slate-100 rounded-full w-auto"
+          />
         </template>
         <template #actions>
           <Button

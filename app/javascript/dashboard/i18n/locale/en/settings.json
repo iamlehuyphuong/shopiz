@@ -1225,5 +1225,21 @@
       "CONFIRM_BUTTON_LABEL": "Delete",
       "CANCEL_BUTTON_LABEL": "Cancel"
     }
+  },
+  "LIMITATION": {
+    "USAGE_STATUS": "Usage",
+    "MODAL": {
+      "TITLE": "Resource Limit Reached",
+      "DESCRIPTION": {
+        "agents": "You have reached the maximum number of agents allowed for your current plan. Please upgrade to add more agents.",
+        "inboxes": "You have reached the maximum number of inboxes allowed for your current plan. Please upgrade to add more inboxes.",
+        "automations": "You have reached the maximum number of automations allowed for your current plan. Please upgrade to add more automations.",
+        "captain_assistants": "You have reached the maximum number of AI assistants allowed for your current plan. Please upgrade to add more assistants.",
+        "captain_documents": "You have reached the maximum number of AI documents allowed for your current plan. Please upgrade to add more documents.",
+        "captain_faqs": "You have reached the maximum number of AI FAQs allowed for your current plan. Please upgrade to add more FAQs."
+      },
+      "UPGRADE_NOW": "Upgrade Now",
+      "CANCEL": "Cancel"
+    }
   }
 }

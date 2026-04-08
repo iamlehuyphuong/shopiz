@@ -8,13 +8,16 @@ import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useStoreGetters, useStore } from 'dashboard/composables/store';
 import { picoSearch } from '@scmmishra/pico-search';
+import { useLimitation } from 'dashboard/composables/useLimitation';
 import AutomationRuleRow from './AutomationRuleRow.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
+import BillingMeter from 'dashboard/routes/dashboard/settings/billing/components/BillingMeter.vue';
 import { BaseTable } from 'dashboard/components-next/table';
 
 const getters = useStoreGetters();
 const store = useStore();
 const { t } = useI18n();
+const { getUsage, checkLimitation } = useLimitation();
 const confirmDialog = ref(null);
 
 const loading = ref({});
@@ -66,7 +69,9 @@ onMounted(() => {
 });
 
 const openAddPopup = () => {
-  addDialogRef.value?.open();
+  if (checkLimitation('automations')) {
+    addDialogRef.value?.open();
+  }
 };
 const hideAddPopup = () => {
   addDialogRef.value?.close();
@@ -198,9 +203,13 @@ const tableHeaders = computed(() => {
         feature-name="automation"
       >
         <template v-if="records?.length" #count>
-          <span class="text-body-main text-n-slate-11">
-            {{ $t('AUTOMATION.COUNT', { n: records.length }) }}
-          </span>
+          <BillingMeter
+            :consumed="getUsage('automations').consumed"
+            :total-count="getUsage('automations').totalCount"
+            :show-bar="false"
+            :show-title="false"
+            class="px-2 py-0.5 bg-slate-50 border border-slate-100 rounded-full w-auto"
+          />
         </template>
         <template #actions>
           <Button

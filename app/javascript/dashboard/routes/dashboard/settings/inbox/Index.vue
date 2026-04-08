@@ -12,14 +12,19 @@ import {
   useStoreGetters,
   useStore,
 } from 'dashboard/composables/store';
+import { useLimitation } from 'dashboard/composables/useLimitation';
+import { useRouter } from 'vue-router';
 import ChannelName from './components/ChannelName.vue';
 import ChannelIcon from 'next/icon/ChannelIcon.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
+import BillingMeter from 'dashboard/routes/dashboard/settings/billing/components/BillingMeter.vue';
 
 const getters = useStoreGetters();
 const store = useStore();
 const { t } = useI18n();
 const { isAdmin } = useAdmin();
+const { getUsage, checkLimitation } = useLimitation();
+const router = useRouter();
 
 const showDeletePopup = ref(false);
 const selectedInbox = ref({});
@@ -78,6 +83,12 @@ const openDelete = inbox => {
   showDeletePopup.value = true;
   selectedInbox.value = inbox;
 };
+
+const onAddInbox = () => {
+  if (checkLimitation('inboxes')) {
+    router.push({ name: 'settings_inbox_new' });
+  }
+};
 </script>
 
 <template>
@@ -96,14 +107,21 @@ const openDelete = inbox => {
         feature-name="inboxes"
       >
         <template v-if="inboxesList?.length" #count>
-          <span class="text-body-main text-n-slate-11">
-            {{ $t('INBOX_MGMT.COUNT', { n: inboxesList.length }) }}
-          </span>
+          <BillingMeter
+            :consumed="getUsage('inboxes').consumed"
+            :total-count="getUsage('inboxes').totalCount"
+            :show-bar="false"
+            :show-title="false"
+            class="px-2 py-0.5 bg-slate-50 border border-slate-100 rounded-full w-auto"
+          />
         </template>
         <template #actions>
-          <router-link v-if="isAdmin" :to="{ name: 'settings_inbox_new' }">
-            <Button :label="$t('SETTINGS.INBOXES.NEW_INBOX')" size="sm" />
-          </router-link>
+          <Button
+            v-if="isAdmin"
+            :label="$t('SETTINGS.INBOXES.NEW_INBOX')"
+            size="sm"
+            @click="onAddInbox"
+          />
         </template>
       </BaseSettingsHeader>
     </template>

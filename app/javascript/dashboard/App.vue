@@ -25,6 +25,7 @@ import { useUISettings } from 'dashboard/composables/useUISettings';
 import ContextMenu from 'dashboard/components/ui/ContextMenu.vue';
 import DropdownMenu from 'dashboard/components-next/dropdown-menu/DropdownMenu.vue';
 import CreateNewContactDialog from 'dashboard/components-next/Contacts/ContactsForm/CreateNewContactDialog.vue';
+import LimitationModal from './components/widgets/modal/LimitationModal.vue';
 
 export default {
   name: 'App',
@@ -40,6 +41,7 @@ export default {
     ContextMenu,
     DropdownMenu,
     CreateNewContactDialog,
+    LimitationModal,
   },
   setup() {
     const router = useRouter();
@@ -508,6 +510,7 @@ export default {
       ref="createNewContactDialog"
       @create="onCreateContact"
     />
+    <LimitationModal />
   </div>
   <LoadingState v-else />
 </template>

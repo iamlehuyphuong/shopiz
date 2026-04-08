@@ -176,6 +176,7 @@ const handleCreateAssistant = () => {
               >
                 {{ headerTitle }}
               </span>
+              <slot name="usage" />
               <div
                 v-if="!isEmpty && showKnowMore"
                 class="flex items-center gap-2"
