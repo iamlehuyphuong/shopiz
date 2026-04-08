@@ -36,6 +36,9 @@ en:
       billing_histories:
         one: Purchase History
         other: Purchase Histories
+  inboxes:
+    zalo:
+      unsupported_message: "Unsupported message type"
   inbox:
     reauthorization:
       success: 'Channel reauthorized successfully'

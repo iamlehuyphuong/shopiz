@@ -436,6 +436,21 @@
   locked: false
   type: secret
 # ------- End of TikTok Channel Related Config ------- #
+ 
+# ------- Zalo OA Channel Related Config ------- #
+- name: ZALO_OA_APP_ID
+  display_title: 'Zalo App ID'
+  locked: false
+- name: ZALO_OA_APP_SECRET
+  display_title: 'Zalo App Secret'
+  locked: false
+  type: secret
+- name: ZALO_OA_SECRET_KEY
+  display_title: 'Zalo OA Secret Key'
+  description: 'The secret key used for Zalo OA Webhook Signature validation'
+  locked: false
+  type: secret
+# ------- End of Zalo OA Channel Related Config ------- #
 
 # ------- Zalo Personal Channel Related Config ------- #
 - name: ZALO_API_URL

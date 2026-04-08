@@ -3,7 +3,7 @@ class Webhooks::ZaloEventsJob < ApplicationJob
 
   SUPPORTED_EVENTS = %w[user_send_text user_send_image user_send_link user_send_audio user_send_video user_send_sticker
                         user_send_location user_send_file user_received_message user_seen_message user_submit_info
-                        oa_send_text oa_send_image oa_send_gif oa_send_file oa_send_sticker].freeze
+                        user_reacted_message oa_send_text oa_send_image oa_send_gif oa_send_file oa_send_sticker].freeze
 
   def perform(params = {}, signature: '', post_body: '')
     return unless SUPPORTED_EVENTS.include?(params[:event_name])
@@ -21,7 +21,7 @@ class Webhooks::ZaloEventsJob < ApplicationJob
   def validate_signature(params, post_body, signature)
     app_id = params[:app_id]
     timestamp = params[:timestamp]
-    oa_secret_key = ENV.fetch('ZALO_OA_SECRET_KEY', nil)
+    oa_secret_key = GlobalConfigService.load('ZALO_OA_SECRET_KEY', '')
     raw_verify = "#{app_id}#{post_body}#{timestamp}#{oa_secret_key}"
 
     hash = Digest::SHA256.hexdigest(raw_verify)
