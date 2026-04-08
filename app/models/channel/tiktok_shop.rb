@@ -20,6 +20,10 @@
 
 class Channel::TiktokShop < ApplicationRecord
   include Channelable
+  include Reauthorizable
+
+  encrypts :access_token
+  encrypts :refresh_token
 
   self.table_name = 'channel_tiktok_shop'
   EDITABLE_ATTRS = [:access_token, :refresh_token, :expires_in].freeze
@@ -36,6 +40,10 @@ class Channel::TiktokShop < ApplicationRecord
     'Tiktok Shop'
   end
 
+  def client
+    @client ||= TiktokShop::Client.new(self)
+  end
+
   def send_message(message)
     source_conversation_id = message.source_conversation_id
     if (attachment = message.attachments&.first) && attachment&.file_type == 'image'
@@ -45,20 +53,11 @@ class Channel::TiktokShop < ApplicationRecord
     return {} unless message.content
 
     text_body = build_text_body(message.content)
-    call_api_send_message(source_conversation_id, text_body)
+    client.send_message(source_conversation_id, text_body)
   end
 
   def refresh_access_token
-    refresh_url = 'https://auth.tiktok-shops.com/api/v2/token/refresh'
-    params = {
-      app_key: GlobalConfigService.load('TIKTOK_SHOP_APP_ID', ''),
-      app_secret: GlobalConfigService.load('TIKTOK_SHOP_APP_SECRET', ''),
-      refresh_token: refresh_token,
-      grant_type: 'refresh_token'
-    }
-    url = "#{refresh_url}?#{URI.encode_www_form(params)}"
-    response = HTTParty.get(url)
-    result = JSON.parse(response.body)
+    result = client.refresh_token
 
     if result['code']&.zero?
       update!(
@@ -72,26 +71,13 @@ class Channel::TiktokShop < ApplicationRecord
   end
 
   def get_conversation_messages(conversation_id, options)
-    converstation_messages_url = "https://open-api.tiktokglobalshop.com/customer_service/202309/conversations/#{conversation_id}/messages"
-    params = default_params.merge(options)
-
-    signed_url = ::TiktokShop::SignatureService.signed_url(
-      converstation_messages_url,
-      params: params,
-      content_type: 'application/json'
-    )
-    res = HTTParty.get(
-      signed_url,
-      headers: { 'content-type' => 'application/json', 'x-tts-access-token' => access_token }
-    )
-
-    JSON.parse(res.body)
+    client.get_messages(conversation_id, options)
   end
 
   private
 
   def send_image(source_conversation_id, attachment)
-    result = upload_image_to_tiktok(attachment)
+    result = client.upload_image(attachment.file.download)
     return result unless result['code']&.zero?
 
     image_body = {
@@ -103,58 +89,7 @@ class Channel::TiktokShop < ApplicationRecord
       }.to_json
     }.to_json
 
-    call_api_send_message(source_conversation_id, image_body)
-  end
-
-  def upload_image_to_tiktok(attachment)
-    upload_image_url = 'https://open-api.tiktokglobalshop.com/customer_service/202309/images/upload'
-    signed_url = ::TiktokShop::SignatureService.signed_url(
-      upload_image_url,
-      params: default_params,
-      content_type: 'multipart/form-data'
-    )
-
-    uri = URI.parse(signed_url)
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-
-    request = Net::HTTP::Post.new(uri.path)
-    request['x-tts-access-token'] = access_token
-    request['content-type'] = 'multipart/form-data'
-
-    request.set_form(
-      [
-        ['data', attachment.file.download]
-      ]
-    )
-
-    res = http.request(request)
-    JSON.parse(res.body)
-  end
-
-  def call_api_send_message(conversation_id, body)
-    send_message_url = "https://open-api.tiktokglobalshop.com/customer_service/202309/conversations/#{conversation_id}/messages"
-    signed_url = ::TiktokShop::SignatureService.signed_url(
-      send_message_url,
-      params: default_params,
-      body: body,
-      content_type: 'application/json'
-    )
-    res = HTTParty.post(
-      signed_url,
-      headers: { 'content-type' => 'application/json', 'x-tts-access-token' => access_token },
-      body: body
-    )
-
-    JSON.parse(res.body)
-  end
-
-  def default_params
-    {
-      app_key: GlobalConfigService.load('TIKTOK_SHOP_APP_ID', ''),
-      shop_cipher: shop_cipher,
-      timestamp: Time.now.to_i
-    }
+    client.send_message(source_conversation_id, image_body)
   end
 
   def build_text_body(text_content)

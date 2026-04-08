@@ -6,6 +6,7 @@ class Api::V1::Accounts::Channels::TiktokShopChannelsController < Api::V1::Accou
     ActiveRecord::Base.transaction do
       channel = Current.account.tiktok_shops.create!(@channel_data)
       tiktok_inbox = Current.account.inboxes.create!(name: params[:shop_name], channel: channel)
+      ::TiktokShop::SyncJob.perform_later(channel.id)
     end
 
     @redis.del("tiktok_session:#{params[:tiktok_session_id]}")
