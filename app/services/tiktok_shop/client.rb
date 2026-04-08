@@ -13,6 +13,32 @@ class TiktokShop::Client
     post('images/upload', body: image_data, content_type: 'multipart/form-data')
   end
 
+  def get_authorized_shops
+    url = 'https://open-api.tiktokglobalshop.com/authorization/202309/shops'
+    params = default_params.except(:shop_cipher)
+    signed_url = signature_service.signed_url(url, params: params)
+
+    response = HTTParty.get(signed_url, headers: headers)
+    JSON.parse(response.body)
+  end
+
+  def get_category_assets
+    url = 'https://open-api.tiktokglobalshop.com/authorization/202405/category_assets'
+    params = default_params.except(:shop_cipher)
+    signed_url = signature_service.signed_url(url, params: params)
+
+    response = HTTParty.get(signed_url, headers: headers)
+    JSON.parse(response.body)
+  end
+
+  def get_conversation(conversation_id)
+    get("conversations/#{conversation_id}")
+  end
+
+  def mark_as_read(conversation_id)
+    post("conversations/#{conversation_id}/messages/read", body: {}.to_json)
+  end
+
   def create_conversation(buyer_user_id)
     body = { buyer_user_id: buyer_user_id }.to_json
     post('conversations', body: body)
