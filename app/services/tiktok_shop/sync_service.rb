@@ -16,7 +16,10 @@ class TiktokShop::SyncService
     response = @client.get_conversations(page_size: 20)
     return unless response['code']&.zero?
 
+    # Defensive parsing for both list-style and single-object responses
     conversations = response.dig('data', 'conversations') || []
+    conversations = [response['data']] if conversations.empty? && response.dig('data', 'conversation_id')
+
     conversations.each do |conv_data|
       sync_messages(conv_data['conversation_id'])
     end

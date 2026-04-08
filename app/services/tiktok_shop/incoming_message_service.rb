@@ -105,8 +105,8 @@ class TiktokShop::IncomingMessageService
   end
 
   def message_type
-    # TikTok sender roles: USER = 1, SHOP_OWNER = 2
-    params.dig(:data, :sender, :role) == 2 ? :outgoing : :incoming
+    # TikTok sender roles: BUYER, SHOP_OWNER, etc.
+    params.dig(:data, :sender, :role) == 'SHOP_OWNER' ? :outgoing : :incoming
   end
 
   def attach_media

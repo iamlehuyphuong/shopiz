@@ -13,6 +13,11 @@ class TiktokShop::Client
     post('images/upload', body: image_data, content_type: 'multipart/form-data')
   end
 
+  def create_conversation(buyer_user_id)
+    body = { buyer_user_id: buyer_user_id }.to_json
+    post('conversations', body: body)
+  end
+
   def get_conversations(options = {})
     get('conversations', params: options)
   end
