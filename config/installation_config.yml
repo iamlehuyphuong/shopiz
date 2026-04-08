@@ -437,6 +437,19 @@
   type: secret
 # ------- End of TikTok Channel Related Config ------- #
 
+# ------- Zalo Personal Channel Related Config ------- #
+- name: ZALO_API_URL
+  display_title: 'Zalo Personal API URL'
+  description: 'The base URL for Zalo Personal API'
+  value: 'https://personal-api.shopiz.pro'
+  locked: false
+- name: ZALO_SECRET_KEY
+  display_title: 'Zalo Personal Secret Key'
+  description: 'The secret key used for Zalo Personal webhook signature verification'
+  locked: false
+  type: secret
+# ------- End of Zalo Personal Channel Related Config ------- #
+
 # ------- OG Image Related Config ------- #
 - name: OG_IMAGE_CDN_URL
   display_title: 'OG Image CDN URL'

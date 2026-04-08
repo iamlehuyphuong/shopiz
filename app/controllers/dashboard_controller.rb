@@ -83,6 +83,7 @@ class DashboardController < ActionController::Base
       ZALO_OA_APP_SECRET: GlobalConfigService.load('ZALO_OA_APP_SECRET', ''),
       ZALO_API_URL: GlobalConfigService.load('ZALO_API_URL', ''),
       ZALO_OA_SECRET_KEY: GlobalConfigService.load('ZALO_OA_SECRET_KEY', ''),
+      ZALO_SECRET_KEY: GlobalConfigService.load('ZALO_SECRET_KEY', ''),
       TIKTOK_SHOP_APP_ID: GlobalConfigService.load('TIKTOK_SHOP_APP_ID', ''),
       TIKTOK_SHOP_APP_SECRET: GlobalConfigService.load('TIKTOK_SHOP_APP_SECRET', ''),
       TWITTER_CONSUMER_KEY: GlobalConfigService.load('TWITTER_CONSUMER_KEY', ''),

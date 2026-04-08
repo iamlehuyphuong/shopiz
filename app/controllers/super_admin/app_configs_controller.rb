@@ -52,7 +52,7 @@ class SuperAdmin::AppConfigsController < SuperAdmin::ApplicationController
       'google' => %w[GOOGLE_OAUTH_CLIENT_ID GOOGLE_OAUTH_CLIENT_SECRET GOOGLE_OAUTH_REDIRECT_URI ENABLE_GOOGLE_OAUTH_LOGIN],
       'captain' => %w[CAPTAIN_OPEN_AI_API_KEY CAPTAIN_OPEN_AI_MODEL CAPTAIN_OPEN_AI_ENDPOINT],
       'zalo' => %w[ZALO_OA_APP_ID ZALO_OA_APP_SECRET ZALO_OA_SECRET_KEY],
-      'zalo_personal' => %w[ZALO_API_URL],
+      'zalo_personal' => %w[ZALO_API_URL ZALO_SECRET_KEY],
       'tiktok_shop' => %w[TIKTOK_SHOP_APP_ID TIKTOK_SHOP_APP_SECRET],
     }
 
