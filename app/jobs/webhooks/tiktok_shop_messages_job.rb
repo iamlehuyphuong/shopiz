@@ -1,4 +1,4 @@
-class Webhooks::TiktokShopMessagesJob < ApplicationJob
+class Webhooks::TiktokShopMessagesJob < MutexApplicationJob
   queue_as :default
 
   SUPPORTED_TYPE = 14
@@ -10,5 +10,9 @@ class Webhooks::TiktokShopMessagesJob < ApplicationJob
     return unless channel_tiktok_shop
 
     TiktokShop::IncomingMessageService.new(inbox: channel_tiktok_shop.inbox, params: data.with_indifferent_access).perform
+  end
+
+  def lock_key(data)
+    "tiktok_shop_messages_#{data['conversation_id']}"
   end
 end

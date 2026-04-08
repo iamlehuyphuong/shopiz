@@ -2,6 +2,8 @@ class TiktokShop::IncomingMessageService
   pattr_initialize [:inbox!, :params!]
 
   def perform
+    return if already_processed?
+
     set_contact
     update_contact_info if @contact.messages.empty?
     set_conversation
@@ -11,6 +13,10 @@ class TiktokShop::IncomingMessageService
   end
 
   private
+
+  def already_processed?
+    @inbox.messages.exists?(source_id: params[:data][:message_id])
+  end
 
   def set_contact
     contact_inbox = ::ContactInboxWithContactBuilder.new(
@@ -91,11 +97,16 @@ class TiktokShop::IncomingMessageService
       content: message_content,
       account_id: @inbox.account_id,
       inbox_id: @inbox.id,
-      message_type: :incoming,
-      sender: @contact,
+      message_type: message_type,
+      sender: message_type == :outgoing ? nil : @contact,
       source_id: params[:data][:message_id],
       created_at: params[:data][:create_time]
     }
+  end
+
+  def message_type
+    # TikTok sender roles: USER = 1, SHOP_OWNER = 2
+    params.dig(:data, :sender, :role) == 2 ? :outgoing : :incoming
   end
 
   def attach_media
