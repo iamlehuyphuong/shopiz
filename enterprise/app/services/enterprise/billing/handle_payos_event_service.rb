@@ -1,10 +1,10 @@
 class Enterprise::Billing::HandlePayosEventService
   def perform(payload)
     prepare_data(payload)
-    return if @account.blank? || @product.blank?
+    return if @account.blank? || @record.blank?
 
     ActiveRecord::Base.transaction do
-      @product[:metadata]['type'] == 'package' ? update_plan : update_credit
+      @record.is_a?(SubscriptionPlan) ? update_plan : update_addon
       save_billing_history(payload)
     end
   end
@@ -12,104 +12,62 @@ class Enterprise::Billing::HandlePayosEventService
   private
 
   def prepare_data(payload)
-    name = payload.dig('data', 'description').to_s.split.last
-    @product = Polar::ProductService.by_name(name&.downcase)&.with_indifferent_access
+    sku = payload.dig('data', 'description').to_s.split.last
+    @record = SubscriptionPlan.find_by(sku: sku) || AddonPackage.find_by(sku: sku)
     @customer_id = payload['data']['orderCode'].to_s[10..].to_s
     @account = Account.find_by(id: @customer_id)
   end
 
   def update_plan
-    update_custom_attributes
-    change_plan_features
-    update_limits
-  end
-
-  def update_credit
-    new_credit = @account.limits['captain_responses_credit'].to_i + @product[:metadata]['captain_responses_credit'].to_i
-    @account.limits['captain_responses_credit'] = new_credit
-    @account.save
-  end
-
-  def update_custom_attributes
-    @account.update(custom_attributes: build_custom_attributes)
-  end
-
-  def build_custom_attributes
-    {
-      stripe_customer_id: @customer_id,
-      stripe_price_id: @product[:prices][0]['id'],
-      stripe_product_id: @product[:id],
-      plan_name: @product[:name],
-      sku: @product[:metadata]['sku'],
-      subscribed_quantity: @product[:metadata]['agents'],
-      subscription_status: :active,
-      subscription_ends_on: subscription_ends_on
-    }
-  end
-
-  def subscription_ends_on
-    current_plan = @account.custom_attributes['plan_name']
-    number_of_months = @product[:metadata]['months'].to_i
-
-    if current_plan == @product[:name]
-      base_time = [Time.zone.now, Time.zone.parse(@account.custom_attributes['subscription_ends_on'])].max
-      base_time + number_of_months.months
-    else
-      Time.zone.now + number_of_months.months
-    end
-  end
-
-  def change_plan_features
-    # Disable all current features before applying plan-specific ones
+    @account.update!(
+      limits: @account.limits.merge(@record.limits),
+      custom_attributes: @account.custom_attributes.merge(
+        plan_name: @record.name(@account.locale),
+        sku: @record.sku,
+        subscription_status: 'active',
+        subscription_ends_on: (Time.zone.now + @record.duration_days.days).to_s
+      )
+    )
+    # Handle features
     all_feature_names = Featurable::FEATURE_LIST.map { |f| f['name'] }
     @account.disable_features(*all_feature_names)
-
-    # Metadata 'features' should ideally contain the full feature names.
-    # If they contain short codes, they will be ignored unless we maintain a local mapping.
-    features = @product[:metadata]['features']&.split(',')&.map(&:strip) || []
-    
-    # We attempt to enable features by name. If they were short codes, we might need a mapping later,
-    # but for now we're moving towards using full names as requested.
-    valid_features = features.select { |f| all_feature_names.include?(f) }
-    @account.enable_features(*valid_features)
+    @record.features.each do |feature, enabled|
+      enabled ? @account.enable_features(feature) : @account.disable_features(feature)
+    end
     @account.save!
   end
 
-  def update_limits
-    @account.limits = build_limits
+  def update_addon
+    case @record.addon_type
+    when 'ai_messages'
+      current = @account.limits['captain_responses_credit'].to_i
+      @account.limits['captain_responses_credit'] = (current + @record.quantity).to_s
+    when 'staff'
+      current = @account.limits['agents'].to_i
+      @account.limits['agents'] = (current + @record.quantity).to_s
+    when 'inboxes_count'
+      current = @account.limits['inboxes'].to_i
+      @account.limits['inboxes'] = (current + @record.quantity).to_s
+    end
     @account.save!
-  end
-
-  def build_limits
-    metadata = @product[:metadata]
-
-    {
-      captain_assistants: metadata['captain_assistants'].to_i,
-      captain_responses: metadata['captain_responses'].to_i,
-      captain_documents: metadata['captain_documents'].to_i,
-      captain_faqs: metadata['captain_faqs'].to_i,
-      contacts: metadata['contacts'].to_i,
-      inboxes: metadata['inboxes'].to_i,
-      agents: metadata['agents'].to_i,
-      automations: metadata['automations'].to_i
-    }
-  end
-
-  def reset_captain_usage
-    @account.reset_response_usage
   end
 
   def save_billing_history(payload)
     data = payload['data']
-
+    product_name = @record.is_a?(SubscriptionPlan) ? @record.name(@account.locale) : @record.name
+    
     @account.billing_histories.create!(
       price_amount: data['amount'],
-      price_currency: data['currency'],
-      product_name: @product[:name],
-      sku: @product[:metadata]['sku'],
-      status: 0,
-      product_id: @product[:id],
-      metadata: @product[:metadata],
+      price_currency: data['currency'] || 'vnd',
+      product_name: product_name,
+      sku: @record.sku,
+      status: 0, # Success
+      product_id: @record.id.to_s,
+      metadata: {
+        type: @record.is_a?(SubscriptionPlan) ? 'package' : 'addon',
+        sku: @record.sku,
+        id: @record.id
+      },
       transaction_id: data['reference'],
       description: data['description'],
       transaction_date_time: data['transactionDateTime']

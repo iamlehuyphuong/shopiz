@@ -19,7 +19,7 @@ const emit = defineEmits([
 ]);
 
 const { t } = useI18n();
-const searchShortcut = useKbd([`$mod`, 'k']);
+const searchShortcut = useKbd([`$mod`, '+', 'k']);
 const store = useStore();
 const router = useRouter();
 const { accountScopedRoute, currentAccount } = useAccount();
@@ -78,7 +78,7 @@ onUnmounted(() => {
       </div>
 
       <!-- Search Bar -->
-      <div class="hidden md:flex items-center w-[240px]">
+      <div class="hidden md:flex items-center w-[200px]">
         <RouterLink
           :to="accountScopedRoute('search')"
           class="flex gap-2 items-center px-3 py-1.5 w-full h-8 rounded-lg outline outline-1 outline-n-weak bg-n-solid-2 hover:bg-n-solid-3 dark:bg-n-black/30 dark:hover:bg-n-black/40 transition-colors"

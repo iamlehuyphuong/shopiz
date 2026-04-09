@@ -18,7 +18,8 @@
 class AddonPackage < ApplicationRecord
   enum addon_type: { ai_messages: 0, staff: 1, inboxes_count: 2 }
 
-  validates :name, :addon_type, :quantity, presence: true
+  validates :name, :addon_type, :quantity, :sku, presence: true
+  validates :sku, uniqueness: true
   validates :quantity, numericality: { greater_than: 0 }
   validates :price_amount, numericality: { greater_than_or_equal_to: 0 }
 

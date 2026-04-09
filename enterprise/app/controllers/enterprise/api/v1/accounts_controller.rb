@@ -158,9 +158,12 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
       @account.id,
       params[:product_id]
     )
-    return if url.blank?
 
-    render_redirect_url(url)
+    if url.present?
+      render_redirect_url(url)
+    else
+      render json: { message: I18n.t('BILLING_SETTINGS.PAYMENT_LINK_ERROR') }, status: :unprocessable_entity
+    end
   end
 
   def cancel_cloud_subscriptions_for_deletion

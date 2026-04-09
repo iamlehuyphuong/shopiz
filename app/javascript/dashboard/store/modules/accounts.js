@@ -126,7 +126,12 @@ export const actions = {
     commit(types.default.SET_ACCOUNT_UI_FLAG, { isCheckoutInProcess: true });
     try {
       const response = await EnterpriseAccountAPI.checkout(paymentInfo);
-      window.location = response.data.redirect_url;
+      const { redirect_url: redirectUrl } = response.data;
+      if (redirectUrl) {
+        window.location = redirectUrl;
+      } else {
+        throw new Error('Invalid redirect URL');
+      }
     } catch (error) {
       throwErrorMessage(error);
     } finally {

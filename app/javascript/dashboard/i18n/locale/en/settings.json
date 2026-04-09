@@ -750,6 +750,7 @@
     "FACEBOOK_SUPPORT": "Message on Messenger",
     "ZALO_SUPPORT": "Message on Zalo",
     "NO_BILLING_USER": "Your billing account is being configured. Please refresh the page and try again.",
+    "PAYMENT_LINK_ERROR": "Could not create payment link. Please check your configuration.",
     "TOPUP": {
       "BUY_CREDITS": "Buy more credits",
       "MODAL_TITLE": "Buy AI Credits",

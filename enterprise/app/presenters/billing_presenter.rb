@@ -149,14 +149,17 @@ class BillingPresenter
   end
 
   def credit_data
-    data = Polar::ProductService.by_type('credit')
-    data = data.sort_by { |item| item.dig('metadata', 'captain_responses_credit').to_i }
-
-    data.map(&method(:normalize_credit))
-  end
-
-  def normalize_credit(credit)
-    credit.slice('id', 'name', 'description').merge(price: credit['prices'][0])
+    AddonPackage.ai_messages.visible.order(:price_amount).map do |addon|
+      {
+        id: addon.id,
+        name: addon.name,
+        description: addon.name,
+        price: {
+          price_amount: addon.price_amount.to_f,
+          currency: addon.currency
+        }
+      }
+    end
   end
 
   def billing_histories_data

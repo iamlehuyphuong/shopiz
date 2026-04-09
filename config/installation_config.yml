@@ -477,6 +477,20 @@
   type: secret
 # ------- End of TikTok Shop Channel Related Config ------- #
 
+# ------- PayOS Related Config ------- #
+- name: PAYOS_CLIENT_ID
+  display_title: 'PayOS Client ID'
+  locked: false
+- name: PAYOS_API_KEY
+  display_title: 'PayOS API Key'
+  locked: false
+  type: secret
+- name: PAYOS_CHECKSUM_KEY
+  display_title: 'PayOS Checksum Key'
+  locked: false
+  type: secret
+# ------- End of PayOS Related Config ------- #
+
 # ------- OG Image Related Config ------- #
 - name: OG_IMAGE_CDN_URL
   display_title: 'OG Image CDN URL'

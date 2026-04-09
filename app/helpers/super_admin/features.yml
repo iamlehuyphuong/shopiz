@@ -175,3 +175,9 @@ tiktok_shop:
   enabled: true
   icon: 'icon-tiktok'
   config_key: 'tiktok_shop'
+payos:
+  name: 'PayOS'
+  description: 'Configuration for setting up PayOS Integration'
+  enabled: true
+  icon: 'icon-bank-card-line'
+  config_key: 'payos'

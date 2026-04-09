@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_04_06_014621) do
+ActiveRecord::Schema[7.1].define(version: 2026_04_09_071613) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -152,6 +152,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_06_014621) do
     t.boolean "visible", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "sku"
+    t.index ["sku"], name: "index_addon_packages_on_sku", unique: true
   end
 
   create_table "agent_bot_inboxes", force: :cascade do |t|
@@ -1313,7 +1315,9 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_06_014621) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_free"
+    t.string "sku"
     t.index ["is_free"], name: "index_subscription_plans_on_is_free"
+    t.index ["sku"], name: "index_subscription_plans_on_sku", unique: true
   end
 
   create_table "taggings", id: :serial, force: :cascade do |t|

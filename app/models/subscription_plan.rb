@@ -44,6 +44,7 @@ class SubscriptionPlan < ApplicationRecord
   before_validation :ensure_json_fields
 
   validates :name_en, :name_vi, presence: true
+  validates :sku, presence: true, uniqueness: true
   validates :duration_days, presence: true, numericality: { greater_than: 0 }
   validates :price_amount, presence: true, numericality: { greater_than_or_equal_to: 0 }
 

@@ -4,9 +4,9 @@ require 'json'
 class Payos::Client
   attr_reader :client_id, :api_key, :checksum_key, :base_url
 
-  def initialize(client_id: ENV.fetch('PAYOS_CLIENT_ID', nil),
-                 api_key: ENV.fetch('PAYOS_API_KEY', nil),
-                 checksum_key: ENV.fetch('PAYOS_CHECKSUM_KEY', nil),
+  def initialize(client_id: GlobalConfig.get('PAYOS_CLIENT_ID').presence || ENV.fetch('PAYOS_CLIENT_ID', nil),
+                 api_key: GlobalConfig.get('PAYOS_API_KEY').presence || ENV.fetch('PAYOS_API_KEY', nil),
+                 checksum_key: GlobalConfig.get('PAYOS_CHECKSUM_KEY').presence || ENV.fetch('PAYOS_CHECKSUM_KEY', nil),
                  base_url: default_base_url)
     @client_id = client_id
     @api_key = api_key

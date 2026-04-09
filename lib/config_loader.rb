@@ -55,13 +55,13 @@ class ConfigLoader
   end
 
   def compare_values(existing, latest)
-    existing.value != latest[:value] ||
+    existing.serialized_value.with_indifferent_access != latest.with_indifferent_access ||
       (!latest[:locked].nil? && existing.locked != latest[:locked])
   end
 
   def save_as_new_config(latest)
     config = InstallationConfig.find_or_initialize_by(name: latest[:name])
-    config.value = latest[:value]
+    config.serialized_value = latest
     config.locked = latest[:locked]
     config.save!
   end
