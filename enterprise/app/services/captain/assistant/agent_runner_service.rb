@@ -24,6 +24,8 @@ class Captain::Assistant::AgentRunnerService
     @conversation = conversation
     @callbacks = callbacks
     @source = source
+
+    Llm::Config.initialize!
   end
 
   def generate_response(message_history: [])
