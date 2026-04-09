@@ -249,14 +249,12 @@ onMounted(fetchAccountDetails);
                 isFreePlan(currentSubscription) ? '---' : subscriptionRenewsOn
               "
             />
-            <div
-              v-if="!isFreePlan(currentSubscription)"
-              class="flex items-center justify-end"
-            >
+            <div class="flex items-center justify-center">
               <ButtonV4
                 sm
                 solid
-                ruby
+                :color="isFreePlan(currentSubscription) ? 'slate' : 'ruby'"
+                :disabled="isFreePlan(currentSubscription)"
                 @click="
                   onClickBillingPortal({
                     product_id: currentSubscription.plan_id,
@@ -485,7 +483,7 @@ onMounted(fetchAccountDetails);
               target="_blank"
               rel="noopener noreferrer"
             >
-              <ButtonV4 sm solid ruby icon="i-ri-zalo-fill">
+              <ButtonV4 sm solid blue icon="i-ri-zalo-fill">
                 {{ $t('BILLING_SETTINGS.ZALO_SUPPORT') }}
               </ButtonV4>
             </a>
