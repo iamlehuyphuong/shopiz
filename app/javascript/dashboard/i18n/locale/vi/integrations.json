@@ -689,7 +689,7 @@
         },
         "ADD": {
           "SUGGESTED": {
-            "TITLE": "Ví dụ kịch bản",
+            "TITLE": "Kịch bản mẫu",
             "ADD": "Thêm tất cả",
             "ADD_SINGLE": "Thêm",
             "TOOLS_USED": "Công cụ sử dụng:"
@@ -723,7 +723,8 @@
           "UPDATE": "Cập nhật thay đổi"
         },
         "LIST": {
-          "SEARCH_PLACEHOLDER": "Tìm kiếm..."
+          "SEARCH_PLACEHOLDER": "Tìm kiếm...",
+          "COUNT": "{count} kịch bản"
         },
         "EMPTY_MESSAGE": "Chưa có kịch bản nào.",
         "SEARCH_EMPTY_MESSAGE": "Không tìm thấy kịch bản.",
