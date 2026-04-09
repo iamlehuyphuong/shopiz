@@ -215,6 +215,74 @@ const addAllExampleScenarios = async () => {
   }
 };
 
+const importInput = ref(null);
+
+const triggerImport = () => {
+  importInput.value.click();
+};
+
+const onFileChange = async event => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = async e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!Array.isArray(data)) {
+        throw new Error('Invalid format');
+      }
+
+      const validItems = data.filter(
+        item => item.title && item.description && item.instruction
+      );
+
+      if (validItems.length > 0) {
+        await Promise.all(validItems.map(item => addScenario(item)));
+        useAlert(t('CAPTAIN.ASSISTANTS.SCENARIOS.API.IMPORT.SUCCESS'));
+      } else {
+        useAlert(t('CAPTAIN.ASSISTANTS.SCENARIOS.API.IMPORT.ERROR'));
+      }
+    } catch (error) {
+      useAlert(t('CAPTAIN.ASSISTANTS.SCENARIOS.API.IMPORT.ERROR'));
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+};
+
+const exportScenarios = scenario => {
+  let scenariosToExport = [];
+  if (scenario) {
+    scenariosToExport = [scenario];
+  } else if (bulkSelectedIds.value.size > 0) {
+    scenariosToExport = scenarios.value.filter(s =>
+      bulkSelectedIds.value.has(s.id)
+    );
+  } else {
+    scenariosToExport = filteredScenarios.value;
+  }
+
+  const exportData = scenariosToExport.map(s => ({
+    title: s.title,
+    description: s.description,
+    instruction: s.instruction,
+  }));
+
+  const dataStr = JSON.stringify(exportData, null, 2);
+  const dataUri =
+    'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+
+  const exportFileDefaultName = `scenarios-${
+    assistantId.value
+  }-${new Date().getTime()}.json`;
+
+  const linkElement = document.createElement('a');
+  linkElement.setAttribute('href', dataUri);
+  linkElement.setAttribute('download', exportFileDefaultName);
+  linkElement.click();
+};
+
 onMounted(() => {
   store.dispatch('captainScenarios/get', {
     assistantId: assistantId.value,
@@ -258,11 +326,30 @@ onMounted(() => {
           />
         </template>
         <template #actions>
-          <AddNewScenariosDialog color="blue" @add="addScenario" />
+          <div class="flex items-center gap-2">
+            <input
+              ref="importInput"
+              type="file"
+              accept=".json"
+              class="hidden"
+              @change="onFileChange"
+            />
+            <Button
+              :label="
+                t('CAPTAIN.ASSISTANTS.SCENARIOS.IMPORT_EXPORT.IMPORT_BUTTON')
+              "
+              sm
+              slate
+              faded
+              icon="i-lucide-upload"
+              @click="triggerImport"
+            />
+            <AddNewScenariosDialog color="blue" @add="addScenario" />
+          </div>
         </template>
       </BaseSettingsHeader>
 
-      <div v-if="activeTabIndex === 0" class="flex mt-7 flex-col gap-4">
+      <div v-if="activeTabIndex === 0" class="flex mt-7 flex-col gap-4 pb-16">
         <div class="flex justify-between items-center">
           <BulkSelectBar
             v-model="bulkSelectedIds"
@@ -301,11 +388,12 @@ onMounted(() => {
             @select="handleRuleSelect"
             @delete="deleteScenario(scenario.id)"
             @update="updateScenario"
+            @export="exportScenarios(scenario)"
             @hover="isHovered => handleRuleHover(isHovered, scenario.id)"
           />
         </div>
       </div>
-      <div v-else class="flex mt-7 flex-col gap-4">
+      <div v-else class="flex mt-7 flex-col gap-4 pb-16">
         <SuggestedScenarios
           :title="$t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.SUGGESTED.TITLE')"
           :items="scenariosExample"

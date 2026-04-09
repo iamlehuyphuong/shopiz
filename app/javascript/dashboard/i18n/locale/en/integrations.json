@@ -739,7 +739,16 @@
           "DELETE": {
             "SUCCESS": "Scenarios deleted successfully",
             "ERROR": "There was an error deleting scenarios, please try again."
+          },
+          "IMPORT": {
+            "SUCCESS": "Scenarios imported successfully",
+            "ERROR": "Error importing scenarios. Please check the file format.",
+            "INVALID_FILE": "Invalid file format. Please upload a JSON file."
           }
+        },
+        "IMPORT_EXPORT": {
+          "IMPORT_BUTTON": "Import",
+          "EXPORT_BUTTON": "Export"
         }
       }
     },

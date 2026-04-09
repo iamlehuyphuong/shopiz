@@ -536,7 +536,7 @@
           "ALLOW_CONVERSATION_FAQS": "Tạo FAQ từ các cuộc trò chuyện đã giải quyết",
           "ALLOW_MEMORIES": "Ghi nhớ thông tin quan trọng từ tương tác khách hàng",
           "ALLOW_CITATIONS": "Đính kèm nguồn tham khảo trong phản hồi",
-          "ALLOW_CONTACT_ATTRIBUTES": "Allow access to contact information"
+          "ALLOW_CONTACT_ATTRIBUTES": "Cho phép truy cập thông tin liên hệ"
         }
       },
       "EDIT": {
@@ -560,11 +560,11 @@
           "DESCRIPTION": "Thêm các quy tắc để hướng dẫn trợ lý theo ngữ cảnh.",
           "OPTIONS": {
             "GUARDRAILS": {
-              "TITLE": "Giới hạn",
+              "TITLE": "Giới hạn an toàn (Guardrails)",
               "DESCRIPTION": "Định nghĩa phạm vi nội dung trợ lý được phép trả lời."
             },
             "RESPONSE_GUIDELINES": {
-              "TITLE": "Quy tắc trả lời",
+              "TITLE": "Chỉ dẫn phản hồi (Response Guidelines)",
               "DESCRIPTION": "Định hình phong cách trả lời: thân thiện, ngắn gọn, chi tiết, trang trọng..."
             }
           }
@@ -589,7 +589,7 @@
         }
       },
       "GUARDRAILS": {
-        "TITLE": "Giới hạn",
+        "TITLE": "Giới hạn an toàn (Guardrails)",
         "DESCRIPTION": "Xác định những nội dung trợ lý được phép và không được phép trả lời.",
         "BULK_ACTION": {
           "SELECTED": "{count} mục đã chọn",
@@ -599,14 +599,14 @@
         },
         "ADD": {
           "SUGGESTED": {
-            "TITLE": "Ví dụ giới hạn",
+            "TITLE": "Ví dụ giới hạn an toàn",
             "ADD": "Thêm tất cả",
             "ADD_SINGLE": "Thêm",
             "SAVE": "Thêm & lưu (↵)",
             "PLACEHOLDER": "Nhập giới hạn mới..."
           },
           "NEW": {
-            "TITLE": "Thêm giới hạn",
+            "TITLE": "Thêm giới hạn an toàn",
             "CREATE": "Tạo",
             "CANCEL": "Huỷ",
             "PLACEHOLDER": "Nhập giới hạn mới...",
@@ -620,21 +620,21 @@
         "SEARCH_EMPTY_MESSAGE": "Không tìm thấy giới hạn nào.",
         "API": {
           "ADD": {
-            "SUCCESS": "Thêm giới hạn thành công",
-            "ERROR": "Có lỗi khi thêm giới hạn"
+            "SUCCESS": "Thêm giới hạn an toàn thành công",
+            "ERROR": "Có lỗi khi thêm giới hạn an toàn"
           },
           "UPDATE": {
-            "SUCCESS": "Cập nhật giới hạn thành công",
-            "ERROR": "Có lỗi khi cập nhật giới hạn"
+            "SUCCESS": "Cập nhật giới hạn an toàn thành công",
+            "ERROR": "Có lỗi khi cập nhật giới hạn an toàn"
           },
           "DELETE": {
-            "SUCCESS": "Xóa giới hạn thành công",
-            "ERROR": "Có lỗi khi xóa giới hạn"
+            "SUCCESS": "Xóa giới hạn an toàn thành công",
+            "ERROR": "Có lỗi khi xóa giới hạn an toàn"
           }
         }
       },
       "RESPONSE_GUIDELINES": {
-        "TITLE": "Quy tắc trả lời",
+        "TITLE": "Chỉ dẫn phản hồi (Response Guidelines)",
         "DESCRIPTION": "Định hình phong cách phản hồi của trợ lý.",
         "BULK_ACTION": {
           "SELECTED": "{count} mục đã chọn",
@@ -644,14 +644,14 @@
         },
         "ADD": {
           "SUGGESTED": {
-            "TITLE": "Ví dụ quy tắc trả lời",
+            "TITLE": "Ví dụ chỉ dẫn phản hồi",
             "ADD": "Thêm tất cả",
             "ADD_SINGLE": "Thêm",
             "SAVE": "Lưu (↵)",
             "PLACEHOLDER": "Nhập quy tắc trả lời..."
           },
           "NEW": {
-            "TITLE": "Thêm quy tắc trả lời",
+            "TITLE": "Thêm chỉ dẫn phản hồi",
             "CREATE": "Tạo",
             "CANCEL": "Huỷ",
             "PLACEHOLDER": "Nhập quy tắc...",
@@ -661,8 +661,8 @@
         "LIST": {
           "SEARCH_PLACEHOLDER": "Tìm kiếm..."
         },
-        "EMPTY_MESSAGE": "Chưa có quy tắc nào.",
-        "SEARCH_EMPTY_MESSAGE": "Không tìm thấy quy tắc nào.",
+        "EMPTY_MESSAGE": "Chưa có chỉ dẫn nào.",
+        "SEARCH_EMPTY_MESSAGE": "Không tìm thấy chỉ dẫn nào.",
         "API": {
           "ADD": {
             "SUCCESS": "Thêm thành công",
@@ -740,7 +740,16 @@
           "DELETE": {
             "SUCCESS": "Xóa kịch bản thành công",
             "ERROR": "Lỗi khi xóa kịch bản"
+          },
+          "IMPORT": {
+            "SUCCESS": "Nhập kịch bản thành công",
+            "ERROR": "Lỗi khi nhập kịch bản. Vui lòng kiểm tra định dạng file.",
+            "INVALID_FILE": "Định dạng file không hợp lệ. Vui lòng tải lên file JSON."
           }
+        },
+        "IMPORT_EXPORT": {
+          "IMPORT_BUTTON": "Nhập từ file",
+          "EXPORT_BUTTON": "Xuất ra file"
         }
       }
     },
