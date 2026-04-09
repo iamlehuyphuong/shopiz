@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUnmounted } from 'vue';
+import { onMounted, onUnmounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useKbd } from 'dashboard/composables/utils/useKbd';
 import { useI18n } from 'vue-i18n';
@@ -22,7 +22,14 @@ const { t } = useI18n();
 const searchShortcut = useKbd([`$mod`, 'k']);
 const store = useStore();
 const router = useRouter();
-const { accountScopedRoute } = useAccount();
+const { accountScopedRoute, currentAccount } = useAccount();
+
+const planName = computed(() => {
+  return (
+    currentAccount.value?.billing?.current_subscription?.plan_name ||
+    currentAccount.value?.custom_attributes?.plan_name
+  );
+});
 
 const handleKeyDown = e => {
   if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -129,7 +136,18 @@ onUnmounted(() => {
         </template>
       </ComposeConversation>
 
-      <div class="flex-shrink-0 w-px h-5 bg-n-strong mx-1 hidden md:block" />
+      <RouterLink
+        v-if="planName"
+        :to="accountScopedRoute('billing_settings_index')"
+        class="hidden lg:flex items-center px-2 py-0.5 rounded-full bg-n-brand text-[10px] font-bold uppercase tracking-wider text-white hover:opacity-90 transition-opacity whitespace-nowrap shadow-sm"
+      >
+        {{ planName }}
+      </RouterLink>
+
+      <div
+        v-if="planName"
+        class="flex-shrink-0 w-px h-5 bg-n-strong mx-1 hidden lg:block"
+      />
 
       <SidebarProfileMenu
         position="top"
