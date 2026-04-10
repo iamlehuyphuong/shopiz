@@ -88,7 +88,9 @@ class DashboardController < ActionController::Base
       TIKTOK_SHOP_APP_SECRET: GlobalConfigService.load('TIKTOK_SHOP_APP_SECRET', ''),
       TWITTER_CONSUMER_KEY: GlobalConfigService.load('TWITTER_CONSUMER_KEY', ''),
       GIT_SHA: GIT_HASH,
-      ALLOWED_LOGIN_METHODS: allowed_login_methods
+      ALLOWED_LOGIN_METHODS: allowed_login_methods,
+      GOOGLE_OAUTH_CLIENT_ID: GlobalConfigService.load('GOOGLE_OAUTH_CLIENT_ID', nil),
+      GOOGLE_OAUTH_REDIRECT_URI: GlobalConfigService.load('GOOGLE_OAUTH_REDIRECT_URI', nil)
     }
   end
 
