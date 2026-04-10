@@ -1,11 +1,27 @@
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, computed, onBeforeMount } from 'vue';
+import { useI18n } from 'vue-i18n';
 import TestimonialCard from './TestimonialCard.vue';
 import { getTestimonialContent } from '../../../../../api/testimonials';
 
 const emit = defineEmits(['resizeContainers']);
+const { locale } = useI18n();
 
 const testimonial = ref(null);
+
+const testimonialReview = computed(() => {
+  if (!testimonial.value) return '';
+  return locale.value === 'vi'
+    ? testimonial.value.authorReviewVi
+    : testimonial.value.authorReviewEn;
+});
+
+const testimonialCompany = computed(() => {
+  if (!testimonial.value) return '';
+  return locale.value === 'vi'
+    ? testimonial.value.authorCompanyVi
+    : testimonial.value.authorCompanyEn;
+});
 
 const fetchTestimonials = async () => {
   try {
@@ -31,10 +47,10 @@ onBeforeMount(() => {
   >
     <TestimonialCard
       v-if="testimonial"
-      :review-content="testimonial.authorReview"
+      :review-content="testimonialReview"
       :author-image="testimonial.authorImage"
       :author-name="testimonial.authorName"
-      :author-designation="testimonial.authorCompany"
+      :author-designation="testimonialCompany"
     />
     <div class="absolute bottom-8 right-8 grid grid-cols-3 gap-1.5">
       <span class="w-2 h-2 rounded-full bg-n-gray-5" />
