@@ -8,15 +8,16 @@ module AssigneeActivityMessageHandler
 
     return unless user_name
 
-    content = generate_assignee_change_activity_content(user_name)
-    ::Conversations::ActivityMessageJob.perform_later(self, activity_message_params(content)) if content
+    content, translation_key, translation_values = generate_assignee_change_activity_content(user_name)
+    ::Conversations::ActivityMessageJob.perform_later(self, activity_message_params(content, translation_key, translation_values)) if content
   end
 
   def generate_assignee_change_activity_content(user_name)
     params = { assignee_name: assignee&.name || '', user_name: user_name }
     key = assignee_id ? 'assigned' : 'removed'
     key = 'self_assigned' if self_assign? assignee_id
-    I18n.t("conversations.activity.assignee.#{key}", **params)
+    translation_key = "conversations.activity.assignee.#{key}"
+    [I18n.t(translation_key, **params), translation_key, params]
   end
 
   def activity_message_owner(user_name)

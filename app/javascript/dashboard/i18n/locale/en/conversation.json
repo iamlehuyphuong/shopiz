@@ -80,15 +80,40 @@
       "HIDE_LABELS": "Hide labels"
     },
     "VOICE_CALL": {
+      "TITLE": "Call",
+      "RINGING": "Ringing",
+      "ACTIVE": "Call in progress",
+      "MISSED": "Missed Call",
+      "ENDED": "Call Ended",
+      "INCOMING": "Incoming call",
+      "OUTGOING": "Call started...",
       "INCOMING_CALL": "Incoming call",
       "OUTGOING_CALL": "Outgoing call",
       "CALL_IN_PROGRESS": "Call in progress",
       "NO_ANSWER": "No answer",
       "MISSED_CALL": "Missed call",
       "CALL_ENDED": "Call ended",
+      "DURATION": "{duration}",
+      "UNKNOWN": "Unknown",
+      "UNKNOWN_CALLER": "Unknown caller",
+      "UNKNOWN_NUMBER": "Unknown number",
+      "CALL_ERROR": "Failed to initiate call. Please try again.",
+      "CALL_INITIATED": "Call initiated successfully.",
       "NOT_ANSWERED_YET": "Not answered yet",
+      "YOU_CALLED": "You called",
       "THEY_ANSWERED": "They answered",
-      "YOU_ANSWERED": "You answered"
+      "YOU_ANSWERED": "You answered",
+      "YOU_DIDNT_ANSWER": "You didn't answer",
+      "RINGING_STATUS": "Ringing",
+      "ACTIVE_STATUS": "Call in progress",
+      "MISSED_STATUS": "Missed Call",
+      "ENDED_STATUS": "Call Ended",
+      "CALL_DURATION": "Duration: {duration}",
+      "INCOMING_FROM": "Incoming from {name}",
+      "OUTGOING_TO": "Outgoing to {name}",
+      "JOIN_CALL": "Join call",
+      "REJECT_CALL": "Reject call",
+      "END_CALL": "End call"
     },
     "HEADER": {
       "RESOLVE_ACTION": "Resolve",
@@ -295,42 +320,6 @@
       "CONTACT": "Contact",
       "COPILOT": "Shopiz AI"
     },
-    "VOICE_CALL": {
-      "TITLE": "Call",
-      "RINGING": "Ringing",
-      "ACTIVE": "Call in progress",
-      "MISSED": "Missed Call",
-      "ENDED": "Call Ended",
-      "INCOMING": "Incoming call",
-      "OUTGOING": "Call started...",
-      "INCOMING_CALL": "Incoming call",
-      "OUTGOING_CALL": "Outgoing call",
-      "CALL_IN_PROGRESS": "Call in progress",
-      "NO_ANSWER": "No answer",
-      "MISSED_CALL": "Missed call",
-      "CALL_ENDED": "Call ended",
-      "DURATION": "{duration}",
-      "UNKNOWN": "Unknown",
-      "UNKNOWN_CALLER": "Unknown caller",
-      "UNKNOWN_NUMBER": "Unknown number",
-      "CALL_ERROR": "Failed to initiate call. Please try again.",
-      "CALL_INITIATED": "Call initiated successfully.",
-      "NOT_ANSWERED_YET": "Not answered yet",
-      "YOU_CALLED": "You called",
-      "THEY_ANSWERED": "They answered",
-      "YOU_ANSWERED": "You answered",
-      "YOU_DIDNT_ANSWER": "You didn't answer",
-      "RINGING_STATUS": "Ringing",
-      "ACTIVE_STATUS": "Call in progress",
-      "MISSED_STATUS": "Missed Call",
-      "ENDED_STATUS": "Call Ended",
-      "CALL_DURATION": "Duration: {duration}",
-      "INCOMING_FROM": "Incoming from {name}",
-      "OUTGOING_TO": "Outgoing to {name}",
-      "JOIN_CALL": "Join call",
-      "REJECT_CALL": "Reject call",
-      "END_CALL": "End call"
-    },
     "COPILOT": {
       "TRY_THESE_PROMPTS": "Try these prompts"
     },
@@ -338,7 +327,68 @@
       "ERROR_DOWNLOADING": "Unable to download attachment. Please try again"
     },
     "LOAD_MORE_MESSAGES": "Load more messages",
-    "ALL_MESSAGE_LOADED": "All messages loaded 🎉"
+    "ALL_MESSAGE_LOADED": "All messages loaded 🎉",
+    "ACTIVITY": {
+      "captain": {
+        "resolved": "Conversation was marked resolved by {user_name} due to inactivity",
+        "resolved_with_reason": "Conversation was marked resolved by {user_name} ({reason})",
+        "resolved_by_tool": "Conversation was marked resolved by {user_name}: {reason}",
+        "open": "Conversation was marked open by {user_name}",
+        "open_with_reason": "Conversation was marked open by {user_name} ({reason})",
+        "auto_opened_after_agent_reply": "Conversation was marked open automatically after an agent reply"
+      },
+      "agent_bot": {
+        "error_moved_to_open": "Conversation was marked open by system due to an error with the agent bot."
+      },
+      "status": {
+        "resolved": "Conversation was marked resolved by {user_name}",
+        "contact_resolved": "Conversation was resolved by {contact_name}",
+        "open": "Conversation was reopened by {user_name}",
+        "pending": "Conversation was marked as pending by {user_name}",
+        "snoozed": "Conversation was snoozed by {user_name}",
+        "auto_resolved_days": "Conversation was marked resolved by system due to {count} days of inactivity",
+        "auto_resolved_hours": "Conversation was marked resolved by system due to {count} hours of inactivity",
+        "auto_resolved_minutes": "Conversation was marked resolved by system due to {count} minutes of inactivity",
+        "system_auto_open": "System reopened the conversation due to a new incoming message."
+      },
+      "priority": {
+        "added": "{user_name} set the priority to {new_priority}",
+        "updated": "{user_name} changed the priority from {old_priority} to {new_priority}",
+        "removed": "{user_name} removed the priority"
+      },
+      "assignee": {
+        "self_assigned": "{user_name} self-assigned this conversation",
+        "assigned": "Assigned to {assignee_name} by {user_name}",
+        "removed": "Conversation unassigned by {user_name}"
+      },
+      "team": {
+        "assigned": "Assigned to {team_name} by {user_name}",
+        "assigned_with_assignee": "Assigned to {assignee_name} via {team_name} by {user_name}",
+        "removed": "Unassigned from {team_name} by {user_name}"
+      },
+      "labels": {
+        "added": "{user_name} added {labels}",
+        "removed": "{user_name} removed {labels}"
+      },
+      "sla": {
+        "added": "{user_name} added SLA policy {sla_name}",
+        "removed": "{user_name} removed SLA policy {sla_name}"
+      },
+      "linear": {
+        "issue_created": "Linear issue {issue_id} was created by {user_name}",
+        "issue_linked": "Linear issue {issue_id} was linked by {user_name}",
+        "issue_unlinked": "Linear issue {issue_id} was unlinked by {user_name}"
+      },
+      "csat": {
+        "not_sent_due_to_messaging_window": "CSAT survey not sent due to outgoing message restrictions"
+      },
+      "auto_resolve": {
+        "not_sent_due_to_messaging_window": "Auto-resolve message not sent due to outgoing message restrictions"
+      },
+      "muted": "{user_name} has muted the conversation",
+      "unmuted": "{user_name} has unmuted the conversation",
+      "auto_resolution_message": "Resolving the conversation as it has been inactive for a while. Please start a new conversation if you need further assistance."
+    }
   },
   "EMAIL_TRANSCRIPT": {
     "TITLE": "Send conversation transcript",

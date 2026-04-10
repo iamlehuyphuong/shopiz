@@ -48,13 +48,13 @@ module ActivityMessageHandler
   end
 
   def status_change_activity(user_name)
-    content = if Current.executed_by.present?
-                automation_status_change_activity_content
-              else
-                user_status_change_activity_content(user_name)
-              end
+    content, translation_key, translation_values = if Current.executed_by.present?
+                                                     automation_status_change_activity_content
+                                                   else
+                                                     user_status_change_activity_content(user_name)
+                                                   end
 
-    ::Conversations::ActivityMessageJob.perform_later(self, activity_message_params(content)) if content
+    ::Conversations::ActivityMessageJob.perform_later(self, activity_message_params(content, translation_key, translation_values)) if content
   end
 
   def auto_resolve_message_key(minutes)
@@ -69,26 +69,44 @@ module ActivityMessageHandler
 
   def user_status_change_activity_content(user_name)
     if user_name
-      I18n.t("conversations.activity.status.#{status}", user_name: user_name)
+      key = "conversations.activity.status.#{status}"
+      values = { user_name: user_name }
+      [I18n.t(key, **values), key, values]
     elsif Current.contact.present? && resolved?
-      I18n.t('conversations.activity.status.contact_resolved', contact_name: Current.contact.name.capitalize)
+      key = 'conversations.activity.status.contact_resolved'
+      values = { contact_name: Current.contact.name.capitalize }
+      [I18n.t(key, **values), key, values]
     elsif resolved?
       message_data = auto_resolve_message_key(auto_resolve_after || 0)
-      I18n.t("conversations.activity.status.#{message_data[:key]}", count: message_data[:count])
+      key = "conversations.activity.status.#{message_data[:key]}"
+      values = { count: message_data[:count] }
+      [I18n.t(key, **values), key, values]
+    else
+      [nil, nil, nil]
     end
   end
 
   def automation_status_change_activity_content
     if Current.executed_by.instance_of?(AutomationRule)
-      I18n.t("conversations.activity.status.#{status}", user_name: I18n.t('automation.system_name'))
+      key = "conversations.activity.status.#{status}"
+      values = { user_name: I18n.t('automation.system_name') }
+      [I18n.t(key, **values), key, values]
     elsif Current.executed_by.instance_of?(Contact)
       Current.executed_by = nil
-      I18n.t('conversations.activity.status.system_auto_open')
+      key = 'conversations.activity.status.system_auto_open'
+      [I18n.t(key), key, {}]
+    else
+      [nil, nil, nil]
     end
   end
 
-  def activity_message_params(content)
-    { account_id: account_id, inbox_id: inbox_id, message_type: :activity, content: content }
+  def activity_message_params(content, translation_key = nil, translation_values = nil)
+    params = { account_id: account_id, inbox_id: inbox_id, message_type: :activity, content: content }
+    params[:content_attributes] = {
+      translation_key: translation_key,
+      translation_values: translation_values
+    } if translation_key.present?
+    params
   end
 
   def create_muted_message
@@ -102,8 +120,10 @@ module ActivityMessageHandler
   def create_mute_change_activity(change_type)
     return unless Current.user
 
-    content = I18n.t("conversations.activity.#{change_type}", user_name: Current.user.name)
-    ::Conversations::ActivityMessageJob.perform_later(self, activity_message_params(content)) if content
+    key = "conversations.activity.#{change_type}"
+    values = { user_name: Current.user.name }
+    content = I18n.t(key, **values)
+    ::Conversations::ActivityMessageJob.perform_later(self, activity_message_params(content, key, values)) if content
   end
 end
 
