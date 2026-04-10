@@ -35,7 +35,7 @@ const FORM_CONFIG = {
   LAST_NAME: { field: 'lastName' },
   EMAIL_ADDRESS: { field: 'email' },
   PHONE_NUMBER: { field: 'phoneNumber' },
-  GENDER_ID: { field: 'gender_id' },
+  GENDER_ID: { field: 'genderId' },
   BIRTHDAY: { field: 'birthday' },
   CITY: { field: 'additionalAttributes.city' },
   COUNTRY: { field: 'additionalAttributes.countryCode' },
@@ -50,7 +50,6 @@ const SOCIAL_CONFIG = {
   TELEGRAM: 'i-ri-telegram-fill',
   TIKTOK: 'i-ri-tiktok-fill',
   TWITTER: 'i-ri-twitter-x-fill',
-  GITHUB: 'i-ri-github-fill',
 };
 
 const defaultState = {
@@ -70,7 +69,6 @@ const defaultState = {
     city: '',
     socialProfiles: {
       facebook: '',
-      github: '',
       instagram: '',
       telegram: '',
       tiktok: '',
@@ -102,7 +100,8 @@ const prepareStateBasedOnProps = () => {
     email: emailAddress,
     phoneNumber,
     birthday,
-    genderId,
+    genderId: genderIdFromProps,
+    gender_id: genderIdFromBackend,
     additionalAttributes = {},
   } = props.contactData || {};
   const { firstName, lastName } = splitName(name || '');
@@ -126,8 +125,8 @@ const prepareStateBasedOnProps = () => {
     lastName,
     email: emailAddress,
     phoneNumber,
-    birthday,
-    genderId,
+    birthday: birthday ? birthday.split('T')[0] : '',
+    genderId: genderIdFromProps ?? genderIdFromBackend ?? '',
     additionalAttributes: {
       description,
       companyName,
@@ -147,14 +146,14 @@ const genderOptions = computed(() => {
     {
       id: 'male',
       title: t(`CONTACT_PANEL.GENDERS.male`),
-      checked: state.genderId == 'male',
+      checked: state.genderId === 'male',
     },
     {
       id: 'female',
       title: t(`CONTACT_PANEL.GENDERS.female`),
-      checked: state.genderId == 'female',
-    }
-  ]
+      checked: state.genderId === 'female',
+    },
+  ];
 });
 
 const countryOptions = computed(() =>
@@ -259,11 +258,11 @@ const resetForm = () => {
 };
 
 watch(
-  () => props.contactData?.id,
-  id => {
-    if (id) prepareStateBasedOnProps();
+  () => props.contactData,
+  () => {
+    prepareStateBasedOnProps();
   },
-  { immediate: true }
+  { immediate: true, deep: true }
 );
 
 // Expose state to parent component for avatar upload
@@ -306,7 +305,7 @@ defineExpose({
             v-else-if="item.key === 'GENDER_ID'"
             v-model="state.genderId"
             :placeholder="item.placeholder"
-            name="gender_id"
+            name="genderId"
             :items="genderOptions"
             :action="handleGenderSelection"
             class="[&_div]:!mb-0"
@@ -331,11 +330,11 @@ defineExpose({
             class="w-full"
             @input="
               isValidationField(item.key) &&
-              v$[getValidationKey(item.key)].$touch()
+                v$[getValidationKey(item.key)].$touch()
             "
             @blur="
               isValidationField(item.key) &&
-              v$[getValidationKey(item.key)].$touch()
+                v$[getValidationKey(item.key)].$touch()
             "
           />
         </template>
