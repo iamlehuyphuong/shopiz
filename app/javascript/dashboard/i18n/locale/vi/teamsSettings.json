@@ -5,9 +5,9 @@
     "LOADING": "Đang tải danh sách đội nhóm",
     "DESCRIPTION": "Đội nhóm cho phép bạn tổ chức các nhân viên theo nhiệm vụ của họ. Một nhân viên có thể thuộc nhiều đội nhóm. Khi cộng tác, bạn có thể gán các cuộc hội thoại cho từng đội nhóm cụ thể.",
     "LEARN_MORE": "Tìm hiểu thêm về đội nhóm",
-    "COUNT": "{n} team | {n} teams",
+    "COUNT": "{n} đội nhóm | {n} đội nhóm",
     "SEARCH_PLACEHOLDER": "Tìm kiếm nhóm...",
-    "NO_RESULTS": "No teams found matching your search",
+    "NO_RESULTS": "Không tìm thấy đội nhóm nào khớp với tìm kiếm của bạn",
     "LIST": {
       "404": "Không có đội nhóm nào được tạo trong tài khoản này.",
       "EDIT_TEAM": "Chỉnh sửa đội nhóm",

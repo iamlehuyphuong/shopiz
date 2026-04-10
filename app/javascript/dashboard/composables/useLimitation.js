@@ -1,4 +1,4 @@
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useAccount } from './useAccount';
 import { useStore } from './store';
 
@@ -8,6 +8,13 @@ export const useLimitation = () => {
 
   const usageData = computed(() => {
     return currentAccount.value?.billing?.usage || {};
+  });
+
+  onMounted(() => {
+    const hasUsageData = Object.keys(usageData.value).length > 0;
+    if (!hasUsageData && currentAccount.value?.id) {
+      store.dispatch('accounts/billings');
+    }
   });
 
   const parseUsage = usageString => {

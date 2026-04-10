@@ -74,7 +74,7 @@ export function useCaptain() {
   const isFetchingLimits = computed(() => uiFlags.value.isFetchingLimits);
 
   const fetchLimits = () => {
-    if (isEnterprise) {
+    if (isEnterprise && !isFetchingLimits.value) {
       store.dispatch('accounts/limits');
     }
   };

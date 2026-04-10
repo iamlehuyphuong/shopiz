@@ -19,6 +19,7 @@ const state = {
     isUpdating: false,
     isCheckoutInProcess: false,
     isFetchingLimits: false,
+    isFetchingBillings: false,
     limitationModal: {
       show: false,
       resourceKey: '',
@@ -162,12 +163,17 @@ export const actions = {
     }
   },
 
-  billings: async ({ commit }) => {
+  billings: async ({ commit, state: accountState }) => {
+    if (accountState.uiFlags.isFetchingBillings) return;
+
+    commit(types.default.SET_ACCOUNT_UI_FLAG, { isFetchingBillings: true });
     try {
       const response = await EnterpriseAccountAPI.getBillings();
       commit(types.default.SET_ACCOUNT_PLANS, response.data);
     } catch (error) {
       // silent error
+    } finally {
+      commit(types.default.SET_ACCOUNT_UI_FLAG, { isFetchingBillings: false });
     }
   },
 
