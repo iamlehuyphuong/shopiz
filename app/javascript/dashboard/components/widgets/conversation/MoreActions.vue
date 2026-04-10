@@ -30,12 +30,26 @@ const currentInbox = computed(() =>
   store.getters['inboxes/getInboxById'](currentChat.value.inbox_id)
 );
 
-const isAiAssistantEnabled = computed(() => !!currentInbox.value?.activeBot);
+const isAiAssistantEnabled = computed(() => {
+  const hasActiveBotInChat =
+    !!currentChat.value?.active_bot || !!currentChat.value?.activeBot;
+  const hasActiveBotInInbox = !!currentInbox.value?.activeBot;
+  const isCurrentlyBotManaged = currentChat.value?.status === 'pending';
+  const hasAgentBotInStore =
+    !!store.state.agentBots.agentBotInbox[currentChat.value.inbox_id];
 
-const isAiAssistantOn = computed(() => currentChat.value.status === 'pending');
+  return (
+    hasActiveBotInChat ||
+    hasActiveBotInInbox ||
+    isCurrentlyBotManaged ||
+    hasAgentBotInStore
+  );
+});
+
+const isAiAssistantOn = computed(() => currentChat.value.status === 'open');
 
 const onAiAssistantToggle = value => {
-  const status = value ? 'pending' : 'open';
+  const status = value ? 'open' : 'pending';
   store.dispatch('toggleStatus', {
     conversationId: currentChat.value.id,
     status: status,
