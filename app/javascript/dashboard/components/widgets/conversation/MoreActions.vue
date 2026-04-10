@@ -9,6 +9,7 @@ import EmailTranscriptModal from './EmailTranscriptModal.vue';
 import ResolveAction from '../../buttons/ResolveAction.vue';
 import ButtonV4 from 'dashboard/components-next/button/Button.vue';
 import DropdownMenu from 'dashboard/components-next/dropdown-menu/DropdownMenu.vue';
+import SwitchV4 from 'dashboard/components-next/switch/Switch.vue';
 
 import {
   CMD_MUTE_CONVERSATION,
@@ -24,6 +25,22 @@ const [showEmailActionsModal, toggleEmailModal] = useToggle(false);
 const [showActionsDropdown, toggleDropdown] = useToggle(false);
 
 const currentChat = computed(() => store.getters.getSelectedChat);
+
+const currentInbox = computed(() =>
+  store.getters['inboxes/getInboxById'](currentChat.value.inbox_id)
+);
+
+const isAiAssistantEnabled = computed(() => !!currentInbox.value?.activeBot);
+
+const isAiAssistantOn = computed(() => currentChat.value.status === 'pending');
+
+const onAiAssistantToggle = value => {
+  const status = value ? 'pending' : 'open';
+  store.dispatch('toggleStatus', {
+    conversationId: currentChat.value.id,
+    status: status,
+  });
+};
 
 const actionMenuItems = computed(() => {
   const items = [];
@@ -92,6 +109,15 @@ onUnmounted(() => {
 
 <template>
   <div class="relative flex items-center gap-2 actions--container">
+    <div
+      v-if="isAiAssistantEnabled"
+      class="flex items-center gap-2 px-2 py-1 border rounded-md border-n-slate-3 dark:border-n-slate-4"
+    >
+      <span class="text-xs font-medium text-n-slate-11">
+        {{ t('CONVERSATION.HEADER.AI_ASSISTANT_TOGGLE') }}
+      </span>
+      <SwitchV4 :model-value="isAiAssistantOn" @change="onAiAssistantToggle" />
+    </div>
     <ResolveAction
       :conversation-id="currentChat.id"
       :status="currentChat.status"
