@@ -50,6 +50,14 @@ export default {
     const { accountId } = useAccount();
     const { width: windowWidth } = useWindowSize();
     const callsStore = useCallsStore();
+    const route = useRoute();
+    const { shouldShowPaywall } = usePolicy();
+
+    const isFeatureLocked = computed(() => {
+      const featureFlag = route.meta?.featureFlag;
+      if (!featureFlag) return false;
+      return shouldShowPaywall(featureFlag);
+    });
 
     return {
       uiSettings,
@@ -59,14 +67,8 @@ export default {
       windowWidth,
       hasActiveCall: computed(() => callsStore.hasActiveCall),
       hasIncomingCall: computed(() => callsStore.hasIncomingCall),
-      route: useRoute(),
-      isFeatureLocked: computed(() => {
-        const route = useRoute();
-        const { shouldShowPaywall } = usePolicy();
-        const featureFlag = route.meta?.featureFlag;
-        if (!featureFlag) return false;
-        return shouldShowPaywall(featureFlag);
-      }),
+      route,
+      isFeatureLocked,
     };
   },
   data() {
