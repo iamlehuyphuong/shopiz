@@ -46,10 +46,10 @@ const isAiAssistantEnabled = computed(() => {
   );
 });
 
-const isAiAssistantOn = computed(() => currentChat.value.status === 'open');
+const isAiAssistantOn = computed(() => currentChat.value.status === 'pending');
 
 const onAiAssistantToggle = value => {
-  const status = value ? 'open' : 'pending';
+  const status = value ? 'pending' : 'open';
   store.dispatch('toggleStatus', {
     conversationId: currentChat.value.id,
     status: status,

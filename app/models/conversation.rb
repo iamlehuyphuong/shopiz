@@ -178,7 +178,19 @@ class Conversation < ApplicationRecord
   end
 
   def unread_incoming_messages
-    unread_messages.where(account_id: account_id).incoming.last(10)
+    unread_messages.where(account_id: account_id).incoming.order(created_at: :desc).limit(10)
+  end
+
+  # Returns the most recent non-activity message with attachments eager-loaded.
+  # Intentionally returns the raw Message object (not push_event_data) so the
+  # caller controls when push_event_data is invoked, preventing duplicate calls
+  # and the hidden unread_count query inside conversation_push_event_data.
+  def last_non_activity_message_obj
+    messages.where(account_id: account_id)
+            .where.not(message_type: :activity)
+            .order(created_at: :desc)
+            .includes({ attachments: [{ file_attachment: [:blob] }] })
+            .first
   end
 
   def cached_label_list_array

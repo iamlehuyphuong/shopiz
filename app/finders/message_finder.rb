@@ -11,7 +11,7 @@ class MessageFinder
   private
 
   def conversation_messages
-    @conversation.messages.includes(:attachments, :sender, sender: { avatar_attachment: [:blob] })
+    @conversation.messages.includes(:conversation, :inbox, :attachments, :sender, sender: { avatar_attachment: [:blob] })
   end
 
   def messages
@@ -33,22 +33,27 @@ class MessageFinder
   end
 
   def messages_after(after_id)
-    after_time = Message.find(after_id).created_at
-
-    messages.reorder('created_at asc').where('created_at > ?', after_time).limit(100)
+    messages.reorder('created_at asc')
+            .where('created_at > (SELECT created_at FROM messages WHERE id = ?)', after_id)
+            .limit(100)
   end
 
   def messages_before(before_id)
-    before_time = Message.find(before_id).created_at
-
-    messages.reorder('created_at desc').where('created_at <= ?', before_time).where.not(id: before_id).limit(20).reverse
+    messages.reorder('created_at desc')
+            .where('created_at <= (SELECT created_at FROM messages WHERE id = ?)', before_id)
+            .where.not(id: before_id)
+            .limit(20)
+            .reverse
   end
 
   def messages_between(after_id, before_id)
-    after_time = Message.find(after_id).created_at
-    before_time = Message.find(before_id).created_at
-
-    messages.reorder('created_at asc').where('created_at >= ? AND created_at < ?', after_time, before_time).limit(1000)
+    messages.reorder('created_at asc')
+            .where(
+              'created_at >= (SELECT created_at FROM messages WHERE id = ?) AND created_at < (SELECT created_at FROM messages WHERE id = ?)',
+              after_id,
+              before_id
+            )
+            .limit(1000)
   end
 
   def messages_latest
