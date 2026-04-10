@@ -5,6 +5,8 @@ import { format, isSameYear, isValid } from 'date-fns';
 import Icon from 'dashboard/components-next/icon/Icon.vue';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 
+import { useI18n } from 'vue-i18n';
+
 const props = defineProps({
   selectedStartDate: Date,
   selectedEndDate: Date,
@@ -28,6 +30,8 @@ const props = defineProps({
 
 const emit = defineEmits(['open', 'navigateMonth']);
 
+const { t } = useI18n();
+
 const formatDateRange = computed(() => {
   const startDate = props.selectedStartDate;
   const endDate = props.selectedEndDate;
@@ -38,13 +42,16 @@ const formatDateRange = computed(() => {
 
   const crossesYears = !isSameYear(startDate, endDate);
 
+  const formatWithYear = t('GENERAL.DATE_FORMAT');
+  const formatStingy = t('GENERAL.DATE_FORMAT_STINGY');
+
   // Always show years when crossing year boundaries
   if (crossesYears) {
-    return `${format(startDate, 'MMM d, yyyy')} - ${format(endDate, 'MMM d, yyyy')}`;
+    return `${format(startDate, formatWithYear)} - ${format(endDate, formatWithYear)}`;
   }
 
   // For same year, always show the year for clarity
-  return `${format(startDate, 'MMM d')} - ${format(endDate, 'MMM d, yyyy')}`;
+  return `${format(startDate, formatStingy)} - ${format(endDate, formatWithYear)}`;
 });
 
 const activeDateRange = computed(

@@ -10,7 +10,17 @@
     "BETA_DESCRIPTION": "Tính năng này đang trong giai đoạn thử nghiệm và có thể thay đổi khi chúng tôi cải tiến nó.",
     "ACCEPT": "Chấp nhận",
     "DISCARD": "Loại bỏ",
-    "PREFERRED": "Ưu tiên"
+    "PREFERRED": "Ưu tiên",
+    "DATE_FORMAT": "dd/MM/yyyy",
+    "DATETIME_FORMAT": "dd/MM/yyyy HH:mm",
+    "DATETIME_FORMAT_STINGY": "HH:mm, dd/MM",
+    "DATETIME_FORMAT_WITH_SHORT_MONTH": "HH:mm, dd/MM",
+    "DATETIME_FORMAT_WITH_YEAR": "HH:mm, dd/MM/yyyy",
+    "REPORT_SHORT_DATE_FORMAT": "dd/MM",
+    "REPORT_MONTH_YEAR_FORMAT": "MM/yyyy",
+    "DATE_FORMAT_STINGY": "dd/MM",
+    "DATE_FORMAT_WITH_SHORT_DAY": "EEE, dd/MM/yyyy 'lúc' HH:mm",
+    "QUOTED_EMAIL_HEADER": "Vào %{date}, %{sender} đã viết:"
   },
   "CHOICE_TOGGLE": {
     "YES": "Có",

@@ -3,6 +3,7 @@ import { useRoute } from 'vue-router';
 import { useFunctionGetter } from 'dashboard/composables/store';
 import { ref, onMounted, computed } from 'vue';
 import { format } from 'date-fns';
+import { useI18n } from 'vue-i18n';
 import { formatTime } from '@chatwoot/utils';
 import ReportHeader from './components/ReportHeader.vue';
 import ReportFilters from './components/ReportFilters.vue';
@@ -11,6 +12,7 @@ import BarChart from 'shared/components/charts/BarChart.vue';
 import { GROUP_BY_FILTER, GROUP_BY_OPTIONS } from './constants';
 
 const route = useRoute();
+const { t } = useI18n();
 const inbox = useFunctionGetter('inboxes/getInboxById', route.params.id);
 
 // For this dummy implementation, we'll show dummy data
@@ -55,7 +57,7 @@ const generateDateLabels = (days = 7) => {
   for (let i = days - 1; i >= 0; i--) {
     const date = new Date();
     date.setDate(today.getDate() - i);
-    dates.push(format(date, 'dd-MMM'));
+    dates.push(format(date, t('GENERAL.REPORT_SHORT_DATE_FORMAT')));
   }
   
   return dates;

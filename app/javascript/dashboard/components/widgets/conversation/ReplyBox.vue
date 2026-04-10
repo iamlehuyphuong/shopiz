@@ -601,7 +601,11 @@ export default {
       const header = buildQuotedEmailHeader(
         this.lastEmailWithQuotedContent,
         this.currentContact,
-        this.inbox
+        this.inbox,
+        {
+          dateFormat: this.$t('GENERAL.DATE_FORMAT_WITH_SHORT_DAY'),
+          headerTemplate: this.$t('GENERAL.QUOTED_EMAIL_HEADER'),
+        }
       );
 
       return appendQuotedTextToMessage(message, quotedText, header);

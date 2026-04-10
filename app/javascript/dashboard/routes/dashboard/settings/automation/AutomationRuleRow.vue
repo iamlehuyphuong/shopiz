@@ -4,6 +4,7 @@ import { messageStamp } from 'shared/helpers/timeHelper';
 import Button from 'dashboard/components-next/button/Button.vue';
 import ToggleSwitch from 'dashboard/components-next/switch/Switch.vue';
 import { BaseTableRow, BaseTableCell } from 'dashboard/components-next/table';
+import { useI18n } from 'vue-i18n';
 
 const props = defineProps({
   automation: {
@@ -18,9 +19,11 @@ const props = defineProps({
 
 const emit = defineEmits(['toggle', 'edit', 'delete', 'clone']);
 
-const readableDate = date => messageStamp(new Date(date), 'LLL d, yyyy');
+const { t } = useI18n();
+
+const readableDate = date => messageStamp(new Date(date), t('GENERAL.DATE_FORMAT'));
 const readableDateWithTime = date =>
-  messageStamp(new Date(date), 'LLL d, yyyy hh:mm a');
+  messageStamp(new Date(date), t('GENERAL.DATETIME_FORMAT'));
 
 const automationActive = computed({
   get: () => props.automation.active,

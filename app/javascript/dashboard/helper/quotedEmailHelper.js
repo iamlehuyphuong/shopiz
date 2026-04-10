@@ -96,15 +96,19 @@ export const getEmailDate = lastEmail => {
 /**
  * Formats date for quoted email header
  * @param {Date} date - Date to format
+ * @param {string} formatStr - Format string
  * @returns {string} Formatted date string
  */
-export const formatQuotedEmailDate = date => {
+export const formatQuotedEmailDate = (
+  date,
+  formatStr = "EEE, MMM d, yyyy 'at' p"
+) => {
   try {
-    return format(date, "EEE, MMM d, yyyy 'at' p");
+    return format(date, formatStr);
   } catch (error) {
     const fallbackDate = new Date(date);
     if (!Number.isNaN(fallbackDate.getTime())) {
-      return format(fallbackDate, "EEE, MMM d, yyyy 'at' p");
+      return format(fallbackDate, formatStr);
     }
   }
 
@@ -134,89 +138,62 @@ export const getInboxEmail = (lastEmail, inbox) => {
 };
 
 /**
- * Builds quoted email header from contact (for incoming messages)
- * @param {Object} lastEmail - Last email message object
- * @param {Object} contact - Contact object
- * @returns {string} Formatted header string
- */
-export const buildQuotedEmailHeaderFromContact = (lastEmail, contact) => {
-  if (!lastEmail) {
-    return '';
-  }
-
-  const quotedDate = getEmailDate(lastEmail);
-  const senderEmail = getEmailSenderEmail(lastEmail, contact);
-
-  if (!quotedDate || !senderEmail) {
-    return '';
-  }
-
-  const formattedDate = formatQuotedEmailDate(quotedDate);
-  if (!formattedDate) {
-    return '';
-  }
-
-  const senderName = getEmailSenderName(lastEmail, contact);
-  const hasName = !!senderName;
-  const contactLabel = hasName
-    ? `${senderName} <${senderEmail}>`
-    : `<${senderEmail}>`;
-
-  return `On ${formattedDate} ${contactLabel} wrote:`;
-};
-
-/**
- * Builds quoted email header from inbox (for outgoing messages)
- * @param {Object} lastEmail - Last email message object
- * @param {Object} inbox - Inbox object
- * @returns {string} Formatted header string
- */
-export const buildQuotedEmailHeaderFromInbox = (lastEmail, inbox) => {
-  if (!lastEmail) {
-    return '';
-  }
-
-  const quotedDate = getEmailDate(lastEmail);
-  const inboxEmail = getInboxEmail(lastEmail, inbox);
-
-  if (!quotedDate || !inboxEmail) {
-    return '';
-  }
-
-  const formattedDate = formatQuotedEmailDate(quotedDate);
-  if (!formattedDate) {
-    return '';
-  }
-
-  const inboxName = inbox?.name;
-  const hasName = !!inboxName;
-  const inboxLabel = hasName
-    ? `${inboxName} <${inboxEmail}>`
-    : `<${inboxEmail}>`;
-
-  return `On ${formattedDate} ${inboxLabel} wrote:`;
-};
-
-/**
  * Builds quoted email header based on message type
  * @param {Object} lastEmail - Last email message object
  * @param {Object} contact - Contact object
  * @param {Object} inbox - Inbox object
+ * @param {Object} options - Localization options
+ * @param {string} options.dateFormat - Date format string
+ * @param {string} options.headerTemplate - Header template string
  * @returns {string} Formatted header string
  */
-export const buildQuotedEmailHeader = (lastEmail, contact, inbox) => {
+export const buildQuotedEmailHeader = (
+  lastEmail,
+  contact,
+  inbox,
+  { dateFormat, headerTemplate } = {}
+) => {
   if (!lastEmail) {
+    return '';
+  }
+
+  const quotedDate = getEmailDate(lastEmail);
+  if (!quotedDate) {
     return '';
   }
 
   // MESSAGE_TYPE.OUTGOING = 1, MESSAGE_TYPE.INCOMING = 0
   const isOutgoing = lastEmail.message_type === 1;
 
-  if (isOutgoing) {
-    return buildQuotedEmailHeaderFromInbox(lastEmail, inbox);
+  const emailAddr = isOutgoing
+    ? getInboxEmail(lastEmail, inbox)
+    : getEmailSenderEmail(lastEmail, contact);
+
+  if (!emailAddr) {
+    return '';
   }
 
-  return buildQuotedEmailHeaderFromContact(lastEmail, contact);
+  const formattedDate = formatQuotedEmailDate(quotedDate, dateFormat);
+  if (!formattedDate) {
+    return '';
+  }
+
+  const senderName = isOutgoing
+    ? inbox?.name
+    : getEmailSenderName(lastEmail, contact);
+
+  const hasName = !!senderName;
+  const senderLabel = hasName
+    ? `${senderName} <${emailAddr}>`
+    : `<${emailAddr}>`;
+
+  if (headerTemplate) {
+    return headerTemplate
+      .replace('%{date}', formattedDate)
+      .replace('%{sender}', senderLabel);
+  }
+
+  return `On ${formattedDate} ${senderLabel} wrote:`;
 };
 
 /**

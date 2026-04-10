@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 import UserAvatarWithName from 'dashboard/components/widgets/UserAvatarWithName.vue';
 import IssueHeader from './IssueHeader.vue';
 import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 const props = defineProps({
   issue: {
@@ -17,6 +18,8 @@ const props = defineProps({
 
 const emit = defineEmits(['unlinkIssue']);
 
+const { t } = useI18n();
+
 const priorityMap = {
   1: 'Urgent',
   2: 'High',
@@ -26,7 +29,7 @@ const priorityMap = {
 
 const formattedDate = computed(() => {
   const { createdAt } = props.issue;
-  return format(new Date(createdAt), 'hh:mm a, MMM dd');
+  return format(new Date(createdAt), t('GENERAL.DATETIME_FORMAT_STINGY'));
 });
 
 const assignee = computed(() => {

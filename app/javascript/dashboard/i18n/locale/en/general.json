@@ -10,7 +10,17 @@
     "BETA_DESCRIPTION": "This feature is in beta and may change as we improve it.",
     "ACCEPT": "Accept",
     "DISCARD": "Discard",
-    "PREFERRED": "Preferred"
+    "PREFERRED": "Preferred",
+    "DATE_FORMAT": "MMM dd, yyyy",
+    "DATETIME_FORMAT": "MMM dd, yyyy, hh:mm a",
+    "DATETIME_FORMAT_STINGY": "hh:mm a, MMM dd",
+    "DATETIME_FORMAT_WITH_SHORT_MONTH": "LLL d, h:mm a",
+    "DATETIME_FORMAT_WITH_YEAR": "LLL d yyyy, h:mm a",
+    "REPORT_SHORT_DATE_FORMAT": "dd-MMM",
+    "REPORT_MONTH_YEAR_FORMAT": "MMM-yyyy",
+    "DATE_FORMAT_STINGY": "MMM d",
+    "DATE_FORMAT_WITH_SHORT_DAY": "EEE, MMM d, yyyy 'at' p",
+    "QUOTED_EMAIL_HEADER": "On %{date} %{sender} wrote:"
   },
   "CHOICE_TOGGLE": {
     "YES": "Yes",

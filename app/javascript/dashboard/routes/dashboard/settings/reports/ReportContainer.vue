@@ -77,18 +77,27 @@ export default {
           const last_day = first_day + 6;
           const week_first_date = new Date(week_date.setDate(first_day));
           const week_last_date = new Date(week_date.setDate(last_day));
-          return `${format(week_first_date, 'dd-MMM')} - ${format(
+          return `${format(
+            week_first_date,
+            this.$t('GENERAL.REPORT_SHORT_DATE_FORMAT')
+          )} - ${format(
             week_last_date,
-            'dd-MMM'
+            this.$t('GENERAL.REPORT_SHORT_DATE_FORMAT')
           )}`;
         }
         if (this.groupBy?.period === GROUP_BY_FILTER[3].period) {
-          return format(fromUnixTime(element.timestamp), 'MMM-yyyy');
+          return format(
+            fromUnixTime(element.timestamp),
+            this.$t('GENERAL.REPORT_MONTH_YEAR_FORMAT')
+          );
         }
         if (this.groupBy?.period === GROUP_BY_FILTER[4].period) {
           return format(fromUnixTime(element.timestamp), 'yyyy');
         }
-        return format(fromUnixTime(element.timestamp), 'dd-MMM');
+        return format(
+          fromUnixTime(element.timestamp),
+          this.$t('GENERAL.REPORT_SHORT_DATE_FORMAT')
+        );
       });
       const datasets = METRIC_CHART[metric.KEY].datasets.map(dataset => {
         switch (dataset.type) {

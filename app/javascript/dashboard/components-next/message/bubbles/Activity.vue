@@ -1,13 +1,15 @@
 <script setup>
 import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { messageTimestamp } from 'shared/helpers/timeHelper';
 import BaseBubble from './Base.vue';
 import { useMessageContext } from '../provider.js';
 
+const { t } = useI18n();
 const { content, createdAt } = useMessageContext();
 
 const readableTime = computed(() =>
-  messageTimestamp(createdAt.value, 'LLL d, h:mm a')
+  messageTimestamp(createdAt.value, t('GENERAL.DATETIME_FORMAT_WITH_SHORT_MONTH'))
 );
 </script>
 

@@ -51,7 +51,7 @@ const quantileRange = computed(() => {
 });
 
 function formatDate(dateString) {
-  return format(new Date(dateString), 'MMM d, yyyy');
+  return format(new Date(dateString), t('GENERAL.DATE_FORMAT'));
 }
 
 const DAYS_OF_WEEK = [
