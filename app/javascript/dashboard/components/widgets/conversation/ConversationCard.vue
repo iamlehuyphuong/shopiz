@@ -447,19 +447,19 @@ const deleteConversation = () => {
 <style lang="scss" scoped>
 .conversation--status {
   &.bot {
-    @apply bg-[#4077f1];
+    @apply bg-n-brand;
   }
   &.open {
-    @apply bg-[#22c55e];
+    @apply bg-n-teal-10;
   }
   &.pending {
-    @apply bg-[#f59e08];
+    @apply bg-n-slate-10;
   }
   &.resolved {
-    @apply bg-[#00c0e8];
+    @apply bg-[#5b5bd6];
   }
   &.snoozed {
-    @apply bg-[#6155f5];
+    @apply bg-n-ruby-10;
   }
 }
 </style>
