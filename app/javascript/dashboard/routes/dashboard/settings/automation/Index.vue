@@ -96,6 +96,7 @@ const closeDeletePopup = () => {
 const deleteAutomation = async id => {
   try {
     await store.dispatch('automations/delete', id);
+    store.dispatch('accounts/billings');
     useAlert(t('AUTOMATION.DELETE.API.SUCCESS_MESSAGE'));
   } catch (error) {
     useAlert(t('AUTOMATION.DELETE.API.ERROR_MESSAGE'));
@@ -113,6 +114,7 @@ const cloneAutomation = async ({ id }) => {
     await store.dispatch('automations/clone', id);
     useAlert(t('AUTOMATION.CLONE.API.SUCCESS_MESSAGE'));
     store.dispatch('automations/get');
+    store.dispatch('accounts/billings');
   } catch (error) {
     useAlert(t('AUTOMATION.CLONE.API.ERROR_MESSAGE'));
   } finally {
@@ -129,6 +131,9 @@ const submitAutomation = async (payload, mode) => {
         ? t('AUTOMATION.EDIT.API.SUCCESS_MESSAGE')
         : t('AUTOMATION.ADD.API.SUCCESS_MESSAGE');
     await store.dispatch(action, payload);
+    if (mode !== 'edit') {
+      store.dispatch('accounts/billings');
+    }
     useAlert(successMessage);
     hideAddPopup();
     hideEditPopup();
