@@ -15,6 +15,7 @@ class AddonPackageDashboard < Administrate::BaseDashboard
     name: Field::String,
     price_amount: Field::String.with_options(searchable: false),
     quantity: Field::Number,
+    sku: Field::String,
     visible: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -27,6 +28,7 @@ class AddonPackageDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
+    sku
     name
     addon_type
     quantity
@@ -39,6 +41,7 @@ class AddonPackageDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
     id
+    sku
     name
     addon_type
     quantity
@@ -54,6 +57,7 @@ class AddonPackageDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
+    sku
     name
     addon_type
     quantity

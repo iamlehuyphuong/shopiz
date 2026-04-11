@@ -687,8 +687,12 @@ Rails.application.routes.draw do
         post :subscribe, on: :member
         post :purchase_addon, on: :member
       end
-      resources :subscription_plans
-      resources :addon_packages
+      resources :subscription_plans do
+        get :duplicate, on: :member
+      end
+      resources :addon_packages do
+        get :duplicate, on: :member
+      end
       resources :billing_histories, only: [:index, :show]
       resources :users, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
         delete :avatar, on: :member, action: :destroy_avatar

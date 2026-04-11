@@ -20,6 +20,7 @@ class SubscriptionPlanDashboard < Administrate::BaseDashboard
     name_en: Field::String,
     name_vi: Field::String,
     price_amount: Field::String.with_options(searchable: false),
+    sku: Field::String,
     visible: Field::Boolean,
     is_free: Field::Boolean,
     created_at: Field::DateTime,
@@ -33,6 +34,7 @@ class SubscriptionPlanDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
+    sku
     name_en
     name_vi
     price_amount
@@ -45,6 +47,7 @@ class SubscriptionPlanDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
     id
+    sku
     name_en
     name_vi
     description_en
@@ -64,6 +67,7 @@ class SubscriptionPlanDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
+    sku
     name_en
     name_vi
     description_en
