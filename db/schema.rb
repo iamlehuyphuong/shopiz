@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_04_10_154000) do
+ActiveRecord::Schema[7.1].define(version: 2026_04_11_122000) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -1302,22 +1302,29 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_10_154000) do
   end
 
   create_table "subscription_plans", force: :cascade do |t|
-    t.string "name_en", null: false
-    t.string "name_vi", null: false
-    t.text "description_en"
-    t.text "description_vi"
     t.decimal "price_amount", precision: 15, scale: 2, default: "0.0"
     t.string "currency", default: "vnd"
     t.integer "duration_days", null: false
-    t.jsonb "limits", default: {}
-    t.jsonb "features", default: {}
-    t.boolean "is_free", default: false
     t.boolean "visible", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "sku"
-    t.index ["is_free"], name: "index_subscription_plans_on_is_free"
+    t.bigint "subscription_tier_id"
     t.index ["sku"], name: "index_subscription_plans_on_sku", unique: true
+    t.index ["subscription_tier_id"], name: "index_subscription_plans_on_subscription_tier_id"
+  end
+
+  create_table "subscription_tiers", force: :cascade do |t|
+    t.string "name_en", null: false
+    t.string "name_vi", null: false
+    t.text "description_en"
+    t.text "description_vi"
+    t.jsonb "limits", default: {}
+    t.jsonb "features", default: {}
+    t.boolean "visible", default: true
+    t.boolean "is_free", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "taggings", id: :serial, force: :cascade do |t|
@@ -1450,6 +1457,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_10_154000) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "inboxes", "portals"
+  add_foreign_key "subscription_plans", "subscription_tiers"
   create_trigger("accounts_after_insert_row_tr", :generated => true, :compatibility => 1).
       on("accounts").
       after(:insert).

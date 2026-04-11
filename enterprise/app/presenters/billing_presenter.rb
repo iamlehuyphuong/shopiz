@@ -29,17 +29,39 @@ class BillingPresenter
   
   def current_subscription
     sub = @account.active_subscription
-    return nil unless sub
+    
+    if sub
+      rank = PRODUCT_TYPES.index((sub.subscription_plan.name_en || '').downcase) || -1
+      return {
+        plan_id: sub.subscription_plan_id,
+        plan_name: sub.subscription_plan.name(@account.locale),
+        ends_at: sub.ends_at,
+        starts_at: sub.starts_at,
+        is_free: sub.subscription_plan.is_free,
+        rank: rank,
+        price: {
+          price_amount: sub.subscription_plan.price_amount.to_f,
+          currency: sub.subscription_plan.currency
+        }
+      }
+    end
 
+    sku = @account.custom_attributes['sku']
+    plan = SubscriptionPlan.find_by(sku: sku) if sku.present?
+    
+    return nil unless plan
+    
+    rank = PRODUCT_TYPES.index((plan.name_en || '').downcase) || -1
     {
-      plan_id: sub.subscription_plan_id,
-      plan_name: sub.subscription_plan.name(@account.locale),
-      ends_at: sub.ends_at,
-      starts_at: sub.starts_at,
-      is_free: sub.subscription_plan.is_free,
+      plan_id: plan.id,
+      plan_name: plan.name(@account.locale),
+      ends_at: @account.custom_attributes['subscription_ends_on'],
+      starts_at: nil,
+      is_free: plan.is_free,
+      rank: rank,
       price: {
-        price_amount: sub.subscription_plan.price_amount.to_f,
-        currency: sub.subscription_plan.currency
+        price_amount: plan.price_amount.to_f,
+        currency: plan.currency
       }
     }
   end
@@ -70,16 +92,56 @@ class BillingPresenter
   end
 
   def plans_data
-    all_plans = SubscriptionPlan.visible.where.not(is_free: true).to_a
+    all_plans = SubscriptionPlan.joins(:subscription_tier)
+                                .where(visible: true, subscription_tiers: { is_free: false })
+                                .includes(:subscription_tier).to_a
 
-    # Group dynamically by name_en (lowercase) to accommodate any tier
-    all_plans.group_by { |p| (p.name_en || p.name || 'other').downcase }.transform_values do |tier_plans|
-      tier_plans.map { |plan| normalize_subscription_plan(plan) }
+    tiers = all_plans.group_by { |p| (p.name_en || p.name || 'other').downcase }
+    
+    formatted_tiers = tiers.map do |tier_name, tier_plans|
+      sorted_plans = tier_plans.sort_by { |p| p.duration_days.to_i }
+      base_plan = sorted_plans.find { |p| p.duration_days == 180 } || sorted_plans.first
+      
+      base_price_monthly = 0.0
+      if base_plan && base_plan.duration_days.to_i > 0
+        base_price_monthly = base_plan.price_amount.to_f / (base_plan.duration_days / 30.0).round
+      end
+
+      packages = sorted_plans.map do |plan|
+        normalized = normalize_subscription_plan(plan)
+        if base_price_monthly > 0 && plan.duration_days.to_i > 0
+          expected_price = base_price_monthly * (plan.duration_days / 30.0).round
+          actual_price = plan.price_amount.to_f
+          if actual_price < expected_price && expected_price > 0
+            discount = ((expected_price - actual_price) / expected_price * 100).round
+            normalized[:discount_percent] = discount > 0 ? discount : 0
+          else
+            normalized[:discount_percent] = 0
+          end
+        else
+          normalized[:discount_percent] = 0
+        end
+        normalized
+      end
+      
+      tier_rank = PRODUCT_TYPES.index(tier_name) || -1
+
+      {
+        tier_name: base_plan&.name(@account.locale),
+        tier_name_en: base_plan&.name_en,
+        tier_name_vi: base_plan&.name_vi,
+        rank: tier_rank,
+        description: base_plan&.description(@account.locale),
+        benefits: generate_benefits(base_plan),
+        packages: packages
+      }
     end
+    
+    formatted_tiers.sort_by { |t| t[:rank] }
   end
 
   def trial_data
-    sub_plan = SubscriptionPlan.free_plan.visible.where.not(is_free: true).first
+    sub_plan = SubscriptionPlan.free_plan.visible.first
     normalize_subscription_plan(sub_plan) if sub_plan
   end
 

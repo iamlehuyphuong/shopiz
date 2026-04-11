@@ -113,7 +113,10 @@ const currentPlanObject = computed(() => {
   const plans = [];
   if (trialPlan.value) plans.push(trialPlan.value);
   if (enterpisePlan.value) plans.push(enterpisePlan.value);
-  return [...plans, ...allVisiblePlans.value].find(p => p.id === pId);
+  allVisibleTiers.value.forEach(t => {
+    if (t.packages) plans.push(...t.packages);
+  });
+  return plans.find(p => p.id === pId);
 });
 
 const localizedPlanName = computed(() => {
@@ -226,21 +229,9 @@ const onClickBillingPortal = paymentInfo => {
   store.dispatch('accounts/checkout', paymentInfo);
 };
 
-const allVisiblePlans = computed(() => {
+const allVisibleTiers = computed(() => {
   const billingObj = currentAccount.value?.billing || {};
-  const plansObj = billingObj.plans || [];
-  
-  let plansArray = [];
-  if (Array.isArray(plansObj)) {
-    plansArray = plansObj;
-  } else {
-    plansArray = Object.keys(plansObj).reduce((acc, tier) => {
-      const tierPlans = plansObj[tier] || [];
-      return [...acc, ...(Array.isArray(tierPlans) ? tierPlans : [tierPlans])];
-    }, []);
-  }
-
-  return plansArray.filter(p => !isFreePlan(p) && p.visible);
+  return billingObj.plans || [];
 });
 
 const handleTopupSuccess = () => {
@@ -413,36 +404,17 @@ onMounted(fetchAccountDetails);
 
           <!-- Normal Plans -->
           <div
-            v-if="allVisiblePlans.length"
+            v-if="allVisibleTiers.length"
             class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8 pb-8"
           >
             <NormalItem
-              v-for="plan in allVisiblePlans"
-              :key="plan.id"
-              :plan="plan"
-            >
-              <ButtonV4
-                md
-                solid
-                ruby
-                @click="
-                  onClickBillingPortal({
-                    product_id: plan.id,
-                    payment_method: 'payos',
-                  })
-                "
-              >
-                {{
-                  planId === plan.id
-                    ? $t(
-                        'BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.CURRENT_PACKAGE'
-                      )
-                    : $t(
-                        'BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.UPGRADE_NOW'
-                      )
-                }}
-              </ButtonV4>
-            </NormalItem>
+              v-for="tier in allVisibleTiers"
+              :key="tier.tier_name_en"
+              :tier="tier"
+              :current-plan-id="currentSubscription.plan_id"
+              :current-rank="currentSubscription.rank"
+              @checkout="onClickBillingPortal"
+            />
           </div>
         </BillingCard>
 

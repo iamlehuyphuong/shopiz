@@ -687,11 +687,26 @@ Rails.application.routes.draw do
         post :subscribe, on: :member
         post :purchase_addon, on: :member
       end
+      resources :subscription_tiers do
+        get :duplicate, on: :member
+        collection do
+          get :export_csv
+          post :import_csv
+        end
+      end
       resources :subscription_plans do
         get :duplicate, on: :member
+        collection do
+          get :export_csv
+          post :import_csv
+        end
       end
       resources :addon_packages do
         get :duplicate, on: :member
+        collection do
+          get :export_csv
+          post :import_csv
+        end
       end
       resources :billing_histories, only: [:index, :show]
       resources :users, only: [:index, :new, :create, :show, :edit, :update, :destroy] do

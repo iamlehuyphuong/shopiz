@@ -24,55 +24,19 @@
 #  index_subscription_plans_on_is_free  (is_free)
 #
 class SubscriptionPlan < ApplicationRecord
+  belongs_to :subscription_tier
   has_many :account_subscriptions, dependent: :restrict_with_error
   has_many :accounts, through: :account_subscriptions
 
-  AVAILABLE_LIMIT_KEYS = %w[
-    agents
-    inboxes
-    contacts
-    automations
-    captain_responses
-    captain_documents
-    captain_assistants
-    captain_faqs
-    captain_responses_credit
-  ].freeze
+  delegate :name, :name_en, :name_vi, :description, :description_en, :description_vi,
+           :limits, :features, :is_free, to: :subscription_tier, allow_nil: true
 
-  SYSTEM_FEATURES = Featurable::FEATURE_LIST.map { |f| f['name'] }.freeze
-
-  before_validation :ensure_json_fields
-
-  validates :name_en, :name_vi, presence: true
   validates :sku, presence: true, uniqueness: true
   validates :duration_days, presence: true, numericality: { greater_than: 0 }
   validates :price_amount, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   scope :visible, -> { where(visible: true) }
-  scope :free_plan, -> { where(is_free: true) }
+  scope :free_plan, -> { joins(:subscription_tier).where(subscription_tiers: { is_free: true }) }
 
-  validate :single_free_plan_allowed
-
-  def name(locale = :en)
-    locale.to_s == 'vi' ? name_vi : name_en
-  end
-
-  def description(locale = :en)
-    locale.to_s == 'vi' ? description_vi : description_en
-  end
-
-  private
-
-  def single_free_plan_allowed
-    return unless is_free?
-
-    # Check if any other plan is already marked as free
-    other_free_plan = SubscriptionPlan.free_plan.where.not(id: id).exists?
-    errors.add(:is_free, 'can only be set for one plan') if other_free_plan
-  end
-
-  def ensure_json_fields
-    self.features ||= {}
-    self.limits ||= {}
-  end
+  # Removed duplicate name logic since it's now delegated to subscription_tier
 end

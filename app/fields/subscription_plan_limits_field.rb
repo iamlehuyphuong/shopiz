@@ -6,7 +6,7 @@ class SubscriptionPlanLimitsField < Administrate::Field::Base
   end
 
   def limit_keys
-    SubscriptionPlan::AVAILABLE_LIMIT_KEYS
+    SubscriptionTier::AVAILABLE_LIMIT_KEYS
   end
 
   def limit_value(key)

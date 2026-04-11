@@ -11,7 +11,7 @@ class AddonPackageDashboard < Administrate::BaseDashboard
     id: Field::Number,
     addon_type: Field::Select.with_options(searchable: false, collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys }),
     currency: Field::String,
-    duration_days: Field::Number,
+    duration_days: Field::Select.with_options(collection: [180, 365, 730]),
     name: Field::String,
     price_amount: Field::String.with_options(searchable: false),
     quantity: Field::Number,
