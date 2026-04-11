@@ -3,6 +3,8 @@ import { computed, onMounted, ref } from 'vue';
 import { useMapGetter, useStore } from 'dashboard/composables/store.js';
 import { useCaptain } from 'dashboard/composables/useCaptain';
 import { useAccount } from 'dashboard/composables/useAccount';
+import { useUISettings } from 'dashboard/composables/useUISettings';
+import { useI18n } from 'vue-i18n';
 import { format, differenceInDays } from 'date-fns';
 import BillingCard from './components/BillingCard.vue';
 import BillingHeader from './components/BillingHeader.vue';
@@ -19,9 +21,12 @@ import BillingMeter from './components/BillingMeter.vue';
 
 const { currentAccount } = useAccount();
 const { fetchLimits } = useCaptain();
+const { uiSettings } = useUISettings();
 
 const uiFlags = useMapGetter('accounts/getUIFlags');
 const store = useStore();
+
+const { t, locale } = useI18n();
 
 // State for handling loading
 const purchaseCreditsModalRef = ref(null);
@@ -97,6 +102,30 @@ const planName = computed(() => {
   );
 });
 
+const isVietnamese = computed(() => {
+  const localeToUse = uiSettings.value?.locale || locale.value || 'en';
+  return localeToUse === 'vi';
+});
+
+const currentPlanObject = computed(() => {
+  const pId = currentSubscription.value.plan_id || customAttributes.value.stripe_product_id;
+  if (!pId) return null;
+  const plans = [];
+  if (trialPlan.value) plans.push(trialPlan.value);
+  if (enterpisePlan.value) plans.push(enterpisePlan.value);
+  return [...plans, ...allVisiblePlans.value].find(p => p.id === pId);
+});
+
+const localizedPlanName = computed(() => {
+  const p = currentPlanObject.value;
+  if (p) {
+    if (isVietnamese.value && p.name_vi) return p.name_vi;
+    if (!isVietnamese.value && p.name_en) return p.name_en;
+    if (p.name) return p.name;
+  }
+  return planName.value;
+});
+
 const hasABillingPlan = computed(() => {
   return (
     currentSubscription.value.plan_name || customAttributes.value.plan_name
@@ -120,8 +149,7 @@ const subscriptionRenewsOn = computed(() => {
   if (!endDateStr) return '';
 
   const endDate = new Date(endDateStr);
-  // return date as 12 Jan, 2034
-  return format(endDate, 'dd MMM, yyyy');
+  return isVietnamese.value ? format(endDate, 'dd/MM/yyyy') : format(endDate, 'dd MMM, yyyy');
 });
 
 const daysUntilRefresh = computed(() => {
@@ -200,13 +228,19 @@ const onClickBillingPortal = paymentInfo => {
 
 const allVisiblePlans = computed(() => {
   const billingObj = currentAccount.value?.billing || {};
-  const plansObj = billingObj.plans || {};
+  const plansObj = billingObj.plans || [];
   
-  return Object.keys(plansObj).reduce((acc, tier) => {
-    const tierPlans = plansObj[tier] || [];
-    const filtered = tierPlans.filter(p => !isFreePlan(p) && p.visible);
-    return [...acc, ...filtered];
-  }, []);
+  let plansArray = [];
+  if (Array.isArray(plansObj)) {
+    plansArray = plansObj;
+  } else {
+    plansArray = Object.keys(plansObj).reduce((acc, tier) => {
+      const tierPlans = plansObj[tier] || [];
+      return [...acc, ...(Array.isArray(tierPlans) ? tierPlans : [tierPlans])];
+    }, []);
+  }
+
+  return plansArray.filter(p => !isFreePlan(p) && p.visible);
 });
 
 const handleTopupSuccess = () => {
@@ -241,7 +275,7 @@ onMounted(fetchAccountDetails);
           <div class="grid sm:grid-cols-3 grid-cols-1 gap-2 divide-n-weak">
             <DetailItem
               :label="$t('BILLING_SETTINGS.CURRENT_PLAN.TITLE')"
-              :value="planName"
+              :value="localizedPlanName"
             />
             <DetailItem
               :label="$t('BILLING_SETTINGS.CURRENT_PLAN.RENEWS_ON')"
@@ -253,7 +287,7 @@ onMounted(fetchAccountDetails);
               <ButtonV4
                 sm
                 solid
-                :color="isFreePlan(currentSubscription) ? 'slate' : 'ruby'"
+                :color="isFreePlan(currentSubscription) ? 'slate' : 'blue'"
                 :disabled="isFreePlan(currentSubscription)"
                 @click="
                   onClickBillingPortal({

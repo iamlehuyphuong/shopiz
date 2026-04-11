@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUnmounted, computed, ref } from 'vue';
+import { onMounted, onUnmounted, computed, ref, getCurrentInstance } from 'vue';
 import { useRouter } from 'vue-router';
 import { useKbd } from 'dashboard/composables/utils/useKbd';
 import { useI18n } from 'vue-i18n';
@@ -21,6 +21,7 @@ const emit = defineEmits([
   'toggleMobileSidebar',
 ]);
 
+const instance = getCurrentInstance();
 const { t, te, locale } = useI18n();
 const searchShortcut = useKbd([`$mod`, '+', 'k']);
 const store = useStore();
@@ -52,8 +53,14 @@ const isVietnamese = computed({
   set: async (val) => {
     try {
       const newLocale = val ? 'vi' : 'en';
+      await store.dispatch('accounts/update', { locale: newLocale });
       await updateUISettings({ locale: newLocale });
       locale.value = newLocale;
+      
+      const rootProxy = instance?.root?.proxy || instance?.appContext?.config?.globalProperties;
+      if (rootProxy && rootProxy.$i18n) {
+        rootProxy.$i18n.locale = newLocale;
+      }
     } catch {}
   }
 });

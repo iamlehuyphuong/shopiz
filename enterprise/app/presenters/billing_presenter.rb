@@ -72,14 +72,10 @@ class BillingPresenter
   def plans_data
     all_plans = SubscriptionPlan.visible.where.not(is_free: true).to_a
 
-    # Group by name_en (lowercase) to ensure matching with PRODUCT_TYPES
-    PRODUCT_TYPES.index_with do |tier|
-      MONTH_OPTIONS.map do |month|
-        days = month.to_i == 6 ? 180 : 365
-        plan = all_plans.find { |p| p.name_en.downcase == tier.downcase && p.duration_days == days }
-        plan ? normalize_subscription_plan(plan) : nil
-      end.compact
-    end.reject { |_tier, tier_plans| tier_plans.empty? }
+    # Group dynamically by name_en (lowercase) to accommodate any tier
+    all_plans.group_by { |p| (p.name_en || p.name || 'other').downcase }.transform_values do |tier_plans|
+      tier_plans.map { |plan| normalize_subscription_plan(plan) }
+    end
   end
 
   def trial_data

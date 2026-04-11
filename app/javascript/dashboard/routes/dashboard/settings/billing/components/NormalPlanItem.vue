@@ -3,6 +3,7 @@ import { computed } from 'vue';
 import BenefitItem from './BenefitItem.vue';
 import { formatCurrency } from 'dashboard/helper/commons';
 import { useI18n } from 'vue-i18n';
+import { useUISettings } from 'dashboard/composables/useUISettings';
 
 const props = defineProps({
   plan: {
@@ -11,7 +12,16 @@ const props = defineProps({
   },
 });
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
+const { uiSettings } = useUISettings();
+
+const localizedTitle = computed(() => {
+  const localeToUse = uiSettings.value?.locale || locale.value || 'en';
+  const isVietnamese = localeToUse === 'vi';
+  if (isVietnamese && props.plan.name_vi) return props.plan.name_vi;
+  if (!isVietnamese && props.plan.name_en) return props.plan.name_en;
+  return props.plan.name;
+});
 
 const durationLabel = computed(() => {
   if (props.plan.duration_days === 180)
@@ -27,7 +37,7 @@ const durationLabel = computed(() => {
   <div class="trial-item rounded-xl shadow-sm border border-n-weak bg-n-solid-2 py-8 px-8">
     <div class="title text-center">
       <span class="text-base font-medium text-n-slate-12">
-        {{ plan.name }}
+        {{ localizedTitle }}
       </span>
       <p class="text-base font-medium text-n-slate-12 mt-1">
         {{ formatCurrency(plan.price) }}
