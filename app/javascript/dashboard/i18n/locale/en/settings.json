@@ -731,7 +731,7 @@
     "AI_RESOURCE_MANAGEMENT": {
       "TITLE": "AI Resources",
       "DESCRIPTION": "Manage your AI resource usage and limits.",
-      "REFRESHES_IN_DAYS": "Refreshes in {days} days"
+      "REFRESHES_IN_DAYS": "AI messages per month: Refreshes in {days} days"
     },
     "CAPTAIN": {
       "TITLE": "Addon packages",

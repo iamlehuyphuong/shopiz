@@ -729,7 +729,7 @@
     "AI_RESOURCE_MANAGEMENT": {
       "TITLE": "Tài nguyên AI",
       "DESCRIPTION": "Thông tin về hạn mức và và sử dụng tài nguyên AI.",
-      "REFRESHES_IN_DAYS": "Tự động làm mới sau {days} ngày"
+      "REFRESHES_IN_DAYS": "Tin nhắn AI mỗi tháng: Tự động làm mới sau {days} ngày"
     },
     "CAPTAIN": {
       "TITLE": "Các gói tài nguyên",

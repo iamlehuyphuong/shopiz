@@ -493,17 +493,8 @@ onMounted(fetchAccountDetails);
           >
             <template v-for="addon in allAddonPackages" :key="addon.id">
               <CreditItem :credit-item="addon">
-                <div v-if="getActiveAddon(addon.id)" class="text-center mb-4">
-                  <span
-                    class="px-2 py-0.5 rounded text-xs font-bold bg-n-blue-4 text-n-blue-11"
-                  >
-                    {{
-                      $t('BILLING_SETTINGS.ADDON_QUANTITY', {
-                        quantity: getActiveAddon(addon.id).quantity,
-                      })
-                    }}
-                  </span>
-                </div>
+
+
                 <ButtonV4
                   md
                   solid
