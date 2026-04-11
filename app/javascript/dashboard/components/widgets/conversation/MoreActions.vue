@@ -125,9 +125,9 @@ onUnmounted(() => {
   <div class="relative flex items-center gap-2 actions--container">
     <div
       v-if="isAiAssistantEnabled"
-      class="flex items-center gap-2 px-2 py-1 border rounded-md border-n-slate-3 dark:border-n-slate-4"
+      class="flex items-center gap-2 h-8 px-3 border rounded-lg shadow border-n-slate-3 dark:border-n-slate-4"
     >
-      <span class="text-xs font-medium text-n-slate-11">
+      <span class="text-sm font-medium text-n-slate-11">
         {{ t('CONVERSATION.HEADER.AI_ASSISTANT_TOGGLE') }}
       </span>
       <SwitchV4 :model-value="isAiAssistantOn" @change="onAiAssistantToggle" />
