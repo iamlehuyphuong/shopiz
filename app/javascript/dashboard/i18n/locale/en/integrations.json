@@ -723,7 +723,8 @@
           "UPDATE": "Update changes"
         },
         "LIST": {
-          "SEARCH_PLACEHOLDER": "Search..."
+          "SEARCH_PLACEHOLDER": "Search...",
+          "COUNT": "{count} scenario | {count} scenarios"
         },
         "EMPTY_MESSAGE": "No scenarios found. Create or add examples to begin.",
         "SEARCH_EMPTY_MESSAGE": "No scenarios found for this search.",
