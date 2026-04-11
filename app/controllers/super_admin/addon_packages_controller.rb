@@ -65,7 +65,7 @@ class SuperAdmin::AddonPackagesController < SuperAdmin::ApplicationController
 
   def resource_params
     params.require(:addon_package).permit(
-      :sku, :name, :addon_type, :quantity, :price_amount, :currency, :duration_days, :visible
+      :sku, :name, :name_en, :name_vi, :addon_type, :quantity, :price_amount, :currency, :duration_days, :visible
     )
   end
 end

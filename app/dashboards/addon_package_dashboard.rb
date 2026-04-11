@@ -11,8 +11,10 @@ class AddonPackageDashboard < Administrate::BaseDashboard
     id: Field::Number,
     addon_type: Field::Select.with_options(searchable: false, collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys }),
     currency: Field::String,
-    duration_days: Field::Select.with_options(collection: [180, 365, 730]),
+    duration_days: Field::Select.with_options(collection: [['Không có hạn sử dụng', nil], ['6 Tháng (180)', 180], ['1 Năm (365)', 365], ['2 Năm (730)', 730]]),
     name: Field::String,
+    name_en: Field::String,
+    name_vi: Field::String,
     price_amount: Field::String.with_options(searchable: false),
     quantity: Field::Number,
     sku: Field::String,
@@ -30,6 +32,8 @@ class AddonPackageDashboard < Administrate::BaseDashboard
     id
     sku
     name
+    name_en
+    name_vi
     addon_type
     quantity
     price_amount
@@ -43,6 +47,8 @@ class AddonPackageDashboard < Administrate::BaseDashboard
     id
     sku
     name
+    name_en
+    name_vi
     addon_type
     quantity
     price_amount
@@ -59,6 +65,8 @@ class AddonPackageDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     sku
     name
+    name_en
+    name_vi
     addon_type
     quantity
     price_amount

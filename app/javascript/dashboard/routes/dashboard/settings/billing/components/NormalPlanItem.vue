@@ -18,6 +18,14 @@ const props = defineProps({
   currentRank: {
     type: Number,
     default: -1,
+  },
+  globalDuration: {
+    type: Number,
+    default: 365,
+  },
+  globalAiIncluded: {
+    type: Boolean,
+    default: false,
   }
 });
 
@@ -26,37 +34,33 @@ const emit = defineEmits(['checkout']);
 const { t, locale } = useI18n();
 const { uiSettings } = useUISettings();
 
-const selectedPackageId = ref(null);
-
-watch(() => props.tier.packages, (pkgs) => {
-  if (pkgs && pkgs.length > 0) {
-    const currentInTier = pkgs.find(p => p.id === props.currentPlanId);
-    if (currentInTier) {
-      selectedPackageId.value = currentInTier.id;
-    } else {
-      selectedPackageId.value = pkgs[0].id;
-    }
-  }
-}, { immediate: true });
-
 const selectedPackage = computed(() => {
-  return props.tier.packages.find(p => p.id === selectedPackageId.value) || props.tier.packages[0];
+  if (!props.tier?.packages || props.tier.packages.length === 0) return null;
+  let match = props.tier.packages.find(p => p.duration_days === props.globalDuration && !!p.ai_included === props.globalAiIncluded);
+  if (match) return match;
+  
+  match = props.tier.packages.find(p => p.duration_days === props.globalDuration);
+  if (match) return match;
+  
+  match = props.tier.packages.find(p => !!p.ai_included === props.globalAiIncluded);
+  if (match) return match;
+  
+  return props.tier.packages[0];
 });
 
 const localizedTitle = computed(() => {
   const localeToUse = uiSettings.value?.locale || locale.value || 'en';
   const isVietnamese = localeToUse === 'vi';
+  const pkg = selectedPackage.value;
+  if (pkg) {
+    if (isVietnamese && pkg.name_vi) return pkg.name_vi;
+    if (!isVietnamese && pkg.name_en) return pkg.name_en;
+    if (pkg.name) return pkg.name;
+  }
   if (isVietnamese && props.tier.tier_name_vi) return props.tier.tier_name_vi;
   if (!isVietnamese && props.tier.tier_name_en) return props.tier.tier_name_en;
   return props.tier.tier_name;
 });
-
-const getDurationLabel = (durationDays) => {
-  if (durationDays === 180) return '6 Tháng';
-  if (durationDays === 365) return '1 Năm';
-  if (durationDays === 730) return '2 Năm';
-  return `${durationDays} Ngày`;
-};
 
 const monthlyPrice = computed(() => {
   const price = selectedPackage.value?.price?.price_amount || 0;
@@ -79,7 +83,7 @@ const isCurrentTier = computed(() => {
 
 const buttonLabel = computed(() => {
   if (isCurrentTier.value) {
-    if (selectedPackage.value.id === props.currentPlanId) {
+    if (selectedPackage.value?.id === props.currentPlanId) {
       return t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.CURRENT_PACKAGE');
     }
     return t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.RENEW_NOW') || 'Sửa đổi chu kỳ';
@@ -89,7 +93,7 @@ const buttonLabel = computed(() => {
 
 const onCheckout = () => {
   emit('checkout', {
-    product_id: selectedPackage.value.id,
+    product_id: selectedPackage.value?.id,
     payment_method: 'payos',
   });
 };
@@ -102,41 +106,36 @@ const onCheckout = () => {
       <span class="text-base font-medium text-n-slate-12 uppercase">
         {{ localizedTitle }}
       </span>
-      
-      <div class="flex justify-center mt-3">
-        <select 
-          v-model="selectedPackageId"
-          class="w-full max-w-[200px] text-sm font-medium text-n-slate-12 bg-white border border-n-weak rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-n-brand"
-        >
-          <option v-for="pkg in tier.packages" :key="pkg.id" :value="pkg.id">
-            {{ getDurationLabel(pkg.duration_days) }}
-            <template v-if="pkg.discount_percent > 0">(-{{ pkg.discount_percent }}%)</template>
-          </option>
-        </select>
-      </div>
 
-      <div class="mt-4 flex flex-col items-center justify-center">
-         <div class="flex items-center">
-           <p class="text-2xl font-bold text-n-slate-12 m-0">
-            {{ formatCurrency(selectedPackage.price) }}
-           </p>
-           <span v-if="selectedPackage.discount_percent > 0" class="ml-2 text-xs font-semibold text-green-600 bg-green-100 px-1.5 py-0.5 rounded">
-             Giảm {{ selectedPackage.discount_percent }}%
+      <template v-if="selectedPackage">
+        <div class="mt-4 flex flex-col items-center justify-center">
+           <div class="flex items-center">
+             <p class="text-2xl font-bold text-n-slate-12 m-0">
+              {{ formatCurrency(selectedPackage.price) }}
+             </p>
+             <span v-if="selectedPackage.discount_percent > 0" class="ml-2 text-xs font-semibold text-n-brand bg-n-brand/10 px-1.5 py-0.5 rounded">
+               {{ $t('BILLING_SETTINGS.PRICING_PACKAGES.DISCOUNT', { percent: selectedPackage.discount_percent }) }}
+             </span>
+           </div>
+           <span class="text-xs text-n-slate-11 mt-1 block">
+             {{ $t('BILLING_SETTINGS.PRICING_PACKAGES.MONTHLY_EQUIVALENT', { price: formatCurrency({ price_amount: monthlyPrice, currency: selectedPackage.price?.currency }) }) }}
            </span>
-         </div>
-         <p v-if="monthlyPrice > 0" class="text-xs text-n-slate-11 mt-1.5 font-medium">
-           {{ formatCurrency({ price_amount: monthlyPrice, currency: selectedPackage.price.currency }) }}/tháng
-         </p>
-      </div>
+        </div>
+      </template>
       
       <p class="text-sm text-n-slate-11 mt-2 min-h-[40px]">
         {{ tier.description }}
       </p>
     </div>
     
-    <div class="benefit mt-6 flex-1">
-      <template v-for="benefit in tier.benefits" :key="benefit['id']">
-        <BenefitItem class="text-center" :label="benefit['description']" />
+    <div class="benefit mt-6 mb-4 flex-1 w-full px-6">
+      <template v-for="category in selectedPackage.benefits" :key="category.name">
+        <div class="mt-6 mb-3">
+          <h4 class="text-xs font-semibold text-n-slate-12 uppercase tracking-wide border-b border-n-weak pb-1.5 mb-3">{{ $t(category.name) }}</h4>
+          <div class="flex flex-col gap-1">
+            <BenefitItem v-for="benefit in category.items" :key="benefit['id']" class="justify-start text-left" :label="benefit['description']" :count="benefit['count']" :included="benefit['included'] !== false" />
+          </div>
+        </div>
       </template>
     </div>
     

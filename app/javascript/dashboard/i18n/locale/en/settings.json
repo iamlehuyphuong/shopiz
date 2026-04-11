@@ -713,6 +713,7 @@
       "AI_FAQ": "ShopizAI FAQs",
       "AI_ASSISTANT": "ShopizAI Assistant",
       "AI_RESPONSE": "AI messages per month",
+      "AI_RESPONSE_CREDIT": "AI Response Credit",
       "LIMITATION_TITLE": "Resource Limitations",
       "ACTIVE_ADDONS": "Active Addons"
     },
@@ -789,6 +790,54 @@
         "RENEW_NOW": "Renew Now",
         "CONTACT": "Contact Us",
         "BUY_NOW": "Buy Now"
+      },
+      "MONTHLY_EQUIVALENT": "equivalent to {price}/month",
+      "DISCOUNT": "Save {percent}%",
+      "BENEFITS": {
+        "CATEGORIES": {
+          "LIMITATIONS": "Limitation",
+          "CHANNELS": "Channels",
+          "FEATURES": "Features"
+        },
+        "LIMITS": {
+          "AGENTS": "{count} Agents",
+          "INBOXES": "{count} Inboxes",
+          "CONTACTS": "{count} Contacts",
+          "AUTOMATIONS": "{count} Automations",
+          "CAPTAIN_ASSISTANTS": "{count} ShopizAI Assistants",
+          "CAPTAIN_DOCUMENTS": "{count} ShopizAI Documents",
+          "CAPTAIN_FAQS": "{count} ShopizAI FAQs",
+          "CAPTAIN_RESPONSES": "{count} ShopizAI Responses"
+        },
+        "CHANNELS": {
+          "WEBSITE": "Website",
+          "ZALO_OA": "Zalo OA",
+          "ZALO_PERSONAL": "Zalo Personal",
+          "FACEBOOK": "Facebook",
+          "WHATSAPP": "Whatsapp",
+          "INSTAGRAM": "Instagram",
+          "TIKTOK": "Tiktok",
+          "TIKTOK_SHOP": "Tiktok Shop",
+          "TELEGRAM": "Telegram",
+          "LINE": "Line",
+          "TWITTER": "Twitter (X)"
+        },
+        "FEATURES": {
+          "CANNED_RESPONSES": "Canned Responses",
+          "MACROS": "Macros",
+          "AUTOMATIONS": "Automations",
+          "AGENT_BOTS": "Bots",
+          "REPORTS": "Reports",
+          "LABELS": "Labels",
+          "CHANNEL_WHATSAPP": "Templates",
+          "INTEGRATIONS": "Integrations",
+          "CSAT_REVIEW_NOTES": "CSAT",
+          "SLA": "SLA",
+          "CAMPAIGNS": "Campaigns",
+          "CUSTOM_ROLES": "Custom Roles",
+          "CUSTOM_ATTRIBUTES": "Custom Attributes",
+          "AUDIT_LOGS": "Audit Logs"
+        }
       }
     },
     "BILLING_HISTORY": "Billing History"

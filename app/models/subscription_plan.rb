@@ -28,8 +28,46 @@ class SubscriptionPlan < ApplicationRecord
   has_many :account_subscriptions, dependent: :restrict_with_error
   has_many :accounts, through: :account_subscriptions
 
-  delegate :name, :name_en, :name_vi, :description, :description_en, :description_vi,
-           :limits, :features, :is_free, to: :subscription_tier, allow_nil: true
+  delegate :description, :description_en, :description_vi,
+           :is_free, to: :subscription_tier, allow_nil: true
+
+  def name(locale = 'en')
+    base_name = subscription_tier&.name(locale)
+    return "#{base_name} + AI" if ai_included? && base_name.present?
+
+    base_name
+  end
+
+  def name_en
+    base_name = subscription_tier&.name_en
+    return "#{base_name} + AI" if ai_included? && base_name.present?
+
+    base_name
+  end
+
+  def name_vi
+    base_name = subscription_tier&.name_vi
+    return "#{base_name} + AI" if ai_included? && base_name.present?
+
+    base_name
+  end
+
+  AI_FEATURES = %w[captain captain_v2 captain_task].freeze
+  AI_LIMITS = %w[captain_assistants captain_responses captain_documents captain_faqs].freeze
+
+  def features
+    base_features = subscription_tier&.features || {}
+    return base_features if ai_included?
+
+    base_features.except(*AI_FEATURES)
+  end
+
+  def limits
+    base_limits = subscription_tier&.limits || {}
+    return base_limits if ai_included?
+
+    base_limits.except(*AI_LIMITS)
+  end
 
   validates :sku, presence: true, uniqueness: true
   validates :duration_days, presence: true, numericality: { greater_than: 0 }

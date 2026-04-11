@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useMapGetter, useStore } from 'dashboard/composables/store.js';
 import { useCaptain } from 'dashboard/composables/useCaptain';
 import { useAccount } from 'dashboard/composables/useAccount';
@@ -18,6 +18,7 @@ import BaseSettingsHeader from '../components/BaseSettingsHeader.vue';
 import SettingsLayout from '../SettingsLayout.vue';
 import ButtonV4 from 'next/button/Button.vue';
 import BillingMeter from './components/BillingMeter.vue';
+import Switch from 'dashboard/components-next/switch/Switch.vue';
 
 const { currentAccount } = useAccount();
 const { fetchLimits } = useCaptain();
@@ -65,7 +66,7 @@ const aiLimitations = computed(() => {
       label: 'BILLING_SETTINGS.CURRENT_PLAN.AI_ASSISTANT',
     },
     {
-      key: 'captain_credit',
+      key: 'captain_responses',
       label: 'BILLING_SETTINGS.CURRENT_PLAN.AI_RESPONSE',
     },
     {
@@ -239,6 +240,34 @@ const handleTopupSuccess = () => {
   fetchLimits();
 };
 
+const globalDuration = ref(365);
+const globalAiIncluded = ref(false);
+
+const durationTabs = computed(() => [
+  { value: 180, label: isVietnamese.value ? '6 Tháng' : '6 Months' },
+  { value: 365, label: isVietnamese.value ? '1 Năm' : '1 Year' },
+  { value: 730, label: isVietnamese.value ? '2 Năm' : '2 Years' }
+]);
+
+const selectDuration = (val) => {
+  globalDuration.value = val;
+};
+
+watch(() => allVisibleTiers.value, (tiers) => {
+  const cPlanId = currentSubscription.value.plan_id;
+  if (!cPlanId || !tiers) return;
+  for(const tier of tiers) {
+    if(tier.packages) {
+      const match = tier.packages.find(p => p.id === cPlanId);
+      if(match) {
+        globalDuration.value = match.duration_days;
+        globalAiIncluded.value = !!match.ai_included;
+        break;
+      }
+    }
+  }
+}, { immediate: true });
+
 onMounted(fetchAccountDetails);
 </script>
 
@@ -263,7 +292,7 @@ onMounted(fetchAccountDetails);
           :title="$t('BILLING_SETTINGS.MANAGE_SUBSCRIPTION.TITLE')"
           :description="$t('BILLING_SETTINGS.MANAGE_SUBSCRIPTION.DESCRIPTION')"
         >
-          <div class="grid sm:grid-cols-3 grid-cols-1 gap-2 divide-n-weak">
+          <div class="grid sm:grid-cols-4 grid-cols-1 gap-2 divide-n-weak">
             <DetailItem
               :label="$t('BILLING_SETTINGS.CURRENT_PLAN.TITLE')"
               :value="localizedPlanName"
@@ -273,6 +302,10 @@ onMounted(fetchAccountDetails);
               :value="
                 isFreePlan(currentSubscription) ? '---' : subscriptionRenewsOn
               "
+            />
+            <DetailItem
+              :label="$t('BILLING_SETTINGS.CURRENT_PLAN.AI_RESPONSE_CREDIT')"
+              :value="usageData?.captain_responses_credit || '0'"
             />
             <div class="flex items-center justify-center">
               <ButtonV4
@@ -405,6 +438,36 @@ onMounted(fetchAccountDetails);
           <!-- Normal Plans -->
           <div
             v-if="allVisibleTiers.length"
+            class="flex flex-col items-center justify-center mb-8 px-8"
+          >
+            <!-- Duration Tabs -->
+            <div class="inline-flex bg-n-solid-2 border border-n-weak rounded-xl p-1 mb-6 shadow-sm">
+              <button
+                v-for="tab in durationTabs"
+                :key="tab.value"
+                type="button"
+                class="px-8 py-2 text-[14px] font-semibold rounded-lg transition-all duration-200"
+                :class="globalDuration === tab.value ? 'bg-n-brand text-white shadow' : 'text-n-slate-11 hover:text-n-slate-12'"
+                @click="selectDuration(tab.value)"
+              >
+                {{ tab.label }}
+              </button>
+            </div>
+
+            <!-- AI Toggle -->
+            <div class="flex items-center justify-center gap-2 mb-2">
+              <span class="text-[14px] font-bold text-n-slate-12">
+                {{ isVietnamese ? 'Sử dụng ShopizAI' : 'Using ShopizAI' }}
+              </span>
+              <Switch v-model="globalAiIncluded" />
+            </div>
+            <p class="text-xs text-n-slate-10 text-center max-w-md mt-1">
+              {{ isVietnamese ? 'Kích hoạt tuỳ chọn này nếu bạn muốn hệ thống trang bị trợ lý ảo siêu việt hỗ trợ bạn trả lời tin nhắn.' : 'Enable this option if you want to equip the system with a super virtual assistant to help you reply to messages.' }}
+            </p>
+          </div>
+
+          <div
+            v-if="allVisibleTiers.length"
             class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8 pb-8"
           >
             <NormalItem
@@ -413,6 +476,8 @@ onMounted(fetchAccountDetails);
               :tier="tier"
               :current-plan-id="currentSubscription.plan_id"
               :current-rank="currentSubscription.rank"
+              :global-duration="globalDuration"
+              :global-ai-included="globalAiIncluded"
               @checkout="onClickBillingPortal"
             />
           </div>

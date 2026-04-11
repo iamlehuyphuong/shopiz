@@ -65,7 +65,7 @@ class SuperAdmin::SubscriptionPlansController < SuperAdmin::ApplicationControlle
   def resource_params
     params.require(:subscription_plan).permit(
       :subscription_tier_id, :sku,
-      :price_amount, :currency, :duration_days, :visible
+      :price_amount, :currency, :duration_days, :visible, :ai_included
     )
   end
 end

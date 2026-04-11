@@ -711,6 +711,7 @@
       "AI_FAQ": "FAQ ShopizAI",
       "AI_ASSISTANT": "Trợ lý ShopizAI",
       "AI_RESPONSE": "Tin nhắn AI mỗi tháng",
+      "AI_RESPONSE_CREDIT": "Tín dụng AI vĩnh viễn",
       "LIMITATION_TITLE": "Giới hạn tài nguyên",
       "ACTIVE_ADDONS": "Gói mua thêm"
     },
@@ -787,6 +788,54 @@
         "RENEW_NOW": "Gia hạn ngay",
         "CONTACT": "Liên hệ với chúng tôi",
         "BUY_NOW": "Mua ngay"
+      },
+      "MONTHLY_EQUIVALENT": "tương đương {price}/tháng",
+      "DISCOUNT": "Giảm {percent}%",
+      "BENEFITS": {
+        "CATEGORIES": {
+          "LIMITATIONS": "Giới hạn hệ thống",
+          "CHANNELS": "Kênh giao tiếp",
+          "FEATURES": "Bao gồm tính năng"
+        },
+        "LIMITS": {
+          "AGENTS": "{count} Nhân viên",
+          "INBOXES": "{count} Hộp thư",
+          "CONTACTS": "{count} Liên hệ",
+          "AUTOMATIONS": "{count} Quy tắc tự động",
+          "CAPTAIN_ASSISTANTS": "{count} Trợ lý ShopizAI",
+          "CAPTAIN_DOCUMENTS": "{count} Tài liệu ShopizAI",
+          "CAPTAIN_FAQS": "{count} FAQs ShopizAI",
+          "CAPTAIN_RESPONSES": "{count} Phản hồi ShopizAI"
+        },
+        "CHANNELS": {
+          "WEBSITE": "Website",
+          "ZALO_OA": "Zalo OA",
+          "ZALO_PERSONAL": "Zalo cá nhân",
+          "FACEBOOK": "Facebook",
+          "WHATSAPP": "Whatsapp",
+          "INSTAGRAM": "Instagram",
+          "TIKTOK": "Tiktok",
+          "TIKTOK_SHOP": "Tiktok Shop",
+          "TELEGRAM": "Telegram",
+          "LINE": "Line",
+          "TWITTER": "Twitter (X)"
+        },
+        "FEATURES": {
+          "CANNED_RESPONSES": "Tin nhắn mẫu",
+          "MACROS": "Lệnh tự động (Macros)",
+          "AUTOMATIONS": "Tự động hóa",
+          "AGENT_BOTS": "Trợ lý ảo",
+          "REPORTS": "Báo cáo",
+          "LABELS": "Gắn nhãn",
+          "CHANNEL_WHATSAPP": "Mẫu nội dung",
+          "INTEGRATIONS": "Kho ứng dụng",
+          "CSAT_REVIEW_NOTES": "Đánh giá CSAT",
+          "SLA": "Chính sách SLA",
+          "CAMPAIGNS": "Chiến dịch",
+          "CUSTOM_ROLES": "Vai trò tùy chỉnh",
+          "CUSTOM_ATTRIBUTES": "Thuộc tính tùy chỉnh",
+          "AUDIT_LOGS": "Nhật ký hệ thống"
+        }
       }
     },
     "BILLING_HISTORY": "Lịch sử thanh toán"
@@ -915,7 +964,6 @@
       }
     }
   },
-
   "CREATE_ACCOUNT": {
     "NO_ACCOUNT_WARNING": "Không tìm thấy tài khoản Shopiz. Vui lòng tạo tài khoản mới để tiếp tục.",
     "NEW_ACCOUNT": "Tạo tài khoản mới",
