@@ -23,7 +23,9 @@ class Internal::ProcessStaleOutDatePlanJob < ApplicationJob
 
   def process_expired_subscriptions
     # Find active subscriptions that have expired beyond the grace period
+    # Skip free plans - they have ends_at=nil and never expire
     AccountSubscription.where(status: :active)
+                       .where.not(ends_at: nil)
                        .where('ends_at < ?', Time.current - GRACE_PERIOD_DAYS.days)
                        .find_each do |subscription|
       subscription.update!(status: :expired)

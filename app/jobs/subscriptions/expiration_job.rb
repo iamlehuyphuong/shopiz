@@ -16,8 +16,11 @@ class Subscriptions::ExpirationJob < ApplicationJob
   def mark_expired_subscriptions
     # Mark subscriptions as expired when ends_at has passed
     # But DON'T downgrade yet - they get a 3-day grace period
+    # Skip free plans - they never expire (ends_at is nil)
     AccountSubscription.where(status: :active)
+                       .where.not(ends_at: nil)
                        .where('ends_at < ?', Time.current)
+                       .joins(:subscription_plan).where.not(subscription_plans: { subscription_tier_id: SubscriptionTier.where(is_free: true).select(:id) })
                        .find_each do |subscription|
       subscription.update!(status: :expired)
       Rails.logger.info("Subscription #{subscription.id} for Account #{subscription.account_id} marked as expired (grace period starts)")
@@ -30,7 +33,9 @@ class Subscriptions::ExpirationJob < ApplicationJob
 
   def downgrade_after_grace_period
     # Find expired subscriptions where grace period has also passed
+    # Free plans have ends_at=nil, so they're naturally excluded
     AccountSubscription.where(status: :expired)
+                       .where.not(ends_at: nil)
                        .where('ends_at < ?', Time.current - GRACE_PERIOD_DAYS.days)
                        .find_each do |subscription|
       account = subscription.account
