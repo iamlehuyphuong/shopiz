@@ -65,6 +65,10 @@ class Conversations::MessageWindowService
   end
 
   def last_incoming_message
-    @last_incoming_message ||= @conversation.messages.where(account_id: @conversation.account_id).incoming&.last
+    @last_incoming_message ||= @conversation.messages
+                                             .where(account_id: @conversation.account_id)
+                                             .incoming
+                                             .reorder(created_at: :desc)
+                                             .first
   end
 end

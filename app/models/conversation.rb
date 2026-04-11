@@ -130,7 +130,9 @@ class Conversation < ApplicationRecord
   delegate :auto_resolve_after, to: :account
 
   def can_reply?
-    Conversations::MessageWindowService.new(self).can_reply?
+    return @can_reply_cache if defined?(@can_reply_cache)
+
+    @can_reply_cache = Conversations::MessageWindowService.new(self).can_reply?
   end
 
   def language
@@ -148,7 +150,7 @@ class Conversation < ApplicationRecord
   end
 
   def last_incoming_message
-    messages.where(account_id: account_id)&.incoming&.last
+    messages.where(account_id: account_id).incoming.reorder(created_at: :desc).first
   end
 
   def toggle_status
