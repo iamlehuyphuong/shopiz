@@ -44,3 +44,38 @@
   title: 'Handoff to Human'
   description: 'Hand off the conversation to a human agent'
   icon: 'user-switch'
+
+- id: assign_conversation
+  title: 'Assign Conversation'
+  description: 'Assign a conversation to a specific team or agent'
+  icon: 'people-team'
+
+- id: update_contact
+  title: 'Update Contact'
+  description: 'Update contact profile information (name, email, phone, custom attributes)'
+  icon: 'person-edit'
+
+- id: get_contact_detail
+  title: 'Get Contact Details'
+  description: 'Get detailed information about the current contact'
+  icon: 'person-info'
+
+- id: snooze_conversation
+  title: 'Snooze Conversation'
+  description: 'Snooze a conversation to follow up later'
+  icon: 'clock'
+
+- id: remove_label_from_conversation
+  title: 'Remove Label from Conversation'
+  description: 'Remove a label from a conversation'
+  icon: 'tag-dismiss'
+
+- id: set_conversation_custom_attribute
+  title: 'Set Conversation Custom Attributes'
+  description: 'Set or update custom attributes on a conversation'
+  icon: 'document-data'
+
+- id: search_previous_conversation
+  title: 'Search Previous Conversations'
+  description: 'Search previous conversations of the current contact'
+  icon: 'history'
