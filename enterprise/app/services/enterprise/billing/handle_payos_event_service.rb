@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class Enterprise::Billing::HandlePayosEventService
   def perform(payload)
     prepare_data(payload)
     return if @account.blank? || @record.blank?
 
     ActiveRecord::Base.transaction do
-      @record.is_a?(SubscriptionPlan) ? update_plan : update_addon
+      @record.is_a?(SubscriptionPlan) ? activate_plan : activate_addon
       save_billing_history(payload)
     end
   end
@@ -18,100 +20,66 @@ class Enterprise::Billing::HandlePayosEventService
     @account = Account.find_by(id: @customer_id)
   end
 
-  def update_plan
+  def activate_plan
+    # Handle renewal vs upgrade: if same tier, extend from current ends_at
     sub = @account.active_subscription
-    
-    current_ends_at = nil
-    current_rank = -1
-    target_rank = ::BillingPresenter::PRODUCT_TYPES.index((@record.name_en || '').downcase) || -1
+    if sub && same_tier?(sub.subscription_plan, @record)
+      # Renewal: extend from current end date
+      current_ends_at = sub.ends_at > Time.current ? sub.ends_at : Time.current
+      new_ends_at = current_ends_at + @record.duration_days.days
 
-    if sub
-      current_ends_at = sub.ends_at
-      current_rank = ::BillingPresenter::PRODUCT_TYPES.index((sub.subscription_plan.name_en || '').downcase) || -1
-    else
-      sku = @account.custom_attributes['sku']
-      plan = SubscriptionPlan.find_by(sku: sku) if sku.present?
-      if plan
-        current_rank = ::BillingPresenter::PRODUCT_TYPES.index((plan.name_en || '').downcase) || -1
-      end
-      current_ends_at = @account.custom_attributes['subscription_ends_on']
-    end
-
-    current_ends_at_time = if current_ends_at.is_a?(String)
-                             Time.zone.parse(current_ends_at) rescue Time.zone.now
-                           else
-                             current_ends_at || Time.zone.now
-                           end
-
-    new_ends_at = Time.zone.now
-
-    if target_rank == current_rank
-      # Renewal
-      new_ends_at = (current_ends_at_time > Time.zone.now ? current_ends_at_time : Time.zone.now) + @record.duration_days.days
-    else
-      # Upgrade
-      new_ends_at = Time.zone.now + @record.duration_days.days
-    end
-
-    # Expire old one
-    sub.update!(status: :canceled) if sub
-
-    AccountSubscription.create!(
-      account: @account,
-      subscription_plan: @record,
-      starts_at: Time.zone.now,
-      ends_at: new_ends_at,
-      status: :active
-    )
-
-    @account.update!(
-      limits: @account.limits.merge(@record.limits),
-      custom_attributes: @account.custom_attributes.merge(
-        plan_name: @record.name(@account.locale),
-        sku: @record.sku,
-        subscription_status: 'active',
-        subscription_ends_on: new_ends_at.to_s
+      sub.update!(status: :expired)
+      @account.account_subscriptions.create!(
+        subscription_plan: @record,
+        starts_at: Time.current,
+        ends_at: new_ends_at,
+        status: :active
       )
-    )
-    # Handle features
-    all_feature_names = Featurable::FEATURE_LIST.map { |f| f['name'] }
-    @account.disable_features(*all_feature_names)
-    @record.features.each do |feature, enabled|
-      enabled ? @account.enable_features(feature) : @account.disable_features(feature)
+      Subscriptions::ProvisioningService.new(@account).execute
+      log_subscription(@record, new_ends_at)
+    else
+      # New plan or upgrade: use standard subscribe flow
+      Subscriptions::SubscribeService.new(@account, @record).execute
     end
-    @account.save!
   end
 
-  def update_addon
-    case @record.addon_type
-    when 'ai_messages'
-      current = @account.limits['captain_responses_credit'].to_i
-      @account.limits['captain_responses_credit'] = (current + @record.quantity).to_s
-    when 'staff'
-      current = @account.limits['agents'].to_i
-      @account.limits['agents'] = (current + @record.quantity).to_s
-    when 'inboxes_count'
-      current = @account.limits['inboxes'].to_i
-      @account.limits['inboxes'] = (current + @record.quantity).to_s
-    end
-    @account.save!
+  def activate_addon
+    Addons::PurchaseService.new(@account, @record).execute
+  end
+
+  def same_tier?(current_plan, new_plan)
+    return false unless current_plan&.subscription_tier_id && new_plan&.subscription_tier_id
+
+    current_plan.subscription_tier_id == new_plan.subscription_tier_id
+  end
+
+  def log_subscription(plan, new_ends_at)
+    @account.update!(
+      custom_attributes: @account.custom_attributes.merge(
+        'plan_name' => plan.name(@account.locale),
+        'sku' => plan.sku,
+        'subscription_status' => 'active',
+        'subscription_ends_on' => new_ends_at.to_s
+      )
+    )
   end
 
   def save_billing_history(payload)
     data = payload['data']
     product_name = @record.is_a?(SubscriptionPlan) ? @record.name(@account.locale) : @record.name
-    
+
     @account.billing_histories.create!(
       price_amount: data['amount'],
       price_currency: data['currency'] || 'vnd',
       product_name: product_name,
       sku: @record.sku,
-      status: 0, # Success
+      status: 0,
       product_id: @record.id.to_s,
       metadata: {
         type: @record.is_a?(SubscriptionPlan) ? 'package' : 'addon',
         sku: @record.sku,
-        id: @record.id
+        id: @record.id,
+        payment_method: 'payos'
       },
       transaction_id: data['reference'],
       description: data['description'],

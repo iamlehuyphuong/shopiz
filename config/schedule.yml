@@ -89,3 +89,11 @@ account_monthly_reset_usage_job:
   cron: '0 0 * * *'
   class: 'Enterprise::Account::MonthlyResetUsageJob'
   queue: scheduled_jobs
+
+# executed daily at 0100 UTC
+# expires subscriptions and addons that have passed their end date + grace period
+subscription_expiration_job:
+  cron: '0 1 * * *'
+  class: 'Subscriptions::ExpirationJob'
+  queue: scheduled_jobs
+

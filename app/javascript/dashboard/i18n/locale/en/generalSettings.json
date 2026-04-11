@@ -145,6 +145,8 @@
     "VERSION": "Version: {version}",
     "LEARN_MORE": "Learn more",
     "PAYMENT_PENDING": "Your payment is pending. Please update your payment information to continue using Shopiz",
+    "SUBSCRIPTION_EXPIRED": "Your subscription has expired. Please subscribe to a new plan to continue using all features.",
+    "SUBSCRIPTION_EXPIRED_GRACE": "Your subscription has expired. You have {days} day(s) remaining to renew before being downgraded to the Free plan.",
     "UPGRADE": "Upgrade to continue using Shopiz",
     "LIMITS_UPGRADE": "Your account has exceeded the usage limits, please upgrade your plan to continue using Shopiz",
     "OPEN_BILLING": "Open billing",

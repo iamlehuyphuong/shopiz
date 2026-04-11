@@ -82,7 +82,8 @@ class Enterprise::Billing::CreateSessionService
 
     res.dig(:data, :checkoutUrl)
   rescue StandardError => e
-    Rails.logger.error("PayOS session creation failed for account #{customer_id}: #{e.message}")
+    Rails.logger.error("PayOS session creation failed for account #{customer_id}: #{e.class} - #{e.message}")
+    Rails.logger.error(e.backtrace&.first(5)&.join("\n"))
     nil
   end
 end

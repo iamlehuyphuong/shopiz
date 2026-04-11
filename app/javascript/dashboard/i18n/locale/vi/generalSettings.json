@@ -145,6 +145,8 @@
     "VERSION": "Version: {version}",
     "LEARN_MORE": "Tìm hiểu thêm",
     "PAYMENT_PENDING": "Thanh toán của bạn đang chờ xử lý. Vui lòng cập nhật thông tin để tiếp tục sử dụng Shopiz.",
+    "SUBSCRIPTION_EXPIRED": "Hết hạn sử dụng, khách cần đăng ký gói mới ngay để tiếp tục sử dụng không gián đoạn.",
+    "SUBSCRIPTION_EXPIRED_GRACE": "Gói đăng ký đã hết hạn. Bạn còn {days} ngày để gia hạn trước khi bị chuyển về gói Miễn phí.",
     "UPGRADE": "Nâng cấp để tiếp tục sử dụng Shopiz",
     "LIMITS_UPGRADE": "Tài khoản đã vượt hạn mức sử dụng. Vui lòng nâng cấp gói để tiếp tục.",
     "OPEN_BILLING": "Mở trang thanh toán",

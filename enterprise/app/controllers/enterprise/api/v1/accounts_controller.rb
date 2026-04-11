@@ -5,10 +5,10 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
   before_action :check_cloud_env, only: [:billings, :limits, :toggle_deletion]
 
   def subscription
-    if stripe_customer_id.blank? && @account.custom_attributes['is_creating_customer'].blank?
-      @account.update(custom_attributes: { is_creating_customer: true })
-      Enterprise::CreateVnpayCustomerJob.perform_later(@account)
-      #Enterprise::CreateStripeCustomerJob.perform_later(@account)
+    # Ensure account has a subscription - assign free plan if none exists
+    unless @account.active_subscription.present?
+      free_plan = SubscriptionPlan.free_plan.first
+      Subscriptions::SubscribeService.new(@account, free_plan).execute if free_plan
     end
     head :no_content
   end
@@ -162,7 +162,7 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
     if url.present?
       render_redirect_url(url)
     else
-      render json: { message: I18n.t('BILLING_SETTINGS.PAYMENT_LINK_ERROR') }, status: :unprocessable_entity
+      render json: { message: 'Could not create payment link. Please check your configuration.' }, status: :unprocessable_entity
     end
   end
 

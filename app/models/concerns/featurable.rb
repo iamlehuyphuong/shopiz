@@ -49,7 +49,6 @@ module Featurable
     has_flags FEATURES.select { |k, _v| k > 63 }.transform_keys { |k| k - 63 }.merge(column: 'feature_flags_2').merge(QUERY_MODE)
 
     before_create :enable_default_features
-    after_create_commit :assign_free_plan
   end
 
   def enable_features(*names)
@@ -111,10 +110,4 @@ module Featurable
     enable_features(*DEFAULT_PLAN_FEATURES)
   end
 
-  def assign_free_plan
-    free_plan = Polar::ProductService.by_name('free')
-    return unless free_plan
-
-    ::Account::AssignPlanService.new(self, free_plan['id']).execute
-  end
 end

@@ -489,6 +489,10 @@
   display_title: 'PayOS Checksum Key'
   locked: false
   type: secret
+- name: PAYOS_PARTNER_ID
+  display_title: 'PayOS Partner ID'
+  description: 'The Partner Code provided by PayOS for partner integrations'
+  locked: false
 # ------- End of PayOS Related Config ------- #
 
 # ------- OG Image Related Config ------- #
