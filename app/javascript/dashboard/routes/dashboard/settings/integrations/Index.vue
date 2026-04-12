@@ -25,7 +25,7 @@ const CATEGORIES = [
   },
   {
     key: 'SHOP_SALES',
-    ids: ['shopify', 'leadsquared'],
+    ids: ['shopify', 'kiotviet', 'leadsquared'],
   },
   {
     key: 'AI_AUTOMATION',

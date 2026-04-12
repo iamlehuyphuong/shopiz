@@ -38,6 +38,18 @@ class IntegrationsAPI extends ApiClient {
       shop_domain: shopDomain,
     });
   }
+
+  connectKiotviet({ clientId, clientSecret, retailer }) {
+    return axios.post(`${this.baseUrl()}/integrations/kiotviet/auth`, {
+      client_id: clientId,
+      client_secret: clientSecret,
+      retailer,
+    });
+  }
+
+  disconnectKiotviet() {
+    return axios.delete(`${this.baseUrl()}/integrations/kiotviet`);
+  }
 }
 
 export default new IntegrationsAPI();

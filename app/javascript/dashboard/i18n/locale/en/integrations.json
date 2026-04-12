@@ -16,6 +16,33 @@
       },
       "ERROR": "There was an error connecting to Shopify. Please try again or contact support if the issue persists."
     },
+    "KIOTVIET": {
+      "HEADER": "KiotViet",
+      "DELETE": {
+        "TITLE": "Delete KiotViet Integration",
+        "MESSAGE": "Are you sure you want to delete the KiotViet integration?"
+      },
+      "CONNECT": {
+        "TITLE": "Connect KiotViet Store",
+        "CLIENT_ID": {
+          "LABEL": "Client ID",
+          "PLACEHOLDER": "Enter your KiotViet Client ID"
+        },
+        "CLIENT_SECRET": {
+          "LABEL": "Client Secret",
+          "PLACEHOLDER": "Enter your KiotViet Client Secret"
+        },
+        "RETAILER": {
+          "LABEL": "Retailer Name",
+          "PLACEHOLDER": "Enter your KiotViet retailer name",
+          "HELP": "This is the subdomain name of your KiotViet store"
+        },
+        "CANCEL": "Cancel",
+        "SUBMIT": "Connect Store"
+      },
+      "SUCCESS": "KiotViet store connected successfully.",
+      "ERROR": "There was an error connecting to KiotViet. Please check your credentials and try again."
+    },
     "HEADER": "Integrations",
     "DESCRIPTION": "Shopiz integrates with multiple tools and services to improve your team's efficiency. Explore the list below to configure your favorite apps.",
     "LEARN_MORE": "Learn more about integrations",

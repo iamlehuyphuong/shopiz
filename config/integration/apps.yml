@@ -224,6 +224,13 @@ shopify:
   hook_type: account
   allow_multiple_hooks: false
 
+kiotviet:
+  id: kiotviet
+  logo: kiotviet.png
+  i18n_key: kiotviet
+  hook_type: account
+  allow_multiple_hooks: false
+
 leadsquared:
   id: leadsquared
   feature_flag: crm_integration

@@ -322,6 +322,10 @@ vi:
       name: 'Shopify'
       short_description: 'Truy cập chi tiết đơn hàng và dữ liệu khách hàng từ cửa hàng Shopify của bạn.'
       description: 'Kết nối cửa hàng Shopify của bạn để truy cập chi tiết đơn hàng, thông tin khách hàng và dữ liệu sản phẩm trực tiếp trong cuộc trò chuyện, giúp đội ngũ hỗ trợ của bạn cung cấp hỗ trợ nhanh chóng và có bối cảnh hơn cho khách hàng.'
+    kiotviet:
+      name: 'KiotViet'
+      short_description: 'Truy cập chi tiết đơn hàng và dữ liệu khách hàng từ cửa hàng KiotViet của bạn.'
+      description: 'Kết nối cửa hàng KiotViet của bạn để truy cập chi tiết đơn hàng, thông tin khách hàng và dữ liệu sản phẩm trực tiếp trong cuộc trò chuyện, giúp đội ngũ hỗ trợ của bạn cung cấp hỗ trợ nhanh chóng và có bối cảnh hơn cho khách hàng.'
     leadsquared:
       name: 'LeadSquared'
       short_description: 'Đồng bộ hóa danh bạ và cuộc trò chuyện của bạn với CRM LeadSquared.'
