@@ -50,6 +50,29 @@ class IntegrationsAPI extends ApiClient {
   disconnectKiotviet() {
     return axios.delete(`${this.baseUrl()}/integrations/kiotviet`);
   }
+
+  connectHaravan({ apiKey, storeName }) {
+    return axios.post(`${this.baseUrl()}/integrations/haravan/auth`, {
+      api_key: apiKey,
+      store_name: storeName,
+    });
+  }
+
+  disconnectHaravan() {
+    return axios.delete(`${this.baseUrl()}/integrations/haravan`);
+  }
+
+  connectWoocommerce({ storeUrl, consumerKey, consumerSecret }) {
+    return axios.post(`${this.baseUrl()}/integrations/woocommerce/auth`, {
+      store_url: storeUrl,
+      consumer_key: consumerKey,
+      consumer_secret: consumerSecret,
+    });
+  }
+
+  disconnectWoocommerce() {
+    return axios.delete(`${this.baseUrl()}/integrations/woocommerce`);
+  }
 }
 
 export default new IntegrationsAPI();

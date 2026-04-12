@@ -380,6 +380,22 @@ Rails.application.routes.draw do
                 get :customers
               end
             end
+            resource :haravan, controller: 'haravan', only: [:destroy] do
+              collection do
+                post :auth
+                get :orders
+                get :products
+                get :customers
+              end
+            end
+            resource :woocommerce, controller: 'woocommerce', only: [:destroy] do
+              collection do
+                post :auth
+                get :orders
+                get :products
+                get :customers
+              end
+            end
             resource :linear, controller: 'linear', only: [] do
               collection do
                 delete :destroy

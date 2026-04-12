@@ -99,3 +99,23 @@
   title: 'KiotViet: Get Product'
   description: 'Search KiotViet products by name or keyword'
   icon: 'box'
+
+- id: haravan_search_orders
+  title: 'Haravan: Search Orders'
+  description: 'Search Haravan orders for the current contact'
+  icon: 'shopping-bag'
+
+- id: haravan_get_product
+  title: 'Haravan: Get Product'
+  description: 'Search Haravan products by name or keyword'
+  icon: 'box'
+
+- id: woocommerce_search_orders
+  title: 'WooCommerce: Search Orders'
+  description: 'Search WooCommerce orders for the current contact'
+  icon: 'shopping-bag'
+
+- id: woocommerce_get_product
+  title: 'WooCommerce: Get Product'
+  description: 'Search WooCommerce products by name or keyword'
+  icon: 'box'

@@ -43,6 +43,56 @@
       "SUCCESS": "KiotViet store connected successfully.",
       "ERROR": "There was an error connecting to KiotViet. Please check your credentials and try again."
     },
+    "HARAVAN": {
+      "HEADER": "Haravan",
+      "DELETE": {
+        "TITLE": "Delete Haravan Integration",
+        "MESSAGE": "Are you sure you want to delete the Haravan integration?"
+      },
+      "CONNECT": {
+        "TITLE": "Connect Haravan Store",
+        "API_KEY": {
+          "LABEL": "API Key",
+          "PLACEHOLDER": "Enter your Haravan Private App API key"
+        },
+        "STORE_NAME": {
+          "LABEL": "Store Name",
+          "PLACEHOLDER": "Enter your Haravan store name",
+          "HELP": "The store name used in your Haravan admin panel"
+        },
+        "CANCEL": "Cancel",
+        "SUBMIT": "Connect Store"
+      },
+      "SUCCESS": "Haravan store connected successfully.",
+      "ERROR": "There was an error connecting to Haravan. Please check your API key and try again."
+    },
+    "WOOCOMMERCE": {
+      "HEADER": "WooCommerce",
+      "DELETE": {
+        "TITLE": "Delete WooCommerce Integration",
+        "MESSAGE": "Are you sure you want to delete the WooCommerce integration?"
+      },
+      "CONNECT": {
+        "TITLE": "Connect WooCommerce Store",
+        "STORE_URL": {
+          "LABEL": "Store URL",
+          "PLACEHOLDER": "your-store.com",
+          "HELP": "Your WordPress site domain (without https://)"
+        },
+        "CONSUMER_KEY": {
+          "LABEL": "Consumer Key",
+          "PLACEHOLDER": "Enter your WooCommerce Consumer Key (ck_...)"
+        },
+        "CONSUMER_SECRET": {
+          "LABEL": "Consumer Secret",
+          "PLACEHOLDER": "Enter your WooCommerce Consumer Secret (cs_...)"
+        },
+        "CANCEL": "Cancel",
+        "SUBMIT": "Connect Store"
+      },
+      "SUCCESS": "WooCommerce store connected successfully.",
+      "ERROR": "There was an error connecting to WooCommerce. Please check your credentials and store URL."
+    },
     "HEADER": "Integrations",
     "DESCRIPTION": "Shopiz integrates with multiple tools and services to improve your team's efficiency. Explore the list below to configure your favorite apps.",
     "LEARN_MORE": "Learn more about integrations",

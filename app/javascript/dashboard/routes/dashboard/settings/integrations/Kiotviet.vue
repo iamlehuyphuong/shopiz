@@ -118,7 +118,7 @@ onMounted(() => {
         >
           <template #action>
             <Button
-              teal
+              blue
               :label="t('INTEGRATION_SETTINGS.CONNECT.BUTTON_TEXT')"
               @click="openConnectDialog"
             />

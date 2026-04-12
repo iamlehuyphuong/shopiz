@@ -60,34 +60,37 @@ class Captain::Copilot::ChatService < Llm::BaseAiService
                         end
   end
 
+  COPILOT_TOOL_CLASSES = [
+    Captain::Tools::SearchDocumentationService,
+    Captain::Tools::Copilot::GetConversationService,
+    Captain::Tools::Copilot::SearchConversationsService,
+    Captain::Tools::Copilot::GetContactService,
+    Captain::Tools::Copilot::SearchContactsService,
+    Captain::Tools::Copilot::SearchLinearIssuesService,
+    Captain::Tools::Copilot::ListLabelsService,
+    Captain::Tools::Copilot::ListTeamsService,
+    Captain::Tools::Copilot::ListInboxesService,
+    Captain::Tools::Copilot::SearchCannedResponsesService,
+    Captain::Tools::Copilot::GetConversationSummaryService,
+    Captain::Tools::Copilot::ListMacrosService,
+    Captain::Tools::Copilot::GetContactNotesService,
+    Captain::Tools::Copilot::ListAutomationRulesService,
+    Captain::Tools::Copilot::ShopifySearchOrdersService,
+    Captain::Tools::Copilot::ShopifySearchProductsService,
+    Captain::Tools::Copilot::ShopifySearchCustomersService,
+    Captain::Tools::Copilot::KiotvietSearchOrdersService,
+    Captain::Tools::Copilot::KiotvietSearchProductsService,
+    Captain::Tools::Copilot::KiotvietSearchCustomersService,
+    Captain::Tools::Copilot::HaravanSearchOrdersService,
+    Captain::Tools::Copilot::HaravanSearchProductsService,
+    Captain::Tools::Copilot::HaravanSearchCustomersService,
+    Captain::Tools::Copilot::WoocommerceSearchOrdersService,
+    Captain::Tools::Copilot::WoocommerceSearchProductsService,
+    Captain::Tools::Copilot::WoocommerceSearchCustomersService
+  ].freeze
+
   def build_tools
-    tools = []
-
-    tools << Captain::Tools::SearchDocumentationService.new(@assistant, user: @user)
-    tools << Captain::Tools::Copilot::GetConversationService.new(@assistant, user: @user)
-    tools << Captain::Tools::Copilot::SearchConversationsService.new(@assistant, user: @user)
-    tools << Captain::Tools::Copilot::GetContactService.new(@assistant, user: @user)
-    # NOTE: Temporarily hidden
-    # tools << Captain::Tools::Copilot::GetArticleService.new(@assistant, user: @user)
-    # tools << Captain::Tools::Copilot::SearchArticlesService.new(@assistant, user: @user)
-    tools << Captain::Tools::Copilot::SearchContactsService.new(@assistant, user: @user)
-    tools << Captain::Tools::Copilot::SearchLinearIssuesService.new(@assistant, user: @user)
-    tools << Captain::Tools::Copilot::ListLabelsService.new(@assistant, user: @user)
-    tools << Captain::Tools::Copilot::ListTeamsService.new(@assistant, user: @user)
-    tools << Captain::Tools::Copilot::ListInboxesService.new(@assistant, user: @user)
-    tools << Captain::Tools::Copilot::SearchCannedResponsesService.new(@assistant, user: @user)
-    tools << Captain::Tools::Copilot::GetConversationSummaryService.new(@assistant, user: @user)
-    tools << Captain::Tools::Copilot::ListMacrosService.new(@assistant, user: @user)
-    tools << Captain::Tools::Copilot::GetContactNotesService.new(@assistant, user: @user)
-    tools << Captain::Tools::Copilot::ListAutomationRulesService.new(@assistant, user: @user)
-    tools << Captain::Tools::Copilot::ShopifySearchOrdersService.new(@assistant, user: @user)
-    tools << Captain::Tools::Copilot::ShopifySearchProductsService.new(@assistant, user: @user)
-    tools << Captain::Tools::Copilot::ShopifySearchCustomersService.new(@assistant, user: @user)
-    tools << Captain::Tools::Copilot::KiotvietSearchOrdersService.new(@assistant, user: @user)
-    tools << Captain::Tools::Copilot::KiotvietSearchProductsService.new(@assistant, user: @user)
-    tools << Captain::Tools::Copilot::KiotvietSearchCustomersService.new(@assistant, user: @user)
-
-    tools.select(&:active?)
+    COPILOT_TOOL_CLASSES.map { |klass| klass.new(@assistant, user: @user) }.select(&:active?)
   end
 
   def system_message

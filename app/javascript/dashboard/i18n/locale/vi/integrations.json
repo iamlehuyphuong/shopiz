@@ -16,6 +16,83 @@
       },
       "ERROR": "Đã xảy ra lỗi khi kết nối với Shopify. Vui lòng thử lại hoặc liên hệ hỗ trợ nếu lỗi vẫn tiếp diễn."
     },
+    "KIOTVIET": {
+      "HEADER": "KiotViet",
+      "DELETE": {
+        "TITLE": "Xóa tích hợp KiotViet",
+        "MESSAGE": "Bạn có chắc chắn muốn xóa tích hợp KiotViet không?"
+      },
+      "CONNECT": {
+        "TITLE": "Kết nối cửa hàng KiotViet",
+        "CLIENT_ID": {
+          "LABEL": "Client ID",
+          "PLACEHOLDER": "Nhập Client ID KiotViet của bạn"
+        },
+        "CLIENT_SECRET": {
+          "LABEL": "Client Secret",
+          "PLACEHOLDER": "Nhập Client Secret KiotViet của bạn"
+        },
+        "RETAILER": {
+          "LABEL": "Tên cửa hàng",
+          "PLACEHOLDER": "Nhập tên cửa hàng KiotViet của bạn",
+          "HELP": "Đây là tên subdomain của cửa hàng KiotViet"
+        },
+        "CANCEL": "Hủy",
+        "SUBMIT": "Kết nối cửa hàng"
+      },
+      "SUCCESS": "Kết nối cửa hàng KiotViet thành công.",
+      "ERROR": "Đã xảy ra lỗi khi kết nối KiotViet. Vui lòng kiểm tra thông tin xác thực và thử lại."
+    },
+    "HARAVAN": {
+      "HEADER": "Haravan",
+      "DELETE": {
+        "TITLE": "Xóa tích hợp Haravan",
+        "MESSAGE": "Bạn có chắc chắn muốn xóa tích hợp Haravan không?"
+      },
+      "CONNECT": {
+        "TITLE": "Kết nối cửa hàng Haravan",
+        "API_KEY": {
+          "LABEL": "Khóa API",
+          "PLACEHOLDER": "Nhập API key ứng dụng riêng Haravan của bạn"
+        },
+        "STORE_NAME": {
+          "LABEL": "Tên cửa hàng",
+          "PLACEHOLDER": "Nhập tên cửa hàng Haravan của bạn",
+          "HELP": "Tên cửa hàng được sử dụng trên bảng quản trị Haravan"
+        },
+        "CANCEL": "Hủy",
+        "SUBMIT": "Kết nối cửa hàng"
+      },
+      "SUCCESS": "Kết nối cửa hàng Haravan thành công.",
+      "ERROR": "Đã xảy ra lỗi khi kết nối Haravan. Vui lòng kiểm tra API key và thử lại."
+    },
+    "WOOCOMMERCE": {
+      "HEADER": "WooCommerce",
+      "DELETE": {
+        "TITLE": "Xóa tích hợp WooCommerce",
+        "MESSAGE": "Bạn có chắc chắn muốn xóa tích hợp WooCommerce không?"
+      },
+      "CONNECT": {
+        "TITLE": "Kết nối cửa hàng WooCommerce",
+        "STORE_URL": {
+          "LABEL": "URL cửa hàng",
+          "PLACEHOLDER": "ten-cua-hang.com",
+          "HELP": "Tên miền trang WordPress của bạn (không cần https://)"
+        },
+        "CONSUMER_KEY": {
+          "LABEL": "Consumer Key",
+          "PLACEHOLDER": "Nhập Consumer Key WooCommerce (ck_...)"
+        },
+        "CONSUMER_SECRET": {
+          "LABEL": "Consumer Secret",
+          "PLACEHOLDER": "Nhập Consumer Secret WooCommerce (cs_...)"
+        },
+        "CANCEL": "Hủy",
+        "SUBMIT": "Kết nối cửa hàng"
+      },
+      "SUCCESS": "Kết nối cửa hàng WooCommerce thành công.",
+      "ERROR": "Đã xảy ra lỗi khi kết nối WooCommerce. Vui lòng kiểm tra thông tin xác thực và URL cửa hàng."
+    },
     "HEADER": "Tích hợp",
     "DESCRIPTION": "Shopiz tích hợp với nhiều công cụ và dịch vụ nhằm nâng cao hiệu quả cho đội ngũ của bạn. Khám phá danh sách bên dưới để cấu hình ứng dụng bạn yêu thích.",
     "LEARN_MORE": "Tìm hiểu thêm về tích hợp",

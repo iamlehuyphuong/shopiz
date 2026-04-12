@@ -10,6 +10,8 @@ import Linear from './Linear.vue';
 import Notion from './Notion.vue';
 import Shopify from './Shopify.vue';
 import Kiotviet from './Kiotviet.vue';
+import Haravan from './Haravan.vue';
+import Woocommerce from './Woocommerce.vue';
 
 export default {
   routes: [
@@ -93,6 +95,24 @@ export default {
           path: 'kiotviet',
           name: 'settings_integrations_kiotviet',
           component: Kiotviet,
+          meta: {
+            featureFlag: FEATURE_FLAGS.INTEGRATIONS,
+            permissions: ['administrator'],
+          },
+        },
+        {
+          path: 'haravan',
+          name: 'settings_integrations_haravan',
+          component: Haravan,
+          meta: {
+            featureFlag: FEATURE_FLAGS.INTEGRATIONS,
+            permissions: ['administrator'],
+          },
+        },
+        {
+          path: 'woocommerce',
+          name: 'settings_integrations_woocommerce',
+          component: Woocommerce,
           meta: {
             featureFlag: FEATURE_FLAGS.INTEGRATIONS,
             permissions: ['administrator'],
