@@ -73,6 +73,17 @@ class IntegrationsAPI extends ApiClient {
   disconnectWoocommerce() {
     return axios.delete(`${this.baseUrl()}/integrations/woocommerce`);
   }
+
+  connectSapo({ accessToken, storeName }) {
+    return axios.post(`${this.baseUrl()}/integrations/sapo/auth`, {
+      access_token: accessToken,
+      store_name: storeName,
+    });
+  }
+
+  disconnectSapo() {
+    return axios.delete(`${this.baseUrl()}/integrations/sapo`);
+  }
 }
 
 export default new IntegrationsAPI();

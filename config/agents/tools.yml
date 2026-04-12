@@ -119,3 +119,13 @@
   title: 'WooCommerce: Get Product'
   description: 'Search WooCommerce products by name or keyword'
   icon: 'box'
+
+- id: sapo_search_orders
+  title: 'Sapo: Search Orders'
+  description: 'Search Sapo orders for the current contact'
+  icon: 'shopping-bag'
+
+- id: sapo_get_product
+  title: 'Sapo: Get Product'
+  description: 'Search Sapo products by name or keyword'
+  icon: 'box'

@@ -12,6 +12,7 @@ import Shopify from './Shopify.vue';
 import Kiotviet from './Kiotviet.vue';
 import Haravan from './Haravan.vue';
 import Woocommerce from './Woocommerce.vue';
+import Sapo from './Sapo.vue';
 
 export default {
   routes: [
@@ -113,6 +114,15 @@ export default {
           path: 'woocommerce',
           name: 'settings_integrations_woocommerce',
           component: Woocommerce,
+          meta: {
+            featureFlag: FEATURE_FLAGS.INTEGRATIONS,
+            permissions: ['administrator'],
+          },
+        },
+        {
+          path: 'sapo',
+          name: 'settings_integrations_sapo',
+          component: Sapo,
           meta: {
             featureFlag: FEATURE_FLAGS.INTEGRATIONS,
             permissions: ['administrator'],

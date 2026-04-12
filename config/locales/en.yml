@@ -373,6 +373,10 @@ en:
       name: 'WooCommerce'
       short_description: 'Access order details and customer data from your WooCommerce store.'
       description: 'Connect your WordPress WooCommerce store to access order details, customer information, and product data directly within your conversations and helps your support team provide faster, more contextual assistance to your customers.'
+    sapo:
+      name: 'Sapo'
+      short_description: 'Access order details and customer data from your Sapo store.'
+      description: 'Connect your Sapo store to access order details, customer information, and product data directly within your conversations and helps your support team provide faster, more contextual assistance to your customers.'
     leadsquared:
       name: 'LeadSquared'
       short_description: 'Sync your contacts and conversations with LeadSquared CRM.'

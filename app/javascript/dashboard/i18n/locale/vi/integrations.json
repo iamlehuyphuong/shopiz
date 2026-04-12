@@ -93,6 +93,29 @@
       "SUCCESS": "Kết nối cửa hàng WooCommerce thành công.",
       "ERROR": "Đã xảy ra lỗi khi kết nối WooCommerce. Vui lòng kiểm tra thông tin xác thực và URL cửa hàng."
     },
+    "SAPO": {
+      "HEADER": "Sapo",
+      "DELETE": {
+        "TITLE": "Xóa tích hợp Sapo",
+        "MESSAGE": "Bạn có chắc chắn muốn xóa tích hợp Sapo không?"
+      },
+      "CONNECT": {
+        "TITLE": "Kết nối cửa hàng Sapo",
+        "ACCESS_TOKEN": {
+          "LABEL": "Access Token",
+          "PLACEHOLDER": "Nhập access token API Sapo của bạn"
+        },
+        "STORE_NAME": {
+          "LABEL": "Tên cửa hàng",
+          "PLACEHOLDER": "ten-cua-hang",
+          "HELP": "Tên subdomain cửa hàng Sapo (ví dụ: ten-cua-hang.mysapo.net)"
+        },
+        "CANCEL": "Hủy",
+        "SUBMIT": "Kết nối cửa hàng"
+      },
+      "SUCCESS": "Kết nối cửa hàng Sapo thành công.",
+      "ERROR": "Đã xảy ra lỗi khi kết nối Sapo. Vui lòng kiểm tra access token và tên cửa hàng."
+    },
     "HEADER": "Tích hợp",
     "DESCRIPTION": "Shopiz tích hợp với nhiều công cụ và dịch vụ nhằm nâng cao hiệu quả cho đội ngũ của bạn. Khám phá danh sách bên dưới để cấu hình ứng dụng bạn yêu thích.",
     "LEARN_MORE": "Tìm hiểu thêm về tích hợp",

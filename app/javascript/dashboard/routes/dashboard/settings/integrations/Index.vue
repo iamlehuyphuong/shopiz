@@ -20,20 +20,20 @@ const integrationList = computed(
 
 const CATEGORIES = [
   {
-    key: 'WORKSPACE_SYNC',
-    ids: ['linear', 'notion', 'slack'],
-  },
-  {
     key: 'SHOP_SALES',
-    ids: ['shopify', 'kiotviet', 'haravan', 'woocommerce', 'leadsquared'],
+    ids: ['shopify', 'woocommerce', 'kiotviet', 'haravan', 'sapo', 'leadsquared'],
   },
   {
     key: 'AI_AUTOMATION',
     ids: ['openai', 'dialogflow', 'webhook', 'google_translate'],
   },
   {
+    key: 'WORKSPACE_SYNC',
+    ids: ['linear', 'notion', 'slack'],
+  },
+  {
     key: 'CUSTOM_EXTENSIONS',
-    ids: ['dashboard_apps'],
+    ids: ['dashboard_apps', 'dyte'],
   },
 ];
 

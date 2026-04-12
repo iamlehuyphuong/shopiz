@@ -396,6 +396,14 @@ Rails.application.routes.draw do
                 get :customers
               end
             end
+            resource :sapo, controller: 'sapo', only: [:destroy] do
+              collection do
+                post :auth
+                get :orders
+                get :products
+                get :customers
+              end
+            end
             resource :linear, controller: 'linear', only: [] do
               collection do
                 delete :destroy

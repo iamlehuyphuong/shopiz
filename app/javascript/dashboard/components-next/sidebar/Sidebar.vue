@@ -586,6 +586,7 @@ const menuItems = computed(() => {
             'settings_integrations_kiotviet',
             'settings_integrations_haravan',
             'settings_integrations_woocommerce',
+            'settings_integrations_sapo',
             'settings_integrations_webhook',
             'settings_integrations_dashboard_apps',
           ],

@@ -93,6 +93,29 @@
       "SUCCESS": "WooCommerce store connected successfully.",
       "ERROR": "There was an error connecting to WooCommerce. Please check your credentials and store URL."
     },
+    "SAPO": {
+      "HEADER": "Sapo",
+      "DELETE": {
+        "TITLE": "Delete Sapo Integration",
+        "MESSAGE": "Are you sure you want to delete the Sapo integration?"
+      },
+      "CONNECT": {
+        "TITLE": "Connect Sapo Store",
+        "ACCESS_TOKEN": {
+          "LABEL": "Access Token",
+          "PLACEHOLDER": "Enter your Sapo API access token"
+        },
+        "STORE_NAME": {
+          "LABEL": "Store Name",
+          "PLACEHOLDER": "your-store",
+          "HELP": "The subdomain of your Sapo store (e.g. your-store.mysapo.net)"
+        },
+        "CANCEL": "Cancel",
+        "SUBMIT": "Connect Store"
+      },
+      "SUCCESS": "Sapo store connected successfully.",
+      "ERROR": "There was an error connecting to Sapo. Please check your access token and store name."
+    },
     "HEADER": "Integrations",
     "DESCRIPTION": "Shopiz integrates with multiple tools and services to improve your team's efficiency. Explore the list below to configure your favorite apps.",
     "LEARN_MORE": "Learn more about integrations",
