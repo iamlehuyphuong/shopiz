@@ -67,10 +67,19 @@ class Captain::Copilot::ChatService < Llm::BaseAiService
     tools << Captain::Tools::Copilot::GetConversationService.new(@assistant, user: @user)
     tools << Captain::Tools::Copilot::SearchConversationsService.new(@assistant, user: @user)
     tools << Captain::Tools::Copilot::GetContactService.new(@assistant, user: @user)
-    tools << Captain::Tools::Copilot::GetArticleService.new(@assistant, user: @user)
-    tools << Captain::Tools::Copilot::SearchArticlesService.new(@assistant, user: @user)
+    # NOTE: Temporarily hidden
+    # tools << Captain::Tools::Copilot::GetArticleService.new(@assistant, user: @user)
+    # tools << Captain::Tools::Copilot::SearchArticlesService.new(@assistant, user: @user)
     tools << Captain::Tools::Copilot::SearchContactsService.new(@assistant, user: @user)
     tools << Captain::Tools::Copilot::SearchLinearIssuesService.new(@assistant, user: @user)
+    tools << Captain::Tools::Copilot::ListLabelsService.new(@assistant, user: @user)
+    tools << Captain::Tools::Copilot::ListTeamsService.new(@assistant, user: @user)
+    tools << Captain::Tools::Copilot::ListInboxesService.new(@assistant, user: @user)
+    tools << Captain::Tools::Copilot::SearchCannedResponsesService.new(@assistant, user: @user)
+    tools << Captain::Tools::Copilot::GetConversationSummaryService.new(@assistant, user: @user)
+    tools << Captain::Tools::Copilot::ListMacrosService.new(@assistant, user: @user)
+    tools << Captain::Tools::Copilot::GetContactNotesService.new(@assistant, user: @user)
+    tools << Captain::Tools::Copilot::ListAutomationRulesService.new(@assistant, user: @user)
 
     tools.select(&:active?)
   end
