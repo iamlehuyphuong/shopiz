@@ -29,7 +29,7 @@ class SubscriptionPlan < ApplicationRecord
   has_many :accounts, through: :account_subscriptions
 
   delegate :description, :description_en, :description_vi,
-           :is_free, to: :subscription_tier, allow_nil: true
+           :is_free, :is_free?, to: :subscription_tier, allow_nil: true
 
   def name(locale = 'en')
     base_name = subscription_tier&.name(locale)

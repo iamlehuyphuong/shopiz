@@ -29,7 +29,7 @@ class Subscriptions::SubscribeService
     @subscription = @account.account_subscriptions.create!(
       subscription_plan: @plan,
       starts_at: Time.current,
-      ends_at: @plan.is_free? ? nil : Time.current + @plan.duration_days.days,
+      ends_at: @plan.is_free? ? 100.years.from_now : Time.current + @plan.duration_days.days,
       status: :active
     )
   end
