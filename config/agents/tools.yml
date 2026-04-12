@@ -79,3 +79,13 @@
   title: 'Search Previous Conversations'
   description: 'Search previous conversations of the current contact'
   icon: 'history'
+
+- id: shopify_search_orders
+  title: 'Shopify: Search Orders'
+  description: 'Search Shopify orders for the current contact'
+  icon: 'shopping-bag'
+
+- id: shopify_get_product
+  title: 'Shopify: Get Product'
+  description: 'Search Shopify products by name or keyword'
+  icon: 'box'

@@ -80,6 +80,9 @@ class Captain::Copilot::ChatService < Llm::BaseAiService
     tools << Captain::Tools::Copilot::ListMacrosService.new(@assistant, user: @user)
     tools << Captain::Tools::Copilot::GetContactNotesService.new(@assistant, user: @user)
     tools << Captain::Tools::Copilot::ListAutomationRulesService.new(@assistant, user: @user)
+    tools << Captain::Tools::Copilot::ShopifySearchOrdersService.new(@assistant, user: @user)
+    tools << Captain::Tools::Copilot::ShopifySearchProductsService.new(@assistant, user: @user)
+    tools << Captain::Tools::Copilot::ShopifySearchCustomersService.new(@assistant, user: @user)
 
     tools.select(&:active?)
   end
