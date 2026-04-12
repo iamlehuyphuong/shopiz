@@ -789,8 +789,10 @@
         "UPGRADE_NOW": "Upgrade Now",
         "RENEW_NOW": "Renew Now",
         "CONTACT": "Contact Us",
-        "BUY_NOW": "Buy Now"
+        "BUY_NOW": "Buy Now",
+        "DOWNGRADE_NOT_SUPPORTED": "Downgrade not supported"
       },
+      "DOWNGRADE_NOTICE": "Downgrading is not supported online. Please contact our support team for assistance.",
       "MONTHLY_EQUIVALENT": "equivalent to {price}/month",
       "DISCOUNT": "Save {percent}%",
       "BENEFITS": {

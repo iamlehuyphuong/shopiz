@@ -787,8 +787,10 @@
         "UPGRADE_NOW": "Nâng cấp ngay",
         "RENEW_NOW": "Gia hạn ngay",
         "CONTACT": "Liên hệ với chúng tôi",
-        "BUY_NOW": "Mua ngay"
+        "BUY_NOW": "Mua ngay",
+        "DOWNGRADE_NOT_SUPPORTED": "Không hỗ trợ hạ cấp"
       },
+      "DOWNGRADE_NOTICE": "Việc hạ cấp gói không được hỗ trợ trực tuyến. Vui lòng liên hệ nhân viên hỗ trợ để được tư vấn.",
       "MONTHLY_EQUIVALENT": "tương đương {price}/tháng",
       "DISCOUNT": "Giảm {percent}%",
       "BENEFITS": {

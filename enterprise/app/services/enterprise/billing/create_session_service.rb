@@ -51,8 +51,11 @@ class Enterprise::Billing::CreateSessionService
       end
 
       if current_plan && current_ends_at.present?
-        current_rank = ::BillingPresenter::PRODUCT_TYPES.index((current_plan.name_en || '').downcase) || -1
-        target_rank = ::BillingPresenter::PRODUCT_TYPES.index((item.name_en || '').downcase) || -1
+        current_rank = ::BillingPresenter::PRODUCT_TYPES.index((current_plan.subscription_tier&.name_en || '').downcase) || -1
+        target_rank = ::BillingPresenter::PRODUCT_TYPES.index((item.subscription_tier&.name_en || '').downcase) || -1
+
+        # Block downgrade
+        return nil if target_rank >= 0 && current_rank >= 0 && target_rank < current_rank
 
         if target_rank > current_rank
           # Upgrade: calculate unused value

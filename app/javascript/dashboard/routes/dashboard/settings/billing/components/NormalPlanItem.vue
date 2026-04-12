@@ -139,7 +139,7 @@ const onCheckout = () => {
       </template>
     </div>
     
-    <div class="mt-6 flex justify-center">
+    <div class="mt-6 flex flex-col items-center gap-2">
       <ButtonV4
         md
         solid
@@ -147,9 +147,12 @@ const onCheckout = () => {
         :disabled="isDowngrade || (isCurrentTier && selectedPackage.id === currentPlanId)"
         @click="onCheckout"
       >
-        <span v-if="isDowngrade">{{ $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.DOWNGRADE_NOT_SUPPORTED') || 'Không thể hạ cấp' }}</span>
+        <span v-if="isDowngrade">{{ $t('BILLING_SETTINGS.PRICING_PACKAGES.BUTTONS.DOWNGRADE_NOT_SUPPORTED') }}</span>
         <span v-else>{{ buttonLabel }}</span>
       </ButtonV4>
+      <p v-if="isDowngrade" class="text-xs text-n-slate-11 text-center mt-1 max-w-[220px]">
+        {{ $t('BILLING_SETTINGS.PRICING_PACKAGES.DOWNGRADE_NOTICE') }}
+      </p>
     </div>
   </div>
 </template>

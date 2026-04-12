@@ -1,6 +1,6 @@
 class BillingPresenter
-  PRODUCT_TYPES = %w[starter pro biz ai-start ai-pro ai-biz].freeze
-  MONTH_OPTIONS = %w[6 12].freeze
+  PRODUCT_TYPES = %w[basic pro biz].freeze
+  MONTH_OPTIONS = %w[6 12 24].freeze
 
   def initialize(account)
     @account = account
@@ -31,7 +31,8 @@ class BillingPresenter
     sub = @account.active_subscription
     
     if sub
-      rank = PRODUCT_TYPES.index((sub.subscription_plan.name_en || '').downcase) || -1
+      tier_name = (sub.subscription_plan.subscription_tier&.name_en || '').downcase
+      rank = PRODUCT_TYPES.index(tier_name) || -1
       return {
         plan_id: sub.subscription_plan_id,
         plan_name: sub.subscription_plan.name(@account.locale),
@@ -51,7 +52,8 @@ class BillingPresenter
     
     return nil unless plan
     
-    rank = PRODUCT_TYPES.index((plan.name_en || '').downcase) || -1
+    tier_name = (plan.subscription_tier&.name_en || '').downcase
+    rank = PRODUCT_TYPES.index(tier_name) || -1
     {
       plan_id: plan.id,
       plan_name: plan.name(@account.locale),
