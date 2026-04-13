@@ -15,6 +15,7 @@ export const INBOX_FEATURE_MAP = {
     INBOX_TYPES.TWITTER,
     INBOX_TYPES.WHATSAPP,
     INBOX_TYPES.TELEGRAM,
+    INBOX_TYPES.TIKTOK,
     INBOX_TYPES.API,
     INBOX_TYPES.VOICE,
     INBOX_TYPES.TIKTOK_SHOP,
@@ -25,6 +26,7 @@ export const INBOX_FEATURE_MAP = {
     INBOX_TYPES.TWITTER,
     INBOX_TYPES.WHATSAPP,
     INBOX_TYPES.TELEGRAM,
+    INBOX_TYPES.TIKTOK,
     INBOX_TYPES.API,
     INBOX_TYPES.VOICE,
     INBOX_TYPES.TIKTOK_SHOP,
@@ -62,7 +64,7 @@ export default {
     isAZaloPersonalChannel() {
       return this.channelType === INBOX_TYPES.ZALO_PERSONAL;
     },
-    isATiktokChannel() {
+    isATiktokShopChannel() {
       return this.channelType === INBOX_TYPES.TIKTOK_SHOP;
     },
     isAWebWidgetInbox() {
@@ -76,9 +78,6 @@ export default {
     },
     isALineChannel() {
       return this.channelType === INBOX_TYPES.LINE;
-    },
-    isAVoiceChannel() {
-      return this.channelType === INBOX_TYPES.VOICE;
     },
     isAnEmailChannel() {
       return this.channelType === INBOX_TYPES.EMAIL;
@@ -135,6 +134,8 @@ export default {
         badgeKey = this.twilioBadge;
       } else if (this.isAWhatsAppChannel) {
         badgeKey = 'whatsapp';
+      } else if (this.isATiktokChannel) {
+        badgeKey = 'tiktok';
       }
       return badgeKey || this.channelType;
     },
@@ -146,6 +147,9 @@ export default {
     },
     isAnInstagramChannel() {
       return this.channelType === INBOX_TYPES.INSTAGRAM;
+    },
+    isATiktokChannel() {
+      return this.channelType === INBOX_TYPES.TIKTOK;
     },
   },
   methods: {

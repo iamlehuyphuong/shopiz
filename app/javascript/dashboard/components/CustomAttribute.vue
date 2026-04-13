@@ -48,7 +48,7 @@ export default {
     displayValue() {
       if (this.isAttributeTypeDate) {
         return this.value
-          ? new Date(this.value || new Date()).toLocaleDateString()
+          ? format(new Date(this.value), this.$t('GENERAL.DATE_FORMAT'))
           : '---';
       }
       if (this.isAttributeTypeCheckbox) {

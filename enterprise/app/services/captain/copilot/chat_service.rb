@@ -1,6 +1,4 @@
-require 'openai'
-
-class Captain::Copilot::ChatService < Llm::BaseOpenAiService
+class Captain::Copilot::ChatService < Llm::BaseAiService
   include Captain::ChatHelper
 
   attr_reader :assistant, :account, :user, :copilot_thread, :previous_history, :messages
@@ -13,9 +11,12 @@ class Captain::Copilot::ChatService < Llm::BaseOpenAiService
     @user = nil
     @copilot_thread = nil
     @previous_history = []
+    @conversation = @account.conversations.find_by(display_id: config[:conversation_id])
+    @conversation_id = @conversation&.display_id
+
     setup_user(config)
     setup_message_history(config)
-    register_tools
+    @tools = build_tools
     @messages = build_messages(config)
   end
 
@@ -59,16 +60,40 @@ class Captain::Copilot::ChatService < Llm::BaseOpenAiService
                         end
   end
 
-  def register_tools
-    @tool_registry = Captain::ToolRegistryService.new(@assistant, user: @user)
-    @tool_registry.register_tool(Captain::Tools::SearchDocumentationService)
-    @tool_registry.register_tool(Captain::Tools::Copilot::GetArticleService)
-    @tool_registry.register_tool(Captain::Tools::Copilot::GetContactService)
-    @tool_registry.register_tool(Captain::Tools::Copilot::GetConversationService)
-    @tool_registry.register_tool(Captain::Tools::Copilot::SearchArticlesService)
-    @tool_registry.register_tool(Captain::Tools::Copilot::SearchContactsService)
-    @tool_registry.register_tool(Captain::Tools::Copilot::SearchConversationsService)
-    @tool_registry.register_tool(Captain::Tools::Copilot::SearchLinearIssuesService)
+  COPILOT_TOOL_CLASSES = [
+    Captain::Tools::SearchDocumentationService,
+    Captain::Tools::Copilot::GetConversationService,
+    Captain::Tools::Copilot::SearchConversationsService,
+    Captain::Tools::Copilot::GetContactService,
+    Captain::Tools::Copilot::SearchContactsService,
+    Captain::Tools::Copilot::SearchLinearIssuesService,
+    Captain::Tools::Copilot::ListLabelsService,
+    Captain::Tools::Copilot::ListTeamsService,
+    Captain::Tools::Copilot::ListInboxesService,
+    Captain::Tools::Copilot::SearchCannedResponsesService,
+    Captain::Tools::Copilot::GetConversationSummaryService,
+    Captain::Tools::Copilot::ListMacrosService,
+    Captain::Tools::Copilot::GetContactNotesService,
+    Captain::Tools::Copilot::ListAutomationRulesService,
+    Captain::Tools::Copilot::ShopifySearchOrdersService,
+    Captain::Tools::Copilot::ShopifySearchProductsService,
+    Captain::Tools::Copilot::ShopifySearchCustomersService,
+    Captain::Tools::Copilot::KiotvietSearchOrdersService,
+    Captain::Tools::Copilot::KiotvietSearchProductsService,
+    Captain::Tools::Copilot::KiotvietSearchCustomersService,
+    Captain::Tools::Copilot::HaravanSearchOrdersService,
+    Captain::Tools::Copilot::HaravanSearchProductsService,
+    Captain::Tools::Copilot::HaravanSearchCustomersService,
+    Captain::Tools::Copilot::WoocommerceSearchOrdersService,
+    Captain::Tools::Copilot::WoocommerceSearchProductsService,
+    Captain::Tools::Copilot::WoocommerceSearchCustomersService,
+    Captain::Tools::Copilot::SapoSearchOrdersService,
+    Captain::Tools::Copilot::SapoSearchProductsService,
+    Captain::Tools::Copilot::SapoSearchCustomersService
+  ].freeze
+
+  def build_tools
+    COPILOT_TOOL_CLASSES.map { |klass| klass.new(@assistant, user: @user) }.select(&:active?)
   end
 
   def system_message
@@ -76,10 +101,14 @@ class Captain::Copilot::ChatService < Llm::BaseOpenAiService
       role: 'system',
       content: Captain::Llm::SystemPromptsService.copilot_response_generator(
         @assistant.config['product_name'],
-        @tool_registry.tools_summary,
+        tools_summary,
         @assistant.config
       )
     }
+  end
+
+  def tools_summary
+    @tools.map { |tool| "- #{tool.class.name}: #{tool.class.description}" }.join("\n")
   end
 
   def account_id_context
@@ -112,5 +141,9 @@ class Captain::Copilot::ChatService < Llm::BaseOpenAiService
       message: message,
       message_type: message_type
     )
+  end
+
+  def feature_name
+    'copilot'
   end
 end

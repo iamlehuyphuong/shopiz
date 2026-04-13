@@ -6,30 +6,30 @@ import ZaloPersonal from './channels/ZaloPersonal.vue';
 import Website from './channels/Website.vue';
 import Twitter from './channels/Twitter.vue';
 import Api from './channels/Api.vue';
-import Email from './channels/Email.vue';
 import Sms from './channels/Sms.vue';
 import Whatsapp from './channels/Whatsapp.vue';
 import Line from './channels/Line.vue';
 import Telegram from './channels/Telegram.vue';
 import Instagram from './channels/Instagram.vue';
+import Tiktok from './channels/Tiktok.vue';
 import Voice from './channels/Voice.vue';
-import TikTok from './channels/TikTok.vue';
+import TikTokShop from './channels/TikTokShop.vue';
 
 const channelViewList = {
   facebook: Facebook,
   website: Website,
   twitter: Twitter,
   api: Api,
-  email: Email,
   sms: Sms,
   whatsapp: Whatsapp,
   line: Line,
   telegram: Telegram,
   instagram: Instagram,
+  tiktok: Tiktok,
   voice: Voice,
   zalo: Zalo,
   zalopersonal: ZaloPersonal,
-  tiktok: TikTok,
+  tiktok_shop: TikTokShop,
 };
 
 export default defineComponent({

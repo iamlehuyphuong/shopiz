@@ -16,76 +16,53 @@ class Account::AssignPlanService
       update_limits
     end
     true
-  rescue StandardError
+  rescue StandardError => e
+    Rails.logger.error("Failed to assign plan #{@plan_id} to account #{@account.id}: #{e.message}")
     false
   end
 
   private
 
   def load_plan
-    Polar::ProductService.find(@plan_id)
-  rescue StandardError
-    nil
+    SubscriptionPlan.find_by(id: @plan_id)
   end
 
   def update_account_attributes
     custom_attributes = {
       stripe_customer_id: @account.id,
-      stripe_price_id: @plan[:prices][0]['id'],
+      stripe_price_id: nil, # No longer using Stripe/Polar price IDs here
       stripe_product_id: @plan_id,
-      plan_name: @plan[:name],
-      sku: @plan[:metadata]['sku'],
-      subscribed_quantity: @plan.dig(:metadata, 'agents'),
+      plan_name: @plan.name(@account.locale),
+      sku: @plan.sku,
+      subscribed_quantity: @plan.limits['agents'],
       subscription_status: 'active',
       subscription_ends_on: subscription_ends_on
     }
 
-    @account.update(custom_attributes: custom_attributes)
+    @account.update(custom_attributes: @account.custom_attributes.merge(custom_attributes))
   end
 
   def subscription_ends_on
-    current_plan = @account.custom_attributes['plan_name']
-    number_of_months = @plan[:metadata]['months'].to_i
-
-    if current_plan == @plan[:name]
-      base_time = [Time.zone.now, Time.zone.parse(@account.custom_attributes['subscription_ends_on'])].max
-      base_time + number_of_months.months
-    else
-      Time.zone.now + number_of_months.months
-    end
+    (Time.zone.now + @plan.duration_days.days).to_s
   end
 
   def change_plan_features
-    @account.disable_features(*Featurable::MAPPING.values)
+    # Disable all current features before applying plan-specific ones
+    all_feature_names = Featurable::FEATURE_LIST.map { |f| f['name'] }
+    @account.disable_features(*all_feature_names)
 
     if default_plan?
       @account.enable_features(*Featurable::DEFAULT_PLAN_FEATURES)
     else
-      features = @plan.dig(:metadata, 'features')&.split(',')&.map(&:strip) || []
-      mapping_features = features.map { |item| Featurable::MAPPING[item.to_sym] }
-      @account.enable_features(*mapping_features)
+      @plan.features.each do |feature, enabled|
+        enabled ? @account.enable_features(feature) : @account.disable_features(feature)
+      end
     end
     @account.save!
   end
 
   def update_limits
-    @account.limits = build_limits
-    @account.save!
-  end
-
-  def build_limits
-    metadata = @plan[:metadata]
-
-    {
-      captain_assistants: metadata['captain_assistants'].to_i,
-      captain_responses: metadata['captain_responses'].to_i,
-      captain_documents: metadata['captain_documents'].to_i,
-      captain_faqs: metadata['captain_faqs'].to_i,
-      contacts: metadata['contacts'].to_i,
-      inboxes: metadata['inboxes'].to_i,
-      agents: metadata['agents'].to_i,
-      automations: metadata['automations'].to_i
-    }
+    @account.update!(limits: @account.limits.merge(@plan.limits))
   end
 
   def reset_captain_usage
@@ -93,6 +70,6 @@ class Account::AssignPlanService
   end
 
   def default_plan?
-    @account.custom_attributes['plan_name'] == 'free'
+    @plan.is_free?
   end
 end

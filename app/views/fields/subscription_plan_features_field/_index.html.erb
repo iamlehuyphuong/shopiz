@@ -1,0 +1,4 @@
+<% enabled_count = field.features_list.select { |f| field.feature_enabled?(f['name']) }.count %>
+<span class="text-xs text-slate-500 whitespace-nowrap">
+  <%= enabled_count %> features enabled
+</span>

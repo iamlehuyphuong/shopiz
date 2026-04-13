@@ -44,7 +44,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['select', 'hover', 'delete', 'update']);
+const emit = defineEmits(['select', 'hover', 'delete', 'update', 'export']);
 
 const { t } = useI18n();
 const { formatMessage } = useMessageFormatter();
@@ -145,7 +145,9 @@ const renderInstruction = instruction => () =>
     <div v-if="!isEditing" class="flex flex-col w-full">
       <div class="flex items-start justify-between w-full gap-2">
         <div class="flex flex-col items-start">
-          <span class="text-sm text-n-slate-12 font-medium">{{ t(title) }}</span>
+          <span class="text-sm text-n-slate-12 font-medium">
+            {{ t(title) }}
+          </span>
           <span class="text-sm text-n-slate-11 mt-2">
             {{ t(description) }}
           </span>
@@ -153,6 +155,14 @@ const renderInstruction = instruction => () =>
         <div class="flex items-center gap-2">
           <!-- <Button label="Test" slate xs ghost class="!text-sm" />
           <span class="w-px h-4 bg-n-weak" /> -->
+          <Button
+            icon="i-lucide-download"
+            slate
+            xs
+            ghost
+            @click="emit('export')"
+          />
+          <span class="w-px h-4 bg-n-weak" />
           <Button icon="i-lucide-pen" slate xs ghost @click="startEdit" />
           <span class="w-px h-4 bg-n-weak" />
           <Button

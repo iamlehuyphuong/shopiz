@@ -105,6 +105,9 @@ onMounted(() => {
   @apply flex items-center justify-center bg-n-alpha-black2 backdrop-blur-[4px] z-[9990] h-full left-0 fixed top-0 w-full;
 
   .modal-container {
+    &.small {
+      @apply w-[25rem];
+    }
     &.medium {
       @apply max-w-[80%] w-[56.25rem];
     }

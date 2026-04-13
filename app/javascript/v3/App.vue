@@ -9,7 +9,14 @@ export default {
   mounted() {
     this.setColorTheme();
     this.listenToThemeChanges();
-    this.setLocale(window.shopizConfig.selectedLocale);
+    let locale = window.shopizConfig.selectedLocale;
+    if (locale === 'en') {
+      const browserLocale = navigator.language || navigator.userLanguage;
+      if (browserLocale.startsWith('vi')) {
+        locale = 'vi';
+      }
+    }
+    this.setLocale(locale);
   },
   methods: {
     setColorTheme() {

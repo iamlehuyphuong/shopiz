@@ -3,6 +3,9 @@
     "HEADER": "Hộp thư",
     "DESCRIPTION": "Kênh là phương thức giao tiếp mà khách hàng sử dụng để tương tác với bạn. Hộp thư là nơi bạn quản lý các cuộc trao đổi của một kênh cụ thể. Hộp thư có thể bao gồm nhiều nguồn như email, live chat và mạng xã hội.",
     "LEARN_MORE": "Tìm hiểu thêm về hộp thư",
+    "COUNT": "Có {n} hộp thư",
+    "SEARCH_PLACEHOLDER": "Tìm kiếm hộp thư...",
+    "NO_RESULTS": "Không tìm thấy hộp thư nào khớp với tìm kiếm của bạn",
     "RECONNECTION_REQUIRED": "Hộp thư của bạn đã bị ngắt kết nối. Bạn sẽ không nhận được tin nhắn mới cho đến khi cấp quyền lại.",
     "CLICK_TO_RECONNECT": "Nhấp để kết nối lại.",
     "WHATSAPP_REGISTRATION_INCOMPLETE": "Quy trình đăng ký WhatsApp Business chưa hoàn tất. Vui lòng kiểm tra trạng thái tên hiển thị trong Meta Business Manager trước khi kết nối lại.",
@@ -73,7 +76,7 @@
         "DESC_2": "để kết nối với"
       },
       "TIKTOK_SHOP": {
-        "HELP": "Lưu ý: Shopiz chỉ truy cập tin nhắn Tiktok. Tin nhắn riêng tư không bao giờ được truy cập.",
+        "HELP": "Lưu ý: Shopiz chỉ truy cập tin nhắn TikTok Shop. Tin nhắn riêng tư không bao giờ được truy cập.",
         "INBOX_NAME": "Tên hộp thư",
         "ADD_NAME": "Nhập tên hộp thư",
         "PICK_NAME": "Chọn tên hộp thư",
@@ -87,6 +90,13 @@
         "ERROR_AUTH": "Không thể kết nối với Instagram, vui lòng thử lại.",
         "NEW_INBOX_SUGGESTION": "Tài khoản Instagram này trước đó đã gắn với hộp thư khác và đã được chuyển sang hộp thư này. Tin nhắn mới sẽ hiển thị tại đây.",
         "DUPLICATE_INBOX_BANNER": "Tài khoản Instagram này đã được chuyển sang hộp thư mới. Bạn không thể gửi/nhận tin nhắn từ hộp thư cũ."
+      },
+      "TIKTOK": {
+        "CONTINUE_WITH_TIKTOK": "Tiếp tục với TikTok",
+        "CONNECT_YOUR_TIKTOK_PROFILE": "Kết nối tài khoản TikTok",
+        "HELP": "Để thêm tài khoản TikTok làm kênh hỗ trợ, bạn cần xác thực bằng cách nhấn 'Tiếp tục với TikTok'.",
+        "ERROR_MESSAGE": "Đã xảy ra lỗi khi kết nối với TikTok, vui lòng thử lại.",
+        "ERROR_AUTH": "Đã xảy ra lỗi khi xác thực TikTok, vui lòng thử lại."
       },
       "TWITTER": {
         "HELP": "Để thêm Twitter, hãy xác thực bằng cách nhấn 'Đăng nhập với Twitter'.",
@@ -413,7 +423,11 @@
         "API": {
           "ERROR_MESSAGE": "Không thể lưu kênh Email."
         },
-        "FINISH_MESSAGE": "Hãy chuyển tiếp email về địa chỉ sau:"
+        "FINISH_MESSAGE": "Hãy chuyển tiếp email về địa chỉ sau:",
+        "FINISH_MESSAGE_NO_FORWARDING": "Hộp thư email của bạn đã được tạo thành công! Bạn cần cấu hình thông tin đăng nhập SMTP và IMAP để gửi và nhận email. Nếu không có các cài đặt này, không có email nào sẽ được xử lý.",
+        "FORWARDING_ADDRESS_LABEL": "Chuyển tiếp email đến địa chỉ này:",
+        "CONFIGURE_SMTP_IMAP_LINK": "Click vào đây",
+        "CONFIGURE_SMTP_IMAP_TEXT": " để cấu hình IMAP và SMTP"
       },
       "LINE_CHANNEL": {
         "TITLE": "Kênh LINE",
@@ -424,16 +438,16 @@
           "ERROR": "Bắt buộc"
         },
         "LINE_CHANNEL_ID": {
-          "LABEL": "LINE Channel ID",
-          "PLACEHOLDER": "LINE Channel ID"
+          "LABEL": "ID Kênh LINE",
+          "PLACEHOLDER": "Nhập ID Kênh LINE"
         },
         "LINE_CHANNEL_SECRET": {
-          "LABEL": "LINE Channel Secret",
-          "PLACEHOLDER": "LINE Channel Secret"
+          "LABEL": "Mã bảo mật Kênh LINE",
+          "PLACEHOLDER": "Nhập mã bảo mật Kênh LINE"
         },
         "LINE_CHANNEL_TOKEN": {
-          "LABEL": "LINE Channel Token",
-          "PLACEHOLDER": "LINE Channel Token"
+          "LABEL": "Mã thông báo Kênh LINE",
+          "PLACEHOLDER": "Nhập mã thông báo Kênh LINE"
         },
         "SUBMIT_BUTTON": "Tạo kênh LINE",
         "API": {
@@ -459,7 +473,7 @@
       },
       "AUTH": {
         "TITLE": "Chọn kênh",
-        "DESC": "Shopiz hỗ trợ Live Chat, Facebook Messenger, WhatsApp, Email, SMS, API, Telegram, Line, Instagram, Voice, Zalo, Tiktok và nhiều hơn nữa. Chọn một kênh để bắt đầu.",
+        "DESC": "Shopiz hỗ trợ Live Chat, Facebook Messenger, WhatsApp, Email, SMS, API, Telegram, Line, Instagram, Voice, Zalo, TikTok Shop và nhiều hơn nữa. Chọn một kênh để bắt đầu.",
         "TITLE_NEXT": "Hoàn tất thiết lập",
         "TITLE_FINISH": "Hoàn tất!",
         "CHANNEL": {
@@ -499,6 +513,14 @@
             "TITLE": "Instagram",
             "DESCRIPTION": "Kết nối tài khoản Instagram"
           },
+          "TWITTER": {
+            "TITLE": "Twitter",
+            "DESCRIPTION": "Kết nối tài khoản Twitter"
+          },
+          "TIKTOK": {
+            "TITLE": "TikTok",
+            "DESCRIPTION": "Kết nối tài khoản TikTok"
+          },
           "VOICE": {
             "TITLE": "Voice",
             "DESCRIPTION": "Tích hợp Twilio Voice"
@@ -512,8 +534,8 @@
             "DESCRIPTION": "Kết nối Zalo cá nhân"
           },
           "TIKTOK_SHOP": {
-            "TITLE": "Tiktok Shop",
-            "DESCRIPTION": "Kết nối Tiktok Shop"
+            "TITLE": "TikTok Shop",
+            "DESCRIPTION": "Kết nối TikTok Shop"
           }
         }
       },
@@ -620,8 +642,10 @@
         "DISABLED": "Tắt"
       },
       "LOCK_TO_SINGLE_CONVERSATION": {
-        "ENABLED": "Bật",
-        "DISABLED": "Tắt"
+        "ENABLED": "Mở lại hội thoại cũ",
+        "DISABLED": "Tạo hội thoại mới",
+        "ENABLED_DESCRIPTION": "Khi một liên hệ nhắn tin lại, hội thoại trước đó sẽ được mở lại.",
+        "DISABLED_DESCRIPTION": "Một hội thoại mới sẽ được tạo ra mỗi khi hội thoại trước đó được đóng."
       },
       "ENABLE_HMAC": {
         "LABEL": "Bật"
@@ -646,16 +670,18 @@
     },
     "TABS": {
       "SETTINGS": "Cài đặt",
-      "COLLABORATORS": "Cộng tác viên",
+      "COLLABORATORS": "Nhân viên phụ trách",
       "CONFIGURATION": "Cấu hình",
       "CAMPAIGN": "Chiến dịch",
-      "PRE_CHAT_FORM": "Form trước chat",
+      "PRE_CHAT_FORM": "Biểu mẫu trước khi chat",
       "BUSINESS_HOURS": "Giờ làm việc",
       "WIDGET_BUILDER": "Tùy chỉnh widget",
       "BOT_CONFIGURATION": "Cấu hình trợ lý ảo",
       "ACCOUNT_HEALTH": "Sức khỏe tài khoản",
       "CSAT": "CSAT"
     },
+    "CHANNEL_PREFERENCES": "Cài đặt kênh",
+    "WIDGET_FEATURES": "Tính năng widget",
     "ACCOUNT_HEALTH": {
       "TITLE": "Quản lý tài khoản WhatsApp",
       "DESCRIPTION": "Xem trạng thái, giới hạn nhắn tin và chất lượng tài khoản WhatsApp. Cập nhật cài đặt hoặc xử lý vấn đề nếu cần.",
@@ -707,8 +733,18 @@
         },
         "MODES": {
           "SANDBOX": "Sandbox",
-          "LIVE": "Live"
+          "LIVE": "Trực tuyến"
         }
+      },
+      "WEBHOOK": {
+        "TITLE": "Cấu hình Webhook",
+        "DESCRIPTION": "Webhook URL là bắt buộc để Tài khoản WhatsApp Business của bạn có thể nhận tin nhắn từ khách hàng",
+        "ACTION_REQUIRED": "Webhook chưa được cấu hình",
+        "REGISTER_BUTTON": "Đăng ký Webhook",
+        "REGISTER_SUCCESS": "Đăng ký Webhook thành công",
+        "REGISTER_ERROR": "Đăng ký Webhook thất bại. Vui lòng thử lại.",
+        "CONFIGURED_SUCCESS": "Cấu hình Webhook thành công",
+        "URL_MISMATCH": "URL Webhook không khớp"
       }
     },
     "SETTINGS": "Cài đặt",
@@ -723,9 +759,21 @@
       "MESSENGER_HEADING": "Mã nhúng",
       "MESSENGER_SUB_HEAD": "Đặt đoạn mã này trong thẻ <body>",
       "ALLOWED_DOMAINS": {
-        "TITLE": "Tên miền cho phép",
-        "SUBTITLE": "Thêm tên miền hoặc wildcard, phân tách bằng dấu phẩy (để trống nếu cho phép tất cả).",
-        "PLACEHOLDER": "Nhập danh sách tên miền (ví dụ: *.shopiz.dev, shopiz.pro)"
+        "TITLE": "Domains được phép",
+        "DESCRIPTION": "Giới hạn các website có thể nhúng widget chat của bạn. Vì lý do bảo mật, chỉ thêm các tên miền bạn sở hữu và tin cậy. Thêm một hoặc nhiều tên miền, phân tách bằng dấu phẩy. Để trống để cho phép tất cả các tên miền (không khuyến nghị cho môi trường production).",
+        "PLACEHOLDER": "example.com, www.example.com, app.example.com"
+      },
+      "ALLOW_MOBILE_WEBVIEW": {
+        "LABEL": "Hiển thị widget trong ứng dụng di động",
+        "SUBTITLE": "Chọn mục này nếu bạn nhúng widget vào ứng dụng iOS hoặc Android. Ứng dụng di động không gửi thông tin miền, vì vậy chúng sẽ bị chặn bởi các hạn chế về miền trừ khi mục này được bật."
+      },
+      "IDENTITY_VALIDATION": {
+        "TITLE": "Xác thực danh tính",
+        "DESCRIPTION": "Xác thực danh tính người dùng bằng cách tạo mã bảo mật. Điều này ngăn chặn người dùng trái phép giả mạo người khác trong cuộc trò chuyện của bạn.",
+        "SECRET_KEY": "Khóa bí mật",
+        "VIEW_DOCS": "Xem tài liệu",
+        "REQUIRE_LABEL": "Yêu cầu xác thực danh tính cho tất cả các cuộc trò chuyện",
+        "REQUIRE_DESCRIPTION": "Khi được bật, người dùng phải cung cấp mã xác thực danh tính hợp lệ để bắt đầu cuộc trò chuyện. Các yêu cầu không có mã hợp lệ sẽ bị từ chối."
       },
       "INBOX_AGENTS": "Nhân viên",
       "INBOX_AGENTS_SUB_TEXT": "Thêm hoặc xóa nhân viên khỏi hộp thư này",
@@ -737,18 +785,18 @@
       "PERSONAL_PHONE_ROUTING_SUB_TEXT": "Khi nhân viên đang bận hoặc offline, cuộc gọi sẽ được chuyển tiếp đến số cá nhân của họ",
       "AGENT_PHONE_SETTINGS_INFO": "Nhân viên có thể cấu hình số cá nhân tại trang hồ sơ",
       "UPDATE": "Cập nhật",
-      "ENABLE_EMAIL_COLLECT_BOX": "Thu thập email khách",
-      "ENABLE_EMAIL_COLLECT_BOX_SUB_TEXT": "Bật/tắt thu thập email khi mở hội thoại mới",
-      "AUTO_ASSIGNMENT": "Tự động phân công",
-      "SENDER_NAME_SECTION": "Tên người gửi email",
-      "SENDER_NAME_SECTION_TEXT": "Bật/tắt hiển thị tên nhân viên trong email. Nếu tắt, hệ thống sẽ dùng tên doanh nghiệp.",
-      "ENABLE_CONTINUITY_VIA_EMAIL": "Duy trì hội thoại qua email",
-      "ENABLE_CONTINUITY_VIA_EMAIL_SUB_TEXT": "Hội thoại sẽ tiếp tục qua email nếu có email người liên hệ.",
-      "LOCK_TO_SINGLE_CONVERSATION": "Chỉ 1 hội thoại/kênh",
-      "LOCK_TO_SINGLE_CONVERSATION_SUB_TEXT": "Bật/tắt cho phép nhiều hội thoại cho cùng 1 khách",
-      "INBOX_UPDATE_TITLE": "Cài đặt hộp thư",
-      "INBOX_UPDATE_SUB_TEXT": "Cập nhật cài đặt hộp thư của bạn",
-      "AUTO_ASSIGNMENT_SUB_TEXT": "Bật/tắt tự động phân công hội thoại mới.",
+      "ENABLE_EMAIL_COLLECT_BOX": "Bật hộp thu thập email",
+      "ENABLE_EMAIL_COLLECT_BOX_SUB_TEXT": "Bật hoặc tắt hộp thu thập email trên cuộc trò chuyện mới",
+      "AUTO_ASSIGNMENT": "Bật tự động chuyển nhượng",
+      "SENDER_NAME_SECTION": "Hiển thị tên nhân viên trong email",
+      "SENDER_NAME_SECTION_TEXT": "Bật/Tắt hiển thị tên nhân viên trong email, nếu tắt sẽ hiển thị tên doanh nghiệp",
+      "ENABLE_CONTINUITY_VIA_EMAIL": "Bật tiếp tục cuộc trò chuyện qua email",
+      "ENABLE_CONTINUITY_VIA_EMAIL_SUB_TEXT": "Cuộc trò chuyện sẽ tiếp tục qua email nếu có địa chỉ email liên lạc.",
+      "LOCK_TO_SINGLE_CONVERSATION": "Định tuyến cuộc trò chuyện",
+      "LOCK_TO_SINGLE_CONVERSATION_SUB_TEXT": "Cấu hình tạo cuộc trò chuyện cho các liên hệ hiện có",
+      "INBOX_UPDATE_TITLE": "Cài đặt Hộp thư đến",
+      "INBOX_UPDATE_SUB_TEXT": "Cập nhật cài đặt hộp thư đến của bạn",
+      "AUTO_ASSIGNMENT_SUB_TEXT": "Bật hoặc tắt tính năng tự động gán các cuộc hội thoại mới cho các tác nhân được thêm vào hộp thư đến này.",
       "HMAC_VERIFICATION": "Xác thực danh tính người dùng",
       "HMAC_DESCRIPTION": "Khoá này dùng để tạo mã xác thực nhằm kiểm tra danh tính người dùng.",
       "HMAC_LINK_TO_DOCS": "Xem thêm tại đây.",
@@ -758,6 +806,7 @@
       "INBOX_IDENTIFIER_SUB_TEXT": "Dùng mã này để xác thực API client.",
       "FORWARD_EMAIL_TITLE": "Chuyển tiếp email",
       "FORWARD_EMAIL_SUB_TEXT": "Chuyển tiếp email của bạn đến địa chỉ sau.",
+      "FORWARD_EMAIL_NOT_CONFIGURED": "Forwarding emails to your inbox is currently disabled on this installation. To use this feature, it must be enabled by your administrator. Please get in touch with them to proceed.",
       "ALLOW_MESSAGES_AFTER_RESOLVED": "Cho phép nhắn sau khi đóng hội thoại",
       "ALLOW_MESSAGES_AFTER_RESOLVED_SUB_TEXT": "Khách vẫn có thể nhắn tiếp ngay cả khi hội thoại đã được đánh dấu hoàn tất.",
       "WHATSAPP_SECTION_SUBHEADER": "API key dùng để tích hợp với WhatsApp APIs.",
@@ -787,12 +836,13 @@
       "WHATSAPP_TEMPLATES_SYNC_SUBHEADER": "Đồng bộ template WhatsApp thủ công.",
       "WHATSAPP_TEMPLATES_SYNC_BUTTON": "Đồng bộ",
       "WHATSAPP_TEMPLATES_SYNC_SUCCESS": "Đã bắt đầu đồng bộ template. Quá trình có thể mất vài phút.",
-      "UPDATE_PRE_CHAT_FORM_SETTINGS": "Cập nhật form trước chat"
+      "UPDATE_PRE_CHAT_FORM_SETTINGS": "Cập nhật biểu mẫu trước khi chat"
     },
     "HELP_CENTER": {
       "LABEL": "Trung tâm trợ giúp",
       "PLACEHOLDER": "Chọn Help Center",
       "SELECT_PLACEHOLDER": "Chọn Help Center",
+      "NONE": "Không có",
       "REMOVE": "Gỡ Help Center",
       "SUB_TEXT": "Gắn Help Center vào hộp thư này"
     },
@@ -801,6 +851,53 @@
       "MAX_ASSIGNMENT_LIMIT_RANGE_ERROR": "Vui lòng nhập giá trị lớn hơn 0",
       "MAX_ASSIGNMENT_LIMIT_SUB_TEXT": "Giới hạn số hội thoại tối đa được phân công tự động cho một nhân viên"
     },
+    "ASSIGNMENT": {
+      "TITLE": "Phân công cuộc trò chuyện",
+      "DESCRIPTION": "Tự động phân công các cuộc trò chuyện đến các nhân viên có sẵn dựa trên chính sách phân công",
+      "ENABLE_AUTO_ASSIGNMENT": "Bật phân công cuộc trò chuyện tự động",
+      "DEFAULT_RULES_TITLE": "Quy tắc phân công mặc định",
+      "DEFAULT_RULES_DESCRIPTION": "Sử dụng hành vi phân công mặc định cho tất cả các cuộc trò chuyện",
+      "DEFAULT_RULE_1": "Cuộc trò chuyện được tạo sớm nhất trước",
+      "DEFAULT_RULE_2": "Phân phối luân phiên",
+      "CUSTOMIZE_WITH_POLICY": "Tùy chỉnh với chính sách phân công",
+      "USING_POLICY": "Sử dụng chính sách phân công tùy chỉnh cho hộp thư này",
+      "CUSTOMIZE_POLICY": "Tùy chỉnh với chính sách phân công",
+      "DELETE_POLICY": "Xóa chính sách",
+      "POLICY_LABEL": "Chính sách phân công",
+      "ASSIGNMENT_ORDER_LABEL": "Thứ tự phân công",
+      "ASSIGNMENT_METHOD_LABEL": "Phương thức phân công",
+      "POLICY_STATUS": {
+        "ACTIVE": "Có hiệu lực",
+        "INACTIVE": "Không hoạt động"
+      },
+      "PRIORITY": {
+        "EARLIEST_CREATED": "Cuộc trò chuyện được tạo sớm nhất",
+        "LONGEST_WAITING": "Chờ lâu nhất"
+      },
+      "METHOD": {
+        "ROUND_ROBIN": "Phân phối luân phiên",
+        "BALANCED": "Phân bổ cân bằng"
+      },
+      "UPGRADE_PROMPT": "Các chính sách phân công tùy chỉnh chỉ có ở gói Business",
+      "UPGRADE_TO_BUSINESS": "Nâng cấp lên gói Business",
+      "DEFAULT_POLICY_LINKED": "Đã liên kết chính sách mặc định",
+      "DEFAULT_POLICY_DESCRIPTION": "Liên kết một chính sách phân công tùy chỉnh để thay đổi cách các cuộc trò chuyện được phân công cho nhân viên trong hộp thư này.",
+      "LINK_EXISTING_POLICY": "Liên kết chính sách hiện có",
+      "CREATE_NEW_POLICY": "Tạo chính sách mới",
+      "NO_POLICIES": "Không tìm thấy chính sách phân công nào",
+      "VIEW_ALL_POLICIES": "Xem tất cả các chính sách",
+      "CURRENT_BEHAVIOR": "Hiện đang sử dụng hành vi phân công mặc định:",
+      "LINK_SUCCESS": "Đã liên kết chính sách phân công thành công",
+      "LINK_ERROR": "Không thể liên kết chính sách phân công"
+    },
+    "ASSIGNMENT_POLICY": {
+      "DELETE_CONFIRM_TITLE": "Xóa chính sách phân công?",
+      "DELETE_CONFIRM_MESSAGE": "Bạn có chắc chắn muốn xóa chính sách phân công này khỏi hộp thư này? Hộp thư sẽ quay lại quy tắc phân công mặc định.",
+      "CANCEL": "Huỷ",
+      "CONFIRM_DELETE": "Xoá",
+      "DELETE_SUCCESS": "Đã xóa chính sách phân công thành công",
+      "DELETE_ERROR": "Không thể xóa chính sách phân công"
+    },
     "FACEBOOK_REAUTHORIZE": {
       "TITLE": "Kết nối lại",
       "SUBTITLE": "Kết nối Facebook đã hết hạn, vui lòng kết nối lại để tiếp tục sử dụng",
@@ -808,8 +905,8 @@
       "MESSAGE_ERROR": "Có lỗi xảy ra, vui lòng thử lại"
     },
     "PRE_CHAT_FORM": {
-      "DESCRIPTION": "Form trước chat giúp bạn thu thập thông tin khách hàng trước khi họ bắt đầu trò chuyện.",
-      "SET_FIELDS": "Trường trong form",
+      "DESCRIPTION": "Biểu mẫu trước khi chat giúp bạn thu thập thông tin khách hàng trước khi họ bắt đầu trò chuyện.",
+      "SET_FIELDS": "Trường trong biểu mẫu",
       "SET_FIELDS_HEADER": {
         "FIELDS": "Trường",
         "LABEL": "Nhãn",
@@ -819,7 +916,7 @@
         "REQUIRED": "Bắt buộc"
       },
       "ENABLE": {
-        "LABEL": "Bật form trước chat",
+        "LABEL": "Bật biểu mẫu trước khi chat",
         "OPTIONS": {
           "ENABLED": "Bật",
           "DISABLED": "Tắt"
@@ -827,7 +924,7 @@
       },
       "PRE_CHAT_MESSAGE": {
         "LABEL": "Tin nhắn giới thiệu",
-        "PLACEHOLDER": "Tin nhắn hiển thị cùng với form"
+        "PLACEHOLDER": "Tin nhắn hiển thị cùng với biểu mẫu"
       },
       "REQUIRE_EMAIL": {
         "LABEL": "Khách phải cung cấp tên và email trước khi bắt đầu trò chuyện"
@@ -843,6 +940,49 @@
         "LABEL": "Tin nhắn",
         "PLACEHOLDER": "Nhập nội dung hiển thị kèm khảo sát"
       },
+      "BUTTON_TEXT": {
+        "LABEL": "Button text",
+        "PLACEHOLDER": "Please rate us"
+      },
+      "LANGUAGE": {
+        "LABEL": "Ngôn ngữ",
+        "PLACEHOLDER": "Chọn ngôn ngữ template"
+      },
+      "MESSAGE_PREVIEW": {
+        "LABEL": "Xem trước tin nhắn",
+        "TOOLTIP": "Nội dung có thể thay đổi nhỏ khi hiển thị trên nền tảng WhatsApp."
+      },
+      "TEMPLATE_STATUS": {
+        "APPROVED": "Đã được WhatsApp duyệt",
+        "PENDING": "Đang chờ WhatsApp duyệt",
+        "REJECTED": "Meta đã từ chối template",
+        "DEFAULT": "Cần WhatsApp duyệt",
+        "NOT_FOUND": "Template không tồn tại trên nền tảng Meta."
+      },
+      "TEMPLATE_CREATION": {
+        "SUCCESS_MESSAGE": "Đã tạo template WhatsApp thành công và gửi đi duyệt",
+        "ERROR_MESSAGE": "Không thể tạo template WhatsApp"
+      },
+      "TEMPLATE_UPDATE_DIALOG": {
+        "TITLE": "Chỉnh sửa chi tiết khảo sát",
+        "DESCRIPTION": "Chúng tôi sẽ xóa template cũ và tạo template mới để gửi WhatsApp duyệt lại",
+        "CONFIRM": "Tạo template mới",
+        "CANCEL": "Trở về"
+      },
+      "UTILITY_ANALYZER": {
+        "ACTION": "Kiểm tra mức độ phù hợp (Utility)",
+        "HELPER_NOTE": "Kiểm tra tin nhắn này trước khi gửi để cải thiện khả năng được duyệt là Tiện ích (Utility). Hệ thống sẽ tạo một template CSAT riêng với các nút báo cáo và gửi dưới dạng Tiện ích; Meta vẫn có thể phân loại lại thành Tiếp thị (Marketing) dựa trên nội dung.",
+        "RESULT_LABEL": "Dự đoán phân loại của Meta",
+        "GUIDANCE_NOTE": "Đây là kiểm tra hướng dẫn, không đảm bảo sẽ được Meta phê duyệt.",
+        "SUGGESTION_LABEL": "Gợi ý viết lại an toàn (Utility-safe)",
+        "APPLY": "Sử dụng bản viết lại này",
+        "ERROR_MESSAGE": "Không thể phân tích tin nhắn. Vui lòng thử lại.",
+        "CLASSIFICATION": {
+          "LIKELY_UTILITY": "Có khả năng là Tiện ích (Utility)",
+          "LIKELY_MARKETING": "Có khả năng là Tiếp thị (Marketing)",
+          "UNCLEAR": "Cần làm rõ"
+        }
+      },
       "SURVEY_RULE": {
         "LABEL": "Quy tắc gửi khảo sát",
         "DESCRIPTION_PREFIX": "Gửi khảo sát nếu hội thoại",
@@ -854,6 +994,7 @@
         "SELECT_PLACEHOLDER": "chọn nhãn"
       },
       "NOTE": "Lưu ý: Mỗi hội thoại chỉ được gửi khảo sát một lần",
+      "WHATSAPP_NOTE": "Lưu ý: Khi bạn lưu, hệ thống sẽ tạo một template CSAT riêng trong WhatsApp (dùng để ghi nhận đánh giá và phản hồi trong báo cáo) và gửi dưới dạng Tiện ích (Utility) để được phê duyệt. Meta vẫn có thể phân loại là Tiếp thị (Marketing) dựa trên nội dung. Sau khi được duyệt, khảo sát chỉ được gửi một lần cho mỗi cuộc hội thoại theo quy tắc khảo sát.",
       "API": {
         "SUCCESS_MESSAGE": "Cập nhật CSAT thành công",
         "ERROR_MESSAGE": "Không thể cập nhật CSAT, vui lòng thử lại"
@@ -869,9 +1010,11 @@
       "UNAVAILABLE_MESSAGE_LABEL": "Tin nhắn khi không trực tuyến",
       "TOGGLE_HELP": "Khi bật, widget sẽ hiển thị giờ làm việc ngay cả khi tất cả nhân viên đang offline.",
       "DAY": {
+        "DAY": "Ngày",
+        "AVAILABILITY": "Khả dụng",
+        "HOURS": "Hours",
         "ENABLE": "Bật ngày làm việc",
         "UNAVAILABLE": "Không làm việc",
-        "HOURS": "giờ",
         "VALIDATION_ERROR": "Giờ mở phải trước giờ đóng",
         "CHOOSE": "Chọn"
       },
@@ -977,13 +1120,14 @@
           "IN_A_FEW_HOURS": "Trong vài giờ",
           "IN_A_DAY": "Trong một ngày"
         },
-        "WIDGET_COLOR_LABEL": "Màu widget",
-        "WIDGET_BUBBLE_POSITION_LABEL": "Vị trí bong bóng",
-        "WIDGET_BUBBLE_TYPE_LABEL": "Loại bong bóng",
+        "WIDGET_COLOR_LABEL": "Màu tiện ích",
+        "WIDGET_BUBBLE": "Bong bóng",
+        "WIDGET_BUBBLE_POSITION_LABEL": "Vị trí bong bóng widget",
+        "WIDGET_BUBBLE_TYPE_LABEL": "Kiểu bong bóng widget",
         "WIDGET_BUBBLE_LAUNCHER_TITLE": {
-          "DEFAULT": "Chat với chúng tôi",
-          "LABEL": "Tiêu đề bong bóng widget",
-          "PLACE_HOLDER": "Chat với chúng tôi"
+          "DEFAULT": "Trò chuyện với chúng tôi",
+          "LABEL": "Tiêu đề trình khởi chạy bong bóng widget",
+          "PLACE_HOLDER": "Trò chuyện với chúng tôi"
         },
         "UPDATE": {
           "BUTTON_TEXT": "Cập nhật cài đặt widget",
@@ -1007,7 +1151,7 @@
       },
       "WIDGET_SCREEN": {
         "DEFAULT": "Mặc định",
-        "CHAT": "Chat"
+        "CHAT": "Chat mode"
       },
       "REPLY_TIME": {
         "IN_A_FEW_MINUTES": "Thường phản hồi trong vài phút",
@@ -1056,6 +1200,7 @@
       "LINE": "Line",
       "API": "Kênh API",
       "INSTAGRAM": "Instagram",
+      "TIKTOK": "TikTok",
       "ZALO_OA": "Zalo OA",
       "ZALO_PERSONAL": "Zalo cá nhân",
       "TIKTOK_SHOP": "Tiktok Shop"

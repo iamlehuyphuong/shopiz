@@ -18,6 +18,10 @@
 
 class Channel::ZaloOa < ApplicationRecord
   include Channelable
+  include Reauthorizable
+
+  encrypts :oa_access_token
+  encrypts :refresh_token
 
   self.table_name = 'channel_zalo_oa'
   EDITABLE_ATTRS = [:oa_access_token, :refresh_token, :expires_in].freeze
@@ -111,7 +115,7 @@ class Channel::ZaloOa < ApplicationRecord
   def refresh_post(refresh_token)
     HTTParty.post(
       url_refresh_token,
-      headers: { 'Content-Type' => 'application/x-www-form-urlencoded', 'secret_key' => ENV.fetch('ZALO_OA_APP_SECRET', nil) },
+      headers: { 'Content-Type' => 'application/x-www-form-urlencoded', 'secret_key' => GlobalConfigService.load('ZALO_OA_APP_SECRET', '') },
       body: refresh_body(refresh_token)
     )
   end
@@ -119,7 +123,7 @@ class Channel::ZaloOa < ApplicationRecord
   def refresh_body(refresh_token)
     {
       refresh_token: refresh_token,
-      app_id: ENV.fetch('ZALO_OA_APP_ID', nil),
+      app_id: GlobalConfigService.load('ZALO_OA_APP_ID', ''),
       grant_type: 'refresh_token'
     }
   end

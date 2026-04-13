@@ -82,19 +82,19 @@ class Channel::ZaloPersonal < ApplicationRecord
   private
 
   def url_message_cs
-    "#{GlobalConfigService.load('ZALO_OA_API_URL', nil)}/api/sendmessage"
+    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendmessage"
   end
 
   def send_image_to_user_url
-    "#{GlobalConfigService.load('ZALO_OA_API_URL', nil)}/api/sendImageToUser"
+    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendImageToUser"
   end
 
   def send_image_to_group_url
-    "#{GlobalConfigService.load('ZALO_OA_API_URL', nil)}/api/sendImageToGroup"
+    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendImageToGroup"
   end
 
   def send_file_url
-    "#{GlobalConfigService.load('ZALO_OA_API_URL', nil)}/api/sendFile"
+    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendFile"
   end
 
   def send_attachment(user_id, attachment, is_zalo_group)

@@ -20,7 +20,7 @@ class Conversations::PermissionFilterService
   end
 
   def account_user
-    AccountUser.find_by(account_id: account.id, user_id: user.id)
+    @account_user ||= AccountUser.find_by(account_id: account.id, user_id: user.id)
   end
 
   def user_role

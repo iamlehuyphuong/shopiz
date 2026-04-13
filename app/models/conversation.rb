@@ -130,7 +130,9 @@ class Conversation < ApplicationRecord
   delegate :auto_resolve_after, to: :account
 
   def can_reply?
-    Conversations::MessageWindowService.new(self).can_reply?
+    return @can_reply_cache if defined?(@can_reply_cache)
+
+    @can_reply_cache = Conversations::MessageWindowService.new(self).can_reply?
   end
 
   def language
@@ -148,7 +150,7 @@ class Conversation < ApplicationRecord
   end
 
   def last_incoming_message
-    messages&.incoming&.last
+    messages.where(account_id: account_id).incoming.reorder(created_at: :desc).first
   end
 
   def toggle_status
@@ -164,6 +166,7 @@ class Conversation < ApplicationRecord
   end
 
   def bot_handoff!
+    update(waiting_since: Time.current) if waiting_since.blank?
     open!
     dispatcher_dispatch(CONVERSATION_BOT_HANDOFF)
   end
@@ -172,8 +175,24 @@ class Conversation < ApplicationRecord
     agent_last_seen_at.present? ? messages.created_since(agent_last_seen_at) : messages
   end
 
+  def assignee_unread_messages
+    assignee_last_seen_at.present? ? messages.created_since(assignee_last_seen_at) : messages
+  end
+
   def unread_incoming_messages
-    unread_messages.where(account_id: account_id).incoming.last(10)
+    unread_messages.where(account_id: account_id).incoming.order(created_at: :desc).limit(10)
+  end
+
+  # Returns the most recent non-activity message with attachments eager-loaded.
+  # Intentionally returns the raw Message object (not push_event_data) so the
+  # caller controls when push_event_data is invoked, preventing duplicate calls
+  # and the hidden unread_count query inside conversation_push_event_data.
+  def last_non_activity_message_obj
+    messages.where(account_id: account_id)
+            .where.not(message_type: :activity)
+            .order(created_at: :desc)
+            .includes({ attachments: [{ file_attachment: [:blob] }] })
+            .first
   end
 
   def cached_label_list_array

@@ -68,7 +68,7 @@ const senderThumbnail = computed(() => props.sender?.thumbnail || '');
     {{ t('CAMPAIGN.SMS.CARD.CAMPAIGN_DETAILS.ON') }}
     </span>
     <span class="flex-1 text-sm font-medium truncate text-n-slate-12">
-      {{ messageStamp(new Date(scheduledAt), 'LLL d, h:mm a') }}
+      {{ messageStamp(new Date(scheduledAt), t('GENERAL.DATETIME_FORMAT_WITH_SHORT_MONTH')) }}
     </span>
   </div>
 </template>

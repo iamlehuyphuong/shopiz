@@ -8,10 +8,10 @@
 # deprecated: purpose of feature flag is done, no need to show it in the UI anymore
 - name: inbound_emails
   display_name: Inbound Emails
-  enabled: true
+  enabled: false
 - name: channel_email
   display_name: Email Channel
-  enabled: true
+  enabled: false
   help_url: https://help.shopiz.pro/hc/email
 - name: channel_facebook
   display_name: Facebook Channel
@@ -19,8 +19,8 @@
   help_url: https://help.shopiz.pro/hc/fb
 - name: channel_twitter
   display_name: Twitter Channel
-  enabled: false
-  deprecated: true
+  enabled: true
+  deprecated: false
 - name: ip_lookup
   display_name: IP Lookup
   enabled: false
@@ -74,10 +74,9 @@
 - name: voice_recorder
   display_name: Voice Recorder
   enabled: true
-- name: mobile_v2
-  display_name: Mobile App V2
+- name: report_rollup
+  display_name: Report Rollup
   enabled: true
-  deprecated: true
 - name: channel_website
   display_name: Website Channel
   enabled: true
@@ -85,10 +84,6 @@
   display_name: Campaigns
   enabled: false
   help_url: https://help.shopiz.pro/hc/campaigns
-- name: sales
-  display_name: Sales
-  enabled: false
-  help_url: https://help.shopiz.pro/hc/sales
 - name: reports
   display_name: Reports
   enabled: true
@@ -112,7 +107,6 @@
 - name: response_bot
   display_name: Response Bot
   enabled: true
-  premium: true
   deprecated: true
 - name: message_reply_to
   display_name: Message Reply To
@@ -153,7 +147,7 @@
   enabled: true
 - name: report_v4
   display_name: Report V4
-  enabled: true
+  enabled: false
   deprecated: true
 - name: contact_chatwoot_support_team
   display_name: Contact Shopiz Support Team
@@ -161,7 +155,7 @@
   chatwoot_internal: false
 - name: shopify_integration
   display_name: Shopify Integration
-  enabled: false
+  enabled: true
 - name: search_with_gin
   display_name: Search messages with GIN
   enabled: true
@@ -172,9 +166,15 @@
 - name: crm_integration
   display_name: CRM Integration
   enabled: false
+- name: channel_voice
+  display_name: Voice Channel
+  enabled: false
+  premium: true
+  deprecated: true
+  help_url: https://help.shopiz.pro/hc/voice
 - name: notion_integration
   display_name: Notion Integration
-  enabled: false
+  enabled: true
 - name: captain_integration_v2
   display_name: Captain V2
   enabled: false
@@ -194,7 +194,7 @@
 - name: assignment_v2
   display_name: Assignment V2
   enabled: false
-  #chatwoot_internal: true
+  chatwoot_internal: true
 - name: twilio_content_templates
   display_name: Twilio Content Templates
   enabled: false
@@ -244,11 +244,11 @@
 - name: channel_api
   display_name: API Channel
   enabled: false
+  deprecated: true
   help_url: https://help.shopiz.pro/hc/api
-- name: channel_voice
-  display_name: Voice Channel
+- name: deprecated_feature_64
+  display_name: Deprecated Feature 64
   enabled: false
-  help_url: https://help.shopiz.pro/hc/voice
 - name: channel_line
   display_name: Line Channel
   enabled: false
@@ -257,15 +257,25 @@
   display_name: Whatsapp Channel
   enabled: false
   help_url: https://help.shopiz.pro/hc/whatsapp
-- name: workflow
-  display_name: Workflow
+- name: channel_tiktok_shop
+  display_name: TikTok Shop Channel
   enabled: false
-  help_url: https://help.shopiz.pro/hc/workflows
-- name: survey
-  display_name: Survey
-  enabled: false
-  help_url: https://help.shopiz.pro/hc/survey
+  help_url: https://help.shopiz.pro/hc/tiktok-shop
 - name: channel_tiktok
   display_name: TikTok Channel
+  enabled: true
+- name: csat_review_notes
+  display_name: CSAT Review Notes
   enabled: false
-  help_url: https://help.shopiz.pro/hc/tiktok
+  premium: true
+- name: captain_tasks
+  display_name: Captain Tasks
+  enabled: true
+- name: conversation_required_attributes
+  display_name: Required Conversation Attributes
+  enabled: false
+  premium: true
+- name: advanced_assignment
+  display_name: Advanced Assignment
+  enabled: false
+  premium: true

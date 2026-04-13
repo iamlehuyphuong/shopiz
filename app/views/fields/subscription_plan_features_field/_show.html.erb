@@ -1,0 +1,12 @@
+<div class="flex flex-wrap gap-2">
+  <% enabled_features = field.features_list.select { |f| field.feature_enabled?(f['name']) } %>
+  <% if enabled_features.any? %>
+    <% enabled_features.each do |feature| %>
+      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-woot-50 text-woot-700 border border-woot-100">
+        <%= feature['display_name'] %>
+      </span>
+    <% end %>
+  <% else %>
+    <span class="text-xs text-slate-400 italic">No features enabled</span>
+  <% end %>
+</div>

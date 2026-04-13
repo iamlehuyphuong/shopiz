@@ -13,7 +13,7 @@ const props = defineProps({
 const { t } = useI18n();
 
 const formatDate = dateString => {
-  return format(new Date(dateString), 'MMM d, yyyy');
+  return format(new Date(dateString), t('GENERAL.DATE_FORMAT'));
 };
 
 const formatCurrency = (amount, currency) => {

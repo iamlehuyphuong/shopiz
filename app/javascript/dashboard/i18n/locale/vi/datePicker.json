@@ -1,5 +1,8 @@
 {
   "DATE_PICKER": {
+    "PREVIOUS_PERIOD": "Previous period",
+    "NEXT_PERIOD": "Next period",
+    "WEEK_NUMBER": "Week #{weekNumber}",
     "APPLY_BUTTON": "Áp dụng",
     "CLEAR_BUTTON": "Xóa",
     "DATE_RANGE_INPUT": {
@@ -13,6 +16,8 @@
       "LAST_3_MONTHS": "3 tháng gần nhất",
       "LAST_6_MONTHS": "6 tháng gần nhất",
       "LAST_YEAR": "Năm trước",
+      "THIS_WEEK": "Tuần này",
+      "MONTH_TO_DATE": "Tháng này",
       "CUSTOM_RANGE": "Tùy chọn khoảng thời gian"
     }
   }

@@ -224,6 +224,34 @@ shopify:
   hook_type: account
   allow_multiple_hooks: false
 
+kiotviet:
+  id: kiotviet
+  logo: kiotviet.png
+  i18n_key: kiotviet
+  hook_type: account
+  allow_multiple_hooks: false
+
+haravan:
+  id: haravan
+  logo: haravan.png
+  i18n_key: haravan
+  hook_type: account
+  allow_multiple_hooks: false
+
+woocommerce:
+  id: woocommerce
+  logo: woocommerce.png
+  i18n_key: woocommerce
+  hook_type: account
+  allow_multiple_hooks: false
+
+sapo:
+  id: sapo
+  logo: sapo.png
+  i18n_key: sapo
+  hook_type: account
+  allow_multiple_hooks: false
+
 leadsquared:
   id: leadsquared
   feature_flag: crm_integration

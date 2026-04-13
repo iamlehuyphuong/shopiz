@@ -1,8 +1,86 @@
-import { inject, provide } from 'vue';
+import { inject, provide, ref, computed } from 'vue';
 import { usePolicy } from 'dashboard/composables/usePolicy';
 import { useRouter } from 'vue-router';
+import { useUISettings } from 'dashboard/composables/useUISettings';
 
 const SidebarControl = Symbol('SidebarControl');
+
+const DEFAULT_WIDTH = 264;
+const MIN_WIDTH = 64;
+const COLLAPSED_THRESHOLD = 160;
+const MAX_WIDTH = 400;
+
+// Shared state for active popover (only one can be open at a time)
+const activePopover = ref(null);
+let globalCloseTimeout = null;
+
+export function useSidebarResize() {
+  const { uiSettings, updateUISettings } = useUISettings();
+
+  const sidebarWidth = ref(uiSettings.value.sidebar_width || DEFAULT_WIDTH);
+  const isCollapsed = computed(() => sidebarWidth.value < COLLAPSED_THRESHOLD);
+
+  const setSidebarWidth = width => {
+    sidebarWidth.value = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, width));
+  };
+
+  const saveWidth = () => {
+    updateUISettings({ sidebar_width: sidebarWidth.value });
+  };
+
+  const snapToCollapsed = () => {
+    sidebarWidth.value = MIN_WIDTH;
+    updateUISettings({ sidebar_width: MIN_WIDTH });
+  };
+
+  const snapToExpanded = () => {
+    sidebarWidth.value = DEFAULT_WIDTH;
+    updateUISettings({ sidebar_width: DEFAULT_WIDTH });
+  };
+
+  return {
+    sidebarWidth,
+    isCollapsed,
+    setSidebarWidth,
+    saveWidth,
+    snapToCollapsed,
+    snapToExpanded,
+    MIN_WIDTH,
+    MAX_WIDTH,
+    COLLAPSED_THRESHOLD,
+    DEFAULT_WIDTH,
+  };
+}
+
+export function usePopoverState() {
+  const setActivePopover = name => {
+    clearTimeout(globalCloseTimeout);
+    activePopover.value = name;
+  };
+
+  const closeActivePopover = () => {
+    activePopover.value = null;
+  };
+
+  const scheduleClose = (delay = 150) => {
+    clearTimeout(globalCloseTimeout);
+    globalCloseTimeout = setTimeout(() => {
+      closeActivePopover();
+    }, delay);
+  };
+
+  const cancelClose = () => {
+    clearTimeout(globalCloseTimeout);
+  };
+
+  return {
+    activePopover,
+    setActivePopover,
+    closeActivePopover,
+    scheduleClose,
+    cancelClose,
+  };
+}
 
 export function useSidebarContext() {
   const context = inject(SidebarControl, null);
@@ -11,8 +89,7 @@ export function useSidebarContext() {
   }
 
   const router = useRouter();
-
-  const { shouldShow } = usePolicy();
+  const { shouldShow, shouldShowPaywall } = usePolicy();
 
   const resolvePath = to => {
     if (to) return router.resolve(to)?.path || '/';
@@ -69,12 +146,18 @@ export function useSidebarContext() {
     return shouldShow(featureFlag, permissions, installationType);
   };
 
+  const isLocked = to => {
+    const featureFlag = resolveFeatureFlag(to);
+    return shouldShowPaywall(featureFlag);
+  };
+
   return {
     ...context,
     resolvePath,
     resolvePermissions,
     resolveFeatureFlag,
     isAllowed,
+    isLocked,
   };
 }
 

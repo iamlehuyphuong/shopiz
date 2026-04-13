@@ -35,7 +35,97 @@
   description: 'Search FAQ responses using semantic similarity'
   icon: 'search'
 
+- id: resolve_conversation
+  title: 'Resolve Conversation'
+  description: 'Resolve a conversation when the issue has been addressed'
+  icon: 'checkmark'
+
 - id: handoff
   title: 'Handoff to Human'
   description: 'Hand off the conversation to a human agent'
   icon: 'user-switch'
+
+- id: assign_conversation
+  title: 'Assign Conversation'
+  description: 'Assign a conversation to a specific team or agent'
+  icon: 'people-team'
+
+- id: update_contact
+  title: 'Update Contact'
+  description: 'Update contact profile information (name, email, phone, custom attributes)'
+  icon: 'person-edit'
+
+- id: get_contact_detail
+  title: 'Get Contact Details'
+  description: 'Get detailed information about the current contact'
+  icon: 'person-info'
+
+- id: snooze_conversation
+  title: 'Snooze Conversation'
+  description: 'Snooze a conversation to follow up later'
+  icon: 'clock'
+
+- id: remove_label_from_conversation
+  title: 'Remove Label from Conversation'
+  description: 'Remove a label from a conversation'
+  icon: 'tag-dismiss'
+
+- id: set_conversation_custom_attribute
+  title: 'Set Conversation Custom Attributes'
+  description: 'Set or update custom attributes on a conversation'
+  icon: 'document-data'
+
+- id: search_previous_conversation
+  title: 'Search Previous Conversations'
+  description: 'Search previous conversations of the current contact'
+  icon: 'history'
+
+- id: shopify_search_orders
+  title: 'Shopify: Search Orders'
+  description: 'Search Shopify orders for the current contact'
+  icon: 'shopping-bag'
+
+- id: shopify_get_product
+  title: 'Shopify: Get Product'
+  description: 'Search Shopify products by name or keyword'
+  icon: 'box'
+
+- id: kiotviet_search_orders
+  title: 'KiotViet: Search Orders'
+  description: 'Search KiotViet orders (invoices) for the current contact'
+  icon: 'shopping-bag'
+
+- id: kiotviet_get_product
+  title: 'KiotViet: Get Product'
+  description: 'Search KiotViet products by name or keyword'
+  icon: 'box'
+
+- id: haravan_search_orders
+  title: 'Haravan: Search Orders'
+  description: 'Search Haravan orders for the current contact'
+  icon: 'shopping-bag'
+
+- id: haravan_get_product
+  title: 'Haravan: Get Product'
+  description: 'Search Haravan products by name or keyword'
+  icon: 'box'
+
+- id: woocommerce_search_orders
+  title: 'WooCommerce: Search Orders'
+  description: 'Search WooCommerce orders for the current contact'
+  icon: 'shopping-bag'
+
+- id: woocommerce_get_product
+  title: 'WooCommerce: Get Product'
+  description: 'Search WooCommerce products by name or keyword'
+  icon: 'box'
+
+- id: sapo_search_orders
+  title: 'Sapo: Search Orders'
+  description: 'Search Sapo orders for the current contact'
+  icon: 'shopping-bag'
+
+- id: sapo_get_product
+  title: 'Sapo: Get Product'
+  description: 'Search Sapo products by name or keyword'
+  icon: 'box'

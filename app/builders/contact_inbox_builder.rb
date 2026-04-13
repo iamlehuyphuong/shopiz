@@ -110,3 +110,5 @@ class ContactInboxBuilder
     @inbox.email? || @inbox.sms? || @inbox.twilio? || @inbox.whatsapp? || @inbox.channel_type == 'Channel::Voice'
   end
 end
+
+ContactInboxBuilder.prepend_mod_with('ContactInboxBuilder')

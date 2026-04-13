@@ -48,6 +48,12 @@ help_center:
   description: 'Allow agents to create help center articles and publish them in a portal.'
   enabled: true
   icon: 'icon-book-2-line'
+captain:
+  name: 'Captain'
+  description: 'Enable AI-powered conversations with your customers.'
+  enabled: true
+  icon: 'icon-captain'
+  config_key: 'captain'
 
 # ------- Communication Channels ------- #
 live_chat:
@@ -78,6 +84,12 @@ instagram:
   enabled: true
   icon: 'icon-instagram'
   config_key: 'instagram'
+tiktok:
+  name: 'TikTok'
+  description: 'Stay connected with your customers on TikTok'
+  enabled: true
+  icon: 'icon-tiktok'
+  config_key: 'tiktok'
 whatsapp:
   name: 'WhatsApp'
   description: 'Manage your WhatsApp business interactions from Shopiz.'
@@ -140,7 +152,7 @@ shopify:
   icon: 'icon-shopify'
   config_key: 'shopify'
 zalo:
-  name: 'Zalo'
+  name: 'Zalo OA'
   description: 'Stay connected with your customers on Zalo Official Account.'
   enabled: true
   icon: 'icon-zalo'
@@ -151,21 +163,21 @@ zalo_personal:
   enabled: true
   icon: 'icon-zalo'
   config_key: 'zalo_personal'
-activepieces:
-  name: 'Active Pieces'
-  description: 'Automation software that is AI-first.'
-  enabled: true
-  icon: 'icon-activepieces'
-  config_key: 'activepieces'
 google:
   name: 'Google'
   description: 'Configuration for setting up Google'
   enabled: true
   icon: 'icon-google'
   config_key: 'google'
-tiktok:
-  name: 'Tiktok'
-  description: 'Stay connected with your customers on Tiktok.'
+tiktok_shop:
+  name: 'TikTok Shop'
+  description: 'Stay connected with your customers on TikTok Shop.'
   enabled: true
   icon: 'icon-tiktok'
-  config_key: 'tiktok'
+  config_key: 'tiktok_shop'
+payos:
+  name: 'PayOS'
+  description: 'Configuration for setting up PayOS Integration'
+  enabled: true
+  icon: 'icon-bank-card-line'
+  config_key: 'payos'

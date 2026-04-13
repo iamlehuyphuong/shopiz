@@ -3,7 +3,8 @@ import { computed } from 'vue';
 const props = defineProps({
   title: {
     type: String,
-    required: true,
+    required: false,
+    default: '',
   },
   consumed: {
     type: Number,
@@ -12,6 +13,14 @@ const props = defineProps({
   totalCount: {
     type: Number,
     required: true,
+  },
+  showBar: {
+    type: Boolean,
+    default: true,
+  },
+  showTitle: {
+    type: Boolean,
+    default: true,
   },
 });
 
@@ -34,12 +43,17 @@ const colorClass = computed(() => {
   <div
     class="flex gap-5 items-center justify-between text-xs uppercase text-n-slate-10"
   >
-    <div class="font-medium tracking-wider">
+    <div v-if="showTitle" class="font-medium tracking-wider">
       {{ title }}
     </div>
-    <div class="tabular-nums">{{ consumed }} / {{ totalCount }}</div>
+    <div class="tabular-nums font-medium">
+      {{ consumed }} / {{ totalCount }}
+    </div>
   </div>
-  <div class="rounded-full overflow-hidden h-2 w-full bg-n-slate-4 mt-2">
+  <div
+    v-if="showBar"
+    class="rounded-full overflow-hidden h-2 w-full bg-n-slate-4 mt-2"
+  >
     <div class="h-2" :class="colorClass" :style="{ width: `${percent}%` }" />
   </div>
 </template>

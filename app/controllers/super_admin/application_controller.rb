@@ -9,7 +9,7 @@ class SuperAdmin::ApplicationController < Administrate::ApplicationController
   include ActionView::Context
   include SuperAdmin::NavigationHelper
 
-  helper_method :render_vue_component, :settings_open?, :settings_pages, :load_plans
+  helper_method :render_vue_component, :settings_open?, :settings_pages
   # authenticiation done via devise : SuperAdmin Model
   before_action :authenticate_super_admin!
 
@@ -39,14 +39,6 @@ class SuperAdmin::ApplicationController < Administrate::ApplicationController
     content_tag(:div, '', html_options)
   end
 
-  def load_plans
-    products = Polar::ProductService.by_type('package')
-    products.map do |product|
-      [product['metadata']['sku'], product['id']]
-    end
-  rescue StandardError
-    []
-  end
 
   def invalid_action_perfomed
     # rubocop:disable Rails/I18nLocaleTexts
