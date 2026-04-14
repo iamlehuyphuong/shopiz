@@ -12,8 +12,18 @@ class Conversations::FollowupExecutionJob < ApplicationJob
     return unless trigger_message
 
     inbox = conversation.inbox
+
+    # WebWidget channels do not support follow ups
+    return if inbox.channel_type == 'Channel::WebWidget'
+
     followup_config = inbox.followup_config || {}
     return unless followup_config['enabled']
+
+    # Guard: check if channel policy allows freeform messaging at this time
+    unless channel_policy_allows_followup?(conversation)
+      Rails.logger.info("[FollowupExecutionJob] Follow-up aborted due to strict channel policy limits on timestamp for #{conversation.id}.")
+      return
+    end
 
     # Guard: check if the customer has replied since the trigger message
     if customer_replied_after?(conversation, trigger_message.created_at)
@@ -37,6 +47,26 @@ class Conversations::FollowupExecutionJob < ApplicationJob
   end
 
   private
+
+  def channel_policy_allows_followup?(conversation)
+    inbox = conversation.inbox
+    
+    # Calculate time since the customer's last interaction
+    last_incoming = conversation.messages.where(message_type: 'incoming').last
+    last_interaction_at = last_incoming&.created_at || conversation.created_at
+    time_since_interaction = Time.current - last_interaction_at
+
+    case inbox.channel_type
+    when 'Channel::FacebookPage' # Covers FB and Instagram if routed here
+      time_since_interaction <= 7.days
+    when 'Channel::Whatsapp'
+      time_since_interaction <= 24.hours
+    when 'Channel::Zalo', 'Channel::ZaloPersonal'
+      time_since_interaction <= 48.hours
+    else
+      true # Other channels have no strict API timeout limits for freeform text
+    end
+  end
 
   def customer_replied_after?(conversation, timestamp)
     conversation.messages.where(message_type: 'incoming').where('created_at > ?', timestamp).exists?
