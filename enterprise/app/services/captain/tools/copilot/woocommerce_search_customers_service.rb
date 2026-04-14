@@ -1,26 +1,20 @@
 # Copilot tool: Search WooCommerce customers by email, name, or phone.
-class Captain::Tools::Copilot::WoocommerceSearchCustomersService < Captain::Tools::Copilot::BaseTool
+class Captain::Tools::Copilot::WoocommerceSearchCustomersService < Captain::Tools::BaseTool
   include Captain::Tools::Concerns::WoocommerceClient
-
-  def name
+  def self.name
     'woocommerce_search_customers'
   end
 
-  def description
-    'Search WooCommerce customers by email, name, or phone number'
-  end
+  description 'Search WooCommerce customers by email, name, or phone number'
+  param :query, type: :string, desc: 'Customer email, name, or phone to search'
 
-  def parameters
-    [
-      { name: 'query', type: 'string', description: 'Customer email, name, or phone to search', required: true }
-    ]
-  end
 
   def active?
     woocommerce_active?
   end
 
-  def execute(arguments)
+  def execute(**args)
+    arguments = args.stringify_keys
     query = arguments['query']
     return 'Query is required' if query.blank?
 

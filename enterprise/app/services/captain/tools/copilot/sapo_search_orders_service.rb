@@ -1,22 +1,16 @@
-class Captain::Tools::Copilot::SapoSearchOrdersService < Captain::Tools::Copilot::BaseService
+class Captain::Tools::Copilot::SapoSearchOrdersService < Captain::Tools::BaseTool
   include Captain::Tools::Concerns::SapoClient
-
-  def tool_name
+  def self.name
     'sapo_search_orders'
   end
 
-  def tool_description
-    'Search for orders on the Sapo store by customer email or phone.'
-  end
+  description 'Search for orders on the Sapo store by customer email or phone.'
+  param :email, type: :string, desc: 'Customer email address'
+  param :phone, type: :string, desc: 'Customer phone number (optional)'
 
-  def tool_parameters
-    [
-      { name: 'email', type: 'string', description: 'Customer email address' },
-      { name: 'phone', type: 'string', description: 'Customer phone number (optional)' }
-    ]
-  end
 
-  def execute(arguments)
+  def execute(**args)
+    arguments = args.stringify_keys
     return 'Sapo integration is not connected.' unless sapo_active?
 
     customer_id = find_sapo_customer_id(arguments['email'], arguments['phone'])

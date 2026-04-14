@@ -24,7 +24,7 @@ vi:
   errors:
     account:
       reporting_timezone:
-        invalid: is not a valid timezone
+        invalid: không phải là múi giờ hợp lệ
     validations:
       presence: 'không được để trống'
     webhook:
