@@ -67,6 +67,18 @@ class Integrations::Facebook::MessageParser
   def in_reply_to_external_id
     @messaging.dig('message', 'reply_to', 'mid')
   end
+
+  def referral
+    @messaging['referral'] || @messaging.dig('message', 'referral') || @messaging.dig('postback', 'referral')
+  end
+
+  def ad_id
+    referral&.dig('ad_id')
+  end
+
+  def ref_payload
+    referral&.dig('ref')
+  end
 end
 
 # Sample Response

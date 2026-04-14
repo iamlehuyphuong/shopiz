@@ -23,7 +23,8 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
 
     ActiveRecord::Base.transaction do
       build_contact_inbox
-      build_message
+      build_message unless response.content.blank? && @attachments.blank? && response.in_reply_to_external_id.blank?
+      build_referral_note if response.referral.present?
     end
   rescue Koala::Facebook::AuthenticationError => e
     Rails.logger.warn("Facebook authentication error for inbox: #{@inbox.id} with error: #{e.message}")
@@ -50,6 +51,22 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
     @attachments.each do |attachment|
       process_attachment(attachment)
     end
+  end
+
+  def build_referral_note
+    return if response.referral.blank?
+
+    note_content = "Nguồn: Quảng cáo CTM\n"
+    note_content += "- Chiến dịch (Ad ID): #{response.ad_id}\n" if response.ad_id.present?
+    note_content += "- Mã sản phẩm (Ref): #{response.ref_payload}\n" if response.ref_payload.present?
+    
+    conversation.messages.create!(
+      account_id: conversation.account_id,
+      inbox_id: conversation.inbox_id,
+      message_type: :outgoing,
+      private: true,
+      content: note_content
+    )
   end
 
   def conversation
@@ -126,7 +143,12 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
     {
       name: "#{result['first_name'] || 'John'} #{result['last_name'] || 'Doe'}",
       account_id: @inbox.account_id,
-      avatar_url: result['profile_pic']
+      avatar_url: result['profile_pic'],
+      additional_attributes: {
+        gender: result['gender'],
+        locale: result['locale'],
+        timezone: result['timezone']
+      }.compact
     }
   end
 
@@ -135,7 +157,7 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
   def contact_params
     begin
       k = Koala::Facebook::API.new(@inbox.channel.page_access_token) if @inbox.facebook?
-      result = k.get_object(@sender_id) || {}
+      result = k.get_object(@sender_id, fields: 'first_name,last_name,profile_pic,locale,timezone,gender') || {}
     rescue Koala::Facebook::AuthenticationError => e
       Rails.logger.warn("Facebook authentication error for inbox: #{@inbox.id} with error: #{e.message}")
       Rails.logger.error e
