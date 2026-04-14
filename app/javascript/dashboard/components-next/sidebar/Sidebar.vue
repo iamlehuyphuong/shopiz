@@ -469,6 +469,69 @@ const menuItems = computed(() => {
       ],
     },
     {
+      name: 'Help Center',
+      label: t('SIDEBAR.HELP_CENTER.TITLE'),
+      icon: 'i-lucide-book',
+      to: accountScopedRoute('portals_index', {
+        navigationPath: 'portals_articles_index',
+      }),
+      activeOn: [
+        'portals_index',
+        'portals_articles_index',
+        'portals_articles_new',
+        'portals_articles_edit',
+        'portals_landing_pages_index',
+        'portals_categories_index',
+        'portals_categories_articles_index',
+        'portals_categories_articles_edit',
+        'portals_locales_index',
+        'portals_settings_index',
+        'portals_new'
+      ],
+      children: [
+        {
+          name: 'Articles',
+          label: t('SIDEBAR.HELP_CENTER.ARTICLES'),
+          icon: 'i-lucide-file-text',
+          activeOn: ['portals_articles_index', 'portals_articles_new', 'portals_articles_edit'],
+          to: accountScopedRoute('portals_index', {
+            navigationPath: 'portals_articles_index',
+          }),
+        },
+        {
+          name: 'Categories',
+          label: t('SIDEBAR.HELP_CENTER.CATEGORIES'),
+          icon: 'i-lucide-folder',
+          activeOn: [
+            'portals_categories_index',
+            'portals_categories_articles_index',
+            'portals_categories_articles_edit'
+          ],
+          to: accountScopedRoute('portals_index', {
+            navigationPath: 'portals_categories_index',
+          }),
+        },
+        {
+          name: 'Locales',
+          label: t('SIDEBAR.HELP_CENTER.LOCALES'),
+          icon: 'i-lucide-languages',
+          activeOn: ['portals_locales_index'],
+          to: accountScopedRoute('portals_index', {
+            navigationPath: 'portals_locales_index',
+          }),
+        },
+        {
+          name: 'Settings',
+          label: t('SIDEBAR.HELP_CENTER.SETTINGS'),
+          icon: 'i-lucide-settings-2',
+          activeOn: ['portals_settings_index'],
+          to: accountScopedRoute('portals_index', {
+            navigationPath: 'portals_settings_index',
+          }),
+        },
+      ],
+    },
+    {
       name: 'Settings',
       label: t('SIDEBAR.SETTINGS'),
       icon: 'i-lucide-bolt',

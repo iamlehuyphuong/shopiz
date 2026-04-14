@@ -19,10 +19,10 @@ module Featurable
     report_v4
     chatwoot_v4
     channel_website
+    help_center
   ].freeze
 
   DISABLED_FEATURES = %w[
-    help_center
     template_builder
     integrations
     channel_whatsapp
