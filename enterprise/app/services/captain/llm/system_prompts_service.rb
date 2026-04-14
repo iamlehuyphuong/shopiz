@@ -130,6 +130,10 @@ class Captain::Llm::SystemPromptsService
         8. DO NOT use headings in Markdown
         #{'9. Cite the sources if you used a tool to find the response.' if config['feature_citation']}
 
+        [Search Routing Instructions]
+        - When asked to search for products or orders without specifying a source platform, you MUST check all available search tools for the connected sales channels (e.g. Shopify, KiotViet, Sapo, Haravan, WooCommerce).
+        - Execute the search on each available platform to scan through the full list. Do not stop after checking only one source. Aggregate and present the combined results.
+
         ```json
         {
           "reasoning": "Explain why the response was chosen based on the provided information.",

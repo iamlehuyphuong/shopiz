@@ -89,7 +89,8 @@ class Captain::Copilot::ChatService < Llm::BaseAiService
     Captain::Tools::Copilot::WoocommerceSearchCustomersService,
     Captain::Tools::Copilot::SapoSearchOrdersService,
     Captain::Tools::Copilot::SapoSearchProductsService,
-    Captain::Tools::Copilot::SapoSearchCustomersService
+    Captain::Tools::Copilot::SapoSearchCustomersService,
+    Captain::Tools::Copilot::CreateScenarioService
   ].freeze
 
   def build_tools
