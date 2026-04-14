@@ -79,6 +79,26 @@ class Integrations::Facebook::MessageParser
   def ref_payload
     referral&.dig('ref')
   end
+
+  def optin
+    @messaging['optin']
+  end
+
+  def notification_messages_token
+    optin&.dig('notification_messages_token')
+  end
+
+  def notification_messages_status
+    optin&.dig('notification_messages_status')
+  end
+
+  def notification_messages_frequency
+    optin&.dig('notification_messages_frequency')
+  end
+
+  def optin_payload
+    optin&.dig('payload') || optin&.dig('ref')
+  end
 end
 
 # Sample Response

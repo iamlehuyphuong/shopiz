@@ -25,6 +25,7 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
       build_contact_inbox
       build_message unless response.content.blank? && @attachments.blank? && response.in_reply_to_external_id.blank?
       build_referral_note if response.referral.present?
+      process_optin if response.optin.present?
     end
   rescue Koala::Facebook::AuthenticationError => e
     Rails.logger.warn("Facebook authentication error for inbox: #{@inbox.id} with error: #{e.message}")
@@ -67,6 +68,38 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
       private: true,
       content: note_content
     )
+  end
+
+  def process_optin
+    return if response.notification_messages_token.blank?
+    
+    expires_at = nil
+    if response.notification_messages_frequency == 'MONTHLY'
+      expires_at = Time.current + 1.month
+    elsif response.notification_messages_frequency == 'WEEKLY'
+      expires_at = Time.current + 1.week
+    elsif response.notification_messages_frequency == 'DAILY'
+      expires_at = Time.current + 1.day
+    end
+
+    status = if response.notification_messages_status == 'STOP_NOTIFICATIONS'
+               :revoked
+             else
+               :active
+             end
+
+    optin_record = ContactOptin.find_or_initialize_by(
+      contact_id: @contact_inbox.contact_id,
+      inbox_id: @inbox.id,
+      topic: response.optin_payload
+    )
+    
+    optin_record.assign_attributes(
+      token: response.notification_messages_token,
+      status: status,
+      expires_at: expires_at
+    )
+    optin_record.save!
   end
 
   def conversation

@@ -121,6 +121,7 @@ class MessageTemplate < ApplicationRecord
 
   def sync_templates_from_provider
     return unless inbox&.channel
+    return unless inbox.channel.respond_to?(:sync_templates)
 
     inbox.channel.sync_templates
   rescue StandardError => e

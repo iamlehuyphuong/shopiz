@@ -49,12 +49,21 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
   end
 
   def fb_text_message_params
-    {
-      recipient: { id: contact.get_source_id(inbox.id) },
-      message: fb_text_message_payload,
-      messaging_type: 'MESSAGE_TAG',
-      tag: message_tag
+    base_params = {
+      message: fb_text_message_payload
     }
+    setup_recipient(base_params)
+    base_params
+  end
+
+  def setup_recipient(base_params)
+    if message.content_attributes['notification_messages_token'].present?
+      base_params[:recipient] = { notification_messages_token: message.content_attributes['notification_messages_token'] }
+    else
+      base_params[:recipient] = { id: contact.get_source_id(inbox.id) }
+      base_params[:messaging_type] = 'MESSAGE_TAG'
+      base_params[:tag] = message_tag
+    end
   end
 
   def fb_text_message_payload
@@ -83,8 +92,7 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
   end
 
   def fb_attachment_message_params(attachment)
-    {
-      recipient: { id: contact.get_source_id(inbox.id) },
+    base_params = {
       message: {
         attachment: {
           type: attachment_type(attachment),
@@ -92,10 +100,10 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
             url: attachment.download_url
           }
         }
-      },
-      messaging_type: 'MESSAGE_TAG',
-      tag: message_tag
+      }
     }
+    setup_recipient(base_params)
+    base_params
   end
 
   # Facebook internative message
@@ -110,6 +118,9 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
     # 3. Cards
     when 'cards'
       fb_card_message_params message
+    # 4. Marketing Optin
+    when 'marketing_optin'
+      fb_marketing_optin_message_params message
     end
   end
 
@@ -125,15 +136,14 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
       }
     end
     # 2. Return
-    {
-      recipient: { id: contact.get_source_id(inbox.id) },
+    base_params = {
       message: {
         text: message.content,
         quick_replies: quick_replies
-      },
-      messaging_type: 'MESSAGE_TAG',
-      tag: 'ACCOUNT_UPDATE'
+      }
     }
+    setup_recipient(base_params)
+    base_params
   end
 
   # 2. Form: FB form message params
@@ -146,8 +156,7 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
       }
     end
     # 2. Return
-    {
-      recipient: { id: contact.get_source_id(inbox.id) },
+    base_params = {
       message: {
         attachment: {
           type: 'template',
@@ -161,10 +170,10 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
             ]
           }
         }
-      },
-      messaging_type: 'MESSAGE_TAG',
-      tag: 'ACCOUNT_UPDATE'
+      }
     }
+    setup_recipient(base_params)
+    base_params
   end
 
   # 3. Facebook card message
@@ -193,8 +202,7 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
       }
     end
     #  2. Return
-    {
-      recipient: { id: contact.get_source_id(inbox.id) },
+    base_params = {
       message: {
         attachment: {
           type: 'template',
@@ -203,10 +211,35 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
             elements: elements
           }
         }
-      },
-      messaging_type: 'MESSAGE_TAG',
-      tag: 'ACCOUNT_UPDATE'
+      }
     }
+    setup_recipient(base_params)
+    base_params
+  end
+
+  # 4. Marketing Optin
+  def fb_marketing_optin_message_params(message)
+    base_params = {
+      message: {
+        attachment: {
+          type: 'template',
+          payload: {
+            template_type: 'notification_messages',
+            notification_messages_timezone: 'UTC',
+            title: message.content,
+            payload: message.content_attributes['topic'] || 'marketing'
+          }
+        }
+      }
+    }
+    
+    # Add image_url if provided
+    if message.content_attributes['image_url'].present?
+      base_params[:message][:attachment][:payload][:image_url] = message.content_attributes['image_url']
+    end
+
+    setup_recipient(base_params)
+    base_params
   end
 
   def message_tag
