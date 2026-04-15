@@ -3,7 +3,7 @@
 # Service to interact with Facebook Graph API for comment management on posts.
 # Handles hiding comments and sending private replies.
 class Facebook::CommentActionService
-  API_VERSION = 'v18.0'
+  API_VERSION = 'v25.0'
 
   def initialize(channel:)
     @channel = channel
