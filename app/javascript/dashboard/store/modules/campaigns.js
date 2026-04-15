@@ -56,6 +56,10 @@ export const getters = {
     const facebookChannelTypes = [INBOX_TYPES.FB];
     return _getters.getCampaigns(CAMPAIGN_TYPES.ONE_OFF, facebookChannelTypes);
   },
+  getZaloOaCampaigns: (_state, _getters) => {
+    const zaloOaChannelTypes = [INBOX_TYPES.ZALO_OA];
+    return _getters.getCampaigns(CAMPAIGN_TYPES.ONE_OFF, zaloOaChannelTypes);
+  },
   getAllCampaigns: _state => {
     return _state.records;
   },

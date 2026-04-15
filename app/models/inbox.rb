@@ -168,6 +168,10 @@ class Inbox < ApplicationRecord
     channel_type == 'Channel::ZaloPersonal'
   end
 
+  def zalo_oa?
+    channel_type == 'Channel::ZaloOa'
+  end
+
   def twilio_whatsapp?
     channel_type == 'Channel::TwilioSms' && channel.medium == 'whatsapp'
   end

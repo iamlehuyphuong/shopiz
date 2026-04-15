@@ -33,99 +33,54 @@ class Channel::ZaloOa < ApplicationRecord
   validates :oa_id, presence: true
   validates :oa_id, uniqueness: true
 
+  has_many :zalo_message_templates, dependent: :destroy_async, foreign_key: :channel_id
+
   def name
     'ZaloOa'
   end
 
-  def send_message(user_id, message, access_token)
-    # check attachments to send first
+  def client
+    @client ||= Zalo::Client.new(channel: self)
+  end
+
+  def send_message(user_id, message, _access_token = nil)
+    # Send attachments first
     message.attachments.each do |attachment|
-      response = send_attachment(user_id, attachment, access_token)
-      return response unless (response['error']).zero? && message.content
+      response = send_attachment(user_id, attachment)
+      return response unless response['error']&.zero? && message.content
     end
 
     body = message_body(user_id, message.content)
     body[:message][:quote_message_id] = message.content_attributes[:in_reply_to_external_id] if message.content_attributes[:in_reply_to_external_id]
-    send_message_cs(body, access_token)
+    client.send_cs_message(body)
   end
 
   def refresh_access_token(channel)
-    response = refresh_post(channel.refresh_token)
-    if response['access_token']
-      channel.update!(oa_access_token: response['access_token'], refresh_token: response['refresh_token'],
-                      expires_in: response['expires_in'])
-    end
-    response
-  end
-
-  def send_message_cs(body, access_token)
-    HTTParty.post(
-      url_message_cs,
-      headers: { 'Content-Type' => 'application/json', 'access_token' => access_token },
-      body: body.to_json
-    )
+    Zalo::TokenService.new(channel: channel).refresh!
+    { 'access_token' => channel.reload.oa_access_token }
   end
 
   private
 
-  def url_message_cs
-    'https://openapi.zalo.me/v3.0/oa/message/cs'
-  end
-
-  def url_refresh_token
-    'https://oauth.zaloapp.com/v4/oa/access_token'
-  end
-
-  def url_upload_file
-    'https://openapi.zalo.me/v2.0/oa/upload/file'
-  end
-
-  def url_upload_image
-    'https://openapi.zalo.me/v2.0/oa/upload/image'
-  end
-
-  def send_attachment(user_id, attachment, access_token)
+  def send_attachment(user_id, attachment)
     is_image = attachment.file_type == 'image'
-    url_upload = is_image ? url_upload_image : url_upload_file
-    return unless (response = upload_file_to_zalo_api(url_upload, attachment, access_token)).code == '200'
+    file_data = attachment.file.download
+    filename = attachment.file.filename.to_s
 
-    data = JSON.parse(response.body)
-    return data unless (data['error']).zero?
+    data = if is_image
+             client.upload_image(file_data, filename)
+           else
+             client.upload_file(file_data, filename)
+           end
 
-    body = is_image ? image_body(user_id, data['data']['attachment_id']) : attachment_body(user_id, data['data']['token'])
-    send_message_cs(body, access_token)
-  end
+    return data unless data['error']&.zero?
 
-  # unknown issue with HTTParty so changed to Net::HTTP with success
-  def upload_file_to_zalo_api(url_upload, attachment, access_token)
-    url = URI.parse(url_upload)
-    http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = true
-
-    request = Net::HTTP::Post.new(url.path)
-    request['access_token'] = access_token
-    request.content_type = 'multipart/form-data'
-    request.set_form([
-                       ['file', attachment.file.download, { filename: attachment.file.filename.to_s }]
-                     ], 'multipart/form-data')
-
-    http.request(request)
-  end
-
-  def refresh_post(refresh_token)
-    HTTParty.post(
-      url_refresh_token,
-      headers: { 'Content-Type' => 'application/x-www-form-urlencoded', 'secret_key' => GlobalConfigService.load('ZALO_OA_APP_SECRET', '') },
-      body: refresh_body(refresh_token)
-    )
-  end
-
-  def refresh_body(refresh_token)
-    {
-      refresh_token: refresh_token,
-      app_id: GlobalConfigService.load('ZALO_OA_APP_ID', ''),
-      grant_type: 'refresh_token'
-    }
+    body = if is_image
+             image_body(user_id, data['data']['attachment_id'])
+           else
+             attachment_body(user_id, data['data']['token'])
+           end
+    client.send_cs_message(body)
   end
 
   def attachment_body(user_id, file_token)

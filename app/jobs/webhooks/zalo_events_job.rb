@@ -1,19 +1,34 @@
+# Processes webhook events from Zalo OA
+# Routes events to the appropriate service based on event_name
 class Webhooks::ZaloEventsJob < ApplicationJob
   queue_as :default
 
-  SUPPORTED_EVENTS = %w[user_send_text user_send_image user_send_link user_send_audio user_send_video user_send_sticker
-                        user_send_location user_send_file user_received_message user_seen_message user_submit_info
-                        user_reacted_message oa_send_text oa_send_image oa_send_gif oa_send_file oa_send_sticker].freeze
+  INCOMING_MESSAGE_EVENTS = %w[
+    user_send_text user_send_image user_send_link user_send_audio
+    user_send_video user_send_sticker user_send_location user_send_file
+  ].freeze
+
+  OUTGOING_ECHO_EVENTS = %w[
+    oa_send_text oa_send_image oa_send_gif oa_send_file oa_send_sticker
+  ].freeze
+
+  DELIVERY_EVENTS = %w[user_received_message user_seen_message].freeze
+
+  SUPPORTED_EVENTS = (
+    INCOMING_MESSAGE_EVENTS +
+    OUTGOING_ECHO_EVENTS +
+    DELIVERY_EVENTS +
+    %w[follow unfollow user_submit_info user_reacted_message]
+  ).freeze
 
   def perform(params = {}, signature: '', post_body: '')
     return unless SUPPORTED_EVENTS.include?(params[:event_name])
     return unless validate_signature(params, post_body, signature)
 
-    oa_id = delivery_event?(params) || oa_send_from_chat_tool?(params) ? params[:sender][:id] : params[:recipient][:id]
-    channel = Channel::ZaloOa.find_by(oa_id: oa_id)
+    channel = find_channel(params)
     return unless channel
 
-    process_event_params(channel, params)
+    process_event(channel, params)
   end
 
   private
@@ -28,18 +43,43 @@ class Webhooks::ZaloEventsJob < ApplicationJob
     signature == "mac=#{hash}"
   end
 
-  def process_event_params(channel, params)
-    if delivery_event?(params)
-      Zalo::DeliveryStatusService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
-    elsif oa_send_from_chat_tool?(params)
-      Zalo::OutgoingMessageService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
+  def find_channel(params)
+    oa_id = extract_oa_id(params)
+    Channel::ZaloOa.find_by(oa_id: oa_id)
+  end
+
+  def extract_oa_id(params)
+    event = params[:event_name]
+
+    if DELIVERY_EVENTS.include?(event) || oa_send_from_chat_tool?(params)
+      params[:sender][:id]
+    elsif %w[follow unfollow].include?(event)
+      params[:oa_id]
     else
-      Zalo::IncomingMessageService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
+      params[:recipient][:id]
     end
   end
 
-  def delivery_event?(params)
-    params[:event_name] == 'user_received_message' || params[:event_name] == 'user_seen_message'
+  def process_event(channel, params) # rubocop:disable Metrics/CyclomaticComplexity
+    inbox = channel.inbox
+    safe_params = params.with_indifferent_access
+
+    case params[:event_name]
+    when *DELIVERY_EVENTS
+      Zalo::DeliveryStatusService.new(inbox: inbox, params: safe_params).perform
+    when *OUTGOING_ECHO_EVENTS
+      Zalo::OutgoingMessageService.new(inbox: inbox, params: safe_params).perform if oa_send_from_chat_tool?(params)
+    when 'follow'
+      Zalo::FollowService.new(inbox: inbox, params: safe_params).perform
+    when 'unfollow'
+      Zalo::UnfollowService.new(inbox: inbox, params: safe_params).perform
+    when 'user_submit_info'
+      Zalo::UserInfoService.new(inbox: inbox, params: safe_params).perform
+    when 'user_reacted_message'
+      Zalo::ReactionService.new(inbox: inbox, params: safe_params).perform
+    when *INCOMING_MESSAGE_EVENTS
+      Zalo::IncomingMessageService.new(inbox: inbox, params: safe_params).perform
+    end
   end
 
   def oa_send_from_chat_tool?(params)

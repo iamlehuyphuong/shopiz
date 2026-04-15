@@ -6,6 +6,7 @@ import SMSCampaignsPage from './pages/SMSCampaignsPage.vue';
 import WhatsAppCampaignsPage from './pages/WhatsAppCampaignsPage.vue';
 import VoiceCampaignsPage from './pages/VoiceCampaignsPage.vue';
 import ZaloPersonalCampaignsPage from './pages/ZaloPersonalCampaignsPage.vue';
+import ZaloOaCampaignsPage from './pages/ZaloOaCampaignsPage.vue';
 import FacebookCampaignsPage from './pages/FacebookCampaignsPage.vue';
 
 import { FEATURE_FLAGS } from 'dashboard/featureFlags';
@@ -57,6 +58,12 @@ const campaignsRoutes = {
             featureFlag: FEATURE_FLAGS.CHANNEL_ZALO_PERSONAL,
           },
           component: ZaloPersonalCampaignsPage,
+        },
+        {
+          path: 'zalo_oa',
+          name: 'campaigns_zalo_oa_index',
+          meta,
+          component: ZaloOaCampaignsPage,
         },
         {
           path: 'sms',

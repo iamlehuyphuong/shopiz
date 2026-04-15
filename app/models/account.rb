@@ -118,6 +118,7 @@ class Account < ApplicationRecord
   has_many :email_channels, dependent: :destroy_async, class_name: '::Channel::Email'
   has_many :facebook_pages, dependent: :destroy_async, class_name: '::Channel::FacebookPage'
   has_many :zalo_oas, dependent: :destroy_async, class_name: '::Channel::ZaloOa'
+  has_many :zalo_message_templates, dependent: :destroy_async
   has_many :zalo_personals, dependent: :destroy_async, class_name: '::Channel::ZaloPersonal'
   has_many :tiktok_shops, dependent: :destroy_async, class_name: '::Channel::TiktokShop'
   has_many :instagram_channels, dependent: :destroy_async, class_name: '::Channel::Instagram'

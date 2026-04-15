@@ -13,6 +13,7 @@ class Api::V1::Accounts::Channels::ZaloChannelsController < Api::V1::Accounts::B
       zalo_inbox = Current.account.inboxes.create!(name: inbox_name, channel: channel)
       Avatar::AvatarFromUrlJob.perform_later(zalo_inbox, avatar_url)
       Zalo::SyncConversationsJob.perform_later(channel)
+      Zalo::SyncFollowersJob.perform_later(channel)
     end
     render json: zalo_inbox.as_json
   rescue StandardError => e

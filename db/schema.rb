@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_04_15_010300) do
+ActiveRecord::Schema[7.1].define(version: 2026_04_15_052400) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -340,6 +340,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_15_010300) do
     t.datetime "scheduled_at", precision: nil
     t.boolean "trigger_only_during_business_hours", default: false
     t.jsonb "template_params"
+    t.jsonb "campaign_metrics", default: {}
     t.index ["account_id"], name: "index_campaigns_on_account_id"
     t.index ["campaign_status"], name: "index_campaigns_on_campaign_status"
     t.index ["campaign_type"], name: "index_campaigns_on_campaign_type"
@@ -1467,6 +1468,21 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_15_010300) do
     t.boolean "open_all_day", default: false
     t.index ["account_id"], name: "index_working_hours_on_account_id"
     t.index ["inbox_id"], name: "index_working_hours_on_inbox_id"
+  end
+
+  create_table "zalo_message_templates", force: :cascade do |t|
+    t.string "template_name", null: false
+    t.integer "template_type", default: 0, null: false
+    t.jsonb "template_content", default: {}, null: false
+    t.string "language", default: "VI"
+    t.integer "status", default: 0, null: false
+    t.bigint "account_id", null: false
+    t.bigint "channel_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "template_name", "channel_id"], name: "idx_zalo_templates_unique", unique: true
+    t.index ["account_id"], name: "index_zalo_message_templates_on_account_id"
+    t.index ["channel_id"], name: "index_zalo_message_templates_on_channel_id"
   end
 
   add_foreign_key "account_addons", "accounts"

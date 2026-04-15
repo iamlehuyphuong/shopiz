@@ -279,6 +279,80 @@
         }
       }
     },
+    "ZALO_OA": {
+      "HEADER_TITLE": "Zalo OA Campaigns",
+      "NEW_CAMPAIGN": "Create campaign",
+      "EMPTY_STATE": {
+        "TITLE": "No Zalo OA campaigns are available",
+        "SUBTITLE": "Send promotional messages to your Zalo OA followers. Reach customers with offers, updates, and announcements. Click 'Create campaign' to get started."
+      },
+      "CARD": {
+        "STATUS": {
+          "COMPLETED": "Completed",
+          "SCHEDULED": "Scheduled"
+        },
+        "CAMPAIGN_DETAILS": {
+          "SENT_FROM": "Sent from",
+          "ON": "on",
+          "SENT_BY": "Sent by",
+          "BOT": "BOT"
+        }
+      },
+      "CREATE": {
+        "TITLE": "Create Zalo OA Campaign",
+        "CANCEL_BUTTON_TEXT": "Cancel",
+        "CREATE_BUTTON_TEXT": "Create",
+        "FORM": {
+          "TITLE": {
+            "LABEL": "Title",
+            "PLACEHOLDER": "Enter the campaign title",
+            "ERROR": "Title is required"
+          },
+          "MESSAGE": {
+            "LABEL": "Message",
+            "PLACEHOLDER": "Enter the promotional message for OA followers",
+            "ERROR": "Message is required"
+          },
+          "INBOX": {
+            "LABEL": "Zalo OA Inbox",
+            "PLACEHOLDER": "Select Zalo OA inbox",
+            "ERROR": "Inbox is required"
+          },
+          "SENT_BY": {
+            "LABEL": "Sender",
+            "PLACEHOLDER": "Select sender",
+            "ERROR": "Sender is required"
+          },
+          "AUDIENCE": {
+            "LABEL": "Audience",
+            "PLACEHOLDER": "Select customer labels",
+            "ERROR": "Audience is required"
+          },
+          "SCHEDULED_AT": {
+            "LABEL": "Scheduled time",
+            "PLACEHOLDER": "Select campaign start time",
+            "ERROR": "Scheduled time is required"
+          },
+          "BUTTONS": {
+            "CREATE": "Create",
+            "CANCEL": "Cancel"
+          },
+          "API": {
+            "SUCCESS_MESSAGE": "Zalo OA campaign created successfully",
+            "ERROR_MESSAGE": "An error occurred. Please try again."
+          }
+        }
+      },
+      "EDIT": {
+        "TITLE": "Edit Zalo OA campaign",
+        "FORM": {
+          "API": {
+            "SUCCESS_MESSAGE": "Updated successfully",
+            "ERROR_MESSAGE": "There was an error. Please try again."
+          }
+        }
+      }
+    },
     "FACEBOOK": {
       "HEADER_TITLE": "Facebook Marketing Campaigns",
       "NEW_CAMPAIGN": "Create campaign",

@@ -461,6 +461,12 @@ const menuItems = computed(() => {
           to: accountScopedRoute('campaigns_zalo_personal_index'),
         },
         {
+          name: 'Zalo OA',
+          label: 'Zalo OA',
+          icon: 'i-ri-zalo-oa-fill',
+          to: accountScopedRoute('campaigns_zalo_oa_index'),
+        },
+        {
           name: 'WhatsApp',
           label: t('SIDEBAR.WHATSAPP'),
           icon: 'i-woot-whatsapp',
