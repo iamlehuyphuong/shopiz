@@ -14,14 +14,18 @@ const props = defineProps({
   activeChild: { type: Object, default: undefined },
 });
 
-const { isAllowed } = useSidebarContext();
+const { isAllowed, isLocked, openLockedModal } = useSidebarContext();
 const scrollableContainer = ref(null);
 
 const accessibleItems = computed(() =>
   props.children.filter(child => {
-    return child.to && isAllowed(child.to);
+    return child.to && (isAllowed(child.to) || isLocked(child.to));
   })
 );
+
+const onToggleLocked = (label, featureFlag = '') => {
+  openLockedModal(label, featureFlag);
+};
 
 const hasAccessibleItems = computed(() => {
   return accessibleItems.value.length > 0;
@@ -44,31 +48,38 @@ useEventListener(scrollableContainer, 'scroll', () => {
   <SidebarGroupSeparator
     v-if="hasAccessibleItems"
     v-show="isExpanded"
-    :label
-    :icon
+    :label="label"
+    :icon="icon"
     class="my-1"
   />
-  <ul v-if="children.length" class="m-0 list-none reset-base relative group">
+  <ul
+    v-if="children.length"
+    class="m-0 list-none reset-base relative group min-w-0"
+  >
     <!-- Each element has h-8, which is 32px, we will show 7 items with one hidden at the end,
     which is 14rem. Then we add 16px so that we have some text visible from the next item  -->
     <div
       ref="scrollableContainer"
+      class="min-w-0"
       :class="{
         'max-h-[calc(14rem+16px)] overflow-y-scroll no-scrollbar': isScrollable,
       }"
     >
       <SidebarGroupLeaf
-        v-for="child in children"
+        v-for="child in accessibleItems"
         v-show="isExpanded || activeChild?.name === child.name"
         v-bind="child"
         :key="child.name"
         :active="activeChild?.name === child.name"
+        :is-locked="isLocked(child.to)"
+        :feature-flag="child.to?.featureFlag || ''"
+        @toggle-locked="onToggleLocked(child.label, $event)"
       />
     </div>
     <div
       v-if="isScrollable && isExpanded"
       v-show="!scrollEnd"
-      class="absolute bg-gradient-to-t from-n-solid-2 w-full h-12 to-transparent -bottom-1 pointer-events-none flex items-end justify-end px-2 animate-fade-in-up"
+      class="absolute bg-gradient-to-t from-n-background w-full h-12 to-transparent -bottom-1 pointer-events-none flex items-end justify-end px-2 animate-fade-in-up"
     >
       <svg
         width="16"

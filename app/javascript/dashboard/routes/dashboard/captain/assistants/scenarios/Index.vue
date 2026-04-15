@@ -5,13 +5,12 @@ import { useRoute } from 'vue-router';
 import { picoSearch } from '@scmmishra/pico-search';
 import { useStore, useMapGetter } from 'dashboard/composables/store';
 import { useAlert } from 'dashboard/composables';
-import { useUISettings } from 'dashboard/composables/useUISettings';
 import { useMessageFormatter } from 'shared/composables/useMessageFormatter';
 import Button from 'dashboard/components-next/button/Button.vue';
-import Input from 'dashboard/components-next/input/Input.vue';
 
 import PageLayout from 'dashboard/components-next/captain/PageLayout.vue';
-import SettingsHeader from 'dashboard/components-next/captain/pageComponents/settings/SettingsHeader.vue';
+import BaseSettingsHeader from 'dashboard/routes/dashboard/settings/components/BaseSettingsHeader.vue';
+import TabBar from 'dashboard/components-next/tabbar/TabBar.vue';
 import SuggestedScenarios from 'dashboard/components-next/captain/assistant/SuggestedRules.vue';
 import ScenariosCard from 'dashboard/components-next/captain/assistant/ScenariosCard.vue';
 import BulkSelectBar from 'dashboard/components-next/captain/assistant/BulkSelectBar.vue';
@@ -20,13 +19,30 @@ import AddNewScenariosDialog from 'dashboard/components-next/captain/assistant/A
 const { t } = useI18n();
 const route = useRoute();
 const store = useStore();
-const { uiSettings, updateUISettings } = useUISettings();
 const { formatMessage } = useMessageFormatter();
 const assistantId = computed(() => Number(route.params.assistantId));
+
+const activeTabIndex = ref(0);
 
 const uiFlags = useMapGetter('captainScenarios/getUIFlags');
 const isFetching = computed(() => uiFlags.value.fetchingList);
 const scenarios = useMapGetter('captainScenarios/getRecords');
+
+const tabs = computed(() => [
+  {
+    key: 'scenarios',
+    label: t('CAPTAIN.ASSISTANTS.SCENARIOS.TITLE'),
+    count: scenarios.value.length,
+  },
+  {
+    key: 'templates',
+    label: t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.SUGGESTED.TITLE'),
+  },
+]);
+
+const onTabChange = tab => {
+  activeTabIndex.value = tabs.value.findIndex(item => item.key === tab.key);
+};
 
 const searchQuery = ref('');
 
@@ -44,30 +60,34 @@ const scenariosExample = [
   {
     id: 1,
     title: t('Prospective Buyer'),
-    description:
-      t('Handle customers who are showing interest in purchasing a license'),
-    instruction:
-      t('If someone is interested in purchasing a license, ask them for following:\n\n1. How many licenses are they willing to purchase?\n2. Are they migrating from another platform?\n. Once these details are collected, do the following steps\n1. add a private note to with the information you collected using [Add Private Note](tool://add_private_note)\n2. Add label "sales" to the contact using [Add Label to Conversation](tool://add_label_to_conversation)\n3. Reply saying "one of us will reach out soon" and provide an estimated timeline for the response and [Handoff to Human](tool://handoff)'),
+    description: t(
+      'Handle customers who are showing interest in purchasing a license'
+    ),
+    instruction: t(
+      'If someone is interested in purchasing a license, ask them for following:\n\n1. How many licenses are they willing to purchase?\n2. Are they migrating from another platform?\n. Once these details are collected, do the following steps\n1. add a private note to with the information you collected using [Add Private Note](tool://add_private_note)\n2. Add label "sales" to the contact using [Add Label to Conversation](tool://add_label_to_conversation)\n3. Reply saying "one of us will reach out soon" and provide an estimated timeline for the response and [Handoff to Human](tool://handoff)'
+    ),
     tools: ['add_private_note', 'add_label_to_conversation', 'handoff'],
   },
   {
     id: 2,
     title: t('Technical Issue'),
-    description:
-      t('Assist customers who report a technical problem or bug with the product'),
-    instruction:
-      t('If a customer reports a technical issue, follow these steps:\n\n1. Ask for a detailed description of the problem and any error messages.\n2. Request screenshots or screen recordings if possible.\n3. Add a private note summarizing the issue using [Add Private Note](tool://add_private_note).\n4. Assign the conversation to the "technical support" team using [Add Label to Conversation](tool://add_label_to_conversation).\n5. Inform the customer that the issue has been escalated and provide an estimated response time.'),
+    description: t(
+      'Assist customers who report a technical problem or bug with the product'
+    ),
+    instruction: t(
+      'If a customer reports a technical issue, follow these steps:\n\n1. Ask for a detailed description of the problem and any error messages.\n2. Request screenshots or screen recordings if possible.\n3. Add a private note summarizing the issue using [Add Private Note](tool://add_private_note).\n4. Assign the conversation to the "technical support" team using [Add Label to Conversation](tool://add_label_to_conversation).\n5. Inform the customer that the issue has been escalated and provide an estimated response time.'
+    ),
     tools: ['add_private_note', 'add_label_to_conversation'],
   },
   {
     id: 3,
     title: t('Feature Request'),
-    description:
-      t('Handle customers who suggest new features or improvements'),
-    instruction:
-      t('When a customer requests a new feature, do the following:\n\n1. Thank them for their suggestion.\n2. Add a private note with the feature details using [Add Private Note](tool://add_private_note).\n3. Tag the conversation with "feature-request" using [Add Label to Conversation](tool://add_label_to_conversation).\n4. Let the customer know their feedback has been shared with the product team.'),
+    description: t('Handle customers who suggest new features or improvements'),
+    instruction: t(
+      'When a customer requests a new feature, do the following:\n\n1. Thank them for their suggestion.\n2. Add a private note with the feature details using [Add Private Note](tool://add_private_note).\n3. Tag the conversation with "feature-request" using [Add Label to Conversation](tool://add_label_to_conversation).\n4. Let the customer know their feedback has been shared with the product team.'
+    ),
     tools: ['add_private_note', 'add_label_to_conversation'],
-  }
+  },
 ];
 
 const filteredScenarios = computed(() => {
@@ -77,13 +97,8 @@ const filteredScenarios = computed(() => {
   return picoSearch(source, query, ['title', 'description', 'instruction']);
 });
 
-const shouldShowSuggestedRules = computed(() => {
-  return true;
-  return uiSettings.value?.show_scenarios_suggestions !== false;
-});
-
 const closeSuggestedRules = () => {
-  updateUISettings({ show_scenarios_suggestions: false });
+  activeTabIndex.value = 0;
 };
 
 // Bulk selection & hover state
@@ -200,6 +215,74 @@ const addAllExampleScenarios = async () => {
   }
 };
 
+const importInput = ref(null);
+
+const triggerImport = () => {
+  importInput.value.click();
+};
+
+const onFileChange = async event => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = async e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!Array.isArray(data)) {
+        throw new Error('Invalid format');
+      }
+
+      const validItems = data.filter(
+        item => item.title && item.description && item.instruction
+      );
+
+      if (validItems.length > 0) {
+        await Promise.all(validItems.map(item => addScenario(item)));
+        useAlert(t('CAPTAIN.ASSISTANTS.SCENARIOS.API.IMPORT.SUCCESS'));
+      } else {
+        useAlert(t('CAPTAIN.ASSISTANTS.SCENARIOS.API.IMPORT.ERROR'));
+      }
+    } catch (error) {
+      useAlert(t('CAPTAIN.ASSISTANTS.SCENARIOS.API.IMPORT.ERROR'));
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+};
+
+const exportScenarios = scenario => {
+  let scenariosToExport = [];
+  if (scenario) {
+    scenariosToExport = [scenario];
+  } else if (bulkSelectedIds.value.size > 0) {
+    scenariosToExport = scenarios.value.filter(s =>
+      bulkSelectedIds.value.has(s.id)
+    );
+  } else {
+    scenariosToExport = filteredScenarios.value;
+  }
+
+  const exportData = scenariosToExport.map(s => ({
+    title: s.title,
+    description: s.description,
+    instruction: s.instruction,
+  }));
+
+  const dataStr = JSON.stringify(exportData, null, 2);
+  const dataUri =
+    'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+
+  const exportFileDefaultName = `scenarios-${
+    assistantId.value
+  }-${new Date().getTime()}.json`;
+
+  const linkElement = document.createElement('a');
+  linkElement.setAttribute('href', dataUri);
+  linkElement.setAttribute('download', exportFileDefaultName);
+  linkElement.click();
+};
+
 onMounted(() => {
   store.dispatch('captainScenarios/get', {
     assistantId: assistantId.value,
@@ -216,107 +299,137 @@ onMounted(() => {
     :show-pagination-footer="false"
   >
     <template #body>
-      <SettingsHeader
-        :heading="$t('CAPTAIN.ASSISTANTS.SCENARIOS.TITLE')"
+      <BaseSettingsHeader
+        v-model:search-query="searchQuery"
+        :title="$t('CAPTAIN.ASSISTANTS.SCENARIOS.TITLE')"
         :description="$t('CAPTAIN.ASSISTANTS.SCENARIOS.DESCRIPTION')"
-      />
-      <div class="grid grid-cols-2 gap-4">
-        <div v-if="shouldShowSuggestedRules" class="flex mt-7 flex-col gap-4">
-          <SuggestedScenarios
-            :title="$t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.SUGGESTED.TITLE')"
-            :items="scenariosExample"
-            @close="closeSuggestedRules"
-            @add="addAllExampleScenarios"
-          >
-            <template #default="{ item }">
-              <div class="flex items-center gap-3 justify-between">
-                <span class="text-sm text-n-slate-12">
-                  {{ item.title }}
-                </span>
-                <Button
-                  :label="
-                    $t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.SUGGESTED.ADD_SINGLE')
-                  "
-                  ghost
-                  xs
-                  slate
-                  class="!text-sm !text-n-slate-11 flex-shrink-0"
-                  @click="addScenario(item)"
-                />
-              </div>
-              <div class="flex flex-col">
-                <span class="text-sm text-n-slate-11 mt-2">
-                  {{ item.description }}
-                </span>
-                <component
-                  :is="renderInstruction(formatMessage(item.instruction, false))"
-                />
-                <span class="text-sm text-n-slate-11 font-medium mb-1">
-                  {{ t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.SUGGESTED.TOOLS_USED') }}
-                  {{ item.tools?.map(tool => `@${tool}`).join(', ') }}
-                </span>
-              </div>
-            </template>
-          </SuggestedScenarios>
-        </div>
-        <div class="flex mt-7 flex-col gap-4">
-          <div class="flex justify-between items-center">
-            <BulkSelectBar
-              v-model="bulkSelectedIds"
-              :all-items="scenarios"
-              :select-all-label="buildSelectedCountLabel"
-              :selected-count-label="selectedCountLabel"
-              :delete-label="
-                $t('CAPTAIN.ASSISTANTS.SCENARIOS.BULK_ACTION.BULK_DELETE_BUTTON')
+        :search-placeholder="
+          activeTabIndex === 0
+            ? t('CAPTAIN.ASSISTANTS.SCENARIOS.LIST.SEARCH_PLACEHOLDER')
+            : ''
+        "
+      >
+        <template v-if="scenarios.length" #count>
+          <span class="text-body-main text-n-slate-11 truncate min-w-0">
+            {{
+              $t('CAPTAIN.ASSISTANTS.SCENARIOS.LIST.COUNT', {
+                count: scenarios.length,
+              })
+            }}
+          </span>
+        </template>
+        <template #tabs>
+          <TabBar
+            :tabs="tabs"
+            :initial-active-tab="activeTabIndex"
+            @tab-changed="onTabChange"
+          />
+        </template>
+        <template #actions>
+          <div class="flex items-center gap-2">
+            <input
+              ref="importInput"
+              type="file"
+              accept=".json"
+              class="hidden"
+              @change="onFileChange"
+            />
+            <Button
+              :label="
+                t('CAPTAIN.ASSISTANTS.SCENARIOS.IMPORT_EXPORT.IMPORT_BUTTON')
               "
-              @bulk-delete="bulkDeleteScenarios"
-            >
-              <template #default-actions>
-                <AddNewScenariosDialog @add="addScenario" />
-              </template>
-            </BulkSelectBar>
-            <div
-              v-if="scenarios.length && bulkSelectedIds.size === 0"
-              class="max-w-[22.5rem] w-full min-w-0"
-            >
-              <Input
-                v-model="searchQuery"
-                :placeholder="
-                  t('CAPTAIN.ASSISTANTS.SCENARIOS.LIST.SEARCH_PLACEHOLDER')
+              sm
+              slate
+              faded
+              icon="i-lucide-upload"
+              @click="triggerImport"
+            />
+            <AddNewScenariosDialog color="blue" @add="addScenario" />
+          </div>
+        </template>
+      </BaseSettingsHeader>
+
+      <div v-if="activeTabIndex === 0" class="flex mt-7 flex-col gap-4 pb-16">
+        <div class="flex justify-between items-center">
+          <BulkSelectBar
+            v-model="bulkSelectedIds"
+            :all-items="scenarios"
+            :select-all-label="buildSelectedCountLabel"
+            :selected-count-label="selectedCountLabel"
+            :delete-label="
+              $t('CAPTAIN.ASSISTANTS.SCENARIOS.BULK_ACTION.BULK_DELETE_BUTTON')
+            "
+            @bulk-delete="bulkDeleteScenarios"
+          />
+        </div>
+        <div v-if="scenarios.length === 0" class="mt-1 mb-2">
+          <span class="text-n-slate-11 text-sm">
+            {{ t('CAPTAIN.ASSISTANTS.SCENARIOS.EMPTY_MESSAGE') }}
+          </span>
+        </div>
+        <div v-else-if="filteredScenarios.length === 0" class="mt-1 mb-2">
+          <span class="text-n-slate-11 text-sm">
+            {{ t('CAPTAIN.ASSISTANTS.SCENARIOS.SEARCH_EMPTY_MESSAGE') }}
+          </span>
+        </div>
+        <div v-else class="flex flex-col gap-2">
+          <ScenariosCard
+            v-for="scenario in filteredScenarios"
+            :id="scenario.id"
+            :key="scenario.id"
+            :title="scenario.title"
+            :description="scenario.description"
+            :instruction="scenario.instruction"
+            :tools="scenario.tools"
+            :is-selected="bulkSelectedIds.has(scenario.id)"
+            :selectable="
+              hoveredCard === scenario.id || bulkSelectedIds.size > 0
+            "
+            @select="handleRuleSelect"
+            @delete="deleteScenario(scenario.id)"
+            @update="updateScenario"
+            @export="exportScenarios(scenario)"
+            @hover="isHovered => handleRuleHover(isHovered, scenario.id)"
+          />
+        </div>
+      </div>
+      <div v-else class="flex mt-7 flex-col gap-4 pb-16">
+        <SuggestedScenarios
+          :title="$t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.SUGGESTED.TITLE')"
+          :items="scenariosExample"
+          @close="closeSuggestedRules"
+          @add="addAllExampleScenarios"
+        >
+          <template #default="{ item }">
+            <div class="flex items-center gap-3 justify-between">
+              <span class="text-sm text-n-slate-12">
+                {{ item.title }}
+              </span>
+              <Button
+                :label="
+                  $t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.SUGGESTED.ADD_SINGLE')
                 "
+                ghost
+                xs
+                slate
+                class="!text-sm !text-n-slate-11 flex-shrink-0"
+                @click="addScenario(item)"
               />
             </div>
-          </div>
-          <div v-if="scenarios.length === 0" class="mt-1 mb-2">
-            <span class="text-n-slate-11 text-sm">
-              {{ t('CAPTAIN.ASSISTANTS.SCENARIOS.EMPTY_MESSAGE') }}
-            </span>
-          </div>
-          <div v-else-if="filteredScenarios.length === 0" class="mt-1 mb-2">
-            <span class="text-n-slate-11 text-sm">
-              {{ t('CAPTAIN.ASSISTANTS.SCENARIOS.SEARCH_EMPTY_MESSAGE') }}
-            </span>
-          </div>
-          <div v-else class="flex flex-col gap-2">
-            <ScenariosCard
-              v-for="scenario in filteredScenarios"
-              :id="scenario.id"
-              :key="scenario.id"
-              :title="scenario.title"
-              :description="scenario.description"
-              :instruction="scenario.instruction"
-              :tools="scenario.tools"
-              :is-selected="bulkSelectedIds.has(scenario.id)"
-              :selectable="
-                hoveredCard === scenario.id || bulkSelectedIds.size > 0
-              "
-              @select="handleRuleSelect"
-              @delete="deleteScenario(scenario.id)"
-              @update="updateScenario"
-              @hover="isHovered => handleRuleHover(isHovered, scenario.id)"
-            />
-          </div>
-        </div>
+            <div class="flex flex-col">
+              <span class="text-sm text-n-slate-11 mt-2">
+                {{ item.description }}
+              </span>
+              <component
+                :is="renderInstruction(formatMessage(item.instruction, false))"
+              />
+              <span class="text-sm text-n-slate-11 font-medium mb-1">
+                {{ t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.SUGGESTED.TOOLS_USED') }}
+                {{ item.tools?.map(tool => `@${tool}`).join(', ') }}
+              </span>
+            </div>
+          </template>
+        </SuggestedScenarios>
       </div>
     </template>
   </PageLayout>

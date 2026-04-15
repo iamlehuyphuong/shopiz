@@ -38,6 +38,52 @@ class IntegrationsAPI extends ApiClient {
       shop_domain: shopDomain,
     });
   }
+
+  connectKiotviet({ clientId, clientSecret, retailer }) {
+    return axios.post(`${this.baseUrl()}/integrations/kiotviet/auth`, {
+      client_id: clientId,
+      client_secret: clientSecret,
+      retailer,
+    });
+  }
+
+  disconnectKiotviet() {
+    return axios.delete(`${this.baseUrl()}/integrations/kiotviet`);
+  }
+
+  connectHaravan({ apiKey, storeName }) {
+    return axios.post(`${this.baseUrl()}/integrations/haravan/auth`, {
+      api_key: apiKey,
+      store_name: storeName,
+    });
+  }
+
+  disconnectHaravan() {
+    return axios.delete(`${this.baseUrl()}/integrations/haravan`);
+  }
+
+  connectWoocommerce({ storeUrl, consumerKey, consumerSecret }) {
+    return axios.post(`${this.baseUrl()}/integrations/woocommerce/auth`, {
+      store_url: storeUrl,
+      consumer_key: consumerKey,
+      consumer_secret: consumerSecret,
+    });
+  }
+
+  disconnectWoocommerce() {
+    return axios.delete(`${this.baseUrl()}/integrations/woocommerce`);
+  }
+
+  connectSapo({ accessToken, storeName }) {
+    return axios.post(`${this.baseUrl()}/integrations/sapo/auth`, {
+      access_token: accessToken,
+      store_name: storeName,
+    });
+  }
+
+  disconnectSapo() {
+    return axios.delete(`${this.baseUrl()}/integrations/sapo`);
+  }
 }
 
 export default new IntegrationsAPI();

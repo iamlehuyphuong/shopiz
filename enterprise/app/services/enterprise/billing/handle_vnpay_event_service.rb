@@ -1,157 +1,77 @@
-class Enterprise::Billing::HandleVnpayEventService
-  CAPTAIN_RESPONSES = 'captain_responses'.freeze
-  CAPTAIN_DOCUMENTS = 'captain_documents'.freeze
-  CAPTAIN_RESPONSES_USAGE = 'captain_responses_usage'.freeze
-  CAPTAIN_DOCUMENTS_USAGE = 'captain_documents_usage'.freeze
+# frozen_string_literal: true
 
+class Enterprise::Billing::HandleVnpayEventService
   def perform(event:)
-    ensure_event_context(event)
-    case @event.type
-    when 'customer.subscription.updated'
-      process_subscription_updated
-    when 'customer.subscription.deleted'
-      process_subscription_deleted
-    else
-      Rails.logger.debug { "Unhandled event type: #{event.type}" }
+    prepare_data(event)
+    return if @account.blank? || @record.blank?
+
+    ActiveRecord::Base.transaction do
+      @record.is_a?(SubscriptionPlan) ? activate_plan : activate_addon
+      save_billing_history(event)
     end
   end
 
   private
 
-  def process_subscription_updated
-    plan = find_plan(subscription['plan']['product']) if subscription['plan'].present?
+  def prepare_data(event)
+    order_info = event['vnp_OrderInfo'].to_s
+    # Extract SKU and account_id from order info
+    # Format: "TT SHOPIZ [SKU]" or legacy format with product_id/customer_id
+    match = order_info.match(/customer_id=(\d+)/)
+    @customer_id = match ? match[1] : nil
 
-    # skipping self hosted plan events
-    return if plan.blank? || account.blank?
+    # Try to extract SKU from new format or fallback
+    sku = extract_sku(order_info)
+    @record = SubscriptionPlan.find_by(sku: sku) || AddonPackage.find_by(sku: sku) if sku.present?
 
-    update_account_attributes(subscription, plan)
+    # Fallback: try product_id from legacy format
+    if @record.blank?
+      product_match = order_info.match(/product_id=(\d+)/)
+      if product_match
+        product_id = product_match[1]
+        @record = SubscriptionPlan.find_by(id: product_id) || AddonPackage.find_by(id: product_id)
+      end
+    end
 
-    change_plan_features(plan)
-    update_limits(plan)
-    reset_captain_usage
+    @account = Account.find_by(id: @customer_id)
   end
 
-  def update_account_attributes(subscription, plan)
-    # https://stripe.com/docs/api/subscriptions/object
+  def extract_sku(order_info)
+    # Try "sku=XXX" format
+    sku_match = order_info.match(/sku=([^\s|]+)/)
+    return sku_match[1] if sku_match
 
-    account.update(
-      custom_attributes: {
-        stripe_customer_id: subscription.customer,
-        stripe_price_id: subscription['plan']['id'],
-        stripe_product_id: subscription['plan']['product'],
-        plan_name: plan['name'],
-        subscribed_quantity: subscription['quantity'],
-        subscription_status: subscription['status'],
-        subscription_ends_on: Time.zone.at(subscription['current_period_end'])
-      }
+    # Fallback: extract from description
+    nil
+  end
+
+  def activate_plan
+    Subscriptions::SubscribeService.new(@account, @record).execute
+  end
+
+  def activate_addon
+    Addons::PurchaseService.new(@account, @record).execute
+  end
+
+  def save_billing_history(event)
+    product_name = @record.is_a?(SubscriptionPlan) ? @record.name(@account.locale) : @record.name
+
+    @account.billing_histories.create!(
+      price_amount: event['vnp_Amount'].to_i / 100, # VNPay sends amount in smallest unit
+      price_currency: 'vnd',
+      product_name: product_name,
+      sku: @record.respond_to?(:sku) ? @record.sku : "#{@record.class.name}_#{@record.id}",
+      status: 0,
+      product_id: @record.id.to_s,
+      metadata: {
+        type: @record.is_a?(SubscriptionPlan) ? 'package' : 'addon',
+        sku: @record.respond_to?(:sku) ? @record.sku : nil,
+        id: @record.id,
+        payment_method: 'vnpay'
+      },
+      transaction_id: event['vnp_TransactionNo'],
+      description: event['vnp_OrderInfo'],
+      transaction_date_time: event['vnp_PayDate']
     )
-  end
-
-  def process_subscription_deleted
-    # skipping self hosted plan events
-    return if account.blank?
-
-    Enterprise::Billing::CreateStripeCustomerService.new(account: account).perform
-  end
-
-  def change_plan_features(plan)
-    if default_plan?
-      account.disable_features(*features_to_update)
-    else
-      features = plan['features'] || []
-      account.enable_features(*features)
-    end
-    account.save!
-  end
-
-  def update_limits(plan)
-    account.limits = plan['limits'] || {}
-    account.save!
-  end
-
-  def reset_captain_usage
-    account.reset_response_usage
-  end
-
-  def ensure_event_context(event)
-    orderInfo = event['vnp_OrderInfo']
-    match_data = orderInfo.match(/Thanh toán cho Shopiz - Gói (?<product_name>.+?) - Tham số: product_id=(?<product_id>[^|]+)\|\|price_id=(?<price_id>[^|]+)\|\|customer_id=(?<customer_id>.+)/)
-    raise 'Invalid orderInfo format' unless match_data
-
-    product = { name: match_data[:product_name], id: match_data[:product_id] }
-    price = { 'id' => match_data[:price_id] }
-    customer_id = match_data[:customer_id]
-
-    plan = find_plan(product[:id])
-    days = (plan['months'].to_i || 0) * 30
-    event = {
-      type: 'customer.subscription.updated',
-      data: {
-        object: {
-          customer: customer_id,
-          plan: {
-            id: price[:id],
-            product: product[:id]
-          },
-          quantity: plan['limits']['agents'],
-          status: 'active',
-          current_period_end: Time.now.to_i + days.days
-        }
-      }
-    }
-    @event = JSON.parse(event.to_json, object_class: OpenStruct)
-  end
-
-  def features_to_update
-    %w[inbound_emails help_center campaigns team_management channel_twitter channel_facebook channel_email channel_api channel_zalopersonal
-       channel_line channel_telegram channel_whatsapp channel_sms captain_integration]
-  end
-
-  def subscription
-    @subscription ||= @event.data.object
-  end
-
-  def account
-    @account ||= Account.where("custom_attributes->>'stripe_customer_id' = ?",
-                               subscription.customer).first || Account.find_by(id: subscription.customer)
-  end
-
-  def find_plan(plan_id)
-    installation_config = InstallationConfig.find_by(name: 'CHATWOOT_CLOUD_PLANS')
-    plan = installation_config.value.find { |config| config['product_id'].include?(plan_id) }
-    return nil if plan.blank?
-
-    Polar.configure do |config|
-      config.access_token = ENV.fetch('POLAR_ACCESS_TOKEN', nil)
-      config.sandbox = ENV['POLAR_ENV'] == 'sandbox'
-    end
-    product = Polar::Product.get(plan_id)
-    product = product.table
-    if product[:metadata].present? && product[:metadata]['features'].present?
-      plan['features'] =
-        product[:metadata]['features'].split(',').map(&:strip)
-    end
-    plan['months'] = product[:metadata]['months'] if product[:metadata].present? && product[:metadata]['months'].present?
-    plan['inboxes'] = product[:metadata]['inboxes'] if product[:metadata].present? && product[:metadata]['inboxes'].present?
-
-    plan['limits'] = {
-      'inboxes' => product[:metadata]['inboxes'] || 1,
-      'agents' => product[:metadata]['agents'] || 1,
-      'captain_responses' => product[:metadata]['captain_responses'] || 0,
-      'captain_documents' => product[:metadata]['captain_documents'] || 0
-    }
-    plan
-  rescue Polar::NotFoundError => e
-    Rails.logger.error { "Plan not found for ID: #{plan_id}, Error: #{e.message}" }
-    nil
-  rescue StandardError => e
-    Rails.logger.error { "Error fetching plan for ID: #{plan_id}, Error: #{e.message}" }
-    nil
-  end
-
-  def default_plan?
-    installation_config = InstallationConfig.find_by(name: 'CHATWOOT_CLOUD_PLANS')
-    default_plan = installation_config.value.first
-    @account.custom_attributes['plan_name'] == default_plan['name']
   end
 end

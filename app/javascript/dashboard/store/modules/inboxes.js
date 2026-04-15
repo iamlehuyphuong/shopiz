@@ -6,7 +6,7 @@ import WebChannel from '../../api/channel/webChannel';
 import FBChannel from '../../api/channel/fbChannel';
 import ZaloChannel from '../../api/channel/zaloChannel';
 import ZaloPersonalChannel from '../../api/channel/zalopersonalChannel';
-import TiktokChannel from '../../api/channel/tiktokChannel';
+import TiktokShopChannel from '../../api/channel/tiktokShopChannel';
 import TwilioChannel from '../../api/channel/twilioChannel';
 import WhatsappChannel from '../../api/channel/whatsappChannel';
 import { throwErrorMessage } from '../utils/api';
@@ -86,6 +86,14 @@ export const getters = {
         return false;
       }
 
+      // Filter out CSAT templates (customer_satisfaction_survey and its versions)
+      if (
+        template.name &&
+        template.name.startsWith('customer_satisfaction_survey')
+      ) {
+        return false;
+      }
+
       // Filter out interactive templates (LIST, PRODUCT, CATALOG), location templates, and call permission templates
       const hasUnsupportedComponents = template.components.some(
         component =>
@@ -151,24 +159,22 @@ export const getters = {
   },
   getVoiceInboxes($state) {
     return $state.records.filter(
-      item =>
-        item.channel_type === INBOX_TYPES.VOICE
+      item => item.channel_type === INBOX_TYPES.VOICE
     );
   },
   getZaloPersonalInboxes($state) {
     return $state.records.filter(
-      item =>
-        item.channel_type === INBOX_TYPES.ZALO_PERSONAL
+      item => item.channel_type === INBOX_TYPES.ZALO_PERSONAL
     );
   },
-  getSurveyInboxes($state) {
+  getZaloOaInboxes($state) {
     return $state.records.filter(
-      item =>
-        item.channel_type === INBOX_TYPES.SMS ||
-        item.channel_type === INBOX_TYPES.WEB ||
-        item.channel_type === INBOX_TYPES.ZALO_OA ||
-        item.channel_type === INBOX_TYPES.ZALO_PERSONAL ||
-        (item.channel_type === INBOX_TYPES.TWILIO && item.medium === 'sms')
+      item => item.channel_type === INBOX_TYPES.ZALO_OA
+    );
+  },
+  getFacebookInboxes($state) {
+    return $state.records.filter(
+      item => item.channel_type === INBOX_TYPES.FB
     );
   },
   dialogFlowEnabledInboxes($state) {
@@ -188,6 +194,13 @@ export const getters = {
       item =>
         item.instagram_id === instagramId &&
         item.channel_type === INBOX_TYPES.INSTAGRAM
+    );
+  },
+  getTiktokInboxByBusinessId: $state => businessId => {
+    return $state.records.find(
+      item =>
+        item.business_id === businessId &&
+        item.channel_type === INBOX_TYPES.TIKTOK
     );
   },
 };
@@ -274,13 +287,13 @@ export const actions = {
       throw new Error(error);
     }
   },
-  createTiktokChannel: async ({ commit }, params) => {
+  createTiktokShopChannel: async ({ commit }, params) => {
     try {
       commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: true });
-      const response = await TiktokChannel.create(params);
+      const response = await TiktokShopChannel.create(params);
       commit(types.default.ADD_INBOXES, response.data);
       commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
-      sendAnalyticsEvent('tiktok');
+      sendAnalyticsEvent('tiktok_shop');
       return response.data;
     } catch (error) {
       commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
@@ -427,6 +440,21 @@ export const actions = {
     } catch (error) {
       throw new Error(error);
     }
+  },
+  createCSATTemplate: async (_, { inboxId, template }) => {
+    const response = await InboxesAPI.createCSATTemplate(inboxId, template);
+    return response.data;
+  },
+  getCSATTemplateStatus: async (_, { inboxId }) => {
+    const response = await InboxesAPI.getCSATTemplateStatus(inboxId);
+    return response.data;
+  },
+  analyzeCSATTemplateUtility: async (_, { inboxId, template }) => {
+    const response = await InboxesAPI.analyzeCSATTemplateUtility(
+      inboxId,
+      template
+    );
+    return response.data;
   },
 };
 

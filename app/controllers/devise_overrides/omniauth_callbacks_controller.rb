@@ -4,7 +4,13 @@ class DeviseOverrides::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCa
   def omniauth_success
     get_resource_from_auth_hash
 
-    @resource.present? ? sign_in_user : sign_up_user
+    if @resource.present?
+      @resource.update(name: auth_hash.dig('info', 'name')) if @resource.name.blank? || @resource.name == @resource.email
+      Avatar::AvatarFromUrlJob.perform_later(@resource, auth_hash.dig('info', 'image')) if auth_hash.dig('info', 'image').present?
+      sign_in_user
+    else
+      sign_up_user
+    end
   end
 
   private
@@ -51,8 +57,7 @@ class DeviseOverrides::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCa
   end
 
   def account_signup_allowed?
-    # set it to true by default, this is the behaviour across the app
-    GlobalConfigService.load('ENABLE_ACCOUNT_SIGNUP', 'false') != 'false'
+    GlobalConfigService.account_signup_enabled?
   end
 
   def resource_class(_mapping = nil)

@@ -1,4 +1,4 @@
 # https://github.com/mperham/sidekiq/issues/3090#issuecomment-389748695
-worker: dotenv bundle exec sidekiq -C config/sidekiq.yml
+worker: bin/bundle exec sidekiq -C config/sidekiq.yml
 vite: bin/vite dev
 web: bin/rails s -p 3005

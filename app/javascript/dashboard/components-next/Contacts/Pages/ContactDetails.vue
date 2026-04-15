@@ -44,7 +44,7 @@ const getInitialContactData = () => {
 };
 
 onMounted(() => {
-  Object.assign(contactData.value, getInitialContactData());
+  contactData.value = getInitialContactData();
 });
 
 const createdAt = computed(() => {

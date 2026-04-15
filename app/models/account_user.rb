@@ -50,7 +50,7 @@ class AccountUser < ApplicationRecord
   end
 
   def remove_user_from_account
-    ::Agents::DestroyJob.perform_later(account, user)
+    ::AccountUsers::DestroyJob.perform_later(account, user)
   end
 
   def permissions

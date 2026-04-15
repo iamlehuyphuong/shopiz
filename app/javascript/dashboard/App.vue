@@ -24,6 +24,8 @@ import ReconnectService from 'dashboard/helper/ReconnectService';
 import { useUISettings } from 'dashboard/composables/useUISettings';
 import ContextMenu from 'dashboard/components/ui/ContextMenu.vue';
 import DropdownMenu from 'dashboard/components-next/dropdown-menu/DropdownMenu.vue';
+import CreateNewContactDialog from 'dashboard/components-next/Contacts/ContactsForm/CreateNewContactDialog.vue';
+import LimitationModal from './components/widgets/modal/LimitationModal.vue';
 
 export default {
   name: 'App',
@@ -38,6 +40,8 @@ export default {
     PendingEmailVerificationBanner,
     ContextMenu,
     DropdownMenu,
+    CreateNewContactDialog,
+    LimitationModal,
   },
   setup() {
     const router = useRouter();
@@ -80,6 +84,7 @@ export default {
       hasActiveCall: 'calls/hasActiveCall',
       incomingCall: 'calls/getIncomingCall',
       hasIncomingCall: 'calls/hasIncomingCall',
+      selectedChat: 'getSelectedChat',
     }),
     hideOnOnboardingView() {
       return !isOnOnboardingView(this.$route);
@@ -88,6 +93,12 @@ export default {
       const { type } = this.contactMenuConfig;
       if (type === 'email') {
         return [
+          {
+            label: this.$t('CONTACT_PANEL.SAVE_CONTACT'),
+            action: 'save',
+            value: 'save',
+            icon: 'i-lucide-user-plus',
+          },
           {
             label: this.$t('CONTACT_PANEL.COPY_EMAIL'),
             action: 'copy',
@@ -104,6 +115,12 @@ export default {
       }
       if (type === 'phone') {
         return [
+          {
+            label: this.$t('CONTACT_PANEL.SAVE_CONTACT'),
+            action: 'save',
+            value: 'save',
+            icon: 'i-lucide-user-plus',
+          },
           {
             label: this.$t('CONTACT_PANEL.COPY_PHONE'),
             action: 'copy',
@@ -307,9 +324,35 @@ export default {
     closeContactMenu() {
       this.contactMenuConfig.show = false;
     },
-    handleContactMenuAction({ action }) {
-      const { value } = this.contactMenuConfig;
-      if (action === 'copy') {
+    async handleContactMenuAction({ action }) {
+      const { value, type } = this.contactMenuConfig;
+      if (action === 'save') {
+        const contact = this.selectedChat?.meta?.sender;
+        if (!contact?.id) {
+          useAlert(this.$t('CONTACT_PANEL.NO_CONTACT_FOUND'));
+        } else {
+          try {
+            const updatePayload = { id: contact.id };
+            if (type === 'email') {
+              updatePayload.email = value;
+            } else if (type === 'phone') {
+              // Normalize to international format (+84 for Vietnam)
+              const digits = value.replace(/\D/g, '');
+              if (digits.startsWith('0')) {
+                updatePayload.phoneNumber = `+84${digits.slice(1)}`;
+              } else if (digits.startsWith('84')) {
+                updatePayload.phoneNumber = `+${digits}`;
+              } else {
+                updatePayload.phoneNumber = `+${digits}`;
+              }
+            }
+            await this.$store.dispatch('contacts/update', updatePayload);
+            useAlert(this.$t('CONTACT_PANEL.SAVE_CONTACT_SUCCESS'));
+          } catch {
+            useAlert(this.$t('CONTACT_PANEL.SAVE_CONTACT_ERROR'));
+          }
+        }
+      } else if (action === 'copy') {
         navigator.clipboard.writeText(value).then(() => {
           useAlert(this.$t('CONTACT_PANEL.COPY_SUCCESSFUL'));
         });
@@ -323,6 +366,26 @@ export default {
       }
       this.closeContactMenu();
     },
+    async onCreateContact(contact) {
+      try {
+        await this.$store.dispatch('contacts/create', contact);
+        this.$refs.createNewContactDialog.onSuccess();
+        useAlert(
+          this.$t(
+            'CONTACTS_LAYOUT.HEADER.ACTIONS.CONTACT_CREATION.SUCCESS_MESSAGE'
+          )
+        );
+      } catch (error) {
+        const i18nPrefix = 'CONTACTS_LAYOUT.HEADER.ACTIONS.CONTACT_CREATION';
+        if (error.response?.data?.message?.includes('email')) {
+          useAlert(this.$t(`${i18nPrefix}.EMAIL_ADDRESS_DUPLICATE`));
+        } else if (error.response?.data?.message?.includes('phone_number')) {
+          useAlert(this.$t(`${i18nPrefix}.PHONE_NUMBER_DUPLICATE`));
+        } else {
+          useAlert(this.$t(`${i18nPrefix}.ERROR_MESSAGE`));
+        }
+      }
+    },
   },
 };
 </script>
@@ -331,7 +394,7 @@ export default {
   <div
     v-if="!authUIFlags.isFetching && !accountUIFlags.isFetchingItem"
     id="app"
-    class="flex flex-col w-full h-screen min-h-0"
+    class="flex flex-col w-full h-screen min-h-0 bg-n-background"
     :dir="isRTL ? 'rtl' : 'ltr'"
   >
     <UpdateBanner :latest-chatwoot-version="latestChatwootVersion" />
@@ -426,7 +489,7 @@ export default {
             ? incomingCall.phoneNumber
             : ''
       "
-      :use-web-rtc="true"
+      use-web-rtc
       @call-ended="handleCallEnded"
       @call-joined="handleCallJoined"
       @call-rejected="handleCallRejected"
@@ -443,6 +506,11 @@ export default {
         @action="handleContactMenuAction"
       />
     </ContextMenu>
+    <CreateNewContactDialog
+      ref="createNewContactDialog"
+      @create="onCreateContact"
+    />
+    <LimitationModal />
   </div>
   <LoadingState v-else />
 </template>
@@ -461,10 +529,4 @@ export default {
 .v-popper--theme-tooltip .v-popper__arrow-container {
   display: none;
 }
-
-.multiselect__input {
-  margin-bottom: 0px !important;
-}
 </style>
-
-<style src="vue-multiselect/dist/vue-multiselect.css"></style>

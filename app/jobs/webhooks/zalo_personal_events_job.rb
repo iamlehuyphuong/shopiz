@@ -15,7 +15,7 @@ class Webhooks::ZaloPersonalEventsJob < ApplicationJob
   def validate_signature(params, post_body, signature)
     app_id = params[:app_id]
     timestamp = params[:timestamp]
-    oa_secret_key = ENV.fetch('ZALO_OA_SECRET_KEY', nil)
+    oa_secret_key = ENV.fetch('ZALO_SECRET_KEY', nil)
     raw_verify = "#{app_id}#{post_body}#{timestamp}#{oa_secret_key}"
 
     hash = Digest::SHA256.hexdigest(raw_verify)

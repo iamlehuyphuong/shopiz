@@ -10,6 +10,10 @@
     "PHONE_NUMBER": "Phone number",
     "IDENTIFIER": "Identifier",
     "COPY_SUCCESSFUL": "Copied to clipboard successfully",
+    "SAVE_CONTACT": "Save to contact",
+    "SAVE_CONTACT_SUCCESS": "Contact updated successfully",
+    "SAVE_CONTACT_ERROR": "Could not update contact",
+    "NO_CONTACT_FOUND": "No contact assigned to this conversation",
     "COPY_EMAIL": "Copy email",
     "SEND_EMAIL": "Send email",
     "COPY_PHONE": "Copy phone number",
@@ -27,7 +31,8 @@
     "CREATED_AT_LABEL": "Created",
     "NEW_MESSAGE": "New message",
     "CALL": "Call",
-    "CALL_UNDER_DEVELOPMENT": "Calling is under development",
+    "CALL_INITIATED": "Calling the contact…",
+    "CALL_FAILED": "Unable to start the call. Please try again.",
     "REQUEST_FRIEND": "Send a friend request",
     "VOICE_INBOX_PICKER": {
       "TITLE": "Choose a voice inbox"
@@ -392,7 +397,7 @@
       }
     },
     "PAGINATION_FOOTER": {
-      "SHOWING": "Showing {startItem} - {endItem} of {totalItems} contacts"
+      "SHOWING": "Showing {startItem} - {endItem} of {totalItems} contact | Showing {startItem} - {endItem} of {totalItems} contacts"
     },
     "FILTER": {
       "NAME": "Name",
@@ -472,6 +477,12 @@
           },
           "INSTAGRAM": {
             "PLACEHOLDER": "Add Instagram"
+          },
+          "TELEGRAM": {
+            "PLACEHOLDER": "Add Telegram"
+          },
+          "TIKTOK": {
+            "PLACEHOLDER": "Add TikTok"
           },
           "LINKEDIN": {
             "PLACEHOLDER": "Add LinkedIn"
@@ -586,7 +597,8 @@
       "SEARCH_EMPTY_STATE_TITLE": "No contacts matches your search 🔍",
       "LIST_EMPTY_STATE_TITLE": "No contacts available in this view 📋",
       "ACTIVE_EMPTY_STATE_TITLE": "No contacts are active at the moment 🌙"
-    }
+    },
+    "LOAD_MORE": "Load more"
   },
   "CONTACTS_BULK_ACTIONS": {
     "ASSIGN_LABELS": "Assign Labels",
@@ -620,7 +632,7 @@
       "NO_INBOX_ALERT": "There are no available inboxes to start a conversation with this contact.",
       "CONTACT_SELECTOR": {
         "LABEL": "To:",
-        "TAG_INPUT_PLACEHOLDER": "Search for a contact with name, email or phone number",
+        "TAG_INPUT_PLACEHOLDER": "Enter at least 2 characters to search by name, email, or phone number",
         "CONTACT_CREATING": "Creating contact..."
       },
       "INBOX_SELECTOR": {
@@ -631,9 +643,9 @@
         "SUBJECT_LABEL": "Subject :",
         "SUBJECT_PLACEHOLDER": "Enter your email subject here",
         "CC_LABEL": "Cc:",
-        "CC_PLACEHOLDER": "Search for a contact with their email address",
+        "CC_PLACEHOLDER": "Enter at least 2 characters to search by email",
         "BCC_LABEL": "Bcc:",
-        "BCC_PLACEHOLDER": "Search for a contact with their email address",
+        "BCC_PLACEHOLDER": "Enter at least 2 characters to search by email",
         "BCC_BUTTON": "Bcc"
       },
       "MESSAGE_EDITOR": {

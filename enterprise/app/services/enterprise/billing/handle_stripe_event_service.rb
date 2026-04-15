@@ -1,30 +1,6 @@
+# frozen_string_literal: true
+
 class Enterprise::Billing::HandleStripeEventService
-  CLOUD_PLANS_CONFIG = 'CHATWOOT_CLOUD_PLANS'.freeze
-
-  # Plan hierarchy: Hacker (default) -> Startups -> Business -> Enterprise
-  # Each higher tier includes all features from the lower tiers
-
-  # Basic features available starting with the Startups plan
-  STARTUP_PLAN_FEATURES = %w[
-    inbound_emails
-    help_center
-    campaigns
-    team_management
-    channel_twitter
-    channel_facebook
-    channel_email
-    channel_instagram
-    captain_integration
-    advanced_search_indexing
-    advanced_search
-  ].freeze
-
-  # Additional features available starting with the Business plan
-  BUSINESS_PLAN_FEATURES = %w[sla custom_roles].freeze
-
-  # Additional features available only in the Enterprise plan
-  ENTERPRISE_PLAN_FEATURES = %w[audit_logs disable_branding saml].freeze
-
   def perform(event:)
     @event = event
 
@@ -41,89 +17,49 @@ class Enterprise::Billing::HandleStripeEventService
   private
 
   def process_subscription_updated
-    plan = find_plan(subscription['plan']['product']) if subscription['plan'].present?
+    return if account.blank?
 
-    # skipping self hosted plan events
-    return if plan.blank? || account.blank?
+    # Try to find the plan by SKU from metadata, or by Stripe product_id
+    plan = find_plan_from_event
+    return if plan.blank?
 
-    update_account_attributes(subscription, plan)
-    update_plan_features
-    reset_captain_usage
-  end
-
-  def update_account_attributes(subscription, plan)
-    # https://stripe.com/docs/api/subscriptions/object
-    account.update(
-      custom_attributes: {
-        stripe_customer_id: subscription.customer,
-        stripe_price_id: subscription['plan']['id'],
-        stripe_product_id: subscription['plan']['product'],
-        plan_name: plan['name'],
-        subscribed_quantity: subscription['quantity'],
-        subscription_status: subscription['status'],
-        subscription_ends_on: Time.zone.at(subscription['current_period_end'])
-      }
-    )
+    ActiveRecord::Base.transaction do
+      Subscriptions::SubscribeService.new(account, plan).execute
+    end
   end
 
   def process_subscription_deleted
-    # skipping self hosted plan events
     return if account.blank?
 
-    Enterprise::Billing::CreateStripeCustomerService.new(account: account).perform
+    # When Stripe subscription is deleted, downgrade to free plan
+    free_plan = SubscriptionPlan.free_plan.first
+    return unless free_plan
+
+    Subscriptions::SubscribeService.new(account, free_plan).execute
   end
 
-  def update_plan_features
-    if default_plan?
-      disable_all_premium_features
-    else
-      enable_features_for_current_plan
+  def find_plan_from_event
+    # 1. Try SKU from Stripe subscription metadata
+    sku = subscription.dig('metadata', 'sku')
+    plan = SubscriptionPlan.find_by(sku: sku) if sku.present?
+    return plan if plan.present?
+
+    # 2. Try product_id from Stripe
+    product_id = subscription.dig('plan', 'product')
+    if product_id.present?
+      plan = SubscriptionPlan.find_by(sku: product_id)
+      return plan if plan.present?
     end
 
-    # Enable any manually managed features configured in internal_attributes
-    enable_account_manually_managed_features
-
-    account.save!
-  end
-
-  def disable_all_premium_features
-    # Disable all features (for default Hacker plan)
-    account.disable_features(*STARTUP_PLAN_FEATURES)
-    account.disable_features(*BUSINESS_PLAN_FEATURES)
-    account.disable_features(*ENTERPRISE_PLAN_FEATURES)
-  end
-
-  def enable_features_for_current_plan
-    # First disable all premium features to handle downgrades
-    disable_all_premium_features
-
-    # Then enable features based on the current plan
-    enable_plan_specific_features
-  end
-
-  def reset_captain_usage
-    account.reset_response_usage
-  end
-
-  def enable_plan_specific_features
-    plan_name = account.custom_attributes['plan_name']
-    return if plan_name.blank?
-
-    # Enable features based on plan hierarchy
-    case plan_name
-    when 'Startups'
-      # Startups plan gets the basic features
-      account.enable_features(*STARTUP_PLAN_FEATURES)
-    when 'Business'
-      # Business plan gets Startups features + Business features
-      account.enable_features(*STARTUP_PLAN_FEATURES)
-      account.enable_features(*BUSINESS_PLAN_FEATURES)
-    when 'Enterprise'
-      # Enterprise plan gets all features
-      account.enable_features(*STARTUP_PLAN_FEATURES)
-      account.enable_features(*BUSINESS_PLAN_FEATURES)
-      account.enable_features(*ENTERPRISE_PLAN_FEATURES)
+    # 3. Fallback: try price_id
+    price_id = subscription.dig('plan', 'id')
+    if price_id.present?
+      plan = SubscriptionPlan.find_by(sku: price_id)
+      return plan if plan.present?
     end
+
+    Rails.logger.warn("Could not find SubscriptionPlan for Stripe event. SKU: #{sku}, product: #{product_id}, price: #{price_id}")
+    nil
   end
 
   def subscription
@@ -131,26 +67,11 @@ class Enterprise::Billing::HandleStripeEventService
   end
 
   def account
-    @account ||= Account.where("custom_attributes->>'stripe_customer_id' = ?", subscription.customer).first
-  end
-
-  def find_plan(plan_id)
-    cloud_plans = InstallationConfig.find_by(name: CLOUD_PLANS_CONFIG)&.value || []
-    cloud_plans.find { |config| config['product_id'].include?(plan_id) }
-  end
-
-  def default_plan?
-    cloud_plans = InstallationConfig.find_by(name: CLOUD_PLANS_CONFIG)&.value || []
-    default_plan = cloud_plans.first || {}
-    account.custom_attributes['plan_name'] == default_plan['name']
-  end
-
-  def enable_account_manually_managed_features
-    # Get manually managed features from internal attributes using the service
-    service = Internal::Accounts::InternalAttributesService.new(account)
-    features = service.manually_managed_features
-
-    # Enable each feature
-    account.enable_features(*features) if features.present?
+    @account ||= begin
+      # Try to find by stripe_customer_id in custom_attributes
+      customer_id = subscription.customer
+      Account.where("custom_attributes->>'stripe_customer_id' = ?", customer_id).first ||
+        Account.find_by(id: customer_id)
+    end
   end
 end

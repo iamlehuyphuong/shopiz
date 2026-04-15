@@ -5,10 +5,10 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
   before_action :check_cloud_env, only: [:billings, :limits, :toggle_deletion]
 
   def subscription
-    if stripe_customer_id.blank? && @account.custom_attributes['is_creating_customer'].blank?
-      @account.update(custom_attributes: { is_creating_customer: true })
-      Enterprise::CreateVnpayCustomerJob.perform_later(@account)
-      #Enterprise::CreateStripeCustomerJob.perform_later(@account)
+    # Ensure account has a subscription - assign free plan if none exists
+    unless @account.active_subscription.present?
+      free_plan = SubscriptionPlan.free_plan.first
+      Subscriptions::SubscribeService.new(@account, free_plan).execute if free_plan
     end
     head :no_content
   end
@@ -71,6 +71,22 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
     end
   end
 
+  def topup_checkout
+    return render json: { error: I18n.t('errors.topup.credits_required') }, status: :unprocessable_entity if params[:credits].blank?
+
+    service = Enterprise::Billing::TopupCheckoutService.new(account: @account)
+    result = service.create_checkout_session(credits: params[:credits].to_i)
+
+    @account.reload
+    render json: result.merge(
+      id: @account.id,
+      limits: @account.limits,
+      custom_attributes: @account.custom_attributes
+    )
+  rescue Enterprise::Billing::TopupCheckoutService::Error, Stripe::StripeError => e
+    render_could_not_create_error(e.message)
+  end
+
   private
 
   def check_cloud_env
@@ -102,6 +118,8 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
     reason = 'manual_deletion'
 
     if @account.mark_for_deletion(reason)
+      cancel_cloud_subscriptions_for_deletion
+
       render json: { message: 'Account marked for deletion' }, status: :ok
     else
       render json: { message: @account.errors.full_messages.join(', ') }, status: :unprocessable_entity
@@ -125,13 +143,13 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
     render_redirect_url(session.url)
   end
 
-  def create_vnpay_billing_session(customer_id,product_id)
-    url = Enterprise::Billing::CreateSessionService.new.create_vnpay_session(customer_id,product_id)
+  def create_vnpay_billing_session(customer_id, product_id)
+    url = Enterprise::Billing::CreateSessionService.new.create_vnpay_session(customer_id, product_id)
     render_redirect_url(url)
   end
 
-  def create_polar_billing_session(customer_id,product_id)
-    url = Enterprise::Billing::CreateSessionService.new.create_vnpay_session(customer_id,product_id)
+  def create_polar_billing_session(customer_id, product_id)
+    url = Enterprise::Billing::CreateSessionService.new.create_vnpay_session(customer_id, product_id)
     render_redirect_url(url)
   end
 
@@ -140,9 +158,18 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
       @account.id,
       params[:product_id]
     )
-    return if url.blank?
 
-    render_redirect_url(url)
+    if url.present?
+      render_redirect_url(url)
+    else
+      render json: { message: 'Could not create payment link. Please check your configuration.' }, status: :unprocessable_entity
+    end
+  end
+
+  def cancel_cloud_subscriptions_for_deletion
+    Enterprise::Billing::CancelCloudSubscriptionsService.new(account: @account).perform
+  rescue Stripe::StripeError => e
+    Rails.logger.warn("Failed to cancel cloud subscriptions for account #{@account.id}: #{e.class} - #{e.message}")
   end
 
   def render_redirect_url(redirect_url)

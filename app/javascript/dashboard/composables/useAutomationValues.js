@@ -20,7 +20,7 @@ import {
 export default function useAutomationValues() {
   const getters = useStoreGetters();
   const { t } = useI18n();
-  const agents = useMapGetter('agents/getAgents');
+  const agents = useMapGetter('agents/getVerifiedAgents');
   const campaigns = useMapGetter('campaigns/getAllCampaigns');
   const contacts = useMapGetter('contacts/getContacts');
   const inboxes = useMapGetter('inboxes/getInboxes');
@@ -55,13 +55,10 @@ export default function useAutomationValues() {
 
   const statusFilterOptions = computed(() => {
     const statusFilters = statusFilterItems.value;
-    return [
-      ...Object.keys(statusFilters).map(status => ({
-        id: status,
-        name: statusFilters[status].TEXT,
-      })),
-      { id: 'all', name: t('CHAT_LIST.FILTER_ALL') },
-    ];
+    return Object.keys(statusFilters).map(status => ({
+      id: status,
+      name: statusFilters[status].TEXT,
+    }));
   });
 
   const messageTypeOptions = computed(() =>

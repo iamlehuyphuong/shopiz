@@ -6,6 +6,7 @@ import { useRouter, useRoute } from 'vue-router';
 import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 import { debounce } from '@chatwoot/utils';
 import { useAccount } from 'dashboard/composables/useAccount';
+import { useLimitation } from 'dashboard/composables/useLimitation';
 
 import Banner from 'dashboard/components-next/banner/Banner.vue';
 import Input from 'dashboard/components-next/input/Input.vue';
@@ -13,17 +14,17 @@ import BulkSelectBar from 'dashboard/components-next/captain/assistant/BulkSelec
 import DeleteDialog from 'dashboard/components-next/captain/pageComponents/DeleteDialog.vue';
 import BulkDeleteDialog from 'dashboard/components-next/captain/pageComponents/BulkDeleteDialog.vue';
 import PageLayout from 'dashboard/components-next/captain/PageLayout.vue';
-import CaptainPaywall from 'dashboard/components-next/captain/pageComponents/Paywall.vue';
 import ResponseCard from 'dashboard/components-next/captain/assistant/ResponseCard.vue';
 import CreateResponseDialog from 'dashboard/components-next/captain/pageComponents/response/CreateResponseDialog.vue';
+import BillingMeter from 'dashboard/routes/dashboard/settings/billing/components/BillingMeter.vue';
 import ResponsePageEmptyState from 'dashboard/components-next/captain/pageComponents/emptyStates/ResponsePageEmptyState.vue';
 import FeatureSpotlightPopover from 'dashboard/components-next/feature-spotlight/FeatureSpotlightPopover.vue';
-import LimitBanner from 'dashboard/components-next/captain/pageComponents/response/LimitBanner.vue';
 
 const router = useRouter();
 const route = useRoute();
 const store = useStore();
 const { isOnChatwootCloud } = useAccount();
+const { getUsage, checkLimitation } = useLimitation();
 const uiFlags = useMapGetter('captainResponses/getUIFlags');
 const responseMeta = useMapGetter('captainResponses/getMeta');
 const responses = useMapGetter('captainResponses/getRecords');
@@ -48,8 +49,10 @@ const handleDelete = () => {
 };
 
 const handleCreate = () => {
-  dialogType.value = 'create';
-  nextTick(() => createDialog.value.dialogRef.open());
+  if (checkLimitation('captain_faqs')) {
+    dialogType.value = 'create';
+    nextTick(() => createDialog.value.dialogRef.open());
+  }
 };
 
 const handleEdit = () => {
@@ -216,6 +219,16 @@ onMounted(() => {
     @update:current-page="onPageChange"
     @click="handleCreate"
   >
+    <template #usage>
+      <BillingMeter
+        v-if="isOnChatwootCloud"
+        :consumed="getUsage('captain_faqs').consumed"
+        :total-count="getUsage('captain_faqs').totalCount"
+        :show-bar="false"
+        :show-title="false"
+        class="px-2 py-0.5 bg-slate-50 border border-slate-100 rounded-full w-auto block"
+      />
+    </template>
     <template #knowMore>
       <FeatureSpotlightPopover
         :button-label="$t('CAPTAIN.HEADER_KNOW_MORE')"
@@ -264,12 +277,7 @@ onMounted(() => {
       <ResponsePageEmptyState @click="handleCreate" />
     </template>
 
-    <template #paywall>
-      <CaptainPaywall />
-    </template>
-
     <template #body>
-      <LimitBanner class="mb-5" />
       <Banner
         v-if="pendingCount > 0"
         color="blue"

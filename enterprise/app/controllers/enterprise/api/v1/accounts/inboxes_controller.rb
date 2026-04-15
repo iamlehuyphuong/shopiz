@@ -7,6 +7,10 @@ module Enterprise::Api::V1::Accounts::InboxesController
     [auto_assignment_config: [:max_assignment_limit]]
   end
 
+  def index_includes
+    super + [:captain_assistant]
+  end
+
   private
 
   def allowed_channel_types

@@ -18,6 +18,12 @@ const state = {
     isFetchingItem: false,
     isUpdating: false,
     isCheckoutInProcess: false,
+    isFetchingLimits: false,
+    isFetchingBillings: false,
+    limitationModal: {
+      show: false,
+      resourceKey: '',
+    },
   },
 };
 
@@ -121,7 +127,12 @@ export const actions = {
     commit(types.default.SET_ACCOUNT_UI_FLAG, { isCheckoutInProcess: true });
     try {
       const response = await EnterpriseAccountAPI.checkout(paymentInfo);
-      window.location = response.data.redirect_url;
+      const { redirect_url: redirectUrl } = response.data;
+      if (redirectUrl) {
+        window.location = redirectUrl;
+      } else {
+        throw new Error('Invalid redirect URL');
+      }
     } catch (error) {
       throwErrorMessage(error);
     } finally {
@@ -141,25 +152,37 @@ export const actions = {
   },
 
   limits: async ({ commit }) => {
+    commit(types.default.SET_ACCOUNT_UI_FLAG, { isFetchingLimits: true });
     try {
       const response = await EnterpriseAccountAPI.getLimits();
       commit(types.default.SET_ACCOUNT_LIMITS, response.data);
     } catch (error) {
       // silent error
+    } finally {
+      commit(types.default.SET_ACCOUNT_UI_FLAG, { isFetchingLimits: false });
     }
   },
 
-  billings: async ({ commit }) => {
+  billings: async ({ commit, state: accountState }) => {
+    if (accountState.uiFlags.isFetchingBillings) return;
+
+    commit(types.default.SET_ACCOUNT_UI_FLAG, { isFetchingBillings: true });
     try {
       const response = await EnterpriseAccountAPI.getBillings();
       commit(types.default.SET_ACCOUNT_PLANS, response.data);
     } catch (error) {
       // silent error
+    } finally {
+      commit(types.default.SET_ACCOUNT_UI_FLAG, { isFetchingBillings: false });
     }
   },
 
   getCacheKeys: async () => {
     return AccountAPI.getCacheKeys();
+  },
+
+  toggleLimitationModal: ({ commit }, data) => {
+    commit(types.default.SET_LIMITATION_MODAL, data);
   },
 };
 
@@ -174,9 +197,23 @@ export const mutations = {
   [types.default.EDIT_ACCOUNT]: MutationHelpers.update,
   [types.default.SET_ACCOUNT_LIMITS]: MutationHelpers.updateAttributes,
   [types.default.SET_ACCOUNT_PLANS]($state, { id, data }) {
-    const account = $state.records.find(record => record.id === Number(id));
-    account.billing = { ...account.billing, ...data };
-  }
+    const recordIndex = $state.records.findIndex(
+      record => record.id === Number(id)
+    );
+    if (recordIndex > -1) {
+      const account = $state.records[recordIndex];
+      $state.records[recordIndex] = {
+        ...account,
+        billing: { ...account.billing, ...data },
+      };
+    }
+  },
+  [types.default.SET_LIMITATION_MODAL]($state, data) {
+    $state.uiFlags.limitationModal = {
+      ...$state.uiFlags.limitationModal,
+      ...data,
+    };
+  },
 };
 
 export default {

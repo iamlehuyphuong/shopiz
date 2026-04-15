@@ -1,5 +1,10 @@
 vi:
   hello: 'Chào thế giới'
+  activerecord:
+    models:
+      billing_histories:
+        one: Lịch sử mua bán
+        other: Lịch sử mua bán
   inbox:
     reauthorization:
       success: 'Kênh đã được cấp lại quyền truy cập thành công'
@@ -17,6 +22,9 @@ vi:
     saml_not_available: Xác thực SAML không khả dụng trong cài đặt này.
     inbox_deletetion_response: Yêu cầu xoá hộp thư của bạn sẽ được xử lý.
   errors:
+    account:
+      reporting_timezone:
+        invalid: không phải là múi giờ hợp lệ
     validations:
       presence: 'không được để trống'
     webhook:
@@ -30,8 +38,11 @@ vi:
       failed: Đăng ký thất bại
     assignment_policy:
       not_found: Chính sách phân công không được tìm thấy
+    attachments:
+      invalid: Tệp đính kèm không hợp lệ
     saml:
       feature_not_enabled: Tính năng SAML không được bật cho tài khoản này
+      sso_not_enabled: SAML SSO chưa được bật cho bản cài đặt này
     data_import:
       data_type:
         invalid: 'Kiểu dữ liệu không hợp lệ'
@@ -47,6 +58,11 @@ vi:
     companies:
       domain:
         invalid: phải là một tên miền hợp lệ
+      search:
+        query_missing: Chỉ định chuỗi tìm kiếm với tham số q
+    messages:
+      search:
+        time_range_limit_exceeded: 'Tìm kiếm bị giới hạn trong %{days} ngày qua'
     categories:
       locale:
         unique: 'phải là duy nhất trong danh mục và cổng thông tin'
@@ -69,6 +85,11 @@ vi:
         host_unreachable_error: 'Máy chủ không thể truy cập được, vui lòng kiểm tra địa chỉ IMAP, cổng IMAP và thử lại.'
         connection_timed_out_error: 'Kết nối đã hết thời gian chờ %{address}:%{port}'
         connection_closed_error: 'Kết nối bị đóng.'
+      smtp:
+        authentication_error: Xác thực SMTP thất bại. Vui lòng kiểm tra thông tin đăng nhập.
+        connection_error: Không thể kết nối tới máy chủ SMTP. Vui lòng kiểm tra địa chỉ và cổng máy chủ.
+        ssl_error: Lỗi SSL/TLS. Vui lòng kiểm tra cấu hình mã hóa của bạn.
+        smtp_error: Lỗi máy chủ SMTP. Vui lòng kiểm tra lại cấu hình và thử lại.
       validations:
         name: 'Không nên bắt đầu hoặc kết thúc bằng các ký hiệu đặc biệt và không được chứa các ký tự < > / \\ @.'
     custom_filters:
@@ -78,6 +99,7 @@ vi:
       invalid_query_operator: Toán tử truy vấn phải là "AND" hoặc "OR".
       invalid_value: Giá trị không hợp lệ. Các giá trị được cung cấp cho %{attribute_name} là không hợp lệ
     custom_attribute_definition:
+      attribute_key_format: phải chỉ bao gồm chữ cái, số, dấu gạch dưới, gạch ngang và dấu chấm
       key_conflict: Khóa được cung cấp không được phép vì có thể xung đột với các thuộc tính mặc định.
     mfa:
       already_enabled: MFA đã được bật
@@ -87,6 +109,15 @@ vi:
       invalid_token: Mã thông báo MFA không hợp lệ hoặc đã hết hạn
       invalid_credentials: Thông tin đăng nhập hoặc mã xác thực không hợp lệ
       feature_unavailable: Tính năng MFA không khả dụng. Vui lòng cấu hình các khóa mã hóa.
+    topup:
+      credits_required: Yêu cầu số lượng tín dụng
+      invalid_credits: Số lượng tín dụng không hợp lệ
+      invalid_option: Tùy chọn nạp tiền không hợp lệ
+      plan_not_eligible: Nạp tiền chỉ khả dụng cho các gói trả phí. Vui lòng nâng cấp gói của bạn trước.
+      stripe_customer_not_configured: Khách hàng Stripe chưa được cấu hình
+      no_payment_method: Không tìm thấy phương thức thanh toán. Vui lòng thêm phương thức thanh toán trước khi thực hiện mua hàng.
+    reports:
+      date_range_too_long: Phạm vi ngày không được vượt quá 6 tháng
   profile:
     mfa:
       enabled: MFA đã được bật
@@ -123,6 +154,14 @@ vi:
       avg_resolution_time: 'Thời gian giải quyết trung bình'
       resolution_count: 'Số lượng giải quyết'
       avg_customer_waiting_time: 'Thời gian chờ của khách hàng trung bình'
+    conversation_csv:
+      conversations_count: 'Các cuộc hội thoại'
+      incoming_messages_count: 'Tin nhắn nhận được'
+      outgoing_messages_count: 'Tin nhắn gửi đi'
+      avg_first_response_time: 'Thời gian phản hồi đầu tiên trung bình'
+      avg_resolution_time: 'Thời gian giải quyết trung bình'
+      resolution_count: 'Số lượng giải quyết'
+      avg_customer_waiting_time: 'Thời gian chờ của khách hàng trung bình'
     conversation_traffic_csv:
       timezone: 'Múi giờ'
     sla_csv:
@@ -145,6 +184,7 @@ vi:
         rating: 'Đánh giá'
         feedback: 'Phản hồi ý kiến'
         recorded_at: 'Ngày ghi nhận'
+        review_notes: 'Ghi chú đánh giá'
   notifications:
     notification_title:
       conversation_creation: 'Một cuộc trò chuyện (#%{display_id}) đã được tạo trong %{inbox_name}'
@@ -162,9 +202,9 @@ vi:
     messages:
       instagram_story_content: '%{story_sender} đã đề cập đến bạn trong hội thoại: '
       instagram_deleted_story_content: 'Hội thoại này không còn nữa.'
+      instagram_shared_story_content: 'Tin bài được chia sẻ'
+      instagram_shared_post_content: 'Bài viết được chia sẻ'
       deleted: 'Tin nhắn đã bị xoá'
-      undo: 'Tin nhắn đã bị thu hồi'
-      deleted_or_retracted: 'Tin nhắn đã được xoá hoặc thu hồi'
       whatsapp:
         list_button_label: 'Chọn một mục'
       delivery_status:
@@ -172,7 +212,11 @@ vi:
     activity:
       captain:
         resolved: 'Cuộc trò chuyện đã được đánh dấu là đã giải quyết bởi %{user_name} do không có hoạt động'
+        resolved_with_reason: 'Cuộc trò chuyện đã được đánh dấu là đã giải quyết bởi %{user_name} (%{reason})'
+        resolved_by_tool: 'Cuộc trò chuyện đã được đánh dấu là đã giải quyết bởi %{user_name}: %{reason}'
         open: 'Cuộc trò chuyện đã được mở lại bởi %{user_name}'
+        open_with_reason: 'Cuộc trò chuyện đã được mở lại bởi %{user_name} (%{reason})'
+        auto_opened_after_agent_reply: 'Cuộc trò chuyện được tự động mở lại sau phản hồi của nhân viên'
       agent_bot:
         error_moved_to_open: 'Hội thoại được hệ thống đánh dấu là mở do lỗi trợ lý ảo.'
       status:
@@ -278,14 +322,33 @@ vi:
       name: 'Shopify'
       short_description: 'Truy cập chi tiết đơn hàng và dữ liệu khách hàng từ cửa hàng Shopify của bạn.'
       description: 'Kết nối cửa hàng Shopify của bạn để truy cập chi tiết đơn hàng, thông tin khách hàng và dữ liệu sản phẩm trực tiếp trong cuộc trò chuyện, giúp đội ngũ hỗ trợ của bạn cung cấp hỗ trợ nhanh chóng và có bối cảnh hơn cho khách hàng.'
+    kiotviet:
+      name: 'KiotViet'
+      short_description: 'Truy cập chi tiết đơn hàng và dữ liệu khách hàng từ cửa hàng KiotViet của bạn.'
+      description: 'Kết nối cửa hàng KiotViet của bạn để truy cập chi tiết đơn hàng, thông tin khách hàng và dữ liệu sản phẩm trực tiếp trong cuộc trò chuyện, giúp đội ngũ hỗ trợ của bạn cung cấp hỗ trợ nhanh chóng và có bối cảnh hơn cho khách hàng.'
+    haravan:
+      name: 'Haravan'
+      short_description: 'Truy cập chi tiết đơn hàng và dữ liệu khách hàng từ cửa hàng Haravan của bạn.'
+      description: 'Kết nối cửa hàng Haravan của bạn để truy cập chi tiết đơn hàng, thông tin khách hàng và dữ liệu sản phẩm trực tiếp trong cuộc trò chuyện, giúp đội ngũ hỗ trợ của bạn cung cấp hỗ trợ nhanh chóng và có bối cảnh hơn cho khách hàng.'
+    woocommerce:
+      name: 'WooCommerce'
+      short_description: 'Truy cập chi tiết đơn hàng và dữ liệu khách hàng từ cửa hàng WooCommerce của bạn.'
+      description: 'Kết nối cửa hàng WordPress WooCommerce của bạn để truy cập chi tiết đơn hàng, thông tin khách hàng và dữ liệu sản phẩm trực tiếp trong cuộc trò chuyện, giúp đội ngũ hỗ trợ của bạn cung cấp hỗ trợ nhanh chóng và có bối cảnh hơn cho khách hàng.'
+    sapo:
+      name: 'Sapo'
+      short_description: 'Truy cập chi tiết đơn hàng và dữ liệu khách hàng từ cửa hàng Sapo của bạn.'
+      description: 'Kết nối cửa hàng Sapo của bạn để truy cập chi tiết đơn hàng, thông tin khách hàng và dữ liệu sản phẩm trực tiếp trong cuộc trò chuyện, giúp đội ngũ hỗ trợ của bạn cung cấp hỗ trợ nhanh chóng và có bối cảnh hơn cho khách hàng.'
     leadsquared:
       name: 'LeadSquared'
       short_description: 'Đồng bộ hóa danh bạ và cuộc trò chuyện của bạn với CRM LeadSquared.'
       description: 'Đồng bộ hóa danh bạ và cuộc trò chuyện của bạn với CRM LeadSquared. Tính năng này tự động tạo khách hàng tiềm năng trong LeadSquared khi danh bạ mới được thêm và lưu lại các hoạt động cuộc trò chuyện để cung cấp bối cảnh đầy đủ cho đội ngũ bán hàng của bạn.'
   captain:
-    copilot_message_required: Thông điệp bắt buộc có
+    copilot_message_required: Thông điệp bắt buộc
     copilot_error: 'Đã xảy ra lỗi với Copilot. Vui lòng thử lại.'
     copilot_limit: 'Bạn đã hết tín dụng Copilot. Bạn có thể mua thêm tín dụng từ phần thanh toán.'
+    upgrade: 'Nâng cấp gói để bật ShopizAI'
+    disabled: 'ShopizAI đã bị vô hiệu hóa cho tài khoản này.'
+    api_key_missing: 'Khóa API ShopizAI chưa được cấu hình.'
     copilot:
       using_tool: 'Đang sử dụng công cụ %{function_name}'
       completed_tool_call: 'Đã hoàn thành cuộc gọi công cụ %{function_name}'
@@ -367,6 +430,9 @@ vi:
       other: '%{count} phút'
     seconds:
       other: '%{count} giây'
+  auto_assignment:
+    default_policy_name: 'Chính sách mặc định'
+    policy_actor: 'Hệ thống tự động hóa thông qua %{policy_name}'
   automation:
     system_name: 'Hệ thống tự động hóa'
   crm:

@@ -4,21 +4,22 @@ import { useMapGetter, useStore } from 'dashboard/composables/store';
 import { useRoute } from 'vue-router';
 import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 import { useAccount } from 'dashboard/composables/useAccount';
+import { useLimitation } from 'dashboard/composables/useLimitation';
 
 import DeleteDialog from 'dashboard/components-next/captain/pageComponents/DeleteDialog.vue';
 import DocumentCard from 'dashboard/components-next/captain/assistant/DocumentCard.vue';
 import PageLayout from 'dashboard/components-next/captain/PageLayout.vue';
-import CaptainPaywall from 'dashboard/components-next/captain/pageComponents/Paywall.vue';
 import RelatedResponses from 'dashboard/components-next/captain/pageComponents/document/RelatedResponses.vue';
 import CreateDocumentDialog from 'dashboard/components-next/captain/pageComponents/document/CreateDocumentDialog.vue';
 import DocumentPageEmptyState from 'dashboard/components-next/captain/pageComponents/emptyStates/DocumentPageEmptyState.vue';
 import FeatureSpotlightPopover from 'dashboard/components-next/feature-spotlight/FeatureSpotlightPopover.vue';
-import LimitBanner from 'dashboard/components-next/captain/pageComponents/document/LimitBanner.vue';
+import BillingMeter from 'dashboard/routes/dashboard/settings/billing/components/BillingMeter.vue';
 
 const route = useRoute();
 const store = useStore();
 
 const { isOnChatwootCloud } = useAccount();
+const { getUsage, checkLimitation } = useLimitation();
 const uiFlags = useMapGetter('captainDocuments/getUIFlags');
 const documents = useMapGetter('captainDocuments/getRecords');
 const isFetching = computed(() => uiFlags.value.fetchingList);
@@ -37,7 +38,6 @@ const showRelatedResponses = ref(false);
 const showCreateDialog = ref(false);
 const createDocumentDialog = ref(null);
 const relationQuestionDialog = ref(null);
-const limitBannerRef = ref(null);
 
 const handleShowRelatedDocument = () => {
   showRelatedResponses.value = true;
@@ -45,8 +45,10 @@ const handleShowRelatedDocument = () => {
 };
 
 const handleCreateDocument = () => {
-  showCreateDialog.value = true;
-  nextTick(() => createDocumentDialog.value.dialogRef.open());
+  if (checkLimitation('captain_documents')) {
+    showCreateDialog.value = true;
+    nextTick(() => createDocumentDialog.value.dialogRef.open());
+  }
 };
 
 const handleRelatedResponseClose = () => {
@@ -56,10 +58,6 @@ const handleRelatedResponseClose = () => {
 const handleCreateDialogClose = () => {
   showCreateDialog.value = false;
 };
-
-const isOverDocument = computed(() => {
-  return limitBannerRef.value?.showBanner;
-})
 
 const handleAction = ({ action, id }) => {
   selectedDocument.value = documents.value.find(
@@ -109,10 +107,19 @@ onMounted(() => {
     :is-empty="!documents.length"
     :show-know-more="false"
     :feature-flag="FEATURE_FLAGS.CAPTAIN"
-    :disable-btn-create="isOverDocument"
     @update:current-page="onPageChange"
     @click="handleCreateDocument"
   >
+    <template #usage>
+      <BillingMeter
+        v-if="isOnChatwootCloud"
+        :consumed="getUsage('captain_documents').consumed"
+        :total-count="getUsage('captain_documents').totalCount"
+        :show-bar="false"
+        :show-title="false"
+        class="px-2 py-0.5 bg-slate-50 border border-slate-100 rounded-full w-auto block"
+      />
+    </template>
     <template #knowMore>
       <FeatureSpotlightPopover
         :button-label="$t('CAPTAIN.HEADER_KNOW_MORE')"
@@ -129,13 +136,7 @@ onMounted(() => {
       <DocumentPageEmptyState @click="handleCreateDocument" />
     </template>
 
-    <template #paywall>
-      <CaptainPaywall />
-    </template>
-
     <template #body>
-      <LimitBanner class="mb-5" ref="limitBannerRef" />
-
       <div class="flex flex-col gap-4">
         <DocumentCard
           v-for="doc in documents"

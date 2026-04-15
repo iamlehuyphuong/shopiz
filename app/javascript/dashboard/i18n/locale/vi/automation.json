@@ -1,10 +1,13 @@
 {
   "AUTOMATION": {
-    "HEADER": "Tự động hóa",
-    "DESCRIPTION": "Tự động hóa giúp thay thế và tối ưu các quy trình thủ công, chẳng hạn như thêm nhãn hoặc phân công cuộc hội thoại cho nhân viên phù hợp nhất. Điều này giúp đội ngũ tập trung vào các nhiệm vụ quan trọng, đồng thời giảm thời gian xử lý các tác vụ lặp lại.",
-    "LEARN_MORE": "Tìm hiểu thêm về tự động hóa",
-    "HEADER_BTN_TXT": "Thêm quy tắc tự động",
-    "LOADING": "Đang tải quy tắc tự động",
+    "HEADER": "Tự động hoá",
+    "DESCRIPTION": "Quy tắc tự động có thể thay thế và hợp lý hóa các quy trình hiện có đòi hỏi nỗ lực thủ công, chẳng hạn như thêm nhãn và phân công cuộc trò chuyện cho đại lý phù hợp nhất. Điều này cho phép nhóm tập trung vào điểm mạnh của họ trong khi giảm thời gian dành cho các nhiệm vụ thông thường.",
+    "LEARN_MORE": "Tìm hiểu thêm về quy tắc tự động",
+    "COUNT": "{n} quy tắc tự động | {n} quy tắc tự động",
+    "HEADER_BTN_TXT": "Tạo quy tắc tự động",
+    "LOADING": "Đang lấy luật tự động hoá",
+    "SEARCH_PLACEHOLDER": "Tìm kiếm quy tắc tự động...",
+    "NO_RESULTS": "Không tìm thấy quy tắc tự động nào",
     "ADD": {
       "TITLE": "Thêm quy tắc tự động",
       "SUBMIT": "Tạo",
@@ -42,9 +45,9 @@
     "LIST": {
       "TABLE_HEADER": {
         "NAME": "Tên",
-        "DESCRIPTION": "Mô tả",
         "ACTIVE": "Kích hoạt",
-        "CREATED_ON": "Ngày tạo"
+        "CREATED_ON": "Ngày tạo",
+        "ACTIONS": "Hành động"
       },
       "404": "Không tìm thấy quy tắc tự động nào"
     },
@@ -150,7 +153,8 @@
       "ADD_PRIVATE_NOTE": "Thêm ghi chú nội bộ",
       "CHANGE_PRIORITY": "Thay đổi mức độ ưu tiên",
       "ADD_SLA": "Thêm SLA",
-      "OPEN_CONVERSATION": "Mở cuộc hội thoại"
+      "OPEN_CONVERSATION": "Mở cuộc hội thoại",
+      "PENDING_CONVERSATION": "Đánh dấu cuộc hội thoại là đang chờ"
     },
     "MESSAGE_TYPES": {
       "INCOMING": "Tin nhắn đến",

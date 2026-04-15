@@ -32,7 +32,7 @@
 class Campaign < ApplicationRecord
   include UrlHelper
 
-  SUPPORTED_INBOX_TYPES = ['Website', 'Twilio SMS', 'Sms', 'Whatsapp', 'Voice', 'ZaloPersonal'].freeze
+  SUPPORTED_INBOX_TYPES = ['Website', 'Twilio SMS', 'Sms', 'Whatsapp', 'Voice', 'ZaloPersonal', 'ZaloOa', 'Facebook'].freeze
 
   validates :account_id, presence: true
   validates :inbox_id, presence: true
@@ -48,7 +48,7 @@ class Campaign < ApplicationRecord
   belongs_to :inbox
   belongs_to :sender, class_name: 'User', optional: true
 
-  enum campaign_type: { ongoing: 0, one_off: 1, voice: 2, survey:3 }
+  enum campaign_type: { ongoing: 0, one_off: 1, voice: 2 }
   # TODO : enabled attribute is unneccessary . lets move that to the campaign status with additional statuses like draft, disabled etc.
   enum campaign_status: { active: 0, completed: 1 }
 
@@ -56,6 +56,27 @@ class Campaign < ApplicationRecord
 
   before_validation :ensure_correct_campaign_attributes
   after_commit :set_display_id, unless: :display_id?
+
+  # -- Campaign Metrics helpers --
+  def increment_metric!(key, count = 1)
+    metrics = campaign_metrics || {}
+    metrics[key.to_s] = (metrics[key.to_s] || 0) + count
+    update_column(:campaign_metrics, metrics)
+  end
+
+  def delivery_rate
+    total = campaign_metrics&.dig('total_sent').to_i
+    return 0 if total.zero?
+
+    ((campaign_metrics&.dig('delivered').to_i.to_f / total) * 100).round(1)
+  end
+
+  def failure_rate
+    total = campaign_metrics&.dig('total_sent').to_i
+    return 0 if total.zero?
+
+    ((campaign_metrics&.dig('failed').to_i.to_f / total) * 100).round(1)
+  end
 
   def trigger!
     return unless one_off?
@@ -76,6 +97,10 @@ class Campaign < ApplicationRecord
       Whatsapp::OneoffCampaignService.new(campaign: self).perform if account.feature_enabled?(:whatsapp_campaign)
     when 'ZaloPersonal'
       ZaloPersonal::OneoffCampaignService.new(campaign: self).perform if account.feature_enabled?(:channel_zalopersonal)
+    when 'ZaloOa'
+      Zalo::OneoffCampaignService.new(campaign: self).perform
+    when 'Facebook'
+      Facebook::OneoffCampaignService.new(campaign: self).perform
     end
   end
 
@@ -93,7 +118,7 @@ class Campaign < ApplicationRecord
   def ensure_correct_campaign_attributes
     return if inbox.blank?
 
-    if ['Twilio SMS', 'Sms', 'Whatsapp', 'ZaloPersonal'].include?(inbox.inbox_type)
+    if ['Twilio SMS', 'Sms', 'Whatsapp', 'ZaloPersonal', 'ZaloOa', 'Facebook'].include?(inbox.inbox_type)
       self.campaign_type = 'one_off'
       self.scheduled_at ||= Time.now.utc
     elsif ['Voice'].include?(inbox.inbox_type)

@@ -215,6 +215,12 @@
         "ERROR": "Vui lòng nhập địa chỉ hợp lệ",
         "PLACEHOLDER": "Vui lòng nhập địa chỉ"
       },
+      "ID_NUMBER": {
+        "LABEL": "Số CMND / Căn cước công dân",
+        "ERROR": "Vui lòng nhập số định danh hợp lệ",
+        "PLACEHOLDER": "Vui lòng nhập số CMND hoặc thẻ CCCD"
+      },
+      "IS_COMPANY": "Tài khoản công ty?",
       "TYPE_IDS": {
         "PERSONAL": "Cá nhân",
         "COMPANY": "Công ty"
@@ -263,6 +269,7 @@
     "CONTACT_SUPPORT": "Liên hệ hỗ trợ",
     "SELECTOR_SUBTITLE": "Chọn một tài khoản từ danh sách",
     "PROFILE_SETTINGS": "Cài đặt hồ sơ",
+    "YEAR_IN_REVIEW": "Tổng kết năm",
     "KEYBOARD_SHORTCUTS": "Phím tắt",
     "APPEARANCE": "Đổi giao diện",
     "SUPER_ADMIN_CONSOLE": "Bảng quản trị cao cấp",
@@ -301,7 +308,8 @@
     "FILE_BUBBLE": {
       "DOWNLOAD": "Tải xuống",
       "UPLOADING": "Đang tải lên...",
-      "INSTAGRAM_STORY_UNAVAILABLE": "Story này không còn khả dụng."
+      "INSTAGRAM_STORY_UNAVAILABLE": "Story này không còn khả dụng.",
+      "INSTAGRAM_STORY_REPLY": "Trả lời story của bạn:"
     },
     "LOCATION_BUBBLE": {
       "SEE_ON_MAP": "Xem trên bản đồ"
@@ -331,7 +339,24 @@
       "ACTIONS": {
         "CREATE_TEMPLATE": "Tạo mẫu",
         "NEW_TEMPLATE": "Mẫu mới",
-        "DELETE": "Xóa mẫu"
+        "DELETE": "Xóa mẫu",
+        "SYNC_ALL": "Đồng bộ tất cả",
+        "MANAGE": "Quản lý",
+        "VIEW_IN_INBOX": "Xem trong hộp thư"
+      },
+      "CHANNEL_OVERVIEW": {
+        "INBOXES": "{count} hộp thư",
+        "TEMPLATES_COUNT": "{count} mẫu",
+        "NO_INBOXES": "Chưa có hộp thư nào",
+        "NO_TEMPLATES": "Chưa có mẫu"
+      },
+      "UNIFIED_STATUS": {
+        "ACTIVE": "Hoạt động",
+        "APPROVED": "Đã duyệt",
+        "PENDING": "Đang chờ",
+        "DRAFT": "Bản nháp",
+        "REJECTED": "Từ chối",
+        "DISABLED": "Đã tắt"
       },
       "FILTERS": {
         "CONTENT": "Nội dung",
@@ -340,8 +365,12 @@
         "APPROVED": "Đã duyệt",
         "PENDING": "Đang chờ",
         "REJECTED": "Từ chối",
+        "ACTIVE": "Hoạt động",
+        "DRAFT": "Bản nháp",
+        "DISABLED": "Đã tắt",
         "ALL_CHANNELS": "Tất cả kênh",
-        "ALL_LANGUAGES": "Tất cả ngôn ngữ"
+        "ALL_LANGUAGES": "Tất cả ngôn ngữ",
+        "ALL_INBOXES": "Tất cả hộp thư"
       },
       "LIST": {
         "404": "Không tìm thấy mẫu",
@@ -360,6 +389,7 @@
         "CANCEL": "Hủy",
         "CREATE": "Tạo",
         "CONTINUE": "Tiếp tục",
+        "GO_TO_INBOX": "Đi đến hộp thư",
         "BACK": "Quay lại",
         "STEPS": {
           "BASIC": "Thông tin cơ bản",
@@ -394,9 +424,11 @@
           },
           "INBOX": {
             "LABEL": "Hộp thư WhatsApp",
-            "PLACEHOLDER": "Chọn hộp thư WhatsApp",
-            "ERROR": "Vui lòng chọn hộp thư WhatsApp",
-            "NO_WHATSAPP_INBOX": "Không có hộp thư WhatsApp nào. Vui lòng tạo trước."
+            "ZALO_LABEL": "Hộp thư Zalo OA",
+            "PLACEHOLDER": "Chọn hộp thư",
+            "ERROR": "Vui lòng chọn hộp thư",
+            "NO_WHATSAPP_INBOX": "Không có hộp thư WhatsApp nào. Vui lòng tạo trước.",
+            "NO_ZALO_INBOX": "Không có hộp thư Zalo OA nào. Vui lòng tạo trước."
           }
         }
       },
@@ -548,6 +580,8 @@
     "SETTINGS": "Cài đặt",
     "CONTACTS": "Liên hệ",
     "ACTIVE": "Đang hoạt động",
+    "COMPANIES": "Công ty",
+    "ALL_COMPANIES": "Tất cả công ty",
     "CAPTAIN": "ShopizAI",
     "CAPTAIN_ASSISTANTS": "Trợ lý",
     "CAPTAIN_DOCUMENTS": "Tài liệu",
@@ -559,8 +593,6 @@
     "CAPTAIN_SETTINGS": "Cài đặt",
     "HOME": "Trang Chủ",
     "AGENTS": "Nhân viên",
-    "COMPANIES": "Công ty",
-    "ALL_COMPANIES": "Tất cả công ty",
     "AGENT_BOTS": "Trợ lý ảo",
     "AUDIT_LOGS": "Nhật ký hệ thống",
     "INBOXES": "Hộp thư",
@@ -608,7 +640,7 @@
     "REPORTS_TEAM": "Nhóm",
     "AGENT_ASSIGNMENT": "Phân công nhân viên",
     "SET_AVAILABILITY_TITLE": "Đặt trạng thái:",
-    "SET_YOUR_AVAILABILITY": "Đặt trạng thái hoạt động",
+    "SET_YOUR_AVAILABILITY": "Trạng thái hoạt động",
     "SLA": "SLA",
     "CUSTOM_ROLES": "Vai trò tùy chỉnh",
     "BETA": "Beta",
@@ -629,7 +661,60 @@
       "INFO_SHORT": "Tự động offline khi không hoạt động."
     },
     "DOCS": "Xem tài liệu",
-    "SECURITY": "Bảo mật"
+    "SECURITY": "Bảo mật",
+    "CAPTAIN_AI": "ShopizAI",
+    "CONVERSATION_WORKFLOW": "Quy trình hội thoại"
+  },
+  "DATABASE": {
+    "LOADING": "Đang tải dữ liệu..."
+  },
+  "CAPTAIN_SETTINGS": {
+    "TITLE": "Cài đặt ShopizAI",
+    "DESCRIPTION": "Cấu hình các mô hình AI và tính năng cho ShopizAI. ShopizAI sử dụng hệ thống tính phí dựa trên tín dụng, bạn sẽ bị tính tín dụng cho mỗi hành động ShopizAI thực hiện dựa trên mô hình đã chọn.",
+    "LOADING": "Đang tải cấu hình ShopizAI...",
+    "LINK_TEXT": "Tìm hiểu thêm về Tín dụng ShopizAI",
+    "NOT_ENABLED": "ShopizAI chưa được bật cho tài khoản của bạn. Vui lòng nâng cấp gói để truy cập các tính năng của ShopizAI.",
+    "MODEL_CONFIG": {
+      "TITLE": "Cấu hình mô hình",
+      "DESCRIPTION": "Chọn mô hình AI cho các tính năng khác nhau.",
+      "SELECT_MODEL": "Chọn mô hình",
+      "CREDITS_PER_MESSAGE": "{credits} tín dụng/tin nhắn",
+      "COMING_SOON": "Sắp ra mắt",
+      "EDITOR": {
+        "TITLE": "Tính năng soạn thảo",
+        "DESCRIPTION": "Tự động hoàn thiện thông minh, sửa lỗi ngữ pháp, điều chỉnh giọng điệu và nâng cao nội dung trong trình soạn thảo tin nhắn."
+      },
+      "ASSISTANT": {
+        "TITLE": "Trợ lý",
+        "DESCRIPTION": "Xử lý phản hồi tự động, tóm tắt cuộc hội thoại và đề xuất trả lời thông minh cho tương tác với khách hàng."
+      },
+      "COPILOT": {
+        "TITLE": "Co-pilot",
+        "DESCRIPTION": "Cung cấp đề xuất theo ngữ cảnh thời gian thực, gợi ý cơ sở tri thức và thông tin chi tiết chủ động trong các cuộc hội thoại."
+      }
+    },
+    "FEATURES": {
+      "TITLE": "Các tính năng",
+      "DESCRIPTION": "Bật hoặc tắt các tính năng hỗ trợ AI.",
+      "AUDIO_TRANSCRIPTION": {
+        "TITLE": "Audio Transcription",
+        "DESCRIPTION": "Tự động chuyển đổi tin nhắn thoại và bản ghi cuộc gọi thành văn bản có thể tìm kiếm."
+      },
+      "HELP_CENTER_SEARCH": {
+        "TITLE": "Help Center Search Indexing",
+        "DESCRIPTION": "Sử dụng AI để tìm kiếm theo ngữ cảnh bên trong các bài viết trong trung tâm trợ giúp của bạn."
+      },
+      "LABEL_SUGGESTION": {
+        "TITLE": "Label Suggestion",
+        "DESCRIPTION": "Tự động đề xuất nhãn và thẻ phù hợp cho các cuộc hội thoại dựa trên phân tích nội dung và ngữ cảnh.",
+        "MODEL_TITLE": "Label Suggestion Model",
+        "MODEL_DESCRIPTION": "Chọn mô hình AI để sử dụng cho việc phân tích các cuộc hội thoại và đề xuất nhãn phù hợp"
+      }
+    },
+    "API": {
+      "SUCCESS": "ShopizAI settings updated successfully.",
+      "ERROR": "Failed to update ShopizAI settings. Please try again."
+    }
   },
   "BILLING_SETTINGS": {
     "TITLE": "Thanh toán",
@@ -649,53 +734,143 @@
       "AI_DOCUMENT": "Tài liệu ShopizAI",
       "AI_FAQ": "FAQ ShopizAI",
       "AI_ASSISTANT": "Trợ lý ShopizAI",
-      "AI_RESPONSE": "Tin nhắn AI mỗi tháng"
+      "AI_RESPONSE": "Tin nhắn AI mỗi tháng",
+      "AI_RESPONSE_CREDIT": "Tín dụng AI vĩnh viễn",
+      "LIMITATION_TITLE": "Giới hạn tài nguyên",
+      "ACTIVE_ADDONS": "Gói mua thêm"
     },
+    "ADDON_QUANTITY": "{name} (x{quantity})",
     "VIEW_PRICING": "Xem bảng giá",
     "MANAGE_SUBSCRIPTION": {
-      "TITLE": "Quản lý đăng ký",
+      "TITLE": "Gói đăng ký hiện tại",
       "DESCRIPTION": "Xem hóa đơn trước đây, chỉnh sửa thông tin thanh toán hoặc hủy đăng ký.",
       "BUTTON_TXT": "Đi tới cổng thanh toán"
     },
+    "REGISTRATION_MANAGEMENT": {
+      "TITLE": "Quản lý đăng ký",
+      "DESCRIPTION": "Thông tin giới hạn tài nguyên đăng ký của bạn."
+    },
+    "AI_RESOURCE_MANAGEMENT": {
+      "TITLE": "Tài nguyên AI",
+      "DESCRIPTION": "Thông tin về hạn mức và và sử dụng tài nguyên AI.",
+      "REFRESHES_IN_DAYS": "Tin nhắn AI mỗi tháng: Tự động làm mới sau {days} ngày"
+    },
     "CAPTAIN": {
-      "TITLE": "AI Agent",
+      "TITLE": "Các gói tài nguyên",
       "DESCRIPTION": "Quản lý mức sử dụng và tín dụng AI.",
       "BUTTON_TXT": "Mua thêm tín dụng",
       "DOCUMENTS": "Tài liệu",
       "RESPONSES": "Câu trả lời",
-      "GET_MORE": "Mua thêm tin nhắn AI",
+      "GET_MORE": "Các gói tài nguyên",
       "NO_EXPIRATION": "Không có hạn sử dụng",
-      "UPGRADE": "AI Agent không khả dụng trên gói miễn phí. Hãy nâng cấp để truy cập trợ lý, copilot và nhiều tính năng nâng cao."
+      "UPGRADE": "AI Agent không khả dụng trên gói miễn phí. Hãy nâng cấp để truy cập trợ lý, chatbot và nhiều tính năng nâng cao.",
+      "REFRESH_CREDITS": "Làm mới"
     },
     "CHAT_WITH_US": {
       "TITLE": "Cần hỗ trợ?",
-      "DESCRIPTION": "Gặp vấn đề thanh toán? Chúng tôi luôn sẵn sàng hỗ trợ.",
-      "BUTTON_TXT": "Trò chuyện với chúng tôi"
+      "DESCRIPTION": "Gặp vấn đề thanh toán? Chúng tôi luôn sẵn sàng hỗ trợ."
     },
-    "NO_BILLING_USER": "Tài khoản thanh toán của bạn đang được thiết lập. Hãy tải lại trang và thử lại.",
+    "FACEBOOK_SUPPORT": "Nhắn tin qua Messenger",
+    "ZALO_SUPPORT": "Nhắn tin qua Zalo",
+    "NO_BILLING_USER": "Tài khoản thanh toán của bạn đang được định cấu hình. Hãy làm mới trang và thử lại.",
+    "PAYMENT_LINK_ERROR": "Không thể tạo liên kết thanh toán. Vui lòng kiểm tra lại cấu hình.",
+    "TOPUP": {
+      "BUY_CREDITS": "Mua thêm tín dụng",
+      "MODAL_TITLE": "Mua tín dụng AI",
+      "MODAL_DESCRIPTION": "Mua thêm tín dụng cho ShopizAI.",
+      "CREDITS": "TÍN DỤNG",
+      "ONE_TIME": "Một lần",
+      "POPULAR": "Phổ biến nhất",
+      "NOTE_TITLE": "Ghi chú:",
+      "NOTE_DESCRIPTION": "Tín dụng sẽ được thêm ngay lập tức và hết hạn sau 6 tháng. Cần có gói đăng ký đang hoạt động để sử dụng tín dụng. Tín dụng đã mua sẽ được sử dụng sau khi hết tín dụng của gói hàng tháng.",
+      "CANCEL": "Huỷ",
+      "PURCHASE": "Mua tín dụng",
+      "LOADING": "Đang tải...",
+      "FETCH_ERROR": "Không thể tải tùy chọn tín dụng. Vui lòng thử lại.",
+      "PURCHASE_ERROR": "Không thể xử lý giao dịch mua. Vui lòng thử lại.",
+      "PURCHASE_SUCCESS": "Đã thêm {credits} tín dụng vào tài khoản của bạn",
+      "CONFIRM": {
+        "TITLE": "Xác nhận mua hàng",
+        "DESCRIPTION": "Bạn sắp mua {credits} tín dụng với giá {amount}.",
+        "INSTANT_DEDUCTION_NOTE": "Thẻ đã lưu của bạn sẽ được tính phí ngay lập tức sau khi xác nhận.",
+        "GO_BACK": "Quay lại",
+        "CONFIRM_PURCHASE": "Xác nhận mua hàng"
+      }
+    },
     "PRICING_PACKAGES": {
       "HEADING": {
         "TITLE": "Gói dịch vụ",
-        "DESCRIPTION": "Tùy chọn linh hoạt cho mọi quy mô doanh nghiệp, thanh toán dễ dàng, nâng cấp nhanh chóng",
-        "FEATURES": "Tính năng"
+        "DESCRIPTION": "Chọn gói dịch vụ phù hợp nhất với nhu cầu kinh doanh của bạn."
+      },
+      "DURATIONS": {
+        "SIX_MONTHS": "6 tháng",
+        "YEAR": "năm"
       },
       "BUTTONS": {
         "CURRENT_PACKAGE": "Gói hiện tại",
         "UPGRADE_NOW": "Nâng cấp ngay",
-        "SUBCRIBE_NOW": "Đăng ký ngay",
+        "RENEW_NOW": "Gia hạn ngay",
+        "CONTACT": "Liên hệ với chúng tôi",
         "BUY_NOW": "Mua ngay",
-        "CONTACT": "Liên hệ"
+        "DOWNGRADE_NOT_SUPPORTED": "Không hỗ trợ hạ cấp"
       },
-      "MONTH": "1 tháng",
-      "HALF-YEAR": "6 tháng",
-      "YEAR": "1 năm"
+      "DOWNGRADE_NOTICE": "Việc hạ cấp gói không được hỗ trợ trực tuyến. Vui lòng liên hệ nhân viên hỗ trợ để được tư vấn.",
+      "MONTHLY_EQUIVALENT": "tương đương {price}/tháng",
+      "DISCOUNT": "Giảm {percent}%",
+      "BENEFITS": {
+        "CATEGORIES": {
+          "LIMITATIONS": "Giới hạn hệ thống",
+          "CHANNELS": "Kênh giao tiếp",
+          "FEATURES": "Bao gồm tính năng"
+        },
+        "LIMITS": {
+          "AGENTS": "{count} Nhân viên",
+          "INBOXES": "{count} Hộp thư",
+          "CONTACTS": "{count} Liên hệ",
+          "AUTOMATIONS": "{count} Quy tắc tự động",
+          "CAPTAIN_ASSISTANTS": "{count} Trợ lý ShopizAI",
+          "CAPTAIN_DOCUMENTS": "{count} Tài liệu ShopizAI",
+          "CAPTAIN_FAQS": "{count} FAQs ShopizAI",
+          "CAPTAIN_RESPONSES": "{count} Phản hồi ShopizAI"
+        },
+        "CHANNELS": {
+          "WEBSITE": "Website",
+          "ZALO_OA": "Zalo OA",
+          "ZALO_PERSONAL": "Zalo cá nhân",
+          "FACEBOOK": "Facebook",
+          "WHATSAPP": "Whatsapp",
+          "INSTAGRAM": "Instagram",
+          "TIKTOK": "Tiktok",
+          "TIKTOK_SHOP": "Tiktok Shop",
+          "TELEGRAM": "Telegram",
+          "LINE": "Line",
+          "TWITTER": "Twitter (X)"
+        },
+        "FEATURES": {
+          "CANNED_RESPONSES": "Tin nhắn mẫu",
+          "MACROS": "Lệnh tự động (Macros)",
+          "AUTOMATIONS": "Tự động hóa",
+          "AGENT_BOTS": "Trợ lý ảo",
+          "REPORTS": "Báo cáo",
+          "LABELS": "Gắn nhãn",
+          "CHANNEL_WHATSAPP": "Mẫu nội dung",
+          "INTEGRATIONS": "Kho ứng dụng",
+          "CSAT_REVIEW_NOTES": "Đánh giá CSAT",
+          "SLA": "Chính sách SLA",
+          "CAMPAIGNS": "Chiến dịch",
+          "CUSTOM_ROLES": "Vai trò tùy chỉnh",
+          "CUSTOM_ATTRIBUTES": "Thuộc tính tùy chỉnh",
+          "AUDIT_LOGS": "Nhật ký hệ thống"
+        }
+      }
     },
-    "BILLING_HISTORY": "Lịch sử mua gói"
+    "BILLING_HISTORY": "Lịch sử thanh toán"
   },
   "SECURITY_SETTINGS": {
     "TITLE": "Bảo mật",
     "DESCRIPTION": "Quản lý các cài đặt bảo mật tài khoản.",
     "LINK_TEXT": "Tìm hiểu thêm về SAML SSO",
+    "SAML_DISABLED_MESSAGE": "SAML SSO is currently disabled. Please contact your administrator to enable this feature.",
     "SAML": {
       "TITLE": "SAML SSO",
       "NOTE": "Cấu hình đăng nhập một lần SAML cho tài khoản. Người dùng sẽ đăng nhập thông qua nhà cung cấp danh tính thay vì email/mật khẩu.",
@@ -760,6 +935,58 @@
       "INFO_SECTION": {
         "TITLE": "Thông tin Nhà cung cấp dịch vụ",
         "TOOLTIP": "Sao chép các giá trị này và cấu hình trong IdP của bạn"
+      }
+    }
+  },
+  "CONVERSATION_WORKFLOW": {
+    "INDEX": {
+      "HEADER": {
+        "TITLE": "Quy trình xử lý hội thoại",
+        "DESCRIPTION": "Cấu hình các quy tắc và trường dữ liệu bắt buộc khi kết thúc hội thoại."
+      }
+    },
+    "REQUIRED_ATTRIBUTES": {
+      "TITLE": "Thuộc tính bắt buộc khi hoàn tất",
+      "DESCRIPTION": "Cảnh báo tư vấn viên điền các thông tin này trước khi cuộc hội thoại được đánh dấu là đã giải quyết.",
+      "NO_ATTRIBUTES": "Chưa có thuộc tính nào được thêm",
+      "ADD": {
+        "TITLE": "Thêm thuộc tính",
+        "SEARCH_PLACEHOLDER": "Tìm kiếm thuộc tính"
+      },
+      "SAVE": {
+        "SUCCESS": "Đã cập nhật các thuộc tính bắt buộc",
+        "ERROR": "Không thể cập nhật các thuộc tính bắt buộc, vui lòng thử lại"
+      },
+      "MODAL": {
+        "TITLE": "Hoàn tất cuộc hội thoại",
+        "DESCRIPTION": "Vui lòng hoàn thành các thông tin bắt buộc sau trước khi đóng cuộc hội thoại này",
+        "ACTIONS": {
+          "RESOLVE": "Giải quyết hội thoại",
+          "CANCEL": "Huỷ"
+        },
+        "PLACEHOLDERS": {
+          "TEXT": "Viết ghi chú...",
+          "NUMBER": "Nhập một số",
+          "LINK": "Thêm liên kết",
+          "DATE": "Chọn ngày",
+          "LIST": "Chọn một tùy chọn"
+        },
+        "CHECKBOX": {
+          "YES": "Có",
+          "NO": "Không"
+        }
+      },
+      "PAYWALL": {
+        "TITLE": "Nâng cấp để sử dụng các thuộc tính bắt buộc",
+        "AVAILABLE_ON": "Tính năng các thuộc tính hội thoại bắt buộc có sẵn trên các gói Business và Enterprise.",
+        "UPGRADE_PROMPT": "Nâng cấp gói của bạn để nhắc tư vấn viên điền các thuộc tính bắt buộc trước khi giải quyết hội thoại.",
+        "UPGRADE_NOW": "Nâng cấp ngay",
+        "CANCEL_ANYTIME": "Bạn có thể thay đổi hoặc hủy gói của mình bất cứ lúc nào"
+      },
+      "ENTERPRISE_PAYWALL": {
+        "AVAILABLE_ON": "Tính năng các thuộc tính hội thoại bắt buộc có sẵn trên các gói trả phí.",
+        "UPGRADE_PROMPT": "Nâng cấp lên gói trả phí để thực thi các thuộc tính bắt buộc trước khi giải quyết hội thoại.",
+        "ASK_ADMIN": "Vui lòng liên hệ với quản trị viên của bạn để nâng cấp."
       }
     }
   },
@@ -848,7 +1075,8 @@
         "CREATE_BUTTON": "Tạo chính sách",
         "API": {
           "SUCCESS_MESSAGE": "Tạo chính sách phân công thành công",
-          "ERROR_MESSAGE": "Tạo chính sách phân công thất bại"
+          "ERROR_MESSAGE": "Tạo chính sách phân công thất bại",
+          "INBOX_LINKED": "Inbox has been linked to the policy"
         }
       },
       "EDIT": {
@@ -861,6 +1089,12 @@
           "DESCRIPTION": "{inboxName} đã được gán vào chính sách khác. Bạn có muốn chuyển sang chính sách này không? Nó sẽ bị gỡ khỏi chính sách cũ.",
           "CONFIRM_BUTTON_LABEL": "Tiếp tục",
           "CANCEL_BUTTON_LABEL": "Hủy"
+        },
+        "INBOX_LINK_PROMPT": {
+          "TITLE": "Liên kết hộp thư đến với chính sách",
+          "DESCRIPTION": "Bạn có muốn liên kết hộp thư đến này với chính sách phân bổ không?",
+          "LINK_BUTTON": "Liên kết hộp thư đến",
+          "CANCEL_BUTTON": "Bỏ qua"
         },
         "API": {
           "SUCCESS_MESSAGE": "Cập nhật chính sách thành công",
@@ -900,7 +1134,9 @@
           },
           "BALANCED": {
             "LABEL": "Cân bằng",
-            "DESCRIPTION": "Phân công dựa trên năng lực sẵn có."
+            "DESCRIPTION": "Phân công dựa trên năng lực sẵn có.",
+            "PREMIUM_MESSAGE": "Upgrade to access balanced assignment and agent capacity management.",
+            "PREMIUM_BADGE": "Premium"
           }
         },
         "ASSIGNMENT_PRIORITY": {
@@ -986,6 +1222,20 @@
             "SUCCESS_MESSAGE": "Gỡ nhân viên thành công",
             "ERROR_MESSAGE": "Gỡ nhân viên thất bại"
           }
+        },
+        "INBOX_LIMIT_API": {
+          "ADD": {
+            "SUCCESS_MESSAGE": "Thêm giới hạn hộp thư thành công",
+            "ERROR_MESSAGE": "Thêm giới hạn hộp thư thất bại"
+          },
+          "UPDATE": {
+            "SUCCESS_MESSAGE": "Cập nhật giới hạn hộp thư thành công",
+            "ERROR_MESSAGE": "Cập nhật giới hạn hộp thư thất bại"
+          },
+          "DELETE": {
+            "SUCCESS_MESSAGE": "Xóa giới hạn hộp thư thành công",
+            "ERROR_MESSAGE": "Xóa giới hạn hộp thư thất bại"
+          }
         }
       },
       "FORM": {
@@ -1048,6 +1298,22 @@
       "DESCRIPTION": "Bạn có chắc muốn xóa chính sách này? Hành động này không thể hoàn tác.",
       "CONFIRM_BUTTON_LABEL": "Xóa",
       "CANCEL_BUTTON_LABEL": "Hủy"
+    }
+  },
+  "LIMITATION": {
+    "USAGE_STATUS": "Sử dụng",
+    "MODAL": {
+      "TITLE": "Đã đạt giới hạn tài nguyên",
+      "DESCRIPTION": {
+        "AGENTS": "Tài khoản của bạn đã đạt giới hạn số lượng nhân viên. Vui lòng nâng cấp gói để tiếp tục.",
+        "INBOXES": "Bạn đã đạt số lượng hộp thư tối đa cho gói hiện tại. Vui lòng nâng cấp để thêm hộp thư mới.",
+        "AUTOMATIONS": "Bạn đã đạt số lượng tự động hóa tối đa cho gói hiện tại. Vui lòng nâng cấp để thêm tự động hóa mới.",
+        "CAPTAIN_ASSISTANTS": "Bạn đã đạt số lượng trợ lý AI tối đa cho gói hiện tại. Vui lòng nâng cấp để thêm trợ lý mới.",
+        "CAPTAIN_DOCUMENTS": "Bạn đã đạt số lượng tài liệu AI tối đa cho gói hiện tại. Vui lòng nâng cấp để thêm tài liệu mới.",
+        "CAPTAIN_FAQS": "Bạn đã đạt số lượng FAQ AI tối đa cho gói hiện tại. Vui lòng nâng cấp để thêm FAQ mới."
+      },
+      "UPGRADE_BUTTON": "Mở trang thanh toán",
+      "CANCEL_BUTTON": "Hủy"
     }
   }
 }

@@ -35,6 +35,7 @@
     "LOADING_CONVERSATIONS": "Loading Conversations",
     "CANNOT_REPLY": "You cannot reply due to",
     "24_HOURS_WINDOW": "24 hour message window restriction",
+    "48_HOURS_WINDOW": "48 hour message window restriction",
     "API_HOURS_WINDOW": "You can only reply to this conversation within {hours} hours",
     "NOT_ASSIGNED_TO_YOU": "This conversation is not assigned to you. Would you like to assign this conversation to yourself?",
     "ASSIGN_TO_ME": "Assign to me",
@@ -60,9 +61,10 @@
     },
     "UPLOADING_ATTACHMENTS": "Uploading attachments...",
     "REPLIED_TO_STORY": "Replied to your story",
-    "UNSUPPORTED_MESSAGE": "This message is unsupported. You can view this message on the Facebook / Instagram app.",
+    "UNSUPPORTED_MESSAGE": "This message is unsupported. To view it, please open it on the original platform.",
     "UNSUPPORTED_MESSAGE_FACEBOOK": "This message is unsupported. You can view this message on the Facebook Messenger app.",
     "UNSUPPORTED_MESSAGE_INSTAGRAM": "This message is unsupported. You can view this message on the Instagram app.",
+    "UNSUPPORTED_MESSAGE_TIKTOK": "This message is unsupported. You can view this message on the TikTok app.",
     "SUCCESS_DELETE_MESSAGE": "Message deleted successfully",
     "FAIL_DELETE_MESSSAGE": "Couldn't delete message! Try again",
     "SUCCESS_UNDO_MESSAGE": "Message recalled",
@@ -78,20 +80,46 @@
       "HIDE_LABELS": "Hide labels"
     },
     "VOICE_CALL": {
+      "TITLE": "Call",
+      "RINGING": "Ringing",
+      "ACTIVE": "Call in progress",
+      "MISSED": "Missed Call",
+      "ENDED": "Call Ended",
+      "INCOMING": "Incoming call",
+      "OUTGOING": "Call started...",
       "INCOMING_CALL": "Incoming call",
       "OUTGOING_CALL": "Outgoing call",
       "CALL_IN_PROGRESS": "Call in progress",
       "NO_ANSWER": "No answer",
       "MISSED_CALL": "Missed call",
       "CALL_ENDED": "Call ended",
+      "DURATION": "{duration}",
+      "UNKNOWN": "Unknown",
+      "UNKNOWN_CALLER": "Unknown caller",
+      "UNKNOWN_NUMBER": "Unknown number",
+      "CALL_ERROR": "Failed to initiate call. Please try again.",
+      "CALL_INITIATED": "Call initiated successfully.",
       "NOT_ANSWERED_YET": "Not answered yet",
+      "YOU_CALLED": "You called",
       "THEY_ANSWERED": "They answered",
-      "YOU_ANSWERED": "You answered"
+      "YOU_ANSWERED": "You answered",
+      "YOU_DIDNT_ANSWER": "You didn't answer",
+      "RINGING_STATUS": "Ringing",
+      "ACTIVE_STATUS": "Call in progress",
+      "MISSED_STATUS": "Missed Call",
+      "ENDED_STATUS": "Call Ended",
+      "CALL_DURATION": "Duration: {duration}",
+      "INCOMING_FROM": "Incoming from {name}",
+      "OUTGOING_TO": "Outgoing to {name}",
+      "JOIN_CALL": "Join call",
+      "REJECT_CALL": "Reject call",
+      "END_CALL": "End call"
     },
     "HEADER": {
       "RESOLVE_ACTION": "Resolve",
       "REOPEN_ACTION": "Reopen",
       "OPEN_ACTION": "Open",
+      "AI_ASSISTANT_TOGGLE": "AI Assistant",
       "MORE_ACTIONS": "More actions",
       "OPEN": "More",
       "CLOSE": "Close",
@@ -178,6 +206,10 @@
           "SUCCESFUL": "Assigned label #{labelName} to conversation id {conversationId}",
           "FAILED": "Couldn't assign label. Please try again."
         },
+        "LABEL_REMOVAL": {
+          "SUCCESFUL": "Removed label #{labelName} from conversation id {conversationId}",
+          "FAILED": "Couldn't remove label. Please try again."
+        },
         "TEAM_ASSIGNMENT": {
           "SUCCESFUL": "Assigned team \"{team}\" to conversation id {conversationId}",
           "FAILED": "Couldn't assign team. Please try again."
@@ -190,7 +222,11 @@
       "DISABLE_SIGN_TOOLTIP": "Disable signature",
       "MSG_INPUT": "Shift + enter for new line. Start with '/' to select a Canned Response.",
       "PRIVATE_MSG_INPUT": "Shift + enter for new line. This will be visible only to Agents",
+      "MESSAGING_RESTRICTED": "You cannot reply to this conversation",
+      "MESSAGING_RESTRICTED_WHATSAPP": "You can only reply using a template message due to 24-hour message window restriction",
+      "MESSAGING_RESTRICTED_API": "You can only reply using a template message due to message window restriction",
       "MESSAGE_SIGNATURE_NOT_CONFIGURED": "Message signature is not configured, please configure it in profile settings.",
+      "COPILOT_MSG_INPUT": "Give copilot additional prompts, or ask anything else... Press enter to send follow-up",
       "CLICK_HERE": "Click here to update",
       "WHATSAPP_TEMPLATES": "Whatsapp Templates"
     },
@@ -202,7 +238,6 @@
       "INSERT_READ_MORE": "Read more",
       "DISMISS_REPLY": "Dismiss reply",
       "REPLYING_TO": "Replying to:",
-      "TIP_FORMAT_ICON": "Show rich text editor",
       "TIP_EMOJI_ICON": "Show emoji selector",
       "TIP_ATTACH_ICON": "Attach files",
       "TIP_AUDIORECORDER_ICON": "Record audio",
@@ -211,7 +246,7 @@
       "DRAG_DROP": "Drag and drop here to attach",
       "START_AUDIO_RECORDING": "Start audio recording",
       "STOP_AUDIO_RECORDING": "Stop audio recording",
-      "": "",
+      "COPILOT_THINKING": "Copilot is thinking",
       "EMAIL_HEAD": {
         "TO": "TO",
         "ADD_BCC": "Add bcc",
@@ -253,9 +288,12 @@
     "SUCCESS_DELETE_CONVERSATION": "Conversation deleted successfully",
     "FAIL_DELETE_CONVERSATION": "Couldn't delete conversation! Try again",
     "FILE_SIZE_LIMIT": "File exceeds the {MAXIMUM_SUPPORTED_FILE_UPLOAD_SIZE} MB attachment limit",
+    "FILE_TYPE_NOT_SUPPORTED": "This {fileName} file type is not supported in this conversation",
     "MESSAGE_ERROR": "Unable to send this message, please try again later",
     "SENT_BY": "Sent by:",
     "BOT": "Bot",
+    "NATIVE_APP": "Native app",
+    "NATIVE_APP_ADVISORY": "This message was sent from the native app. Reply from Chatwoot to maintain the message window.",
     "SEND_FAILED": "Couldn't send message! Try again",
     "TRY_AGAIN": "retry",
     "ASSIGNMENT": {
@@ -283,42 +321,6 @@
       "CONTACT": "Contact",
       "COPILOT": "Shopiz AI"
     },
-    "VOICE_CALL": {
-      "TITLE": "Call",
-      "RINGING": "Ringing",
-      "ACTIVE": "Call in progress",
-      "MISSED": "Missed Call",
-      "ENDED": "Call Ended",
-      "INCOMING": "Incoming call",
-      "OUTGOING": "Call started...",
-      "INCOMING_CALL": "Incoming call",
-      "OUTGOING_CALL": "Outgoing call",
-      "CALL_IN_PROGRESS": "Call in progress",
-      "NO_ANSWER": "No answer",
-      "MISSED_CALL": "Missed call",
-      "CALL_ENDED": "Call ended",
-      "DURATION": "{duration}",
-      "UNKNOWN": "Unknown",
-      "UNKNOWN_CALLER": "Unknown caller",
-      "UNKNOWN_NUMBER": "Unknown number",
-      "CALL_ERROR": "Failed to initiate call. Please try again.",
-      "CALL_INITIATED": "Call initiated successfully.",
-      "NOT_ANSWERED_YET": "Not answered yet",
-      "YOU_CALLED": "You called",
-      "THEY_ANSWERED": "They answered",
-      "YOU_ANSWERED": "You answered",
-      "YOU_DIDNT_ANSWER": "You didn't answer",
-      "RINGING_STATUS": "Ringing",
-      "ACTIVE_STATUS": "Call in progress",
-      "MISSED_STATUS": "Missed Call",
-      "ENDED_STATUS": "Call Ended",
-      "CALL_DURATION": "Duration: {duration}",
-      "INCOMING_FROM": "Incoming from {name}",
-      "OUTGOING_TO": "Outgoing to {name}",
-      "JOIN_CALL": "Join call",
-      "REJECT_CALL": "Reject call",
-      "END_CALL": "End call"
-    },
     "COPILOT": {
       "TRY_THESE_PROMPTS": "Try these prompts"
     },
@@ -326,7 +328,68 @@
       "ERROR_DOWNLOADING": "Unable to download attachment. Please try again"
     },
     "LOAD_MORE_MESSAGES": "Load more messages",
-    "ALL_MESSAGE_LOADED": "All messages loaded 🎉"
+    "ALL_MESSAGE_LOADED": "All messages loaded 🎉",
+    "ACTIVITY": {
+      "captain": {
+        "resolved": "Conversation was marked resolved by {user_name} due to inactivity",
+        "resolved_with_reason": "Conversation was marked resolved by {user_name} ({reason})",
+        "resolved_by_tool": "Conversation was marked resolved by {user_name}: {reason}",
+        "open": "Conversation was marked open by {user_name}",
+        "open_with_reason": "Conversation was marked open by {user_name} ({reason})",
+        "auto_opened_after_agent_reply": "Conversation was marked open automatically after an agent reply"
+      },
+      "agent_bot": {
+        "error_moved_to_open": "Conversation was marked open by system due to an error with the agent bot."
+      },
+      "status": {
+        "resolved": "Conversation was marked resolved by {user_name}",
+        "contact_resolved": "Conversation was resolved by {contact_name}",
+        "open": "Conversation was reopened by {user_name}",
+        "pending": "Conversation was marked as pending by {user_name}",
+        "snoozed": "Conversation was snoozed by {user_name}",
+        "auto_resolved_days": "Conversation was marked resolved by system due to {count} days of inactivity",
+        "auto_resolved_hours": "Conversation was marked resolved by system due to {count} hours of inactivity",
+        "auto_resolved_minutes": "Conversation was marked resolved by system due to {count} minutes of inactivity",
+        "system_auto_open": "System reopened the conversation due to a new incoming message."
+      },
+      "priority": {
+        "added": "{user_name} set the priority to {new_priority}",
+        "updated": "{user_name} changed the priority from {old_priority} to {new_priority}",
+        "removed": "{user_name} removed the priority"
+      },
+      "assignee": {
+        "self_assigned": "{user_name} self-assigned this conversation",
+        "assigned": "Assigned to {assignee_name} by {user_name}",
+        "removed": "Conversation unassigned by {user_name}"
+      },
+      "team": {
+        "assigned": "Assigned to {team_name} by {user_name}",
+        "assigned_with_assignee": "Assigned to {assignee_name} via {team_name} by {user_name}",
+        "removed": "Unassigned from {team_name} by {user_name}"
+      },
+      "labels": {
+        "added": "{user_name} added {labels}",
+        "removed": "{user_name} removed {labels}"
+      },
+      "sla": {
+        "added": "{user_name} added SLA policy {sla_name}",
+        "removed": "{user_name} removed SLA policy {sla_name}"
+      },
+      "linear": {
+        "issue_created": "Linear issue {issue_id} was created by {user_name}",
+        "issue_linked": "Linear issue {issue_id} was linked by {user_name}",
+        "issue_unlinked": "Linear issue {issue_id} was unlinked by {user_name}"
+      },
+      "csat": {
+        "not_sent_due_to_messaging_window": "CSAT survey not sent due to outgoing message restrictions"
+      },
+      "auto_resolve": {
+        "not_sent_due_to_messaging_window": "Auto-resolve message not sent due to outgoing message restrictions"
+      },
+      "muted": "{user_name} has muted the conversation",
+      "unmuted": "{user_name} has unmuted the conversation",
+      "auto_resolution_message": "Resolving the conversation as it has been inactive for a while. Please start a new conversation if you need further assistance."
+    }
   },
   "EMAIL_TRANSCRIPT": {
     "TITLE": "Send conversation transcript",
@@ -335,6 +398,7 @@
     "CANCEL": "Cancel",
     "SEND_EMAIL_SUCCESS": "The chat transcript was sent successfully",
     "SEND_EMAIL_ERROR": "There was an error, please try again",
+    "SEND_EMAIL_PAYMENT_REQUIRED": "Email transcript is not available on your current plan. Please upgrade to use this feature.",
     "FORM": {
       "SEND_TO_CONTACT": "Send the transcript to the customer",
       "SEND_TO_AGENT": "Send the transcript to the assigned agent",

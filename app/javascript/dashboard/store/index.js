@@ -15,7 +15,6 @@ import calls from './modules/calls';
 import campaigns from './modules/campaigns';
 import cannedResponse from './modules/cannedResponse';
 import categories from './modules/helpCenterCategories';
-import companies from './modules/companies';
 import contactConversations from './modules/contactConversations';
 import contactLabels from './modules/contactLabels';
 import contactNotes from './modules/contactNotes';
@@ -61,8 +60,6 @@ import copilotMessages from './captain/copilotMessages';
 import captainScenarios from './captain/scenarios';
 import captainTools from './captain/tools';
 import captainCustomTools from './captain/customTools';
-import salesProducts from './modules/sales/products';
-import salesOrders from './modules/sales/orders';
 
 const plugins = [];
 
@@ -83,7 +80,6 @@ export default createStore({
     campaigns,
     cannedResponse,
     categories,
-    companies,
     contactConversations,
     contactLabels,
     contactNotes,
@@ -129,8 +125,6 @@ export default createStore({
     captainScenarios,
     captainTools,
     captainCustomTools,
-    salesProducts,
-    salesOrders,
   },
   plugins,
 });

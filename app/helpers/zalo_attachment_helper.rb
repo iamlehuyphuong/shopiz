@@ -7,7 +7,7 @@ module ZaloAttachmentHelper
     return :audio if media[:type] == 'audio'
     return :video if media[:type] == 'video'
 
-    file_type(media[:payload][:type])
+    :unsupported
   end
 
   def attach_media # rubocop:disable Metrics/AbcSize

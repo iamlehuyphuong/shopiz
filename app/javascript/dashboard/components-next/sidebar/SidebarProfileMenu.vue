@@ -21,6 +21,10 @@ const props = defineProps({
     type: String,
     default: 'bottom',
   },
+  isCollapsed: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['close', 'openKeyShortcutModal']);
@@ -134,11 +138,19 @@ const dropdownBodyClass = computed(() => {
 </script>
 
 <template>
-  <DropdownContainer class="relative w-full min-w-0" @close="emit('close')">
+  <DropdownContainer
+    class="relative min-w-0"
+    :class="isCollapsed ? 'w-auto' : 'w-full'"
+    @close="emit('close')"
+  >
     <template #trigger="{ toggle, isOpen }">
       <button
-        class="flex gap-2 items-center p-1 w-full text-left rounded-lg cursor-pointer hover:bg-n-alpha-1"
-        :class="{ 'bg-n-alpha-1': isOpen }"
+        class="flex gap-2 items-center p-1 text-left rounded-lg cursor-pointer hover:bg-n-alpha-1"
+        :class="[
+          { 'bg-n-alpha-1': isOpen },
+          isCollapsed ? 'justify-center' : 'w-full',
+        ]"
+        :title="isCollapsed ? currentUser.available_name : undefined"
         @click="toggle"
       >
         <Avatar
@@ -150,7 +162,7 @@ const dropdownBodyClass = computed(() => {
           branded
           rounded-full
         />
-        <div class="min-w-0">
+        <div v-if="!isCollapsed" class="min-w-0">
           <div class="text-sm font-medium leading-4 truncate text-n-slate-12">
             {{ currentUser.available_name }}
           </div>
@@ -161,7 +173,7 @@ const dropdownBodyClass = computed(() => {
       </button>
     </template>
     <TeleportWithDirection to="body" :disabled="position !== 'top'">
-      <DropdownBody :class="['z-50 w-80', dropdownBodyClass]">
+      <DropdownBody class="z-50 w-80" :class="dropdownBodyClass">
         <SidebarProfileMenuStatus />
         <DropdownSeparator />
         <template v-for="item in allowedMenuItems" :key="item.label">

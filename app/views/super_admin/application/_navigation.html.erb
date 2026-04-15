@@ -16,6 +16,10 @@ as defined by the routes in the `admin/` namespace
     users: 'icon-user-follow-line',
     platform_apps: 'icon-apps-2-line',
     agent_bots: 'icon-robot-line',
+    subscription_tiers: 'icon-layers-3',
+    subscription_plans: 'icon-package',
+    addon_packages: 'icon-blocks',
+    billing_histories: 'icon-receipt',
   }
 %>
 
@@ -32,7 +36,8 @@ as defined by the routes in the `admin/` namespace
     <ul class="my-4">
       <%= render partial: "nav_item", locals: { icon: 'icon-grid-line', url: super_admin_root_url, label: 'Dashboard' } %>
       <% Administrate::Namespace.new(namespace).resources.each do |resource| %>
-        <% next if ["account_users", "access_tokens", "installation_configs", "dashboard", "devise/sessions", "app_configs", "instance_statuses", "settings"].include?  resource.resource %>
+        <% grouped_resources = ["subscription_tiers", "subscription_plans", "addon_packages", "billing_histories"] %>
+        <% next if (["account_users", "access_tokens", "installation_configs", "dashboard", "devise/sessions", "app_configs", "instance_statuses", "settings"] + grouped_resources).include? resource.resource %>
         <%= render partial: "nav_item", locals: {
             icon: sidebar_icons[resource.resource.to_sym],
             url: resource_index_route(resource),
@@ -41,6 +46,33 @@ as defined by the routes in the `admin/` namespace
         %>
 
       <% end %>
+
+      <li class="px-4 mb-1">
+        <% grouped_resources = ["subscription_tiers", "subscription_plans", "addon_packages", "billing_histories"] %>
+        <% is_billing_open = grouped_resources.any? { |r| request.path.include?(r) } %>
+        <details class="group" <%= 'open' if is_billing_open %>>
+          <summary class="-ml-1 flex items-center px-2 py-1.5 cursor-pointer rounded-lg <%= is_billing_open ? 'text-woot-500 bg-slate-25' : 'text-slate-800 hover:text-woot-500 hover:bg-slate-25' %> list-none">
+            <svg width="16" height="16"><use xlink:href="#icon-package" /></svg>
+            <span class="ml-2 text-sm">Packages</span>
+            <svg class="ml-auto w-4 h-4 transition-transform duration-200 group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </summary>
+          <ul class="ml-4 mt-1">
+            <% Administrate::Namespace.new(namespace).resources.each do |resource| %>
+              <% next unless grouped_resources.include?(resource.resource) %>
+              <% resource_url = resource_index_route(resource) %>
+              <li class="px-4 mb-1">
+                <% text_class = current_page?(resource_url) ? 'text-woot-500 bg-slate-25' : 'text-slate-800' %>
+                <%= link_to resource_url, class: text_class + ' -ml-1 flex items-center px-2 py-1.5 hover:text-woot-500 hover:bg-slate-25 rounded-lg' do %>
+                  <span class="ml-2 text-sm"><%= display_resource_name(resource) %></span>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </details>
+      </li>
+
       <%= render 'settings_menu', open: settings_open? %>
     </ul>
   </div>

@@ -18,6 +18,10 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  isFacebookType: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['edit', 'delete']);
@@ -41,6 +45,8 @@ const handleDelete = campaign => emit('delete', campaign);
       :is-live-chat-type="isLiveChatType"
       :is-voice-type="isVoiceType"
       :is-zalo-personal-type="isZaloPersonalType"
+      :is-facebook-type="isFacebookType"
+      :campaign="campaign"
       @edit="handleEdit(campaign)"
       @delete="handleDelete(campaign)"
     />

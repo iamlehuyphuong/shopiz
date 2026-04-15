@@ -33,7 +33,7 @@ const statusList = computed(() => {
   ];
 });
 
-const statusColors = ['bg-n-teal-9', 'bg-n-amber-9', 'bg-n-slate-9'];
+const statusColors = ['bg-n-teal-9', 'bg-n-ruby-9', 'bg-n-slate-9'];
 
 const availabilityStatuses = computed(() => {
   return statusList.value.map((statusLabel, index) => ({

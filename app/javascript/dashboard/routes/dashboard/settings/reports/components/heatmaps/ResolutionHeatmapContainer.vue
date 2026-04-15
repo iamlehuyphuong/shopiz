@@ -13,6 +13,5 @@ const { t } = useI18n();
     store-getter="getAccountResolutionHeatmapData"
     store-action="fetchAccountResolutionHeatmap"
     ui-flag-key="isFetchingAccountResolutionsHeatmap"
-    color-scheme="green"
   />
 </template>

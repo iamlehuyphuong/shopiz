@@ -5,8 +5,9 @@ import LiveChatCampaignsPage from './pages/LiveChatCampaignsPage.vue';
 import SMSCampaignsPage from './pages/SMSCampaignsPage.vue';
 import WhatsAppCampaignsPage from './pages/WhatsAppCampaignsPage.vue';
 import VoiceCampaignsPage from './pages/VoiceCampaignsPage.vue';
-import SurveyCampaignsPage from './pages/SurveyCampaignsPage.vue';
 import ZaloPersonalCampaignsPage from './pages/ZaloPersonalCampaignsPage.vue';
+import ZaloOaCampaignsPage from './pages/ZaloOaCampaignsPage.vue';
+import FacebookCampaignsPage from './pages/FacebookCampaignsPage.vue';
 
 import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 
@@ -59,6 +60,12 @@ const campaignsRoutes = {
           component: ZaloPersonalCampaignsPage,
         },
         {
+          path: 'zalo_oa',
+          name: 'campaigns_zalo_oa_index',
+          meta,
+          component: ZaloOaCampaignsPage,
+        },
+        {
           path: 'sms',
           name: 'campaigns_sms_index',
           meta,
@@ -80,10 +87,10 @@ const campaignsRoutes = {
           component: VoiceCampaignsPage,
         },
         {
-          path: 'surveys',
-          name: 'campaigns_survey_index',
-          component: SurveyCampaignsPage,
-          meta: meta,
+          path: 'facebook',
+          name: 'campaigns_facebook_index',
+          meta,
+          component: FacebookCampaignsPage,
         },
       ],
     },

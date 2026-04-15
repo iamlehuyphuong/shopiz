@@ -10,6 +10,7 @@ import LiveChatCampaignDetails from './LiveChatCampaignDetails.vue';
 import SMSCampaignDetails from './SMSCampaignDetails.vue';
 import VoiceCampaignDetails from './VoiceCampaignDetails.vue';
 import ZaloPersonalCampaignDetails from './ZaloPersonalCampaignDetails.vue';
+import FacebookCampaignDetails from './FacebookCampaignDetails.vue';
 
 const props = defineProps({
   title: {
@@ -32,6 +33,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  isFacebookType: {
+    type: Boolean,
+    default: false,
+  },
   isEnabled: {
     type: Boolean,
     default: false,
@@ -47,6 +52,10 @@ const props = defineProps({
   inbox: {
     type: Object,
     default: null,
+  },
+  campaign: {
+    type: Object,
+    default: () => ({}),
   },
   scheduledAt: {
     type: Number,
@@ -137,6 +146,14 @@ const inboxIcon = computed(() => {
           :inbox-icon="inboxIcon"
           :scheduled-at="scheduledAt"
         />
+        <FacebookCampaignDetails
+          v-else-if="isFacebookType"
+          :sender="sender"
+          :inbox-name="inboxName"
+          :inbox-icon="inboxIcon"
+          :scheduled-at="scheduledAt"
+          :campaign="campaign"
+        />
         <SMSCampaignDetails
           v-else
           :inbox-name="inboxName"
@@ -147,7 +164,7 @@ const inboxIcon = computed(() => {
     </div>
     <div class="flex items-center justify-end w-20 gap-2">
       <Button
-        v-if="isLiveChatType || isVoiceType || (isZaloPersonalType && status == 'active')"
+        v-if="isLiveChatType || isVoiceType || (isZaloPersonalType && status == 'active') || (isFacebookType && status == 'active')"
         variant="faded"
         size="sm"
         color="slate"

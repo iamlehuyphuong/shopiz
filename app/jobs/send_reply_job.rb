@@ -9,12 +9,13 @@ class SendReplyJob < ApplicationJob
     'Channel::Whatsapp' => ::Whatsapp::SendOnWhatsappService,
     'Channel::Sms' => ::Sms::SendOnSmsService,
     'Channel::Instagram' => ::Instagram::SendOnInstagramService,
+    'Channel::Tiktok' => ::Tiktok::SendOnTiktokService,
     'Channel::Email' => ::Email::SendOnEmailService,
     'Channel::WebWidget' => ::Messages::SendEmailNotificationService,
     'Channel::Api' => ::Messages::SendEmailNotificationService,
     'Channel::ZaloOa' => ::Zalo::SendOnZaloService,
     'Channel::ZaloPersonal' => ::ZaloPersonal::SendOnZaloService,
-    'Channel::Tiktok' => ::Tiktok::SendOnTiktokService
+    'Channel::TiktokShop' => ::TiktokShop::SendOnTiktokService
   }.freeze
 
   def perform(message_id)

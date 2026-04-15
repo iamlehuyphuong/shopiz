@@ -1,3 +1,5 @@
+# Processes incoming messages from Zalo OA webhook
+# Creates/updates contacts, conversations, and messages
 class Zalo::IncomingMessageService
   include ::ZaloAttachmentHelper
 
@@ -12,6 +14,7 @@ class Zalo::IncomingMessageService
     @message.content_attributes[:in_reply_to_external_id] = params[:message][:quote_msg_id] if params[:message][:quote_msg_id]
 
     attach_media
+    @message.content ||= I18n.t('inboxes.zalo.unsupported_message') if @message.attachments.blank?
     @message.save!
   end
 
@@ -25,29 +28,47 @@ class Zalo::IncomingMessageService
     @channel ||= @inbox.channel
   end
 
-  def url_getprofile
-    'https://openapi.zalo.me/v3.0/oa/user/detail'
+  def client
+    @client ||= channel.client
   end
 
-  def get_profile(user_id, access_token)
-    HTTParty.get(
-      url_getprofile,
-      headers: { 'access_token' => access_token },
-      query: { data: { user_id: user_id }.to_json }
-    )
+  def update_contact_from_profile
+    response = client.get_user_detail(params[:sender][:id])
+
+    # Retry once if error (rare but API sometimes glitches)
+    response = client.get_user_detail(params[:sender][:id]) unless response['error']&.zero?
+    return unless response['error']&.zero?
+
+    data = response['data']
+    update_contact_basic_info(data)
+    update_contact_shared_info(data['shared_info']) if data['shared_info'].present?
+    ::Avatar::AvatarFromUrlJob.perform_later(@contact, data['avatars']['240']) if data.dig('avatars', '240')
   end
 
-  def update_contact_from_profile # rubocop:disable Metrics/AbcSize
-    response = get_profile(params[:sender][:id], channel.oa_access_token)
-    channel.refresh_access_token(channel) if response['error'] == -216
+  def update_contact_basic_info(data)
+    @contact.update!(name: data['display_name']) if data['display_name'].present?
+    @contact.additional_attributes['zalo_user_id'] = data['user_id']
+    @contact.additional_attributes['zalo_user_id_by_app'] = data['user_id_by_app']
+    @contact.additional_attributes['zalo_is_follower'] = data['user_is_follower']
+    @contact.additional_attributes['zalo_last_interaction'] = data['user_last_interaction_date']
+    @contact.save!
+  end
 
-    # retry one time if error since it is rare but sometimes api got error
-    response = get_profile(params[:sender][:id], channel.oa_access_token) unless response['error'].zero?
+  def update_contact_shared_info(shared_info)
+    # Zalo only provides these fields when user has explicitly shared them
+    if shared_info['phone'].present?
+      phone = shared_info['phone']
+      phone = "+84#{phone[1..]}" if phone.start_with?('0')
+      @contact.phone_number = phone if @contact.phone_number.blank?
+    end
 
-    return unless (response['error']).zero?
+    if shared_info['address'].present?
+      @contact.location = shared_info['address']
+      @contact.additional_attributes['city'] = shared_info['city'] if shared_info['city'].present?
+    end
 
-    @contact.update!(name: response['data']['display_name'])
-    ::Avatar::AvatarFromUrlJob.perform_later(@contact, response['data']['avatars']['240'])
+    @contact.additional_attributes['zalo_name'] = shared_info['name'] if shared_info['name'].present?
+    @contact.save!
   end
 
   def set_contact

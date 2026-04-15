@@ -3,6 +3,7 @@ import { useRoute } from 'vue-router';
 import { useFunctionGetter } from 'dashboard/composables/store';
 import { ref, onMounted, computed } from 'vue';
 import { format } from 'date-fns';
+import { useI18n } from 'vue-i18n';
 import { formatTime } from '@chatwoot/utils';
 import ReportHeader from './components/ReportHeader.vue';
 import ReportFilters from './components/ReportFilters.vue';
@@ -11,6 +12,7 @@ import BarChart from 'shared/components/charts/BarChart.vue';
 import { GROUP_BY_FILTER, GROUP_BY_OPTIONS } from './constants';
 
 const route = useRoute();
+const { t } = useI18n();
 const inbox = useFunctionGetter('inboxes/getInboxById', route.params.id);
 
 // For this dummy implementation, we'll show dummy data
@@ -55,7 +57,7 @@ const generateDateLabels = (days = 7) => {
   for (let i = days - 1; i >= 0; i--) {
     const date = new Date();
     date.setDate(today.getDate() - i);
-    dates.push(format(date, 'dd-MMM'));
+    dates.push(format(date, t('GENERAL.REPORT_SHORT_DATE_FORMAT')));
   }
   
   return dates;
@@ -69,19 +71,19 @@ const callsByTypeChart = computed(() => {
       {
         label: 'Incoming Calls',
         data: generateRandomData(2, 8, 7),
-        backgroundColor: '#3B82F6', // blue
+        backgroundColor: '#E06720', // brand orange
         barPercentage: 0.6,
       },
       {
         label: 'Outgoing Calls',
         data: generateRandomData(1, 5, 7),
-        backgroundColor: '#6366F1', // indigo
+        backgroundColor: '#F97316', // light orange
         barPercentage: 0.6,
       },
       {
         label: 'Missed Calls',
         data: generateRandomData(0, 2, 7),
-        backgroundColor: '#F97316', // orange
+        backgroundColor: '#D15A10', // dark orange
         barPercentage: 0.6,
       },
     ]
@@ -126,7 +128,7 @@ const successRateChart = computed(() => {
       {
         label: 'Call Success Rate (%)',
         data: generateRandomData(75, 100, 7),
-        backgroundColor: '#3B82F6', // blue (chatwoot standard)
+        backgroundColor: '#E06720', // brand orange
         barPercentage: 0.6,
       }
     ]

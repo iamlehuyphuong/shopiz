@@ -16,7 +16,7 @@ class DashboardController < ActionController::Base
     CHATWOOT_INBOX_TOKEN
     API_CHANNEL_NAME
     API_CHANNEL_THUMBNAIL
-    ANALYTICS_TOKEN
+    CLOUD_ANALYTICS_TOKEN
     DIRECT_UPLOADS_ENABLED
     MAXIMUM_FILE_UPLOAD_SIZE
     HCAPTCHA_SITE_KEY
@@ -73,21 +73,24 @@ class DashboardController < ActionController::Base
       ENABLE_ACCOUNT_SIGNUP: GlobalConfigService.load('ENABLE_ACCOUNT_SIGNUP', 'false'),
       FB_APP_ID: GlobalConfigService.load('FB_APP_ID', ''),
       INSTAGRAM_APP_ID: GlobalConfigService.load('INSTAGRAM_APP_ID', ''),
-      FACEBOOK_API_VERSION: GlobalConfigService.load('FACEBOOK_API_VERSION', 'v18.0'),
+      TIKTOK_APP_ID: GlobalConfigService.load('TIKTOK_APP_ID', ''),
+      FACEBOOK_API_VERSION: GlobalConfigService.load('FACEBOOK_API_VERSION', 'v25.0'),
       WHATSAPP_APP_ID: GlobalConfigService.load('WHATSAPP_APP_ID', ''),
       WHATSAPP_CONFIGURATION_ID: GlobalConfigService.load('WHATSAPP_CONFIGURATION_ID', ''),
       IS_ENTERPRISE: ChatwootApp.enterprise?,
       AZURE_APP_ID: GlobalConfigService.load('AZURE_APP_ID', ''),
       ZALO_OA_APP_ID: GlobalConfigService.load('ZALO_OA_APP_ID', ''),
       ZALO_OA_APP_SECRET: GlobalConfigService.load('ZALO_OA_APP_SECRET', ''),
-      ZALO_OA_API_URL: GlobalConfigService.load('ZALO_OA_API_URL', ''),
+      ZALO_API_URL: GlobalConfigService.load('ZALO_API_URL', ''),
       ZALO_OA_SECRET_KEY: GlobalConfigService.load('ZALO_OA_SECRET_KEY', ''),
+      ZALO_SECRET_KEY: GlobalConfigService.load('ZALO_SECRET_KEY', ''),
       TIKTOK_SHOP_APP_ID: GlobalConfigService.load('TIKTOK_SHOP_APP_ID', ''),
       TIKTOK_SHOP_APP_SECRET: GlobalConfigService.load('TIKTOK_SHOP_APP_SECRET', ''),
-      ACTIVE_PIECES_INSTANCE_URL: GlobalConfigService.load('ACTIVE_PIECES_INSTANCE_URL', ''),
-      ACTIVE_PIECES_JWT_SECRET: GlobalConfigService.load('ACTIVE_PIECES_JWT_SECRET', ''),
+      TWITTER_CONSUMER_KEY: GlobalConfigService.load('TWITTER_CONSUMER_KEY', ''),
       GIT_SHA: GIT_HASH,
-      ALLOWED_LOGIN_METHODS: allowed_login_methods
+      ALLOWED_LOGIN_METHODS: allowed_login_methods,
+      GOOGLE_OAUTH_CLIENT_ID: GlobalConfigService.load('GOOGLE_OAUTH_CLIENT_ID', nil),
+      GOOGLE_OAUTH_REDIRECT_URI: GlobalConfigService.load('GOOGLE_OAUTH_REDIRECT_URI', nil)
     }
   end
 

@@ -1,33 +1,53 @@
 class Webhooks::TiktokController < ActionController::API
-  def process_payload
-    body = request.raw_post
+  before_action :verify_signature!
 
-    unless verify_tiktok_signature(body, request.headers["TikTok-Signature"])
-      render plain: "Unauthorized", status: :unauthorized and return
+  def events
+    event = JSON.parse(request_payload)
+    if echo_event?
+      # Add delay to prevent race condition where echo arrives before send message API completes
+      # This avoids duplicate messages when echo comes early during API processing
+      ::Webhooks::TiktokEventsJob.set(wait: 2.seconds).perform_later(event)
+    else
+      ::Webhooks::TiktokEventsJob.perform_later(event)
     end
-
-    payload = JSON.parse(body) rescue nil
-    return render plain: "Invalid JSON", status: :bad_request unless payload
-
-    Rails.logger.info "Verified TikTok webhook event: #{payload}"
-    Webhooks::TiktokMessagesJob.perform_later(payload)
 
     head :ok
   end
 
   private
 
-  def verify_tiktok_signature(body, signature_header)
-    return false if body.blank? || signature_header.blank?
+  def request_payload
+    @request_payload ||= request.body.read
+  end
 
-    timestamp = signature_header.split(",").find { |s| s.start_with?("t=") }&.split("=")&.last
-    signature_value = signature_header.split(",").find { |s| s.start_with?("s=") }&.split("=")&.last
-    return false unless timestamp && signature_value
+  def verify_signature!
+    signature_header = request.headers['Tiktok-Signature']
+    client_secret = GlobalConfigService.load('TIKTOK_APP_SECRET', nil)
+    received_timestamp, received_signature = extract_signature_parts(signature_header)
 
-    payload = "#{timestamp}.#{body}"
-    app_secret = GlobalConfigService.load('TIKTOK_SHOP_APP_SECRET', '')
-    expected_signature = OpenSSL::HMAC.hexdigest("SHA256", app_secret, payload)
+    return head :unauthorized unless client_secret && received_timestamp && received_signature
 
-    ActiveSupport::SecurityUtils.secure_compare(expected_signature, signature_value)
+    signature_payload = "#{received_timestamp}.#{request_payload}"
+    computed_signature = OpenSSL::HMAC.hexdigest('SHA256', client_secret, signature_payload)
+
+    return head :unauthorized unless ActiveSupport::SecurityUtils.secure_compare(computed_signature, received_signature)
+
+    # Check timestamp delay (acceptable delay: 5 seconds)
+    current_timestamp = Time.current.to_i
+    delay = current_timestamp - received_timestamp
+
+    return head :unauthorized if delay > 5
+  end
+
+  def extract_signature_parts(signature_header)
+    return [nil, nil] if signature_header.blank?
+
+    keys = signature_header.split(',')
+    signature_parts = keys.map { |part| part.split('=') }.to_h
+    [signature_parts['t']&.to_i, signature_parts['s']]
+  end
+
+  def echo_event?
+    params[:event] == 'im_send_msg'
   end
 end

@@ -16,6 +16,7 @@ json.company_name resource.company_name
 json.company_address resource.company_address
 json.company_email resource.company_email
 json.company_tax_id resource.company_tax_id
+json.id_number resource.id_number
 json.provider resource.provider
 json.pubsub_token resource.pubsub_token
 json.custom_attributes resource.custom_attributes if resource.custom_attributes.present?

@@ -85,7 +85,7 @@ const AVATAR_COLORS = {
 
 const STATUS_CLASSES = computed(() => ({
   online: 'bg-n-teal-10',
-  busy: 'bg-n-amber-10',
+  busy: 'bg-n-ruby-10',
   ...(props.hideOfflineStatus ? {} : { offline: 'bg-n-slate-10' }),
 }));
 
@@ -127,6 +127,19 @@ const containerStyles = computed(() => ({
   width: `${props.size}px`,
   height: `${props.size}px`,
 }));
+
+const borderRadiusClass = computed(() => {
+  if (props.roundedFull) {
+    return 'rounded-full';
+  }
+
+  // Approximates 25% of size
+  if (props.size <= 16) return 'rounded'; // 4px
+  if (props.size <= 24) return 'rounded-md'; // 6px
+  if (props.size <= 32) return 'rounded-lg'; // 8px
+  if (props.size <= 48) return 'rounded-xl'; // 12px
+  return 'rounded-2xl'; // 16px
+});
 
 const avatarStyles = computed(() => ({
   ...containerStyles.value,
@@ -200,7 +213,7 @@ watch(
 
 <template>
   <span
-    class="relative inline-flex group/avatar z-0 flex-shrink-0"
+    class="relative inline-flex group/avatar z-0 flex-shrink-0 align-middle"
     :style="containerStyles"
   >
     <!-- Status Badge -->
@@ -232,9 +245,9 @@ watch(
     <!-- Avatar Container -->
     <span
       role="img"
-      class="relative inline-flex items-center justify-center object-cover overflow-hidden font-medium"
+      class="relative inline-flex items-center justify-center object-cover overflow-hidden font-medium outline outline-1 -outline-offset-1 outline-[rgb(0_0_0_/_0.03)] dark:outline-[rgb(255_255_255_/_0.04)]"
       :class="[
-        roundedFull ? 'rounded-full' : 'rounded-xl',
+        borderRadiusClass,
         {
           'dark:!bg-[var(--dark-bg)] dark:!text-[var(--dark-text)]':
             !showDefaultAvatar && (!src || !isImageValid),
@@ -283,7 +296,8 @@ watch(
         :handle-image-upload="handleImageUpload"
       >
         <div
-          class="absolute inset-0 z-10 flex items-center justify-center invisible w-full h-full transition-all duration-300 ease-in-out opacity-0 rounded-xl bg-n-alpha-black1 group-hover/avatar:visible group-hover/avatar:opacity-100"
+          class="absolute inset-0 z-10 flex items-center justify-center invisible w-full h-full transition-all duration-300 ease-in-out opacity-0 bg-n-alpha-black1 group-hover/avatar:visible group-hover/avatar:opacity-100"
+          :class="borderRadiusClass"
           @click="handleUploadAvatar"
         >
           <Icon

@@ -1,7 +1,8 @@
-module Enterprise::Account::PlanUsageAndLimits
+module Enterprise::Account::PlanUsageAndLimits # rubocop:disable Metrics/ModuleLength
   CAPTAIN_RESPONSES = 'captain_responses'.freeze
   CAPTAIN_DOCUMENTS = 'captain_documents'.freeze
   CAPTAIN_RESPONSES_USAGE = 'captain_responses_usage'.freeze
+  CAPTAIN_RESPONSES_CREDIT_USAGE = 'captain_responses_credit_usage'.freeze
   CAPTAIN_DOCUMENTS_USAGE = 'captain_documents_usage'.freeze
 
   def usage_limits
@@ -25,13 +26,26 @@ module Enterprise::Account::PlanUsageAndLimits
   end
 
   def captain_response_summary
-    total_count = limits['captain_responses'].to_i + limits['captain_responses_credit'].to_i
-    consumed = custom_attributes[CAPTAIN_RESPONSES_USAGE].to_i
+    monthly_limit = limits['captain_responses'].to_i
+    credit_limit = limits['captain_responses_credit'].to_i
+    
+    monthly_consumed = custom_attributes[CAPTAIN_RESPONSES_USAGE].to_i
+    credit_consumed = custom_attributes[CAPTAIN_RESPONSES_CREDIT_USAGE].to_i
+
+    monthly_available = (monthly_limit - monthly_consumed).clamp(0, monthly_limit)
+    credit_available = (credit_limit - credit_consumed).clamp(0, credit_limit)
 
     {
-      total_count: total_count,
-      current_available: (total_count - consumed).clamp(0, total_count),
-      consumed: consumed
+      monthly_limit: monthly_limit,
+      monthly_consumed: monthly_consumed,
+      monthly_available: monthly_available,
+      credit_limit: credit_limit,
+      credit_consumed: credit_consumed,
+      credit_available: credit_available,
+      total_available: monthly_available + credit_available,
+      total_count: monthly_limit + credit_limit,
+      current_available: monthly_available + credit_available,
+      consumed: monthly_consumed + credit_consumed
     }
   end
 
@@ -47,8 +61,15 @@ module Enterprise::Account::PlanUsageAndLimits
   end
 
   def increment_response_usage
-    current_usage = custom_attributes[CAPTAIN_RESPONSES_USAGE].to_i || 0
-    custom_attributes[CAPTAIN_RESPONSES_USAGE] = current_usage + 1
+    summary = captain_response_summary
+    
+    if summary[:monthly_available] > 0
+      current_usage = custom_attributes[CAPTAIN_RESPONSES_USAGE].to_i || 0
+      custom_attributes[CAPTAIN_RESPONSES_USAGE] = current_usage + 1
+    elsif summary[:credit_available] > 0
+      current_credit_usage = custom_attributes[CAPTAIN_RESPONSES_CREDIT_USAGE].to_i || 0
+      custom_attributes[CAPTAIN_RESPONSES_CREDIT_USAGE] = current_credit_usage + 1
+    end
     save
   end
 
@@ -61,6 +82,17 @@ module Enterprise::Account::PlanUsageAndLimits
     # this will ensure that the document count is always accurate
     custom_attributes[CAPTAIN_DOCUMENTS_USAGE] = captain_documents.count
     save
+  end
+
+  def email_transcript_enabled?
+    default_plan = InstallationConfig.find_by(name: 'CHATWOOT_CLOUD_PLANS')&.value&.first
+    return true if default_plan.blank?
+
+    plan_name.present? && plan_name != default_plan['name']
+  end
+
+  def email_rate_limit
+    account_limit || plan_email_limit || global_limit || default_limit
   end
 
   def subscribed_features
@@ -104,6 +136,16 @@ module Enterprise::Account::PlanUsageAndLimits
       current_available: (total_count - consumed).clamp(0, total_count),
       consumed: consumed
     }
+  end
+
+  def plan_email_limit
+    config = InstallationConfig.find_by(name: 'ACCOUNT_EMAILS_PLAN_LIMITS')&.value
+    return nil if config.blank? || plan_name.blank?
+
+    parsed = config.is_a?(String) ? JSON.parse(config) : config
+    parsed[plan_name.downcase]&.to_i
+  rescue StandardError
+    nil
   end
 
   def default_captain_limits
@@ -158,7 +200,8 @@ module Enterprise::Account::PlanUsageAndLimits
         'captain_faqs' => { 'type': 'number' },
         'contacts' => { 'type': 'number' },
         'automations' => { 'type': 'number' },
-        'captain_responses_credit' => { 'type': 'number' }
+        'captain_responses_credit' => { 'type': 'number' },
+        'emails' => { 'type': 'number' }
       },
       'required' => [],
       'additionalProperties' => false

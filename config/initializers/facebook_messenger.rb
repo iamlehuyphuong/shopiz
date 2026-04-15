@@ -48,7 +48,11 @@ Rails.application.reloader.to_prepare do
     Webhooks::FacebookPostbackJob.perform_later(postback.to_json)
   end
 
-  Facebook::Messenger::Bot.on :postback do |postback|
-    Webhooks::FacebookPostbackJob.perform_later(postback.to_json)
+  Facebook::Messenger::Bot.on :referral do |referral|
+    Webhooks::FacebookEventsJob.perform_later(referral.to_json)
+  end
+
+  Facebook::Messenger::Bot.on :optin do |optin|
+    Webhooks::FacebookEventsJob.perform_later(optin.to_json)
   end
 end

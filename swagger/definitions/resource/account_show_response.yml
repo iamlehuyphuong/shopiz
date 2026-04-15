@@ -3,7 +3,9 @@ allOf:
   - type: object
     properties:
       latest_shopiz_version:
-        type: string
+        type:
+          - string
+          - 'null'
         description: Latest version of Shopiz available
         example: "3.0.0"
       subscribed_features:

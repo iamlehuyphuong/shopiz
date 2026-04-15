@@ -1,0 +1,9 @@
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+  <% field.limit_keys.each do |key| %>
+    <% value = field.limit_value(key) %>
+    <div class="flex justify-between items-center p-2 border border-slate-100 rounded">
+      <span class="text-sm font-medium text-slate-500"><%= key.titleize %></span>
+      <span class="text-sm font-semibold text-slate-900"><%= value.presence || "∞" %></span>
+    </div>
+  <% end %>
+</div>

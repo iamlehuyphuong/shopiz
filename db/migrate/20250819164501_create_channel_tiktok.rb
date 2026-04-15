@@ -1,6 +1,6 @@
 class CreateChannelTiktok < ActiveRecord::Migration[7.0]
   def change
-    create_table :channel_tiktok do |t|
+    create_table :channel_tiktok_shop do |t|
       t.string :access_token, null: false
       t.string :refresh_token, null: false
       t.integer :expires_in, null: false

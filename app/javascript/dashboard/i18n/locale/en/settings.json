@@ -215,6 +215,12 @@
         "ERROR": "Please enter a valid address",
         "PLACEHOLDER": "Please enter your address"
       },
+      "ID_NUMBER": {
+        "LABEL": "ID card number / CCCD",
+        "ERROR": "Please enter a valid ID number",
+        "PLACEHOLDER": "Please enter your ID card number or CCCD"
+      },
+      "IS_COMPANY": "Company account?",
       "TYPE_IDS": {
         "PERSONAL": "Personal",
         "COMPANY": "Company"
@@ -263,6 +269,7 @@
     "CONTACT_SUPPORT": "Contact support",
     "SELECTOR_SUBTITLE": "Select an account from the following list",
     "PROFILE_SETTINGS": "Profile settings",
+    "YEAR_IN_REVIEW": "Year in Review",
     "KEYBOARD_SHORTCUTS": "Keyboard shortcuts",
     "APPEARANCE": "Change appearance",
     "SUPER_ADMIN_CONSOLE": "SuperAdmin console",
@@ -301,7 +308,8 @@
     "FILE_BUBBLE": {
       "DOWNLOAD": "Download",
       "UPLOADING": "Uploading...",
-      "INSTAGRAM_STORY_UNAVAILABLE": "This story is no longer available."
+      "INSTAGRAM_STORY_UNAVAILABLE": "This story is no longer available.",
+      "INSTAGRAM_STORY_REPLY": "Replied to your story:"
     },
     "LOCATION_BUBBLE": {
       "SEE_ON_MAP": "See on map"
@@ -322,7 +330,7 @@
     "TEMPLATES": {
       "HEADER": {
         "TITLE": "Templates",
-        "DESCRIPTION": "Create and manage message templates to streamline your customer support responses."
+        "DESCRIPTION": "Manage message templates across all your messaging channels from one place."
       },
       "EMPTY_STATE": {
         "TITLE": "No templates yet",
@@ -331,7 +339,24 @@
       "ACTIONS": {
         "CREATE_TEMPLATE": "Create Template",
         "NEW_TEMPLATE": "New template",
-        "DELETE": "Delete template"
+        "DELETE": "Delete template",
+        "SYNC_ALL": "Sync all",
+        "MANAGE": "Manage",
+        "VIEW_IN_INBOX": "View in inbox"
+      },
+      "CHANNEL_OVERVIEW": {
+        "INBOXES": "{count} inbox | {count} inboxes",
+        "TEMPLATES_COUNT": "{count} template | {count} templates",
+        "NO_INBOXES": "No inboxes configured",
+        "NO_TEMPLATES": "No templates"
+      },
+      "UNIFIED_STATUS": {
+        "ACTIVE": "Active",
+        "APPROVED": "Approved",
+        "PENDING": "Pending",
+        "DRAFT": "Draft",
+        "REJECTED": "Rejected",
+        "DISABLED": "Disabled"
       },
       "FILTERS": {
         "CONTENT": "Content",
@@ -340,8 +365,12 @@
         "APPROVED": "Approved",
         "PENDING": "Pending",
         "REJECTED": "Rejected",
+        "ACTIVE": "Active",
+        "DRAFT": "Draft",
+        "DISABLED": "Disabled",
         "ALL_CHANNELS": "All Channels",
-        "ALL_LANGUAGES": "All Languages"
+        "ALL_LANGUAGES": "All Languages",
+        "ALL_INBOXES": "All Inboxes"
       },
       "LIST": {
         "404": "No templates found",
@@ -360,6 +389,7 @@
         "CANCEL": "Cancel",
         "CREATE": "Create",
         "CONTINUE": "Continue",
+        "GO_TO_INBOX": "Go to inbox",
         "BACK": "Back",
         "STEPS": {
           "BASIC": "Basic Info",
@@ -394,9 +424,11 @@
           },
           "INBOX": {
             "LABEL": "WhatsApp Inbox",
-            "PLACEHOLDER": "Select a WhatsApp inbox",
-            "ERROR": "Please select a WhatsApp inbox",
-            "NO_WHATSAPP_INBOX": "No WhatsApp inboxes found. Create a WhatsApp inbox first."
+            "ZALO_LABEL": "Zalo OA Inbox",
+            "PLACEHOLDER": "Select an inbox",
+            "ERROR": "Please select an inbox",
+            "NO_WHATSAPP_INBOX": "No WhatsApp inboxes found. Create a WhatsApp inbox first.",
+            "NO_ZALO_INBOX": "No Zalo OA inboxes found. Create a Zalo OA inbox first."
           }
         }
       },
@@ -629,7 +661,60 @@
       "INFO_SHORT": "Automatically mark offline when you aren't using the app."
     },
     "DOCS": "Read docs",
-    "SECURITY": "Security"
+    "SECURITY": "Security",
+    "CAPTAIN_AI": "ShopizAI",
+    "CONVERSATION_WORKFLOW": "Conversation Workflow"
+  },
+  "DATABASE": {
+    "LOADING": "Loading database..."
+  },
+  "CAPTAIN_SETTINGS": {
+    "TITLE": "ShopizAI Settings",
+    "DESCRIPTION": "Configure your AI models and features for ShopizAI. ShopizAI follows a credit based billing, you will be charged credits for every action ShopizAI takes based on the model selected.",
+    "LOADING": "Loading ShopizAI configuration...",
+    "LINK_TEXT": "Learn more about ShopizAI Credits",
+    "NOT_ENABLED": "ShopizAI is not enabled for your account. Please upgrade your plan to access ShopizAI features.",
+    "MODEL_CONFIG": {
+      "TITLE": "Model Configuration",
+      "DESCRIPTION": "Select AI models for different features.",
+      "SELECT_MODEL": "Select model",
+      "CREDITS_PER_MESSAGE": "{credits} credit/message",
+      "COMING_SOON": "Coming soon",
+      "EDITOR": {
+        "TITLE": "Editor Features",
+        "DESCRIPTION": "Powers smart compose, grammar corrections, tone adjustments, and content enhancement in your message editor."
+      },
+      "ASSISTANT": {
+        "TITLE": "Assistant",
+        "DESCRIPTION": "Handles automated responses, conversation summaries, and intelligent reply suggestions for customer interactions."
+      },
+      "COPILOT": {
+        "TITLE": "Co-pilot",
+        "DESCRIPTION": "Provides real-time contextual suggestions, knowledge base recommendations, and proactive insights during conversations."
+      }
+    },
+    "FEATURES": {
+      "TITLE": "Features",
+      "DESCRIPTION": "Enable or disable AI-powered features.",
+      "AUDIO_TRANSCRIPTION": {
+        "TITLE": "Audio Transcription",
+        "DESCRIPTION": "Automatically convert voice messages and call recordings into searchable text transcripts."
+      },
+      "HELP_CENTER_SEARCH": {
+        "TITLE": "Help Center Search Indexing",
+        "DESCRIPTION": "Use AI for context aware search inside your help center articles."
+      },
+      "LABEL_SUGGESTION": {
+        "TITLE": "Label Suggestion",
+        "DESCRIPTION": "Automatically suggest relevant labels and tags for conversations based on content analysis and context.",
+        "MODEL_TITLE": "Label Suggestion Model",
+        "MODEL_DESCRIPTION": "Select the AI model to use for analyzing conversations and suggesting appropriate labels"
+      }
+    },
+    "API": {
+      "SUCCESS": "ShopizAI settings updated successfully.",
+      "ERROR": "Failed to update ShopizAI settings. Please try again."
+    }
   },
   "BILLING_SETTINGS": {
     "TITLE": "Billing",
@@ -641,6 +726,8 @@
       "RENEWS_ON": "Renews on",
       "AI_ADDON_MESSAGE": "AI add-on message",
       "RESOURCE": "Resource",
+      "PLAN_RESOURCE": "Plan Resource",
+      "ADDON_RESOURCE": "Addon Resource",
       "AGENT": "Agent",
       "INBOX": "Inbox",
       "CONTACT": "Contact",
@@ -649,48 +736,137 @@
       "AI_DOCUMENT": "ShopizAI Document",
       "AI_FAQ": "ShopizAI FAQs",
       "AI_ASSISTANT": "ShopizAI Assistant",
-      "AI_RESPONSE": "AI messages per month"
+      "AI_RESPONSE": "AI messages per month",
+      "AI_RESPONSE_CREDIT": "AI Response Credit",
+      "LIMITATION_TITLE": "Resource Limitations",
+      "ACTIVE_ADDONS": "Active Addons"
     },
+    "ADDON_QUANTITY": "{name} (x{quantity})",
     "VIEW_PRICING": "View Pricing",
     "MANAGE_SUBSCRIPTION": {
-      "TITLE": "Manage your subscription",
+      "TITLE": "Current Subscription",
       "DESCRIPTION": "View your previous invoices, edit your billing details, or cancel your subscription.",
       "BUTTON_TXT": "Go to the billing portal"
     },
+    "REGISTRATION_MANAGEMENT": {
+      "TITLE": "Registration Management",
+      "DESCRIPTION": "Manage your registration limits and resources."
+    },
+    "AI_RESOURCE_MANAGEMENT": {
+      "TITLE": "AI Resources",
+      "DESCRIPTION": "Manage your AI resource usage and limits.",
+      "REFRESHES_IN_DAYS": "AI messages per month: Refreshes in {days} days"
+    },
     "CAPTAIN": {
-      "TITLE": "AI Agent",
+      "TITLE": "Addon packages",
       "DESCRIPTION": "Manage usage and credits for AI Agent.",
       "BUTTON_TXT": "Buy more credits",
       "DOCUMENTS": "Documents",
-      "RESPONSES": "Responses",
-      "GET_MORE": "Get more AI messages",
+      "RESPONSES": "Credits",
+      "GET_MORE": "Addon packages",
       "NO_EXPIRATION": "No expiration",
-      "UPGRADE": "AI Agent is not available on the free plan, upgrade now to get access to assistants, copilot and more."
+      "UPGRADE": "AI Agent is not available on the free plan, upgrade now to get access to assistants, copilot and more.",
+      "REFRESH_CREDITS": "Refresh"
     },
     "CHAT_WITH_US": {
       "TITLE": "Need help?",
-      "DESCRIPTION": "Do you face any issues in billing? We are here to help.",
-      "BUTTON_TXT": "Chat with us"
+      "DESCRIPTION": "Do you face any issues in billing? We are here to help."
     },
+    "FACEBOOK_SUPPORT": "Message on Messenger",
+    "ZALO_SUPPORT": "Message on Zalo",
     "NO_BILLING_USER": "Your billing account is being configured. Please refresh the page and try again.",
+    "PAYMENT_LINK_ERROR": "Could not create payment link. Please check your configuration.",
+    "TOPUP": {
+      "BUY_CREDITS": "Buy more credits",
+      "MODAL_TITLE": "Buy AI Credits",
+      "MODAL_DESCRIPTION": "Purchase additional credits for ShopizAI.",
+      "CREDITS": "CREDITS",
+      "ONE_TIME": "one-time",
+      "POPULAR": "Most Popular",
+      "NOTE_TITLE": "Note:",
+      "NOTE_DESCRIPTION": "Credits are added immediately and expire in 6 months. An active subscription is required to use credits. Purchased credits are consumed after your monthly plan credits.",
+      "CANCEL": "Cancel",
+      "PURCHASE": "Purchase Credits",
+      "LOADING": "Loading options...",
+      "FETCH_ERROR": "Failed to load credit options. Please try again.",
+      "PURCHASE_ERROR": "Failed to process purchase. Please try again.",
+      "PURCHASE_SUCCESS": "Successfully added {credits} credits to your account",
+      "CONFIRM": {
+        "TITLE": "Confirm Purchase",
+        "DESCRIPTION": "You are about to purchase {credits} credits for {amount}.",
+        "INSTANT_DEDUCTION_NOTE": "Your saved card will be charged immediately upon confirmation.",
+        "GO_BACK": "Go Back",
+        "CONFIRM_PURCHASE": "Confirm Purchase"
+      }
+    },
     "PRICING_PACKAGES": {
       "HEADING": {
         "TITLE": "Pricing Packages",
-        "DESCRIPTION": "Flexible options for every business size, simple payments, easy upgrades",
-        "FEATURES": "Features"
+        "DESCRIPTION": "Choose the plan that best fits your business needs."
+      },
+      "DURATIONS": {
+        "SIX_MONTHS": "6 months",
+        "YEAR": "year"
       },
       "BUTTONS": {
         "CURRENT_PACKAGE": "Current Package",
         "UPGRADE_NOW": "Upgrade Now",
-        "SUBCRIBE_NOW": "Subscribe Now",
+        "RENEW_NOW": "Renew Now",
+        "CONTACT": "Contact Us",
         "BUY_NOW": "Buy Now",
-        "CONTACT": "Contact"
+        "DOWNGRADE_NOT_SUPPORTED": "Downgrade not supported"
       },
-      "MONTH": "1 month",
-      "HALF-YEAR": "6 months",
-      "YEAR": "1 year"
+      "DOWNGRADE_NOTICE": "Downgrading is not supported online. Please contact our support team for assistance.",
+      "MONTHLY_EQUIVALENT": "equivalent to {price}/month",
+      "DISCOUNT": "Save {percent}%",
+      "BENEFITS": {
+        "CATEGORIES": {
+          "LIMITATIONS": "Limitation",
+          "CHANNELS": "Channels",
+          "FEATURES": "Features"
+        },
+        "LIMITS": {
+          "AGENTS": "{count} Agents",
+          "INBOXES": "{count} Inboxes",
+          "CONTACTS": "{count} Contacts",
+          "AUTOMATIONS": "{count} Automations",
+          "CAPTAIN_ASSISTANTS": "{count} ShopizAI Assistants",
+          "CAPTAIN_DOCUMENTS": "{count} ShopizAI Documents",
+          "CAPTAIN_FAQS": "{count} ShopizAI FAQs",
+          "CAPTAIN_RESPONSES": "{count} ShopizAI Responses"
+        },
+        "CHANNELS": {
+          "WEBSITE": "Website",
+          "ZALO_OA": "Zalo OA",
+          "ZALO_PERSONAL": "Zalo Personal",
+          "FACEBOOK": "Facebook",
+          "WHATSAPP": "Whatsapp",
+          "INSTAGRAM": "Instagram",
+          "TIKTOK": "Tiktok",
+          "TIKTOK_SHOP": "Tiktok Shop",
+          "TELEGRAM": "Telegram",
+          "LINE": "Line",
+          "TWITTER": "Twitter (X)"
+        },
+        "FEATURES": {
+          "CANNED_RESPONSES": "Canned Responses",
+          "MACROS": "Macros",
+          "AUTOMATIONS": "Automations",
+          "AGENT_BOTS": "Bots",
+          "REPORTS": "Reports",
+          "LABELS": "Labels",
+          "CHANNEL_WHATSAPP": "Templates",
+          "INTEGRATIONS": "Integrations",
+          "CSAT_REVIEW_NOTES": "CSAT",
+          "SLA": "SLA",
+          "CAMPAIGNS": "Campaigns",
+          "CUSTOM_ROLES": "Custom Roles",
+          "CUSTOM_ATTRIBUTES": "Custom Attributes",
+          "AUDIT_LOGS": "Audit Logs"
+        }
+      }
     },
-    "BILLING_HISTORY": "Package purchase histories"
+    "BILLING_HISTORY": "Billing History"
   },
   "SECURITY_SETTINGS": {
     "TITLE": "Security",
@@ -761,6 +937,58 @@
       "INFO_SECTION": {
         "TITLE": "Service Provider Information",
         "TOOLTIP": "Copy these values and configure them in your Identity Provider to establish the SAML connection"
+      }
+    }
+  },
+  "CONVERSATION_WORKFLOW": {
+    "INDEX": {
+      "HEADER": {
+        "TITLE": "Conversation Workflows",
+        "DESCRIPTION": "Configure rules and required fields for conversation resolution."
+      }
+    },
+    "REQUIRED_ATTRIBUTES": {
+      "TITLE": "Attributes required on resolution",
+      "DESCRIPTION": "When resolving a conversation, agents will be prompted to fill these attributes if they haven't yet.",
+      "NO_ATTRIBUTES": "No attributes added yet",
+      "ADD": {
+        "TITLE": "Add Attributes",
+        "SEARCH_PLACEHOLDER": "Search attributes"
+      },
+      "SAVE": {
+        "SUCCESS": "Required attributes updated",
+        "ERROR": "Could not update required attributes, please try again"
+      },
+      "MODAL": {
+        "TITLE": "Resolve conversation",
+        "DESCRIPTION": "Please fill in the following custom attributes before resolving this conversation",
+        "ACTIONS": {
+          "RESOLVE": "Resolve conversation",
+          "CANCEL": "Cancel"
+        },
+        "PLACEHOLDERS": {
+          "TEXT": "Write a note...",
+          "NUMBER": "Enter a number",
+          "LINK": "Add a link",
+          "DATE": "Pick a date",
+          "LIST": "Select an option"
+        },
+        "CHECKBOX": {
+          "YES": "Yes",
+          "NO": "No"
+        }
+      },
+      "PAYWALL": {
+        "TITLE": "Upgrade to use required attributes",
+        "AVAILABLE_ON": "The required conversation attributes feature is available on the Business and Enterprise plans.",
+        "UPGRADE_PROMPT": "Upgrade your plan to prompt agents to fill required attributes before conversation resolution.",
+        "UPGRADE_NOW": "Upgrade now",
+        "CANCEL_ANYTIME": "You can change or cancel your plan anytime"
+      },
+      "ENTERPRISE_PAYWALL": {
+        "AVAILABLE_ON": "The required conversation attributes feature is available on the paid plans.",
+        "UPGRADE_PROMPT": "Upgrade to a paid plan to enforce required attributes before conversation resolution.",
+        "ASK_ADMIN": "Please reach out to your administrator for the upgrade."
       }
     }
   },
@@ -849,7 +1077,8 @@
         "CREATE_BUTTON": "Create policy",
         "API": {
           "SUCCESS_MESSAGE": "Assignment policy created successfully",
-          "ERROR_MESSAGE": "Failed to create assignment policy"
+          "ERROR_MESSAGE": "Failed to create assignment policy",
+          "INBOX_LINKED": "Inbox has been linked to the policy"
         }
       },
       "EDIT": {
@@ -862,6 +1091,12 @@
           "DESCRIPTION": "{inboxName} inbox is already linked to another policy. Are you sure you want to link it to this policy? It will be unlinked from the other policy.",
           "CONFIRM_BUTTON_LABEL": "Continue",
           "CANCEL_BUTTON_LABEL": "Cancel"
+        },
+        "INBOX_LINK_PROMPT": {
+          "TITLE": "Link inbox to policy",
+          "DESCRIPTION": "Would you like to link this inbox to the assignment policy?",
+          "LINK_BUTTON": "Link inbox",
+          "CANCEL_BUTTON": "Skip"
         },
         "API": {
           "SUCCESS_MESSAGE": "Assignment policy updated successfully",
@@ -901,7 +1136,9 @@
           },
           "BALANCED": {
             "LABEL": "Balanced",
-            "DESCRIPTION": "Assign conversations based on available capacity."
+            "DESCRIPTION": "Assign conversations based on available capacity.",
+            "PREMIUM_MESSAGE": "Upgrade to access balanced assignment and agent capacity management.",
+            "PREMIUM_BADGE": "Premium"
           }
         },
         "ASSIGNMENT_PRIORITY": {
@@ -987,6 +1224,20 @@
             "SUCCESS_MESSAGE": "Agent removed from policy successfully",
             "ERROR_MESSAGE": "Failed to remove agent from policy"
           }
+        },
+        "INBOX_LIMIT_API": {
+          "ADD": {
+            "SUCCESS_MESSAGE": "Inbox limit added successfully",
+            "ERROR_MESSAGE": "Failed to add inbox limit"
+          },
+          "UPDATE": {
+            "SUCCESS_MESSAGE": "Inbox limit updated successfully",
+            "ERROR_MESSAGE": "Failed to update inbox limit"
+          },
+          "DELETE": {
+            "SUCCESS_MESSAGE": "Inbox limit deleted successfully",
+            "ERROR_MESSAGE": "Failed to delete inbox limit"
+          }
         }
       },
       "FORM": {
@@ -1049,6 +1300,22 @@
       "DESCRIPTION": "Are you sure you want to delete this policy? This action cannot be undone.",
       "CONFIRM_BUTTON_LABEL": "Delete",
       "CANCEL_BUTTON_LABEL": "Cancel"
+    }
+  },
+  "LIMITATION": {
+    "USAGE_STATUS": "Usage",
+    "MODAL": {
+      "TITLE": "Resource Limit Reached",
+      "DESCRIPTION": {
+        "agents": "You have reached the maximum number of agents allowed for your current plan. Please upgrade to add more agents.",
+        "inboxes": "You have reached the maximum number of inboxes allowed for your current plan. Please upgrade to add more inboxes.",
+        "automations": "You have reached the maximum number of automations allowed for your current plan. Please upgrade to add more automations.",
+        "captain_assistants": "You have reached the maximum number of AI assistants allowed for your current plan. Please upgrade to add more assistants.",
+        "captain_documents": "You have reached the maximum number of AI documents allowed for your current plan. Please upgrade to add more documents.",
+        "captain_faqs": "You have reached the maximum number of AI FAQs allowed for your current plan. Please upgrade to add more FAQs."
+      },
+      "UPGRADE_NOW": "Upgrade Now",
+      "CANCEL": "Cancel"
     }
   }
 }

@@ -1,21 +1,24 @@
 <script setup>
-import { computed, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useToggle } from '@vueuse/core';
 import { useVuelidate } from '@vuelidate/core';
-import { vOnClickOutside } from '@vueuse/components';
 import { required, minLength } from '@vuelidate/validators';
 
 import Input from 'dashboard/components-next/input/Input.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 import TextArea from 'dashboard/components-next/textarea/TextArea.vue';
-import Editor from 'dashboard/components-next/Editor/Editor.vue';
+import Editor from 'dashboard/components-next/editor/Editor.vue';
+import Dialog from 'dashboard/components-next/dialog/Dialog.vue';
+
+defineProps({
+  color: { type: String, default: 'blue' },
+});
 
 const emit = defineEmits(['add']);
 
 const { t } = useI18n();
 
-const [showPopover, togglePopover] = useToggle();
+const addScenarioDialog = ref(null);
 
 const state = reactive({
   id: '',
@@ -65,35 +68,36 @@ const onClickAdd = async () => {
 
   await emit('add', state);
   resetState();
-  togglePopover(false);
+  addScenarioDialog.value.close();
 };
 
-const onClickCancel = () => {
-  togglePopover(false);
+const openDialog = () => {
+  addScenarioDialog.value.open();
 };
 </script>
 
 <template>
-  <div
-    v-on-click-outside="() => togglePopover(false)"
-    class="inline-flex relative"
-  >
+  <div class="inline-flex relative">
     <Button
       :label="t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.CREATE')"
       sm
-      slate
+      :color="color"
       class="flex-shrink-0"
-      @click="togglePopover(!showPopover)"
+      @click="openDialog"
     />
 
-    <div
-      v-if="showPopover"
-      class="w-[31.25rem] absolute top-10 ltr:left-0 rtl:right-0 bg-n-alpha-3 backdrop-blur-[100px] p-6 rounded-xl border border-n-weak shadow-md flex flex-col gap-6 z-50"
+    <Dialog
+      ref="addScenarioDialog"
+      :title="t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.TITLE')"
+      :confirm-button-label="
+        t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.CREATE')
+      "
+      :cancel-button-label="
+        t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.CANCEL')
+      "
+      width="3xl"
+      @confirm="onClickAdd"
     >
-      <h3 class="text-base font-medium text-n-slate-12">
-        {{ t(`CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.TITLE`) }}
-      </h3>
-
       <div class="flex flex-col gap-4">
         <Input
           v-model="state.title"
@@ -119,37 +123,24 @@ const onClickCancel = () => {
           :message-type="descriptionError ? 'error' : 'info'"
           show-character-count
         />
-        <Editor
-          v-model="state.instruction"
-          :label="
-            t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.INSTRUCTION.LABEL')
-          "
-          :placeholder="
-            t(
-              'CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.INSTRUCTION.PLACEHOLDER'
-            )
-          "
-          :message="instructionError"
-          :message-type="instructionError ? 'error' : 'info'"
-          :show-character-count="false"
-          enable-captain-tools
-        />
+        <div class="flex flex-col gap-2 [&_.editor-wrapper]:min-h-[250px]">
+          <Editor
+            v-model="state.instruction"
+            :label="
+              t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.INSTRUCTION.LABEL')
+            "
+            :placeholder="
+              t(
+                'CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.INSTRUCTION.PLACEHOLDER'
+              )
+            "
+            :message="instructionError"
+            :message-type="instructionError ? 'error' : 'info'"
+            :show-character-count="false"
+            enable-captain-tools
+          />
+        </div>
       </div>
-
-      <div class="flex items-center justify-between w-full gap-3">
-        <Button
-          variant="faded"
-          color="slate"
-          :label="t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.CANCEL')"
-          class="w-full bg-n-alpha-2 !text-n-blue-text hover:bg-n-alpha-3"
-          @click="onClickCancel"
-        />
-        <Button
-          :label="t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.CREATE')"
-          class="w-full"
-          @click="onClickAdd"
-        />
-      </div>
-    </div>
+    </Dialog>
   </div>
 </template>

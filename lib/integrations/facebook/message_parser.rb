@@ -67,6 +67,38 @@ class Integrations::Facebook::MessageParser
   def in_reply_to_external_id
     @messaging.dig('message', 'reply_to', 'mid')
   end
+
+  def referral
+    @messaging['referral'] || @messaging.dig('message', 'referral') || @messaging.dig('postback', 'referral')
+  end
+
+  def ad_id
+    referral&.dig('ad_id')
+  end
+
+  def ref_payload
+    referral&.dig('ref')
+  end
+
+  def optin
+    @messaging['optin']
+  end
+
+  def notification_messages_token
+    optin&.dig('notification_messages_token')
+  end
+
+  def notification_messages_status
+    optin&.dig('notification_messages_status')
+  end
+
+  def notification_messages_frequency
+    optin&.dig('notification_messages_frequency')
+  end
+
+  def optin_payload
+    optin&.dig('payload') || optin&.dig('ref')
+  end
 end
 
 # Sample Response

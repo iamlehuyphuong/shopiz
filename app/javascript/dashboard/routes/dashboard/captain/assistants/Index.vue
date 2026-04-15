@@ -4,15 +4,18 @@ import { useRouter } from 'vue-router';
 import { useMapGetter } from 'dashboard/composables/store';
 import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 import { useAccount } from 'dashboard/composables/useAccount';
+import { useLimitation } from 'dashboard/composables/useLimitation';
 
 import PageLayout from 'dashboard/components-next/captain/PageLayout.vue';
-import CaptainPaywall from 'dashboard/components-next/captain/pageComponents/Paywall.vue';
 import CreateAssistantDialog from 'dashboard/components-next/captain/pageComponents/assistant/CreateAssistantDialog.vue';
 import AssistantPageEmptyState from 'dashboard/components-next/captain/pageComponents/emptyStates/AssistantPageEmptyState.vue';
 import FeatureSpotlightPopover from 'dashboard/components-next/feature-spotlight/FeatureSpotlightPopover.vue';
-import LimitBanner from 'dashboard/components-next/captain/pageComponents/assistant/LimitBanner.vue';
+import BillingMeter from 'dashboard/routes/dashboard/settings/billing/components/BillingMeter.vue';
+import AssistantCard from 'dashboard/components-next/captain/assistant/AssistantCard.vue';
+import DeleteDialog from 'dashboard/components-next/captain/pageComponents/DeleteDialog.vue';
 
 const { isOnChatwootCloud } = useAccount();
+const { getUsage, checkLimitation } = useLimitation();
 
 const dialogType = ref('');
 const uiFlags = useMapGetter('captainAssistants/getUIFlags');
@@ -20,22 +23,15 @@ const isFetching = computed(() => uiFlags.value.fetchingList);
 
 const selectedAssistant = ref(null);
 const deleteAssistantDialog = ref(null);
-const limitBannerRef = ref(null);
-
-const handleDelete = () => {
-  deleteAssistantDialog.value.dialogRef.open();
-};
-
-const isOverAssistant = computed(() => {
-  return limitBannerRef.value?.overAssistant;
-})
 
 const createAssistantDialog = ref(null);
 const router = useRouter();
 
 const handleCreate = () => {
-  dialogType.value = 'create';
-  nextTick(() => createAssistantDialog.value.dialogRef.open());
+  if (checkLimitation('captain_assistants')) {
+    dialogType.value = 'create';
+    nextTick(() => createAssistantDialog.value.dialogRef.open());
+  }
 };
 
 const handleCreateClose = () => {
@@ -63,9 +59,18 @@ const handleAfterCreate = newAssistant => {
     :show-pagination-footer="false"
     :is-fetching="isFetching"
     :feature-flag="FEATURE_FLAGS.CAPTAIN"
-    :disable-btn-create="isOverAssistant"
     @click="handleCreate"
   >
+    <template #usage>
+      <BillingMeter
+        v-if="isOnChatwootCloud"
+        :consumed="getUsage('captain_assistants').consumed"
+        :total-count="getUsage('captain_assistants').totalCount"
+        :show-bar="false"
+        :show-title="false"
+        class="px-2 py-0.5 bg-slate-50 border border-slate-100 rounded-full w-auto block"
+      />
+    </template>
     <template #knowMore>
       <FeatureSpotlightPopover
         :button-label="$t('CAPTAIN.HEADER_KNOW_MORE')"
@@ -77,17 +82,12 @@ const handleAfterCreate = newAssistant => {
         learn-more-url="https://docs.shopiz.pro/features/shopiz-ai/assistant"
       />
     </template>
+
     <template #emptyState>
       <AssistantPageEmptyState @click="handleCreate" />
     </template>
 
-    <template #paywall>
-      <CaptainPaywall />
-    </template>
-
     <template #body>
-      <LimitBanner class="mb-5" ref="limitBannerRef" />
-
       <div class="flex flex-col gap-4">
         <AssistantCard
           v-for="assistant in assistants"

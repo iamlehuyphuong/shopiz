@@ -21,20 +21,66 @@ export const notificationBubble = document.createElement('span');
 export const setBubbleText = bubbleText => {
   if (isExpandedView(window.$shopiz.type)) {
     const textNode = document.getElementById('woot-widget--expanded__text');
-    textNode.innerText = bubbleText;
+    if (textNode) {
+      textNode.innerText = bubbleText;
+    }
+  }
+
+  const launcherTextNode = document.getElementById(
+    'woot-widget--launcher__text'
+  );
+  if (launcherTextNode) {
+    launcherTextNode.innerText = bubbleText;
   }
 };
 
-export const addImageToButton = ({ target, imageName }) => {
+export const addImageToButton = ({ target, imageUrl }) => {
+  if (!imageUrl) return;
+
+  const container = document.createElement('div');
+  container.className = 'bubble-icon-container';
   const img = document.createElement('img');
   img.className = 'bubble-icon';
-  img.setAttribute('src', window.$shopiz.baseUrl + '/assets/images/' + imageName);
-  target.appendChild(img);
-}
+  img.setAttribute('src', imageUrl);
+  container.appendChild(img);
+  target.appendChild(container);
+};
 
-export const createBubbleIcon = ({ className, path, target }) => {
+export const createBubbleIcon = ({
+  className,
+  target,
+  widgetColor,
+  bubbleAvatarUrl,
+}) => {
   let bubbleClassName = `${className} woot-elements--${window.$shopiz.position}`;
-  addImageToButton({ target, imageName: 'bubble_chat_icon.svg' });
+  if (bubbleAvatarUrl) {
+    addImageToButton({
+      target,
+      imageUrl: bubbleAvatarUrl,
+    });
+  } else {
+    const container = document.createElement('div');
+    container.className = 'bubble-icon-container';
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 240.808 240.808');
+    svg.setAttribute('width', '32');
+    svg.setAttribute('height', '32');
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', bubbleSVG);
+    path.setAttribute('fill', '#ffffff');
+    svg.appendChild(path);
+    container.appendChild(svg);
+    target.appendChild(container);
+  }
+
+  if (window.$shopiz.launcherTitle) {
+    const title = document.createElement('span');
+    title.id = 'woot-widget--launcher__text';
+    title.className = 'woot-widget--bubble__text';
+    title.innerText = window.$shopiz.launcherTitle;
+    title.style.background = widgetColor;
+    target.insertBefore(title, target.firstChild);
+  }
 
   target.className = bubbleClassName;
   // target.title = 'Open chat window';

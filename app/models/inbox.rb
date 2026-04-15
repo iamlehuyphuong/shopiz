@@ -66,6 +66,7 @@ class Inbox < ApplicationRecord
   has_many :campaigns, dependent: :destroy_async
   has_many :contact_inboxes, dependent: :destroy_async
   has_many :contacts, through: :contact_inboxes
+  has_many :contact_optins, dependent: :destroy_async
 
   has_many :inbox_members, dependent: :destroy_async
   has_many :members, through: :inbox_members, source: :user
@@ -131,6 +132,10 @@ class Inbox < ApplicationRecord
     channel_type == 'Channel::Instagram'
   end
 
+  def tiktok?
+    channel_type == 'Channel::Tiktok'
+  end
+
   def web_widget?
     channel_type == 'Channel::WebWidget'
   end
@@ -163,13 +168,20 @@ class Inbox < ApplicationRecord
     channel_type == 'Channel::ZaloPersonal'
   end
 
+  def zalo_oa?
+    channel_type == 'Channel::ZaloOa'
+  end
+
+  def twilio_whatsapp?
+    channel_type == 'Channel::TwilioSms' && channel.medium == 'whatsapp'
+  end
+
   def assignable_agents
     (account.users.where(id: members.select(:user_id)) + account.administrators).uniq
   end
 
   def active_bot?
-    agent_bot_inbox&.active? || hooks.where(app_id: %w[dialogflow],
-                                            status: 'enabled').count.positive?
+    agent_bot_inbox&.active? || hooks.any? { |hook| hook.app_id.in?(%w[dialogflow]) && hook.enabled? }
   end
 
   def inbox_type

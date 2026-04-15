@@ -112,14 +112,18 @@ export const formatToTitleCase = str => {
   );
 };
 
-export const formatCurrency = (price) => {
+export const formatCurrency = price => {
   if (!price) return '';
 
-  const { amount_type, price_amount } = price;
-  if (amount_type === 'free') return 'Free';
+  const { amount_type, price_amount, currency } = price;
+  if (amount_type === 'free' || price_amount === 0) return 'Free';
   if (amount_type === 'custom') return 'Contact for consultation';
 
-  const amount = (price_amount / 100) * 25000;
+  let amount = price_amount;
+  if (currency?.toLowerCase() !== 'vnd') {
+    amount = (price_amount / 100) * 25000;
+  }
+
   return new Intl.NumberFormat('vi-VN', {
     style: 'currency',
     currency: 'VND',
