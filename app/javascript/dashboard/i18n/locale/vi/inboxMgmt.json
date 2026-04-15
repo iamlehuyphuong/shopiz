@@ -1,7 +1,7 @@
 {
   "INBOX_MGMT": {
     "HEADER": "Hộp thư",
-    "DESCRIPTION": "Kênh là phương thức giao tiếp mà khách hàng sử dụng để tương tác với bạn. Hộp thư là nơi bạn quản lý các cuộc trao đổi của một kênh cụ thể. Hộp thư có thể bao gồm nhiều nguồn như email, live chat và mạng xã hội.",
+    "DESCRIPTION": "Kênh là phương thức giao tiếp mà khách hàng sử dụng để tương tác với bạn. Hộp thư là nơi bạn quản lý các cuộc trao đổi của một kênh cụ thể. Hộp thư có thể bao gồm nhiều nguồn như live chat, mạng xã hội và nền tảng thương mại điện tử.",
     "LEARN_MORE": "Tìm hiểu thêm về hộp thư",
     "COUNT": "Có {n} hộp thư",
     "SEARCH_PLACEHOLDER": "Tìm kiếm hộp thư...",
