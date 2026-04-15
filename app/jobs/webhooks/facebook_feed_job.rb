@@ -13,7 +13,6 @@ class Webhooks::FacebookFeedJob < ApplicationJob
     comment_id = change['comment_id']
     message = change['message'] || ''
     sender_name = change['from']&.dig('name') || ''
-    sender_id = change['from']&.dig('id') || ''
 
     Rails.logger.info "[FacebookFeed] New comment on page #{page_id}: #{comment_id} from #{sender_name}"
 
@@ -27,15 +26,9 @@ class Webhooks::FacebookFeedJob < ApplicationJob
   private
 
   def hide_comment_if_needed(channel, comment_id, message)
-    should_hide = false
-
-    if channel.hide_comments?
-      should_hide = true
-    elsif channel.hide_no_phone_comments? && !contains_phone?(message)
-      should_hide = true
-    elsif channel.hide_no_email_comments? && !contains_email?(message)
-      should_hide = true
-    end
+    should_hide = channel.hide_comments?
+    should_hide ||= channel.hide_phone_comments? && contains_phone?(message)
+    should_hide ||= channel.hide_email_comments? && contains_email?(message)
 
     return unless should_hide
 

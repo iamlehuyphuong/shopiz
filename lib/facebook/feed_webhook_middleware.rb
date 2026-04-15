@@ -34,20 +34,24 @@ class Facebook::FeedWebhookMiddleware
     return unless payload['object'] == 'page'
 
     entries = payload['entry'] || []
-    entries.each do |entry|
-      page_id = entry['id']
-      changes = entry['changes'] || []
+    entries.each { |entry| process_entry_changes(entry) }
+  end
 
-      changes.each do |change|
-        next unless change['field'] == 'feed'
+  def process_entry_changes(entry)
+    page_id = entry['id']
+    changes = entry['changes'] || []
 
-        value = change['value']
-        next unless value
-        # Only process new comments (not edits, removes, etc.)
-        next unless value['item'] == 'comment' && value['verb'] == 'add'
+    changes.each do |change|
+      next unless change['field'] == 'feed'
 
-        Webhooks::FacebookFeedJob.perform_later(page_id, value.to_json)
-      end
+      value = change['value']
+      next unless new_comment?(value)
+
+      Webhooks::FacebookFeedJob.perform_later(page_id, value.to_json)
     end
+  end
+
+  def new_comment?(value)
+    value && value['item'] == 'comment' && value['verb'] == 'add'
   end
 end

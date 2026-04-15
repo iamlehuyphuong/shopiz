@@ -943,10 +943,10 @@
         "DESCRIPTION": "Configure automatic comment hiding rules for your page posts.",
         "HIDE_ALL": "Hide all comments",
         "HIDE_ALL_HELP": "Automatically hide all new comments on your page posts.",
-        "HIDE_NO_PHONE": "Hide comments without phone number",
-        "HIDE_NO_PHONE_HELP": "Automatically hide comments that don't contain a phone number.",
-        "HIDE_NO_EMAIL": "Hide comments without email",
-        "HIDE_NO_EMAIL_HELP": "Automatically hide comments that don't contain an email address."
+        "HIDE_PHONE": "Hide comments containing phone number",
+        "HIDE_PHONE_HELP": "Automatically hide comments that contain a phone number to protect customer contact info.",
+        "HIDE_EMAIL": "Hide comments containing email",
+        "HIDE_EMAIL_HELP": "Automatically hide comments that contain an email address to protect customer contact info."
       },
       "AUTO_REPLY": {
         "TITLE": "Auto Reply (Private Message)",

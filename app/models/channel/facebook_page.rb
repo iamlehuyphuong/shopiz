@@ -33,8 +33,8 @@ class Channel::FacebookPage < ApplicationRecord
   # Post & comment management settings stored in provider_config JSONB column
   store_accessor :provider_config,
                  :hide_comments,            # Boolean - hide all comments
-                 :hide_no_phone_comments,   # Boolean - hide comments without phone number
-                 :hide_no_email_comments,   # Boolean - hide comments without email
+                 :hide_phone_comments,      # Boolean - hide comments containing phone number
+                 :hide_email_comments,      # Boolean - hide comments containing email
                  :auto_reply_to_comments,   # Boolean - send private reply to commenters
                  :auto_reply_message        # String  - message content for private reply
 
@@ -80,12 +80,12 @@ class Channel::FacebookPage < ApplicationRecord
     ActiveModel::Type::Boolean.new.cast(hide_comments)
   end
 
-  def hide_no_phone_comments?
-    ActiveModel::Type::Boolean.new.cast(hide_no_phone_comments)
+  def hide_phone_comments?
+    ActiveModel::Type::Boolean.new.cast(hide_phone_comments)
   end
 
-  def hide_no_email_comments?
-    ActiveModel::Type::Boolean.new.cast(hide_no_email_comments)
+  def hide_email_comments?
+    ActiveModel::Type::Boolean.new.cast(hide_email_comments)
   end
 
   def auto_reply_to_comments?

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useAlert } from 'dashboard/composables';
 import { useStore } from 'dashboard/composables/store';
@@ -19,8 +19,8 @@ const { t } = useI18n();
 const store = useStore();
 
 const hideComments = ref(false);
-const hideNoPhoneComments = ref(false);
-const hideNoEmailComments = ref(false);
+const hidePhoneComments = ref(false);
+const hideEmailComments = ref(false);
 const autoReplyToComments = ref(false);
 const autoReplyMessage = ref('');
 const isUpdating = ref(false);
@@ -29,6 +29,14 @@ const providerConfig = computed(
   () => props.inbox.provider_config || {}
 );
 
+// When "hide all" is toggled on, force-off the granular rules
+watch(hideComments, newVal => {
+  if (newVal) {
+    hidePhoneComments.value = false;
+    hideEmailComments.value = false;
+  }
+});
+
 onMounted(() => {
   syncSettings();
 });
@@ -36,8 +44,8 @@ onMounted(() => {
 function syncSettings() {
   const config = providerConfig.value;
   hideComments.value = toBool(config.hide_comments);
-  hideNoPhoneComments.value = toBool(config.hide_no_phone_comments);
-  hideNoEmailComments.value = toBool(config.hide_no_email_comments);
+  hidePhoneComments.value = toBool(config.hide_phone_comments);
+  hideEmailComments.value = toBool(config.hide_email_comments);
   autoReplyToComments.value = toBool(config.auto_reply_to_comments);
   autoReplyMessage.value = config.auto_reply_message || '';
 }
@@ -57,8 +65,8 @@ async function updateSettings() {
       channel: {
         provider_config: {
           hide_comments: hideComments.value,
-          hide_no_phone_comments: hideNoPhoneComments.value,
-          hide_no_email_comments: hideNoEmailComments.value,
+          hide_phone_comments: hidePhoneComments.value,
+          hide_email_comments: hideEmailComments.value,
           auto_reply_to_comments: autoReplyToComments.value,
           auto_reply_message: autoReplyMessage.value,
         },
@@ -89,8 +97,9 @@ async function updateSettings() {
 
     <!-- Comment Moderation Section -->
     <SettingsAccordion
-      :title="$t('INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.TITLE')"
-      class="mb-4"
+      :title="
+        $t('INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.TITLE')
+      "
     >
       <p class="text-sm text-n-slate-11 mb-4">
         {{
@@ -112,41 +121,42 @@ async function updateSettings() {
         "
       />
 
-      <SettingsToggleSection
-        v-model="hideNoPhoneComments"
-        :disabled="hideComments"
-        :header="
-          $t(
-            'INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.HIDE_NO_PHONE'
-          )
-        "
-        :description="
-          $t(
-            'INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.HIDE_NO_PHONE_HELP'
-          )
-        "
-      />
+      <div :class="{ 'opacity-50 pointer-events-none': hideComments }">
+        <SettingsToggleSection
+          v-model="hidePhoneComments"
+          :header="
+            $t(
+              'INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.HIDE_PHONE'
+            )
+          "
+          :description="
+            $t(
+              'INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.HIDE_PHONE_HELP'
+            )
+          "
+        />
+      </div>
 
-      <SettingsToggleSection
-        v-model="hideNoEmailComments"
-        :disabled="hideComments"
-        :header="
-          $t(
-            'INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.HIDE_NO_EMAIL'
-          )
-        "
-        :description="
-          $t(
-            'INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.HIDE_NO_EMAIL_HELP'
-          )
-        "
-      />
+      <div :class="{ 'opacity-50 pointer-events-none': hideComments }">
+        <SettingsToggleSection
+          v-model="hideEmailComments"
+          :header="
+            $t(
+              'INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.HIDE_EMAIL'
+            )
+          "
+          :description="
+            $t(
+              'INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.HIDE_EMAIL_HELP'
+            )
+          "
+        />
+      </div>
     </SettingsAccordion>
 
     <!-- Auto Reply Section -->
     <SettingsAccordion
       :title="$t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.TITLE')"
-      class="mb-4"
     >
       <p class="text-sm text-n-slate-11 mb-4">
         {{ $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.DESCRIPTION') }}
@@ -167,11 +177,10 @@ async function updateSettings() {
         :label="
           $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.MESSAGE_LABEL')
         "
-        class="[&>div]:!items-start [&>div>label]:mt-1 mt-4"
       >
         <textarea
           v-model="autoReplyMessage"
-          class="w-full min-h-[100px] rounded-lg border border-n-weak p-3 text-sm text-n-slate-12 bg-n-alpha-white placeholder:text-n-slate-9 focus:outline-none focus:ring-2 focus:ring-n-blue-9"
+          class="w-full min-h-[100px] rounded-lg border border-n-weak p-3 text-sm text-n-slate-12 bg-n-alpha-white placeholder:text-n-slate-9 focus:outline-none focus:ring-2 focus:ring-n-blue-9 resize-y"
           :placeholder="
             $t(
               'INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.MESSAGE_PLACEHOLDER'
@@ -183,7 +192,7 @@ async function updateSettings() {
 
       <p
         v-if="autoReplyToComments"
-        class="text-xs text-n-slate-10 mt-2"
+        class="text-xs text-n-slate-10 mt-2 italic"
       >
         {{ $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.NOTE') }}
       </p>
