@@ -400,8 +400,8 @@
     "COPILOT": {
       "TITLE": "Kopilots",
       "TRY_THESE_PROMPTS": "Pamēģiniet",
-      "PANEL_TITLE": "Get started with Copilot",
-      "KICK_OFF_MESSAGE": "Need a quick summary, want to check past conversations, or draft a better reply? Copilot’s here to speed things up.",
+      "PANEL_TITLE": "Get started with ShopizAI Assistant",
+      "KICK_OFF_MESSAGE": "Need a quick summary, want to check past conversations, or draft a better reply? ShopizAI Assistant’s here to speed things up.",
       "SEND_MESSAGE": "Sūtīt ziņojumu...",
       "EMPTY_MESSAGE": "There was an error generating the response. Please try again.",
       "LOADER": "Kapteinis domā",
