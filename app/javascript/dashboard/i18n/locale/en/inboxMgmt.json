@@ -708,7 +708,8 @@
       "WIDGET_BUILDER": "Widget Builder",
       "BOT_CONFIGURATION": "Bot Configuration",
       "ACCOUNT_HEALTH": "Account Health",
-      "CSAT": "CSAT"
+      "CSAT": "CSAT",
+      "POSTS_AND_COMMENTS": "Posts & Comments"
     },
     "CHANNEL_PREFERENCES": "Channel Preferences",
     "WIDGET_FEATURES": "Widget features",
@@ -933,6 +934,33 @@
       "SUBTITLE": "Your Facebook connection has expired, please reconnect your Facebook page to continue services",
       "MESSAGE_SUCCESS": "Reconnection successful",
       "MESSAGE_ERROR": "There was an error, please try again"
+    },
+    "POSTS_AND_COMMENTS": {
+      "TITLE": "Posts & Comments Management",
+      "DESCRIPTION": "Manage how comments on your Facebook page posts are handled. You can automatically hide comments and send private replies to commenters.",
+      "COMMENT_MODERATION": {
+        "TITLE": "Comment Moderation",
+        "DESCRIPTION": "Configure automatic comment hiding rules for your page posts.",
+        "HIDE_ALL": "Hide all comments",
+        "HIDE_ALL_HELP": "Automatically hide all new comments on your page posts.",
+        "HIDE_NO_PHONE": "Hide comments without phone number",
+        "HIDE_NO_PHONE_HELP": "Automatically hide comments that don't contain a phone number.",
+        "HIDE_NO_EMAIL": "Hide comments without email",
+        "HIDE_NO_EMAIL_HELP": "Automatically hide comments that don't contain an email address."
+      },
+      "AUTO_REPLY": {
+        "TITLE": "Auto Reply (Private Message)",
+        "DESCRIPTION": "Automatically send a private message via Messenger to customers who comment on your posts.",
+        "ENABLE": "Enable auto reply to comments",
+        "ENABLE_HELP": "When enabled, a private message will be sent to the commenter's Messenger inbox.",
+        "MESSAGE_LABEL": "Auto reply message",
+        "MESSAGE_PLACEHOLDER": "Hi! Thank you for your comment. We have sent you more details via Messenger.",
+        "NOTE": "Note: Facebook allows only one private reply per comment within 7 days."
+      },
+      "API": {
+        "SUCCESS_MESSAGE": "Posts & Comments settings updated successfully",
+        "ERROR_MESSAGE": "Failed to update Posts & Comments settings. Please try again."
+      }
     },
     "PRE_CHAT_FORM": {
       "DESCRIPTION": "Pre chat forms enable you to capture user information before they start conversation with you.",

@@ -10,6 +10,7 @@ import SettingsFieldSection from 'dashboard/components-next/Settings/SettingsFie
 import SettingsAccordion from 'dashboard/components-next/Settings/SettingsAccordion.vue';
 import inboxMixin from 'shared/mixins/inboxMixin';
 import FacebookReauthorize from './facebook/Reauthorize.vue';
+import FacebookPostsAndComments from './facebook/PostsAndComments.vue';
 import InstagramReauthorize from './channels/instagram/Reauthorize.vue';
 import TiktokReauthorize from './channels/tiktok/Reauthorize.vue';
 import DuplicateInboxBanner from './channels/instagram/DuplicateInboxBanner.vue';
@@ -47,6 +48,7 @@ export default {
     ConfigurationPage,
     CustomerSatisfactionPage,
     FacebookReauthorize,
+    FacebookPostsAndComments,
     GreetingsEditor,
     PreChatFormSettings,
     SettingIntroBanner,
@@ -192,6 +194,16 @@ export default {
           {
             key: 'configuration',
             name: this.$t('INBOX_MGMT.TABS.CONFIGURATION'),
+          },
+        ];
+      }
+
+      if (this.isAFacebookInbox) {
+        visibleToAllChannelTabs = [
+          ...visibleToAllChannelTabs,
+          {
+            key: 'posts-and-comments',
+            name: this.$t('INBOX_MGMT.TABS.POSTS_AND_COMMENTS'),
           },
         ];
       }
@@ -1197,6 +1209,9 @@ export default {
         </div>
         <div v-if="selectedTabKey === 'bot-configuration'">
           <BotConfiguration :inbox="inbox" />
+        </div>
+        <div v-if="selectedTabKey === 'posts-and-comments'">
+          <FacebookPostsAndComments :inbox="inbox" />
         </div>
         <div v-if="selectedTabKey === 'whatsapp-health'">
           <AccountHealth

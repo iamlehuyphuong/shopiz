@@ -56,6 +56,7 @@ end
 if resource.facebook?
   json.page_id resource.channel.try(:page_id)
   json.reauthorization_required resource.channel.try(:reauthorization_required?)
+  json.provider_config resource.channel.try(:provider_config)
 end
 
 ## Instagram Attributes
