@@ -1,14 +1,17 @@
 <script setup>
-import { computed, onMounted, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
 import UpgradePage from '../components/UpgradePage.vue';
 import { useUISettings } from 'dashboard/composables/useUISettings';
 import { FEATURE_FLAGS } from 'dashboard/featureFlags';
+import Spinner from 'dashboard/components-next/spinner/Spinner.vue';
 
 const route = useRoute();
 const store = useStore();
 const { uiSettings, updateUISettings } = useUISettings();
+
+const isReady = ref(false);
 
 const accountId = computed(() => store.getters.getCurrentAccountId);
 const portals = computed(() => store.getters['portals/allPortals']);
@@ -43,9 +46,12 @@ const fetchPortalAndItsCategories = async () => {
     portalSlug: selectedPortalSlug.value,
     locale: selectedLocaleInPortal.value,
   };
-  store.dispatch('portals/show', selectedPortalParam);
-  store.dispatch('categories/index', selectedPortalParam);
-  store.dispatch('agents/get');
+  await Promise.all([
+    store.dispatch('portals/show', selectedPortalParam),
+    store.dispatch('categories/index', selectedPortalParam),
+    store.dispatch('agents/get'),
+  ]);
+  isReady.value = true;
 };
 
 onMounted(() => fetchPortalAndItsCategories());
@@ -69,7 +75,10 @@ watch(
       v-if="isHelpCenterEnabled"
       class="flex flex-1 h-full px-0 overflow-hidden bg-n-surface-1"
     >
-      <router-view />
+      <div v-if="!isReady" class="flex items-center justify-center w-full h-full text-n-slate-11">
+        <Spinner />
+      </div>
+      <router-view v-else />
     </section>
     <UpgradePage v-else />
   </div>
