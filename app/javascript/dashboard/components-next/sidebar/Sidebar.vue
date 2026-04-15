@@ -466,6 +466,12 @@ const menuItems = computed(() => {
           icon: 'i-woot-whatsapp',
           to: accountScopedRoute('campaigns_whatsapp_index'),
         },
+        {
+          name: 'Facebook',
+          label: 'Facebook',
+          icon: 'i-ri-messenger-fill',
+          to: accountScopedRoute('campaigns_facebook_index'),
+        },
       ],
     },
     {

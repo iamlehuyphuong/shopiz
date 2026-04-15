@@ -167,6 +167,11 @@ export const getters = {
       item => item.channel_type === INBOX_TYPES.ZALO_PERSONAL
     );
   },
+  getFacebookInboxes($state) {
+    return $state.records.filter(
+      item => item.channel_type === INBOX_TYPES.FB
+    );
+  },
   dialogFlowEnabledInboxes($state) {
     return $state.records.filter(
       item => item.channel_type !== INBOX_TYPES.EMAIL

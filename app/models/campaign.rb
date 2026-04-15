@@ -57,6 +57,27 @@ class Campaign < ApplicationRecord
   before_validation :ensure_correct_campaign_attributes
   after_commit :set_display_id, unless: :display_id?
 
+  # -- Campaign Metrics helpers --
+  def increment_metric!(key, count = 1)
+    metrics = campaign_metrics || {}
+    metrics[key.to_s] = (metrics[key.to_s] || 0) + count
+    update_column(:campaign_metrics, metrics)
+  end
+
+  def delivery_rate
+    total = campaign_metrics&.dig('total_sent').to_i
+    return 0 if total.zero?
+
+    ((campaign_metrics&.dig('delivered').to_i.to_f / total) * 100).round(1)
+  end
+
+  def failure_rate
+    total = campaign_metrics&.dig('total_sent').to_i
+    return 0 if total.zero?
+
+    ((campaign_metrics&.dig('failed').to_i.to_f / total) * 100).round(1)
+  end
+
   def trigger!
     return unless one_off?
     return if completed?

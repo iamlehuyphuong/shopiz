@@ -30,9 +30,11 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
     if parsed_result['error'].present?
       Messages::StatusUpdateService.new(message, 'failed', external_error(parsed_result)).perform
       Rails.logger.info "Facebook::SendOnFacebookService: Error sending message to Facebook : Page - #{channel.page_id} : #{parsed_result}"
+      track_campaign_metric(:failed)
+    else
+      message.update!(source_id: parsed_result['message_id']) if parsed_result['message_id'].present?
+      track_campaign_metric(:delivered)
     end
-
-    message.update!(source_id: parsed_result['message_id']) if parsed_result['message_id'].present?
   end
 
   def deliver_message(delivery_params)
@@ -240,6 +242,13 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
 
     setup_recipient(base_params)
     base_params
+  end
+
+  def track_campaign_metric(status)
+    campaign = conversation&.campaign
+    return unless campaign
+
+    campaign.increment_metric!(status)
   end
 
   def message_tag

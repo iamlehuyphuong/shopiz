@@ -29,7 +29,14 @@ class Facebook::OneoffCampaignService
 
       next unless optin
 
-      process_contact(contact, contact_inbox, optin.token)
+      begin
+        process_contact(contact, contact_inbox, optin.token)
+        campaign.increment_metric!(:total_sent)
+      rescue StandardError => e
+        campaign.increment_metric!(:total_sent)
+        campaign.increment_metric!(:failed)
+        Rails.logger.error "Facebook::OneoffCampaignService: Error processing contact #{contact.id}: #{e.message}"
+      end
     end
   end
 

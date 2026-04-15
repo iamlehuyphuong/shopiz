@@ -279,6 +279,86 @@
         }
       }
     },
+    "FACEBOOK": {
+      "HEADER_TITLE": "Facebook Marketing Campaigns",
+      "NEW_CAMPAIGN": "Create campaign",
+      "EMPTY_STATE": {
+        "TITLE": "No Facebook marketing campaigns yet",
+        "SUBTITLE": "Start sending promotional messages to customers who have opted in to receive marketing notifications. Set up your first campaign by clicking 'Create campaign'."
+      },
+      "CARD": {
+        "STATUS": {
+          "COMPLETED": "Completed",
+          "SCHEDULED": "Scheduled"
+        },
+        "CAMPAIGN_DETAILS": {
+          "SENT_FROM": "Sent from",
+          "ON": "on",
+          "SENT_BY": "Sent by",
+          "BOT": "BOT"
+        },
+        "METRICS": {
+          "TOTAL_SENT": "Sent",
+          "DELIVERED": "Delivered",
+          "FAILED": "Failed",
+          "DELIVERY_RATE": "Delivery rate"
+        }
+      },
+      "CREATE": {
+        "TITLE": "Create Facebook marketing campaign",
+        "CANCEL_BUTTON_TEXT": "Cancel",
+        "CREATE_BUTTON_TEXT": "Create",
+        "FORM": {
+          "TITLE": {
+            "LABEL": "Title",
+            "PLACEHOLDER": "Enter campaign title",
+            "ERROR": "Title is required"
+          },
+          "MESSAGE": {
+            "LABEL": "Message",
+            "PLACEHOLDER": "Enter the marketing message to send to opted-in customers",
+            "ERROR": "Message is required"
+          },
+          "INBOX": {
+            "LABEL": "Facebook Page",
+            "PLACEHOLDER": "Select Facebook page",
+            "ERROR": "Facebook page is required"
+          },
+          "SENT_BY": {
+            "LABEL": "Sender",
+            "PLACEHOLDER": "Select sender",
+            "ERROR": "Sender is required"
+          },
+          "AUDIENCE": {
+            "LABEL": "Audience",
+            "PLACEHOLDER": "Select customer labels",
+            "ERROR": "Audience is required"
+          },
+          "SCHEDULED_AT": {
+            "LABEL": "Scheduled time",
+            "PLACEHOLDER": "Select campaign start time",
+            "ERROR": "Scheduled time is required"
+          },
+          "BUTTONS": {
+            "CREATE": "Create",
+            "CANCEL": "Cancel"
+          },
+          "API": {
+            "SUCCESS_MESSAGE": "Facebook marketing campaign created successfully",
+            "ERROR_MESSAGE": "An error occurred. Please try again."
+          }
+        }
+      },
+      "EDIT": {
+        "TITLE": "Edit Facebook marketing campaign",
+        "FORM": {
+          "API": {
+            "SUCCESS_MESSAGE": "Updated successfully",
+            "ERROR_MESSAGE": "There was an error. Please try again."
+          }
+        }
+      }
+    },
     "VOICE": {
       "HEADER_TITLE": "Voice campaigns",
       "NEW_CAMPAIGN": "Create campaign",

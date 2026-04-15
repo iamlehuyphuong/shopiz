@@ -19,5 +19,8 @@ if resource.campaign_type == 'one_off'
 end
 json.trigger_rules resource.trigger_rules
 json.trigger_only_during_business_hours resource.trigger_only_during_business_hours
+json.campaign_metrics resource.campaign_metrics
+json.delivery_rate resource.delivery_rate
+json.failure_rate resource.failure_rate
 json.created_at resource.created_at
 json.updated_at resource.updated_at

@@ -365,6 +365,86 @@
         }
       }
     },
+    "FACEBOOK": {
+      "HEADER_TITLE": "Chiến dịch Facebook Marketing",
+      "NEW_CAMPAIGN": "Tạo chiến dịch",
+      "EMPTY_STATE": {
+        "TITLE": "Chưa có chiến dịch Facebook Marketing nào",
+        "SUBTITLE": "Bắt đầu gửi tin nhắn quảng cáo đến khách hàng đã đồng ý nhận thông báo tiếp thị. Nhấn 'Tạo chiến dịch' để thiết lập chiến dịch đầu tiên."
+      },
+      "CARD": {
+        "STATUS": {
+          "COMPLETED": "Hoàn tất",
+          "SCHEDULED": "Đã lên lịch"
+        },
+        "CAMPAIGN_DETAILS": {
+          "SENT_FROM": "Gửi từ",
+          "ON": "vào",
+          "SENT_BY": "Gửi bởi",
+          "BOT": "ShopizAI"
+        },
+        "METRICS": {
+          "TOTAL_SENT": "Đã gửi",
+          "DELIVERED": "Thành công",
+          "FAILED": "Thất bại",
+          "DELIVERY_RATE": "Tỉ lệ gửi"
+        }
+      },
+      "CREATE": {
+        "TITLE": "Tạo chiến dịch Facebook Marketing",
+        "CANCEL_BUTTON_TEXT": "Hủy",
+        "CREATE_BUTTON_TEXT": "Tạo",
+        "FORM": {
+          "TITLE": {
+            "LABEL": "Tiêu đề",
+            "PLACEHOLDER": "Nhập tiêu đề chiến dịch",
+            "ERROR": "Tiêu đề là bắt buộc"
+          },
+          "MESSAGE": {
+            "LABEL": "Tin nhắn",
+            "PLACEHOLDER": "Nhập nội dung tin nhắn Marketing gửi đến khách hàng đã opt-in",
+            "ERROR": "Tin nhắn là bắt buộc"
+          },
+          "INBOX": {
+            "LABEL": "Trang Facebook",
+            "PLACEHOLDER": "Chọn trang Facebook",
+            "ERROR": "Trang Facebook là bắt buộc"
+          },
+          "SENT_BY": {
+            "LABEL": "Người gửi",
+            "PLACEHOLDER": "Chọn người gửi",
+            "ERROR": "Người gửi là bắt buộc"
+          },
+          "AUDIENCE": {
+            "LABEL": "Tập khách hàng",
+            "PLACEHOLDER": "Chọn nhãn khách hàng",
+            "ERROR": "Tập khách hàng là bắt buộc"
+          },
+          "SCHEDULED_AT": {
+            "LABEL": "Thời gian gửi",
+            "PLACEHOLDER": "Chọn thời điểm bắt đầu chiến dịch",
+            "ERROR": "Thời gian gửi là bắt buộc"
+          },
+          "BUTTONS": {
+            "CREATE": "Tạo",
+            "CANCEL": "Hủy"
+          },
+          "API": {
+            "SUCCESS_MESSAGE": "Tạo chiến dịch Facebook Marketing thành công",
+            "ERROR_MESSAGE": "Đã xảy ra lỗi. Vui lòng thử lại."
+          }
+        }
+      },
+      "EDIT": {
+        "TITLE": "Sửa chiến dịch Facebook Marketing",
+        "FORM": {
+          "API": {
+            "SUCCESS_MESSAGE": "Cập nhật thành công",
+            "ERROR_MESSAGE": "Đã xảy ra lỗi. Vui lòng thử lại."
+          }
+        }
+      }
+    },
     "CONFIRM_DELETE": {
       "TITLE": "Bạn có chắc muốn xóa?",
       "DESCRIPTION": "Hành động này là vĩnh viễn và không thể hoàn tác.",
