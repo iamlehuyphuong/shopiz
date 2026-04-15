@@ -330,7 +330,7 @@
     "TEMPLATES": {
       "HEADER": {
         "TITLE": "Templates",
-        "DESCRIPTION": "Create and manage message templates to streamline your customer support responses."
+        "DESCRIPTION": "Manage message templates across all your messaging channels from one place."
       },
       "EMPTY_STATE": {
         "TITLE": "No templates yet",
@@ -339,7 +339,24 @@
       "ACTIONS": {
         "CREATE_TEMPLATE": "Create Template",
         "NEW_TEMPLATE": "New template",
-        "DELETE": "Delete template"
+        "DELETE": "Delete template",
+        "SYNC_ALL": "Sync all",
+        "MANAGE": "Manage",
+        "VIEW_IN_INBOX": "View in inbox"
+      },
+      "CHANNEL_OVERVIEW": {
+        "INBOXES": "{count} inbox | {count} inboxes",
+        "TEMPLATES_COUNT": "{count} template | {count} templates",
+        "NO_INBOXES": "No inboxes configured",
+        "NO_TEMPLATES": "No templates"
+      },
+      "UNIFIED_STATUS": {
+        "ACTIVE": "Active",
+        "APPROVED": "Approved",
+        "PENDING": "Pending",
+        "DRAFT": "Draft",
+        "REJECTED": "Rejected",
+        "DISABLED": "Disabled"
       },
       "FILTERS": {
         "CONTENT": "Content",
@@ -348,8 +365,12 @@
         "APPROVED": "Approved",
         "PENDING": "Pending",
         "REJECTED": "Rejected",
+        "ACTIVE": "Active",
+        "DRAFT": "Draft",
+        "DISABLED": "Disabled",
         "ALL_CHANNELS": "All Channels",
-        "ALL_LANGUAGES": "All Languages"
+        "ALL_LANGUAGES": "All Languages",
+        "ALL_INBOXES": "All Inboxes"
       },
       "LIST": {
         "404": "No templates found",
@@ -368,6 +389,7 @@
         "CANCEL": "Cancel",
         "CREATE": "Create",
         "CONTINUE": "Continue",
+        "GO_TO_INBOX": "Go to inbox",
         "BACK": "Back",
         "STEPS": {
           "BASIC": "Basic Info",
@@ -402,9 +424,11 @@
           },
           "INBOX": {
             "LABEL": "WhatsApp Inbox",
-            "PLACEHOLDER": "Select a WhatsApp inbox",
-            "ERROR": "Please select a WhatsApp inbox",
-            "NO_WHATSAPP_INBOX": "No WhatsApp inboxes found. Create a WhatsApp inbox first."
+            "ZALO_LABEL": "Zalo OA Inbox",
+            "PLACEHOLDER": "Select an inbox",
+            "ERROR": "Please select an inbox",
+            "NO_WHATSAPP_INBOX": "No WhatsApp inboxes found. Create a WhatsApp inbox first.",
+            "NO_ZALO_INBOX": "No Zalo OA inboxes found. Create a Zalo OA inbox first."
           }
         }
       },

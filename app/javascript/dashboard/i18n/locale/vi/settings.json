@@ -339,7 +339,24 @@
       "ACTIONS": {
         "CREATE_TEMPLATE": "Tạo mẫu",
         "NEW_TEMPLATE": "Mẫu mới",
-        "DELETE": "Xóa mẫu"
+        "DELETE": "Xóa mẫu",
+        "SYNC_ALL": "Đồng bộ tất cả",
+        "MANAGE": "Quản lý",
+        "VIEW_IN_INBOX": "Xem trong hộp thư"
+      },
+      "CHANNEL_OVERVIEW": {
+        "INBOXES": "{count} hộp thư",
+        "TEMPLATES_COUNT": "{count} mẫu",
+        "NO_INBOXES": "Chưa có hộp thư nào",
+        "NO_TEMPLATES": "Chưa có mẫu"
+      },
+      "UNIFIED_STATUS": {
+        "ACTIVE": "Hoạt động",
+        "APPROVED": "Đã duyệt",
+        "PENDING": "Đang chờ",
+        "DRAFT": "Bản nháp",
+        "REJECTED": "Từ chối",
+        "DISABLED": "Đã tắt"
       },
       "FILTERS": {
         "CONTENT": "Nội dung",
@@ -348,8 +365,12 @@
         "APPROVED": "Đã duyệt",
         "PENDING": "Đang chờ",
         "REJECTED": "Từ chối",
+        "ACTIVE": "Hoạt động",
+        "DRAFT": "Bản nháp",
+        "DISABLED": "Đã tắt",
         "ALL_CHANNELS": "Tất cả kênh",
-        "ALL_LANGUAGES": "Tất cả ngôn ngữ"
+        "ALL_LANGUAGES": "Tất cả ngôn ngữ",
+        "ALL_INBOXES": "Tất cả hộp thư"
       },
       "LIST": {
         "404": "Không tìm thấy mẫu",
@@ -368,6 +389,7 @@
         "CANCEL": "Hủy",
         "CREATE": "Tạo",
         "CONTINUE": "Tiếp tục",
+        "GO_TO_INBOX": "Đi đến hộp thư",
         "BACK": "Quay lại",
         "STEPS": {
           "BASIC": "Thông tin cơ bản",
@@ -402,9 +424,11 @@
           },
           "INBOX": {
             "LABEL": "Hộp thư WhatsApp",
-            "PLACEHOLDER": "Chọn hộp thư WhatsApp",
-            "ERROR": "Vui lòng chọn hộp thư WhatsApp",
-            "NO_WHATSAPP_INBOX": "Không có hộp thư WhatsApp nào. Vui lòng tạo trước."
+            "ZALO_LABEL": "Hộp thư Zalo OA",
+            "PLACEHOLDER": "Chọn hộp thư",
+            "ERROR": "Vui lòng chọn hộp thư",
+            "NO_WHATSAPP_INBOX": "Không có hộp thư WhatsApp nào. Vui lòng tạo trước.",
+            "NO_ZALO_INBOX": "Không có hộp thư Zalo OA nào. Vui lòng tạo trước."
           }
         }
       },

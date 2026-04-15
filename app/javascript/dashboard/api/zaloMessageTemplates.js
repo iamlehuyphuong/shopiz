@@ -10,6 +10,10 @@ class ZaloMessageTemplatesAPI extends ApiClient {
       params: { channel_id: channelId },
     });
   }
+
+  getAll() {
+    return this.axios.get(this.url);
+  }
 }
 
 export default new ZaloMessageTemplatesAPI();

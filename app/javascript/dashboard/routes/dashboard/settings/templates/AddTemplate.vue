@@ -1,7 +1,7 @@
 <script setup>
 import { useVuelidate } from '@vuelidate/core';
 import { required, minLength, maxLength, helpers } from '@vuelidate/validators';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
@@ -34,10 +34,19 @@ const channelTypes = [
     label: 'WhatsApp',
     icon: 'i-ri-whatsapp-fill',
   },
+  {
+    value: 'Channel::ZaloOa',
+    label: 'Zalo OA',
+    icon: 'i-ri-zalo-oa-fill',
+  },
 ];
 
-// Category options with icons
-const categoryTypes = [
+const isZaloSelected = computed(
+  () => selectedChannelType.value === 'Channel::ZaloOa'
+);
+
+// WhatsApp category options
+const whatsappCategoryTypes = [
   {
     value: 'utility',
     label: t('SETTINGS.TEMPLATES.ADD.FORM.CATEGORY.OPTIONS.UTILITY'),
@@ -56,9 +65,55 @@ const categoryTypes = [
   },
 ];
 
+// Zalo OA category options
+const zaloCategoryTypes = [
+  {
+    value: 'transaction_order',
+    label: t('INBOX_MGMT.ZALO_TEMPLATES.TYPES.ORDER'),
+    icon: 'i-lucide-shopping-cart',
+  },
+  {
+    value: 'transaction_payment',
+    label: t('INBOX_MGMT.ZALO_TEMPLATES.TYPES.PAYMENT'),
+    icon: 'i-lucide-credit-card',
+  },
+  {
+    value: 'transaction_shipping',
+    label: t('INBOX_MGMT.ZALO_TEMPLATES.TYPES.SHIPPING'),
+    icon: 'i-lucide-truck',
+  },
+  {
+    value: 'transaction_otp',
+    label: t('INBOX_MGMT.ZALO_TEMPLATES.TYPES.OTP'),
+    icon: 'i-lucide-key-round',
+  },
+  {
+    value: 'transaction_reward',
+    label: t('INBOX_MGMT.ZALO_TEMPLATES.TYPES.REWARD'),
+    icon: 'i-lucide-gift',
+  },
+  {
+    value: 'promotion',
+    label: t('INBOX_MGMT.ZALO_TEMPLATES.TYPES.PROMOTION'),
+    icon: 'i-lucide-megaphone',
+  },
+];
+
+const currentCategoryTypes = computed(() =>
+  isZaloSelected.value ? zaloCategoryTypes : whatsappCategoryTypes
+);
+
+// Reset category and inbox when channel type changes
+watch(selectedChannelType, () => {
+  selectedCategory.value = isZaloSelected.value
+    ? 'transaction_order'
+    : 'utility';
+  selectedInbox.value = null;
+});
+
 // Transform categories for DropdownMenu format
 const categoryMenuItems = computed(() => {
-  return categoryTypes.map(category => ({
+  return currentCategoryTypes.value.map(category => ({
     action: 'categorySelect',
     value: category.value,
     label: category.label,
@@ -69,7 +124,7 @@ const categoryMenuItems = computed(() => {
 });
 
 const selectedCategoryLabel = computed(() => {
-  const selected = categoryTypes.find(
+  const selected = currentCategoryTypes.value.find(
     cat => cat.value === selectedCategory.value
   );
   return selected
@@ -77,29 +132,43 @@ const selectedCategoryLabel = computed(() => {
     : t('SETTINGS.TEMPLATES.ADD.FORM.CATEGORY.PLACEHOLDER');
 });
 
-// Get WhatsApp inboxes
+// Get inboxes based on selected channel type
 const allInboxes = useMapGetter('inboxes/getInboxes');
-const whatsappInboxes = computed(() =>
-  allInboxes.value.filter(inbox => inbox.channel_type === 'Channel::Whatsapp')
+const accountId = useMapGetter('getCurrentAccountId');
+
+const filteredInboxes = computed(() =>
+  allInboxes.value.filter(
+    inbox => inbox.channel_type === selectedChannelType.value
+  )
 );
 
 // Transform inboxes for DropdownMenu format
 const inboxMenuItems = computed(() => {
-  const inboxOptions = whatsappInboxes.value.map(inbox => ({
+  return filteredInboxes.value.map(inbox => ({
     action: 'inboxSelect',
     value: inbox,
     label: inbox.name,
     icon: getInboxIconByType(inbox.channel_type, inbox.medium),
     isSelected: selectedInbox.value?.id === inbox.id,
   }));
-
-  return inboxOptions;
 });
 
 const selectedInboxLabel = computed(() => {
   return selectedInbox.value
     ? selectedInbox.value.name
     : t('SETTINGS.TEMPLATES.ADD.FORM.INBOX.PLACEHOLDER');
+});
+
+const inboxLabel = computed(() => {
+  if (isZaloSelected.value)
+    return t('SETTINGS.TEMPLATES.ADD.FORM.INBOX.ZALO_LABEL');
+  return t('SETTINGS.TEMPLATES.ADD.FORM.INBOX.LABEL');
+});
+
+const noInboxMessage = computed(() => {
+  if (isZaloSelected.value)
+    return t('SETTINGS.TEMPLATES.ADD.FORM.INBOX.NO_ZALO_INBOX');
+  return t('SETTINGS.TEMPLATES.ADD.FORM.INBOX.NO_WHATSAPP_INBOX');
 });
 
 const validationRules = {
@@ -144,21 +213,37 @@ const onClose = () => {
   emit('close');
 };
 
-const goToBuilder = () => {
-  if (isBasicFormValid.value) {
-    // Save configuration to store
-    store.dispatch('messageTemplates/setBuilderConfig', {
-      name: templateName.value.trim(),
-      language: selectedLanguage.value,
-      channelType: selectedChannelType.value,
-      inboxId: selectedInbox.value.id,
-      category: selectedCategory.value,
-    });
-
-    // Navigate to builder page without query params
-    router.push({ name: 'template_builder' });
-    onClose();
+const continueLabel = computed(() => {
+  if (isZaloSelected.value) {
+    return t('SETTINGS.TEMPLATES.ADD.GO_TO_INBOX');
   }
+  return t('SETTINGS.TEMPLATES.ADD.CONTINUE');
+});
+
+const goToBuilder = () => {
+  if (!isBasicFormValid.value) return;
+
+  if (isZaloSelected.value) {
+    // Navigate to the Zalo OA inbox settings at the message-templates tab
+    const inboxId = selectedInbox.value.id;
+    router.push(
+      `/app/accounts/${accountId.value}/settings/inboxes/${inboxId}/message-templates`
+    );
+    onClose();
+    return;
+  }
+
+  // WhatsApp: save config and go to builder
+  store.dispatch('messageTemplates/setBuilderConfig', {
+    name: templateName.value.trim(),
+    language: selectedLanguage.value,
+    channelType: selectedChannelType.value,
+    inboxId: selectedInbox.value.id,
+    category: selectedCategory.value,
+  });
+
+  router.push({ name: 'template_builder' });
+  onClose();
 };
 
 const handleInboxAction = ({ value }) => {
@@ -203,6 +288,29 @@ const closeInboxDropdown = () => {
 
     <!-- Basic Information Form -->
     <div class="flex flex-col w-full p-6 space-y-4">
+      <!-- Channel Type -->
+      <div class="w-full">
+        <label class="block text-sm font-medium text-n-slate-12 mb-3">
+          {{ t('SETTINGS.TEMPLATES.ADD.FORM.CHANNEL_TYPE.LABEL') }}
+        </label>
+
+        <!-- Channel Type Selection -->
+        <div class="flex gap-2">
+          <NextButton
+            v-for="type in channelTypes"
+            :key="type.value"
+            :label="type.label"
+            :icon="type.icon"
+            variant="outline"
+            :color="selectedChannelType === type.value ? 'blue' : 'slate'"
+            size="sm"
+            justify="start"
+            class="h-11 flex-1"
+            @click="selectedChannelType = type.value"
+          />
+        </div>
+      </div>
+
       <!-- Template Name -->
       <div class="w-full">
         <label class="block text-sm font-medium text-n-slate-12 mb-2">
@@ -233,7 +341,8 @@ const closeInboxDropdown = () => {
         </span>
       </div>
 
-      <div class="w-full">
+      <!-- Language (WhatsApp only) -->
+      <div v-if="!isZaloSelected" class="w-full">
         <label class="block text-sm font-medium text-n-slate-12 mb-2">
           {{ t('SETTINGS.TEMPLATES.ADD.FORM.LANGUAGE.LABEL') }}
         </label>
@@ -261,8 +370,9 @@ const closeInboxDropdown = () => {
               <span
                 v-if="selectedCategory"
                 :class="
-                  categoryTypes.find(cat => cat.value === selectedCategory)
-                    ?.icon
+                  currentCategoryTypes.find(
+                    cat => cat.value === selectedCategory
+                  )?.icon
                 "
                 class="size-4"
               />
@@ -283,33 +393,10 @@ const closeInboxDropdown = () => {
         </div>
       </div>
 
-      <!-- Channel Type -->
-      <div class="w-full">
-        <label class="block text-sm font-medium text-n-slate-12 mb-3">
-          {{ t('SETTINGS.TEMPLATES.ADD.FORM.CHANNEL_TYPE.LABEL') }}
-        </label>
-
-        <!-- Channel Type Selection -->
-        <div class="space-y-2">
-          <NextButton
-            v-for="type in channelTypes"
-            :key="type.value"
-            :label="type.label"
-            :icon="type.icon"
-            variant="outline"
-            :color="selectedChannelType === type.value ? 'blue' : 'slate'"
-            size="sm"
-            justify="start"
-            class="h-12"
-            @click="selectedChannelType = type.value"
-          />
-        </div>
-      </div>
-
       <!-- Inbox Selection -->
       <div class="w-full">
         <label class="block text-sm font-medium text-n-slate-12 mb-2">
-          {{ t('SETTINGS.TEMPLATES.ADD.FORM.INBOX.LABEL') }}
+          {{ inboxLabel }}
         </label>
         <div v-on-click-outside="closeInboxDropdown" class="relative w-full">
           <button
@@ -334,7 +421,7 @@ const closeInboxDropdown = () => {
             />
           </button>
           <DropdownMenu
-            v-if="isInboxDropdownOpen && whatsappInboxes.length > 0"
+            v-if="isInboxDropdownOpen && filteredInboxes.length > 0"
             :menu-items="inboxMenuItems"
             class="absolute top-full mt-1 left-0 right-0 w-full z-50 max-h-60 overflow-y-auto"
             @action="handleInboxAction"
@@ -347,10 +434,10 @@ const closeInboxDropdown = () => {
           {{ t('SETTINGS.TEMPLATES.ADD.FORM.INBOX.ERROR') }}
         </span>
         <span
-          v-if="whatsappInboxes.length === 0"
+          v-if="filteredInboxes.length === 0"
           class="text-xs text-orange-500 mt-1 block"
         >
-          {{ t('SETTINGS.TEMPLATES.ADD.FORM.INBOX.NO_WHATSAPP_INBOX') }}
+          {{ noInboxMessage }}
         </span>
       </div>
 
@@ -363,7 +450,7 @@ const closeInboxDropdown = () => {
           @click="onClose"
         />
         <NextButton
-          :label="$t('SETTINGS.TEMPLATES.ADD.CONTINUE')"
+          :label="continueLabel"
           :disabled="!isBasicFormValid"
           @click="goToBuilder"
         />
