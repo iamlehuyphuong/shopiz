@@ -22,7 +22,8 @@
       "UPGRADE_PROMPT_AGENT_BOTS": "Tính năng Trợ lý ảo hiện không khả dụng trong gói hiện tại của bạn. Vui lòng nâng cấp để sử dụng tính năng này và các tính năng cao cấp khác.",
       "UPGRADE_PROMPT_TEMPLATE_BUILDER": "Tính năng Trình tạo mẫu tin nhắn hiện không khả dụng trong gói hiện tại của bạn. Vui lòng nâng cấp để sử dụng tính năng này và các tính năng cao cấp khác.",
       "UPGRADE_PROMPT_INTEGRATIONS": "Tính năng Tích hợp ứng dụng hiện không khả dụng trong gói hiện tại của bạn. Vui lòng nâng cấp để sử dụng tính năng này và các tính năng cao cấp khác.",
-      "UPGRADE_PROMPT_AUDIT_LOGS": "Tính năng Nhật ký hoạt động hiện không khả dụng trong gói hiện tại của bạn. Vui lòng nâng cấp để sử dụng tính năng này và các tính năng cao cấp khác."
+      "UPGRADE_PROMPT_AUDIT_LOGS": "Tính năng Nhật ký hoạt động hiện không khả dụng trong gói hiện tại của bạn. Vui lòng nâng cấp để sử dụng tính năng này và các tính năng cao cấp khác.",
+      "UPGRADE_PROMPT_HELP_CENTER": "Tính năng Trung tâm trợ giúp hiện không khả dụng trong gói hiện tại của bạn. Vui lòng nâng cấp để sử dụng tính năng này và các tính năng cao cấp khác."
     },
     "TITLE": "Cài đặt tài khoản",
     "SUBMIT": "Cập nhật cài đặt",

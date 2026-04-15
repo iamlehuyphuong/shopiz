@@ -28,6 +28,15 @@ class Channel::FacebookPage < ApplicationRecord
   end
 
   self.table_name = 'channel_facebook_pages'
+  EDITABLE_ATTRS = [{ provider_config: {} }].freeze
+
+  # Post & comment management settings stored in provider_config JSONB column
+  store_accessor :provider_config,
+                 :hide_comments,            # Boolean - hide all comments
+                 :hide_no_phone_comments,   # Boolean - hide comments without phone number
+                 :hide_no_email_comments,   # Boolean - hide comments without email
+                 :auto_reply_to_comments,   # Boolean - send private reply to commenters
+                 :auto_reply_message        # String  - message content for private reply
 
   validates :page_id, uniqueness: { scope: :account_id }
 
@@ -51,7 +60,7 @@ class Channel::FacebookPage < ApplicationRecord
     Facebook::Messenger::Subscriptions.subscribe(
       access_token: page_access_token,
       subscribed_fields: %w[
-        messages message_deliveries message_echoes message_reads standby messaging_handovers
+        messages message_deliveries message_echoes message_reads messaging_postbacks messaging_referrals messaging_optins standby messaging_handovers feed
       ]
     )
   rescue StandardError => e
@@ -64,5 +73,22 @@ class Channel::FacebookPage < ApplicationRecord
   rescue StandardError => e
     Rails.logger.debug { "Rescued: #{e.inspect}" }
     true
+  end
+
+  # Helper methods for checking boolean provider_config values
+  def hide_comments?
+    ActiveModel::Type::Boolean.new.cast(hide_comments)
+  end
+
+  def hide_no_phone_comments?
+    ActiveModel::Type::Boolean.new.cast(hide_no_phone_comments)
+  end
+
+  def hide_no_email_comments?
+    ActiveModel::Type::Boolean.new.cast(hide_no_email_comments)
+  end
+
+  def auto_reply_to_comments?
+    ActiveModel::Type::Boolean.new.cast(auto_reply_to_comments)
   end
 end

@@ -22,7 +22,8 @@
       "UPGRADE_PROMPT_AGENT_BOTS": "Agent Bots are not available in your current plan. Please upgrade to access this and other premium features.",
       "UPGRADE_PROMPT_TEMPLATE_BUILDER": "The Template Builder feature is not available in your current plan. Please upgrade to access this and other premium features.",
       "UPGRADE_PROMPT_INTEGRATIONS": "Integrations are not available in your current plan. Please upgrade to access this and other premium features.",
-      "UPGRADE_PROMPT_AUDIT_LOGS": "Audit Logs are not available in your current plan. Please upgrade to access this and other premium features."
+      "UPGRADE_PROMPT_AUDIT_LOGS": "Audit Logs are not available in your current plan. Please upgrade to access this and other premium features.",
+      "UPGRADE_PROMPT_HELP_CENTER": "Help Center is not available in your current plan. Please upgrade to access this and other premium features."
     },
     "TITLE": "Account settings",
     "SUBMIT": "Update settings",
