@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_04_14_194931) do
+ActiveRecord::Schema[7.1].define(version: 2026_04_15_010300) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -520,6 +520,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_14_194931) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "instagram_id"
+    t.jsonb "provider_config", default: {}, null: false
     t.index ["page_id", "account_id"], name: "index_channel_facebook_pages_on_page_id_and_account_id", unique: true
     t.index ["page_id"], name: "index_channel_facebook_pages_on_page_id"
   end
@@ -708,6 +709,20 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_14_194931) do
     t.index ["inbox_id"], name: "index_contact_inboxes_on_inbox_id"
     t.index ["pubsub_token"], name: "index_contact_inboxes_on_pubsub_token", unique: true
     t.index ["source_id"], name: "index_contact_inboxes_on_source_id"
+  end
+
+  create_table "contact_optins", force: :cascade do |t|
+    t.bigint "contact_id", null: false
+    t.bigint "inbox_id", null: false
+    t.string "token", null: false
+    t.string "topic"
+    t.integer "status", default: 0
+    t.datetime "expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contact_id"], name: "index_contact_optins_on_contact_id"
+    t.index ["inbox_id"], name: "index_contact_optins_on_inbox_id"
+    t.index ["token"], name: "index_contact_optins_on_token", unique: true
   end
 
   create_table "contacts", id: :serial, force: :cascade do |t|
@@ -1460,6 +1475,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_14_194931) do
   add_foreign_key "account_subscriptions", "subscription_plans"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "contact_optins", "contacts"
+  add_foreign_key "contact_optins", "inboxes"
   add_foreign_key "inboxes", "portals"
   add_foreign_key "subscription_plans", "subscription_tiers"
   create_trigger("accounts_after_insert_row_tr", :generated => true, :compatibility => 1).
