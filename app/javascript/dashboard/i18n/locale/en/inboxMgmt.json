@@ -709,7 +709,68 @@
       "BOT_CONFIGURATION": "Bot Configuration",
       "ACCOUNT_HEALTH": "Account Health",
       "CSAT": "CSAT",
-      "POSTS_AND_COMMENTS": "Posts & Comments"
+      "POSTS_AND_COMMENTS": "Posts & Comments",
+      "MESSAGE_TEMPLATES": "Message Templates"
+    },
+    "ZALO_TEMPLATES": {
+      "TITLE": "Zalo OA Message Templates",
+      "SUBTITLE": "Manage message templates for transaction and promotion messages",
+      "ADD_BUTTON": "New Template",
+      "CREATE_TITLE": "Create Message Template",
+      "EDIT_TITLE": "Edit Message Template",
+      "DELETE_TITLE": "Delete Template",
+      "DELETE_CONFIRM": "Are you sure you want to delete this template? This action cannot be undone.",
+      "DELETE_BUTTON": "Delete",
+      "EMPTY_STATE": "No message templates yet. Create your first template to get started.",
+      "TYPES": {
+        "ORDER": "Order",
+        "PAYMENT": "Payment",
+        "SHIPPING": "Shipping",
+        "OTP": "OTP",
+        "REWARD": "Reward",
+        "PROMOTION": "Promotion"
+      },
+      "FORM": {
+        "NAME": {
+          "LABEL": "Template Name",
+          "PLACEHOLDER": "e.g. Order Confirmation"
+        },
+        "TYPE": {
+          "LABEL": "Template Type",
+          "PLACEHOLDER": "Select type"
+        },
+        "STATUS": {
+          "LABEL": "Status"
+        },
+        "HEADER": {
+          "LABEL": "Header",
+          "PLACEHOLDER": "e.g. Order Update"
+        },
+        "CONTENT": {
+          "LABEL": "Content",
+          "PLACEHOLDER": "e.g. Your order {{order_id}} has been confirmed"
+        },
+        "BUTTON_TITLE": {
+          "LABEL": "Button Title",
+          "PLACEHOLDER": "e.g. View Order"
+        },
+        "BUTTON_URL": {
+          "LABEL": "Button URL",
+          "PLACEHOLDER": "e.g. https://example.com/orders/{{order_id}}"
+        },
+        "CANCEL": "Cancel",
+        "CREATE": "Create Template",
+        "UPDATE": "Update Template"
+      },
+      "API": {
+        "FETCH_ERROR": "Failed to load templates",
+        "CREATE_SUCCESS": "Template created successfully",
+        "CREATE_ERROR": "Failed to create template",
+        "UPDATE_SUCCESS": "Template updated successfully",
+        "UPDATE_ERROR": "Failed to update template",
+        "DELETE_SUCCESS": "Template deleted successfully",
+        "DELETE_ERROR": "Failed to delete template"
+      }
     },
     "CHANNEL_PREFERENCES": "Channel Preferences",
     "WIDGET_FEATURES": "Widget features",

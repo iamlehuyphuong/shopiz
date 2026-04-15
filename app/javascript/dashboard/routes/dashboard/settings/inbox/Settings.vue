@@ -16,6 +16,7 @@ import TiktokReauthorize from './channels/tiktok/Reauthorize.vue';
 import DuplicateInboxBanner from './channels/instagram/DuplicateInboxBanner.vue';
 import MicrosoftReauthorize from './channels/microsoft/Reauthorize.vue';
 import ZaloReauthorize from './channels/zalo/Reauthorize.vue';
+import ZaloTemplatesPage from './components/ZaloTemplatesPage.vue';
 import GoogleReauthorize from './channels/google/Reauthorize.vue';
 import WhatsappReauthorize from './channels/whatsapp/Reauthorize.vue';
 import InboxHealthAPI from 'dashboard/api/inboxHealth';
@@ -60,6 +61,7 @@ export default {
     LockToSingleConversationPreview,
     MicrosoftReauthorize,
     ZaloReauthorize,
+    ZaloTemplatesPage,
     GoogleReauthorize,
     NextButton,
     SpinnerLoader,
@@ -176,6 +178,16 @@ export default {
           {
             key: 'zaloPersonalLogin',
             name: this.$t('INBOX_MGMT.ADD.ZALO_OA.RELOGIN'),
+          },
+        ];
+      }
+
+      if (this.isAZaloOaChannel) {
+        visibleToAllChannelTabs = [
+          ...visibleToAllChannelTabs,
+          {
+            key: 'message-templates',
+            name: this.$t('INBOX_MGMT.TABS.MESSAGE_TEMPLATES'),
           },
         ];
       }
@@ -1212,6 +1224,9 @@ export default {
         </div>
         <div v-if="selectedTabKey === 'posts-and-comments'">
           <FacebookPostsAndComments :inbox="inbox" />
+        </div>
+        <div v-if="selectedTabKey === 'message-templates'">
+          <ZaloTemplatesPage :inbox="inbox" />
         </div>
         <div v-if="selectedTabKey === 'whatsapp-health'">
           <AccountHealth

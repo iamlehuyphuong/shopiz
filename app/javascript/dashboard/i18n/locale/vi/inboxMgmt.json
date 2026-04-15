@@ -678,7 +678,68 @@
       "WIDGET_BUILDER": "Tùy chỉnh widget",
       "BOT_CONFIGURATION": "Cấu hình trợ lý ảo",
       "ACCOUNT_HEALTH": "Sức khỏe tài khoản",
-      "CSAT": "CSAT"
+      "CSAT": "CSAT",
+      "MESSAGE_TEMPLATES": "Mẫu tin nhắn"
+    },
+    "ZALO_TEMPLATES": {
+      "TITLE": "Mẫu tin nhắn Zalo OA",
+      "SUBTITLE": "Quản lý mẫu tin nhắn giao dịch và truyền thông",
+      "ADD_BUTTON": "Tạo mẫu mới",
+      "CREATE_TITLE": "Tạo mẫu tin nhắn",
+      "EDIT_TITLE": "Chỉnh sửa mẫu tin nhắn",
+      "DELETE_TITLE": "Xóa mẫu tin nhắn",
+      "DELETE_CONFIRM": "Bạn có chắc chắn muốn xóa mẫu tin nhắn này? Hành động này không thể hoàn tác.",
+      "DELETE_BUTTON": "Xóa",
+      "EMPTY_STATE": "Chưa có mẫu tin nhắn nào. Tạo mẫu đầu tiên để bắt đầu.",
+      "TYPES": {
+        "ORDER": "Đơn hàng",
+        "PAYMENT": "Thanh toán",
+        "SHIPPING": "Vận chuyển",
+        "OTP": "OTP",
+        "REWARD": "Tích điểm",
+        "PROMOTION": "Truyền thông"
+      },
+      "FORM": {
+        "NAME": {
+          "LABEL": "Tên mẫu",
+          "PLACEHOLDER": "VD: Xác nhận đơn hàng"
+        },
+        "TYPE": {
+          "LABEL": "Loại mẫu",
+          "PLACEHOLDER": "Chọn loại"
+        },
+        "STATUS": {
+          "LABEL": "Trạng thái"
+        },
+        "HEADER": {
+          "LABEL": "Tiêu đề",
+          "PLACEHOLDER": "VD: Cập nhật đơn hàng"
+        },
+        "CONTENT": {
+          "LABEL": "Nội dung",
+          "PLACEHOLDER": "VD: Đơn hàng {{order_id}} của bạn đã được xác nhận"
+        },
+        "BUTTON_TITLE": {
+          "LABEL": "Tiêu đề nút",
+          "PLACEHOLDER": "VD: Xem đơn hàng"
+        },
+        "BUTTON_URL": {
+          "LABEL": "URL nút",
+          "PLACEHOLDER": "VD: https://example.com/orders/{{order_id}}"
+        },
+        "CANCEL": "Hủy",
+        "CREATE": "Tạo mẫu",
+        "UPDATE": "Cập nhật mẫu"
+      },
+      "API": {
+        "FETCH_ERROR": "Không thể tải danh sách mẫu",
+        "CREATE_SUCCESS": "Tạo mẫu thành công",
+        "CREATE_ERROR": "Không thể tạo mẫu",
+        "UPDATE_SUCCESS": "Cập nhật mẫu thành công",
+        "UPDATE_ERROR": "Không thể cập nhật mẫu",
+        "DELETE_SUCCESS": "Xóa mẫu thành công",
+        "DELETE_ERROR": "Không thể xóa mẫu"
+      }
     },
     "CHANNEL_PREFERENCES": "Cài đặt kênh",
     "WIDGET_FEATURES": "Tính năng widget",
