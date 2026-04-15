@@ -1,26 +1,20 @@
 # Copilot tool: Search Haravan customers by phone, email, or name.
-class Captain::Tools::Copilot::HaravanSearchCustomersService < Captain::Tools::Copilot::BaseTool
+class Captain::Tools::Copilot::HaravanSearchCustomersService < Captain::Tools::BaseTool
   include Captain::Tools::Concerns::HaravanClient
-
-  def name
+  def self.name
     'haravan_search_customers'
   end
 
-  def description
-    'Search Haravan customers by phone number, email address, or name'
-  end
+  description 'Search Haravan customers by phone number, email address, or name'
+  param :query, type: :string, desc: 'Customer phone, email, or name to search'
 
-  def parameters
-    [
-      { name: 'query', type: 'string', description: 'Customer phone, email, or name to search', required: true }
-    ]
-  end
 
   def active?
     haravan_active?
   end
 
-  def execute(arguments)
+  def execute(**args)
+    arguments = args.stringify_keys
     query = arguments['query']
     return 'Query is required' if query.blank?
 

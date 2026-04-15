@@ -10,8 +10,33 @@ class Captain::Llm::ContactAttributesService < Llm::BaseAiService
   end
 
   def generate_and_update_attributes
-    generate_attributes
-    # to implement the update attributes
+    attributes_array = generate_attributes
+    return if attributes_array.blank?
+    
+    attributes_to_update = {}
+    custom_attrs = @contact.custom_attributes || {}
+    
+    attributes_array.each do |feature|
+      key = feature['attribute'].to_s
+      val = feature['value']
+      next if key.blank? || val.blank?
+
+      case key
+      when 'phone_number'
+        # Chỉ cập nhật nếu đang trống
+        attributes_to_update[:phone_number] = val if @contact.phone_number.blank?
+      when 'email'
+        attributes_to_update[:email] = val.downcase if @contact.email.blank?
+      when 'identifier', 'cccd', 'cmnd'
+        attributes_to_update[:identifier] = val if @contact.identifier.blank?
+      else
+        # Ghi các thông tin phụ vào custom_attributes nếu chưa có
+        custom_attrs[key] = val if custom_attrs[key].blank?
+      end
+    end
+
+    attributes_to_update[:custom_attributes] = custom_attrs
+    @contact.update(attributes_to_update) if attributes_to_update.any?
   end
 
   private

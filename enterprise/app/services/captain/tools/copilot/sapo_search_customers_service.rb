@@ -1,21 +1,15 @@
-class Captain::Tools::Copilot::SapoSearchCustomersService < Captain::Tools::Copilot::BaseService
+class Captain::Tools::Copilot::SapoSearchCustomersService < Captain::Tools::BaseTool
   include Captain::Tools::Concerns::SapoClient
-
-  def tool_name
+  def self.name
     'sapo_search_customers'
   end
 
-  def tool_description
-    'Search for customers on the Sapo store by name, email, or phone.'
-  end
+  description 'Search for customers on the Sapo store by name, email, or phone.'
+  param :query, type: :string, desc: 'Customer name, email, or phone to search'
 
-  def tool_parameters
-    [
-      { name: 'query', type: 'string', description: 'Customer name, email, or phone to search' }
-    ]
-  end
 
-  def execute(arguments)
+  def execute(**args)
+    arguments = args.stringify_keys
     return 'Sapo integration is not connected.' unless sapo_active?
 
     customers = fetch_customers(arguments['query'])

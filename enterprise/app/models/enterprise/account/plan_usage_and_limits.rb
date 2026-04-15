@@ -42,7 +42,10 @@ module Enterprise::Account::PlanUsageAndLimits # rubocop:disable Metrics/ModuleL
       credit_limit: credit_limit,
       credit_consumed: credit_consumed,
       credit_available: credit_available,
-      total_available: monthly_available + credit_available
+      total_available: monthly_available + credit_available,
+      total_count: monthly_limit + credit_limit,
+      current_available: monthly_available + credit_available,
+      consumed: monthly_consumed + credit_consumed
     }
   end
 

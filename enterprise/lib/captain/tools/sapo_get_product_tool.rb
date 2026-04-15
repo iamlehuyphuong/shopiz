@@ -1,21 +1,11 @@
-class Captain::Tools::SapoGetProductTool < Base
+class Captain::Tools::SapoGetProductTool < Captain::Tools::BasePublicTool
   include Captain::Tools::Concerns::SapoClient
+  description 'Search for products on the Sapo store. Returns product name, price, variants, and availability.'
+  param :query, type: 'string', desc: 'Product name or keyword to search for'
 
-  def name
-    'sapo_get_product'
-  end
 
-  def description
-    'Search for products on the Sapo store. Returns product name, price, variants, and availability.'
-  end
-
-  def parameters
-    [
-      { name: 'query', type: 'string', description: 'Product name or keyword to search for' }
-    ]
-  end
-
-  def execute(arguments)
+  def perform(tool_context, **args)
+    arguments = args.stringify_keys
     return 'Sapo integration is not active.' unless sapo_active?
 
     products = fetch_products(arguments['query'])

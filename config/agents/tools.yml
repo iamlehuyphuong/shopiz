@@ -129,3 +129,8 @@
   title: 'Sapo: Get Product'
   description: 'Search Sapo products by name or keyword'
   icon: 'box'
+
+- id: send_marketing_optin
+  title: 'Send Marketing Opt-in'
+  description: 'Send a Meta Marketing Messages Opt-in request to the customer'
+  icon: 'mail-open'

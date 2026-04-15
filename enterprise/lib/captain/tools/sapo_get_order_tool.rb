@@ -1,22 +1,12 @@
-class Captain::Tools::SapoGetOrderTool < Base
+class Captain::Tools::SapoGetOrderTool < Captain::Tools::BasePublicTool
   include Captain::Tools::Concerns::SapoClient
+  description 'Look up orders for a customer on the Sapo store. Returns order details, status, and items.'
+  param :email, type: 'string', desc: 'Customer email address to search orders for'
+  param :phone, type: 'string', desc: 'Customer phone number to search orders for (optional)'
 
-  def name
-    'sapo_get_order'
-  end
 
-  def description
-    'Look up orders for a customer on the Sapo store. Returns order details, status, and items.'
-  end
-
-  def parameters
-    [
-      { name: 'email', type: 'string', description: 'Customer email address to search orders for' },
-      { name: 'phone', type: 'string', description: 'Customer phone number to search orders for (optional)' }
-    ]
-  end
-
-  def execute(arguments)
+  def perform(tool_context, **args)
+    arguments = args.stringify_keys
     return 'Sapo integration is not active.' unless sapo_active?
 
     customer_id = find_sapo_customer_id(arguments['email'], arguments['phone'])

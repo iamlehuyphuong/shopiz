@@ -1,26 +1,20 @@
 # Copilot tool: Search Haravan products with inventory information.
-class Captain::Tools::Copilot::HaravanSearchProductsService < Captain::Tools::Copilot::BaseTool
+class Captain::Tools::Copilot::HaravanSearchProductsService < Captain::Tools::BaseTool
   include Captain::Tools::Concerns::HaravanClient
-
-  def name
+  def self.name
     'haravan_search_products'
   end
 
-  def description
-    'Search Haravan products by name or keyword to check pricing, inventory, and details'
-  end
+  description 'Search Haravan products by name or keyword to check pricing, inventory, and details'
+  param :query, type: :string, desc: 'Product name or keyword to search'
 
-  def parameters
-    [
-      { name: 'query', type: 'string', description: 'Product name or keyword to search', required: true }
-    ]
-  end
 
   def active?
     haravan_active?
   end
 
-  def execute(arguments)
+  def execute(**args)
+    arguments = args.stringify_keys
     query = arguments['query']
     return 'Query is required' if query.blank?
 

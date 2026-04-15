@@ -1,26 +1,20 @@
 # Copilot tool: Search WooCommerce orders by email or order ID.
-class Captain::Tools::Copilot::WoocommerceSearchOrdersService < Captain::Tools::Copilot::BaseTool
+class Captain::Tools::Copilot::WoocommerceSearchOrdersService < Captain::Tools::BaseTool
   include Captain::Tools::Concerns::WoocommerceClient
-
-  def name
+  def self.name
     'woocommerce_search_orders'
   end
 
-  def description
-    'Search WooCommerce orders by customer email, phone, or order ID'
-  end
+  description 'Search WooCommerce orders by customer email, phone, or order ID'
+  param :query, type: :string, desc: 'Customer email, phone, or order ID to search'
 
-  def parameters
-    [
-      { name: 'query', type: 'string', description: 'Customer email, phone, or order ID to search', required: true }
-    ]
-  end
 
   def active?
     woocommerce_active?
   end
 
-  def execute(arguments)
+  def execute(**args)
+    arguments = args.stringify_keys
     query = arguments['query']
     return 'Query is required' if query.blank?
 

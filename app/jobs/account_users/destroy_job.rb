@@ -1,4 +1,4 @@
-class Agents::DestroyJob < ApplicationJob
+class AccountUsers::DestroyJob < ApplicationJob
   queue_as :low
 
   def perform(account, user)
