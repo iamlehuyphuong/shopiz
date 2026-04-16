@@ -103,7 +103,7 @@ export default {
       );
     },
     isFormValid() {
-      return !this.v$.$invalid && this.hasAValidCaptcha;
+      return !this.v$.$invalid;
     },
     passwordRequirements() {
       const password = this.credentials.password || '';
@@ -158,6 +158,12 @@ export default {
         this.resetCaptcha();
         return;
       }
+      
+      if (this.globalConfig.hCaptchaSiteKey && !this.credentials.hCaptchaClientResponse) {
+        this.$refs.hCaptcha.execute();
+        return;
+      }
+
       this.isSignupInProgress = true;
       try {
         await register(this.credentials);
@@ -175,6 +181,9 @@ export default {
       this.credentials.hCaptchaClientResponse = token;
       this.didCaptchaReset = false;
       this.v$.$touch();
+      if (!this.v$.$invalid) {
+        this.submit();
+      }
     },
     resetCaptcha() {
       if (!this.globalConfig.hCaptchaSiteKey) return;

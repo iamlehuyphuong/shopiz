@@ -7,8 +7,24 @@ class Instagram::Messenger::MessageText < Instagram::BaseMessageText
   end
 
   def fetch_instagram_user(ig_scope_id)
-    k = Koala::Facebook::API.new(@inbox.channel.page_access_token) if @inbox.facebook?
-    k.get_object(ig_scope_id) || {}
+    if @inbox.facebook?
+      k = Koala::Facebook::API.new(@inbox.channel.page_access_token)
+      k.get_object(ig_scope_id, fields: 'name,profile_pic') || {}
+    else
+      token = @inbox.channel.access_token
+      api_version = GlobalConfigService.load('INSTAGRAM_API_VERSION', 'v22.0')
+      url = "https://graph.instagram.com/#{api_version}/#{ig_scope_id}?fields=name,profile_pic&access_token=#{token}"
+      response = HTTParty.get(url)
+      
+      return {} unless response.success?
+      
+      result = JSON.parse(response.body).with_indifferent_access
+      {
+        'name' => result['name'],
+        'profile_pic' => result['profile_pic'],
+        'id' => result['id']
+      }.with_indifferent_access
+    end
   rescue Koala::Facebook::AuthenticationError => e
     handle_authentication_error(e)
     {}

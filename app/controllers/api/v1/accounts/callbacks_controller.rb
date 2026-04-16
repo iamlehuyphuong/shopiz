@@ -110,7 +110,7 @@ class Api::V1::Accounts::CallbacksController < Api::V1::Accounts::BaseController
   end
 
   def set_avatar(facebook_inbox, page_id)
-    avatar_url = "https://graph.facebook.com/#{page_id}/picture?type=large"
+    avatar_url = "https://graph.facebook.com/#{page_id}/picture?type=large&access_token=#{facebook_inbox.channel.page_access_token}"
     Avatar::AvatarFromUrlJob.perform_later(facebook_inbox, avatar_url)
   end
 end

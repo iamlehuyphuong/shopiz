@@ -57,7 +57,7 @@ export default {
         'https://oauth.zaloapp.com/v4/oa/permission?app_id=' +
           window.shopizConfig.zaloAppId +
           '&redirect_uri=' +
-          encodeURIComponent(window.shopizConfig.hostURL + '/zalo/callback/') +
+          encodeURIComponent(window.shopizConfig.hostURL + '/zalo/callback') +
           '&state=' +
           encodeURIComponent(this.accountId)
       );
@@ -160,6 +160,7 @@ export default {
         <img
           src="~dashboard/assets/images/channels/zalo_login.jpg"
           alt="Zalo-logo"
+          class="max-w-[300px] w-full"
         />
       </a>
       <p class="pt-6 mb-0 text-center">

@@ -679,6 +679,7 @@
       "BOT_CONFIGURATION": "Cấu hình trợ lý ảo",
       "ACCOUNT_HEALTH": "Sức khỏe tài khoản",
       "CSAT": "CSAT",
+      "POSTS_AND_COMMENTS": "Bài viết & Bình luận",
       "MESSAGE_TEMPLATES": "Mẫu tin nhắn"
     },
     "ZALO_TEMPLATES": {
@@ -1059,6 +1060,33 @@
       "API": {
         "SUCCESS_MESSAGE": "Cập nhật CSAT thành công",
         "ERROR_MESSAGE": "Không thể cập nhật CSAT, vui lòng thử lại"
+      }
+    },
+    "POSTS_AND_COMMENTS": {
+      "TITLE": "Quản lý Bài viết & Bình luận",
+      "DESCRIPTION": "Quản lý cách xử lý bình luận trên các bài viết của trang Facebook. Bạn có thể tự động ẩn bình luận và gửi tin nhắn riêng tư cho người bình luận.",
+      "COMMENT_MODERATION": {
+        "TITLE": "Kiểm duyệt bình luận",
+        "DESCRIPTION": "Cấu hình quy tắc tự động ẩn bình luận cho các bài viết trên trang.",
+        "HIDE_ALL": "Ẩn tất cả bình luận",
+        "HIDE_ALL_HELP": "Tự động ẩn tất cả bình luận mới trên các bài viết.",
+        "HIDE_PHONE": "Ẩn bình luận chứa số điện thoại",
+        "HIDE_PHONE_HELP": "Tự động ẩn bình luận có chứa số điện thoại để bảo vệ thông tin liên hệ của khách hàng.",
+        "HIDE_EMAIL": "Ẩn bình luận chứa địa chỉ email",
+        "HIDE_EMAIL_HELP": "Tự động ẩn bình luận có chứa địa chỉ email để bảo vệ thông tin liên hệ của khách hàng."
+      },
+      "AUTO_REPLY": {
+        "TITLE": "Trả lời tự động (Tin nhắn riêng)",
+        "DESCRIPTION": "Tự động gửi tin nhắn riêng qua Messenger cho khách hàng bình luận trên bài viết.",
+        "ENABLE": "Bật tính năng gửi tin nhắn tự động",
+        "ENABLE_HELP": "Khi được bật, một tin nhắn riêng tư sẽ được gửi đến hộp thư Messenger của người bình luận.",
+        "MESSAGE_LABEL": "Nội dung tin nhắn tự động",
+        "MESSAGE_PLACEHOLDER": "Chào bạn! Cảm ơn bạn đã bình luận. Chúng tôi đã gửi thêm thông tin chi tiết qua Messenger cho bạn nhé.",
+        "NOTE": "Lưu ý: Facebook chỉ cho phép gửi một tin nhắn riêng tư cho mỗi bình luận trong vòng 7 ngày."
+      },
+      "API": {
+        "SUCCESS_MESSAGE": "Cập nhật cài đặt Bài viết & Bình luận thành công",
+        "ERROR_MESSAGE": "Lỗi khi cập nhật cài đặt Bài viết & Bình luận. Vui lòng thử lại."
       }
     },
     "BUSINESS_HOURS": {

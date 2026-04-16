@@ -20,9 +20,9 @@
       "ERROR": "Họ và tên quá ngắn."
     },
     "EMAIL": {
-      "LABEL": "Email công việc",
-      "PLACEHOLDER": "Nhập email công việc của bạn. Ví dụ: bruce@wayne.enterprises",
-      "ERROR": "Vui lòng nhập địa chỉ email công việc hợp lệ."
+      "LABEL": "Email",
+      "PLACEHOLDER": "Nhập email của bạn. Ví dụ: bruce@wayne.enterprises",
+      "ERROR": "Vui lòng nhập địa chỉ email hợp lệ."
     },
     "PASSWORD": {
       "LABEL": "Mật khẩu",
