@@ -22,6 +22,16 @@ class Channel::Instagram < ApplicationRecord
   # TODO: Remove guard once encryption keys become mandatory (target 3-4 releases out).
   encrypts :access_token if Chatwoot.encryption_configured?
 
+  EDITABLE_ATTRS = [{ provider_config: {} }].freeze
+
+  # Post & comment management settings stored in provider_config JSONB column
+  store_accessor :provider_config,
+                 :hide_comments,            # Boolean - hide all comments
+                 :hide_phone_comments,      # Boolean - hide comments containing phone number
+                 :hide_email_comments,      # Boolean - hide comments containing email
+                 :auto_reply_to_comments,   # Boolean - send private reply to commenters
+                 :auto_reply_message        # String  - message content for private reply
+
   AUTHORIZATION_ERROR_THRESHOLD = 1
 
   validates :access_token, presence: true
@@ -47,7 +57,7 @@ class Channel::Instagram < ApplicationRecord
     HTTParty.post(
       "https://graph.instagram.com/v22.0/#{instagram_id}/subscribed_apps",
       query: {
-        subscribed_fields: %w[messages message_reactions messaging_seen],
+        subscribed_fields: %w[messages message_reactions messaging_seen comments],
         access_token: access_token
       }
     )
@@ -71,5 +81,22 @@ class Channel::Instagram < ApplicationRecord
 
   def access_token
     Instagram::RefreshOauthTokenService.new(channel: self).access_token
+  end
+
+  # Helper methods for checking boolean provider_config values
+  def hide_comments?
+    ActiveModel::Type::Boolean.new.cast(hide_comments)
+  end
+
+  def hide_phone_comments?
+    ActiveModel::Type::Boolean.new.cast(hide_phone_comments)
+  end
+
+  def hide_email_comments?
+    ActiveModel::Type::Boolean.new.cast(hide_email_comments)
+  end
+
+  def auto_reply_to_comments?
+    ActiveModel::Type::Boolean.new.cast(auto_reply_to_comments)
   end
 end

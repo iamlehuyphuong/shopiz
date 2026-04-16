@@ -21,10 +21,36 @@ class Instagram::BaseMessageText < Instagram::WebhooksBaseService
 
     ensure_contact(contact_id) if contacts_first_message?(contact_id)
 
-    create_message
+    @message = create_message
+    process_referral if @message.present?
   end
 
   private
+
+  def process_referral
+    referral = @messaging.dig(:message, :referral) || @messaging[:referral]
+    return if referral.blank?
+
+    @message.update(content_attributes: @message.content_attributes.merge(referral: referral))
+    conversation = @message.conversation
+
+    url = referral[:source_url]
+    ad_id = referral[:ad_id]
+    
+    note_content = "Tin nhắn bắt nguồn từ Ads Instagram"
+    note_content += ": #{ad_id}" if ad_id.present?
+    note_content += " - #{url}" if url.present?
+
+    conversation.messages.create!(
+      content: note_content.strip,
+      account_id: @inbox.account_id,
+      inbox_id: @inbox.id,
+      message_type: :template,
+      private: true
+    )
+
+    conversation.add_labels(['instagram-ad'])
+  end
 
   def instagram_and_contact_ids
     if agent_message_via_echo?

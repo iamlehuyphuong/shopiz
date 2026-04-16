@@ -29,6 +29,11 @@ class Webhooks::InstagramEventsJob < MutexApplicationJob
       return
     end
 
+    if feed_event?(entry)
+      ::Webhooks::InstagramFeedJob.perform_later(entry.to_json)
+      return
+    end
+
     process_messages(entry)
   end
 
@@ -52,7 +57,11 @@ class Webhooks::InstagramEventsJob < MutexApplicationJob
   end
 
   def test_event?(entry)
-    entry[:changes].present?
+    entry[:changes].present? && entry[:changes].first[:field] == 'messages'
+  end
+
+  def feed_event?(entry)
+    entry[:changes].present? && entry[:changes].first[:field] == 'comments'
   end
 
   def process_test_event(entry)

@@ -210,7 +210,7 @@ export default {
         ];
       }
 
-      if (this.isAFacebookInbox) {
+      if (this.isAFacebookInbox || this.isAnInstagramChannel) {
         visibleToAllChannelTabs = [
           ...visibleToAllChannelTabs,
           {
