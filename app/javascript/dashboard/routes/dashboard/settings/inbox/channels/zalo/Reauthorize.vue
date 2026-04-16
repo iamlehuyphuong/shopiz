@@ -121,22 +121,24 @@ export default {
 
 <template>
   <div class="wizard-body w-full flex-shrink-0 flex-grow-0">
-    <div v-if="!hasLoginStarted" class="flex flex-col login-init items-center justify-center pt-10">
-      <div class="text-center w-[300px]">
-        <p class="font-bold mb-0 text-lg">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.DESC') }}<span class="text-n-blue-text">Zalo</span></p>
-        <p class="font-bold text-lg">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.DESC_2') }} <span class="text-n-blue-text">Shopiz</span></p>
+    <div v-if="!hasLoginStarted" class="flex flex-col login-init items-start justify-start pt-6">
+      <div class="w-full">
+        <p class="font-bold mb-0 text-lg">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.DESC') }} <span class="text-n-brand">Zalo</span></p>
+        <p class="font-bold text-lg">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.DESC_2') }} <span class="text-n-brand">Shopiz</span></p>
       </div>
       <img
         v-if="qrCode"
         :src="qrCode"
         alt="Zalo-Login-QR"
-        class="text-center w-[300px] h-[300px]"
+        class="w-[300px] h-[300px] mt-4 border border-n-weak rounded-md shadow-sm"
       />
-      <p class="pt-6 mb-0 text-center">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.HELP') }}</p>
-      <p class="text-center">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.HELP_2') }}</p>
+      <div class="mt-6 text-n-slate-11">
+        <p class="mb-1">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.HELP') }}</p>
+        <p class="mb-0">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.HELP_2') }}</p>
+      </div>
     </div>
-    <div v-else class="pt-10">
-      <div v-if="hasError" class="max-w-lg mx-auto text-center">
+    <div v-else class="pt-6">
+      <div v-if="hasError" class="max-w-lg">
         <h5>{{ errorStateMessage }}</h5>
         <p
           v-if="errorStateDescription"

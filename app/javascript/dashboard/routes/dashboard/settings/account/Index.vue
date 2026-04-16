@@ -184,6 +184,7 @@ export default {
             />
           </WithLabel>
           <WithLabel
+            v-if="false"
             name="site-language"
             :has-error="v$.locale.$error"
             :label="$t('GENERAL_SETTINGS.FORM.LANGUAGE.LABEL')"
