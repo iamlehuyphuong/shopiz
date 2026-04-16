@@ -44,12 +44,6 @@ const tailwindConfig = {
         inter: defaultSansFonts,
         interDisplay: defaultSansFonts,
       },
-      fontWeight: {
-        420: '420',
-        440: '440',
-        460: '460',
-        520: '520',
-      },
       typography: {
         bubble: {
           css: {

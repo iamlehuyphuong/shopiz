@@ -99,7 +99,7 @@ const pageInfo = computed(() => {
       />
       <div class="inline-flex items-center gap-2 text-sm">
         <span
-          class="px-3 tabular-nums py-0.5 font-420 bg-n-input-background text-body-main text-n-slate-12 rounded-md"
+          class="px-3 tabular-nums py-0.5 font-normal bg-n-input-background text-body-main text-n-slate-12 rounded-md"
         >
           {{ formatFullNumber(currentPage) }}
         </span>

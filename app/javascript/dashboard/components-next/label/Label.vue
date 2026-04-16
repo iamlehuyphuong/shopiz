@@ -62,7 +62,7 @@ const colorClasses = computed(() => COLOR_CLASSES[props.color]);
     <slot v-else name="icon" />
     <span
       class="whitespace-nowrap"
-      :class="compact ? 'text-label-small' : 'text-label !font-420'"
+      :class="compact ? 'text-label-small' : 'text-label !font-normal'"
     >
       {{ labelTitle }}
     </span>
