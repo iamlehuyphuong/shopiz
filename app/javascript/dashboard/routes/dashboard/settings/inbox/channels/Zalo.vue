@@ -160,6 +160,7 @@ export default {
         <img
           src="~dashboard/assets/images/channels/zalo_login.jpg"
           alt="Zalo-logo"
+          class="max-w-[300px] w-full"
         />
       </a>
       <p class="pt-6 mb-0 text-center">
