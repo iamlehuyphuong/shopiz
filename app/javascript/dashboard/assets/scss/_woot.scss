@@ -145,21 +145,24 @@ body {
 
   /* body-text-main: Main text style for general body text */
   .text-body-main {
-    @apply font-inter text-sm font-420;
+    @apply font-inter text-sm;
+    font-weight: 420;
     line-height: 21px; /* 150% */
     letter-spacing: -0.28px;
   }
 
   /* body-text-paragraph: For paragraphs or larger blocks of text */
   .text-body-para {
-    @apply font-inter text-sm font-420;
+    @apply font-inter text-sm;
+    font-weight: 420;
     line-height: 21px; /* 150% */
     letter-spacing: -0.21px;
   }
 
   /* heading-1: Large heading for pages and panels */
   .text-heading-1 {
-    @apply font-inter text-lg font-520;
+    @apply font-inter text-lg;
+    font-weight: 520;
     line-height: 24px; /* 133.333% */
     letter-spacing: -0.27px;
   }
@@ -186,21 +189,24 @@ body {
 
   /* label-small: Smallest font for labels, footnotes, tags */
   .text-label-small {
-    @apply font-inter text-xs font-440;
+    @apply font-inter text-xs;
+    font-weight: 440;
     line-height: 16px; /* 133.333% */
     letter-spacing: -0.24px;
   }
 
   /* button-text: Text for standard size buttons */
   .text-button {
-    @apply font-inter text-sm font-460;
+    @apply font-inter text-sm;
+    font-weight: 460;
     line-height: 21px; /* 150% */
     letter-spacing: -0.28px;
   }
 
   /* button-text-small: Text for smaller buttons */
   .text-button-small {
-    @apply font-inter text-xs font-440;
+    @apply font-inter text-xs;
+    font-weight: 440;
     line-height: 18px; /* 150% */
     letter-spacing: -0.24px;
   }
