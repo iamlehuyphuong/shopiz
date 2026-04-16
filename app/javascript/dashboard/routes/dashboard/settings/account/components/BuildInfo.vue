@@ -38,7 +38,7 @@ const hasAnUpdateAvailable = computed(() => {
         t('GENERAL_SETTINGS.VERSION', { version: globalConfig.appVersion || '1.0.0' })
       }}</span>
       <span v-if="globalConfig.gitSha" class="px-2">
-        Commit ID: {{ globalConfig.gitSha }}
+        Commit ID: {{ globalConfig.gitSha.slice(-9) }}
       </span>
     </div>
   </div>
