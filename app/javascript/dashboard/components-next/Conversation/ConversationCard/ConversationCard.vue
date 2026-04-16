@@ -209,7 +209,7 @@ const onCardClick = e => {
     class="flex w-full gap-3 px-3 py-4 transition-all duration-300 ease-in-out cursor-pointer relative"
     :class="{ 
       'border-l-2 border-green-500 dark:border-green-400': isRingingCall,
-      'border-l-2 border-woot-500 dark:border-woot-400': isActiveCall,
+      'border-l-2 border-n-brand': isActiveCall,
       'border-l-2 border-red-500 dark:border-red-400': normalizedCallStatus === 'missed' || normalizedCallStatus === 'no-answer',
       'conversation-ringing': isRingingCall
     }"
@@ -247,7 +247,7 @@ const onCardClick = e => {
             ></span>
             <span
               v-else-if="isVoiceChannel && normalizedCallStatus === 'active'"
-              class="i-ph-phone-call-fill text-woot-600 dark:text-woot-400 size-3 inline-block"
+              class="i-ph-phone-call-fill text-n-blue-11 size-3 inline-block"
             ></span>
             <span
               v-else-if="isVoiceChannel && normalizedCallStatus === 'ended' && isIncomingCall"
@@ -285,7 +285,7 @@ const onCardClick = e => {
         class="flex items-center py-1 h-7 gap-1 mb-0 text-sm line-clamp-1"
         :class="{
           'text-green-600 dark:text-green-400': normalizedCallStatus === 'ringing',
-          'text-woot-600 dark:text-woot-400': normalizedCallStatus === 'active',
+          'text-n-blue-11': normalizedCallStatus === 'active',
           'text-red-600 dark:text-red-400': normalizedCallStatus === 'missed' || normalizedCallStatus === 'no-answer',
           'text-slate-600 dark:text-slate-400': normalizedCallStatus === 'ended'
         }"
@@ -295,7 +295,7 @@ const onCardClick = e => {
            class="i-ph-phone-x-fill text-base inline-block flex-shrink-0 text-red-600 dark:text-red-400 mr-1"></i>
               
         <i v-else-if="normalizedCallStatus === 'active'" 
-           class="i-ph-phone-call-fill text-base inline-block flex-shrink-0 text-woot-600 dark:text-woot-400 mr-1"></i>
+           class="i-ph-phone-call-fill text-base inline-block flex-shrink-0 text-n-blue-11 mr-1"></i>
               
         <i v-else-if="normalizedCallStatus === 'ended'" 
            class="i-ph-phone-fill text-base inline-block flex-shrink-0 text-slate-600 dark:text-slate-400 mr-1"></i>

@@ -153,7 +153,7 @@ defineExpose({
         class="flex items-center gap-1 mb-0 text-sm line-clamp-1"
         :class="{
           'text-green-600 dark:text-green-400': normalizedCallStatus === 'ringing',
-          'text-woot-600 dark:text-woot-400': normalizedCallStatus === 'active',
+          'text-n-blue-11': normalizedCallStatus === 'active',
           'text-red-600 dark:text-red-400': normalizedCallStatus === 'missed' || normalizedCallStatus === 'no-answer',
           'text-slate-600 dark:text-slate-400': normalizedCallStatus === 'ended'
         }"
@@ -165,7 +165,7 @@ defineExpose({
               
         <!-- Active call -->
         <i v-else-if="normalizedCallStatus === 'active'" 
-           class="i-ph-phone-call-fill text-base inline-block flex-shrink-0 text-woot-600 dark:text-woot-400 mr-1"></i>
+           class="i-ph-phone-call-fill text-base inline-block flex-shrink-0 text-n-blue-11 mr-1"></i>
               
         <!-- Ended incoming call -->
         <i v-else-if="normalizedCallStatus === 'ended' && isIncomingCall" 
