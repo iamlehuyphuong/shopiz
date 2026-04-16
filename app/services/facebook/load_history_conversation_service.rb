@@ -96,7 +96,7 @@ class Facebook::LoadHistoryConversationService
 
   def contact_params(sender)
     begin
-      result = @graph.get_object(sender['id']) || {}
+      result = @graph.get_object(sender['id'], fields: 'first_name,last_name,profile_pic') || {}
     rescue StandardError => e
       result = {}
       ChatwootExceptionTracker.new(e, account: @inbox.account).capture_exception

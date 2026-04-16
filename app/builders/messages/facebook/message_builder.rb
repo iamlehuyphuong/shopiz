@@ -190,7 +190,7 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
   def contact_params
     begin
       k = Koala::Facebook::API.new(@inbox.channel.page_access_token) if @inbox.facebook?
-      result = k.get_object(@sender_id, fields: 'first_name,last_name,profile_pic,locale,timezone,gender') || {}
+      result = k.get_object(@sender_id, fields: 'first_name,last_name,profile_pic') || {}
     rescue Koala::Facebook::AuthenticationError => e
       Rails.logger.warn("Facebook authentication error for inbox: #{@inbox.id} with error: #{e.message}")
       Rails.logger.error e
