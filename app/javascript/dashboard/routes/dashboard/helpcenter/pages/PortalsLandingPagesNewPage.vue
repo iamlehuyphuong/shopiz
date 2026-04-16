@@ -6,7 +6,7 @@ import { useAlert, useTrack } from 'dashboard/composables';
 import { useStore, useMapGetter } from 'dashboard/composables/store';
 import { PORTALS_EVENTS } from 'dashboard/helper/AnalyticsHelper/events';
 
-import LandingEditor from 'dashboard/components-next/HelpCenter/Pages/LandingEditorPage/LandingEditor.vue';
+import LandingEditor from 'dashboard/components-next/HelpCenter/Pages/ArticleEditorPage/ArticleEditor.vue';
 
 const route = useRoute();
 const router = useRouter();
