@@ -181,6 +181,7 @@ const onAddInbox = () => {
                 icon="i-woot-settings"
                 slate
                 sm
+                ghost
               />
             </router-link>
             <Button
@@ -189,6 +190,7 @@ const onAddInbox = () => {
               icon="i-woot-bin"
               slate
               sm
+              ghost
               class="hover:enabled:text-n-ruby-11 hover:enabled:bg-n-ruby-2"
               @click="openDelete(inbox)"
             />
