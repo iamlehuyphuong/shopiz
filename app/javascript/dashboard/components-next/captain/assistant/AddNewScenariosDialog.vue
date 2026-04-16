@@ -7,7 +7,7 @@ import { required, minLength } from '@vuelidate/validators';
 import Input from 'dashboard/components-next/input/Input.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 import TextArea from 'dashboard/components-next/textarea/TextArea.vue';
-import Editor from 'dashboard/components-next/editor/Editor.vue';
+import Editor from 'dashboard/components-next/Editor/Editor.vue';
 import Dialog from 'dashboard/components-next/dialog/Dialog.vue';
 
 defineProps({
