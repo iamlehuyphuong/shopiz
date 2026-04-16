@@ -1095,7 +1095,7 @@ useEmitter(BUS_EVENTS.INSERT_INTO_RICH_EDITOR, insertContentIntoEditor);
         }
 
         .ProseMirror-copilot svg {
-          @apply fill-current text-n-violet-9 stroke-none;
+          @apply fill-current text-[rgb(var(--violet-9))] stroke-none;
         }
       }
 
