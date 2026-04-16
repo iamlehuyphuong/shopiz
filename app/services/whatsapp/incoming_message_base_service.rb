@@ -84,6 +84,8 @@ class Whatsapp::IncomingMessageBaseService
     attach_files
     attach_location if message_type == 'location'
     @message.save!
+
+    process_referral(message)
   end
 
   def set_contact
@@ -177,6 +179,7 @@ class Whatsapp::IncomingMessageBaseService
   def create_message(message, source_id: nil)
     content_attrs = outgoing_echo ? { external_echo: true } : {}
     content_attrs[:in_reply_to_external_id] = @in_reply_to_external_id if @in_reply_to_external_id.present?
+    content_attrs[:referral] = message[:referral] if message[:referral].present?
 
     @message = @conversation.messages.build(
       content: message_content(message),
@@ -189,6 +192,29 @@ class Whatsapp::IncomingMessageBaseService
       source_id: (source_id || message[:id]).to_s,
       content_attributes: content_attrs
     )
+  end
+
+  def process_referral(message)
+    referral = message[:referral]
+    return if referral.blank?
+
+    note_content = "Tin nhắn bắt nguồn từ Quảng cáo Click-to-WhatsApp:\n"
+    note_content += "- **Tiêu đề:** #{referral[:headline] || 'N/A'}\n"
+    note_content += "- **Nguồn:** #{referral[:source_url] || 'N/A'}\n"
+    
+    media_url = referral[:video_url] || referral[:image_url]
+    note_content += "- **Media:** #{media_url}\n" if media_url.present?
+
+    @conversation.messages.create!(
+      content: note_content,
+      account_id: @inbox.account_id,
+      inbox_id: @inbox.id,
+      message_type: :template,
+      private: true,
+      content_attributes: { referral: referral }
+    )
+
+    @conversation.add_labels(['whatsapp-ad'])
   end
 
   def attach_contact(contact)
