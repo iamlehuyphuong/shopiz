@@ -197,9 +197,9 @@
       "AVAILABILITY": {
         "LABEL": "Trạng thái hoạt động",
         "STATUS": {
-          "ONLINE": "Online",
+          "ONLINE": "Trực tuyến",
           "BUSY": "Bận",
-          "OFFLINE": "Offline"
+          "OFFLINE": "Ngoại tuyến"
         },
         "SET_AVAILABILITY_SUCCESS": "Cập nhật trạng thái thành công",
         "SET_AVAILABILITY_ERROR": "Không thể cập nhật trạng thái, vui lòng thử lại",
@@ -290,9 +290,9 @@
     },
     "NO_ACCOUNTS": {
       "TITLE": "Không tìm thấy tài khoản nào",
-      "MESSAGE_CLOUD": "You are not part of any accounts right now. If you think this is a mistake, please reach out to our support team.",
-      "MESSAGE_SELF_HOSTED": "You are not part of any accounts right now. Please reach out to your administrator.",
-      "LOGOUT": "Log out"
+      "MESSAGE_CLOUD": "Bạn đang không thuộc tài khoản (workspace) nào cả. Nếu bạn cho rằng đây là một sự nhầm lẫn, vui lòng liên hệ với đội ngũ CSKH của chúng tôi.",
+      "MESSAGE_SELF_HOSTED": "Bạn đang không thuộc tài khoản (workspace) nào cả. Vui lòng liên hệ với quản trị viên của bạn.",
+      "LOGOUT": "Đăng xuất"
     }
   },
   "COMPONENTS": {
@@ -457,7 +457,7 @@
         "OPTIONAL": "Tùy chọn",
         "REQUIRED": "Bắt buộc",
         "HEADER": {
-          "TITLE": "Header",
+          "TITLE": "Tiêu đề (Header)",
           "TYPE": "Loại header",
           "TEXT_LABEL": "Text header",
           "TEXT_PLACEHOLDER": "Nhập nội dung header",
@@ -476,7 +476,7 @@
           "INSERT_VARIABLE_HELP": "Nhấn + để chèn biến {{1}}, {{2}}..."
         },
         "FOOTER": {
-          "TITLE": "Footer",
+          "TITLE": "Chân trang (Footer)",
           "TEXT_LABEL": "Nội dung footer",
           "TEXT_PLACEHOLDER": "Nhập nội dung footer",
           "TEXT_HELP": "Thêm thông tin bổ sung (tối đa 60 ký tự)",
@@ -498,7 +498,7 @@
           "SEE_ALL_OPTIONS": "Xem tất cả tùy chọn",
           "TYPE_LABEL": "Loại",
           "EXAMPLE_CODE_LABEL": "Mã ví dụ",
-          "EXAMPLE_CODE_PLACEHOLDER": "SAVE20",
+          "EXAMPLE_CODE_PLACEHOLDER": "GIAM20",
           "DROPDOWN": {
             "VISIT_WEBSITE": "Truy cập website",
             "CALL_PHONE": "Gọi điện",
@@ -606,7 +606,7 @@
     "LABELS": "Nhãn",
     "CUSTOM_ATTRIBUTES": "Thuộc tính tùy chỉnh",
     "AUTOMATION": "Tự động hóa",
-    "MACROS": "Macros",
+    "MACROS": "Lệnh (Macros)",
     "TEAMS": "Nhóm",
     "BILLING": "Thanh toán",
     "CUSTOM_VIEWS_FOLDER": "Thư mục",
@@ -621,7 +621,7 @@
     "LIVE_CHAT": "Live Chat",
     "SMS": "SMS",
     "WHATSAPP": "WhatsApp",
-    "VOICE": "Voice",
+    "VOICE": "Gọi thoại (Voice)",
     "SURVEY": "Khảo sát",
     "ZALO_PERSONAL": "Zalo cá nhân",
     "LANDING_PAGE": "Trang đích",
@@ -632,7 +632,7 @@
     "SALES_ORDERS": "Đơn hàng",
     "ONGOING": "Đang diễn ra",
     "ONE_OFF": "Một lần",
-    "REPORTS_SLA": "SLA",
+    "REPORTS_SLA": "Cam kết cấp độ dịch vụ (SLA)",
     "REPORTS_BOT": "Trợ lý ảo",
     "REPORTS_AGENT": "Nhân viên",
     "REPORTS_LABEL": "Nhãn",
@@ -641,7 +641,7 @@
     "AGENT_ASSIGNMENT": "Phân công nhân viên",
     "SET_AVAILABILITY_TITLE": "Đặt trạng thái:",
     "SET_YOUR_AVAILABILITY": "Trạng thái hoạt động",
-    "SLA": "SLA",
+    "SLA": "Cam kết cấp độ dịch vụ (SLA)",
     "CUSTOM_ROLES": "Vai trò tùy chỉnh",
     "BETA": "Beta",
     "REPORTS_OVERVIEW": "Tổng quan",
@@ -697,23 +697,23 @@
       "TITLE": "Các tính năng",
       "DESCRIPTION": "Bật hoặc tắt các tính năng hỗ trợ AI.",
       "AUDIO_TRANSCRIPTION": {
-        "TITLE": "Audio Transcription",
+        "TITLE": "Chuyển giọng nói thành văn bản (Transcription)",
         "DESCRIPTION": "Tự động chuyển đổi tin nhắn thoại và bản ghi cuộc gọi thành văn bản có thể tìm kiếm."
       },
       "HELP_CENTER_SEARCH": {
-        "TITLE": "Help Center Search Indexing",
+        "TITLE": "Lập chỉ mục tìm kiếm Help Center",
         "DESCRIPTION": "Sử dụng AI để tìm kiếm theo ngữ cảnh bên trong các bài viết trong trung tâm trợ giúp của bạn."
       },
       "LABEL_SUGGESTION": {
-        "TITLE": "Label Suggestion",
+        "TITLE": "Gợi ý gắn Nhãn",
         "DESCRIPTION": "Tự động đề xuất nhãn và thẻ phù hợp cho các cuộc hội thoại dựa trên phân tích nội dung và ngữ cảnh.",
-        "MODEL_TITLE": "Label Suggestion Model",
+        "MODEL_TITLE": "Mô hình gợi ý Nhãn",
         "MODEL_DESCRIPTION": "Chọn mô hình AI để sử dụng cho việc phân tích các cuộc hội thoại và đề xuất nhãn phù hợp"
       }
     },
     "API": {
-      "SUCCESS": "ShopizAI settings updated successfully.",
-      "ERROR": "Failed to update ShopizAI settings. Please try again."
+      "SUCCESS": "Đã cập nhật cài đặt ShopizAI thành công.",
+      "ERROR": "Không thể cập nhật cấu hình ShopizAI. Vui lòng thử lại."
     }
   },
   "BILLING_SETTINGS": {
@@ -726,6 +726,8 @@
       "RENEWS_ON": "Gia hạn vào",
       "AI_ADDON_MESSAGE": "Tin nhắn AI mua thêm",
       "RESOURCE": "Tài nguyên",
+      "PLAN_RESOURCE": "Tài nguyên trong gói đăng ký",
+      "ADDON_RESOURCE": "Tài nguyên mua thêm (Add-on)",
       "AGENT": "Nhân viên",
       "INBOX": "Hộp thư",
       "CONTACT": "Danh bạ",
@@ -870,7 +872,7 @@
     "TITLE": "Bảo mật",
     "DESCRIPTION": "Quản lý các cài đặt bảo mật tài khoản.",
     "LINK_TEXT": "Tìm hiểu thêm về SAML SSO",
-    "SAML_DISABLED_MESSAGE": "SAML SSO is currently disabled. Please contact your administrator to enable this feature.",
+    "SAML_DISABLED_MESSAGE": "SAML SSO hiện đang bị vô hiệu hoá. Vui lòng liên hệ với quản trị viên để bật tính năng này.",
     "SAML": {
       "TITLE": "SAML SSO",
       "NOTE": "Cấu hình đăng nhập một lần SAML cho tài khoản. Người dùng sẽ đăng nhập thông qua nhà cung cấp danh tính thay vì email/mật khẩu.",
@@ -1002,7 +1004,7 @@
     "FORM": {
       "NAME": {
         "LABEL": "Tên công ty",
-        "PLACEHOLDER": "Wayne Enterprises"
+        "PLACEHOLDER": "Tập đoàn Vingroup"
       },
       "SUBMIT": "Gửi",
       "CANCEL": "Hủy"
@@ -1076,7 +1078,7 @@
         "API": {
           "SUCCESS_MESSAGE": "Tạo chính sách phân công thành công",
           "ERROR_MESSAGE": "Tạo chính sách phân công thất bại",
-          "INBOX_LINKED": "Inbox has been linked to the policy"
+          "INBOX_LINKED": "Hộp thư đã được liên kết với chính sách"
         }
       },
       "EDIT": {
@@ -1135,7 +1137,7 @@
           "BALANCED": {
             "LABEL": "Cân bằng",
             "DESCRIPTION": "Phân công dựa trên năng lực sẵn có.",
-            "PREMIUM_MESSAGE": "Upgrade to access balanced assignment and agent capacity management.",
+            "PREMIUM_MESSAGE": "Nâng cấp gói tài khoản để truy cập tính năng chia việc nhận tin nhắn cân bằng (Balanced assignment) và khả năng quản lý tỷ trọng chăm sóc của nhân viên.",
             "PREMIUM_BADGE": "Premium"
           }
         },
@@ -1305,15 +1307,15 @@
     "MODAL": {
       "TITLE": "Đã đạt giới hạn tài nguyên",
       "DESCRIPTION": {
-        "AGENTS": "Tài khoản của bạn đã đạt giới hạn số lượng nhân viên. Vui lòng nâng cấp gói để tiếp tục.",
-        "INBOXES": "Bạn đã đạt số lượng hộp thư tối đa cho gói hiện tại. Vui lòng nâng cấp để thêm hộp thư mới.",
-        "AUTOMATIONS": "Bạn đã đạt số lượng tự động hóa tối đa cho gói hiện tại. Vui lòng nâng cấp để thêm tự động hóa mới.",
-        "CAPTAIN_ASSISTANTS": "Bạn đã đạt số lượng trợ lý AI tối đa cho gói hiện tại. Vui lòng nâng cấp để thêm trợ lý mới.",
-        "CAPTAIN_DOCUMENTS": "Bạn đã đạt số lượng tài liệu AI tối đa cho gói hiện tại. Vui lòng nâng cấp để thêm tài liệu mới.",
-        "CAPTAIN_FAQS": "Bạn đã đạt số lượng FAQ AI tối đa cho gói hiện tại. Vui lòng nâng cấp để thêm FAQ mới."
+        "agents": "Bạn đã đạt đến giới hạn số lượng nhân viên tối đa của gói hiện tại. Vui lòng nâng cấp để có thể thêm nhân viên.",
+        "inboxes": "Bạn đã đạt số lượng hộp thư tối đa. Vui lòng nâng cấp gói để lập thêm nhiều hộp thư nữa.",
+        "automations": "Bạn đã đạt số quy tắc tự động đa. Vui lòng nâng cấp gói để cấu hình thêm automation.",
+        "captain_assistants": "Bạn đã đạt số trợ lý AI tối đa. Vui lòng nâng cấp gói để sử dụng thêm trợ lý.",
+        "captain_documents": "Bạn đã đạt giới hạn tài liệu cung cấp cho AI tối đa của gói hiện tại. Vui lòng nâng cấp gói.",
+        "captain_faqs": "Bạn đã đạt tới hạn mức Số lượng FAQ cung cấp cho AI của gói hiện tại. Vui lòng nâng cấp gói để cấu hình thêm."
       },
-      "UPGRADE_BUTTON": "Mở trang thanh toán",
-      "CANCEL_BUTTON": "Hủy"
+      "UPGRADE_NOW": "Nâng cấp ngay",
+      "CANCEL": "Huỷ bỏ"
     }
   }
 }

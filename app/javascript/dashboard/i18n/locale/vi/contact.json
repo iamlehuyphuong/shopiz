@@ -30,11 +30,10 @@
     "IP_ADDRESS": "Địa chỉ IP",
     "CREATED_AT_LABEL": "Tạo lúc",
     "NEW_MESSAGE": "Tin nhắn mới",
-    "REQUEST_FRIEND": "Gửi yêu cầu kết bạn",
     "CALL": "Gọi",
-    "CALL_UNDER_DEVELOPMENT": "Tính năng gọi đang được phát triển",
     "CALL_INITIATED": "Đang gọi liên hệ…",
     "CALL_FAILED": "Không thể bắt đầu cuộc gọi. Vui lòng thử lại.",
+    "REQUEST_FRIEND": "Gửi yêu cầu kết bạn",
     "VOICE_INBOX_PICKER": {
       "TITLE": "Chọn voice inbox"
     },
@@ -480,10 +479,10 @@
             "PLACEHOLDER": "Thêm Instagram"
           },
           "TELEGRAM": {
-            "PLACEHOLDER": "Add Telegram"
+            "PLACEHOLDER": "Thêm Telegram"
           },
           "TIKTOK": {
-            "PLACEHOLDER": "Add TikTok"
+            "PLACEHOLDER": "Thêm TikTok"
           },
           "LINKEDIN": {
             "PLACEHOLDER": "Thêm LinkedIn"

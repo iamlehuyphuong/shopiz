@@ -16,7 +16,6 @@
       "AVAILABLE_ON": "Tính năng SLA chỉ khả dụng trong gói Business và Enterprise.",
       "UPGRADE_PROMPT": "Nâng cấp gói của bạn để truy cập các tính năng nâng cao như quản lý đội nhóm, tự động hóa, thuộc tính tùy chỉnh và nhiều hơn nữa.",
       "UPGRADE_NOW": "Nâng cấp ngay",
-      "UPGRADE_URL": "https://shopiz.pro/pricing",
       "CANCEL_ANYTIME": "Bạn có thể thay đổi hoặc hủy gói bất kỳ lúc nào"
     },
     "ENTERPRISE_PAYWALL": {
@@ -27,7 +26,7 @@
     "LIST": {
       "404": "Không có SLA nào trong tài khoản này.",
       "TABLE_HEADER": {
-        "SLA": "SLA",
+        "SLA": "Cam kết chất lượng dịch vụ (SLA)",
         "BUSINESS_HOURS": "Giờ làm việc"
       },
       "EMPTY": {

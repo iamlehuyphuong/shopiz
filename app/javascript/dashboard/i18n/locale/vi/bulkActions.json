@@ -23,8 +23,8 @@
       "UPDATE_FAILED": "Không thể cập nhật cuộc hội thoại. Vui lòng thử lại."
     },
     "RESOLVE": {
-      "ALL_MISSING_ATTRIBUTES": "Cannot resolve conversations due to missing required attributes",
-      "PARTIAL_SUCCESS": "Some conversations need required attributes before resolving and were skipped"
+      "ALL_MISSING_ATTRIBUTES": "Không thể kết thúc cuộc trò chuyện do thiếu thuộc tính bắt buộc",
+      "PARTIAL_SUCCESS": "Một số cuộc trò chuyện cần thuộc tính bắt buộc trước khi kết thúc và đã bị bỏ qua"
     },
     "LABELS": {
       "ASSIGN_LABELS": "Gán nhãn",

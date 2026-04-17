@@ -9,7 +9,7 @@
       "STORE_URL": {
         "TITLE": "Kết nối cửa hàng Shopify",
         "LABEL": "URL cửa hàng",
-        "PLACEHOLDER": "your-store.myshopify.com",
+        "PLACEHOLDER": "ten-cua-hang.myshopify.com",
         "HELP": "Nhập URL cửa hàng myshopify.com của bạn",
         "CANCEL": "Hủy",
         "SUBMIT": "Kết nối cửa hàng"
@@ -139,7 +139,7 @@
       "SUBSCRIBED_EVENTS": "Sự kiện đã đăng ký",
       "LEARN_MORE": "Tìm hiểu thêm về webhook",
       "SECRET": {
-        "LABEL": "Secret",
+        "LABEL": "Mã bí mật (Secret)",
         "COPY": "Sao chép secret vào bộ nhớ tạm",
         "COPY_SUCCESS": "Đã sao chép secret vào bộ nhớ tạm",
         "TOGGLE": "Hiển thị/Ẩn secret",
@@ -268,28 +268,28 @@
         "MAKE_FRIENDLY": "Thay đổi giọng nói thân thiện",
         "MAKE_FORMAL": "Sử dụng giọng chính thức",
         "SIMPLIFY": "Đơn giản hóa",
-        "CONFIDENT": "Use confident tone",
-        "PROFESSIONAL": "Use professional tone",
-        "CASUAL": "Use casual tone",
-        "STRAIGHTFORWARD": "Use straightforward tone"
+        "CONFIDENT": "Sử dụng giọng điệu tự tin",
+        "PROFESSIONAL": "Sử dụng giọng điệu chuyên nghiệp",
+        "CASUAL": "Sử dụng giọng điệu thân thiện thoải mái",
+        "STRAIGHTFORWARD": "Sử dụng giọng điệu thẳng thắn"
       },
       "REPLY_OPTIONS": {
-        "IMPROVE_REPLY": "Improve reply",
-        "IMPROVE_REPLY_SELECTION": "Improve the selection",
+        "IMPROVE_REPLY": "Cải thiện câu trả lời",
+        "IMPROVE_REPLY_SELECTION": "Cải thiện đoạn đã chọn",
         "CHANGE_TONE": {
-          "TITLE": "Change tone",
+          "TITLE": "Đổi giọng điệu",
           "OPTIONS": {
-            "PROFESSIONAL": "Professional",
-            "CASUAL": "Casual",
-            "STRAIGHTFORWARD": "Straightforward",
-            "CONFIDENT": "Confident",
-            "FRIENDLY": "Friendly"
+            "PROFESSIONAL": "Chuyên nghiệp",
+            "CASUAL": "Thân thiện thoải mái",
+            "STRAIGHTFORWARD": "Thẳng thắn",
+            "CONFIDENT": "Tự tin",
+            "FRIENDLY": "Gần gũi"
           }
         },
-        "GRAMMAR": "Fix grammar & spelling",
-        "SUGGESTION": "Suggest a reply",
-        "SUMMARIZE": "Summarize the conversation",
-        "ASK_COPILOT": "Ask Copilot"
+        "GRAMMAR": "Sửa lỗi chính tả & ngữ pháp",
+        "SUGGESTION": "Gợi ý câu trả lời",
+        "SUMMARIZE": "Tóm tắt cuộc trò chuyện",
+        "ASK_COPILOT": "Hỏi Copilot"
       },
       "ASSISTANCE_MODAL": {
         "DRAFT_TITLE": "Nội dung nháp",
@@ -556,7 +556,7 @@
       "CANCEL_ANYTIME": "Bạn có thể thay đổi hoặc hủy gói bất cứ lúc nào"
     },
     "ENTERPRISE_PAYWALL": {
-      "AVAILABLE_ON": "ShopizAI is only available in the Enterprise plans.",
+      "AVAILABLE_ON": "ShopizAI chỉ hỗ trợ trong các gói Enterprise.",
       "UPGRADE_PROMPT": "Nâng cấp để dùng trợ lý, copilot và nhiều tính năng khác.",
       "ASK_ADMIN": "Vui lòng liên hệ quản trị viên để được nâng cấp."
     },
@@ -905,7 +905,7 @@
         "TITLE": "Chưa có tài liệu",
         "SUBTITLE": "Tài liệu giúp trợ lý hiểu và trả lời chính xác hơn. Bạn có thể nhập tài liệu để làm nguồn tri thức.",
         "FEATURE_SPOTLIGHT": {
-          "TITLE": "ShopizAI Document",
+          "TITLE": "Tài liệu ShopizAI",
           "NOTE": "Tài liệu được dùng làm nguồn tri thức cho trợ lý. ShopizAI có thể phân tích và tạo phản hồi chính xác dựa trên nội dung của bạn."
         }
       }
@@ -1100,7 +1100,7 @@
         "SUBTITLE": "FAQ giúp trợ lý trả lời nhanh và chính xác hơn. FAQ có thể được tạo tự động hoặc thêm thủ công.",
         "CLEAR_SEARCH": "Xóa bộ lọc",
         "FEATURE_SPOTLIGHT": {
-          "TITLE": "ShopizAI FAQ",
+          "TITLE": "Câu hỏi thường gặp ShopizAI FAQ",
           "NOTE": "ShopizAI phát hiện các câu hỏi thường gặp, tạo gợi ý, và cho phép bạn duyệt hoặc từ chối."
         }
       }

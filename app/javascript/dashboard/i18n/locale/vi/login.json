@@ -3,7 +3,7 @@
     "TITLE": "Đăng nhập vào Shopiz",
     "EMAIL": {
       "LABEL": "Email",
-      "PLACEHOLDER": "example{'@'}companyname.com",
+      "PLACEHOLDER": "vidu{'@'}tencongty.com",
       "ERROR": "Vui lòng nhập địa chỉ email hợp lệ"
     },
     "PASSWORD": {
@@ -22,6 +22,7 @@
     },
     "FORGOT_PASSWORD": "Quên mật khẩu?",
     "CREATE_NEW_ACCOUNT": "Tạo tài khoản mới",
+    "CREATE_NEW_ACCOUNT_LABEL": "Chưa có tài khoản?",
     "SUBMIT": "Đăng nhập",
     "SAML": {
       "LABEL": "Đăng nhập qua SSO",

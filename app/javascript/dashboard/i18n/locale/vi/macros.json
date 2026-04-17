@@ -3,7 +3,7 @@
     "HEADER": "Macro",
     "DESCRIPTION": "Macro là một tập hợp các hành động được lưu sẵn giúp nhân viên hỗ trợ khách hàng hoàn thành tác vụ dễ dàng hơn. Nhân viên có thể định nghĩa nhiều hành động như gắn nhãn cuộc hội thoại, gửi bản ghi email, cập nhật thuộc tính tùy chỉnh,… và có thể chạy tất cả chỉ với một lần nhấp.",
     "LEARN_MORE": "Tìm hiểu thêm về macro",
-    "COUNT": "{n} macro | {n} macros",
+    "COUNT": "{n} lệnh (macro) | {n} lệnh (macros)",
     "HEADER_BTN_TXT": "Thêm macro mới",
     "HEADER_BTN_TXT_SAVE": "Lưu macro",
     "LOADING": "Đang tải macro",

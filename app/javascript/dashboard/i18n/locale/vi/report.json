@@ -52,7 +52,6 @@
     "DATE_RANGE_OPTIONS": {
       "LAST_7_DAYS": "7 ngày cuối",
       "LAST_14_DAYS": "14 ngày cuối",
-
       "LAST_30_DAYS": "30 ngày cuối",
       "THIS_MONTH": "Tháng này",
       "LAST_MONTH": "Tháng trước",
@@ -287,21 +286,6 @@
     "FILTER_DROPDOWN_LABEL": "Chọn Hộp thư đến",
     "ALL_INBOXES": "Tất cả hộp thư",
     "SEARCH_INBOX": "Tìm kiếm hộp thư",
-    "VOICE_METRICS": {
-      "TOTAL_CALLS": "Tổng số cuộc gọi",
-      "INCOMING_CALLS": "Cuộc gọi đến",
-      "OUTGOING_CALLS": "Cuộc gọi đi",
-      "MISSED_CALLS": "Cuộc gọi nhỡ",
-      "AVG_DURATION": "Thời lượng cuộc gọi trung bình",
-      "AVG_WAITING_TIME": "Thời gian chờ trung bình",
-      "SUCCESS_RATE": "Tỷ lệ thành công cuộc gọi"
-    },
-    "VOICE_CHARTS": {
-      "CALLS_BY_TYPE": "Cuộc gọi theo loại",
-      "CALL_DURATION": "Thời lượng cuộc gọi trung bình",
-      "WAITING_TIME": "Thời gian chờ trung bình",
-      "SUCCESS_RATE": "Tỷ lệ thành công cuộc gọi"
-    },
     "FILTERS": {
       "INPUT_PLACEHOLDER": {
         "INBOXES": "Tìm kiếm hộp thư"
@@ -377,8 +361,8 @@
     "FILTER_DROPDOWN_LABEL": "Chọn nhóm",
     "FILTERS": {
       "ADD_FILTER": "Thêm bộ lọc",
-      "CLEAR_ALL": "Clear all",
-      "NO_FILTER": "No filters available",
+      "CLEAR_ALL": "Xoá tất cả",
+      "NO_FILTER": "Không có bộ lọc nào",
       "INPUT_PLACEHOLDER": {
         "TEAMS": "Tìm kiếm nhóm"
       }
@@ -447,18 +431,18 @@
   "CSAT_REPORTS": {
     "HEADER": "Báo cáo CSAT",
     "NO_RECORDS": "Không có phản hồi khảo sát CSAT nào.",
+    "NO_RECORDS_DESCRIPTION": "Phản hồi khảo sát CSAT sẽ xuất hiện tại đây khi khách hàng bắt đầu cung cấp phản hồi.",
     "DOWNLOAD": "Tải báo cáo CSAT",
     "DOWNLOAD_FAILED": "Không thể tải báo cáo CSAT",
-    "NO_RECORDS_DESCRIPTION": "Phản hồi khảo sát CSAT sẽ xuất hiện tại đây khi khách hàng bắt đầu cung cấp phản hồi.",
     "FILTERS": {
       "ADD_FILTER": "Thêm bộ lọc",
-      "CLEAR_ALL": "Clear all",
-      "NO_FILTER": "No filters available",
+      "CLEAR_ALL": "Xoá tất cả",
+      "NO_FILTER": "Không có bộ lọc nào",
       "INPUT_PLACEHOLDER": {
         "AGENTS": "Tìm kiếm nhân viên",
-        "INBOXES": "Search inboxes",
+        "INBOXES": "Tìm kiếm nguồn hộp thư",
         "TEAMS": "Tìm kiếm nhóm",
-        "RATINGS": "Search ratings"
+        "RATINGS": "Tìm kiếm đánh giá"
       },
       "AGENTS": {
         "LABEL": "Nhân viên"
@@ -568,7 +552,6 @@
       "CONVERSATIONS": "{count} cuộc hội thoại",
       "DOWNLOAD_REPORT": "Tải báo cáo"
     },
-
     "AGENT_CONVERSATIONS": {
       "HEADER": "Cuộc hội thoại theo nhân viên",
       "LOADING_MESSAGE": "Đang tải dữ liệu...",

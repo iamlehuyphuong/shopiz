@@ -97,20 +97,8 @@
         },
         "CAMPAIGN_DETAILS": {
           "SENT_FROM": "Gửi từ",
-          "ON": "vào",
-          "FROM": " từ ",
-          "BOT": "Trợ lý ảo"
+          "ON": "vào"
         }
-      },
-      "EMPTY_STATE_BADGE": {
-        "ENABLED": "Đang hoạt động",
-        "DISABLED": "Không hoạt động"
-      },
-      "DETAILS": {
-        "MESSAGE": "Tin nhắn",
-        "INBOX": "Hộp thư",
-        "AUDIENCE": "Tập khách hàng",
-        "SCHEDULED_AT": "Thời gian dự kiến"
       },
       "CREATE": {
         "TITLE": "Tạo chiến dịch SMS",
@@ -212,80 +200,6 @@
           },
           "API": {
             "SUCCESS_MESSAGE": "Tạo chiến dịch WhatsApp thành công",
-            "ERROR_MESSAGE": "Đã xảy ra lỗi. Vui lòng thử lại."
-          }
-        }
-      }
-    },
-    "VOICE": {
-      "HEADER_TITLE": "Chiến dịch Voice (Gọi tự động)",
-      "NEW_CAMPAIGN": "Tạo chiến dịch",
-      "EMPTY_STATE": {
-        "TITLE": "Chưa có chiến dịch Voice nào",
-        "SUBTITLE": "Liên hệ khách hàng cá nhân hóa qua cuộc gọi AI. Phù hợp cho nhắc lịch hẹn, xác minh, hoặc chăm sóc sau bán. Trợ lý AI có thể tương tác linh hoạt, thu thập thông tin và làm giàu dữ liệu khách hàng—giúp tiết kiệm thời gian cho đội ngũ.",
-        "JS_API_DESCRIPTION": "Bạn có thể kích hoạt chiến dịch Voice bằng JavaScript API:"
-      },
-      "CARD": {
-        "STATUS": {
-          "COMPLETED": "Đã hoàn thành",
-          "SCHEDULED": "Đã lên lịch"
-        },
-        "CAMPAIGN_DETAILS": {
-          "SENT_BY": "Gửi bởi ",
-          "FROM": " từ ",
-          "ON": " vào ",
-          "BOT": "Trợ lý ảo"
-        }
-      },
-      "EMPTY_STATE_BADGE": {
-        "ENABLED": "Đã bật",
-        "DISABLED": "Đã tắt"
-      },
-      "DETAILS": {
-        "MESSAGE": "Kịch bản",
-        "INBOX": "Hộp thư",
-        "AUDIENCE": "Tệp khách hàng",
-        "SCHEDULED_AT": "Thời gian gửi"
-      },
-      "CREATE": {
-        "TITLE": "Tạo chiến dịch Voice",
-        "FORM": {
-          "TITLE": {
-            "LABEL": "Tiêu đề",
-            "PLACEHOLDER": "Nhập tiêu đề chiến dịch",
-            "ERROR": "Tiêu đề là bắt buộc"
-          },
-          "MESSAGE": {
-            "LABEL": "Kịch bản cuộc gọi",
-            "PLACEHOLDER": "Nhập hướng dẫn cho AI: giọng điệu, thông tin cần thu thập, cách xử lý phản hồi...",
-            "ERROR": "Kịch bản cuộc gọi là bắt buộc"
-          },
-          "INBOX": {
-            "LABEL": "Hộp thư thoại",
-            "PLACEHOLDER": "Chọn Hộp thư thoại",
-            "ERROR": "Hộp thư thoại là bắt buộc"
-          },
-          "SENT_BY": {
-            "LABEL": "Gửi bởi",
-            "PLACEHOLDER": "Chọn người gửi",
-            "ERROR": "Người gửi là bắt buộc"
-          },
-          "AUDIENCE": {
-            "LABEL": "Tệp khách hàng",
-            "PLACEHOLDER": "Chọn nhãn khách hàng",
-            "ERROR": "Tệp khách hàng là bắt buộc"
-          },
-          "SCHEDULED_AT": {
-            "LABEL": "Thời gian gửi",
-            "PLACEHOLDER": "Chọn thời gian",
-            "ERROR": "Thời gian gửi là bắt buộc"
-          },
-          "BUTTONS": {
-            "CREATE": "Tạo",
-            "CANCEL": "Hủy"
-          },
-          "API": {
-            "SUCCESS_MESSAGE": "Tạo chiến dịch Voice thành công",
             "ERROR_MESSAGE": "Đã xảy ra lỗi. Vui lòng thử lại."
           }
         }
@@ -519,6 +433,80 @@
         }
       }
     },
+    "VOICE": {
+      "HEADER_TITLE": "Chiến dịch Voice (Gọi tự động)",
+      "NEW_CAMPAIGN": "Tạo chiến dịch",
+      "EMPTY_STATE": {
+        "TITLE": "Chưa có chiến dịch Voice nào",
+        "SUBTITLE": "Liên hệ khách hàng cá nhân hóa qua cuộc gọi AI. Phù hợp cho nhắc lịch hẹn, xác minh, hoặc chăm sóc sau bán. Trợ lý AI có thể tương tác linh hoạt, thu thập thông tin và làm giàu dữ liệu khách hàng—giúp tiết kiệm thời gian cho đội ngũ.",
+        "JS_API_DESCRIPTION": "Bạn có thể kích hoạt chiến dịch Voice bằng JavaScript API:"
+      },
+      "CARD": {
+        "STATUS": {
+          "COMPLETED": "Đã hoàn thành",
+          "SCHEDULED": "Đã lên lịch"
+        },
+        "CAMPAIGN_DETAILS": {
+          "SENT_BY": "Gửi bởi ",
+          "FROM": " từ ",
+          "ON": " vào ",
+          "BOT": "Trợ lý ảo"
+        }
+      },
+      "EMPTY_STATE_BADGE": {
+        "ENABLED": "Đã bật",
+        "DISABLED": "Đã tắt"
+      },
+      "DETAILS": {
+        "MESSAGE": "Kịch bản",
+        "INBOX": "Hộp thư",
+        "AUDIENCE": "Tệp khách hàng",
+        "SCHEDULED_AT": "Thời gian gửi"
+      },
+      "CREATE": {
+        "TITLE": "Tạo chiến dịch Voice",
+        "FORM": {
+          "TITLE": {
+            "LABEL": "Tiêu đề",
+            "PLACEHOLDER": "Nhập tiêu đề chiến dịch",
+            "ERROR": "Tiêu đề là bắt buộc"
+          },
+          "MESSAGE": {
+            "LABEL": "Kịch bản cuộc gọi",
+            "PLACEHOLDER": "Nhập hướng dẫn cho AI: giọng điệu, thông tin cần thu thập, cách xử lý phản hồi...",
+            "ERROR": "Kịch bản cuộc gọi là bắt buộc"
+          },
+          "INBOX": {
+            "LABEL": "Hộp thư thoại",
+            "PLACEHOLDER": "Chọn Hộp thư thoại",
+            "ERROR": "Hộp thư thoại là bắt buộc"
+          },
+          "SENT_BY": {
+            "LABEL": "Gửi bởi",
+            "PLACEHOLDER": "Chọn người gửi",
+            "ERROR": "Người gửi là bắt buộc"
+          },
+          "AUDIENCE": {
+            "LABEL": "Tệp khách hàng",
+            "PLACEHOLDER": "Chọn nhãn khách hàng",
+            "ERROR": "Tệp khách hàng là bắt buộc"
+          },
+          "SCHEDULED_AT": {
+            "LABEL": "Thời gian gửi",
+            "PLACEHOLDER": "Chọn thời gian",
+            "ERROR": "Thời gian gửi là bắt buộc"
+          },
+          "BUTTONS": {
+            "CREATE": "Tạo",
+            "CANCEL": "Hủy"
+          },
+          "API": {
+            "SUCCESS_MESSAGE": "Tạo chiến dịch Voice thành công",
+            "ERROR_MESSAGE": "Đã xảy ra lỗi. Vui lòng thử lại."
+          }
+        }
+      }
+    },
     "CONFIRM_DELETE": {
       "TITLE": "Bạn có chắc muốn xóa?",
       "DESCRIPTION": "Hành động này là vĩnh viễn và không thể hoàn tác.",
@@ -542,20 +530,8 @@
         },
         "CAMPAIGN_DETAILS": {
           "SENT_FROM": "Gửi từ",
-          "ON": "vào",
-          "FROM": " từ ",
-          "BOT": "Trợ lý ảo"
+          "ON": "vào"
         }
-      },
-      "EMPTY_STATE_BADGE": {
-        "ENABLED": "Đang hoạt động",
-        "DISABLED": "Không hoạt động"
-      },
-      "DETAILS": {
-        "MESSAGE": "Tin nhắn",
-        "INBOX": "Hộp thư",
-        "AUDIENCE": "Tập khách hàng",
-        "SCHEDULED_AT": "Thời gian dự kiến"
       },
       "CREATE": {
         "TITLE": "Tạo chiến dịch Telegram",
@@ -612,20 +588,8 @@
         },
         "CAMPAIGN_DETAILS": {
           "SENT_FROM": "Gửi từ",
-          "ON": "vào",
-          "FROM": " từ ",
-          "BOT": "Trợ lý ảo"
+          "ON": "vào"
         }
-      },
-      "EMPTY_STATE_BADGE": {
-        "ENABLED": "Đang hoạt động",
-        "DISABLED": "Không hoạt động"
-      },
-      "DETAILS": {
-        "MESSAGE": "Tin nhắn",
-        "INBOX": "Hộp thư",
-        "AUDIENCE": "Tập khách hàng",
-        "SCHEDULED_AT": "Thời gian dự kiến"
       },
       "CREATE": {
         "TITLE": "Tạo chiến dịch LINE",

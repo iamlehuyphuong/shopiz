@@ -260,7 +260,47 @@
           }
         }
       },
-
+      "VOICE": {
+        "TITLE": "Kênh thoại",
+        "DESC": "Tích hợp Twilio Voice để hỗ trợ khách hàng qua cuộc gọi.",
+        "PHONE_NUMBER": {
+          "LABEL": "Số điện thoại",
+          "PLACEHOLDER": "Nhập số điện thoại (ví dụ: +1234567890)",
+          "ERROR": "Vui lòng nhập số theo chuẩn E.164"
+        },
+        "TWILIO": {
+          "ACCOUNT_SID": {
+            "LABEL": "Account SID",
+            "PLACEHOLDER": "Nhập Account SID",
+            "REQUIRED": "Bắt buộc"
+          },
+          "AUTH_TOKEN": {
+            "LABEL": "Mã xác thực (Auth Token)",
+            "PLACEHOLDER": "Nhập mã xác thực",
+            "REQUIRED": "Bắt buộc"
+          },
+          "API_KEY_SID": {
+            "LABEL": "API Key SID",
+            "PLACEHOLDER": "Nhập API Key SID",
+            "REQUIRED": "Bắt buộc"
+          },
+          "API_KEY_SECRET": {
+            "LABEL": "API Key Secret",
+            "PLACEHOLDER": "Nhập API Key Secret",
+            "REQUIRED": "Bắt buộc"
+          }
+        },
+        "CONFIGURATION": {
+          "TWILIO_VOICE_URL_TITLE": "Twilio Voice URL",
+          "TWILIO_VOICE_URL_SUBTITLE": "Cấu hình URL này trong phần Voice URL của Twilio.",
+          "TWILIO_STATUS_URL_TITLE": "Status Callback URL",
+          "TWILIO_STATUS_URL_SUBTITLE": "Cấu hình Status Callback URL trong Twilio."
+        },
+        "SUBMIT_BUTTON": "Tạo kênh thoại",
+        "API": {
+          "ERROR_MESSAGE": "Không thể tạo kênh thoại."
+        }
+      },
       "WHATSAPP": {
         "TITLE": "Kênh WhatsApp",
         "DESC": "Hỗ trợ khách hàng qua WhatsApp.",
@@ -345,47 +385,6 @@
         },
         "API": {
           "ERROR_MESSAGE": "Không thể lưu kênh WhatsApp."
-        }
-      },
-      "VOICE": {
-        "TITLE": "Kênh thoại",
-        "DESC": "Tích hợp Twilio Voice để hỗ trợ khách hàng qua cuộc gọi.",
-        "PHONE_NUMBER": {
-          "LABEL": "Số điện thoại",
-          "PLACEHOLDER": "Nhập số điện thoại (ví dụ: +1234567890)",
-          "ERROR": "Vui lòng nhập số theo chuẩn E.164"
-        },
-        "TWILIO": {
-          "ACCOUNT_SID": {
-            "LABEL": "Account SID",
-            "PLACEHOLDER": "Nhập Account SID",
-            "REQUIRED": "Bắt buộc"
-          },
-          "AUTH_TOKEN": {
-            "LABEL": "Mã xác thực (Auth Token)",
-            "PLACEHOLDER": "Nhập mã xác thực",
-            "REQUIRED": "Bắt buộc"
-          },
-          "API_KEY_SID": {
-            "LABEL": "API Key SID",
-            "PLACEHOLDER": "Nhập API Key SID",
-            "REQUIRED": "Bắt buộc"
-          },
-          "API_KEY_SECRET": {
-            "LABEL": "API Key Secret",
-            "PLACEHOLDER": "Nhập API Key Secret",
-            "REQUIRED": "Bắt buộc"
-          }
-        },
-        "CONFIGURATION": {
-          "TWILIO_VOICE_URL_TITLE": "Twilio Voice URL",
-          "TWILIO_VOICE_URL_SUBTITLE": "Cấu hình URL này trong phần Voice URL của Twilio.",
-          "TWILIO_STATUS_URL_TITLE": "Status Callback URL",
-          "TWILIO_STATUS_URL_SUBTITLE": "Cấu hình Status Callback URL trong Twilio."
-        },
-        "SUBMIT_BUTTON": "Tạo kênh thoại",
-        "API": {
-          "ERROR_MESSAGE": "Không thể tạo kênh thoại."
         }
       },
       "API_CHANNEL": {
@@ -522,7 +521,7 @@
             "DESCRIPTION": "Kết nối tài khoản TikTok"
           },
           "VOICE": {
-            "TITLE": "Voice",
+            "TITLE": "Gọi thoại (Voice)",
             "DESCRIPTION": "Tích hợp Twilio Voice"
           },
           "ZALO_OA": {
@@ -794,7 +793,7 @@
           "NON_EXISTS": "Không tồn tại"
         },
         "MODES": {
-          "SANDBOX": "Sandbox",
+          "SANDBOX": "Môi trường thử nghiệm Sandbox",
           "LIVE": "Trực tuyến"
         }
       },
@@ -868,7 +867,7 @@
       "INBOX_IDENTIFIER_SUB_TEXT": "Dùng mã này để xác thực API client.",
       "FORWARD_EMAIL_TITLE": "Chuyển tiếp email",
       "FORWARD_EMAIL_SUB_TEXT": "Chuyển tiếp email của bạn đến địa chỉ sau.",
-      "FORWARD_EMAIL_NOT_CONFIGURED": "Forwarding emails to your inbox is currently disabled on this installation. To use this feature, it must be enabled by your administrator. Please get in touch with them to proceed.",
+      "FORWARD_EMAIL_NOT_CONFIGURED": "Tính năng chuyển tiếp email tới hộp thư hiện đang bị vô hiệu hoá. Để sử dụng tính năng này, quản trị viên cần bật nó lên. Vui lòng liên hệ với quản trị viên của bạn để tiếp tục.",
       "ALLOW_MESSAGES_AFTER_RESOLVED": "Cho phép nhắn sau khi đóng hội thoại",
       "ALLOW_MESSAGES_AFTER_RESOLVED_SUB_TEXT": "Khách vẫn có thể nhắn tiếp ngay cả khi hội thoại đã được đánh dấu hoàn tất.",
       "WHATSAPP_SECTION_SUBHEADER": "API key dùng để tích hợp với WhatsApp APIs.",
@@ -877,7 +876,7 @@
       "WHATSAPP_SECTION_UPDATE_TITLE": "Cập nhật API Key",
       "WHATSAPP_SECTION_UPDATE_PLACEHOLDER": "Nhập API Key mới",
       "WHATSAPP_SECTION_UPDATE_BUTTON": "Cập nhật",
-      "WHATSAPP_EMBEDDED_SIGNUP_TITLE": "WhatsApp Embedded Signup",
+      "WHATSAPP_EMBEDDED_SIGNUP_TITLE": "Đăng ký WhatsApp Embedded",
       "WHATSAPP_EMBEDDED_SIGNUP_SUBHEADER": "Hộp thư này được kết nối bằng Embedded Signup.",
       "WHATSAPP_EMBEDDED_SIGNUP_DESCRIPTION": "Bạn có thể cấu hình lại để cập nhật thiết lập WhatsApp Business.",
       "WHATSAPP_RECONFIGURE_BUTTON": "Cấu hình lại",
@@ -966,6 +965,33 @@
       "MESSAGE_SUCCESS": "Kết nối lại thành công",
       "MESSAGE_ERROR": "Có lỗi xảy ra, vui lòng thử lại"
     },
+    "POSTS_AND_COMMENTS": {
+      "TITLE": "Quản lý Bài viết & Bình luận",
+      "DESCRIPTION": "Quản lý cách xử lý bình luận trên các bài viết của trang Facebook. Bạn có thể tự động ẩn bình luận và gửi tin nhắn riêng tư cho người bình luận.",
+      "COMMENT_MODERATION": {
+        "TITLE": "Kiểm duyệt bình luận",
+        "DESCRIPTION": "Cấu hình quy tắc tự động ẩn bình luận cho các bài viết trên trang.",
+        "HIDE_ALL": "Ẩn tất cả bình luận",
+        "HIDE_ALL_HELP": "Tự động ẩn tất cả bình luận mới trên các bài viết.",
+        "HIDE_PHONE": "Ẩn bình luận chứa số điện thoại",
+        "HIDE_PHONE_HELP": "Tự động ẩn bình luận có chứa số điện thoại để bảo vệ thông tin liên hệ của khách hàng.",
+        "HIDE_EMAIL": "Ẩn bình luận chứa địa chỉ email",
+        "HIDE_EMAIL_HELP": "Tự động ẩn bình luận có chứa địa chỉ email để bảo vệ thông tin liên hệ của khách hàng."
+      },
+      "AUTO_REPLY": {
+        "TITLE": "Trả lời tự động (Tin nhắn riêng)",
+        "DESCRIPTION": "Tự động gửi tin nhắn riêng qua Messenger cho khách hàng bình luận trên bài viết.",
+        "ENABLE": "Bật tính năng gửi tin nhắn tự động",
+        "ENABLE_HELP": "Khi được bật, một tin nhắn riêng tư sẽ được gửi đến hộp thư Messenger của người bình luận.",
+        "MESSAGE_LABEL": "Nội dung tin nhắn tự động",
+        "MESSAGE_PLACEHOLDER": "Chào bạn! Cảm ơn bạn đã bình luận. Chúng tôi đã gửi thêm thông tin chi tiết qua Messenger cho bạn nhé.",
+        "NOTE": "Lưu ý: Facebook chỉ cho phép gửi một tin nhắn riêng tư cho mỗi bình luận trong vòng 7 ngày."
+      },
+      "API": {
+        "SUCCESS_MESSAGE": "Cập nhật cài đặt Bài viết & Bình luận thành công",
+        "ERROR_MESSAGE": "Lỗi khi cập nhật cài đặt Bài viết & Bình luận. Vui lòng thử lại."
+      }
+    },
     "PRE_CHAT_FORM": {
       "DESCRIPTION": "Biểu mẫu trước khi chat giúp bạn thu thập thông tin khách hàng trước khi họ bắt đầu trò chuyện.",
       "SET_FIELDS": "Trường trong biểu mẫu",
@@ -973,7 +999,7 @@
         "FIELDS": "Trường",
         "LABEL": "Nhãn",
         "PLACE_HOLDER": "Văn bản giữ chỗ",
-        "KEY": "Key",
+        "KEY": "Từ khoá (Key)",
         "TYPE": "Loại",
         "REQUIRED": "Bắt buộc"
       },
@@ -1003,8 +1029,8 @@
         "PLACEHOLDER": "Nhập nội dung hiển thị kèm khảo sát"
       },
       "BUTTON_TEXT": {
-        "LABEL": "Button text",
-        "PLACEHOLDER": "Please rate us"
+        "LABEL": "Chữ trên nút",
+        "PLACEHOLDER": "Vui lòng đánh giá dịch vụ của chúng tôi"
       },
       "LANGUAGE": {
         "LABEL": "Ngôn ngữ",
@@ -1062,33 +1088,6 @@
         "ERROR_MESSAGE": "Không thể cập nhật CSAT, vui lòng thử lại"
       }
     },
-    "POSTS_AND_COMMENTS": {
-      "TITLE": "Quản lý Bài viết & Bình luận",
-      "DESCRIPTION": "Quản lý cách xử lý bình luận trên các bài viết của trang Facebook. Bạn có thể tự động ẩn bình luận và gửi tin nhắn riêng tư cho người bình luận.",
-      "COMMENT_MODERATION": {
-        "TITLE": "Kiểm duyệt bình luận",
-        "DESCRIPTION": "Cấu hình quy tắc tự động ẩn bình luận cho các bài viết trên trang.",
-        "HIDE_ALL": "Ẩn tất cả bình luận",
-        "HIDE_ALL_HELP": "Tự động ẩn tất cả bình luận mới trên các bài viết.",
-        "HIDE_PHONE": "Ẩn bình luận chứa số điện thoại",
-        "HIDE_PHONE_HELP": "Tự động ẩn bình luận có chứa số điện thoại để bảo vệ thông tin liên hệ của khách hàng.",
-        "HIDE_EMAIL": "Ẩn bình luận chứa địa chỉ email",
-        "HIDE_EMAIL_HELP": "Tự động ẩn bình luận có chứa địa chỉ email để bảo vệ thông tin liên hệ của khách hàng."
-      },
-      "AUTO_REPLY": {
-        "TITLE": "Trả lời tự động (Tin nhắn riêng)",
-        "DESCRIPTION": "Tự động gửi tin nhắn riêng qua Messenger cho khách hàng bình luận trên bài viết.",
-        "ENABLE": "Bật tính năng gửi tin nhắn tự động",
-        "ENABLE_HELP": "Khi được bật, một tin nhắn riêng tư sẽ được gửi đến hộp thư Messenger của người bình luận.",
-        "MESSAGE_LABEL": "Nội dung tin nhắn tự động",
-        "MESSAGE_PLACEHOLDER": "Chào bạn! Cảm ơn bạn đã bình luận. Chúng tôi đã gửi thêm thông tin chi tiết qua Messenger cho bạn nhé.",
-        "NOTE": "Lưu ý: Facebook chỉ cho phép gửi một tin nhắn riêng tư cho mỗi bình luận trong vòng 7 ngày."
-      },
-      "API": {
-        "SUCCESS_MESSAGE": "Cập nhật cài đặt Bài viết & Bình luận thành công",
-        "ERROR_MESSAGE": "Lỗi khi cập nhật cài đặt Bài viết & Bình luận. Vui lòng thử lại."
-      }
-    },
     "BUSINESS_HOURS": {
       "TITLE": "Cài đặt giờ làm việc",
       "SUBTITLE": "Hiển thị giờ làm việc trên widget live chat",
@@ -1101,7 +1100,7 @@
       "DAY": {
         "DAY": "Ngày",
         "AVAILABILITY": "Khả dụng",
-        "HOURS": "Hours",
+        "HOURS": "Số giờ",
         "ENABLE": "Bật ngày làm việc",
         "UNAVAILABLE": "Không làm việc",
         "VALIDATION_ERROR": "Giờ mở phải trước giờ đóng",
@@ -1126,7 +1125,7 @@
       },
       "PORT": {
         "LABEL": "Cổng",
-        "PLACE_HOLDER": "Port"
+        "PLACE_HOLDER": "Cổng (Port)"
       },
       "LOGIN": {
         "LABEL": "Đăng nhập",
@@ -1134,13 +1133,13 @@
       },
       "PASSWORD": {
         "LABEL": "Mật khẩu",
-        "PLACE_HOLDER": "Password"
+        "PLACE_HOLDER": "Mật khẩu"
       },
       "ENABLE_SSL": "Bật SSL"
     },
-    "MICROSOFT_AUTH": {
+    "MICROSOFT": {
       "TITLE": "Microsoft",
-      "SUBTITLE": "Kết nối lại tài khoản MICROSOFT"
+      "SUBTITLE": "Uỷ quyền lại tài khoản MICROSOFT của bạn"
     },
     "SMTP": {
       "TITLE": "SMTP",
@@ -1158,7 +1157,7 @@
       },
       "PORT": {
         "LABEL": "Cổng",
-        "PLACE_HOLDER": "Port"
+        "PLACE_HOLDER": "Cổng (Port)"
       },
       "LOGIN": {
         "LABEL": "Đăng nhập",
@@ -1166,11 +1165,11 @@
       },
       "PASSWORD": {
         "LABEL": "Mật khẩu",
-        "PLACE_HOLDER": "Password"
+        "PLACE_HOLDER": "Mật khẩu"
       },
       "DOMAIN": {
-        "LABEL": "Domain",
-        "PLACE_HOLDER": "Domain"
+        "LABEL": "Tên miền (Domain)",
+        "PLACE_HOLDER": "Tên miền (Domain)"
       },
       "ENCRYPTION": "Mã hóa",
       "SSL_TLS": "SSL/TLS",
@@ -1187,6 +1186,24 @@
             "API": {
               "SUCCESS_MESSAGE": "Xóa ảnh đại diện thành công",
               "ERROR_MESSAGE": "Có lỗi xảy ra, vui lòng thử lại"
+            }
+          }
+        },
+        "BUBBLE_AVATAR": {
+          "LABEL": "Biểu tượng bong bóng (Bubble)",
+          "DELETE": {
+            "API": {
+              "SUCCESS_MESSAGE": "Xoá biểu tượng bong bóng thành công",
+              "ERROR_MESSAGE": "Đã xảy ra lỗi, vui lòng thử lại."
+            }
+          }
+        },
+        "CLOSE_BUBBLE_AVATAR": {
+          "LABEL": "Biểu tượng đóng",
+          "DELETE": {
+            "API": {
+              "SUCCESS_MESSAGE": "Xoá biểu tượng đóng thành công",
+              "ERROR_MESSAGE": "Đã xảy ra lỗi, vui lòng thử lại."
             }
           }
         },
@@ -1240,7 +1257,7 @@
       },
       "WIDGET_SCREEN": {
         "DEFAULT": "Mặc định",
-        "CHAT": "Chat mode"
+        "CHAT": "Chế độ trò chuyện"
       },
       "REPLY_TIME": {
         "IN_A_FEW_MINUTES": "Thường phản hồi trong vài phút",
@@ -1259,7 +1276,7 @@
         "USER_MESSAGE": "Xin chào",
         "AGENT_MESSAGE": "Chào bạn"
       },
-      "BRANDING_TEXT": "Powered by Shopiz",
+      "BRANDING_TEXT": "Được hỗ trợ bởi Shopiz",
       "SCRIPT_SETTINGS": "\nwindow.shopizSettings = {options};"
     },
     "EMAIL_PROVIDERS": {
@@ -1281,18 +1298,14 @@
       "WEB_WIDGET": "Website",
       "TWITTER_PROFILE": "Twitter",
       "TWILIO_SMS": "Twilio SMS",
-      "VOICE": "Voice",
+      "VOICE": "Gọi thoại (Voice)",
       "WHATSAPP": "WhatsApp",
       "SMS": "SMS",
       "EMAIL": "Email",
       "TELEGRAM": "Telegram",
       "LINE": "Line",
       "API": "Kênh API",
-      "INSTAGRAM": "Instagram",
-      "TIKTOK": "TikTok",
-      "ZALO_OA": "Zalo OA",
-      "ZALO_PERSONAL": "Zalo cá nhân",
-      "TIKTOK_SHOP": "Tiktok Shop"
+      "INSTAGRAM": "Instagram"
     }
   }
 }

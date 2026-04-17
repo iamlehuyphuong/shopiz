@@ -9,9 +9,9 @@
       "SEARCH_PLACEHOLDER": "Tìm kiếm mẫu",
       "NO_TEMPLATES_FOUND": "Không tìm thấy mẫu cho",
       "NO_CONTENT": "Không có nội dung",
-      "HEADER": "Header",
-      "BODY": "Body",
-      "FOOTER": "Footer",
+      "HEADER": "Tiêu đề (Header)",
+      "BODY": "Nội dung (Body)",
+      "FOOTER": "Chân trang (Footer)",
       "BUTTONS": "Nút",
       "CATEGORY": "Danh mục",
       "MEDIA_CONTENT": "Nội dung media",
@@ -26,9 +26,9 @@
         "CATEGORY": "Danh mục"
       },
       "TYPES": {
-        "MEDIA": "Media",
+        "MEDIA": "Phương tiện (Media)",
         "QUICK_REPLY": "Trả lời nhanh",
-        "CALL_TO_ACTION": "Call to Action",
+        "CALL_TO_ACTION": "Kêu gọi hành động (CTA)",
         "TEXT": "Văn bản"
       }
     },
@@ -40,7 +40,7 @@
       "GO_BACK_LABEL": "Quay lại",
       "SEND_MESSAGE_LABEL": "Gửi tin nhắn",
       "FORM_ERROR_MESSAGE": "Vui lòng nhập đầy đủ giá trị các biến trước khi gửi",
-      "MEDIA_HEADER_LABEL": "{type} Header",
+      "MEDIA_HEADER_LABEL": "Tiêu đề {type}",
       "MEDIA_URL_LABEL": "Nhập URL media đầy đủ",
       "MEDIA_URL_PLACEHOLDER": "https://example.com/image.jpg"
     },

@@ -9,7 +9,7 @@
       "ADMINISTRATOR": "Quản trị viên",
       "AGENT": "Nhân viên"
     },
-    "COUNT": "{n} agent | {n} agents",
+    "COUNT": "{n} nhân viên | {n} nhân viên",
     "LIST": {
       "404": "Không có nhân viên nào trong tài khoản này",
       "TITLE": "Quản lý nhân viên trong đội của bạn",
@@ -98,7 +98,7 @@
       }
     },
     "SEARCH_PLACEHOLDER": "Tìm kiếm nhân viên...",
-    "NO_RESULTS": "No agents found matching your search",
+    "NO_RESULTS": "Không tìm thấy nhân viên nào phù hợp với tìm kiếm của bạn",
     "SEARCH": {
       "NO_RESULTS": "Không tìm thấy kết quả."
     },

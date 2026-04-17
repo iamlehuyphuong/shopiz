@@ -82,7 +82,7 @@
         "TEXT": "Chờ phản hồi: Ngắn nhất trước"
       },
       "priority_desc_created_at_asc": {
-        "TEXT": "Priority: Highest first, Created: Oldest first"
+        "TEXT": "Độ ưu tiên: Cao nhất trước, Thời gian tạo: Cũ nhất trước"
       }
     },
     "ATTACHMENTS": {
@@ -111,7 +111,7 @@
         "CONTENT": "Chia sẻ liên hệ"
       },
       "embed": {
-        "CONTENT": "Embedded content"
+        "CONTENT": "Nội dung nhúng"
       }
     },
     "CHAT_SORT_BY_FILTER": {
