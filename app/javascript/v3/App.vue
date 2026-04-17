@@ -84,7 +84,11 @@ body {
 }
 
 .text-link {
-  @apply text-n-orange font-medium hover:text-n-orange-10;
+  @apply font-medium;
+  color: #e06720;
+  &:hover {
+    color: rgb(var(--orange-10));
+  }
 }
 
 .v-popper--theme-tooltip .v-popper__inner {

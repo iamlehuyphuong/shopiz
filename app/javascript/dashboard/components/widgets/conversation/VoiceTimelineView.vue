@@ -437,7 +437,11 @@ export default defineComponent({
   @apply absolute top-0 left-0 right-0 h-7 z-10;
   
   .time-label {
-    @apply absolute text-sm transform -translate-x-1/2 font-medium text-n-orange-8 dark:text-n-orange-5;
+    @apply absolute text-sm transform -translate-x-1/2 font-medium;
+    color: rgb(var(--orange-8));
+    html.dark & {
+      color: rgb(var(--orange-5));
+    }
     top: 4px;
     
     .h-3 {
@@ -447,13 +451,21 @@ export default defineComponent({
 }
 
 .progress-indicator {
-  @apply absolute top-0 bottom-0 w-[1.5px] z-30 bg-n-orange-7 dark:bg-n-orange-5;
+  @apply absolute top-0 bottom-0 w-[1.5px] z-30;
+  background-color: rgb(var(--orange-7));
+  html.dark & {
+    background-color: rgb(var(--orange-5));
+  }
   box-shadow: 0 0 3px rgba(var(--orange-7), 0.5);
 }
 
 /* Agent Timeline (Top) */
 .agent-timeline {
-  @apply relative h-[50px] px-2 mt-1 bg-n-orange-2 dark:bg-n-orange-7/20 rounded-xl;
+  @apply relative h-[50px] px-2 mt-1 rounded-xl;
+  background-color: rgb(var(--orange-2));
+  html.dark & {
+    background-color: rgba(var(--orange-7), 0.2);
+  }
   
   .waveform-bars {
     @apply flex items-end h-full relative z-10;
@@ -485,11 +497,17 @@ export default defineComponent({
 }
 
 .active-agent-bar {
-  @apply bg-n-orange-7 dark:bg-n-orange-6;
+  background-color: rgb(var(--orange-7));
+  html.dark & {
+    background-color: rgb(var(--orange-6));
+  }
 }
 
 .inactive-agent-bar {
-  @apply bg-n-orange-5 dark:bg-n-orange-5;
+  background-color: rgb(var(--orange-5));
+  html.dark & {
+    background-color: rgb(var(--orange-5));
+  }
 }
 
 .active-contact-bar {
@@ -600,7 +618,7 @@ export default defineComponent({
   }
   
   &.marker--agentMessage .marker-dot {
-    @apply bg-n-orange-11;
+    background-color: rgb(var(--orange-11));
   }
   
   &.marker--userResponse .marker-dot {
@@ -621,10 +639,10 @@ export default defineComponent({
   }
   
   &.marker-tooltip-agentMessage {
-    @apply bg-n-orange-11;
+    background-color: rgb(var(--orange-11));
     
     &:after {
-      @apply border-t-n-orange-11;
+      border-top-color: rgb(var(--orange-11));
     }
   }
   
