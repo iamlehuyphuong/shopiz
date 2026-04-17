@@ -1,47 +1,36 @@
 require 'openssl'
-require 'json'
 require 'rack/utils'
 
 module Payos
   module Signature
     module_function
 
-    def flatten_hash(obj, prefix = nil)
-      case obj
-      when Hash
-        obj.each_with_object({}) do |(k, v), acc|
-          key = prefix ? "#{prefix}[#{k}]" : k.to_s
-          acc.merge!(flatten_hash(v, key))
-        end
-      when Array
-        arr = obj.map do |item|
-          if item.is_a?(Hash)
-            flatten_hash(item)
-          else
-            item.to_s
-          end
-        end
-        { prefix => JSON.generate(arr, ascii_only: false).gsub('nil', 'null') }
-      when NilClass
-        { prefix => "" }
-      else
-        { prefix => obj.to_s }
-      end
-    end
+    # Fields required for signing a payment creation request (per PayOS API docs)
+    CREATE_SIGNING_FIELDS = %w[amount cancelUrl description orderCode returnUrl].freeze
 
+    # Generate signature for payment creation payload
+    # PayOS requires: sort fields alphabetically, join as key=value&key=value, HMAC-SHA256
     def generate(payload, checksum_key)
-      data = payload.reject { |k,_| k.to_s == 'signature' }
-      flat = flatten_hash(data)
-      sorted = flat.sort_by { |k,_| k }.map { |k,v| "#{k}=#{v}" }.join("&")
-      OpenSSL::HMAC.hexdigest('SHA256', checksum_key.to_s, sorted)
+      data = payload.transform_keys(&:to_s)
+      sorted_str = CREATE_SIGNING_FIELDS.sort.map { |k| "#{k}=#{data[k]}" }.join('&')
+      OpenSSL::HMAC.hexdigest('SHA256', checksum_key.to_s, sorted_str)
     end
 
+    # Verify webhook signature from PayOS
+    # The signature is computed from all fields in the 'data' object, sorted alphabetically
     def verify(payload, checksum_key)
-      return false unless payload['signature']
+      signature = payload['signature']
+      return false if signature.blank?
 
-      data_payload = payload['data'] || {}
-      expected = generate(data_payload, checksum_key)
-      Rack::Utils.secure_compare(expected, payload['signature'])
+      data_payload = payload['data']
+      return false if data_payload.blank?
+
+      data_str = data_payload.transform_keys(&:to_s)
+                             .sort_by { |k, _| k }
+                             .map { |k, v| "#{k}=#{v}" }
+                             .join('&')
+      expected = OpenSSL::HMAC.hexdigest('SHA256', checksum_key.to_s, data_str)
+      Rack::Utils.secure_compare(expected, signature)
     end
   end
 end

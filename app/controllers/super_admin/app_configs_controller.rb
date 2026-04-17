@@ -55,6 +55,7 @@ class SuperAdmin::AppConfigsController < SuperAdmin::ApplicationController
       'zalo_personal' => %w[ZALO_API_URL ZALO_SECRET_KEY],
       'tiktok_shop' => %w[TIKTOK_SHOP_APP_ID TIKTOK_SHOP_APP_SECRET],
       'payos' => %w[PAYOS_CLIENT_ID PAYOS_API_KEY PAYOS_CHECKSUM_KEY PAYOS_PARTNER_ID],
+      'sepay' => %w[SEPAY_COMPANY_CODE SEPAY_SECRET_KEY],
     }
 
     @allowed_configs = mapping.fetch(

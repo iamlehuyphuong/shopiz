@@ -47,12 +47,10 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
     case params[:payment_method]
     when 'stripe'
       return create_stripe_billing_session(stripe_customer_id) if stripe_customer_id.present?
-    when 'vnpay'
-      return create_vnpay_billing_session(@account.id, params[:product_id]) if @account.id.present?
-    when 'polar'
-      return create_polar_billing_session(@account.id, params[:product_id]) if @account.id.present?
     when 'payos'
       return create_payos_billing_session
+    when 'sepay'
+      return create_sepay_checkout_info
     else
       render_invalid_billing_details
     end
@@ -143,14 +141,21 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
     render_redirect_url(session.url)
   end
 
-  def create_vnpay_billing_session(customer_id, product_id)
-    url = Enterprise::Billing::CreateSessionService.new.create_vnpay_session(customer_id, product_id)
-    render_redirect_url(url)
-  end
+  def create_sepay_checkout_info
+    result = Enterprise::Billing::CreateSessionService.new.create_sepay_checkout(
+      @account.id,
+      params[:product_id]
+    )
 
-  def create_polar_billing_session(customer_id, product_id)
-    url = Enterprise::Billing::CreateSessionService.new.create_vnpay_session(customer_id, product_id)
-    render_redirect_url(url)
+    if result.present? && result[:checkout_url].present?
+      render json: {
+        redirect_url: result[:checkout_url],
+        form_params: result[:form_params],
+        method: 'POST'
+      }, status: :ok
+    else
+      render json: { message: 'Could not create payment session. Please check your configuration.' }, status: :unprocessable_entity
+    end
   end
 
   def create_payos_billing_session

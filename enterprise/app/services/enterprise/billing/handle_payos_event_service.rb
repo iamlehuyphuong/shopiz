@@ -1,9 +1,19 @@
 # frozen_string_literal: true
 
 class Enterprise::Billing::HandlePayosEventService
+  # orderCode format: last 8 digits of timestamp + 4-digit zero-padded account_id
+  ACCOUNT_ID_DIGITS = 4
+
   def perform(payload)
     prepare_data(payload)
     return if @account.blank? || @record.blank?
+
+    # Idempotency: skip if already processed
+    reference = payload.dig('data', 'reference').to_s
+    if reference.present? && @account.billing_histories.exists?(transaction_id: reference)
+      Rails.logger.info("[PayOS] Skipping duplicate webhook for reference: #{reference}")
+      return
+    end
 
     ActiveRecord::Base.transaction do
       @record.is_a?(SubscriptionPlan) ? activate_plan : activate_addon
@@ -14,9 +24,16 @@ class Enterprise::Billing::HandlePayosEventService
   private
 
   def prepare_data(payload)
-    sku = payload.dig('data', 'description').to_s.split.last
-    @record = SubscriptionPlan.find_by(sku: sku) || AddonPackage.find_by(sku: sku)
-    @customer_id = payload['data']['orderCode'].to_s[10..].to_s
+    description = payload.dig('data', 'description').to_s
+    # Description format: "TT SHOPIZ <SKU>" (set during checkout)
+    sku_match = description.match(/TT SHOPIZ\s+(.+)/i)
+    sku = sku_match ? sku_match[1].strip : nil
+
+    @record = (SubscriptionPlan.find_by(sku: sku) || AddonPackage.find_by(sku: sku)) if sku.present?
+
+    # Extract account_id from orderCode: last ACCOUNT_ID_DIGITS digits
+    order_code = payload.dig('data', 'orderCode').to_s
+    @customer_id = order_code.last(ACCOUNT_ID_DIGITS).to_i if order_code.length > ACCOUNT_ID_DIGITS
     @account = Account.find_by(id: @customer_id)
   end
 

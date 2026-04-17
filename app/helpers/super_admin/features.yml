@@ -181,3 +181,10 @@ payos:
   enabled: true
   icon: 'icon-bank-card-line'
   config_key: 'payos'
+sepay:
+  name: 'SePay'
+  description: 'Configuration for setting up SePay bank transfer monitoring'
+  enabled: true
+  icon: 'icon-bank-card-line'
+  config_key: 'sepay'
+

@@ -495,6 +495,18 @@
   locked: false
 # ------- End of PayOS Related Config ------- #
 
+# ------- SePay Related Config ------- #
+- name: SEPAY_COMPANY_CODE
+  display_title: 'SePay Mã đơn vị'
+  description: 'The company code from SePay dashboard (e.g., SP-LIVE-XXXXXXXX)'
+  locked: false
+- name: SEPAY_SECRET_KEY
+  display_title: 'SePay Secret Key'
+  description: 'The secret key from SePay dashboard, used in webhook X-Secret-Key header verification'
+  locked: false
+  type: secret
+# ------- End of SePay Related Config ------- #
+
 # ------- OG Image Related Config ------- #
 - name: OG_IMAGE_CDN_URL
   display_title: 'OG Image CDN URL'
