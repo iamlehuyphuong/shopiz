@@ -135,7 +135,10 @@ export default {
 }
 
 .search-input {
-  @apply m-0 w-full border border-solid border-transparent h-8 text-sm text-n-slate-12 rounded-md focus:border-n-orange bg-n-background dark:bg-n-background;
+  @apply m-0 w-full border border-solid border-transparent h-8 text-sm text-n-slate-12 rounded-md bg-n-background dark:bg-n-background;
+  &:focus {
+    border-color: #e06720;
+  }
 }
 
 .multiselect-dropdown--item {

@@ -996,7 +996,12 @@ useEmitter(BUS_EVENTS.INSERT_INTO_RICH_EDITOR, insertContentIntoEditor);
       @apply h-8 px-3;
 
       &[type='submit'] {
-        @apply bg-n-orange text-white hover:bg-n-orange/90;
+        background-color: #e06720;
+        color: #fff;
+        
+        &:hover {
+          background-color: rgba(224, 103, 32, 0.9);
+        }
       }
 
       &[type='button'] {

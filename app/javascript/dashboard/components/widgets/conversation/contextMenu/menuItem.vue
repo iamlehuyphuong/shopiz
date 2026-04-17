@@ -59,7 +59,8 @@ defineProps({
   }
 
   &:hover {
-    @apply bg-n-orange text-white;
+    background-color: #e06720;
+    color: #fff;
   }
 }
 

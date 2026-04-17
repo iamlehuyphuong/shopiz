@@ -447,7 +447,7 @@ const deleteConversation = () => {
 <style lang="scss" scoped>
 .conversation--status {
   &.bot {
-    @apply bg-n-orange;
+    background-color: #e06720;
   }
   &.open {
     @apply bg-n-teal-10;

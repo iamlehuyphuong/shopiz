@@ -41,7 +41,8 @@ export default {
 
 <style scoped lang="scss">
 .option {
-  @apply rounded-[5rem] border border-solid border-n-orange ltr:float-left rtl:float-right m-1 max-w-full;
+  @apply rounded-[5rem] border border-solid ltr:float-left rtl:float-right m-1 max-w-full;
+  border-color: #e06720;
 
   .option-button {
     @apply bg-transparent border-0 cursor-pointer h-auto leading-normal ltr:text-left rtl:text-right whitespace-normal rounded-[2rem] min-h-[2.5rem];

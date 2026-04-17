@@ -16,7 +16,8 @@ p {
   @apply mb-2 leading-[1.65] text-sm;
 
   a {
-    @apply text-n-orange dark:text-n-orange cursor-pointer;
+    @apply cursor-pointer;
+    color: #e06720;
   }
 }
 
@@ -66,7 +67,10 @@ textarea {
 // Field base styles (Input, TextArea, Select)
 @layer components {
   .field-base {
-    @apply block box-border w-full transition-colors duration-[0.25s] ease-[ease-in-out] focus:outline-n-orange dark:focus:outline-n-orange appearance-none mx-0 mt-0 mb-4 py-2 px-3 rounded-lg text-sm font-normal bg-n-alpha-black2 placeholder:text-n-slate-10 dark:placeholder:text-n-slate-10 text-n-slate-12 border-none outline outline-1 outline-n-weak dark:outline-n-weak hover:outline-n-slate-6 dark:hover:outline-n-slate-6;
+    @apply block box-border w-full transition-colors duration-[0.25s] ease-[ease-in-out] appearance-none mx-0 mt-0 mb-4 py-2 px-3 rounded-lg text-sm font-normal bg-n-alpha-black2 placeholder:text-n-slate-10 dark:placeholder:text-n-slate-10 text-n-slate-12 border-none outline outline-1 outline-n-weak dark:outline-n-weak hover:outline-n-slate-6 dark:hover:outline-n-slate-6;
+    &:focus {
+      outline-color: #e06720;
+    }
   }
 
   .field-disabled {
