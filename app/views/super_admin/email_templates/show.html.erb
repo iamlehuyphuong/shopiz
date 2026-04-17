@@ -1,0 +1,118 @@
+<%#
+# Show
+
+This view is the template for the show page.
+It renders the attributes of a resource,
+as well as a link to its edit page.
+
+## Local variables:
+
+- `page`:
+  An instance of [Administrate::Page::Show][1].
+  Contains methods for accessing the resource to be displayed on the page,
+  as well as helpers for describing how each attribute of the resource
+  should be displayed.
+
+[1]: http://www.rubydoc.info/gems/administrate/Administrate/Page/Show
+%>
+
+<% content_for(:title) { t("administrate.actions.show_resource", name: page.page_title) } %>
+
+<header class="main-content__header">
+  <h1 class="main-content__page-title">
+    <%= content_for(:title) %>
+  </h1>
+
+  <div>
+    <%= link_to(
+      t("administrate.actions.edit_resource", name: page.page_title),
+      [:edit, namespace, page.resource],
+      class: "button",
+    ) if accessible_action?(page.resource, :edit) %>
+
+    <%= link_to(
+      t("administrate.actions.destroy"),
+      [namespace, page.resource],
+      class: "button button--danger",
+      method: :delete,
+      data: { confirm: t("administrate.actions.confirm") }
+    ) if accessible_action?(page.resource, :destroy) %>
+  </div>
+</header>
+
+<section class="main-content__body">
+  <dl>
+    <% page.attributes.each do |title, attributes| %>
+      <fieldset class="<%= "field-unit--nested" if title.present? %>">
+        <% if title.present? %>
+          <legend><%= t "helpers.label.#{page.resource_name}.#{title}", default: title %></legend>
+        <% end %>
+
+        <% attributes.each do |attribute| %>
+          <dt class="attribute-label" id="<%= attribute.name %>">
+          <%= t(
+            "helpers.label.#{resource_name}.#{attribute.name}",
+            default: page.resource.class.human_attribute_name(attribute.name),
+          ) %>
+          </dt>
+
+          <dd class="attribute-data attribute-data--<%=attribute.html_class%>"
+              ><%= render_field attribute, page: page %></dd>
+        <% end %>
+      </fieldset>
+    <% end %>
+  </dl>
+</section>
+
+<%
+  # EMAIL PREVIEW LOGIC
+  begin
+    action_name = page.resource.name.split('/').last
+
+    liquid_assigns = {
+      'global_config' => { 'BRAND_NAME' => 'Shopiz', 'BRAND_URL' => 'https://shopiz.pro' },
+      'user' => { 'name' => 'John Doe' },
+      'account' => { 'name' => 'Demo Account Workspace' },
+      'action_url' => 'https://app.shopiz.pro/login',
+      'conversation' => { 'id' => '12345' },
+      'inbox' => { 'name' => 'Facebook Page HQ' },
+      'mailer_action' => action_name
+    }
+    
+    t_body = page.resource.body || ''
+    
+    # Standard Chatwoot templates are mostly ERB but the body we saved may contain Liquid tags.
+    # Actually, Chatwoot parses it as Liquid if the .liquid extension was used, but ERB was also used.
+    # We will try to parse it as Liquid for the preview regardless.
+    parsed_content = Liquid::Template.parse(t_body).render!(liquid_assigns)
+
+    if page.resource.template_type == 'content'
+      base_layout = EmailTemplate.find_by(name: 'layouts/mailer/base', template_type: :layout)
+      if base_layout
+        layout_template = Liquid::Template.parse(base_layout.body)
+        preview_html = layout_template.render!(liquid_assigns.merge('content_for_layout' => parsed_content))
+      else
+        preview_html = parsed_content
+      end
+    else
+      dummy_content = "<div style='padding:40px;text-align:center;background:#fff;border:1px dashed #ccc;'><h1>Dummy Content Block</h1><p>This is where the email content goes.</p></div>"
+      preview_html = Liquid::Template.parse(t_body).render!(liquid_assigns.merge('content_for_layout' => dummy_content))
+    end
+  rescue => e
+    preview_html = "<div style='padding:20px;color:red;'>Preview Error: #{e.message}</div>"
+  end
+%>
+
+<section class="main-content__body" style="margin-top: 40px; padding-top: 40px; border-top: 2px dashed #e2e8f0;">
+  <h2 style="margin-bottom: 20px; font-weight: 700;">Live Email Preview</h2>
+  
+  <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.05); min-height: 400px; display: flex; justify-content: center; overflow: auto;">
+    <div style="width: 100%; max-width: 600px;">
+      <iframe 
+        srcdoc="<%= ERB::Util.html_escape(preview_html) %>" 
+        style="width: 100%; height: 600px; border: none; background: transparent; border-radius: 8px;"
+        title="Email Preview">
+      </iframe>
+    </div>
+  </div>
+</section>

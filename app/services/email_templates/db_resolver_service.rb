@@ -34,6 +34,7 @@ class ::EmailTemplates::DbResolverService < ActionView::Resolver
   # cause of codeclimate issue with 4 args, relying on (*args)
   def find_templates(name, prefix, partial, *_args)
     @template_name = name
+    @prefix = prefix
     @template_type = prefix.include?('layout') ? 'layout' : 'content'
     @db_template = find_db_template
 
@@ -60,11 +61,13 @@ class ::EmailTemplates::DbResolverService < ActionView::Resolver
   def find_account_template
     return unless Current.account
 
-    @@model.find_by(name: @template_name, template_type: @template_type, account: Current.account)
+    @@model.find_by(name: build_path(@prefix), template_type: @template_type, account: Current.account) ||
+      @@model.find_by(name: @template_name, template_type: @template_type, account: Current.account)
   end
 
   def find_installation_template
-    @@model.find_by(name: @template_name, template_type: @template_type, account: nil)
+    @@model.find_by(name: build_path(@prefix), template_type: @template_type, account: nil) ||
+      @@model.find_by(name: @template_name, template_type: @template_type, account: nil)
   end
 
   # Build path with eventual prefix
