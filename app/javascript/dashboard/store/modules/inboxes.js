@@ -177,6 +177,16 @@ export const getters = {
       item => item.channel_type === INBOX_TYPES.FB
     );
   },
+  getTelegramInboxes($state) {
+    return $state.records.filter(
+      item => item.channel_type === INBOX_TYPES.TELEGRAM
+    );
+  },
+  getLineInboxes($state) {
+    return $state.records.filter(
+      item => item.channel_type === INBOX_TYPES.LINE
+    );
+  },
   dialogFlowEnabledInboxes($state) {
     return $state.records.filter(
       item => item.channel_type !== INBOX_TYPES.EMAIL

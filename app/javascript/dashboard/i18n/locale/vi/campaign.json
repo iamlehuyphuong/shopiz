@@ -527,6 +527,146 @@
         "SUCCESS_MESSAGE": "Xóa chiến dịch thành công",
         "ERROR_MESSAGE": "Đã xảy ra lỗi. Vui lòng thử lại."
       }
+    },
+    "TELEGRAM": {
+      "HEADER_TITLE": "Chiến dịch Telegram",
+      "NEW_CAMPAIGN": "Tạo chiến dịch",
+      "EMPTY_STATE": {
+        "TITLE": "Chưa có chiến dịch Telegram nào",
+        "SUBTITLE": "Bắt đầu gửi tin nhắn hàng loạt qua Telegram để kết nối khách hàng. Bấm 'Tạo chiến dịch' để bắt đầu."
+      },
+      "CARD": {
+        "STATUS": {
+          "COMPLETED": "Đã hoàn thành",
+          "SCHEDULED": "Đã lên lịch"
+        },
+        "CAMPAIGN_DETAILS": {
+          "SENT_FROM": "Gửi từ",
+          "ON": "vào",
+          "FROM": " từ ",
+          "BOT": "Trợ lý ảo"
+        }
+      },
+      "EMPTY_STATE_BADGE": {
+        "ENABLED": "Đang hoạt động",
+        "DISABLED": "Không hoạt động"
+      },
+      "DETAILS": {
+        "MESSAGE": "Tin nhắn",
+        "INBOX": "Hộp thư",
+        "AUDIENCE": "Tập khách hàng",
+        "SCHEDULED_AT": "Thời gian dự kiến"
+      },
+      "CREATE": {
+        "TITLE": "Tạo chiến dịch Telegram",
+        "CANCEL_BUTTON_TEXT": "Hủy",
+        "CREATE_BUTTON_TEXT": "Tạo",
+        "FORM": {
+          "TITLE": {
+            "LABEL": "Tiêu đề",
+            "PLACEHOLDER": "Nhập tiêu đề chiến dịch",
+            "ERROR": "Tiêu đề là bắt buộc"
+          },
+          "MESSAGE": {
+            "LABEL": "Tin nhắn",
+            "PLACEHOLDER": "Nhập nội dung tin nhắn",
+            "ERROR": "Tin nhắn là bắt buộc"
+          },
+          "INBOX": {
+            "LABEL": "Chọn hộp thư",
+            "PLACEHOLDER": "Chọn hộp thư",
+            "ERROR": "Hộp thư là bắt buộc"
+          },
+          "AUDIENCE": {
+            "LABEL": "Tệp khách hàng",
+            "PLACEHOLDER": "Chọn nhãn khách hàng",
+            "ERROR": "Tệp khách hàng là bắt buộc"
+          },
+          "SCHEDULED_AT": {
+            "LABEL": "Thời gian gửi",
+            "PLACEHOLDER": "Chọn thời gian",
+            "ERROR": "Thời gian gửi là bắt buộc"
+          },
+          "BUTTONS": {
+            "CREATE": "Tạo",
+            "CANCEL": "Hủy"
+          },
+          "API": {
+            "SUCCESS_MESSAGE": "Tạo chiến dịch Telegram thành công",
+            "ERROR_MESSAGE": "Đã xảy ra lỗi. Vui lòng thử lại."
+          }
+        }
+      }
+    },
+    "LINE": {
+      "HEADER_TITLE": "Chiến dịch LINE",
+      "NEW_CAMPAIGN": "Tạo chiến dịch",
+      "EMPTY_STATE": {
+        "TITLE": "Chưa có chiến dịch LINE nào",
+        "SUBTITLE": "Khởi tạo chiến dịch trên LINE dễ dàng. Bấm 'Tạo chiến dịch' để bắt đầu."
+      },
+      "CARD": {
+        "STATUS": {
+          "COMPLETED": "Đã hoàn thành",
+          "SCHEDULED": "Đã lên lịch"
+        },
+        "CAMPAIGN_DETAILS": {
+          "SENT_FROM": "Gửi từ",
+          "ON": "vào",
+          "FROM": " từ ",
+          "BOT": "Trợ lý ảo"
+        }
+      },
+      "EMPTY_STATE_BADGE": {
+        "ENABLED": "Đang hoạt động",
+        "DISABLED": "Không hoạt động"
+      },
+      "DETAILS": {
+        "MESSAGE": "Tin nhắn",
+        "INBOX": "Hộp thư",
+        "AUDIENCE": "Tập khách hàng",
+        "SCHEDULED_AT": "Thời gian dự kiến"
+      },
+      "CREATE": {
+        "TITLE": "Tạo chiến dịch LINE",
+        "CANCEL_BUTTON_TEXT": "Hủy",
+        "CREATE_BUTTON_TEXT": "Tạo",
+        "FORM": {
+          "TITLE": {
+            "LABEL": "Tiêu đề",
+            "PLACEHOLDER": "Nhập tiêu đề chiến dịch",
+            "ERROR": "Tiêu đề là bắt buộc"
+          },
+          "MESSAGE": {
+            "LABEL": "Tin nhắn",
+            "PLACEHOLDER": "Nhập nội dung tin nhắn",
+            "ERROR": "Tin nhắn là bắt buộc"
+          },
+          "INBOX": {
+            "LABEL": "Chọn hộp thư",
+            "PLACEHOLDER": "Chọn hộp thư",
+            "ERROR": "Hộp thư là bắt buộc"
+          },
+          "AUDIENCE": {
+            "LABEL": "Tệp khách hàng",
+            "PLACEHOLDER": "Chọn nhãn khách hàng",
+            "ERROR": "Tệp khách hàng là bắt buộc"
+          },
+          "SCHEDULED_AT": {
+            "LABEL": "Thời gian gửi",
+            "PLACEHOLDER": "Chọn thời gian",
+            "ERROR": "Thời gian gửi là bắt buộc"
+          },
+          "BUTTONS": {
+            "CREATE": "Tạo",
+            "CANCEL": "Hủy"
+          },
+          "API": {
+            "SUCCESS_MESSAGE": "Tạo chiến dịch LINE thành công",
+            "ERROR_MESSAGE": "Đã xảy ra lỗi. Vui lòng thử lại."
+          }
+        }
+      }
     }
   }
 }

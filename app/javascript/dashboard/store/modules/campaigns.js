@@ -60,6 +60,14 @@ export const getters = {
     const zaloOaChannelTypes = [INBOX_TYPES.ZALO_OA];
     return _getters.getCampaigns(CAMPAIGN_TYPES.ONE_OFF, zaloOaChannelTypes);
   },
+  getTelegramCampaigns: (_state, _getters) => {
+    const telegramChannelTypes = [INBOX_TYPES.TELEGRAM];
+    return _getters.getCampaigns(CAMPAIGN_TYPES.ONE_OFF, telegramChannelTypes);
+  },
+  getLineCampaigns: (_state, _getters) => {
+    const lineChannelTypes = [INBOX_TYPES.LINE];
+    return _getters.getCampaigns(CAMPAIGN_TYPES.ONE_OFF, lineChannelTypes);
+  },
   getAllCampaigns: _state => {
     return _state.records;
   },
