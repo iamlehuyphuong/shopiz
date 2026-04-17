@@ -98,7 +98,7 @@ const callDurationChart = computed(() => {
       {
         label: 'Average Call Duration (seconds)',
         data: generateRandomData(180, 320, 7),
-        backgroundColor: '#3B82F6', // blue (chatwoot standard)
+        backgroundColor: '#E06720',
         barPercentage: 0.6,
       }
     ]
@@ -113,7 +113,7 @@ const waitingTimeChart = computed(() => {
       {
         label: 'Average Waiting Time (seconds)',
         data: generateRandomData(15, 60, 7),
-        backgroundColor: '#3B82F6', // blue (chatwoot standard)
+        backgroundColor: '#E06720',
         barPercentage: 0.6,
       }
     ]
