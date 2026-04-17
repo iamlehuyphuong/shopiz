@@ -1,7 +1,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { useVuelidate } from '@vuelidate/core';
-import { required, minLength, email, sameAs } from '@vuelidate/validators';
+import { required, minLength, email } from '@vuelidate/validators';
 import { useAlert } from 'dashboard/composables';
 import { DEFAULT_REDIRECT_URL } from 'dashboard/constants/globals';
 import VueHcaptcha from '@hcaptcha/vue3-hcaptcha';
@@ -37,7 +37,6 @@ export default {
         fullName: '',
         email: '',
         password: '',
-        confirmPassword: '',
         hCaptchaClientResponse: '',
       },
       didCaptchaReset: false,
@@ -57,11 +56,6 @@ export default {
           required,
           isValidPassword,
           minLength: minLength(MIN_PASSWORD_LENGTH),
-        },
-        confirmPassword: {
-          required,
-          minLength: minLength(MIN_PASSWORD_LENGTH),
-          sameAsPassword: sameAs(this.credentials.password),
         },
       },
     };
@@ -84,14 +78,6 @@ export default {
         return !!this.credentials.hCaptchaClientResponse;
       }
       return true;
-    },
-    confirmPasswordErrorText() {
-      const { confirmPassword } = this.v$.credentials;
-      if (!confirmPassword.$error) return '';
-      if (confirmPassword.sameAsPassword.$invalid) {
-        return this.$t('REGISTER.CONFIRM_PASSWORD.ERROR');
-      }
-      return '';
     },
     allowedLoginMethods() {
       return window.shopizConfig.allowedLoginMethods || ['email'];
