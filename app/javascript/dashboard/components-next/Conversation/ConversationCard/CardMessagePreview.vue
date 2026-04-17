@@ -134,7 +134,7 @@ const unreadMessagesCount = computed(() => {
       class="w-full mb-0 text-sm flex items-center gap-1 pt-0.5"
       :class="{
         'text-green-600 dark:text-green-400': normalizedCallStatus === 'ringing',
-        'text-n-blue-11': normalizedCallStatus === 'active',
+        'text-n-orange-11': normalizedCallStatus === 'active',
         'text-red-600 dark:text-red-400': normalizedCallStatus === 'missed' || normalizedCallStatus === 'no-answer',
         'text-slate-600 dark:text-slate-400': normalizedCallStatus === 'ended'
       }"
@@ -146,7 +146,7 @@ const unreadMessagesCount = computed(() => {
             
       <!-- Active call -->
       <i v-else-if="normalizedCallStatus === 'active'" 
-         class="i-ph-phone-call-fill text-base inline-block flex-shrink-0 text-n-blue-11 mr-1"></i>
+         class="i-ph-phone-call-fill text-base inline-block flex-shrink-0 text-n-orange-11 mr-1"></i>
             
       <!-- Ended incoming call -->
       <i v-else-if="normalizedCallStatus === 'ended' && isIncomingCall" 
@@ -191,7 +191,7 @@ const unreadMessagesCount = computed(() => {
       />
       <div
         v-if="unreadMessagesCount > 0"
-        class="inline-flex items-center justify-center rounded-full size-5 bg-n-brand"
+        class="inline-flex items-center justify-center rounded-full size-5 bg-n-orange"
       >
         <span class="text-xs font-semibold text-white">
           {{ unreadMessagesCount }}

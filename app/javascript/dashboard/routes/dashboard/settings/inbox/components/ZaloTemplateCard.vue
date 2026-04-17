@@ -48,7 +48,7 @@ const previewContent = (() => {
           {{ template.status }}
         </span>
         <span
-          class="text-xs font-medium px-2 py-0.5 rounded-md bg-n-blue-3 text-n-blue-11 whitespace-nowrap"
+          class="text-xs font-medium px-2 py-0.5 rounded-md bg-n-orange-3 text-n-orange-11 whitespace-nowrap"
         >
           {{ typeLabel }}
         </span>

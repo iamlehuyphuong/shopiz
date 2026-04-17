@@ -249,7 +249,7 @@ export default {
       {{ $t('REGISTER.OAUTH.GOOGLE_SIGNUP') }}
     </GoogleOAuthButton>
     <p
-      class="text-sm mt-5 mb-0 text-n-slate-11 [&>a]:text-n-blue-10 [&>a]:font-medium [&>a]:hover:text-n-blue-11"
+      class="text-sm mt-5 mb-0 text-n-slate-11 [&>a]:text-n-orange-10 [&>a]:font-medium [&>a]:hover:text-n-orange-11"
       v-html="termsLink"
     />
   </div>

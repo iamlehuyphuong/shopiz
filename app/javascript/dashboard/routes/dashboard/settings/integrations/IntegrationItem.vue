@@ -53,7 +53,7 @@ const actionURL = computed(() =>
 
 <template>
   <div
-    class="group flex flex-col p-5 bg-n-alpha-1 border border-n-weak rounded-2xl hover:border-n-brand-weak hover:shadow-xl hover:shadow-n-brand/5 active:scale-[0.98] transition-all duration-300 ease-out"
+    class="group flex flex-col p-5 bg-n-alpha-1 border border-n-weak rounded-2xl hover:border-n-orange-weak hover:shadow-xl hover:shadow-n-orange/5 active:scale-[0.98] transition-all duration-300 ease-out"
     :class="{ 'opacity-70': !isActive }"
   >
     <div class="flex items-start justify-between mb-4">
@@ -93,7 +93,7 @@ const actionURL = computed(() =>
     <div class="mt-4 pt-4 border-t border-n-weak/50 flex justify-end">
       <router-link v-if="isActive" :to="actionURL">
         <span
-          class="text-xs font-medium text-n-brand hover:text-n-brand-strong transition-colors cursor-pointer flex items-center gap-1"
+          class="text-xs font-medium text-n-orange hover:text-n-orange-strong transition-colors cursor-pointer flex items-center gap-1"
         >
           {{ $t('INTEGRATION_APPS.CONFIGURE') }}
           <span class="i-lucide-chevron-right size-3" />

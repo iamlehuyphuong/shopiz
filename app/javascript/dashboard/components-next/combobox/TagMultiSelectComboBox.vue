@@ -128,7 +128,7 @@ defineExpose({
           'border-n-ruby-8': hasError,
           'border-n-weak dark:border-n-weak hover:border-n-slate-6 dark:hover:border-n-slate-6':
             !hasError && !open,
-          'border-n-brand': open,
+          'border-n-orange': open,
           'cursor-not-allowed pointer-events-none opacity-50': disabled,
         }"
         @click="toggleDropdown"

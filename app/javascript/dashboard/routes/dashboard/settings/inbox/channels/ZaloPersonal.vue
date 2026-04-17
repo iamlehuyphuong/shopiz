@@ -152,8 +152,8 @@ export default {
   <div class="wizard-body w-full flex-shrink-0 flex-grow-0">
     <div v-if="!hasLoginStarted" class="flex flex-col login-init items-start justify-start pt-6">
       <div class="w-full">
-        <p class="font-bold mb-0 text-lg">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.DESC') }} <span class="text-n-brand">Zalo</span></p>
-        <p class="font-bold text-lg">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.DESC_2') }} <span class="text-n-brand">Shopiz</span></p>
+        <p class="font-bold mb-0 text-lg">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.DESC') }} <span class="text-n-orange">Zalo</span></p>
+        <p class="font-bold text-lg">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.DESC_2') }} <span class="text-n-orange">Shopiz</span></p>
       </div>
       <img
         v-if="qrCode"

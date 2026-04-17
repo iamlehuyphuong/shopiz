@@ -133,13 +133,13 @@ export default {
 
   /* Color Schemes */
   &.primary {
-    @apply bg-n-blue-5 text-n-blue-12 border border-solid border-n-blue-7;
+    @apply bg-n-orange-5 text-n-orange-12 border border-solid border-n-orange-7;
 
     a {
-      @apply text-n-blue-12;
+      @apply text-n-orange-12;
     }
     .label-color-dot {
-      @apply bg-n-blue-9;
+      @apply bg-n-orange-9;
     }
   }
   &.secondary {

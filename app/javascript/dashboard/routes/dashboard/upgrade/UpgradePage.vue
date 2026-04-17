@@ -134,10 +134,10 @@ defineExpose({ shouldShowUpgradePage });
       <div class="flex flex-col gap-4">
         <div class="flex items-center w-full gap-2">
           <span
-            class="flex items-center justify-center w-6 h-6 rounded-full bg-n-solid-blue"
+            class="flex items-center justify-center w-6 h-6 rounded-full bg-n-solid-orange"
           >
             <Icon
-              class="flex-shrink-0 text-n-brand size-[14px]"
+              class="flex-shrink-0 text-n-orange size-[14px]"
               icon="i-lucide-lock-keyhole"
             />
           </span>

@@ -92,7 +92,7 @@ const inputBorderClass = computed(() => {
   const errorClass =
     'outline-n-ruby-8 dark:outline-n-ruby-8 hover:outline-n-ruby-9 dark:hover:outline-n-ruby-9 disabled:outline-n-ruby-8 dark:disabled:outline-n-ruby-8';
   const focusClass =
-    'has-[:focus]:outline-n-brand dark:has-[:focus]:outline-n-brand';
+    'has-[:focus]:outline-n-orange dark:has-[:focus]:outline-n-orange';
 
   if (!props.showBorder) {
     if (hasError.value) return errorClass;

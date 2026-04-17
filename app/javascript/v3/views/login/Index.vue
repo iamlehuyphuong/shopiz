@@ -258,7 +258,7 @@ export default {
             <p v-if="showSignupLink" class="mt-2 text-sm text-n-slate-11 text-center md:text-left">
               {{ $t('LOGIN.CREATE_NEW_ACCOUNT_LABEL') || 'New here?' }}
               <router-link
-                class="text-n-blue-10 font-medium hover:text-n-blue-11"
+                class="text-n-orange-10 font-medium hover:text-n-orange-11"
                 to="/app/auth/signup"
               >
                 {{ $t('LOGIN.CREATE_NEW_ACCOUNT') }}

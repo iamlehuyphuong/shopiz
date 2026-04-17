@@ -286,7 +286,7 @@ defineExpose({ prepareCampaignDetails, isSubmitDisabled });
         color="slate"
         type="button"
         :label="t('CAMPAIGN.ZALO_PERSONAL.CREATE.FORM.BUTTONS.CANCEL')"
-        class="w-full bg-n-alpha-2 n-blue-text hover:bg-n-alpha-3"
+        class="w-full bg-n-alpha-2 n-orange-text hover:bg-n-alpha-3"
         @click="handleCancel"
       />
       <Button

@@ -294,7 +294,7 @@ export default {
               target="_blank"
               rel="noopener noreferrer"
               href="https://www.shopiz.pro/docs/product/channels/live-chat/sdk/identity-validation/"
-              class="text-n-blue-11 hover:underline text-label-small"
+              class="text-n-orange-11 hover:underline text-label-small"
             >
               {{
                 $t('INBOX_MGMT.SETTINGS_POPUP.IDENTITY_VALIDATION.VIEW_DOCS')

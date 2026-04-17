@@ -332,13 +332,13 @@ const deleteConversation = () => {
         </span>
         <div
           v-if="currentContact.phone_number"
-          class="inline-flex items-center justify-center size-6 bg-n-brand rounded-md"
+          class="inline-flex items-center justify-center size-6 bg-n-orange rounded-md"
         >
           <span class="i-lucide-phone text-white size-3"></span>
         </div>
         <div
           v-if="currentContact.email"
-          class="inline-flex items-center justify-center size-6 bg-n-brand rounded-md"
+          class="inline-flex items-center justify-center size-6 bg-n-orange rounded-md"
         >
           <span class="i-lucide-mail text-white size-3"></span>
         </div>
@@ -447,7 +447,7 @@ const deleteConversation = () => {
 <style lang="scss" scoped>
 .conversation--status {
   &.bot {
-    @apply bg-n-brand;
+    @apply bg-n-orange;
   }
   &.open {
     @apply bg-n-teal-10;

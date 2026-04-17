@@ -30,12 +30,12 @@ defineProps({
             {{ header }}
           </h5>
           <span
-            class="flex flex-row items-center py-0.5 px-2 rounded bg-n-brand/10 text-xs"
+            class="flex flex-row items-center py-0.5 px-2 rounded bg-n-orange/10 text-xs"
           >
             <span
-              class="bg-n-brand h-1 w-1 rounded-full mr-1 rtl:mr-0 rtl:ml-0"
+              class="bg-n-orange h-1 w-1 rounded-full mr-1 rtl:mr-0 rtl:ml-0"
             />
-            <span class="text-xs text-n-brand font-medium">
+            <span class="text-xs text-n-orange font-medium">
               {{ $t('OVERVIEW_REPORTS.LIVE') }}
             </span>
           </span>

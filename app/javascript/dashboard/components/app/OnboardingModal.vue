@@ -127,10 +127,10 @@ const submit = async () => {
               v-for="option in industryOptions"
               :key="option.value"
               type="button"
-              class="px-3.5 py-1.5 rounded-full text-[13px] font-medium border transition-colors focus:outline-none focus:ring-2 focus:ring-n-brand/50"
+              class="px-3.5 py-1.5 rounded-full text-[13px] font-medium border transition-colors focus:outline-none focus:ring-2 focus:ring-n-orange/50"
               :class="[
                 industry === option.value
-                  ? 'bg-n-brand border-n-brand text-white shadow-sm'
+                  ? 'bg-n-orange border-n-orange text-white shadow-sm'
                   : 'bg-n-alpha-black2 border-n-strong text-n-slate-11 hover:bg-n-alpha-black3 hover:text-n-slate-12'
               ]"
               @click="industry = option.value; v$.industry.$touch()"
@@ -151,10 +151,10 @@ const submit = async () => {
               v-for="option in companySizeOptions"
               :key="option.value"
               type="button"
-              class="px-3.5 py-1.5 rounded-full text-[13px] font-medium border transition-colors focus:outline-none focus:ring-2 focus:ring-n-brand/50"
+              class="px-3.5 py-1.5 rounded-full text-[13px] font-medium border transition-colors focus:outline-none focus:ring-2 focus:ring-n-orange/50"
               :class="[
                 companySize === option.value
-                  ? 'bg-n-brand border-n-brand text-white shadow-sm'
+                  ? 'bg-n-orange border-n-orange text-white shadow-sm'
                   : 'bg-n-alpha-black2 border-n-strong text-n-slate-11 hover:bg-n-alpha-black3 hover:text-n-slate-12'
               ]"
               @click="companySize = option.value; v$.companySize.$touch()"
@@ -175,10 +175,10 @@ const submit = async () => {
               v-for="option in sourceOptions"
               :key="option.value"
               type="button"
-              class="px-3.5 py-1.5 rounded-full text-[13px] font-medium border transition-colors focus:outline-none focus:ring-2 focus:ring-n-brand/50"
+              class="px-3.5 py-1.5 rounded-full text-[13px] font-medium border transition-colors focus:outline-none focus:ring-2 focus:ring-n-orange/50"
               :class="[
                 source === option.value
-                  ? 'bg-n-brand border-n-brand text-white shadow-sm'
+                  ? 'bg-n-orange border-n-orange text-white shadow-sm'
                   : 'bg-n-alpha-black2 border-n-strong text-n-slate-11 hover:bg-n-alpha-black3 hover:text-n-slate-12'
               ]"
               @click="source = option.value; v$.source.$touch()"

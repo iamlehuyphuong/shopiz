@@ -59,7 +59,7 @@ defineProps({
   }
 
   &:hover {
-    @apply bg-n-brand text-white;
+    @apply bg-n-orange text-white;
   }
 }
 

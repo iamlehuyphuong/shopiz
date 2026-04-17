@@ -45,7 +45,7 @@ const formatAmount = (amount, currency) => {
   <label
     class="relative flex flex-col p-6 border-2 rounded-xl transition-all cursor-pointer bg-n-solid-1 hover:bg-n-solid-2"
     :class="[
-      isSelected ? 'border-n-brand' : 'border-n-weak hover:border-n-strong',
+      isSelected ? 'border-n-orange' : 'border-n-weak hover:border-n-strong',
     ]"
   >
     <input
@@ -60,14 +60,14 @@ const formatAmount = (amount, currency) => {
       v-if="isPopular"
       class="absolute -top-3 left-4 px-3 py-1 text-xs font-medium rounded"
       :class="
-        isSelected ? 'bg-n-brand text-white' : 'bg-n-solid-3 text-n-slate-11'
+        isSelected ? 'bg-n-orange text-white' : 'bg-n-solid-3 text-n-slate-11'
       "
     >
       {{ $t('BILLING_SETTINGS.TOPUP.POPULAR') }}
     </span>
     <div
       v-if="isSelected"
-      class="absolute top-4 right-4 flex items-center justify-center w-6 h-6 rounded-full bg-n-brand"
+      class="absolute top-4 right-4 flex items-center justify-center w-6 h-6 rounded-full bg-n-orange"
     >
       <svg
         class="w-4 h-4 text-white"

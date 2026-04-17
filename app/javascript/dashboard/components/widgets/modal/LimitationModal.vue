@@ -39,9 +39,9 @@ const onClickUpgrade = () => {
     <div class="flex flex-col gap-6 p-8">
       <div class="flex items-center gap-4">
         <div
-          class="flex items-center justify-center size-10 rounded-full bg-n-solid-blue/20 shrink-0"
+          class="flex items-center justify-center size-10 rounded-full bg-n-solid-orange/20 shrink-0"
         >
-          <Icon icon="i-lucide-lock-keyhole" class="size-4 text-n-brand" />
+          <Icon icon="i-lucide-lock-keyhole" class="size-4 text-n-orange" />
         </div>
         <h3 class="text-lg font-bold text-n-slate-12">
           {{ $t('LIMITATION.MODAL.TITLE') }}

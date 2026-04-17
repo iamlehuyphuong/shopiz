@@ -46,7 +46,7 @@ const handleChange = () => {
     class="cursor-pointer rounded-xl outline outline-1 p-4 transition-all duration-200 bg-n-solid-1 py-4 ltr:pl-4 rtl:pr-4 ltr:pr-6 rtl:pl-6"
     :class="[
       disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer',
-      isActive ? 'outline-n-blue-9' : 'outline-n-weak',
+      isActive ? 'outline-n-orange-9' : 'outline-n-weak',
       !disabled && !isActive ? 'hover:outline-n-strong' : '',
     ]"
     @click="handleChange"
@@ -66,7 +66,7 @@ const handleChange = () => {
           :name="id"
           :disabled="disabled"
           type="radio"
-          class="h-4 w-4 border-n-slate-6 text-n-brand focus:ring-n-brand focus:ring-offset-0 flex-shrink-0"
+          class="h-4 w-4 border-n-slate-6 text-n-orange focus:ring-n-orange focus:ring-offset-0 flex-shrink-0"
           @change="handleChange"
         />
       </div>

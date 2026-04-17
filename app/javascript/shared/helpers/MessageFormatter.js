@@ -82,7 +82,7 @@ class MessageFormatter {
     renderedMessage = renderedMessage.replace(
       /<a [^>]*href="mailto:([^"]+)"[^>]*>.*?<\/a>/gi,
       (match, email) => {
-        return `<strong class="highlight-link underline cursor-pointer text-n-blue-10 hover:text-n-brand dark:text-n-blue-5 transition-colors" data-type="email" data-value="${email}"><u>${email}</u></strong>`;
+        return `<strong class="highlight-link underline cursor-pointer text-n-orange-10 hover:text-n-orange dark:text-n-orange-5 transition-colors" data-type="email" data-value="${email}"><u>${email}</u></strong>`;
       }
     );
 
@@ -90,12 +90,12 @@ class MessageFormatter {
     renderedMessage = renderedMessage.replace(EMAIL_REGEX, match => {
       // Avoid replacing if it's already inside our custom tag (very simple check)
       if (renderedMessage.includes(`data-value="${match}"`)) return match;
-      return `<strong class="highlight-link underline cursor-pointer text-n-blue-10 hover:text-n-brand dark:text-n-blue-5 transition-colors" data-type="email" data-value="${match}"><u>${match}</u></strong>`;
+      return `<strong class="highlight-link underline cursor-pointer text-n-orange-10 hover:text-n-orange dark:text-n-orange-5 transition-colors" data-type="email" data-value="${match}"><u>${match}</u></strong>`;
     });
 
     // Highlight phone numbers (usually not linkified by markdown-it)
     renderedMessage = renderedMessage.replace(VN_PHONE_REGEX, match => {
-      return `<strong class="highlight-link underline cursor-pointer text-n-blue-10 hover:text-n-brand dark:text-n-blue-5 transition-colors" data-type="phone" data-value="${match}"><u>${match}</u></strong>`;
+      return `<strong class="highlight-link underline cursor-pointer text-n-orange-10 hover:text-n-orange dark:text-n-orange-5 transition-colors" data-type="phone" data-value="${match}"><u>${match}</u></strong>`;
     });
 
     if (this.isATweet && !this.isAPrivateNote) {

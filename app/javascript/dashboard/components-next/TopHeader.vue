@@ -214,7 +214,7 @@ onUnmounted(() => {
       <RouterLink
         v-if="localizedPlanName"
         :to="accountScopedRoute('billing_settings_index')"
-        class="hidden lg:flex items-center px-2 py-0.5 rounded-full bg-n-brand text-[10px] font-bold uppercase tracking-wider text-white hover:opacity-90 transition-opacity whitespace-nowrap shadow-sm"
+        class="hidden lg:flex items-center px-2 py-0.5 rounded-full bg-n-orange text-[10px] font-bold uppercase tracking-wider text-white hover:opacity-90 transition-opacity whitespace-nowrap shadow-sm"
       >
         {{ localizedPlanName }}
       </RouterLink>

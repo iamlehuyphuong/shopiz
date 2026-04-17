@@ -74,7 +74,7 @@ label {
 input:not(.reset-base),
 textarea:not(.reset-base) {
   font-family: inherit;
-  @apply rounded-lg box-border bg-n-background dark:bg-n-alpha-2 border-none outline outline-1 outline-offset-[-1px] outline-n-weak block text-base leading-[1.5] p-2.5 w-full text-n-slate-12 focus:outline-n-brand focus:ring-1 focus:ring-n-brand;
+  @apply rounded-lg box-border bg-n-background dark:bg-n-alpha-2 border-none outline outline-1 outline-offset-[-1px] outline-n-weak block text-base leading-[1.5] p-2.5 w-full text-n-slate-12 focus:outline-n-orange focus:ring-1 focus:ring-n-orange;
 
   &:disabled {
     @apply opacity-40 cursor-not-allowed;
@@ -90,7 +90,7 @@ textarea {
 }
 
 select:not(.reset-base) {
-  @apply bg-n-background dark:bg-n-alpha-2 w-full p-2.5 border-none outline outline-1 outline-offset-[-1px] outline-n-weak rounded-lg text-n-slate-12 text-base ltr:pr-10 rtl:pl-10 font-normal ltr:bg-[right_-1.6rem_center] rtl:bg-[left_-1.6rem_center] focus:outline-n-brand focus:ring-1 focus:ring-n-brand;
+  @apply bg-n-background dark:bg-n-alpha-2 w-full p-2.5 border-none outline outline-1 outline-offset-[-1px] outline-n-weak rounded-lg text-n-slate-12 text-base ltr:pr-10 rtl:pl-10 font-normal ltr:bg-[right_-1.6rem_center] rtl:bg-[left_-1.6rem_center] focus:outline-n-orange focus:ring-1 focus:ring-n-orange;
 
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -119,16 +119,16 @@ blockquote {
 }
 
 .button {
-  @apply appearance-none bg-n-brand border border-solid border-n-brand text-white cursor-pointer inline-block text-sm h-10 leading-none outline-none outline-0 py-1 px-4 text-center no-underline select-none align-middle whitespace-nowrap;
+  @apply appearance-none bg-n-orange border border-solid border-n-orange text-white cursor-pointer inline-block text-sm h-10 leading-none outline-none outline-0 py-1 px-4 text-center no-underline select-none align-middle whitespace-nowrap;
 
   &:focus,
   &:hover {
-    @apply no-underline border-n-brand brightness-110;
+    @apply no-underline border-n-orange brightness-110;
   }
 
   &:active,
   &.active {
-    @apply no-underline border-n-brand brightness-125;
+    @apply no-underline border-n-orange brightness-125;
   }
 
   &[disabled],
@@ -251,7 +251,7 @@ blockquote {
     --gray-12: 32 32 32;
 
     --background-color: 253 253 253;
-    --text-blue: 224 103 32;
+    --text-orange: 224 103 32;
     --border-container: 236 236 236;
     --border-strong: 235 235 235;
     --border-weak: 234 234 234;
@@ -260,7 +260,7 @@ blockquote {
     --solid-3: 255 255 255;
     --solid-active: 255 255 255;
     --solid-amber: 252 232 193;
-    --solid-blue: 255 239 214;
+    --solid-orange: 255 239 214;
     --solid-iris: 230 231 255;
 
     --alpha-1: 67, 67, 67, 0.06;
@@ -268,7 +268,7 @@ blockquote {
     --alpha-3: 255, 255, 255, 0.96;
     --black-alpha-1: 0, 0, 0, 0.12;
     --black-alpha-2: 0, 0, 0, 0.04;
-    --border-blue: 224, 103, 32, 0.5;
+    --border-orange: 224, 103, 32, 0.5;
     --white-alpha: 255, 255, 255, 0.8;
   }
 
@@ -365,16 +365,16 @@ blockquote {
     --solid-3: 44 45 54;
     --solid-active: 53 57 66;
     --solid-amber: 42 37 30;
-    --solid-blue: 70 33 0;
+    --solid-orange: 70 33 0;
     --solid-iris: 38 42 101;
-    --text-blue: 255 160 87;
+    --text-orange: 255 160 87;
 
     --alpha-1: 36, 36, 36, 0.8;
     --alpha-2: 139, 147, 182, 0.15;
     --alpha-3: 36, 38, 45, 0.9;
     --black-alpha-1: 0, 0, 0, 0.3;
     --black-alpha-2: 0, 0, 0, 0.2;
-    --border-blue: 224, 103, 32, 0.5;
+    --border-orange: 224, 103, 32, 0.5;
     --border-container: 236, 236, 236, 0;
     --white-alpha: 255, 255, 255, 0.1;
   }

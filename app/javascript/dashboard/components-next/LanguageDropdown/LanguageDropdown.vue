@@ -119,7 +119,7 @@ const buttonVariantClass = computed(() => {
     <button
       type="button"
       :disabled="disabled"
-      class="flex items-center justify-between gap-2 rounded-lg text-n-slate-12 transition-colors focus:outline-none focus:ring-2 focus:ring-n-blue-5 disabled:opacity-50 disabled:cursor-not-allowed w-full"
+      class="flex items-center justify-between gap-2 rounded-lg text-n-slate-12 transition-colors focus:outline-none focus:ring-2 focus:ring-n-orange-5 disabled:opacity-50 disabled:cursor-not-allowed w-full"
       :class="[buttonSizeClass, buttonVariantClass]"
       @click="toggleDropdown"
     >

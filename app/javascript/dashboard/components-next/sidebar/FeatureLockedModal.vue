@@ -66,9 +66,9 @@ const upgradeMessage = computed(() => {
     <div class="flex flex-col gap-4 p-6">
       <div class="flex items-center gap-3">
         <div
-          class="flex items-center justify-center size-8 rounded-full bg-n-solid-blue"
+          class="flex items-center justify-center size-8 rounded-full bg-n-solid-orange"
         >
-          <Icon icon="i-lucide-lock-keyhole" class="size-4 text-n-brand" />
+          <Icon icon="i-lucide-lock-keyhole" class="size-4 text-n-orange" />
         </div>
         <h3 class="text-lg font-semibold text-n-slate-12">
           {{ t('GENERAL_SETTINGS.UPGRADE') }}
