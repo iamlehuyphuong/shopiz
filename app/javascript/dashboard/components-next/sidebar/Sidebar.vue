@@ -478,6 +478,18 @@ const menuItems = computed(() => {
           icon: 'i-ri-messenger-fill',
           to: accountScopedRoute('campaigns_facebook_index'),
         },
+        {
+          name: 'Telegram',
+          label: 'Telegram',
+          icon: 'i-woot-telegram',
+          to: accountScopedRoute('campaigns_telegram_index'),
+        },
+        {
+          name: 'LINE',
+          label: 'LINE',
+          icon: 'i-woot-line',
+          to: accountScopedRoute('campaigns_line_index'),
+        },
       ],
     },
     {

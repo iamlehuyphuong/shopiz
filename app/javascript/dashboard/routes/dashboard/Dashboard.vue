@@ -43,6 +43,7 @@ export default {
     FloatingCallWidget,
     MobileSidebarLauncher,
     FeatureLockOverlay,
+    OnboardingModal: defineAsyncComponent(() => import('dashboard/components/app/OnboardingModal.vue')),
   },
   setup() {
     const upgradePageRef = ref(null);
@@ -59,6 +60,18 @@ export default {
       return shouldShowPaywall(featureFlag);
     });
 
+    const isAppReady = computed(() => !!accountId.value);
+    const { currentAccount } = useAccount();
+    const shouldShowOnboardingModal = computed(() => {
+      if (!isAppReady.value) return false;
+      
+      const account = currentAccount.value || {};
+      if (!account.id) return false; // wait until fully loaded
+
+      const customAttrs = account.custom_attributes || {};
+      return customAttrs.onboarding_completed !== true;
+    });
+
     return {
       uiSettings,
       updateUISettings,
@@ -69,6 +82,7 @@ export default {
       hasIncomingCall: computed(() => callsStore.hasIncomingCall),
       route,
       isFeatureLocked,
+      shouldShowOnboardingModal,
     };
   },
   data() {
@@ -203,6 +217,7 @@ export default {
           @close="closeKeyShortcutModal"
           @clickaway="closeKeyShortcutModal"
         />
+        <OnboardingModal v-if="shouldShowOnboardingModal" :show="true" />
       </main>
     </div>
   </div>

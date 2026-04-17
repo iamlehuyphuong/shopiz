@@ -41,6 +41,21 @@ class Tiktok::Client
     send_message(conversation_id, 'IMAGE', media_id, referenced_message_id: referenced_message_id)
   end
 
+  def send_comment_reply(comment_id, text)
+    endpoint = "#{api_base_url}/business/comment/reply/create/"
+    headers = { 'Access-Token': access_token, 'Content-Type': 'application/json' }
+    body = {
+      business_id: business_id,
+      comment_id: comment_id,
+      text: text
+    }
+
+    response = HTTParty.post(endpoint, body: body.to_json, headers: headers)
+    json = process_json_response(response, 'Failed to send TikTok comment reply')
+
+    json.dig('data', 'reply_id')
+  end
+
   private
 
   def send_message(conversation_id, type, payload, referenced_message_id: nil)

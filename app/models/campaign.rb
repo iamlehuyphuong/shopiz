@@ -32,7 +32,7 @@
 class Campaign < ApplicationRecord
   include UrlHelper
 
-  SUPPORTED_INBOX_TYPES = ['Website', 'Twilio SMS', 'Sms', 'Whatsapp', 'Voice', 'ZaloPersonal', 'ZaloOa', 'Facebook'].freeze
+  SUPPORTED_INBOX_TYPES = ['Website', 'Twilio SMS', 'Sms', 'Whatsapp', 'Voice', 'ZaloPersonal', 'ZaloOa', 'Facebook', 'Telegram', 'Line'].freeze
 
   validates :account_id, presence: true
   validates :inbox_id, presence: true
@@ -101,6 +101,10 @@ class Campaign < ApplicationRecord
       Zalo::OneoffCampaignService.new(campaign: self).perform
     when 'Facebook'
       Facebook::OneoffCampaignService.new(campaign: self).perform
+    when 'Telegram'
+      Telegram::OneoffCampaignService.new(campaign: self).perform
+    when 'Line'
+      Line::OneoffCampaignService.new(campaign: self).perform
     end
   end
 
@@ -118,7 +122,7 @@ class Campaign < ApplicationRecord
   def ensure_correct_campaign_attributes
     return if inbox.blank?
 
-    if ['Twilio SMS', 'Sms', 'Whatsapp', 'ZaloPersonal', 'ZaloOa', 'Facebook'].include?(inbox.inbox_type)
+    if ['Twilio SMS', 'Sms', 'Whatsapp', 'ZaloPersonal', 'ZaloOa', 'Facebook', 'Telegram', 'Line'].include?(inbox.inbox_type)
       self.campaign_type = 'one_off'
       self.scheduled_at ||= Time.now.utc
     elsif ['Voice'].include?(inbox.inbox_type)

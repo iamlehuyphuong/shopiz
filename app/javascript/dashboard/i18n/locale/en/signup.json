@@ -45,6 +45,50 @@
       "ERROR_MESSAGE": "Could not connect to Woot server. Please try again."
     },
     "SUBMIT": "Create account",
-    "HAVE_AN_ACCOUNT": "Already have an account?"
+    "HAVE_AN_ACCOUNT": "Already have an account?",
+    "ONBOARDING": {
+      "NEXT_STEP": "Continue",
+      "GO_BACK": "Go back",
+      "BUSINESS_NAME": {
+        "LABEL": "Business / Store Name",
+        "PLACEHOLDER": "Enter your business name",
+        "ERROR": "Please enter your business name"
+      },
+      "INDUSTRY": {
+        "LABEL": "Industry",
+        "PLACEHOLDER": "Select your industry",
+        "ERROR": "Please select your industry",
+        "OPTIONS": {
+          "FASHION": "Fashion & Accessories",
+          "HEALTH_BEAUTY": "Health & Beauty",
+          "F_B": "F&B (Restaurants, Cafe)",
+          "TECH": "Technology / Electronics",
+          "OTHER": "Other"
+        }
+      },
+      "COMPANY_SIZE": {
+        "LABEL": "Company Size",
+        "PLACEHOLDER": "Select your company size",
+        "ERROR": "Please select your company size",
+        "OPTIONS": {
+          "SIZE_1_5": "1-5 employees",
+          "SIZE_6_20": "6-20 employees",
+          "SIZE_21_50": "21-50 employees",
+          "SIZE_50_PLUS": "50+ employees"
+        }
+      },
+      "SOURCE": {
+        "LABEL": "How did you hear about Shopiz?",
+        "PLACEHOLDER": "Select an option",
+        "ERROR": "Please select an option",
+        "OPTIONS": {
+          "FACEBOOK": "Facebook",
+          "TIKTOK": "TikTok",
+          "GOOGLE": "Google",
+          "REFERRAL": "Referral",
+          "OTHER": "Other"
+        }
+      }
+    }
   }
 }

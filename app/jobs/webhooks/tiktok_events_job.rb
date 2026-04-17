@@ -3,7 +3,7 @@ class Webhooks::TiktokEventsJob < MutexApplicationJob
   queue_as :default
   retry_on LockAcquisitionError, wait: 2.seconds, attempts: 8
 
-  SUPPORTED_EVENTS = [:im_send_msg, :im_receive_msg, :im_mark_read_msg].freeze
+  SUPPORTED_EVENTS = [:im_send_msg, :im_receive_msg, :im_mark_read_msg, :comment].freeze
 
   def perform(event)
     @event = event.with_indifferent_access
@@ -65,5 +65,10 @@ class Webhooks::TiktokEventsJob < MutexApplicationJob
   # Receive real-time notifications when a Personal Account user marks all messages in a session as read.
   def im_mark_read_msg
     ::Tiktok::ReadStatusService.new(channel: channel, content: content).perform
+  end
+
+  # Receive real-time notifications for video comments
+  def comment
+    ::Tiktok::IncomingCommentService.new(channel: channel, content: content).perform
   end
 end

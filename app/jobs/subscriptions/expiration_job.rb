@@ -24,10 +24,6 @@ class Subscriptions::ExpirationJob < ApplicationJob
                        .find_each do |subscription|
       subscription.update!(status: :expired)
       Rails.logger.info("Subscription #{subscription.id} for Account #{subscription.account_id} marked as expired (grace period starts)")
-
-      # Re-provision to update custom_attributes status to 'expired'
-      # but keep features/limits from the plan during grace period
-      update_grace_period_status(subscription)
     end
   end
 
@@ -57,13 +53,5 @@ class Subscriptions::ExpirationJob < ApplicationJob
     end
   end
 
-  def update_grace_period_status(subscription)
-    account = subscription.account
-    account.update!(
-      custom_attributes: account.custom_attributes.merge(
-        'subscription_status' => 'expired',
-        'grace_period_ends_at' => (subscription.ends_at + GRACE_PERIOD_DAYS.days).to_s
-      )
-    )
-  end
+
 end

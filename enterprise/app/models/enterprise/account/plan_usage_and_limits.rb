@@ -112,11 +112,11 @@ module Enterprise::Account::PlanUsageAndLimits # rubocop:disable Metrics/ModuleL
   end
 
   def plan_name
-    custom_attributes['plan_name']
+    active_subscription&.subscription_plan&.name_en&.downcase || 'free'
   end
 
   def subscription_end_at
-    custom_attributes['subscription_ends_on']
+    active_subscription&.ends_at
   end
 
   private
@@ -172,8 +172,7 @@ module Enterprise::Account::PlanUsageAndLimits # rubocop:disable Metrics/ModuleL
   end
 
   def agent_limits
-    subscribed_quantity = custom_attributes['subscribed_quantity']
-    subscribed_quantity || get_limits(:agents)
+    get_limits(:agents)
   end
 
   def get_limits(limit_name)
