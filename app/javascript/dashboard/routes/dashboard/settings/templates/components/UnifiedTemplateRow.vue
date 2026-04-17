@@ -22,7 +22,7 @@ const channelIcon = computed(() => {
 
 const channelIconColor = computed(() => {
   if (props.template.source === 'whatsapp') return 'text-green-500';
-  if (props.template.source === 'zalo') return 'text-blue-500';
+  if (props.template.source === 'zalo') return 'text-orange-500';
   return 'text-n-slate-11';
 });
 

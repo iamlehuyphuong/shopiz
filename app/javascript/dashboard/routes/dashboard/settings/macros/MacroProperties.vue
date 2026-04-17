@@ -22,7 +22,7 @@ export default {
   methods: {
     isActive(key) {
       return this.macroVisibility === key
-        ? 'bg-n-blue-2 dark:bg-n-blue-1 border-n-blue-3 dark:border-n-blue-4'
+        ? 'bg-n-orange-2 dark:bg-n-orange-1 border-n-orange-3 dark:border-n-orange-4'
         : 'bg-white dark:bg-n-solid-2 border-n-weak dark:border-n-strong';
     },
     onUpdateName(value) {
@@ -66,7 +66,7 @@ export default {
             <Icon
               v-if="macroVisibility === 'global'"
               icon="i-lucide-circle-check-big"
-              class="text-n-brand size-4"
+              class="text-n-orange size-4"
             />
           </div>
           <p class="text-n-slate-11 text-label-small">
@@ -85,7 +85,7 @@ export default {
             <Icon
               v-if="macroVisibility === 'personal'"
               icon="i-lucide-circle-check-big"
-              class="text-n-brand size-4"
+              class="text-n-orange size-4"
             />
           </div>
           <p class="text-n-slate-11 text-label-small">

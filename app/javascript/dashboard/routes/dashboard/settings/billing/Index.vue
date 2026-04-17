@@ -447,7 +447,7 @@ onMounted(fetchAccountDetails);
                 :key="tab.value"
                 type="button"
                 class="px-8 py-2 text-[14px] font-semibold rounded-lg transition-all duration-200"
-                :class="globalDuration === tab.value ? 'bg-n-brand text-white shadow' : 'text-n-slate-11 hover:text-n-slate-12'"
+                :class="globalDuration === tab.value ? 'bg-n-orange text-white shadow' : 'text-n-slate-11 hover:text-n-slate-12'"
                 @click="selectDuration(tab.value)"
               >
                 {{ tab.label }}

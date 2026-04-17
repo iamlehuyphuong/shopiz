@@ -66,7 +66,7 @@ const handleSelect = () => {
     class="flex flex-col gap-4 p-5 rounded-xl border transition-all duration-200 text-left w-full min-w-0"
     :class="[
       isActive
-        ? 'border-n-blue-7 bg-n-blue-2 ring-1 ring-n-blue-7 shadow-sm'
+        ? 'border-n-orange-7 bg-n-orange-2 ring-1 ring-n-orange-7 shadow-sm'
         : 'border-n-weak bg-n-solid-2 hover:bg-n-solid-3 hover:border-n-strong',
     ]"
     @click="handleSelect"
@@ -76,7 +76,7 @@ const handleSelect = () => {
       <div class="flex items-center gap-3 min-w-0">
         <div
           class="flex items-center justify-center w-9 h-9 rounded-lg"
-          :class="isActive ? 'bg-n-blue-3' : 'bg-n-solid-3'"
+          :class="isActive ? 'bg-n-orange-3' : 'bg-n-solid-3'"
         >
           <span :class="[channelIcon, iconColor]" class="size-5" />
         </div>
@@ -93,7 +93,7 @@ const handleSelect = () => {
         class="flex items-center justify-center px-2.5 py-1 rounded-full text-xs font-bold"
         :class="
           isActive
-            ? 'bg-n-blue-4 text-n-blue-11'
+            ? 'bg-n-orange-4 text-n-orange-11'
             : 'bg-n-solid-3 text-n-slate-11'
         "
       >

@@ -490,7 +490,7 @@ onMounted(() => {
         channel-key="Channel::ZaloOa"
         channel-name="Zalo OA"
         channel-icon="i-ri-zalo-oa-fill"
-        icon-color="text-blue-500"
+        icon-color="text-orange-500"
         :inbox-count="zaloOaInboxes.length"
         :templates="normalizedZaloTemplates"
         :status-groups="zaloStatusGroups"
@@ -505,7 +505,7 @@ onMounted(() => {
       <div v-on-click-outside="closeStatusDropdown" class="relative w-44">
         <button
           type="button"
-          class="flex items-center justify-between gap-2 h-9 px-3 text-sm rounded-lg text-n-slate-12 transition-colors focus:outline-none focus:ring-2 focus:ring-n-blue-5 w-full border border-n-weak bg-n-solid-1 hover:bg-n-solid-2"
+          class="flex items-center justify-between gap-2 h-9 px-3 text-sm rounded-lg text-n-slate-12 transition-colors focus:outline-none focus:ring-2 focus:ring-n-orange-5 w-full border border-n-weak bg-n-solid-1 hover:bg-n-solid-2"
           @click="toggleStatusDropdown"
         >
           <span class="truncate">{{ selectedStatusLabel }}</span>
@@ -527,7 +527,7 @@ onMounted(() => {
       <div v-on-click-outside="closeChannelDropdown" class="relative w-44">
         <button
           type="button"
-          class="flex items-center justify-between gap-2 h-9 px-3 text-sm rounded-lg text-n-slate-12 transition-colors focus:outline-none focus:ring-2 focus:ring-n-blue-5 w-full border border-n-weak bg-n-solid-1 hover:bg-n-solid-2"
+          class="flex items-center justify-between gap-2 h-9 px-3 text-sm rounded-lg text-n-slate-12 transition-colors focus:outline-none focus:ring-2 focus:ring-n-orange-5 w-full border border-n-weak bg-n-solid-1 hover:bg-n-solid-2"
           @click="toggleChannelDropdown"
         >
           <span class="truncate">{{ selectedChannelLabel }}</span>

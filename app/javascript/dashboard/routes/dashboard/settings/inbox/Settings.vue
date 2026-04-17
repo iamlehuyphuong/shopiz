@@ -612,7 +612,7 @@ export default {
     v-if="uiFlags.isFetching"
     class="flex items-center justify-center h-full w-full"
   >
-    <SpinnerLoader :size="28" class="text-n-blue-9" />
+    <SpinnerLoader :size="28" class="text-n-orange-9" />
   </div>
   <div
     v-else

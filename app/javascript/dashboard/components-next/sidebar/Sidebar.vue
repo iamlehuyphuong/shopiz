@@ -912,13 +912,13 @@ const handleMainMenuClick = item => {
     <!-- Resize Handle -->
     <div
       v-show="!isMobile"
-      class="absolute top-0 ltr:right-0 rtl:left-0 w-1 h-full cursor-col-resize hover:bg-n-brand/10 transition-colors z-[100] group hidden md:block"
+      class="absolute top-0 ltr:right-0 rtl:left-0 w-1 h-full cursor-col-resize hover:bg-n-orange/10 transition-colors z-[100] group hidden md:block"
       @mousedown="onResizeStart"
       @touchstart="onResizeStart"
       @dblclick="onResizeHandleDoubleClick"
     >
       <div
-        class="absolute ltr:right-0 rtl:left-0 h-full w-[1px] bg-n-weak group-hover:bg-n-brand transition-colors"
+        class="absolute ltr:right-0 rtl:left-0 h-full w-[1px] bg-n-weak group-hover:bg-n-orange transition-colors"
       />
     </div>
     <!-- Feature Locked Modal -->

@@ -140,7 +140,7 @@ const toggleOption = option => {
             <Icon
               v-if="selectedIds.includes(option.id)"
               icon="i-lucide-check"
-              class="bg-n-blue-text pointer-events-none"
+              class="bg-n-orange-text pointer-events-none"
             />
           </template>
         </DropdownItem>

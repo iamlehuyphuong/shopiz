@@ -186,7 +186,7 @@ const handleSubmit = () => {
         color="slate"
         type="button"
         :label="t('INBOX_MGMT.ZALO_TEMPLATES.FORM.CANCEL')"
-        class="w-full bg-n-alpha-2 n-blue-text hover:bg-n-alpha-3"
+        class="w-full bg-n-alpha-2 n-orange-text hover:bg-n-alpha-3"
         @click="emit('cancel')"
       />
       <Button

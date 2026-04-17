@@ -180,7 +180,7 @@ async function updateSettings() {
       >
         <textarea
           v-model="autoReplyMessage"
-          class="w-full min-h-[100px] rounded-lg border border-n-weak p-3 text-sm text-n-slate-12 bg-n-alpha-white placeholder:text-n-slate-9 focus:outline-none focus:ring-2 focus:ring-n-blue-9 resize-y"
+          class="w-full min-h-[100px] rounded-lg border border-n-weak p-3 text-sm text-n-slate-12 bg-n-alpha-white placeholder:text-n-slate-9 focus:outline-none focus:ring-2 focus:ring-n-orange-9 resize-y"
           :placeholder="
             $t(
               'INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.MESSAGE_PLACEHOLDER'

@@ -72,12 +72,12 @@ const helpURL = getHelpUrlForFeature(props.featureName);
           :href="helpURL"
           target="_blank"
           rel="noopener noreferrer"
-          class="items-center hidden gap-1 text-sm font-medium sm:inline-flex w-fit text-n-blue-11 hover:underline mb-2"
+          class="items-center hidden gap-1 text-sm font-medium sm:inline-flex w-fit text-n-orange-11 hover:underline mb-2"
         >
           {{ linkText }}
           <Icon
             icon="i-lucide-chevron-right"
-            class="flex-shrink-0 text-n-blue-11 size-4"
+            class="flex-shrink-0 text-n-orange-11 size-4"
           />
         </a>
       </CustomBrandPolicyWrapper>
@@ -106,7 +106,7 @@ const helpURL = getHelpUrlForFeature(props.featureName);
         <template #prefix>
           <Icon
             icon="i-lucide-search"
-            class="absolute top-1/2 -translate-y-1/2 text-n-slate-11 group-focus-within:text-n-brand size-3.5 ltr:left-2.5 rtl:right-2.5"
+            class="absolute top-1/2 -translate-y-1/2 text-n-slate-11 group-focus-within:text-n-orange size-3.5 ltr:left-2.5 rtl:right-2.5"
           />
         </template>
       </Input>

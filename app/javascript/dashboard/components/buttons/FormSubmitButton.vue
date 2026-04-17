@@ -58,9 +58,9 @@ export default {
 
 <style lang="scss" scoped>
 button:disabled {
-  @apply bg-n-brand/10 dark:bg-n-brand/25 dark:text-slate-500 opacity-100;
+  @apply bg-n-orange/10 dark:bg-n-orange/25 dark:text-slate-500 opacity-100;
   &:hover {
-    @apply bg-n-brand/10 dark:bg-n-brand/25;
+    @apply bg-n-orange/10 dark:bg-n-orange/25;
   }
 }
 </style>

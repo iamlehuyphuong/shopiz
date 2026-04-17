@@ -83,7 +83,7 @@ onUnmounted(() => {
   <div
     class="rounded-xl transition-[border-bottom] duration-[0.2s] ease-[ease-in-out] relative flex items-start flex-col border border-solid bg-n-solid-1 divide-y divide-n-strong"
     :class="{
-      'border-n-brand': isInputFocused,
+      'border-n-orange': isInputFocused,
       'border-n-strong': !isInputFocused,
     }"
   >
@@ -94,7 +94,7 @@ onUnmounted(() => {
           class="icon"
           aria-hidden="true"
           :class="{
-            'text-n-blue-11': isInputFocused,
+            'text-n-orange-11': isInputFocused,
             'text-n-slate-10': !isInputFocused,
           }"
         />

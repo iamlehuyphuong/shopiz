@@ -64,7 +64,7 @@ export default {
 
 <template>
   <div
-    class="flex flex-col justify-center w-full min-h-screen py-12 bg-n-brand/5 dark:bg-n-background sm:px-6 lg:px-8"
+    class="flex flex-col justify-center w-full min-h-screen py-12 bg-n-orange/5 dark:bg-n-background sm:px-6 lg:px-8"
   >
     <form
       class="bg-white shadow sm:mx-auto sm:w-full sm:max-w-lg dark:bg-n-solid-2 p-11 sm:shadow-lg sm:rounded-lg"
@@ -101,7 +101,7 @@ export default {
       </div>
       <p class="mt-4 -mb-1 text-sm text-n-slate-11">
         {{ $t('RESET_PASSWORD.GO_BACK_TO_LOGIN') }}
-        <router-link to="/auth/login" class="text-link text-n-brand">
+        <router-link to="/auth/login" class="text-link text-n-orange">
           {{ $t('COMMON.CLICK_HERE') }}.
         </router-link>
       </p>

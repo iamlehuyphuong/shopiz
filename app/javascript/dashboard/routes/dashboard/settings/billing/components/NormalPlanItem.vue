@@ -113,7 +113,7 @@ const onCheckout = () => {
              <p class="text-2xl font-bold text-n-slate-12 m-0">
               {{ formatCurrency(selectedPackage.price) }}
              </p>
-             <span v-if="selectedPackage.discount_percent > 0" class="ml-2 text-xs font-semibold text-n-brand bg-n-brand/10 px-1.5 py-0.5 rounded">
+             <span v-if="selectedPackage.discount_percent > 0" class="ml-2 text-xs font-semibold text-n-orange bg-n-orange/10 px-1.5 py-0.5 rounded">
                {{ $t('BILLING_SETTINGS.PRICING_PACKAGES.DISCOUNT', { percent: selectedPackage.discount_percent }) }}
              </span>
            </div>

@@ -1001,7 +1001,7 @@ watch(conversationFilters, (newVal, oldVal) => {
         />
       </Virtualizer>
       <div v-if="chatListLoading" class="flex justify-center my-4">
-        <Spinner class="text-n-brand" />
+        <Spinner class="text-n-orange" />
           </div>
           <template v-else-if="showEndOfListMessage">
             <div
