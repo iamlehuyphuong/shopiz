@@ -151,6 +151,23 @@ export const colors = {
       12: 'rgb(var(--orange-12) / <alpha-value>)',
     },
 
+    // Backward-compatible alias: n-blue-* → same as n-orange-*
+    blue: {
+      DEFAULT: '#E06720',
+      1: 'rgb(var(--orange-1) / <alpha-value>)',
+      2: 'rgb(var(--orange-2) / <alpha-value>)',
+      3: 'rgb(var(--orange-3) / <alpha-value>)',
+      4: 'rgb(var(--orange-4) / <alpha-value>)',
+      5: 'rgb(var(--orange-5) / <alpha-value>)',
+      6: 'rgb(var(--orange-6) / <alpha-value>)',
+      7: 'rgb(var(--orange-7) / <alpha-value>)',
+      8: 'rgb(var(--orange-8) / <alpha-value>)',
+      9: 'rgb(var(--orange-9) / <alpha-value>)',
+      10: 'rgb(var(--orange-10) / <alpha-value>)',
+      11: 'rgb(var(--orange-11) / <alpha-value>)',
+      12: 'rgb(var(--orange-12) / <alpha-value>)',
+    },
+
     ruby: {
       1: 'rgb(var(--ruby-1) / <alpha-value>)',
       2: 'rgb(var(--ruby-2) / <alpha-value>)',
@@ -244,6 +261,9 @@ export const colors = {
       'amber-button': 'rgb(var(--solid-amber-button) / <alpha-value>)',
       orange: 'rgb(var(--solid-orange) / <alpha-value>)',
       'orange-2': 'rgb(var(--solid-orange-2) / <alpha-value>)',
+      // Backward-compatible aliases
+      blue: 'rgb(var(--solid-orange) / <alpha-value>)',
+      'blue-2': 'rgb(var(--solid-orange-2) / <alpha-value>)',
       red: 'rgb(var(--solid-red) / <alpha-value>)',
       iris: 'rgb(var(--solid-iris) / <alpha-value>)',
       purple: 'rgb(var(--solid-purple) / <alpha-value>)',
@@ -262,8 +282,14 @@ export const colors = {
     strong: 'rgb(var(--border-strong) / <alpha-value>)',
     'orange-strong': 'rgb(var(--border-orange-strong) / <alpha-value>)',
     'orange-border': 'rgba(var(--border-orange))',
+    'orange-weak': 'rgb(var(--border-weak) / <alpha-value>)',
+    // Backward-compatible aliases
+    'blue-strong': 'rgb(var(--border-orange-strong) / <alpha-value>)',
+    'blue-border': 'rgba(var(--border-orange))',
     // Text colors
     'orange-text': 'rgb(var(--text-orange) / <alpha-value>)',
+    // Backward-compatible alias
+    'blue-text': 'rgb(var(--text-orange) / <alpha-value>)',
     'purple-text': 'rgb(var(--text-purple) / <alpha-value>)',
     'amber-text': 'rgb(var(--text-amber) / <alpha-value>)',
     card: 'rgb(var(--card-color) / <alpha-value>)',

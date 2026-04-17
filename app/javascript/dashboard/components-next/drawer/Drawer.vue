@@ -51,7 +51,7 @@
             >
               <button
                 type="button"
-                class="relative rounded-md text-gray-300 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden"
+                class="relative rounded-md text-gray-300 hover:text-white focus-visible:ring-2 focus-visible:ring-white focus:outline-hidden"
               >
                 <span class="absolute -inset-2.5"></span>
                 <span class="sr-only">Close panel</span>

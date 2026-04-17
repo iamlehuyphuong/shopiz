@@ -1337,7 +1337,10 @@
       "LINE": "Line",
       "API": "API Channel",
       "INSTAGRAM": "Instagram",
-      "VOICE": "Voice"
+      "TIKTOK": "TikTok",
+      "ZALO_OA": "Zalo OA",
+      "ZALO_PERSONAL": "Zalo Personal",
+      "TIKTOK_SHOP": "TikTok Shop"
     }
   }
 }

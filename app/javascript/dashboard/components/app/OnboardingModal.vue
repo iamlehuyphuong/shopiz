@@ -127,7 +127,7 @@ const submit = async () => {
               v-for="option in industryOptions"
               :key="option.value"
               type="button"
-              class="px-3.5 py-1.5 rounded-full text-[13px] font-medium border transition-colors focus:outline-none focus:ring-2 focus:ring-n-orange/50"
+              class="px-3.5 py-1.5 rounded-full text-[13px] font-medium border transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-n-orange/50"
               :class="[
                 industry === option.value
                   ? 'bg-n-orange border-n-orange text-white shadow-sm'
@@ -151,7 +151,7 @@ const submit = async () => {
               v-for="option in companySizeOptions"
               :key="option.value"
               type="button"
-              class="px-3.5 py-1.5 rounded-full text-[13px] font-medium border transition-colors focus:outline-none focus:ring-2 focus:ring-n-orange/50"
+              class="px-3.5 py-1.5 rounded-full text-[13px] font-medium border transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-n-orange/50"
               :class="[
                 companySize === option.value
                   ? 'bg-n-orange border-n-orange text-white shadow-sm'
@@ -175,7 +175,7 @@ const submit = async () => {
               v-for="option in sourceOptions"
               :key="option.value"
               type="button"
-              class="px-3.5 py-1.5 rounded-full text-[13px] font-medium border transition-colors focus:outline-none focus:ring-2 focus:ring-n-orange/50"
+              class="px-3.5 py-1.5 rounded-full text-[13px] font-medium border transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-n-orange/50"
               :class="[
                 source === option.value
                   ? 'bg-n-orange border-n-orange text-white shadow-sm'

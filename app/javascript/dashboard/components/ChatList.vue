@@ -1065,6 +1065,6 @@ watch(conversationFilters, (newVal, oldVal) => {
 
 <style lang="scss" scoped>
 .conversation-load-more {
-  @apply w-48 text-center px-2 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition w-32 flex items-center gap-1 justify-center;
+  @apply w-48 text-center px-2 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 transition w-32 flex items-center gap-1 justify-center;
 }
 </style>

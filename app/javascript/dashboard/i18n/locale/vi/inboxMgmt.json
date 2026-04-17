@@ -1305,7 +1305,11 @@
       "TELEGRAM": "Telegram",
       "LINE": "Line",
       "API": "Kênh API",
-      "INSTAGRAM": "Instagram"
+      "INSTAGRAM": "Instagram",
+      "TIKTOK": "TikTok",
+      "ZALO_OA": "Zalo OA",
+      "ZALO_PERSONAL": "Zalo cá nhân",
+      "TIKTOK_SHOP": "TikTok Shop"
     }
   }
 }

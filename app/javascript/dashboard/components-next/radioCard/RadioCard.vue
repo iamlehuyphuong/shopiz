@@ -66,7 +66,7 @@ const handleChange = () => {
           :name="id"
           :disabled="disabled"
           type="radio"
-          class="h-4 w-4 border-n-slate-6 text-n-orange focus:ring-n-orange focus:ring-offset-0 flex-shrink-0"
+          class="h-4 w-4 border-n-slate-6 text-n-orange focus:ring-0 focus-visible:ring-n-orange focus-visible:ring-offset-0 flex-shrink-0"
           @change="handleChange"
         />
       </div>
