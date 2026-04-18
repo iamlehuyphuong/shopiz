@@ -1,15 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>
-      <%= @global_config['INSTALLATION_NAME'] %>
-    </title>
+    <%
+      meta_title = @global_config['INSTALLATION_NAME']
+      meta_description = "#{@global_config['INSTALLATION_NAME']} is a customer support solution that helps companies engage customers over Messenger, Twitter, Telegram, Whatsapp. Simply connect your channels and converse with your customers from a single place. Easily add new agents to your system and have them own and resolve conversations with customers. #{@global_config['INSTALLATION_NAME']} also gives you real-time reports to measure your team's performance, canned responses to easily respond to frequently asked questions and private notes for agents to collaborate among themselves."
+      meta_image = @global_config['LOGO_THUMBNAIL'] # You can change this to a specific high-res banner image URL, e.g., '/brand-assets/social-share.png'
+    %>
+    <title><%= meta_title %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0"/>
     <% if @global_config['DISPLAY_MANIFEST'] %>
       <meta name="msapplication-TileColor" content="#E06720">
       <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
       <meta name="theme-color" content="#E06720">
-      <meta name="description" content="<%= @global_config['INSTALLATION_NAME'] %> is a customer support solution that helps companies engage customers over Messenger, Twitter, Telegram, WeChat, Whatsapp. Simply connect your channels and converse with your customers from a single place. Easily add new agents to your system and have them own and resolve conversations with customers. <%= @global_config['INSTALLATION_NAME'] %> also gives you real-time reports to measure your team's performance, canned responses to easily respond to frequently asked questions and private notes for agents to collaborate among themselves.">
+      
+      <!-- Standard Meta -->
+      <meta name="description" content="<%= meta_description %>">
+      
+      <!-- Open Graph / Facebook / Zalo -->
+      <meta property="og:type" content="website">
+      <meta property="og:title" content="<%= meta_title %>">
+      <meta property="og:description" content="<%= meta_description %>">
+      <meta property="og:image" content="<%= meta_image %>">
+
+      <!-- Twitter -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:title" content="<%= meta_title %>">
+      <meta name="twitter:description" content="<%= meta_description %>">
+      <meta name="twitter:image" content="<%= meta_image %>">
+
       <% if ENV['IOS_APP_IDENTIFIER'].present? %>
         <meta name="apple-itunes-app" content='app-id=<%= ENV['IOS_APP_IDENTIFIER'] %>'>
       <% end %>
