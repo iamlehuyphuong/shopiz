@@ -116,6 +116,33 @@
       "SUCCESS": "Kết nối cửa hàng Sapo thành công.",
       "ERROR": "Đã xảy ra lỗi khi kết nối Sapo. Vui lòng kiểm tra access token và tên cửa hàng."
     },
+    "NHANHVN": {
+      "HEADER": "Nhanh.vn",
+      "DELETE": {
+        "TITLE": "Xóa tích hợp Nhanh.vn",
+        "MESSAGE": "Bạn có chắc chắn muốn xóa tích hợp Nhanh.vn không?"
+      },
+      "CONNECT": {
+        "TITLE": "Kết nối cửa hàng Nhanh.vn",
+        "APP_ID": {
+          "LABEL": "App ID",
+          "PLACEHOLDER": "Nhập App ID Nhanh.vn của bạn"
+        },
+        "ACCESS_TOKEN": {
+          "LABEL": "Access Token",
+          "PLACEHOLDER": "Nhập Access Token Nhanh.vn của bạn"
+        },
+        "BUSINESS_ID": {
+          "LABEL": "Business ID",
+          "PLACEHOLDER": "Nhập Business ID Nhanh.vn của bạn",
+          "HELP": "Đây là mã doanh nghiệp được cấp sau khi ủy quyền OAuth trên open.nhanh.vn"
+        },
+        "CANCEL": "Hủy",
+        "SUBMIT": "Kết nối cửa hàng"
+      },
+      "SUCCESS": "Kết nối cửa hàng Nhanh.vn thành công.",
+      "ERROR": "Đã xảy ra lỗi khi kết nối Nhanh.vn. Vui lòng kiểm tra thông tin xác thực và thử lại."
+    },
     "HEADER": "Tích hợp",
     "DESCRIPTION": "Shopiz tích hợp với nhiều công cụ và dịch vụ nhằm nâng cao hiệu quả cho đội ngũ của bạn. Khám phá danh sách bên dưới để cấu hình ứng dụng bạn yêu thích.",
     "LEARN_MORE": "Tìm hiểu thêm về tích hợp",

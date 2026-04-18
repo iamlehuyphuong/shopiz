@@ -33,7 +33,7 @@ gem 'liquid'
 # Parse Markdown to HTML
 gem 'commonmarker'
 # Convert PDF pages to images for content extraction
-gem 'pdftoimage'
+gem 'pdftoimage', require: false
 # Google Vision API for text extraction from images
 gem 'google-cloud-vision'
 # Tesseract OCR fallback when Vision API not available
