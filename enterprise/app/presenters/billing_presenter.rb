@@ -17,7 +17,17 @@ class BillingPresenter
       disabled_register_trial: disabled_register_trial,
       current_subscription: current_subscription,
       current_addons: current_addons,
-      all_addon_packages: all_addon_packages
+      all_addon_packages: all_addon_packages,
+      payment_config: payment_config_data
+    }
+  end
+
+  def payment_config_data
+    router = Enterprise::Billing::PaymentRouter.new(@account)
+    {
+      default_method: router.resolve,
+      available_methods: router.available_methods,
+      show_method_dialog: router.show_method_dialog?
     }
   end
 

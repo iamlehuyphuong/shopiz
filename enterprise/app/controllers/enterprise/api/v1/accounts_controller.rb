@@ -44,16 +44,8 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
   end
 
   def checkout
-    case params[:payment_method]
-    when 'stripe'
-      return create_stripe_billing_session(stripe_customer_id) if stripe_customer_id.present?
-    when 'payos'
-      return create_payos_billing_session
-    when 'sepay'
-      return create_sepay_checkout_info
-    else
-      render_invalid_billing_details
-    end
+    method = resolve_payment_method
+    attempt_checkout_with_fallback(method)
   end
 
   def toggle_deletion
@@ -136,6 +128,41 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
     render_could_not_create_error('Please subscribe to a plan before viewing the billing details')
   end
 
+  def resolve_payment_method
+    method = params[:payment_method]
+    return method if method.present? && %w[payos sepay stripe].include?(method)
+
+    # Auto-resolve based on account locale and config
+    router = Enterprise::Billing::PaymentRouter.new(@account)
+    router.resolve
+  end
+
+  def attempt_checkout_with_fallback(method)
+    attempt_checkout(method)
+  rescue Payos::Client::PaymentError, StandardError => e
+    router = Enterprise::Billing::PaymentRouter.new(@account)
+    fallback = router.next_fallback(method)
+    if fallback
+      Rails.logger.info("[Checkout] #{method} failed (#{e.message}), falling back to #{fallback}")
+      attempt_checkout(fallback)
+    else
+      render_could_not_create_error(e.message)
+    end
+  end
+
+  def attempt_checkout(method)
+    case method
+    when 'stripe'
+      create_stripe_billing_session(stripe_customer_id)
+    when 'payos'
+      create_payos_billing_session
+    when 'sepay'
+      create_sepay_checkout_info
+    else
+      render_invalid_billing_details
+    end
+  end
+
   def create_stripe_billing_session(customer_id)
     session = Enterprise::Billing::CreateSessionService.new.create_session(customer_id)
     render_redirect_url(session.url)
@@ -146,16 +173,13 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
       @account.id,
       params[:product_id]
     )
+    raise StandardError, 'SePay checkout failed' if result.blank? || result[:checkout_url].blank?
 
-    if result.present? && result[:checkout_url].present?
-      render json: {
-        redirect_url: result[:checkout_url],
-        form_params: result[:form_params],
-        method: 'POST'
-      }, status: :ok
-    else
-      render json: { message: 'Could not create payment session. Please check your configuration.' }, status: :unprocessable_entity
-    end
+    render json: {
+      redirect_url: result[:checkout_url],
+      form_params: result[:form_params],
+      method: 'POST'
+    }, status: :ok
   end
 
   def create_payos_billing_session
@@ -163,12 +187,9 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
       @account.id,
       params[:product_id]
     )
+    raise Payos::Client::PaymentError, 'PayOS checkout failed' if url.blank?
 
-    if url.present?
-      render_redirect_url(url)
-    else
-      render json: { message: 'Could not create payment link. Please check your configuration.' }, status: :unprocessable_entity
-    end
+    render_redirect_url(url)
   end
 
   def cancel_cloud_subscriptions_for_deletion

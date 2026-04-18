@@ -316,7 +316,7 @@ onMounted(fetchAccountDetails);
                 @click="
                   onClickBillingPortal({
                     product_id: currentSubscription.plan_id,
-                    payment_method: 'payos',
+                    payment_method: 'auto',
                   })
                 "
               >
@@ -399,7 +399,7 @@ onMounted(fetchAccountDetails);
                 @click="
                   onClickBillingPortal({
                     product_id: trialPlan.id,
-                    payment_method: 'payos',
+                    payment_method: 'auto',
                   })
                 "
               >
@@ -502,7 +502,7 @@ onMounted(fetchAccountDetails);
                   @click="
                     onClickBillingPortal({
                       product_id: addon.id,
-                      payment_method: 'payos',
+                      payment_method: 'auto',
                     })
                   "
                 >

@@ -507,6 +507,15 @@
   type: secret
 # ------- End of SePay Related Config ------- #
 
+# ------- Payment Routing Config ------- #
+- name: PAYMENT_GATEWAY_CONFIG
+  display_title: 'Payment Gateway Configuration'
+  description: 'JSON config for payment methods: default, fallback order, and region rules. Keys: vn_default, vn_fallback, intl_default, intl_fallback, enabled'
+  value: '{"vn_default":"payos","vn_fallback":["sepay"],"intl_default":"payos","intl_fallback":["sepay"],"enabled":["payos","sepay"]}'
+  locked: false
+  type: code
+# ------- End of Payment Routing Config ------- #
+
 # ------- OG Image Related Config ------- #
 - name: OG_IMAGE_CDN_URL
   display_title: 'OG Image CDN URL'

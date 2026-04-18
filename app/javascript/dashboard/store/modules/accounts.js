@@ -127,8 +127,28 @@ export const actions = {
     commit(types.default.SET_ACCOUNT_UI_FLAG, { isCheckoutInProcess: true });
     try {
       const response = await EnterpriseAccountAPI.checkout(paymentInfo);
-      const { redirect_url: redirectUrl } = response.data;
-      if (redirectUrl) {
+      const {
+        redirect_url: redirectUrl,
+        form_params: formParams,
+        method,
+      } = response.data;
+
+      if (method === 'POST' && formParams && redirectUrl) {
+        // SePay: create hidden form and submit via POST
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = redirectUrl;
+        form.style.display = 'none';
+        Object.entries(formParams).forEach(([key, value]) => {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = key;
+          input.value = value;
+          form.appendChild(input);
+        });
+        document.body.appendChild(form);
+        form.submit();
+      } else if (redirectUrl) {
         window.location = redirectUrl;
       } else {
         throw new Error('Invalid redirect URL');

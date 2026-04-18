@@ -187,4 +187,11 @@ sepay:
   enabled: true
   icon: 'icon-bank-card-line'
   config_key: 'sepay'
+payment:
+  name: 'Payment Routing'
+  description: 'Configure default payment method, fallback chain, and region-based routing'
+  enabled: true
+  icon: 'icon-bank-card-line'
+  config_key: 'payment'
+
 
