@@ -178,7 +178,8 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
   def create_sepay_checkout_info
     result = Enterprise::Billing::CreateSessionService.new.create_sepay_checkout(
       @account.id,
-      params[:product_id]
+      params[:product_id],
+      product_type: params[:product_type]
     )
     raise StandardError, 'SePay checkout failed - no checkout URL returned' if result.blank? || result[:checkout_url].blank?
 
@@ -192,7 +193,8 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
   def create_payos_billing_session
     url = Enterprise::Billing::CreateSessionService.new.create_payos_session(
       @account.id,
-      params[:product_id]
+      params[:product_id],
+      product_type: params[:product_type]
     )
     raise StandardError, 'PayOS checkout failed - no payment link returned' if url.blank?
 

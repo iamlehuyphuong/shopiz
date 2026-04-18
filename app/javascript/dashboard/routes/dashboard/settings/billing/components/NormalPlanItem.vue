@@ -94,6 +94,7 @@ const buttonLabel = computed(() => {
 const onCheckout = () => {
   emit('checkout', {
     product_id: selectedPackage.value?.id,
+    product_type: 'plan',
     payment_method: 'auto',
   });
 };

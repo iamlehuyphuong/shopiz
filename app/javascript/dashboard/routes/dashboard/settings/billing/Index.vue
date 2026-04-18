@@ -316,6 +316,7 @@ onMounted(fetchAccountDetails);
                 @click="
                   onClickBillingPortal({
                     product_id: currentSubscription.plan_id,
+                    product_type: 'plan',
                     payment_method: 'auto',
                   })
                 "
@@ -399,6 +400,7 @@ onMounted(fetchAccountDetails);
                 @click="
                   onClickBillingPortal({
                     product_id: trialPlan.id,
+                    product_type: 'plan',
                     payment_method: 'auto',
                   })
                 "
@@ -502,6 +504,7 @@ onMounted(fetchAccountDetails);
                   @click="
                     onClickBillingPortal({
                       product_id: addon.id,
+                      product_type: 'addon',
                       payment_method: 'auto',
                     })
                   "

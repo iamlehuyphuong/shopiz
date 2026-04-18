@@ -8,9 +8,9 @@ class Enterprise::Billing::CreateSessionService
     )
   end
 
-  def create_payos_session(customer_id, product_id)
+  def create_payos_session(customer_id, product_id, product_type: nil)
     account = Account.find_by(id: customer_id)
-    item = SubscriptionPlan.find_by(id: product_id) || AddonPackage.find_by(id: product_id)
+    item = find_product(product_id, product_type)
     raise StandardError, 'Invalid account or product' if item.blank? || account.blank?
 
     amount_to_pay = item.price_amount.to_i
@@ -21,8 +21,9 @@ class Enterprise::Billing::CreateSessionService
     end
 
     sku = item.sku
-    # Safe orderCode: last 8 digits of timestamp + 4-digit zero-padded account_id
-    order_code = "#{Time.now.to_i.to_s[-8..]}#{customer_id.to_s.rjust(4, '0')}".to_i
+    # Safe orderCode: 6-digit timestamp + 3-digit account_id + 3-digit random
+    # Max: 999999_999_999 = 999999999999 (12 digits, safely under JS MAX_SAFE_INTEGER)
+    order_code = "#{Time.now.to_i.to_s[-6..]}#{customer_id.to_s.rjust(3, '0')[-3..]}#{rand(100..999)}".to_i
     description = "TT SHOPIZ #{sku}".upcase[0..24]
     return_url = "#{ENV.fetch('FRONTEND_URL')}/app/accounts/#{customer_id}/settings/billing"
 
@@ -37,9 +38,9 @@ class Enterprise::Billing::CreateSessionService
     res.dig(:data, :checkoutUrl)
   end
 
-  def create_sepay_checkout(account_id, product_id)
+  def create_sepay_checkout(account_id, product_id, product_type: nil)
     account = Account.find_by(id: account_id)
-    item = SubscriptionPlan.find_by(id: product_id) || AddonPackage.find_by(id: product_id)
+    item = find_product(product_id, product_type)
     raise StandardError, 'Invalid account or product' if item.blank? || account.blank?
 
     amount_to_pay = item.price_amount.to_i
@@ -64,6 +65,17 @@ class Enterprise::Billing::CreateSessionService
   end
 
   private
+
+  def find_product(product_id, product_type)
+    case product_type
+    when 'addon'
+      AddonPackage.find_by(id: product_id)
+    when 'plan'
+      SubscriptionPlan.find_by(id: product_id)
+    else
+      SubscriptionPlan.find_by(id: product_id) || AddonPackage.find_by(id: product_id)
+    end
+  end
 
   def calculate_upgrade_amount(account, item, base_amount)
     sub = account.active_subscription
