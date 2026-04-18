@@ -14,15 +14,16 @@ class Enterprise::Webhooks::SepayController < ActionController::API
     end
 
     # Check payment status - only process successful payments
-    status = payload['status'].to_s.upcase
-    unless status == 'COMPLETED' || status == 'PAID'
-      Rails.logger.info("[SePay Webhook] Non-success status: #{status} for order #{payload['order_invoice_number']}")
+    notification_type = payload['notification_type'].to_s.upcase
+    order_status = payload.dig('order', 'order_status').to_s.upcase
+    unless notification_type == 'ORDER_PAID' || order_status == 'CAPTURED' || order_status == 'PAID'
+      Rails.logger.info("[SePay Webhook] Non-success status: #{notification_type}/#{order_status} for order #{payload.dig('order', 'order_invoice_number')}")
       render json: { success: true }, status: :ok
       return
     end
 
     # Idempotency: check transaction reference
-    transaction_ref = payload['transaction_id'].to_s.presence || payload['id'].to_s
+    transaction_ref = payload.dig('transaction', 'transaction_id').to_s.presence || payload.dig('transaction', 'id').to_s
     if transaction_ref.present? && BillingHistory.exists?(transaction_id: transaction_ref)
       Rails.logger.info("[SePay Webhook] Skipping duplicate transaction: #{transaction_ref}")
       render json: { success: true }, status: :ok
@@ -45,7 +46,8 @@ class Enterprise::Webhooks::SepayController < ActionController::API
     expected = GlobalConfig.get_value('SEPAY_SECRET_KEY').presence || ENV.fetch('SEPAY_SECRET_KEY', nil)
     return false if expected.blank?
 
-    provided_key = request.headers['X-Secret-Key'].to_s
+    provided_key = request.headers['Authorization'].to_s.gsub(/Bearer\s+|Apikey\s+/i, '').strip
+    provided_key = request.headers['X-Secret-Key'].to_s.strip if provided_key.blank?
     return false if provided_key.blank?
 
     ActiveSupport::SecurityUtils.secure_compare(provided_key, expected)

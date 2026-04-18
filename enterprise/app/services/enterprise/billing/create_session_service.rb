@@ -21,9 +21,9 @@ class Enterprise::Billing::CreateSessionService
     end
 
     sku = item.sku
-    # Safe orderCode: 6-digit timestamp + 3-digit account_id + 3-digit random
-    # Max: 999999_999_999 = 999999999999 (12 digits, safely under JS MAX_SAFE_INTEGER)
-    order_code = "#{Time.now.to_i.to_s[-6..]}#{customer_id.to_s.rjust(3, '0')[-3..]}#{rand(100..999)}".to_i
+    # Format order_code as 15 digits: 5-digit account_id + 10-digit timestamp
+    # E.g. account 12 at 1713422345 => 000121713422345 => 121713422345
+    order_code = format("%05d%10d", customer_id, Time.now.to_i).to_i
     description = "TT SHOPIZ #{sku}".upcase[0..24]
     return_url = "#{ENV.fetch('FRONTEND_URL')}/app/accounts/#{customer_id}/settings/billing"
 
@@ -35,7 +35,23 @@ class Enterprise::Billing::CreateSessionService
       description: description
     )
 
-    res.dig(:data, :checkoutUrl)
+    checkout_url = res.dig(:data, :checkoutUrl)
+
+    account.billing_histories.create!(
+      order_id: order_code.to_s,
+      product_id: item.id.to_s,
+      product_name: item.is_a?(SubscriptionPlan) ? item.name(account.locale) : item.name,
+      sku: sku,
+      status: :pending,
+      price_amount: amount_to_pay,
+      price_currency: 'VND',
+      payment_method: 'payos',
+      metadata: { type: item.is_a?(SubscriptionPlan) ? 'package' : 'addon' },
+      description: description,
+      checkout_url: checkout_url
+    )
+
+    checkout_url
   end
 
   def create_sepay_checkout(account_id, product_id, product_type: nil)
@@ -56,12 +72,28 @@ class Enterprise::Billing::CreateSessionService
     return_url = "#{ENV.fetch('FRONTEND_URL')}/app/accounts/#{account_id}/settings/billing"
 
     client = Sepay::Client.new
-    client.create_checkout(
+    result = client.create_checkout(
       amount: amount_to_pay,
       order_id: order_id,
       description: description,
       return_url: return_url
     )
+
+    account.billing_histories.create!(
+      order_id: order_id,
+      product_id: item.id.to_s,
+      product_name: item.is_a?(SubscriptionPlan) ? item.name(account.locale) : item.name,
+      sku: sku,
+      status: :pending,
+      price_amount: amount_to_pay,
+      price_currency: 'VND',
+      payment_method: 'sepay',
+      metadata: { type: item.is_a?(SubscriptionPlan) ? 'package' : 'addon' },
+      description: description,
+      checkout_url: result&.dig(:checkout_url)
+    )
+
+    result
   end
 
   private

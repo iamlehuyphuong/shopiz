@@ -447,10 +447,10 @@ onMounted(() => {
     <!-- Header -->
     <div class="flex items-center justify-between mb-6">
       <div>
-        <h1 class="text-2xl font-semibold text-n-slate-12">
+        <h1 class="text-heading-1 text-n-slate-12">
           {{ t('SETTINGS.TEMPLATES.HEADER.TITLE') }}
         </h1>
-        <p class="text-sm text-n-slate-10 mt-1">
+        <p class="text-body-main text-n-slate-11 mt-1">
           {{ t('SETTINGS.TEMPLATES.HEADER.DESCRIPTION') }}
         </p>
       </div>

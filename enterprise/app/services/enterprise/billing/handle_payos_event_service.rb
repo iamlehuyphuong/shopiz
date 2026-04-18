@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class Enterprise::Billing::HandlePayosEventService
-  # orderCode format: last 8 digits of timestamp + 4-digit zero-padded account_id
-  ACCOUNT_ID_DIGITS = 4
+  # orderCode format: account_id + 10 digits timestamp
 
   def perform(payload)
     prepare_data(payload)
@@ -24,17 +23,25 @@ class Enterprise::Billing::HandlePayosEventService
   private
 
   def prepare_data(payload)
+    order_code_str = payload.dig('data', 'orderCode').to_s
+    @pending_bill = BillingHistory.find_by(order_id: order_code_str)
+
+    if @pending_bill.present?
+      @account = @pending_bill.account
+      @record = SubscriptionPlan.find_by(sku: @pending_bill.sku) || AddonPackage.find_by(sku: @pending_bill.sku)
+      return
+    end
+
+    # Fallback to legacy tracking if no pending bill exists
     description = payload.dig('data', 'description').to_s
-    # Description format: "TT SHOPIZ <SKU>" (set during checkout)
     sku_match = description.match(/TT SHOPIZ\s+(.+)/i)
     sku = sku_match ? sku_match[1].strip : nil
 
     @record = (SubscriptionPlan.find_by(sku: sku) || AddonPackage.find_by(sku: sku)) if sku.present?
 
-    # Extract account_id from orderCode: last ACCOUNT_ID_DIGITS digits
-    order_code = payload.dig('data', 'orderCode').to_s
-    @customer_id = order_code.last(ACCOUNT_ID_DIGITS).to_i if order_code.length > ACCOUNT_ID_DIGITS
+    @customer_id = order_code_str.length > 10 ? order_code_str[0...-10].to_i : 0
     @account = Account.find_by(id: @customer_id)
+    Rails.logger.warn("[PayOS] Account not found for parsed ID: #{@customer_id}") if @account.blank?
   end
 
   def activate_plan
@@ -83,24 +90,42 @@ class Enterprise::Billing::HandlePayosEventService
 
   def save_billing_history(payload)
     data = payload['data']
-    product_name = @record.is_a?(SubscriptionPlan) ? @record.name(@account.locale) : @record.name
+    transaction_date_time = data['transactionDateTime']
+    
+    # Parse transaction date if possible for paid_at
+    parsed_paid_at = Time.zone.parse(transaction_date_time) rescue Time.current
 
-    @account.billing_histories.create!(
-      price_amount: data['amount'],
-      price_currency: data['currency'] || 'vnd',
-      product_name: product_name,
-      sku: @record.sku,
-      status: 0,
-      product_id: @record.id.to_s,
-      metadata: {
-        type: @record.is_a?(SubscriptionPlan) ? 'package' : 'addon',
+    if @pending_bill.present?
+      @pending_bill.update!(
+        status: :completed,
+        transaction_id: data['reference'],
+        gateway_payload: payload,
+        paid_at: parsed_paid_at,
+        transaction_date_time: transaction_date_time
+      )
+    else
+      product_name = @record.is_a?(SubscriptionPlan) ? @record.name(@account.locale) : @record.name
+      @account.billing_histories.create!(
+        price_amount: data['amount'],
+        price_currency: data['currency'] || 'vnd',
+        product_name: product_name,
         sku: @record.sku,
-        id: @record.id,
-        payment_method: 'payos'
-      },
-      transaction_id: data['reference'],
-      description: data['description'],
-      transaction_date_time: data['transactionDateTime']
-    )
+        status: :completed,
+        product_id: @record.id.to_s,
+        metadata: {
+          type: @record.is_a?(SubscriptionPlan) ? 'package' : 'addon',
+          sku: @record.sku,
+          id: @record.id,
+          payment_method: 'payos'
+        },
+        transaction_id: data['reference'],
+        description: data['description'],
+        transaction_date_time: transaction_date_time,
+        payment_method: 'payos',
+        gateway_payload: payload,
+        paid_at: parsed_paid_at,
+        order_id: data['orderCode'].to_s
+      )
+    end
   end
 end

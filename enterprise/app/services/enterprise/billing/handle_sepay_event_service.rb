@@ -20,9 +20,17 @@ class Enterprise::Billing::HandleSepayEventService
   private
 
   def prepare_data(payload)
-    order_id = payload['order_invoice_number'].to_s.strip.upcase
-    match = order_id.match(ORDER_ID_PATTERN)
+    order_id = payload.dig('order', 'order_invoice_number').to_s.strip.upcase
 
+    @pending_bill = BillingHistory.find_by(order_id: order_id)
+    if @pending_bill.present?
+      @account = @pending_bill.account
+      @record = SubscriptionPlan.find_by(sku: @pending_bill.sku) || AddonPackage.find_by(sku: @pending_bill.sku)
+      return
+    end
+
+    # Fallback for old orders
+    match = order_id.match(ORDER_ID_PATTERN)
     unless match
       Rails.logger.warn("[SePay] Could not parse order_invoice_number: #{order_id}")
       return
@@ -81,25 +89,42 @@ class Enterprise::Billing::HandleSepayEventService
   end
 
   def save_billing_history(payload)
-    product_name = @record.is_a?(SubscriptionPlan) ? @record.name(@account.locale) : @record.name
-    transaction_ref = payload['transaction_id'].to_s.presence || payload['id'].to_s
+    transaction_ref = payload.dig('transaction', 'transaction_id').to_s.presence || payload.dig('transaction', 'id').to_s
+    transaction_date_time = payload.dig('transaction', 'transaction_date') || payload['timestamp']
+    parsed_paid_at = Time.zone.parse(transaction_date_time.to_s) rescue Time.current
 
-    @account.billing_histories.create!(
-      price_amount: payload['order_amount'].to_i,
-      price_currency: payload['currency'] || 'VND',
-      product_name: product_name,
-      sku: @record.sku,
-      status: 0,
-      product_id: @record.id.to_s,
-      metadata: {
-        type: @record.is_a?(SubscriptionPlan) ? 'package' : 'addon',
+    if @pending_bill.present?
+      @pending_bill.update!(
+        status: :completed,
+        transaction_id: transaction_ref,
+        gateway_payload: payload,
+        paid_at: parsed_paid_at,
+        transaction_date_time: transaction_date_time
+      )
+      @pending_bill
+    else
+      product_name = @record.is_a?(SubscriptionPlan) ? @record.name(@account.locale) : @record.name
+      @account.billing_histories.create!(
+        price_amount: payload.dig('order', 'order_amount').to_i,
+        price_currency: payload.dig('order', 'order_currency') || 'VND',
+        product_name: product_name,
         sku: @record.sku,
-        id: @record.id,
-        payment_method: 'sepay'
-      },
-      transaction_id: transaction_ref,
-      description: payload['order_description'],
-      transaction_date_time: payload['paid_at'] || payload['created_at']
-    )
+        status: :completed,
+        product_id: @record.id.to_s,
+        metadata: {
+          type: @record.is_a?(SubscriptionPlan) ? 'package' : 'addon',
+          sku: @record.sku,
+          id: @record.id,
+          payment_method: 'sepay'
+        },
+        transaction_id: transaction_ref,
+        description: payload.dig('order', 'order_description'),
+        transaction_date_time: transaction_date_time,
+        payment_method: 'sepay',
+        gateway_payload: payload,
+        paid_at: parsed_paid_at,
+        order_id: payload.dig('order', 'order_invoice_number').to_s.strip.upcase
+      )
+    end
   end
 end

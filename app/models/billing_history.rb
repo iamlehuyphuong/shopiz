@@ -24,7 +24,7 @@
 class BillingHistory < ApplicationRecord
   belongs_to :account
 
-  enum status: { pending: 0, invoiced: 1, overdue: 2 }
+  enum status: { pending: 0, invoiced: 1, overdue: 2, cancelled: 3, expired: 4, completed: 5 }
 
   def content
     if metadata['type'] == 'package'

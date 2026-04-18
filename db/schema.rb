@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_04_16_090520) do
+ActiveRecord::Schema[7.1].define(version: 2026_04_18_072252) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -319,7 +319,13 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_16_090520) do
     t.bigint "account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "order_id"
+    t.string "payment_method"
+    t.string "checkout_url"
+    t.jsonb "gateway_payload"
+    t.datetime "paid_at"
     t.index ["account_id"], name: "index_billing_histories_on_account_id"
+    t.index ["order_id"], name: "index_billing_histories_on_order_id"
   end
 
   create_table "campaigns", force: :cascade do |t|
