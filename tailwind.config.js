@@ -37,6 +37,21 @@ const tailwindConfig = {
     './app/javascript/dashboard/routes/dashboard/**/**/*.js',
     './app/views/**/*.html.erb',
   ],
+  safelist: [
+    // Critical brand color classes used in dynamic JS configs (Button.vue STYLE_CONFIG)
+    'bg-n-orange',
+    'bg-n-blue',
+    'text-n-orange-11',
+    'text-n-blue-11',
+    'outline-n-orange',
+    'outline-n-blue',
+    {
+      pattern: /bg-n-orange\/(5|10|20|30|50|80)/,
+    },
+    {
+      pattern: /bg-n-blue\/(5|10|20|30|50|80)/,
+    },
+  ],
   theme: {
     extend: {
       fontFamily: {
