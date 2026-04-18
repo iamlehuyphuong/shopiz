@@ -3,26 +3,23 @@
 # Central service for resolving which payment gateway to use
 # Based on account locale (VN vs international) and configured routing rules
 class Enterprise::Billing::PaymentRouter
-  METHODS = %w[payos sepay].freeze
+  METHODS = %w[payos sepay polar].freeze
 
   def initialize(account)
     @account = account
-    @config = load_config
   end
 
   # Returns the best payment method for this account
   def resolve
-    default_method = vietnam_account? ? @config['vn_default'] : @config['intl_default']
-    return default_method if enabled?(default_method)
+    default_m = default_method
+    return default_m if enabled?(default_m)
 
-    fallback_chain.find { |m| enabled?(m) } || METHODS.first
+    fallback_chain.first || METHODS.first
   end
 
   # Returns ordered list of available methods for this account's region
   def available_methods
-    primary = vietnam_account? ? @config['vn_default'] : @config['intl_default']
-    fallbacks = vietnam_account? ? @config['vn_fallback'] : @config['intl_fallback']
-    ([primary] + (fallbacks || [])).uniq.select { |m| enabled?(m) }
+    ([default_method] + fallback_chain).uniq.select { |m| enabled?(m) }
   end
 
   # Returns the next fallback method after the given method fails
@@ -42,32 +39,27 @@ class Enterprise::Billing::PaymentRouter
   private
 
   def enabled?(method)
-    (@config['enabled'] || METHODS).include?(method)
+    val = GlobalConfig.get_value("PAYMENT_GATEWAY_#{method.upcase}_ENABLED")
+    # By default, payos and sepay are enabled for safe operation if DB not seeded
+    val.nil? ? %w[payos sepay].include?(method) : val.to_s == 'true'
+  end
+
+  def default_method
+    if vietnam_account?
+      GlobalConfig.get_value('PAYMENT_GATEWAY_VN_DEFAULT').presence || 'payos'
+    else
+      GlobalConfig.get_value('PAYMENT_GATEWAY_INTL_DEFAULT').presence || 'polar'
+    end
+  end
+
+  def fallback_chain
+    # The fallback logic: All *other* payment methods that are currently enabled
+    enabled_methods = METHODS.select { |m| enabled?(m) }
+    enabled_methods - [default_method]
   end
 
   def vietnam_account?
     locale = @account.locale || 'vi'
     locale == 'vi'
-  end
-
-  def fallback_chain
-    vietnam_account? ? (@config['vn_fallback'] || []) : (@config['intl_fallback'] || [])
-  end
-
-  def load_config
-    raw = GlobalConfig.get_value('PAYMENT_GATEWAY_CONFIG')
-    raw.present? ? JSON.parse(raw) : default_config
-  rescue JSON::ParserError
-    default_config
-  end
-
-  def default_config
-    {
-      'vn_default' => 'payos',
-      'vn_fallback' => ['sepay'],
-      'intl_default' => 'payos',
-      'intl_fallback' => ['sepay'],
-      'enabled' => %w[payos sepay]
-    }
   end
 end

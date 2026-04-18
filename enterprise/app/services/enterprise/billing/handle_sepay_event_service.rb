@@ -12,7 +12,8 @@ class Enterprise::Billing::HandleSepayEventService
 
     ActiveRecord::Base.transaction do
       @record.is_a?(SubscriptionPlan) ? activate_plan : activate_addon
-      save_billing_history(payload)
+      billing_history = save_billing_history(payload)
+      Enterprise::Billing::IssueSepayEinvoiceJob.perform_later(billing_history.id)
     end
   end
 

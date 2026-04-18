@@ -505,15 +505,72 @@
   description: 'The secret key from SePay dashboard, used in webhook X-Secret-Key header verification'
   locked: false
   type: secret
+- name: SEPAY_EINVOICE_CLIENT_ID
+  display_title: 'SePay eInvoice Client ID'
+  description: 'The Client ID from SePay dashboard, used for eInvoice authentication'
+  locked: false
+  type: secret
+- name: SEPAY_EINVOICE_CLIENT_SECRET
+  display_title: 'SePay eInvoice Client Secret'
+  description: 'The Client Secret from SePay dashboard, used for eInvoice authentication'
+  locked: false
+  type: secret
+- name: SEPAY_EINVOICE_ENABLED
+  display_title: 'Enable SePay eInvoice'
+  description: 'Automatically create and issue an eInvoice upon successful SePay payment'
+  value: false
+  locked: false
+  type: boolean
+- name: SEPAY_EINVOICE_PROVIDER_ACCOUNT_ID
+  display_title: 'SePay eInvoice Provider Account ID'
+  description: 'UUID of the company account on SePay used to create invoices'
+  locked: false
+- name: SEPAY_EINVOICE_TEMPLATE_CODE
+  display_title: 'SePay eInvoice Template Code'
+  description: 'The invoice template code (e.g. 1 for VAT, 2 for Sales)'
+  locked: false
+- name: SEPAY_EINVOICE_INVOICE_SERIES
+  display_title: 'SePay eInvoice Series'
+  description: 'The invoice series for the current year (e.g. C26TSE)'
+  locked: false
 # ------- End of SePay Related Config ------- #
 
 # ------- Payment Routing Config ------- #
-- name: PAYMENT_GATEWAY_CONFIG
-  display_title: 'Payment Gateway Configuration'
-  description: 'JSON config for payment methods: default, fallback order, and region rules. Keys: vn_default, vn_fallback, intl_default, intl_fallback, enabled'
-  value: '{"vn_default":"payos","vn_fallback":["sepay"],"intl_default":"payos","intl_fallback":["sepay"],"enabled":["payos","sepay"]}'
+- name: PAYMENT_GATEWAY_VN_DEFAULT
+  display_title: 'Vietnam Default Payment Gateway'
+  description: 'Select the default payment method for users in Vietnam'
+  value: 'payos'
+  type: select
+  options:
+    payos: 'PayOS'
+    sepay: 'SePay'
+    polar: 'Polar'
   locked: false
-  type: code
+- name: PAYMENT_GATEWAY_INTL_DEFAULT
+  display_title: 'International Default Payment Gateway'
+  description: 'Select the default payment method for international users'
+  value: 'polar'
+  type: select
+  options:
+    payos: 'PayOS'
+    sepay: 'SePay'
+    polar: 'Polar'
+  locked: false
+- name: PAYMENT_GATEWAY_PAYOS_ENABLED
+  display_title: 'Enable PayOS Gateway'
+  value: true
+  type: boolean
+  locked: false
+- name: PAYMENT_GATEWAY_SEPAY_ENABLED
+  display_title: 'Enable SePay Gateway'
+  value: false
+  type: boolean
+  locked: false
+- name: PAYMENT_GATEWAY_POLAR_ENABLED
+  display_title: 'Enable Polar Gateway'
+  value: false
+  type: boolean
+  locked: false
 # ------- End of Payment Routing Config ------- #
 
 # ------- OG Image Related Config ------- #
