@@ -76,9 +76,23 @@ class DeviseOverrides::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCa
     false
   end
 
+  def get_account_name(email)
+    domain = email.split('@').last
+    return 'My Store' if domain.blank?
+
+    require 'email_provider_info'
+    provider = EmailProviderInfo.call(email)
+
+    if provider.present?
+      'My Store'
+    else
+      domain.split('.').first.titleize
+    end
+  end
+
   def create_account_for_user
     @resource, @account = AccountBuilder.new(
-      account_name: extract_domain_without_tld(auth_hash['info']['email']),
+      account_name: get_account_name(auth_hash['info']['email']),
       user_full_name: auth_hash['info']['name'],
       email: auth_hash['info']['email'],
       locale: I18n.locale,

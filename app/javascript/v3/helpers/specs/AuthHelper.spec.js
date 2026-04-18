@@ -42,14 +42,14 @@ describe('#URL Helpers', () => {
   });
 
   describe('getCredentialsFromEmail', () => {
-    it('should capitalize fullName and accountName from a standard email', () => {
+    it('should extract fullName and return domain as accountName from company email', () => {
       expect(getCredentialsFromEmail('john@company.com')).toEqual({
         fullName: 'John',
         accountName: 'Company',
       });
     });
 
-    it('should handle subdomains by using the first part of the domain', () => {
+    it('should handle subdomains by using the domain name', () => {
       expect(getCredentialsFromEmail('jane@mail.example.org')).toEqual({
         fullName: 'Jane',
         accountName: 'Mail',
@@ -74,6 +74,17 @@ describe('#URL Helpers', () => {
       expect(getCredentialsFromEmail('first_last@my-company.com')).toEqual({
         fullName: 'First Last',
         accountName: 'My Company',
+      });
+    });
+
+    it('should return My Store for free public emails', () => {
+      expect(getCredentialsFromEmail('first_last@gmail.com')).toEqual({
+        fullName: 'First Last',
+        accountName: 'My Store',
+      });
+      expect(getCredentialsFromEmail('first.last24@yahoo.com')).toEqual({
+        fullName: 'First Last24',
+        accountName: 'My Store',
       });
     });
   });

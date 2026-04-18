@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
+import { isCompanyEmail } from 'company-email-validator';
 import { DEFAULT_REDIRECT_URL } from 'dashboard/constants/globals';
 import { frontendURL } from 'dashboard/helper/URLHelper';
-
 export const hasAuthCookie = () => {
   return !!Cookies.get('cw_d_session_info');
 };
@@ -28,12 +28,21 @@ const capitalize = str =>
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 
+const extractDomainName = email => {
+  const domain = email.split('@')[1];
+  if (!domain) return 'My Store';
+  const domainName = domain.split('.')[0];
+  return capitalize(domainName);
+};
+
 export const getCredentialsFromEmail = email => {
-  const [localPart, domain] = email.split('@');
+  const [localPart] = email.split('@');
   const namePart = localPart.split('+')[0];
+  const isCompany = isCompanyEmail(email);
+
   return {
     fullName: capitalize(namePart),
-    accountName: capitalize(domain.split('.')[0]),
+    accountName: isCompany ? extractDomainName(email) : 'My Store',
   };
 };
 
