@@ -92,6 +92,9 @@ class Captain::Copilot::ChatService < Llm::BaseAiService
     Captain::Tools::Copilot::SapoSearchOrdersService,
     Captain::Tools::Copilot::SapoSearchProductsService,
     Captain::Tools::Copilot::SapoSearchCustomersService,
+    Captain::Tools::Copilot::NhanhvnSearchOrdersService,
+    Captain::Tools::Copilot::NhanhvnSearchProductsService,
+    Captain::Tools::Copilot::NhanhvnSearchCustomersService,
     Captain::Tools::Copilot::CreateScenarioService
   ].freeze
 

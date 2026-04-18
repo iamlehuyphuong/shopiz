@@ -130,6 +130,16 @@
   description: 'Search Sapo products by name or keyword'
   icon: 'box'
 
+- id: nhanhvn_search_orders
+  title: 'Nhanh.vn: Search Orders'
+  description: 'Search Nhanh.vn orders for the current contact'
+  icon: 'shopping-bag'
+
+- id: nhanhvn_get_product
+  title: 'Nhanh.vn: Get Product'
+  description: 'Search Nhanh.vn products by name or keyword'
+  icon: 'box'
+
 - id: send_marketing_optin
   title: 'Send Marketing Opt-in'
   description: 'Send a Meta Marketing Messages Opt-in request to the customer'

@@ -139,14 +139,21 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
 
   def attempt_checkout_with_fallback(method)
     attempt_checkout(method)
-  rescue Payos::Client::PaymentError, StandardError => e
+  rescue StandardError => e
+    Rails.logger.warn("[Checkout] #{method} failed: #{e.class} - #{e.message}")
     router = Enterprise::Billing::PaymentRouter.new(@account)
     fallback = router.next_fallback(method)
+
     if fallback
-      Rails.logger.info("[Checkout] #{method} failed (#{e.message}), falling back to #{fallback}")
-      attempt_checkout(fallback)
+      Rails.logger.info("[Checkout] Falling back from #{method} to #{fallback}")
+      begin
+        attempt_checkout(fallback)
+      rescue StandardError => fallback_error
+        Rails.logger.error("[Checkout] Fallback #{fallback} also failed: #{fallback_error.message}")
+        render_could_not_create_error("Payment failed. Please try again later.")
+      end
     else
-      render_could_not_create_error(e.message)
+      render_could_not_create_error("Payment failed. Please try again later.")
     end
   end
 
@@ -159,7 +166,7 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
     when 'sepay'
       create_sepay_checkout_info
     else
-      render_invalid_billing_details
+      raise StandardError, 'No valid payment method available'
     end
   end
 
@@ -173,7 +180,7 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
       @account.id,
       params[:product_id]
     )
-    raise StandardError, 'SePay checkout failed' if result.blank? || result[:checkout_url].blank?
+    raise StandardError, 'SePay checkout failed - no checkout URL returned' if result.blank? || result[:checkout_url].blank?
 
     render json: {
       redirect_url: result[:checkout_url],
@@ -187,7 +194,7 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
       @account.id,
       params[:product_id]
     )
-    raise Payos::Client::PaymentError, 'PayOS checkout failed' if url.blank?
+    raise StandardError, 'PayOS checkout failed - no payment link returned' if url.blank?
 
     render_redirect_url(url)
   end

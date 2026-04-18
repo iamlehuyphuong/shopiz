@@ -116,6 +116,33 @@
       "SUCCESS": "Sapo store connected successfully.",
       "ERROR": "There was an error connecting to Sapo. Please check your access token and store name."
     },
+    "NHANHVN": {
+      "HEADER": "Nhanh.vn",
+      "DELETE": {
+        "TITLE": "Delete Nhanh.vn Integration",
+        "MESSAGE": "Are you sure you want to delete the Nhanh.vn integration?"
+      },
+      "CONNECT": {
+        "TITLE": "Connect Nhanh.vn Store",
+        "APP_ID": {
+          "LABEL": "App ID",
+          "PLACEHOLDER": "Enter your Nhanh.vn App ID"
+        },
+        "ACCESS_TOKEN": {
+          "LABEL": "Access Token",
+          "PLACEHOLDER": "Enter your Nhanh.vn Access Token"
+        },
+        "BUSINESS_ID": {
+          "LABEL": "Business ID",
+          "PLACEHOLDER": "Enter your Nhanh.vn Business ID",
+          "HELP": "This is the business ID assigned after OAuth authorization on open.nhanh.vn"
+        },
+        "CANCEL": "Cancel",
+        "SUBMIT": "Connect Store"
+      },
+      "SUCCESS": "Nhanh.vn store connected successfully.",
+      "ERROR": "There was an error connecting to Nhanh.vn. Please check your credentials and try again."
+    },
     "HEADER": "Integrations",
     "DESCRIPTION": "Shopiz integrates with multiple tools and services to improve your team's efficiency. Explore the list below to configure your favorite apps.",
     "LEARN_MORE": "Learn more about integrations",

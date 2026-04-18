@@ -84,6 +84,18 @@ class IntegrationsAPI extends ApiClient {
   disconnectSapo() {
     return axios.delete(`${this.baseUrl()}/integrations/sapo`);
   }
+
+  connectNhanhvn({ appId, accessToken, businessId }) {
+    return axios.post(`${this.baseUrl()}/integrations/nhanhvn/auth`, {
+      app_id: appId,
+      access_token: accessToken,
+      business_id: businessId,
+    });
+  }
+
+  disconnectNhanhvn() {
+    return axios.delete(`${this.baseUrl()}/integrations/nhanhvn`);
+  }
 }
 
 export default new IntegrationsAPI();

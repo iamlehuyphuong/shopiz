@@ -252,6 +252,13 @@ sapo:
   hook_type: account
   allow_multiple_hooks: false
 
+nhanhvn:
+  id: nhanhvn
+  logo: nhanhvn.png
+  i18n_key: nhanhvn
+  hook_type: account
+  allow_multiple_hooks: false
+
 leadsquared:
   id: leadsquared
   feature_flag: crm_integration
