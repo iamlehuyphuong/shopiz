@@ -130,7 +130,7 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
 
   def resolve_payment_method
     method = params[:payment_method]
-    return method if method.present? && %w[payos sepay stripe].include?(method)
+    return method if method.present? && %w[payos sepay polar stripe].include?(method)
 
     # Auto-resolve based on account locale and config
     router = Enterprise::Billing::PaymentRouter.new(@account)
@@ -165,9 +165,22 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
       create_payos_billing_session
     when 'sepay'
       create_sepay_checkout_info
+    when 'polar'
+      create_polar_billing_session
     else
       raise StandardError, 'No valid payment method available'
     end
+  end
+
+  def create_polar_billing_session
+    url = Enterprise::Billing::CreateSessionService.new.create_polar_session(
+      @account.id,
+      params[:product_id],
+      product_type: params[:product_type]
+    )
+    raise StandardError, 'Polar checkout failed - no payment link returned' if url.blank?
+
+    render_redirect_url(url)
   end
 
   def create_stripe_billing_session(customer_id)

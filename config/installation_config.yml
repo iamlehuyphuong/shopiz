@@ -571,6 +571,26 @@
   value: false
   type: boolean
   locked: false
+- name: POLAR_API_KEY
+  display_title: 'Polar API Key'
+  value: ''
+  type: secret
+  locked: false
+- name: POLAR_WEBHOOK_SECRET
+  display_title: 'Polar Webhook Secret'
+  value: ''
+  type: secret
+  locked: false
+- name: POLAR_GENERIC_PRODUCT_ID
+  display_title: 'Polar Generic Product ID (for Ad-hoc prices)'
+  value: ''
+  type: string
+  locked: false
+- name: EXCHANGE_RATE_VND_USD
+  display_title: 'VND to USD Exchange Rate'
+  value: 25000
+  type: string
+  locked: false
 # ------- End of Payment Routing Config ------- #
 
 # ------- OG Image Related Config ------- #

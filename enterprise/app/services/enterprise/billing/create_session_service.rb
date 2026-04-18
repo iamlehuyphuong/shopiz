@@ -96,6 +96,60 @@ class Enterprise::Billing::CreateSessionService
     result
   end
 
+  def create_polar_session(account_id, product_id, product_type: nil)
+    account = Account.find_by(id: account_id)
+    item = find_product(product_id, product_type)
+    raise StandardError, 'Invalid account or product' if item.blank? || account.blank?
+
+    amount_to_pay_vnd = item.price_amount.to_i
+
+    if item.is_a?(SubscriptionPlan)
+      amount_to_pay_vnd = calculate_upgrade_amount(account, item, amount_to_pay_vnd)
+      raise StandardError, 'Downgrade not allowed' if amount_to_pay_vnd.nil?
+    end
+
+    exchange_rate = GlobalConfig.get_value('EXCHANGE_RATE_VND_USD').presence&.to_i || 25_000
+    exchange_rate = 25_000 if exchange_rate <= 0
+    usd_cents = ((amount_to_pay_vnd.to_f / exchange_rate) * 100).round
+
+    sku = item.sku
+    order_id = "POLAR#{sku}A#{account_id}T#{Time.now.to_i}".upcase.gsub(/[^A-Z0-9]/, '')
+    return_url = "#{ENV.fetch('FRONTEND_URL')}/app/accounts/#{account_id}/settings/billing"
+    generic_product_id = GlobalConfig.get_value('POLAR_GENERIC_PRODUCT_ID').presence || ENV.fetch('POLAR_GENERIC_PRODUCT_ID', '')
+
+    raise StandardError, 'Polar generic product ID not configured' if generic_product_id.blank?
+
+    client = Polar::Client.new
+    res = client.create_checkout(
+      amount_cents: usd_cents,
+      product_id: generic_product_id,
+      success_url: return_url,
+      metadata: { order_id: order_id }
+    )
+
+    checkout_url = res.dig('url') || res['url']
+
+    account.billing_histories.create!(
+      order_id: order_id,
+      product_id: item.id.to_s,
+      product_name: item.is_a?(SubscriptionPlan) ? item.name(account.locale) : item.name,
+      sku: sku,
+      status: :pending,
+      price_amount: amount_to_pay_vnd, # Internal amount stays in base currency (VND)
+      price_currency: 'VND',
+      payment_method: 'polar',
+      metadata: { 
+        type: item.is_a?(SubscriptionPlan) ? 'package' : 'addon',
+        usd_cents: usd_cents,
+        exchange_rate: exchange_rate
+      },
+      description: "TT SHOPIZ #{sku}".upcase[0..24],
+      checkout_url: checkout_url
+    )
+
+    checkout_url
+  end
+
   private
 
   def find_product(product_id, product_type)
