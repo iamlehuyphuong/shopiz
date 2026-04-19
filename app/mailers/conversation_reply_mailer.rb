@@ -207,4 +207,11 @@ class ConversationReplyMailer < ApplicationMailer
 
     'mailer/base'
   end
+
+  def liquid_droppables
+    super.merge({
+      message: @message || @messages&.last,
+      messages: @messages || [@message].compact
+    })
+  end
 end

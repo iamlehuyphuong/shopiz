@@ -1,16 +1,29 @@
-<p>Hello there,</p>
-
-<p>An account administrator has requested deletion of the Chatwoot account <strong>{{ meta.account_name }}</strong>. The account is scheduled for deletion on <strong>{{ meta.deletion_date }}</strong>.</p>
-
-<p><strong>What happens next?</strong></p>
-
-<ul>
-  <li>The account will remain accessible until the scheduled deletion date.</li>
-  <li>After that, all data including conversations, contacts, integrations, and settings will be permanently removed.</li>
-  </ul>
-
-<p>If you change your mind before the deletion date, you can <a href="{{ action_url }}">cancel this request</a> by visiting your account settings.</p>
-
-<p>— The Chatwoot Team</p>
-
-
+<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Workspace Deletion Request</h2>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
+  An administrator has requested the deletion of Workspace <strong>{{ meta['account_name'] }}</strong> from the Shopiz system. This process fully completes on <strong>{{ meta['deletion_date'] }}</strong>.
+</p>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
+  Note that while the workspace hasn't been removed, you can access the system settings to cancel this execution at any time:
+</p>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 24px;">
+  <tr>
+    <td align="left">
+      <a href="{{ action_url }}" style="display: inline-block; background-color: #3B82F6; color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 12px;">Cancel Deletion</a>
+    </td>
+  </tr>
+</table>
+<hr style="border: 0; border-bottom: 1px solid #E2E8F0; margin: 24px 0;" />
+<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Yêu Cầu Xóa Workspace</h2>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
+  Một Quản trị viên (Admin) vừa gửi yêu cầu xoá Workspace <strong>{{ meta['account_name'] }}</strong> khỏi hệ thống Shopiz. Tiến trình này sẽ được thực thi hoàn tất vào ngày <strong>{{ meta['deletion_date'] }}</strong>.
+</p>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
+  Xin lưu ý, trong lúc Workspace chưa bị xoá hoãn toàn, bạn có quyền can thiệp vào cài đặt hệ thống và chủ động Huỷ lệnh xử lý bất cứ lúc nào qua đường dẫn bên dưới:
+</p>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 24px;">
+  <tr>
+    <td align="left">
+      <a href="{{ action_url }}" style="display: inline-block; background-color: #3B82F6; color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 12px;">Huỷ Lệnh Xoá</a>
+    </td>
+  </tr>
+</table>

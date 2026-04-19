@@ -56,7 +56,8 @@ class ApplicationMailer < ActionMailer::Base
     locals = {
       global_config: GlobalConfig.get('BRAND_NAME', 'BRAND_URL'),
       action_url: @action_url,
-      mailer_action: action_name
+      mailer_action: action_name,
+      frontend_url: ENV.fetch('FRONTEND_URL', 'https://beta.shopiz.pro')
     }
 
     locals.merge({ attachment_url: @attachment_url }) if @attachment_url
