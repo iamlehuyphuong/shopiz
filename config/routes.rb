@@ -454,6 +454,8 @@ Rails.application.routes.draw do
       # end of account scoped api routes
       # ----------------------------------
 
+      resources :pricing, only: [:index]
+
       namespace :integrations do
         resources :webhooks, only: [:create]
       end
