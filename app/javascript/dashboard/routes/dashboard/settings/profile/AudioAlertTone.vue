@@ -9,7 +9,17 @@ const props = defineProps({
     type: String,
     required: true,
     validator: value =>
-      ['ding', 'bell', 'chime', 'magic', 'ping'].includes(value),
+      [
+        'pium_pium',
+        'retro_synth',
+        'xia',
+        'telegram',
+        'viber',
+        'facebook_notification',
+        'instagram',
+        'messenger',
+        'ding', // Keep default in case existing users have it
+      ].includes(value),
   },
   label: {
     type: String,
@@ -21,24 +31,36 @@ const emit = defineEmits(['change']);
 
 const alertTones = computed(() => [
   {
-    value: 'ding',
-    label: 'Ding',
+    value: 'pium_pium',
+    label: 'Pium Pium',
   },
   {
-    value: 'bell',
-    label: 'Bell',
+    value: 'retro_synth',
+    label: 'Retro Synth',
   },
   {
-    value: 'chime',
-    label: 'Chime',
+    value: 'xia',
+    label: 'Xia',
   },
   {
-    value: 'magic',
-    label: 'Magic',
+    value: 'telegram',
+    label: 'Telegram',
   },
   {
-    value: 'ping',
-    label: 'Ping',
+    value: 'viber',
+    label: 'Viber',
+  },
+  {
+    value: 'facebook_notification',
+    label: 'Facebook Notification',
+  },
+  {
+    value: 'instagram',
+    label: 'Instagram',
+  },
+  {
+    value: 'messenger',
+    label: 'Messenger',
   },
 ]);
 

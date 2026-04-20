@@ -21,7 +21,7 @@ const { t } = useI18n();
 const audioAlert = ref('');
 const playAudioWhenTabIsInactive = ref(false);
 const alertIfUnreadConversationExist = ref(false);
-const alertTone = ref('ding');
+const alertTone = ref('pium_pium');
 const audioAlertConditions = ref([]);
 const i18nKeyPrefix = 'PROFILE_SETTINGS.FORM.AUDIO_NOTIFICATIONS_SECTION';
 
@@ -46,7 +46,7 @@ const initializeNotificationUISettings = newUISettings => {
       value: 'conversations_are_read',
     },
   ];
-  alertTone.value = updatedUISettings.notificationTone || 'ding';
+  alertTone.value = updatedUISettings.notificationTone || 'pium_pium';
 };
 
 watch(

@@ -62,7 +62,7 @@
       },
       "MESSAGE_SIGNATURE_SECTION": {
         "TITLE": "Chữ ký tin nhắn cá nhân",
-        "NOTE": "Tạo chữ ký tin nhắn hiển thị ở cuối mỗi tin nhắn bạn gửi từ bất kỳ hộp thư nào. Bạn có thể thêm hình ảnh inline, hỗ trợ trên live-chat, email và API inbox.",
+        "NOTE": "Tạo chữ ký tin nhắn hiển thị ở cuối mỗi tin nhắn bạn gửi từ bất kỳ hộp thư nào. Bạn có thể thêm hình ảnh inline, hỗ trợ trên live-chat.",
         "BTN_TEXT": "Lưu chữ ký",
         "API_ERROR": "Không thể lưu chữ ký! Vui lòng thử lại",
         "API_SUCCESS": "Lưu chữ ký thành công",
