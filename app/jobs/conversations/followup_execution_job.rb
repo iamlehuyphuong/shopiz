@@ -43,6 +43,8 @@ class Conversations::FollowupExecutionJob < ApplicationJob
       trigger_ai_assistant(conversation)
     elsif action_type == 'macro' && followup_config['macro_id'].present?
       trigger_macro(conversation, followup_config['macro_id'])
+    elsif action_type == 'predefined_message' && followup_config['predefined_message'].present?
+      trigger_predefined_message(conversation, followup_config['predefined_message'])
     end
   end
 
@@ -93,5 +95,23 @@ class Conversations::FollowupExecutionJob < ApplicationJob
     return unless macro
 
     Macros::ExecutionService.new(macro, nil, conversation).perform
+  end
+  def trigger_predefined_message(conversation, content)
+    count = conversation.custom_attributes['followup_count'].to_i + 1
+    conversation.custom_attributes['followup_count'] = count
+    conversation.save!
+
+    # Create the automated message using MessageBuilder to fire appropriate integrations
+    message_params = {
+      account_id: conversation.account_id,
+      inbox_id: conversation.inbox_id,
+      message_type: 'outgoing',
+      content: content,
+      private: false,
+      content_attributes: { followup_automated: true }
+    }
+
+    builder = MessageBuilder.new(message_params, conversation)
+    builder.perform
   end
 end

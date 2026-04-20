@@ -109,6 +109,14 @@ export default {
       widgetBubblePosition: 'right',
       widgetBubbleType: 'standard',
       widgetBubbleLauncherTitle: '',
+      followupEnabled: false,
+      followupMaxAttempts: 1,
+      followupIntervalHours: 24,
+      followupTimeMode: 'relative',
+      followupFixedTime: '09:00',
+      followupTimezone: 'Asia/Ho_Chi_Minh',
+      followupActionType: 'ai_assistant',
+      followupPredefinedMessage: '',
     };
   },
   computed: {
@@ -368,6 +376,32 @@ export default {
     widgetBuilderStorageKey() {
       return `${LOCAL_STORAGE_KEYS.WIDGET_BUILDER}${this.inbox.id}`;
     },
+    dynamicMaxAttemptsOptions() {
+      let upperLimit = 168; // 7 days fallback for standard UI threshold
+      
+      if (this.isAWhatsAppChannel || this.isAWhatsAppCloudChannel || this.isATwilioWhatsAppChannel || this.is360DialogWhatsAppChannel) {
+        upperLimit = 24;
+      } else if (this.isAZaloOaChannel || this.isAZaloPersonalChannel) {
+        upperLimit = 48;
+      } else if (this.isAnInstagramChannel) {
+        upperLimit = 24;
+      } else if (this.isATwilioSMSChannel || this.isAnEmailChannel || this.isAWebWidgetInbox) {
+        upperLimit = 999;
+      }
+      
+      let maxNumber = 10;
+      if (upperLimit < 999 && this.followupIntervalHours > 0) {
+        maxNumber = Math.floor(upperLimit / this.followupIntervalHours);
+      }
+      
+      if (maxNumber < 1) maxNumber = 1;
+      if (maxNumber > 10) maxNumber = 10;
+      
+      return Array.from({ length: maxNumber }, (_, i) => ({
+        label: `${i + 1} Lần`,
+        value: i + 1,
+      }));
+    },
   },
   watch: {
     $route(to, from) {
@@ -441,6 +475,15 @@ export default {
         this.widgetBubbleType = 'standard';
         this.widgetBubbleLauncherTitle = '';
       }
+
+      this.followupEnabled = this.inbox.followup_config?.enabled || false;
+      this.followupMaxAttempts = this.inbox.followup_config?.max_attempts || 1;
+      this.followupIntervalHours = this.inbox.followup_config?.interval_hours || 24;
+      this.followupTimeMode = this.inbox.followup_config?.time_mode || 'relative';
+      this.followupFixedTime = this.inbox.followup_config?.fixed_time || '09:00';
+      this.followupTimezone = this.inbox.followup_config?.timezone || 'Asia/Ho_Chi_Minh';
+      this.followupActionType = this.inbox.followup_config?.action_type || 'ai_assistant';
+      this.followupPredefinedMessage = this.inbox.followup_config?.predefined_message || '';
     },
     async fetchHealthData() {
       if (!this.inbox) return;
@@ -540,6 +583,16 @@ export default {
           lock_to_single_conversation: this.locktoSingleConversation,
           sender_name_type: this.senderNameType,
           business_name: this.businessName || null,
+          followup_config: {
+            enabled: this.followupEnabled,
+            max_attempts: this.followupMaxAttempts,
+            interval_hours: this.followupIntervalHours,
+            time_mode: this.followupTimeMode,
+            fixed_time: this.followupFixedTime,
+            timezone: this.followupTimezone,
+            action_type: this.followupActionType,
+            predefined_message: this.followupPredefinedMessage,
+          },
           channel: {
             widget_color: this.inbox.widget_color,
             website_url: this.channelWebsiteUrl,
@@ -1151,6 +1204,115 @@ export default {
                   )
                 "
               />
+            </SettingsAccordion>
+
+            <SettingsAccordion
+              :title="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TITLE')"
+              class="mt-6"
+            >
+              <SettingsToggleSection
+                v-model="followupEnabled"
+                :header="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TOGGLE')"
+                :description="
+                  $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_DESC')
+                "
+              >
+                <template v-if="followupEnabled" #editor>
+                  <div class="flex flex-col gap-4 mt-2 mb-2 p-4 bg-n-surface-1 rounded-md border border-slate-100 dark:border-slate-800">
+                    <div class="flex flex-col gap-1">
+                      <label class="text-n-slate-11 text-small font-medium">
+                        {{ $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_DELAY_LABEL') }}
+                      </label>
+                      <div class="flex items-center gap-2">
+                        <woot-input
+                          v-model="followupIntervalHours"
+                          type="number"
+                          min="1"
+                          max="999"
+                          class="[&_input]:!mb-0"
+                          style="width: 150px"
+                        />
+                      </div>
+                      <p class="text-[12px] text-n-slate-11">{{ $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_LIMIT_WARNING') }}</p>
+                    </div>
+
+                    <div class="flex flex-col gap-1 mt-2">
+                      <label class="text-n-slate-11 text-small font-medium">
+                        {{ $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_MAX_ATTEMPTS') }}
+                      </label>
+                      <SelectInput
+                        v-model="followupMaxAttempts"
+                        :options="dynamicMaxAttemptsOptions"
+                        class="w-full"
+                      />
+                    </div>
+
+                    <div class="flex flex-col gap-1 mt-2">
+                      <label class="text-n-slate-11 text-small font-medium">
+                        {{ $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIME_MODE') }}
+                      </label>
+                      <SelectInput
+                        v-model="followupTimeMode"
+                        :options="[
+                          { value: 'relative', label: $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIME_MODE_RELATIVE') },
+                          { value: 'fixed', label: $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIME_MODE_FIXED') }
+                        ]"
+                        class="w-full"
+                      />
+                    </div>
+
+                    <div v-if="followupTimeMode === 'fixed'" class="flex gap-4 mt-2">
+                      <div class="flex flex-col gap-1 w-1/2">
+                        <label class="text-n-slate-11 text-small font-medium">
+                          {{ $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_FIXED_TIME_LABEL') }}
+                        </label>
+                        <woot-input
+                          v-model="followupFixedTime"
+                          type="time"
+                          class="[&_input]:!mb-0"
+                        />
+                      </div>
+                      <div class="flex flex-col gap-1 w-1/2">
+                        <label class="text-n-slate-11 text-small font-medium">
+                          {{ $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIMEZONE_LABEL') }}
+                        </label>
+                        <woot-input
+                          v-model="followupTimezone"
+                          type="text"
+                          class="[&_input]:!mb-0"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="flex flex-col gap-1 mt-2">
+                      <label class="text-n-slate-11 text-small font-medium">
+                        {{ $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_LABEL') }}
+                      </label>
+                      <SelectInput
+                        v-model="followupActionType"
+                        :options="[
+                          { value: 'ai_assistant', label: $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_AI_ASSISTANT') },
+                          { value: 'macro', label: $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_MACRO') },
+                          { value: 'predefined_message', label: $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_PREDEFINED') }
+                        ]"
+                        class="w-full"
+                      />
+                    </div>
+                    
+                    <div v-if="followupActionType === 'predefined_message'" class="flex flex-col gap-1 mt-2">
+                      <label class="text-n-slate-11 text-small font-medium">
+                        {{ $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_PREDEFINED_MESSAGE') }}
+                      </label>
+                      <textarea
+                        v-model="followupPredefinedMessage"
+                        rows="4"
+                        placeholder="Hello, are you still there?"
+                        class="w-full text-n-slate-12 bg-n-alpha-1 border-n-weak outline-none rounded-md px-3 py-2 border dark:bg-n-solid-1 text-sm focus:border-n-brand focus:ring-1 focus:ring-n-brand"
+                      ></textarea>
+                    </div>
+                  </div>
+                </template>
+              </SettingsToggleSection>
             </SettingsAccordion>
 
             <div class="w-full flex justify-end items-center py-4 mt-2">
