@@ -28,6 +28,13 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
     head :ok
   end
 
+  def sync_templates
+    trigger_template_sync
+    render status: :ok, json: { message: I18n.t('messages.template_sync_initiated') }
+  rescue StandardError => e
+    render status: :internal_server_error, json: { error: e.message }
+  end
+
   def create
     ActiveRecord::Base.transaction do
       channel = create_channel
@@ -76,6 +83,20 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   def fetch_inbox
     @inbox = Current.account.inboxes.find(params[:id])
     authorize @inbox, :show?
+  end
+
+  def trigger_template_sync
+    if @inbox.whatsapp?
+      Channels::Whatsapp::TemplatesSyncJob.perform_later(@inbox.channel)
+    elsif @inbox.twilio? && @inbox.channel.whatsapp?
+      Channels::Twilio::TemplatesSyncJob.perform_later(@inbox.channel)
+    elsif @inbox.channel_type == 'Channel::ZaloOa'
+      Channels::Zalo::TemplatesSyncJob.perform_later(@inbox.channel)
+    elsif @inbox.channel_type == 'Channel::TiktokShop'
+      Channels::TiktokShop::TemplatesSyncJob.perform_later(@inbox.channel)
+    else
+      raise StandardError, 'Template sync is only available for supported channels (WhatsApp, Zalo OA, TikTok Shop)'
+    end
   end
 
   def fetch_agent_bot

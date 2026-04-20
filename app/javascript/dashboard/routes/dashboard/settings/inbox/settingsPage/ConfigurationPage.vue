@@ -40,7 +40,6 @@ export default {
       allowMobileWebview: false,
       whatsAppInboxAPIKey: '',
       isRequestingReauthorization: false,
-      isSyncingTemplates: false,
       allowedDomains: '',
       isUpdatingAllowedDomains: false,
       isSettingDefaults: false,
@@ -171,19 +170,6 @@ export default {
         await this.$refs.whatsappReauth.requestAuthorization();
       }
     },
-    async syncTemplates() {
-      this.isSyncingTemplates = true;
-      try {
-        await this.$store.dispatch('inboxes/syncTemplates', this.inbox.id);
-        useAlert(
-          this.$t('INBOX_MGMT.SETTINGS_POPUP.WHATSAPP_TEMPLATES_SYNC_SUCCESS')
-        );
-      } catch (error) {
-        useAlert(this.$t('INBOX_MGMT.EDIT.API.ERROR_MESSAGE'));
-      } finally {
-        this.isSyncingTemplates = false;
-      }
-    },
   },
 };
 </script>
@@ -195,17 +181,6 @@ export default {
       :help-text="$t('INBOX_MGMT.ADD.TWILIO.API_CALLBACK.SUBTITLE')"
     >
       <woot-code :script="inbox.callback_webhook_url" lang="html" />
-    </SettingsFieldSection>
-    <SettingsFieldSection
-      v-if="isATwilioWhatsAppChannel"
-      :label="$t('INBOX_MGMT.SETTINGS_POPUP.WHATSAPP_TEMPLATES_SYNC_TITLE')"
-      :help-text="
-        $t('INBOX_MGMT.SETTINGS_POPUP.WHATSAPP_TEMPLATES_SYNC_SUBHEADER')
-      "
-    >
-      <NextButton :disabled="isSyncingTemplates" @click="syncTemplates">
-        {{ $t('INBOX_MGMT.SETTINGS_POPUP.WHATSAPP_TEMPLATES_SYNC_BUTTON') }}
-      </NextButton>
     </SettingsFieldSection>
   </div>
   <div v-else-if="isAVoiceChannel">
@@ -442,16 +417,6 @@ export default {
           </div>
         </SettingsFieldSection>
       </template>
-      <SettingsFieldSection
-        :label="$t('INBOX_MGMT.SETTINGS_POPUP.WHATSAPP_TEMPLATES_SYNC_TITLE')"
-        :help-text="
-          $t('INBOX_MGMT.SETTINGS_POPUP.WHATSAPP_TEMPLATES_SYNC_SUBHEADER')
-        "
-      >
-        <NextButton :disabled="isSyncingTemplates" @click="syncTemplates">
-          {{ $t('INBOX_MGMT.SETTINGS_POPUP.WHATSAPP_TEMPLATES_SYNC_BUTTON') }}
-        </NextButton>
-      </SettingsFieldSection>
     </div>
     <WhatsappReauthorize
       v-if="isEmbeddedSignupWhatsApp"

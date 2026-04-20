@@ -65,6 +65,15 @@ class TiktokShop::Client
     JSON.parse(response.body)
   end
 
+  def get_message_templates
+    url = 'https://open-api.tiktokglobalshop.com/customer_engagement/202412/message_templates'
+    params = default_params.except(:shop_cipher)
+    signed_url = signature_service.signed_url(url, params: params, content_type: 'application/json')
+    
+    response = HTTParty.get(signed_url, headers: headers)
+    JSON.parse(response.body)
+  end
+
   private
 
   def get(path, params: {})

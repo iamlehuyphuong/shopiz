@@ -22,6 +22,7 @@ const store = useStore();
 const router = useRouter();
 
 const showAddPopup = ref(false);
+const isSyncing = ref(false);
 
 // Filter states
 const selectedStatus = ref('');
@@ -56,22 +57,48 @@ const zaloOaInboxes = computed(() =>
   allInboxes.value.filter(inbox => inbox.channel_type === 'Channel::ZaloOa')
 );
 
+const tiktokShopInboxes = computed(() =>
+  allInboxes.value.filter(inbox => inbox.channel_type === 'Channel::TiktokShop')
+);
+
 // Normalize WhatsApp templates
 const normalizedWATemplates = computed(() =>
-  waTemplates.value.map(tpl => ({
-    id: `wa-${tpl.id}`,
-    originalId: tpl.id,
-    name: tpl.name,
-    source: 'whatsapp',
-    channelType: 'Channel::Whatsapp',
-    inboxId: tpl.inbox_id,
-    inboxName: whatsappInboxes.value.find(i => i.id === tpl.inbox_id)?.name || '',
-    category: tpl.category,
-    status: tpl.status,
-    normalizedStatus: tpl.status,
-    language: tpl.language,
-    raw: tpl,
-  }))
+  waTemplates.value
+    .filter(tpl => !tpl.channel_type || tpl.channel_type === 'Channel::Whatsapp')
+    .map(tpl => ({
+      id: `wa-${tpl.id}`,
+      originalId: tpl.id,
+      name: tpl.name,
+      source: 'whatsapp',
+      channelType: 'Channel::Whatsapp',
+      inboxId: tpl.inbox_id,
+      inboxName: whatsappInboxes.value.find(i => i.id === tpl.inbox_id)?.name || '',
+      category: tpl.category,
+      status: tpl.status,
+      normalizedStatus: tpl.status,
+      language: tpl.language,
+      raw: tpl,
+    }))
+);
+
+// Normalize TikTok Shop templates
+const normalizedTiktokShopTemplates = computed(() =>
+  waTemplates.value
+    .filter(tpl => tpl.channel_type === 'Channel::TiktokShop')
+    .map(tpl => ({
+      id: `ttshop-${tpl.id}`,
+      originalId: tpl.id,
+      name: tpl.name,
+      source: 'tiktok_shop',
+      channelType: 'Channel::TiktokShop',
+      inboxId: tpl.inbox_id,
+      inboxName: tiktokShopInboxes.value.find(i => i.id === tpl.inbox_id)?.name || '',
+      category: tpl.category,
+      status: tpl.status,
+      normalizedStatus: tpl.status,
+      language: tpl.language,
+      raw: tpl,
+    }))
 );
 
 // Normalize Zalo templates
@@ -101,6 +128,7 @@ const normalizedZaloTemplates = computed(() =>
 const allTemplates = computed(() => [
   ...normalizedWATemplates.value,
   ...normalizedZaloTemplates.value,
+  ...normalizedTiktokShopTemplates.value,
 ]);
 
 const isLoading = computed(() => isLoadingWA.value || isLoadingZalo.value);
@@ -154,6 +182,33 @@ const zaloStatusGroups = computed(() => {
       key: 'disabled',
       label: t('SETTINGS.TEMPLATES.UNIFIED_STATUS.DISABLED'),
       count: templates.filter(tp => tp.status === 'disabled').length,
+      barColor: 'bg-n-ruby-9',
+      textColor: 'text-n-ruby-11',
+    },
+  ];
+});
+
+const tiktokShopStatusGroups = computed(() => {
+  const templates = normalizedTiktokShopTemplates.value;
+  return [
+    {
+      key: 'approved',
+      label: t('SETTINGS.TEMPLATES.UNIFIED_STATUS.APPROVED'),
+      count: templates.filter(tp => tp.status === 'approved' || tp.status === 'active').length,
+      barColor: 'bg-n-teal-9',
+      textColor: 'text-n-teal-11',
+    },
+    {
+      key: 'pending',
+      label: t('SETTINGS.TEMPLATES.UNIFIED_STATUS.PENDING'),
+      count: templates.filter(tp => tp.status === 'pending').length,
+      barColor: 'bg-n-amber-9',
+      textColor: 'text-n-amber-11',
+    },
+    {
+      key: 'rejected',
+      label: t('SETTINGS.TEMPLATES.UNIFIED_STATUS.REJECTED'),
+      count: templates.filter(tp => tp.status === 'rejected' || tp.status === 'disabled').length,
       barColor: 'bg-n-ruby-9',
       textColor: 'text-n-ruby-11',
     },
@@ -245,6 +300,12 @@ const channelMenuItems = computed(() => [
     value: 'Channel::ZaloOa',
     label: 'Zalo OA',
     isSelected: selectedChannelType.value === 'Channel::ZaloOa',
+  },
+  {
+    action: 'channelSelect',
+    value: 'Channel::TiktokShop',
+    label: 'TikTok Shop',
+    isSelected: selectedChannelType.value === 'Channel::TiktokShop',
   },
 ]);
 
@@ -436,6 +497,38 @@ const onKeydown = e => {
 
 useEventListener(document, 'keydown', onKeydown);
 
+// ── Sync ──
+const syncAllTemplates = async () => {
+  isSyncing.value = true;
+  try {
+    const inboxesToSync = [
+      ...whatsappInboxes.value,
+      ...zaloOaInboxes.value,
+      ...tiktokShopInboxes.value,
+    ];
+
+    if (inboxesToSync.length === 0) {
+      useAlert(t('SETTINGS.TEMPLATES.SYNC_ERROR', 'Không tìm thấy kênh nào hỗ trợ đồng bộ mẫu.'));
+      return;
+    }
+
+    // Trigger sync for all relevant inboxes concurrently
+    await Promise.allSettled(
+      inboxesToSync.map(inbox => store.dispatch('inboxes/syncTemplates', inbox.id))
+    );
+
+    // Re-fetch templates
+    await fetchWhatsAppTemplates();
+    await fetchZaloTemplates();
+
+    useAlert(t('SETTINGS.TEMPLATES.SYNC_SUCCESS', 'Đã gởi yêu cầu đồng bộ cấu trúc mẫu thành công.'));
+  } catch (error) {
+    useAlert(t('SETTINGS.TEMPLATES.SYNC_ERROR', 'Có lỗi khi đồng bộ mẫu.'));
+  } finally {
+    isSyncing.value = false;
+  }
+};
+
 onMounted(() => {
   fetchWhatsAppTemplates();
   fetchZaloTemplates();
@@ -454,7 +547,14 @@ onMounted(() => {
           {{ t('SETTINGS.TEMPLATES.HEADER.DESCRIPTION') }}
         </p>
       </div>
-      <div class="relative">
+      <div class="relative flex items-center gap-2">
+        <Button
+          icon="i-lucide-refresh-cw"
+          :label="'Đồng bộ mẫu'"
+          :is-loading="isSyncing"
+          color-scheme="secondary"
+          @click="syncAllTemplates"
+        />
         <Button
           icon="i-lucide-plus"
           blue
@@ -474,7 +574,7 @@ onMounted(() => {
     </div>
 
     <!-- Channel Overview Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-4 mb-6">
       <ChannelOverviewCard
         channel-key="Channel::Whatsapp"
         channel-name="WhatsApp"
@@ -495,6 +595,17 @@ onMounted(() => {
         :templates="normalizedZaloTemplates"
         :status-groups="zaloStatusGroups"
         :is-active="selectedChannelType === 'Channel::ZaloOa'"
+        @select="handleChannelCardSelect"
+      />
+      <ChannelOverviewCard
+        channel-key="Channel::TiktokShop"
+        channel-name="TikTok Shop"
+        channel-icon="i-ri-tiktok-fill"
+        icon-color="text-n-slate-12"
+        :inbox-count="tiktokShopInboxes.length"
+        :templates="normalizedTiktokShopTemplates"
+        :status-groups="tiktokShopStatusGroups"
+        :is-active="selectedChannelType === 'Channel::TiktokShop'"
         @select="handleChannelCardSelect"
       />
     </div>

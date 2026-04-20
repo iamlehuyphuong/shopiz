@@ -78,6 +78,18 @@ class Zalo::Client
     send_cs_message(body)
   end
 
+  # --- ZNS / Template APIs ---
+
+  def get_templates(offset: 0, limit: 100)
+    with_token_retry do
+      HTTParty.get(
+        'https://business.openapi.zalo.me/template/all',
+        headers: default_headers,
+        query: { offset: offset, limit: limit }
+      )
+    end
+  end
+
   private
 
   def access_token
