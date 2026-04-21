@@ -301,10 +301,9 @@ const onCardClick = e => {
       >
         <!-- Icon based on call status -->
         <i
-v-if="normalizedCallStatus === 'missed' || normalizedCallStatus === 'no-answer'" 
-           class="i-ph-phone-x-fill text-base inline-block flex-shrink-0 text-red-600 dark:text-red-400 mr-1"
-/>
-        ></i>
+          v-if="normalizedCallStatus === 'missed' || normalizedCallStatus === 'no-answer'"
+          class="i-ph-phone-x-fill text-base inline-block flex-shrink-0 text-red-600 dark:text-red-400 mr-1"
+        />
 
         <i
           v-else-if="normalizedCallStatus === 'active'"
