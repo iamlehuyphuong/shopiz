@@ -58,6 +58,12 @@ class Captain::Conversation::FollowupBuilderJob < ApplicationJob
     status = Conversation.uncached { Conversation.where(id: @conversation.id).pick(:status) }
     return if status == 'resolved' || status == Conversation.statuses[:resolved]
 
+    # Re-check messaging window — AI generation may have taken time and the window could have expired
+    unless Conversations::MessageWindowService.new(@conversation).can_reply?
+      Rails.logger.info("[CAPTAIN][FollowupBuilderJob] Messaging window expired for #{@conversation.id}. Aborting.")
+      return
+    end
+
     if handoff_requested?
       process_action('handoff')
     else
@@ -139,7 +145,8 @@ class Captain::Conversation::FollowupBuilderJob < ApplicationJob
       inbox_id: inbox.id,
       sender: @assistant,
       content: message_content,
-      additional_attributes: additional_attrs
+      additional_attributes: additional_attrs,
+      content_attributes: { followup_automated: true }
     )
   end
 

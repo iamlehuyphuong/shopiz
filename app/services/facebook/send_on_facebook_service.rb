@@ -252,7 +252,9 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
   end
 
   def message_tag
-    @message_tag ||= GlobalConfigService.load('ENABLE_MESSENGER_CHANNEL_HUMAN_AGENT', nil) ? 'HUMAN_AGENT' : 'ACCOUNT_UPDATE'
+    # ACCOUNT_UPDATE deprecated since 27/04/2026 (returns error code 100)
+    # Ref: https://developers.facebook.com/docs/messenger-platform/send-messages/message-tags
+    'HUMAN_AGENT'
   end
 
   def attachment_type(attachment)

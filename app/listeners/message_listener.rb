@@ -25,14 +25,18 @@ class MessageListener < BaseListener
     
     # 1. Sequence Limit Check
     is_automated = message.content_attributes['followup_automated'] == true
+    # Messages from AgentBot senders are also considered automated (e.g. macro/AI-generated)
+    is_automated ||= message.sender.is_a?(AgentBot)
     if is_automated
       current_count = conversation.custom_attributes['followup_count'].to_i
       # Bail if we reached the maximum loop of sequence
       return if current_count >= max_attempts
     else
       # Real agent message resets the count back to 0
-      conversation.custom_attributes['followup_count'] = 0
-      conversation.save!
+      conversation.with_lock do
+        conversation.custom_attributes['followup_count'] = 0
+        conversation.save!
+      end
     end
     
     # 2. Compute Timing

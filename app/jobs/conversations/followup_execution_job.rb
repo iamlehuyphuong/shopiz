@@ -57,19 +57,25 @@ class Conversations::FollowupExecutionJob < ApplicationJob
 
   def channel_policy_allows_followup?(conversation)
     inbox = conversation.inbox
-    
+
     # Calculate time since the customer's last interaction
     last_incoming = conversation.messages.where(message_type: 'incoming').last
     last_interaction_at = last_incoming&.created_at || conversation.created_at
     time_since_interaction = Time.current - last_interaction_at
 
     case inbox.channel_type
-    when 'Channel::FacebookPage' # Covers FB and Instagram if routed here
-      time_since_interaction <= 7.days
+    when 'Channel::FacebookPage'
+      window = GlobalConfigService.load('ENABLE_MESSENGER_CHANNEL_HUMAN_AGENT', nil) ? 7.days : 24.hours
+      time_since_interaction <= window
+    when 'Channel::Instagram'
+      window = GlobalConfigService.load('ENABLE_INSTAGRAM_CHANNEL_HUMAN_AGENT', nil) ? 7.days : 24.hours
+      time_since_interaction <= window
     when 'Channel::Whatsapp'
       time_since_interaction <= 24.hours
-    when 'Channel::Zalo', 'Channel::ZaloPersonal'
+    when 'Channel::Zalo'
       time_since_interaction <= 48.hours
+    when 'Channel::ZaloPersonal'
+      true # ZaloPersonal không giới hạn thời gian gửi tin
     else
       true # Other channels have no strict API timeout limits for freeform text
     end
@@ -93,8 +99,10 @@ class Conversations::FollowupExecutionJob < ApplicationJob
     end
 
     # Increment count immediately so the next followup knows it's attempt_count + 1
-    conversation.custom_attributes['followup_count'] = attempt_count + 1
-    conversation.save!
+    conversation.with_lock do
+      conversation.custom_attributes['followup_count'] = attempt_count + 1
+      conversation.save!
+    end
 
     Captain::Conversation::FollowupBuilderJob.perform_later(conversation, assistant, attempt_count)
   end
@@ -103,15 +111,19 @@ class Conversations::FollowupExecutionJob < ApplicationJob
     macro = conversation.account.macros.find_by(id: macro_id)
     return unless macro
 
-    conversation.custom_attributes['followup_count'] = attempt_count + 1
-    conversation.save!
+    conversation.with_lock do
+      conversation.custom_attributes['followup_count'] = attempt_count + 1
+      conversation.save!
+    end
 
     Macros::ExecutionService.new(macro, nil, conversation).perform
   end
 
   def trigger_predefined_message(conversation, content, attempt_count)
-    conversation.custom_attributes['followup_count'] = attempt_count + 1
-    conversation.save!
+    conversation.with_lock do
+      conversation.custom_attributes['followup_count'] = attempt_count + 1
+      conversation.save!
+    end
 
     # Create the automated message using MessageBuilder to fire appropriate integrations
     message_params = {

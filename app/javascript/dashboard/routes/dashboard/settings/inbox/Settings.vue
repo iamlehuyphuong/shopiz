@@ -390,10 +390,12 @@ export default {
         this.is360DialogWhatsAppChannel
       ) {
         upperLimit = 24;
-      } else if (this.isAZaloOaChannel || this.isAZaloPersonalChannel) {
+      } else if (this.isAZaloOaChannel) {
         upperLimit = 48;
-      } else if (this.isAnInstagramChannel) {
-        upperLimit = 24;
+      } else if (this.isAZaloPersonalChannel) {
+        upperLimit = 999; // ZaloPersonal không giới hạn thời gian gửi tin
+      } else if (this.isAnInstagramChannel || this.isAFacebookInbox) {
+        upperLimit = 168; // 7 days with HUMAN_AGENT tag
       } else if (
         this.isATwilioSMSChannel ||
         this.isAnEmailChannel ||
