@@ -5,7 +5,7 @@ class Webhooks::InstagramFeedJob < ApplicationJob
 
   def perform(entry_json)
     entry = JSON.parse(entry_json).with_indifferent_access
-    
+
     instagram_id = entry[:id]
     channel = Channel::Instagram.find_by(instagram_id: instagram_id)
     return unless channel
@@ -18,9 +18,13 @@ class Webhooks::InstagramFeedJob < ApplicationJob
     post_id = value[:media][:id] if value[:media].present?
     post_id ||= 'unknown'
     message = value[:text] || ''
-    
+    comment_timestamp = value[:timestamp]
+
     sender_username = value.dig(:from, :username) || 'Instagram User'
     sender_id = value.dig(:from, :id) || "unknown_#{comment_id}"
+
+    # Phase 3: Skip comments from our own Instagram account
+    return if sender_id == instagram_id
 
     Rails.logger.info "[InstagramFeed] New comment on account #{instagram_id}: #{comment_id} from #{sender_username}"
 
@@ -37,7 +41,7 @@ class Webhooks::InstagramFeedJob < ApplicationJob
 
     return unless conversation
 
-    process_auto_reply(channel, conversation, comment_id, message, post_id)
+    process_auto_reply(channel, conversation, comment_id, message, post_id, comment_timestamp)
   end
 
   private
@@ -52,8 +56,23 @@ class Webhooks::InstagramFeedJob < ApplicationJob
     Instagram::CommentActionService.new(channel: channel).hide_comment(comment_id)
   end
 
-  def process_auto_reply(channel, conversation, comment_id, message, post_id)
+  def process_auto_reply(channel, conversation, comment_id, message, post_id, comment_timestamp)
     return unless channel.auto_reply_to_comments?
+
+    # Phase 5: Check 7-day TTL — Meta requires private reply within 7 days of comment creation
+    if comment_timestamp.present?
+      comment_time = Time.at(comment_timestamp.to_i) rescue Time.current
+      if comment_time < 7.days.ago
+        Rails.logger.warn "[InstagramFeed] Skipping private reply for comment #{comment_id} — older than 7 days"
+        return
+      end
+    end
+
+    # Phase 4: Idempotency guard — only one private reply per comment
+    lock_key = "private_reply:ig:#{comment_id}"
+    return unless Redis::Alfred.setnx(lock_key, Time.current.to_i)
+
+    Redis::Alfred.expire(lock_key, 7.days.to_i)
 
     if channel.provider_config['auto_reply_use_ai']
       Captain::Conversation::CommentReplyBuilderJob.perform_later(
@@ -61,11 +80,12 @@ class Webhooks::InstagramFeedJob < ApplicationJob
         comment_id: comment_id,
         post_id: post_id,
         message: message,
-        platform: 'instagram'
+        platform: 'instagram',
+        comment_created_at: comment_timestamp.to_s
       )
     elsif channel.auto_reply_message.present?
       Instagram::CommentActionService.new(channel: channel).send_private_reply_and_log(
-        comment_id, 
+        comment_id,
         channel.auto_reply_message,
         conversation
       )

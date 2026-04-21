@@ -3,12 +3,21 @@
 class Captain::Conversation::CommentReplyBuilderJob < ApplicationJob
   queue_as :default
 
-  def perform(conversation_id, comment_id:, post_id:, message:, platform:)
+  def perform(conversation_id, comment_id:, post_id:, message:, platform:, comment_created_at: nil)
     @conversation = Conversation.find_by(id: conversation_id)
     return unless @conversation
 
     @channel = @conversation.inbox.channel
     return unless @channel.is_a?(Channel::FacebookPage) || @channel.is_a?(Channel::Instagram)
+
+    # Phase 5: TTL check — AI generation may take time, verify comment is still within 7-day window
+    if comment_created_at.present?
+      created_time = Time.at(comment_created_at.to_i) rescue nil
+      if created_time && created_time < 7.days.ago
+        Rails.logger.warn "[CommentReply] Skipping AI reply for #{comment_id} — comment older than 7 days"
+        return
+      end
+    end
 
     # 1. Generate text using AI
     generated_text = generate_reply_text(message, post_id, platform)
@@ -28,7 +37,7 @@ class Captain::Conversation::CommentReplyBuilderJob < ApplicationJob
 
   def generate_reply_text(customer_message, post_id, platform)
     prompt_config = @channel.provider_config['auto_reply_ai_prompt'] || 'Hãy viết một tin nhắn ngắn gọn, thân thiện, trả lời khách hàng.'
-    
+
     system_prompt = <<~PROMPT
       Bạn là trợ lý chăm sóc khách hàng của trang #{platform.capitalize}.
       Nhiệm vụ: Phản hồi bình luận của khách hàng thông qua tin nhắn riêng tư (Direct Message).

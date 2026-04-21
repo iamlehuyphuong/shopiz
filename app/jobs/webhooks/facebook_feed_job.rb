@@ -13,10 +13,14 @@ class Webhooks::FacebookFeedJob < ApplicationJob
     comment_id = change['comment_id']
     post_id = change['post_id']
     message = change['message'] || ''
-    
+    comment_created_time = change['created_time']
+
     # Facebook user from feed
     sender_name = change['from']&.dig('name') || 'Facebook User'
     sender_id = change['from']&.dig('id') || "unknown_#{comment_id}"
+
+    # Phase 3: Skip comments from the Page itself — cannot send private reply to self
+    return if sender_id == page_id
 
     Rails.logger.info "[FacebookFeed] New comment on page #{page_id}: #{comment_id} from #{sender_name}"
 
@@ -36,7 +40,7 @@ class Webhooks::FacebookFeedJob < ApplicationJob
     return unless conversation
 
     # 3. Handle auto-reply (DM)
-    process_auto_reply(channel, conversation, comment_id, message, post_id)
+    process_auto_reply(channel, conversation, comment_id, message, post_id, comment_created_time)
   end
 
   private
@@ -51,9 +55,24 @@ class Webhooks::FacebookFeedJob < ApplicationJob
     Facebook::CommentActionService.new(channel: channel).hide_comment(comment_id)
   end
 
-  def process_auto_reply(channel, conversation, comment_id, message, post_id)
+  def process_auto_reply(channel, conversation, comment_id, message, post_id, comment_created_time)
     # config setup can be in provider_config or auto_reply_to_comments flag directly.
     return unless channel.auto_reply_to_comments?
+
+    # Phase 5: Check 7-day TTL — Meta requires private reply within 7 days of comment creation
+    if comment_created_time.present?
+      comment_time = Time.at(comment_created_time.to_i)
+      if comment_time < 7.days.ago
+        Rails.logger.warn "[FacebookFeed] Skipping private reply for comment #{comment_id} — older than 7 days"
+        return
+      end
+    end
+
+    # Phase 4: Idempotency guard — only one private reply per comment
+    lock_key = "private_reply:fb:#{comment_id}"
+    return unless Redis::Alfred.setnx(lock_key, Time.current.to_i)
+
+    Redis::Alfred.expire(lock_key, 7.days.to_i)
 
     if channel.provider_config['auto_reply_use_ai']
       # Call the AI Builder
@@ -62,12 +81,13 @@ class Webhooks::FacebookFeedJob < ApplicationJob
         comment_id: comment_id,
         post_id: post_id,
         message: message,
-        platform: 'facebook'
+        platform: 'facebook',
+        comment_created_at: comment_created_time.to_s
       )
     elsif channel.auto_reply_message.present?
       # Send static message
       Facebook::CommentActionService.new(channel: channel).send_private_reply_and_log(
-        comment_id, 
+        comment_id,
         channel.auto_reply_message,
         conversation
       )

@@ -30,17 +30,20 @@ class Instagram::CommentActionService
   end
 
   # Send a private reply to a comment via Instagram Direct
-  # POST /{ig_user_id}/messages
+  # POST /{PAGE_ID}/messages — using Facebook Send API
+  # Ref: https://developers.facebook.com/docs/messenger-platform/instagram/features/private-replies
+  # Falls back to instagram_id if page_id is not resolved yet
   def send_private_reply(comment_id, message_text)
-    url = "https://graph.instagram.com/#{API_VERSION}/#{@instagram_id}/messages"
+    sender_id = @channel.page_id.presence || @instagram_id
+    url = "https://graph.facebook.com/#{API_VERSION}/#{sender_id}/messages"
     payload = {
       recipient: { comment_id: comment_id },
       message: { text: message_text },
       access_token: @access_token
     }
-    
+
     response = HTTParty.post(
-      url, 
+      url,
       body: payload.to_json,
       headers: { 'Content-Type' => 'application/json' }
     )
@@ -48,7 +51,7 @@ class Instagram::CommentActionService
     if response.success?
       Rails.logger.info "[InstagramFeed] Successfully sent private reply for comment #{comment_id}"
     else
-      Rails.logger.error "[InstagramFeed] Failed to send private reply for comment #{comment_id}: #{response.body}"
+      log_api_error('send private reply', comment_id, response)
     end
 
     response
@@ -73,5 +76,24 @@ class Instagram::CommentActionService
       content: message_text,
       source_id: msg_id
     )
+  end
+
+  private
+
+  def log_api_error(action, comment_id, response)
+    body = JSON.parse(response.body) rescue {}
+    error_code = body.dig('error', 'code')
+    error_msg = body.dig('error', 'message') || response.body
+
+    case error_code
+    when 10
+      Rails.logger.warn "[InstagramFeed] Rate limited while #{action} for comment #{comment_id}"
+    when 200, 551
+      Rails.logger.info "[InstagramFeed] Private reply already sent for comment #{comment_id} (code #{error_code})"
+    when 100
+      Rails.logger.warn "[InstagramFeed] Invalid request for #{action} comment #{comment_id}: #{error_msg}"
+    else
+      Rails.logger.error "[InstagramFeed] Failed to #{action} for comment #{comment_id} (code #{error_code}): #{error_msg}"
+    end
   end
 end
