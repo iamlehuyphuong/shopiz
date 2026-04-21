@@ -4,6 +4,7 @@ import { useVuelidate } from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import LoadingState from 'dashboard/components/widgets/LoadingState.vue';
 import { useAccount } from 'dashboard/composables/useAccount';
+import { useAlert } from 'dashboard/composables';
 import axios from 'axios';
 import PageHeader from '../../SettingsSubPageHeader.vue';
 import router from '../../../../index';
@@ -141,8 +142,9 @@ export default {
               params: { page: 'new', inbox_id: data.id },
             });
           })
-          .catch(() => {
+          .catch(error => {
             this.isCreating = false;
+            useAlert(error.message);
           });
       }
     },
@@ -204,7 +206,11 @@ export default {
             </label>
           </div>
           <div class="w-full text-right">
-            <input type="submit" value="Create Inbox" class="button" />
+            <input
+              type="submit"
+              :value="$t('INBOX_MGMT.ADD.ZALO_OA.CREATE_INBOX')"
+              class="button"
+            />
           </div>
         </div>
       </form>
