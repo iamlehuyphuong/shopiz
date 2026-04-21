@@ -22,8 +22,11 @@ class Channel::TiktokShop < ApplicationRecord
   include Channelable
   include Reauthorizable
 
-  encrypts :access_token
-  encrypts :refresh_token
+  # TODO: Remove guard once encryption keys become mandatory (target 3-4 releases out).
+  if Chatwoot.encryption_configured?
+    encrypts :access_token
+    encrypts :refresh_token
+  end
 
   self.table_name = 'channel_tiktok_shop'
   EDITABLE_ATTRS = [:access_token, :refresh_token, :expires_in].freeze
