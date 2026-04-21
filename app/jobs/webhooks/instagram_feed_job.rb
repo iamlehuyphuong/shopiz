@@ -15,13 +15,29 @@ class Webhooks::InstagramFeedJob < ApplicationJob
 
     value = change[:value]
     comment_id = value[:id]
+    post_id = value[:media][:id] if value[:media].present?
+    post_id ||= 'unknown'
     message = value[:text] || ''
-    sender_username = value.dig(:from, :username) || ''
+    
+    sender_username = value.dig(:from, :username) || 'Instagram User'
+    sender_id = value.dig(:from, :id) || "unknown_#{comment_id}"
 
     Rails.logger.info "[InstagramFeed] New comment on account #{instagram_id}: #{comment_id} from #{sender_username}"
 
     hide_comment_if_needed(channel, comment_id, message)
-    send_private_reply_if_needed(channel, comment_id)
+
+    conversation = Facebook::CommentHandlerService.new(
+      channel: channel,
+      contact_id: sender_id,
+      contact_name: sender_username,
+      comment_id: comment_id,
+      post_id: post_id,
+      message: message
+    ).perform
+
+    return unless conversation
+
+    process_auto_reply(channel, conversation, comment_id, message, post_id)
   end
 
   private
@@ -36,11 +52,24 @@ class Webhooks::InstagramFeedJob < ApplicationJob
     Instagram::CommentActionService.new(channel: channel).hide_comment(comment_id)
   end
 
-  def send_private_reply_if_needed(channel, comment_id)
+  def process_auto_reply(channel, conversation, comment_id, message, post_id)
     return unless channel.auto_reply_to_comments?
-    return if channel.auto_reply_message.blank?
 
-    Instagram::CommentActionService.new(channel: channel).send_private_reply(comment_id, channel.auto_reply_message)
+    if channel.provider_config['auto_reply_use_ai']
+      Captain::Conversation::CommentReplyBuilderJob.perform_later(
+        conversation.id,
+        comment_id: comment_id,
+        post_id: post_id,
+        message: message,
+        platform: 'instagram'
+      )
+    elsif channel.auto_reply_message.present?
+      Instagram::CommentActionService.new(channel: channel).send_private_reply_and_log(
+        comment_id, 
+        channel.auto_reply_message,
+        conversation
+      )
+    end
   end
 
   def contains_phone?(text)

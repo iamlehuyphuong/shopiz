@@ -1004,6 +1004,10 @@
         "DESCRIPTION": "Tự động gửi tin nhắn riêng qua Messenger cho khách hàng bình luận trên bài viết.",
         "ENABLE": "Bật tính năng gửi tin nhắn tự động",
         "ENABLE_HELP": "Khi được bật, một tin nhắn riêng tư sẽ được gửi đến hộp thư Messenger của người bình luận.",
+        "USE_AI": "Sinh tự động bằng Trợ lý AI",
+        "USE_AI_HELP": "Hệ thống sẽ thông qua ngữ cảnh Bình luận Khách hàng và cấu hình dưới đây để gọi AI sinh ra câu trả lời.",
+        "AI_PROMPT_LABEL": "Chiến lược cho Trợ lý AI",
+        "AI_PROMPT_PLACEHOLDER": "Ví dụ: Khen ngợi khách hàng, mời khách kích vào link của cửa hàng...",
         "MESSAGE_LABEL": "Nội dung tin nhắn tự động",
         "MESSAGE_PLACEHOLDER": "Chào bạn! Cảm ơn bạn đã bình luận. Chúng tôi đã gửi thêm thông tin chi tiết qua Messenger cho bạn nhé.",
         "NOTE": "Lưu ý: Facebook chỉ cho phép gửi một tin nhắn riêng tư cho mỗi bình luận trong vòng 7 ngày."

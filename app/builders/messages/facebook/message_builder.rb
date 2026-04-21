@@ -23,6 +23,7 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
 
     ActiveRecord::Base.transaction do
       build_contact_inbox
+      merge_contact_if_reply_to_private_reply!
       build_message unless response.content.blank? && @attachments.blank? && response.in_reply_to_external_id.blank?
       build_referral_note if response.referral.present?
       process_optin if response.optin.present?
@@ -44,6 +45,29 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
       inbox: @inbox,
       contact_attributes: contact_params
     ).perform
+  end
+
+  def merge_contact_if_reply_to_private_reply!
+    return if response.in_reply_to_external_id.blank?
+
+    # Look for the outgoing private reply message
+    private_reply_message = Message.find_by(source_id: response.in_reply_to_external_id, account_id: @inbox.account_id)
+    return unless private_reply_message
+    
+    asid_contact = private_reply_message.conversation.contact
+    psid_contact = @contact_inbox.contact
+    
+    return if asid_contact.id == psid_contact.id
+
+    # Merge ASID contact (the one built from Comment feed) into PSID contact (the DM user)
+    ContactMergeAction.new(
+      account: @inbox.account,
+      base_contact: psid_contact,
+      mergee_contact: asid_contact
+    ).perform
+    
+    # Reload the PSID contact inbox associations after merge
+    @contact_inbox.reload
   end
 
   def build_message

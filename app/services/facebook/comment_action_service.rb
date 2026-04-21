@@ -45,4 +45,23 @@ class Facebook::CommentActionService
     Rails.logger.error "[FacebookFeed] Error sending private reply for comment #{comment_id}: #{e.message}"
     nil
   end
+
+  def send_private_reply_and_log(comment_id, message, conversation)
+    response = send_private_reply(comment_id, message)
+    return unless response&.success?
+
+    # Facebook returns `{"id":"m_1234abc..."}` which is the message ID of the generated private reply
+    body = JSON.parse(response.body)
+    msg_id = body['id']
+
+    return unless msg_id.present?
+
+    conversation.messages.create!(
+      account_id: conversation.account_id,
+      inbox_id: conversation.inbox_id,
+      message_type: :outgoing,
+      content: message,
+      source_id: msg_id
+    )
+  end
 end

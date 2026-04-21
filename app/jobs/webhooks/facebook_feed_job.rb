@@ -11,16 +11,32 @@ class Webhooks::FacebookFeedJob < ApplicationJob
     return unless channel
 
     comment_id = change['comment_id']
+    post_id = change['post_id']
     message = change['message'] || ''
-    sender_name = change['from']&.dig('name') || ''
+    
+    # Facebook user from feed
+    sender_name = change['from']&.dig('name') || 'Facebook User'
+    sender_id = change['from']&.dig('id') || "unknown_#{comment_id}"
 
     Rails.logger.info "[FacebookFeed] New comment on page #{page_id}: #{comment_id} from #{sender_name}"
 
     # 1. Handle comment hiding based on channel settings
     hide_comment_if_needed(channel, comment_id, message)
 
-    # 2. Handle auto-reply via Private Replies API
-    send_private_reply_if_needed(channel, comment_id)
+    # 2. Build discussion Context (Internal Note)
+    conversation = Facebook::CommentHandlerService.new(
+      channel: channel,
+      contact_id: sender_id,
+      contact_name: sender_name,
+      comment_id: comment_id,
+      post_id: post_id,
+      message: message
+    ).perform
+
+    return unless conversation
+
+    # 3. Handle auto-reply (DM)
+    process_auto_reply(channel, conversation, comment_id, message, post_id)
   end
 
   private
@@ -35,11 +51,27 @@ class Webhooks::FacebookFeedJob < ApplicationJob
     Facebook::CommentActionService.new(channel: channel).hide_comment(comment_id)
   end
 
-  def send_private_reply_if_needed(channel, comment_id)
+  def process_auto_reply(channel, conversation, comment_id, message, post_id)
+    # config setup can be in provider_config or auto_reply_to_comments flag directly.
     return unless channel.auto_reply_to_comments?
-    return if channel.auto_reply_message.blank?
 
-    Facebook::CommentActionService.new(channel: channel).send_private_reply(comment_id, channel.auto_reply_message)
+    if channel.provider_config['auto_reply_use_ai']
+      # Call the AI Builder
+      Captain::Conversation::CommentReplyBuilderJob.perform_later(
+        conversation.id,
+        comment_id: comment_id,
+        post_id: post_id,
+        message: message,
+        platform: 'facebook'
+      )
+    elsif channel.auto_reply_message.present?
+      # Send static message
+      Facebook::CommentActionService.new(channel: channel).send_private_reply_and_log(
+        comment_id, 
+        channel.auto_reply_message,
+        conversation
+      )
+    end
   end
 
   def contains_phone?(text)

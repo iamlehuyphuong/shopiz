@@ -1035,6 +1035,10 @@
         "DESCRIPTION": "Automatically send a private message via Messenger to customers who comment on your posts.",
         "ENABLE": "Enable auto reply to comments",
         "ENABLE_HELP": "When enabled, a private message will be sent to the commenter's Messenger inbox.",
+        "USE_AI": "Reply using AI Assistant",
+        "USE_AI_HELP": "When enabled, an AI will generate the response based on the post and comment context instead of sending a static message.",
+        "AI_PROMPT_LABEL": "AI Assistant Strategy",
+        "AI_PROMPT_PLACEHOLDER": "E.g: Write a polite response, invite them to visit our store link, etc.",
         "MESSAGE_LABEL": "Auto reply message",
         "MESSAGE_PLACEHOLDER": "Hi! Thank you for your comment. We have sent you more details via Messenger.",
         "NOTE": "Note: Facebook allows only one private reply per comment within 7 days."
