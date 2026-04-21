@@ -119,6 +119,7 @@ export default {
       followupPredefinedMessage: '',
       followupPredefinedMessages: Array.from({ length: 15 }, () => ''),
       followupMacros: Array.from({ length: 15 }, () => ''),
+      followupCustomAIPrompts: Array.from({ length: 15 }, () => ''),
     };
   },
   computed: {
@@ -515,6 +516,10 @@ export default {
       this.followupMacros =
         this.inbox.followup_config?.macros ||
         Array.from({ length: 15 }, () => '');
+        
+      this.followupCustomAIPrompts =
+        this.inbox.followup_config?.custom_ai_prompts ||
+        Array.from({ length: 15 }, () => '');
     },
     async fetchHealthData() {
       if (!this.inbox) return;
@@ -625,6 +630,7 @@ export default {
             predefined_message: this.followupPredefinedMessage,
             predefined_messages: this.followupPredefinedMessages,
             macros: this.followupMacros,
+            custom_ai_prompts: this.followupCustomAIPrompts,
           },
           channel: {
             widget_color: this.inbox.widget_color,
@@ -1393,13 +1399,36 @@ export default {
                     </div>
                     <div
                       v-if="followupActionType === 'ai_assistant'"
-                      class="flex flex-col gap-1 mt-3 p-3 bg-n-brand/10 text-n-brand rounded-md"
+                      class="flex flex-col gap-3 mt-3"
                     >
-                      <p class="text-sm">
-                        {{
-                          $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_AI_HINT')
-                        }}
-                      </p>
+                      <div class="flex flex-col gap-1 p-3 bg-n-brand/10 text-n-brand rounded-md">
+                        <p class="text-sm">
+                          {{
+                            $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_AI_HINT')
+                          }}
+                        </p>
+                      </div>
+
+                      <div
+                        v-for="(n, index) in followupMaxAttempts"
+                        :key="'ai-' + index"
+                        class="flex flex-col gap-1 w-full bg-n-alpha-1 p-3 rounded-md border border-n-weak"
+                      >
+                        <label class="text-n-slate-11 text-small font-medium">
+                          {{
+                            $t(
+                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_LABEL'
+                            )
+                          }}
+                          {{ index + 1 }}
+                        </label>
+                        <textarea
+                          v-model="followupCustomAIPrompts[index]"
+                          rows="3"
+                          :placeholder="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_PLACEHOLDER')"
+                          class="w-full text-n-slate-12 bg-n-alpha-1 border-n-weak outline-none rounded-md px-3 py-2 border dark:bg-n-solid-1 text-sm focus:border-n-brand focus:ring-1 focus:ring-n-brand"
+                        />
+                      </div>
                     </div>
 
                     <div

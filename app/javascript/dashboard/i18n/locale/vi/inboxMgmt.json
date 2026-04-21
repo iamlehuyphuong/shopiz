@@ -865,6 +865,8 @@
       "AUTO_FOLLOWUP_PREDEFINED_MESSAGE": "Nội dung tin nhắn bám đuổi lần",
       "AUTO_FOLLOWUP_MACRO_SELECT": "Chọn macro cần chạy cho lần",
       "AUTO_FOLLOWUP_MACRO_EMPTY": "Vui lòng chọn macro",
+      "AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_LABEL": "Kịch bản Trợ lý AI lần",
+      "AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_PLACEHOLDER": "Ví dụ: Đưa ra mã giảm giá 10% nếu khách chưa chốt. Bỏ trống để dùng hướng dẫn mặc định của hệ thống.",
       "AUTO_FOLLOWUP_AI_HINT": "Lưu ý: Đảm bảo thiết lập cấu hình của (Tính năng > Cấu hình trợ lý AI) có bao gồm các hướng dẫn tạo nội dung bám đuổi.",
       "AUTO_FOLLOWUP_LIMIT_WARNING": "Lưu ý: Bạn chọn Khoảng cách quá dài có nguy cơ vi phạm bộ luật chống Spam API 24h hoặc 48h của Zalo / WhatsApp / Instagram. Vì an toàn, mọi tin của các Ngày vỡ luật sẽ bị hệ thống huỷ tự động.",
       "AUTO_ASSIGNMENT": "Bật tự động chuyển nhượng",

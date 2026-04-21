@@ -3,10 +3,11 @@ class Captain::Conversation::FollowupBuilderJob < ApplicationJob
   retry_on ActiveStorage::FileNotFoundError, attempts: 3, wait: 2.seconds
   retry_on Faraday::BadRequestError, attempts: 3, wait: 2.seconds
 
-  def perform(conversation, assistant)
+  def perform(conversation, assistant, attempt_count = 0)
     @conversation = conversation
     @inbox = conversation.inbox
     @assistant = assistant
+    @attempt_count = attempt_count
 
     # Do not execute if the conversation has been resolved
     return if @conversation.status == 'resolved'
@@ -160,9 +161,16 @@ class Captain::Conversation::FollowupBuilderJob < ApplicationJob
     delay_hours = delay > 0 ? (delay / 3600.0).round(1) : nil
     time_text = delay_hours ? " for #{delay_hours} hours" : ""
 
-    "System Instruction: The customer has not replied to our last message#{time_text}. " \
-    "Please read the conversation context and generate a polite, engaging, and highly personalized follow-up message " \
-    "to encourage them to respond. Tailor the message to specifically reference what they were interested in. " \
-    "Do not use generic statements. Do not offer a handoff."
+    custom_prompts_list = @inbox.followup_config&.dig('custom_ai_prompts') || []
+    custom_prompt = custom_prompts_list[@attempt_count].presence || @inbox.followup_config&.dig('custom_ai_prompt').presence
+
+    if custom_prompt
+      "System Instruction: The customer has not replied to our last message#{time_text}. #{custom_prompt}"
+    else
+      "System Instruction: The customer has not replied to our last message#{time_text}. " \
+      "Please read the conversation context and generate a polite, engaging, and highly personalized follow-up message " \
+      "to encourage them to respond. Tailor the message to specifically reference what they were interested in. " \
+      "Do not use generic statements. Do not offer a handoff."
+    end
   end
 end

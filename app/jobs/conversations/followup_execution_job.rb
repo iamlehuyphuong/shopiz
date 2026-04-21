@@ -38,13 +38,18 @@ class Conversations::FollowupExecutionJob < ApplicationJob
     end
 
     action_type = followup_config['action_type']
+    attempt_count = conversation.custom_attributes['followup_count'].to_i
 
     if action_type == 'ai_assistant'
-      trigger_ai_assistant(conversation)
-    elsif action_type == 'macro' && followup_config['macro_id'].present?
-      trigger_macro(conversation, followup_config['macro_id'])
-    elsif action_type == 'predefined_message' && followup_config['predefined_message'].present?
-      trigger_predefined_message(conversation, followup_config['predefined_message'])
+      trigger_ai_assistant(conversation, attempt_count)
+    elsif action_type == 'macro'
+      macros_list = followup_config['macros'] || []
+      macro_id = macros_list[attempt_count].presence || followup_config['macro_id']
+      trigger_macro(conversation, macro_id, attempt_count) if macro_id.present?
+    elsif action_type == 'predefined_message'
+      messages_list = followup_config['predefined_messages'] || []
+      content = messages_list[attempt_count].presence || followup_config['predefined_message']
+      trigger_predefined_message(conversation, content, attempt_count) if content.present?
     end
   end
 
@@ -78,7 +83,7 @@ class Conversations::FollowupExecutionJob < ApplicationJob
     conversation.messages.where(message_type: 'outgoing').where('created_at > ?', timestamp).exists?
   end
 
-  def trigger_ai_assistant(conversation)
+  def trigger_ai_assistant(conversation, attempt_count)
     inbox = conversation.inbox
     assistant = inbox.agent_bot || conversation.account.agent_bots.first
     
@@ -87,18 +92,25 @@ class Conversations::FollowupExecutionJob < ApplicationJob
       return
     end
 
-    Captain::Conversation::FollowupBuilderJob.perform_later(conversation, assistant)
+    # Increment count immediately so the next followup knows it's attempt_count + 1
+    conversation.custom_attributes['followup_count'] = attempt_count + 1
+    conversation.save!
+
+    Captain::Conversation::FollowupBuilderJob.perform_later(conversation, assistant, attempt_count)
   end
 
-  def trigger_macro(conversation, macro_id)
+  def trigger_macro(conversation, macro_id, attempt_count)
     macro = conversation.account.macros.find_by(id: macro_id)
     return unless macro
 
+    conversation.custom_attributes['followup_count'] = attempt_count + 1
+    conversation.save!
+
     Macros::ExecutionService.new(macro, nil, conversation).perform
   end
-  def trigger_predefined_message(conversation, content)
-    count = conversation.custom_attributes['followup_count'].to_i + 1
-    conversation.custom_attributes['followup_count'] = count
+
+  def trigger_predefined_message(conversation, content, attempt_count)
+    conversation.custom_attributes['followup_count'] = attempt_count + 1
     conversation.save!
 
     # Create the automated message using MessageBuilder to fire appropriate integrations

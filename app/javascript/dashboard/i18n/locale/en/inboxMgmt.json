@@ -896,6 +896,8 @@
       "AUTO_FOLLOWUP_PREDEFINED_MESSAGE": "Message for attempt",
       "AUTO_FOLLOWUP_MACRO_SELECT": "Select macro for attempt",
       "AUTO_FOLLOWUP_MACRO_EMPTY": "Please select a macro",
+      "AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_LABEL": "AI Strategy for attempt",
+      "AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_PLACEHOLDER": "E.g: Offer a 10% discount if the customer is hesitating. Leave blank to use default system instruction.",
       "AUTO_FOLLOWUP_AI_HINT": "Note: Make sure your AI Assistant configuration (Features > AI Assistant Config) includes instructions on how to create follow-up content.",
       "AUTO_FOLLOWUP_LIMIT_WARNING": "Warning: Channel platforms limit message reachouts after 24h/48h. Any scheduled attempt falling beyond connection thresholds will gracefully be discarded.",
       "AUTO_ASSIGNMENT": "Enable auto assignment",
