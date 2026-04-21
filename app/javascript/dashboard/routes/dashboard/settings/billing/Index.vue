@@ -109,7 +109,9 @@ const isVietnamese = computed(() => {
 });
 
 const currentPlanObject = computed(() => {
-  const pId = currentSubscription.value.plan_id || customAttributes.value.stripe_product_id;
+  const pId =
+    currentSubscription.value.plan_id ||
+    customAttributes.value.stripe_product_id;
   if (!pId) return null;
   const plans = [];
   if (trialPlan.value) plans.push(trialPlan.value);
@@ -153,7 +155,9 @@ const subscriptionRenewsOn = computed(() => {
   if (!endDateStr) return '';
 
   const endDate = new Date(endDateStr);
-  return isVietnamese.value ? format(endDate, 'dd/MM/yyyy') : format(endDate, 'dd MMM, yyyy');
+  return isVietnamese.value
+    ? format(endDate, 'dd/MM/yyyy')
+    : format(endDate, 'dd MMM, yyyy');
 });
 
 const daysUntilRefresh = computed(() => {
@@ -246,27 +250,31 @@ const globalAiIncluded = ref(false);
 const durationTabs = computed(() => [
   { value: 180, label: isVietnamese.value ? '6 Tháng' : '6 Months' },
   { value: 365, label: isVietnamese.value ? '1 Năm' : '1 Year' },
-  { value: 730, label: isVietnamese.value ? '2 Năm' : '2 Years' }
+  { value: 730, label: isVietnamese.value ? '2 Năm' : '2 Years' },
 ]);
 
-const selectDuration = (val) => {
+const selectDuration = val => {
   globalDuration.value = val;
 };
 
-watch(() => allVisibleTiers.value, (tiers) => {
-  const cPlanId = currentSubscription.value.plan_id;
-  if (!cPlanId || !tiers) return;
-  for(const tier of tiers) {
-    if(tier.packages) {
-      const match = tier.packages.find(p => p.id === cPlanId);
-      if(match) {
-        globalDuration.value = match.duration_days;
-        globalAiIncluded.value = !!match.ai_included;
-        break;
+watch(
+  () => allVisibleTiers.value,
+  tiers => {
+    const cPlanId = currentSubscription.value.plan_id;
+    if (!cPlanId || !tiers) return;
+    for (const tier of tiers) {
+      if (tier.packages) {
+        const match = tier.packages.find(p => p.id === cPlanId);
+        if (match) {
+          globalDuration.value = match.duration_days;
+          globalAiIncluded.value = !!match.ai_included;
+          break;
+        }
       }
     }
-  }
-}, { immediate: true });
+  },
+  { immediate: true }
+);
 
 onMounted(fetchAccountDetails);
 </script>
@@ -443,13 +451,19 @@ onMounted(fetchAccountDetails);
             class="flex flex-col items-center justify-center mb-8 px-8"
           >
             <!-- Duration Tabs -->
-            <div class="inline-flex bg-n-solid-2 border border-n-weak rounded-xl p-1 mb-6 shadow-sm">
+            <div
+              class="inline-flex bg-n-solid-2 border border-n-weak rounded-xl p-1 mb-6 shadow-sm"
+            >
               <button
                 v-for="tab in durationTabs"
                 :key="tab.value"
                 type="button"
                 class="px-8 py-2 text-[14px] font-semibold rounded-lg transition-all duration-200"
-                :class="globalDuration === tab.value ? 'bg-n-orange text-white shadow' : 'text-n-slate-11 hover:text-n-slate-12'"
+                :class="
+                  globalDuration === tab.value
+                    ? 'bg-n-orange text-white shadow'
+                    : 'text-n-slate-11 hover:text-n-slate-12'
+                "
                 @click="selectDuration(tab.value)"
               >
                 {{ tab.label }}
@@ -464,7 +478,11 @@ onMounted(fetchAccountDetails);
               <Switch v-model="globalAiIncluded" />
             </div>
             <p class="text-xs text-n-slate-10 text-center max-w-md mt-1">
-              {{ isVietnamese ? 'Kích hoạt tuỳ chọn này nếu bạn muốn hệ thống trang bị trợ lý ảo siêu việt hỗ trợ bạn trả lời tin nhắn.' : 'Enable this option if you want to equip the system with a super virtual assistant to help you reply to messages.' }}
+              {{
+                isVietnamese
+                  ? 'Kích hoạt tuỳ chọn này nếu bạn muốn hệ thống trang bị trợ lý ảo siêu việt hỗ trợ bạn trả lời tin nhắn.'
+                  : 'Enable this option if you want to equip the system with a super virtual assistant to help you reply to messages.'
+              }}
             </p>
           </div>
 
@@ -495,8 +513,6 @@ onMounted(fetchAccountDetails);
           >
             <template v-for="addon in allAddonPackages" :key="addon.id">
               <CreditItem :credit-item="addon">
-
-
                 <ButtonV4
                   md
                   solid

@@ -11,12 +11,12 @@ const props = defineProps({
 
 <template>
   <svg
+    v-if="!active"
     width="24"
     height="25"
     viewBox="0 0 24 25"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    v-if="!active"
   >
     <path
       d="M8.5 14.9134H15.5M8.5 9.91336H12"
@@ -34,12 +34,12 @@ const props = defineProps({
   </svg>
 
   <svg
+    v-else
     width="22"
     height="22"
     viewBox="0 0 22 22"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    v-else
   >
     <g id="Message">
       <path

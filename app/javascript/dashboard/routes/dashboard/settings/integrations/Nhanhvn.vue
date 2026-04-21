@@ -25,10 +25,7 @@ const accessToken = ref('');
 const businessId = ref('');
 const isSubmitting = ref(false);
 const formError = ref('');
-const integration = useFunctionGetter(
-  'integrations/getIntegration',
-  'nhanhvn'
-);
+const integration = useFunctionGetter('integrations/getIntegration', 'nhanhvn');
 const uiFlags = useMapGetter('integrations/getUIFlags');
 
 const integrationAction = computed(() => {
@@ -91,9 +88,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <SettingsLayout
-    :is-loading="!integrationLoaded || uiFlags.isCreatingNhanhvn"
-  >
+  <SettingsLayout :is-loading="!integrationLoaded || uiFlags.isCreatingNhanhvn">
     <template #header>
       <BaseSettingsHeader
         :title="$t('INTEGRATION_SETTINGS.NHANHVN.HEADER')"
@@ -142,9 +137,7 @@ onMounted(() => {
           <div class="flex flex-col gap-4">
             <Input
               v-model="appId"
-              :label="
-                t('INTEGRATION_SETTINGS.NHANHVN.CONNECT.APP_ID.LABEL')
-              "
+              :label="t('INTEGRATION_SETTINGS.NHANHVN.CONNECT.APP_ID.LABEL')"
               :placeholder="
                 t('INTEGRATION_SETTINGS.NHANHVN.CONNECT.APP_ID.PLACEHOLDER')
               "
@@ -163,9 +156,13 @@ onMounted(() => {
             />
             <Input
               v-model="businessId"
-              :label="t('INTEGRATION_SETTINGS.NHANHVN.CONNECT.BUSINESS_ID.LABEL')"
+              :label="
+                t('INTEGRATION_SETTINGS.NHANHVN.CONNECT.BUSINESS_ID.LABEL')
+              "
               :placeholder="
-                t('INTEGRATION_SETTINGS.NHANHVN.CONNECT.BUSINESS_ID.PLACEHOLDER')
+                t(
+                  'INTEGRATION_SETTINGS.NHANHVN.CONNECT.BUSINESS_ID.PLACEHOLDER'
+                )
               "
               :message="
                 !formError

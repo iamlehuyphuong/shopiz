@@ -252,10 +252,15 @@ export default {
               :alt="globalConfig.installationName"
               class="hidden w-auto h-7 dark:block"
             />
-            <h2 class="mt-6 text-2xl font-semibold text-n-slate-12 text-center md:text-left">
+            <h2
+              class="mt-6 text-2xl font-semibold text-n-slate-12 text-center md:text-left"
+            >
               {{ replaceInstallationName($t('LOGIN.TITLE')) }}
             </h2>
-            <p v-if="showSignupLink" class="mt-2 text-sm text-n-slate-11 text-center md:text-left">
+            <p
+              v-if="showSignupLink"
+              class="mt-2 text-sm text-n-slate-11 text-center md:text-left"
+            >
               {{ $t('LOGIN.CREATE_NEW_ACCOUNT_LABEL') || 'New here?' }}
               <router-link
                 class="text-n-orange-10 font-medium hover:text-n-orange-11"
@@ -330,7 +335,10 @@ export default {
                   :has-error="v$.credentials.password.$error"
                   @input="v$.credentials.password.$touch"
                 >
-                  <p v-if="!globalConfig.disableUserProfileUpdate" class="text-right">
+                  <p
+                    v-if="!globalConfig.disableUserProfileUpdate"
+                    class="text-right"
+                  >
                     <router-link
                       to="auth/reset/password"
                       class="text-sm text-link"
@@ -358,9 +366,7 @@ export default {
           </section>
         </div>
       </div>
-      <Testimonials
-        class="flex-1 hidden xl:flex"
-      />
+      <Testimonials class="flex-1 hidden xl:flex" />
     </div>
   </div>
 </template>

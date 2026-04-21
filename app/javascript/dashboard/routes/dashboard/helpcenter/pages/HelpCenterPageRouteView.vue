@@ -75,7 +75,10 @@ watch(
       v-if="isHelpCenterEnabled"
       class="flex flex-1 h-full px-0 overflow-hidden bg-n-surface-1"
     >
-      <div v-if="!isReady" class="flex items-center justify-center w-full h-full text-n-slate-11">
+      <div
+        v-if="!isReady"
+        class="flex items-center justify-center w-full h-full text-n-slate-11"
+      >
         <Spinner />
       </div>
       <router-view v-else />

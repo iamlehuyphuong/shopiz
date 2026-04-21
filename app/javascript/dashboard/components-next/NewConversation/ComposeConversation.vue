@@ -233,7 +233,7 @@ const requestFriend = async ({ payload }) => {
     );
     return false; // Return failure
   }
-}
+};
 
 const toggle = () => {
   showComposeNewConversation.value = !showComposeNewConversation.value;

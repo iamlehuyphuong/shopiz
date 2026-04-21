@@ -18,6 +18,7 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(['completed']);
 const store = useStore();
 const { currentAccount } = useAccount();
 const { t } = useI18n();
@@ -44,29 +45,54 @@ onMounted(() => {
 });
 
 const industryOptions = computed(() => [
-  { label: t('REGISTER.ONBOARDING.INDUSTRY.OPTIONS.FASHION'), value: 'fashion_accessories' },
-  { label: t('REGISTER.ONBOARDING.INDUSTRY.OPTIONS.HEALTH_BEAUTY'), value: 'health_beauty' },
+  {
+    label: t('REGISTER.ONBOARDING.INDUSTRY.OPTIONS.FASHION'),
+    value: 'fashion_accessories',
+  },
+  {
+    label: t('REGISTER.ONBOARDING.INDUSTRY.OPTIONS.HEALTH_BEAUTY'),
+    value: 'health_beauty',
+  },
   { label: t('REGISTER.ONBOARDING.INDUSTRY.OPTIONS.F_B'), value: 'f_b' },
-  { label: t('REGISTER.ONBOARDING.INDUSTRY.OPTIONS.TECH'), value: 'technology' },
+  {
+    label: t('REGISTER.ONBOARDING.INDUSTRY.OPTIONS.TECH'),
+    value: 'technology',
+  },
   { label: t('REGISTER.ONBOARDING.INDUSTRY.OPTIONS.OTHER'), value: 'other' },
 ]);
 
 const companySizeOptions = computed(() => [
-  { label: t('REGISTER.ONBOARDING.COMPANY_SIZE.OPTIONS.SIZE_1_5'), value: '1_5' },
-  { label: t('REGISTER.ONBOARDING.COMPANY_SIZE.OPTIONS.SIZE_6_20'), value: '6_20' },
-  { label: t('REGISTER.ONBOARDING.COMPANY_SIZE.OPTIONS.SIZE_21_50'), value: '21_50' },
-  { label: t('REGISTER.ONBOARDING.COMPANY_SIZE.OPTIONS.SIZE_50_PLUS'), value: '50_plus' },
+  {
+    label: t('REGISTER.ONBOARDING.COMPANY_SIZE.OPTIONS.SIZE_1_5'),
+    value: '1_5',
+  },
+  {
+    label: t('REGISTER.ONBOARDING.COMPANY_SIZE.OPTIONS.SIZE_6_20'),
+    value: '6_20',
+  },
+  {
+    label: t('REGISTER.ONBOARDING.COMPANY_SIZE.OPTIONS.SIZE_21_50'),
+    value: '21_50',
+  },
+  {
+    label: t('REGISTER.ONBOARDING.COMPANY_SIZE.OPTIONS.SIZE_50_PLUS'),
+    value: '50_plus',
+  },
 ]);
 
 const sourceOptions = computed(() => [
-  { label: t('REGISTER.ONBOARDING.SOURCE.OPTIONS.FACEBOOK'), value: 'facebook' },
+  {
+    label: t('REGISTER.ONBOARDING.SOURCE.OPTIONS.FACEBOOK'),
+    value: 'facebook',
+  },
   { label: t('REGISTER.ONBOARDING.SOURCE.OPTIONS.TIKTOK'), value: 'tiktok' },
   { label: t('REGISTER.ONBOARDING.SOURCE.OPTIONS.GOOGLE'), value: 'google' },
-  { label: t('REGISTER.ONBOARDING.SOURCE.OPTIONS.REFERRAL'), value: 'referral' },
+  {
+    label: t('REGISTER.ONBOARDING.SOURCE.OPTIONS.REFERRAL'),
+    value: 'referral',
+  },
   { label: t('REGISTER.ONBOARDING.SOURCE.OPTIONS.OTHER'), value: 'other' },
 ]);
-
-const emit = defineEmits(['completed']);
 
 const submit = async () => {
   v$.value.$touch();
@@ -93,15 +119,20 @@ const submit = async () => {
 </script>
 
 <template>
-  <Modal 
-    :show="show" 
-    :close-on-backdrop-click="false" 
+  <Modal
+    :show="show"
+    :close-on-backdrop-click="false"
     :show-close-button="false"
   >
     <div class="px-2 pb-2 pt-6 flex flex-col gap-6">
       <div class="text-center">
-        <h2 class="text-2xl font-semibold text-n-slate-12 mb-2">Chào mừng đến với Shopiz 👋</h2>
-        <p class="text-n-slate-11">Hãy cung cấp thêm một số thông tin cơ bản để chúng tôi phục vụ bạn tốt hơn!</p>
+        <h2 class="text-2xl font-semibold text-n-slate-12 mb-2">
+          Chào mừng đến với Shopiz 👋
+        </h2>
+        <p class="text-n-slate-11">
+          Hãy cung cấp thêm một số thông tin cơ bản để chúng tôi phục vụ bạn tốt
+          hơn!
+        </p>
       </div>
 
       <form class="space-y-4" @submit.prevent="submit">
@@ -131,9 +162,12 @@ const submit = async () => {
               :class="[
                 industry === option.value
                   ? 'bg-n-orange border-n-orange text-white shadow-sm'
-                  : 'bg-n-alpha-black2 border-n-strong text-n-slate-11 hover:bg-n-alpha-black3 hover:text-n-slate-12'
+                  : 'bg-n-alpha-black2 border-n-strong text-n-slate-11 hover:bg-n-alpha-black3 hover:text-n-slate-12',
               ]"
-              @click="industry = option.value; v$.industry.$touch()"
+              @click="
+                industry = option.value;
+                v$.industry.$touch();
+              "
             >
               {{ option.label }}
             </button>
@@ -155,9 +189,12 @@ const submit = async () => {
               :class="[
                 companySize === option.value
                   ? 'bg-n-orange border-n-orange text-white shadow-sm'
-                  : 'bg-n-alpha-black2 border-n-strong text-n-slate-11 hover:bg-n-alpha-black3 hover:text-n-slate-12'
+                  : 'bg-n-alpha-black2 border-n-strong text-n-slate-11 hover:bg-n-alpha-black3 hover:text-n-slate-12',
               ]"
-              @click="companySize = option.value; v$.companySize.$touch()"
+              @click="
+                companySize = option.value;
+                v$.companySize.$touch();
+              "
             >
               {{ option.label }}
             </button>
@@ -179,15 +216,18 @@ const submit = async () => {
               :class="[
                 source === option.value
                   ? 'bg-n-orange border-n-orange text-white shadow-sm'
-                  : 'bg-n-alpha-black2 border-n-strong text-n-slate-11 hover:bg-n-alpha-black3 hover:text-n-slate-12'
+                  : 'bg-n-alpha-black2 border-n-strong text-n-slate-11 hover:bg-n-alpha-black3 hover:text-n-slate-12',
               ]"
-              @click="source = option.value; v$.source.$touch()"
+              @click="
+                source = option.value;
+                v$.source.$touch();
+              "
             >
               {{ option.label }}
             </button>
           </div>
         </WithLabel>
-        
+
         <div class="pt-4">
           <NextButton
             lg

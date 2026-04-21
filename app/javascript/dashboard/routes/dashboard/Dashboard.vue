@@ -43,7 +43,9 @@ export default {
     FloatingCallWidget,
     MobileSidebarLauncher,
     FeatureLockOverlay,
-    OnboardingModal: defineAsyncComponent(() => import('dashboard/components/app/OnboardingModal.vue')),
+    OnboardingModal: defineAsyncComponent(
+      () => import('dashboard/components/app/OnboardingModal.vue')
+    ),
   },
   setup() {
     const upgradePageRef = ref(null);
@@ -64,7 +66,7 @@ export default {
     const { currentAccount } = useAccount();
     const shouldShowOnboardingModal = computed(() => {
       if (!isAppReady.value) return false;
-      
+
       const account = currentAccount.value || {};
       if (!account.id) return false; // wait until fully loaded
 

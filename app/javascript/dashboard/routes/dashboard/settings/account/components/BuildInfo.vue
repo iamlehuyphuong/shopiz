@@ -35,7 +35,9 @@ const hasAnUpdateAvailable = computed(() => {
     </div>
     <div class="flex items-center justify-center divide-x divide-n-slate-9">
       <span class="px-2">{{
-        t('GENERAL_SETTINGS.VERSION', { version: globalConfig.appVersion || '1.0.0' })
+        t('GENERAL_SETTINGS.VERSION', {
+          version: globalConfig.appVersion || '1.0.0',
+        })
       }}</span>
       <span v-if="globalConfig.gitSha" class="px-2">
         Commit ID: {{ globalConfig.gitSha.slice(-9) }}

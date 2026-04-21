@@ -29,7 +29,7 @@ const ALL_CHANNEL_ICONS = [
   'i-woot-outlook',
   'i-ri-tiktok-fill',
   'i-ri-zalo-oa-fill',
-  'i-ri-zalo-fill'
+  'i-ri-zalo-fill',
 ];
 
 const createFlowSteps = computed(() => {

@@ -25,9 +25,7 @@ const autoReplyToComments = ref(false);
 const autoReplyMessage = ref('');
 const isUpdating = ref(false);
 
-const providerConfig = computed(
-  () => props.inbox.provider_config || {}
-);
+const providerConfig = computed(() => props.inbox.provider_config || {});
 
 // When "hide all" is toggled on, force-off the granular rules
 watch(hideComments, newVal => {
@@ -75,8 +73,7 @@ async function updateSettings() {
     useAlert(t('INBOX_MGMT.POSTS_AND_COMMENTS.API.SUCCESS_MESSAGE'));
   } catch (error) {
     useAlert(
-      error.message ||
-        t('INBOX_MGMT.POSTS_AND_COMMENTS.API.ERROR_MESSAGE')
+      error.message || t('INBOX_MGMT.POSTS_AND_COMMENTS.API.ERROR_MESSAGE')
     );
   } finally {
     isUpdating.value = false;
@@ -97,16 +94,10 @@ async function updateSettings() {
 
     <!-- Comment Moderation Section -->
     <SettingsAccordion
-      :title="
-        $t('INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.TITLE')
-      "
+      :title="$t('INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.TITLE')"
     >
       <p class="text-sm text-n-slate-11 mb-4">
-        {{
-          $t(
-            'INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.DESCRIPTION'
-          )
-        }}
+        {{ $t('INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.DESCRIPTION') }}
       </p>
 
       <SettingsToggleSection
@@ -115,9 +106,7 @@ async function updateSettings() {
           $t('INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.HIDE_ALL')
         "
         :description="
-          $t(
-            'INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.HIDE_ALL_HELP'
-          )
+          $t('INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.HIDE_ALL_HELP')
         "
       />
 
@@ -125,9 +114,7 @@ async function updateSettings() {
         <SettingsToggleSection
           v-model="hidePhoneComments"
           :header="
-            $t(
-              'INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.HIDE_PHONE'
-            )
+            $t('INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.HIDE_PHONE')
           "
           :description="
             $t(
@@ -141,9 +128,7 @@ async function updateSettings() {
         <SettingsToggleSection
           v-model="hideEmailComments"
           :header="
-            $t(
-              'INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.HIDE_EMAIL'
-            )
+            $t('INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.HIDE_EMAIL')
           "
           :description="
             $t(
@@ -164,9 +149,7 @@ async function updateSettings() {
 
       <SettingsToggleSection
         v-model="autoReplyToComments"
-        :header="
-          $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.ENABLE')
-        "
+        :header="$t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.ENABLE')"
         :description="
           $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.ENABLE_HELP')
         "
@@ -174,26 +157,19 @@ async function updateSettings() {
 
       <SettingsFieldSection
         v-if="autoReplyToComments"
-        :label="
-          $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.MESSAGE_LABEL')
-        "
+        :label="$t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.MESSAGE_LABEL')"
       >
         <textarea
           v-model="autoReplyMessage"
           class="w-full min-h-[100px] rounded-lg border border-n-weak p-3 text-sm text-n-slate-12 bg-n-alpha-white placeholder:text-n-slate-9 focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-n-orange-9 resize-y"
           :placeholder="
-            $t(
-              'INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.MESSAGE_PLACEHOLDER'
-            )
+            $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.MESSAGE_PLACEHOLDER')
           "
           rows="4"
         />
       </SettingsFieldSection>
 
-      <p
-        v-if="autoReplyToComments"
-        class="text-xs text-n-slate-10 mt-2 italic"
-      >
+      <p v-if="autoReplyToComments" class="text-xs text-n-slate-10 mt-2 italic">
         {{ $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.NOTE') }}
       </p>
     </SettingsAccordion>

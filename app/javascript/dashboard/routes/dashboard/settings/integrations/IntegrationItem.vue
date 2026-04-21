@@ -59,11 +59,13 @@ const actionURL = computed(() =>
           :alt="name"
         />
       </div>
-      <div class="flex items-center justify-center h-6 w-6 rounded-full bg-n-slate-5 dark:bg-n-slate-6">
+      <div
+        class="flex items-center justify-center h-6 w-6 rounded-full bg-n-slate-5 dark:bg-n-slate-6"
+      >
         <span class="i-lucide-check text-white size-3.5" />
       </div>
     </div>
-    
+
     <div class="flex flex-col flex-1">
       <div class="flex items-center justify-between gap-3 mb-2">
         <h3 class="text-base font-medium text-n-slate-12 leading-tight">

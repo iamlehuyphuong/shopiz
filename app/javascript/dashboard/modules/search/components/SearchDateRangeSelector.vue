@@ -143,7 +143,8 @@ const clearCustomRange = () => {
   customTo.value = '';
 };
 
-const formatDate = timestamp => format(fromUnixTime(timestamp), t('GENERAL.DATE_FORMAT'));
+const formatDate = timestamp =>
+  format(fromUnixTime(timestamp), t('GENERAL.DATE_FORMAT'));
 
 const selectedLabel = computed(() => {
   const prefix = t('SEARCH.DATE_RANGE.TIME_RANGE');

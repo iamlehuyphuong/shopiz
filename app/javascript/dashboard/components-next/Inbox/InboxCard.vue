@@ -215,7 +215,8 @@ onBeforeMount(contextMenuActions.close);
           :conversation="primaryActor"
           class="[&>span]:text-xs"
           :class="
-            !isUnread && '[&>span]:text-n-slate-11 [&>div>svg]:fill-current [&>div>svg]:text-n-slate-11'
+            !isUnread &&
+            '[&>span]:text-n-slate-11 [&>div>svg]:fill-current [&>div>svg]:text-n-slate-11'
           "
         />
         <div v-if="hasSlaThreshold" class="w-px h-3 rounded-sm bg-n-slate-4" />

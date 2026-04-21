@@ -197,7 +197,7 @@ export default {
 @layer components {
   .box-shadow-blue {
     box-shadow:
-      0 0 0 1px #E06720,
+      0 0 0 1px #e06720,
       0 0 1px 2px #fde0c7;
   }
 

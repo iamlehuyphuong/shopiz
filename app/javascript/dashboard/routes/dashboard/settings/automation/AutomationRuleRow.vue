@@ -21,7 +21,8 @@ const emit = defineEmits(['toggle', 'edit', 'delete', 'clone']);
 
 const { t } = useI18n();
 
-const readableDate = date => messageStamp(new Date(date), t('GENERAL.DATE_FORMAT'));
+const readableDate = date =>
+  messageStamp(new Date(date), t('GENERAL.DATE_FORMAT'));
 const readableDateWithTime = date =>
   messageStamp(new Date(date), t('GENERAL.DATETIME_FORMAT'));
 

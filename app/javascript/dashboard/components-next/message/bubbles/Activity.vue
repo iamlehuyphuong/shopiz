@@ -9,7 +9,10 @@ const { t, te } = useI18n();
 const { content, createdAt, contentAttributes } = useMessageContext();
 
 const readableTime = computed(() =>
-  messageTimestamp(createdAt.value, t('GENERAL.DATETIME_FORMAT_WITH_SHORT_MONTH'))
+  messageTimestamp(
+    createdAt.value,
+    t('GENERAL.DATETIME_FORMAT_WITH_SHORT_MONTH')
+  )
 );
 
 const localizedContent = computed(() => {
@@ -23,13 +26,17 @@ const localizedContent = computed(() => {
     );
 
     if (te(frontendTranslationKey)) {
-      const translationValues = attrs.translation_values || attrs.translationValues || {};
-      
+      const translationValues =
+        attrs.translation_values || attrs.translationValues || {};
+
       // Convert camelCase keys back to snake_case just in case Axios intercepted them.
       // We expect `{user_name}` but interceptor might make it `{userName}`.
       const normalizedValues = {};
-      Object.keys(translationValues).forEach((key) => {
-        const snakeKey = key.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+      Object.keys(translationValues).forEach(key => {
+        const snakeKey = key.replace(
+          /[A-Z]/g,
+          letter => `_${letter.toLowerCase()}`
+        );
         normalizedValues[snakeKey] = translationValues[key];
         normalizedValues[key] = translationValues[key]; // Keep original as fallback
       });

@@ -82,5 +82,5 @@ const goBackToArticles = () => {
 </script>
 
 <template>
-  <LandingEditor/>
+  <LandingEditor />
 </template>

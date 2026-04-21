@@ -35,9 +35,7 @@ defineProps({
       <img :src="imageSrc" :alt="imageAlt" class="h-36 w-auto mx-auto" />
     </div>
     <div class="mt-auto">
-      <p
-        class="text-base text-n-slate-12 font-semibold tracking-[0.3px]"
-      >
+      <p class="text-base text-n-slate-12 font-semibold tracking-[0.3px]">
         {{ title }}
       </p>
       <p class="text-n-slate-11 text-sm">

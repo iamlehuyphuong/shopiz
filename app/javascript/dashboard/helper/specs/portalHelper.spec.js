@@ -26,9 +26,7 @@ describe('PortalHelper', () => {
       };
       expect(
         buildPortalArticleURL('handbook', 'culture', 'fr', 'article-slug')
-      ).toEqual(
-        'https://help.shopiz.pro/hc/handbook/articles/article-slug'
-      );
+      ).toEqual('https://help.shopiz.pro/hc/handbook/articles/article-slug');
       window.shopizConfig = {};
     });
 

@@ -50,19 +50,20 @@ const isVietnamese = computed({
     const localeToUse = uiSettings.value?.locale || locale.value || 'en';
     return localeToUse === 'vi';
   },
-  set: async (val) => {
+  set: async val => {
     try {
       const newLocale = val ? 'vi' : 'en';
       await store.dispatch('accounts/update', { locale: newLocale });
       await updateUISettings({ locale: newLocale });
       locale.value = newLocale;
-      
-      const rootProxy = instance?.root?.proxy || instance?.appContext?.config?.globalProperties;
+
+      const rootProxy =
+        instance?.root?.proxy || instance?.appContext?.config?.globalProperties;
       if (rootProxy && rootProxy.$i18n) {
         rootProxy.$i18n.locale = newLocale;
       }
     } catch {}
-  }
+  },
 });
 
 const languageItems = computed(() => [
@@ -79,10 +80,10 @@ const languageItems = computed(() => [
     label: 'Tiếng Việt',
     emoji: '🇻🇳',
     isSelected: isVietnamese.value,
-  }
+  },
 ]);
 
-const handleLanguageAction = (item) => {
+const handleLanguageAction = item => {
   if (item.action === 'languageSelect') {
     isVietnamese.value = item.value === 'vi';
     showLanguageDropdownDesktop.value = false;
@@ -124,9 +125,7 @@ onUnmounted(() => {
       />
       <!-- Logo + Workspace Switcher -->
       <div class="flex items-center gap-2">
-        <div
-          class="flex items-center justify-center flex-shrink-0 size-8"
-        >
+        <div class="flex items-center justify-center flex-shrink-0 size-8">
           <Logo class="size-8 text-brand-500" />
         </div>
         <div class="flex-shrink-0 w-px h-5 bg-n-strong mx-2" />
@@ -155,19 +154,27 @@ onUnmounted(() => {
       </div>
 
       <!-- Language Dropdown Desktop -->
-      <div v-on-click-outside="() => showLanguageDropdownDesktop = false" class="hidden md:block relative w-[140px]">
+      <div
+        v-on-click-outside="() => (showLanguageDropdownDesktop = false)"
+        class="hidden md:block relative w-[140px]"
+      >
         <button
           type="button"
           class="flex items-center justify-between w-full h-8 px-3 rounded-lg outline outline-1 outline-n-weak bg-n-solid-2 hover:bg-n-solid-3 dark:bg-n-black/30 dark:hover:bg-n-black/40 transition-colors"
           @click="showLanguageDropdownDesktop = !showLanguageDropdownDesktop"
         >
           <div class="flex items-center gap-2 overflow-hidden">
-            <span class="text-lg leading-none">{{ isVietnamese ? '🇻🇳' : '🇬🇧' }}</span>
+            <span class="text-lg leading-none">{{
+              isVietnamese ? '🇻🇳' : '🇬🇧'
+            }}</span>
             <span class="text-sm truncate pt-0.5 font-medium text-n-slate-12">
               {{ isVietnamese ? 'Tiếng Việt' : 'English' }}
             </span>
           </div>
-          <Icon icon="i-lucide-chevron-down" class="size-4 opacity-50 flex-shrink-0" />
+          <Icon
+            icon="i-lucide-chevron-down"
+            class="size-4 opacity-50 flex-shrink-0"
+          />
         </button>
         <DropdownMenu
           v-if="showLanguageDropdownDesktop"
@@ -189,19 +196,27 @@ onUnmounted(() => {
       </RouterLink>
 
       <!-- Language Dropdown Mobile -->
-      <div v-on-click-outside="() => showLanguageDropdownMobile = false" class="md:hidden relative w-[130px]">
+      <div
+        v-on-click-outside="() => (showLanguageDropdownMobile = false)"
+        class="md:hidden relative w-[130px]"
+      >
         <button
           type="button"
           class="flex items-center justify-between w-full h-8 px-2 rounded-lg outline outline-1 outline-n-weak bg-n-solid-2 hover:bg-n-solid-3 dark:bg-n-black/30 dark:hover:bg-n-black/40 transition-colors"
           @click="showLanguageDropdownMobile = !showLanguageDropdownMobile"
         >
           <div class="flex items-center gap-2 overflow-hidden">
-            <span class="text-lg leading-none">{{ isVietnamese ? '🇻🇳' : '🇬🇧' }}</span>
+            <span class="text-lg leading-none">{{
+              isVietnamese ? '🇻🇳' : '🇬🇧'
+            }}</span>
             <span class="text-sm truncate pt-0.5 font-medium text-n-slate-12">
               {{ isVietnamese ? 'Tiếng Việt' : 'English' }}
             </span>
           </div>
-          <Icon icon="i-lucide-chevron-down" class="size-4 opacity-50 flex-shrink-0" />
+          <Icon
+            icon="i-lucide-chevron-down"
+            class="size-4 opacity-50 flex-shrink-0"
+          />
         </button>
         <DropdownMenu
           v-if="showLanguageDropdownMobile"

@@ -167,8 +167,10 @@ export default {
           ghost
           :disabled="disabled || isEditorDisabled"
           :class="{
-            'text-[rgb(var(--violet-9))] hover:enabled:!bg-[rgb(var(--violet-3))]': !showCopilotMenu,
-            'text-[rgb(var(--violet-9))] bg-[rgb(var(--violet-3))]': showCopilotMenu,
+            'text-[rgb(var(--violet-9))] hover:enabled:!bg-[rgb(var(--violet-3))]':
+              !showCopilotMenu,
+            'text-[rgb(var(--violet-9))] bg-[rgb(var(--violet-3))]':
+              showCopilotMenu,
           }"
           sm
           icon="i-ph-sparkle-fill"

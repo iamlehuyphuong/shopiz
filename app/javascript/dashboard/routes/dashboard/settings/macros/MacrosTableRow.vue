@@ -48,7 +48,8 @@ const visibilityLabel = computed(() => {
           <Avatar
             :name="createdByName"
             :size="24"
-            branded rounded-full
+            branded
+            rounded-full
             class="flex-shrink-0"
           />
           <span class="text-body-main text-n-slate-12 truncate">
@@ -63,7 +64,8 @@ const visibilityLabel = computed(() => {
           <Avatar
             :name="updatedByName"
             :size="24"
-            branded rounded-full
+            branded
+            rounded-full
             class="flex-shrink-0"
           />
           <span class="text-body-main text-n-slate-12 truncate">

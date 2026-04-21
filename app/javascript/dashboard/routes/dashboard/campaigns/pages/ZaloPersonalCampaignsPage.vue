@@ -16,7 +16,8 @@ const { t } = useI18n();
 const getters = useStoreGetters();
 
 const selectedCampaign = ref(null);
-const [showZaloPersonalCampaignDialog, toggleZaloPersonalCampaignDialog] = useToggle();
+const [showZaloPersonalCampaignDialog, toggleZaloPersonalCampaignDialog] =
+  useToggle();
 
 const uiFlags = useMapGetter('campaigns/getUIFlags');
 const isFetchingCampaigns = computed(() => uiFlags.value.isFetching);
@@ -41,7 +42,6 @@ const handleEdit = campaign => {
   selectedCampaign.value = campaign;
   editZaloPersonalCampaignDialogRef.value.dialogRef.open();
 };
-
 </script>
 
 <template>

@@ -22,11 +22,12 @@ const localizedTitle = computed(() => {
   if (!isVietnamese && props.plan.name_en) return props.plan.name_en;
   return props.plan.name;
 });
-
 </script>
 
 <template>
-  <div class="trial-item rounded-xl shadow-sm border border-n-weak bg-n-solid-2 py-8 px-8">
+  <div
+    class="trial-item rounded-xl shadow-sm border border-n-weak bg-n-solid-2 py-8 px-8"
+  >
     <div class="grid grid-cols-2 gap-8">
       <div class="title">
         <span class="text-base font-medium text-n-slate-12">

@@ -152,7 +152,8 @@ export default {
             <span
               class="text-xs font-medium hover:text-n-orange truncate min-w-0 dark:hover:text-n-orange"
               :class="{
-                'text-n-orange-11 dark:text-n-orange-11': activeSort === option.key,
+                'text-n-orange-11 dark:text-n-orange-11':
+                  activeSort === option.key,
                 'text-n-slate-11': activeSort !== option.key,
               }"
             >

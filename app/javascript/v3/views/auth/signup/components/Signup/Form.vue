@@ -64,10 +64,7 @@ export default {
     ...mapGetters({ globalConfig: 'globalConfig/get' }),
     termsLink() {
       return this.$t('REGISTER.TERMS_ACCEPT')
-        .replace(
-          'https://www.shopiz.pro/terms',
-          this.globalConfig.termsURL
-        )
+        .replace('https://www.shopiz.pro/terms', this.globalConfig.termsURL)
         .replace(
           'https://www.shopiz.pro/privacy-policy',
           this.globalConfig.privacyURL
@@ -144,8 +141,11 @@ export default {
         this.resetCaptcha();
         return;
       }
-      
-      if (this.globalConfig.hCaptchaSiteKey && !this.credentials.hCaptchaClientResponse) {
+
+      if (
+        this.globalConfig.hCaptchaSiteKey &&
+        !this.credentials.hCaptchaClientResponse
+      ) {
         this.$refs.hCaptcha.execute();
         return;
       }

@@ -68,7 +68,12 @@ const unlinkIssue = () => {
     <div class="flex flex-col gap-2">
       <div class="flex items-center gap-2">
         <div v-if="assignee" class="flex items-center gap-1.5">
-          <Avatar :src="assignee.thumbnail" :name="assignee.name" :size="16" branded />
+          <Avatar
+            :src="assignee.thumbnail"
+            :name="assignee.name"
+            :size="16"
+            branded
+          />
           <span class="text-xs capitalize truncate text-n-slate-12">
             {{ assignee.name }}
           </span>

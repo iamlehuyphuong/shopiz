@@ -578,7 +578,11 @@ export default {
             :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_BIRTHDAY')"
           />
           <ContactInfoRow
-            :value="contact.gender_id ? $t(`CONTACT_PANEL.GENDERS.${contact.gender_id}`) : ''"
+            :value="
+              contact.gender_id
+                ? $t(`CONTACT_PANEL.GENDERS.${contact.gender_id}`)
+                : ''
+            "
             icon="person"
             :title="$t('CONTACT_PANEL.GENDER')"
             :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_GENDER')"
@@ -628,8 +632,8 @@ export default {
           v-if="contact.phone_number"
           :contact-id="String(contact.id)"
           is-modal
-          @close="closeComposeConversationModal"
           is-request-friend
+          @close="closeComposeConversationModal"
         >
           <template #trigger="{ toggle }">
             <NextButton

@@ -43,7 +43,7 @@ const emit = defineEmits([
   'addSignature',
   'removeSignature',
   'attachFile',
-  'addFriend'
+  'addFriend',
 ]);
 
 const { t } = useI18n();
@@ -287,7 +287,11 @@ useEventListener(document, 'paste', onPaste);
       <Button
         v-if="isRequestFriend"
         :label="t('COMPOSE_REQUEST_FRIEND.FORM.BUTTON')"
-        :disabled="isLoading || disableSendButton || !(hasSelectedInbox && isZaloPersonalInbox)"
+        :disabled="
+          isLoading ||
+          disableSendButton ||
+          !(hasSelectedInbox && isZaloPersonalInbox)
+        "
         :is-loading="isLoading"
         size="sm"
         class="!text-xs font-medium"

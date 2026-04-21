@@ -21,7 +21,15 @@ const integrationList = computed(
 const CATEGORIES = [
   {
     key: 'SHOP_SALES',
-    ids: ['shopify', 'woocommerce', 'kiotviet', 'haravan', 'sapo', 'nhanhvn', 'leadsquared'],
+    ids: [
+      'shopify',
+      'woocommerce',
+      'kiotviet',
+      'haravan',
+      'sapo',
+      'nhanhvn',
+      'leadsquared',
+    ],
   },
   {
     key: 'AI_AUTOMATION',

@@ -17,14 +17,16 @@ const localizedTitle = computed(() => {
   const localeToUse = uiSettings.value?.locale || locale.value || 'en';
   const isVietnamese = localeToUse === 'vi';
   if (isVietnamese && props.creditItem.name_vi) return props.creditItem.name_vi;
-  if (!isVietnamese && props.creditItem.name_en) return props.creditItem.name_en;
+  if (!isVietnamese && props.creditItem.name_en)
+    return props.creditItem.name_en;
   return props.creditItem.name;
 });
-
 </script>
 
 <template>
-  <div class="trial-item rounded-xl shadow-sm border border-n-weak bg-n-solid-2 py-8 px-8">
+  <div
+    class="trial-item rounded-xl shadow-sm border border-n-weak bg-n-solid-2 py-8 px-8"
+  >
     <div class="title text-center">
       <span class="text-base font-medium text-n-slate-12">
         {{ localizedTitle }}

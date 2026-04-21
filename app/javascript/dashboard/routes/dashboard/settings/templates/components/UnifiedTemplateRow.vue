@@ -116,7 +116,10 @@ const categoryIcon = computed(() => {
           class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium"
           :class="statusConfig.classes"
         >
-          <span class="w-1.5 h-1.5 rounded-full" :class="statusConfig.dotClass" />
+          <span
+            class="w-1.5 h-1.5 rounded-full"
+            :class="statusConfig.dotClass"
+          />
           {{ statusConfig.label }}
         </span>
       </div>

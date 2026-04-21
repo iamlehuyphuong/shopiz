@@ -510,14 +510,18 @@ const menuItems = computed(() => {
         'portals_categories_articles_edit',
         'portals_locales_index',
         'portals_settings_index',
-        'portals_new'
+        'portals_new',
       ],
       children: [
         {
           name: 'Articles',
           label: t('SIDEBAR.HELP_CENTER.ARTICLES'),
           icon: 'i-lucide-file-text',
-          activeOn: ['portals_articles_index', 'portals_articles_new', 'portals_articles_edit'],
+          activeOn: [
+            'portals_articles_index',
+            'portals_articles_new',
+            'portals_articles_edit',
+          ],
           to: accountScopedRoute('portals_index', {
             navigationPath: 'portals_articles_index',
           }),
@@ -529,7 +533,7 @@ const menuItems = computed(() => {
           activeOn: [
             'portals_categories_index',
             'portals_categories_articles_index',
-            'portals_categories_articles_edit'
+            'portals_categories_articles_edit',
           ],
           to: accountScopedRoute('portals_index', {
             navigationPath: 'portals_categories_index',

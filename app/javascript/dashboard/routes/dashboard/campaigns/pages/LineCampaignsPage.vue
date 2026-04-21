@@ -22,7 +22,9 @@ const isFetchingCampaigns = computed(() => uiFlags.value.isFetching);
 
 const confirmDeleteCampaignDialogRef = ref(null);
 
-const LineCampaigns = computed(() => getters['campaigns/getLineCampaigns'].value);
+const LineCampaigns = computed(
+  () => getters['campaigns/getLineCampaigns'].value
+);
 
 const hasNoLineCampaigns = computed(
   () => LineCampaigns.value?.length === 0 && !isFetchingCampaigns.value

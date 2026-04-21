@@ -64,7 +64,9 @@ const tiktokShopInboxes = computed(() =>
 // Normalize WhatsApp templates
 const normalizedWATemplates = computed(() =>
   waTemplates.value
-    .filter(tpl => !tpl.channel_type || tpl.channel_type === 'Channel::Whatsapp')
+    .filter(
+      tpl => !tpl.channel_type || tpl.channel_type === 'Channel::Whatsapp'
+    )
     .map(tpl => ({
       id: `wa-${tpl.id}`,
       originalId: tpl.id,
@@ -72,7 +74,8 @@ const normalizedWATemplates = computed(() =>
       source: 'whatsapp',
       channelType: 'Channel::Whatsapp',
       inboxId: tpl.inbox_id,
-      inboxName: whatsappInboxes.value.find(i => i.id === tpl.inbox_id)?.name || '',
+      inboxName:
+        whatsappInboxes.value.find(i => i.id === tpl.inbox_id)?.name || '',
       category: tpl.category,
       status: tpl.status,
       normalizedStatus: tpl.status,
@@ -92,7 +95,8 @@ const normalizedTiktokShopTemplates = computed(() =>
       source: 'tiktok_shop',
       channelType: 'Channel::TiktokShop',
       inboxId: tpl.inbox_id,
-      inboxName: tiktokShopInboxes.value.find(i => i.id === tpl.inbox_id)?.name || '',
+      inboxName:
+        tiktokShopInboxes.value.find(i => i.id === tpl.inbox_id)?.name || '',
       category: tpl.category,
       status: tpl.status,
       normalizedStatus: tpl.status,
@@ -194,7 +198,9 @@ const tiktokShopStatusGroups = computed(() => {
     {
       key: 'approved',
       label: t('SETTINGS.TEMPLATES.UNIFIED_STATUS.APPROVED'),
-      count: templates.filter(tp => tp.status === 'approved' || tp.status === 'active').length,
+      count: templates.filter(
+        tp => tp.status === 'approved' || tp.status === 'active'
+      ).length,
       barColor: 'bg-n-teal-9',
       textColor: 'text-n-teal-11',
     },
@@ -208,7 +214,9 @@ const tiktokShopStatusGroups = computed(() => {
     {
       key: 'rejected',
       label: t('SETTINGS.TEMPLATES.UNIFIED_STATUS.REJECTED'),
-      count: templates.filter(tp => tp.status === 'rejected' || tp.status === 'disabled').length,
+      count: templates.filter(
+        tp => tp.status === 'rejected' || tp.status === 'disabled'
+      ).length,
       barColor: 'bg-n-ruby-9',
       textColor: 'text-n-ruby-11',
     },
@@ -508,20 +516,32 @@ const syncAllTemplates = async () => {
     ];
 
     if (inboxesToSync.length === 0) {
-      useAlert(t('SETTINGS.TEMPLATES.SYNC_ERROR', 'Không tìm thấy kênh nào hỗ trợ đồng bộ mẫu.'));
+      useAlert(
+        t(
+          'SETTINGS.TEMPLATES.SYNC_ERROR',
+          'Không tìm thấy kênh nào hỗ trợ đồng bộ mẫu.'
+        )
+      );
       return;
     }
 
     // Trigger sync for all relevant inboxes concurrently
     await Promise.allSettled(
-      inboxesToSync.map(inbox => store.dispatch('inboxes/syncTemplates', inbox.id))
+      inboxesToSync.map(inbox =>
+        store.dispatch('inboxes/syncTemplates', inbox.id)
+      )
     );
 
     // Re-fetch templates
     await fetchWhatsAppTemplates();
     await fetchZaloTemplates();
 
-    useAlert(t('SETTINGS.TEMPLATES.SYNC_SUCCESS', 'Đã gởi yêu cầu đồng bộ cấu trúc mẫu thành công.'));
+    useAlert(
+      t(
+        'SETTINGS.TEMPLATES.SYNC_SUCCESS',
+        'Đã gởi yêu cầu đồng bộ cấu trúc mẫu thành công.'
+      )
+    );
   } catch (error) {
     useAlert(t('SETTINGS.TEMPLATES.SYNC_ERROR', 'Có lỗi khi đồng bộ mẫu.'));
   } finally {
@@ -550,7 +570,7 @@ onMounted(() => {
       <div class="relative flex items-center gap-2">
         <Button
           icon="i-lucide-refresh-cw"
-          :label="'Đồng bộ mẫu'"
+          label="Đồng bộ mẫu"
           :is-loading="isSyncing"
           color-scheme="secondary"
           @click="syncAllTemplates"
@@ -674,7 +694,7 @@ onMounted(() => {
         xs
         faded
         slate
-        :label="'Clear'"
+        label="Clear"
         @click="clearFilters"
       />
 

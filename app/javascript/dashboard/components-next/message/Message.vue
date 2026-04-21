@@ -281,7 +281,7 @@ const shouldGroupWithNext = computed(() => {
 
 const shouldShowAvatar = computed(() => {
   if (props.messageType === MESSAGE_TYPES.ACTIVITY) return false;
-  //if (orientation.value === ORIENTATION.LEFT) return false;
+  // if (orientation.value === ORIENTATION.LEFT) return false;
 
   return true;
 });
@@ -399,7 +399,7 @@ const contextMenuEnabledOptions = computed(() => {
       !props.private &&
       props.inboxSupportsReplyTo.outgoing &&
       !isFailedOrProcessing,
-    undo: props.canUndo
+    undo: props.canUndo,
   };
 });
 
@@ -590,7 +590,10 @@ provideMessageContext({
         <Component :is="componentToRender" :message="props" />
       </div>
       <div
-        v-if="Array.isArray(contentAttributes?.reactions) && contentAttributes.reactions.length"
+        v-if="
+          Array.isArray(contentAttributes?.reactions) &&
+          contentAttributes.reactions.length
+        "
         class="[grid-area:reaction] flex"
         :class="{
           'ltr:ml-8 rtl:mr-8 justify-end': orientation === ORIENTATION.LEFT,

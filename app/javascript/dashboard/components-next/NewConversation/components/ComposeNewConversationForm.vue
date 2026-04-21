@@ -53,7 +53,7 @@ const emit = defineEmits([
   'updateTargetInbox',
   'clearSelectedContact',
   'createConversation',
-  'requestFriend'
+  'requestFriend',
 ]);
 
 const DEFAULT_FORMATTING = 'Context::Default';
@@ -111,7 +111,11 @@ const effectiveChannelType = computed(() =>
 const validationRules = computed(() => ({
   selectedContact: { required },
   targetInbox: { required },
-  message: { required: requiredIf(!inboxTypes.value.isWhatsapp && !inboxTypes.value.isVoice) },
+  message: {
+    required: requiredIf(
+      !inboxTypes.value.isWhatsapp && !inboxTypes.value.isVoice
+    ),
+  },
   subject: { required: requiredIf(inboxTypes.value.isEmail) },
 }));
 
@@ -316,9 +320,8 @@ const handleRequestFriend = async () => {
     if (success) {
       clearForm();
     }
-  } catch (error) {
-  }
-}
+  } catch (error) {}
+};
 
 const handleSendWhatsappMessage = async ({ message, templateParams }) => {
   const whatsappMessagePayload = prepareWhatsAppMessagePayload({
@@ -434,7 +437,7 @@ useKeyboardEvents({
         :medium="targetInbox?.medium || ''"
         :copilot="copilot"
         :is-request-friend="isRequestFriend"
-    />
+      />
 
       <AttachmentPreviews
         v-if="state.attachedFiles.length > 0 && !inboxTypes.isVoice"

@@ -11,14 +11,15 @@ export const setColorTheme = isOSOnDarkMode => {
   ) {
     document.body.classList.add('dark');
     document.documentElement.style.setProperty('color-scheme', 'dark');
-    if(kanbanCss) {
-      kanbanCss.href = "https://cdn.syncfusion.com/ej2/30.1.37/tailwind3-dark.css"
+    if (kanbanCss) {
+      kanbanCss.href =
+        'https://cdn.syncfusion.com/ej2/30.1.37/tailwind3-dark.css';
     }
   } else {
     document.body.classList.remove('dark');
     document.documentElement.style.setProperty('color-scheme', 'light');
-    if(kanbanCss) {
-      kanbanCss.href = "https://cdn.syncfusion.com/ej2/30.1.37/tailwind3.css"
+    if (kanbanCss) {
+      kanbanCss.href = 'https://cdn.syncfusion.com/ej2/30.1.37/tailwind3.css';
     }
   }
 };

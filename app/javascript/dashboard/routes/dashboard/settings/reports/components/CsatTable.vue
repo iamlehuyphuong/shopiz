@@ -66,7 +66,10 @@ const tableData = computed(() => {
     conversationId: response.conversation_id,
     csatReviewNotes: response.csat_review_notes,
     createdAgo: dynamicTime(response.created_at),
-    createdAt: messageStamp(response.created_at, t('GENERAL.DATETIME_FORMAT_WITH_YEAR')),
+    createdAt: messageStamp(
+      response.created_at,
+      t('GENERAL.DATETIME_FORMAT_WITH_YEAR')
+    ),
     _original: response,
   }));
 });

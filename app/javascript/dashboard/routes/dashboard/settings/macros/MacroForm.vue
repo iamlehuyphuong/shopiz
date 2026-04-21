@@ -108,7 +108,9 @@ export default {
 </script>
 
 <template>
-  <div class="flex flex-col w-full ltr:pl-12 ltr:pr-6 rtl:pl-6 rtl:pr-12 h-full lg:flex-row">
+  <div
+    class="flex flex-col w-full ltr:pl-12 ltr:pr-6 rtl:pl-6 rtl:pr-12 h-full lg:flex-row"
+  >
     <div
       class="flex-1 w-full h-full max-h-full py-4 overflow-y-auto lg:w-auto macro-gradient-radial dark:macro-dark-gradient-radial macro-gradient-radial-size"
     >

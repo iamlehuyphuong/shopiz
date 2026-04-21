@@ -22,7 +22,9 @@ const isFetchingCampaigns = computed(() => uiFlags.value.isFetching);
 
 const confirmDeleteCampaignDialogRef = ref(null);
 
-const TelegramCampaigns = computed(() => getters['campaigns/getTelegramCampaigns'].value);
+const TelegramCampaigns = computed(
+  () => getters['campaigns/getTelegramCampaigns'].value
+);
 
 const hasNoTelegramCampaigns = computed(
   () => TelegramCampaigns.value?.length === 0 && !isFetchingCampaigns.value

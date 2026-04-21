@@ -173,9 +173,7 @@ export const getters = {
     );
   },
   getFacebookInboxes($state) {
-    return $state.records.filter(
-      item => item.channel_type === INBOX_TYPES.FB
-    );
+    return $state.records.filter(item => item.channel_type === INBOX_TYPES.FB);
   },
   getTelegramInboxes($state) {
     return $state.records.filter(

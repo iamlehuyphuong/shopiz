@@ -53,18 +53,21 @@ const displayGuidelines = computed(() =>
 const guidelinesExample = [
   {
     id: 1,
-    content:
-      t('Block queries that share or request sensitive personal information (e.g. phone numbers, passwords).'),
+    content: t(
+      'Block queries that share or request sensitive personal information (e.g. phone numbers, passwords).'
+    ),
   },
   {
     id: 2,
-    content:
-      t('Reject queries that include offensive, discriminatory, or threatening language.'),
+    content: t(
+      'Reject queries that include offensive, discriminatory, or threatening language.'
+    ),
   },
   {
     id: 3,
-    content:
-      t('Deflect when the assistant is asked for legal or medical diagnosis or treatment.'),
+    content: t(
+      'Deflect when the assistant is asked for legal or medical diagnosis or treatment.'
+    ),
   },
 ];
 

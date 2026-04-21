@@ -1002,27 +1002,24 @@ watch(conversationFilters, (newVal, oldVal) => {
       </Virtualizer>
       <div v-if="chatListLoading" class="flex justify-center my-4">
         <Spinner class="text-n-orange" />
-          </div>
-          <template v-else-if="showEndOfListMessage">
-            <div
-              v-if="showLoadHistoryConversation"
-              class="flex justify-center my-4"
-            >
-              <button
-                class="conversation-load-more bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full dark:hover:bg-gray-700"
-                @click="onClickLoadHistoryConversation"
-              >
-                <span class="i-lucide-chevron-down" />
-                {{ $t('CHAT_LIST.LOAD_MORE') }}
-              </button>
-        </div>
-        <p
-          v-else
-          class="p-4 text-center text-slate-400 dark:text-slate-300"
+      </div>
+      <template v-else-if="showEndOfListMessage">
+        <div
+          v-if="showLoadHistoryConversation"
+          class="flex justify-center my-4"
         >
+          <button
+            class="conversation-load-more bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full dark:hover:bg-gray-700"
+            @click="onClickLoadHistoryConversation"
+          >
+            <span class="i-lucide-chevron-down" />
+            {{ $t('CHAT_LIST.LOAD_MORE') }}
+          </button>
+        </div>
+        <p v-else class="p-4 text-center text-slate-400 dark:text-slate-300">
           {{ $t('CHAT_LIST.EOF') }}
         </p>
-          </template>
+      </template>
 
       <IntersectionObserver
         v-else

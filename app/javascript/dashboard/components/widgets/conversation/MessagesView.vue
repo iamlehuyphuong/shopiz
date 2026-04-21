@@ -413,8 +413,8 @@ export default {
       const action = isLoadMore
         ? 'fetchPreviousMessages'
         : isLoadMoreHistory
-        ? 'fetchHistoryMessages'
-        : null;
+          ? 'fetchHistoryMessages'
+          : null;
       if (!action) return;
 
       const payload = {

@@ -328,19 +328,21 @@ const deleteConversation = () => {
           class="conversation--status text-white text-xxs font-medium leading-4 py-1 px-2 rounded-lg border border-solid border-n-strong text-n-slate-10 bg-n-slate-1 text-ellipsis overflow-hidden whitespace-nowrap"
           :class="chat.status"
         >
-          {{ $t(`CHAT_LIST.CHAT_STATUS_FILTER_ITEMS.${props.chat.status}.TEXT`) }}
+          {{
+            $t(`CHAT_LIST.CHAT_STATUS_FILTER_ITEMS.${props.chat.status}.TEXT`)
+          }}
         </span>
         <div
           v-if="currentContact.phone_number"
           class="inline-flex items-center justify-center size-6 bg-n-orange rounded-md"
         >
-          <span class="i-lucide-phone text-white size-3"></span>
+          <span class="i-lucide-phone text-white size-3" />
         </div>
         <div
           v-if="currentContact.email"
           class="inline-flex items-center justify-center size-6 bg-n-orange rounded-md"
         >
-          <span class="i-lucide-mail text-white size-3"></span>
+          <span class="i-lucide-mail text-white size-3" />
         </div>
       </div>
       <div class="flex items-center gap-2">
@@ -444,6 +446,7 @@ const deleteConversation = () => {
     </ContextMenu>
   </div>
 </template>
+
 <style lang="scss" scoped>
 .conversation--status {
   &.bot {

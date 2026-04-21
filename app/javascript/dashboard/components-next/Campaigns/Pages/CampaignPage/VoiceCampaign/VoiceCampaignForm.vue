@@ -183,7 +183,7 @@ const handleSubmit = async () => {
         class="[&>div>button]:bg-n-alpha-black2 [&>div>button:not(.focused)]:dark:outline-n-weak [&>div>button:not(.focused)]:hover:!outline-n-slate-6"
       />
     </div>
-    
+
     <div class="flex flex-col gap-1">
       <label for="sender" class="mb-0.5 text-sm font-medium text-n-slate-12">
         {{ t('CAMPAIGN.VOICE.CREATE.FORM.SENT_BY.LABEL') }}
