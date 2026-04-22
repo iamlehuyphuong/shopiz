@@ -45,11 +45,14 @@ class Channel::Instagram < ApplicationRecord
     'Instagram'
   end
 
-  def create_contact_inbox(instagram_id, name)
+  def create_contact_inbox(instagram_id, name, avatar_url: nil)
+    attrs = { name: name }
+    attrs[:avatar_url] = avatar_url if avatar_url.present?
+
     @contact_inbox = ::ContactInboxWithContactBuilder.new({
                                                             source_id: instagram_id,
                                                             inbox: inbox,
-                                                            contact_attributes: { name: name }
+                                                            contact_attributes: attrs
                                                           }).perform
   end
 

@@ -1,6 +1,7 @@
 class Conversations::LoadMoreHistoryService
   SERVICES = {
-    'Channel::FacebookPage' => ::Facebook::LoadHistoryConversationService
+    'Channel::FacebookPage' => ::Facebook::LoadHistoryConversationService,
+    'Channel::Instagram' => ::Instagram::LoadHistoryConversationService
   }.freeze
 
   def initialize(inbox)

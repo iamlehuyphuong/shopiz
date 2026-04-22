@@ -48,7 +48,12 @@ class Inbox < ApplicationRecord
   include AccountCacheRevalidator
   include InboxAgentAvailability
 
-  ENABLE_LOAD_HISTORY_CONVERSATION = ['Channel::FacebookPage'].freeze
+  ENABLE_LOAD_HISTORY_CONVERSATION = ['Channel::FacebookPage', 'Channel::Instagram'].freeze
+
+  LOAD_HISTORY_CONVERSATION_SERVICES = {
+    'Channel::FacebookPage' => 'Facebook::LoadHistoryConversationService',
+    'Channel::Instagram' => 'Instagram::LoadHistoryConversationService'
+  }.freeze
 
   # Not allowing characters:
   validates :name, presence: true
@@ -261,7 +266,10 @@ class Inbox < ApplicationRecord
   def auto_load_old_conversation
     return if ENABLE_LOAD_HISTORY_CONVERSATION.exclude?(channel.class.to_s)
 
-    ::Facebook::LoadHistoryConversationService.new(self).perform
+    service_class_name = LOAD_HISTORY_CONVERSATION_SERVICES[channel.class.to_s]
+    return if service_class_name.blank?
+
+    service_class_name.constantize.new(self).perform
   end
 end
 

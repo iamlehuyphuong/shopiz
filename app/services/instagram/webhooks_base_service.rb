@@ -13,18 +13,16 @@ class Instagram::WebhooksBaseService
 
   def find_or_create_contact(user)
     @contact_inbox = @inbox.contact_inboxes.where(source_id: user['id']).first
-    
+
     if @contact_inbox
       @contact = @contact_inbox.contact
       update_instagram_profile_link(user)
-      if user['profile_pic'].present? && !@contact.avatar.attached?
-        Avatar::AvatarFromUrlJob.perform_later(@contact, user['profile_pic'])
-      end
+      Avatar::AvatarFromUrlJob.perform_later(@contact, user['profile_pic']) if user['profile_pic'].present? && !@contact.avatar.attached?
       return
     end
 
     @contact_inbox = @inbox.channel.create_contact_inbox(
-      user['id'], user['name']
+      user['id'], user['name'], avatar_url: user['profile_pic']
     )
 
     @contact = @contact_inbox.contact
