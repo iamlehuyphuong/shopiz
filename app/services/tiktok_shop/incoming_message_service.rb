@@ -5,7 +5,7 @@ class TiktokShop::IncomingMessageService
     return if already_processed?
 
     set_contact
-    update_contact_info if @contact.messages.empty?
+    update_contact_info if should_update_contact?
     set_conversation
     @message = @conversation.messages.create!(message_params)
     attach_media
@@ -39,24 +39,52 @@ class TiktokShop::IncomingMessageService
     }
   end
 
-  def update_contact_info
-    response = load_profile
-
-    if response['code'] == Channel::TiktokShop::INVALID_ACCESS_TOKEN_CODE
-      channel.refresh_access_token
-      response = load_profile
-    end
-    return unless response['code']&.zero?
-
-    sender_info = response.dig('data', 'messages', 0, 'sender')
-    return unless sender_info && sender_info['im_user_id'] == im_user_id
-
-    @contact.update!(name: sender_info['nickname'])
-    ::Avatar::AvatarFromUrlJob.perform_later(@contact, sender_info['avatar'])
+  def should_update_contact?
+    @contact.name == im_user_id || @contact.avatar.blank?
   end
 
-  def load_profile
-    channel.get_conversation_messages(source_conversation_id, { page_size: 1 })
+  def update_contact_info
+    buyer = fetch_buyer_participant
+    return unless buyer
+
+    update_contact_name(buyer)
+    update_contact_avatar(buyer)
+  rescue StandardError => e
+    Rails.logger.warn("[TiktokShop::IncomingMessageService] Failed to update contact info: #{e.message}")
+  end
+
+  def fetch_buyer_participant
+    response = fetch_conversation_info
+    return unless response&.dig('code')&.zero?
+
+    find_buyer_in_participants(response)
+  end
+
+  def find_buyer_in_participants(response)
+    participants = response.dig('data', 'participants') || []
+    participants.find { |p| p['im_user_id'] == im_user_id } ||
+      participants.find { |p| p['role'] == 'BUYER' }
+  end
+
+  def update_contact_name(buyer)
+    return unless buyer['nickname'].present? && @contact.name == im_user_id
+
+    @contact.update!(name: buyer['nickname'])
+  end
+
+  def update_contact_avatar(buyer)
+    return unless buyer['avatar'].present? && @contact.avatar.blank?
+
+    ::Avatar::AvatarFromUrlJob.perform_later(@contact, buyer['avatar'])
+  end
+
+  def fetch_conversation_info
+    response = channel.client.get_conversation(source_conversation_id)
+    if response['code'] == Channel::TiktokShop::INVALID_ACCESS_TOKEN_CODE
+      channel.refresh_access_token
+      response = channel.client.get_conversation(source_conversation_id)
+    end
+    response
   end
 
   def channel
