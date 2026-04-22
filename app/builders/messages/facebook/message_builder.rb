@@ -53,10 +53,10 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
     # Look for the outgoing private reply message
     private_reply_message = Message.find_by(source_id: response.in_reply_to_external_id, account_id: @inbox.account_id)
     return unless private_reply_message
-    
+
     asid_contact = private_reply_message.conversation.contact
     psid_contact = @contact_inbox.contact
-    
+
     return if asid_contact.id == psid_contact.id
 
     # Merge ASID contact (the one built from Comment feed) into PSID contact (the DM user)
@@ -65,7 +65,7 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
       base_contact: psid_contact,
       mergee_contact: asid_contact
     ).perform
-    
+
     # Reload the PSID contact inbox associations after merge
     @contact_inbox.reload
   end
@@ -84,7 +84,7 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
     note_content = "Nguồn: Quảng cáo CTM\n"
     note_content += "- Chiến dịch (Ad ID): #{response.ad_id}\n" if response.ad_id.present?
     note_content += "- Mã sản phẩm (Ref): #{response.ref_payload}\n" if response.ref_payload.present?
-    
+
     conversation.messages.create!(
       account_id: conversation.account_id,
       inbox_id: conversation.inbox_id,
@@ -96,14 +96,14 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
 
   def process_optin
     return if response.notification_messages_token.blank?
-    
+
     expires_at = nil
     if response.notification_messages_frequency == 'MONTHLY'
-      expires_at = Time.current + 1.month
+      expires_at = 1.month.from_now
     elsif response.notification_messages_frequency == 'WEEKLY'
-      expires_at = Time.current + 1.week
+      expires_at = 1.week.from_now
     elsif response.notification_messages_frequency == 'DAILY'
-      expires_at = Time.current + 1.day
+      expires_at = 1.day.from_now
     end
 
     status = if response.notification_messages_status == 'STOP_NOTIFICATIONS'
@@ -117,7 +117,7 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
       inbox_id: @inbox.id,
       topic: response.optin_payload
     )
-    
+
     optin_record.assign_attributes(
       token: response.notification_messages_token,
       status: status,
@@ -198,7 +198,7 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
 
   def process_contact_params_result(result)
     {
-      name: "#{result['first_name'] || 'John'} #{result['last_name'] || 'Doe'}",
+      name: "#{result['first_name'] || 'John'} #{result['last_name'] || 'Doe'}".strip,
       account_id: @inbox.account_id,
       avatar_url: result['profile_pic'],
       additional_attributes: {
@@ -233,7 +233,19 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
       result = {}
       ChatwootExceptionTracker.new(e, account: @inbox.account).capture_exception
     end
-    process_contact_params_result(result)
+    params = process_contact_params_result(result)
+    params[:avatar_url] ||= fetch_profile_picture_url(k)
+    params
+  end
+
+  def fetch_profile_picture_url(graph_api)
+    return nil unless graph_api
+
+    picture_data = graph_api.get_picture_data(@sender_id, type: 'large')
+    picture_data.dig('data', 'url') if picture_data && !picture_data.dig('data', 'is_silhouette')
+  rescue StandardError => e
+    Rails.logger.info("Could not fetch profile picture for #{@sender_id}: #{e.message}")
+    nil
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength

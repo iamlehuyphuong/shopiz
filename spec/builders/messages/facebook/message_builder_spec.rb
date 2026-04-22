@@ -49,6 +49,7 @@ describe Messages::Facebook::MessageBuilder do
                                                                                             'error_subcode' => 2_018_218,
                                                                                             'code' => 100
                                                                                           }))
+      allow(fb_object).to receive(:get_picture_data).and_return(nil)
       message_builder
 
       contact = facebook_channel.inbox.contacts.first

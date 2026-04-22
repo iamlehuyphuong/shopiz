@@ -102,14 +102,24 @@ class Facebook::LoadHistoryConversationService
       ChatwootExceptionTracker.new(e, account: @inbox.account).capture_exception
     end
 
-    process_contact_params_result(result)
+    params = process_contact_params_result(result)
+    params[:avatar_url] ||= fetch_profile_picture_url(sender['id'])
+    params
   end
 
   def process_contact_params_result(result)
     {
-      name: "#{result['first_name'] || 'John'} #{result['last_name'] || 'Doe'}",
+      name: "#{result['first_name'] || 'John'} #{result['last_name'] || 'Doe'}".strip,
       account_id: @inbox.account_id,
       avatar_url: result['profile_pic']
     }
+  end
+
+  def fetch_profile_picture_url(psid)
+    picture_data = @graph.get_picture_data(psid, type: 'large')
+    picture_data.dig('data', 'url') if picture_data && !picture_data.dig('data', 'is_silhouette')
+  rescue StandardError => e
+    Rails.logger.info("Could not fetch profile picture for #{psid}: #{e.message}")
+    nil
   end
 end
