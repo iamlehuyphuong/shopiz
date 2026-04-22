@@ -228,7 +228,8 @@ export default {
     >
       <a href="#" @click="startLogin()">
         <img
-          class="w-auto h-10 rounded-md"
+          style="height: 150px; width: auto;"
+          class="rounded-md"
           src="~dashboard/assets/images/channels/facebook_login.png"
           alt="Facebook-logo"
         />

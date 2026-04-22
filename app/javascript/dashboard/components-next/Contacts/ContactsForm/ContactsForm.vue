@@ -48,8 +48,8 @@ const SOCIAL_CONFIG = {
   FACEBOOK: 'i-ri-facebook-circle-fill',
   INSTAGRAM: 'i-ri-instagram-line',
   TELEGRAM: 'i-ri-telegram-fill',
-  TIKTOK: 'i-ri-tiktok-fill',
-  TWITTER: 'i-ri-twitter-x-fill',
+  TIKTOK: 'i-woot-tiktok',
+  TWITTER: 'i-woot-x',
 };
 
 const defaultState = {

@@ -457,13 +457,13 @@ const menuItems = computed(() => {
         {
           name: 'Zalo Personal',
           label: t('SIDEBAR.ZALO_PERSONAL'),
-          icon: 'i-ri-zalo-fill',
+          icon: 'i-woot-zalo-personal',
           to: accountScopedRoute('campaigns_zalo_personal_index'),
         },
         {
           name: 'Zalo OA',
           label: 'Zalo OA',
-          icon: 'i-ri-zalo-oa-fill',
+          icon: 'i-woot-zalo-oa',
           to: accountScopedRoute('campaigns_zalo_oa_index'),
         },
         {

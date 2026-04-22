@@ -15,9 +15,9 @@ export function useChannelIcon(inbox) {
     'Channel::Instagram': 'i-woot-instagram',
     'Channel::Tiktok': 'i-woot-tiktok',
     'Channel::Voice': 'i-woot-voice',
-    'Channel::ZaloOa': 'i-ri-zalo-oa-fill',
-    'Channel::ZaloPersonal': 'i-ri-zalo-fill',
-    'Channel::TiktokShop': 'i-ri-tiktok-fill',
+    'Channel::ZaloOa': 'i-woot-zalo-oa',
+    'Channel::ZaloPersonal': 'i-woot-zalo-personal',
+    'Channel::TiktokShop': 'i-woot-tiktok-shop',
   };
 
   const providerIconMap = {

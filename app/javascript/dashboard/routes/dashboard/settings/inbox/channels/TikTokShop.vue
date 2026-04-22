@@ -100,6 +100,7 @@ export default {
         <img
           src="~dashboard/assets/images/channels/tiktok_shop_login.png"
           alt="TikTok-logo"
+          style="height: 150px; width: auto;"
         />
       </a>
       <p>{{ $t('INBOX_MGMT.ADD.TIKTOK_SHOP.HELP') }}</p>

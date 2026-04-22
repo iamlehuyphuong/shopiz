@@ -609,7 +609,7 @@ onMounted(() => {
       <ChannelOverviewCard
         channel-key="Channel::ZaloOa"
         channel-name="Zalo OA"
-        channel-icon="i-ri-zalo-oa-fill"
+        channel-icon="i-woot-zalo-oa"
         icon-color="text-orange-500"
         :inbox-count="zaloOaInboxes.length"
         :templates="normalizedZaloTemplates"
@@ -620,7 +620,7 @@ onMounted(() => {
       <ChannelOverviewCard
         channel-key="Channel::TiktokShop"
         channel-name="TikTok Shop"
-        channel-icon="i-ri-tiktok-fill"
+        channel-icon="i-woot-tiktok-shop"
         icon-color="text-n-slate-12"
         :inbox-count="tiktokShopInboxes.length"
         :templates="normalizedTiktokShopTemplates"

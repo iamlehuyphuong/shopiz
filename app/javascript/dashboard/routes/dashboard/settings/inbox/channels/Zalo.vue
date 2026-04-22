@@ -160,9 +160,9 @@ export default {
     >
       <a href="#" @click="startLogin()">
         <img
-          src="~dashboard/assets/images/channels/zalo_login.jpg"
+          src="~dashboard/assets/images/channels/zalo_login.png"
           alt="Zalo-logo"
-          class="max-w-[300px] w-full"
+          style="height: 150px; width: auto;"
         />
       </a>
       <p class="pt-6 mb-0 text-center">

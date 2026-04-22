@@ -564,7 +564,7 @@ onMounted(fetchAccountDetails);
               target="_blank"
               rel="noopener noreferrer"
             >
-              <ButtonV4 sm solid blue icon="i-ri-zalo-fill">
+              <ButtonV4 sm solid blue icon="i-woot-zalo-personal">
                 {{ $t('BILLING_SETTINGS.ZALO_SUPPORT') }}
               </ButtonV4>
             </a>

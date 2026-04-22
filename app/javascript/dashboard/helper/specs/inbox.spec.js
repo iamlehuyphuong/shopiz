@@ -55,7 +55,7 @@ describe('#Inbox Helpers', () => {
 
       it('returns correct icon for Twitter', () => {
         expect(getInboxIconByType(INBOX_TYPES.TWITTER)).toBe(
-          'i-ri-twitter-x-fill'
+          'i-woot-x'
         );
       });
 
@@ -84,7 +84,7 @@ describe('#Inbox Helpers', () => {
       });
 
       it('returns correct icon for TikTok', () => {
-        expect(getInboxIconByType(INBOX_TYPES.TIKTOK)).toBe('i-ri-tiktok-fill');
+        expect(getInboxIconByType(INBOX_TYPES.TIKTOK)).toBe('i-woot-tiktok');
       });
 
       it('returns default icon for unknown type', () => {

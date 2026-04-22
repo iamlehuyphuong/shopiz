@@ -16,7 +16,7 @@ const { t } = useI18n();
 
 const channelIcon = computed(() => {
   if (props.template.source === 'whatsapp') return 'i-ri-whatsapp-fill';
-  if (props.template.source === 'zalo') return 'i-ri-zalo-oa-fill';
+  if (props.template.source === 'zalo') return 'i-woot-zalo-oa';
   return 'i-lucide-message-square';
 });
 

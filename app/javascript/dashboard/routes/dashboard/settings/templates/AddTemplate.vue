@@ -37,7 +37,7 @@ const channelTypes = [
   {
     value: 'Channel::ZaloOa',
     label: 'Zalo OA',
-    icon: 'i-ri-zalo-oa-fill',
+    icon: 'i-woot-zalo-oa',
   },
 ];
 

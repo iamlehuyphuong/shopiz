@@ -29,13 +29,13 @@ const channelList = computed(() => {
       key: 'zalo',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO_OA.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO_OA.DESCRIPTION'),
-      icon: 'i-ri-zalo-oa-fill',
+      icon: 'i-woot-zalo-oa',
     },
     {
       key: 'zalopersonal',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO_PERSONAL.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO_PERSONAL.DESCRIPTION'),
-      icon: 'i-ri-zalo-fill',
+      icon: 'i-woot-zalo-personal',
     },
     {
       key: 'facebook',
@@ -83,7 +83,7 @@ const channelList = computed(() => {
       key: 'tiktok_shop',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK_SHOP.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK_SHOP.DESCRIPTION'),
-      icon: 'i-ri-tiktok-fill',
+      icon: 'i-woot-tiktok-shop',
     },
   ];
 

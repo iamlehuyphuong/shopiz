@@ -32,12 +32,12 @@ const INBOX_ICON_MAP_FILL = {
   [INBOX_TYPES.EMAIL]: 'i-ri-mail-fill',
   [INBOX_TYPES.TELEGRAM]: 'i-ri-telegram-fill',
   [INBOX_TYPES.LINE]: 'i-ri-line-fill',
-  [INBOX_TYPES.ZALO_OA]: 'i-ri-zalo-oa-fill',
-  [INBOX_TYPES.ZALO_PERSONAL]: 'i-ri-zalo-fill',
+  [INBOX_TYPES.ZALO_OA]: 'i-woot-zalo-oa',
+  [INBOX_TYPES.ZALO_PERSONAL]: 'i-woot-zalo-personal',
   [INBOX_TYPES.INSTAGRAM]: 'i-ri-instagram-fill',
-  [INBOX_TYPES.TIKTOK]: 'i-ri-tiktok-fill',
+  [INBOX_TYPES.TIKTOK]: 'i-woot-tiktok-shop',
   [INBOX_TYPES.VOICE]: 'i-ri-phone-fill',
-  [INBOX_TYPES.TIKTOK_SHOP]: 'i-ri-tiktok-fill',
+  [INBOX_TYPES.TIKTOK_SHOP]: 'i-woot-tiktok-shop',
 };
 
 const DEFAULT_ICON_FILL = 'i-ri-chat-1-fill';
