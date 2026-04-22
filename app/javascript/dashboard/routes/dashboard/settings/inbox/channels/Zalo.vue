@@ -162,7 +162,7 @@ export default {
         <img
           src="~dashboard/assets/images/channels/zalo_login.png"
           alt="Zalo-logo"
-          style="height: 150px; width: auto;"
+          style="height: 150px; width: auto"
         />
       </a>
       <p class="pt-6 mb-0 text-center">

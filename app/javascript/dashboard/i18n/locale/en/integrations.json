@@ -812,7 +812,8 @@
           "SELECTED": "{count} item selected | {count} items selected",
           "SELECT_ALL": "Select all ({count})",
           "UNSELECT_ALL": "Unselect all ({count})",
-          "BULK_DELETE_BUTTON": "Delete"
+          "BULK_DELETE_BUTTON": "Delete",
+          "BULK_EXPORT_BUTTON": "Export"
         },
         "ADD": {
           "SUGGESTED": {

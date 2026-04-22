@@ -812,7 +812,8 @@
           "SELECTED": "{count} mục đã chọn",
           "SELECT_ALL": "Chọn tất cả ({count})",
           "UNSELECT_ALL": "Bỏ chọn tất cả ({count})",
-          "BULK_DELETE_BUTTON": "Xóa"
+          "BULK_DELETE_BUTTON": "Xóa",
+          "BULK_EXPORT_BUTTON": "Xuất file"
         },
         "ADD": {
           "SUGGESTED": {

@@ -360,7 +360,37 @@ onMounted(() => {
               $t('CAPTAIN.ASSISTANTS.SCENARIOS.BULK_ACTION.BULK_DELETE_BUTTON')
             "
             @bulk-delete="bulkDeleteScenarios"
-          />
+          >
+            <template #actions>
+              <Button
+                :label="
+                  $t(
+                    'CAPTAIN.ASSISTANTS.SCENARIOS.BULK_ACTION.BULK_EXPORT_BUTTON'
+                  )
+                "
+                sm
+                slate
+                ghost
+                class="!px-1.5"
+                icon="i-lucide-download"
+                @click="exportScenarios()"
+              />
+              <span class="w-px h-4 bg-n-weak" />
+              <Button
+                :label="
+                  $t(
+                    'CAPTAIN.ASSISTANTS.SCENARIOS.BULK_ACTION.BULK_DELETE_BUTTON'
+                  )
+                "
+                sm
+                ruby
+                ghost
+                class="!px-1.5"
+                icon="i-lucide-trash"
+                @click="bulkDeleteScenarios(null)"
+              />
+            </template>
+          </BulkSelectBar>
         </div>
         <div v-if="scenarios.length === 0" class="mt-1 mb-2">
           <span class="text-n-slate-11 text-sm">

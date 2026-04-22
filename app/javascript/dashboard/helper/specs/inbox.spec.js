@@ -54,9 +54,7 @@ describe('#Inbox Helpers', () => {
       });
 
       it('returns correct icon for Twitter', () => {
-        expect(getInboxIconByType(INBOX_TYPES.TWITTER)).toBe(
-          'i-woot-x'
-        );
+        expect(getInboxIconByType(INBOX_TYPES.TWITTER)).toBe('i-woot-x');
       });
 
       it('returns correct icon for WhatsApp', () => {

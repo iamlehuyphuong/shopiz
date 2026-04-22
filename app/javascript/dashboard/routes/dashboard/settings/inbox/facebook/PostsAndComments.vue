@@ -172,18 +172,22 @@ async function updateSettings() {
 
         <SettingsFieldSection
           v-if="autoReplyUseAi"
-          :label="$t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.AI_PROMPT_LABEL')"
+          :label="
+            $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.AI_PROMPT_LABEL')
+          "
         >
           <textarea
             v-model="autoReplyAiPrompt"
             class="w-full min-h-[100px] rounded-lg border border-n-weak p-3 text-sm text-n-slate-12 bg-n-alpha-white placeholder:text-n-slate-9 focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-n-orange-9 resize-y"
             :placeholder="
-              $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.AI_PROMPT_PLACEHOLDER')
+              $t(
+                'INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.AI_PROMPT_PLACEHOLDER'
+              )
             "
             rows="4"
           />
         </SettingsFieldSection>
-        
+
         <SettingsFieldSection
           v-else
           :label="$t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.MESSAGE_LABEL')"

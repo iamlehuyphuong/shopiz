@@ -166,38 +166,41 @@ defineExpose({
         <!-- Explicit icon based on call status -->
         <!-- Missed call or no answer -->
         <i
-          v-if="normalizedCallStatus === 'missed' || normalizedCallStatus === 'no-answer'"
+          v-if="
+            normalizedCallStatus === 'missed' ||
+            normalizedCallStatus === 'no-answer'
+          "
           class="i-ph-phone-x-fill text-base inline-block flex-shrink-0 text-red-600 dark:text-red-400 mr-1"
         />
 
         <!-- Active call -->
         <i
-v-else-if="normalizedCallStatus === 'active'" 
+          v-else-if="normalizedCallStatus === 'active'"
           class="i-ph-phone-call-fill text-base inline-block flex-shrink-0 text-n-orange-11 mr-1"
         />
 
         <!-- Ended incoming call -->
         <i
-v-else-if="normalizedCallStatus === 'ended' && isIncomingCall" 
+          v-else-if="normalizedCallStatus === 'ended' && isIncomingCall"
           class="i-ph-phone-incoming-fill text-base inline-block flex-shrink-0 text-slate-600 dark:text-slate-400 mr-1"
         />
 
         <!-- Ended outgoing call -->
         <i
-v-else-if="normalizedCallStatus === 'ended'" 
+          v-else-if="normalizedCallStatus === 'ended'"
           class="i-ph-phone-outgoing-fill text-base inline-block flex-shrink-0 text-slate-600 dark:text-slate-400 mr-1"
         />
 
         <!-- Ringing incoming call -->
         <i
-v-else-if="isIncomingCall" 
+          v-else-if="isIncomingCall"
           class="i-ph-phone-incoming-fill text-base inline-block flex-shrink-0 text-green-600 dark:text-green-400 mr-1"
           :class="{ 'pulse-animation': normalizedCallStatus === 'ringing' }"
         />
 
         <!-- Ringing outgoing call -->
         <i
-v-else 
+          v-else
           class="i-ph-phone-outgoing-fill text-base inline-block flex-shrink-0 text-green-600 dark:text-green-400 mr-1"
           :class="{ 'pulse-animation': normalizedCallStatus === 'ringing' }"
         />
