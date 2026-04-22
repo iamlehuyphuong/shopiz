@@ -3,17 +3,21 @@ class Tiktok::Client
   pattr_initialize [:business_id!, :access_token!]
 
   def business_account_details
-    endpoint = "#{api_base_url}/business/get/"
-    headers = { 'Access-Token': access_token }
-    params = { business_id: business_id, fields: %w[username display_name profile_image].to_s }
-    response = HTTParty.get(endpoint, query: params, headers: headers)
-
-    json = process_json_response(response, 'Failed to fetch TikTok user details')
-    {
-      username: json['data']['username'],
-      display_name: json['data']['display_name'],
-      profile_image: json['data']['profile_image']
-    }.with_indifferent_access
+    fetch_business_details(%w[username display_name avatar_url profile_image])
+  rescue StandardError => e
+    # If full field list fails (likely scope issues), try with minimal fields
+    Rails.logger.warn "TikTok business_account_details full fetch failed: #{e.message}, trying minimal fields"
+    begin
+      fetch_business_details(%w[display_name avatar_url])
+    rescue StandardError => retry_error
+      # If even minimal fields fail, return fallback data so channel creation can proceed
+      Rails.logger.warn "TikTok business_account_details minimal fetch also failed: #{retry_error.message}, using fallback"
+      {
+        username: business_id,
+        display_name: 'TikTok Business',
+        profile_image: nil
+      }.with_indifferent_access
+    end
   end
 
   def file_download_url(conversation_id, message_id, media_id, media_type = 'IMAGE')
@@ -57,6 +61,21 @@ class Tiktok::Client
   end
 
   private
+
+  def fetch_business_details(fields)
+    endpoint = "#{api_base_url}/business/get/"
+    headers = { 'Access-Token': access_token }
+    params = { business_id: business_id, fields: fields.to_s }
+    response = HTTParty.get(endpoint, query: params, headers: headers)
+
+    json = process_json_response(response, 'Failed to fetch TikTok user details')
+    data = json['data'] || {}
+    {
+      username: data['username'] || data['display_name'] || business_id,
+      display_name: data['display_name'] || data['username'] || 'TikTok User',
+      profile_image: data['profile_image'] || data['avatar_url']
+    }.with_indifferent_access
+  end
 
   def send_message(conversation_id, type, payload, referenced_message_id: nil)
     # https://business-api.tiktok.com/portal/docs?id=1832184403754242
