@@ -1,6 +1,8 @@
 class Tiktok::AuthClient
-  REQUIRED_SCOPES = %w[user.info.basic user.info.username user.info.stats user.info.profile user.account.type user.insights message.list.read
-                       message.list.send message.list.manage].freeze
+  # Scopes must match exactly what's approved on business-api.tiktok.com portal.
+  # Check: App Detail → Basic Information → TikTok account holder authorization URL
+  REQUIRED_SCOPES = %w[user.info.basic user.account.type biz.brand.insights comment.list
+                       message.list.read message.list.send message.list.manage].freeze
 
   class << self
     def authorize_url(state: nil)
