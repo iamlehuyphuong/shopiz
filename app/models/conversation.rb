@@ -236,7 +236,7 @@ class Conversation < ApplicationRecord
   end
 
   def show_load_more_history
-    inbox.channel.instance_of?(::Channel::FacebookPage) && !is_load_all_message
+    Inbox::ENABLE_LOAD_HISTORY_CONVERSATION.include?(inbox.channel_type) && !is_load_all_message
   end
 
   def zalo_group?

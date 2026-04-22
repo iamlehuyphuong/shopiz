@@ -42,7 +42,8 @@ class Zalo::IncomingMessageService
     data = response['data']
     update_contact_basic_info(data)
     update_contact_shared_info(data['shared_info']) if data['shared_info'].present?
-    ::Avatar::AvatarFromUrlJob.perform_later(@contact, data['avatars']['240']) if data.dig('avatars', '240')
+    avatar_url = data.dig('avatars', '240') || data['avatar']
+    ::Avatar::AvatarFromUrlJob.perform_later(@contact, avatar_url) if avatar_url.present?
   end
 
   def update_contact_basic_info(data)

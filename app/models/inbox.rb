@@ -48,11 +48,12 @@ class Inbox < ApplicationRecord
   include AccountCacheRevalidator
   include InboxAgentAvailability
 
-  ENABLE_LOAD_HISTORY_CONVERSATION = ['Channel::FacebookPage', 'Channel::Instagram'].freeze
+  ENABLE_LOAD_HISTORY_CONVERSATION = ['Channel::FacebookPage', 'Channel::Instagram', 'Channel::ZaloOa'].freeze
 
   LOAD_HISTORY_CONVERSATION_SERVICES = {
     'Channel::FacebookPage' => 'Facebook::LoadHistoryConversationService',
-    'Channel::Instagram' => 'Instagram::LoadHistoryConversationService'
+    'Channel::Instagram' => 'Instagram::LoadHistoryConversationService',
+    'Channel::ZaloOa' => 'Zalo::LoadHistoryConversationService'
   }.freeze
 
   # Not allowing characters:

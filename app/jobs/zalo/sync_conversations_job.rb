@@ -4,6 +4,6 @@ class Zalo::SyncConversationsJob < ApplicationJob
   def perform(channel)
     return unless channel.is_a?(Channel::ZaloOa)
 
-    Zalo::SyncService.new(channel.inbox).perform
+    Zalo::LoadHistoryConversationService.new(channel.inbox).perform
   end
 end
