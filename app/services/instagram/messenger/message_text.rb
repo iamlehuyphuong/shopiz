@@ -13,7 +13,7 @@ class Instagram::Messenger::MessageText < Instagram::BaseMessageText
     else
       token = @inbox.channel.access_token
       api_version = GlobalConfigService.load('INSTAGRAM_API_VERSION', 'v22.0')
-      url = "https://graph.instagram.com/#{api_version}/#{ig_scope_id}?fields=name,profile_pic&access_token=#{token}"
+      url = "https://graph.instagram.com/#{api_version}/#{ig_scope_id}?fields=name,profile_picture_url&access_token=#{token}"
       response = HTTParty.get(url)
       
       return {} unless response.success?
@@ -21,7 +21,7 @@ class Instagram::Messenger::MessageText < Instagram::BaseMessageText
       result = JSON.parse(response.body).with_indifferent_access
       {
         'name' => result['name'],
-        'profile_pic' => result['profile_pic'],
+        'profile_pic' => result['profile_picture_url'] || result['profile_pic'],
         'id' => result['id']
       }.with_indifferent_access
     end

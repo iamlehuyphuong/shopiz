@@ -118,14 +118,14 @@ class Instagram::LoadHistoryConversationService
     {
       name: user_info['name'] || user_info['username'] || 'Instagram User',
       account_id: @inbox.account_id,
-      avatar_url: user_info['profile_pic']
+      avatar_url: user_info['profile_picture_url'] || user_info['profile_pic']
     }
   end
 
   def fetch_instagram_user_profile(ig_scope_id)
     url = "#{BASE_URI}/#{api_version}/#{ig_scope_id}"
     params = {
-      fields: 'name,username,profile_pic,follower_count,is_user_follow_business,is_business_follow_user',
+      fields: 'name,username,profile_picture_url,follower_count,is_user_follow_business,is_business_follow_user',
       access_token: @channel.access_token
     }
 
