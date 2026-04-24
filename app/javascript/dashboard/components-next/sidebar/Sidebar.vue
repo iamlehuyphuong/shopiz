@@ -264,7 +264,7 @@ const menuItems = computed(() => {
     },
     {
       name: 'Captain',
-      icon: 'i-lucide-bot-message-square',
+      icon: 'i-woot-captain',
       label: t('SIDEBAR.CAPTAIN'),
       activeOn: ['captain_assistants_create_index'],
       children: [
