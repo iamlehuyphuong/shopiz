@@ -64,9 +64,8 @@ class Facebook::CommentHandlerService
   end
 
   def log_internal_note
-    note_content = "Post ID: #{@post_id}\n"
-    note_content += "Comment ID: #{@comment_id}\n"
-    note_content += "Message: #{@message}"
+    note_content = "Post: https://www.facebook.com/#{@post_id}\n"
+    note_content += "Comment: #{@message}"
 
     # Verify if this exact note already exists to prevent duplication on multiple webhook deliveries
     return if @conversation.messages.where(message_type: :outgoing, private: true, content: note_content).exists?
