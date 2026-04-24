@@ -123,11 +123,14 @@ class Instagram::CallbacksController < ApplicationController
 
     # Update inbox name if username changed
     channel_instagram.inbox.update!(name: user_details['username'])
+
+    # Update inbox avatar with the latest profile picture
+    set_avatar(channel_instagram.inbox, user_details['profile_picture_url'])
     channel_instagram
   end
 
   def create_channel_with_inbox(user_details)
-    ActiveRecord::Base.transaction do
+    channel_instagram = ActiveRecord::Base.transaction do
       expires_at = Time.current + @long_lived_token_response['expires_in'].seconds
       access_token = @long_lived_token_response['access_token']
 
@@ -149,6 +152,14 @@ class Instagram::CallbacksController < ApplicationController
 
       channel_instagram
     end
+
+    # Set inbox avatar outside the transaction
+    set_avatar(channel_instagram.inbox, user_details['profile_picture_url'])
+    channel_instagram
+  end
+
+  def set_avatar(inbox, avatar_url)
+    Avatar::AvatarFromUrlJob.perform_later(inbox, avatar_url) if avatar_url.present?
   end
 
   def resolve_and_store_page_id(channel, access_token, instagram_user_id)

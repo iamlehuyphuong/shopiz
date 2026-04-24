@@ -7,12 +7,14 @@ class Twitter::CallbacksController < Twitter::BaseController
     @response = ensure_access_token
     return redirect_to twitter_app_redirect_url if @response.status != '200'
 
+    inbox = nil
     ActiveRecord::Base.transaction do
       inbox = create_inbox
       ::Redis::Alfred.delete(permitted_params[:oauth_token])
       ::Twitter::WebhookSubscribeService.new(inbox_id: inbox.id).perform
-      redirect_to app_twitter_inbox_agents_url(account_id: account.id, inbox_id: inbox.id)
     end
+    save_profile_image(inbox)
+    redirect_to app_twitter_inbox_agents_url(account_id: account.id, inbox_id: inbox.id)
   rescue StandardError => e
     ChatwootExceptionTracker.new(e).capture_exception
     redirect_to twitter_app_redirect_url
@@ -49,12 +51,10 @@ class Twitter::CallbacksController < Twitter::BaseController
       twitter_access_token_secret: parsed_body['oauth_token_secret'],
       profile_id: parsed_body['user_id']
     )
-    inbox = account.inboxes.create!(
+    account.inboxes.create!(
       name: parsed_body['screen_name'],
       channel: twitter_profile
     )
-    save_profile_image(inbox)
-    inbox
   end
 
   def save_profile_image(inbox)

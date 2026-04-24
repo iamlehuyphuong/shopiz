@@ -11,7 +11,7 @@ class Api::V1::Accounts::Channels::ZaloChannelsController < Api::V1::Accounts::B
     ActiveRecord::Base.transaction do
       channel = Current.account.zalo_oas.create!(oa_id: oa_id, oa_access_token: access_token, refresh_token: refresh_token, expires_in: expires_in)
       zalo_inbox = Current.account.inboxes.create!(name: inbox_name, channel: channel)
-      Avatar::AvatarFromUrlJob.perform_later(zalo_inbox, avatar_url)
+      Avatar::AvatarFromUrlJob.perform_later(zalo_inbox, avatar_url) if avatar_url.present?
       Zalo::SyncConversationsJob.perform_later(channel)
       Zalo::SyncFollowersJob.perform_later(channel)
     end
