@@ -49,6 +49,11 @@ class Conversations::MessageWindowService
   end
 
   def messenger_messaging_window
+    # Comment conversations use Private Reply API (1 message within 7 days)
+    # They are NOT subject to the standard Messenger 24h messaging window.
+    # Once the customer replies to the DM, the standard window opens.
+    return nil if @conversation.additional_attributes['type'] == 'comment'
+
     meta_messaging_window('ENABLE_MESSENGER_CHANNEL_HUMAN_AGENT')
   end
 

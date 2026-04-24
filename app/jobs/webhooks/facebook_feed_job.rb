@@ -40,22 +40,23 @@ class Webhooks::FacebookFeedJob < ApplicationJob
   end
 
   def process_comment_for_channel(channel, data)
-    hide_comment_if_needed(channel, data[:comment_id], data[:message])
+    comment_hidden = hide_comment_if_needed(channel, data[:comment_id], data[:message])
 
-    conversation = build_conversation(channel, data)
+    conversation = build_conversation(channel, data, comment_hidden: comment_hidden)
     return unless conversation
 
     process_auto_reply(channel, conversation, data)
   end
 
-  def build_conversation(channel, data)
+  def build_conversation(channel, data, comment_hidden: false)
     Facebook::CommentHandlerService.new(
       channel: channel,
       contact_id: data[:sender_id],
       contact_name: data[:sender_name],
       comment_id: data[:comment_id],
       post_id: data[:post_id],
-      message: data[:message]
+      message: data[:message],
+      comment_hidden: comment_hidden
     ).perform
   end
 
@@ -64,9 +65,10 @@ class Webhooks::FacebookFeedJob < ApplicationJob
     should_hide ||= channel.hide_phone_comments? && contains_phone?(message)
     should_hide ||= channel.hide_email_comments? && contains_email?(message)
 
-    return unless should_hide
+    return false unless should_hide
 
     Facebook::CommentActionService.new(channel: channel).hide_comment(comment_id)
+    true
   end
 
   # rubocop:disable Metrics/MethodLength
