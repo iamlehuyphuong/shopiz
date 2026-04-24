@@ -28,6 +28,7 @@ class Channel::Tiktok < ApplicationRecord
   end
 
   AUTHORIZATION_ERROR_THRESHOLD = 1
+  EDITABLE_ATTRS = [{ provider_config: {} }].freeze
 
   validates :business_id, uniqueness: true, presence: true
   validates :access_token, presence: true
@@ -35,11 +36,22 @@ class Channel::Tiktok < ApplicationRecord
   validates :expires_at, presence: true
   validates :refresh_token_expires_at, presence: true
 
+  # Comment auto-reply settings stored in provider_config JSONB column
+  store_accessor :provider_config,
+                 :auto_reply_to_comments,   # Boolean - auto-reply to commenters
+                 :auto_reply_message,        # String  - static reply text
+                 :auto_reply_use_ai,         # Boolean - use AI to generate reply
+                 :auto_reply_ai_prompt       # String  - AI prompt for generating reply
+
   def name
     'Tiktok'
   end
 
   def validated_access_token
     Tiktok::TokenService.new(channel: self).access_token
+  end
+
+  def auto_reply_to_comments?
+    ActiveModel::Type::Boolean.new.cast(auto_reply_to_comments)
   end
 end

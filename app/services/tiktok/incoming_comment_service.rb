@@ -8,6 +8,7 @@ class Tiktok::IncomingCommentService
     return if message.present?
 
     create_message
+    process_auto_reply
   end
 
   private
@@ -103,5 +104,52 @@ class Tiktok::IncomingCommentService
     return Time.current unless timestamp
 
     Time.zone.at(timestamp).utc
+  end
+
+  def process_auto_reply
+    return unless channel.auto_reply_to_comments?
+    return unless acquire_auto_reply_lock
+
+    dispatch_auto_reply
+  end
+
+  def acquire_auto_reply_lock
+    lock_key = "auto_reply:tt:#{channel.id}:#{tt_comment_id}"
+    return false unless Redis::Alfred.setnx(lock_key, Time.current.to_i)
+
+    Redis::Alfred.expire(lock_key, 7.days.to_i)
+    true
+  end
+
+  def dispatch_auto_reply
+    if channel.provider_config&.dig('auto_reply_use_ai')
+      Captain::Conversation::CommentReplyBuilderJob.perform_later(
+        conversation.id,
+        comment_id: tt_comment_id,
+        post_id: tt_video_id,
+        message: tt_comment_text,
+        platform: 'tiktok',
+        comment_created_at: tt_created_at.to_s
+      )
+    elsif channel.auto_reply_message.present?
+      send_comment_auto_reply(tt_comment_id, channel.auto_reply_message)
+    end
+  end
+
+  def send_comment_auto_reply(comment_id, reply_text)
+    client = Tiktok::Client.new(business_id: channel.business_id, access_token: channel.validated_access_token)
+    reply_id = client.send_comment_reply(comment_id, reply_text)
+
+    return if reply_id.blank?
+
+    conversation.messages.create!(
+      account_id: channel.account_id,
+      inbox_id: channel.inbox_id,
+      message_type: :outgoing,
+      content: reply_text,
+      source_id: reply_id
+    )
+  rescue StandardError => e
+    Rails.logger.error "[TikTok] Error sending auto-reply for comment #{comment_id}: #{e.message}"
   end
 end

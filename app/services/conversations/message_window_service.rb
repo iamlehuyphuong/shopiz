@@ -58,10 +58,16 @@ class Conversations::MessageWindowService
   end
 
   def instagram_messaging_window
+    # Comment conversations use Private Reply API (1 message within 7 days)
+    # They are NOT subject to the standard Instagram 24h messaging window.
+    return nil if @conversation.additional_attributes['type'] == 'comment'
+
     meta_messaging_window('ENABLE_INSTAGRAM_CHANNEL_HUMAN_AGENT')
   end
 
   def tiktok_messaging_window
+    return nil if @conversation.additional_attributes['type'] == 'comment'
+
     48.hours
   end
 

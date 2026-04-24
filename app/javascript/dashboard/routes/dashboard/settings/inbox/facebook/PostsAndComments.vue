@@ -28,6 +28,8 @@ const autoReplyAiPrompt = ref('');
 const isUpdating = ref(false);
 
 const providerConfig = computed(() => props.inbox.provider_config || {});
+const isTiktokChannel = computed(() => props.inbox.channel_type === 'Channel::Tiktok');
+const supportsCommentModeration = computed(() => !isTiktokChannel.value);
 
 // When "hide all" is toggled on, force-off the granular rules
 watch(hideComments, newVal => {
@@ -66,9 +68,13 @@ async function updateSettings() {
       formData: false,
       channel: {
         provider_config: {
-          hide_comments: hideComments.value,
-          hide_phone_comments: hidePhoneComments.value,
-          hide_email_comments: hideEmailComments.value,
+          ...(supportsCommentModeration.value
+            ? {
+                hide_comments: hideComments.value,
+                hide_phone_comments: hidePhoneComments.value,
+                hide_email_comments: hideEmailComments.value,
+              }
+            : {}),
           auto_reply_to_comments: autoReplyToComments.value,
           auto_reply_use_ai: autoReplyUseAi.value,
           auto_reply_message: autoReplyMessage.value,
@@ -98,8 +104,9 @@ async function updateSettings() {
       </p>
     </div>
 
-    <!-- Comment Moderation Section -->
+    <!-- Comment Moderation Section (not available for TikTok) -->
     <SettingsAccordion
+      v-if="supportsCommentModeration"
       :title="$t('INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.TITLE')"
     >
       <p class="text-sm text-n-slate-11 mb-4">
