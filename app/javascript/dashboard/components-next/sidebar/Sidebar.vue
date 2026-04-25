@@ -845,7 +845,7 @@ const handleMainMenuClick = item => {
       closeMobileSidebar,
       { ignore: ['#mobile-sidebar-launcher'] },
     ]"
-    class="flex h-full flex-shrink-0 fixed top-0 ltr:left-0 rtl:right-0 z-40 transition-transform duration-200 ease-in-out md:static md:ltr:translate-x-0 md:rtl:translate-x-0"
+    class="flex flex-shrink-0 fixed top-14 h-[calc(100vh-3.5rem)] ltr:left-0 rtl:right-0 z-40 transition-transform duration-200 ease-in-out md:static md:h-full md:ltr:translate-x-0 md:rtl:translate-x-0"
     :class="[
       {
         'shadow-lg md:shadow-none': isMobileSidebarOpen,

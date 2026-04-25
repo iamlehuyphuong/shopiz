@@ -115,14 +115,7 @@ onUnmounted(() => {
   >
     <!-- Left Section: Mobile Toggle, Logo, Workspace, Search, Compose -->
     <div class="flex items-center flex-1 gap-4">
-      <Button
-        icon="i-lucide-menu"
-        color="slate"
-        variant="ghost"
-        size="sm"
-        class="md:hidden !text-n-slate-11"
-        @click="emit('toggleMobileSidebar')"
-      />
+
       <!-- Logo + Workspace Switcher -->
       <div class="flex items-center gap-2">
         <div class="flex items-center justify-center flex-shrink-0 size-8">
@@ -195,33 +188,24 @@ onUnmounted(() => {
         <span class="i-lucide-search size-5" />
       </RouterLink>
 
-      <!-- Language Dropdown Mobile -->
+      <!-- Language Dropdown Mobile (flag icon only) -->
       <div
         v-on-click-outside="() => (showLanguageDropdownMobile = false)"
-        class="md:hidden relative w-[130px]"
+        class="md:hidden relative"
       >
         <button
           type="button"
-          class="flex items-center justify-between w-full h-8 px-2 rounded-lg outline outline-1 outline-n-weak bg-n-solid-2 hover:bg-n-solid-3 dark:bg-n-black/30 dark:hover:bg-n-black/40 transition-colors"
+          class="flex items-center justify-center size-8 rounded-lg hover:bg-n-solid-3 transition-colors"
           @click="showLanguageDropdownMobile = !showLanguageDropdownMobile"
         >
-          <div class="flex items-center gap-2 overflow-hidden">
-            <span class="text-lg leading-none">{{
-              isVietnamese ? '🇻🇳' : '🇬🇧'
-            }}</span>
-            <span class="text-sm truncate pt-0.5 font-medium text-n-slate-12">
-              {{ isVietnamese ? 'Tiếng Việt' : 'English' }}
-            </span>
-          </div>
-          <Icon
-            icon="i-lucide-chevron-down"
-            class="size-4 opacity-50 flex-shrink-0"
-          />
+          <span class="text-lg leading-none">{{
+            isVietnamese ? '🇻🇳' : '🇬🇧'
+          }}</span>
         </button>
         <DropdownMenu
           v-if="showLanguageDropdownMobile"
           :menu-items="languageItems"
-          class="top-full mt-1 right-0 w-full"
+          class="top-full mt-1 right-0 w-40"
           @action="handleLanguageAction"
         />
       </div>

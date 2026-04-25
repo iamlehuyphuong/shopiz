@@ -151,7 +151,7 @@ const hasSlaPolicyId = computed(() => props.chat?.sla_policy_id);
       </div>
     </div>
     <div
-      class="flex flex-row items-center justify-start xl:justify-end flex-shrink-0 gap-2 w-full xl:w-auto header-actions-wrap"
+      class="flex flex-row items-center justify-end flex-shrink-0 gap-2 w-full xl:w-auto header-actions-wrap"
     >
       <SLACardLabel
         v-if="hasSlaPolicyId"
