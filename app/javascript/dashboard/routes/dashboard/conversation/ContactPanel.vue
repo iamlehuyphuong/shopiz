@@ -20,7 +20,7 @@ import CustomAttributes from './customAttributes/CustomAttributes.vue';
 import Draggable from 'vuedraggable';
 import MacrosList from './Macros/List.vue';
 import ShopifyOrdersList from 'dashboard/components/widgets/conversation/ShopifyOrdersList.vue';
-import SidebarActionsHeader from 'dashboard/components-next/SidebarActionsHeader.vue';
+
 import LinearIssuesList from 'dashboard/components/widgets/conversation/linear/IssuesList.vue';
 import LinearSetupCTA from 'dashboard/components/widgets/conversation/linear/LinearSetupCTA.vue';
 
@@ -117,13 +117,6 @@ const onDragEnd = () => {
   });
 };
 
-const closeContactPanel = () => {
-  updateUISettings({
-    is_contact_sidebar_open: false,
-    is_copilot_panel_open: false,
-  });
-};
-
 onMounted(() => {
   conversationSidebarItems.value = conversationSidebarItemsOrder.value;
   getContactDetails();
@@ -135,10 +128,6 @@ onMounted(() => {
 
 <template>
   <div class="w-full">
-    <SidebarActionsHeader
-      :title="$t('CONVERSATION.SIDEBAR.CONTACT')"
-      @close="closeContactPanel"
-    />
     <ContactInfo :contact="contact" :channel-type="channelType" />
     <div class="px-2 pb-8 list-group">
       <Draggable

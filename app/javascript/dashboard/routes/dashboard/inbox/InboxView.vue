@@ -68,8 +68,11 @@ const activeNotificationIndex = computed(() => {
 
 const isContactPanelOpen = computed(() => {
   if (currentChat.value.id) {
-    const { is_contact_sidebar_open: isContactSidebarOpen } = uiSettings.value;
-    return isContactSidebarOpen;
+    const {
+      is_contact_sidebar_open: isContactSidebarOpen,
+      is_copilot_panel_open: isCopilotPanelOpen,
+    } = uiSettings.value;
+    return isContactSidebarOpen || isCopilotPanelOpen;
   }
   return false;
 });
