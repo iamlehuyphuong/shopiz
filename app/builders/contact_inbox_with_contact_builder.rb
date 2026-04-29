@@ -20,7 +20,11 @@ class ContactInboxWithContactBuilder
       @contact = @contact_inbox.contact
       update_contact_avatar(@contact) unless @contact.avatar.attached?
       
-      if @contact.name == 'John Doe' && contact_attributes[:name].present? && contact_attributes[:name] != 'John Doe'
+      is_default_name = @contact.name == 'John Doe' || @contact.name.to_s.match?(/^(Khách hàng|Customer) - /)
+      is_new_name_present_and_different = contact_attributes[:name].present? && contact_attributes[:name] != @contact.name
+      is_new_name_not_default = !contact_attributes[:name].to_s.match?(/^(Khách hàng|Customer) - /)
+
+      if is_default_name && is_new_name_present_and_different && is_new_name_not_default
         @contact.update(name: contact_attributes[:name])
       end
       

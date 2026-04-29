@@ -318,6 +318,7 @@ en:
     survey:
       response: 'Please rate this conversation, %{link}'
   contacts:
+    default_name: 'Customer - %{id}'
     online:
       delete: '%{contact_name} is Online, please try again later'
   integration_apps:

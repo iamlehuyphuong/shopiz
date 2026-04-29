@@ -59,7 +59,7 @@ class ZaloPersonal::BaseService
   def user_contact_attributes
     return {} if @user_info.blank?
 
-    name = @user_info['zaloName'] || @user_info['zalo_name'] || @user_info['displayName']
+    name = @user_info['zaloName'] || @user_info['displayName']
     attributes = { name: name }
     if @user_info['phoneNumber'].present?
       phone = @user_info['phoneNumber']
@@ -355,7 +355,7 @@ class ZaloPersonal::BaseService
     attributes[:description] = @user_info['status']
     attributes[:zalo_is_friend] = @user_info['isFr'] unless @user_info['isFr'].nil?
     
-    name = @user_info['zaloName'] || @user_info['zalo_name'] || @user_info['displayName']
+    name = @user_info['zaloName'] || @user_info['displayName']
     update_params = {
       name: name,
       gender_id: @user_info['gender'],
@@ -454,7 +454,7 @@ class ZaloPersonal::BaseService
     phone_number = @user_info['phoneNumber']
     phone_number = "+#{phone_number}" unless phone_number.start_with?('+')
 
-    name = @user_info['zaloName'] || @user_info['zalo_name'] || @user_info['displayName']
+    name = @user_info['zaloName'] || @user_info['displayName']
     account.contacts.find_or_create_by!(phone_number: phone_number) do |contact|
       contact.name = name
       contact.additional_attributes = { source_id: params[:data][:uidFrom] }
@@ -462,7 +462,7 @@ class ZaloPersonal::BaseService
   end
 
   def contact_from_source_id
-    name = @user_info['zaloName'] || @user_info['zalo_name'] || @user_info['displayName']
+    name = @user_info['zaloName'] || @user_info['displayName']
     account.contacts.where(
       "additional_attributes ->> 'source_id' = :source_id", source_id: params[:data][:uidFrom]
     ).first_or_create do |contact|

@@ -280,6 +280,7 @@ vi:
     survey:
       response: 'Bạn hãy vui lòng đánh giá hội thoại, %{link}'
   contacts:
+    default_name: 'Khách hàng - %{id}'
     online:
       delete: '%{contact_name} đang online, vui lòng thử lại sau'
   integration_apps:

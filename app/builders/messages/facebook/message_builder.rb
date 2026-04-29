@@ -197,8 +197,14 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
   end
 
   def process_contact_params_result(result)
+    name = if result['first_name'].present? || result['last_name'].present?
+             "#{result['first_name']} #{result['last_name']}".strip
+           else
+             I18n.t('contacts.default_name', id: @sender_id.to_s.last(4))
+           end
+
     {
-      name: "#{result['first_name'] || 'John'} #{result['last_name'] || 'Doe'}".strip,
+      name: name,
       account_id: @inbox.account_id,
       avatar_url: result['profile_pic'],
       additional_attributes: {
