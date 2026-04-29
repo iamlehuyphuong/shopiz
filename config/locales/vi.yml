@@ -78,6 +78,8 @@ vi:
       reauthorization:
         generic: 'Không thể cấp lại quyền truy cập cho WhatsApp. Vui lòng thử lại.'
         not_supported: 'Cấp lại quyền truy cập không được hỗ trợ cho loại kênh WhatsApp này.'
+    facebook:
+      human_agent_error: '%{error_code} - %{error_message}\n(Lỗi): Bạn đang gửi tin nhắn quá 24h nhưng Fanpage chưa được cấp quyền Human Agent. Hãy vào Cài đặt Trang -> Trải nghiệm Trang mới -> Nhắn tin nâng cao -> Chọn Human Agent và Yêu cầu cấp quyền.'
     inboxes:
       imap:
         socket_error: 'Vui lòng kiểm tra kết nối mạng, địa chỉ IMAP và thử lại.'

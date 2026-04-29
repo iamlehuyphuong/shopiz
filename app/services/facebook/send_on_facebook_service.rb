@@ -63,9 +63,21 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
       base_params[:recipient] = { notification_messages_token: message.content_attributes['notification_messages_token'] }
     else
       base_params[:recipient] = { id: contact.get_source_id(inbox.id) }
-      base_params[:messaging_type] = 'MESSAGE_TAG'
-      base_params[:tag] = message_tag
+      if under_24_hours?
+        base_params[:messaging_type] = 'RESPONSE'
+      else
+        base_params[:messaging_type] = 'MESSAGE_TAG'
+        base_params[:tag] = 'HUMAN_AGENT'
+      end
     end
+  end
+
+  def under_24_hours?
+    last_incoming_message_time > 24.hours.ago
+  end
+
+  def last_incoming_message_time
+    conversation.last_incoming_message&.created_at || conversation.created_at
   end
 
   def fb_text_message_payload
@@ -89,6 +101,10 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
     # https://developers.facebook.com/docs/graph-api/guides/error-handling/
     error_message = response['error']['message']
     error_code = response['error']['code']
+
+    if error_code == 100 && error_message.include?('HUMAN_AGENT')
+      return I18n.t('errors.facebook.human_agent_error', error_code: error_code, error_message: error_message)
+    end
 
     "#{error_code} - #{error_message}"
   end
@@ -251,11 +267,7 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
     campaign.increment_metric!(status)
   end
 
-  def message_tag
-    # ACCOUNT_UPDATE deprecated since 27/04/2026 (returns error code 100)
-    # Ref: https://developers.facebook.com/docs/messenger-platform/send-messages/message-tags
-    'HUMAN_AGENT'
-  end
+
 
   def attachment_type(attachment)
     return attachment.file_type if %w[image audio video file].include? attachment.file_type
