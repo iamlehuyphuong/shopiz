@@ -319,7 +319,8 @@
     },
     "SIDEBAR": {
       "CONTACT": "Contact",
-      "COPILOT": "Shopiz AI"
+      "COPILOT": "Shopiz AI",
+      "ORDERS": "Orders"
     },
     "COPILOT": {
       "TRY_THESE_PROMPTS": "Try these prompts"
@@ -389,6 +390,43 @@
       "muted": "{user_name} has muted the conversation",
       "unmuted": "{user_name} has unmuted the conversation",
       "auto_resolution_message": "Resolving the conversation as it has been inactive for a while. Please start a new conversation if you need further assistance."
+    },
+    "ORDER_PANEL": {
+      "TITLE": "Orders",
+      "NEW_ORDER": "New Order",
+      "EDIT_ORDER": "Edit Order",
+      "NO_ORDERS": "No orders yet",
+      "CREATE_FIRST": "Create the first order for this conversation",
+      "PRODUCTS": "Products",
+      "PRODUCT_SEARCH": "Search products...",
+      "PRODUCT_NAME": "Product name",
+      "NO_PRODUCTS": "No products found",
+      "ADD_MANUAL": "Add manually",
+      "CUSTOMER_INFO": "Customer Info",
+      "CUSTOMER_NAME": "Customer name",
+      "PHONE": "Phone number",
+      "ADDRESS": "Delivery address",
+      "NOTE": "Note",
+      "TOTAL": "Total",
+      "QUANTITY": "Qty",
+      "PRICE": "Price",
+      "ITEMS_COUNT": "items",
+      "STATUS_LABEL": "Status",
+      "STATUS": {
+        "DRAFT": "Draft",
+        "CONFIRMED": "Confirmed",
+        "PROCESSING": "Processing",
+        "SHIPPED": "Shipped",
+        "DELIVERED": "Delivered",
+        "CANCELLED": "Cancelled"
+      },
+      "SAVE": "Save Order",
+      "UPDATE": "Update",
+      "CANCEL": "Cancel",
+      "DELETE": "Delete",
+      "SAVE_SUCCESS": "Order saved successfully",
+      "DELETE_SUCCESS": "Order deleted successfully",
+      "DELETE_ERROR": "Failed to delete order"
     }
   },
   "EMAIL_TRANSCRIPT": {

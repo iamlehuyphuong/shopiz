@@ -1,0 +1,160 @@
+<script setup>
+import { ref, computed, watch, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useStore, useMapGetter } from 'dashboard/composables/store';
+import { useAlert } from 'dashboard/composables';
+import AccordionItem from 'dashboard/components/Accordion/AccordionItem.vue';
+import Button from 'dashboard/components-next/button/Button.vue';
+import OrderList from './OrderList.vue';
+import OrderForm from './OrderForm.vue';
+
+const props = defineProps({
+  conversationId: {
+    type: [Number, String],
+    required: true,
+  },
+});
+
+const { t } = useI18n();
+const store = useStore();
+
+const showForm = ref(false);
+const editingOrder = ref(null);
+const isOrderListOpen = ref(true);
+
+const currentConversation = useMapGetter('getSelectedChat');
+const contact = computed(() => {
+  const conversation = currentConversation.value;
+  if (!conversation) return {};
+  return store.getters['contacts/getContact'](conversation.meta?.sender?.id) || {};
+});
+
+const orders = computed(() =>
+  store.getters['conversationOrders/getOrdersByConversationId'](
+    props.conversationId
+  )
+);
+
+const uiFlags = computed(
+  () => store.getters['conversationOrders/getUIFlags']
+);
+
+const fetchOrders = () => {
+  store.dispatch('conversationOrders/get', {
+    conversationId: props.conversationId,
+  });
+};
+
+onMounted(fetchOrders);
+
+watch(() => props.conversationId, fetchOrders);
+
+const handleNewOrder = () => {
+  editingOrder.value = null;
+  showForm.value = true;
+};
+
+const handleEditOrder = order => {
+  editingOrder.value = order;
+  showForm.value = true;
+};
+
+const handleFormSaved = () => {
+  showForm.value = false;
+  editingOrder.value = null;
+  useAlert(t('CONVERSATION.ORDER_PANEL.SAVE_SUCCESS'));
+};
+
+const handleFormClose = () => {
+  showForm.value = false;
+  editingOrder.value = null;
+};
+
+const handleDeleteOrder = async order => {
+  try {
+    await store.dispatch('conversationOrders/delete', {
+      conversationId: props.conversationId,
+      orderId: order.id,
+    });
+    useAlert(t('CONVERSATION.ORDER_PANEL.DELETE_SUCCESS'));
+  } catch {
+    useAlert(t('CONVERSATION.ORDER_PANEL.DELETE_ERROR'));
+  }
+};
+</script>
+
+<template>
+  <div class="flex flex-col w-full h-full">
+    <!-- Form Mode -->
+    <OrderForm
+      v-if="showForm"
+      :conversation-id="conversationId"
+      :contact="contact"
+      :order="editingOrder"
+      @close="handleFormClose"
+      @saved="handleFormSaved"
+    />
+
+    <!-- List Mode -->
+    <div v-else class="w-full overflow-y-auto">
+      <!-- Quick Actions -->
+      <div class="px-4 py-3 border-b border-n-weak">
+        <Button
+          :label="t('CONVERSATION.ORDER_PANEL.NEW_ORDER')"
+          icon="i-lucide-plus"
+          sm
+          class="w-full"
+          @click="handleNewOrder"
+        />
+      </div>
+
+      <!-- Orders Accordion -->
+      <div class="px-2 pb-8 pt-3">
+        <AccordionItem
+          :title="t('CONVERSATION.ORDER_PANEL.TITLE')"
+          :is-open="isOrderListOpen"
+          compact
+          @toggle="isOrderListOpen = !isOrderListOpen"
+        >
+          <template #button>
+            <span
+              v-if="orders.length"
+              class="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-n-alpha-2 text-xs font-medium text-n-slate-11 mr-2"
+            >
+              {{ orders.length }}
+            </span>
+          </template>
+
+          <!-- Loading -->
+          <div
+            v-if="uiFlags.isFetching"
+            class="flex items-center justify-center py-6"
+          >
+            <i class="i-lucide-loader-2 text-n-slate-10 animate-spin text-lg" />
+          </div>
+
+          <!-- Orders List -->
+          <OrderList
+            v-else-if="orders.length"
+            :orders="orders"
+            @edit="handleEditOrder"
+            @delete="handleDeleteOrder"
+          />
+
+          <!-- Empty State -->
+          <div
+            v-else
+            class="flex flex-col items-center py-6 px-4"
+          >
+            <div class="w-10 h-10 rounded-xl bg-n-solid-3 flex items-center justify-center mb-2.5">
+              <i class="i-lucide-shopping-bag text-base text-n-slate-10" />
+            </div>
+            <p class="text-xs text-n-slate-10 text-center leading-relaxed">
+              {{ t('CONVERSATION.ORDER_PANEL.NO_ORDERS') }}
+            </p>
+          </div>
+        </AccordionItem>
+      </div>
+    </div>
+  </div>
+</template>

@@ -2,6 +2,7 @@
 import { ref, computed, onMounted } from 'vue';
 import ContactPanel from 'dashboard/routes/dashboard/conversation/ContactPanel.vue';
 import Copilot from 'dashboard/components-next/copilot/Copilot.vue';
+import OrderPanel from 'dashboard/components/widgets/conversation/orders/OrderPanel.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 import { useUISettings } from 'dashboard/composables/useUISettings';
 import { useWindowSize } from '@vueuse/core';
@@ -31,9 +32,15 @@ const isContactTabActive = computed(
 const isCopilotTabActive = computed(
   () => uiSettings.value.is_copilot_panel_open
 );
+const isOrderTabActive = computed(
+  () => uiSettings.value.is_order_sidebar_open
+);
 
 const isSidebarVisible = computed(
-  () => isContactTabActive.value || isCopilotTabActive.value
+  () =>
+    isContactTabActive.value ||
+    isCopilotTabActive.value ||
+    isOrderTabActive.value
 );
 
 const isSmallScreen = computed(
@@ -137,6 +144,7 @@ const switchToContactTab = () => {
   updateUISettings({
     is_contact_sidebar_open: true,
     is_copilot_panel_open: false,
+    is_order_sidebar_open: false,
   });
 };
 
@@ -144,6 +152,15 @@ const switchToCopilotTab = () => {
   updateUISettings({
     is_contact_sidebar_open: false,
     is_copilot_panel_open: true,
+    is_order_sidebar_open: false,
+  });
+};
+
+const switchToOrderTab = () => {
+  updateUISettings({
+    is_contact_sidebar_open: false,
+    is_copilot_panel_open: false,
+    is_order_sidebar_open: true,
   });
 };
 
@@ -151,6 +168,7 @@ const closeSidebar = () => {
   updateUISettings({
     is_contact_sidebar_open: false,
     is_copilot_panel_open: false,
+    is_order_sidebar_open: false,
   });
 };
 
@@ -203,6 +221,17 @@ onMounted(() => {
         >
           {{ $t('CONVERSATION.SIDEBAR.COPILOT') }}
         </button>
+        <button
+          class="px-3 py-1.5 text-sm rounded-md transition-colors duration-150"
+          :class="
+            isOrderTabActive
+              ? 'bg-n-alpha-2 text-n-slate-12 font-medium'
+              : 'text-n-slate-11 hover:text-n-slate-12 hover:bg-n-alpha-1'
+          "
+          @click="switchToOrderTab"
+        >
+          {{ $t('CONVERSATION.SIDEBAR.ORDERS') }}
+        </button>
       </div>
       <Button
         v-tooltip="$t('GENERAL.CLOSE')"
@@ -214,7 +243,7 @@ onMounted(() => {
     </div>
 
     <!-- Contact Panel -->
-    <div v-show="isContactTabActive" class="flex flex-1 overflow-auto">
+    <div v-if="isContactTabActive" class="flex flex-1 overflow-auto">
       <ContactPanel
         :conversation-id="currentChat.id"
         :inbox-id="currentChat.inbox_id"
@@ -223,7 +252,7 @@ onMounted(() => {
 
     <!-- Copilot Panel -->
     <div
-      v-if="isCopilotTabActive && shouldShowCopilotContent"
+      v-else-if="isCopilotTabActive && shouldShowCopilotContent"
       class="flex flex-1 overflow-hidden"
     >
       <Copilot
@@ -236,6 +265,14 @@ onMounted(() => {
         @send-message="sendCopilotMessage"
         @reset="handleCopilotReset"
       />
+    </div>
+
+    <!-- Order Panel -->
+    <div
+      v-else-if="isOrderTabActive"
+      class="flex flex-1 overflow-hidden"
+    >
+      <OrderPanel :conversation-id="currentChat.id" />
     </div>
   </div>
   <template v-else />

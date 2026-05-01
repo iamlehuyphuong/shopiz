@@ -96,8 +96,9 @@ export default {
       const {
         is_contact_sidebar_open: isContactSidebarOpen,
         is_copilot_panel_open: isCopilotPanelOpen,
+        is_order_sidebar_open: isOrderSidebarOpen,
       } = this.uiSettings;
-      return isContactSidebarOpen || isCopilotPanelOpen;
+      return isContactSidebarOpen || isCopilotPanelOpen || isOrderSidebarOpen;
     },
   },
   watch: {

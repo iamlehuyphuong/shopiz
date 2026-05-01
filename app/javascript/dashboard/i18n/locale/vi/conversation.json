@@ -319,7 +319,8 @@
     },
     "SIDEBAR": {
       "CONTACT": "Liên hệ",
-      "COPILOT": "Shopiz AI"
+      "COPILOT": "Shopiz AI",
+      "ORDERS": "Đơn hàng"
     },
     "COPILOT": {
       "TRY_THESE_PROMPTS": "Hãy thử những gợi ý này"
@@ -389,6 +390,43 @@
       "muted": "{user_name} đã tắt tiếng hội thoại",
       "unmuted": "{user_name} đã bật tiếng cuộc trò chuyện",
       "auto_resolution_message": "Đang giải quyết cuộc trò chuyện vì đã không hoạt động trong một thời gian. Vui lòng bắt đầu một cuộc trò chuyện mới nếu cần hỗ trợ thêm."
+    },
+    "ORDER_PANEL": {
+      "TITLE": "Đơn hàng",
+      "NEW_ORDER": "Tạo đơn",
+      "EDIT_ORDER": "Sửa đơn hàng",
+      "NO_ORDERS": "Chưa có đơn hàng",
+      "CREATE_FIRST": "Tạo đơn hàng đầu tiên cho hội thoại này",
+      "PRODUCTS": "Sản phẩm",
+      "PRODUCT_SEARCH": "Tìm sản phẩm...",
+      "PRODUCT_NAME": "Tên sản phẩm",
+      "NO_PRODUCTS": "Không tìm thấy sản phẩm",
+      "ADD_MANUAL": "Thêm thủ công",
+      "CUSTOMER_INFO": "Thông tin khách hàng",
+      "CUSTOMER_NAME": "Tên khách hàng",
+      "PHONE": "Số điện thoại",
+      "ADDRESS": "Địa chỉ giao hàng",
+      "NOTE": "Ghi chú",
+      "TOTAL": "Tổng tiền",
+      "QUANTITY": "SL",
+      "PRICE": "Giá",
+      "ITEMS_COUNT": "sản phẩm",
+      "STATUS_LABEL": "Trạng thái",
+      "STATUS": {
+        "DRAFT": "Nháp",
+        "CONFIRMED": "Đã xác nhận",
+        "PROCESSING": "Đang xử lý",
+        "SHIPPED": "Đang giao",
+        "DELIVERED": "Đã giao",
+        "CANCELLED": "Đã hủy"
+      },
+      "SAVE": "Lưu đơn hàng",
+      "UPDATE": "Cập nhật",
+      "CANCEL": "Hủy",
+      "DELETE": "Xóa",
+      "SAVE_SUCCESS": "Lưu đơn hàng thành công",
+      "DELETE_SUCCESS": "Xóa đơn hàng thành công",
+      "DELETE_ERROR": "Không thể xóa đơn hàng"
     }
   },
   "EMAIL_TRANSCRIPT": {

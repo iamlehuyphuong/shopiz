@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_04_24_102618) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_01_035729) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -766,6 +766,43 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_24_102618) do
     t.index ["identifier", "account_id"], name: "uniq_identifier_per_account_contact", unique: true
     t.index ["name", "email", "phone_number", "identifier"], name: "index_contacts_on_name_email_phone_number_identifier", opclass: :gin_trgm_ops, using: :gin
     t.index ["phone_number", "account_id"], name: "index_contacts_on_phone_number_and_account_id"
+  end
+
+  create_table "conversation_order_items", force: :cascade do |t|
+    t.bigint "conversation_order_id", null: false
+    t.string "product_name", null: false
+    t.string "product_id"
+    t.string "product_source"
+    t.integer "quantity", default: 1, null: false
+    t.decimal "unit_price", precision: 15, scale: 2, default: "0.0"
+    t.decimal "total_price", precision: 15, scale: 2, default: "0.0"
+    t.string "product_thumbnail"
+    t.jsonb "product_metadata", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_order_id"], name: "index_conversation_order_items_on_conversation_order_id"
+  end
+
+  create_table "conversation_orders", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "conversation_id", null: false
+    t.bigint "contact_id"
+    t.integer "status", default: 0, null: false
+    t.string "customer_name"
+    t.string "customer_phone"
+    t.text "customer_address"
+    t.text "customer_note"
+    t.decimal "total_amount", precision: 15, scale: 2, default: "0.0"
+    t.string "currency", default: "VND"
+    t.string "external_order_id"
+    t.string "external_source"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "conversation_id"], name: "index_conversation_orders_on_account_id_and_conversation_id"
+    t.index ["account_id"], name: "index_conversation_orders_on_account_id"
+    t.index ["contact_id"], name: "index_conversation_orders_on_contact_id"
+    t.index ["conversation_id"], name: "index_conversation_orders_on_conversation_id"
+    t.index ["status"], name: "index_conversation_orders_on_status"
   end
 
   create_table "conversation_participants", force: :cascade do |t|

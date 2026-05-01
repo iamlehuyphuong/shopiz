@@ -25,11 +25,15 @@ const isContactSidebarOpen = computed(
 const isCopilotPanelOpen = computed(
   () => uiSettings.value.is_copilot_panel_open
 );
+const isOrderSidebarOpen = computed(
+  () => uiSettings.value.is_order_sidebar_open
+);
 
 const toggleConversationSidebarToggle = () => {
   updateUISettings({
     is_contact_sidebar_open: !isContactSidebarOpen.value,
     is_copilot_panel_open: false,
+    is_order_sidebar_open: false,
   });
 };
 
@@ -37,6 +41,7 @@ const handleConversationSidebarToggle = () => {
   updateUISettings({
     is_contact_sidebar_open: true,
     is_copilot_panel_open: false,
+    is_order_sidebar_open: false,
   });
 };
 
@@ -44,6 +49,15 @@ const handleCopilotSidebarToggle = () => {
   updateUISettings({
     is_contact_sidebar_open: false,
     is_copilot_panel_open: true,
+    is_order_sidebar_open: false,
+  });
+};
+
+const handleOrderSidebarToggle = () => {
+  updateUISettings({
+    is_contact_sidebar_open: false,
+    is_copilot_panel_open: false,
+    is_order_sidebar_open: true,
   });
 };
 
@@ -85,5 +99,19 @@ useKeyboardEvents(keyboardEvents);
       icon="i-woot-captain"
       @click="handleCopilotSidebarToggle"
     />
+    <Button
+      v-tooltip.bottom="$t('CONVERSATION.SIDEBAR.ORDERS')"
+      ghost
+      slate
+      sm
+      class="!rounded-full transition-all duration-[250ms] ease-out active:!scale-95 active:duration-75"
+      :class="{
+        'bg-n-alpha-2 !text-n-amber-9 active:!brightness-105 active:shadow-sm':
+          isOrderSidebarOpen,
+      }"
+      icon="i-lucide-shopping-bag"
+      @click="handleOrderSidebarToggle"
+    />
   </ButtonGroup>
 </template>
+
