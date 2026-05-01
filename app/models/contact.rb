@@ -68,8 +68,9 @@ class Contact < ApplicationRecord
   before_validation :prepare_contact_attributes
   after_create_commit :dispatch_create_event, :ip_lookup
   after_update_commit :dispatch_update_event
-  after_destroy_commit :dispatch_destroy_event
   before_save :sync_contact_attributes
+  after_commit :trigger_auto_merge, on: [:create, :update]
+  after_destroy_commit :dispatch_destroy_event
 
   enum contact_type: { visitor: 0, lead: 1, customer: 2 }
   enum gender_id: { male: 0, female: 1 }
@@ -201,6 +202,23 @@ class Contact < ApplicationRecord
 
   def self.from_email(email)
     find_by(email: email&.downcase)
+  end
+
+  def trigger_auto_merge
+    return unless saved_change_to_phone_number? || saved_change_to_email?
+    return if phone_number.blank? && email.blank?
+    # Skip if no duplicate exists — avoids unnecessary job after ContactMergeAction#update!
+    return unless duplicate_contact_exists?
+
+    AutoMergeContactJob.perform_later(id)
+  end
+
+  def duplicate_contact_exists?
+    scope = self.class.where(account_id: account_id).where.not(id: id)
+    return true if phone_number.present? && scope.exists?(phone_number: phone_number)
+    return true if email.present? && scope.exists?(email: email)
+
+    false
   end
 
   private

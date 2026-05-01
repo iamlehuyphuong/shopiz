@@ -59,6 +59,46 @@ const lastActivityAt = computed(() => {
     : '';
 });
 
+const mapChannelName = channelType => {
+  if (!channelType) return '';
+  const map = {
+    'Channel::FacebookPage': 'Facebook',
+    'Channel::ZaloPersonal': 'Zalo Cá nhân',
+    'Channel::ZaloOa': 'Zalo OA',
+    'Channel::WebWidget': 'Web Widget',
+    'Channel::Api': 'API',
+    'Channel::Whatsapp': 'WhatsApp',
+  };
+  return map[channelType] || channelType.replace('Channel::', '');
+};
+
+const formatSourceString = sourceStr => {
+  if (!sourceStr) return '';
+  const parts = sourceStr.split(' | ');
+  if (parts.length === 2) {
+    return `${mapChannelName(parts[0])} | ${parts[1]}`;
+  }
+  return mapChannelName(sourceStr);
+};
+
+const displaySource = computed(() => {
+  const inboxes = props.selectedContact?.contactInboxes;
+  if (inboxes && inboxes.length > 0) {
+    return inboxes
+      .map(ci => {
+        if (!ci.inbox) return null;
+        return `${mapChannelName(ci.inbox.channelType)} | ${ci.inbox.name}`;
+      })
+      .filter(Boolean)
+      .join(', ');
+  }
+  const sources = props.selectedContact?.additionalAttributes?.sources;
+  if (sources && Array.isArray(sources) && sources.length > 0) {
+    return sources.map(formatSourceString).join(', ');
+  }
+  return null;
+});
+
 const avatarSrc = computed(() => {
   return avatarUrl.value ? avatarUrl.value : contactData.value?.thumbnail;
 });
@@ -163,17 +203,10 @@ const handleAvatarDelete = async () => {
           >
             <span class="i-ph-inbox text-n-slate-10 size-4" />
             {{
-              selectedContact?.contactInboxes &&
-              selectedContact.contactInboxes.length > 0
-                ? $t('CONTACTS_LAYOUT.DETAILS.SOURCE', {
-                    source: selectedContact.contactInboxes
-                      .map(ci => ci.inbox?.name)
-                      .filter(Boolean)
-                      .join(', '),
-                  })
-                : $t('CONTACTS_LAYOUT.DETAILS.SOURCE', {
-                    source: $t('CONTACTS_LAYOUT.DETAILS.SOURCE_SYSTEM'),
-                  })
+              $t('CONTACTS_LAYOUT.DETAILS.SOURCE', {
+                source:
+                  displaySource || $t('CONTACTS_LAYOUT.DETAILS.SOURCE_SYSTEM'),
+              })
             }}
           </span>
         </div>

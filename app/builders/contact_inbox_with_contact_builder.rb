@@ -15,19 +15,17 @@ class ContactInboxWithContactBuilder
 
   def find_or_create_contact_and_contact_inbox
     @contact_inbox = inbox.contact_inboxes.find_by(source_id: source_id) if source_id.present?
-    
+
     if @contact_inbox
       @contact = @contact_inbox.contact
       update_contact_avatar(@contact) unless @contact.avatar.attached?
-      
+
       is_default_name = @contact.name == 'John Doe' || @contact.name.to_s.match?(/^(Khách hàng|Customer) - /)
       is_new_name_present_and_different = contact_attributes[:name].present? && contact_attributes[:name] != @contact.name
       is_new_name_not_default = !contact_attributes[:name].to_s.match?(/^(Khách hàng|Customer) - /)
 
-      if is_default_name && is_new_name_present_and_different && is_new_name_not_default
-        @contact.update(name: contact_attributes[:name])
-      end
-      
+      @contact.update(name: contact_attributes[:name]) if is_default_name && is_new_name_present_and_different && is_new_name_not_default
+
       return @contact_inbox
     end
 
@@ -42,6 +40,7 @@ class ContactInboxWithContactBuilder
 
   def build_contact_with_contact_inbox
     @contact = find_contact || create_contact
+    append_source_to_existing_contact if @contact.persisted? && !@contact.previously_new_record?
     @contact_inbox = create_contact_inbox
   end
 
@@ -63,13 +62,28 @@ class ContactInboxWithContactBuilder
   end
 
   def create_contact
+    attrs = contact_attributes[:additional_attributes] || {}
+    attrs['sources'] = ["#{inbox.channel_type} | #{inbox.name}"]
+
     account.contacts.create!(
       name: contact_attributes[:name] || ::Haikunator.haikunate(1000),
       phone_number: contact_attributes[:phone_number],
       email: contact_attributes[:email],
       identifier: contact_attributes[:identifier],
-      additional_attributes: contact_attributes[:additional_attributes],
+      additional_attributes: attrs,
       custom_attributes: contact_attributes[:custom_attributes]
+    )
+  end
+
+  def append_source_to_existing_contact
+    new_source = "#{inbox.channel_type} | #{inbox.name}"
+    current_sources = @contact.additional_attributes&.dig('sources') || []
+    return if current_sources.include?(new_source)
+
+    @contact.update!(
+      additional_attributes: (@contact.additional_attributes || {}).merge(
+        'sources' => (current_sources + [new_source]).uniq
+      )
     )
   end
 
