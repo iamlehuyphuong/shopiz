@@ -55,7 +55,7 @@ const channelList = computed(() => {
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.INSTAGRAM.DESCRIPTION'),
       icon: 'i-woot-instagram',
     },
-   {
+    {
       key: 'tiktok',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK.DESCRIPTION'),
@@ -66,7 +66,7 @@ const channelList = computed(() => {
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK_SHOP.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK_SHOP.DESCRIPTION'),
       icon: 'i-woot-tiktok-shop',
-    }, 
+    },
     {
       key: 'telegram',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TELEGRAM.TITLE'),
@@ -79,7 +79,7 @@ const channelList = computed(() => {
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.LINE.DESCRIPTION'),
       icon: 'i-woot-line',
     },
-     {
+    {
       key: 'twitter',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TWITTER.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TWITTER.DESCRIPTION'),

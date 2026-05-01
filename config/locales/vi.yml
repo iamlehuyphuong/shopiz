@@ -483,3 +483,18 @@ vi:
     content:
       package: 'Gói %{product_name} %{month} Tháng'
       credit: 'Gói %{product_name}'
+  zalo_personal:
+    calls:
+      action:
+        rejected: 'Bạn đã từ chối'
+        missed: 'Bạn bị nhỡ'
+        cancelled: 'Bạn đã huỷ'
+        recipient_rejected: 'Người nhận từ chối'
+      type:
+        video_missed: 'Cuộc gọi video'
+        video_outgoing: 'Cuộc gọi video đi'
+        video_incoming: 'Cuộc gọi video đến'
+        voice_missed: 'Cuộc gọi thoại'
+        voice_outgoing: 'Cuộc gọi thoại đi'
+        voice_incoming: 'Cuộc gọi thoại đến'
+      duration: '%{mins} phút %{seconds} giây'

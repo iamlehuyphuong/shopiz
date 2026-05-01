@@ -222,7 +222,11 @@ export default {
         ];
       }
 
-      if (this.isAFacebookInbox || this.isAnInstagramChannel || this.isATiktokChannel) {
+      if (
+        this.isAFacebookInbox ||
+        this.isAnInstagramChannel ||
+        this.isATiktokChannel
+      ) {
         visibleToAllChannelTabs = [
           ...visibleToAllChannelTabs,
           {

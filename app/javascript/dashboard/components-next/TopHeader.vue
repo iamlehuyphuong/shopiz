@@ -115,7 +115,6 @@ onUnmounted(() => {
   >
     <!-- Left Section: Mobile Toggle, Logo, Workspace, Search, Compose -->
     <div class="flex items-center flex-1 gap-4">
-
       <!-- Logo + Workspace Switcher -->
       <div class="flex items-center gap-2">
         <div class="flex items-center justify-center flex-shrink-0 size-8">

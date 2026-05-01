@@ -36,6 +36,7 @@ const tailwindConfig = {
     './app/javascript/dashboard/components-next/**/*.js',
     './app/javascript/dashboard/routes/dashboard/**/**/*.js',
     './app/views/**/*.html.erb',
+    './app/services/**/*.rb',
   ],
   safelist: [
     // Critical brand color classes used in dynamic JS configs (Button.vue STYLE_CONFIG)

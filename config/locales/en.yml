@@ -526,3 +526,18 @@ en:
     content:
       package: '%{product_name} Package - %{month} months'
       credit: '%{product_name} Package'
+  zalo_personal:
+    calls:
+      action:
+        rejected: 'You rejected'
+        missed: 'You missed'
+        cancelled: 'You cancelled'
+        recipient_rejected: 'Recipient rejected'
+      type:
+        video_missed: 'Video call'
+        video_outgoing: 'Outgoing video call'
+        video_incoming: 'Incoming video call'
+        voice_missed: 'Voice call'
+        voice_outgoing: 'Outgoing voice call'
+        voice_incoming: 'Incoming voice call'
+      duration: '%{mins} minutes %{seconds} seconds'

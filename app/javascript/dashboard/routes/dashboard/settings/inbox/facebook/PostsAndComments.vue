@@ -28,7 +28,9 @@ const autoReplyAiPrompt = ref('');
 const isUpdating = ref(false);
 
 const providerConfig = computed(() => props.inbox.provider_config || {});
-const isTiktokChannel = computed(() => props.inbox.channel_type === 'Channel::Tiktok');
+const isTiktokChannel = computed(
+  () => props.inbox.channel_type === 'Channel::Tiktok'
+);
 const supportsCommentModeration = computed(() => !isTiktokChannel.value);
 
 // When "hide all" is toggled on, force-off the granular rules
