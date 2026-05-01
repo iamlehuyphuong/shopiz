@@ -157,6 +157,25 @@ const handleAvatarDelete = async () => {
               })
             }}
           </span>
+          <span
+            v-if="selectedContact"
+            class="inline-flex items-center gap-1 text-sm text-n-slate-11"
+          >
+            <span class="i-ph-inbox text-n-slate-10 size-4" />
+            {{
+              selectedContact?.contactInboxes &&
+              selectedContact.contactInboxes.length > 0
+                ? $t('CONTACTS_LAYOUT.DETAILS.SOURCE', {
+                    source: selectedContact.contactInboxes
+                      .map(ci => ci.inbox?.name)
+                      .filter(Boolean)
+                      .join(', '),
+                  })
+                : $t('CONTACTS_LAYOUT.DETAILS.SOURCE', {
+                    source: $t('CONTACTS_LAYOUT.DETAILS.SOURCE_SYSTEM'),
+                  })
+            }}
+          </span>
         </div>
       </div>
       <ContactLabels :contact-id="selectedContact?.id" />

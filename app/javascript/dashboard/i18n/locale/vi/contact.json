@@ -500,6 +500,8 @@
     "DETAILS": {
       "CREATED_AT": "Tạo lúc {date}",
       "LAST_ACTIVITY": "Hoạt động cuối {date}",
+      "SOURCE": "Nguồn: {source}",
+      "SOURCE_SYSTEM": "Hệ thống / Nhập thủ công",
       "DELETE_CONTACT_DESCRIPTION": "Xóa vĩnh viễn liên hệ này. Hành động không thể hoàn tác.",
       "DELETE_CONTACT": "Xóa liên hệ",
       "DELETE_DIALOG": {
