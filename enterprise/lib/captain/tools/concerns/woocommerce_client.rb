@@ -28,6 +28,34 @@ module Captain::Tools::Concerns::WoocommerceClient
     nil
   end
 
+  def woocommerce_post(endpoint, body = {})
+    response = woocommerce_connection.post(endpoint) do |req|
+      req.headers['Content-Type'] = 'application/json'
+      req.body = body.to_json
+    end
+    JSON.parse(response.body)
+  rescue Faraday::Error => e
+    Rails.logger.error("WooCommerce API POST error: #{e.message}")
+    nil
+  rescue JSON::ParserError => e
+    Rails.logger.error("WooCommerce JSON parse error: #{e.message}")
+    nil
+  end
+
+  def woocommerce_put(endpoint, body = {})
+    response = woocommerce_connection.put(endpoint) do |req|
+      req.headers['Content-Type'] = 'application/json'
+      req.body = body.to_json
+    end
+    JSON.parse(response.body)
+  rescue Faraday::Error => e
+    Rails.logger.error("WooCommerce API PUT error: #{e.message}")
+    nil
+  rescue JSON::ParserError => e
+    Rails.logger.error("WooCommerce JSON parse error: #{e.message}")
+    nil
+  end
+
   def woocommerce_connection
     @woocommerce_connection ||= begin
       store_url = woocommerce_hook.reference_id

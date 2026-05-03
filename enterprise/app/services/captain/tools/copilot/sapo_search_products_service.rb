@@ -7,7 +7,6 @@ class Captain::Tools::Copilot::SapoSearchProductsService < Captain::Tools::BaseT
   description 'Search for products on the Sapo store by name or keyword.'
   param :query, type: :string, desc: 'Product name or keyword to search'
 
-
   def execute(**args)
     arguments = args.stringify_keys
     return 'Sapo integration is not connected.' unless sapo_active?

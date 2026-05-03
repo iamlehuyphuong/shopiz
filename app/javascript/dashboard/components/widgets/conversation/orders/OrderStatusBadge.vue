@@ -60,10 +60,7 @@ const pipelineStatuses = computed(() =>
     </span>
 
     <!-- Mini Pipeline (only for non-cancelled) -->
-    <div
-      v-if="status !== 'cancelled'"
-      class="flex items-center gap-0.5"
-    >
+    <div v-if="status !== 'cancelled'" class="flex items-center gap-0.5">
       <div
         v-for="(pStatus, index) in pipelineStatuses"
         :key="pStatus"

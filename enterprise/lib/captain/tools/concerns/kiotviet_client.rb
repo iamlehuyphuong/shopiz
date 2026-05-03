@@ -32,6 +32,36 @@ module Captain::Tools::Concerns::KiotvietClient
     nil
   end
 
+  def kiotviet_post(endpoint, body = {})
+    ensure_valid_token
+    response = kiotviet_connection.post(endpoint) do |req|
+      req.headers.merge!(kiotviet_headers)
+      req.body = body.to_json
+    end
+    JSON.parse(response.body)
+  rescue Faraday::Error => e
+    Rails.logger.error("KiotViet API POST error: #{e.message}")
+    nil
+  rescue JSON::ParserError => e
+    Rails.logger.error("KiotViet JSON parse error: #{e.message}")
+    nil
+  end
+
+  def kiotviet_put(endpoint, body = {})
+    ensure_valid_token
+    response = kiotviet_connection.put(endpoint) do |req|
+      req.headers.merge!(kiotviet_headers)
+      req.body = body.to_json
+    end
+    JSON.parse(response.body)
+  rescue Faraday::Error => e
+    Rails.logger.error("KiotViet API PUT error: #{e.message}")
+    nil
+  rescue JSON::ParserError => e
+    Rails.logger.error("KiotViet JSON parse error: #{e.message}")
+    nil
+  end
+
   def kiotviet_connection
     @kiotviet_connection ||= Faraday.new(url: KIOTVIET_API_BASE) do |f|
       f.request :url_encoded

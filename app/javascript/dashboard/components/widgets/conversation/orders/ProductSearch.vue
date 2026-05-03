@@ -99,7 +99,10 @@ const formatPrice = price => {
       <button
         v-else-if="searchQuery.length > 0"
         class="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 rounded hover:bg-n-alpha-2 text-n-slate-10 hover:text-n-slate-12 transition-colors"
-        @click="searchQuery = ''; results = []"
+        @click="
+          searchQuery = '';
+          results = [];
+        "
       >
         <fluent-icon icon="dismiss" size="12" />
       </button>
@@ -111,7 +114,9 @@ const formatPrice = price => {
       class="max-h-48 overflow-y-auto rounded-lg border border-n-weak bg-n-solid-1 divide-y divide-n-weak"
     >
       <template v-for="(products, source) in groupedResults" :key="source">
-        <div class="px-3 py-1.5 bg-n-solid-2 text-xs font-medium text-n-slate-10 uppercase tracking-wider">
+        <div
+          class="px-3 py-1.5 bg-n-solid-2 text-xs font-medium text-n-slate-10 uppercase tracking-wider"
+        >
           {{ sourceLabel(source) }}
         </div>
         <button
@@ -136,10 +141,7 @@ const formatPrice = price => {
             <div class="text-sm text-n-slate-12 truncate">
               {{ product.name }}
             </div>
-            <div
-              v-if="product.price"
-              class="text-xs text-n-slate-10"
-            >
+            <div v-if="product.price" class="text-xs text-n-slate-10">
               {{ formatPrice(product.price) }}đ
             </div>
           </div>
@@ -149,7 +151,9 @@ const formatPrice = price => {
     </div>
 
     <div
-      v-else-if="searchQuery.length >= 2 && !isSearching && results.length === 0"
+      v-else-if="
+        searchQuery.length >= 2 && !isSearching && results.length === 0
+      "
       class="text-center py-3 text-sm text-n-slate-10"
     >
       {{ t('CONVERSATION.ORDER_PANEL.NO_PRODUCTS') }}

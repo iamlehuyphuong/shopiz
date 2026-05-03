@@ -20,7 +20,7 @@ module Captain::Tools::Concerns::ShopifyClient
       api_key: client_id,
       api_secret_key: client_secret,
       api_version: '2025-01'.freeze,
-      scope: 'read_products,read_customers,read_orders,read_fulfillments',
+      scope: 'read_products,read_customers,read_orders,read_fulfillments,write_orders,write_customers',
       is_embedded: true,
       is_private: false
     )
@@ -41,6 +41,26 @@ module Captain::Tools::Concerns::ShopifyClient
     nil
   rescue StandardError => e
     Rails.logger.error("Shopify client error: #{e.message}")
+    nil
+  end
+
+  def shopify_post(path, body = {})
+    shopify_client.post(path: path, body: body).body
+  rescue ShopifyAPI::Errors::HttpResponseError => e
+    Rails.logger.error("Shopify API POST error: #{e.message}")
+    nil
+  rescue StandardError => e
+    Rails.logger.error("Shopify POST error: #{e.message}")
+    nil
+  end
+
+  def shopify_put(path, body = {})
+    shopify_client.put(path: path, body: body).body
+  rescue ShopifyAPI::Errors::HttpResponseError => e
+    Rails.logger.error("Shopify API PUT error: #{e.message}")
+    nil
+  rescue StandardError => e
+    Rails.logger.error("Shopify PUT error: #{e.message}")
     nil
   end
 

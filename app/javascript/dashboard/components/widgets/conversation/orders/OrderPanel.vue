@@ -26,7 +26,9 @@ const currentConversation = useMapGetter('getSelectedChat');
 const contact = computed(() => {
   const conversation = currentConversation.value;
   if (!conversation) return {};
-  return store.getters['contacts/getContact'](conversation.meta?.sender?.id) || {};
+  return (
+    store.getters['contacts/getContact'](conversation.meta?.sender?.id) || {}
+  );
 });
 
 const orders = computed(() =>
@@ -35,9 +37,7 @@ const orders = computed(() =>
   )
 );
 
-const uiFlags = computed(
-  () => store.getters['conversationOrders/getUIFlags']
-);
+const uiFlags = computed(() => store.getters['conversationOrders/getUIFlags']);
 
 const fetchOrders = () => {
   store.dispatch('conversationOrders/get', {
@@ -142,11 +142,10 @@ const handleDeleteOrder = async order => {
           />
 
           <!-- Empty State -->
-          <div
-            v-else
-            class="flex flex-col items-center py-6 px-4"
-          >
-            <div class="w-10 h-10 rounded-xl bg-n-solid-3 flex items-center justify-center mb-2.5">
+          <div v-else class="flex flex-col items-center py-6 px-4">
+            <div
+              class="w-10 h-10 rounded-xl bg-n-solid-3 flex items-center justify-center mb-2.5"
+            >
               <i class="i-lucide-shopping-bag text-base text-n-slate-10" />
             </div>
             <p class="text-xs text-n-slate-10 text-center leading-relaxed">

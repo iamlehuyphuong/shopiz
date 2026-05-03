@@ -70,10 +70,7 @@ const formatCurrency = amount =>
       </div>
 
       <!-- Products preview -->
-      <div
-        v-if="order.items?.length"
-        class="mt-2 flex flex-wrap gap-1"
-      >
+      <div v-if="order.items?.length" class="mt-2 flex flex-wrap gap-1">
         <span
           v-for="item in order.items.slice(0, 3)"
           :key="item.id"

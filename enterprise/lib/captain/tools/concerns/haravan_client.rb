@@ -31,6 +31,36 @@ module Captain::Tools::Concerns::HaravanClient
     nil
   end
 
+  def haravan_post(endpoint, body = {})
+    response = haravan_connection.post(endpoint) do |req|
+      req.headers['Authorization'] = "Bearer #{haravan_hook.access_token}"
+      req.headers['Content-Type'] = 'application/json'
+      req.body = body.to_json
+    end
+    JSON.parse(response.body)
+  rescue Faraday::Error => e
+    Rails.logger.error("Haravan API POST error: #{e.message}")
+    nil
+  rescue JSON::ParserError => e
+    Rails.logger.error("Haravan JSON parse error: #{e.message}")
+    nil
+  end
+
+  def haravan_put(endpoint, body = {})
+    response = haravan_connection.put(endpoint) do |req|
+      req.headers['Authorization'] = "Bearer #{haravan_hook.access_token}"
+      req.headers['Content-Type'] = 'application/json'
+      req.body = body.to_json
+    end
+    JSON.parse(response.body)
+  rescue Faraday::Error => e
+    Rails.logger.error("Haravan API PUT error: #{e.message}")
+    nil
+  rescue JSON::ParserError => e
+    Rails.logger.error("Haravan JSON parse error: #{e.message}")
+    nil
+  end
+
   def haravan_connection
     @haravan_connection ||= Faraday.new(url: HARAVAN_API_BASE) do |f|
       f.adapter Faraday.default_adapter

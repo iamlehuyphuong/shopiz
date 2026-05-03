@@ -8,7 +8,6 @@ class Captain::Tools::Copilot::SapoSearchOrdersService < Captain::Tools::BaseToo
   param :email, type: :string, desc: 'Customer email address'
   param :phone, type: :string, desc: 'Customer phone number (optional)'
 
-
   def execute(**args)
     arguments = args.stringify_keys
     return 'Sapo integration is not connected.' unless sapo_active?

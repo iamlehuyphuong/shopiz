@@ -114,4 +114,3 @@ useKeyboardEvents(keyboardEvents);
     />
   </ButtonGroup>
 </template>
-

@@ -71,12 +71,12 @@ const totalAmount = computed(() =>
   )
 );
 
-const formatCurrency = amount =>
-  new Intl.NumberFormat('vi-VN').format(amount);
+const formatCurrency = amount => new Intl.NumberFormat('vi-VN').format(amount);
 
 const addProduct = product => {
   const existingIndex = form.value.items.findIndex(
-    item => item.product_id === product.id && item.product_source === product.source
+    item =>
+      item.product_id === product.id && item.product_source === product.source
   );
   if (existingIndex >= 0) {
     form.value.items[existingIndex].quantity += 1;
@@ -114,7 +114,8 @@ const isSaving = computed(
 );
 
 const canSave = computed(
-  () => form.value.items.length > 0 && form.value.items.every(i => i.product_name)
+  () =>
+    form.value.items.length > 0 && form.value.items.every(i => i.product_name)
 );
 
 const handleSave = async () => {
@@ -169,7 +170,9 @@ const toggleSection = key => {
 <template>
   <div class="flex flex-col h-full w-full">
     <!-- Header - matches contact panel style -->
-    <div class="flex items-center gap-2 px-4 py-3 border-b border-n-weak shrink-0">
+    <div
+      class="flex items-center gap-2 px-4 py-3 border-b border-n-weak shrink-0"
+    >
       <button
         class="p-1 rounded-md hover:bg-n-alpha-2 text-n-slate-10 hover:text-n-slate-12 transition-colors"
         @click="emit('close')"
@@ -199,7 +202,12 @@ const toggleSection = key => {
             <select
               v-model="form.status"
               class="w-full px-3 py-2 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 cursor-pointer appearance-none"
-              style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2394a3b8%22 stroke-width=%222%22%3e%3cpath d=%22m6 9 6 6 6-6%22/%3e%3c/svg%3e'); background-repeat: no-repeat; background-position: right 0.5rem center; background-size: 1.25rem;"
+              style="
+                background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2394a3b8%22 stroke-width=%222%22%3e%3cpath d=%22m6 9 6 6 6-6%22/%3e%3c/svg%3e');
+                background-repeat: no-repeat;
+                background-position: right 0.5rem center;
+                background-size: 1.25rem;
+              "
             >
               <option v-for="s in STATUS_OPTIONS" :key="s" :value="s">
                 {{ t(`CONVERSATION.ORDER_PANEL.STATUS.${s.toUpperCase()}`) }}
@@ -362,5 +370,3 @@ const toggleSection = key => {
     </div>
   </div>
 </template>
-
-

@@ -90,6 +90,16 @@
   description: 'Search Shopify products by name or keyword'
   icon: 'box'
 
+- id: shopify_create_order_draft
+  title: 'Shopify: Create Order Draft'
+  description: 'Create a draft order with Shopify products for the current contact'
+  icon: 'cart-plus'
+
+- id: shopify_suggest_products
+  title: 'Shopify: Suggest Products'
+  description: 'Suggest upsell and cross-sell products based on current product selection'
+  icon: 'lightbulb'
+
 - id: kiotviet_search_orders
   title: 'KiotViet: Search Orders'
   description: 'Search KiotViet orders (invoices) for the current contact'
@@ -99,6 +109,16 @@
   title: 'KiotViet: Get Product'
   description: 'Search KiotViet products by name or keyword'
   icon: 'box'
+
+- id: kiotviet_create_order_draft
+  title: 'KiotViet: Create Order Draft'
+  description: 'Create a draft order with KiotViet products for the current contact'
+  icon: 'cart-plus'
+
+- id: kiotviet_suggest_products
+  title: 'KiotViet: Suggest Products'
+  description: 'Suggest upsell and cross-sell products based on current product selection and conversation context'
+  icon: 'lightbulb'
 
 - id: haravan_search_orders
   title: 'Haravan: Search Orders'
@@ -110,6 +130,16 @@
   description: 'Search Haravan products by name or keyword'
   icon: 'box'
 
+- id: haravan_create_order_draft
+  title: 'Haravan: Create Order Draft'
+  description: 'Create a draft order with Haravan products for the current contact'
+  icon: 'cart-plus'
+
+- id: haravan_suggest_products
+  title: 'Haravan: Suggest Products'
+  description: 'Suggest upsell and cross-sell products based on current product selection and conversation context'
+  icon: 'lightbulb'
+
 - id: woocommerce_search_orders
   title: 'WooCommerce: Search Orders'
   description: 'Search WooCommerce orders for the current contact'
@@ -119,6 +149,16 @@
   title: 'WooCommerce: Get Product'
   description: 'Search WooCommerce products by name or keyword'
   icon: 'box'
+
+- id: woocommerce_create_order_draft
+  title: 'WooCommerce: Create Order Draft'
+  description: 'Create a draft order with WooCommerce products for the current contact'
+  icon: 'cart-plus'
+
+- id: woocommerce_suggest_products
+  title: 'WooCommerce: Suggest Products'
+  description: 'Suggest upsell and cross-sell products based on current product selection'
+  icon: 'lightbulb'
 
 - id: sapo_search_orders
   title: 'Sapo: Search Orders'
@@ -130,6 +170,16 @@
   description: 'Search Sapo products by name or keyword'
   icon: 'box'
 
+- id: sapo_create_order_draft
+  title: 'Sapo: Create Order Draft'
+  description: 'Create a draft order with Sapo products for the current contact'
+  icon: 'cart-plus'
+
+- id: sapo_suggest_products
+  title: 'Sapo: Suggest Products'
+  description: 'Suggest upsell and cross-sell products based on current product selection and conversation context'
+  icon: 'lightbulb'
+
 - id: nhanhvn_search_orders
   title: 'Nhanh.vn: Search Orders'
   description: 'Search Nhanh.vn orders for the current contact'
@@ -139,6 +189,16 @@
   title: 'Nhanh.vn: Get Product'
   description: 'Search Nhanh.vn products by name or keyword'
   icon: 'box'
+
+- id: nhanhvn_create_order_draft
+  title: 'Nhanh.vn: Create Order Draft'
+  description: 'Create a draft order with Nhanh.vn products for the current contact'
+  icon: 'cart-plus'
+
+- id: nhanhvn_suggest_products
+  title: 'Nhanh.vn: Suggest Products'
+  description: 'Suggest upsell and cross-sell products based on current product selection and conversation context'
+  icon: 'lightbulb'
 
 - id: send_marketing_optin
   title: 'Send Marketing Opt-in'

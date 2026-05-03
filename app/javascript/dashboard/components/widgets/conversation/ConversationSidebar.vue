@@ -32,9 +32,7 @@ const isContactTabActive = computed(
 const isCopilotTabActive = computed(
   () => uiSettings.value.is_copilot_panel_open
 );
-const isOrderTabActive = computed(
-  () => uiSettings.value.is_order_sidebar_open
-);
+const isOrderTabActive = computed(() => uiSettings.value.is_order_sidebar_open);
 
 const isSidebarVisible = computed(
   () =>
@@ -268,10 +266,7 @@ onMounted(() => {
     </div>
 
     <!-- Order Panel -->
-    <div
-      v-else-if="isOrderTabActive"
-      class="flex flex-1 overflow-hidden"
-    >
+    <div v-else-if="isOrderTabActive" class="flex flex-1 overflow-hidden">
       <OrderPanel :conversation-id="currentChat.id" />
     </div>
   </div>
