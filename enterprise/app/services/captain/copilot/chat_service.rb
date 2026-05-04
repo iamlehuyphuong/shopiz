@@ -137,6 +137,11 @@ class Captain::Copilot::ChatService < Llm::BaseAiService
     Captain::Tools::Copilot::NhanhvnGetOrderDetailService,
     Captain::Tools::Copilot::NhanhvnPushOrderService,
     Captain::Tools::Copilot::NhanhvnCheckInventoryService,
+    Captain::Tools::Copilot::TiktokShopSearchProductsService,
+    Captain::Tools::Copilot::TiktokShopSuggestProductsService,
+    Captain::Tools::Copilot::TiktokShopCheckInventoryService,
+    Captain::Tools::Copilot::TiktokShopSearchOrdersService,
+    Captain::Tools::Copilot::TiktokShopGetOrderDetailService,
     Captain::Tools::Copilot::CreateScenarioService
   ].freeze
 

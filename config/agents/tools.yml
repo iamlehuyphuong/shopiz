@@ -204,3 +204,13 @@
   title: 'Send Marketing Opt-in'
   description: 'Send a Meta Marketing Messages Opt-in request to the customer'
   icon: 'mail-open'
+
+- id: tiktok_shop_suggest_products
+  title: 'TikTok Shop: Suggest Products'
+  description: 'Suggest products to buyers from TikTok Shop based on chat context'
+  icon: 'lightbulb'
+
+- id: tiktok_shop_search_orders
+  title: 'TikTok Shop: Search Orders'
+  description: 'Look up order details on TikTok Shop by Order ID to provide status, packing, and shipping information'
+  icon: 'shopping-bag'
