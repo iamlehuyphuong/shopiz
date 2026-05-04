@@ -55,7 +55,7 @@ class TiktokShop::Client
   def refresh_token
     refresh_url = 'https://auth.tiktok-shops.com/api/v2/token/refresh'
     params = {
-      app_key: tiktok_shop_app_id,
+      app_key: tiktok_shop_app_key,
       app_secret: tiktok_shop_app_secret,
       refresh_token: channel.refresh_token,
       grant_type: 'refresh_token'
@@ -114,7 +114,7 @@ class TiktokShop::Client
 
   def default_params
     {
-      app_key: tiktok_shop_app_id,
+      app_key: tiktok_shop_app_key,
       shop_cipher: channel.shop_cipher,
       timestamp: Time.now.to_i
     }
@@ -124,8 +124,8 @@ class TiktokShop::Client
     ::TiktokShop::SignatureService
   end
 
-  def tiktok_shop_app_id
-    GlobalConfigService.load('TIKTOK_SHOP_APP_ID', '')
+  def tiktok_shop_app_key
+    GlobalConfigService.load('TIKTOK_SHOP_APP_KEY', '')
   end
 
   def tiktok_shop_app_secret
