@@ -1,8 +1,6 @@
 class TiktokShop::AuthService
   AUTHORIZED_SHOPS_URL = "https://open-api.tiktokglobalshop.com/authorization/202309/shops"
   GET_ACCESS_TOKEN_URL = "https://auth.tiktok-shops.com/api/v2/token/get"
-  APP_KEY = GlobalConfigService.load('TIKTOK_SHOP_APP_KEY', '')
-  APP_SECRET = GlobalConfigService.load('TIKTOK_SHOP_APP_SECRET', '')
 
   def initialize(account_id, code)
     @account_id = account_id
@@ -11,8 +9,11 @@ class TiktokShop::AuthService
 
   def perform
     token_data = get_access_token
+    raise "TikTok API Error (token): #{token_data['message']}" if token_data['code'] != 0
+
     access_token = token_data.dig("data", "access_token")
     shop_data = get_shop_info(access_token)
+    raise "TikTok API Error (shop): #{shop_data['message']}" if shop_data['code'] != 0
 
     data = build_data(token_data, shop_data)
     shop_name = data[:shop_name]
@@ -22,10 +23,18 @@ class TiktokShop::AuthService
 
   private
 
+  def app_key
+    GlobalConfigService.load('TIKTOK_SHOP_APP_KEY', '')
+  end
+
+  def app_secret
+    GlobalConfigService.load('TIKTOK_SHOP_APP_SECRET', '')
+  end
+
   def get_access_token
     params = {
-      app_key: APP_KEY,
-      app_secret: APP_SECRET,
+      app_key: app_key,
+      app_secret: app_secret,
       auth_code: @code,
       grant_type: "authorized_code",
     }
@@ -37,7 +46,7 @@ class TiktokShop::AuthService
 
   def get_shop_info(access_token)
     params = {
-      app_key: APP_KEY,
+      app_key: app_key,
       timestamp: Time.now.to_i,
       access_token: access_token,
     }

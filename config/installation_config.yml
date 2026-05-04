@@ -468,6 +468,10 @@
 # ------- TikTok Shop Channel Related Config ------- #
 - name: TIKTOK_SHOP_APP_ID
   display_title: 'TikTok Shop App ID'
+  description: 'The App ID / Service ID provided by TikTok Shop Developer Platform'
+  locked: false
+- name: TIKTOK_SHOP_APP_KEY
+  display_title: 'TikTok Shop App Key'
   description: 'The App Key provided by TikTok Shop Developer Platform'
   locked: false
 - name: TIKTOK_SHOP_APP_SECRET
