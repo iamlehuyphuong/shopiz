@@ -13,8 +13,18 @@ export const state = {
 
 export const getters = {
   getOrdersByConversationId: _state => conversationId => {
-    const records = _state.records[conversationId] || [];
-    return records.sort((a, b) => b.id - a.id);
+    const entry = _state.records[conversationId];
+    if (!entry) return [];
+    // Support both old (array) and new (object) formats
+    const orders = Array.isArray(entry)
+      ? entry
+      : entry.conversationOrders || [];
+    return [...orders].sort((a, b) => b.id - a.id);
+  },
+  getContactOrdersByConversationId: _state => conversationId => {
+    const entry = _state.records[conversationId];
+    if (!entry || Array.isArray(entry)) return [];
+    return entry.contactOrders || [];
   },
   getUIFlags(_state) {
     return _state.uiFlags;
@@ -121,36 +131,71 @@ export const mutations = {
   },
 
   [types.SET_CONVERSATION_ORDERS]($state, { conversationId, data }) {
+    // data can be { conversation_orders, contact_orders } or a plain array
+    const normalized =
+      data.conversation_orders !== undefined
+        ? {
+            conversationOrders: data.conversation_orders || [],
+            contactOrders: data.contact_orders || [],
+          }
+        : { conversationOrders: data, contactOrders: [] };
     $state.records = {
       ...$state.records,
-      [conversationId]: data,
+      [conversationId]: normalized,
     };
   },
 
   [types.ADD_CONVERSATION_ORDER]($state, { conversationId, data }) {
-    const orders = $state.records[conversationId] || [];
+    const entry = $state.records[conversationId] || {
+      conversationOrders: [],
+      contactOrders: [],
+    };
+    const orders = Array.isArray(entry)
+      ? entry
+      : entry.conversationOrders || [];
     $state.records = {
       ...$state.records,
-      [conversationId]: [...orders, data],
+      [conversationId]: {
+        conversationOrders: [...orders, data],
+        contactOrders: Array.isArray(entry) ? [] : entry.contactOrders || [],
+      },
     };
   },
 
   [types.UPDATE_CONVERSATION_ORDER]($state, { conversationId, data }) {
-    const orders = $state.records[conversationId] || [];
+    const entry = $state.records[conversationId] || {
+      conversationOrders: [],
+      contactOrders: [],
+    };
+    const orders = Array.isArray(entry)
+      ? entry
+      : entry.conversationOrders || [];
     const updatedOrders = orders.map(order =>
       order.id === data.id ? data : order
     );
     $state.records = {
       ...$state.records,
-      [conversationId]: updatedOrders,
+      [conversationId]: {
+        conversationOrders: updatedOrders,
+        contactOrders: Array.isArray(entry) ? [] : entry.contactOrders || [],
+      },
     };
   },
 
   [types.DELETE_CONVERSATION_ORDER]($state, { conversationId, orderId }) {
-    const orders = $state.records[conversationId] || [];
+    const entry = $state.records[conversationId] || {
+      conversationOrders: [],
+      contactOrders: [],
+    };
+    const orders = Array.isArray(entry)
+      ? entry
+      : entry.conversationOrders || [];
     $state.records = {
       ...$state.records,
-      [conversationId]: orders.filter(order => order.id !== orderId),
+      [conversationId]: {
+        conversationOrders: orders.filter(order => order.id !== orderId),
+        contactOrders: Array.isArray(entry) ? [] : entry.contactOrders || [],
+      },
     };
   },
 };

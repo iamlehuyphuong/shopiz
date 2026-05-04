@@ -3,8 +3,13 @@ class Api::V1::Accounts::Conversations::OrdersController < Api::V1::Accounts::Co
   before_action :check_sales_permission, only: [:create, :update, :destroy, :push]
 
   def index
-    @orders = @conversation.conversation_orders.ordered.includes(:items)
-    render json: @orders.map { |order| order_json(order) }
+    conversation_orders = @conversation.conversation_orders.ordered.includes(:items)
+    contact_orders = fetch_contact_orders
+
+    render json: {
+      conversation_orders: conversation_orders.map { |order| order_json(order) },
+      contact_orders: contact_orders.map { |order| order_json(order) }
+    }
   end
 
   def show
@@ -101,6 +106,16 @@ class Api::V1::Accounts::Conversations::OrdersController < Api::V1::Accounts::Co
     @order.customer_name ||= contact.name
     @order.customer_phone ||= contact.phone_number
     @order.customer_address ||= contact.additional_attributes&.dig('address')
+  end
+
+  def fetch_contact_orders
+    contact = @conversation.contact
+    return [] unless contact
+
+    ConversationOrder
+      .where(contact_id: contact.id)
+      .where.not(conversation_id: @conversation.id)
+      .ordered.includes(:items).limit(20)
   end
 
   def order_json(order)

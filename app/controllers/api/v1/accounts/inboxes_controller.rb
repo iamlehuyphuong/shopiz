@@ -172,7 +172,7 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   def inbox_attributes
     [:name, :avatar, :greeting_enabled, :greeting_message, :enable_email_collect, :csat_survey_enabled,
      :enable_auto_assignment, :working_hours_enabled, :out_of_office_message, :timezone, :allow_messages_after_resolved,
-     :lock_to_single_conversation, :portal_id, :sender_name_type, :business_name,
+     :lock_to_single_conversation, :portal_id, :sender_name_type, :business_name, :ecommerce_integration_id,
      { followup_config: [:enabled, :delay_seconds, :action_type, :max_attempts, :interval_hours, :time_mode,
                           :fixed_time, :timezone, :predefined_message, :custom_ai_prompt, :macro_id,
                           { predefined_messages: [] }, { macros: [] }, { custom_ai_prompts: [] }] },

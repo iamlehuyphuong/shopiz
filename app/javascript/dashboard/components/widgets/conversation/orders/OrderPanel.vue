@@ -21,6 +21,7 @@ const store = useStore();
 const showForm = ref(false);
 const editingOrder = ref(null);
 const isOrderListOpen = ref(true);
+const isContactOrdersOpen = ref(false);
 
 const currentConversation = useMapGetter('getSelectedChat');
 const contact = computed(() => {
@@ -33,6 +34,12 @@ const contact = computed(() => {
 
 const orders = computed(() =>
   store.getters['conversationOrders/getOrdersByConversationId'](
+    props.conversationId
+  )
+);
+
+const contactOrders = computed(() =>
+  store.getters['conversationOrders/getContactOrdersByConversationId'](
     props.conversationId
   )
 );
@@ -180,6 +187,33 @@ const handleSyncOrder = async order => {
               {{ t('CONVERSATION.ORDER_PANEL.NO_ORDERS') }}
             </p>
           </div>
+        </AccordionItem>
+
+        <!-- Contact's Previous Orders -->
+        <AccordionItem
+          v-if="contactOrders.length"
+          :title="t('CONVERSATION.ORDER_PANEL.CONTACT_ORDERS')"
+          :is-open="isContactOrdersOpen"
+          compact
+          class="mt-2"
+          @toggle="isContactOrdersOpen = !isContactOrdersOpen"
+        >
+          <template #button>
+            <span
+              class="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-n-alpha-2 text-xs font-medium text-n-slate-11 mr-2"
+            >
+              {{ contactOrders.length }}
+            </span>
+          </template>
+
+          <OrderList
+            :orders="contactOrders"
+            readonly
+            @edit="handleEditOrder"
+            @delete="handleDeleteOrder"
+            @push="handlePushOrder"
+            @sync="handleSyncOrder"
+          />
         </AccordionItem>
       </div>
     </div>

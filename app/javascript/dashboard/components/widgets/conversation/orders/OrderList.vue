@@ -8,6 +8,10 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  readonly: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['edit', 'delete', 'push', 'sync']);
@@ -132,8 +136,9 @@ const platformIcon = source => PLATFORM_ICONS[source] || 'i-lucide-box';
         </span>
       </div>
 
-      <!-- Action buttons (visible on hover) -->
+      <!-- Action buttons (visible on hover, hidden in readonly mode) -->
       <div
+        v-if="!props.readonly"
         class="flex items-center gap-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity"
       >
         <button

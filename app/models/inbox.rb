@@ -57,6 +57,16 @@ class Inbox < ApplicationRecord
     'Channel::TiktokShop' => 'TiktokShop::LoadHistoryConversationService'
   }.freeze
 
+  # Integration app_ids considered as e-commerce platforms
+  ECOMMERCE_APP_IDS = %w[kiotviet sapo haravan shopify woocommerce nhanhvn tiktok_shop].freeze
+
+  # Channel types that are permanently linked to their native e-commerce platform
+  MARKETPLACE_CHANNEL_MAP = {
+    'Channel::TiktokShop' => 'tiktok_shop'
+    # 'Channel::Lazada' => 'lazada',
+    # 'Channel::Shopee' => 'shopee',
+  }.freeze
+
   # Not allowing characters:
   validates :name, presence: true
   validates :account_id, presence: true
@@ -67,6 +77,7 @@ class Inbox < ApplicationRecord
 
   belongs_to :account
   belongs_to :portal, optional: true
+  belongs_to :ecommerce_integration, class_name: 'Integrations::Hook', optional: true
 
   belongs_to :channel, polymorphic: true, dependent: :destroy
 
@@ -189,6 +200,25 @@ class Inbox < ApplicationRecord
 
   def active_bot?
     agent_bot_inbox&.active? || hooks.any? { |hook| hook.app_id.in?(%w[dialogflow]) && hook.enabled? }
+  end
+
+  def marketplace_channel?
+    MARKETPLACE_CHANNEL_MAP.key?(channel_type)
+  end
+
+  def auto_linked_platform
+    MARKETPLACE_CHANNEL_MAP[channel_type]
+  end
+
+  # Returns the effective e-commerce hook for this inbox.
+  # Marketplace channels (TikTok Shop) are auto-linked to their native platform hook.
+  # Generic channels use the explicitly assigned ecommerce_integration.
+  def effective_ecommerce_hook
+    if marketplace_channel?
+      account.hooks.find_by(app_id: auto_linked_platform)
+    else
+      ecommerce_integration
+    end
   end
 
   def inbox_type

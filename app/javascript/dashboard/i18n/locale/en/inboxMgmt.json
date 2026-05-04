@@ -710,7 +710,20 @@
       "ACCOUNT_HEALTH": "Account Health",
       "CSAT": "CSAT",
       "POSTS_AND_COMMENTS": "Comment Management",
-      "MESSAGE_TEMPLATES": "Message Templates"
+      "MESSAGE_TEMPLATES": "Message Templates",
+      "ECOMMERCE": "eCommerce"
+    },
+    "ECOMMERCE": {
+      "TITLE": "eCommerce Integration",
+      "DESCRIPTION": "Link this inbox to a sales platform. All conversations in this inbox will use this integration for product search and order management.",
+      "SELECT_PLATFORM": "Select integration",
+      "NO_INTEGRATIONS": "No e-commerce integrations found. Please configure an integration in Settings → Integrations first.",
+      "AUTO_LINKED": "Auto-linked to {platform}",
+      "MARKETPLACE_NOTE": "Marketplace channels are permanently linked to their native e-commerce platform and cannot be changed.",
+      "NONE": "No integration",
+      "SAVE": "Update",
+      "SAVE_SUCCESS": "eCommerce integration updated successfully",
+      "SAVE_ERROR": "Failed to update eCommerce integration. Please try again."
     },
     "ZALO_TEMPLATES": {
       "TITLE": "Zalo OA Message Templates",

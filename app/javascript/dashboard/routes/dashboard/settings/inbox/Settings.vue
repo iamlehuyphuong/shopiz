@@ -31,6 +31,7 @@ import AccountHealth from './components/AccountHealth.vue';
 import { FEATURE_FLAGS } from '../../../../featureFlags';
 import SenderNameExamplePreview from './components/SenderNameExamplePreview.vue';
 import LockToSingleConversationPreview from './components/LockToSingleConversationPreview.vue';
+import EcommerceTab from './settingsPage/EcommerceTab.vue';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import SpinnerLoader from 'dashboard/components-next/spinner/Spinner.vue';
 import { INBOX_TYPES } from 'dashboard/helper/inbox';
@@ -75,6 +76,7 @@ export default {
     SelectInput,
     AccountHealth,
     Widget,
+    EcommerceTab,
   },
   mixins: [inboxMixin],
   setup() {
@@ -256,6 +258,14 @@ export default {
           },
         ];
       }
+
+      visibleToAllChannelTabs = [
+        ...visibleToAllChannelTabs,
+        {
+          key: 'ecommerce',
+          name: this.$t('INBOX_MGMT.TABS.ECOMMERCE'),
+        },
+      ];
 
       return visibleToAllChannelTabs;
     },
@@ -1592,6 +1602,9 @@ export default {
             :is-registering-webhook="isRegisteringWebhook"
             @register-webhook="registerWebhook"
           />
+        </div>
+        <div v-if="selectedTabKey === 'ecommerce'">
+          <EcommerceTab :inbox="inbox" />
         </div>
       </div>
     </section>

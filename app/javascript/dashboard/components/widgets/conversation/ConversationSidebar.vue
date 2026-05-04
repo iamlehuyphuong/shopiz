@@ -3,6 +3,7 @@ import { ref, computed, onMounted } from 'vue';
 import ContactPanel from 'dashboard/routes/dashboard/conversation/ContactPanel.vue';
 import Copilot from 'dashboard/components-next/copilot/Copilot.vue';
 import OrderPanel from 'dashboard/components/widgets/conversation/orders/OrderPanel.vue';
+import ProductPanel from 'dashboard/components/widgets/conversation/products/ProductPanel.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 import { useUISettings } from 'dashboard/composables/useUISettings';
 import { useWindowSize } from '@vueuse/core';
@@ -33,12 +34,16 @@ const isCopilotTabActive = computed(
   () => uiSettings.value.is_copilot_panel_open
 );
 const isOrderTabActive = computed(() => uiSettings.value.is_order_sidebar_open);
+const isProductTabActive = computed(
+  () => uiSettings.value.is_product_sidebar_open
+);
 
 const isSidebarVisible = computed(
   () =>
     isContactTabActive.value ||
     isCopilotTabActive.value ||
-    isOrderTabActive.value
+    isOrderTabActive.value ||
+    isProductTabActive.value
 );
 
 const isSmallScreen = computed(
@@ -143,6 +148,7 @@ const switchToContactTab = () => {
     is_contact_sidebar_open: true,
     is_copilot_panel_open: false,
     is_order_sidebar_open: false,
+    is_product_sidebar_open: false,
   });
 };
 
@@ -151,6 +157,7 @@ const switchToCopilotTab = () => {
     is_contact_sidebar_open: false,
     is_copilot_panel_open: true,
     is_order_sidebar_open: false,
+    is_product_sidebar_open: false,
   });
 };
 
@@ -159,6 +166,16 @@ const switchToOrderTab = () => {
     is_contact_sidebar_open: false,
     is_copilot_panel_open: false,
     is_order_sidebar_open: true,
+    is_product_sidebar_open: false,
+  });
+};
+
+const switchToProductTab = () => {
+  updateUISettings({
+    is_contact_sidebar_open: false,
+    is_copilot_panel_open: false,
+    is_order_sidebar_open: false,
+    is_product_sidebar_open: true,
   });
 };
 
@@ -167,6 +184,7 @@ const closeSidebar = () => {
     is_contact_sidebar_open: false,
     is_copilot_panel_open: false,
     is_order_sidebar_open: false,
+    is_product_sidebar_open: false,
   });
 };
 
@@ -230,6 +248,17 @@ onMounted(() => {
         >
           {{ $t('CONVERSATION.SIDEBAR.ORDERS') }}
         </button>
+        <button
+          class="px-3 py-1.5 text-sm rounded-md transition-colors duration-150"
+          :class="
+            isProductTabActive
+              ? 'bg-n-alpha-2 text-n-slate-12 font-medium'
+              : 'text-n-slate-11 hover:text-n-slate-12 hover:bg-n-alpha-1'
+          "
+          @click="switchToProductTab"
+        >
+          {{ $t('CONVERSATION.PRODUCT_PANEL.TITLE') }}
+        </button>
       </div>
       <Button
         v-tooltip="$t('GENERAL.CLOSE')"
@@ -268,6 +297,11 @@ onMounted(() => {
     <!-- Order Panel -->
     <div v-else-if="isOrderTabActive" class="flex flex-1 overflow-hidden">
       <OrderPanel :conversation-id="currentChat.id" />
+    </div>
+
+    <!-- Product Panel -->
+    <div v-else-if="isProductTabActive" class="flex flex-1 overflow-hidden">
+      <ProductPanel :conversation-id="currentChat.id" />
     </div>
   </div>
   <template v-else />

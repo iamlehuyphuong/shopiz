@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useStore } from 'dashboard/composables/store';
+import { useStore, useMapGetter } from 'dashboard/composables/store';
 import AccordionItem from 'dashboard/components/Accordion/AccordionItem.vue';
 import ProductSearch from './ProductSearch.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
@@ -27,6 +27,19 @@ const { t } = useI18n();
 const store = useStore();
 
 const isEditing = computed(() => !!props.order);
+
+const currentConversation = useMapGetter('getSelectedChat');
+
+// Auto-detect ecommerce platform from inbox integration
+const inboxEcommerceAppId = computed(() => {
+  const inbox = currentConversation.value?.inbox;
+  if (!inbox) return '';
+  return inbox.ecommerce_integration?.app_id || '';
+});
+
+const isSourceLocked = computed(
+  () => !isEditing.value && inboxEcommerceAppId.value !== ''
+);
 
 const form = ref({
   status: 'draft',
@@ -74,6 +87,10 @@ onMounted(() => {
     form.value.customer_phone = props.contact?.phone_number || '';
     form.value.customer_address =
       props.contact?.additional_attributes?.address || '';
+    // Auto-fill from inbox ecommerce integration
+    if (inboxEcommerceAppId.value) {
+      form.value.external_source = inboxEcommerceAppId.value;
+    }
   }
 });
 
@@ -229,7 +246,8 @@ const toggleSection = key => {
             </select>
             <select
               v-model="form.external_source"
-              class="w-full px-3 py-2 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 cursor-pointer appearance-none"
+              :disabled="isSourceLocked"
+              class="w-full px-3 py-2 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 cursor-pointer appearance-none disabled:opacity-60 disabled:cursor-not-allowed"
               style="
                 background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2394a3b8%22 stroke-width=%222%22%3e%3cpath d=%22m6 9 6 6 6-6%22/%3e%3c/svg%3e');
                 background-repeat: no-repeat;

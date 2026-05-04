@@ -21,6 +21,18 @@ json.sender_name_type resource.sender_name_type
 json.business_name resource.business_name
 json.active_bot resource.active_bot?
 
+## eCommerce integration
+json.marketplace_locked resource.marketplace_channel?
+if resource.effective_ecommerce_hook.present?
+  json.ecommerce_integration do
+    hook = resource.effective_ecommerce_hook
+    json.id hook.id
+    json.app_id hook.app_id
+  end
+else
+  json.ecommerce_integration nil
+end
+
 if resource.portal.present?
   json.help_center do
     json.name resource.portal.name

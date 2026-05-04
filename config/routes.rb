@@ -175,6 +175,7 @@ Rails.application.routes.draw do
                   post :sync
                 end
               end
+              resources :products, only: [:index]
             end
             member do
               post :mute
