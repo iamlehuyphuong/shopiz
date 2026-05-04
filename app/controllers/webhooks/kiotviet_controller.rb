@@ -4,10 +4,18 @@ class Webhooks::KiotvietController < ActionController::API
   before_action :verify_webhook!
 
   def events
-    order_id = params.dig(:Data, :Id)&.to_s
-    return head :ok if order_id.blank?
+    notifications = params[:Notifications] || []
+    
+    notifications.each do |notification|
+      data = notification[:Data] || []
+      data.each do |item|
+        order_id = item[:Id]&.to_s
+        if order_id.present?
+          ConversationOrders::WebhookSyncJob.perform_later(platform: 'kiotviet', external_order_id: order_id)
+        end
+      end
+    end
 
-    ConversationOrders::WebhookSyncJob.perform_later(platform: 'kiotviet', external_order_id: order_id)
     head :ok
   end
 

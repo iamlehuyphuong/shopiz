@@ -51,11 +51,11 @@ class ConversationOrders::SyncService
     mapped = client.map_status(raw_status)
     attrs[:status] = mapped if mapped.present?
 
+    @order.update!(attrs) if attrs.present?
+
     # Update total if available — delegate extraction to proxy
     total = client.extract_total(result)
-    attrs[:total_amount] = total if total.present?
-
-    @order.update!(attrs) if attrs.present?
+    @order.update_column(:total_amount, total) if total.present? # bypass before_save calculate_total_amount
   end
 
   def log_activity(action_type)

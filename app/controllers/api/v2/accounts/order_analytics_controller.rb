@@ -1,7 +1,7 @@
 # API endpoint for order analytics and reporting.
 # GET /api/v1/accounts/:account_id/order_analytics
 # Params: since, until, group_by (day/week/month)
-class Api::V1::Accounts::OrderAnalyticsController < Api::V1::Accounts::BaseController
+class Api::V2::Accounts::OrderAnalyticsController < Api::V1::Accounts::BaseController
   before_action :check_authorization
 
   def show
@@ -18,7 +18,7 @@ class Api::V1::Accounts::OrderAnalyticsController < Api::V1::Accounts::BaseContr
   private
 
   def check_authorization
-    authorize :account, :report?
+    authorize :report, :view?
   end
 
   def account_orders_scope
