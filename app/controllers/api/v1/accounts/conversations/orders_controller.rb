@@ -1,5 +1,6 @@
 class Api::V1::Accounts::Conversations::OrdersController < Api::V1::Accounts::Conversations::BaseController
   before_action :set_order, only: [:show, :update, :destroy, :push, :sync]
+  before_action :check_sales_permission, only: [:create, :update, :destroy, :push]
 
   def index
     @orders = @conversation.conversation_orders.ordered.includes(:items)
@@ -18,6 +19,7 @@ class Api::V1::Accounts::Conversations::OrdersController < Api::V1::Accounts::Co
 
     if @order.save
       @order.reload
+      log_order_activity(@order, :created)
       render json: order_json(@order), status: :created
     else
       render json: { errors: @order.errors.full_messages }, status: :unprocessable_entity
@@ -34,6 +36,7 @@ class Api::V1::Accounts::Conversations::OrdersController < Api::V1::Accounts::Co
   end
 
   def destroy
+    log_order_activity(@order, :deleted)
     @order.destroy!
     head :ok
   end
@@ -48,7 +51,7 @@ class Api::V1::Accounts::Conversations::OrdersController < Api::V1::Accounts::Co
   end
 
   def sync
-    result = ConversationOrders::SyncService.new(order: @order).perform
+    result = ConversationOrders::SyncService.new(order: @order, user: current_user).perform
     if result[:success]
       render json: order_json(@order.reload)
     else
@@ -60,6 +63,24 @@ class Api::V1::Accounts::Conversations::OrdersController < Api::V1::Accounts::Co
 
   def set_order
     @order = @conversation.conversation_orders.find(params[:id])
+  end
+
+  def check_sales_permission
+    account_user = Current.account_user
+    return if account_user&.administrator?
+    return unless account_user&.custom_role_id.present?
+    return if account_user.custom_role&.permissions&.include?('sales_manage')
+
+    render json: { error: 'You do not have permission to manage orders' }, status: :forbidden
+  end
+
+  def log_order_activity(order, action_type)
+    ConversationOrders::OrderActivityMessageService.new(
+      conversation: @conversation,
+      order: order,
+      action_type: action_type,
+      user: current_user
+    ).perform
   end
 
   def order_params

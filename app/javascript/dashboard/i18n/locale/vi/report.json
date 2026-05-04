@@ -657,5 +657,16 @@
     "HOUR": "Giờ",
     "MINUTE": "Phút",
     "SECOND": "Giây"
+  },
+  "ORDER_ANALYTICS": {
+    "HEADER": "Báo cáo đơn hàng",
+    "LOADING": "Đang tải dữ liệu đơn hàng...",
+    "NO_DATA": "Không có dữ liệu đơn hàng cho khoảng thời gian đã chọn.",
+    "TOTAL_ORDERS": "Tổng đơn hàng",
+    "TOTAL_REVENUE": "Tổng doanh thu",
+    "AVG_ORDER_VALUE": "Giá trị trung bình",
+    "BY_PLATFORM": "Theo nền tảng",
+    "BY_STATUS": "Theo trạng thái",
+    "ORDERS": "đơn"
   }
 }

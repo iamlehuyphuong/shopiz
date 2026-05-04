@@ -30,6 +30,7 @@ const isEditing = computed(() => !!props.order);
 
 const form = ref({
   status: 'draft',
+  external_source: '',
   customer_name: '',
   customer_phone: '',
   customer_address: '',
@@ -46,10 +47,22 @@ const STATUS_OPTIONS = [
   'cancelled',
 ];
 
+const PLATFORM_OPTIONS = [
+  { value: '', label: '—' },
+  { value: 'kiotviet', label: 'KiotViet' },
+  { value: 'sapo', label: 'Sapo' },
+  { value: 'haravan', label: 'Haravan' },
+  { value: 'shopify', label: 'Shopify' },
+  { value: 'woocommerce', label: 'WooCommerce' },
+  { value: 'nhanhvn', label: 'Nhanh.vn' },
+  { value: 'tiktok_shop', label: 'TikTok Shop' },
+];
+
 onMounted(() => {
   if (isEditing.value) {
     form.value = {
       status: props.order.status,
+      external_source: props.order.external_source || '',
       customer_name: props.order.customer_name || '',
       customer_phone: props.order.customer_phone || '',
       customer_address: props.order.customer_address || '',
@@ -121,6 +134,7 @@ const canSave = computed(
 const handleSave = async () => {
   const orderData = {
     status: form.value.status,
+    external_source: form.value.external_source || undefined,
     customer_name: form.value.customer_name,
     customer_phone: form.value.customer_phone,
     customer_address: form.value.customer_address,
@@ -198,7 +212,7 @@ const toggleSection = key => {
           compact
           @toggle="toggleSection('status')"
         >
-          <div class="px-3 py-3">
+          <div class="px-3 py-3 space-y-2.5">
             <select
               v-model="form.status"
               class="w-full px-3 py-2 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 cursor-pointer appearance-none"
@@ -211,6 +225,24 @@ const toggleSection = key => {
             >
               <option v-for="s in STATUS_OPTIONS" :key="s" :value="s">
                 {{ t(`CONVERSATION.ORDER_PANEL.STATUS.${s.toUpperCase()}`) }}
+              </option>
+            </select>
+            <select
+              v-model="form.external_source"
+              class="w-full px-3 py-2 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 cursor-pointer appearance-none"
+              style="
+                background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2394a3b8%22 stroke-width=%222%22%3e%3cpath d=%22m6 9 6 6 6-6%22/%3e%3c/svg%3e');
+                background-repeat: no-repeat;
+                background-position: right 0.5rem center;
+                background-size: 1.25rem;
+              "
+            >
+              <option
+                v-for="platform in PLATFORM_OPTIONS"
+                :key="platform.value"
+                :value="platform.value"
+              >
+                {{ platform.label }}
               </option>
             </select>
           </div>

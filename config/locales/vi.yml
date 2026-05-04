@@ -483,6 +483,14 @@ vi:
     content:
       package: 'Gói %{product_name} %{month} Tháng'
       credit: 'Gói %{product_name}'
+  conversation_orders:
+    push_success_message: 'Đơn hàng của bạn đã được xác nhận thành công! Mã đơn hàng: %{order_id}. Tổng tiền: %{total}.'
+    activity:
+      created: '🛒 Đơn hàng #%{order_id} được tạo bởi %{user_name}'
+      pushed: '📤 Đơn hàng #%{order_id} đã đẩy lên %{platform} (Mã ngoài: %{external_id})'
+      synced: '🔄 Đơn hàng #%{order_id} đồng bộ từ %{platform} — Trạng thái: %{status}'
+      cancelled: '❌ Đơn hàng #%{order_id} đã hủy bởi %{user_name}'
+      deleted: '🗑️ Đơn hàng #%{order_id} đã xóa bởi %{user_name}'
   zalo_personal:
     calls:
       action:

@@ -11,8 +11,9 @@ class ConversationOrders::SyncService
     'tiktok_shop' => 'ConversationOrders::TiktokShopProxy'
   }.freeze
 
-  def initialize(order:)
+  def initialize(order:, user: nil)
     @order = order
+    @user = user
   end
 
   def perform
@@ -34,6 +35,8 @@ class ConversationOrders::SyncService
     return { success: false, error: "Failed to fetch order from #{client.platform_name}" } if result.blank?
 
     update_order_from_result(client, result)
+    @order.update_column(:last_synced_at, Time.current)
+    log_activity(:synced)
     { success: true, order: @order }
   rescue StandardError => e
     Rails.logger.error("SyncService error for order #{@order.id}: #{e.message}")
@@ -43,25 +46,24 @@ class ConversationOrders::SyncService
   def update_order_from_result(client, result)
     attrs = {}
 
-    # Map status
-    raw_status = extract_raw_status(result)
+    # Map status — delegate extraction to platform-specific proxy
+    raw_status = client.extract_raw_status(result)
     mapped = client.map_status(raw_status)
     attrs[:status] = mapped if mapped.present?
 
-    # Update total if available
-    total = extract_total(result)
+    # Update total if available — delegate extraction to proxy
+    total = client.extract_total(result)
     attrs[:total_amount] = total if total.present?
 
     @order.update!(attrs) if attrs.present?
   end
 
-  def extract_raw_status(result)
-    # Each platform stores status differently
-    result['status'] || result['financial_status'] || result['statusCode']
-  end
-
-  def extract_total(result)
-    result['totalPayment'] || result['total_price'] || result['total'] ||
-      result.dig('payment', 'total_amount')
+  def log_activity(action_type)
+    ConversationOrders::OrderActivityMessageService.new(
+      conversation: @order.conversation,
+      order: @order,
+      action_type: action_type,
+      user: @user
+    ).perform
   end
 end

@@ -433,7 +433,10 @@
       "PUSH_ERROR": "Lỗi khi đẩy đơn hàng",
       "SYNC": "Đồng bộ",
       "SYNC_SUCCESS": "Đồng bộ đơn hàng thành công",
-      "SYNC_ERROR": "Lỗi khi đồng bộ đơn hàng"
+      "SYNC_ERROR": "Lỗi khi đồng bộ đơn hàng",
+      "PUSH_CONFIRM": "Bạn có chắc muốn đẩy đơn hàng này? Đơn sẽ được gửi đến sàn thương mại.",
+      "DELETE_CONFIRM": "Bạn có chắc muốn xóa đơn hàng này? Hành động này không thể hoàn tác.",
+      "CONFIRM_YES": "Xác nhận"
     }
   },
   "EMAIL_TRANSCRIPT": {

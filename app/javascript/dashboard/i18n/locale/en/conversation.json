@@ -433,7 +433,10 @@
       "PUSH_ERROR": "Failed to push order",
       "SYNC": "Sync",
       "SYNC_SUCCESS": "Order synced successfully",
-      "SYNC_ERROR": "Failed to sync order"
+      "SYNC_ERROR": "Failed to sync order",
+      "PUSH_CONFIRM": "Are you sure you want to push this order? It will be sent to the external platform.",
+      "DELETE_CONFIRM": "Are you sure you want to delete this order? This action cannot be undone.",
+      "CONFIRM_YES": "Confirm"
     }
   },
   "EMAIL_TRANSCRIPT": {

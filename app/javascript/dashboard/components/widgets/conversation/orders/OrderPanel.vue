@@ -71,6 +71,7 @@ const handleFormClose = () => {
 };
 
 const handleDeleteOrder = async order => {
+  if (!window.confirm(t('CONVERSATION.ORDER_PANEL.DELETE_CONFIRM'))) return;
   try {
     await store.dispatch('conversationOrders/delete', {
       conversationId: props.conversationId,
@@ -83,6 +84,7 @@ const handleDeleteOrder = async order => {
 };
 
 const handlePushOrder = async order => {
+  if (!window.confirm(t('CONVERSATION.ORDER_PANEL.PUSH_CONFIRM'))) return;
   try {
     await store.dispatch('conversationOrders/pushOrder', {
       conversationId: props.conversationId,

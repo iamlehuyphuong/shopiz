@@ -45,6 +45,7 @@ class ConversationOrders::PushService
     if external_id.present?
       @order.update!(external_order_id: external_id, status: :confirmed)
       send_success_message
+      log_activity(:pushed)
       { success: true, order: @order }
     else
       { success: false, error: client.extract_error(result) }
@@ -145,8 +146,12 @@ class ConversationOrders::PushService
   end
 
   def send_success_message
-    content = "Đơn hàng của bạn đã được xác nhận thành công! Mã đơn hàng: #{@order.external_order_id}. " \
-              "Tổng tiền: #{format_vnd(@order.total_amount)}."
+    content = I18n.t(
+      'conversation_orders.push_success_message',
+      order_id: @order.external_order_id,
+      total: format_currency(@order.total_amount, @order.currency),
+      default: "Order confirmed! Order ID: #{@order.external_order_id}. Total: #{format_currency(@order.total_amount, @order.currency)}."
+    )
 
     message_params = {
       content: content,
@@ -159,7 +164,17 @@ class ConversationOrders::PushService
     Rails.logger.error("Failed to send order confirmation message: #{e.message}")
   end
 
-  def format_vnd(amount)
-    ActiveSupport::NumberHelper.number_to_currency(amount, unit: 'đ', format: '%n%u', precision: 0)
+  def format_currency(amount, currency = 'VND')
+    unit = currency == 'VND' ? 'đ' : currency
+    ActiveSupport::NumberHelper.number_to_currency(amount, unit: unit, format: '%n%u', precision: 0)
+  end
+
+  def log_activity(action_type)
+    ConversationOrders::OrderActivityMessageService.new(
+      conversation: @order.conversation,
+      order: @order,
+      action_type: action_type,
+      user: @user
+    ).perform
   end
 end

@@ -18,27 +18,32 @@ class Api::V1::Accounts::ProductsSearchController < Api::V1::Accounts::BaseContr
   private
 
   def integration_hooks
-    Current.account.hooks.where(app_id: %w[shopify kiotviet haravan sapo woocommerce nhanhvn])
+    Current.account.hooks.where(app_id: %w[shopify kiotviet haravan sapo woocommerce nhanhvn tiktok_shop])
   end
 
   def fetch_products_from_integration(hook, query)
     case hook.app_id
-    when 'shopify'
-      fetch_shopify_products(hook, query)
-    when 'kiotviet'
-      fetch_kiotviet_products(hook, query)
-    else
-      []
+    when 'shopify'   then fetch_shopify_products(hook, query)
+    when 'kiotviet'  then fetch_kiotviet_products(hook, query)
+    when 'haravan'   then fetch_haravan_products(hook, query)
+    when 'sapo'      then fetch_sapo_products(hook, query)
+    when 'woocommerce' then fetch_woocommerce_products(hook, query)
+    when 'nhanhvn'   then fetch_nhanhvn_products(hook, query)
+    when 'tiktok_shop' then fetch_tiktok_shop_products(hook, query)
+    else []
     end
   rescue StandardError => e
     Rails.logger.error("Product search error for #{hook.app_id}: #{e.message}")
     []
   end
 
-  def fetch_shopify_products(hook, _query)
+  # --- Shopify ---
+  def fetch_shopify_products(hook, query)
     session = ShopifyAPI::Auth::Session.new(shop: hook.reference_id, access_token: hook.access_token)
     client = ShopifyAPI::Clients::Rest::Admin.new(session: session)
-    products = client.get(path: 'products.json', query: { limit: 20 }).body['products'] || []
+    params = { limit: 20 }
+    params[:title] = query if query.present?
+    products = client.get(path: 'products.json', query: params).body['products'] || []
 
     products.map do |p|
       {
@@ -55,13 +60,16 @@ class Api::V1::Accounts::ProductsSearchController < Api::V1::Accounts::BaseContr
     []
   end
 
-  def fetch_kiotviet_products(hook, _query)
+  # --- KiotViet ---
+  def fetch_kiotviet_products(hook, query)
     ensure_kiotviet_token(hook)
+    params = { pageSize: 20, isActive: true }
+    params[:name] = query if query.present?
     response = Faraday.get('https://public.kiotapi.com/products') do |req|
       req.headers['Retailer'] = hook.settings['retailer']
       req.headers['Authorization'] = "Bearer #{hook.access_token}"
       req.headers['Content-Type'] = 'application/json'
-      req.params = { pageSize: 20, isActive: true }
+      req.params = params
     end
     data = JSON.parse(response.body)
     (data['data'] || []).map do |p|
@@ -79,6 +87,147 @@ class Api::V1::Accounts::ProductsSearchController < Api::V1::Accounts::BaseContr
     []
   end
 
+  # --- Haravan ---
+  def fetch_haravan_products(hook, query)
+    params = { limit: 20 }
+    params[:title] = query if query.present?
+    response = Faraday.get('https://apis.haravan.com/com/products.json') do |req|
+      req.headers['Authorization'] = "Bearer #{hook.access_token}"
+      req.headers['Content-Type'] = 'application/json'
+      req.params = params
+    end
+    data = JSON.parse(response.body)
+    (data['products'] || []).map do |p|
+      {
+        id: p['id'].to_s,
+        name: p['title'],
+        price: p['variants']&.first&.dig('price').to_f,
+        thumbnail: p.dig('image', 'src'),
+        source: 'haravan',
+        metadata: { variants_count: p['variants']&.size }
+      }
+    end
+  rescue StandardError => e
+    Rails.logger.error("Haravan products error: #{e.message}")
+    []
+  end
+
+  # --- Sapo ---
+  def fetch_sapo_products(hook, query)
+    store_name = hook.settings&.dig('store_name') || hook.reference_id
+    params = { limit: 20 }
+    params[:title] = query if query.present?
+    response = Faraday.get("https://#{store_name}.mysapo.net/admin/products.json") do |req|
+      req.headers['X-Sapo-Access-Token'] = hook.access_token
+      req.headers['Content-Type'] = 'application/json'
+      req.params = params
+    end
+    data = JSON.parse(response.body)
+    (data['products'] || []).map do |p|
+      {
+        id: p['id'].to_s,
+        name: p['name'] || p['title'],
+        price: p['variants']&.first&.dig('price').to_f,
+        thumbnail: p.dig('image', 'src') || p.dig('images', 0, 'src'),
+        source: 'sapo',
+        metadata: { variants_count: p['variants']&.size }
+      }
+    end
+  rescue StandardError => e
+    Rails.logger.error("Sapo products error: #{e.message}")
+    []
+  end
+
+  # --- WooCommerce ---
+  def fetch_woocommerce_products(hook, query)
+    store_url = hook.reference_id
+    consumer_key = hook.settings['consumer_key']
+    consumer_secret = hook.settings['consumer_secret']
+    conn = Faraday.new(url: "https://#{store_url}/wp-json/wc/v3") do |f|
+      f.request :authorization, :basic, consumer_key, consumer_secret
+      f.adapter Faraday.default_adapter
+    end
+    params = { per_page: 20, status: 'publish' }
+    params[:search] = query if query.present?
+    response = conn.get('products', params)
+    products = JSON.parse(response.body)
+    (products.is_a?(Array) ? products : []).map do |p|
+      {
+        id: p['id'].to_s,
+        name: p['name'],
+        price: p['price'].to_f,
+        thumbnail: p.dig('images', 0, 'src'),
+        source: 'woocommerce',
+        metadata: { sku: p['sku'] }
+      }
+    end
+  rescue StandardError => e
+    Rails.logger.error("WooCommerce products error: #{e.message}")
+    []
+  end
+
+  # --- Nhanh.vn ---
+  def fetch_nhanhvn_products(hook, query)
+    params = { version: '2.0', appId: hook.settings['app_id'], businessId: hook.settings['business_id'],
+               accessToken: hook.access_token, data: { page: 1 }.to_json }
+    params[:data] = { page: 1, name: query }.to_json if query.present?
+    response = Faraday.post('https://open.nhanh.vn/api/product/search') do |req|
+      req.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+      req.body = URI.encode_www_form(params)
+    end
+    parsed = JSON.parse(response.body)
+    return [] unless parsed['code'] == 1
+
+    products = parsed.dig('data', 'products') || {}
+    products.values.first(20).map do |p|
+      {
+        id: p['idNhanh'].to_s,
+        name: p['name'],
+        price: p['price'].to_f,
+        thumbnail: p['image'],
+        source: 'nhanhvn',
+        metadata: { code: p['code'] }
+      }
+    end
+  rescue StandardError => e
+    Rails.logger.error("Nhanh.vn products error: #{e.message}")
+    []
+  end
+
+  # --- TikTok Shop ---
+  def fetch_tiktok_shop_products(hook, query)
+    return [] if hook.access_token.blank? || hook.settings&.dig('shop_cipher').blank?
+
+    app_key = GlobalConfigService.load('TIKTOK_SHOP_APP_KEY', '')
+    return [] if app_key.blank?
+
+    products = tiktok_shop_search(hook, app_key, query)
+    products.map { |p| map_tiktok_product(p) }
+  rescue StandardError => e
+    Rails.logger.error("TikTok Shop products error: #{e.message}")
+    []
+  end
+
+  def tiktok_shop_search(hook, app_key, query)
+    tts_params = { app_key: app_key, shop_cipher: hook.settings['shop_cipher'], timestamp: Time.now.to_i, page_size: 20 }
+    body = query.present? ? { search_keyword: query } : {}
+    url = 'https://open-api.tiktokglobalshop.com/product/202309/products/search'
+    signed_url = ::TiktokShop::SignatureService.signed_url(url, params: tts_params, body: body.to_json, content_type: 'application/json')
+    headers = { 'Content-Type' => 'application/json', 'x-tts-access-token' => hook.access_token }
+    response = HTTParty.post(signed_url, headers: headers, body: body.to_json)
+    JSON.parse(response.body).dig('data', 'products') || []
+  end
+
+  def map_tiktok_product(product)
+    {
+      id: product['id'].to_s, name: product['title'],
+      price: product.dig('skus', 0, 'price', 'sale_price').to_f / 100.0,
+      thumbnail: product.dig('main_images', 0, 'url_list', 0),
+      source: 'tiktok_shop', metadata: { status: product['status'] }
+    }
+  end
+
+  # --- KiotViet Token Refresh ---
   def ensure_kiotviet_token(hook)
     expires_at = hook.settings&.dig('token_expires_at')
     return if expires_at.present? && Time.zone.parse(expires_at) > Time.current
@@ -101,6 +250,7 @@ class Api::V1::Accounts::ProductsSearchController < Api::V1::Accounts::BaseContr
     )
   end
 
+  # --- Help Center ---
   def search_help_center_products(query)
     escaped_query = sanitize_sql_like(query)
     articles = Current.account.articles

@@ -24,4 +24,12 @@ class ConversationOrders::KiotvietProxy < ConversationOrders::PlatformProxy
   def extract_order_id(result)
     result&.dig('id')&.to_s
   end
+
+  def extract_raw_status(result)
+    result['statusCode']
+  end
+
+  def extract_total(result)
+    result['totalPayment']
+  end
 end

@@ -556,6 +556,7 @@ Rails.application.routes.draw do
             end
           end
           resource :year_in_review, only: [:show]
+          resource :order_analytics, only: [:show]
           resources :live_reports, only: [] do
             collection do
               get :conversation_metrics
@@ -682,6 +683,11 @@ Rails.application.routes.draw do
   post 'webhooks/tiktok_shop', to: 'webhooks/tiktok_shop#process_payload'
   post 'webhooks/tiktok', to: 'webhooks/tiktok#events'
   post 'webhooks/shopify', to: 'webhooks/shopify#events'
+  post 'webhooks/kiotviet', to: 'webhooks/kiotviet#events'
+  post 'webhooks/sapo', to: 'webhooks/sapo#events'
+  post 'webhooks/haravan', to: 'webhooks/haravan#events'
+  post 'webhooks/woocommerce', to: 'webhooks/woocommerce#events'
+  post 'webhooks/nhanhvn', to: 'webhooks/nhanhvn#events'
 
   namespace :twitter do
     resource :callback, only: [:show]

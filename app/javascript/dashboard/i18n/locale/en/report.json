@@ -657,5 +657,16 @@
     "HOUR": "Hr",
     "MINUTE": "Min",
     "SECOND": "Sec"
+  },
+  "ORDER_ANALYTICS": {
+    "HEADER": "Order Reports",
+    "LOADING": "Loading order analytics...",
+    "NO_DATA": "No order data available for the selected period.",
+    "TOTAL_ORDERS": "Total Orders",
+    "TOTAL_REVENUE": "Total Revenue",
+    "AVG_ORDER_VALUE": "Avg Order Value",
+    "BY_PLATFORM": "By Platform",
+    "BY_STATUS": "By Status",
+    "ORDERS": "orders"
   }
 }

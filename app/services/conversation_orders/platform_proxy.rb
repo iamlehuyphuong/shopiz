@@ -31,6 +31,17 @@ class ConversationOrders::PlatformProxy
     result&.dig('errorMessage') || result&.dig('message') || result&.dig('errors')&.first || "API call failed for #{platform_name}"
   end
 
+  # Extract raw status from a fetch response (platform-specific)
+  def extract_raw_status(result)
+    result['status'] || result['financial_status'] || result['statusCode']
+  end
+
+  # Extract total amount from a fetch response (platform-specific)
+  def extract_total(result)
+    result['totalPayment'] || result['total_price'] || result['total'] ||
+      result.dig('payment', 'total_amount')
+  end
+
   def platform_name
     self.class.name.demodulize.sub('Proxy', '')
   end

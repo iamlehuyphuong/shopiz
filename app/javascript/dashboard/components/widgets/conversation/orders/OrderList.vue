@@ -61,6 +61,13 @@ const platformIcon = source => PLATFORM_ICONS[source] || 'i-lucide-box';
               #{{ order.id }}
             </span>
             <span
+              v-if="order.external_order_id"
+              class="text-xs text-n-slate-10 font-mono"
+              :title="order.external_order_id"
+            >
+              → {{ order.external_order_id }}
+            </span>
+            <span
               v-if="order.external_source"
               class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-n-solid-3 text-xs text-n-slate-11"
             >

@@ -34,4 +34,12 @@ class ConversationOrders::TiktokShopProxy < ConversationOrders::PlatformProxy
   def extract_error(result)
     result&.dig('message') || super
   end
+
+  def extract_raw_status(result)
+    result['status']
+  end
+
+  def extract_total(result)
+    result.dig('payment', 'total_amount')
+  end
 end

@@ -5,6 +5,8 @@ class Webhooks::ShopifyController < ActionController::API
     case request.headers['X-Shopify-Topic']
     when 'shop/redact'
       handle_shop_redact
+    when 'orders/updated'
+      handle_order_updated
     end
 
     head :ok
@@ -24,6 +26,13 @@ class Webhooks::ShopifyController < ActionController::API
 
     computed = Base64.strict_encode64(OpenSSL::HMAC.digest('SHA256', secret, data))
     return head :unauthorized unless ActiveSupport::SecurityUtils.secure_compare(computed, hmac_header)
+  end
+
+  def handle_order_updated
+    order_id = params[:id]&.to_s
+    return if order_id.blank?
+
+    ConversationOrders::WebhookSyncJob.perform_later(platform: 'shopify', external_order_id: order_id)
   end
 
   def handle_shop_redact

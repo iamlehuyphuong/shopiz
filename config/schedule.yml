@@ -97,3 +97,10 @@ subscription_expiration_job:
   class: 'Subscriptions::ExpirationJob'
   queue: scheduled_jobs
 
+# executed every 30 minutes
+# syncs conversation orders that are not in terminal status
+periodic_order_sync_job:
+  cron: '*/30 * * * *'
+  class: 'ConversationOrders::PeriodicOrderSyncJob'
+  queue: low
+

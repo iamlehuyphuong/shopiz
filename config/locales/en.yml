@@ -526,6 +526,14 @@ en:
     content:
       package: '%{product_name} Package - %{month} months'
       credit: '%{product_name} Package'
+  conversation_orders:
+    push_success_message: 'Order confirmed! Order ID: %{order_id}. Total: %{total}.'
+    activity:
+      created: '🛒 Order #%{order_id} created by %{user_name}'
+      pushed: '📤 Order #%{order_id} pushed to %{platform} (External ID: %{external_id})'
+      synced: '🔄 Order #%{order_id} synced from %{platform} — Status: %{status}'
+      cancelled: '❌ Order #%{order_id} cancelled by %{user_name}'
+      deleted: '🗑️ Order #%{order_id} deleted by %{user_name}'
   zalo_personal:
     calls:
       action:
