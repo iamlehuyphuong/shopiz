@@ -34,7 +34,7 @@ module InstagramConcern
       client_id: client_id
     }
 
-    make_api_request(endpoint, params, 'Failed to exchange token')
+    make_api_request(endpoint, params, 'Failed to exchange token', method: :post)
   end
 
   def fetch_instagram_user_details(access_token)
@@ -64,12 +64,16 @@ module InstagramConcern
     nil
   end
 
-  def make_api_request(endpoint, params, error_prefix)
-    response = HTTParty.get(
-      endpoint,
-      query: params,
-      headers: { 'Accept' => 'application/json' }
-    )
+  def make_api_request(endpoint, params, error_prefix, method: :get)
+    options = { headers: { 'Accept' => 'application/json' } }
+
+    if method == :post
+      options[:body] = params
+    else
+      options[:query] = params
+    end
+
+    response = HTTParty.public_send(method, endpoint, options)
 
     unless response.success?
       Rails.logger.error "#{error_prefix}. Status: #{response.code}, Body: #{response.body}"
