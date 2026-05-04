@@ -1,9 +1,13 @@
 class Api::V1::Accounts::Conversations::OrdersController < Api::V1::Accounts::Conversations::BaseController
-  before_action :set_order, only: [:show, :update, :destroy]
+  before_action :set_order, only: [:show, :update, :destroy, :push, :sync]
 
   def index
     @orders = @conversation.conversation_orders.ordered.includes(:items)
     render json: @orders.map { |order| order_json(order) }
+  end
+
+  def show
+    render json: order_json(@order)
   end
 
   def create
@@ -20,10 +24,6 @@ class Api::V1::Accounts::Conversations::OrdersController < Api::V1::Accounts::Co
     end
   end
 
-  def show
-    render json: order_json(@order)
-  end
-
   def update
     if @order.update(order_params)
       @order.reload
@@ -36,6 +36,24 @@ class Api::V1::Accounts::Conversations::OrdersController < Api::V1::Accounts::Co
   def destroy
     @order.destroy!
     head :ok
+  end
+
+  def push
+    result = ConversationOrders::PushService.new(order: @order, user: current_user).perform
+    if result[:success]
+      render json: order_json(@order.reload)
+    else
+      render json: { errors: [result[:error]] }, status: :unprocessable_entity
+    end
+  end
+
+  def sync
+    result = ConversationOrders::SyncService.new(order: @order).perform
+    if result[:success]
+      render json: order_json(@order.reload)
+    else
+      render json: { errors: [result[:error]] }, status: :unprocessable_entity
+    end
   end
 
   private

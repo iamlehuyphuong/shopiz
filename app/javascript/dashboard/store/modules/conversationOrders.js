@@ -78,6 +78,38 @@ export const actions = {
       commit(types.SET_CONVERSATION_ORDERS_UI_FLAG, { isDeleting: false });
     }
   },
+
+  async pushOrder({ commit }, { conversationId, orderId }) {
+    commit(types.SET_CONVERSATION_ORDERS_UI_FLAG, { isUpdating: true });
+    try {
+      const { data } = await ConversationOrdersAPI.pushOrder(
+        conversationId,
+        orderId
+      );
+      commit(types.UPDATE_CONVERSATION_ORDER, { conversationId, data });
+      return data;
+    } catch (error) {
+      throw new Error(error);
+    } finally {
+      commit(types.SET_CONVERSATION_ORDERS_UI_FLAG, { isUpdating: false });
+    }
+  },
+
+  async syncOrder({ commit }, { conversationId, orderId }) {
+    commit(types.SET_CONVERSATION_ORDERS_UI_FLAG, { isUpdating: true });
+    try {
+      const { data } = await ConversationOrdersAPI.syncOrder(
+        conversationId,
+        orderId
+      );
+      commit(types.UPDATE_CONVERSATION_ORDER, { conversationId, data });
+      return data;
+    } catch (error) {
+      throw new Error(error);
+    } finally {
+      commit(types.SET_CONVERSATION_ORDERS_UI_FLAG, { isUpdating: false });
+    }
+  },
 };
 
 export const mutations = {

@@ -90,7 +90,8 @@ class Captain::Tools::SapoCreateOrderDraftTool < Captain::Tools::BasePublicTool
       account: conversation.account, contact: contact, status: :draft,
       customer_name: contact.name, customer_phone: contact.phone_number,
       customer_address: contact.additional_attributes&.dig('address'),
-      customer_note: customer_note
+      customer_note: customer_note,
+      external_source: 'sapo'
     )
     items.each { |item| order.items.build(item.slice(:product_name, :product_id, :product_source, :quantity, :unit_price, :product_thumbnail)) }
     order.save!

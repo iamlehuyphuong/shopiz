@@ -427,7 +427,13 @@
       "DELETE": "Delete",
       "SAVE_SUCCESS": "Order saved successfully",
       "DELETE_SUCCESS": "Order deleted successfully",
-      "DELETE_ERROR": "Failed to delete order"
+      "DELETE_ERROR": "Failed to delete order",
+      "PUSH": "Push Order",
+      "PUSH_SUCCESS": "Order pushed successfully",
+      "PUSH_ERROR": "Failed to push order",
+      "SYNC": "Sync",
+      "SYNC_SUCCESS": "Order synced successfully",
+      "SYNC_ERROR": "Failed to sync order"
     }
   },
   "EMAIL_TRANSCRIPT": {

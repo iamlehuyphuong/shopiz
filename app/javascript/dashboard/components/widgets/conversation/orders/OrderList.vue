@@ -10,7 +10,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['edit', 'delete']);
+const emit = defineEmits(['edit', 'delete', 'push', 'sync']);
 
 const { t } = useI18n();
 
@@ -21,6 +21,29 @@ const formatDate = dateString => {
 
 const formatCurrency = amount =>
   new Intl.NumberFormat('vi-VN').format(amount || 0);
+
+const PLATFORM_LABELS = {
+  kiotviet: 'KiotViet',
+  sapo: 'Sapo',
+  haravan: 'Haravan',
+  woocommerce: 'WooCommerce',
+  shopify: 'Shopify',
+  nhanhvn: 'Nhanh.vn',
+  tiktok_shop: 'TikTok Shop',
+};
+
+const PLATFORM_ICONS = {
+  kiotviet: 'i-lucide-store',
+  sapo: 'i-lucide-shopping-bag',
+  haravan: 'i-lucide-shopping-cart',
+  woocommerce: 'i-lucide-globe',
+  shopify: 'i-lucide-package',
+  nhanhvn: 'i-lucide-zap',
+  tiktok_shop: 'i-lucide-music',
+};
+
+const platformLabel = source => PLATFORM_LABELS[source] || source;
+const platformIcon = source => PLATFORM_ICONS[source] || 'i-lucide-box';
 </script>
 
 <template>
@@ -36,6 +59,13 @@ const formatCurrency = amount =>
           <div class="flex items-center gap-2 mb-1">
             <span class="text-sm font-medium text-n-slate-12">
               #{{ order.id }}
+            </span>
+            <span
+              v-if="order.external_source"
+              class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-n-solid-3 text-xs text-n-slate-11"
+            >
+              <i :class="platformIcon(order.external_source)" class="text-xs" />
+              {{ platformLabel(order.external_source) }}
             </span>
             <span class="text-xs text-n-slate-10">
               {{ formatDate(order.created_at) }}
@@ -56,17 +86,25 @@ const formatCurrency = amount =>
 
       <!-- Customer info -->
       <div
-        v-if="order.customer_name || order.customer_phone"
-        class="flex items-center gap-3 text-xs text-n-slate-10 mt-1.5"
+        v-if="
+          order.customer_name || order.customer_phone || order.customer_address
+        "
+        class="flex flex-col gap-1 text-xs text-n-slate-10 mt-1.5"
       >
-        <span v-if="order.customer_name" class="flex items-center gap-1">
-          <i class="i-lucide-user text-xs" />
-          {{ order.customer_name }}
-        </span>
-        <span v-if="order.customer_phone" class="flex items-center gap-1">
-          <i class="i-lucide-phone text-xs" />
-          {{ order.customer_phone }}
-        </span>
+        <div class="flex items-center gap-3">
+          <span v-if="order.customer_name" class="flex items-center gap-1">
+            <i class="i-lucide-user text-xs" />
+            {{ order.customer_name }}
+          </span>
+          <span v-if="order.customer_phone" class="flex items-center gap-1">
+            <i class="i-lucide-phone text-xs" />
+            {{ order.customer_phone }}
+          </span>
+        </div>
+        <div v-if="order.customer_address" class="flex items-center gap-1">
+          <i class="i-lucide-map-pin text-xs" />
+          {{ order.customer_address }}
+        </div>
       </div>
 
       <!-- Products preview -->
@@ -89,8 +127,26 @@ const formatCurrency = amount =>
 
       <!-- Action buttons (visible on hover) -->
       <div
-        class="flex items-center gap-1 mt-2 opacity-0 group-hover:opacity-100 transition-opacity"
+        class="flex items-center gap-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity"
       >
+        <button
+          v-if="
+            order.status === 'draft' && order.external_source !== 'tiktok_shop'
+          "
+          class="text-xs text-n-slate-10 hover:text-n-blue-9 flex items-center gap-1 transition-colors"
+          @click.stop="emit('push', order)"
+        >
+          <i class="i-lucide-upload-cloud text-xs" />
+          {{ t('CONVERSATION.ORDER_PANEL.PUSH') }}
+        </button>
+        <button
+          v-if="order.external_order_id"
+          class="text-xs text-n-slate-10 hover:text-n-emerald-9 flex items-center gap-1 transition-colors"
+          @click.stop="emit('sync', order)"
+        >
+          <i class="i-lucide-refresh-cw text-xs" />
+          {{ t('CONVERSATION.ORDER_PANEL.SYNC') }}
+        </button>
         <button
           class="text-xs text-n-slate-10 hover:text-n-ruby-9 flex items-center gap-1 transition-colors"
           @click.stop="emit('delete', order)"

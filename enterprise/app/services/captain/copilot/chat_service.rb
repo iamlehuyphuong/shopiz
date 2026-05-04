@@ -155,13 +155,29 @@ class Captain::Copilot::ChatService < Llm::BaseAiService
       content: Captain::Llm::SystemPromptsService.copilot_response_generator(
         @assistant.config['product_name'],
         tools_summary,
-        @assistant.config
+        @assistant.config,
+        orders: recent_orders
       )
     }
   end
 
   def tools_summary
     @tools.map { |tool| "- #{tool.class.name}: #{tool.class.description}" }.join("\n")
+  end
+
+  def recent_orders
+    return nil unless @conversation
+
+    @conversation.conversation_orders.order(created_at: :desc).limit(5).map do |order|
+      {
+        id: order.id,
+        external_order_id: order.external_order_id,
+        external_source: order.external_source,
+        status: order.status,
+        total_amount: order.total_amount,
+        currency: order.currency
+      }
+    end
   end
 
   def account_id_context

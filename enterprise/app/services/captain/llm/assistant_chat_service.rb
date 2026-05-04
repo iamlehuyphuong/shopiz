@@ -41,7 +41,8 @@ class Captain::Llm::AssistantChatService < Llm::BaseAiService
       role: 'system',
       content: Captain::Llm::SystemPromptsService.assistant_response_generator(
         @assistant.name, @assistant.config['product_name'], @assistant.config,
-        contact: contact_attributes
+        contact: contact_attributes,
+        orders: recent_orders
       )
     }
   end
@@ -53,6 +54,21 @@ class Captain::Llm::AssistantChatService < Llm::BaseAiService
     @conversation.contact.attributes.symbolize_keys.slice(
       :id, :name, :email, :phone_number, :identifier, :custom_attributes
     )
+  end
+
+  def recent_orders
+    return nil unless @conversation
+
+    @conversation.conversation_orders.order(created_at: :desc).limit(5).map do |order|
+      {
+        id: order.id,
+        external_order_id: order.external_order_id,
+        external_source: order.external_source,
+        status: order.status,
+        total_amount: order.total_amount,
+        currency: order.currency
+      }
+    end
   end
 
   def persist_message(message, message_type = 'assistant')

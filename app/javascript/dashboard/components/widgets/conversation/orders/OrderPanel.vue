@@ -81,6 +81,30 @@ const handleDeleteOrder = async order => {
     useAlert(t('CONVERSATION.ORDER_PANEL.DELETE_ERROR'));
   }
 };
+
+const handlePushOrder = async order => {
+  try {
+    await store.dispatch('conversationOrders/pushOrder', {
+      conversationId: props.conversationId,
+      orderId: order.id,
+    });
+    useAlert(t('CONVERSATION.ORDER_PANEL.PUSH_SUCCESS'));
+  } catch (err) {
+    useAlert(err.message || t('CONVERSATION.ORDER_PANEL.PUSH_ERROR'));
+  }
+};
+
+const handleSyncOrder = async order => {
+  try {
+    await store.dispatch('conversationOrders/syncOrder', {
+      conversationId: props.conversationId,
+      orderId: order.id,
+    });
+    useAlert(t('CONVERSATION.ORDER_PANEL.SYNC_SUCCESS'));
+  } catch (err) {
+    useAlert(err.message || t('CONVERSATION.ORDER_PANEL.SYNC_ERROR'));
+  }
+};
 </script>
 
 <template>
@@ -139,6 +163,8 @@ const handleDeleteOrder = async order => {
             :orders="orders"
             @edit="handleEditOrder"
             @delete="handleDeleteOrder"
+            @push="handlePushOrder"
+            @sync="handleSyncOrder"
           />
 
           <!-- Empty State -->

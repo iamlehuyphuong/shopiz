@@ -32,6 +32,18 @@ class ConversationOrdersAPI extends ApiClient {
     );
   }
 
+  pushOrder(conversationId, orderId) {
+    return axios.post(
+      `${this.baseUrl()}/conversations/${conversationId}/orders/${orderId}/push`
+    );
+  }
+
+  syncOrder(conversationId, orderId) {
+    return axios.post(
+      `${this.baseUrl()}/conversations/${conversationId}/orders/${orderId}/sync`
+    );
+  }
+
   searchProducts(query) {
     return axios.get(`${this.baseUrl()}/products_search`, {
       params: { q: query },

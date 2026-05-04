@@ -427,7 +427,13 @@
       "DELETE": "Xóa",
       "SAVE_SUCCESS": "Lưu đơn hàng thành công",
       "DELETE_SUCCESS": "Xóa đơn hàng thành công",
-      "DELETE_ERROR": "Không thể xóa đơn hàng"
+      "DELETE_ERROR": "Không thể xóa đơn hàng",
+      "PUSH": "Chốt & Đẩy đơn",
+      "PUSH_SUCCESS": "Đẩy đơn hàng thành công",
+      "PUSH_ERROR": "Lỗi khi đẩy đơn hàng",
+      "SYNC": "Đồng bộ",
+      "SYNC_SUCCESS": "Đồng bộ đơn hàng thành công",
+      "SYNC_ERROR": "Lỗi khi đồng bộ đơn hàng"
     }
   },
   "EMAIL_TRANSCRIPT": {

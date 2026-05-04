@@ -128,6 +128,20 @@ class Captain::Assistant::AgentRunnerService
     state[:contact] = slice_attrs(@conversation.contact, CONTACT_STATE_ATTRIBUTES) if @conversation.contact
     state[:campaign] = slice_attrs(@conversation.campaign, CAMPAIGN_STATE_ATTRIBUTES) if @conversation.campaign
     state[:contact_inbox] = slice_attrs(@conversation.contact_inbox, CONTACT_INBOX_STATE_ATTRIBUTES) if @conversation.contact_inbox
+    state[:recent_orders] = recent_orders
+  end
+
+  def recent_orders
+    @conversation.conversation_orders.order(created_at: :desc).limit(5).map do |order|
+      {
+        id: order.id,
+        external_order_id: order.external_order_id,
+        external_source: order.external_source,
+        status: order.status,
+        total_amount: order.total_amount,
+        currency: order.currency
+      }
+    end
   end
 
   def slice_attrs(record, keys)

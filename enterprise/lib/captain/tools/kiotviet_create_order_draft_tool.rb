@@ -100,7 +100,8 @@ class Captain::Tools::KiotvietCreateOrderDraftTool < Captain::Tools::BasePublicT
       customer_name: contact.name,
       customer_phone: contact.phone_number,
       customer_address: contact.additional_attributes&.dig('address'),
-      customer_note: customer_note
+      customer_note: customer_note,
+      external_source: 'kiotviet'
     )
 
     items.each do |item|
