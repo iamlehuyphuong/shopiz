@@ -101,6 +101,18 @@ export const AUTOMATIONS = {
         name: 'SEND_MESSAGE',
       },
       {
+        key: 'send_facebook_post_purchase_update',
+        name: 'SEND_FACEBOOK_POST_PURCHASE_UPDATE',
+      },
+      {
+        key: 'send_facebook_confirmed_event_update',
+        name: 'SEND_FACEBOOK_CONFIRMED_EVENT_UPDATE',
+      },
+      {
+        key: 'send_facebook_account_update',
+        name: 'SEND_FACEBOOK_ACCOUNT_UPDATE',
+      },
+      {
         key: 'send_email_transcript',
         name: 'SEND_EMAIL_TRANSCRIPT',
       },
@@ -223,6 +235,18 @@ export const AUTOMATIONS = {
       {
         key: 'send_message',
         name: 'SEND_MESSAGE',
+      },
+      {
+        key: 'send_facebook_post_purchase_update',
+        name: 'SEND_FACEBOOK_POST_PURCHASE_UPDATE',
+      },
+      {
+        key: 'send_facebook_confirmed_event_update',
+        name: 'SEND_FACEBOOK_CONFIRMED_EVENT_UPDATE',
+      },
+      {
+        key: 'send_facebook_account_update',
+        name: 'SEND_FACEBOOK_ACCOUNT_UPDATE',
       },
       {
         key: 'send_email_transcript',
@@ -357,6 +381,18 @@ export const AUTOMATIONS = {
         name: 'SEND_MESSAGE',
       },
       {
+        key: 'send_facebook_post_purchase_update',
+        name: 'SEND_FACEBOOK_POST_PURCHASE_UPDATE',
+      },
+      {
+        key: 'send_facebook_confirmed_event_update',
+        name: 'SEND_FACEBOOK_CONFIRMED_EVENT_UPDATE',
+      },
+      {
+        key: 'send_facebook_account_update',
+        name: 'SEND_FACEBOOK_ACCOUNT_UPDATE',
+      },
+      {
         key: 'send_email_transcript',
         name: 'SEND_EMAIL_TRANSCRIPT',
       },
@@ -483,6 +519,18 @@ export const AUTOMATIONS = {
         name: 'SEND_MESSAGE',
       },
       {
+        key: 'send_facebook_post_purchase_update',
+        name: 'SEND_FACEBOOK_POST_PURCHASE_UPDATE',
+      },
+      {
+        key: 'send_facebook_confirmed_event_update',
+        name: 'SEND_FACEBOOK_CONFIRMED_EVENT_UPDATE',
+      },
+      {
+        key: 'send_facebook_account_update',
+        name: 'SEND_FACEBOOK_ACCOUNT_UPDATE',
+      },
+      {
         key: 'send_email_transcript',
         name: 'SEND_EMAIL_TRANSCRIPT',
       },
@@ -595,6 +643,18 @@ export const AUTOMATIONS = {
         name: 'SEND_MESSAGE',
       },
       {
+        key: 'send_facebook_post_purchase_update',
+        name: 'SEND_FACEBOOK_POST_PURCHASE_UPDATE',
+      },
+      {
+        key: 'send_facebook_confirmed_event_update',
+        name: 'SEND_FACEBOOK_CONFIRMED_EVENT_UPDATE',
+      },
+      {
+        key: 'send_facebook_account_update',
+        name: 'SEND_FACEBOOK_ACCOUNT_UPDATE',
+      },
+      {
         key: 'send_email_transcript',
         name: 'SEND_EMAIL_TRANSCRIPT',
       },
@@ -702,6 +762,21 @@ export const AUTOMATION_ACTION_TYPES = [
   {
     key: 'send_message',
     label: 'SEND_MESSAGE',
+    inputType: 'textarea',
+  },
+  {
+    key: 'send_facebook_post_purchase_update',
+    label: 'SEND_FACEBOOK_POST_PURCHASE_UPDATE',
+    inputType: 'textarea',
+  },
+  {
+    key: 'send_facebook_confirmed_event_update',
+    label: 'SEND_FACEBOOK_CONFIRMED_EVENT_UPDATE',
+    inputType: 'textarea',
+  },
+  {
+    key: 'send_facebook_account_update',
+    label: 'SEND_FACEBOOK_ACCOUNT_UPDATE',
     inputType: 'textarea',
   },
   {

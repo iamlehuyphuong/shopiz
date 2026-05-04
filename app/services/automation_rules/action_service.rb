@@ -47,6 +47,32 @@ class AutomationRules::ActionService < ActionService
     Messages::MessageBuilder.new(nil, @conversation, params).perform
   end
 
+  def send_facebook_post_purchase_update(message)
+    send_facebook_utility_message(message[0], 'POST_PURCHASE_UPDATE')
+  end
+
+  def send_facebook_confirmed_event_update(message)
+    send_facebook_utility_message(message[0], 'CONFIRMED_EVENT_UPDATE')
+  end
+
+  def send_facebook_account_update(message)
+    send_facebook_utility_message(message[0], 'ACCOUNT_UPDATE')
+  end
+
+  def send_facebook_utility_message(message_content, tag)
+    return if conversation_a_tweet?
+
+    params = {
+      content: message_content,
+      private: false,
+      content_attributes: {
+        automation_rule_id: @rule.id,
+        message_tag: tag
+      }
+    }
+    Messages::MessageBuilder.new(nil, @conversation, params).perform
+  end
+
   def add_private_note(message)
     return if conversation_a_tweet?
 

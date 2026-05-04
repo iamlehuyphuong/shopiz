@@ -63,7 +63,12 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
       base_params[:recipient] = { notification_messages_token: message.content_attributes['notification_messages_token'] }
     else
       base_params[:recipient] = { id: contact.get_source_id(inbox.id) }
-      if under_24_hours?
+      message_tag = message.content_attributes['message_tag']
+
+      if message_tag.present?
+        base_params[:messaging_type] = 'MESSAGE_TAG'
+        base_params[:tag] = message_tag
+      elsif under_24_hours?
         base_params[:messaging_type] = 'RESPONSE'
       else
         base_params[:messaging_type] = 'MESSAGE_TAG'
@@ -250,7 +255,7 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
         }
       }
     }
-    
+
     # Add image_url if provided
     if message.content_attributes['image_url'].present?
       base_params[:message][:attachment][:payload][:image_url] = message.content_attributes['image_url']
@@ -266,8 +271,6 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
 
     campaign.increment_metric!(status)
   end
-
-
 
   def attachment_type(attachment)
     return attachment.file_type if %w[image audio video file].include? attachment.file_type

@@ -39,7 +39,10 @@ const errorMessage = computed(() => {
 const showActionInput = computed(() => {
   if (
     actionData.value.action_name === 'send_email_to_team' ||
-    actionData.value.action_name === 'send_message'
+    actionData.value.action_name === 'send_message' ||
+    actionData.value.action_name === 'send_facebook_post_purchase_update' ||
+    actionData.value.action_name === 'send_facebook_confirmed_event_update' ||
+    actionData.value.action_name === 'send_facebook_account_update'
   )
     return false;
   const type = macroActionTypes.value.find(
