@@ -35,6 +35,7 @@
     "LOADING_CONVERSATIONS": "Đang tải cuộc hội thoại",
     "CANNOT_REPLY": "Bạn không thể trả lời do",
     "24_HOURS_WINDOW": "giới hạn cửa sổ 24 giờ",
+    "HUMAN_AGENT_WARNING": "⚠️ Đã qua 24h, tin nhắn sẽ được gửi dưới dạng hỗ trợ (Human Agent). Vui lòng không gửi nội dung quảng cáo.",
     "48_HOURS_WINDOW": "Giới hạn thời lượng tin nhắn 48 giờ",
     "API_HOURS_WINDOW": "Bạn chỉ có thể trả lời trong vòng {hours} giờ",
     "NOT_ASSIGNED_TO_YOU": "Cuộc hội thoại này chưa được giao cho bạn. Bạn có muốn tự giao cho mình không?",

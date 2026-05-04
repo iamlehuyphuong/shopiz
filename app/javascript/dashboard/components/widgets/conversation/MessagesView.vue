@@ -228,6 +228,22 @@ export default {
       }
       return '';
     },
+    isHumanAgentWindow() {
+      if (!this.currentChat.can_reply) return false;
+      if (!(this.isAFacebookInbox || this.isAnInstagramChannel)) return false;
+
+      if (!this.getMessages || this.getMessages.length === 0) return false;
+
+      const lastIncomingMessage = [...this.getMessages]
+        .reverse()
+        .find(m => m.message_type === 0);
+
+      if (!lastIncomingMessage) return false;
+
+      const timeDiffInSeconds =
+        Date.now() / 1000 - lastIncomingMessage.created_at;
+      return timeDiffInSeconds > 24 * 3600;
+    },
     unreadMessageCount() {
       return this.currentChat.unread_count || 0;
     },
@@ -476,6 +492,12 @@ export default {
       color-scheme="alert"
       class="mx-2 mt-2 overflow-hidden rounded-lg"
       :banner-message="$t('CONVERSATION.OLD_INSTAGRAM_INBOX_REPLY_BANNER')"
+    />
+    <Banner
+      v-else-if="isHumanAgentWindow"
+      color-scheme="warning"
+      class="mx-2 mt-2 overflow-hidden rounded-lg"
+      :banner-message="$t('CONVERSATION.HUMAN_AGENT_WARNING')"
     />
     <MessageList
       ref="conversationPanelRef"
