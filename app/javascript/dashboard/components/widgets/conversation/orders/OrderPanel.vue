@@ -33,7 +33,9 @@ const isContactOrdersOpen = ref(false);
 const currentConversation = useMapGetter('getSelectedChat');
 const isEcommerceChannel = computed(() => {
   const channelType = currentConversation.value?.meta?.channel;
-  return channelType === 'Channel::TiktokShop' || channelType === 'Channel::Shopee';
+  return (
+    channelType === 'Channel::TiktokShop' || channelType === 'Channel::Shopee'
+  );
 });
 const contact = computed(() => {
   const conversation = currentConversation.value;
@@ -75,10 +77,13 @@ onMounted(() => {
   fetchContactDetails();
 });
 
-watch(() => props.conversationId, () => {
-  fetchOrders();
-  fetchContactDetails();
-});
+watch(
+  () => props.conversationId,
+  () => {
+    fetchOrders();
+    fetchContactDetails();
+  }
+);
 
 watch(
   () => props.pendingProduct,
@@ -257,7 +262,10 @@ const handleSyncOrder = async order => {
       </div>
 
       <!-- Quick Actions (Bottom Fixed) -->
-      <div v-if="!isEcommerceChannel" class="shrink-0 p-3 border-t border-n-weak bg-n-solid-1 z-10">
+      <div
+        v-if="!isEcommerceChannel"
+        class="shrink-0 p-3 border-t border-n-weak bg-n-solid-1 z-10"
+      >
         <Button
           :label="t('CONVERSATION.ORDER_PANEL.NEW_ORDER')"
           icon="i-lucide-plus"

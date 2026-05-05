@@ -81,15 +81,18 @@ const PLATFORM_OPTIONS = [
 
 watch(
   () => props.contact,
-  (newContact) => {
+  newContact => {
     if (!isEditing.value) {
-      if (!form.value.customer_name) form.value.customer_name = newContact?.name || '';
-      if (!form.value.customer_phone) form.value.customer_phone = newContact?.phone_number || '';
+      if (!form.value.customer_name)
+        form.value.customer_name = newContact?.name || '';
+      if (!form.value.customer_phone)
+        form.value.customer_phone = newContact?.phone_number || '';
       if (!form.value.customer_address) {
         const attrs = newContact?.additional_attributes || {};
         form.value.customer_address =
           attrs.address ||
-          [attrs.city, attrs.country].filter(Boolean).join(', ') || '';
+          [attrs.city, attrs.country].filter(Boolean).join(', ') ||
+          '';
       }
       // Auto-fill from inbox ecommerce integration
       if (inboxEcommerceAppId.value && !form.value.external_source) {
@@ -336,7 +339,7 @@ const toggleSection = key => {
                     <i class="i-lucide-trash-2 text-sm" />
                   </button>
                 </div>
-                
+
                 <!-- Row 2: Số lượng & Giá -->
                 <div class="flex items-center gap-3">
                   <div class="flex items-center gap-2 w-1/3">
@@ -409,13 +412,13 @@ const toggleSection = key => {
               :placeholder="t('CONVERSATION.ORDER_PANEL.ADDRESS')"
               rows="2"
               class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 placeholder:text-n-slate-9 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 resize-none leading-relaxed"
-            ></textarea>
+            />
             <textarea
               v-model="form.customer_note"
               :placeholder="t('CONVERSATION.ORDER_PANEL.NOTE')"
               rows="2"
               class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 placeholder:text-n-slate-9 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 resize-none leading-relaxed"
-            ></textarea>
+            />
           </div>
         </AccordionItem>
       </div>

@@ -5,6 +5,15 @@ import { useStore } from 'dashboard/composables/store';
 import { useAlert } from 'dashboard/composables';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 
+const props = defineProps({
+  inbox: {
+    type: Object,
+    required: true,
+  },
+});
+
+const emit = defineEmits(['update']);
+
 const ECOMMERCE_APP_IDS = [
   'kiotviet',
   'sapo',
@@ -35,15 +44,6 @@ const PLATFORM_ICONS = {
   tiktok_shop: 'i-lucide-music',
 };
 
-const props = defineProps({
-  inbox: {
-    type: Object,
-    required: true,
-  },
-});
-
-const emit = defineEmits(['update']);
-
 const { t } = useI18n();
 const store = useStore();
 
@@ -53,9 +53,7 @@ const isSaving = ref(false);
 const integrations = computed(() => {
   const allIntegrations = store.getters['integrations/getAppIntegrations'];
   return allIntegrations
-    .filter(
-      app => ECOMMERCE_APP_IDS.includes(app.id) && app.hooks?.length > 0
-    )
+    .filter(app => ECOMMERCE_APP_IDS.includes(app.id) && app.hooks?.length > 0)
     .map(app => ({
       hookId: app.hooks[0].id,
       appId: app.id,
@@ -69,15 +67,12 @@ const isMarketplaceLocked = computed(
 );
 
 const currentIntegration = computed(() =>
-  integrations.value.find(
-    i => i.hookId === selectedIntegrationId.value
-  )
+  integrations.value.find(i => i.hookId === selectedIntegrationId.value)
 );
 
 onMounted(() => {
   store.dispatch('integrations/get');
-  selectedIntegrationId.value =
-    props.inbox.ecommerce_integration?.id || null;
+  selectedIntegrationId.value = props.inbox.ecommerce_integration?.id || null;
 });
 
 const handleSave = async () => {
@@ -91,9 +86,7 @@ const handleSave = async () => {
     });
     useAlert(t('INBOX_MGMT.ECOMMERCE.SAVE_SUCCESS'));
   } catch (error) {
-    useAlert(
-      error.message || t('INBOX_MGMT.ECOMMERCE.SAVE_ERROR')
-    );
+    useAlert(error.message || t('INBOX_MGMT.ECOMMERCE.SAVE_ERROR'));
   } finally {
     isSaving.value = false;
   }
@@ -130,9 +123,7 @@ const handleSave = async () => {
             }}
           </p>
           <p class="text-xs text-n-teal-11 mt-0.5">
-            {{
-              t('INBOX_MGMT.ECOMMERCE.MARKETPLACE_NOTE')
-            }}
+            {{ t('INBOX_MGMT.ECOMMERCE.MARKETPLACE_NOTE') }}
           </p>
         </div>
         <span
@@ -160,7 +151,10 @@ const handleSave = async () => {
             {{ t('INBOX_MGMT.ECOMMERCE.SELECT_PLATFORM') }}
           </label>
 
-          <div v-if="integrations.length === 0" class="flex flex-col items-center py-8 px-4">
+          <div
+            v-if="integrations.length === 0"
+            class="flex flex-col items-center py-8 px-4"
+          >
             <div
               class="w-12 h-12 rounded-xl bg-n-solid-3 flex items-center justify-center mb-3"
             >
@@ -231,10 +225,7 @@ const handleSave = async () => {
                     : 'bg-n-solid-3'
                 "
               >
-                <i
-                  :class="integration.icon"
-                  class="text-sm"
-                />
+                <i :class="integration.icon" class="text-sm" />
               </div>
               <span
                 class="text-sm"

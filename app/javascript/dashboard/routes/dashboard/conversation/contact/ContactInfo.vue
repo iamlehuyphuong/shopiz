@@ -120,11 +120,13 @@ export default {
       return ` ${this.contact.name}?`;
     },
     currentConversation() {
-      return this.$store.getters['getSelectedChat'];
+      return this.$store.getters.getSelectedChat;
     },
     isCurrentConversationZaloPersonal() {
       if (!this.currentConversation) return false;
-      const inbox = this.$store.getters['inboxes/getInbox'](this.currentConversation.inbox_id);
+      const inbox = this.$store.getters['inboxes/getInbox'](
+        this.currentConversation.inbox_id
+      );
       return inbox?.channel_type === 'Channel::ZaloPersonal';
     },
     zaloFriendshipStatus() {
@@ -631,8 +633,6 @@ export default {
         </div>
       </div>
       <div class="flex items-center w-full mt-0.5 gap-2">
-
-        
         <!-- Zalo Personal Integration -->
         <template v-if="contact.phone_number">
           <!-- Connect Zalo Personal (Non-Zalo conversation) -->
@@ -644,7 +644,9 @@ export default {
           >
             <template #trigger="{ toggle }">
               <NextButton
-                v-tooltip.top-end="$t('CONTACT_PANEL.ZALO_PERSONAL.CONNECT_TOOLTIP')"
+                v-tooltip.top-end="
+                  $t('CONTACT_PANEL.ZALO_PERSONAL.CONNECT_TOOLTIP')
+                "
                 icon="i-woot-zalo-personal"
                 slate
                 faded

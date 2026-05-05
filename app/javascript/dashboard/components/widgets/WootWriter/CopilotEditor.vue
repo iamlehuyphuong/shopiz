@@ -209,6 +209,7 @@ onMounted(() => {
 <template>
   <div class="space-y-2 mb-4">
     <div
+      v-if="generatedContent"
       class="overflow-y-auto"
       :class="{ 'max-h-96': isPopout, 'max-h-56': !isPopout }"
     >

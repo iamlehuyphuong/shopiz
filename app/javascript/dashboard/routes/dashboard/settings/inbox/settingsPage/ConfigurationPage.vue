@@ -84,8 +84,10 @@ export default {
         this.inbox.selected_feature_flags || []
       ).includes('allow_mobile_webview');
       this.allowedDomains = this.inbox.allowed_domains || '';
-      this.defaultFriendRequestMessage = this.inbox.provider_config?.default_friend_request_message || '';
-      this.defaultGreetingMessage = this.inbox.provider_config?.default_greeting_message || '';
+      this.defaultFriendRequestMessage =
+        this.inbox.provider_config?.default_friend_request_message || '';
+      this.defaultGreetingMessage =
+        this.inbox.provider_config?.default_greeting_message || '';
       this.$nextTick(() => {
         this.isSettingDefaults = false;
       });
@@ -447,8 +449,14 @@ export default {
   </div>
   <div v-else-if="isAZaloPersonalChannel" class="space-y-4">
     <SettingsFieldSection
-      :label="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_TITLE')"
-      :help-text="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_SUBTITLE')"
+      :label="
+        $t('INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_TITLE')
+      "
+      :help-text="
+        $t(
+          'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_SUBTITLE'
+        )
+      "
     >
       <TextArea
         v-model="defaultFriendRequestMessage"
@@ -458,13 +466,11 @@ export default {
     </SettingsFieldSection>
     <SettingsFieldSection
       :label="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_TITLE')"
-      :help-text="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_SUBTITLE')"
+      :help-text="
+        $t('INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_SUBTITLE')
+      "
     >
-      <TextArea
-        v-model="defaultGreetingMessage"
-        auto-height
-        class="w-full"
-      />
+      <TextArea v-model="defaultGreetingMessage" auto-height class="w-full" />
     </SettingsFieldSection>
     <div class="flex justify-start">
       <NextButton @click="updateZaloPersonalConfig">

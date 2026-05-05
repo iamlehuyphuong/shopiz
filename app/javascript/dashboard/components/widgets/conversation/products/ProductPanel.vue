@@ -180,7 +180,10 @@ const handleAddToOrder = product => {
         </div>
 
         <!-- Products -->
-        <div v-else-if="products && products.length" class="flex flex-col gap-2">
+        <div
+          v-else-if="products && products.length"
+          class="flex flex-col gap-2"
+        >
           <ProductCard
             v-for="product in products"
             :key="`${product.source}-${product.id}`"
@@ -190,7 +193,10 @@ const handleAddToOrder = product => {
           />
 
           <!-- Load more -->
-          <div v-if="products && products.length >= 20" class="flex justify-center pt-2">
+          <div
+            v-if="products && products.length >= 20"
+            class="flex justify-center pt-2"
+          >
             <Button
               :label="t('CONVERSATION.PRODUCT_PANEL.LOAD_MORE')"
               xs
