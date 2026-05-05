@@ -38,7 +38,7 @@ const inboxEcommerceAppId = computed(() => {
 });
 
 const isSourceLocked = computed(
-  () => !isEditing.value && inboxEcommerceAppId.value !== ''
+  () => inboxEcommerceAppId.value !== '' || isEditing.value
 );
 
 const form = ref({
@@ -232,7 +232,7 @@ const toggleSection = key => {
           <div class="px-3 py-3 space-y-2.5">
             <select
               v-model="form.status"
-              class="w-full px-3 py-2 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 cursor-pointer appearance-none"
+              class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-alpha-1 hover:bg-n-alpha-2 transition-colors text-n-slate-12 outline-none focus:border-n-brand focus:bg-n-solid-1 focus:ring-1 focus:ring-n-brand/30 cursor-pointer appearance-none"
               style="
                 background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2394a3b8%22 stroke-width=%222%22%3e%3cpath d=%22m6 9 6 6 6-6%22/%3e%3c/svg%3e');
                 background-repeat: no-repeat;
@@ -245,9 +245,9 @@ const toggleSection = key => {
               </option>
             </select>
             <select
+              v-if="!isSourceLocked"
               v-model="form.external_source"
-              :disabled="isSourceLocked"
-              class="w-full px-3 py-2 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 cursor-pointer appearance-none disabled:opacity-60 disabled:cursor-not-allowed"
+              class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-alpha-1 hover:bg-n-alpha-2 transition-colors text-n-slate-12 outline-none focus:border-n-brand focus:bg-n-solid-1 focus:ring-1 focus:ring-n-brand/30 appearance-none cursor-pointer"
               style="
                 background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2394a3b8%22 stroke-width=%222%22%3e%3cpath d=%22m6 9 6 6 6-6%22/%3e%3c/svg%3e');
                 background-repeat: no-repeat;
@@ -284,54 +284,45 @@ const toggleSection = key => {
               <div
                 v-for="(item, index) in form.items"
                 :key="index"
-                class="flex items-start gap-2.5 p-2.5 rounded-lg bg-n-solid-2 border border-n-weak"
+                class="flex flex-col gap-2 p-2.5 rounded-lg bg-n-solid-2 border border-n-weak"
               >
-                <img
-                  v-if="item.product_thumbnail"
-                  :src="item.product_thumbnail"
-                  :alt="item.product_name"
-                  class="w-10 h-10 rounded-md object-cover shrink-0 border border-n-weak"
-                />
-                <div
-                  v-else
-                  class="w-10 h-10 rounded-md bg-n-solid-3 flex items-center justify-center shrink-0"
-                >
-                  <i class="i-lucide-package text-n-slate-10 text-sm" />
-                </div>
-                <div class="flex-1 min-w-0 space-y-1.5">
+                <!-- Row 1: Tên sản phẩm & Nút xoá -->
+                <div class="flex items-start gap-2">
                   <input
                     v-model="item.product_name"
                     type="text"
                     :placeholder="t('CONVERSATION.ORDER_PANEL.PRODUCT_NAME')"
-                    class="w-full text-sm text-n-slate-12 bg-transparent border-none outline-none font-medium placeholder:text-n-slate-9"
+                    class="flex-1 w-full text-sm text-n-slate-12 bg-n-solid-1 border border-n-weak rounded-md px-2.5 py-1.5 outline-none font-medium placeholder:text-n-slate-9 focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 transition-shadow"
                   />
-                  <div class="flex items-center gap-3">
-                    <div class="flex items-center gap-1.5">
-                      <label class="text-xs text-n-slate-10 whitespace-nowrap">{{ t('CONVERSATION.ORDER_PANEL.QUANTITY') }}:</label>
-                      <input
-                        v-model.number="item.quantity"
-                        type="number"
-                        min="1"
-                        class="w-14 text-xs text-center rounded-md border border-n-weak bg-n-solid-1 text-n-slate-12 py-1 outline-none focus:border-n-brand"
-                      />
-                    </div>
-                    <div class="flex items-center gap-1.5">
-                      <label class="text-xs text-n-slate-10 whitespace-nowrap">{{ t('CONVERSATION.ORDER_PANEL.PRICE') }}:</label>
-                      <input
-                        v-model.number="item.unit_price"
-                        type="number"
-                        min="0"
-                        class="w-24 text-xs rounded-md border border-n-weak bg-n-solid-1 text-n-slate-12 py-1 px-2 outline-none focus:border-n-brand"
-                      />
-                    </div>
+                  <button
+                    class="shrink-0 p-1.5 rounded-md hover:bg-n-ruby-3 text-n-slate-10 hover:text-n-ruby-11 transition-colors"
+                    @click="removeItem(index)"
+                  >
+                    <i class="i-lucide-trash-2 text-sm" />
+                  </button>
+                </div>
+                
+                <!-- Row 2: Số lượng & Giá -->
+                <div class="flex items-center gap-3">
+                  <div class="flex items-center gap-2 w-1/3">
+                    <label class="text-xs text-n-slate-10 shrink-0">{{ t('CONVERSATION.ORDER_PANEL.QUANTITY') }}:</label>
+                    <input
+                      v-model.number="item.quantity"
+                      type="number"
+                      min="1"
+                      class="w-full text-xs text-center rounded-md border border-n-weak bg-n-solid-1 text-n-slate-12 py-1 px-2 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 transition-shadow"
+                    />
+                  </div>
+                  <div class="flex items-center gap-2 flex-1">
+                    <label class="text-xs text-n-slate-10 shrink-0">{{ t('CONVERSATION.ORDER_PANEL.PRICE') }}:</label>
+                    <input
+                      v-model.number="item.unit_price"
+                      type="number"
+                      min="0"
+                      class="w-full text-xs rounded-md border border-n-weak bg-n-solid-1 text-n-slate-12 py-1 px-2 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 transition-shadow"
+                    />
                   </div>
                 </div>
-                <button
-                  class="shrink-0 p-1.5 rounded-md hover:bg-n-alpha-2 text-n-slate-10 hover:text-n-ruby-9 transition-colors"
-                  @click="removeItem(index)"
-                >
-                  <i class="i-lucide-trash-2 text-sm" />
-                </button>
               </div>
             </div>
 
@@ -370,26 +361,26 @@ const toggleSection = key => {
               v-model="form.customer_name"
               type="text"
               :placeholder="t('CONVERSATION.ORDER_PANEL.CUSTOMER_NAME')"
-              class="w-full px-3 py-2 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 placeholder:text-n-slate-9 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30"
+              class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 placeholder:text-n-slate-9 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30"
             />
             <input
               v-model="form.customer_phone"
               type="tel"
               :placeholder="t('CONVERSATION.ORDER_PANEL.PHONE')"
-              class="w-full px-3 py-2 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 placeholder:text-n-slate-9 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30"
+              class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 placeholder:text-n-slate-9 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30"
             />
             <textarea
               v-model="form.customer_address"
               :placeholder="t('CONVERSATION.ORDER_PANEL.ADDRESS')"
               rows="2"
-              class="w-full px-3 py-2 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 placeholder:text-n-slate-9 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 resize-none leading-relaxed"
-            />
+              class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 placeholder:text-n-slate-9 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 resize-none leading-relaxed"
+            ></textarea>
             <textarea
               v-model="form.customer_note"
               :placeholder="t('CONVERSATION.ORDER_PANEL.NOTE')"
               rows="2"
-              class="w-full px-3 py-2 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 placeholder:text-n-slate-9 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 resize-none leading-relaxed"
-            />
+              class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 placeholder:text-n-slate-9 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 resize-none leading-relaxed"
+            ></textarea>
           </div>
         </AccordionItem>
       </div>

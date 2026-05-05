@@ -1,12 +1,23 @@
 class Api::V1::Accounts::ProductsSearchController < Api::V1::Accounts::BaseController
   def index
     query = params[:q].to_s.strip
+    conversation_id = params[:conversation_id]
     sources = []
 
-    # Aggregate products from all connected integrations
-    integration_hooks.each do |hook|
-      products = fetch_products_from_integration(hook, query)
-      sources.concat(products)
+    # If scoped to a conversation, only search the linked ecommerce platform
+    if conversation_id.present?
+      conversation = Current.account.conversations.find_by(id: conversation_id)
+      hook = conversation&.inbox&.effective_ecommerce_hook
+      
+      if hook
+        sources.concat(fetch_products_from_integration(hook, query))
+      end
+    else
+      # Aggregate products from all connected integrations (Fallback)
+      integration_hooks.each do |hook|
+        products = fetch_products_from_integration(hook, query)
+        sources.concat(products)
+      end
     end
 
     # Search Help Center articles as products

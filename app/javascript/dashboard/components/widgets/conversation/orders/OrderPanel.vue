@@ -129,20 +129,9 @@ const handleSyncOrder = async order => {
     />
 
     <!-- List Mode -->
-    <div v-else class="w-full overflow-y-auto">
-      <!-- Quick Actions -->
-      <div class="px-4 py-3 border-b border-n-weak">
-        <Button
-          :label="t('CONVERSATION.ORDER_PANEL.NEW_ORDER')"
-          icon="i-lucide-plus"
-          sm
-          class="w-full"
-          @click="handleNewOrder"
-        />
-      </div>
-
+    <div v-else class="flex flex-col w-full h-full relative">
       <!-- Orders Accordion -->
-      <div class="px-2 pb-8 pt-3">
+      <div class="flex-1 overflow-y-auto px-2 pb-4 pt-3">
         <AccordionItem
           :title="t('CONVERSATION.ORDER_PANEL.TITLE')"
           :is-open="isOrderListOpen"
@@ -215,6 +204,17 @@ const handleSyncOrder = async order => {
             @sync="handleSyncOrder"
           />
         </AccordionItem>
+      </div>
+
+      <!-- Quick Actions (Bottom Fixed) -->
+      <div class="shrink-0 p-3 border-t border-n-weak bg-n-solid-1 z-10">
+        <Button
+          :label="t('CONVERSATION.ORDER_PANEL.NEW_ORDER')"
+          icon="i-lucide-plus"
+          sm
+          class="w-full"
+          @click="handleNewOrder"
+        />
       </div>
     </div>
   </div>

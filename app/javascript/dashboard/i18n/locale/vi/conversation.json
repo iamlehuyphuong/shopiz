@@ -392,6 +392,13 @@
       "unmuted": "{user_name} đã bật tiếng cuộc trò chuyện",
       "auto_resolution_message": "Đang giải quyết cuộc trò chuyện vì đã không hoạt động trong một thời gian. Vui lòng bắt đầu một cuộc trò chuyện mới nếu cần hỗ trợ thêm."
     },
+    "PRODUCT_PANEL": {
+      "TITLE": "Sản phẩm",
+      "SEARCH": "Tìm kiếm sản phẩm...",
+      "ALL_CATEGORIES": "Tất cả",
+      "NO_PRODUCTS": "Không tìm thấy sản phẩm",
+      "NO_INTEGRATION": "Không có liên kết thương mại điện tử nào với hộp thư này. Vui lòng cấu hình trong Cài đặt → Thương mại điện tử."
+    },
     "ORDER_PANEL": {
       "TITLE": "Đơn hàng",
       "NEW_ORDER": "Tạo đơn",

@@ -52,7 +52,8 @@ const performSearch = async () => {
   isSearching.value = true;
   try {
     const { data } = await ConversationOrdersAPI.searchProducts(
-      searchQuery.value
+      searchQuery.value,
+      props.conversationId
     );
     results.value = data.products || [];
   } catch {
@@ -88,7 +89,7 @@ const formatPrice = price => {
         v-model="searchQuery"
         type="text"
         :placeholder="t('CONVERSATION.ORDER_PANEL.PRODUCT_SEARCH')"
-        class="w-full px-3 pr-8 py-2 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 placeholder:text-n-slate-9 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 transition-all"
+        class="w-full px-3 pr-8 py-1.5 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 placeholder:text-n-slate-9 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 transition-all"
       />
       <fluent-icon
         v-if="isSearching"

@@ -44,9 +44,9 @@ class ConversationOrdersAPI extends ApiClient {
     );
   }
 
-  searchProducts(query) {
+  searchProducts(query, conversationId = null) {
     return axios.get(`${this.baseUrl()}/products_search`, {
-      params: { q: query },
+      params: { q: query, conversation_id: conversationId },
     });
   }
 }
