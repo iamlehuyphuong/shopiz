@@ -225,7 +225,9 @@
         "COUNT": "orders"
       },
       "ACTIONS": {
-        "CREATE": "Create order"
+        "CREATE": "Create order",
+        "ADD": "Create order",
+        "REFRESH": "Refresh"
       },
       "TABLE": {
         "EMPTY_SEARCH": "No matching orders found.",
@@ -251,6 +253,29 @@
       "ALERTS": {
         "SYNC_SUCCESS": "Order synced successfully.",
         "SYNC_ERROR": "Failed to sync order."
+      }
+    },
+    "ORDER_FORM": {
+      "PLACEHOLDERS": {
+        "SEARCH_CONTACT": "Search for customer by name, email, or phone number"
+      },
+      "WIZARD": {
+        "STEP_0": {
+          "TITLE": "Products",
+          "BODY": "Add products to the order."
+        },
+        "STEP_1": {
+          "TITLE": "Financials",
+          "BODY": "Set taxes, shipping fees, and discounts."
+        },
+        "STEP_2": {
+          "TITLE": "Customer",
+          "BODY": "Contact information of the customer."
+        },
+        "STEP_3": {
+          "TITLE": "Completion",
+          "BODY": "Review and create the order."
+        }
       }
     },
     "MODULE_TOOLS": {
@@ -481,6 +506,7 @@
       "FIELDS": {
         "STATUS": "Status",
         "CUSTOMER": "Customer",
+        "GENERAL_INFO": "General Information",
         "PHONE": "Phone number",
         "SOURCE": "Source",
         "ADDRESS": "Address",
@@ -490,7 +516,13 @@
         "NOTE": "Note",
         "ITEMS": "Order Items",
         "QTY": "Qty",
-        "PRODUCT": "Product {index}"
+        "PRODUCT": "Product {index}",
+        "PAYMENT_METHOD": "Payment Method",
+        "SHIPPING": "Shipping",
+        "SUBTOTAL": "Subtotal",
+        "SHIPPING_FEE": "Shipping Fee",
+        "TAX": "Tax",
+        "DISCOUNT": "Discount"
       },
       "ACTIONS": {
         "SYNC": "Sync to platform",

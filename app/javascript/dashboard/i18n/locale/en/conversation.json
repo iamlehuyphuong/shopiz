@@ -419,6 +419,17 @@
       "QUANTITY": "Qty",
       "PRICE": "Price",
       "ITEMS_COUNT": "items",
+      "FINANCIAL": "Financial details",
+      "SHIPPING_FEE": "Shipping fee",
+      "DISCOUNT": "Discount",
+      "TAX": "Tax",
+      "PAYMENT_METHOD": "Payment method",
+      "PAYMENT_STATUS": {
+        "LABEL": "Payment status",
+        "UNPAID": "Unpaid",
+        "PAID": "Paid",
+        "PARTIALLY_REFUNDED": "Partially refunded"
+      },
       "STATUS_LABEL": "Status",
       "STATUS": {
         "DRAFT": "Draft",

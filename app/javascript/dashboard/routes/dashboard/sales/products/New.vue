@@ -178,7 +178,7 @@ const onSubmit = async () => {
 <template>
   <div class="flex flex-col h-full bg-n-background w-full overflow-hidden">
     <div
-      class="flex justify-between items-center h-20 min-h-[3.5rem] px-6 py-2 bg-n-background max-w-7xl mx-auto w-full flex-shrink-0"
+      class="flex justify-between items-center h-20 min-h-[3.5rem] px-6 py-2 bg-n-background max-w-5xl mx-auto w-full flex-shrink-0"
     >
       <h1 class="flex items-center mb-0 text-n-slate-12">
         <router-link
@@ -195,10 +195,10 @@ const onSubmit = async () => {
     </div>
 
     <div
-      class="flex flex-col mb-8 mt-8 max-w-7xl mx-auto w-full px-6 flex-1 overflow-hidden"
+      class="flex flex-col mb-8 mt-8 max-w-5xl mx-auto w-full px-6 flex-1 overflow-hidden"
     >
       <div
-        class="grid grid-cols-1 lg:grid-cols-8 lg:divide-x lg:divide-n-weak rounded-xl border border-n-weak h-full w-full bg-white dark:bg-slate-900 overflow-hidden"
+        class="grid grid-cols-1 lg:grid-cols-8 lg:divide-x lg:divide-n-weak rounded-xl border border-n-weak h-full w-full bg-transparent overflow-hidden"
       >
         <!-- Sidebar Wizard -->
         <div
@@ -292,20 +292,23 @@ const onSubmit = async () => {
                 <label class="block text-sm font-medium text-n-slate-12 mb-1">
                   {{ $t('SALES.PRODUCT_FORM.FIELDS.TYPE.LABEL') }}
                 </label>
-                <select
-                  v-model="form.productType"
-                  class="w-full p-2.5 rounded-lg border border-n-weak bg-white dark:bg-slate-900 focus:outline-none focus:ring-1 focus:ring-n-brand text-sm text-n-slate-12"
-                >
-                  <option value="physical">
-                    {{ $t('SALES.PRODUCT_FORM.FIELDS.TYPE.OPTIONS.PHYSICAL') }}
-                  </option>
-                  <option value="digital">
-                    {{ $t('SALES.PRODUCT_FORM.FIELDS.TYPE.OPTIONS.DIGITAL') }}
-                  </option>
-                  <option value="service">
-                    {{ $t('SALES.PRODUCT_FORM.FIELDS.TYPE.OPTIONS.SERVICE') }}
-                  </option>
-                </select>
+                <div class="relative">
+                  <select
+                    v-model="form.productType"
+                    class="w-full p-2.5 pr-10 rounded-lg border border-n-weak bg-n-alpha-1 bg-none focus:outline-none focus:ring-1 focus:ring-n-brand focus:border-n-brand text-sm text-n-slate-12 appearance-none cursor-pointer"
+                  >
+                    <option value="physical">
+                      {{ $t('SALES.PRODUCT_FORM.FIELDS.TYPE.OPTIONS.PHYSICAL') }}
+                    </option>
+                    <option value="digital">
+                      {{ $t('SALES.PRODUCT_FORM.FIELDS.TYPE.OPTIONS.DIGITAL') }}
+                    </option>
+                    <option value="service">
+                      {{ $t('SALES.PRODUCT_FORM.FIELDS.TYPE.OPTIONS.SERVICE') }}
+                    </option>
+                  </select>
+                  <i class="i-lucide-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-n-slate-11 pointer-events-none text-base" />
+                </div>
               </div>
               <woot-input
                 v-model="form.category"
@@ -323,7 +326,7 @@ const onSubmit = async () => {
               </label>
               <textarea
                 v-model="form.description"
-                class="w-full p-3 rounded-lg border border-n-weak bg-white dark:bg-slate-900 focus:outline-none focus:ring-1 focus:ring-n-brand focus:border-n-brand text-sm transition-shadow min-h-[120px]"
+                class="w-full p-3 rounded-lg border border-n-weak bg-n-alpha-1 placeholder:text-n-slate-9 focus:outline-none focus:ring-1 focus:ring-n-brand focus:border-n-brand text-sm transition-shadow min-h-[120px]"
                 :placeholder="
                   $t('SALES.PRODUCT_FORM.FIELDS.DESCRIPTION.PLACEHOLDER')
                 "
@@ -393,7 +396,7 @@ const onSubmit = async () => {
               </label>
               <textarea
                 v-model="form.attributes"
-                class="w-full p-3 rounded-lg border border-n-weak bg-white dark:bg-slate-900 focus:outline-none focus:ring-1 focus:ring-n-brand focus:border-n-brand text-sm transition-shadow min-h-[80px]"
+                class="w-full p-3 rounded-lg border border-n-weak bg-n-alpha-1 placeholder:text-n-slate-9 focus:outline-none focus:ring-1 focus:ring-n-brand focus:border-n-brand text-sm transition-shadow min-h-[80px]"
                 :placeholder="
                   $t('SALES.PRODUCT_FORM.FIELDS.ATTRIBUTES.PLACEHOLDER')
                 "
@@ -637,17 +640,20 @@ const onSubmit = async () => {
               <label class="block text-sm font-medium text-n-slate-12 mb-2">
                 {{ $t('SALES.PRODUCT_FORM.FIELDS.STATUS.LABEL') }}
               </label>
-              <select
-                v-model="form.status"
-                class="w-full p-2.5 rounded-lg border border-n-weak bg-white dark:bg-slate-900 focus:outline-none focus:ring-1 focus:ring-n-brand text-sm text-n-slate-12"
-              >
-                <option value="active">
-                  {{ $t('SALES.PRODUCT_FORM.FIELDS.STATUS.OPTIONS.ACTIVE') }}
-                </option>
-                <option value="draft">
-                  {{ $t('SALES.PRODUCT_FORM.FIELDS.STATUS.OPTIONS.DRAFT') }}
-                </option>
-              </select>
+              <div class="relative">
+                <select
+                  v-model="form.status"
+                  class="w-full p-2.5 pr-10 rounded-lg border border-n-weak bg-n-alpha-1 bg-none focus:outline-none focus:ring-1 focus:ring-n-brand focus:border-n-brand text-sm text-n-slate-12 appearance-none cursor-pointer"
+                >
+                  <option value="active">
+                    {{ $t('SALES.PRODUCT_FORM.FIELDS.STATUS.OPTIONS.ACTIVE') }}
+                  </option>
+                  <option value="draft">
+                    {{ $t('SALES.PRODUCT_FORM.FIELDS.STATUS.OPTIONS.DRAFT') }}
+                  </option>
+                </select>
+                <i class="i-lucide-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-n-slate-11 pointer-events-none text-base" />
+              </div>
             </div>
 
             <div class="mt-6 flex justify-between">

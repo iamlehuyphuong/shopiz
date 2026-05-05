@@ -434,6 +434,17 @@
       "QUANTITY": "SL",
       "PRICE": "Giá",
       "ITEMS_COUNT": "sản phẩm",
+      "FINANCIAL": "Thông tin tài chính",
+      "SHIPPING_FEE": "Phí giao hàng",
+      "DISCOUNT": "Giảm giá",
+      "TAX": "Thuế",
+      "PAYMENT_METHOD": "Phương thức thanh toán",
+      "PAYMENT_STATUS": {
+        "LABEL": "Trạng thái thanh toán",
+        "UNPAID": "Chưa thanh toán",
+        "PAID": "Đã thanh toán",
+        "PARTIALLY_REFUNDED": "Hoàn tiền một phần"
+      },
       "STATUS_LABEL": "Trạng thái",
       "STATUS": {
         "DRAFT": "Nháp",

@@ -223,7 +223,7 @@ const onSubmit = async () => {
 <template>
   <div class="flex flex-col h-full bg-n-background w-full overflow-hidden">
     <div
-      class="flex justify-between items-center h-20 min-h-[3.5rem] px-6 py-2 bg-n-background max-w-7xl mx-auto w-full flex-shrink-0"
+      class="flex justify-between items-center h-20 min-h-[3.5rem] px-6 py-2 bg-n-background max-w-5xl mx-auto w-full flex-shrink-0"
     >
       <h1 class="flex items-center mb-0 text-n-slate-12">
         <router-link
@@ -240,7 +240,7 @@ const onSubmit = async () => {
     </div>
 
     <div
-      class="flex flex-col mb-8 mt-8 max-w-7xl mx-auto w-full px-6 flex-1 overflow-hidden"
+      class="flex flex-col mb-8 mt-8 max-w-5xl mx-auto w-full px-6 flex-1 overflow-hidden"
     >
       <div
         class="grid grid-cols-1 lg:grid-cols-8 lg:divide-x lg:divide-n-weak rounded-xl border border-n-weak h-full w-full bg-white dark:bg-slate-900 overflow-hidden"

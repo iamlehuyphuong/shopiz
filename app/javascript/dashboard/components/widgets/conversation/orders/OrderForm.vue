@@ -4,12 +4,14 @@ import { useI18n } from 'vue-i18n';
 import { useStore, useMapGetter } from 'dashboard/composables/store';
 import AccordionItem from 'dashboard/components/Accordion/AccordionItem.vue';
 import ProductSearch from './ProductSearch.vue';
+import ContactSearch from './ContactSearch.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
+import SalesOrdersAPI from 'dashboard/api/sales/orders';
 
 const props = defineProps({
   conversationId: {
     type: [Number, String],
-    required: true,
+    required: false,
   },
   contact: {
     type: Object,
@@ -61,6 +63,7 @@ const form = ref({
   discount_amount: 0,
   payment_method: 'cod',
   payment_status: 'unpaid',
+  contact_id: null,
   items: [],
 });
 
@@ -98,6 +101,9 @@ watch(
           attrs.address ||
           [attrs.city, attrs.country].filter(Boolean).join(', ') ||
           '';
+      }
+      if (!form.value.contact_id && newContact?.id) {
+        form.value.contact_id = newContact.id;
       }
       // Auto-fill from inbox ecommerce integration
       if (inboxEcommerceAppId.value && !form.value.external_source) {
@@ -197,10 +203,13 @@ const isSaving = computed(
     store.getters['conversationOrders/getUIFlags'].isUpdating
 );
 
-const canSave = computed(
-  () =>
-    form.value.items.length > 0 && form.value.items.every(i => i.product_name)
-);
+const canSave = computed(() => {
+  const hasItems = form.value.items.length > 0 && form.value.items.every(i => i.product_name);
+  if (!props.conversationId && !form.value.contact_id) {
+    return false; // Require contact when creating standalone order
+  }
+  return hasItems;
+});
 
 const handleSave = async () => {
   const orderData = {
@@ -210,6 +219,7 @@ const handleSave = async () => {
     customer_phone: form.value.customer_phone,
     customer_address: form.value.customer_address,
     customer_note: form.value.customer_note,
+    contact_id: form.value.contact_id || undefined,
     shipping_fee: form.value.shipping_fee,
     tax: form.value.tax,
     discount_amount: form.value.discount_amount,
@@ -230,20 +240,28 @@ const handleSave = async () => {
 
   try {
     if (isEditing.value) {
-      await store.dispatch('conversationOrders/update', {
-        conversationId: props.conversationId,
-        orderId: props.order.id,
-        orderData,
-      });
+      if (props.conversationId) {
+        await store.dispatch('conversationOrders/update', {
+          conversationId: props.conversationId,
+          orderId: props.order.id,
+          orderData,
+        });
+      } else {
+        await SalesOrdersAPI.update(props.order.id, orderData);
+      }
     } else {
-      await store.dispatch('conversationOrders/create', {
-        conversationId: props.conversationId,
-        orderData,
-      });
+      if (props.conversationId) {
+        await store.dispatch('conversationOrders/create', {
+          conversationId: props.conversationId,
+          orderData,
+        });
+      } else {
+        await SalesOrdersAPI.create(orderData);
+      }
     }
     emit('saved');
-  } catch {
-    // error handled by store
+  } catch (error) {
+    console.error('Save order failed', error);
   }
 };
 
@@ -257,12 +275,25 @@ const isSectionOpen = ref({
 const toggleSection = key => {
   isSectionOpen.value[key] = !isSectionOpen.value[key];
 };
+
+const handleContactSelect = selectedContact => {
+  form.value.contact_id = selectedContact.id;
+  form.value.customer_name = selectedContact.name;
+  form.value.customer_phone = selectedContact.phone_number || '';
+  
+  const attrs = selectedContact.additional_attributes || {};
+  form.value.customer_address =
+    attrs.address ||
+    [attrs.city, attrs.country].filter(Boolean).join(', ') ||
+    '';
+};
 </script>
 
 <template>
   <div class="flex flex-col h-full w-full">
     <!-- Header - matches contact panel style -->
     <div
+      v-if="conversationId"
       class="flex items-center gap-2 px-4 py-3 border-b border-n-weak shrink-0"
     >
       <button
@@ -516,6 +547,9 @@ const toggleSection = key => {
           @toggle="toggleSection('customer')"
         >
           <div class="px-3 py-3 space-y-2.5">
+            <div v-if="!conversationId && !isEditing" class="mb-4">
+              <ContactSearch @select-contact="handleContactSelect" />
+            </div>
             <input
               v-model="form.customer_name"
               type="text"

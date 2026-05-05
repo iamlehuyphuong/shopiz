@@ -1,6 +1,6 @@
 class ConversationOrder < ApplicationRecord
   belongs_to :account
-  belongs_to :conversation
+  belongs_to :conversation, optional: true
   belongs_to :contact, optional: true
   has_many :items, class_name: 'ConversationOrderItem', dependent: :destroy_async
 
@@ -10,7 +10,8 @@ class ConversationOrder < ApplicationRecord
   enum payment_status: { unpaid: 'unpaid', paid: 'paid', partially_refunded: 'partially_refunded' }
 
   validates :account_id, presence: true
-  validates :conversation_id, presence: true
+  validates :conversation_id, presence: true, if: -> { contact_id.blank? }
+  validates :contact_id, presence: true, if: -> { conversation_id.blank? }
 
   before_save :calculate_total_amount
 

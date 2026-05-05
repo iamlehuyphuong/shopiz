@@ -225,7 +225,9 @@
         "COUNT": "đơn hàng"
       },
       "ACTIONS": {
-        "CREATE": "Tạo đơn hàng"
+        "CREATE": "Tạo đơn hàng",
+        "ADD": "Tạo đơn hàng",
+        "REFRESH": "Làm mới"
       },
       "TABLE": {
         "EMPTY_SEARCH": "Không tìm thấy đơn hàng nào phù hợp.",
@@ -251,6 +253,29 @@
       "ALERTS": {
         "SYNC_SUCCESS": "Đã đồng bộ đơn hàng thành công.",
         "SYNC_ERROR": "Đồng bộ đơn hàng thất bại."
+      }
+    },
+    "ORDER_FORM": {
+      "PLACEHOLDERS": {
+        "SEARCH_CONTACT": "Tìm kiếm khách hàng bằng tên, email hoặc số điện thoại"
+      },
+      "WIZARD": {
+        "STEP_0": {
+          "TITLE": "Sản phẩm",
+          "BODY": "Thêm các sản phẩm vào đơn hàng."
+        },
+        "STEP_1": {
+          "TITLE": "Tài chính",
+          "BODY": "Thiết lập thuế, phí vận chuyển và giảm giá."
+        },
+        "STEP_2": {
+          "TITLE": "Khách hàng",
+          "BODY": "Thông tin liên hệ của khách hàng."
+        },
+        "STEP_3": {
+          "TITLE": "Hoàn thành",
+          "BODY": "Kiểm tra và tạo đơn hàng."
+        }
       }
     },
     "MODULE_TOOLS": {
@@ -481,6 +506,7 @@
       "FIELDS": {
         "STATUS": "Trạng thái",
         "CUSTOMER": "Khách hàng",
+        "GENERAL_INFO": "Thông tin chung",
         "PHONE": "Số điện thoại",
         "SOURCE": "Nguồn",
         "ADDRESS": "Địa chỉ",
@@ -490,7 +516,13 @@
         "NOTE": "Ghi chú",
         "ITEMS": "Sản phẩm trong đơn",
         "QTY": "SL",
-        "PRODUCT": "Sản phẩm {index}"
+        "PRODUCT": "Sản phẩm {index}",
+        "PAYMENT_METHOD": "Phương thức thanh toán",
+        "SHIPPING": "Vận chuyển",
+        "SUBTOTAL": "Tạm tính",
+        "SHIPPING_FEE": "Phí vận chuyển",
+        "TAX": "Thuế",
+        "DISCOUNT": "Giảm giá"
       },
       "ACTIONS": {
         "SYNC": "Đồng bộ lên sàn",
