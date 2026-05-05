@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, computed } from 'vue';
+import { useStore } from 'vuex';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 
 const props = defineProps({
@@ -8,6 +9,8 @@ const props = defineProps({
     default: false,
   },
 });
+
+const store = useStore();
 
 const emit = defineEmits(['close', 'sync']);
 
@@ -30,6 +33,19 @@ const onImageError = e => {
 const selectPlatform = platform => {
   selectedPlatform.value = platform.id;
 };
+
+const isPlatformConnected = platformId => {
+  if (platformId === 'tiktok_shop') {
+    const inboxes = store.getters['inboxes/getInboxes'] || [];
+    return inboxes.some(inbox => inbox.channel_type === 'Channel::TiktokShop');
+  }
+  const integration = store.getters['integrations/getIntegration'](platformId);
+  return integration && integration.hooks && integration.hooks.length > 0;
+};
+
+onMounted(() => {
+  store.dispatch('integrations/get');
+});
 
 const onSync = () => {
   if (selectedPlatform.value) {
@@ -56,12 +72,16 @@ const onClose = () => {
             v-for="platform in platforms"
             :key="platform.id"
             type="button"
-            class="flex items-center gap-3 p-4 rounded-xl border transition-all duration-200 text-left"
-            :class="
+            class="flex items-center gap-3 p-4 rounded-xl border transition-all duration-200 text-left relative"
+            :class="[
               selectedPlatform === platform.id
                 ? 'border-n-brand bg-n-brand/5 ring-1 ring-n-brand'
-                : 'border-n-weak bg-white dark:bg-n-solid-1 hover:border-n-strong'
-            "
+                : 'border-n-weak bg-white dark:bg-n-solid-1 hover:border-n-strong',
+              !isPlatformConnected(platform.id)
+                ? '!opacity-50 cursor-not-allowed hover:border-n-weak !bg-n-alpha-1'
+                : ''
+            ]"
+            :disabled="!isPlatformConnected(platform.id)"
             @click="selectPlatform(platform)"
           >
             <div
@@ -86,7 +106,7 @@ const onClose = () => {
           </button>
         </div>
       </div>
-      <div class="flex items-center justify-end w-full gap-2 px-0 py-2">
+      <div class="flex items-center justify-end w-full gap-2 px-8 py-4 border-t border-n-strong/10 bg-n-alpha-1/50">
         <NextButton
           faded
           slate

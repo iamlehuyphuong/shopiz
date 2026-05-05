@@ -460,7 +460,9 @@ Rails.application.routes.draw do
           resources :products_search, only: [:index]
 
           namespace :sales do
-            resources :products, only: [:index, :show, :create, :update, :destroy]
+            resources :products, only: [:index, :show, :create, :update, :destroy] do
+              post :sync, on: :collection
+            end
             resources :reports, only: [:index]
             resources :orders, only: [:index, :show, :create]
           end

@@ -39,7 +39,7 @@ const paginatedOrders = computed(() => {
 });
 
 const showPagination = computed(
-  () => filteredOrders.value.length > itemsPerPage
+  () => filteredOrders.value.length > 0
 );
 
 const tableHeaders = computed(() => [
@@ -112,6 +112,20 @@ const formatStatus = status => {
   }
 };
 
+const formatSource = source => {
+  if (!source) return t('SALES.DIALOG_ORDER_DETAIL.FALLBACKS.SHOPIZ');
+  const sources = {
+    kiotviet: 'KiotViet',
+    sapo: 'Sapo',
+    haravan: 'Haravan',
+    shopify: 'Shopify',
+    woocommerce: 'WooCommerce',
+    nhanhvn: 'Nhanh.vn',
+    tiktok_shop: 'TikTok Shop',
+  };
+  return sources[source] || source;
+};
+
 const onPageChange = page => {
   currentPage.value = page;
 };
@@ -150,11 +164,6 @@ onBeforeMount(() => {
         :search-placeholder="$t('SALES.MODULE_ORDERS.HEADER.SEARCH')"
         feature-name="salesOrders"
       >
-        <template v-if="orders?.length" #count>
-          <span class="text-body-main text-n-slate-11">
-            {{ orders.length }} {{ $t('SALES.MODULE_ORDERS.HEADER.COUNT') }}
-          </span>
-        </template>
         <template #actions>
           <Button
             :label="$t('SALES.MODULE_ORDERS.ACTIONS.REFRESH')"
@@ -220,12 +229,9 @@ onBeforeMount(() => {
                     class="flex items-center gap-2 text-body-main text-n-slate-11"
                   >
                     <span
-                      class="px-2 py-0.5 bg-n-alpha-2 rounded text-xs capitalize"
+                      class="px-2 py-0.5 bg-n-alpha-2 rounded text-xs"
                     >
-                      {{
-                        order.external_source ||
-                        $t('SALES.DIALOG_ORDER_DETAIL.FALLBACKS.SHOPIZ')
-                      }}
+                      {{ formatSource(order.external_source) }}
                     </span>
                     <span>·</span>
                     <span>{{ formatCurrency(order.total_amount) }}</span>

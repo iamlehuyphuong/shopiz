@@ -522,18 +522,6 @@ const menuItems = computed(() => {
           to: accountScopedRoute('sales_dashboard'),
         },
         {
-          name: 'Sales Orders',
-          label: t('SIDEBAR.SALES_ORDERS'),
-          icon: 'i-lucide-shopping-bag',
-          activeOn: [
-            'sales_orders_list',
-            'sales_orders_new',
-            'sales_orders_show',
-            'sales_orders_edit',
-          ],
-          to: accountScopedRoute('sales_orders_list'),
-        },
-        {
           name: 'Sales Products',
           label: t('SIDEBAR.SALES_PRODUCTS'),
           icon: 'i-lucide-package',
@@ -544,6 +532,18 @@ const menuItems = computed(() => {
             'sales_products_edit',
           ],
           to: accountScopedRoute('sales_products_list'),
+        },
+        {
+          name: 'Sales Orders',
+          label: t('SIDEBAR.SALES_ORDERS'),
+          icon: 'i-lucide-shopping-bag',
+          activeOn: [
+            'sales_orders_list',
+            'sales_orders_new',
+            'sales_orders_show',
+            'sales_orders_edit',
+          ],
+          to: accountScopedRoute('sales_orders_list'),
         },
       ],
     },

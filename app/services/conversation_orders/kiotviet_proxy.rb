@@ -11,6 +11,43 @@ class ConversationOrders::KiotvietProxy < ConversationOrders::PlatformProxy
     kiotviet_get("orders/#{order_id}")
   end
 
+  def fetch_products(page = 1)
+    page_size = 50
+    current_item = (page - 1) * page_size
+    response = kiotviet_get("products?pageSize=#{page_size}&currentItem=#{current_item}&includeInventory=true")
+
+    return [[], false] unless response && response['data'].present?
+
+    products_data = response['data'].map do |item|
+      {
+        external_id: item['id'].to_s,
+        name: item['fullName'] || item['name'],
+        description: item['description'],
+        price: item['basePrice'],
+        currency: 'VND',
+        sku: item['code'],
+        barcode: item['barCode'],
+        status: item['isActive'] ? 'active' : 'archived',
+        variants: [
+          {
+            external_id: item['id'].to_s,
+            name: item['fullName'] || item['name'],
+            price: item['basePrice'],
+            sku: item['code'],
+            barcode: item['barCode'],
+            inventory_quantity: item.dig('inventories', 0, 'onHand') || 0,
+            compare_at_price: nil
+          }
+        ]
+      }
+    end
+
+    total = response['total'].to_i
+    has_more = (current_item + response['data'].length) < total
+
+    [products_data, has_more]
+  end
+
   def map_status(raw_status)
     # KiotViet Order: 1=Temporary, 2=Processing, 3=Completed, 4=Cancelled
     case raw_status

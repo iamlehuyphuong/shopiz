@@ -161,7 +161,7 @@
     },
     "MODULE_DASHBOARD": {
       "HEADER": {
-        "TITLE": "Sales Dashboard",
+        "TITLE": "Sales Overview",
         "DESCRIPTION": "Revenue overview from all sources."
       },
       "METRICS": {
@@ -192,6 +192,7 @@
         "EMPTY_STATE": "No products available.",
         "HEADERS": {
           "PRODUCT": "Product",
+          "SOURCE": "Platform",
           "STATUS": "Status",
           "ACTIONS": "Actions"
         },
@@ -498,6 +499,10 @@
       "FORM": {
         "CANCEL": "Cancel",
         "SUBMIT": "Sync products"
+      },
+      "ALERTS": {
+        "SYNC_SUCCESS": "Products synced successfully.",
+        "SYNC_ERROR": "Failed to sync products."
       }
     },
     "DIALOG_ORDER_DETAIL": {

@@ -4,11 +4,31 @@ class Api::V1::Accounts::Sales::ProductsController < Api::V1::Accounts::BaseCont
 
   def index
     @products = current_account.products.order(created_at: :desc)
-    render json: @products
+
+    if params[:search].present?
+      search_term = "%#{params[:search]}%"
+      @products = @products.where('name ILIKE ? OR sku ILIKE ?', search_term, search_term)
+    end
+
+    @products = @products.page(params[:page]).per(params[:per_page] || 15)
+
+    render json: {
+      payload: @products,
+      meta: {
+        current_page: @products.current_page,
+        total_pages: @products.total_pages,
+        total_count: @products.total_count
+      }
+    }
   end
 
   def show
     render json: @product
+  end
+
+  def sync
+    Sales::ProductsSyncJob.perform_later(current_account.id, params[:platform])
+    head :accepted
   end
 
   def create

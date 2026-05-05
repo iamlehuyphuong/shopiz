@@ -161,7 +161,7 @@
     },
     "MODULE_DASHBOARD": {
       "HEADER": {
-        "TITLE": "Dashboard Bán hàng",
+        "TITLE": "Tổng quan bán hàng",
         "DESCRIPTION": "Tổng quan báo cáo doanh thu từ các nguồn."
       },
       "METRICS": {
@@ -192,6 +192,7 @@
         "EMPTY_STATE": "Chưa có sản phẩm nào.",
         "HEADERS": {
           "PRODUCT": "Sản phẩm",
+          "SOURCE": "Sàn",
           "STATUS": "Trạng thái",
           "ACTIONS": "Hành động"
         },
@@ -498,6 +499,10 @@
       "FORM": {
         "CANCEL": "Huỷ",
         "SUBMIT": "Đồng bộ sản phẩm"
+      },
+      "ALERTS": {
+        "SYNC_SUCCESS": "Đã đồng bộ sản phẩm thành công.",
+        "SYNC_ERROR": "Đồng bộ sản phẩm thất bại."
       }
     },
     "DIALOG_ORDER_DETAIL": {

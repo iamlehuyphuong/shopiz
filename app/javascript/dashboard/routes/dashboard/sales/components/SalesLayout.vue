@@ -20,30 +20,28 @@ defineProps({
 </script>
 
 <template>
-  <div
-    class="flex flex-col w-full h-full m-0 p-6 sm:py-8 lg:px-16 overflow-auto bg-n-background"
-  >
-    <div class="flex-1 flex items-start w-full max-w-5xl mx-auto">
-      <div class="flex flex-col w-full h-full gap-4 font-inter">
+  <div class="flex flex-col w-full h-full m-0 bg-n-surface-1 overflow-hidden">
+    <main class="flex-1 overflow-y-auto p-6 sm:py-8 lg:px-16">
+      <div class="flex flex-col w-full gap-4 font-inter max-w-5xl mx-auto min-h-full">
         <slot name="header" />
-        <main>
-          <slot name="preBody" />
-          <slot v-if="isLoading" name="loading">
-            <woot-loading-state :message="loadingMessage" />
-          </slot>
-          <p
-            v-else-if="noRecordsFound"
-            class="flex-1 py-20 text-n-slate-12 flex items-center justify-center text-base"
-          >
-            {{ noRecordsMessage }}
-          </p>
-          <slot v-else name="body" />
-          <slot />
-        </main>
+        <slot name="preBody" />
+        <slot v-if="isLoading" name="loading">
+          <woot-loading-state :message="loadingMessage" />
+        </slot>
+        <p
+          v-else-if="noRecordsFound"
+          class="flex-1 py-20 text-n-slate-12 flex items-center justify-center text-base"
+        >
+          {{ noRecordsMessage }}
+        </p>
+        <slot v-else name="body" />
+        <slot />
       </div>
-    </div>
-    <footer v-if="$slots.footer" class="sticky bottom-0 z-0">
-      <slot name="footer" />
+    </main>
+    <footer v-if="$slots.footer" class="w-full bg-n-surface-1 py-2 z-10">
+      <div class="w-full max-w-5xl mx-auto px-6 lg:px-16 sm:px-8">
+        <slot name="footer" />
+      </div>
     </footer>
   </div>
 </template>

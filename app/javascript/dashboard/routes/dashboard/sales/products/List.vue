@@ -3,7 +3,7 @@ import { computed, onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useAlert } from 'dashboard/composables';
 import { useStoreGetters, useStore } from 'dashboard/composables/store';
-import { picoSearch } from '@scmmishra/pico-search';
+import { useDebounceFn } from '@vueuse/core';
 
 import SalesLayout from '../components/SalesLayout.vue';
 import BaseSettingsHeader from 'dashboard/routes/dashboard/settings/components/BaseSettingsHeader.vue';
@@ -26,29 +26,52 @@ const itemsPerPage = 15;
 
 const showPullDialog = ref(false);
 
+const selectedProducts = ref([]);
+const toggleSelectAll = (event) => {
+  if (event.target.checked) {
+    selectedProducts.value = products.value.map(p => p.id);
+  } else {
+    selectedProducts.value = [];
+  }
+};
+
 const products = computed(() => getters['salesProducts/getProducts'].value);
+const meta = computed(() => getters['salesProducts/getMeta'].value);
 const uiFlags = computed(() => getters['salesProducts/getUIFlags'].value);
 
-const filteredProducts = computed(() => {
-  const query = searchQuery.value.trim();
-  if (!query) return products.value;
-  return picoSearch(products.value, query, ['name', 'sku']);
-});
-
-const paginatedProducts = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage;
-  return filteredProducts.value.slice(start, start + itemsPerPage);
-});
-
 const showPagination = computed(
-  () => filteredProducts.value.length > itemsPerPage
+  () => meta.value.total_count > itemsPerPage
 );
 
-const tableHeaders = computed(() => [
-  t('SALES.MODULE_PRODUCTS.TABLE.HEADERS.PRODUCT'),
-  t('SALES.MODULE_PRODUCTS.TABLE.HEADERS.STATUS'),
-  t('SALES.MODULE_PRODUCTS.TABLE.HEADERS.ACTIONS'),
-]);
+const fetchProducts = () => {
+  store.dispatch('salesProducts/get', {
+    page: currentPage.value,
+    search: searchQuery.value,
+  });
+};
+
+const debouncedSearch = useDebounceFn(() => {
+  currentPage.value = 1;
+  fetchProducts();
+}, 500);
+
+import { watch } from 'vue';
+watch(searchQuery, () => {
+  debouncedSearch();
+});
+
+const tableHeaders = computed(() => {
+  let productHeader = t('SALES.MODULE_PRODUCTS.TABLE.HEADERS.PRODUCT');
+  if (selectedProducts.value.length > 0) {
+    productHeader = `${productHeader} (${selectedProducts.value.length} đã chọn)`;
+  }
+  return [
+    '', // Checkbox
+    productHeader,
+    t('SALES.MODULE_PRODUCTS.TABLE.HEADERS.STATUS'),
+    t('SALES.MODULE_PRODUCTS.TABLE.HEADERS.ACTIONS'),
+  ];
+});
 
 const formatCurrency = (price, currency = 'VND') => {
   if (!price && price !== 0) return '--';
@@ -78,9 +101,33 @@ const statusColor = status => {
   return colors[status] || 'bg-n-alpha-2 text-n-slate-11';
 };
 
-const onPullProducts = platform => {
+const formatSource = source => {
+  const sources = {
+    kiotviet: 'KiotViet',
+    sapo: 'Sapo',
+    haravan: 'Haravan',
+    shopify: 'Shopify',
+    woocommerce: 'WooCommerce',
+    nhanhvn: 'Nhanh.vn',
+    tiktok_shop: 'TikTok Shop',
+  };
+  return sources[source] || 'Shopiz';
+};
+
+const sourceLogo = source => {
+  if (!source) return null;
+  return `/dashboard/images/integrations/${source}.png`;
+};
+
+const onPullProducts = async platform => {
   useAlert(t('SALES.MODULE_PRODUCTS.ALERTS.PULL_START', { platform }));
   showPullDialog.value = false;
+  try {
+    await store.dispatch('salesProducts/syncPlatform', platform);
+    useAlert(t('SALES.DIALOG_PULL_PRODUCTS.ALERTS.SYNC_SUCCESS'));
+  } catch (error) {
+    useAlert(t('SALES.DIALOG_PULL_PRODUCTS.ALERTS.SYNC_ERROR'));
+  }
 };
 
 const onPushProduct = product => {
@@ -106,10 +153,11 @@ const onDeleteProduct = productId => {
 
 const onPageChange = page => {
   currentPage.value = page;
+  fetchProducts();
 };
 
 onBeforeMount(() => {
-  store.dispatch('salesProducts/get');
+  fetchProducts();
 });
 </script>
 
@@ -127,11 +175,6 @@ onBeforeMount(() => {
         :search-placeholder="$t('SALES.MODULE_PRODUCTS.HEADER.SEARCH')"
         feature-name="salesProducts"
       >
-        <template v-if="products?.length" #count>
-          <span class="text-body-main text-n-slate-11">
-            {{ products.length }} {{ $t('SALES.MODULE_PRODUCTS.HEADER.COUNT') }}
-          </span>
-        </template>
         <template #actions>
           <Button
             :label="$t('SALES.MODULE_PRODUCTS.ACTIONS.PULL')"
@@ -158,20 +201,44 @@ onBeforeMount(() => {
     <template #body>
       <BaseTable
         :headers="tableHeaders"
-        :items="paginatedProducts"
+        :items="products"
         :no-data-message="
           searchQuery
             ? $t('SALES.MODULE_PRODUCTS.TABLE.EMPTY_SEARCH')
             : $t('SALES.MODULE_PRODUCTS.TABLE.EMPTY_STATE')
         "
       >
+        <template #header-0>
+          <div class="flex items-center">
+            <input
+              type="checkbox"
+              class="w-4 h-4 rounded border-n-weak dark:border-slate-700 bg-transparent text-woot-500 focus:ring-woot-500 transition-opacity"
+              :class="selectedProducts.length > 0 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'"
+              :checked="selectedProducts.length === products.length && products.length > 0"
+              :indeterminate="selectedProducts.length > 0 && selectedProducts.length < products.length"
+              @change="toggleSelectAll"
+            />
+          </div>
+        </template>
         <template #row="{ items }">
           <BaseTableRow
             v-for="(product, index) in items"
             :key="product.id"
             :item="product"
+            class="group hover:bg-n-solid-2"
           >
             <template #default>
+              <!-- Column 0: Checkbox -->
+              <BaseTableCell class="w-12">
+                <input
+                  v-model="selectedProducts"
+                  type="checkbox"
+                  class="w-4 h-4 rounded border-n-weak dark:border-slate-700 bg-transparent text-woot-500 focus:ring-woot-500 transition-opacity"
+                  :class="selectedProducts.includes(product.id) ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'"
+                  :value="product.id"
+                />
+              </BaseTableCell>
+
               <!-- Column 1: Product info -->
               <BaseTableCell class="max-w-0 w-full">
                 <div class="flex flex-col gap-1">
@@ -188,6 +255,12 @@ onBeforeMount(() => {
                   <div
                     class="flex items-center gap-2 text-body-main text-n-slate-11"
                   >
+                    <span
+                      class="px-2 py-0.5 bg-n-alpha-2 rounded text-xs"
+                    >
+                      {{ formatSource(product.meta?.source) }}
+                    </span>
+                    <span v-if="product.sku || product.price || product.barcode">·</span>
                     <span v-if="product.sku">SKU: {{ product.sku }}</span>
                     <span v-if="product.sku">·</span>
                     <span>
@@ -211,7 +284,7 @@ onBeforeMount(() => {
                 </span>
               </BaseTableCell>
 
-              <!-- Column 3: Actions -->
+              <!-- Column 4: Actions -->
               <BaseTableCell align="end">
                 <div class="flex gap-3 justify-end flex-shrink-0">
                   <Button
@@ -254,8 +327,8 @@ onBeforeMount(() => {
     </template>
     <template v-if="showPagination" #footer>
       <PaginationFooter
-        :current-page="currentPage"
-        :total-items="filteredProducts.length"
+        :current-page="meta.current_page"
+        :total-items="meta.total_count"
         :items-per-page="itemsPerPage"
         @update:current-page="onPageChange"
       />

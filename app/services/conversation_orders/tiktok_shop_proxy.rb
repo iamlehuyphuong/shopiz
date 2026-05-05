@@ -15,6 +15,43 @@ class ConversationOrders::TiktokShopProxy < ConversationOrders::PlatformProxy
     result&.dig('data', 'orders')&.first
   end
 
+  def fetch_products(page = 1)
+    page_size = 50
+    result = tiktok_shop_post('/product/202309/products/search', { page_size: page_size, page_number: page })
+    
+    products = result&.dig('data', 'products')
+    return [[], false] if products.blank?
+
+    products_data = products.map do |item|
+      {
+        external_id: item['id'].to_s,
+        name: item['title'],
+        description: item['description'],
+        price: item.dig('skus', 0, 'price', 'original_price') || 0,
+        currency: item.dig('skus', 0, 'price', 'currency') || 'VND',
+        sku: item.dig('skus', 0, 'seller_sku'),
+        barcode: nil,
+        status: item['status'] == 'ACTIVATE' ? 'active' : 'archived',
+        variants: item['skus']&.map do |sku|
+          {
+            external_id: sku['id'].to_s,
+            name: sku['sales_attributes']&.map { |a| a['value_name'] }&.join(' - ') || item['title'],
+            price: sku.dig('price', 'original_price'),
+            sku: sku['seller_sku'],
+            barcode: nil,
+            inventory_quantity: sku['inventory']&.sum { |i| i['quantity'] } || 0,
+            compare_at_price: nil
+          }
+        end || []
+      }
+    end
+
+    total_count = result.dig('data', 'total_count').to_i
+    has_more = (page * page_size) < total_count
+
+    [products_data, has_more]
+  end
+
   def map_status(raw_status)
     # TikTok Shop: UNPAID, ON_HOLD, AWAITING_SHIPMENT, AWAITING_COLLECTION,
     #              IN_TRANSIT, DELIVERED, COMPLETED, CANCELLED

@@ -15,6 +15,10 @@ class ConversationOrders::PlatformProxy
     raise NotImplementedError, "#{self.class}#fetch_order not implemented"
   end
 
+  def fetch_products(_page = 1)
+    raise NotImplementedError, "#{self.class}#fetch_products not implemented"
+  end
+
   # Map platform-specific status to ConversationOrder enum.
   # Returns nil if unmappable (caller should default).
   def map_status(_raw_status)
