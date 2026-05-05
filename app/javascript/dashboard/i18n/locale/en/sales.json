@@ -272,6 +272,167 @@
         "TIKTOK_SHOP": "Sync orders, manage messages and products from TikTok Shop Seller Center into Shopiz."
       }
     },
+    "PRODUCT_FORM": {
+      "TITLE_NEW": "Create Product",
+      "TITLE_EDIT": "Edit Product",
+      "BACK": "Back",
+      "WIZARD": {
+        "STEP_0": {
+          "TITLE": "Basic Info",
+          "BODY": "Image, name, price, description."
+        },
+        "STEP_1": {
+          "TITLE": "Attributes",
+          "BODY": "Brand, style, category."
+        },
+        "STEP_2": {
+          "TITLE": "Variants",
+          "BODY": "Add color, size, weight."
+        },
+        "STEP_3": {
+          "TITLE": "Complete",
+          "BODY": "Check status and save product."
+        }
+      },
+      "STEP_0": {
+        "HEADING_NEW": "Basic Information",
+        "HEADING_EDIT": "Edit Basic Information",
+        "SUBHEADING_NEW": "Enter name, price, and description for the new product.",
+        "SUBHEADING_EDIT": "Update name, price, and description."
+      },
+      "STEP_1": {
+        "HEADING_NEW": "Product Attributes",
+        "HEADING_EDIT": "Product Attributes",
+        "SUBHEADING_NEW": "Add brand, style, and other attributes.",
+        "SUBHEADING_EDIT": "Update brand, style, and other attributes."
+      },
+      "STEP_2": {
+        "HEADING_NEW": "Variants & Shipping",
+        "HEADING_EDIT": "Variants & Shipping",
+        "SUBHEADING_NEW": "Create options for size, color, weight, and dimensions.",
+        "SUBHEADING_EDIT": "Update options for size, color, weight, and dimensions."
+      },
+      "STEP_3": {
+        "HEADING_NEW": "Complete",
+        "HEADING_EDIT": "Complete Update",
+        "SUBHEADING_NEW": "Review information and confirm product status.",
+        "SUBHEADING_EDIT": "Review information and save product.",
+        "OVERVIEW": "Product Overview",
+        "NAME": "Product Name:",
+        "NOT_ENTERED": "Not entered",
+        "BASE_PRICE": "Base Price:",
+        "VARIANT_COUNT": "Variant Count:"
+      },
+      "FIELDS": {
+        "NAME": {
+          "LABEL": "Product Name",
+          "PLACEHOLDER": "e.g., Men's T-shirt, Sneakers",
+          "ERROR": "Please enter a product name"
+        },
+        "IMAGE": {
+          "LABEL": "Image URL",
+          "PLACEHOLDER": "https://example.com/image.jpg"
+        },
+        "TYPE": {
+          "LABEL": "Product Type",
+          "OPTIONS": {
+            "PHYSICAL": "Physical Product",
+            "DIGITAL": "Digital Product",
+            "SERVICE": "Service"
+          }
+        },
+        "CATEGORY": {
+          "LABEL": "Category",
+          "PLACEHOLDER": "Fashion, Electronics..."
+        },
+        "DESCRIPTION": {
+          "LABEL": "Product Description",
+          "PLACEHOLDER": "Detailed product description"
+        },
+        "PRICE": {
+          "LABEL": "Price",
+          "PLACEHOLDER": "e.g., 100000"
+        },
+        "CURRENCY": {
+          "LABEL": "Currency",
+          "PLACEHOLDER": "USD"
+        },
+        "BRAND": {
+          "LABEL": "Brand",
+          "PLACEHOLDER": "e.g., Nike, Apple..."
+        },
+        "STYLE": {
+          "LABEL": "Style",
+          "PLACEHOLDER": "e.g., Sport, Vintage..."
+        },
+        "ATTRIBUTES": {
+          "LABEL": "Extended Attributes (Comma separated tags)",
+          "PLACEHOLDER": "Waterproof, Long battery, Lightweight..."
+        },
+        "STATUS": {
+          "LABEL": "Product Status",
+          "OPTIONS": {
+            "ACTIVE": "Active (Visible immediately)",
+            "DRAFT": "Draft (Not visible)"
+          }
+        },
+        "VARIANTS": {
+          "TITLE": "Variant {index}",
+          "REMOVE": "Remove variant",
+          "DUPLICATE": "Duplicate variant",
+          "NAME": {
+            "LABEL": "Variant Name (e.g. Red - Size S)",
+            "PLACEHOLDER": "Variant Name"
+          },
+          "PRICE": {
+            "LABEL": "Specific Price",
+            "PLACEHOLDER": "Leave blank if same as base"
+          },
+          "SKU": {
+            "LABEL": "Variant SKU",
+            "PLACEHOLDER": "e.g., SKU-RED-S"
+          },
+          "BARCODE": {
+            "LABEL": "Barcode",
+            "PLACEHOLDER": "Barcode"
+          },
+          "COLOR": {
+            "LABEL": "Color",
+            "PLACEHOLDER": "e.g., Red, Blue..."
+          },
+          "SIZE": {
+            "LABEL": "Size",
+            "PLACEHOLDER": "e.g., S, M, XL..."
+          },
+          "WEIGHT": {
+            "LABEL": "Weight (g)",
+            "PLACEHOLDER": "0"
+          },
+          "LENGTH": {
+            "LABEL": "Length (cm)"
+          },
+          "WIDTH": {
+            "LABEL": "Width (cm)"
+          },
+          "HEIGHT": {
+            "LABEL": "Height (cm)"
+          }
+        }
+      },
+      "BUTTONS": {
+        "NEXT": "Next",
+        "BACK": "Back",
+        "ADD_VARIANT": "Add new variant",
+        "SUBMIT": "Save product",
+        "UPDATE": "Update product"
+      },
+      "ALERTS": {
+        "NAME_REQUIRED": "Please enter a product name before continuing.",
+        "CREATE_SUCCESS": "Product created successfully!",
+        "UPDATE_SUCCESS": "Product updated successfully!",
+        "SAVE_ERROR": "Error saving product"
+      }
+    },
     "DIALOG_ADD_PRODUCT": {
       "TITLE": "Add new product",
       "DESC": "Add a new product to Shopiz catalog.",

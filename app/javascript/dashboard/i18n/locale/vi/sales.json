@@ -272,6 +272,167 @@
         "TIKTOK_SHOP": "Đồng bộ đơn hàng, quản lý tin nhắn và sản phẩm từ TikTok Shop Seller Center vào Shopiz."
       }
     },
+    "PRODUCT_FORM": {
+      "TITLE_NEW": "Tạo sản phẩm",
+      "TITLE_EDIT": "Sửa sản phẩm",
+      "BACK": "Quay lại",
+      "WIZARD": {
+        "STEP_0": {
+          "TITLE": "Thông tin cơ bản",
+          "BODY": "Hình ảnh, tên, giá bán, mô tả."
+        },
+        "STEP_1": {
+          "TITLE": "Thuộc tính",
+          "BODY": "Thương hiệu, phong cách, phân loại."
+        },
+        "STEP_2": {
+          "TITLE": "Biến thể",
+          "BODY": "Thêm màu sắc, kích thước, cân nặng."
+        },
+        "STEP_3": {
+          "TITLE": "Hoàn tất",
+          "BODY": "Kiểm tra trạng thái và lưu sản phẩm."
+        }
+      },
+      "STEP_0": {
+        "HEADING_NEW": "Thông tin cơ bản",
+        "HEADING_EDIT": "Chỉnh sửa thông tin cơ bản",
+        "SUBHEADING_NEW": "Điền tên, giá bán, mô tả cho sản phẩm mới.",
+        "SUBHEADING_EDIT": "Cập nhật tên, giá bán, mô tả cho sản phẩm."
+      },
+      "STEP_1": {
+        "HEADING_NEW": "Thuộc tính sản phẩm",
+        "HEADING_EDIT": "Thuộc tính sản phẩm",
+        "SUBHEADING_NEW": "Bổ sung thương hiệu, phong cách và các thuộc tính khác.",
+        "SUBHEADING_EDIT": "Cập nhật thương hiệu, phong cách và các thuộc tính khác."
+      },
+      "STEP_2": {
+        "HEADING_NEW": "Biến thể & Giao hàng",
+        "HEADING_EDIT": "Biến thể & Giao hàng",
+        "SUBHEADING_NEW": "Tạo các tuỳ chọn kích thước, màu sắc và thông tin cân nặng, kích thước hộp.",
+        "SUBHEADING_EDIT": "Cập nhật các tuỳ chọn kích thước, màu sắc và thông tin giao hàng."
+      },
+      "STEP_3": {
+        "HEADING_NEW": "Hoàn tất",
+        "HEADING_EDIT": "Hoàn tất cập nhật",
+        "SUBHEADING_NEW": "Kiểm tra lại thông tin và xác nhận trạng thái sản phẩm.",
+        "SUBHEADING_EDIT": "Kiểm tra lại thông tin và lưu sản phẩm.",
+        "OVERVIEW": "Tổng quan sản phẩm",
+        "NAME": "Tên sản phẩm:",
+        "NOT_ENTERED": "Chưa nhập",
+        "BASE_PRICE": "Giá gốc:",
+        "VARIANT_COUNT": "Số biến thể:"
+      },
+      "FIELDS": {
+        "NAME": {
+          "LABEL": "Tên sản phẩm",
+          "PLACEHOLDER": "Ví dụ: Áo thun nam, Giày thể thao",
+          "ERROR": "Vui lòng nhập tên sản phẩm"
+        },
+        "IMAGE": {
+          "LABEL": "Đường dẫn hình ảnh (URL)",
+          "PLACEHOLDER": "https://example.com/image.jpg"
+        },
+        "TYPE": {
+          "LABEL": "Loại hàng hoá",
+          "OPTIONS": {
+            "PHYSICAL": "Sản phẩm vật lý",
+            "DIGITAL": "Sản phẩm số (Digital)",
+            "SERVICE": "Dịch vụ"
+          }
+        },
+        "CATEGORY": {
+          "LABEL": "Danh mục (Category)",
+          "PLACEHOLDER": "Thời trang, Đồ điện tử..."
+        },
+        "DESCRIPTION": {
+          "LABEL": "Mô tả sản phẩm",
+          "PLACEHOLDER": "Mô tả chi tiết về sản phẩm"
+        },
+        "PRICE": {
+          "LABEL": "Giá bán",
+          "PLACEHOLDER": "Ví dụ: 100000"
+        },
+        "CURRENCY": {
+          "LABEL": "Tiền tệ",
+          "PLACEHOLDER": "VND"
+        },
+        "BRAND": {
+          "LABEL": "Thương hiệu (Brand)",
+          "PLACEHOLDER": "Ví dụ: Nike, Apple..."
+        },
+        "STYLE": {
+          "LABEL": "Phong cách (Style)",
+          "PLACEHOLDER": "Ví dụ: Thể thao, Vintage..."
+        },
+        "ATTRIBUTES": {
+          "LABEL": "Thuộc tính mở rộng (Các tags ngăn cách bằng dấu phẩy)",
+          "PLACEHOLDER": "Chống nước, Pin trâu, Thiết kế gọn nhẹ..."
+        },
+        "STATUS": {
+          "LABEL": "Trạng thái sản phẩm",
+          "OPTIONS": {
+            "ACTIVE": "Đang bán (Hiển thị ngay lập tức)",
+            "DRAFT": "Lưu nháp (Chưa hiển thị)"
+          }
+        },
+        "VARIANTS": {
+          "TITLE": "Biến thể {index}",
+          "REMOVE": "Xoá biến thể",
+          "DUPLICATE": "Nhân bản biến thể",
+          "NAME": {
+            "LABEL": "Tên phân loại (VD: Đỏ - Size S)",
+            "PLACEHOLDER": "Tên phân loại"
+          },
+          "PRICE": {
+            "LABEL": "Giá bán riêng",
+            "PLACEHOLDER": "Để trống nếu bằng giá gốc"
+          },
+          "SKU": {
+            "LABEL": "SKU phân loại",
+            "PLACEHOLDER": "VD: SKU-RED-S"
+          },
+          "BARCODE": {
+            "LABEL": "Mã vạch (Barcode)",
+            "PLACEHOLDER": "Barcode"
+          },
+          "COLOR": {
+            "LABEL": "Màu sắc",
+            "PLACEHOLDER": "VD: Đỏ, Xanh..."
+          },
+          "SIZE": {
+            "LABEL": "Kích thước (Size)",
+            "PLACEHOLDER": "VD: S, M, XL..."
+          },
+          "WEIGHT": {
+            "LABEL": "Cân nặng (g)",
+            "PLACEHOLDER": "0"
+          },
+          "LENGTH": {
+            "LABEL": "Dài (cm)"
+          },
+          "WIDTH": {
+            "LABEL": "Rộng (cm)"
+          },
+          "HEIGHT": {
+            "LABEL": "Cao (cm)"
+          }
+        }
+      },
+      "BUTTONS": {
+        "NEXT": "Tiếp tục",
+        "BACK": "Quay lại",
+        "ADD_VARIANT": "Thêm biến thể mới",
+        "SUBMIT": "Lưu sản phẩm",
+        "UPDATE": "Cập nhật sản phẩm"
+      },
+      "ALERTS": {
+        "NAME_REQUIRED": "Vui lòng nhập tên sản phẩm trước khi tiếp tục.",
+        "CREATE_SUCCESS": "Tạo sản phẩm thành công!",
+        "UPDATE_SUCCESS": "Cập nhật sản phẩm thành công!",
+        "SAVE_ERROR": "Lỗi khi lưu sản phẩm"
+      }
+    },
     "DIALOG_ADD_PRODUCT": {
       "TITLE": "Thêm sản phẩm mới",
       "DESC": "Thêm sản phẩm mới vào danh sách quản lý của Shopiz.",

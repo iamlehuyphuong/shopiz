@@ -149,6 +149,7 @@ class Account < ApplicationRecord
   has_many :billing_histories, dependent: :destroy_async, class_name: '::BillingHistory'
   has_many :account_subscriptions, dependent: :destroy_async
   has_many :account_addons, dependent: :destroy_async
+  has_many :products, dependent: :destroy_async
   has_one :active_subscription, -> { active.order(ends_at: :desc) }, class_name: 'AccountSubscription'
 
   has_one_attached :contacts_export

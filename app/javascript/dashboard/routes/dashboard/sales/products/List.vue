@@ -5,10 +5,9 @@ import { useAlert } from 'dashboard/composables';
 import { useStoreGetters, useStore } from 'dashboard/composables/store';
 import { picoSearch } from '@scmmishra/pico-search';
 
-import SalesLayout from './components/SalesLayout.vue';
+import SalesLayout from '../components/SalesLayout.vue';
 import BaseSettingsHeader from 'dashboard/routes/dashboard/settings/components/BaseSettingsHeader.vue';
-import AddProductDialog from './components/AddProductDialog.vue';
-import PullProductsDialog from './components/PullProductsDialog.vue';
+import PullProductsDialog from '../components/PullProductsDialog.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 import PaginationFooter from 'dashboard/components-next/pagination/PaginationFooter.vue';
 import {
@@ -25,7 +24,6 @@ const searchQuery = ref('');
 const currentPage = ref(1);
 const itemsPerPage = 15;
 
-const showAddDialog = ref(false);
 const showPullDialog = ref(false);
 
 const products = computed(() => getters['salesProducts/getProducts'].value);
@@ -80,18 +78,6 @@ const statusColor = status => {
   return colors[status] || 'bg-n-alpha-2 text-n-slate-11';
 };
 
-const onAddProduct = productData => {
-  store
-    .dispatch('salesProducts/create', productData)
-    .then(() => {
-      useAlert(t('SALES.MODULE_PRODUCTS.ALERTS.ADD_SUCCESS'));
-      showAddDialog.value = false;
-    })
-    .catch(error => {
-      useAlert(error.message || t('SALES.MODULE_PRODUCTS.ALERTS.ADD_ERROR'));
-    });
-};
-
 const onPullProducts = platform => {
   useAlert(t('SALES.MODULE_PRODUCTS.ALERTS.PULL_START', { platform }));
   showPullDialog.value = false;
@@ -103,8 +89,11 @@ const onPushProduct = product => {
   );
 };
 
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
 const onEditProduct = product => {
-  useAlert(t('SALES.MODULE_PRODUCTS.ALERTS.EDIT', { name: product.name }));
+  router.push({ name: 'sales_products_edit', params: { id: product.id } });
 };
 
 const onDeleteProduct = productId => {
@@ -161,7 +150,7 @@ onBeforeMount(() => {
           <Button
             :label="$t('SALES.MODULE_PRODUCTS.ACTIONS.ADD')"
             size="sm"
-            @click="showAddDialog = true"
+            @click="router.push({ name: 'sales_products_new' })"
           />
         </template>
       </BaseSettingsHeader>
@@ -273,12 +262,6 @@ onBeforeMount(() => {
     </template>
 
     <!-- Dialogs -->
-    <woot-modal
-      v-model:show="showAddDialog"
-      :on-close="() => (showAddDialog = false)"
-    >
-      <AddProductDialog @close="showAddDialog = false" @submit="onAddProduct" />
-    </woot-modal>
     <woot-modal
       v-model:show="showPullDialog"
       :on-close="() => (showPullDialog = false)"

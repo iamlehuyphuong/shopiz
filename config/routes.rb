@@ -462,7 +462,7 @@ Rails.application.routes.draw do
           namespace :sales do
             resources :products, only: [:index, :show, :create, :update, :destroy]
             resources :reports, only: [:index]
-            resources :orders, only: [:index]
+            resources :orders, only: [:index, :show]
           end
         end
       end

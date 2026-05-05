@@ -45,8 +45,18 @@ class Api::V1::Accounts::Sales::ProductsController < Api::V1::Accounts::BaseCont
   end
 
   def product_params
-    params.require(:product).permit(
-      :name, :description, :price, :currency, :sku, :barcode, :status, :external_id, meta: {}
+    permitted = params.require(:product).permit(
+      :name, :description, :price, :currency, :sku, :barcode, :status, :external_id,
+      images: [],
+      product_variants_attributes: [
+        :id, :name, :sku, :barcode, :price, :compare_at_price, 
+        :inventory_quantity, :weight, :_destroy, meta: {}
+      ]
     )
+    if params.dig(:product, :meta).present?
+      meta_params = params.dig(:product, :meta)
+      permitted[:meta] = meta_params.respond_to?(:permit!) ? meta_params.permit! : meta_params
+    end
+    permitted
   end
 end

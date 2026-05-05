@@ -92,9 +92,11 @@ class Api::V1::Accounts::Conversations::OrdersController < Api::V1::Accounts::Co
     params.permit(
       :status, :customer_name, :customer_phone, :customer_address,
       :customer_note, :currency, :external_order_id, :external_source,
+      :shipping_fee, :tax, :discount_amount, :shipping_carrier,
+      :tracking_code, :payment_method, :payment_status,
       items_attributes: [
         :id, :product_name, :product_id, :product_source, :quantity,
-        :unit_price, :product_thumbnail, :product_metadata, :_destroy
+        :unit_price, :product_thumbnail, :product_metadata, :variant_id, :_destroy
       ]
     )
   end
@@ -127,6 +129,13 @@ class Api::V1::Accounts::Conversations::OrdersController < Api::V1::Accounts::Co
       customer_address: order.customer_address,
       customer_note: order.customer_note,
       total_amount: order.total_amount.to_f,
+      shipping_fee: order.shipping_fee.to_f,
+      tax: order.tax.to_f,
+      discount_amount: order.discount_amount.to_f,
+      shipping_carrier: order.shipping_carrier,
+      tracking_code: order.tracking_code,
+      payment_method: order.payment_method,
+      payment_status: order.payment_status,
       currency: order.currency,
       external_order_id: order.external_order_id,
       external_source: order.external_source,
@@ -141,6 +150,7 @@ class Api::V1::Accounts::Conversations::OrdersController < Api::V1::Accounts::Co
       id: item.id,
       product_name: item.product_name,
       product_id: item.product_id,
+      variant_id: item.variant_id,
       product_source: item.product_source,
       quantity: item.quantity,
       unit_price: item.unit_price.to_f,

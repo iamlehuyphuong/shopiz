@@ -56,6 +56,11 @@ const form = ref({
   customer_phone: '',
   customer_address: '',
   customer_note: '',
+  shipping_fee: 0,
+  tax: 0,
+  discount_amount: 0,
+  payment_method: 'cod',
+  payment_status: 'unpaid',
   items: [],
 });
 
@@ -134,6 +139,11 @@ watch(
         customer_phone: newOrder.customer_phone || '',
         customer_address: newOrder.customer_address || '',
         customer_note: newOrder.customer_note || '',
+        shipping_fee: newOrder.shipping_fee || 0,
+        tax: newOrder.tax || 0,
+        discount_amount: newOrder.discount_amount || 0,
+        payment_method: newOrder.payment_method || 'cod',
+        payment_status: newOrder.payment_status || 'unpaid',
         items: (newOrder.items || []).map(item => ({ ...item })),
       };
     }
@@ -151,12 +161,18 @@ watch(
   { immediate: true }
 );
 
-const totalAmount = computed(() =>
-  form.value.items.reduce(
+const totalAmount = computed(() => {
+  const subtotal = form.value.items.reduce(
     (sum, item) => sum + (item.quantity || 0) * (item.unit_price || 0),
     0
-  )
-);
+  );
+  return (
+    subtotal +
+    (form.value.shipping_fee || 0) +
+    (form.value.tax || 0) -
+    (form.value.discount_amount || 0)
+  );
+});
 
 const formatCurrency = amount => new Intl.NumberFormat('vi-VN').format(amount);
 
@@ -194,11 +210,17 @@ const handleSave = async () => {
     customer_phone: form.value.customer_phone,
     customer_address: form.value.customer_address,
     customer_note: form.value.customer_note,
+    shipping_fee: form.value.shipping_fee,
+    tax: form.value.tax,
+    discount_amount: form.value.discount_amount,
+    payment_method: form.value.payment_method,
+    payment_status: form.value.payment_status,
     items_attributes: form.value.items.map(item => ({
       id: item.id || undefined,
       product_name: item.product_name,
       product_id: item.product_id,
       product_source: item.product_source,
+      variant_id: item.variant_id,
       quantity: item.quantity,
       unit_price: item.unit_price,
       product_thumbnail: item.product_thumbnail,
@@ -228,6 +250,7 @@ const handleSave = async () => {
 const isSectionOpen = ref({
   status: true,
   products: true,
+  financial: true,
   customer: true,
 });
 
@@ -383,6 +406,104 @@ const toggleSection = key => {
               <span class="text-sm font-bold text-n-slate-12">
                 {{ formatCurrency(totalAmount) }}đ
               </span>
+            </div>
+          </div>
+        </AccordionItem>
+
+        <!-- Financial & Payment Accordion -->
+        <AccordionItem
+          :title="t('CONVERSATION.ORDER_PANEL.FINANCIAL')"
+          :is-open="isSectionOpen.financial"
+          compact
+          @toggle="toggleSection('financial')"
+        >
+          <div class="px-3 py-3 space-y-2.5">
+            <div class="flex items-center gap-3">
+              <div class="flex-1">
+                <label class="block text-xs font-medium text-n-slate-11 mb-1">{{
+                  t('CONVERSATION.ORDER_PANEL.SHIPPING_FEE')
+                }}</label>
+                <input
+                  v-model.number="form.shipping_fee"
+                  type="number"
+                  min="0"
+                  class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30"
+                />
+              </div>
+              <div class="flex-1">
+                <label class="block text-xs font-medium text-n-slate-11 mb-1">{{
+                  t('CONVERSATION.ORDER_PANEL.DISCOUNT')
+                }}</label>
+                <input
+                  v-model.number="form.discount_amount"
+                  type="number"
+                  min="0"
+                  class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30"
+                />
+              </div>
+            </div>
+
+            <div class="flex-1">
+              <label class="block text-xs font-medium text-n-slate-11 mb-1">{{
+                t('CONVERSATION.ORDER_PANEL.TAX')
+              }}</label>
+              <input
+                v-model.number="form.tax"
+                type="number"
+                min="0"
+                class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30"
+              />
+            </div>
+
+            <div class="flex items-center gap-3">
+              <div class="flex-1">
+                <label class="block text-xs font-medium text-n-slate-11 mb-1">{{
+                  t('CONVERSATION.ORDER_PANEL.PAYMENT_METHOD')
+                }}</label>
+                <select
+                  v-model="form.payment_method"
+                  class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-alpha-1 hover:bg-n-alpha-2 transition-colors text-n-slate-12 outline-none focus:border-n-brand focus:bg-n-solid-1 focus:ring-1 focus:ring-n-brand/30 cursor-pointer appearance-none"
+                  style="
+                    background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2394a3b8%22 stroke-width=%222%22%3e%3cpath d=%22m6 9 6 6 6-6%22/%3e%3c/svg%3e');
+                    background-repeat: no-repeat;
+                    background-position: right 0.5rem center;
+                    background-size: 1.25rem;
+                  "
+                >
+                  <option value="cod">COD</option>
+                  <option value="bank_transfer">Chuyển khoản</option>
+                  <option value="card">Thẻ / Ví điện tử</option>
+                </select>
+              </div>
+              <div class="flex-1">
+                <label class="block text-xs font-medium text-n-slate-11 mb-1">{{
+                  t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.LABEL')
+                }}</label>
+                <select
+                  v-model="form.payment_status"
+                  class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-alpha-1 hover:bg-n-alpha-2 transition-colors text-n-slate-12 outline-none focus:border-n-brand focus:bg-n-solid-1 focus:ring-1 focus:ring-n-brand/30 cursor-pointer appearance-none"
+                  style="
+                    background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2394a3b8%22 stroke-width=%222%22%3e%3cpath d=%22m6 9 6 6 6-6%22/%3e%3c/svg%3e');
+                    background-repeat: no-repeat;
+                    background-position: right 0.5rem center;
+                    background-size: 1.25rem;
+                  "
+                >
+                  <option value="unpaid">
+                    {{ t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.UNPAID') }}
+                  </option>
+                  <option value="paid">
+                    {{ t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PAID') }}
+                  </option>
+                  <option value="partially_refunded">
+                    {{
+                      t(
+                        'CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PARTIALLY_REFUNDED'
+                      )
+                    }}
+                  </option>
+                </select>
+              </div>
             </div>
           </div>
         </AccordionItem>

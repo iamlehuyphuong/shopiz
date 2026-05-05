@@ -5,9 +5,8 @@ import { useAlert } from 'dashboard/composables';
 import { picoSearch } from '@scmmishra/pico-search';
 
 import SalesOrdersAPI from 'dashboard/api/sales/orders';
-import SalesLayout from './components/SalesLayout.vue';
+import SalesLayout from '../components/SalesLayout.vue';
 import BaseSettingsHeader from 'dashboard/routes/dashboard/settings/components/BaseSettingsHeader.vue';
-import OrderDetailDialog from './components/OrderDetailDialog.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 import PaginationFooter from 'dashboard/components-next/pagination/PaginationFooter.vue';
 import {
@@ -22,9 +21,6 @@ const orders = ref([]);
 const searchQuery = ref('');
 const currentPage = ref(1);
 const itemsPerPage = 15;
-
-const showDetailDialog = ref(false);
-const selectedOrder = ref({});
 
 const filteredOrders = computed(() => {
   const query = searchQuery.value.trim();
@@ -120,14 +116,11 @@ const onPageChange = page => {
   currentPage.value = page;
 };
 
-const openDetail = order => {
-  selectedOrder.value = order;
-  showDetailDialog.value = true;
-};
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
-const closeDetail = () => {
-  showDetailDialog.value = false;
-  selectedOrder.value = {};
+const openDetail = order => {
+  router.push({ name: 'sales_orders_show', params: { id: order.id } });
 };
 
 const onSyncOrder = order => {
@@ -170,6 +163,11 @@ onBeforeMount(() => {
             ghost
             icon="i-lucide-refresh-cw"
             @click="fetchOrders"
+          />
+          <Button
+            :label="$t('SALES.MODULE_ORDERS.ACTIONS.ADD')"
+            size="sm"
+            @click="router.push({ name: 'sales_orders_new' })"
           />
         </template>
       </BaseSettingsHeader>
@@ -281,14 +279,5 @@ onBeforeMount(() => {
         @update:current-page="onPageChange"
       />
     </template>
-
-    <!-- Order Detail Dialog -->
-    <woot-modal v-model:show="showDetailDialog" :on-close="closeDetail">
-      <OrderDetailDialog
-        :order="selectedOrder"
-        @close="closeDetail"
-        @sync="onSyncOrder"
-      />
-    </woot-modal>
   </SalesLayout>
 </template>
