@@ -13,17 +13,28 @@ const props = defineProps({
     type: [Number, String],
     required: true,
   },
+  pendingProduct: {
+    type: Object,
+    default: null,
+  },
 });
+
+const emit = defineEmits(['product-consumed']);
 
 const { t } = useI18n();
 const store = useStore();
 
 const showForm = ref(false);
 const editingOrder = ref(null);
+const initialProduct = ref(null);
 const isOrderListOpen = ref(true);
 const isContactOrdersOpen = ref(false);
 
 const currentConversation = useMapGetter('getSelectedChat');
+const isEcommerceChannel = computed(() => {
+  const channelType = currentConversation.value?.meta?.channel;
+  return channelType === 'Channel::TiktokShop' || channelType === 'Channel::Shopee';
+});
 const contact = computed(() => {
   const conversation = currentConversation.value;
   if (!conversation) return {};
@@ -52,9 +63,45 @@ const fetchOrders = () => {
   });
 };
 
-onMounted(fetchOrders);
+const fetchContactDetails = () => {
+  const cId = currentConversation.value?.meta?.sender?.id;
+  if (cId) {
+    store.dispatch('contacts/show', { id: cId });
+  }
+};
 
-watch(() => props.conversationId, fetchOrders);
+onMounted(() => {
+  fetchOrders();
+  fetchContactDetails();
+});
+
+watch(() => props.conversationId, () => {
+  fetchOrders();
+  fetchContactDetails();
+});
+
+watch(
+  () => props.pendingProduct,
+  product => {
+    if (product) {
+      // Find an existing order that we can edit (prefer draft, processing, confirmed)
+      const existingOrder =
+        orders.value.find(o =>
+          ['draft', 'processing', 'confirmed'].includes(o.status)
+        ) || orders.value[0];
+
+      if (existingOrder) {
+        editingOrder.value = existingOrder;
+      } else {
+        editingOrder.value = null;
+      }
+      initialProduct.value = product;
+      showForm.value = true;
+      emit('product-consumed');
+    }
+  },
+  { immediate: true }
+);
 
 const handleNewOrder = () => {
   editingOrder.value = null;
@@ -75,6 +122,7 @@ const handleFormSaved = () => {
 const handleFormClose = () => {
   showForm.value = false;
   editingOrder.value = null;
+  initialProduct.value = null;
 };
 
 const handleDeleteOrder = async order => {
@@ -124,6 +172,7 @@ const handleSyncOrder = async order => {
       :conversation-id="conversationId"
       :contact="contact"
       :order="editingOrder"
+      :initial-product="initialProduct"
       @close="handleFormClose"
       @saved="handleFormSaved"
     />
@@ -159,6 +208,7 @@ const handleSyncOrder = async order => {
           <OrderList
             v-else-if="orders.length"
             :orders="orders"
+            :allow-edit="!isEcommerceChannel"
             @edit="handleEditOrder"
             @delete="handleDeleteOrder"
             @push="handlePushOrder"
@@ -207,7 +257,7 @@ const handleSyncOrder = async order => {
       </div>
 
       <!-- Quick Actions (Bottom Fixed) -->
-      <div class="shrink-0 p-3 border-t border-n-weak bg-n-solid-1 z-10">
+      <div v-if="!isEcommerceChannel" class="shrink-0 p-3 border-t border-n-weak bg-n-solid-1 z-10">
         <Button
           :label="t('CONVERSATION.ORDER_PANEL.NEW_ORDER')"
           icon="i-lucide-plus"

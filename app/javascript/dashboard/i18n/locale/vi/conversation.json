@@ -397,7 +397,15 @@
       "SEARCH": "Tìm kiếm sản phẩm...",
       "ALL_CATEGORIES": "Tất cả",
       "NO_PRODUCTS": "Không tìm thấy sản phẩm",
-      "NO_INTEGRATION": "Không có liên kết thương mại điện tử nào với hộp thư này. Vui lòng cấu hình trong Cài đặt → Thương mại điện tử."
+      "NO_INTEGRATION": "Không có liên kết thương mại điện tử nào với hộp thư này. Vui lòng cấu hình trong Cài đặt → Thương mại điện tử.",
+      "ADD_TO_ORDER": "Thêm vào đơn",
+      "SEND_TO_CHAT": "Gửi tin nhắn",
+      "IN_STOCK": "Còn hàng",
+      "OUT_OF_STOCK": "Hết hàng",
+      "LOAD_MORE": "Xem thêm",
+      "LOADING": "Đang tải sản phẩm...",
+      "PRODUCT_INSERTED": "Đã chèn thông tin sản phẩm vào tin nhắn",
+      "ADDED_TO_ORDER": "Đã thêm sản phẩm vào đơn hàng"
     },
     "ORDER_PANEL": {
       "TITLE": "Đơn hàng",

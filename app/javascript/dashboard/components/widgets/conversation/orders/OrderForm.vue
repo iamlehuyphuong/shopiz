@@ -19,6 +19,10 @@ const props = defineProps({
     type: Object,
     default: null,
   },
+  initialProduct: {
+    type: Object,
+    default: null,
+  },
 });
 
 const emit = defineEmits(['close', 'saved']);
@@ -31,10 +35,14 @@ const isEditing = computed(() => !!props.order);
 const currentConversation = useMapGetter('getSelectedChat');
 
 // Auto-detect ecommerce platform from inbox integration
+const currentInbox = computed(() => {
+  const inboxId = currentConversation.value?.inbox_id;
+  if (!inboxId) return {};
+  return store.getters['inboxes/getInbox'](inboxId);
+});
+
 const inboxEcommerceAppId = computed(() => {
-  const inbox = currentConversation.value?.inbox;
-  if (!inbox) return '';
-  return inbox.ecommerce_integration?.app_id || '';
+  return currentInbox.value?.ecommerce_integration?.app_id || '';
 });
 
 const isSourceLocked = computed(
@@ -92,29 +100,6 @@ watch(
   { immediate: true, deep: true }
 );
 
-onMounted(() => {
-  if (isEditing.value) {
-    form.value = {
-      status: props.order.status,
-      external_source: props.order.external_source || '',
-      customer_name: props.order.customer_name || '',
-      customer_phone: props.order.customer_phone || '',
-      customer_address: props.order.customer_address || '',
-      customer_note: props.order.customer_note || '',
-      items: (props.order.items || []).map(item => ({ ...item })),
-    };
-  }
-});
-
-const totalAmount = computed(() =>
-  form.value.items.reduce(
-    (sum, item) => sum + (item.quantity || 0) * (item.unit_price || 0),
-    0
-  )
-);
-
-const formatCurrency = amount => new Intl.NumberFormat('vi-VN').format(amount);
-
 const addProduct = product => {
   const existingIndex = form.value.items.findIndex(
     item =>
@@ -133,6 +118,43 @@ const addProduct = product => {
     product_thumbnail: product.thumbnail,
   });
 };
+
+watch(
+  () => props.order,
+  newOrder => {
+    if (newOrder && isEditing.value) {
+      form.value = {
+        status: newOrder.status,
+        external_source: newOrder.external_source || '',
+        customer_name: newOrder.customer_name || '',
+        customer_phone: newOrder.customer_phone || '',
+        customer_address: newOrder.customer_address || '',
+        customer_note: newOrder.customer_note || '',
+        items: (newOrder.items || []).map(item => ({ ...item })),
+      };
+    }
+  },
+  { immediate: true }
+);
+
+watch(
+  () => props.initialProduct,
+  newProduct => {
+    if (newProduct) {
+      addProduct(newProduct);
+    }
+  },
+  { immediate: true }
+);
+
+const totalAmount = computed(() =>
+  form.value.items.reduce(
+    (sum, item) => sum + (item.quantity || 0) * (item.unit_price || 0),
+    0
+  )
+);
+
+const formatCurrency = amount => new Intl.NumberFormat('vi-VN').format(amount);
 
 const addManualItem = () => {
   form.value.items.push({

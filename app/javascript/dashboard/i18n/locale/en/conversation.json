@@ -450,7 +450,9 @@
       "IN_STOCK": "In stock",
       "OUT_OF_STOCK": "Out of stock",
       "LOAD_MORE": "Load more",
-      "LOADING": "Loading products..."
+      "LOADING": "Loading products...",
+      "PRODUCT_INSERTED": "Product info inserted into message",
+      "ADDED_TO_ORDER": "Product added to order"
     }
   },
   "EMAIL_TRANSCRIPT": {

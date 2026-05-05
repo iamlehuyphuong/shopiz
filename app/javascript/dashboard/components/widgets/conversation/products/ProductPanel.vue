@@ -2,6 +2,9 @@
 import { ref, computed, watch, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useStore, useMapGetter } from 'dashboard/composables/store';
+import { useAlert } from 'dashboard/composables';
+import { emitter } from 'shared/helpers/mitt';
+import { BUS_EVENTS } from 'shared/constants/busEvents';
 import ProductCategoryBar from './ProductCategoryBar.vue';
 import ProductCard from './ProductCard.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
@@ -23,9 +26,14 @@ let searchTimer = null;
 
 const currentConversation = useMapGetter('getSelectedChat');
 
+const currentInbox = computed(() => {
+  const inboxId = currentConversation.value?.inbox_id;
+  if (!inboxId) return {};
+  return store.getters['inboxes/getInbox'](inboxId);
+});
+
 const hasEcommerceIntegration = computed(() => {
-  const inbox = currentConversation.value?.inbox;
-  return !!inbox?.ecommerce_integration;
+  return !!currentInbox.value?.ecommerce_integration;
 });
 
 const products = computed(
@@ -86,6 +94,26 @@ watch(
     }
   }
 );
+
+const formatProductText = product => {
+  const price = new Intl.NumberFormat('vi-VN').format(product.price || 0);
+  let text = `${product.name}\nGiá: ${price}đ`;
+  if (product.thumbnail) {
+    text += `\n${product.thumbnail}`;
+  }
+  return text;
+};
+
+const handleSendToChat = product => {
+  const text = formatProductText(product);
+  emitter.emit(BUS_EVENTS.INSERT_INTO_RICH_EDITOR, text);
+  useAlert(t('CONVERSATION.PRODUCT_PANEL.PRODUCT_INSERTED'));
+};
+
+const handleAddToOrder = product => {
+  emitter.emit(BUS_EVENTS.ADD_PRODUCT_TO_ORDER, product);
+  useAlert(t('CONVERSATION.PRODUCT_PANEL.ADDED_TO_ORDER'));
+};
 </script>
 
 <template>
@@ -134,7 +162,7 @@ watch(
 
       <!-- Categories -->
       <ProductCategoryBar
-        v-if="categories.length"
+        v-if="categories && categories.length"
         :categories="categories"
         :selected-id="selectedCategoryId"
         :is-loading="uiFlags.isFetchingCategories"
@@ -152,15 +180,17 @@ watch(
         </div>
 
         <!-- Products -->
-        <div v-else-if="products.length" class="flex flex-col gap-2">
+        <div v-else-if="products && products.length" class="flex flex-col gap-2">
           <ProductCard
             v-for="product in products"
             :key="`${product.source}-${product.id}`"
             :product="product"
+            @send-to-chat="handleSendToChat"
+            @add-to-order="handleAddToOrder"
           />
 
           <!-- Load more -->
-          <div v-if="products.length >= 20" class="flex justify-center pt-2">
+          <div v-if="products && products.length >= 20" class="flex justify-center pt-2">
             <Button
               :label="t('CONVERSATION.PRODUCT_PANEL.LOAD_MORE')"
               xs

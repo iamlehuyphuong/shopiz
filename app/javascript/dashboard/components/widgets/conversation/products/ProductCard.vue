@@ -8,6 +8,8 @@ defineProps({
   },
 });
 
+const emit = defineEmits(['send-to-chat', 'add-to-order']);
+
 const { t } = useI18n();
 
 const PLATFORM_LABELS = {
@@ -26,7 +28,7 @@ const formatCurrency = amount =>
 
 <template>
   <div
-    class="group flex gap-3 p-2.5 rounded-xl border border-n-weak bg-n-solid-1 hover:bg-n-alpha-1 transition-colors cursor-pointer"
+    class="group relative flex gap-3 p-2.5 rounded-xl border border-n-weak bg-n-solid-1 hover:bg-n-alpha-1 transition-colors"
   >
     <!-- Thumbnail -->
     <div
@@ -66,12 +68,35 @@ const formatCurrency = amount =>
           }}
         </span>
       </div>
-      <span
-        v-if="product.source"
-        class="inline-flex mt-1 px-1.5 py-0.5 rounded bg-n-solid-3 text-[10px] text-n-slate-10"
-      >
-        {{ PLATFORM_LABELS[product.source] || product.source }}
-      </span>
+
+      <!-- Footer: Source & Actions -->
+      <div class="flex items-center justify-between mt-1">
+        <span
+          v-if="product.source"
+          class="inline-flex px-1.5 py-0.5 rounded bg-n-solid-3 text-[10px] text-n-slate-10"
+        >
+          {{ PLATFORM_LABELS[product.source] || product.source }}
+        </span>
+        <div v-else />
+
+        <!-- Action Buttons — visible on hover -->
+        <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+          <button
+            :title="t('CONVERSATION.PRODUCT_PANEL.SEND_TO_CHAT')"
+            class="w-8 h-8 rounded bg-n-alpha-1 hover:bg-n-brand hover:text-white flex items-center justify-center text-n-slate-11 transition-colors"
+            @click.stop="emit('send-to-chat', product)"
+          >
+            <i class="i-lucide-send text-base" />
+          </button>
+          <button
+            :title="t('CONVERSATION.PRODUCT_PANEL.ADD_TO_ORDER')"
+            class="w-8 h-8 rounded bg-n-alpha-1 hover:bg-n-brand hover:text-white flex items-center justify-center text-n-slate-11 transition-colors"
+            @click.stop="emit('add-to-order', product)"
+          >
+            <i class="i-lucide-shopping-cart text-base" />
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>

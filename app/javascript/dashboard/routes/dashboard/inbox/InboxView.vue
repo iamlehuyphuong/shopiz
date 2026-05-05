@@ -71,8 +71,15 @@ const isContactPanelOpen = computed(() => {
     const {
       is_contact_sidebar_open: isContactSidebarOpen,
       is_copilot_panel_open: isCopilotPanelOpen,
+      is_order_sidebar_open: isOrderSidebarOpen,
+      is_product_sidebar_open: isProductSidebarOpen,
     } = uiSettings.value;
-    return isContactSidebarOpen || isCopilotPanelOpen;
+    return (
+      isContactSidebarOpen ||
+      isCopilotPanelOpen ||
+      isOrderSidebarOpen ||
+      isProductSidebarOpen
+    );
   }
   return false;
 });

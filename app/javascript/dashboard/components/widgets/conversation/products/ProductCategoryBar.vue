@@ -7,7 +7,7 @@ defineProps({
     default: () => [],
   },
   selectedId: {
-    type: [String, Number, null],
+    type: [String, Number],
     default: null,
   },
   isLoading: {

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import ContactPanel from 'dashboard/routes/dashboard/conversation/ContactPanel.vue';
 import Copilot from 'dashboard/components-next/copilot/Copilot.vue';
 import OrderPanel from 'dashboard/components/widgets/conversation/orders/OrderPanel.vue';
@@ -13,6 +13,8 @@ import { useAlert } from 'dashboard/composables';
 import { useConfig } from 'dashboard/composables/useConfig';
 import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 import wootConstants from 'dashboard/constants/globals';
+import { emitter } from 'shared/helpers/mitt';
+import { BUS_EVENTS } from 'shared/constants/busEvents';
 
 const props = defineProps({
   currentChat: {
@@ -198,10 +200,22 @@ const conversationInboxType = computed(
   () => props.currentChat.meta?.channel || ''
 );
 
+const pendingProduct = ref(null);
+
+const handleAddProductToOrder = product => {
+  pendingProduct.value = { ...product, _timestamp: Date.now() };
+  switchToOrderTab();
+};
+
 onMounted(() => {
   if (isEnterprise) {
     store.dispatch('captainAssistants/get');
   }
+  emitter.on(BUS_EVENTS.ADD_PRODUCT_TO_ORDER, handleAddProductToOrder);
+});
+
+onUnmounted(() => {
+  emitter.off(BUS_EVENTS.ADD_PRODUCT_TO_ORDER, handleAddProductToOrder);
 });
 </script>
 
@@ -296,7 +310,11 @@ onMounted(() => {
 
     <!-- Order Panel -->
     <div v-else-if="isOrderTabActive" class="flex flex-1 overflow-hidden">
-      <OrderPanel :conversation-id="currentChat.id" />
+      <OrderPanel
+        :conversation-id="currentChat.id"
+        :pending-product="pendingProduct"
+        @product-consumed="pendingProduct = null"
+      />
     </div>
 
     <!-- Product Panel -->

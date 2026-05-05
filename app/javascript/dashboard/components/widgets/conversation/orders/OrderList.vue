@@ -12,6 +12,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  allowEdit: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const emit = defineEmits(['edit', 'delete', 'push', 'sync']);
@@ -65,8 +69,9 @@ const canDeleteOrder = order => {
     <div
       v-for="order in orders"
       :key="order.id"
-      class="py-4 px-4 hover:bg-n-alpha-1 transition-colors cursor-pointer group flex flex-col gap-3"
-      @click="emit('edit', order)"
+      class="py-4 px-4 transition-colors flex flex-col gap-3"
+      :class="{ 'hover:bg-n-alpha-1 cursor-pointer group': allowEdit }"
+      @click="allowEdit && emit('edit', order)"
     >
       <!-- Header: IDs and Date -->
       <div class="flex items-start justify-between gap-2">
@@ -141,7 +146,7 @@ const canDeleteOrder = order => {
         class="flex items-center justify-end gap-3 mt-1"
       >
         <button
-          v-if="order.status === 'draft' && order.external_source !== 'tiktok_shop'"
+          v-if="allowEdit && order.status === 'draft' && order.external_source !== 'tiktok_shop'"
           class="text-xs font-medium text-n-slate-11 hover:text-n-blue-9 flex items-center gap-1 transition-colors"
           @click.stop="emit('push', order)"
         >
@@ -157,7 +162,7 @@ const canDeleteOrder = order => {
           {{ t('CONVERSATION.ORDER_PANEL.SYNC') }}
         </button>
         <button
-          v-if="canDeleteOrder(order)"
+          v-if="allowEdit && canDeleteOrder(order)"
           class="text-xs font-medium text-n-slate-11 hover:text-n-ruby-9 flex items-center gap-1 transition-colors"
           @click.stop="emit('delete', order)"
         >
