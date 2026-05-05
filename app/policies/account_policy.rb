@@ -38,4 +38,8 @@ class AccountPolicy < ApplicationPolicy
   def topup_checkout?
     @account_user.administrator?
   end
+
+  def sales_manage?
+    @account_user.custom_role&.permissions&.include?('sales_manage') || @account_user.administrator?
+  end
 end

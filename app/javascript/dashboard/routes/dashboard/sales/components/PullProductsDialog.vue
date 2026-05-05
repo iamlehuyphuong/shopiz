@@ -1,0 +1,104 @@
+<script setup>
+import { ref } from 'vue';
+import NextButton from 'dashboard/components-next/button/Button.vue';
+
+const props = defineProps({
+  show: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const emit = defineEmits(['close', 'sync']);
+
+const platforms = [
+  { id: 'kiotviet', name: 'KiotViet', logo: 'kiotviet' },
+  { id: 'sapo', name: 'Sapo', logo: 'sapo' },
+  { id: 'haravan', name: 'Haravan', logo: 'haravan' },
+  { id: 'shopify', name: 'Shopify', logo: 'shopify' },
+  { id: 'woocommerce', name: 'WooCommerce', logo: 'woocommerce' },
+  { id: 'nhanhvn', name: 'Nhanh.vn', logo: 'nhanhvn' },
+  { id: 'tiktok_shop', name: 'TikTok Shop', logo: 'tiktok_shop' },
+];
+
+const selectedPlatform = ref(null);
+
+const onImageError = e => {
+  e.target.style.display = 'none';
+};
+
+const selectPlatform = platform => {
+  selectedPlatform.value = platform.id;
+};
+
+const onSync = () => {
+  if (selectedPlatform.value) {
+    emit('sync', selectedPlatform.value);
+  }
+};
+
+const onClose = () => {
+  selectedPlatform.value = null;
+  emit('close');
+};
+</script>
+
+<template>
+  <div class="flex flex-col h-auto overflow-auto">
+    <woot-modal-header
+      :header-title="$t('SALES.DIALOG_PULL_PRODUCTS.TITLE')"
+      :header-content="$t('SALES.DIALOG_PULL_PRODUCTS.DESC')"
+    />
+    <div class="flex flex-wrap mx-0">
+      <div class="w-full px-8 pb-4">
+        <div class="grid grid-cols-2 gap-3">
+          <button
+            v-for="platform in platforms"
+            :key="platform.id"
+            type="button"
+            class="flex items-center gap-3 p-4 rounded-xl border transition-all duration-200 text-left"
+            :class="
+              selectedPlatform === platform.id
+                ? 'border-n-brand bg-n-brand/5 ring-1 ring-n-brand'
+                : 'border-n-weak bg-white dark:bg-n-solid-1 hover:border-n-strong'
+            "
+            @click="selectPlatform(platform)"
+          >
+            <div
+              class="flex h-9 w-9 items-center justify-center rounded-lg bg-white dark:bg-n-solid-2 border border-n-strong/20 shadow-sm overflow-hidden flex-shrink-0"
+            >
+              <img
+                :src="`/dashboard/images/integrations/${platform.logo}.png`"
+                class="h-6 w-6 object-contain block dark:hidden"
+                :alt="platform.name"
+                @error="onImageError"
+              />
+              <img
+                :src="`/dashboard/images/integrations/${platform.logo}-dark.png`"
+                class="h-6 w-6 object-contain hidden dark:block"
+                :alt="platform.name"
+                @error="onImageError"
+              />
+            </div>
+            <span class="text-sm font-medium text-n-slate-12">
+              {{ platform.name }}
+            </span>
+          </button>
+        </div>
+      </div>
+      <div class="flex items-center justify-end w-full gap-2 px-0 py-2">
+        <NextButton
+          faded
+          slate
+          :label="$t('SALES.DIALOG_PULL_PRODUCTS.FORM.CANCEL')"
+          @click="onClose"
+        />
+        <NextButton
+          :label="$t('SALES.DIALOG_PULL_PRODUCTS.FORM.SUBMIT')"
+          :disabled="!selectedPlatform"
+          @click="onSync"
+        />
+      </div>
+    </div>
+  </div>
+</template>

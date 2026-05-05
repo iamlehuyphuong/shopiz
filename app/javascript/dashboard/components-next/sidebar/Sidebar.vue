@@ -499,6 +499,37 @@ const menuItems = computed(() => {
       ],
     },
     {
+      name: 'Sales',
+      label: t('SIDEBAR.SALES'),
+      icon: 'i-lucide-shopping-cart',
+      children: [
+        {
+          name: 'Sales Dashboard',
+          label: t('SIDEBAR.SALES_DASHBOARD'),
+          icon: 'i-lucide-layout-dashboard',
+          to: accountScopedRoute('sales_dashboard'),
+        },
+        {
+          name: 'Sales Orders',
+          label: t('SIDEBAR.SALES_ORDERS'),
+          icon: 'i-lucide-shopping-bag',
+          to: accountScopedRoute('sales_orders'),
+        },
+        {
+          name: 'Sales Products',
+          label: t('SIDEBAR.SALES_PRODUCTS'),
+          icon: 'i-lucide-package',
+          to: accountScopedRoute('sales_products'),
+        },
+        {
+          name: 'Sales Tools',
+          label: t('SIDEBAR.SALES_TOOLS'),
+          icon: 'i-lucide-wrench',
+          to: accountScopedRoute('sales_tools'),
+        },
+      ],
+    },
+    {
       name: 'Help Center',
       label: t('SIDEBAR.HELP_CENTER.TITLE'),
       icon: 'i-lucide-book',

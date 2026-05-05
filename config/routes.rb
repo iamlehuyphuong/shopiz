@@ -458,6 +458,12 @@ Rails.application.routes.draw do
           resources :upload, only: [:create]
 
           resources :products_search, only: [:index]
+
+          namespace :sales do
+            resources :products, only: [:index, :show, :create, :update, :destroy]
+            resources :reports, only: [:index]
+            resources :orders, only: [:index]
+          end
         end
       end
       # end of account scoped api routes

@@ -158,6 +158,188 @@
         "SUCCESS_MESSAGE": "Campaign deleted successfully",
         "ERROR_MESSAGE": "There was an error. Please try again."
       }
+    },
+    "MODULE_DASHBOARD": {
+      "HEADER": {
+        "TITLE": "Sales Dashboard",
+        "DESCRIPTION": "Revenue overview from all sources."
+      },
+      "METRICS": {
+        "OVERVIEW": "Overview",
+        "LIVE": "Live",
+        "TOTAL_REVENUE": "Total Revenue",
+        "TOTAL_ORDERS": "Total Orders",
+        "AOV": "Average Order Value"
+      },
+      "CHART": {
+        "PLACEHOLDER": "Revenue chart is being integrated..."
+      }
+    },
+    "MODULE_PRODUCTS": {
+      "HEADER": {
+        "TITLE": "Products",
+        "DESCRIPTION": "Manage Shopiz product catalog and sync with sales channels.",
+        "SEARCH": "Search products...",
+        "COUNT": "products"
+      },
+      "ACTIONS": {
+        "PULL": "Sync from platform",
+        "PUSH": "Push to platform",
+        "ADD": "Add product"
+      },
+      "TABLE": {
+        "EMPTY_SEARCH": "No matching products found.",
+        "EMPTY_STATE": "No products available.",
+        "HEADERS": {
+          "PRODUCT": "Product",
+          "STATUS": "Status",
+          "ACTIONS": "Actions"
+        },
+        "ACTIONS": {
+          "PUSH": "Push to platform",
+          "EDIT": "Edit",
+          "DELETE": "Delete"
+        }
+      },
+      "STATUS": {
+        "ACTIVE": "Active",
+        "DRAFT": "Draft",
+        "ARCHIVED": "Archived"
+      },
+      "ALERTS": {
+        "ADD_SUCCESS": "Product added successfully.",
+        "ADD_ERROR": "Failed to add product.",
+        "PULL_START": "Syncing products from {platform}...",
+        "PUSH_START": "Pushing '{name}' to platform...",
+        "EDIT": "Editing: {name}",
+        "DELETE_CONFIRM": "Are you sure you want to delete this product?",
+        "DELETE_SUCCESS": "Product deleted.",
+        "SELECT_TO_PUSH": "Select a product to push to platform."
+      }
+    },
+    "MODULE_ORDERS": {
+      "HEADER": {
+        "TITLE": "Orders",
+        "DESCRIPTION": "Track and process orders from all sales channels.",
+        "SEARCH": "Search by order ID, phone...",
+        "COUNT": "orders"
+      },
+      "ACTIONS": {
+        "CREATE": "Create order"
+      },
+      "TABLE": {
+        "EMPTY_SEARCH": "No matching orders found.",
+        "EMPTY_STATE": "No orders available.",
+        "HEADERS": {
+          "ORDER": "Order",
+          "STATUS": "Status",
+          "ACTIONS": "Actions"
+        },
+        "ACTIONS": {
+          "SYNC": "Sync",
+          "VIEW": "View Details"
+        }
+      },
+      "STATUS": {
+        "DRAFT": "Draft",
+        "CONFIRMED": "Confirmed",
+        "PROCESSING": "Processing",
+        "SHIPPED": "Shipped",
+        "DELIVERED": "Delivered",
+        "CANCELLED": "Cancelled"
+      },
+      "ALERTS": {
+        "SYNC_SUCCESS": "Order synced successfully.",
+        "SYNC_ERROR": "Failed to sync order."
+      }
+    },
+    "MODULE_TOOLS": {
+      "HEADER": {
+        "TITLE": "Sales Tools",
+        "DESCRIPTION": "Discover and connect tools and services to enhance the efficiency of your sales team."
+      },
+      "ACTIONS": {
+        "CONFIGURE": "Configure",
+        "COMING_SOON": "Coming soon"
+      },
+      "DESCRIPTIONS": {
+        "SHOPIFY": "Connect your Shopify store to sync orders, customers, and product data directly within the app.",
+        "KIOTVIET": "Automatically and continuously sync inventory and manage retail orders with KiotViet.",
+        "HARAVAN": "Manage omnichannel sales on Haravan more efficiently with the ability to pull order info and push products from Shopiz.",
+        "WOOCOMMERCE": "WooCommerce integration syncs products, inventory, and order status directly into your workflow.",
+        "SAPO": "Professionally manage your Sapo online store with two-way product sync.",
+        "NHANHVN": "Solution to connect with Nhanh.vn to track and support seamless order processing from warehouse to customer.",
+        "TIKTOK_SHOP": "Sync orders, manage messages and products from TikTok Shop Seller Center into Shopiz."
+      }
+    },
+    "DIALOG_ADD_PRODUCT": {
+      "TITLE": "Add new product",
+      "DESC": "Add a new product to Shopiz catalog.",
+      "FORM": {
+        "NAME": {
+          "LABEL": "Product Name *",
+          "PLACEHOLDER": "Enter product name"
+        },
+        "SKU": {
+          "LABEL": "SKU",
+          "PLACEHOLDER": "e.g., SP001"
+        },
+        "BARCODE": {
+          "LABEL": "Barcode",
+          "PLACEHOLDER": "Barcode"
+        },
+        "PRICE": {
+          "LABEL": "Price",
+          "PLACEHOLDER": "0"
+        },
+        "CURRENCY": {
+          "LABEL": "Currency"
+        },
+        "DESCRIPTION": {
+          "LABEL": "Description",
+          "PLACEHOLDER": "Product description..."
+        },
+        "CANCEL": "Cancel",
+        "SUBMIT": "Add product"
+      },
+      "ALERTS": {
+        "NAME_REQUIRED": "Please enter a product name."
+      }
+    },
+    "DIALOG_PULL_PRODUCTS": {
+      "TITLE": "Sync products from platform",
+      "DESC": "Select a sales platform to sync the product list to Shopiz.",
+      "FORM": {
+        "CANCEL": "Cancel",
+        "SUBMIT": "Sync products"
+      }
+    },
+    "DIALOG_ORDER_DETAIL": {
+      "TITLE": "Order Details",
+      "DESC": "Order #{id} from {source}",
+      "FIELDS": {
+        "STATUS": "Status",
+        "CUSTOMER": "Customer",
+        "PHONE": "Phone number",
+        "SOURCE": "Source",
+        "ADDRESS": "Address",
+        "TOTAL": "Total Amount",
+        "CREATED_AT": "Created At",
+        "LAST_SYNC": "Last Synced",
+        "NOTE": "Note",
+        "ITEMS": "Order Items",
+        "QTY": "Qty",
+        "PRODUCT": "Product {index}"
+      },
+      "ACTIONS": {
+        "SYNC": "Sync to platform",
+        "CLOSE": "Close"
+      },
+      "FALLBACKS": {
+        "GUEST": "Guest",
+        "SHOPIZ": "Shopiz",
+        "NO_DATA": "--"
+      }
     }
   }
 }

@@ -158,6 +158,188 @@
         "SUCCESS_MESSAGE": "Xóa chiến dịch thành công",
         "ERROR_MESSAGE": "Đã xảy ra lỗi. Vui lòng thử lại."
       }
+    },
+    "MODULE_DASHBOARD": {
+      "HEADER": {
+        "TITLE": "Dashboard Bán hàng",
+        "DESCRIPTION": "Tổng quan báo cáo doanh thu từ các nguồn."
+      },
+      "METRICS": {
+        "OVERVIEW": "Tổng quan",
+        "LIVE": "Live",
+        "TOTAL_REVENUE": "Tổng doanh thu",
+        "TOTAL_ORDERS": "Tổng đơn hàng",
+        "AOV": "Giá trị trung bình/đơn"
+      },
+      "CHART": {
+        "PLACEHOLDER": "Biểu đồ doanh thu đang được tích hợp..."
+      }
+    },
+    "MODULE_PRODUCTS": {
+      "HEADER": {
+        "TITLE": "Quản lý Sản phẩm",
+        "DESCRIPTION": "Quản lý danh sách sản phẩm Shopiz và đồng bộ với nền tảng bán hàng.",
+        "SEARCH": "Tìm kiếm sản phẩm...",
+        "COUNT": "sản phẩm"
+      },
+      "ACTIONS": {
+        "PULL": "Kéo từ sàn",
+        "PUSH": "Đẩy lên sàn",
+        "ADD": "Thêm sản phẩm"
+      },
+      "TABLE": {
+        "EMPTY_SEARCH": "Không tìm thấy sản phẩm nào phù hợp.",
+        "EMPTY_STATE": "Chưa có sản phẩm nào.",
+        "HEADERS": {
+          "PRODUCT": "Sản phẩm",
+          "STATUS": "Trạng thái",
+          "ACTIONS": "Hành động"
+        },
+        "ACTIONS": {
+          "PUSH": "Đẩy lên sàn",
+          "EDIT": "Chỉnh sửa",
+          "DELETE": "Xoá"
+        }
+      },
+      "STATUS": {
+        "ACTIVE": "Đang bán",
+        "DRAFT": "Nháp",
+        "ARCHIVED": "Đã ẩn"
+      },
+      "ALERTS": {
+        "ADD_SUCCESS": "Đã thêm sản phẩm thành công.",
+        "ADD_ERROR": "Thêm sản phẩm thất bại.",
+        "PULL_START": "Đang đồng bộ sản phẩm từ {platform}...",
+        "PUSH_START": "Đang đẩy '{name}' lên sàn...",
+        "EDIT": "Chỉnh sửa: {name}",
+        "DELETE_CONFIRM": "Bạn có chắc chắn muốn xoá sản phẩm này?",
+        "DELETE_SUCCESS": "Đã xoá sản phẩm.",
+        "SELECT_TO_PUSH": "Chọn sản phẩm để đẩy lên sàn."
+      }
+    },
+    "MODULE_ORDERS": {
+      "HEADER": {
+        "TITLE": "Quản lý Đơn hàng",
+        "DESCRIPTION": "Theo dõi và xử lý đơn hàng từ tất cả các kênh bán hàng.",
+        "SEARCH": "Tìm kiếm mã đơn hàng, SĐT...",
+        "COUNT": "đơn hàng"
+      },
+      "ACTIONS": {
+        "CREATE": "Tạo đơn hàng"
+      },
+      "TABLE": {
+        "EMPTY_SEARCH": "Không tìm thấy đơn hàng nào phù hợp.",
+        "EMPTY_STATE": "Chưa có đơn hàng nào.",
+        "HEADERS": {
+          "ORDER": "Đơn hàng",
+          "STATUS": "Trạng thái",
+          "ACTIONS": "Hành động"
+        },
+        "ACTIONS": {
+          "SYNC": "Đồng bộ",
+          "VIEW": "Xem chi tiết"
+        }
+      },
+      "STATUS": {
+        "DRAFT": "Nháp",
+        "CONFIRMED": "Đã xác nhận",
+        "PROCESSING": "Đang xử lý",
+        "SHIPPED": "Đang giao",
+        "DELIVERED": "Đã giao",
+        "CANCELLED": "Đã huỷ"
+      },
+      "ALERTS": {
+        "SYNC_SUCCESS": "Đã đồng bộ đơn hàng thành công.",
+        "SYNC_ERROR": "Đồng bộ đơn hàng thất bại."
+      }
+    },
+    "MODULE_TOOLS": {
+      "HEADER": {
+        "TITLE": "Công cụ hỗ trợ bán hàng",
+        "DESCRIPTION": "Khám phá và kết nối các công cụ, dịch vụ nhằm nâng cao hiệu quả cho đội ngũ bán hàng của bạn."
+      },
+      "ACTIONS": {
+        "CONFIGURE": "Cấu hình",
+        "COMING_SOON": "Sắp ra mắt"
+      },
+      "DESCRIPTIONS": {
+        "SHOPIFY": "Kết nối cửa hàng Shopify của bạn để đồng bộ đơn hàng, khách hàng và dữ liệu sản phẩm trực tiếp trong ứng dụng.",
+        "KIOTVIET": "Đồng bộ hoá tồn kho và quản lý đơn hàng bán lẻ với hệ thống KiotViet một cách tự động và liên tục.",
+        "HARAVAN": "Quản lý bán hàng đa kênh Haravan hiệu quả hơn với khả năng kéo thông tin đơn hàng và đẩy sản phẩm từ Shopiz.",
+        "WOOCOMMERCE": "Tích hợp WooCommerce giúp đồng bộ sản phẩm, tồn kho và trạng thái đơn hàng trực tiếp vào quy trình làm việc.",
+        "SAPO": "Quản lý cửa hàng trực tuyến trên Sapo một cách chuyên nghiệp với tính năng đồng bộ hoá sản phẩm 2 chiều.",
+        "NHANHVN": "Giải pháp kết nối với Nhanh.vn để theo dõi và hỗ trợ quy trình xử lý đơn hàng liền mạch từ kho đến khách hàng.",
+        "TIKTOK_SHOP": "Đồng bộ đơn hàng, quản lý tin nhắn và sản phẩm từ TikTok Shop Seller Center vào Shopiz."
+      }
+    },
+    "DIALOG_ADD_PRODUCT": {
+      "TITLE": "Thêm sản phẩm mới",
+      "DESC": "Thêm sản phẩm mới vào danh sách quản lý của Shopiz.",
+      "FORM": {
+        "NAME": {
+          "LABEL": "Tên sản phẩm *",
+          "PLACEHOLDER": "Nhập tên sản phẩm"
+        },
+        "SKU": {
+          "LABEL": "Mã SKU",
+          "PLACEHOLDER": "VD: SP001"
+        },
+        "BARCODE": {
+          "LABEL": "Mã vạch",
+          "PLACEHOLDER": "Barcode"
+        },
+        "PRICE": {
+          "LABEL": "Giá bán",
+          "PLACEHOLDER": "0"
+        },
+        "CURRENCY": {
+          "LABEL": "Đơn vị tiền tệ"
+        },
+        "DESCRIPTION": {
+          "LABEL": "Mô tả",
+          "PLACEHOLDER": "Mô tả sản phẩm..."
+        },
+        "CANCEL": "Huỷ",
+        "SUBMIT": "Thêm sản phẩm"
+      },
+      "ALERTS": {
+        "NAME_REQUIRED": "Vui lòng nhập tên sản phẩm."
+      }
+    },
+    "DIALOG_PULL_PRODUCTS": {
+      "TITLE": "Kéo sản phẩm từ sàn",
+      "DESC": "Chọn nền tảng bán hàng để đồng bộ danh sách sản phẩm về Shopiz.",
+      "FORM": {
+        "CANCEL": "Huỷ",
+        "SUBMIT": "Đồng bộ sản phẩm"
+      }
+    },
+    "DIALOG_ORDER_DETAIL": {
+      "TITLE": "Chi tiết đơn hàng",
+      "DESC": "Đơn hàng #{id} từ {source}",
+      "FIELDS": {
+        "STATUS": "Trạng thái",
+        "CUSTOMER": "Khách hàng",
+        "PHONE": "Số điện thoại",
+        "SOURCE": "Nguồn",
+        "ADDRESS": "Địa chỉ",
+        "TOTAL": "Tổng tiền",
+        "CREATED_AT": "Ngày tạo",
+        "LAST_SYNC": "Đồng bộ lần cuối",
+        "NOTE": "Ghi chú",
+        "ITEMS": "Sản phẩm trong đơn",
+        "QTY": "SL",
+        "PRODUCT": "Sản phẩm {index}"
+      },
+      "ACTIONS": {
+        "SYNC": "Đồng bộ lên sàn",
+        "CLOSE": "Đóng"
+      },
+      "FALLBACKS": {
+        "GUEST": "Khách lẻ",
+        "SHOPIZ": "Shopiz",
+        "NO_DATA": "--"
+      }
     }
   }
 }

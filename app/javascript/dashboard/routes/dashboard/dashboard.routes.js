@@ -12,6 +12,7 @@ import { routes as captainRoutes } from './captain/captain.routes';
 import AppContainer from './Dashboard.vue';
 import Suspended from './suspended/Index.vue';
 import NoAccounts from './noAccounts/Index.vue';
+import { routes as salesRoutes } from './sales/sales.routes';
 
 export default {
   routes: [
@@ -29,6 +30,7 @@ export default {
         ...notificationRoutes,
         ...helpcenterRoutes.routes,
         ...campaignsRoutes.routes,
+        ...salesRoutes,
       ],
     },
     {

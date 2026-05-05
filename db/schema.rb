@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_05_023331) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_05_075115) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -1294,6 +1294,22 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_05_023331) do
     t.index ["user_id"], name: "index_portals_members_on_user_id"
   end
 
+  create_table "products", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.string "name"
+    t.text "description"
+    t.decimal "price"
+    t.string "currency"
+    t.string "sku"
+    t.string "barcode"
+    t.integer "status"
+    t.string "external_id"
+    t.jsonb "meta"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_products_on_account_id"
+  end
+
   create_table "related_categories", force: :cascade do |t|
     t.bigint "category_id"
     t.bigint "related_category_id"
@@ -1546,6 +1562,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_05_023331) do
   add_foreign_key "contact_optins", "inboxes"
   add_foreign_key "inboxes", "integrations_hooks", column: "ecommerce_integration_id"
   add_foreign_key "inboxes", "portals"
+  add_foreign_key "products", "accounts"
   add_foreign_key "subscription_plans", "subscription_tiers"
   create_trigger("accounts_after_insert_row_tr", :generated => true, :compatibility => 1).
       on("accounts").
