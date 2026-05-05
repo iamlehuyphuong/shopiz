@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_05_075115) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_05_112450) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -781,6 +781,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_05_075115) do
     t.jsonb "product_metadata", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "variant_id"
     t.index ["conversation_order_id"], name: "index_conversation_order_items_on_conversation_order_id"
   end
 
@@ -800,6 +801,13 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_05_075115) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "last_synced_at"
+    t.decimal "shipping_fee", precision: 15, scale: 2, default: "0.0"
+    t.decimal "tax", precision: 15, scale: 2, default: "0.0"
+    t.decimal "discount_amount", precision: 15, scale: 2, default: "0.0"
+    t.string "shipping_carrier"
+    t.string "tracking_code"
+    t.string "payment_method"
+    t.string "payment_status", default: "unpaid"
     t.index ["account_id", "conversation_id"], name: "index_conversation_orders_on_account_id_and_conversation_id"
     t.index ["account_id", "created_at"], name: "index_conversation_orders_on_account_id_and_created_at"
     t.index ["account_id"], name: "index_conversation_orders_on_account_id"
@@ -1294,6 +1302,24 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_05_075115) do
     t.index ["user_id"], name: "index_portals_members_on_user_id"
   end
 
+  create_table "product_variants", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "product_id", null: false
+    t.string "name"
+    t.string "sku"
+    t.string "barcode"
+    t.decimal "price", precision: 15, scale: 2, default: "0.0"
+    t.decimal "compare_at_price", precision: 15, scale: 2
+    t.integer "inventory_quantity", default: 0
+    t.decimal "weight", precision: 10, scale: 2, default: "0.0"
+    t.string "external_id"
+    t.jsonb "meta", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_product_variants_on_account_id"
+    t.index ["product_id"], name: "index_product_variants_on_product_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.string "name"
@@ -1307,6 +1333,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_05_075115) do
     t.jsonb "meta"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "inventory_quantity", default: 0
+    t.jsonb "images", default: []
     t.index ["account_id"], name: "index_products_on_account_id"
   end
 
@@ -1562,6 +1590,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_05_075115) do
   add_foreign_key "contact_optins", "inboxes"
   add_foreign_key "inboxes", "integrations_hooks", column: "ecommerce_integration_id"
   add_foreign_key "inboxes", "portals"
+  add_foreign_key "product_variants", "accounts"
+  add_foreign_key "product_variants", "products"
   add_foreign_key "products", "accounts"
   add_foreign_key "subscription_plans", "subscription_tiers"
   create_trigger("accounts_after_insert_row_tr", :generated => true, :compatibility => 1).

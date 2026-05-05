@@ -1,5 +1,6 @@
 class Product < ApplicationRecord
   belongs_to :account
+  has_many :product_variants, dependent: :destroy
   
   enum status: { active: 0, archived: 1, draft: 2 }
 

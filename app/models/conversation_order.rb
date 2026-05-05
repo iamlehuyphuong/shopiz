@@ -7,6 +7,7 @@ class ConversationOrder < ApplicationRecord
   accepts_nested_attributes_for :items, allow_destroy: true
 
   enum status: { draft: 0, confirmed: 1, processing: 2, shipped: 3, delivered: 4, cancelled: 5 }
+  enum payment_status: { unpaid: 'unpaid', paid: 'paid', partially_refunded: 'partially_refunded' }
 
   validates :account_id, presence: true
   validates :conversation_id, presence: true
@@ -18,6 +19,7 @@ class ConversationOrder < ApplicationRecord
   private
 
   def calculate_total_amount
-    self.total_amount = items.reject(&:marked_for_destruction?).sum { |item| item.quantity * item.unit_price }
+    subtotal = items.reject(&:marked_for_destruction?).sum { |item| item.quantity * item.unit_price }
+    self.total_amount = subtotal + (shipping_fee || 0.0) + (tax || 0.0) - (discount_amount || 0.0)
   end
 end
