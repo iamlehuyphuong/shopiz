@@ -284,7 +284,7 @@ onUnmounted(() => {
     </div>
 
     <!-- Contact Panel -->
-    <div v-if="isContactTabActive" class="flex flex-1 overflow-auto">
+    <div v-show="isContactTabActive" class="flex flex-1 overflow-auto">
       <ContactPanel
         :conversation-id="currentChat.id"
         :inbox-id="currentChat.inbox_id"
@@ -293,7 +293,7 @@ onUnmounted(() => {
 
     <!-- Copilot Panel -->
     <div
-      v-else-if="isCopilotTabActive && shouldShowCopilotContent"
+      v-show="isCopilotTabActive && shouldShowCopilotContent"
       class="flex flex-1 overflow-hidden"
     >
       <Copilot
@@ -309,7 +309,7 @@ onUnmounted(() => {
     </div>
 
     <!-- Order Panel -->
-    <div v-else-if="isOrderTabActive" class="flex flex-1 overflow-hidden">
+    <div v-show="isOrderTabActive" class="flex flex-1 overflow-hidden">
       <OrderPanel
         :conversation-id="currentChat.id"
         :pending-product="pendingProduct"
@@ -318,7 +318,7 @@ onUnmounted(() => {
     </div>
 
     <!-- Product Panel -->
-    <div v-else-if="isProductTabActive" class="flex flex-1 overflow-hidden">
+    <div v-show="isProductTabActive" class="flex flex-1 overflow-hidden">
       <ProductPanel :conversation-id="currentChat.id" />
     </div>
   </div>

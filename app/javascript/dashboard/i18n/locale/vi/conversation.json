@@ -373,6 +373,13 @@
         "added": "{user_name} đã thêm {labels}",
         "removed": "{user_name} đã xoá {labels}"
       },
+      "orders": {
+        "created": "Đơn hàng #{order_id} được tạo bởi {user_name}",
+        "pushed": "Đơn hàng #{order_id} đã đẩy lên {platform} (Mã ngoài: {external_id})",
+        "synced": "Đơn hàng #{order_id} đồng bộ từ {platform} — Trạng thái: {status}",
+        "cancelled": "Đơn hàng #{order_id} đã hủy bởi {user_name}",
+        "deleted": "Đơn hàng #{order_id} đã xóa bởi {user_name}"
+      },
       "sla": {
         "added": "{user_name} đã thêm chính sách SLA {sla_name}",
         "removed": "{user_name} đã xoá chính sách SLA {sla_name}"

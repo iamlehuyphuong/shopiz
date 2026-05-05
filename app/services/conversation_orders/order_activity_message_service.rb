@@ -15,10 +15,10 @@ class ConversationOrders::OrderActivityMessageService
   def perform
     return unless conversation && order
 
-    content = generate_activity_content
+    content, key, values = generate_activity_content
     return unless content
 
-    ::Conversations::ActivityMessageJob.perform_later(conversation, activity_message_params(content))
+    ::Conversations::ActivityMessageJob.perform_later(conversation, activity_message_params(content, key, values))
   end
 
   private
@@ -26,32 +26,42 @@ class ConversationOrders::OrderActivityMessageService
   def generate_activity_content
     case action_type.to_sym
     when :created
-      I18n.t('conversation_orders.activity.created',
-             order_id: order.id, user_name: user_name)
+      key = 'conversations.activity.orders.created'
+      values = { order_id: order.id, user_name: user_name }
     when :pushed
-      I18n.t('conversation_orders.activity.pushed',
-             order_id: order.id, platform: platform_label,
-             external_id: order.external_order_id || 'N/A')
+      key = 'conversations.activity.orders.pushed'
+      values = { order_id: order.id, platform: platform_label, external_id: order.external_order_id || 'N/A' }
     when :synced
-      I18n.t('conversation_orders.activity.synced',
-             order_id: order.id, platform: platform_label,
-             status: order.status)
+      key = 'conversations.activity.orders.synced'
+      values = { order_id: order.id, platform: platform_label, status: order.status }
     when :cancelled
-      I18n.t('conversation_orders.activity.cancelled',
-             order_id: order.id, user_name: user_name)
+      key = 'conversations.activity.orders.cancelled'
+      values = { order_id: order.id, user_name: user_name }
     when :deleted
-      I18n.t('conversation_orders.activity.deleted',
-             order_id: order.id, user_name: user_name)
+      key = 'conversations.activity.orders.deleted'
+      values = { order_id: order.id, user_name: user_name }
+    else
+      return [nil, nil, nil]
     end
+
+    # Keep a fallback evaluated content for DB, but the frontend will override it via the translation_key
+    backend_translation_key = key.sub('conversations', 'conversation_orders')
+    [I18n.t(backend_translation_key, **values), key, values]
   end
 
-  def activity_message_params(content)
-    {
+  def activity_message_params(content, translation_key, translation_values)
+    params = {
       account_id: conversation.account_id,
       inbox_id: conversation.inbox_id,
       message_type: :activity,
       content: content
     }
+    params[:content_attributes] = {
+      translation_key: translation_key,
+      translation_values: translation_values
+    } if translation_key.present?
+    
+    params
   end
 
   def user_name

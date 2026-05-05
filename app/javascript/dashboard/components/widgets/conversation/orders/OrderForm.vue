@@ -103,7 +103,8 @@ watch(
 const addProduct = product => {
   const existingIndex = form.value.items.findIndex(
     item =>
-      item.product_id === product.id && item.product_source === product.source
+      String(item.product_id) === String(product.id) &&
+      String(item.product_source) === String(product.source)
   );
   if (existingIndex >= 0) {
     form.value.items[existingIndex].quantity += 1;
