@@ -20,7 +20,9 @@ class Channel::ZaloPersonal < ApplicationRecord
   include Channelable
 
   self.table_name = 'channel_zalo_personal'
-  EDITABLE_ATTRS = [:oa_access_token, :refresh_token, :expires_in].freeze
+  store_accessor :provider_config, :default_friend_request_message, :default_greeting_message
+  
+  EDITABLE_ATTRS = [:oa_access_token, :refresh_token, :expires_in, :default_friend_request_message, :default_greeting_message].freeze
 
   validates :oa_access_token, presence: true, length: { maximum: 2048 }
   validates :refresh_token, presence: true, length: { maximum: 2048 }

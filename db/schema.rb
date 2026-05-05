@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_05_001000) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_05_023331) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -689,6 +689,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_05_001000) do
     t.string "oa_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "provider_config", default: {}
     t.index ["oa_id"], name: "index_channel_zalo_personal_on_oa_id", unique: true
   end
 

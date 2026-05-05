@@ -73,7 +73,11 @@
         "HELP": "Lưu ý: Shopiz chỉ có quyền truy cập tin nhắn của người dùng Zalo.",
         "HELP_2": "Không đăng nhập Zalo Web để tránh gián đoạn đồng bộ tin nhắn.",
         "DESC": "Đăng nhập tài khoản ",
-        "DESC_2": "để kết nối với"
+        "DESC_2": "để kết nối với",
+        "DEFAULT_FRIEND_REQUEST_MESSAGE_TITLE": "Lời mời kết bạn mặc định",
+        "DEFAULT_FRIEND_REQUEST_MESSAGE_SUBTITLE": "Tin nhắn được gửi kèm khi yêu cầu kết bạn.",
+        "DEFAULT_GREETING_MESSAGE_TITLE": "Lời chào mặc định",
+        "DEFAULT_GREETING_MESSAGE_SUBTITLE": "Lời chào được tự động gửi kèm theo lời mời kết bạn."
       },
       "TIKTOK_SHOP": {
         "HELP": "Lưu ý: Shopiz chỉ truy cập tin nhắn TikTok Shop. Tin nhắn riêng tư không bao giờ được truy cập.",

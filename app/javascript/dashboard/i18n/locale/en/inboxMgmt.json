@@ -73,7 +73,11 @@
         "HELP": "PS: By logging in, we only have access to Zalo messages of Zalo users.",
         "HELP_2": "Do not log in to your account on zalo web to ensure messages are continuously synchronized.",
         "DESC": "Log in to your ",
-        "DESC_2": "to connect to the"
+        "DESC_2": "to connect to the",
+        "DEFAULT_FRIEND_REQUEST_MESSAGE_TITLE": "Default Friend Request Message",
+        "DEFAULT_FRIEND_REQUEST_MESSAGE_SUBTITLE": "The message sent when requesting friendship.",
+        "DEFAULT_GREETING_MESSAGE_TITLE": "Default Greeting Message",
+        "DEFAULT_GREETING_MESSAGE_SUBTITLE": "The greeting message sent alongside the friend request."
       },
       "TIKTOK_SHOP": {
         "HELP": "PS: By signing in, we only get access to your TikTok Shop messages. Your private messages can never be accessed by Shopiz.",
