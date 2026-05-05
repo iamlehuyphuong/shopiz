@@ -18,6 +18,8 @@
     "SEND_EMAIL": "Gửi email",
     "COPY_PHONE": "Sao chép số điện thoại",
     "LOOKUP_ZALO": "Tìm kiếm Zalo",
+    "ADDRESS": "Địa chỉ",
+    "NOT_AVAILABLE_ADDRESS": "Chưa có địa chỉ",
     "COMPANY": "Công ty",
     "LOCATION": "Vị trí",
     "BROWSER_LANGUAGE": "Ngôn ngữ trình duyệt",
@@ -135,6 +137,10 @@
       "COMPANY_NAME": {
         "PLACEHOLDER": "Nhập tên công ty",
         "LABEL": "Công ty"
+      },
+      "ADDRESS": {
+        "PLACEHOLDER": "Nhập địa chỉ chi tiết",
+        "LABEL": "Địa chỉ"
       },
       "COUNTRY": {
         "PLACEHOLDER": "Nhập tên quốc gia",

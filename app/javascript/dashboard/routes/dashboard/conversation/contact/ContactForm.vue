@@ -41,6 +41,7 @@ export default {
     return {
       countries: countries,
       companyName: '',
+      address: '',
       description: '',
       email: '',
       name: '',
@@ -163,6 +164,7 @@ export default {
       this.email = emailAddress || '';
       this.phoneNumber = phoneNumber || '';
       this.companyName = additionalAttributes.company_name || '';
+      this.address = additionalAttributes.address || '';
       this.country = {
         id: additionalAttributes.country_code || '',
         name:
@@ -202,6 +204,7 @@ export default {
           ...this.contact.additional_attributes,
           description: this.description,
           company_name: this.companyName,
+          address: this.address,
           country_code: this.country.id,
           country:
             this.country.name ===
@@ -367,12 +370,6 @@ export default {
         </div>
       </div>
     </div>
-    <woot-input
-      v-model="companyName"
-      class="w-full"
-      :label="$t('CONTACT_FORM.FORM.COMPANY_NAME.LABEL')"
-      :placeholder="$t('CONTACT_FORM.FORM.COMPANY_NAME.PLACEHOLDER')"
-    />
     <div class="w-full mb-4">
       <label>
         {{ $t('CONTACT_FORM.FORM.COUNTRY.LABEL') }}
@@ -396,6 +393,12 @@ export default {
       class="w-full"
       :label="$t('CONTACT_FORM.FORM.CITY.LABEL')"
       :placeholder="$t('CONTACT_FORM.FORM.CITY.PLACEHOLDER')"
+    />
+    <woot-input
+      v-model="address"
+      class="w-full"
+      :label="$t('CONTACT_FORM.FORM.ADDRESS.LABEL')"
+      :placeholder="$t('CONTACT_FORM.FORM.ADDRESS.PLACEHOLDER')"
     />
 
     <div class="w-full">

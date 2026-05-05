@@ -38,6 +38,10 @@ export default {
       type: String,
       default: '',
     },
+    valueClass: {
+      type: String,
+      default: '',
+    },
   },
   methods: {
     async onCopy(e) {
@@ -65,6 +69,7 @@ export default {
       <span
         v-if="value"
         class="overflow-hidden text-sm whitespace-nowrap text-ellipsis"
+        :class="valueClass"
         :title="value"
       >
         {{ value }}
@@ -97,6 +102,7 @@ export default {
         v-if="value"
         v-dompurify-html="value"
         class="overflow-hidden text-sm whitespace-nowrap text-ellipsis"
+        :class="valueClass"
       />
       <span v-else class="text-sm text-n-slate-11">
         {{ notAvailableText || $t('CONTACT_PANEL.NOT_AVAILABLE') }}

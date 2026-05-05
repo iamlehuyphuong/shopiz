@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useStore, useMapGetter } from 'dashboard/composables/store';
 import AccordionItem from 'dashboard/components/Accordion/AccordionItem.vue';
@@ -71,6 +71,27 @@ const PLATFORM_OPTIONS = [
   { value: 'tiktok_shop', label: 'TikTok Shop' },
 ];
 
+watch(
+  () => props.contact,
+  (newContact) => {
+    if (!isEditing.value) {
+      if (!form.value.customer_name) form.value.customer_name = newContact?.name || '';
+      if (!form.value.customer_phone) form.value.customer_phone = newContact?.phone_number || '';
+      if (!form.value.customer_address) {
+        const attrs = newContact?.additional_attributes || {};
+        form.value.customer_address =
+          attrs.address ||
+          [attrs.city, attrs.country].filter(Boolean).join(', ') || '';
+      }
+      // Auto-fill from inbox ecommerce integration
+      if (inboxEcommerceAppId.value && !form.value.external_source) {
+        form.value.external_source = inboxEcommerceAppId.value;
+      }
+    }
+  },
+  { immediate: true, deep: true }
+);
+
 onMounted(() => {
   if (isEditing.value) {
     form.value = {
@@ -82,15 +103,6 @@ onMounted(() => {
       customer_note: props.order.customer_note || '',
       items: (props.order.items || []).map(item => ({ ...item })),
     };
-  } else {
-    form.value.customer_name = props.contact?.name || '';
-    form.value.customer_phone = props.contact?.phone_number || '';
-    form.value.customer_address =
-      props.contact?.additional_attributes?.address || '';
-    // Auto-fill from inbox ecommerce integration
-    if (inboxEcommerceAppId.value) {
-      form.value.external_source = inboxEcommerceAppId.value;
-    }
   }
 });
 

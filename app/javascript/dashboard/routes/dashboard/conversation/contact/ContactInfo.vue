@@ -570,6 +570,7 @@ export default {
             :title="$t('CONTACT_PANEL.PHONE_NUMBER')"
             :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_PHONE')"
             show-copy
+            value-class="!text-[13px]"
           />
           <ContactInfoRow
             :value="formattedBirthday"
@@ -595,11 +596,11 @@ export default {
             :title="$t('CONTACT_PANEL.IDENTIFIER')"
           />
           <ContactInfoRow
-            :value="additionalAttributes.company_name"
-            icon="i-lucide-building-2"
-            emoji="🏢"
-            :title="$t('CONTACT_PANEL.COMPANY')"
-            :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_COMPANY')"
+            :value="additionalAttributes.address"
+            icon="location"
+            emoji="📍"
+            :title="$t('CONTACT_PANEL.ADDRESS')"
+            :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_ADDRESS')"
           />
           <ContactInfoRow
             v-if="location || additionalAttributes.location"
