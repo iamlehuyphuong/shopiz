@@ -952,7 +952,10 @@
       "FORM_DESCRIPTION": "Cấu hình Công cụ AI để kết nối API ngoài",
       "OPTIONS": {
         "EDIT_TOOL": "Chỉnh sửa Công cụ AI",
-        "DELETE_TOOL": "Xóa Công cụ AI"
+        "CLONE_TOOL": "Nhân bản",
+        "DELETE_TOOL": "Xóa Công cụ AI",
+        "CLONE_SUCCESS": "Nhân bản Công cụ AI thành công",
+        "CLONE_ERROR": "Lỗi khi nhân bản Công cụ AI"
       },
       "CREATE": {
         "TITLE": "Tạo Công cụ AI",
@@ -1045,6 +1048,12 @@
         "ERRORS": {
           "PARAM_NAME_REQUIRED": "Tên tham số là bắt buộc"
         }
+      },
+      "IMPORT_EXPORT": {
+        "IMPORT_BUTTON": "Nhập từ file",
+        "EXPORT_BUTTON": "Xuất ra file",
+        "IMPORT_SUCCESS": "Nhập công cụ thành công",
+        "IMPORT_ERROR": "Lỗi khi nhập công cụ. Vui lòng kiểm tra định dạng file."
       }
     },
     "RESPONSES": {

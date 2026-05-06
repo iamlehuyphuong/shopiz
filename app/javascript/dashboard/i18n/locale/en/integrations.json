@@ -952,7 +952,10 @@
       "FORM_DESCRIPTION": "Configure your custom tool to connect with external APIs",
       "OPTIONS": {
         "EDIT_TOOL": "Edit tool",
-        "DELETE_TOOL": "Delete tool"
+        "CLONE_TOOL": "Clone tool",
+        "DELETE_TOOL": "Delete tool",
+        "CLONE_SUCCESS": "Custom Tool cloned successfully",
+        "CLONE_ERROR": "Error cloning Custom Tool"
       },
       "CREATE": {
         "TITLE": "Create Custom Tool",
@@ -1045,6 +1048,12 @@
         "ERRORS": {
           "PARAM_NAME_REQUIRED": "Parameter name is required"
         }
+      },
+      "IMPORT_EXPORT": {
+        "IMPORT_BUTTON": "Import",
+        "EXPORT_BUTTON": "Export",
+        "IMPORT_SUCCESS": "Tools imported successfully",
+        "IMPORT_ERROR": "Error importing tools. Please check the file format."
       }
     },
     "RESPONSES": {

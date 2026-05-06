@@ -8,8 +8,13 @@ import CustomToolsPageEmptyState from 'dashboard/components-next/captain/pageCom
 import CreateCustomToolDialog from 'dashboard/components-next/captain/pageComponents/customTool/CreateCustomToolDialog.vue';
 import CustomToolCard from 'dashboard/components-next/captain/pageComponents/customTool/CustomToolCard.vue';
 import DeleteDialog from 'dashboard/components-next/captain/pageComponents/DeleteDialog.vue';
+import Button from 'dashboard/components-next/button/Button.vue';
+import { useAlert } from 'dashboard/composables';
+import { useI18n } from 'vue-i18n';
+import CaptainCustomTools from 'dashboard/api/captain/customTools';
 
 const store = useStore();
+const { t } = useI18n();
 
 const uiFlags = useMapGetter('captainCustomTools/getUIFlags');
 const customTools = useMapGetter('captainCustomTools/getRecords');
@@ -18,6 +23,7 @@ const customToolsMeta = useMapGetter('captainCustomTools/getMeta');
 
 const createDialogRef = ref(null);
 const deleteDialogRef = ref(null);
+const fileInputRef = ref(null);
 const selectedTool = ref(null);
 const dialogType = ref('');
 
@@ -44,12 +50,29 @@ const handleDelete = tool => {
   nextTick(() => deleteDialogRef.value.dialogRef.open());
 };
 
+const handleClone = async tool => {
+  const { id, created_at, updated_at, account_id, ...rest } = tool;
+  const clonedTool = {
+    ...rest,
+    title: `${rest.title} (Copy)`,
+  };
+  try {
+    await store.dispatch('captainCustomTools/create', clonedTool);
+    useAlert(t('CAPTAIN.CUSTOM_TOOLS.OPTIONS.CLONE_SUCCESS'));
+    fetchCustomTools(customToolsMeta.value.page);
+  } catch (error) {
+    useAlert(t('CAPTAIN.CUSTOM_TOOLS.OPTIONS.CLONE_ERROR'));
+  }
+};
+
 const handleAction = ({ action, id }) => {
   const tool = customTools.value.find(t => t.id === id);
   if (action === 'edit') {
     handleEdit(tool);
   } else if (action === 'delete') {
     handleDelete(tool);
+  } else if (action === 'clone') {
+    handleClone(tool);
   }
 };
 
@@ -68,6 +91,106 @@ const onDeleteSuccess = () => {
     // Refresh current page
     fetchCustomTools(customToolsMeta.value.page);
   }
+};
+
+const handleImportClick = () => {
+  fileInputRef.value.click();
+};
+
+const handleFileUpload = async event => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  if (!file.name.endsWith('.json') && file.type !== 'application/json') {
+    useAlert(t('CAPTAIN.CUSTOM_TOOLS.IMPORT_EXPORT.IMPORT_ERROR'));
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = async e => {
+    let tools = [];
+    try {
+      tools = JSON.parse(e.target.result);
+    } catch (error) {
+      useAlert(t('CAPTAIN.CUSTOM_TOOLS.IMPORT_EXPORT.IMPORT_ERROR'));
+      if (fileInputRef.value) fileInputRef.value.value = '';
+      return;
+    }
+
+    if (!Array.isArray(tools)) {
+      useAlert(t('CAPTAIN.CUSTOM_TOOLS.IMPORT_EXPORT.IMPORT_ERROR'));
+      if (fileInputRef.value) fileInputRef.value.value = '';
+      return;
+    }
+
+    let successCount = 0;
+    let errorCount = 0;
+
+    for (const tool of tools) {
+      try {
+        await store.dispatch('captainCustomTools/create', tool);
+        successCount++;
+      } catch (error) {
+        errorCount++;
+      }
+    }
+
+    if (errorCount === 0) {
+      useAlert(`${t('CAPTAIN.CUSTOM_TOOLS.IMPORT_EXPORT.IMPORT_SUCCESS')} (${successCount}/${tools.length})`);
+    } else if (successCount > 0) {
+      useAlert(`${t('CAPTAIN.CUSTOM_TOOLS.IMPORT_EXPORT.IMPORT_SUCCESS')} (${successCount}/${tools.length})`);
+    } else {
+      useAlert(t('CAPTAIN.CUSTOM_TOOLS.IMPORT_EXPORT.IMPORT_ERROR'));
+    }
+    
+    fetchCustomTools(customToolsMeta.value.page);
+
+    if (fileInputRef.value) {
+      fileInputRef.value.value = '';
+    }
+  };
+  reader.readAsText(file);
+};
+
+const handleExport = async () => {
+  if (customToolsMeta.value.totalCount === 0) return;
+
+  let allTools = [];
+  let currentPage = 1;
+
+  try {
+    while (true) {
+      const response = await CaptainCustomTools.get({ page: currentPage });
+      const { payload, meta } = response.data;
+      
+      if (payload && payload.length > 0) {
+        allTools = [...allTools, ...payload];
+      }
+      
+      if (allTools.length >= meta.total_count || !payload || payload.length === 0) {
+        break;
+      }
+      currentPage++;
+    }
+  } catch (error) {
+    useAlert(t('CAPTAIN.CUSTOM_TOOLS.IMPORT_EXPORT.IMPORT_ERROR'));
+    return;
+  }
+
+  const exportData = allTools.map(tool => {
+    const { id, created_at, updated_at, account_id, ...rest } = tool;
+    return rest;
+  });
+
+  const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+    type: 'application/json',
+  });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `shopiz_ai_tools_${new Date().getTime()}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
 };
 
 onMounted(() => {
@@ -92,6 +215,34 @@ onMounted(() => {
   >
     <template #emptyState>
       <CustomToolsPageEmptyState @click="openCreateDialog" />
+    </template>
+
+    <template #search>
+      <div class="flex gap-2">
+        <Button
+          icon="i-lucide-upload"
+          variant="outline"
+          color="slate"
+          size="sm"
+          :label="$t('CAPTAIN.CUSTOM_TOOLS.IMPORT_EXPORT.IMPORT_BUTTON')"
+          @click="handleImportClick"
+        />
+        <Button
+          icon="i-lucide-download"
+          variant="outline"
+          color="slate"
+          size="sm"
+          :label="$t('CAPTAIN.CUSTOM_TOOLS.IMPORT_EXPORT.EXPORT_BUTTON')"
+          @click="handleExport"
+        />
+        <input 
+          ref="fileInputRef"
+          type="file" 
+          accept=".json" 
+          class="hidden" 
+          @change="handleFileUpload" 
+        />
+      </div>
     </template>
 
     <template #body>
