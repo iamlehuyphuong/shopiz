@@ -161,6 +161,12 @@ onBeforeMount(() => {
 });
 </script>
 
+<!--
+  Tailwind Safelist for dynamic status colors:
+  bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300
+  bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300
+-->
+
 <template>
   <SalesLayout
     :is-loading="uiFlags.isFetching"

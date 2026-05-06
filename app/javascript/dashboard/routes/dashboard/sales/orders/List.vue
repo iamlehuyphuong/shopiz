@@ -25,12 +25,20 @@ const itemsPerPage = 15;
 const filteredOrders = computed(() => {
   const query = searchQuery.value.trim();
   if (!query) return orders.value;
-  return picoSearch(orders.value, query, [
-    'customer_name',
-    'customer_phone',
-    'external_order_id',
-    'external_source',
-  ]);
+  return orders.value.filter(order => {
+    const searchableString = [
+      order.id,
+      order.customer_name,
+      order.customer_phone,
+      order.customer_address,
+      order.external_order_id,
+      order.external_source,
+      order.contact?.name,
+      order.contact?.phone_number
+    ].filter(Boolean).join(' ').toLowerCase();
+    
+    return searchableString.includes(query.toLowerCase());
+  });
 });
 
 const paginatedOrders = computed(() => {
@@ -150,6 +158,15 @@ onBeforeMount(() => {
 });
 </script>
 
+<!--
+  Tailwind Safelist for dynamic status colors:
+  bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300
+  bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300
+  bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300
+  bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300
+  bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300
+-->
+
 <template>
   <SalesLayout
     :is-loading="isLoading"
@@ -205,7 +222,7 @@ onBeforeMount(() => {
                     class="flex items-center gap-2 text-body-main text-n-slate-12"
                   >
                     <span class="font-medium">
-                      #{{ (currentPage - 1) * itemsPerPage + index + 1 }}
+                      #{{ order.external_order_id || order.id }}
                     </span>
                     <span class="font-medium">
                       {{

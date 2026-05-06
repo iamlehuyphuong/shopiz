@@ -57,37 +57,7 @@ const openLink = link => {
         />
 
         <div class="relative flex flex-col items-start gap-4 z-20">
-          <div class="flex-shrink-0 bg-gray-800 w-full h-[7.5rem] rounded-lg">
-            <img
-              v-if="!imageError && thumbnail"
-              :src="thumbnail"
-              :alt="title"
-              draggable="false"
-              loading="lazy"
-              class="w-full h-full object-cover rounded-lg"
-              @error="handleImageError"
-            />
 
-            <template v-else>
-              <img
-                v-if="fallbackThumbnailDark"
-                :src="fallbackThumbnailDark"
-                :alt="title"
-                draggable="false"
-                loading="lazy"
-                class="w-full h-full object-cover hidden dark:block"
-              />
-
-              <img
-                v-if="fallbackThumbnail"
-                :src="fallbackThumbnail"
-                :alt="title"
-                draggable="false"
-                loading="lazy"
-                class="w-full h-full object-cover block dark:hidden"
-              />
-            </template>
-          </div>
 
           <p v-if="note" class="text-n-slate-12 text-start text-sm mb-0">
             {{ note }}
