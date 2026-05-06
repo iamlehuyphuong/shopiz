@@ -164,15 +164,57 @@
         "TITLE": "Sales Overview",
         "DESCRIPTION": "Revenue overview from all sources."
       },
-      "METRICS": {
-        "OVERVIEW": "Overview",
-        "LIVE": "Live",
-        "TOTAL_REVENUE": "Total Revenue",
-        "TOTAL_ORDERS": "Total Orders",
-        "AOV": "Average Order Value"
+      "PERIOD": {
+        "7D": "Last 7 days",
+        "30D": "Last 30 days",
+        "90D": "Last 3 months"
       },
-      "CHART": {
-        "PLACEHOLDER": "Revenue chart is being integrated..."
+      "METRICS": {
+        "TOTAL_REVENUE": "Revenue",
+        "TOTAL_ORDERS": "Orders",
+        "AOV": "Average / Order",
+        "ACTIVE_PRODUCTS": "Products",
+        "CHANGE_UP": "+{percent}%",
+        "CHANGE_DOWN": "{percent}%",
+        "VS_PREVIOUS": "vs previous period"
+      },
+      "REVENUE_CHART": {
+        "TITLE": "Revenue trend",
+        "REVENUE": "Revenue",
+        "ORDERS": "Orders"
+      },
+      "RECENT_ORDERS": {
+        "TITLE": "Recent orders",
+        "VIEW_ALL": "View all",
+        "ORDER_ID": "Order",
+        "CUSTOMER": "Customer",
+        "SOURCE": "Platform",
+        "AMOUNT": "Amount",
+        "STATUS": "Status",
+        "TIME": "Time",
+        "NO_ORDERS": "No orders yet"
+      },
+      "STATUS_BREAKDOWN": {
+        "TITLE": "Order status",
+        "DRAFT": "Draft",
+        "CONFIRMED": "Confirmed",
+        "PROCESSING": "Processing",
+        "SHIPPED": "Shipped",
+        "DELIVERED": "Delivered",
+        "CANCELLED": "Cancelled"
+      },
+      "HEATMAP": {
+        "TITLE": "Order density by hour",
+        "NO_ORDERS": "No orders",
+        "ORDER": "{count} order",
+        "ORDERS": "{count} orders",
+        "DOWNLOAD_REPORT": "Download report"
+      },
+      "ORDERS_BY_INBOX": {
+        "TITLE": "Orders by inbox",
+        "INBOX": "Inbox",
+        "ORDER_COUNT": "Orders",
+        "NO_DATA": "No data available"
       }
     },
     "MODULE_PRODUCTS": {

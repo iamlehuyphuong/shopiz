@@ -164,15 +164,57 @@
         "TITLE": "Tổng quan bán hàng",
         "DESCRIPTION": "Tổng quan báo cáo doanh thu từ các nguồn."
       },
-      "METRICS": {
-        "OVERVIEW": "Tổng quan",
-        "LIVE": "Live",
-        "TOTAL_REVENUE": "Tổng doanh thu",
-        "TOTAL_ORDERS": "Tổng đơn hàng",
-        "AOV": "Giá trị trung bình/đơn"
+      "PERIOD": {
+        "7D": "7 ngày qua",
+        "30D": "30 ngày qua",
+        "90D": "3 tháng qua"
       },
-      "CHART": {
-        "PLACEHOLDER": "Biểu đồ doanh thu đang được tích hợp..."
+      "METRICS": {
+        "TOTAL_REVENUE": "Doanh thu",
+        "TOTAL_ORDERS": "Đơn hàng",
+        "AOV": "Trung bình / đơn",
+        "ACTIVE_PRODUCTS": "Sản phẩm",
+        "CHANGE_UP": "+{percent}%",
+        "CHANGE_DOWN": "{percent}%",
+        "VS_PREVIOUS": "so với kỳ trước"
+      },
+      "REVENUE_CHART": {
+        "TITLE": "Xu hướng doanh thu",
+        "REVENUE": "Doanh thu",
+        "ORDERS": "Đơn hàng"
+      },
+      "RECENT_ORDERS": {
+        "TITLE": "Đơn hàng gần đây",
+        "VIEW_ALL": "Xem tất cả",
+        "ORDER_ID": "Đơn hàng",
+        "CUSTOMER": "Khách hàng",
+        "SOURCE": "Sàn",
+        "AMOUNT": "Tổng tiền",
+        "STATUS": "Trạng thái",
+        "TIME": "Thời gian",
+        "NO_ORDERS": "Chưa có đơn hàng nào"
+      },
+      "STATUS_BREAKDOWN": {
+        "TITLE": "Trạng thái đơn hàng",
+        "DRAFT": "Nháp",
+        "CONFIRMED": "Đã xác nhận",
+        "PROCESSING": "Đang xử lý",
+        "SHIPPED": "Đang giao",
+        "DELIVERED": "Đã giao",
+        "CANCELLED": "Đã huỷ"
+      },
+      "HEATMAP": {
+        "TITLE": "Mật độ đơn hàng theo giờ",
+        "NO_ORDERS": "Không có đơn hàng",
+        "ORDER": "{count} đơn hàng",
+        "ORDERS": "{count} đơn hàng",
+        "DOWNLOAD_REPORT": "Tải báo cáo"
+      },
+      "ORDERS_BY_INBOX": {
+        "TITLE": "Đơn hàng theo Inbox",
+        "INBOX": "Inbox",
+        "ORDER_COUNT": "Số đơn hàng",
+        "NO_DATA": "Không có dữ liệu"
       }
     },
     "MODULE_PRODUCTS": {

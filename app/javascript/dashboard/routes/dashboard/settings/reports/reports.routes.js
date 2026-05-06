@@ -23,7 +23,7 @@ import CsatResponses from './CsatResponses.vue';
 import BotReports from './BotReports.vue';
 import LiveReports from './LiveReports.vue';
 import SLAReports from './SLAReports.vue';
-import OrderReports from './OrderReports.vue';
+
 
 const meta = {
   featureFlag: FEATURE_FLAGS.REPORTS,
@@ -169,12 +169,7 @@ export default {
           meta,
           component: BotReports,
         },
-        {
-          path: 'orders',
-          name: 'order_reports',
-          meta,
-          component: OrderReports,
-        },
+
       ],
     },
   ],

@@ -30,6 +30,10 @@ const props = defineProps({
     default: 'blue',
     validator: value => ['blue', 'green', 'brand'].includes(value),
   },
+  tooltipMessages: {
+    type: Object,
+    default: () => ({}),
+  },
 });
 const { t } = useI18n();
 
@@ -217,6 +221,7 @@ const tooltip = useHeatmapTooltip();
       :x="tooltip.x.value"
       :y="tooltip.y.value"
       :value="tooltip.value.value"
+      :tooltip-messages="tooltipMessages"
     />
   </div>
 </template>

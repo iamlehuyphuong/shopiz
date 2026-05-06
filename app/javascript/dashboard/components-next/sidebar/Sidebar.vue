@@ -441,12 +441,6 @@ const menuItems = computed(() => {
           icon: 'i-lucide-bot',
           to: accountScopedRoute('bot_reports'),
         },
-        {
-          name: 'Reports Orders',
-          label: t('SIDEBAR.REPORTS_ORDERS'),
-          icon: 'i-lucide-shopping-cart',
-          to: accountScopedRoute('order_reports'),
-        },
       ],
     },
     {

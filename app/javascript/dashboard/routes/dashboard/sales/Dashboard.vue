@@ -1,16 +1,40 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import SalesReportsAPI from 'dashboard/api/sales/reports';
 import SalesLayout from './components/SalesLayout.vue';
 import BaseSettingsHeader from 'dashboard/routes/dashboard/settings/components/BaseSettingsHeader.vue';
+import OverviewMetricCard from './components/OverviewMetricCard.vue';
+import RevenueChart from './components/RevenueChart.vue';
+import OrdersByInboxTable from './components/OrdersByInboxTable.vue';
+import OrderHeatmap from './components/OrderHeatmap.vue';
+import WootDatePicker from 'dashboard/components/ui/DatePicker/DatePicker.vue';
+import { DATE_RANGE_TYPES } from 'dashboard/components/ui/DatePicker/helpers/DatePickerHelper';
+import { getUnixStartOfDay, getUnixEndOfDay } from 'helpers/DateHelper';
+import subDays from 'date-fns/subDays';
+import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const isLoading = ref(true);
 const reportData = ref(null);
 
+const customDateRange = ref([subDays(new Date(), 6), new Date()]);
+const selectedDateRange = ref(DATE_RANGE_TYPES.LAST_7_DAYS);
+
+const fromTimestamp = computed(() => getUnixStartOfDay(customDateRange.value[0]));
+const toTimestamp = computed(() => getUnixEndOfDay(customDateRange.value[1]));
+const numberOfDays = computed(() =>
+  differenceInCalendarDays(customDateRange.value[1], customDateRange.value[0]) + 1
+);
+
 const fetchReports = async () => {
   isLoading.value = true;
   try {
-    const response = await SalesReportsAPI.get();
+    const response = await SalesReportsAPI.getReports({
+      from: fromTimestamp.value,
+      to: toTimestamp.value,
+    });
     reportData.value = response.data;
   } catch (error) {
     console.error('Failed to fetch sales reports', error);
@@ -24,7 +48,49 @@ const formatCurrency = price => {
   return new Intl.NumberFormat('vi-VN', {
     style: 'currency',
     currency: 'VND',
+    maximumFractionDigits: 0,
   }).format(price);
+};
+
+const formatNumber = num => {
+  if (!num && num !== 0) return '--';
+  return new Intl.NumberFormat('vi-VN').format(num);
+};
+
+const calcChange = (current, previous) => {
+  if (!previous || previous === 0) return null;
+  return ((current - previous) / previous) * 100;
+};
+
+const metrics = computed(() => {
+  if (!reportData.value?.metrics) return [];
+  const m = reportData.value.metrics;
+  const prev = m.previous || {};
+
+  return [
+    {
+      label: t('SALES.MODULE_DASHBOARD.METRICS.TOTAL_REVENUE'),
+      value: formatCurrency(m.total_revenue),
+      change: calcChange(m.total_revenue, prev.total_revenue),
+    },
+    {
+      label: t('SALES.MODULE_DASHBOARD.METRICS.TOTAL_ORDERS'),
+      value: formatNumber(m.total_orders),
+      change: calcChange(m.total_orders, prev.total_orders),
+    },
+    {
+      label: t('SALES.MODULE_DASHBOARD.METRICS.AOV'),
+      value: formatCurrency(m.average_order_value),
+      change: calcChange(m.average_order_value, prev.average_order_value),
+    },
+  ];
+});
+
+const onDateRangeChange = value => {
+  const [startDate, endDate, rangeType] = value;
+  customDateRange.value = [startDate, endDate];
+  selectedDateRange.value = rangeType || DATE_RANGE_TYPES.CUSTOM_RANGE;
+  fetchReports();
 };
 
 onMounted(() => {
@@ -42,62 +108,35 @@ onMounted(() => {
       />
     </template>
     <template #body>
-      <div v-if="reportData" class="flex flex-col gap-6">
-        <!-- Metrics -->
-        <div
-          class="bg-white dark:bg-n-solid-1 rounded-xl border border-n-weak shadow-sm"
-        >
-          <div class="px-6 py-4 flex items-center gap-2">
-            <h3 class="text-base font-medium text-n-slate-12 mb-0">
-              {{ $t('SALES.MODULE_DASHBOARD.METRICS.OVERVIEW') }}
-            </h3>
-            <span
-              class="px-1.5 py-0.5 bg-n-brand/10 text-n-brand text-xs font-medium rounded"
-            >
-              {{ $t('SALES.MODULE_DASHBOARD.METRICS.LIVE') }}
-            </span>
-          </div>
-          <div class="px-6 pb-6 flex items-center gap-12">
-            <div class="flex flex-col gap-2">
-              <p class="text-sm text-n-slate-11 mb-0">
-                {{ $t('SALES.MODULE_DASHBOARD.METRICS.TOTAL_REVENUE') }}
-              </p>
-              <p class="text-3xl font-normal text-n-slate-12 mb-0">
-                {{ formatCurrency(reportData.metrics.total_revenue) }}
-              </p>
-            </div>
-            <div class="flex flex-col gap-2">
-              <p class="text-sm text-n-slate-11 mb-0">
-                {{ $t('SALES.MODULE_DASHBOARD.METRICS.TOTAL_ORDERS') }}
-              </p>
-              <p class="text-3xl font-normal text-n-slate-12 mb-0">
-                {{ reportData.metrics.total_orders }}
-              </p>
-            </div>
-            <div class="flex flex-col gap-2">
-              <p class="text-sm text-n-slate-11 mb-0">
-                {{ $t('SALES.MODULE_DASHBOARD.METRICS.AOV') }}
-              </p>
-              <p class="text-3xl font-normal text-n-slate-12 mb-0">
-                {{ formatCurrency(reportData.metrics.average_order_value) }}
-              </p>
-            </div>
-          </div>
+      <div v-if="reportData" class="flex flex-col gap-5">
+        <!-- Date Range Picker -->
+        <div class="flex items-center">
+          <WootDatePicker
+            v-model:date-range="customDateRange"
+            v-model:range-type="selectedDateRange"
+            @date-range-changed="onDateRangeChange"
+          />
         </div>
 
-        <!-- Chart area placeholder -->
-        <div
-          class="bg-white dark:bg-n-solid-1 p-8 rounded-xl border border-n-weak shadow-sm h-80 flex flex-col items-center justify-center gap-4"
-        >
-          <div
-            class="h-16 w-16 bg-n-alpha-1 rounded-full flex items-center justify-center"
-          >
-            <span class="i-lucide-bar-chart-3 text-3xl text-n-slate-10" />
-          </div>
-          <p class="text-n-slate-11 font-medium">
-            {{ $t('SALES.MODULE_DASHBOARD.CHART.PLACEHOLDER') }}
-          </p>
+        <!-- KPI Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+          <OverviewMetricCard
+            v-for="metric in metrics"
+            :key="metric.label"
+            :label="metric.label"
+            :value="metric.value"
+            :change-percent="metric.change"
+          />
         </div>
+
+        <!-- Revenue Chart -->
+        <RevenueChart :chart-data="reportData.chart_data || []" />
+
+        <!-- Orders By Inbox -->
+        <OrdersByInboxTable :data="reportData.orders_by_inbox || []" />
+
+        <!-- Order Heatmap -->
+        <OrderHeatmap />
       </div>
     </template>
   </SalesLayout>
