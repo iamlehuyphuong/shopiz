@@ -55,6 +55,12 @@ captain:
   icon: 'icon-captain'
   config_key: 'captain'
 
+sales:
+  name: 'Sales'
+  description: 'Manage e-commerce products, orders and sales integrations.'
+  enabled: true
+  icon: 'icon-package'
+
 # ------- Communication Channels ------- #
 live_chat:
   name: 'Live Chat'
