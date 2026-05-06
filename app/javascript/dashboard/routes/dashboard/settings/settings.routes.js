@@ -24,9 +24,11 @@ import teams from './teams/teams.routes';
 import customRoles from './customRoles/customRole.routes';
 import profile from './profile/profile.routes';
 import templates from './templates/templates.routes';
-import security from './security/security.routes';
-import workflows from './workflows/workflows.routes';
+// import security from './security/security.routes';
+
 import database from './database/database.routes';
+import conversationWorkflow from './conversationWorkflow/conversationWorkflow.routes';
+import captain from './captain/captain.routes';
 
 export default {
   routes: [
@@ -66,8 +68,10 @@ export default {
     ...customRoles.routes,
     ...profile.routes,
     ...templates.routes,
-    ...security.routes,
-    ...workflows.routes,
+    // ...security.routes,
+
     ...database.routes,
+    ...conversationWorkflow.routes,
+    ...captain.routes,
   ],
 };

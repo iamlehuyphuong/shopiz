@@ -4,13 +4,13 @@ export const ONGOING_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Chatbot Assistance',
     inbox: {
       id: 2,
-      name: 'PaperLayer Website',
+      name: 'Shopiz Website',
       channel_type: 'Channel::WebWidget',
       phone_number: '',
     },
     sender: {
       id: 1,
-      name: 'Alexa Rivera',
+      name: 'Alex Morgan',
     },
     message: 'Hello! 👋 Need help with our chatbot features? Feel free to ask!',
     campaign_status: 'active',
@@ -29,13 +29,13 @@ export const ONGOING_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Pricing Information Support',
     inbox: {
       id: 2,
-      name: 'PaperLayer Website',
+      name: 'Shopiz Website',
       channel_type: 'Channel::WebWidget',
       phone_number: '',
     },
     sender: {
       id: 1,
-      name: 'Jamie Lee',
+      name: 'Rachel Green',
     },
     message: 'Hello! 👋 Any questions on pricing? I am here to help!',
     campaign_status: 'active',
@@ -54,7 +54,7 @@ export const ONGOING_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Product Setup Assistance',
     inbox: {
       id: 2,
-      name: 'PaperLayer Website',
+      name: 'Shopiz Website',
       channel_type: 'Channel::WebWidget',
       phone_number: '',
     },
@@ -80,13 +80,13 @@ export const ONGOING_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'General Assistance Campaign',
     inbox: {
       id: 2,
-      name: 'PaperLayer Website',
+      name: 'Shopiz Website',
       channel_type: 'Channel::WebWidget',
       phone_number: '',
     },
     sender: {
       id: 1,
-      name: 'Chris Barlow',
+      name: 'Tyler Ross',
     },
     message:
       'Hi there! 👋 I am here for any questions you may have. Let us chat!',
@@ -109,7 +109,7 @@ export const ONE_OFF_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Customer Feedback Request',
     inbox: {
       id: 6,
-      name: 'PaperLayer Mobile',
+      name: 'Shopiz Mobile',
       channel_type: 'Channel::Sms',
       phone_number: '+29818373149903',
       provider: 'default',
@@ -135,7 +135,7 @@ export const ONE_OFF_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Welcome New Customer',
     inbox: {
       id: 6,
-      name: 'PaperLayer Mobile',
+      name: 'Shopiz Mobile',
       channel_type: 'Channel::Sms',
       phone_number: '+29818373149903',
       provider: 'default',
@@ -162,7 +162,7 @@ export const ONE_OFF_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'New Business Welcome',
     inbox: {
       id: 6,
-      name: 'PaperLayer Mobile',
+      name: 'Shopiz Mobile',
       channel_type: 'Channel::Sms',
       phone_number: '+29818373149903',
       provider: 'default',
@@ -190,7 +190,7 @@ export const ONE_OFF_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'New Member Onboarding',
     inbox: {
       id: 6,
-      name: 'PaperLayer Mobile',
+      name: 'Shopiz Mobile',
       channel_type: 'Channel::Sms',
       phone_number: '+29818373149903',
       provider: 'default',
@@ -218,12 +218,13 @@ export const VOICE_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Signup Confirmation Call',
     inbox: {
       id: 10,
-      name: 'PaperLayer Phone Support',
+      name: 'Shopiz Phone Support',
       channel_type: 'Channel::Voice',
       avatar_url: '',
       phone_number: '+14155552671',
     },
-    message: 'Hello! 👋 Thanks for signing up with PaperLayer. I am calling to confirm your account setup and see if you have any questions about getting started.',
+    message:
+      'Hello! 👋 Thanks for signing up with Shopiz. I am calling to confirm your account setup and see if you have any questions about getting started.',
     campaign_status: 'scheduled',
     enabled: true,
     campaign_type: 'voice',
@@ -232,10 +233,10 @@ export const VOICE_CAMPAIGN_EMPTY_STATE_CONTENT = [
       { id: 4, type: 'Label', title: 'Support Customers' },
       { id: 5, type: 'Label', title: 'Active Users' },
     ],
-    sender: { 
+    sender: {
       id: 1,
-      name: 'Chris Barlow',
-      thumbnail: 'CB'
+      name: 'Tyler Ross',
+      thumbnail: 'TR',
     },
     created_at: '2024-11-15T13:13:08.496Z',
     updated_at: '2024-11-15T13:15:38.698Z',
@@ -245,12 +246,13 @@ export const VOICE_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Support Ticket Follow-Up',
     inbox: {
       id: 10,
-      name: 'PaperLayer Phone Support',
+      name: 'Shopiz Phone Support',
       channel_type: 'Channel::Voice',
       avatar_url: '',
       phone_number: '+14155552671',
     },
-    message: 'Hi, this is PaperLayer support calling to follow up on your recent ticket #12345. Has your issue been resolved to your satisfaction? If not, I can connect you with a specialist right away.',
+    message:
+      'Hi, this is Shopiz support calling to follow up on your recent ticket #12345. Has your issue been resolved to your satisfaction? If not, I can connect you with a specialist right away.',
     campaign_status: 'completed',
     enabled: true,
     campaign_type: 'voice',
@@ -259,10 +261,10 @@ export const VOICE_CAMPAIGN_EMPTY_STATE_CONTENT = [
       { id: 1, type: 'Label', title: 'Enterprise' },
       { id: 6, type: 'Label', title: 'Premium' },
     ],
-    sender: { 
+    sender: {
       id: 2,
-      name: 'Sarah Wilson',
-      thumbnail: 'SW'
+      name: 'Megan Cole',
+      thumbnail: 'MC',
     },
     created_at: '2024-11-10T13:14:00.168Z',
     updated_at: '2024-11-10T13:15:38.707Z',
@@ -272,12 +274,13 @@ export const VOICE_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Appointment Reminder',
     inbox: {
       id: 10,
-      name: 'PaperLayer Phone Support',
+      name: 'Shopiz Phone Support',
       channel_type: 'Channel::Voice',
       avatar_url: '',
       phone_number: '+14155552671',
     },
-    message: 'Hello, this is a reminder about your upcoming consultation scheduled for tomorrow at 2:00 PM. Would you like to confirm this appointment or would you prefer to reschedule?',
+    message:
+      'Hello, this is a reminder about your upcoming consultation scheduled for tomorrow at 2:00 PM. Would you like to confirm this appointment or would you prefer to reschedule?',
     campaign_status: 'scheduled',
     enabled: true,
     campaign_type: 'voice',
@@ -286,10 +289,10 @@ export const VOICE_CAMPAIGN_EMPTY_STATE_CONTENT = [
       { id: 7, type: 'Label', title: 'Consultation Clients' },
       { id: 8, type: 'Label', title: 'New Customers' },
     ],
-    sender: { 
+    sender: {
       id: 3,
-      name: 'Michael Thompson',
-      thumbnail: 'MT'
+      name: 'Brandon Lee',
+      thumbnail: 'BL',
     },
     created_at: '2024-11-12T09:30:45.123Z',
     updated_at: '2024-11-12T09:30:45.123Z',
@@ -299,12 +302,13 @@ export const VOICE_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Customer Feedback Survey',
     inbox: {
       id: 10,
-      name: 'PaperLayer Phone Support',
+      name: 'Shopiz Phone Support',
       channel_type: 'Channel::Voice',
       avatar_url: '',
       phone_number: '+14155552671',
     },
-    message: 'Hello, this is PaperLayer reaching out for your valuable feedback. We noticed you\'ve been using our service for 30 days now. I\'d like to ask a few quick questions about your experience. Your feedback helps us improve our service. Would you have a moment to share your thoughts?',
+    message:
+      "Hello, this is Shopiz reaching out for your valuable feedback. We noticed you've been using our service for 30 days now. I'd like to ask a few quick questions about your experience. Your feedback helps us improve our service. Would you have a moment to share your thoughts?",
     campaign_status: 'scheduled',
     enabled: true,
     campaign_type: 'voice',
@@ -313,14 +317,14 @@ export const VOICE_CAMPAIGN_EMPTY_STATE_CONTENT = [
       { id: 9, type: 'Label', title: 'Active 30+ Days' },
       { id: 10, type: 'Label', title: 'Product Users' },
     ],
-    sender: { 
+    sender: {
       id: 4,
-      name: 'Jessica Rivera',
-      thumbnail: 'JR'
+      name: 'Alex Morgan',
+      thumbnail: 'AM',
     },
     created_at: '2024-11-18T10:45:23.789Z',
     updated_at: '2024-11-18T10:45:23.789Z',
-  }
+  },
 ];
 
 export const SURVEY_CAMPAIGN_EMPTY_STATE_CONTENT = [
@@ -329,12 +333,13 @@ export const SURVEY_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Signup Confirmation Call',
     inbox: {
       id: 10,
-      name: 'PaperLayer Phone Support',
+      name: 'Shopiz Phone Support',
       channel_type: 'Channel::Voice',
       avatar_url: '',
       phone_number: '+14155552671',
     },
-    message: 'Hello! 👋 Thanks for signing up with PaperLayer. I am calling to confirm your account setup and see if you have any questions about getting started.',
+    message:
+      'Hello! 👋 Thanks for signing up with Shopiz. I am calling to confirm your account setup and see if you have any questions about getting started.',
     campaign_status: 'scheduled',
     enabled: true,
     campaign_type: 'voice',
@@ -343,10 +348,10 @@ export const SURVEY_CAMPAIGN_EMPTY_STATE_CONTENT = [
       { id: 4, type: 'Label', title: 'Support Customers' },
       { id: 5, type: 'Label', title: 'Active Users' },
     ],
-    sender: { 
+    sender: {
       id: 1,
-      name: 'Chris Barlow',
-      thumbnail: 'CB'
+      name: 'Tyler Ross',
+      thumbnail: 'TR',
     },
     created_at: '2024-11-15T13:13:08.496Z',
     updated_at: '2024-11-15T13:15:38.698Z',
@@ -356,12 +361,13 @@ export const SURVEY_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Support Ticket Follow-Up',
     inbox: {
       id: 10,
-      name: 'PaperLayer Phone Support',
+      name: 'Shopiz Phone Support',
       channel_type: 'Channel::Voice',
       avatar_url: '',
       phone_number: '+14155552671',
     },
-    message: 'Hi, this is PaperLayer support calling to follow up on your recent ticket #12345. Has your issue been resolved to your satisfaction? If not, I can connect you with a specialist right away.',
+    message:
+      'Hi, this is Shopiz support calling to follow up on your recent ticket #12345. Has your issue been resolved to your satisfaction? If not, I can connect you with a specialist right away.',
     campaign_status: 'completed',
     enabled: true,
     campaign_type: 'voice',
@@ -370,10 +376,10 @@ export const SURVEY_CAMPAIGN_EMPTY_STATE_CONTENT = [
       { id: 1, type: 'Label', title: 'Enterprise' },
       { id: 6, type: 'Label', title: 'Premium' },
     ],
-    sender: { 
+    sender: {
       id: 2,
-      name: 'Sarah Wilson',
-      thumbnail: 'SW'
+      name: 'Megan Cole',
+      thumbnail: 'MC',
     },
     created_at: '2024-11-10T13:14:00.168Z',
     updated_at: '2024-11-10T13:15:38.707Z',
@@ -383,12 +389,13 @@ export const SURVEY_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Appointment Reminder',
     inbox: {
       id: 10,
-      name: 'PaperLayer Phone Support',
+      name: 'Shopiz Phone Support',
       channel_type: 'Channel::Voice',
       avatar_url: '',
       phone_number: '+14155552671',
     },
-    message: 'Hello, this is a reminder about your upcoming consultation scheduled for tomorrow at 2:00 PM. Would you like to confirm this appointment or would you prefer to reschedule?',
+    message:
+      'Hello, this is a reminder about your upcoming consultation scheduled for tomorrow at 2:00 PM. Would you like to confirm this appointment or would you prefer to reschedule?',
     campaign_status: 'scheduled',
     enabled: true,
     campaign_type: 'voice',
@@ -397,10 +404,10 @@ export const SURVEY_CAMPAIGN_EMPTY_STATE_CONTENT = [
       { id: 7, type: 'Label', title: 'Consultation Clients' },
       { id: 8, type: 'Label', title: 'New Customers' },
     ],
-    sender: { 
+    sender: {
       id: 3,
-      name: 'Michael Thompson',
-      thumbnail: 'MT'
+      name: 'Brandon Lee',
+      thumbnail: 'BL',
     },
     created_at: '2024-11-12T09:30:45.123Z',
     updated_at: '2024-11-12T09:30:45.123Z',
@@ -410,12 +417,13 @@ export const SURVEY_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Customer Feedback Survey',
     inbox: {
       id: 10,
-      name: 'PaperLayer Phone Support',
+      name: 'Shopiz Phone Support',
       channel_type: 'Channel::Voice',
       avatar_url: '',
       phone_number: '+14155552671',
     },
-    message: 'Hello, this is PaperLayer reaching out for your valuable feedback. We noticed you\'ve been using our service for 30 days now. I\'d like to ask a few quick questions about your experience. Your feedback helps us improve our service. Would you have a moment to share your thoughts?',
+    message:
+      "Hello, this is Shopiz reaching out for your valuable feedback. We noticed you've been using our service for 30 days now. I'd like to ask a few quick questions about your experience. Your feedback helps us improve our service. Would you have a moment to share your thoughts?",
     campaign_status: 'scheduled',
     enabled: true,
     campaign_type: 'voice',
@@ -424,12 +432,12 @@ export const SURVEY_CAMPAIGN_EMPTY_STATE_CONTENT = [
       { id: 9, type: 'Label', title: 'Active 30+ Days' },
       { id: 10, type: 'Label', title: 'Product Users' },
     ],
-    sender: { 
+    sender: {
       id: 4,
-      name: 'Jessica Rivera',
-      thumbnail: 'JR'
+      name: 'Alex Morgan',
+      thumbnail: 'AM',
     },
     created_at: '2024-11-18T10:45:23.789Z',
     updated_at: '2024-11-18T10:45:23.789Z',
-  }
+  },
 ];

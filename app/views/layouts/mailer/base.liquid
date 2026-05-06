@@ -1,94 +1,87 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" style="font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
-  <head>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title></title>
+    <title>Shopiz Email</title>
     <style type="text/css">
-      img {
-        max-width: 100%;
-      }
-
-      body {
-        -webkit-font-smoothing: antialiased;
-        -webkit-text-size-adjust: none;
-        height: 100%;
-        line-height: 1.6em;
-        width: 100% !important;
-      }
-
-      body {
-        background-color: #F8FAFC;
-      }
-
-      @media only screen and (max-width: 640px) {
-        body {
-          padding: 0 !important;
+        body { background-color: #F1F5F9; font-family: 'Nunito Sans', Helvetica, Arial, sans-serif; margin: 0; -webkit-font-smoothing: antialiased; }
+        img { max-width: 100%; border: none; text-decoration: none; }
+        
+        @media only screen and (max-width: 640px) {
+            .container { width: 100% !important; padding: 10px !important; }
+            .content-wrap { padding: 25px 20px !important; }
+            .header-box { padding: 25px 20px !important; }
         }
-        h1 {
-          font-size: 22px !important;
-          font-weight: 800 !important;
-          margin: 20px 0 5px !important;
-        }
-        h2 {
-          font-size: 18px !important;
-          font-weight: 800 !important;
-          margin: 20px 0 5px !important;
-        }
-        h3 {
-          font-size: 16px !important;
-          font-weight: 800 !important;
-          margin: 20px 0 5px !important;
-        }
-        h4 {
-          font-weight: 800 !important;
-          margin: 20px 0 5px !important;
-        }
-        .container {
-          padding: 0 !important;
-          width: 100% !important;
-        }
-        .content {
-          padding: 0 !important;
-        }
-        .content-wrap {
-          padding: 10px !important;
-        }
-      }
     </style>
-  </head>
+</head>
+<body style="background-color: #F1F5F9;">
+    {% assign brand_color = '#3b82f6' %}
+    {% assign brand_label = 'Notice' %}
 
-  <body itemscope itemtype="http://schema.org/EmailMessage" style="font-size: 14px; font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: none; width: 100% !important; height: 100%; line-height: 1.6em; background-color: #F8FAFC; margin: 0;" bgcolor="#F8FAFC">
-    <table class="body-wrap" style="width: 100%; background-color: #F8FAFC; margin: 0;" bgcolor="#F8FAFC">
-      <tr style="margin: 0;">
-        <td class="container" width="600" style="display: block !important; max-width: 600px !important; clear: both !important; margin: 0 auto;" valign="top">
-          <div class="content" style="display: block; margin: 0 auto; padding: 20px; text-align:center;">
-            <table class="main" width="100%" cellpadding="0" cellspacing="0" itemprop="action" itemscope itemtype="http://schema.org/ConfirmAction" style="border-radius: 6px;  background-color: #fff; text-align:left; margin: 0; border: 1px solid #e9e9e9; border-top:3px solid #0080f8;" bgcolor="#fff">
-              <tr style="margin: 0;">
-                <td class="content-wrap" style="vertical-align: top; margin: 0; padding: 20px; font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" valign="top">
-                  <table width="100%" cellpadding="0" cellspacing="0" style="margin: 0;">
-                    {{ content_for_layout }}
-                  </table>
-                </td>
-              </tr>
-            </table>
-          </div>
-          <div class="footer" style="color: #93AFC8; margin: 0; padding: 0 20px 40px; text-align: center">
-            <table width="100%" style="margin: 0;">
-              <tr style="margin: 0;">
-                {% if global_config['BRAND_NAME'] != '' %}
-                  <td class="content-block" style="font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
-                    Powered by
-                    <a href="{{ global_config['BRAND_URL'] }}" style="vertical-align: top; color: #93AFC8; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top">
-                      {{ global_config['BRAND_NAME'] }}
-                    </a>
-                  </td>
-                {% endif %}
-              </tr>
-            </table>
-          </div>
-        </td>
-      </tr>
+    {% if mailer_action == 'account_deleted' or mailer_action == 'account_deletion_for_inactivity' or mailer_action == 'account_deletion_user_initiated' or mailer_action == 'automation_rule_disabled' or mailer_action contains 'disconnect' or mailer_action == 'contact_import_failed' or mailer_action contains 'sla_missed' %}
+      {% assign brand_color = '#ef4444' %}
+      {% assign brand_label = 'Critical' %}
+    {% elsif mailer_action == 'unlock_instructions' or mailer_action == 'password_change' %}
+      {% assign brand_color = '#f59e0b' %}
+      {% assign brand_label = 'Warning' %}
+    {% endif %}
+
+    <table width="100%" bgcolor="#F1F5F9" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td class="container" width="600" style="display: block; margin: 0 auto; max-width: 600px; padding: 30px 0;">
+                
+                <table width="100%" bgcolor="#ffffff" style="border-radius: 24px; overflow: hidden; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); border-top: 5px solid #F97316;">
+                    
+                    <tr>
+                        <td class="header-box" style="background: linear-gradient(180deg, #FFF7ED 0%, #FFFFFF 100%); padding: 30px 20px; text-align: center;">
+                            <img src="{% if frontend_url %}{{ frontend_url }}{% else %}https://beta.shopiz.pro{% endif %}/brand-assets/logo_thumbnail.svg" width="80" alt="Shopiz" style="display: block; margin: 0 auto;" />
+                            
+                            <div style="margin-top: 8px; color: #F97316; font-size: 12px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;">
+                                {% if global_config['BRAND_NAME'] != blank %}{{ global_config['BRAND_NAME'] }}{% else %}Shopiz{% endif %}
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 0 45px;">
+                            <div style="height: 1px; width: 100%; background-color: #FEE2E2; opacity: 0.5;"></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="content-wrap" style="padding: 35px 45px 45px;">
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td style="padding-bottom: 25px; text-align: left;">
+                                        <span style="display: inline-block; padding: 6px 16px; background-color: {{ brand_color }}; color: #ffffff; border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">
+                                            {{ brand_label }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 15px; line-height: 1.6; color: #334155; text-align: left;">
+                                        {{ content_for_layout }}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td style="text-align: center; padding: 25px 20px; font-size: 12px; color: #94A3B8;">
+                            <p style="margin: 0 0 5px;">&copy; {{ "now" | date: "%Y" }} <strong>{% if global_config['BRAND_NAME'] != blank %}{{ global_config['BRAND_NAME'] }}{% else %}Shopiz{% endif %}</strong>. All Rights Reserved.</p>
+                            <div style="margin-top: 5px;">
+                                <a href="{% if frontend_url %}{{ frontend_url }}{% else %}https://beta.shopiz.pro{% endif %}" style="color: #F97316; text-decoration: none; font-weight: 600;">Trang chủ</a>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
     </table>
-  </body>
+</body>
 </html>

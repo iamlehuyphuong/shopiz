@@ -3,7 +3,7 @@
     "HEADER": "Cuộc hội thoại",
     "LOADING_CHART": "Đang tải dữ liệu biểu đồ...",
     "NO_ENOUGH_DATA": "Chúng tôi chưa nhận đủ dữ liệu để tạo báo cáo. Vui lòng thử lại sau.",
-    "DOWNLOAD_AGENT_REPORTS": "Tải báo cáo theo nhân viên",
+    "DOWNLOAD_CONVERSATION_REPORTS": "Tải báo cáo cuộc hội thoại",
     "DATA_FETCHING_FAILED": "Không thể lấy dữ liệu, vui lòng thử lại sau.",
     "SUMMARY_FETCHING_FAILED": "Không thể lấy dữ liệu tổng quan, vui lòng thử lại sau.",
     "METRICS": {
@@ -52,7 +52,6 @@
     "DATE_RANGE_OPTIONS": {
       "LAST_7_DAYS": "7 ngày cuối",
       "LAST_14_DAYS": "14 ngày cuối",
-
       "LAST_30_DAYS": "30 ngày cuối",
       "THIS_MONTH": "Tháng này",
       "LAST_MONTH": "Tháng trước",
@@ -134,6 +133,11 @@
     "NO_ENOUGH_DATA": "Chưa đủ dữ liệu để tạo báo cáo. Vui lòng thử lại sau.",
     "DOWNLOAD_AGENT_REPORTS": "Tải báo cáo nhân viên",
     "FILTER_DROPDOWN_LABEL": "Chọn nhân viên",
+    "FILTERS": {
+      "INPUT_PLACEHOLDER": {
+        "AGENTS": "Tìm kiếm nhân viên"
+      }
+    },
     "METRICS": {
       "CONVERSATIONS": {
         "NAME": "Cuộc hội thoại",
@@ -202,6 +206,11 @@
     "NO_ENOUGH_DATA": "Chưa đủ dữ liệu để tạo báo cáo. Vui lòng thử lại sau.",
     "DOWNLOAD_LABEL_REPORTS": "Tải báo cáo nhãn",
     "FILTER_DROPDOWN_LABEL": "Chọn nhãn",
+    "FILTERS": {
+      "INPUT_PLACEHOLDER": {
+        "LABELS": "Tìm nhãn"
+      }
+    },
     "METRICS": {
       "CONVERSATIONS": {
         "NAME": "Cuộc hội thoại",
@@ -277,20 +286,10 @@
     "FILTER_DROPDOWN_LABEL": "Chọn Hộp thư đến",
     "ALL_INBOXES": "Tất cả hộp thư",
     "SEARCH_INBOX": "Tìm kiếm hộp thư",
-    "VOICE_METRICS": {
-      "TOTAL_CALLS": "Tổng số cuộc gọi",
-      "INCOMING_CALLS": "Cuộc gọi đến",
-      "OUTGOING_CALLS": "Cuộc gọi đi",
-      "MISSED_CALLS": "Cuộc gọi nhỡ",
-      "AVG_DURATION": "Thời lượng cuộc gọi trung bình",
-      "AVG_WAITING_TIME": "Thời gian chờ trung bình",
-      "SUCCESS_RATE": "Tỷ lệ thành công cuộc gọi"
-    },
-    "VOICE_CHARTS": {
-      "CALLS_BY_TYPE": "Cuộc gọi theo loại",
-      "CALL_DURATION": "Thời lượng cuộc gọi trung bình",
-      "WAITING_TIME": "Thời gian chờ trung bình",
-      "SUCCESS_RATE": "Tỷ lệ thành công cuộc gọi"
+    "FILTERS": {
+      "INPUT_PLACEHOLDER": {
+        "INBOXES": "Tìm kiếm hộp thư"
+      }
     },
     "METRICS": {
       "CONVERSATIONS": {
@@ -360,6 +359,14 @@
     "NO_ENOUGH_DATA": "Chưa đủ dữ liệu để tạo báo cáo. Vui lòng thử lại sau.",
     "DOWNLOAD_TEAM_REPORTS": "Tải báo cáo nhóm",
     "FILTER_DROPDOWN_LABEL": "Chọn nhóm",
+    "FILTERS": {
+      "ADD_FILTER": "Thêm bộ lọc",
+      "CLEAR_ALL": "Xoá tất cả",
+      "NO_FILTER": "Không có bộ lọc nào",
+      "INPUT_PLACEHOLDER": {
+        "TEAMS": "Tìm kiếm nhóm"
+      }
+    },
     "METRICS": {
       "CONVERSATIONS": {
         "NAME": "Cuộc hội thoại",
@@ -424,11 +431,30 @@
   "CSAT_REPORTS": {
     "HEADER": "Báo cáo CSAT",
     "NO_RECORDS": "Không có phản hồi khảo sát CSAT nào.",
+    "NO_RECORDS_DESCRIPTION": "Phản hồi khảo sát CSAT sẽ xuất hiện tại đây khi khách hàng bắt đầu cung cấp phản hồi.",
     "DOWNLOAD": "Tải báo cáo CSAT",
     "DOWNLOAD_FAILED": "Không thể tải báo cáo CSAT",
     "FILTERS": {
+      "ADD_FILTER": "Thêm bộ lọc",
+      "CLEAR_ALL": "Xoá tất cả",
+      "NO_FILTER": "Không có bộ lọc nào",
+      "INPUT_PLACEHOLDER": {
+        "AGENTS": "Tìm kiếm nhân viên",
+        "INBOXES": "Tìm kiếm nguồn hộp thư",
+        "TEAMS": "Tìm kiếm nhóm",
+        "RATINGS": "Tìm kiếm đánh giá"
+      },
       "AGENTS": {
-        "PLACEHOLDER": "Chọn nhân viên"
+        "LABEL": "Nhân viên"
+      },
+      "INBOXES": {
+        "LABEL": "Hộp thư đến"
+      },
+      "TEAMS": {
+        "LABEL": "Nhóm"
+      },
+      "RATINGS": {
+        "LABEL": "Đánh giá"
       }
     },
     "TABLE": {
@@ -436,9 +462,16 @@
         "CONTACT_NAME": "Khách hàng",
         "AGENT_NAME": "Nhân viên phụ trách",
         "RATING": "Đánh giá",
-        "FEEDBACK_TEXT": "Phản hồi"
-      }
+        "FEEDBACK_TEXT": "Phản hồi",
+        "CONVERSATION": "Cuộc hội thoại",
+        "CUSTOMER": "Khách hàng",
+        "RESPONSE": "Phản hồi",
+        "HANDLED_BY": "Được xử lý bởi"
+      },
+      "UNKNOWN_CUSTOMER": "Khách hàng không xác định"
     },
+    "NO_AGENT": "Không có nhân viên phụ trách",
+    "NO_FEEDBACK": "Không có phản hồi",
     "METRIC": {
       "TOTAL_RESPONSES": {
         "LABEL": "Tổng số phản hồi",
@@ -451,6 +484,25 @@
       "RESPONSE_RATE": {
         "LABEL": "Tỷ lệ phản hồi",
         "TOOLTIP": "Tổng phản hồi / Tổng khảo sát CSAT gửi * 100"
+      },
+      "RATING_DISTRIBUTION": "Phân bố đánh giá"
+    },
+    "REVIEW_NOTES": {
+      "TITLE": "Ghi chú đánh giá",
+      "PLACEHOLDER": "Thêm ghi chú đánh giá về đánh giá này...",
+      "SAVE": "Lưu",
+      "CANCEL": "Huỷ",
+      "SAVING": "Đang lưu...",
+      "SAVED": "Đã lưu ghi chú",
+      "SAVE_ERROR": "Không thể lưu ghi chú",
+      "UPDATED_BY": "Cập nhật bởi {name} {time}",
+      "UPDATED_BY_LABEL": "Cập nhật bởi",
+      "PAYWALL": {
+        "TITLE": "Nâng cấp để thêm ghi chú đánh giá",
+        "AVAILABLE_ON": "Tính năng ghi chú đánh giá chỉ khả dụng trong các gói Business và Enterprise.",
+        "UPGRADE_PROMPT": "Thêm ngữ cảnh nội bộ vào mọi phản hồi CSAT với ghi chú đánh giá. Ghi lại những gì thực sự đã xảy ra, phát hiện xu hướng nhanh hơn và đưa ra quyết định tốt hơn từ phản hồi của bạn.",
+        "UPGRADE_NOW": "Nâng cấp ngay",
+        "CANCEL_ANYTIME": "Bạn có thể thay đổi hoặc hủy gói bất cứ lúc nào"
       }
     }
   },
@@ -500,7 +552,6 @@
       "CONVERSATIONS": "{count} cuộc hội thoại",
       "DOWNLOAD_REPORT": "Tải báo cáo"
     },
-
     "AGENT_CONVERSATIONS": {
       "HEADER": "Cuộc hội thoại theo nhân viên",
       "LOADING_MESSAGE": "Đang tải dữ liệu...",
@@ -600,5 +651,22 @@
     "AVG_REPLY_TIME": "Thời gian chờ trung bình",
     "RESOLUTION_COUNT": "Số lượng xử lý",
     "CONVERSATIONS": "Số cuộc hội thoại"
+  },
+  "REPORT_TIME_UNITS": {
+    "DAY": "Ngày",
+    "HOUR": "Giờ",
+    "MINUTE": "Phút",
+    "SECOND": "Giây"
+  },
+  "ORDER_ANALYTICS": {
+    "HEADER": "Báo cáo đơn hàng",
+    "LOADING": "Đang tải dữ liệu đơn hàng...",
+    "NO_DATA": "Không có dữ liệu đơn hàng cho khoảng thời gian đã chọn.",
+    "TOTAL_ORDERS": "Tổng đơn hàng",
+    "TOTAL_REVENUE": "Tổng doanh thu",
+    "AVG_ORDER_VALUE": "Giá trị trung bình",
+    "BY_PLATFORM": "Theo nền tảng",
+    "BY_STATUS": "Theo trạng thái",
+    "ORDERS": "đơn"
   }
 }

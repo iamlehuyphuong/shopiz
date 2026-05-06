@@ -17,7 +17,7 @@ class Facebook::LoadHistoryMessageService
       next if message_already_exists?(message_data['id'])
 
       message = Facebook::MessageBuilder.new(@conversation, @channel.page_id, message_data).perform
-      @new_messages << message.id
+      @new_messages << message.id if message
     end
     @new_messages
   rescue Koala::Facebook::APIError => e
@@ -33,16 +33,16 @@ class Facebook::LoadHistoryMessageService
     if @conversation.next_cursor.present?
       params[:after] = @conversation.next_cursor
     else
-      first_message = @conversation.messages.first
-      params[:until] = first_message.created_at.to_i if first_message
+      oldest_message = @conversation.messages.order(:created_at).first
+      params[:until] = oldest_message.created_at.to_i if oldest_message
     end
     params
   end
 
   def message_already_exists?(source_id)
-    return unless source_id
+    return false if source_id.blank?
 
-    @message = Message.exists?(source_id: source_id)
+    Message.where(account_id: @conversation.account_id).exists?(source_id: source_id)
   end
 
   def save_paging_info(result)
@@ -53,10 +53,10 @@ class Facebook::LoadHistoryMessageService
   end
 
   def fetch_conversation_id
-    message_id = @conversation.messages.last&.id
-    return unless message_id
+    source_id = @conversation.messages.order(created_at: :desc).pick(:source_id)
+    return if source_id.blank?
 
-    result = @graph.get_object(message_id, fields: 'conversation')
+    result = @graph.get_object(source_id, fields: 'conversation')
     source_conversation_id = result.dig('conversation', 'id')
     update_source_conversation(source_conversation_id)
 

@@ -5,6 +5,9 @@
     "LOADING": "Đang tải nhãn",
     "DESCRIPTION": "Nhãn giúp bạn phân loại và ưu tiên các cuộc hội thoại và khách hàng tiềm năng. Bạn có thể gán nhãn cho cuộc hội thoại hoặc liên hệ thông qua bảng bên.",
     "LEARN_MORE": "Tìm hiểu thêm về nhãn",
+    "COUNT": "{n} nhãn",
+    "SEARCH_PLACEHOLDER": "Tìm nhãn...",
+    "NO_RESULTS": "Không tìm thấy nhãn nào khớp với tìm kiếm của bạn",
     "SEARCH_404": "Không có mục nào khớp với từ khóa tìm kiếm",
     "LIST": {
       "404": "Không có nhãn nào trong tài khoản này.",
@@ -13,7 +16,8 @@
       "TABLE_HEADER": {
         "NAME": "Tên",
         "DESCRIPTION": "Mô tả",
-        "COLOR": "Màu sắc"
+        "COLOR": "Màu sắc",
+        "ACTION": "Hành động"
       }
     },
     "FORM": {

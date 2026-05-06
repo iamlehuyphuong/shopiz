@@ -129,7 +129,7 @@
             "ITEMS": {
               "NAME": "Tên",
               "DOMAIN": "Tên miền tuỳ chỉnh",
-              "SLUG": "Slug",
+              "SLUG": "Đường dẫn (Slug)",
               "TITLE": "Tiêu đề cổng",
               "THEME": "Màu chủ đề",
               "SUB_TEXT": "Tiêu đề phụ của cổng thông tin"
@@ -248,7 +248,7 @@
           "ERROR": "Tên bắt buộc có"
         },
         "SLUG": {
-          "LABEL": "Slug",
+          "LABEL": "Đường dẫn (Slug)",
           "PLACEHOLDER": "Slug cổng cho các url",
           "ERROR": "Phải có Slug"
         },
@@ -316,6 +316,18 @@
           "SUCCESS_MESSAGE": "Ngôn ngữ đã được gỡ bỏ thành công khỏi cổng thông tin",
           "ERROR_MESSAGE": "Không thể gỡ ngôn ngữ khỏi cổng thông tin. Vui lòng thử lại."
         }
+      },
+      "DRAFT_LOCALE": {
+        "API": {
+          "SUCCESS_MESSAGE": "Đã chuyển ngôn ngữ sang bản nháp thành công",
+          "ERROR_MESSAGE": "Không thể chuyển ngôn ngữ sang nháp. Vui lòng thử lại."
+        }
+      },
+      "PUBLISH_LOCALE": {
+        "API": {
+          "SUCCESS_MESSAGE": "Đã xuất bản ngôn ngữ thành công",
+          "ERROR_MESSAGE": "Không thể xuất bản ngôn ngữ. Vui lòng thử lại."
+        }
       }
     },
     "TABLE": {
@@ -374,6 +386,16 @@
         "ERROR_MESSAGE": "Lỗi khi xóa bài viết"
       }
     },
+    "REORDER_ARTICLE": {
+      "API": {
+        "ERROR_MESSAGE": "Không thể sắp xếp lại vị trí bài viết. Vui lòng thử lại."
+      }
+    },
+    "REORDER_CATEGORY": {
+      "API": {
+        "ERROR_MESSAGE": "Không thể sắp xếp lại vị trí danh mục. Vui lòng thử lại."
+      }
+    },
     "CREATE_ARTICLE": {
       "ERROR_MESSAGE": "Vui lòng thêm tiêu đề và nội dung bài viết sau đó mới có thể cập nhật cài đặt"
     },
@@ -395,9 +417,9 @@
           "ERROR": "Tên bắt buộc có"
         },
         "SLUG": {
-          "LABEL": "Slug",
+          "LABEL": "Đường dẫn (Slug)",
           "PLACEHOLDER": "Slug danh mục cho URL",
-          "HELP_TEXT": "shopiz.pro/hc/my-portal/en-US/categories/my-slug",
+          "HELP_TEXT": "shopiz.pro/hc/my-portal/vi-VN/categories/my-slug",
           "ERROR": "Phải có Slug"
         },
         "DESCRIPTION": {
@@ -426,9 +448,9 @@
           "ERROR": "Tên bắt buộc có"
         },
         "SLUG": {
-          "LABEL": "Slug",
+          "LABEL": "Đường dẫn (Slug)",
           "PLACEHOLDER": "Slug danh mục cho URL",
-          "HELP_TEXT": "shopiz.pro/hc/my-portal/en-US/categories/my-slug",
+          "HELP_TEXT": "shopiz.pro/hc/my-portal/vi-VN/categories/my-slug",
           "ERROR": "Phải có Slug"
         },
         "DESCRIPTION": {
@@ -609,7 +631,7 @@
             "ERROR": "Tên bắt buộc có"
           },
           "SLUG": {
-            "LABEL": "Slug",
+            "LABEL": "Đường dẫn (Slug)",
             "PLACEHOLDER": "Slug danh mục cho URL",
             "ERROR": "Phải có Slug",
             "HELP_TEXT": "shopiz.pro/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
@@ -634,8 +656,11 @@
         "ARTICLES_COUNT": "{count} bài viết",
         "CATEGORIES_COUNT": "{count} danh mục",
         "DEFAULT": "Mặc định",
+        "DRAFT": "Bản nháp",
         "DROPDOWN_MENU": {
           "MAKE_DEFAULT": "Đặt làm mặc định",
+          "MOVE_TO_DRAFT": "Chuyển sang nháp",
+          "PUBLISH_LOCALE": "Xuất bản ngôn ngữ",
           "DELETE": "Xoá"
         }
       },
@@ -644,6 +669,13 @@
         "DESCRIPTION": "Chọn ngôn ngữ mà bài viết này sẽ được viết. Ngôn ngữ này sẽ được thêm vào danh sách bản dịch của bạn, và bạn có thể thêm các ngôn ngữ khác sau.",
         "COMBOBOX": {
           "PLACEHOLDER": "Chọn ngôn ngữ..."
+        },
+        "STATUS": {
+          "LABEL": "Trạng thái",
+          "OPTIONS": {
+            "LIVE": "Đã xuất bản",
+            "DRAFT": "Bản nháp"
+          }
         },
         "API": {
           "SUCCESS_MESSAGE": "Ngôn ngữ được thêm thành công",
@@ -700,8 +732,8 @@
         "ERROR": "Tên bắt buộc có"
       },
       "SLUG": {
-        "LABEL": "Slug",
-        "PLACEHOLDER": "user-guide",
+        "LABEL": "Đường dẫn (Slug)",
+        "PLACEHOLDER": "huong-dan-su-dung",
         "ERROR": "Phải có Slug",
         "FORMAT_ERROR": "Vui lòng nhập một slug hợp lệ, ví dụ: user-guide"
       }
@@ -735,14 +767,14 @@
           "ERROR": "Nhập một URL hợp lệ. Liên kết trang chủ phải bắt đầu bằng 'http://' hoặc 'https://'."
         },
         "SLUG": {
-          "LABEL": "Slug",
+          "LABEL": "Đường dẫn (Slug)",
           "PLACEHOLDER": "Slug cổng"
         },
         "LIVE_CHAT_WIDGET": {
           "LABEL": "Tiện ích chat trực tiếp",
           "PLACEHOLDER": "Chọn tiện ích chat trực tiếp",
           "HELP_TEXT": "Chọn tiện ích chat trực tiếp sẽ hiển thị trên trung tâm trợ giúp của bạn.",
-          "NONE_OPTION": "No widget"
+          "NONE_OPTION": "Không có widget"
         },
         "BRAND_COLOR": {
           "LABEL": "Màu thương hiệu"

@@ -131,7 +131,7 @@ const closeParameterTypeDropdown = () => {
           >
             <button
               type="button"
-              class="flex items-center justify-between gap-2 w-full px-3 py-2 border border-n-blue-5 rounded-lg bg-n-solid-1 text-n-slate-12 focus:outline-none focus:ring-2 focus:ring-n-blue-5 focus:border-n-blue-5 transition-colors hover:bg-n-solid-2"
+              class="flex items-center justify-between gap-2 w-full px-3 py-2 border border-n-orange-5 rounded-lg bg-n-solid-1 text-n-slate-12 focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-n-orange-5 focus-visible:border-n-orange-5 transition-colors hover:bg-n-solid-2"
               @click="toggleParameterTypeDropdown"
             >
               <span class="truncate">{{ selectedParameterTypeLabel }}</span>

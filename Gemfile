@@ -33,7 +33,7 @@ gem 'liquid'
 # Parse Markdown to HTML
 gem 'commonmarker'
 # Convert PDF pages to images for content extraction
-gem 'pdftoimage'
+gem 'pdftoimage', require: false
 # Google Vision API for text extraction from images
 gem 'google-cloud-vision'
 # Tesseract OCR fallback when Vision API not available
@@ -170,7 +170,7 @@ gem 'working_hours'
 gem 'pg_search'
 
 # Subscriptions, Billing
-gem 'stripe'
+gem 'stripe', '~> 18.0'
 
 ## - helper gems --##
 ## to populate db with sample data
@@ -199,10 +199,17 @@ gem 'reverse_markdown'
 
 gem 'iso-639'
 gem 'ruby-openai'
-gem 'ai-agents', '>= 0.7.0'
+gem 'ai-agents', '>= 0.9.1'
 
 # TODO: Move this gem as a dependency of ai-agents
+gem 'ruby_llm', '>= 1.8.2'
 gem 'ruby_llm-schema'
+
+gem 'cld3', '~> 3.7'
+
+# OpenTelemetry for LLM observability
+gem 'opentelemetry-sdk'
+gem 'opentelemetry-exporter-otlp'
 
 gem 'shopify_api'
 
@@ -218,7 +225,7 @@ group :production do
 end
 
 group :development do
-  gem 'annotate'
+  gem 'annotaterb'
   gem 'bullet'
   gem 'letter_opener'
   gem 'scss_lint', require: false
@@ -269,8 +276,9 @@ group :development, :test do
   gem 'seed_dump'
   gem 'shoulda-matchers'
   gem 'simplecov', '>= 0.21', require: false
+  gem 'skooma'
   gem 'spring'
   gem 'spring-watcher-listen'
 end
 
-gem 'polar_sh', '~> 0.1.1'
+

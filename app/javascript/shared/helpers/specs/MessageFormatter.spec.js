@@ -10,15 +10,13 @@ describe('#MessageFormatter', () => {
       );
     });
     it('should format correctly', () => {
-      const message =
-        'Chatwoot is an opensource tool. https://www.shopiz.pro';
+      const message = 'Chatwoot is an opensource tool. https://www.shopiz.pro';
       expect(new MessageFormatter(message).formattedMessage).toMatch(
         '<p>Chatwoot is an opensource tool. <a href="https://www.shopiz.pro" class="link" rel="noreferrer noopener nofollow" target="_blank">https://www.shopiz.pro</a></p>'
       );
     });
     it('should not convert template variables to links when linkify is disabled', () => {
-      const message =
-        'Hey {{customer.name}}, check https://www.shopiz.pro';
+      const message = 'Hey {{customer.name}}, check https://www.shopiz.pro';
       const formatter = new MessageFormatter(message, false, false, false);
       expect(formatter.formattedMessage).toMatch(
         '<p>Hey {{customer.name}}, check https://www.shopiz.pro</p>'

@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "authorName": "Linh Nguyễn",
+    "authorCompanyVi": "Chủ sở hữu thời trang FashionIZ",
+    "authorCompanyEn": "Owner of FashionIZ",
+    "authorImage": "https://www.chatwoot.com/testimonials/ariel-lambrecht.jpeg",
+    "authorReviewVi": "Shopiz đã hoàn toàn thay đổi cách chúng tôi hỗ trợ khách hàng. Đúng như slogan, việc bán hàng trở nên cực kỳ dễ dàng!",
+    "authorReviewEn": "Shopiz has completely changed how we handle customer support. Making selling 'IZ' indeed!",
+    "live": true
+  },
+  {
+    "id": 2,
+    "authorName": "Minh Trần",
+    "authorCompanyVi": "Người sáng lập TechShop",
+    "authorCompanyEn": "Founder of TechShop",
+    "authorImage": "https://www.chatwoot.com/testimonials/marcelo-ariatti.jpeg",
+    "authorReviewVi": "Khả năng hỗ trợ đa kênh của Shopiz thật sự xuất sắc. Rất đáng trải nghiệm cho bất kỳ doanh nghiệp thương mại điện tử nào.",
+    "authorReviewEn": "The omni-channel capabilities of Shopiz are top-notch. Highly recommended for any e-commerce business.",
+    "live": true
+  },
+  {
+    "id": 3,
+    "authorName": "Elena Phạm",
+    "authorCompanyVi": "Quản lý dịch vụ khách hàng tại E-Global",
+    "authorCompanyEn": "Customer Service Manager at E-Global",
+    "authorImage": "https://www.chatwoot.com/testimonials/adam-compton.jpg",
+    "authorReviewVi": "Giao diện thân thiện và tính năng thông minh giúp đội ngũ của tôi phản hồi khách hàng nhanh chóng và chuyên nghiệp hơn rất nhiều.",
+    "authorReviewEn": "The user-friendly interface and smart features help my team respond to customers much faster and more professionally.",
+    "live": true
+  }
+]

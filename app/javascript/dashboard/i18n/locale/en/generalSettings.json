@@ -6,7 +6,24 @@
       "AGENTS": "You have exceeded the agent limit. Your plan only allows {allowed} agents.",
       "CONTACTS": "You have exceeded the contact limit. Your plan only allows {allowed} contacts.",
       "AUTOMATIONS": "You have exceeded the automation rule limit. Your plan only allows {allowed} automation rules.",
-      "NON_ADMIN": "Please contact your administrator to upgrade the plan and continue using all features."
+      "NON_ADMIN": "Please contact your administrator to upgrade the plan and continue using all features.",
+      "UPGRADE_PROMPT_GENERIC": "The {feature} feature is not available in your current plan. Please upgrade to access this and other premium features.",
+      "UPGRADE_PROMPT_CRM": "Upgrade to continue using Shopiz. You have exceeded the contact limit. Your plan only allows {allowed} contacts.",
+      "UPGRADE_PROMPT_CAMPAIGNS": "Campaigns are available on a higher plan. Upgrade to start reaching more customers with pro-active messaging.",
+      "UPGRADE_PROMPT_REPORTS": "Advanced reports and analytics are available on a higher plan. Upgrade to gain deeper insights into your business.",
+      "UPGRADE_PROMPT_AUTOMATIONS": "Automations and workflows are available on a higher plan. Upgrade to save time and scale your operations.",
+      "UPGRADE_PROMPT_SAML": "SAML SSO is not available in your current plan. Upgrade to enhance your team's security with single sign-on.",
+      "UPGRADE_PROMPT_SLA": "Service Level Agreements (SLA) are not available in your current plan. Upgrade to start tracking and enforcing response times.",
+      "UPGRADE_PROMPT_CUSTOM_ROLES": "Custom Roles are not available in your current plan. Upgrade to manage granular permissions for your team members.",
+      "UPGRADE_PROMPT_CAPTAIN": "ShopizAI is not available in your current plan. Please upgrade to access this and other premium features.",
+      "UPGRADE_PROMPT_CHANNEL_ZALOPERSONAL": "The Zalo Personal Channel feature is not available in your current plan. Please upgrade to access this and other premium features.",
+      "UPGRADE_PROMPT_WHATSAPP_CAMPAIGN": "WhatsApp Campaigns are not available in your current plan. Please upgrade to access this and other premium features.",
+      "UPGRADE_PROMPT_CUSTOM_ATTRIBUTES": "Custom Attributes are not available in your current plan. Please upgrade to access this and other premium features.",
+      "UPGRADE_PROMPT_AGENT_BOTS": "Agent Bots are not available in your current plan. Please upgrade to access this and other premium features.",
+      "UPGRADE_PROMPT_TEMPLATE_BUILDER": "The Template Builder feature is not available in your current plan. Please upgrade to access this and other premium features.",
+      "UPGRADE_PROMPT_INTEGRATIONS": "Integrations are not available in your current plan. Please upgrade to access this and other premium features.",
+      "UPGRADE_PROMPT_AUDIT_LOGS": "Audit Logs are not available in your current plan. Please upgrade to access this and other premium features.",
+      "UPGRADE_PROMPT_HELP_CENTER": "Help Center is not available in your current plan. Please upgrade to access this and other premium features."
     },
     "TITLE": "Account settings",
     "SUBMIT": "Update settings",
@@ -126,11 +143,22 @@
       }
     },
     "UPDATE_CHATWOOT": "An update {latestShopizVersion} for Shopiz is available. Please update your instance.",
+    "VERSION": "Version: {version}",
     "LEARN_MORE": "Learn more",
     "PAYMENT_PENDING": "Your payment is pending. Please update your payment information to continue using Shopiz",
+    "SUBSCRIPTION_EXPIRED": "Your subscription has expired. Please subscribe to a new plan to continue using all features.",
+    "SUBSCRIPTION_EXPIRED_GRACE": "Your subscription has expired. You have {days} day(s) remaining to renew before being downgraded to the Free plan.",
     "UPGRADE": "Upgrade to continue using Shopiz",
     "LIMITS_UPGRADE": "Your account has exceeded the usage limits, please upgrade your plan to continue using Shopiz",
-    "OPEN_BILLING": "Open billing"
+    "OPEN_BILLING": "Open billing",
+    "CLOSE": "Close",
+    "CAPTAIN_API_SOURCE": {
+      "USER_HOOK_BANNER": "AI is using your personal OpenAI API key. You won't be charged system credits.",
+      "NO_KEY_BANNER": "No AI API key configured. Please set up OpenAI integration or contact admin.",
+      "BADGE_PERSONAL_KEY": "Personal API Key",
+      "BADGE_SYSTEM_KEY": "System AI",
+      "CONFIGURE_OPENAI": "Configure OpenAI"
+    }
   },
   "FORMS": {
     "MULTISELECT": {
@@ -184,6 +212,7 @@
   },
   "COMMAND_BAR": {
     "SEARCH_PLACEHOLDER": "Search or jump to",
+    "SNOOZE_PLACEHOLDER": "Type a time e.g. tomorrow, 2 hours, next friday, jan 15...",
     "SECTIONS": {
       "GENERAL": "General",
       "REPORTS": "Reports",

@@ -20,22 +20,22 @@ export const getters = {
   },
   getCampaigns:
     _state =>
-      (campaignType, inboxChannelTypes = null) => {
-        let filteredRecords = _state.records.filter(
-          record => record.campaign_type === campaignType
-        );
+    (campaignType, inboxChannelTypes = null) => {
+      let filteredRecords = _state.records.filter(
+        record => record.campaign_type === campaignType
+      );
 
-        if (inboxChannelTypes && Array.isArray(inboxChannelTypes)) {
-          filteredRecords = filteredRecords.filter(record => {
-            return (
-              record.inbox &&
-              inboxChannelTypes.includes(record.inbox.channel_type)
-            );
-          });
-        }
+      if (inboxChannelTypes && Array.isArray(inboxChannelTypes)) {
+        filteredRecords = filteredRecords.filter(record => {
+          return (
+            record.inbox &&
+            inboxChannelTypes.includes(record.inbox.channel_type)
+          );
+        });
+      }
 
-        return filteredRecords.sort((a1, a2) => a1.id - a2.id);
-      },
+      return filteredRecords.sort((a1, a2) => a1.id - a2.id);
+    },
   getSMSCampaigns: (_state, _getters) => {
     const smsChannelTypes = [INBOX_TYPES.SMS, INBOX_TYPES.TWILIO];
     return _getters.getCampaigns(CAMPAIGN_TYPES.ONE_OFF, smsChannelTypes);
@@ -50,7 +50,26 @@ export const getters = {
   },
   getZaloPersonalCampaigns: (_state, _getters) => {
     const zaloPersonalChannelTypes = [INBOX_TYPES.ZALO_PERSONAL];
-    return _getters.getCampaigns(CAMPAIGN_TYPES.ONE_OFF, zaloPersonalChannelTypes);
+    return _getters.getCampaigns(
+      CAMPAIGN_TYPES.ONE_OFF,
+      zaloPersonalChannelTypes
+    );
+  },
+  getFacebookCampaigns: (_state, _getters) => {
+    const facebookChannelTypes = [INBOX_TYPES.FB];
+    return _getters.getCampaigns(CAMPAIGN_TYPES.ONE_OFF, facebookChannelTypes);
+  },
+  getZaloOaCampaigns: (_state, _getters) => {
+    const zaloOaChannelTypes = [INBOX_TYPES.ZALO_OA];
+    return _getters.getCampaigns(CAMPAIGN_TYPES.ONE_OFF, zaloOaChannelTypes);
+  },
+  getTelegramCampaigns: (_state, _getters) => {
+    const telegramChannelTypes = [INBOX_TYPES.TELEGRAM];
+    return _getters.getCampaigns(CAMPAIGN_TYPES.ONE_OFF, telegramChannelTypes);
+  },
+  getLineCampaigns: (_state, _getters) => {
+    const lineChannelTypes = [INBOX_TYPES.LINE];
+    return _getters.getCampaigns(CAMPAIGN_TYPES.ONE_OFF, lineChannelTypes);
   },
   getAllCampaigns: _state => {
     return _state.records;

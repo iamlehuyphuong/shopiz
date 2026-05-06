@@ -1,5 +1,6 @@
 <script setup>
 import { format, fromUnixTime } from 'date-fns';
+import { useI18n } from 'vue-i18n';
 
 defineProps({
   label: {
@@ -11,8 +12,11 @@ defineProps({
     required: true,
   },
 });
+
+const { t } = useI18n();
+
 const formatDate = timestamp =>
-  format(fromUnixTime(timestamp), 'MMM dd, yyyy, hh:mm a');
+  format(fromUnixTime(timestamp), t('GENERAL.DATETIME_FORMAT'));
 </script>
 
 <template>

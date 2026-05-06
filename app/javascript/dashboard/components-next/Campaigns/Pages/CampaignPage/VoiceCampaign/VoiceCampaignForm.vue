@@ -183,7 +183,7 @@ const handleSubmit = async () => {
         class="[&>div>button]:bg-n-alpha-black2 [&>div>button:not(.focused)]:dark:outline-n-weak [&>div>button:not(.focused)]:hover:!outline-n-slate-6"
       />
     </div>
-    
+
     <div class="flex flex-col gap-1">
       <label for="sender" class="mb-0.5 text-sm font-medium text-n-slate-12">
         {{ t('CAMPAIGN.VOICE.CREATE.FORM.SENT_BY.LABEL') }}
@@ -231,7 +231,7 @@ const handleSubmit = async () => {
         color="slate"
         type="button"
         :label="t('CAMPAIGN.VOICE.CREATE.FORM.BUTTONS.CANCEL')"
-        class="w-full bg-n-alpha-2 n-blue-text hover:bg-n-alpha-3"
+        class="w-full bg-n-alpha-2 n-orange-text hover:bg-n-alpha-3"
         @click="handleCancel"
       />
       <Button

@@ -9,11 +9,32 @@
     "EMAIL_ADDRESS": "Email Address",
     "PHONE_NUMBER": "Phone number",
     "IDENTIFIER": "Identifier",
+    "ZALO_PERSONAL": {
+      "CONNECT_TITLE": "Connect Zalo Personal",
+      "CONNECT_SUBTITLE": "Create a new conversation via Zalo Personal",
+      "SELECT_INBOX": "Select Zalo Personal Inbox",
+      "SELECT_INBOX_PLACEHOLDER": "Select an inbox",
+      "SELECT_INBOX_REQUIRED": "Please select a Zalo Personal inbox",
+      "SEND_FRIEND_REQUEST": "Send Friend Request",
+      "FRIEND_REQUEST_MESSAGE": "Friend Request Message",
+      "GREETING_MESSAGE": "Greeting Message",
+      "CANCEL": "Cancel",
+      "SUBMIT": "Connect",
+      "CONNECT_SUCCESS": "Successfully connected via Zalo Personal.",
+      "CONNECT_ERROR": "Failed to connect via Zalo Personal.",
+      "CONNECT_TOOLTIP": "Connect Zalo Personal"
+    },
     "COPY_SUCCESSFUL": "Copied to clipboard successfully",
+    "SAVE_CONTACT": "Save to contact",
+    "SAVE_CONTACT_SUCCESS": "Contact updated successfully",
+    "SAVE_CONTACT_ERROR": "Could not update contact",
+    "NO_CONTACT_FOUND": "No contact assigned to this conversation",
     "COPY_EMAIL": "Copy email",
     "SEND_EMAIL": "Send email",
     "COPY_PHONE": "Copy phone number",
     "LOOKUP_ZALO": "Search on Zalo",
+    "ADDRESS": "Address",
+    "NOT_AVAILABLE_ADDRESS": "Address not available",
     "COMPANY": "Company",
     "LOCATION": "Location",
     "BROWSER_LANGUAGE": "Browser Language",
@@ -27,7 +48,8 @@
     "CREATED_AT_LABEL": "Created",
     "NEW_MESSAGE": "New message",
     "CALL": "Call",
-    "CALL_UNDER_DEVELOPMENT": "Calling is under development",
+    "CALL_INITIATED": "Calling the contact…",
+    "CALL_FAILED": "Unable to start the call. Please try again.",
     "REQUEST_FRIEND": "Send a friend request",
     "VOICE_INBOX_PICKER": {
       "TITLE": "Choose a voice inbox"
@@ -130,6 +152,10 @@
       "COMPANY_NAME": {
         "PLACEHOLDER": "Enter the company name",
         "LABEL": "Company Name"
+      },
+      "ADDRESS": {
+        "PLACEHOLDER": "Enter the detailed address",
+        "LABEL": "Address"
       },
       "COUNTRY": {
         "PLACEHOLDER": "Enter the country name",
@@ -392,7 +418,7 @@
       }
     },
     "PAGINATION_FOOTER": {
-      "SHOWING": "Showing {startItem} - {endItem} of {totalItems} contacts"
+      "SHOWING": "Showing {startItem} - {endItem} of {totalItems} contact | Showing {startItem} - {endItem} of {totalItems} contacts"
     },
     "FILTER": {
       "NAME": "Name",
@@ -473,6 +499,12 @@
           "INSTAGRAM": {
             "PLACEHOLDER": "Add Instagram"
           },
+          "TELEGRAM": {
+            "PLACEHOLDER": "Add Telegram"
+          },
+          "TIKTOK": {
+            "PLACEHOLDER": "Add TikTok"
+          },
           "LINKEDIN": {
             "PLACEHOLDER": "Add LinkedIn"
           },
@@ -489,6 +521,8 @@
     "DETAILS": {
       "CREATED_AT": "Created {date}",
       "LAST_ACTIVITY": "Last active {date}",
+      "SOURCE": "Source: {source}",
+      "SOURCE_SYSTEM": "System / Manual",
       "DELETE_CONTACT_DESCRIPTION": "Permanently delete this contact. This action is irreversible",
       "DELETE_CONTACT": "Delete contact",
       "DELETE_DIALOG": {
@@ -586,7 +620,8 @@
       "SEARCH_EMPTY_STATE_TITLE": "No contacts matches your search 🔍",
       "LIST_EMPTY_STATE_TITLE": "No contacts available in this view 📋",
       "ACTIVE_EMPTY_STATE_TITLE": "No contacts are active at the moment 🌙"
-    }
+    },
+    "LOAD_MORE": "Load more"
   },
   "CONTACTS_BULK_ACTIONS": {
     "ASSIGN_LABELS": "Assign Labels",
@@ -620,7 +655,7 @@
       "NO_INBOX_ALERT": "There are no available inboxes to start a conversation with this contact.",
       "CONTACT_SELECTOR": {
         "LABEL": "To:",
-        "TAG_INPUT_PLACEHOLDER": "Search for a contact with name, email or phone number",
+        "TAG_INPUT_PLACEHOLDER": "Enter at least 2 characters to search by name, email, or phone number",
         "CONTACT_CREATING": "Creating contact..."
       },
       "INBOX_SELECTOR": {
@@ -631,9 +666,9 @@
         "SUBJECT_LABEL": "Subject :",
         "SUBJECT_PLACEHOLDER": "Enter your email subject here",
         "CC_LABEL": "Cc:",
-        "CC_PLACEHOLDER": "Search for a contact with their email address",
+        "CC_PLACEHOLDER": "Enter at least 2 characters to search by email",
         "BCC_LABEL": "Bcc:",
-        "BCC_PLACEHOLDER": "Search for a contact with their email address",
+        "BCC_PLACEHOLDER": "Enter at least 2 characters to search by email",
         "BCC_BUTTON": "Bcc"
       },
       "MESSAGE_EDITOR": {

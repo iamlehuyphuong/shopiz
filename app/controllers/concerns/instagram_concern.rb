@@ -34,7 +34,7 @@ module InstagramConcern
       client_id: client_id
     }
 
-    make_api_request(endpoint, params, 'Failed to exchange token')
+    make_api_request(endpoint, params, 'Failed to exchange token', method: :post)
   end
 
   def fetch_instagram_user_details(access_token)
@@ -47,12 +47,33 @@ module InstagramConcern
     make_api_request(endpoint, params, 'Failed to fetch Instagram user details')
   end
 
-  def make_api_request(endpoint, params, error_prefix)
-    response = HTTParty.get(
-      endpoint,
-      query: params,
-      headers: { 'Accept' => 'application/json' }
-    )
+  # Fetches the Facebook Page ID linked to this Instagram professional account.
+  # Required for Private Replies API: POST /{PAGE_ID}/messages
+  # Uses the Instagram API to get connected Facebook Page info.
+  def fetch_linked_page_id(access_token, instagram_user_id)
+    endpoint = "https://graph.instagram.com/v22.0/#{instagram_user_id}"
+    params = {
+      fields: 'connected_facebook_page',
+      access_token: access_token
+    }
+
+    result = make_api_request(endpoint, params, 'Failed to fetch linked Facebook Page')
+    result.dig('connected_facebook_page', 'id')
+  rescue StandardError => e
+    Rails.logger.warn "[Instagram] Could not resolve linked page_id for #{instagram_user_id}: #{e.message}"
+    nil
+  end
+
+  def make_api_request(endpoint, params, error_prefix, method: :get)
+    options = { headers: { 'Accept' => 'application/json' } }
+
+    if method == :post
+      options[:body] = params
+    else
+      options[:query] = params
+    end
+
+    response = HTTParty.public_send(method, endpoint, options)
 
     unless response.success?
       Rails.logger.error "#{error_prefix}. Status: #{response.code}, Body: #{response.body}"

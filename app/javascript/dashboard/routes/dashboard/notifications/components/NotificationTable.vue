@@ -183,7 +183,8 @@ export default {
 }
 
 .notification--unread-indicator {
-  @apply w-2.5 h-2.5 rounded-full bg-n-brand;
+  @apply w-2.5 h-2.5 rounded-full;
+  background-color: #e06720;
 }
 
 .notification--created-at {

@@ -1,6 +1,9 @@
 class Messages::LoadMoreHistoryService
   SERVICES = {
-    'Channel::FacebookPage' => ::Facebook::LoadHistoryMessageService
+    'Channel::FacebookPage' => ::Facebook::LoadHistoryMessageService,
+    'Channel::Instagram' => ::Instagram::LoadHistoryMessageService,
+    'Channel::ZaloOa' => ::Zalo::LoadHistoryMessageService,
+    'Channel::TiktokShop' => ::TiktokShop::LoadHistoryMessageService
   }.freeze
 
   def initialize(conversation)

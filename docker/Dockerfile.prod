@@ -21,6 +21,10 @@ COPY ./Gemfile.lock /app/Gemfile.lock
 COPY ./enterprise /app/enterprise
 COPY ./public /app/public
 COPY ./config /app/config
+COPY ./theme /app/theme
+COPY ./tailwind.config.js /app/tailwind.config.js
+COPY ./vite.config.mts /app/vite.config.mts
+COPY ./postcss.config.js /app/postcss.config.js
 
 RUN pnpm install
 RUN bundle install

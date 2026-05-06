@@ -50,6 +50,12 @@ const menuItems = computed(() => [
     icon: 'i-lucide-pencil-line',
   },
   {
+    label: t('CAPTAIN.CUSTOM_TOOLS.OPTIONS.CLONE_TOOL'),
+    value: 'clone',
+    action: 'clone',
+    icon: 'i-lucide-copy',
+  },
+  {
     label: t('CAPTAIN.CUSTOM_TOOLS.OPTIONS.DELETE_TOOL'),
     value: 'delete',
     action: 'delete',

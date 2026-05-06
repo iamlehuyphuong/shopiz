@@ -1,4 +1,4 @@
-import { getLoginRedirectURL } from '../AuthHelper';
+import { getLoginRedirectURL, getCredentialsFromEmail } from '../AuthHelper';
 
 describe('#URL Helpers', () => {
   describe('getLoginRedirectURL', () => {
@@ -38,6 +38,54 @@ describe('#URL Helpers', () => {
         })
       ).toBe('/app/accounts/7501/dashboard');
       expect(getLoginRedirectURL('7500', null)).toBe('/app/');
+    });
+  });
+
+  describe('getCredentialsFromEmail', () => {
+    it('should extract fullName and return domain as accountName from company email', () => {
+      expect(getCredentialsFromEmail('john@company.com')).toEqual({
+        fullName: 'John',
+        accountName: 'Company',
+      });
+    });
+
+    it('should handle subdomains by using the domain name', () => {
+      expect(getCredentialsFromEmail('jane@mail.example.org')).toEqual({
+        fullName: 'Jane',
+        accountName: 'Mail',
+      });
+    });
+
+    it('should split by dots and capitalize each word', () => {
+      expect(getCredentialsFromEmail('john.doe@acme.co')).toEqual({
+        fullName: 'John Doe',
+        accountName: 'Acme',
+      });
+    });
+
+    it('should omit everything after + in the local part', () => {
+      expect(getCredentialsFromEmail('user+tag@startup.io')).toEqual({
+        fullName: 'User',
+        accountName: 'Startup',
+      });
+    });
+
+    it('should split by underscores and hyphens', () => {
+      expect(getCredentialsFromEmail('first_last@my-company.com')).toEqual({
+        fullName: 'First Last',
+        accountName: 'My Company',
+      });
+    });
+
+    it('should return My Store for free public emails', () => {
+      expect(getCredentialsFromEmail('first_last@gmail.com')).toEqual({
+        fullName: 'First Last',
+        accountName: 'My Store',
+      });
+      expect(getCredentialsFromEmail('first.last24@yahoo.com')).toEqual({
+        fullName: 'First Last24',
+        accountName: 'My Store',
+      });
     });
   });
 });

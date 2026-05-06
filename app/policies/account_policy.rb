@@ -34,4 +34,12 @@ class AccountPolicy < ApplicationPolicy
   def toggle_deletion?
     @account_user.administrator?
   end
+
+  def topup_checkout?
+    @account_user.administrator?
+  end
+
+  def sales_manage?
+    @account_user.custom_role&.permissions&.include?('sales_manage') || @account_user.administrator?
+  end
 end

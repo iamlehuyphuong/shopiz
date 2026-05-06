@@ -24,6 +24,7 @@ import BotReports from './BotReports.vue';
 import LiveReports from './LiveReports.vue';
 import SLAReports from './SLAReports.vue';
 
+
 const meta = {
   featureFlag: FEATURE_FLAGS.REPORTS,
   permissions: ['administrator', 'report_manage'],
@@ -168,6 +169,7 @@ export default {
           meta,
           component: BotReports,
         },
+
       ],
     },
   ],

@@ -26,7 +26,8 @@ export const getAlertAudio = async (baseUrl = '', requestContext) => {
   };
 
   if (audioCtx) {
-    const { type = 'dashboard', alertTone = 'ding' } = requestContext || {};
+    const { type = 'dashboard', alertTone = 'pium_pium' } =
+      requestContext || {};
     const resourceUrl = `${baseUrl}/audio/${type}/${alertTone}.mp3`;
     const audioRequest = new Request(resourceUrl);
 

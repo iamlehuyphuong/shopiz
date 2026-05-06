@@ -1,6 +1,7 @@
 {
   "REGISTER": {
     "TRY_WOOT": "Tạo tài khoản",
+    "GET_STARTED": "Bắt đầu sử dụng nền tảng",
     "TITLE": "Đăng ký",
     "TESTIMONIAL_HEADER": "Chỉ cần một bước để tiến về phía trước",
     "TESTIMONIAL_CONTENT": "Bạn chỉ còn một bước nữa để bắt đầu tương tác, giữ chân và tìm thêm khách hàng.",
@@ -19,9 +20,9 @@
       "ERROR": "Họ và tên quá ngắn."
     },
     "EMAIL": {
-      "LABEL": "Email công việc",
-      "PLACEHOLDER": "Nhập email công việc của bạn. Ví dụ: bruce@wayne.enterprises",
-      "ERROR": "Vui lòng nhập địa chỉ email công việc hợp lệ."
+      "LABEL": "Email",
+      "PLACEHOLDER": "Nhập email của bạn. Ví dụ: bruce@wayne.enterprises",
+      "ERROR": "Vui lòng nhập địa chỉ email hợp lệ."
     },
     "PASSWORD": {
       "LABEL": "Mật khẩu",
@@ -44,6 +45,50 @@
       "ERROR_MESSAGE": "Không thể kết nối đến máy chủ. Vui lòng thử lại."
     },
     "SUBMIT": "Tạo tài khoản",
-    "HAVE_AN_ACCOUNT": "Bạn đã có tài khoản?"
+    "HAVE_AN_ACCOUNT": "Bạn đã có tài khoản?",
+    "ONBOARDING": {
+      "NEXT_STEP": "Tiếp tục",
+      "GO_BACK": "Quay lại",
+      "BUSINESS_NAME": {
+        "LABEL": "Tên Doanh nghiệp / Cửa hàng",
+        "PLACEHOLDER": "Nhập tên doanh nghiệp của bạn",
+        "ERROR": "Vui lòng nhập tên doanh nghiệp"
+      },
+      "INDUSTRY": {
+        "LABEL": "Lĩnh vực kinh doanh",
+        "PLACEHOLDER": "Chọn lĩnh vực kinh doanh",
+        "ERROR": "Vui lòng chọn lĩnh vực kinh doanh",
+        "OPTIONS": {
+          "FASHION": "Thời trang & Phụ kiện",
+          "HEALTH_BEAUTY": "Sức khoẻ & Làm đẹp",
+          "F_B": "F&B (Nhà hàng, Quán cafe)",
+          "TECH": "Công nghệ / Điện tử",
+          "OTHER": "Khác"
+        }
+      },
+      "COMPANY_SIZE": {
+        "LABEL": "Quy mô nhân sự",
+        "PLACEHOLDER": "Chọn quy mô nhân sự",
+        "ERROR": "Vui lòng chọn quy mô nhân sự",
+        "OPTIONS": {
+          "SIZE_1_5": "1-5 người",
+          "SIZE_6_20": "6-20 người",
+          "SIZE_21_50": "21-50 người",
+          "SIZE_50_PLUS": "50+ người"
+        }
+      },
+      "SOURCE": {
+        "LABEL": "Bạn biết đến Shopiz từ đâu?",
+        "PLACEHOLDER": "Chọn kênh thông tin",
+        "ERROR": "Vui lòng chọn một tuỳ chọn",
+        "OPTIONS": {
+          "FACEBOOK": "Facebook",
+          "TIKTOK": "TikTok",
+          "GOOGLE": "Google",
+          "REFERRAL": "Bạn bè giới thiệu",
+          "OTHER": "Khác"
+        }
+      }
+    }
   }
 }

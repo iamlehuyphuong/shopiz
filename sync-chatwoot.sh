@@ -23,8 +23,8 @@ else
     cd "$CLONE_DIR"
 fi
 
-# Create and checkout a new branch based on the specified tag.
-git checkout tags/"$TAG" -b sync-"$TAG"
+# Create and checkout a new branch based on the specified tag (overwrite if exists).
+git checkout tags/"$TAG" -B sync-"$TAG"
 
 echo "Chatwoot repository has been synced to tag $TAG in $CLONE_DIR."
 

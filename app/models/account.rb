@@ -7,6 +7,7 @@
 #  custom_attributes     :jsonb
 #  domain                :string(100)
 #  feature_flags         :bigint           default(0), not null
+#  feature_flags_2       :bigint           default(0), not null
 #  internal_attributes   :jsonb            not null
 #  limits                :jsonb
 #  locale                :integer          default("en")
@@ -28,6 +29,8 @@ class Account < ApplicationRecord
   include Reportable
   include Featurable
   include CacheKeys
+  include CaptainFeaturable
+  include AccountEmailRateLimitable
 
   SETTINGS_PARAMS_SCHEMA = {
     'type': 'object',
@@ -37,7 +40,37 @@ class Account < ApplicationRecord
         'auto_resolve_message': { 'type': %w[string null] },
         'auto_resolve_ignore_waiting': { 'type': %w[boolean null] },
         'audio_transcriptions': { 'type': %w[boolean null] },
-        'auto_resolve_label': { 'type': %w[string null] }
+        'auto_resolve_label': { 'type': %w[string null] },
+        'keep_pending_on_bot_failure': { 'type': %w[boolean null] },
+        'captain_auto_resolve_mode': { 'type': %w[string null], 'enum': ['evaluated', 'legacy', 'disabled', nil] },
+        'conversation_required_attributes': {
+          'type': %w[array null],
+          'items': { 'type': 'string' }
+        },
+        'captain_models': {
+          'type': %w[object null],
+          'properties': {
+            'editor': { 'type': %w[string null] },
+            'assistant': { 'type': %w[string null] },
+            'copilot': { 'type': %w[string null] },
+            'label_suggestion': { 'type': %w[string null] },
+            'audio_transcription': { 'type': %w[string null] },
+            'help_center_search': { 'type': %w[string null] }
+          },
+          'additionalProperties': false
+        },
+        'captain_features': {
+          'type': %w[object null],
+          'properties': {
+            'editor': { 'type': %w[boolean null] },
+            'assistant': { 'type': %w[boolean null] },
+            'copilot': { 'type': %w[boolean null] },
+            'label_suggestion': { 'type': %w[boolean null] },
+            'audio_transcription': { 'type': %w[boolean null] },
+            'help_center_search': { 'type': %w[boolean null] }
+          },
+          'additionalProperties': false
+        }
       },
     'required': [],
     'additionalProperties': true
@@ -48,13 +81,21 @@ class Account < ApplicationRecord
     check_for_column: false
   }.freeze
 
+  validates :name, presence: true
   validates :domain, length: { maximum: 100 }
   validates_with JsonSchemaValidator,
                  schema: SETTINGS_PARAMS_SCHEMA,
                  attribute_resolver: ->(record) { record.settings }
+  validate :validate_reporting_timezone
 
   store_accessor :settings, :auto_resolve_after, :auto_resolve_message, :auto_resolve_ignore_waiting
+
   store_accessor :settings, :audio_transcriptions, :auto_resolve_label
+  store_accessor :settings, :captain_models, :captain_features
+  store_accessor :settings, :reporting_timezone
+  store_accessor :settings, :keep_pending_on_bot_failure
+  store_accessor :settings, :captain_auto_resolve_mode
+  include AccountCaptainAutoResolve
 
   has_many :account_users, dependent: :destroy_async
   has_many :agent_bot_inboxes, dependent: :destroy_async
@@ -69,6 +110,7 @@ class Account < ApplicationRecord
   has_many :categories, dependent: :destroy_async, class_name: '::Category'
   has_many :contacts, dependent: :destroy_async
   has_many :conversations, dependent: :destroy_async
+  has_many :conversation_orders, dependent: :destroy_async
   has_many :csat_survey_responses, dependent: :destroy_async
   has_many :custom_attribute_definitions, dependent: :destroy_async
   has_many :custom_filters, dependent: :destroy_async
@@ -77,9 +119,11 @@ class Account < ApplicationRecord
   has_many :email_channels, dependent: :destroy_async, class_name: '::Channel::Email'
   has_many :facebook_pages, dependent: :destroy_async, class_name: '::Channel::FacebookPage'
   has_many :zalo_oas, dependent: :destroy_async, class_name: '::Channel::ZaloOa'
+  has_many :zalo_message_templates, dependent: :destroy_async
   has_many :zalo_personals, dependent: :destroy_async, class_name: '::Channel::ZaloPersonal'
-  has_many :tiktoks, dependent: :destroy_async, class_name: '::Channel::Tiktok'
+  has_many :tiktok_shops, dependent: :destroy_async, class_name: '::Channel::TiktokShop'
   has_many :instagram_channels, dependent: :destroy_async, class_name: '::Channel::Instagram'
+  has_many :tiktok_channels, dependent: :destroy_async, class_name: '::Channel::Tiktok'
   has_many :hooks, dependent: :destroy_async, class_name: 'Integrations::Hook'
   has_many :inboxes, dependent: :destroy_async
   has_many :labels, dependent: :destroy_async
@@ -102,7 +146,11 @@ class Account < ApplicationRecord
   has_many :webhooks, dependent: :destroy_async
   has_many :whatsapp_channels, dependent: :destroy_async, class_name: '::Channel::Whatsapp'
   has_many :working_hours, dependent: :destroy_async
-  has_many :billing_histories, dependent: :destroy_async, class_name: '::BillingHistories'
+  has_many :billing_histories, dependent: :destroy_async, class_name: '::BillingHistory'
+  has_many :account_subscriptions, dependent: :destroy_async
+  has_many :account_addons, dependent: :destroy_async
+  has_many :products, dependent: :destroy_async
+  has_one :active_subscription, -> { active.order(ends_at: :desc) }, class_name: 'AccountSubscription'
 
   has_one_attached :contacts_export
 
@@ -112,7 +160,15 @@ class Account < ApplicationRecord
   scope :with_auto_resolve, -> { where("(settings ->> 'auto_resolve_after')::int IS NOT NULL") }
 
   before_validation :validate_limit_keys
-  after_create_commit :notify_creation
+  after_create_commit :notify_creation, :assign_default_plan
+
+  def assign_default_plan
+    default_plan = SubscriptionPlan.free_plan.first
+    return unless default_plan
+
+    # Use SubscribeService to handle the full subscription logic (creating record and provisioning)
+    Subscriptions::SubscribeService.new(self, default_plan).execute
+  end
   after_destroy :remove_account_sequences
 
   def agents
@@ -180,6 +236,12 @@ class Account < ApplicationRecord
 
   def validate_limit_keys
     # method overridden in enterprise module
+  end
+
+  def validate_reporting_timezone
+    return if reporting_timezone.blank? || ActiveSupport::TimeZone[reporting_timezone].present?
+
+    errors.add(:reporting_timezone, I18n.t('errors.account.reporting_timezone.invalid'))
   end
 
   def remove_account_sequences

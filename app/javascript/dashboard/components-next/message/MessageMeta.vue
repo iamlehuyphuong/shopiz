@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { messageTimestamp } from 'shared/helpers/timeHelper';
 
 import MessageStatus from './MessageStatus.vue';
@@ -8,6 +9,8 @@ import { useInbox } from 'dashboard/composables/useInbox';
 import { useMessageContext } from './provider.js';
 
 import { MESSAGE_STATUS, MESSAGE_TYPES } from './constants';
+
+const { t } = useI18n();
 
 const {
   isAFacebookInbox,
@@ -22,6 +25,7 @@ const {
   isAnEmailChannel,
   isAnInstagramChannel,
   isAVoiceChannel,
+  isATiktokChannel,
 } = useInbox();
 
 const {
@@ -34,7 +38,10 @@ const {
 } = useMessageContext();
 
 const readableTime = computed(() =>
-  messageTimestamp(createdAt.value, 'LLL d, h:mm a')
+  messageTimestamp(
+    createdAt.value,
+    t('GENERAL.DATETIME_FORMAT_WITH_SHORT_MONTH')
+  )
 );
 
 const showStatusIndicator = computed(() => {
@@ -64,10 +71,14 @@ const isSent = computed(() => {
     isAFacebookInbox.value ||
     isASmsInbox.value ||
     isATelegramChannel.value ||
-    isAnInstagramChannel.value
+    isAnInstagramChannel.value ||
+    isATiktokChannel.value
   ) {
     return sourceId.value && status.value === MESSAGE_STATUS.SENT;
   }
+
+  // API inbox messages use real sent/delivered/read status values from the external system.
+  if (isAPIInbox.value) return status.value === MESSAGE_STATUS.SENT;
 
   // All messages will be mark as sent for the Line channel, as there is no source ID.
   if (isALineChannel.value) return true;
@@ -83,12 +94,16 @@ const isDelivered = computed(() => {
     isATwilioChannel.value ||
     isASmsInbox.value ||
     isAFacebookInbox.value ||
-    isAZaloPersonal.value
+    isAZaloPersonal.value ||
+    isAnInstagramChannel.value ||
+    isATiktokChannel.value
   ) {
     return sourceId.value && status.value === MESSAGE_STATUS.DELIVERED;
   }
-  // All messages marked as delivered for the web widget inbox and API inbox once they are sent.
-  if (isAWebWidgetInbox.value || isAPIInbox.value) {
+  // API inbox messages use real delivered status from the external system.
+  if (isAPIInbox.value) return status.value === MESSAGE_STATUS.DELIVERED;
+  // All messages marked as delivered for the web widget inbox once they are sent.
+  if (isAWebWidgetInbox.value) {
     return status.value === MESSAGE_STATUS.SENT;
   }
   if (isALineChannel.value) {
@@ -105,7 +120,8 @@ const isRead = computed(() => {
     isAWhatsAppChannel.value ||
     isATwilioChannel.value ||
     isAFacebookInbox.value ||
-    isAnInstagramChannel.value
+    isAnInstagramChannel.value ||
+    isATiktokChannel.value
   ) {
     return sourceId.value && status.value === MESSAGE_STATUS.READ;
   }

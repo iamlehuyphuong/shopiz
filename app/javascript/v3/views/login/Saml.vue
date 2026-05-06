@@ -69,7 +69,7 @@ onMounted(async () => {
 
 <template>
   <main
-    class="flex flex-col w-full min-h-screen py-20 bg-n-brand/5 dark:bg-n-background sm:px-6 lg:px-8"
+    class="flex flex-col w-full min-h-screen py-20 bg-n-orange/5 dark:bg-n-background sm:px-6 lg:px-8"
   >
     <section class="max-w-5xl mx-auto">
       <img
@@ -124,7 +124,7 @@ onMounted(async () => {
       </form>
     </section>
     <p class="mt-6 text-sm text-center text-n-slate-11">
-      <router-link to="/app/login" class="text-link text-n-brand">
+      <router-link to="/app/login" class="text-link text-n-orange">
         {{ t('LOGIN.SAML.BACK_TO_LOGIN') }}
       </router-link>
     </p>

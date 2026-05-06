@@ -92,7 +92,7 @@ const inputBorderClass = computed(() => {
   const errorClass =
     'outline-n-ruby-8 dark:outline-n-ruby-8 hover:outline-n-ruby-9 dark:hover:outline-n-ruby-9 disabled:outline-n-ruby-8 dark:disabled:outline-n-ruby-8';
   const focusClass =
-    'has-[:focus]:outline-n-brand dark:has-[:focus]:outline-n-brand';
+    'has-[:focus]:outline-n-orange dark:has-[:focus]:outline-n-orange';
 
   if (!props.showBorder) {
     if (hasError.value) return errorClass;
@@ -113,7 +113,13 @@ const phoneNumberError = computed(() => {
 });
 
 const emitPhoneNumber = value => {
-  const newValue = value ? `${activeDialCode.value}${value}` : '';
+  if (!value) {
+    modelValue.value = '';
+    return;
+  }
+  const dialCode = activeDialCode.value;
+  const cleanedValue = value.replace(/^0/, '');
+  const newValue = `${dialCode}${cleanedValue}`;
   modelValue.value = newValue;
 };
 
@@ -147,12 +153,18 @@ watch(phoneNumber, async value => {
 watch(
   modelValue,
   newValue => {
-    const number = parsePhoneNumber(newValue);
+    if (!newValue) {
+      phoneNumber.value = '';
+      return;
+    }
+    const number = parsePhoneNumber(String(newValue), activeCountryCode.value);
     if (number) {
       if (number?.country) activeCountryCode.value = number.country;
       if (number?.countryCallingCode)
         activeDialCode.value = `+${number.countryCallingCode}`;
-      phoneNumber.value = newValue.replace(`+${number.countryCallingCode}`, '');
+      phoneNumber.value = number.nationalNumber;
+    } else {
+      phoneNumber.value = String(newValue);
     }
   },
   { immediate: true }
@@ -166,6 +178,32 @@ watch(
       class="relative flex items-center h-8 transition-all duration-500 ease-in-out outline outline-1 outline-offset-[-1px] rounded-lg bg-n-alpha-black2"
       :class="[inputBorderClass, { 'cursor-not-allowed opacity-50': disabled }]"
     >
+      <div class="flex items-center flex-shrink-0">
+        <Button
+          :label="activeCountry?.emoji || ''"
+          color="slate"
+          size="sm"
+          :icon="!activeCountry ? 'i-lucide-globe' : 'i-lucide-chevron-down'"
+          trailing-icon
+          :disabled="disabled"
+          type="button"
+          class="!h-[1.875rem] top-1 ltr:ml-px rtl:mr-px !px-2 outline-0 !outline-none !rounded-lg border-0 ltr:!rounded-r-none rtl:!rounded-l-none"
+          @click="toggleCountryDropdown"
+        >
+          <span
+            v-if="activeCountry"
+            class="inline-flex justify-center text-sm whitespace-nowrap"
+          >
+            {{ activeCountry?.emoji }}
+          </span>
+        </Button>
+        <span
+          v-if="activeCountry"
+          class="text-sm left-[38px] top-2.5 text-n-slate-11 ltr:!pl-1 rtl:!pr-1"
+        >
+          {{ activeDialCode }}
+        </span>
+      </div>
       <Input
         v-model="phoneNumber"
         type="tel"
@@ -173,38 +211,7 @@ watch(
         :disabled="disabled"
         custom-input-class="!border-0 !outline-none h-8 !py-0.5 !bg-transparent ltr:!pl-1 rtl:!pr-1"
         class="w-full !flex-row"
-      >
-        <template #prefix>
-          <div class="flex items-center flex-shrink-0">
-            <Button
-              :label="activeCountry?.emoji || ''"
-              color="slate"
-              size="sm"
-              :icon="
-                !activeCountry ? 'i-lucide-globe' : 'i-lucide-chevron-down'
-              "
-              trailing-icon
-              :disabled="disabled"
-              type="button"
-              class="!h-[1.875rem] top-1 ltr:ml-px rtl:mr-px !px-2 outline-0 !outline-none !rounded-lg border-0 ltr:!rounded-r-none rtl:!rounded-l-none"
-              @click="toggleCountryDropdown"
-            >
-              <span
-                v-if="activeCountry"
-                class="inline-flex justify-center text-sm whitespace-nowrap"
-              >
-                {{ activeCountry?.emoji }}
-              </span>
-            </Button>
-            <span
-              v-if="activeCountry"
-              class="text-sm left-[38px] top-2.5 text-n-slate-11 ltr:!pl-1 rtl:!pr-1"
-            >
-              {{ activeDialCode }}
-            </span>
-          </div>
-        </template>
-      </Input>
+      />
       <DropdownMenu
         v-if="showDropdown"
         :menu-items="filteredCountries"

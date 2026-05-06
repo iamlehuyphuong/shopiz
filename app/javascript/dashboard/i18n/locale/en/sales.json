@@ -158,6 +158,428 @@
         "SUCCESS_MESSAGE": "Campaign deleted successfully",
         "ERROR_MESSAGE": "There was an error. Please try again."
       }
+    },
+    "MODULE_DASHBOARD": {
+      "HEADER": {
+        "TITLE": "Sales Overview",
+        "DESCRIPTION": "Revenue overview from all sources."
+      },
+      "PERIOD": {
+        "7D": "Last 7 days",
+        "30D": "Last 30 days",
+        "90D": "Last 3 months"
+      },
+      "METRICS": {
+        "TOTAL_REVENUE": "Revenue",
+        "TOTAL_ORDERS": "Orders",
+        "AOV": "Average / Order",
+        "ACTIVE_PRODUCTS": "Products",
+        "CHANGE_UP": "+{percent}%",
+        "CHANGE_DOWN": "{percent}%",
+        "VS_PREVIOUS": "vs previous period"
+      },
+      "REVENUE_CHART": {
+        "TITLE": "Revenue trend",
+        "REVENUE": "Revenue",
+        "ORDERS": "Orders"
+      },
+      "RECENT_ORDERS": {
+        "TITLE": "Recent orders",
+        "VIEW_ALL": "View all",
+        "ORDER_ID": "Order",
+        "CUSTOMER": "Customer",
+        "SOURCE": "Platform",
+        "AMOUNT": "Amount",
+        "STATUS": "Status",
+        "TIME": "Time",
+        "NO_ORDERS": "No orders yet"
+      },
+      "STATUS_BREAKDOWN": {
+        "TITLE": "Order status",
+        "DRAFT": "Draft",
+        "CONFIRMED": "Confirmed",
+        "PROCESSING": "Processing",
+        "SHIPPED": "Shipped",
+        "DELIVERED": "Delivered",
+        "CANCELLED": "Cancelled"
+      },
+      "HEATMAP": {
+        "TITLE": "Order density by hour",
+        "NO_ORDERS": "No orders",
+        "ORDER": "{count} order",
+        "ORDERS": "{count} orders",
+        "DOWNLOAD_REPORT": "Download report"
+      },
+      "ORDERS_BY_INBOX": {
+        "TITLE": "Orders by inbox",
+        "INBOX": "Inbox",
+        "ORDER_COUNT": "Orders",
+        "NO_DATA": "No data available"
+      }
+    },
+    "MODULE_PRODUCTS": {
+      "HEADER": {
+        "TITLE": "Products",
+        "DESCRIPTION": "Manage Shopiz product catalog and sync with sales channels.",
+        "SEARCH": "Search products...",
+        "COUNT": "products"
+      },
+      "ACTIONS": {
+        "PULL": "Sync from platform",
+        "PUSH": "Push to platform",
+        "ADD": "Add product"
+      },
+      "TABLE": {
+        "EMPTY_SEARCH": "No matching products found.",
+        "EMPTY_STATE": "No products available.",
+        "HEADERS": {
+          "PRODUCT": "Product",
+          "SOURCE": "Platform",
+          "STATUS": "Status",
+          "ACTIONS": "Actions"
+        },
+        "ACTIONS": {
+          "PUSH": "Push to platform",
+          "EDIT": "Edit",
+          "DELETE": "Delete"
+        }
+      },
+      "STATUS": {
+        "ACTIVE": "Active",
+        "DRAFT": "Draft",
+        "ARCHIVED": "Archived"
+      },
+      "ALERTS": {
+        "ADD_SUCCESS": "Product added successfully.",
+        "ADD_ERROR": "Failed to add product.",
+        "PULL_START": "Syncing products from {platform}...",
+        "PUSH_START": "Pushing '{name}' to platform...",
+        "EDIT": "Editing: {name}",
+        "DELETE_CONFIRM": "Are you sure you want to delete this product?",
+        "DELETE_SUCCESS": "Product deleted.",
+        "SELECT_TO_PUSH": "Select a product to push to platform."
+      }
+    },
+    "MODULE_ORDERS": {
+      "HEADER": {
+        "TITLE": "Orders",
+        "DESCRIPTION": "Track and process orders from all sales channels.",
+        "SEARCH": "Search by order ID, phone...",
+        "COUNT": "orders"
+      },
+      "ACTIONS": {
+        "CREATE": "Create order",
+        "ADD": "Create order",
+        "REFRESH": "Refresh"
+      },
+      "TABLE": {
+        "EMPTY_SEARCH": "No matching orders found.",
+        "EMPTY_STATE": "No orders available.",
+        "HEADERS": {
+          "ORDER": "Order",
+          "STATUS": "Status",
+          "ACTIONS": "Actions"
+        },
+        "ACTIONS": {
+          "SYNC": "Sync",
+          "VIEW": "View Details"
+        }
+      },
+      "STATUS": {
+        "DRAFT": "Draft",
+        "CONFIRMED": "Confirmed",
+        "PROCESSING": "Processing",
+        "SHIPPED": "Shipped",
+        "DELIVERED": "Delivered",
+        "CANCELLED": "Cancelled"
+      },
+      "ALERTS": {
+        "SYNC_SUCCESS": "Order synced successfully.",
+        "SYNC_ERROR": "Failed to sync order."
+      }
+    },
+    "ORDER_FORM": {
+      "PLACEHOLDERS": {
+        "SEARCH_CONTACT": "Search for customer by name, email, or phone number"
+      },
+      "WIZARD": {
+        "STEP_0": {
+          "TITLE": "Products",
+          "BODY": "Add products to the order."
+        },
+        "STEP_1": {
+          "TITLE": "Financials",
+          "BODY": "Set taxes, shipping fees, and discounts."
+        },
+        "STEP_2": {
+          "TITLE": "Customer",
+          "BODY": "Contact information of the customer."
+        },
+        "STEP_3": {
+          "TITLE": "Completion",
+          "BODY": "Review and create the order."
+        }
+      }
+    },
+    "MODULE_TOOLS": {
+      "HEADER": {
+        "TITLE": "Sales Tools",
+        "DESCRIPTION": "Discover and connect tools and services to enhance the efficiency of your sales team."
+      },
+      "ACTIONS": {
+        "CONFIGURE": "Configure",
+        "COMING_SOON": "Coming soon"
+      },
+      "DESCRIPTIONS": {
+        "SHOPIFY": "Connect your Shopify store to sync orders, customers, and product data directly within the app.",
+        "KIOTVIET": "Automatically and continuously sync inventory and manage retail orders with KiotViet.",
+        "HARAVAN": "Manage omnichannel sales on Haravan more efficiently with the ability to pull order info and push products from Shopiz.",
+        "WOOCOMMERCE": "WooCommerce integration syncs products, inventory, and order status directly into your workflow.",
+        "SAPO": "Professionally manage your Sapo online store with two-way product sync.",
+        "NHANHVN": "Solution to connect with Nhanh.vn to track and support seamless order processing from warehouse to customer.",
+        "TIKTOK_SHOP": "Sync orders, manage messages and products from TikTok Shop Seller Center into Shopiz."
+      }
+    },
+    "PRODUCT_FORM": {
+      "TITLE_NEW": "Create Product",
+      "TITLE_EDIT": "Edit Product",
+      "BACK": "Back",
+      "WIZARD": {
+        "STEP_0": {
+          "TITLE": "Basic Info",
+          "BODY": "Image, name, price, description."
+        },
+        "STEP_1": {
+          "TITLE": "Attributes",
+          "BODY": "Brand, style, category."
+        },
+        "STEP_2": {
+          "TITLE": "Variants",
+          "BODY": "Add color, size, weight."
+        },
+        "STEP_3": {
+          "TITLE": "Complete",
+          "BODY": "Check status and save product."
+        }
+      },
+      "STEP_0": {
+        "HEADING_NEW": "Basic Information",
+        "HEADING_EDIT": "Edit Basic Information",
+        "SUBHEADING_NEW": "Enter name, price, and description for the new product.",
+        "SUBHEADING_EDIT": "Update name, price, and description."
+      },
+      "STEP_1": {
+        "HEADING_NEW": "Product Attributes",
+        "HEADING_EDIT": "Product Attributes",
+        "SUBHEADING_NEW": "Add brand, style, and other attributes.",
+        "SUBHEADING_EDIT": "Update brand, style, and other attributes."
+      },
+      "STEP_2": {
+        "HEADING_NEW": "Variants & Shipping",
+        "HEADING_EDIT": "Variants & Shipping",
+        "SUBHEADING_NEW": "Create options for size, color, weight, and dimensions.",
+        "SUBHEADING_EDIT": "Update options for size, color, weight, and dimensions."
+      },
+      "STEP_3": {
+        "HEADING_NEW": "Complete",
+        "HEADING_EDIT": "Complete Update",
+        "SUBHEADING_NEW": "Review information and confirm product status.",
+        "SUBHEADING_EDIT": "Review information and save product.",
+        "OVERVIEW": "Product Overview",
+        "NAME": "Product Name:",
+        "NOT_ENTERED": "Not entered",
+        "BASE_PRICE": "Base Price:",
+        "VARIANT_COUNT": "Variant Count:"
+      },
+      "FIELDS": {
+        "NAME": {
+          "LABEL": "Product Name",
+          "PLACEHOLDER": "e.g., Men's T-shirt, Sneakers",
+          "ERROR": "Please enter a product name"
+        },
+        "IMAGE": {
+          "LABEL": "Image URL",
+          "PLACEHOLDER": "https://example.com/image.jpg"
+        },
+        "TYPE": {
+          "LABEL": "Product Type",
+          "OPTIONS": {
+            "PHYSICAL": "Physical Product",
+            "DIGITAL": "Digital Product",
+            "SERVICE": "Service"
+          }
+        },
+        "CATEGORY": {
+          "LABEL": "Category",
+          "PLACEHOLDER": "Fashion, Electronics..."
+        },
+        "DESCRIPTION": {
+          "LABEL": "Product Description",
+          "PLACEHOLDER": "Detailed product description"
+        },
+        "PRICE": {
+          "LABEL": "Price",
+          "PLACEHOLDER": "e.g., 100000"
+        },
+        "CURRENCY": {
+          "LABEL": "Currency",
+          "PLACEHOLDER": "USD"
+        },
+        "BRAND": {
+          "LABEL": "Brand",
+          "PLACEHOLDER": "e.g., Nike, Apple..."
+        },
+        "STYLE": {
+          "LABEL": "Style",
+          "PLACEHOLDER": "e.g., Sport, Vintage..."
+        },
+        "ATTRIBUTES": {
+          "LABEL": "Extended Attributes (Comma separated tags)",
+          "PLACEHOLDER": "Waterproof, Long battery, Lightweight..."
+        },
+        "STATUS": {
+          "LABEL": "Product Status",
+          "OPTIONS": {
+            "ACTIVE": "Active (Visible immediately)",
+            "DRAFT": "Draft (Not visible)"
+          }
+        },
+        "VARIANTS": {
+          "TITLE": "Variant {index}",
+          "REMOVE": "Remove variant",
+          "DUPLICATE": "Duplicate variant",
+          "NAME": {
+            "LABEL": "Variant Name (e.g. Red - Size S)",
+            "PLACEHOLDER": "Variant Name"
+          },
+          "PRICE": {
+            "LABEL": "Specific Price",
+            "PLACEHOLDER": "Leave blank if same as base"
+          },
+          "SKU": {
+            "LABEL": "Variant SKU",
+            "PLACEHOLDER": "e.g., SKU-RED-S"
+          },
+          "BARCODE": {
+            "LABEL": "Barcode",
+            "PLACEHOLDER": "Barcode"
+          },
+          "COLOR": {
+            "LABEL": "Color",
+            "PLACEHOLDER": "e.g., Red, Blue..."
+          },
+          "SIZE": {
+            "LABEL": "Size",
+            "PLACEHOLDER": "e.g., S, M, XL..."
+          },
+          "WEIGHT": {
+            "LABEL": "Weight (g)",
+            "PLACEHOLDER": "0"
+          },
+          "LENGTH": {
+            "LABEL": "Length (cm)"
+          },
+          "WIDTH": {
+            "LABEL": "Width (cm)"
+          },
+          "HEIGHT": {
+            "LABEL": "Height (cm)"
+          }
+        }
+      },
+      "BUTTONS": {
+        "NEXT": "Next",
+        "BACK": "Back",
+        "ADD_VARIANT": "Add new variant",
+        "SUBMIT": "Save product",
+        "UPDATE": "Update product"
+      },
+      "ALERTS": {
+        "NAME_REQUIRED": "Please enter a product name before continuing.",
+        "CREATE_SUCCESS": "Product created successfully!",
+        "UPDATE_SUCCESS": "Product updated successfully!",
+        "SAVE_ERROR": "Error saving product"
+      }
+    },
+    "DIALOG_ADD_PRODUCT": {
+      "TITLE": "Add new product",
+      "DESC": "Add a new product to Shopiz catalog.",
+      "FORM": {
+        "NAME": {
+          "LABEL": "Product Name *",
+          "PLACEHOLDER": "Enter product name"
+        },
+        "SKU": {
+          "LABEL": "SKU",
+          "PLACEHOLDER": "e.g., SP001"
+        },
+        "BARCODE": {
+          "LABEL": "Barcode",
+          "PLACEHOLDER": "Barcode"
+        },
+        "PRICE": {
+          "LABEL": "Price",
+          "PLACEHOLDER": "0"
+        },
+        "CURRENCY": {
+          "LABEL": "Currency"
+        },
+        "DESCRIPTION": {
+          "LABEL": "Description",
+          "PLACEHOLDER": "Product description..."
+        },
+        "CANCEL": "Cancel",
+        "SUBMIT": "Add product"
+      },
+      "ALERTS": {
+        "NAME_REQUIRED": "Please enter a product name."
+      }
+    },
+    "DIALOG_PULL_PRODUCTS": {
+      "TITLE": "Sync products from platform",
+      "DESC": "Select a sales platform to sync the product list to Shopiz.",
+      "FORM": {
+        "CANCEL": "Cancel",
+        "SUBMIT": "Sync products"
+      },
+      "ALERTS": {
+        "SYNC_SUCCESS": "Products synced successfully.",
+        "SYNC_ERROR": "Failed to sync products."
+      }
+    },
+    "DIALOG_ORDER_DETAIL": {
+      "TITLE": "Order Details",
+      "DESC": "Order #{id} from {source}",
+      "FIELDS": {
+        "STATUS": "Status",
+        "CUSTOMER": "Customer",
+        "GENERAL_INFO": "General Information",
+        "PHONE": "Phone number",
+        "SOURCE": "Source",
+        "ADDRESS": "Address",
+        "TOTAL": "Total Amount",
+        "CREATED_AT": "Created At",
+        "LAST_SYNC": "Last Synced",
+        "NOTE": "Note",
+        "ITEMS": "Order Items",
+        "QTY": "Qty",
+        "PRODUCT": "Product {index}",
+        "PAYMENT_METHOD": "Payment Method",
+        "SHIPPING": "Shipping",
+        "SUBTOTAL": "Subtotal",
+        "SHIPPING_FEE": "Shipping Fee",
+        "TAX": "Tax",
+        "DISCOUNT": "Discount"
+      },
+      "ACTIONS": {
+        "SYNC": "Sync to platform",
+        "CLOSE": "Close"
+      },
+      "FALLBACKS": {
+        "GUEST": "Guest",
+        "SHOPIZ": "Shopiz",
+        "NO_DATA": "--"
+      }
     }
   }
 }

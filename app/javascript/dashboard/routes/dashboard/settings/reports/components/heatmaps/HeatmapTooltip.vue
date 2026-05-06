@@ -19,21 +19,33 @@ const props = defineProps({
     type: Number,
     default: null,
   },
+  tooltipMessages: {
+    type: Object,
+    default: () => ({}),
+  },
 });
 
 const { t } = useI18n();
 
 const tooltipText = computed(() => {
   if (!props.value) {
-    return t('OVERVIEW_REPORTS.CONVERSATION_HEATMAP.NO_CONVERSATIONS');
+    return props.tooltipMessages.noData
+      ? t(props.tooltipMessages.noData)
+      : t('OVERVIEW_REPORTS.CONVERSATION_HEATMAP.NO_CONVERSATIONS');
   }
 
   if (props.value === 1) {
+    if (props.tooltipMessages.singular) {
+      return t(props.tooltipMessages.singular, { count: props.value });
+    }
     return t('OVERVIEW_REPORTS.CONVERSATION_HEATMAP.CONVERSATION', {
       count: props.value,
     });
   }
 
+  if (props.tooltipMessages.plural) {
+    return t(props.tooltipMessages.plural, { count: props.value });
+  }
   return t('OVERVIEW_REPORTS.CONVERSATION_HEATMAP.CONVERSATIONS', {
     count: props.value,
   });

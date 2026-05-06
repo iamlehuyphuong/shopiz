@@ -212,11 +212,11 @@ export class DashboardAudioNotificationHelper {
     showBadgeOnFavicon();
     this.playAudioEvery30Seconds();
   };
-  
+
   onIncomingCall = () => {
     // Always play audio alerts for incoming calls, regardless of other settings
     // This ensures users never miss a call notification
-    
+
     // Use a different tone for calls if available, otherwise use regular tone
     const originalTone = this.audioConfig.tone;
     try {
@@ -235,7 +235,7 @@ export class DashboardAudioNotificationHelper {
       this.audioConfig.tone = originalTone;
       this.intializeAudio();
     }
-    
+
     // Also show badge on favicon
     showBadgeOnFavicon();
   };

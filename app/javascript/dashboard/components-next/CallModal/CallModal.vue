@@ -1,95 +1,3 @@
-<template>
-  <div class="w-[42rem] divide-y divide-n-strong overflow-visible transition-all duration-300 ease-in-out top-full justify-between flex flex-col bg-n-alpha-3 border border-n-strong shadow-sm backdrop-blur-[100px] rounded-xl">
-    <div class="px-4 py-3 flex items-center">
-      <h3 class="text-base font-medium">{{ $t('CALL_MODAL.START_CALL') }}</h3>
-    </div>
-    
-    <!-- Inbox Selector (First) -->
-    <div class="flex items-center flex-1 w-full gap-3 px-4 py-3 overflow-y-visible">
-      <label class="mb-0.5 text-sm font-medium text-n-slate-11 whitespace-nowrap">
-        {{ $t('CALL_MODAL.VIA') }}
-      </label>
-      
-      <div
-        v-if="selectedInbox"
-        class="flex items-center gap-1.5 rounded-md bg-n-alpha-2 truncate ltr:pl-3 rtl:pr-3 ltr:pr-1 rtl:pl-1 h-7 min-w-0"
-      >
-        <span class="text-sm truncate text-n-slate-12 flex items-center gap-2">
-          <span class="i-ri-phone-fill text-n-slate-11"></span>
-          {{ selectedInbox.name }} - {{ selectedInbox.phoneNumber }}
-        </span>
-        <Button
-          variant="ghost"
-          icon="i-lucide-x"
-          color="slate"
-          size="xs"
-          class="flex-shrink-0"
-          @click="selectedInbox = null"
-        />
-      </div>
-      
-      <div
-        v-else
-        v-on-click-outside="() => showInboxDropdown = false"
-        class="relative flex items-center h-7"
-      >
-        <Button
-          :label="$t('CALL_MODAL.SELECT_INBOX')"
-          variant="link"
-          size="sm"
-          color="slate"
-          class="hover:!no-underline"
-          @click="showInboxDropdown = !showInboxDropdown"
-        />
-        <DropdownMenu
-          v-if="voiceInboxesList.length > 0 && showInboxDropdown"
-          :menu-items="voiceInboxesList"
-          class="left-0 z-[100] top-8 overflow-y-auto max-h-60 w-fit max-w-sm dark:!outline-n-slate-5"
-          @action="selectInbox($event)"
-        />
-      </div>
-    </div>
-    
-    <!-- Contact Selector -->
-    <ContactSelector
-      :contacts="contacts"
-      :selected-contact="selectedContact"
-      :show-contacts-dropdown="showContactsDropdown"
-      :is-loading="isSearching"
-      :is-creating-contact="false"
-      :contact-id="null"
-      :contactable-inboxes-list="[]"
-      :show-inboxes-dropdown="false"
-      :has-errors="false"
-      @search-contacts="handleContactSearch"
-      @set-selected-contact="handleSelectedContact"
-      @clear-selected-contact="clearSelectedContact"
-      @update-dropdown="handleDropdownUpdate"
-    />
-
-    <!-- Action buttons -->
-    <div class="flex items-center justify-end w-full h-[3.25rem] gap-2 px-4 py-3">
-      <Button
-        :label="$t('CALL_MODAL.CANCEL')"
-        variant="faded"
-        color="slate"
-        size="sm"
-        class="!text-xs font-medium"
-        @click="$emit('close')"
-      />
-      <Button
-        :label="$t('CALL_MODAL.CALL')"
-        icon="i-ri-phone-fill"
-        size="sm"
-        class="!text-xs font-medium"
-        :disabled="!selectedInbox || !selectedContact || isLoading"
-        :is-loading="isLoading"
-        @click="makeCall"
-      />
-    </div>
-  </div>
-</template>
-
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -106,10 +14,9 @@ import DropdownMenu from 'dashboard/components-next/dropdown-menu/DropdownMenu.v
 import ContactSelector from 'dashboard/components-next/NewConversation/components/ContactSelector.vue';
 import axios from 'axios';
 
+const emit = defineEmits(['close']);
 const { t } = useI18n();
 const store = useStore();
-
-const emit = defineEmits(['close']);
 
 const selectedContact = ref(null);
 const selectedInbox = ref(null);
@@ -139,11 +46,15 @@ const voiceInboxesList = computed(() => {
 });
 
 // Auto-select the first available voice inbox
-watch(voiceInboxesList, (newList) => {
-  if (newList.length > 0 && !selectedInbox.value) {
-    selectedInbox.value = newList[0];
-  }
-}, { immediate: true });
+watch(
+  voiceInboxesList,
+  newList => {
+    if (newList.length > 0 && !selectedInbox.value) {
+      selectedInbox.value = newList[0];
+    }
+  },
+  { immediate: true }
+);
 
 const selectInbox = item => {
   const inbox = voiceInboxesList.value.find(i => i.value === item.value);
@@ -168,7 +79,7 @@ const handleSelectedContact = ({ value, action, ...rest }) => {
     console.log('Contact selected from dropdown:', { value, action, ...rest });
     selectedContact.value = {
       ...rest,
-      sourceId: rest.id || rest.value || value // Make sure we have the ID in sourceId
+      sourceId: rest.id || rest.value || value, // Make sure we have the ID in sourceId
     };
   }
   showContactsDropdown.value = false;
@@ -203,26 +114,33 @@ const debouncedSearchContacts = debounce(async query => {
     console.log('Search response:', data); // Log the search response
 
     // Ensure contacts.value is an array and convert to camelCase
-    const searchResults = data?.payload ? camelcaseKeys(data.payload, { deep: true }) : [];
+    const searchResults = data?.payload
+      ? camelcaseKeys(data.payload, { deep: true })
+      : [];
 
     // Filter to only include contacts with phone numbers
-    const contactsWithPhone = searchResults.filter(contact => contact.phoneNumber);
+    const contactsWithPhone = searchResults.filter(
+      contact => contact.phoneNumber
+    );
 
     // Map the contacts to ensure they have sourceId set to ID for consistency
     contacts.value = contactsWithPhone.map(contact => ({
       ...contact,
       sourceId: contact.id, // Make sure sourceId is set
-      value: contact.id // Make sure value is set for TagInput
+      value: contact.id, // Make sure value is set for TagInput
     }));
 
     // If it looks like a phone number, add option to call directly
-    if (query.match(/^\+?[0-9\s\-()]+$/) && !contacts.value.some(c => c.phoneNumber === query)) {
+    if (
+      query.match(/^\+?[0-9\s\-()]+$/) &&
+      !contacts.value.some(c => c.phoneNumber === query)
+    ) {
       contacts.value.push({
         id: 'direct-call',
         name: t('CALL_MODAL.CALL_DIRECTLY'),
         phoneNumber: query,
         sourceId: 'direct-call',
-        value: 'direct-call'
+        value: 'direct-call',
       });
     }
 
@@ -246,10 +164,17 @@ const makeCall = async () => {
 
   try {
     const isDirect = selectedContact.value.sourceId === 'direct-call';
-    const contactId = isDirect ? null : (selectedContact.value.sourceId || selectedContact.value.id);
-    
+    const contactId = isDirect
+      ? null
+      : selectedContact.value.sourceId || selectedContact.value.id;
+
     if (contactId) {
-      console.log('Making call to contact ID:', contactId, 'with full contact:', selectedContact.value);
+      console.log(
+        'Making call to contact ID:',
+        contactId,
+        'with full contact:',
+        selectedContact.value
+      );
       // Use VoiceAPI.initiateCall instead of direct axios call
       await VoiceAPI.initiateCall(contactId);
     } else {
@@ -272,7 +197,11 @@ const makeCall = async () => {
       console.log('Created contact:', contactResponse.data);
 
       // Then initiate call to the newly created contact
-      if (contactResponse.data && contactResponse.data.payload && contactResponse.data.payload.contact) {
+      if (
+        contactResponse.data &&
+        contactResponse.data.payload &&
+        contactResponse.data.payload.contact
+      ) {
         const newContactId = contactResponse.data.payload.contact.id;
         console.log('Using new contact ID:', newContactId);
         await VoiceAPI.initiateCall(newContactId);
@@ -304,3 +233,103 @@ onMounted(() => {
   // This ensures it works even if voiceInboxesList is populated after mounting
 });
 </script>
+
+<template>
+  <div
+    class="w-[42rem] divide-y divide-n-strong overflow-visible transition-all duration-300 ease-in-out top-full justify-between flex flex-col bg-n-alpha-3 border border-n-strong shadow-sm backdrop-blur-[100px] rounded-xl"
+  >
+    <div class="px-4 py-3 flex items-center">
+      <h3 class="text-base font-medium">{{ $t('CALL_MODAL.START_CALL') }}</h3>
+    </div>
+
+    <!-- Inbox Selector (First) -->
+    <div
+      class="flex items-center flex-1 w-full gap-3 px-4 py-3 overflow-y-visible"
+    >
+      <label
+        class="mb-0.5 text-sm font-medium text-n-slate-11 whitespace-nowrap"
+      >
+        {{ $t('CALL_MODAL.VIA') }}
+      </label>
+
+      <div
+        v-if="selectedInbox"
+        class="flex items-center gap-1.5 rounded-md bg-n-alpha-2 truncate ltr:pl-3 rtl:pr-3 ltr:pr-1 rtl:pl-1 h-7 min-w-0"
+      >
+        <span class="text-sm truncate text-n-slate-12 flex items-center gap-2">
+          <span class="i-ri-phone-fill text-n-slate-11" />
+          {{ selectedInbox.name }} - {{ selectedInbox.phoneNumber }}
+        </span>
+        <Button
+          variant="ghost"
+          icon="i-lucide-x"
+          color="slate"
+          size="xs"
+          class="flex-shrink-0"
+          @click="selectedInbox = null"
+        />
+      </div>
+
+      <div
+        v-else
+        v-on-click-outside="() => (showInboxDropdown = false)"
+        class="relative flex items-center h-7"
+      >
+        <Button
+          :label="$t('CALL_MODAL.SELECT_INBOX')"
+          variant="link"
+          size="sm"
+          color="slate"
+          class="hover:!no-underline"
+          @click="showInboxDropdown = !showInboxDropdown"
+        />
+        <DropdownMenu
+          v-if="voiceInboxesList.length > 0 && showInboxDropdown"
+          :menu-items="voiceInboxesList"
+          class="left-0 z-[100] top-8 overflow-y-auto max-h-60 w-fit max-w-sm dark:!outline-n-slate-5"
+          @action="selectInbox($event)"
+        />
+      </div>
+    </div>
+
+    <!-- Contact Selector -->
+    <ContactSelector
+      :contacts="contacts"
+      :selected-contact="selectedContact"
+      :show-contacts-dropdown="showContactsDropdown"
+      :is-loading="isSearching"
+      :is-creating-contact="false"
+      :contact-id="null"
+      :contactable-inboxes-list="[]"
+      :show-inboxes-dropdown="false"
+      :has-errors="false"
+      @search-contacts="handleContactSearch"
+      @set-selected-contact="handleSelectedContact"
+      @clear-selected-contact="clearSelectedContact"
+      @update-dropdown="handleDropdownUpdate"
+    />
+
+    <!-- Action buttons -->
+    <div
+      class="flex items-center justify-end w-full h-[3.25rem] gap-2 px-4 py-3"
+    >
+      <Button
+        :label="$t('CALL_MODAL.CANCEL')"
+        variant="faded"
+        color="slate"
+        size="sm"
+        class="!text-xs font-medium"
+        @click="$emit('close')"
+      />
+      <Button
+        :label="$t('CALL_MODAL.CALL')"
+        icon="i-ri-phone-fill"
+        size="sm"
+        class="!text-xs font-medium"
+        :disabled="!selectedInbox || !selectedContact || isLoading"
+        :is-loading="isLoading"
+        @click="makeCall"
+      />
+    </div>
+  </div>
+</template>

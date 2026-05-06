@@ -6,7 +6,24 @@
       "AGENTS": "Bạn đã vượt quá giới hạn nhân viên. Gói của bạn chỉ cho phép {allowed} nhân viên.",
       "CONTACTS": "Bạn đã vượt quá giới hạn liên hệ. Gói của bạn chỉ cho phép {allowed} liên hệ.",
       "AUTOMATIONS": "Bạn đã vượt quá giới hạn số lượng luật tự động hoá. Gói của bạn chỉ cho phép {allowed} luật.",
-      "NON_ADMIN": "Vui lòng liên hệ quản trị viên để nâng cấp gói và tiếp tục sử dụng đầy đủ tính năng."
+      "NON_ADMIN": "Vui lòng liên hệ quản trị viên để nâng cấp gói và tiếp tục sử dụng đầy đủ tính năng.",
+      "UPGRADE_PROMPT_GENERIC": "Tính năng {feature} hiện không khả dụng trong gói hiện tại của bạn. Vui lòng nâng cấp để sử dụng tính năng này và các tính năng cao cấp khác.",
+      "UPGRADE_PROMPT_CRM": "Nâng cấp để tiếp tục sử dụng Shopiz. Bạn đã vượt quá giới hạn liên hệ. Gói của bạn chỉ cho phép {allowed} liên hệ.",
+      "UPGRADE_PROMPT_CAMPAIGNS": "Chiến dịch chỉ khả dụng ở gói cao hơn. Nâng cấp để bắt đầu tiếp cận thêm nhiều khách hàng bằng tin nhắn chủ động.",
+      "UPGRADE_PROMPT_REPORTS": "Báo cáo và phân tích chuyên sâu chỉ khả dụng ở gói cao hơn. Nâng cấp để hiểu rõ hơn về hoạt động kinh doanh của bạn.",
+      "UPGRADE_PROMPT_AUTOMATIONS": "Tự động hóa và quy trình làm việc chỉ khả dụng ở gói cao hơn. Nâng cấp để tiết kiệm thời gian và mở rộng quy mô vận hành.",
+      "UPGRADE_PROMPT_SAML": "Tính năng SAML SSO hiện không khả dụng trong gói hiện tại của bạn. Nâng cấp để tăng cường bảo mật cho đội ngũ của bạn.",
+      "UPGRADE_PROMPT_SLA": "Tính năng Cam kết chất lượng dịch vụ (SLA) hiện không khả dụng trong gói hiện tại của bạn. Nâng cấp để bắt đầu theo dõi hiệu suất phản hồi.",
+      "UPGRADE_PROMPT_CUSTOM_ROLES": "Tính năng Vai trò tùy chỉnh hiện không khả dụng trong gói hiện tại của bạn. Nâng cấp để quản lý phân quyền linh hoạt hơn cho đội ngũ.",
+      "UPGRADE_PROMPT_CAPTAIN": "Tính năng ShopizAI hiện không khả dụng trong gói hiện tại của bạn. Vui lòng nâng cấp để sử dụng tính năng này và các tính năng cao cấp khác.",
+      "UPGRADE_PROMPT_CHANNEL_ZALOPERSONAL": "Tính năng Chiến dịch Zalo Cá nhân hiện không khả dụng trong gói hiện tại của bạn. Vui lòng nâng cấp để sử dụng tính năng này và các tính năng cao cấp khác.",
+      "UPGRADE_PROMPT_WHATSAPP_CAMPAIGN": "Tính năng Chiến dịch WhatsApp hiện không khả dụng trong gói hiện tại của bạn. Vui lòng nâng cấp để sử dụng tính năng này và các tính năng cao cấp khác.",
+      "UPGRADE_PROMPT_CUSTOM_ATTRIBUTES": "Tính năng Thuộc tính tùy chỉnh hiện không khả dụng trong gói hiện tại của bạn. Vui lòng nâng cấp để sử dụng tính năng này và các tính năng cao cấp khác.",
+      "UPGRADE_PROMPT_AGENT_BOTS": "Tính năng Trợ lý ảo hiện không khả dụng trong gói hiện tại của bạn. Vui lòng nâng cấp để sử dụng tính năng này và các tính năng cao cấp khác.",
+      "UPGRADE_PROMPT_TEMPLATE_BUILDER": "Tính năng Trình tạo mẫu tin nhắn hiện không khả dụng trong gói hiện tại của bạn. Vui lòng nâng cấp để sử dụng tính năng này và các tính năng cao cấp khác.",
+      "UPGRADE_PROMPT_INTEGRATIONS": "Tính năng Tích hợp ứng dụng hiện không khả dụng trong gói hiện tại của bạn. Vui lòng nâng cấp để sử dụng tính năng này và các tính năng cao cấp khác.",
+      "UPGRADE_PROMPT_AUDIT_LOGS": "Tính năng Nhật ký hoạt động hiện không khả dụng trong gói hiện tại của bạn. Vui lòng nâng cấp để sử dụng tính năng này và các tính năng cao cấp khác.",
+      "UPGRADE_PROMPT_HELP_CENTER": "Tính năng Trung tâm trợ giúp hiện không khả dụng trong gói hiện tại của bạn. Vui lòng nâng cấp để sử dụng tính năng này và các tính năng cao cấp khác."
     },
     "TITLE": "Cài đặt tài khoản",
     "SUBMIT": "Cập nhật cài đặt",
@@ -126,11 +143,22 @@
       }
     },
     "UPDATE_CHATWOOT": "Có bản cập nhật mới ({latestShopizVersion}) cho Shopiz. Vui lòng cập nhật ngay.",
+    "VERSION": "Phiên bản: {version}",
     "LEARN_MORE": "Tìm hiểu thêm",
     "PAYMENT_PENDING": "Thanh toán của bạn đang chờ xử lý. Vui lòng cập nhật thông tin để tiếp tục sử dụng Shopiz.",
+    "SUBSCRIPTION_EXPIRED": "Hết hạn sử dụng, khách cần đăng ký gói mới ngay để tiếp tục sử dụng không gián đoạn.",
+    "SUBSCRIPTION_EXPIRED_GRACE": "Gói đăng ký đã hết hạn. Bạn còn {days} ngày để gia hạn trước khi bị chuyển về gói Miễn phí.",
     "UPGRADE": "Nâng cấp để tiếp tục sử dụng Shopiz",
     "LIMITS_UPGRADE": "Tài khoản đã vượt hạn mức sử dụng. Vui lòng nâng cấp gói để tiếp tục.",
-    "OPEN_BILLING": "Mở trang thanh toán"
+    "OPEN_BILLING": "Mở trang thanh toán",
+    "CLOSE": "Đóng",
+    "CAPTAIN_API_SOURCE": {
+      "USER_HOOK_BANNER": "AI đang sử dụng API key OpenAI cá nhân của bạn. Bạn sẽ không bị trừ credit hệ thống.",
+      "NO_KEY_BANNER": "Chưa cấu hình API key AI. Vui lòng thiết lập tích hợp OpenAI hoặc liên hệ quản trị viên.",
+      "BADGE_PERSONAL_KEY": "API Key cá nhân",
+      "BADGE_SYSTEM_KEY": "AI hệ thống",
+      "CONFIGURE_OPENAI": "Cấu hình OpenAI"
+    }
   },
   "FORMS": {
     "MULTISELECT": {
@@ -184,6 +212,7 @@
   },
   "COMMAND_BAR": {
     "SEARCH_PLACEHOLDER": "Tìm kiếm hoặc chuyển đến",
+    "SNOOZE_PLACEHOLDER": "Nhập thời gian VD: ngày mai, 2 giờ, thứ sáu tuần sau, 15 tháng 1...",
     "SECTIONS": {
       "GENERAL": "Chung",
       "REPORTS": "Báo cáo",
@@ -196,7 +225,7 @@
       "ADD_LABEL": "Thêm nhãn",
       "REMOVE_LABEL": "Xóa nhãn",
       "SETTINGS": "Cài đặt",
-      "AI_ASSIST": "AI Assist",
+      "AI_ASSIST": "Trợ lý AI",
       "APPEARANCE": "Giao diện",
       "SNOOZE_NOTIFICATION": "Tạm hoãn thông báo"
     },
@@ -220,7 +249,7 @@
       "GO_TO_NOTIFICATIONS": "Đi đến thông báo",
       "ADD_LABELS_TO_CONVERSATION": "Thêm nhãn cho hội thoại",
       "ASSIGN_AN_AGENT": "Gán cho nhân viên",
-      "AI_ASSIST": "AI Assist",
+      "AI_ASSIST": "Trợ lý AI",
       "ASSIGN_PRIORITY": "Gán mức ưu tiên",
       "ASSIGN_A_TEAM": "Gán nhóm",
       "MUTE_CONVERSATION": "Tắt thông báo hội thoại",

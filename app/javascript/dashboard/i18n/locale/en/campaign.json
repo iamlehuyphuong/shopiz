@@ -279,6 +279,160 @@
         }
       }
     },
+    "ZALO_OA": {
+      "HEADER_TITLE": "Zalo OA Campaigns",
+      "NEW_CAMPAIGN": "Create campaign",
+      "EMPTY_STATE": {
+        "TITLE": "No Zalo OA campaigns are available",
+        "SUBTITLE": "Send promotional messages to your Zalo OA followers. Reach customers with offers, updates, and announcements. Click 'Create campaign' to get started."
+      },
+      "CARD": {
+        "STATUS": {
+          "COMPLETED": "Completed",
+          "SCHEDULED": "Scheduled"
+        },
+        "CAMPAIGN_DETAILS": {
+          "SENT_FROM": "Sent from",
+          "ON": "on",
+          "SENT_BY": "Sent by",
+          "BOT": "BOT"
+        }
+      },
+      "CREATE": {
+        "TITLE": "Create Zalo OA Campaign",
+        "CANCEL_BUTTON_TEXT": "Cancel",
+        "CREATE_BUTTON_TEXT": "Create",
+        "FORM": {
+          "TITLE": {
+            "LABEL": "Title",
+            "PLACEHOLDER": "Enter the campaign title",
+            "ERROR": "Title is required"
+          },
+          "MESSAGE": {
+            "LABEL": "Message",
+            "PLACEHOLDER": "Enter the promotional message for OA followers",
+            "ERROR": "Message is required"
+          },
+          "INBOX": {
+            "LABEL": "Zalo OA Inbox",
+            "PLACEHOLDER": "Select Zalo OA inbox",
+            "ERROR": "Inbox is required"
+          },
+          "SENT_BY": {
+            "LABEL": "Sender",
+            "PLACEHOLDER": "Select sender",
+            "ERROR": "Sender is required"
+          },
+          "AUDIENCE": {
+            "LABEL": "Audience",
+            "PLACEHOLDER": "Select customer labels",
+            "ERROR": "Audience is required"
+          },
+          "SCHEDULED_AT": {
+            "LABEL": "Scheduled time",
+            "PLACEHOLDER": "Select campaign start time",
+            "ERROR": "Scheduled time is required"
+          },
+          "BUTTONS": {
+            "CREATE": "Create",
+            "CANCEL": "Cancel"
+          },
+          "API": {
+            "SUCCESS_MESSAGE": "Zalo OA campaign created successfully",
+            "ERROR_MESSAGE": "An error occurred. Please try again."
+          }
+        }
+      },
+      "EDIT": {
+        "TITLE": "Edit Zalo OA campaign",
+        "FORM": {
+          "API": {
+            "SUCCESS_MESSAGE": "Updated successfully",
+            "ERROR_MESSAGE": "There was an error. Please try again."
+          }
+        }
+      }
+    },
+    "FACEBOOK": {
+      "HEADER_TITLE": "Facebook Marketing Campaigns",
+      "NEW_CAMPAIGN": "Create campaign",
+      "EMPTY_STATE": {
+        "TITLE": "No Facebook marketing campaigns yet",
+        "SUBTITLE": "Start sending promotional messages to customers who have opted in to receive marketing notifications. Set up your first campaign by clicking 'Create campaign'."
+      },
+      "CARD": {
+        "STATUS": {
+          "COMPLETED": "Completed",
+          "SCHEDULED": "Scheduled"
+        },
+        "CAMPAIGN_DETAILS": {
+          "SENT_FROM": "Sent from",
+          "ON": "on",
+          "SENT_BY": "Sent by",
+          "BOT": "BOT"
+        },
+        "METRICS": {
+          "TOTAL_SENT": "Sent",
+          "DELIVERED": "Delivered",
+          "FAILED": "Failed",
+          "DELIVERY_RATE": "Delivery rate"
+        }
+      },
+      "CREATE": {
+        "TITLE": "Create Facebook marketing campaign",
+        "CANCEL_BUTTON_TEXT": "Cancel",
+        "CREATE_BUTTON_TEXT": "Create",
+        "FORM": {
+          "TITLE": {
+            "LABEL": "Title",
+            "PLACEHOLDER": "Enter campaign title",
+            "ERROR": "Title is required"
+          },
+          "MESSAGE": {
+            "LABEL": "Message",
+            "PLACEHOLDER": "Enter the marketing message to send to opted-in customers",
+            "ERROR": "Message is required"
+          },
+          "INBOX": {
+            "LABEL": "Facebook Page",
+            "PLACEHOLDER": "Select Facebook page",
+            "ERROR": "Facebook page is required"
+          },
+          "SENT_BY": {
+            "LABEL": "Sender",
+            "PLACEHOLDER": "Select sender",
+            "ERROR": "Sender is required"
+          },
+          "AUDIENCE": {
+            "LABEL": "Audience",
+            "PLACEHOLDER": "Select customer labels",
+            "ERROR": "Audience is required"
+          },
+          "SCHEDULED_AT": {
+            "LABEL": "Scheduled time",
+            "PLACEHOLDER": "Select campaign start time",
+            "ERROR": "Scheduled time is required"
+          },
+          "BUTTONS": {
+            "CREATE": "Create",
+            "CANCEL": "Cancel"
+          },
+          "API": {
+            "SUCCESS_MESSAGE": "Facebook marketing campaign created successfully",
+            "ERROR_MESSAGE": "An error occurred. Please try again."
+          }
+        }
+      },
+      "EDIT": {
+        "TITLE": "Edit Facebook marketing campaign",
+        "FORM": {
+          "API": {
+            "SUCCESS_MESSAGE": "Updated successfully",
+            "ERROR_MESSAGE": "There was an error. Please try again."
+          }
+        }
+      }
+    },
     "VOICE": {
       "HEADER_TITLE": "Voice campaigns",
       "NEW_CAMPAIGN": "Create campaign",
@@ -353,80 +507,6 @@
         }
       }
     },
-    "SURVEY": {
-      "HEADER_TITLE": "Survey campaigns",
-      "NEW_CAMPAIGN": "Create campaign",
-      "EMPTY_STATE": {
-        "TITLE": "No survey campaigns are available",
-        "SUBTITLE": "Make customer outreach more personal with AI-powered survey. Perfect for appointment reminders, verifications, and follow-ups that feel natural. Your AI assistant can adapt to customer responses, gather information, and enrich leads—saving your team valuable time.",
-        "JS_API_DESCRIPTION": "You can trigger survey campaigns programmatically using our JavaScript API:"
-      },
-      "CARD": {
-        "STATUS": {
-          "COMPLETED": "Completed",
-          "SCHEDULED": "Scheduled"
-        },
-        "CAMPAIGN_DETAILS": {
-          "SENT_BY": "Sent by ",
-          "FROM": " from ",
-          "ON": " on ",
-          "BOT": "Bot"
-        }
-      },
-      "EMPTY_STATE_BADGE": {
-        "ENABLED": "Enabled",
-        "DISABLED": "Disabled"
-      },
-      "DETAILS": {
-        "MESSAGE": "Message",
-        "INBOX": "Inbox",
-        "AUDIENCE": "Audience",
-        "SCHEDULED_AT": "Scheduled at"
-      },
-      "CREATE": {
-        "TITLE": "Create survey campaign",
-        "FORM": {
-          "TITLE": {
-            "LABEL": "Title",
-            "PLACEHOLDER": "Enter the title of your survey campaign",
-            "ERROR": "Title is required"
-          },
-          "MESSAGE": {
-            "LABEL": "Call Script",
-            "PLACEHOLDER": "Add the prompt to guide the AI during this call. Be specific about tone, information to gather, and how to handle different responses.",
-            "ERROR": "Call script is required"
-          },
-          "INBOX": {
-            "LABEL": "Survey Inbox",
-            "PLACEHOLDER": "Select survey inbox",
-            "ERROR": "Survey inbox is required"
-          },
-          "SENT_BY": {
-            "LABEL": "Sent by",
-            "PLACEHOLDER": "Select sender",
-            "ERROR": "Sender is required"
-          },
-          "AUDIENCE": {
-            "LABEL": "Audience",
-            "PLACEHOLDER": "Select audience labels",
-            "ERROR": "Audience is required"
-          },
-          "SCHEDULED_AT": {
-            "LABEL": "Scheduled time",
-            "PLACEHOLDER": "Select when to start the campaign",
-            "ERROR": "Scheduled time is required"
-          },
-          "BUTTONS": {
-            "CREATE": "Create",
-            "CANCEL": "Cancel"
-          },
-          "API": {
-            "SUCCESS_MESSAGE": "Survey campaign created successfully",
-            "ERROR_MESSAGE": "There was an error. Please try again."
-          }
-        }
-      }
-    },
     "CONFIRM_DELETE": {
       "TITLE": "Are you sure to delete?",
       "DESCRIPTION": "The delete action is permanent and cannot be reversed.",
@@ -434,6 +514,122 @@
       "API": {
         "SUCCESS_MESSAGE": "Campaign deleted successfully",
         "ERROR_MESSAGE": "There was an error. Please try again."
+      }
+    },
+    "TELEGRAM": {
+      "HEADER_TITLE": "Telegram campaigns",
+      "NEW_CAMPAIGN": "Create campaign",
+      "EMPTY_STATE": {
+        "TITLE": "No Telegram campaigns are available",
+        "SUBTITLE": "Launch a Telegram campaign to reach your customers directly. Send offers or make announcements with ease. Click 'Create campaign' to get started."
+      },
+      "CARD": {
+        "STATUS": {
+          "COMPLETED": "Completed",
+          "SCHEDULED": "Scheduled"
+        },
+        "CAMPAIGN_DETAILS": {
+          "SENT_FROM": "Sent from",
+          "ON": "on"
+        }
+      },
+      "CREATE": {
+        "TITLE": "Create Telegram campaign",
+        "CANCEL_BUTTON_TEXT": "Cancel",
+        "CREATE_BUTTON_TEXT": "Create",
+        "FORM": {
+          "TITLE": {
+            "LABEL": "Title",
+            "PLACEHOLDER": "Please enter the title of campaign",
+            "ERROR": "Title is required"
+          },
+          "MESSAGE": {
+            "LABEL": "Message",
+            "PLACEHOLDER": "Please enter the message of campaign",
+            "ERROR": "Message is required"
+          },
+          "INBOX": {
+            "LABEL": "Select Inbox",
+            "PLACEHOLDER": "Select Inbox",
+            "ERROR": "Inbox is required"
+          },
+          "AUDIENCE": {
+            "LABEL": "Audience",
+            "PLACEHOLDER": "Select the customer labels",
+            "ERROR": "Audience is required"
+          },
+          "SCHEDULED_AT": {
+            "LABEL": "Scheduled time",
+            "PLACEHOLDER": "Please select the time",
+            "ERROR": "Scheduled time is required"
+          },
+          "BUTTONS": {
+            "CREATE": "Create",
+            "CANCEL": "Cancel"
+          },
+          "API": {
+            "SUCCESS_MESSAGE": "Telegram campaign created successfully",
+            "ERROR_MESSAGE": "There was an error. Please try again."
+          }
+        }
+      }
+    },
+    "LINE": {
+      "HEADER_TITLE": "LINE campaigns",
+      "NEW_CAMPAIGN": "Create campaign",
+      "EMPTY_STATE": {
+        "TITLE": "No LINE campaigns are available",
+        "SUBTITLE": "Launch a LINE campaign to reach your customers directly. Send offers or make announcements with ease. Click 'Create campaign' to get started."
+      },
+      "CARD": {
+        "STATUS": {
+          "COMPLETED": "Completed",
+          "SCHEDULED": "Scheduled"
+        },
+        "CAMPAIGN_DETAILS": {
+          "SENT_FROM": "Sent from",
+          "ON": "on"
+        }
+      },
+      "CREATE": {
+        "TITLE": "Create LINE campaign",
+        "CANCEL_BUTTON_TEXT": "Cancel",
+        "CREATE_BUTTON_TEXT": "Create",
+        "FORM": {
+          "TITLE": {
+            "LABEL": "Title",
+            "PLACEHOLDER": "Please enter the title of campaign",
+            "ERROR": "Title is required"
+          },
+          "MESSAGE": {
+            "LABEL": "Message",
+            "PLACEHOLDER": "Please enter the message of campaign",
+            "ERROR": "Message is required"
+          },
+          "INBOX": {
+            "LABEL": "Select Inbox",
+            "PLACEHOLDER": "Select Inbox",
+            "ERROR": "Inbox is required"
+          },
+          "AUDIENCE": {
+            "LABEL": "Audience",
+            "PLACEHOLDER": "Select the customer labels",
+            "ERROR": "Audience is required"
+          },
+          "SCHEDULED_AT": {
+            "LABEL": "Scheduled time",
+            "PLACEHOLDER": "Please select the time",
+            "ERROR": "Scheduled time is required"
+          },
+          "BUTTONS": {
+            "CREATE": "Create",
+            "CANCEL": "Cancel"
+          },
+          "API": {
+            "SUCCESS_MESSAGE": "LINE campaign created successfully",
+            "ERROR_MESSAGE": "There was an error. Please try again."
+          }
+        }
       }
     }
   }

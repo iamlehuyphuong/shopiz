@@ -4,7 +4,7 @@ import { useVuelidate } from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import LoadingState from 'dashboard/components/widgets/LoadingState.vue';
 import { useAccount } from 'dashboard/composables/useAccount';
-import { mapGetters } from 'vuex';
+import { useAlert } from 'dashboard/composables';
 import axios from 'axios';
 import PageHeader from '../../SettingsSubPageHeader.vue';
 import router from '../../../../index';
@@ -47,10 +47,6 @@ export default {
     showLoader() {
       return this.oa_id === '' || this.isCreating;
     },
-    ...mapGetters({
-      // currentUser: 'getCurrentUser',
-      globalConfig: 'globalConfig/get',
-    }),
   },
   created() {
     if (this.$route.query.code) this.getAccessToken();
@@ -62,7 +58,7 @@ export default {
         'https://oauth.zaloapp.com/v4/oa/permission?app_id=' +
           window.shopizConfig.zaloAppId +
           '&redirect_uri=' +
-          encodeURIComponent(window.shopizConfig.hostURL + '/zalo/callback/') +
+          encodeURIComponent(window.shopizConfig.hostURL + '/zalo/callback') +
           '&state=' +
           encodeURIComponent(this.accountId)
       );
@@ -146,8 +142,9 @@ export default {
               params: { page: 'new', inbox_id: data.id },
             });
           })
-          .catch(() => {
+          .catch(error => {
             this.isCreating = false;
+            useAlert(error.message);
           });
       }
     },
@@ -157,14 +154,20 @@ export default {
 
 <template>
   <div class="wizard-body w-[90%] flex-shrink-0 flex-grow-0 max-w-[90%] p-6">
-    <div v-if="!hasLoginStarted" class="flex flex-col items-center justify-center pt-36">
+    <div
+      v-if="!hasLoginStarted"
+      class="flex flex-col items-center justify-center pt-36"
+    >
       <a href="#" @click="startLogin()">
         <img
-          :src="`/assets/images/dashboard/channels/zalo_login.svg`"
+          src="~dashboard/assets/images/channels/zalo_login.png"
           alt="Zalo-logo"
+          style="height: 150px; width: auto"
         />
       </a>
-      <p class="pt-6 mb-0 text-center">{{ $t('INBOX_MGMT.ADD.ZALO_OA.HELP') }}</p>
+      <p class="pt-6 mb-0 text-center">
+        {{ $t('INBOX_MGMT.ADD.ZALO_OA.HELP') }}
+      </p>
       <p class="text-center">{{ $t('INBOX_MGMT.ADD.ZALO_OA.HELP_2') }}</p>
     </div>
     <div v-else>
@@ -203,7 +206,11 @@ export default {
             </label>
           </div>
           <div class="w-full text-right">
-            <input type="submit" value="Create Inbox" class="button" />
+            <input
+              type="submit"
+              :value="$t('INBOX_MGMT.ADD.ZALO_OA.CREATE_INBOX')"
+              class="button"
+            />
           </div>
         </div>
       </form>

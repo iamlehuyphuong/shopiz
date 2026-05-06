@@ -15,12 +15,13 @@ import calls from './modules/calls';
 import campaigns from './modules/campaigns';
 import cannedResponse from './modules/cannedResponse';
 import categories from './modules/helpCenterCategories';
-import companies from './modules/companies';
 import contactConversations from './modules/contactConversations';
 import contactLabels from './modules/contactLabels';
 import contactNotes from './modules/contactNotes';
 import contacts from './modules/contacts';
 import conversationLabels from './modules/conversationLabels';
+import conversationOrders from './modules/conversationOrders';
+import conversationProducts from './modules/conversationProducts';
 import conversationMetadata from './modules/conversationMetadata';
 import conversationPage from './modules/conversationPage';
 import conversations from './modules/conversations';
@@ -61,8 +62,7 @@ import copilotMessages from './captain/copilotMessages';
 import captainScenarios from './captain/scenarios';
 import captainTools from './captain/tools';
 import captainCustomTools from './captain/customTools';
-import salesProducts from './modules/sales/products';
-import salesOrders from './modules/sales/orders';
+import salesProducts from './modules/salesProducts';
 
 const plugins = [];
 
@@ -83,13 +83,14 @@ export default createStore({
     campaigns,
     cannedResponse,
     categories,
-    companies,
     contactConversations,
     contactLabels,
     contactNotes,
     contacts,
     conversationLabels,
     conversationMetadata,
+    conversationOrders,
+    conversationProducts,
     conversationPage,
     conversations,
     conversationSearch,
@@ -130,7 +131,6 @@ export default createStore({
     captainTools,
     captainCustomTools,
     salesProducts,
-    salesOrders,
   },
   plugins,
 });

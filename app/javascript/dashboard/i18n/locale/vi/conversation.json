@@ -35,6 +35,8 @@
     "LOADING_CONVERSATIONS": "Đang tải cuộc hội thoại",
     "CANNOT_REPLY": "Bạn không thể trả lời do",
     "24_HOURS_WINDOW": "giới hạn cửa sổ 24 giờ",
+    "HUMAN_AGENT_WARNING": "⚠️ Đã qua 24h, tin nhắn sẽ được gửi dưới dạng hỗ trợ (Human Agent). Vui lòng không gửi nội dung quảng cáo.",
+    "48_HOURS_WINDOW": "Giới hạn thời lượng tin nhắn 48 giờ",
     "API_HOURS_WINDOW": "Bạn chỉ có thể trả lời trong vòng {hours} giờ",
     "NOT_ASSIGNED_TO_YOU": "Cuộc hội thoại này chưa được giao cho bạn. Bạn có muốn tự giao cho mình không?",
     "ASSIGN_TO_ME": "Giao cho tôi",
@@ -63,6 +65,7 @@
     "UNSUPPORTED_MESSAGE": "Tin nhắn này không được hỗ trợ. Bạn có thể xem tin nhắn trên ứng dụng Facebook / Instagram.",
     "UNSUPPORTED_MESSAGE_FACEBOOK": "Tin nhắn này không được hỗ trợ. Hãy xem trên ứng dụng Facebook Messenger.",
     "UNSUPPORTED_MESSAGE_INSTAGRAM": "Tin nhắn này không được hỗ trợ. Hãy xem trên ứng dụng Instagram.",
+    "UNSUPPORTED_MESSAGE_TIKTOK": "Tin nhắn này không được hỗ trợ. Bạn có thể xem tin nhắn này trên ứng dụng TikTok.",
     "SUCCESS_DELETE_MESSAGE": "Xóa tin nhắn thành công",
     "FAIL_DELETE_MESSSAGE": "Không thể xóa tin nhắn! Thử lại",
     "SUCCESS_UNDO_MESSAGE": "Thu hồi tin nhắn thành công",
@@ -77,11 +80,47 @@
       "SHOW_LABELS": "Hiện nhãn",
       "HIDE_LABELS": "Ẩn nhãn"
     },
-
+    "VOICE_CALL": {
+      "TITLE": "Cuộc gọi",
+      "RINGING": "Đang đổ chuông",
+      "ACTIVE": "Đang gọi",
+      "MISSED": "Cuộc gọi nhỡ",
+      "ENDED": "Đã kết thúc",
+      "INCOMING": "Cuộc gọi đến",
+      "OUTGOING": "Đang gọi...",
+      "INCOMING_CALL": "Cuộc gọi đến",
+      "OUTGOING_CALL": "Cuộc gọi đi",
+      "CALL_IN_PROGRESS": "Đang gọi",
+      "NO_ANSWER": "Không trả lời",
+      "MISSED_CALL": "Cuộc gọi nhỡ",
+      "CALL_ENDED": "Đã kết thúc",
+      "DURATION": "{duration}",
+      "UNKNOWN": "Không xác định",
+      "UNKNOWN_CALLER": "Người gọi không xác định",
+      "UNKNOWN_NUMBER": "Số không xác định",
+      "CALL_ERROR": "Không thể bắt đầu cuộc gọi. Vui lòng thử lại.",
+      "CALL_INITIATED": "Bắt đầu cuộc gọi thành công.",
+      "NOT_ANSWERED_YET": "Chưa trả lời",
+      "YOU_CALLED": "Bạn đã gọi",
+      "THEY_ANSWERED": "Họ đã trả lời",
+      "YOU_ANSWERED": "Bạn đã trả lời",
+      "YOU_DIDNT_ANSWER": "Bạn không trả lời",
+      "RINGING_STATUS": "Đang đổ chuông",
+      "ACTIVE_STATUS": "Đang gọi",
+      "MISSED_STATUS": "Cuộc gọi nhỡ",
+      "ENDED_STATUS": "Đã kết thúc",
+      "CALL_DURATION": "Thời lượng: {duration}",
+      "INCOMING_FROM": "Cuộc gọi đến từ {name}",
+      "OUTGOING_TO": "Gọi đến {name}",
+      "JOIN_CALL": "Tham gia cuộc gọi",
+      "REJECT_CALL": "Từ chối",
+      "END_CALL": "Kết thúc"
+    },
     "HEADER": {
       "RESOLVE_ACTION": "Giải quyết",
       "REOPEN_ACTION": "Mở lại",
       "OPEN_ACTION": "Mở",
+      "AI_ASSISTANT_TOGGLE": "Trợ lý AI",
       "MORE_ACTIONS": "Thêm hành động",
       "OPEN": "Xem thêm",
       "CLOSE": "Đóng",
@@ -168,6 +207,10 @@
           "SUCCESFUL": "Đã gán nhãn #{labelName} cho cuộc hội thoại {conversationId}",
           "FAILED": "Không thể gán nhãn. Vui lòng thử lại."
         },
+        "LABEL_REMOVAL": {
+          "SUCCESFUL": "Đã xoá nhãn #{labelName} khỏi cuộc trò chuyện id {conversationId}",
+          "FAILED": "Không thể xoá nhãn. Vui lòng thử lại."
+        },
         "TEAM_ASSIGNMENT": {
           "SUCCESFUL": "Đã gán nhóm \"{team}\" cho cuộc hội thoại {conversationId}",
           "FAILED": "Không thể gán nhóm. Vui lòng thử lại."
@@ -180,7 +223,11 @@
       "DISABLE_SIGN_TOOLTIP": "Tắt chữ ký",
       "MSG_INPUT": "Shift + Enter để xuống dòng. Gõ '/' để chọn tin nhắn mẫu.",
       "PRIVATE_MSG_INPUT": "Shift + Enter để xuống dòng. Chỉ nhân viên mới thấy nội dung này.",
+      "MESSAGING_RESTRICTED": "Bạn không thể trả lời cuộc trò chuyện này",
+      "MESSAGING_RESTRICTED_WHATSAPP": "Bạn chỉ có thể phản hồi bằng tin nhắn mẫu do giới hạn 24 giờ phản hồi",
+      "MESSAGING_RESTRICTED_API": "Bạn chỉ có thể phản hồi bằng tin nhắn mẫu do giới hạn thời gian phản hồi",
       "MESSAGE_SIGNATURE_NOT_CONFIGURED": "Chưa cấu hình chữ ký tin nhắn. Hãy cấu hình trong cài đặt hồ sơ.",
+      "COPILOT_MSG_INPUT": "Gửi thêm yêu cầu cho Copilot, hoặc hỏi bất kỳ điều gì khác... Nhấn Enter để gửi tiếp",
       "CLICK_HERE": "Nhấn vào đây để cập nhật",
       "WHATSAPP_TEMPLATES": "Mẫu WhatsApp"
     },
@@ -192,7 +239,6 @@
       "INSERT_READ_MORE": "Xem thêm",
       "DISMISS_REPLY": "Hủy trả lời",
       "REPLYING_TO": "Đang trả lời:",
-      "TIP_FORMAT_ICON": "Hiện trình soạn văn bản",
       "TIP_EMOJI_ICON": "Hiện biểu tượng cảm xúc",
       "TIP_ATTACH_ICON": "Đính kèm tệp",
       "TIP_AUDIORECORDER_ICON": "Ghi âm",
@@ -201,7 +247,7 @@
       "DRAG_DROP": "Kéo thả tệp vào đây để đính kèm",
       "START_AUDIO_RECORDING": "Bắt đầu ghi âm",
       "STOP_AUDIO_RECORDING": "Dừng ghi âm",
-      "": "",
+      "COPILOT_THINKING": "Copilot đang suy nghĩ",
       "EMAIL_HEAD": {
         "TO": "Tới",
         "ADD_BCC": "Thêm BCC",
@@ -243,9 +289,12 @@
     "SUCCESS_DELETE_CONVERSATION": "Xóa cuộc hội thoại thành công",
     "FAIL_DELETE_CONVERSATION": "Không thể xóa! Thử lại",
     "FILE_SIZE_LIMIT": "Tệp vượt quá giới hạn {MAXIMUM_SUPPORTED_FILE_UPLOAD_SIZE} MB",
+    "FILE_TYPE_NOT_SUPPORTED": "Loại tệp {fileName} này không được hỗ trợ trong cuộc trò chuyện này",
     "MESSAGE_ERROR": "Không thể gửi tin nhắn, vui lòng thử lại",
     "SENT_BY": "Gửi bởi:",
     "BOT": "Bot",
+    "NATIVE_APP": "Ứng dụng native",
+    "NATIVE_APP_ADVISORY": "Tin nhắn này được gửi từ ứng dụng native. Trả lời từ Chatwoot để duy trì cửa sổ tin nhắn.",
     "SEND_FAILED": "Không thể gửi! Thử lại",
     "TRY_AGAIN": "thử lại",
     "ASSIGNMENT": {
@@ -271,43 +320,8 @@
     },
     "SIDEBAR": {
       "CONTACT": "Liên hệ",
-      "COPILOT": "Shopiz AI"
-    },
-    "VOICE_CALL": {
-      "TITLE": "Cuộc gọi",
-      "RINGING": "Đang đổ chuông",
-      "ACTIVE": "Đang gọi",
-      "MISSED": "Cuộc gọi nhỡ",
-      "ENDED": "Đã kết thúc",
-      "INCOMING": "Cuộc gọi đến",
-      "OUTGOING": "Đang gọi...",
-      "INCOMING_CALL": "Cuộc gọi đến",
-      "OUTGOING_CALL": "Cuộc gọi đi",
-      "CALL_IN_PROGRESS": "Đang gọi",
-      "NO_ANSWER": "Không trả lời",
-      "MISSED_CALL": "Cuộc gọi nhỡ",
-      "CALL_ENDED": "Đã kết thúc",
-      "DURATION": "{duration}",
-      "UNKNOWN": "Không xác định",
-      "UNKNOWN_CALLER": "Người gọi không xác định",
-      "UNKNOWN_NUMBER": "Số không xác định",
-      "CALL_ERROR": "Không thể bắt đầu cuộc gọi. Vui lòng thử lại.",
-      "CALL_INITIATED": "Bắt đầu cuộc gọi thành công.",
-      "NOT_ANSWERED_YET": "Chưa trả lời",
-      "YOU_CALLED": "Bạn đã gọi",
-      "THEY_ANSWERED": "Họ đã trả lời",
-      "YOU_ANSWERED": "Bạn đã trả lời",
-      "YOU_DIDNT_ANSWER": "Bạn không trả lời",
-      "RINGING_STATUS": "Đang đổ chuông",
-      "ACTIVE_STATUS": "Đang gọi",
-      "MISSED_STATUS": "Cuộc gọi nhỡ",
-      "ENDED_STATUS": "Đã kết thúc",
-      "CALL_DURATION": "Thời lượng: {duration}",
-      "INCOMING_FROM": "Cuộc gọi đến từ {name}",
-      "OUTGOING_TO": "Gọi đến {name}",
-      "JOIN_CALL": "Tham gia cuộc gọi",
-      "REJECT_CALL": "Từ chối",
-      "END_CALL": "Kết thúc"
+      "COPILOT": "Shopiz AI",
+      "ORDERS": "Đơn hàng"
     },
     "COPILOT": {
       "TRY_THESE_PROMPTS": "Hãy thử những gợi ý này"
@@ -316,7 +330,147 @@
       "ERROR_DOWNLOADING": "Không thể tải tệp đính kèm. Vui lòng thử lại"
     },
     "LOAD_MORE_MESSAGES": "Tải thêm tin nhắn",
-    "ALL_MESSAGE_LOADED": "Đã tải toàn bộ tin nhắn 🎉"
+    "ALL_MESSAGE_LOADED": "Đã tải toàn bộ tin nhắn 🎉",
+    "ACTIVITY": {
+      "captain": {
+        "resolved": "Cuộc trò chuyện đã được đánh dấu là đã giải quyết bởi {user_name} do không có hoạt động",
+        "resolved_with_reason": "Cuộc trò chuyện đã được đánh dấu là đã giải quyết bởi {user_name} ({reason})",
+        "resolved_by_tool": "Cuộc trò chuyện đã được đánh dấu là đã giải quyết bởi {user_name}: {reason}",
+        "open": "Cuộc trò chuyện đã được mở lại bởi {user_name}",
+        "open_with_reason": "Cuộc trò chuyện đã được mở lại bởi {user_name} ({reason})",
+        "auto_opened_after_agent_reply": "Cuộc trò chuyện được tự động mở lại sau phản hồi của nhân viên"
+      },
+      "agent_bot": {
+        "error_moved_to_open": "Hội thoại được hệ thống đánh dấu là mở do lỗi trợ lý ảo."
+      },
+      "status": {
+        "resolved": "Cuộc trò chuyện được đánh dấu là đã giải quyết bởi {user_name}",
+        "contact_resolved": "Hội thoại đã được giải quyết bởi {contact_name}",
+        "open": "Cuộc trò chuyện đã được mở lại bởi {user_name}",
+        "pending": "Hội thoại được đánh dấu là chưa giải quyết bởi {user_name}",
+        "snoozed": "Hội thoại đã được tạm dừng lại bởi {user_name}",
+        "auto_resolved_days": "Hội thoại được đánh dấu là đã giải quyết bởi hệ thống vì {count} ngày không hoạt động",
+        "auto_resolved_hours": "Cuộc trò chuyện đã được đánh dấu là đã giải quyết bởi hệ thống do {count} giờ không có hoạt động",
+        "auto_resolved_minutes": "Cuộc trò chuyện đã được đánh dấu là đã giải quyết bởi hệ thống do {count} phút không có hoạt động",
+        "system_auto_open": "Hệ thống mở lại hội thoại do có tin nhắn mới."
+      },
+      "priority": {
+        "added": "{user_name} đã thiết lập độ ưu tiên thành {new_priority}",
+        "updated": "{user_name} đã thay đổi mức độ ưu tiên từ {old_priority} thành {new_priority}",
+        "removed": "{user_name} đã bỏ độ ưu tiên"
+      },
+      "assignee": {
+        "self_assigned": "{user_name} phân công chính mình vào hội thoại này",
+        "assigned": "Đã chỉ định {assignee_name} bởi {user_name}",
+        "removed": "Cuộc trò chuyện chưa được chỉ định bởi {user_name}"
+      },
+      "team": {
+        "assigned": "Đã chỉ định {team_name} bởi {user_name}",
+        "assigned_with_assignee": "Đã phân công cho {assignee_name} thông qua {team_name} bởi {user_name}",
+        "removed": "Đã huỷ phân công cho {team_name} bởi {user_name}"
+      },
+      "labels": {
+        "added": "{user_name} đã thêm {labels}",
+        "removed": "{user_name} đã xoá {labels}"
+      },
+      "orders": {
+        "created": "Đơn hàng #{order_id} được tạo bởi {user_name}",
+        "pushed": "Đơn hàng #{order_id} đã đẩy lên {platform} (Mã ngoài: {external_id})",
+        "synced": "Đơn hàng #{order_id} đồng bộ từ {platform} — Trạng thái: {status}",
+        "cancelled": "Đơn hàng #{order_id} đã hủy bởi {user_name}",
+        "deleted": "Đơn hàng #{order_id} đã xóa bởi {user_name}"
+      },
+      "sla": {
+        "added": "{user_name} đã thêm chính sách SLA {sla_name}",
+        "removed": "{user_name} đã xoá chính sách SLA {sla_name}"
+      },
+      "linear": {
+        "issue_created": "Vấn đề Linear {issue_id} đã được tạo bởi {user_name}",
+        "issue_linked": "Vấn đề Linear {issue_id} đã được liên kết bởi {user_name}",
+        "issue_unlinked": "Vấn đề Linear {issue_id} đã được hủy liên kết bởi {user_name}"
+      },
+      "csat": {
+        "not_sent_due_to_messaging_window": "CSAT thông báo không được gửi do hạn chế tin nhắn đi"
+      },
+      "auto_resolve": {
+        "not_sent_due_to_messaging_window": "Thông điệp tự động giải quyết không được gửi do hạn chế tin nhắn đi"
+      },
+      "muted": "{user_name} đã tắt tiếng hội thoại",
+      "unmuted": "{user_name} đã bật tiếng cuộc trò chuyện",
+      "auto_resolution_message": "Đang giải quyết cuộc trò chuyện vì đã không hoạt động trong một thời gian. Vui lòng bắt đầu một cuộc trò chuyện mới nếu cần hỗ trợ thêm."
+    },
+    "PRODUCT_PANEL": {
+      "TITLE": "Sản phẩm",
+      "SEARCH": "Tìm kiếm sản phẩm...",
+      "ALL_CATEGORIES": "Tất cả",
+      "NO_PRODUCTS": "Không tìm thấy sản phẩm",
+      "NO_INTEGRATION": "Không có liên kết thương mại điện tử nào với hộp thư này. Vui lòng cấu hình trong Cài đặt → Thương mại điện tử.",
+      "ADD_TO_ORDER": "Thêm vào đơn",
+      "SEND_TO_CHAT": "Gửi tin nhắn",
+      "IN_STOCK": "Còn hàng",
+      "OUT_OF_STOCK": "Hết hàng",
+      "LOAD_MORE": "Xem thêm",
+      "LOADING": "Đang tải sản phẩm...",
+      "PRODUCT_INSERTED": "Đã chèn thông tin sản phẩm vào tin nhắn",
+      "ADDED_TO_ORDER": "Đã thêm sản phẩm vào đơn hàng"
+    },
+    "ORDER_PANEL": {
+      "TITLE": "Đơn hàng",
+      "NEW_ORDER": "Tạo đơn",
+      "EDIT_ORDER": "Sửa đơn hàng",
+      "NO_ORDERS": "Chưa có đơn hàng",
+      "CREATE_FIRST": "Tạo đơn hàng đầu tiên cho hội thoại này",
+      "PRODUCTS": "Sản phẩm",
+      "PRODUCT_SEARCH": "Tìm sản phẩm...",
+      "PRODUCT_NAME": "Tên sản phẩm",
+      "NO_PRODUCTS": "Không tìm thấy sản phẩm",
+      "ADD_MANUAL": "Thêm thủ công",
+      "CUSTOMER_INFO": "Thông tin khách hàng",
+      "CUSTOMER_NAME": "Tên khách hàng",
+      "PHONE": "Số điện thoại",
+      "ADDRESS": "Địa chỉ giao hàng",
+      "NOTE": "Ghi chú",
+      "TOTAL": "Tổng tiền",
+      "QUANTITY": "SL",
+      "PRICE": "Giá",
+      "ITEMS_COUNT": "sản phẩm",
+      "FINANCIAL": "Thông tin tài chính",
+      "SHIPPING_FEE": "Phí giao hàng",
+      "DISCOUNT": "Giảm giá",
+      "TAX": "Thuế",
+      "PAYMENT_METHOD": "Phương thức thanh toán",
+      "PAYMENT_STATUS": {
+        "LABEL": "Trạng thái thanh toán",
+        "UNPAID": "Chưa thanh toán",
+        "PAID": "Đã thanh toán",
+        "PARTIALLY_REFUNDED": "Hoàn tiền một phần"
+      },
+      "STATUS_LABEL": "Trạng thái",
+      "STATUS": {
+        "DRAFT": "Nháp",
+        "CONFIRMED": "Đã xác nhận",
+        "PROCESSING": "Đang xử lý",
+        "SHIPPED": "Đang giao",
+        "DELIVERED": "Đã giao",
+        "CANCELLED": "Đã hủy"
+      },
+      "SAVE": "Lưu đơn hàng",
+      "UPDATE": "Cập nhật",
+      "CANCEL": "Hủy",
+      "DELETE": "Xóa",
+      "SAVE_SUCCESS": "Lưu đơn hàng thành công",
+      "DELETE_SUCCESS": "Xóa đơn hàng thành công",
+      "DELETE_ERROR": "Không thể xóa đơn hàng",
+      "PUSH": "Chốt & Đẩy đơn",
+      "PUSH_SUCCESS": "Đẩy đơn hàng thành công",
+      "PUSH_ERROR": "Lỗi khi đẩy đơn hàng",
+      "SYNC": "Đồng bộ",
+      "SYNC_SUCCESS": "Đồng bộ đơn hàng thành công",
+      "SYNC_ERROR": "Lỗi khi đồng bộ đơn hàng",
+      "PUSH_CONFIRM": "Bạn có chắc muốn đẩy đơn hàng này? Đơn sẽ được gửi đến sàn thương mại.",
+      "DELETE_CONFIRM": "Bạn có chắc muốn xóa đơn hàng này? Hành động này không thể hoàn tác.",
+      "CONFIRM_YES": "Xác nhận"
+    }
   },
   "EMAIL_TRANSCRIPT": {
     "TITLE": "Gửi bản sao hội thoại",
@@ -325,6 +479,7 @@
     "CANCEL": "Hủy",
     "SEND_EMAIL_SUCCESS": "Đã gửi bản sao hội thoại thành công",
     "SEND_EMAIL_ERROR": "Có lỗi xảy ra, vui lòng thử lại",
+    "SEND_EMAIL_PAYMENT_REQUIRED": "Gửi bản ghi email không có sẵn trong gói hiện tại của bạn. Vui lòng nâng cấp để sử dụng tính năng này.",
     "FORM": {
       "SEND_TO_CONTACT": "Gửi bản sao cho khách hàng",
       "SEND_TO_AGENT": "Gửi bản sao cho nhân viên được giao",
@@ -378,7 +533,7 @@
       "CONTACT_NOTES": "Ghi chú liên hệ",
       "CONTACT_ATTRIBUTES": "Thuộc tính liên hệ",
       "PREVIOUS_CONVERSATION": "Hội thoại trước đó",
-      "MACROS": "Macros",
+      "MACROS": "Lệnh (Macros)",
       "LINEAR_ISSUES": "Vấn đề Linear liên kết",
       "SHOPIFY_ORDERS": "Đơn hàng Shopify"
     },

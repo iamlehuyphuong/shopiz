@@ -35,7 +35,7 @@ export default {
       <form @submit.prevent="requestAuthorization">
         <NextButton
           type="submit"
-          icon="i-ri-twitter-x-fill"
+          icon="i-woot-x"
           label="Sign in with Twitter"
           :is-loading="isRequestingAuthorization"
         />

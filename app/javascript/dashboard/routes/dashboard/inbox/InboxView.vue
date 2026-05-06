@@ -68,8 +68,18 @@ const activeNotificationIndex = computed(() => {
 
 const isContactPanelOpen = computed(() => {
   if (currentChat.value.id) {
-    const { is_contact_sidebar_open: isContactSidebarOpen } = uiSettings.value;
-    return isContactSidebarOpen;
+    const {
+      is_contact_sidebar_open: isContactSidebarOpen,
+      is_copilot_panel_open: isCopilotPanelOpen,
+      is_order_sidebar_open: isOrderSidebarOpen,
+      is_product_sidebar_open: isProductSidebarOpen,
+    } = uiSettings.value;
+    return (
+      isContactSidebarOpen ||
+      isCopilotPanelOpen ||
+      isOrderSidebarOpen ||
+      isProductSidebarOpen
+    );
   }
   return false;
 });
@@ -203,7 +213,7 @@ onMounted(async () => {
         v-if="isConversationLoading"
         class="flex items-center flex-1 my-4 justify-center bg-n-solid-1"
       >
-        <Spinner class="text-n-brand" />
+        <Spinner class="text-n-orange" />
       </div>
       <div v-else class="flex h-[calc(100%-48px)] min-w-0">
         <ConversationBox

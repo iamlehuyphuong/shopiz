@@ -30,9 +30,11 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
     if parsed_result['error'].present?
       Messages::StatusUpdateService.new(message, 'failed', external_error(parsed_result)).perform
       Rails.logger.info "Facebook::SendOnFacebookService: Error sending message to Facebook : Page - #{channel.page_id} : #{parsed_result}"
+      track_campaign_metric(:failed)
+    else
+      message.update!(source_id: parsed_result['message_id']) if parsed_result['message_id'].present?
+      track_campaign_metric(:delivered)
     end
-
-    message.update!(source_id: parsed_result['message_id']) if parsed_result['message_id'].present?
   end
 
   def deliver_message(delivery_params)
@@ -49,12 +51,38 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
   end
 
   def fb_text_message_params
-    {
-      recipient: { id: contact.get_source_id(inbox.id) },
-      message: fb_text_message_payload,
-      messaging_type: 'MESSAGE_TAG',
-      tag: 'ACCOUNT_UPDATE'
+    base_params = {
+      message: fb_text_message_payload
     }
+    setup_recipient(base_params)
+    base_params
+  end
+
+  def setup_recipient(base_params)
+    if message.content_attributes['notification_messages_token'].present?
+      base_params[:recipient] = { notification_messages_token: message.content_attributes['notification_messages_token'] }
+    else
+      base_params[:recipient] = { id: contact.get_source_id(inbox.id) }
+      message_tag = message.content_attributes['message_tag']
+
+      if message_tag.present?
+        base_params[:messaging_type] = 'MESSAGE_TAG'
+        base_params[:tag] = message_tag
+      elsif under_24_hours?
+        base_params[:messaging_type] = 'RESPONSE'
+      else
+        base_params[:messaging_type] = 'MESSAGE_TAG'
+        base_params[:tag] = 'HUMAN_AGENT'
+      end
+    end
+  end
+
+  def under_24_hours?
+    last_incoming_message_time > 24.hours.ago
+  end
+
+  def last_incoming_message_time
+    conversation.last_incoming_message&.created_at || conversation.created_at
   end
 
   def fb_text_message_payload
@@ -79,12 +107,15 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
     error_message = response['error']['message']
     error_code = response['error']['code']
 
+    if error_code == 100 && error_message.include?('HUMAN_AGENT')
+      return I18n.t('errors.facebook.human_agent_error', error_code: error_code, error_message: error_message)
+    end
+
     "#{error_code} - #{error_message}"
   end
 
   def fb_attachment_message_params(attachment)
-    {
-      recipient: { id: contact.get_source_id(inbox.id) },
+    base_params = {
       message: {
         attachment: {
           type: attachment_type(attachment),
@@ -92,10 +123,10 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
             url: attachment.download_url
           }
         }
-      },
-      messaging_type: 'MESSAGE_TAG',
-      tag: 'ACCOUNT_UPDATE'
+      }
     }
+    setup_recipient(base_params)
+    base_params
   end
 
   # Facebook internative message
@@ -110,6 +141,9 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
     # 3. Cards
     when 'cards'
       fb_card_message_params message
+    # 4. Marketing Optin
+    when 'marketing_optin'
+      fb_marketing_optin_message_params message
     end
   end
 
@@ -125,15 +159,14 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
       }
     end
     # 2. Return
-    {
-      recipient: { id: contact.get_source_id(inbox.id) },
+    base_params = {
       message: {
         text: message.content,
         quick_replies: quick_replies
-      },
-      messaging_type: 'MESSAGE_TAG',
-      tag: 'ACCOUNT_UPDATE'
+      }
     }
+    setup_recipient(base_params)
+    base_params
   end
 
   # 2. Form: FB form message params
@@ -146,8 +179,7 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
       }
     end
     # 2. Return
-    {
-      recipient: { id: contact.get_source_id(inbox.id) },
+    base_params = {
       message: {
         attachment: {
           type: 'template',
@@ -161,10 +193,10 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
             ]
           }
         }
-      },
-      messaging_type: 'MESSAGE_TAG',
-      tag: 'ACCOUNT_UPDATE'
+      }
     }
+    setup_recipient(base_params)
+    base_params
   end
 
   # 3. Facebook card message
@@ -193,8 +225,7 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
       }
     end
     #  2. Return
-    {
-      recipient: { id: contact.get_source_id(inbox.id) },
+    base_params = {
       message: {
         attachment: {
           type: 'template',
@@ -203,10 +234,42 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
             elements: elements
           }
         }
-      },
-      messaging_type: 'MESSAGE_TAG',
-      tag: 'ACCOUNT_UPDATE'
+      }
     }
+    setup_recipient(base_params)
+    base_params
+  end
+
+  # 4. Marketing Optin
+  def fb_marketing_optin_message_params(message)
+    base_params = {
+      message: {
+        attachment: {
+          type: 'template',
+          payload: {
+            template_type: 'notification_messages',
+            notification_messages_timezone: 'UTC',
+            title: message.content,
+            payload: message.content_attributes['topic'] || 'marketing'
+          }
+        }
+      }
+    }
+
+    # Add image_url if provided
+    if message.content_attributes['image_url'].present?
+      base_params[:message][:attachment][:payload][:image_url] = message.content_attributes['image_url']
+    end
+
+    setup_recipient(base_params)
+    base_params
+  end
+
+  def track_campaign_metric(status)
+    campaign = conversation&.campaign
+    return unless campaign
+
+    campaign.increment_metric!(status)
   end
 
   def attachment_type(attachment)

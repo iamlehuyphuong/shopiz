@@ -8,9 +8,9 @@
     "PICKER": {
       "SEARCH_PLACEHOLDER": "Tìm kiếm mẫu",
       "NO_TEMPLATES_FOUND": "Không tìm thấy mẫu cho",
-      "HEADER": "Header",
-      "BODY": "Body",
-      "FOOTER": "Footer",
+      "HEADER": "Tiêu đề (Header)",
+      "BODY": "Nội dung (Body)",
+      "FOOTER": "Chân trang (Footer)",
       "BUTTONS": "Nút bấm",
       "CATEGORY": "Danh mục",
       "MEDIA_CONTENT": "Nội dung media",

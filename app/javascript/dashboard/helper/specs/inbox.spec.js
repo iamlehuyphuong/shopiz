@@ -38,6 +38,9 @@ describe('#Inbox Helpers', () => {
     it('should return correct class for Email', () => {
       expect(getInboxClassByType('Channel::Email')).toEqual('mail');
     });
+    it('should return correct class for TikTok', () => {
+      expect(getInboxClassByType(INBOX_TYPES.TIKTOK)).toEqual('brand-tiktok');
+    });
   });
 
   describe('getInboxIconByType', () => {
@@ -51,9 +54,7 @@ describe('#Inbox Helpers', () => {
       });
 
       it('returns correct icon for Twitter', () => {
-        expect(getInboxIconByType(INBOX_TYPES.TWITTER)).toBe(
-          'i-ri-twitter-x-fill'
-        );
+        expect(getInboxIconByType(INBOX_TYPES.TWITTER)).toBe('i-woot-x');
       });
 
       it('returns correct icon for WhatsApp', () => {
@@ -80,6 +81,10 @@ describe('#Inbox Helpers', () => {
         expect(getInboxIconByType(INBOX_TYPES.LINE)).toBe('i-ri-line-fill');
       });
 
+      it('returns correct icon for TikTok', () => {
+        expect(getInboxIconByType(INBOX_TYPES.TIKTOK)).toBe('i-woot-tiktok');
+      });
+
       it('returns default icon for unknown type', () => {
         expect(getInboxIconByType('UNKNOWN_TYPE')).toBe('i-ri-chat-1-fill');
       });
@@ -92,13 +97,19 @@ describe('#Inbox Helpers', () => {
     describe('line variant', () => {
       it('returns correct line icon for web widget', () => {
         expect(getInboxIconByType(INBOX_TYPES.WEB, null, 'line')).toBe(
-          'i-ri-global-line'
+          'i-woot-website'
         );
       });
 
       it('returns correct line icon for Facebook', () => {
         expect(getInboxIconByType(INBOX_TYPES.FB, null, 'line')).toBe(
-          'i-ri-messenger-line'
+          'i-woot-messenger'
+        );
+      });
+
+      it('returns correct line icon for TikTok', () => {
+        expect(getInboxIconByType(INBOX_TYPES.TIKTOK, null, 'line')).toBe(
+          'i-woot-tiktok'
         );
       });
 
@@ -134,7 +145,7 @@ describe('#Inbox Helpers', () => {
         it('returns WhatsApp line icon for Twilio WhatsApp number', () => {
           expect(
             getInboxIconByType(INBOX_TYPES.TWILIO, 'whatsapp', 'line')
-          ).toBe('i-ri-whatsapp-line');
+          ).toBe('i-woot-whatsapp');
         });
 
         it('returns SMS line icon for regular Twilio number', () => {

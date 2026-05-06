@@ -145,14 +145,14 @@ export default {
             role="button"
             class="flex rounded-md h-5 w-full items-center justify-between px-1.5 py-0.5 gap-2 whitespace-nowrap"
             :class="{
-              'bg-n-brand/10 dark:bg-n-brand/10': activeSort === option.key,
+              'bg-n-orange/10 dark:bg-n-orange/10': activeSort === option.key,
             }"
             @click.stop="onSortOptionClick(option)"
           >
             <span
-              class="text-xs font-medium hover:text-n-brand truncate min-w-0 dark:hover:text-n-brand"
+              class="text-xs font-medium hover:text-n-orange truncate min-w-0 dark:hover:text-n-orange"
               :class="{
-                'text-n-blue-text dark:text-n-blue-text':
+                'text-n-orange-11 dark:text-n-orange-11':
                   activeSort === option.key,
                 'text-n-slate-11': activeSort !== option.key,
               }"
@@ -161,7 +161,7 @@ export default {
             </span>
             <span
               v-if="activeSort === option.key"
-              class="i-lucide-check size-2.5 flex-shrink-0 text-n-blue-text"
+              class="i-lucide-check size-2.5 flex-shrink-0 text-n-orange-11"
             />
           </div>
         </div>
@@ -182,7 +182,7 @@ export default {
             type="checkbox"
             :name="option.key"
             :checked="option.selected"
-            class="m-0 border-[1.5px] shadow border-n-weak appearance-none rounded-[4px] w-4 h-4 dark:bg-n-background focus:ring-1 focus:ring-n-weak dark:focus:ring-n-strong checked:bg-n-brand dark:checked:bg-n-brand after:content-[''] after:text-white checked:after:content-['✓'] after:flex after:items-center after:justify-center checked:border-t checked:border-n-blue-10 checked:border-b-0 checked:border-r-0 checked:border-l-0 after:text-center after:text-xs after:font-bold after:relative after:-top-[1.5px]"
+            class="m-0 border-[1.5px] shadow border-n-weak appearance-none rounded-[4px] w-4 h-4 dark:bg-n-background focus:ring-0 focus-visible:ring-1 focus-visible:ring-n-weak dark:focus-visible:ring-n-strong checked:bg-n-orange dark:checked:bg-n-orange after:content-[''] after:text-white checked:after:content-['✓'] after:flex after:items-center after:justify-center checked:border-t checked:border-n-orange-10 checked:border-b-0 checked:border-r-0 checked:border-l-0 after:text-center after:text-xs after:font-bold after:relative after:-top-[1.5px]"
             @change="updateDisplayOption(option)"
           />
           <label

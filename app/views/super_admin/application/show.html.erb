@@ -30,6 +30,15 @@ as well as a link to its edit page.
       class: "button",
     ) if accessible_action?(page.resource, :edit) %>
 
+    <% duplicate_route = "duplicate_super_admin_#{page.resource.class.model_name.singular_route_key}_path"
+       if respond_to?(duplicate_route) %>
+      <%= link_to(
+        "Duplicate",
+        send(duplicate_route, page.resource),
+        class: "button",
+      ) %>
+    <% end %>
+
     <%= link_to(
       t("administrate.actions.destroy"),
       [namespace, page.resource],

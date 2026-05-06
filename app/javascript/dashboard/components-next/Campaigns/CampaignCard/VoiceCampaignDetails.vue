@@ -27,8 +27,8 @@ const props = defineProps({
 
 const { t } = useI18n();
 
-const senderName = computed(() => 
-  props.sender?.name || t('CAMPAIGN.VOICE.CARD.CAMPAIGN_DETAILS.BOT')
+const senderName = computed(
+  () => props.sender?.name || t('CAMPAIGN.VOICE.CARD.CAMPAIGN_DETAILS.BOT')
 );
 
 const senderThumbnail = computed(() => props.sender?.thumbnail || '');

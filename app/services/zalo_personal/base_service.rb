@@ -59,7 +59,8 @@ class ZaloPersonal::BaseService
   def user_contact_attributes
     return {} if @user_info.blank?
 
-    attributes = { name: @user_info['displayName'] }
+    name = @user_info['zaloName'] || @user_info['displayName']
+    attributes = { name: name }
     if @user_info['phoneNumber'].present?
       phone = @user_info['phoneNumber']
       phone = "+#{phone}" unless phone.start_with?('+')
@@ -201,11 +202,11 @@ class ZaloPersonal::BaseService
       {}
     end
 
-    if call_action?
-      params[:data][:content] = build_message_calling
-    else
-      params[:data][:content] = "#{data_content['title']} - #{description['phone']}"
-    end
+    params[:data][:content] = if call_action?
+                                build_message_calling
+                              else
+                                "#{data_content['title']} - #{description['phone']}"
+                              end
     @message = @conversation.messages.build(message_params)
     params[:data][:attachments] ||= []
 
@@ -241,35 +242,43 @@ class ZaloPersonal::BaseService
   def build_message_calling
     payload = JSON.parse(params.dig(:data, :content, :params))
     action =  if miss_call? && payload['isCaller'].zero? && payload['reason'] == 3
-                'Bạn đã từ chối'
+                I18n.t('zalo_personal.calls.action.rejected')
               elsif miss_call? && payload['isCaller'].zero? && payload['reason'] == 2
-                'Bạn bị nhỡ'
+                I18n.t('zalo_personal.calls.action.missed')
               elsif miss_call? && payload['isCaller'] == 1 && [4, 5].include?(payload['reason'])
-                'Bạn đã huỷ'
+                I18n.t('zalo_personal.calls.action.cancelled')
               elsif miss_call? && payload['isCaller'] == 1 && payload['reason'] == 3
-                'Người nhận từ chối'
+                I18n.t('zalo_personal.calls.action.recipient_rejected')
               end
 
     type_call = if payload['calltype'] == 1 && miss_call?
-                  'Cuộc gọi video'
+                  I18n.t('zalo_personal.calls.type.video_missed')
                 elsif payload['calltype'] == 1 && payload['isCaller'] == 1
-                  'Cuộc gọi video đi'
+                  I18n.t('zalo_personal.calls.type.video_outgoing')
                 elsif payload['calltype'] == 1 && payload['isCaller'].zero?
-                  'Cuộc gọi video đến'
+                  I18n.t('zalo_personal.calls.type.video_incoming')
                 elsif miss_call?
-                  'Cuộc gọi thoại'
+                  I18n.t('zalo_personal.calls.type.voice_missed')
                 elsif payload['isCaller'] == 1
-                  'Cuộc gọi thoại đi'
+                  I18n.t('zalo_personal.calls.type.voice_outgoing')
                 elsif payload['isCaller'].zero?
-                  'Cuộc gọi thoại đến'
+                  I18n.t('zalo_personal.calls.type.voice_incoming')
                 end
+
+    icon_class = if payload['calltype'] == 1
+                   'i-fluent-video-16-filled'
+                 else
+                   'i-fluent-call-16-filled'
+                 end
+
     duration_text = nil
     if (duration = payload['duration'].to_i) > 0
       mins, seconds = duration.divmod(60)
-      duration_text = "#{mins} phút #{seconds} giây"
+      duration_label = I18n.t('zalo_personal.calls.duration', mins: mins, seconds: seconds)
+      duration_text = "<span class=\"text-n-slate-11 inline-flex items-center gap-1\"><i class=\"#{icon_class}\"></i> #{duration_label}</span>"
     end
 
-    [action, type_call, duration_text].compact.join("\n")
+    [action, "**#{type_call}**", duration_text].compact.join("\n")
   end
 
   def miss_call?
@@ -352,11 +361,18 @@ class ZaloPersonal::BaseService
 
     attributes = @contact.additional_attributes || {}
     attributes[:description] = @user_info['status']
+    attributes[:zalo_is_friend] = @user_info['isFr'] unless @user_info['isFr'].nil?
+
+    name = @user_info['zaloName'] || @user_info['displayName']
     update_params = {
-      name: @user_info['displayName'],
+      name: name,
       gender_id: @user_info['gender'],
       additional_attributes: attributes,
-      birthday: (Date.parse(@user_info['sdob']) rescue nil)
+      birthday: begin
+        Date.parse(@user_info['sdob'])
+      rescue StandardError
+        nil
+      end
     }
 
     if @user_info['phoneNumber'].present?
@@ -379,7 +395,7 @@ class ZaloPersonal::BaseService
   def load_user_info
     user_id = target_user
     response = HTTParty.post(
-      "#{GlobalConfigService.load('ZALO_OA_API_URL', nil)}/api/getUserInfo",
+      "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/getUserInfo",
       :body => { :userId => user_id, :ownId => channel.oa_access_token }.to_json,
       :headers => { 'Content-Type' => 'application/json' }
     )
@@ -393,7 +409,7 @@ class ZaloPersonal::BaseService
   def load_group_info
     group_id = params[:data][:idTo]
     response = HTTParty.post(
-      "#{GlobalConfigService.load('ZALO_OA_API_URL', nil)}/api/getGroupInfo",
+      "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/getGroupInfo",
       :body => { :groupId => group_id, :ownId => channel.oa_access_token }.to_json,
       :headers => { 'Content-Type' => 'application/json' }
     )
@@ -450,17 +466,19 @@ class ZaloPersonal::BaseService
     phone_number = @user_info['phoneNumber']
     phone_number = "+#{phone_number}" unless phone_number.start_with?('+')
 
+    name = @user_info['zaloName'] || @user_info['displayName']
     account.contacts.find_or_create_by!(phone_number: phone_number) do |contact|
-      contact.name = @user_info['displayName']
+      contact.name = name
       contact.additional_attributes = { source_id: params[:data][:uidFrom] }
     end
   end
 
   def contact_from_source_id
+    name = @user_info['zaloName'] || @user_info['displayName']
     account.contacts.where(
       "additional_attributes ->> 'source_id' = :source_id", source_id: params[:data][:uidFrom]
     ).first_or_create do |contact|
-      contact.name = @user_info['displayName'] || params[:data][:dName]
+      contact.name = name || params[:data][:dName]
       contact.additional_attributes = { source_id: params[:data][:uidFrom] }
     end
   end

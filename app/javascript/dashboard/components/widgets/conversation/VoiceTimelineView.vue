@@ -6,10 +6,10 @@ import { emitter } from 'shared/helpers/mitt';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 
 export default defineComponent({
+  name: 'VoiceTimelineView',
   components: {
     NextButton,
   },
-  name: 'VoiceTimelineView',
   props: {
     conversationId: {
       type: Number,
@@ -24,7 +24,7 @@ export default defineComponent({
     // Use 01:34 (94 seconds) as our fallback/demo duration throughout the component
     const defaultDuration = '01:34';
     const defaultSeconds = 94;
-    
+
     return {
       currentTime: '00:00',
       duration: defaultDuration, // Default duration that will be shown even if API returns nothing
@@ -33,21 +33,95 @@ export default defineComponent({
       waveformData: this.generateRealisticWaveform(180),
       // Define different waveform segments for caller and agent with speaking patterns
       waveformSegments: [
-        { start: '00:00', end: '00:20', type: 'caller', data: this.generateRealisticWaveform(40) },
-        { start: '00:21', end: '00:30', type: 'agent', data: this.generateRealisticWaveform(20) },
-        { start: '00:31', end: '00:45', type: 'caller', data: this.generateRealisticWaveform(30) },
-        { start: '00:46', end: '00:58', type: 'agent', data: this.generateRealisticWaveform(26) },
-        { start: '00:59', end: '01:10', type: 'caller', data: this.generateRealisticWaveform(24) },
-        { start: '01:11', end: '01:23', type: 'agent', data: this.generateRealisticWaveform(24) },
-        { start: '01:24', end: '01:34', type: 'caller', data: this.generateRealisticWaveform(20) },
+        {
+          start: '00:00',
+          end: '00:20',
+          type: 'caller',
+          data: this.generateRealisticWaveform(40),
+        },
+        {
+          start: '00:21',
+          end: '00:30',
+          type: 'agent',
+          data: this.generateRealisticWaveform(20),
+        },
+        {
+          start: '00:31',
+          end: '00:45',
+          type: 'caller',
+          data: this.generateRealisticWaveform(30),
+        },
+        {
+          start: '00:46',
+          end: '00:58',
+          type: 'agent',
+          data: this.generateRealisticWaveform(26),
+        },
+        {
+          start: '00:59',
+          end: '01:10',
+          type: 'caller',
+          data: this.generateRealisticWaveform(24),
+        },
+        {
+          start: '01:11',
+          end: '01:23',
+          type: 'agent',
+          data: this.generateRealisticWaveform(24),
+        },
+        {
+          start: '01:24',
+          end: '01:34',
+          type: 'caller',
+          data: this.generateRealisticWaveform(20),
+        },
       ],
-      timeLabels: ['00:00', '00:12', '00:24', '00:36', '00:48', '01:00', '01:12', '01:24'],
+      timeLabels: [
+        '00:00',
+        '00:12',
+        '00:24',
+        '00:36',
+        '00:48',
+        '01:00',
+        '01:12',
+        '01:24',
+      ],
       markers: [
-        { time: '00:15', label: 'systemEvent', text: 'Tool call: Customer identity verified (method: Voice)', icon: 'i-ph-check-circle-fill', ms: '4598ms' },
-        { time: '00:32', label: 'systemEvent', text: 'Tool call: Order details retrieved (order_id: #38291)', icon: 'i-ph-database-fill', ms: '7436ms' },
-        { time: '00:48', label: 'systemEvent', text: 'Tool call: Customer account verified (id: 57482)', icon: 'i-ph-user-circle-fill', ms: '22060ms' },
-        { time: '01:05', label: 'systemEvent', text: 'Tool call: Address updated (1234 Main St, NY)', icon: 'i-ph-database-fill', ms: '84521ms' },
-        { time: '01:20', label: 'systemEvent', text: 'Tool call: Email sent (template: address_update)', icon: 'i-ph-envelope-fill', ms: '3250ms' },
+        {
+          time: '00:15',
+          label: 'systemEvent',
+          text: 'Tool call: Customer identity verified (method: Voice)',
+          icon: 'i-ph-check-circle-fill',
+          ms: '4598ms',
+        },
+        {
+          time: '00:32',
+          label: 'systemEvent',
+          text: 'Tool call: Order details retrieved (order_id: #38291)',
+          icon: 'i-ph-database-fill',
+          ms: '7436ms',
+        },
+        {
+          time: '00:48',
+          label: 'systemEvent',
+          text: 'Tool call: Customer account verified (id: 57482)',
+          icon: 'i-ph-user-circle-fill',
+          ms: '22060ms',
+        },
+        {
+          time: '01:05',
+          label: 'systemEvent',
+          text: 'Tool call: Address updated (1234 Main St, NY)',
+          icon: 'i-ph-database-fill',
+          ms: '84521ms',
+        },
+        {
+          time: '01:20',
+          label: 'systemEvent',
+          text: 'Tool call: Email sent (template: address_update)',
+          icon: 'i-ph-envelope-fill',
+          ms: '3250ms',
+        },
       ],
       timer: null,
       currentSeconds: 0,
@@ -65,7 +139,9 @@ export default defineComponent({
       return this.isPlaying ? 'Pause' : 'Play';
     },
     progressPercentage() {
-      return this.totalSeconds > 0 ? (this.currentSeconds / this.totalSeconds) * 100 : 0;
+      return this.totalSeconds > 0
+        ? (this.currentSeconds / this.totalSeconds) * 100
+        : 0;
     },
     callData() {
       return this.currentChat?.additional_attributes || {};
@@ -81,7 +157,7 @@ export default defineComponent({
       return formattedTime === '00:00' ? '01:34' : formattedTime;
     },
     shouldShowTimeline() {
-  // Always show the timeline (all conditions removed for demo/testing)
+      // Always show the timeline (all conditions removed for demo/testing)
       return false;
     },
   },
@@ -107,46 +183,53 @@ export default defineComponent({
           console.log('Call duration updated to:', this.duration);
         }
       },
-      immediate: true
-    }
+      immediate: true,
+    },
+  },
+  mounted() {
+    this.loadCallData();
+  },
+  beforeUnmount() {
+    this.stopTimer();
   },
   methods: {
     generateRealisticWaveform(length) {
       // Create a waveform pattern that matches the marked style in the reference image
       // with vertical bars grouped together in sections
-      const baseAmplitude = 40; 
+      const baseAmplitude = 40;
       const minAmplitude = 10;
       const waveform = [];
-      
+
       // Generate segments of active speech with groups of bars
       let i = 0;
       while (i < length) {
         // Create a speech segment (cluster of vertical bars)
         const segmentSize = Math.floor(Math.random() * 8) + 5; // 5-12 bars per segment
-        
+
         // For each bar in the segment
         for (let j = 0; j < segmentSize && i < length; j++, i++) {
           // Create bars of varying heights in a pattern
-          const barHeight = j % 2 === 0 
-            ? Math.random() * baseAmplitude + minAmplitude // Taller bars
-            : Math.random() * (baseAmplitude / 2) + minAmplitude; // Shorter bars
-            
+          const barHeight =
+            j % 2 === 0
+              ? Math.random() * baseAmplitude + minAmplitude // Taller bars
+              : Math.random() * (baseAmplitude / 2) + minAmplitude; // Shorter bars
+
           waveform.push(barHeight);
         }
-        
+
         // Add a gap between segments (spaces between bar clusters)
         const gapSize = Math.floor(Math.random() * 4) + 2; // 2-5 bars of space
         for (let j = 0; j < gapSize && i < length; j++, i++) {
           waveform.push(Math.random() * (minAmplitude / 5)); // Very low height for gaps
         }
       }
-      
+
       return waveform;
     },
-    
+
     togglePlayPause() {
       this.isPlaying = !this.isPlaying;
-      
+
       if (this.isPlaying) {
         this.startTimer();
       } else {
@@ -155,7 +238,7 @@ export default defineComponent({
     },
     startTimer() {
       if (this.timer) return;
-      
+
       this.timer = setInterval(() => {
         this.currentSeconds += 0.1;
         if (this.currentSeconds >= this.totalSeconds) {
@@ -179,20 +262,20 @@ export default defineComponent({
     getMarkerPosition(marker) {
       return this.getTimePercentage(marker.time);
     },
-    
+
     getTimePercentage(timeString) {
       const minutes = parseInt(timeString.split(':')[0], 10);
       const seconds = parseInt(timeString.split(':')[1], 10);
-      
+
       const totalSeconds = minutes * 60 + seconds;
-      
+
       return (totalSeconds / this.totalSeconds) * 100;
     },
-    
+
     timeToSeconds(timeString) {
       const minutes = parseInt(timeString.split(':')[0], 10);
       const seconds = parseInt(timeString.split(':')[1], 10);
-      
+
       return minutes * 60 + seconds;
     },
     getMarkerClass(marker) {
@@ -221,43 +304,54 @@ export default defineComponent({
     loadCallData() {
       // Always set a default value first
       this.duration = '01:34'; // Default fallback
-      this.totalSeconds = 94;  // Default 01:34 in seconds
-      
+      this.totalSeconds = 94; // Default 01:34 in seconds
+
       // If we have actual call duration, use it
       if (this.callDuration && this.callDuration > 0) {
         this.totalSeconds = this.callDuration;
         this.duration = this.formattedCallDuration;
       }
-            
+
       console.log('Call data loaded for conversation:', this.conversationId);
       console.log('Call duration:', this.duration);
-      console.log('Sample conversation events:', this.markers.map(m => m.text).join(', '));
+      console.log(
+        'Sample conversation events:',
+        this.markers.map(m => m.text).join(', ')
+      );
     },
-    
+
     extractCallEvents() {
       // Simulate real implementation - would parse messages to find call events
       const messages = this.currentChat?.messages || [];
-      
+
       // In a real implementation, we would find call events in the messages
-      console.log('Analyzing conversation messages for call events and tool calls...');
-      console.log('Looking through', messages.length, 'messages for activities');
-      
+      console.log(
+        'Analyzing conversation messages for call events and tool calls...'
+      );
+      console.log(
+        'Looking through',
+        messages.length,
+        'messages for activities'
+      );
+
       // This is just for demonstration - actual implementation would process real events
       const eventTypes = [
-        'call_initiated', 
-        'authentication_successful', 
+        'call_initiated',
+        'authentication_successful',
         'customer_verified',
-        'tool_call:database_lookup', 
-        'tool_call:payment_processed', 
+        'tool_call:database_lookup',
+        'tool_call:payment_processed',
         'tool_call:email_notification_sent',
-        'call_ended'
+        'call_ended',
       ];
-      
+
       console.log('Found call events and tool calls:', eventTypes.join(', '));
 
       // The actual markers we're showing in the UI simulate these events
       console.log('Processing tool calls:');
-      console.log('- Tool call: Customer account verified (customer_id: 57482)');
+      console.log(
+        '- Tool call: Customer account verified (customer_id: 57482)'
+      );
       console.log(
         '- Tool call: Address updated (new_address: 1234 Main St, Apt 5B)'
       );
@@ -265,35 +359,32 @@ export default defineComponent({
         '- Tool call: Confirmation email sent (template: address_update)'
       );
     },
-    
+
     // Determine the active speaker at the current time
     getActiveSpeaker() {
       // In a real implementation, this would check the actual call data
       // For now, we'll use the predefined segments to determine who's speaking
-      
+
       const currentTimeStr = this.formatTime(this.currentSeconds);
-      
+
       // Find the segment that contains the current time
       const activeSegment = this.waveformSegments.find(segment => {
         const startSeconds = this.timeToSeconds(segment.start);
         const endSeconds = this.timeToSeconds(segment.end);
-        return this.currentSeconds >= startSeconds && this.currentSeconds <= endSeconds;
+        return (
+          this.currentSeconds >= startSeconds &&
+          this.currentSeconds <= endSeconds
+        );
       });
-      
+
       // Return the speaker type, or null if not found
       return activeSegment ? activeSegment.type : null;
     },
-    
+
     // Check if a specific speaker is active
     isSpeakerActive(speakerType) {
       return this.getActiveSpeaker() === speakerType;
     },
-  },
-  mounted() {
-    this.loadCallData();
-  },
-  beforeUnmount() {
-    this.stopTimer();
   },
 });
 </script>
@@ -302,89 +393,103 @@ export default defineComponent({
   <div v-if="shouldShowTimeline" class="voice-timeline-view">
     <div class="timeline-header">
       <div class="time-display">
-        <span class="current-time">{{ currentTime }}</span> / <span class="total-time">{{ duration || formattedCallDuration }}</span>
+        <span class="current-time">{{ currentTime }}</span> /
+        <span class="total-time">{{ duration || formattedCallDuration }}</span>
       </div>
       <div class="control-buttons">
         <NextButton
-          @click="togglePlayPause"
           v-tooltip.top-start="playButtonLabel"
           :icon="isPlaying ? 'i-ph-pause-fill' : 'i-ph-play-fill'"
           slate
           faded
           sm
           round
+          @click="togglePlayPause"
         />
       </div>
     </div>
 
-    <div 
-      class="timeline-container"
-      @click="setProgress"
-    >
+    <div class="timeline-container" @click="setProgress">
       <!-- Progress Indicator -->
-      <div 
-        class="progress-indicator" 
+      <div
+        class="progress-indicator"
         :style="{ left: `${progressPercentage}%` }"
-      ></div>
+      />
 
       <!-- Agent Timeline (Top) -->
       <div class="agent-timeline">
         <div class="waveform-bars">
           <div
-            v-for="(value, index) in waveformData.slice(waveformData.length / 2)"
+            v-for="(value, index) in waveformData.slice(
+              waveformData.length / 2
+            )"
             :key="'agent-' + index"
             class="waveform-bar"
             :class="{
               'active-agent-bar': isSpeakerActive('agent'),
               'inactive-agent-bar': !isSpeakerActive('agent'),
-              'progress-passed': index / (waveformData.length / 2) < progressPercentage / 100
+              'progress-passed':
+                index / (waveformData.length / 2) < progressPercentage / 100,
             }"
             :style="{
-              height: `${value}%`
+              height: `${value}%`,
             }"
-          ></div>
+          />
         </div>
       </div>
-      
+
       <!-- Contact Timeline (Middle) -->
       <div class="contact-timeline">
         <div class="waveform-bars">
           <div
-            v-for="(value, index) in waveformData.slice(0, waveformData.length / 2)"
+            v-for="(value, index) in waveformData.slice(
+              0,
+              waveformData.length / 2
+            )"
             :key="'contact-' + index"
             class="waveform-bar"
             :class="{
               'active-contact-bar': isSpeakerActive('caller'),
               'inactive-contact-bar': !isSpeakerActive('caller'),
-              'progress-passed': index / (waveformData.length / 2) < progressPercentage / 100
+              'progress-passed':
+                index / (waveformData.length / 2) < progressPercentage / 100,
             }"
             :style="{
-              height: `${value}%`
+              height: `${value}%`,
             }"
-          ></div>
+          />
         </div>
       </div>
-      
+
       <!-- Events Timeline overlaid at bottom -->
       <div class="events-timeline">
         <!-- Event Markers -->
-        <div 
-          v-for="(marker, index) in markers" 
+        <div
+          v-for="(marker, index) in markers"
           :key="index"
           class="event-marker"
           :class="getMarkerClass(marker)"
           :style="{ left: `${getMarkerPosition(marker)}%` }"
         >
           <div class="marker-dot">
-            <span v-if="marker.icon" :class="[marker.icon, 'marker-icon']"></span>
+            <span
+              v-if="marker.icon"
+              class="marker-icon"
+              :class="[marker.icon]"
+            />
           </div>
-          
+
           <!-- Tooltips for all events -->
-          <div 
+          <div
             class="marker-tooltip"
             :class="[
               `marker-tooltip-${marker.label}`,
-              { 'marker-tooltip-visible': isPlaying && currentSeconds >= timeToSeconds(marker.time) && currentSeconds <= timeToSeconds(marker.time) + 2 }
+              {
+                'marker-tooltip-visible':
+                  isPlaying &&
+                  currentSeconds >= timeToSeconds(marker.time) &&
+                  currentSeconds <= timeToSeconds(marker.time) + 2,
+              },
             ]"
           >
             <div class="font-semibold mb-1">Tool Call</div>
@@ -403,7 +508,11 @@ export default defineComponent({
 <style lang="scss" scoped>
 .voice-timeline-view {
   @apply relative flex flex-col px-5 pt-3 pb-5 mb-4 mx-4 h-[220px] border border-n-slate-3 dark:border-n-slate-7 rounded-lg bg-n-solid-2 shadow-sm;
-  font-family: 'Nunito Sans', system-ui, -apple-system, sans-serif;
+  font-family:
+    'Nunito Sans',
+    system-ui,
+    -apple-system,
+    sans-serif;
 }
 
 .timeline-header {
@@ -415,11 +524,11 @@ export default defineComponent({
 
   .time-display {
     @apply text-sm font-medium text-n-slate-11;
-    
+
     .current-time {
       @apply font-medium text-n-slate-11;
     }
-    
+
     .total-time {
       @apply font-normal text-n-slate-11;
     }
@@ -435,11 +544,15 @@ export default defineComponent({
 
 .time-labels {
   @apply absolute top-0 left-0 right-0 h-7 z-10;
-  
+
   .time-label {
-    @apply absolute text-sm transform -translate-x-1/2 font-medium text-n-blue-8 dark:text-n-blue-5;
+    @apply absolute text-sm transform -translate-x-1/2 font-medium;
+    color: rgb(var(--orange-8));
+    html.dark & {
+      color: rgb(var(--orange-5));
+    }
     top: 4px;
-    
+
     .h-3 {
       @apply bg-n-slate-3 dark:bg-n-slate-6;
     }
@@ -447,18 +560,26 @@ export default defineComponent({
 }
 
 .progress-indicator {
-  @apply absolute top-0 bottom-0 w-[1.5px] z-30 bg-n-blue-7 dark:bg-n-blue-5;
-  box-shadow: 0 0 3px rgba(var(--blue-7), 0.5);
+  @apply absolute top-0 bottom-0 w-[1.5px] z-30;
+  background-color: rgb(var(--orange-7));
+  html.dark & {
+    background-color: rgb(var(--orange-5));
+  }
+  box-shadow: 0 0 3px rgba(var(--orange-7), 0.5);
 }
 
 /* Agent Timeline (Top) */
 .agent-timeline {
-  @apply relative h-[50px] px-2 mt-1 bg-n-blue-2 dark:bg-n-blue-7/20 rounded-xl;
-  
+  @apply relative h-[50px] px-2 mt-1 rounded-xl;
+  background-color: rgb(var(--orange-2));
+  html.dark & {
+    background-color: rgba(var(--orange-7), 0.2);
+  }
+
   .waveform-bars {
     @apply flex items-end h-full relative z-10;
   }
-  
+
   .waveform-bar {
     @apply flex-1 mx-[0.5px] transition-all duration-300 rounded-sm;
     min-width: 2px;
@@ -468,11 +589,11 @@ export default defineComponent({
 /* Contact Timeline (Middle) */
 .contact-timeline {
   @apply relative h-[55px] px-2 mt-3 bg-n-slate-2 dark:bg-n-slate-7/20 rounded-xl; /* Added background */
-  
+
   .waveform-bars {
     @apply flex items-end h-full relative z-10;
   }
-  
+
   .waveform-bar {
     @apply flex-1 mx-[0.5px] transition-all duration-300 rounded-sm;
     min-width: 2px;
@@ -485,11 +606,17 @@ export default defineComponent({
 }
 
 .active-agent-bar {
-  @apply bg-n-blue-7 dark:bg-n-blue-6;
+  background-color: rgb(var(--orange-7));
+  html.dark & {
+    background-color: rgb(var(--orange-6));
+  }
 }
 
 .inactive-agent-bar {
-  @apply bg-n-blue-5 dark:bg-n-blue-5;
+  background-color: rgb(var(--orange-5));
+  html.dark & {
+    background-color: rgb(var(--orange-5));
+  }
 }
 
 .active-contact-bar {
@@ -539,11 +666,11 @@ export default defineComponent({
   .marker--userResponse .marker-icon {
     @apply text-n-slate-12;
   }
-  
+
   .marker--callEnded .marker-icon {
     @apply text-n-slate-1;
   }
-  
+
   .marker-tooltip {
     @apply absolute -translate-x-1/2 p-3 rounded-md shadow-xl text-n-slate-1 text-sm min-w-[150px] max-w-[250px] transition-all duration-200 z-50 opacity-0 invisible bg-n-slate-12;
     bottom: 40px;
@@ -555,18 +682,18 @@ export default defineComponent({
     .marker-text {
       @apply text-sm whitespace-normal font-normal text-n-slate-1;
     }
-    
+
     .marker-time {
       @apply text-xs text-n-slate-2 mt-1 font-medium;
     }
-    
+
     &:after {
       content: '';
       @apply absolute w-0 h-0 border-l-[6px] border-l-transparent border-t-[6px] left-1/2 -translate-x-1/2;
       border-top-color: #1e293b; /* Consistent color for both light/dark modes */
       bottom: -6px;
     }
-    
+
     /* Improve positioning when tooltip is near the edge */
     &.marker-tooltip-left {
       @apply -left-[50px];
@@ -574,7 +701,7 @@ export default defineComponent({
         @apply left-[calc(50%+50px)];
       }
     }
-    
+
     &.marker-tooltip-right {
       @apply -right-[50px];
       &:after {
@@ -582,63 +709,63 @@ export default defineComponent({
       }
     }
   }
-  
+
   &:hover {
     .marker-tooltip {
       @apply z-50 opacity-100 visible;
     }
-    
+
     .marker-dot {
       @apply transform scale-125;
       filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
     }
   }
-  
+
   /* Marker type styling with bright Tailwind color classes */
   &.marker--systemEvent .marker-dot {
     @apply bg-n-iris-11;
   }
-  
+
   &.marker--agentMessage .marker-dot {
-    @apply bg-n-blue-11;
+    background-color: rgb(var(--orange-11));
   }
-  
+
   &.marker--userResponse .marker-dot {
     @apply bg-n-amber-11;
   }
-  
+
   &.marker--callEnded .marker-dot {
     @apply bg-n-ruby-11;
   }
-  
+
   /* Tooltip type styling with bright Tailwind color classes */
   &.marker-tooltip-systemEvent {
     @apply bg-n-iris-11;
-    
+
     &:after {
       @apply border-t-n-iris-11;
     }
   }
-  
+
   &.marker-tooltip-agentMessage {
-    @apply bg-n-blue-11;
-    
+    background-color: rgb(var(--orange-11));
+
     &:after {
-      @apply border-t-n-blue-11;
+      border-top-color: rgb(var(--orange-11));
     }
   }
-  
+
   &.marker-tooltip-userResponse {
     @apply bg-n-amber-11;
-    
+
     &:after {
       @apply border-t-n-amber-11;
     }
   }
-  
+
   &.marker-tooltip-callEnded {
     @apply bg-n-ruby-11;
-    
+
     &:after {
       @apply border-t-n-ruby-11;
     }

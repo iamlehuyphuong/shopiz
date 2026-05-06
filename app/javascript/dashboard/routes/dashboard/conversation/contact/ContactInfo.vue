@@ -9,6 +9,7 @@ import Avatar from 'next/avatar/Avatar.vue';
 import SocialIcons from './SocialIcons.vue';
 import EditContact from './EditContact.vue';
 import ContactMergeModal from 'dashboard/modules/contact/ContactMergeModal.vue';
+import ConnectZaloPersonalModal from 'dashboard/components-next/NewConversation/ConnectZaloPersonalModal.vue';
 import ComposeConversation from 'dashboard/components-next/NewConversation/ComposeConversation.vue';
 import { BUS_EVENTS } from 'shared/constants/busEvents';
 import NextButton from 'dashboard/components-next/button/Button.vue';
@@ -29,6 +30,7 @@ export default {
     ContactInfoRow,
     EditContact,
     Avatar,
+    ConnectZaloPersonalModal,
     ComposeConversation,
     SocialIcons,
     ContactMergeModal,
@@ -55,7 +57,6 @@ export default {
   data() {
     return {
       showEditModal: false,
-      showMergeModal: false,
       showDeleteModal: false,
       isCallLoading: false,
       activeCallConversation: null,
@@ -104,15 +105,37 @@ export default {
         screen_name: twitterScreenName,
         social_telegram_user_name: telegramUsername,
       } = this.additionalAttributes;
+
+      const telegram = socialProfiles?.telegram || telegramUsername || '';
+      const twitter = socialProfiles?.twitter || twitterScreenName || '';
+
       return {
-        twitter: twitterScreenName,
-        telegram: telegramUsername,
         ...(socialProfiles || {}),
+        twitter,
+        telegram,
       };
     },
     // Delete Modal
     confirmDeleteMessage() {
       return ` ${this.contact.name}?`;
+    },
+    currentConversation() {
+      return this.$store.getters.getSelectedChat;
+    },
+    isCurrentConversationZaloPersonal() {
+      if (!this.currentConversation) return false;
+      const inbox = this.$store.getters['inboxes/getInbox'](
+        this.currentConversation.inbox_id
+      );
+      return inbox?.channel_type === 'Channel::ZaloPersonal';
+    },
+    zaloFriendshipStatus() {
+      return this.contact.additional_attributes?.zalo_is_friend;
+    },
+    hasZaloPersonalInboxes() {
+      return this.$store.getters['inboxes/getInboxes'].some(
+        inbox => inbox.channel_type === 'Channel::ZaloPersonal'
+      );
     },
   },
   watch: {
@@ -460,11 +483,8 @@ export default {
         );
       }
     },
-    closeMergeModal() {
-      this.showMergeModal = false;
-    },
     openMergeModal() {
-      this.showMergeModal = true;
+      this.$refs.mergeModal?.open();
     },
     onCallButtonClick() {
       // If there's an active call in the store, just show widget
@@ -570,6 +590,7 @@ export default {
             :title="$t('CONTACT_PANEL.PHONE_NUMBER')"
             :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_PHONE')"
             show-copy
+            value-class="!text-[13px]"
           />
           <ContactInfoRow
             :value="formattedBirthday"
@@ -578,7 +599,11 @@ export default {
             :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_BIRTHDAY')"
           />
           <ContactInfoRow
-            :value="contact.gender_id ? $t(`CONTACT_PANEL.GENDERS.${contact.gender_id}`) : ''"
+            :value="
+              contact.gender_id
+                ? $t(`CONTACT_PANEL.GENDERS.${contact.gender_id}`)
+                : ''
+            "
             icon="person"
             :title="$t('CONTACT_PANEL.GENDER')"
             :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_GENDER')"
@@ -591,11 +616,11 @@ export default {
             :title="$t('CONTACT_PANEL.IDENTIFIER')"
           />
           <ContactInfoRow
-            :value="additionalAttributes.company_name"
-            icon="i-lucide-building-2"
-            emoji="🏢"
-            :title="$t('CONTACT_PANEL.COMPANY')"
-            :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_COMPANY')"
+            :value="additionalAttributes.address"
+            icon="location"
+            emoji="📍"
+            :title="$t('CONTACT_PANEL.ADDRESS')"
+            :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_ADDRESS')"
           />
           <ContactInfoRow
             v-if="location || additionalAttributes.location"
@@ -608,42 +633,47 @@ export default {
         </div>
       </div>
       <div class="flex items-center w-full mt-0.5 gap-2">
-        <ComposeConversation
-          :contact-id="String(contact.id)"
-          is-modal
-          @close="closeComposeConversationModal"
-        >
-          <template #trigger="{ toggle }">
-            <NextButton
-              v-tooltip.top-end="$t('CONTACT_PANEL.NEW_MESSAGE')"
-              icon="i-lucide-message-circle-plus"
-              slate
-              faded
-              sm
-              @click="openComposeConversationModal(toggle)"
+        <!-- Zalo Personal Integration -->
+        <template v-if="contact.phone_number">
+          <!-- Connect Zalo Personal (Non-Zalo conversation) -->
+          <ConnectZaloPersonalModal
+            v-if="!isCurrentConversationZaloPersonal"
+            :contact-id="String(contact.id)"
+            :phone="contact.phone_number"
+            @close="closeComposeConversationModal"
+          >
+            <template #trigger="{ toggle }">
+              <NextButton
+                v-tooltip.top-end="
+                  $t('CONTACT_PANEL.ZALO_PERSONAL.CONNECT_TOOLTIP')
+                "
+                icon="i-woot-zalo-personal"
+                slate
+                faded
+                sm
+                :disabled="!hasZaloPersonalInboxes"
+                @click="openComposeConversationModal(toggle)"
+              />
+            </template>
+          </ConnectZaloPersonalModal>
+
+          <!-- Friendship Status (Zalo conversation) -->
+          <div
+            v-else
+            class="flex items-center gap-1 px-2 py-1 bg-slate-50 dark:bg-slate-800 rounded-md text-xs"
+          >
+            <span
+              class="w-2 h-2 rounded-full"
+              :class="zaloFriendshipStatus ? 'bg-green-500' : 'bg-slate-400'"
             />
-          </template>
-        </ComposeConversation>
-        <ComposeConversation
-          v-if="contact.phone_number"
-          :contact-id="String(contact.id)"
-          is-modal
-          @close="closeComposeConversationModal"
-          is-request-friend
-        >
-          <template #trigger="{ toggle }">
-            <NextButton
-              v-tooltip.top-end="$t('CONTACT_PANEL.REQUEST_FRIEND')"
-              icon="i-ph-user-plus"
-              slate
-              faded
-              sm
-              @click="openComposeConversationModal(toggle)"
-            />
-          </template>
-        </ComposeConversation>
+            <span class="text-slate-600 dark:text-slate-300 font-medium">
+              {{ zaloFriendshipStatus ? 'Đã là bạn bè' : 'Chưa là bạn bè' }}
+            </span>
+          </div>
+        </template>
         <VoiceCallButton
           :phone="contact.phone_number"
+          :contact-id="contact.id"
           icon="i-ri-phone-fill"
           size="sm"
           :tooltip-label="$t('CONTACT_PANEL.CALL')"
@@ -685,12 +715,7 @@ export default {
         :contact="contact"
         @cancel="toggleEditModal"
       />
-      <ContactMergeModal
-        v-if="showMergeModal"
-        :primary-contact="contact"
-        :show="showMergeModal"
-        @close="closeMergeModal"
-      />
+      <ContactMergeModal ref="mergeModal" :primary-contact="contact" />
     </div>
     <woot-delete-modal
       v-if="showDeleteModal"

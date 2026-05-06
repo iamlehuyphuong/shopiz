@@ -110,13 +110,13 @@ const STYLE_CONFIG = {
   colors: {
     blue: {
       solid:
-        'bg-n-brand text-white hover:enabled:brightness-110 focus-visible:brightness-110 outline-transparent',
+        'bg-n-orange text-white hover:enabled:brightness-110 focus-visible:brightness-110 outline-transparent',
       faded:
-        'bg-n-brand/10 text-n-blue-text hover:enabled:bg-n-brand/20 focus-visible:bg-n-brand/20 outline-transparent',
-      outline: 'text-n-blue-text outline-n-brand',
+        'bg-n-orange/10 text-n-orange-11 hover:enabled:bg-n-orange/20 focus-visible:bg-n-orange/20 outline-transparent',
+      outline: 'text-n-orange-11 outline-n-orange',
       ghost:
-        'text-n-blue-text hover:enabled:bg-n-alpha-2 focus-visible:bg-n-alpha-2 outline-transparent',
-      link: 'text-n-blue-text hover:enabled:underline focus-visible:underline outline-transparent',
+        'text-n-orange-11 hover:enabled:bg-n-alpha-2 focus-visible:bg-n-alpha-2 outline-transparent',
+      link: 'text-n-orange-11 hover:enabled:underline focus-visible:underline outline-transparent',
     },
     ruby: {
       solid:
@@ -142,7 +142,7 @@ const STYLE_CONFIG = {
     },
     slate: {
       solid:
-        'bg-n-solid-3 dark:hover:enabled:bg-n-solid-2 dark:focus-visible:bg-n-solid-2 hover:enabled:bg-n-alpha-2 focus-visible:bg-n-alpha-2 text-n-slate-12 outline-n-container',
+        'bg-n-button-color dark:hover:enabled:bg-n-solid-2 dark:focus-visible:bg-n-solid-2 hover:enabled:bg-n-alpha-2 focus-visible:bg-n-alpha-2 text-n-slate-12 outline-n-container',
       faded:
         'bg-n-slate-9/10 text-n-slate-12 hover:enabled:bg-n-slate-9/20 focus-visible:bg-n-slate-9/20 outline-transparent',
       outline:
@@ -166,7 +166,7 @@ const STYLE_CONFIG = {
       solid:
         'bg-n-teal-9 text-white hover:enabled:bg-n-teal-10 focus-visible:bg-n-teal-10 outline-transparent',
       faded:
-        'bg-n-teal-9/10 text-n-slate-12 hover:enabled:bg-n-teal-9/20 focus-visible:bg-n-teal-9/20 outline-transparent',
+        'bg-n-teal-9/10 text-n-teal-11 hover:enabled:bg-n-teal-9/20 focus-visible:bg-n-teal-9/20 outline-transparent',
       outline:
         'text-n-teal-11 hover:enabled:bg-n-teal-9/10 focus-visible:bg-n-teal-9/10 outline-n-teal-9',
       link: 'text-n-teal-9 hover:enabled:underline focus-visible:underline outline-transparent',

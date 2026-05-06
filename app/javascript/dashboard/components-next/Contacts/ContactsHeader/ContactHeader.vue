@@ -32,9 +32,9 @@ const emit = defineEmits([
 </script>
 
 <template>
-  <header class="sticky top-0 z-10">
+  <header class="sticky top-0 z-10 px-6">
     <div
-      class="flex items-start sm:items-center justify-between w-full py-6 px-6 gap-2 mx-auto max-w-[60rem]"
+      class="flex items-start sm:items-center justify-between w-full py-6 gap-2 mx-auto max-w-5xl"
     >
       <span class="text-xl font-medium truncate text-n-slate-12">
         {{ headerTitle }}
@@ -75,7 +75,7 @@ const emit = defineEmits([
               >
                 <div
                   v-if="hasActiveFilters && !isSegmentsView"
-                  class="absolute top-0 right-0 w-2 h-2 rounded-full bg-n-brand"
+                  class="absolute top-0 right-0 w-2 h-2 rounded-full bg-n-orange"
                 />
               </Button>
               <slot name="filter" />

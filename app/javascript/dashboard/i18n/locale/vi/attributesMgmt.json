@@ -5,6 +5,9 @@
     "LOADING": "Đang tải danh sách thuộc tính tùy chỉnh",
     "DESCRIPTION": "Thuộc tính tùy chỉnh giúp bạn theo dõi thêm các thông tin bổ sung về liên hệ hoặc cuộc hội thoại - ví dụ như gói đăng ký hoặc ngày mua hàng đầu tiên. Bạn có thể thêm nhiều loại thuộc tính khác nhau như văn bản, danh sách hoặc số để thu thập thông tin phù hợp với nhu cầu.",
     "LEARN_MORE": "Tìm hiểu thêm về thuộc tính tùy chỉnh",
+    "COUNT": "{n} thuộc tính | {n} thuộc tính",
+    "SEARCH_PLACEHOLDER": "Tìm kiếm thuộc tính...",
+    "NO_RESULTS": "Không tìm thấy thuộc tính nào khớp với tìm kiếm của bạn",
     "ATTRIBUTE_MODELS": {
       "CONVERSATION": "Cuộc hội thoại",
       "CONTACT": "Liên hệ"
@@ -15,7 +18,7 @@
       "LINK": "Liên kết",
       "DATE": "Ngày",
       "LIST": "Danh sách",
-      "CHECKBOX": "Checkbox"
+      "CHECKBOX": "Hộp kiểm"
     },
     "ADD": {
       "TITLE": "Thêm thuộc tính tùy chỉnh",
@@ -48,13 +51,13 @@
           }
         },
         "KEY": {
-          "LABEL": "Key",
+          "LABEL": "Từ khoá (Key)",
           "PLACEHOLDER": "Nhập key cho thuộc tính tùy chỉnh",
           "ERROR": "Key là bắt buộc",
           "IN_VALID": "Key không hợp lệ"
         },
         "REGEX_PATTERN": {
-          "LABEL": "Regex Pattern",
+          "LABEL": "Biểu thức chính quy (Regex)",
           "PLACEHOLDER": "Nhập mẫu regex (không bắt buộc)"
         },
         "REGEX_CUE": {
@@ -63,6 +66,10 @@
         },
         "ENABLE_REGEX": {
           "LABEL": "Bật kiểm tra regex"
+        },
+        "BADGES": {
+          "PRE_CHAT": "Trước khi chat",
+          "RESOLUTION": "Sau khi giải quyết"
         }
       },
       "API": {
@@ -108,7 +115,7 @@
         "NAME": "Tên",
         "DESCRIPTION": "Mô tả",
         "TYPE": "Loại",
-        "KEY": "Key"
+        "KEY": "Từ khoá (Key)"
       },
       "BUTTONS": {
         "EDIT": "Chỉnh sửa",
@@ -119,7 +126,7 @@
         "NOT_FOUND": "Không có thuộc tính tùy chỉnh nào được cấu hình"
       },
       "REGEX_PATTERN": {
-        "LABEL": "Regex Pattern",
+        "LABEL": "Biểu thức chính quy (Regex)",
         "PLACEHOLDER": "Nhập mẫu regex (không bắt buộc)"
       },
       "REGEX_CUE": {
@@ -129,6 +136,10 @@
       "ENABLE_REGEX": {
         "LABEL": "Bật kiểm tra regex"
       }
+    },
+    "BADGES": {
+      "PRE_CHAT": "Trước khi chat",
+      "RESOLUTION": "Sau khi giải quyết"
     }
   }
 }

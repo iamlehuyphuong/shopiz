@@ -107,6 +107,16 @@
   value:
   description: 'The support email address for your installation'
   locked: false
+- name: ACCOUNT_EMAILS_LIMIT
+  display_title: 'Account Email Sending Limit (Daily)'
+  description: 'Maximum number of non-channel emails an account can send per day'
+  value: 100
+  locked: false
+- name: ACCOUNT_EMAILS_PLAN_LIMITS
+  display_title: 'Account Email Plan Limits (Daily)'
+  description: 'Per-plan daily email sending limits as JSON'
+  value:
+  type: code
 # ------- End of Email Related Config ------- #
 
 # ------- Facebook Channel Related Config ------- #
@@ -184,7 +194,7 @@
   type: secret
 - name: CAPTAIN_OPEN_AI_MODEL
   display_title: 'OpenAI Model'
-  description: 'The OpenAI model configured for use in Captain AI. Default: gpt-4o-mini'
+  description: 'The OpenAI model configured for use in Captain AI. Default: gpt-4.1-mini'
   locked: false
 - name: CAPTAIN_OPEN_AI_ENDPOINT
   display_title: 'OpenAI API Endpoint (optional)'
@@ -204,7 +214,12 @@
   description: 'The limits for the Captain AI service for different plans'
   value:
   type: code
-
+- name: CAPTAIN_ALLOW_USER_HOOK_KEY
+  display_title: 'Allow User OpenAI Hook Key for Captain'
+  description: 'When enabled, Captain AI will fallback to the user-integrated OpenAI API key when system credits are exhausted or no system API key is configured.'
+  value: true
+  locked: false
+  type: boolean
 # End of Captain Config
 
 # ------- Shopiz Internal Config for Cloud ----#
@@ -235,7 +250,7 @@
 - name: ANALYTICS_TOKEN
   value:
   display_title: 'Analytics Token'
-  description: 'The PostHog analytics token for Chatwoot cloud'
+  description: 'The Amplitude analytics API key for Chatwoot cloud'
   type: secret
 - name: CLEARBIT_API_KEY
   value:
@@ -413,6 +428,181 @@
   locked: true
 # ------- End of Instagram Channel Related Config ------- #
 
+# ------- TikTok Channel Related Config ------- #
+- name: TIKTOK_API_VERSION
+  display_title: 'TikTok API Version'
+  description: 'Configure this if you want to use a different TikTok API version. Make sure its prefixed with `v`'
+  value: 'v1.3'
+  locked: false
+- name: TIKTOK_APP_ID
+  display_title: 'TikTok App ID'
+  locked: false
+- name: TIKTOK_APP_SECRET
+  display_title: 'TikTok App Secret'
+  locked: false
+  type: secret
+# ------- End of TikTok Channel Related Config ------- #
+ 
+# ------- Zalo OA Channel Related Config ------- #
+- name: ZALO_OA_APP_ID
+  display_title: 'Zalo App ID'
+  locked: false
+- name: ZALO_OA_APP_SECRET
+  display_title: 'Zalo App Secret'
+  locked: false
+  type: secret
+- name: ZALO_OA_SECRET_KEY
+  display_title: 'Zalo OA Secret Key'
+  description: 'The secret key used for Zalo OA Webhook Signature validation'
+  locked: false
+  type: secret
+# ------- End of Zalo OA Channel Related Config ------- #
+
+# ------- Zalo Personal Channel Related Config ------- #
+- name: ZALO_API_URL
+  display_title: 'Zalo Personal API URL'
+  description: 'The base URL for Zalo Personal API'
+  value: 'https://personal-api.shopiz.pro'
+  locked: false
+- name: ZALO_SECRET_KEY
+  display_title: 'Zalo Personal Secret Key'
+  description: 'The secret key used for Zalo Personal webhook signature verification'
+  locked: false
+  type: secret
+# ------- End of Zalo Personal Channel Related Config ------- #
+
+# ------- TikTok Shop Channel Related Config ------- #
+- name: TIKTOK_SHOP_APP_ID
+  display_title: 'TikTok Shop App ID'
+  description: 'The App ID / Service ID provided by TikTok Shop Developer Platform'
+  locked: false
+- name: TIKTOK_SHOP_APP_KEY
+  display_title: 'TikTok Shop App Key'
+  description: 'The App Key provided by TikTok Shop Developer Platform'
+  locked: false
+- name: TIKTOK_SHOP_APP_SECRET
+  display_title: 'TikTok Shop App Secret'
+  description: 'The Client Secret provided by TikTok Shop Developer Platform'
+  locked: false
+  type: secret
+# ------- End of TikTok Shop Channel Related Config ------- #
+
+# ------- PayOS Related Config ------- #
+- name: PAYOS_CLIENT_ID
+  display_title: 'PayOS Client ID'
+  locked: false
+- name: PAYOS_API_KEY
+  display_title: 'PayOS API Key'
+  locked: false
+  type: secret
+- name: PAYOS_CHECKSUM_KEY
+  display_title: 'PayOS Checksum Key'
+  locked: false
+  type: secret
+- name: PAYOS_PARTNER_ID
+  display_title: 'PayOS Partner ID'
+  description: 'The Partner Code provided by PayOS for partner integrations'
+  locked: false
+# ------- End of PayOS Related Config ------- #
+
+# ------- SePay Related Config ------- #
+- name: SEPAY_COMPANY_CODE
+  display_title: 'SePay Mã đơn vị'
+  description: 'The company code from SePay dashboard (e.g., SP-LIVE-XXXXXXXX)'
+  locked: false
+- name: SEPAY_SECRET_KEY
+  display_title: 'SePay Secret Key'
+  description: 'The secret key from SePay dashboard, used in webhook X-Secret-Key header verification'
+  locked: false
+  type: secret
+- name: SEPAY_EINVOICE_CLIENT_ID
+  display_title: 'SePay eInvoice Client ID'
+  description: 'The Client ID from SePay dashboard, used for eInvoice authentication'
+  locked: false
+  type: secret
+- name: SEPAY_EINVOICE_CLIENT_SECRET
+  display_title: 'SePay eInvoice Client Secret'
+  description: 'The Client Secret from SePay dashboard, used for eInvoice authentication'
+  locked: false
+  type: secret
+- name: SEPAY_EINVOICE_ENABLED
+  display_title: 'Enable SePay eInvoice'
+  description: 'Automatically create and issue an eInvoice upon successful SePay payment'
+  value: false
+  locked: false
+  type: boolean
+- name: SEPAY_EINVOICE_PROVIDER_ACCOUNT_ID
+  display_title: 'SePay eInvoice Provider Account ID'
+  description: 'UUID of the company account on SePay used to create invoices'
+  locked: false
+- name: SEPAY_EINVOICE_TEMPLATE_CODE
+  display_title: 'SePay eInvoice Template Code'
+  description: 'The invoice template code (e.g. 1 for VAT, 2 for Sales)'
+  locked: false
+- name: SEPAY_EINVOICE_INVOICE_SERIES
+  display_title: 'SePay eInvoice Series'
+  description: 'The invoice series for the current year (e.g. C26TSE)'
+  locked: false
+# ------- End of SePay Related Config ------- #
+
+# ------- Payment Routing Config ------- #
+- name: PAYMENT_GATEWAY_VN_DEFAULT
+  display_title: 'Vietnam Default Payment Gateway'
+  description: 'Select the default payment method for users in Vietnam'
+  value: 'payos'
+  type: select
+  options:
+    payos: 'PayOS'
+    sepay: 'SePay'
+    polar: 'Polar'
+  locked: false
+- name: PAYMENT_GATEWAY_INTL_DEFAULT
+  display_title: 'International Default Payment Gateway'
+  description: 'Select the default payment method for international users'
+  value: 'polar'
+  type: select
+  options:
+    payos: 'PayOS'
+    sepay: 'SePay'
+    polar: 'Polar'
+  locked: false
+- name: PAYMENT_GATEWAY_PAYOS_ENABLED
+  display_title: 'Enable PayOS Gateway'
+  value: true
+  type: boolean
+  locked: false
+- name: PAYMENT_GATEWAY_SEPAY_ENABLED
+  display_title: 'Enable SePay Gateway'
+  value: false
+  type: boolean
+  locked: false
+- name: PAYMENT_GATEWAY_POLAR_ENABLED
+  display_title: 'Enable Polar Gateway'
+  value: false
+  type: boolean
+  locked: false
+- name: POLAR_API_KEY
+  display_title: 'Polar API Key'
+  value: ''
+  type: secret
+  locked: false
+- name: POLAR_WEBHOOK_SECRET
+  display_title: 'Polar Webhook Secret'
+  value: ''
+  type: secret
+  locked: false
+- name: POLAR_GENERIC_PRODUCT_ID
+  display_title: 'Polar Generic Product ID (for Ad-hoc prices)'
+  value: ''
+  type: string
+  locked: false
+- name: EXCHANGE_RATE_VND_USD
+  display_title: 'VND to USD Exchange Rate'
+  value: 25000
+  type: string
+  locked: false
+# ------- End of Payment Routing Config ------- #
+
 # ------- OG Image Related Config ------- #
 - name: OG_IMAGE_CDN_URL
   display_title: 'OG Image CDN URL'
@@ -482,3 +672,28 @@
   locked: false
   description: 'Token expiry in days'
 ## ------ End of Customizations for Customers ------ ##
+
+## ----- LLM Observability ---- ##
+- name: OTEL_PROVIDER
+  display_title: 'OpenTelemetry Provider'
+  description: 'LLM observability provider (langfuse, langsmith, etc.)'
+  value: ''
+  locked: false
+- name: LANGFUSE_PUBLIC_KEY
+  display_title: 'Langfuse Public Key'
+  description: 'Public key for Langfuse authentication'
+  value: ''
+  locked: false
+  type: secret
+- name: LANGFUSE_SECRET_KEY
+  display_title: 'Langfuse Secret Key'
+  description: 'Secret key for Langfuse authentication'
+  value: ''
+  locked: false
+  type: secret
+- name: LANGFUSE_BASE_URL
+  display_title: 'Langfuse Base URL'
+  description: 'Langfuse endpoint (US: https://us.cloud.langfuse.com, EU: https://cloud.langfuse.com)'
+  value: 'https://us.cloud.langfuse.com'
+  locked: false
+## ---- End of LLM Observability ---- ##

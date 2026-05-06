@@ -25,7 +25,7 @@ const contentDirection = computed(() => (isRTL.value ? 'rtl' : 'ltr'));
 
 <template>
   <Teleport :to="to" :disabled="disabled">
-    <div :dir="contentDirection" class="contents">
+    <div v-bind="$attrs" :dir="contentDirection" class="contents">
       <slot />
     </div>
   </Teleport>

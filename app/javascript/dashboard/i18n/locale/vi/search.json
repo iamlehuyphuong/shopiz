@@ -1,7 +1,7 @@
 {
   "SEARCH": {
     "TABS": {
-      "ALL": "Tất cả",
+      "ALL": "Tất cả kết quả",
       "CONTACTS": "Liên hệ",
       "CONVERSATIONS": "Cuộc hội thoại",
       "MESSAGES": "Tin nhắn",
@@ -21,12 +21,48 @@
     "EMPTY_STATE_FULL": "Không có kết quả nào cho truy vấn '{query}'",
     "PLACEHOLDER_KEYBINDING": "/ để tìm kiếm",
     "INPUT_PLACEHOLDER": "Nhập từ 3 ký tự trở lên để tìm kiếm",
+    "RECENT_SEARCHES": "Tìm kiếm gần đây",
+    "CLEAR_ALL": "Xoá tất cả",
+    "MOST_RECENT": "Gần đây nhất",
     "EMPTY_STATE_DEFAULT": "Tìm theo ID cuộc hội thoại, email, số điện thoại hoặc nội dung tin nhắn để có kết quả chính xác hơn.",
     "BOT_LABEL": "Bot",
     "READ_MORE": "Xem thêm",
+    "READ_LESS": "Thu gọn",
     "WROTE": "đã viết:",
-    "FROM": "từ",
-    "EMAIL": "email",
-    "EMAIL_SUBJECT": "tiêu đề"
+    "FROM": "Từ",
+    "EMAIL": "Email",
+    "EMAIL_SUBJECT": "Chủ đề",
+    "PRIVATE": "Ghi chú nội bộ",
+    "TRANSCRIPT": "Bản ghi cuộc trò chuyện (Transcript)",
+    "CREATED_AT": "tạo lúc {time}",
+    "UPDATED_AT": "cập nhật lúc {time}",
+    "SORT_BY": {
+      "RELEVANCE": "Mức độ liên quan"
+    },
+    "DATE_RANGE": {
+      "LAST_7_DAYS": "7 ngày cuối",
+      "LAST_30_DAYS": "30 ngày cuối",
+      "LAST_60_DAYS": "60 ngày cuối",
+      "LAST_90_DAYS": "90 ngày cuối",
+      "CUSTOM_RANGE": "Khoảng tuỳ chọn:",
+      "CREATED_BETWEEN": "Tạo trong khoảng",
+      "AND": "đến",
+      "APPLY": "Áp dụng",
+      "BEFORE_DATE": "Trước {date}",
+      "AFTER_DATE": "Sau {date}",
+      "TIME_RANGE": "Lọc theo thời gian",
+      "CLEAR_FILTER": "Xóa bộ lọc"
+    },
+    "FILTERS": {
+      "FILTER_MESSAGE": "Lọc tin nhắn theo:",
+      "FROM": "Người gửi",
+      "IN": "Hộp thư đến",
+      "AGENTS": "Nhân viên",
+      "CONTACTS": "Liên hệ",
+      "INBOXES": "Hộp thư đến",
+      "NO_AGENTS": "Không tìm thấy nhân viên",
+      "NO_CONTACTS": "Bắt đầu tìm kiếm để xem kết quả",
+      "NO_INBOXES": "Không tìm thấy hộp thư đến"
+    }
   }
 }

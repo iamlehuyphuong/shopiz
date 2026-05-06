@@ -4,6 +4,8 @@ class Contacts::ContactInfoExtractorService
   # Detects Vietnamese phone numbers starting with 0 or +84
   # Examples: 0901234567, +84901234567
   VN_PHONE_REGEX = /(?:\+84|0)([35789]\d{8})\b/
+  CCCD_REGEX = /\b\d{12}\b/
+  ADDRESS_KEYWORDS_REGEX = /(phường|xã|quận|huyện|đường|thành phố|tỉnh|cccd|cmnd|căn cước)/i
 
   def initialize(message)
     @message = message
@@ -26,10 +28,25 @@ class Contacts::ContactInfoExtractorService
     email = content.scan(EMAIL_REGEX).first
     phone = content.scan(VN_PHONE_REGEX).first&.first # The first capture group is the number without 0 or +84
 
-    update_contact(email, phone)
+    # Keep the fast synchronous legacy contact update
+    update_contact_fast(email, phone)
+
+    trigger_ai_expansion(content, email, phone)
   end
 
-  def update_contact(email, phone)
+  def trigger_ai_expansion(content, has_email, has_phone)
+    has_cccd = content.match?(CCCD_REGEX)
+    has_address = content.match?(ADDRESS_KEYWORDS_REGEX)
+
+    # Nếu phát hiện bất kỳ dấu hiệu thông tin nào chưa có, hoặc có CCCD/Địa chỉ, ta gọi AI đọc lại ngữ cảnh.
+    if has_email || has_phone || has_cccd || has_address
+      if @account.feature_enabled?('captain_copilot') || @account.feature_enabled?('captain_assistant')
+        CaptainContactAttributesJob.perform_later(@message.conversation_id)
+      end
+    end
+  end
+
+  def update_contact_fast(email, phone)
     attributes_to_update = {}
 
     if email.present? && @contact.email.blank?

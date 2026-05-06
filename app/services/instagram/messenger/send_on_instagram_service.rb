@@ -9,12 +9,13 @@ class Instagram::Messenger::SendOnInstagramService < Instagram::BaseSendService
   # @see https://developers.facebook.com/docs/messenger-platform/instagram/features/send-message
   def send_message(message_content)
     access_token = channel.page_access_token
+    api_version = GlobalConfigService.load('FACEBOOK_API_VERSION', '25.0')
     app_secret_proof = calculate_app_secret_proof(GlobalConfigService.load('FB_APP_SECRET', ''), access_token)
     query = { access_token: access_token }
     query[:appsecret_proof] = app_secret_proof if app_secret_proof
 
     response = HTTParty.post(
-      'https://graph.facebook.com/v11.0/me/messages',
+      "https://graph.facebook.com/v#{api_version}/me/messages",
       body: message_content,
       query: query
     )

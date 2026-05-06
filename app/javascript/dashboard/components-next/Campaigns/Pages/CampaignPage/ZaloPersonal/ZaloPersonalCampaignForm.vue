@@ -12,11 +12,6 @@ import Button from 'dashboard/components-next/button/Button.vue';
 import ComboBox from 'dashboard/components-next/combobox/ComboBox.vue';
 import TagMultiSelectComboBox from 'dashboard/components-next/combobox/TagMultiSelectComboBox.vue';
 
-const emit = defineEmits(['submit', 'cancel']);
-
-const { t } = useI18n();
-const store = useStore();
-
 const props = defineProps({
   mode: {
     type: String,
@@ -32,6 +27,11 @@ const props = defineProps({
     default: true,
   },
 });
+
+const emit = defineEmits(['submit', 'cancel']);
+
+const { t } = useI18n();
+const store = useStore();
 
 const formState = {
   uiFlags: useMapGetter('campaigns/getUIFlags'),
@@ -150,10 +150,12 @@ const updateStateFromCampaign = campaign => {
     inbox: { id: inboxId },
     sender,
     scheduled_at,
-    audience
+    audience,
   } = campaign;
   const selectedAudience = audience.map(item => item.id);
-  const scheduled = new Date(scheduled_at * 1000 - new Date().getTimezoneOffset() * 60000)
+  const scheduled = new Date(
+    scheduled_at * 1000 - new Date().getTimezoneOffset() * 60000
+  )
     .toISOString()
     .slice(0, 16);
 
@@ -163,7 +165,7 @@ const updateStateFromCampaign = campaign => {
     inboxId,
     senderId: sender?.id ?? 0,
     scheduledAt: scheduled,
-    selectedAudience
+    selectedAudience,
   });
 };
 
@@ -247,7 +249,9 @@ defineExpose({ prepareCampaignDetails, isSubmitDisabled });
         :options="sendersAndBotList"
         :has-error="!!formErrors.sender"
         :disabled="!state.inboxId"
-        :placeholder="t('CAMPAIGN.ZALO_PERSONAL.CREATE.FORM.SENT_BY.PLACEHOLDER')"
+        :placeholder="
+          t('CAMPAIGN.ZALO_PERSONAL.CREATE.FORM.SENT_BY.PLACEHOLDER')
+        "
         :message="formErrors.sender"
         class="[&>div>button]:bg-n-alpha-black2 [&>div>button:not(.focused)]:dark:outline-n-weak [&>div>button:not(.focused)]:hover:!outline-n-slate-6"
       />
@@ -261,7 +265,9 @@ defineExpose({ prepareCampaignDetails, isSubmitDisabled });
         v-model="state.selectedAudience"
         :options="audienceList"
         :label="t('CAMPAIGN.ZALO_PERSONAL.CREATE.FORM.AUDIENCE.LABEL')"
-        :placeholder="t('CAMPAIGN.ZALO_PERSONAL.CREATE.FORM.AUDIENCE.PLACEHOLDER')"
+        :placeholder="
+          t('CAMPAIGN.ZALO_PERSONAL.CREATE.FORM.AUDIENCE.PLACEHOLDER')
+        "
         :has-error="!!formErrors.audience"
         :message="formErrors.audience"
         class="[&>div>button]:bg-n-alpha-black2"
@@ -273,12 +279,15 @@ defineExpose({ prepareCampaignDetails, isSubmitDisabled });
       :label="t('CAMPAIGN.ZALO_PERSONAL.CREATE.FORM.SCHEDULED_AT.LABEL')"
       type="datetime-local"
       :min="currentDateTime"
-      :placeholder="t('CAMPAIGN.ZALO_PERSONAL.CREATE.FORM.SCHEDULED_AT.PLACEHOLDER')"
+      :placeholder="
+        t('CAMPAIGN.ZALO_PERSONAL.CREATE.FORM.SCHEDULED_AT.PLACEHOLDER')
+      "
       :message="formErrors.scheduledAt"
       :message-type="formErrors.scheduledAt ? 'error' : 'info'"
     />
 
-    <div v-if="showActionButtons"
+    <div
+      v-if="showActionButtons"
       class="flex items-center justify-between w-full gap-3"
     >
       <Button
@@ -286,7 +295,7 @@ defineExpose({ prepareCampaignDetails, isSubmitDisabled });
         color="slate"
         type="button"
         :label="t('CAMPAIGN.ZALO_PERSONAL.CREATE.FORM.BUTTONS.CANCEL')"
-        class="w-full bg-n-alpha-2 n-blue-text hover:bg-n-alpha-3"
+        class="w-full bg-n-alpha-2 n-orange-text hover:bg-n-alpha-3"
         @click="handleCancel"
       />
       <Button

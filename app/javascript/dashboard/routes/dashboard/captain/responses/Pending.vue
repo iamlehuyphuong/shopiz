@@ -14,7 +14,6 @@ import BulkSelectBar from 'dashboard/components-next/captain/assistant/BulkSelec
 import DeleteDialog from 'dashboard/components-next/captain/pageComponents/DeleteDialog.vue';
 import BulkDeleteDialog from 'dashboard/components-next/captain/pageComponents/BulkDeleteDialog.vue';
 import PageLayout from 'dashboard/components-next/captain/PageLayout.vue';
-import CaptainPaywall from 'dashboard/components-next/captain/pageComponents/Paywall.vue';
 import ResponseCard from 'dashboard/components-next/captain/assistant/ResponseCard.vue';
 import CreateResponseDialog from 'dashboard/components-next/captain/pageComponents/response/CreateResponseDialog.vue';
 import ResponsePageEmptyState from 'dashboard/components-next/captain/pageComponents/emptyStates/ResponsePageEmptyState.vue';
@@ -34,7 +33,7 @@ const selectedResponse = ref(null);
 const deleteDialog = ref(null);
 const bulkDeleteDialog = ref(null);
 
-const selectedAssistantId = Number(route.params.assistantId);
+const selectedAssistantId = computed(() => route.params.assistantId);
 const dialogType = ref('');
 const searchQuery = ref('');
 const { t } = useI18n();
@@ -45,7 +44,7 @@ const backUrl = computed(() => ({
   name: 'captain_assistants_responses_index',
   params: {
     accountId: route.params.accountId,
-    assistantId: selectedAssistantId,
+    assistantId: selectedAssistantId.value,
   },
 }));
 
@@ -125,8 +124,8 @@ const updateURLWithFilters = (page, search) => {
 const fetchResponses = (page = 1) => {
   const filterParams = { page, status: 'pending' };
 
-  if (selectedAssistantId) {
-    filterParams.assistantId = selectedAssistantId;
+  if (selectedAssistantId.value) {
+    filterParams.assistantId = selectedAssistantId.value;
   }
   if (searchQuery.value) {
     filterParams.search = searchQuery.value;
@@ -263,7 +262,7 @@ onMounted(() => {
         :hide-actions="!isOnChatwootCloud"
         fallback-thumbnail="/assets/images/dashboard/captain/faqs-popover-light.svg"
         fallback-thumbnail-dark="/assets/images/dashboard/captain/faqs-popover-dark.svg"
-        learn-more-url="https://chwt.app/captain-faq"
+        learn-more-url="https://www.shopiz.pro/docs/04-shopizai-copilot/02-knowledge-base"
       />
     </template>
 
@@ -316,10 +315,6 @@ onMounted(() => {
         :has-active-filters="hasActiveFilters"
         @clear-filters="clearFilters"
       />
-    </template>
-
-    <template #paywall>
-      <CaptainPaywall />
     </template>
 
     <template #body>

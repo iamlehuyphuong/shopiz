@@ -47,12 +47,7 @@ const limitExceededMessage = computed(() => {
   const account = currentAccount.value;
   if (!account?.limits) return '';
 
-  const {
-    agents,
-    inboxes,
-    contacts,
-    automations
-  } = account.limits;
+  const { agents, inboxes, contacts, automations } = account.limits;
 
   let message = '';
 
@@ -64,13 +59,11 @@ const limitExceededMessage = computed(() => {
     message = t('GENERAL_SETTINGS.LIMIT_MESSAGES.INBOXES', {
       allowed: inboxes.allowed,
     });
-  }
-  else if (testLimit(contacts)) {
+  } else if (testLimit(contacts)) {
     message = t('GENERAL_SETTINGS.LIMIT_MESSAGES.CONTACTS', {
       allowed: contacts.allowed,
     });
-  }
-   else if (testLimit(automations)) {
+  } else if (testLimit(automations)) {
     message = t('GENERAL_SETTINGS.LIMIT_MESSAGES.AUTOMATIONS', {
       allowed: automations.allowed,
     });
@@ -83,20 +76,18 @@ const isLimitExceeded = computed(() => {
   const account = currentAccount.value;
   if (!account?.limits) return false;
 
-  const {
-    agents,
-    inboxes,
-    contacts,
-    automations
-  } = account.limits;
+  const { agents, inboxes, contacts, automations } = account.limits;
 
   return (
-    testLimit(agents) || testLimit(inboxes) || testLimit(contacts) || testLimit(automations)
+    testLimit(agents) ||
+    testLimit(inboxes) ||
+    testLimit(contacts) ||
+    testLimit(automations)
   );
 });
 
 const shouldShowUpgradePage = computed(() => {
-  //return false;
+  // return false;
   // Skip upgrade page in Billing, Inbox, and Agent pages
   if (props.bypassUpgradePage) return false;
   if (!isOnChatwootCloud.value) return false;
@@ -134,10 +125,10 @@ defineExpose({ shouldShowUpgradePage });
       <div class="flex flex-col gap-4">
         <div class="flex items-center w-full gap-2">
           <span
-            class="flex items-center justify-center w-6 h-6 rounded-full bg-n-solid-blue"
+            class="flex items-center justify-center w-6 h-6 rounded-full bg-n-solid-orange"
           >
             <Icon
-              class="flex-shrink-0 text-n-brand size-[14px]"
+              class="flex-shrink-0 text-n-orange size-[14px]"
               icon="i-lucide-lock-keyhole"
             />
           </span>

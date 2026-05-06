@@ -48,7 +48,24 @@ class Inbox < ApplicationRecord
   include AccountCacheRevalidator
   include InboxAgentAvailability
 
-  ENABLE_LOAD_HISTORY_CONVERSATION = ['Channel::FacebookPage'].freeze
+  ENABLE_LOAD_HISTORY_CONVERSATION = ['Channel::FacebookPage', 'Channel::Instagram', 'Channel::ZaloOa', 'Channel::TiktokShop'].freeze
+
+  LOAD_HISTORY_CONVERSATION_SERVICES = {
+    'Channel::FacebookPage' => 'Facebook::LoadHistoryConversationService',
+    'Channel::Instagram' => 'Instagram::LoadHistoryConversationService',
+    'Channel::ZaloOa' => 'Zalo::LoadHistoryConversationService',
+    'Channel::TiktokShop' => 'TiktokShop::LoadHistoryConversationService'
+  }.freeze
+
+  # Integration app_ids considered as e-commerce platforms
+  ECOMMERCE_APP_IDS = %w[kiotviet sapo haravan shopify woocommerce nhanhvn tiktok_shop].freeze
+
+  # Channel types that are permanently linked to their native e-commerce platform
+  MARKETPLACE_CHANNEL_MAP = {
+    'Channel::TiktokShop' => 'tiktok_shop'
+    # 'Channel::Lazada' => 'lazada',
+    # 'Channel::Shopee' => 'shopee',
+  }.freeze
 
   # Not allowing characters:
   validates :name, presence: true
@@ -60,12 +77,14 @@ class Inbox < ApplicationRecord
 
   belongs_to :account
   belongs_to :portal, optional: true
+  belongs_to :ecommerce_integration, class_name: 'Integrations::Hook', optional: true
 
   belongs_to :channel, polymorphic: true, dependent: :destroy
 
   has_many :campaigns, dependent: :destroy_async
   has_many :contact_inboxes, dependent: :destroy_async
   has_many :contacts, through: :contact_inboxes
+  has_many :contact_optins, dependent: :destroy_async
 
   has_many :inbox_members, dependent: :destroy_async
   has_many :members, through: :inbox_members, source: :user
@@ -131,6 +150,10 @@ class Inbox < ApplicationRecord
     channel_type == 'Channel::Instagram'
   end
 
+  def tiktok?
+    channel_type == 'Channel::Tiktok'
+  end
+
   def web_widget?
     channel_type == 'Channel::WebWidget'
   end
@@ -163,13 +186,39 @@ class Inbox < ApplicationRecord
     channel_type == 'Channel::ZaloPersonal'
   end
 
+  def zalo_oa?
+    channel_type == 'Channel::ZaloOa'
+  end
+
+  def twilio_whatsapp?
+    channel_type == 'Channel::TwilioSms' && channel.medium == 'whatsapp'
+  end
+
   def assignable_agents
     (account.users.where(id: members.select(:user_id)) + account.administrators).uniq
   end
 
   def active_bot?
-    agent_bot_inbox&.active? || hooks.where(app_id: %w[dialogflow],
-                                            status: 'enabled').count.positive?
+    agent_bot_inbox&.active? || hooks.any? { |hook| hook.app_id.in?(%w[dialogflow]) && hook.enabled? }
+  end
+
+  def marketplace_channel?
+    MARKETPLACE_CHANNEL_MAP.key?(channel_type)
+  end
+
+  def auto_linked_platform
+    MARKETPLACE_CHANNEL_MAP[channel_type]
+  end
+
+  # Returns the effective e-commerce hook for this inbox.
+  # Marketplace channels (TikTok Shop) are auto-linked to their native platform hook.
+  # Generic channels use the explicitly assigned ecommerce_integration.
+  def effective_ecommerce_hook
+    if marketplace_channel?
+      account.hooks.find_by(app_id: auto_linked_platform)
+    else
+      ecommerce_integration
+    end
   end
 
   def inbox_type
@@ -249,7 +298,10 @@ class Inbox < ApplicationRecord
   def auto_load_old_conversation
     return if ENABLE_LOAD_HISTORY_CONVERSATION.exclude?(channel.class.to_s)
 
-    ::Facebook::LoadHistoryConversationService.new(self).perform
+    service_class_name = LOAD_HISTORY_CONVERSATION_SERVICES[channel.class.to_s]
+    return if service_class_name.blank?
+
+    service_class_name.constantize.new(self).perform
   end
 end
 

@@ -133,53 +133,63 @@ export default {
 
   /* Color Schemes */
   &.primary {
-    @apply bg-n-blue-5 text-n-blue-12 border border-solid border-n-blue-7;
+    background-color: rgb(var(--orange-5));
+    color: rgb(var(--orange-12));
+    border-color: rgb(var(--orange-7));
 
     a {
-      @apply text-n-blue-12;
+      color: rgb(var(--orange-12));
     }
     .label-color-dot {
-      @apply bg-n-blue-9;
+      background-color: rgb(var(--orange-9));
     }
   }
   &.secondary {
-    @apply bg-n-slate-5 text-n-slate-12 border border-solid border-n-slate-7;
+    background-color: rgb(var(--slate-5));
+    color: rgb(var(--slate-12));
+    border-color: rgb(var(--slate-7));
 
     a {
-      @apply text-n-slate-12;
+      color: rgb(var(--slate-12));
     }
     .label-color-dot {
-      @apply bg-n-slate-9;
+      background-color: rgb(var(--slate-9));
     }
   }
   &.success {
-    @apply bg-n-teal-5 text-n-teal-12 border border-solid border-n-teal-7;
+    background-color: rgb(var(--teal-5));
+    color: rgb(var(--teal-12));
+    border-color: rgb(var(--teal-7));
 
     a {
-      @apply text-n-teal-12;
+      color: rgb(var(--teal-12));
     }
     .label-color-dot {
-      @apply bg-n-teal-9;
+      background-color: rgb(var(--teal-9));
     }
   }
   &.alert {
-    @apply bg-n-ruby-5 text-n-ruby-12 border border-solid border-n-ruby-7;
+    background-color: rgb(var(--ruby-5));
+    color: rgb(var(--ruby-12));
+    border-color: rgb(var(--ruby-7));
 
     a {
-      @apply text-n-ruby-12;
+      color: rgb(var(--ruby-12));
     }
     .label-color-dot {
-      @apply bg-n-ruby-9;
+      background-color: rgb(var(--ruby-9));
     }
   }
   &.warning {
-    @apply bg-n-amber-5 text-n-amber-12 border border-solid border-n-amber-7;
+    background-color: rgb(var(--amber-5));
+    color: rgb(var(--amber-12));
+    border-color: rgb(var(--amber-7));
 
     a {
-      @apply text-n-amber-12;
+      color: rgb(var(--amber-12));
     }
     .label-color-dot {
-      @apply bg-n-amber-9;
+      background-color: rgb(var(--amber-9));
     }
   }
 

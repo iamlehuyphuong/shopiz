@@ -71,6 +71,7 @@ class Api::V1::ProfilesController < Api::BaseController
       :company_address,
       :company_email,
       :company_tax_id,
+      :id_number,
       ui_settings: {}
     )
   end

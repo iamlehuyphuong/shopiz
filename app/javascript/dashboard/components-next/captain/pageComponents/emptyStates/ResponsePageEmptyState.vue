@@ -1,5 +1,6 @@
 <script setup>
 import { useAccount } from 'dashboard/composables/useAccount';
+import { useBranding } from 'shared/composables/useBranding';
 import EmptyStateLayout from 'dashboard/components-next/EmptyStateLayout.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 import ResponseCard from 'dashboard/components-next/captain/assistant/ResponseCard.vue';
@@ -26,6 +27,7 @@ const isApproved = computed(() => props.variant === 'approved');
 const isPending = computed(() => props.variant === 'pending');
 
 const { isOnChatwootCloud } = useAccount();
+const { replaceInstallationName } = useBranding();
 
 const onClick = () => {
   emit('click');
@@ -43,7 +45,7 @@ const onClearFilters = () => {
     :note="$t('CAPTAIN.RESPONSES.EMPTY_STATE.FEATURE_SPOTLIGHT.NOTE')"
     fallback-thumbnail="/assets/images/dashboard/captain/faqs-light.svg"
     fallback-thumbnail-dark="/assets/images/dashboard/captain/faqs-dark.svg"
-    learn-more-url="https://www.shopiz.pro/captain-faq"
+    learn-more-url="https://www.shopiz.pro/docs/04-shopizai-copilot/02-knowledge-base"
     class="mb-8"
   />
   <EmptyStateLayout
@@ -62,8 +64,8 @@ const onClearFilters = () => {
           v-for="(response, index) in responsesList.slice(0, 5)"
           :id="response.id"
           :key="`response-${index}`"
-          :question="response.question"
-          :answer="response.answer"
+          :question="replaceInstallationName(response.question)"
+          :answer="replaceInstallationName(response.answer)"
           :status="response.status"
           :assistant="response.assistant"
           :created-at="response.created_at"

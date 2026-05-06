@@ -17,10 +17,7 @@ import {
   useFunctionGetter,
 } from 'dashboard/composables/store.js';
 
-// [VITE] [TODO] We are using vue-virtual-scroll for now, since that seemed the simplest way to migrate
-// from the current one. But we should consider using tanstack virtual in the future
-// https://tanstack.com/virtual/latest/docs/framework/vue/examples/variable
-import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller';
+import { Virtualizer } from 'virtua/vue';
 import ChatListHeader from './ChatListHeader.vue';
 import Dialog from 'dashboard/components-next/dialog/Dialog.vue';
 import ConversationFilter from 'next/filter/ConversationFilter.vue';
@@ -29,9 +26,10 @@ import ChatTypeTabs from './widgets/ChatTypeTabs.vue';
 import ConversationItem from './ConversationItem.vue';
 import DeleteCustomViews from 'dashboard/routes/dashboard/customviews/DeleteCustomViews.vue';
 import ConversationBulkActions from './widgets/conversation/conversationBulkActions/Index.vue';
-import IntersectionObserver from './IntersectionObserver.vue';
 import TeleportWithDirection from 'dashboard/components-next/TeleportWithDirection.vue';
 import Spinner from 'dashboard/components-next/spinner/Spinner.vue';
+import IntersectionObserver from 'dashboard/components/IntersectionObserver.vue';
+import ConversationResolveAttributesModal from 'dashboard/components-next/ConversationWorkflow/ConversationResolveAttributesModal.vue';
 
 import { useUISettings } from 'dashboard/composables/useUISettings';
 import { useAlert } from 'dashboard/composables';
@@ -45,7 +43,7 @@ import {
   useSnakeCase,
 } from 'dashboard/composables/useTransformKeys';
 import { useEmitter } from 'dashboard/composables/emitter';
-import { useEventListener } from '@vueuse/core';
+import { useConversationRequiredAttributes } from 'dashboard/composables/useConversationRequiredAttributes';
 
 import { emitter } from 'shared/helpers/mitt';
 
@@ -68,8 +66,6 @@ import { matchesFilters } from '../store/modules/conversations/helpers/filterHel
 import { CONVERSATION_EVENTS } from '../helper/AnalyticsHelper/events';
 import { ASSIGNEE_TYPE_TAB_PERMISSIONS } from 'dashboard/constants/permissions.js';
 
-import 'vue-virtual-scroller/dist/vue-virtual-scroller.css';
-
 const props = defineProps({
   conversationInbox: { type: [String, Number], default: 0 },
   teamId: { type: [String, Number], default: 0 },
@@ -87,10 +83,11 @@ const router = useRouter();
 const route = useRoute();
 const store = useStore();
 
+const resolveAttributesModalRef = ref(null);
 const conversationListRef = ref(null);
-const conversationDynamicScroller = ref(null);
+const virtualListRef = ref(null);
 
-provide('contextMenuElementTarget', conversationDynamicScroller);
+provide('contextMenuElementTarget', virtualListRef);
 
 const activeAssigneeTab = ref(wootConstants.ASSIGNEE_TYPE.ALL);
 const activeStatus = ref(wootConstants.STATUS_TYPE.OPEN);
@@ -129,6 +126,7 @@ const labels = useMapGetter('labels/getLabels');
 const currentAccountId = useMapGetter('getCurrentAccountId');
 // We can't useFunctionGetter here since it needs to be called on setup?
 const getTeamFn = useMapGetter('teams/getTeam');
+const getConversationById = useMapGetter('getConversationById');
 
 useChatListKeyboardEvents(conversationListRef);
 const {
@@ -141,6 +139,7 @@ const {
   isConversationSelected,
   onAssignAgent,
   onAssignLabels,
+  onRemoveLabels,
   onAssignTeamsForBulk,
   onUpdateConversations,
 } = useBulkActions();
@@ -153,13 +152,9 @@ const {
   attributeModel: 'conversation_attribute',
 });
 
+const { checkMissingAttributes } = useConversationRequiredAttributes();
+
 // computed
-const intersectionObserverOptions = computed(() => {
-  return {
-    root: conversationListRef.value,
-    rootMargin: '100px 0px 100px 0px',
-  };
-});
 
 const hasAppliedFilters = computed(() => {
   return appliedFilters.value.length !== 0;
@@ -357,9 +352,12 @@ const currentInbox = computed(() => {
 });
 
 const allowLoadHistoryConversation = computed(() => {
-  return currentInbox.value.channel_type === 'Channel::FacebookPage' &&
-    !conversationStats.value['isLoadAllConversation'] && !hasAppliedFiltersOrActiveFolders.value;
-})
+  return (
+    currentInbox.value.channel_type === 'Channel::FacebookPage' &&
+    !conversationStats.value.isLoadAllConversation &&
+    !hasAppliedFiltersOrActiveFolders.value
+  );
+});
 
 const allConversationsSelected = computed(() => {
   return (
@@ -388,18 +386,6 @@ function setFiltersFromUISettings() {
 
 function emitConversationLoaded() {
   emit('conversationLoad');
-  // [VITE] removing this since the library has changed
-  // nextTick(() => {
-  //   // Addressing a known issue in the virtual list library where dynamically added items
-  //   // might not render correctly. This workaround involves a slight manual adjustment
-  //   // to the scroll position, triggering the list to refresh its rendering.
-  //   const virtualList = conversationListRef.value;
-  //   const scrollToOffset = virtualList?.scrollToOffset;
-  //   const currentOffset = virtualList?.getOffset() || 0;
-  //   if (scrollToOffset) {
-  //     scrollToOffset(currentOffset + 1);
-  //   }
-  // });
 }
 
 function fetchFilteredConversations(payload) {
@@ -602,12 +588,15 @@ function resetAndFetchData() {
 }
 
 function loadMoreConversations() {
-  if ((hasCurrentPageEndReached.value && !allowLoadHistoryConversation.value) || chatListLoading.value) {
+  if (
+    (hasCurrentPageEndReached.value && !allowLoadHistoryConversation.value) ||
+    chatListLoading.value
+  ) {
     return;
   }
 
   if (hasCurrentPageEndReached.value && allowLoadHistoryConversation.value) {
-    fetchHistoryConversation()
+    fetchHistoryConversation();
   } else if (!hasAppliedFiltersOrActiveFolders.value) {
     fetchConversations();
   } else if (hasActiveFolders.value) {
@@ -618,16 +607,13 @@ function loadMoreConversations() {
   }
 }
 
-// Add a method to handle scroll events
-function handleScroll() {
-  const scroller = conversationDynamicScroller.value;
-  if (scroller && scroller.hasScrollbar) {
-    const { scrollTop, scrollHeight, clientHeight } = scroller.$el;
-    if (scrollHeight - (scrollTop + clientHeight) < 100) {
-      loadMoreConversations();
-    }
-  }
-}
+// Use IntersectionObserver instead of @scroll since Virtualizer only emits on user scroll.
+// If the list doesn’t fill the viewport, loading can stall.
+// IntersectionObserver triggers as soon as the sentinel is visible.
+const intersectionObserverOptions = computed(() => ({
+  root: conversationListRef.value,
+  rootMargin: '100px 0px 100px 0px',
+}));
 
 function updateAssigneeTab(selectedTab) {
   if (activeAssigneeTab.value !== selectedTab) {
@@ -747,22 +733,76 @@ async function onAssignTeam(team, conversationId = null) {
   }
 }
 
-function toggleConversationStatus(conversationId, status, snoozedUntil) {
-  store
-    .dispatch('toggleStatus', {
-      conversationId,
-      status,
+function toggleConversationStatus(
+  conversationId,
+  status,
+  snoozedUntil,
+  customAttributes = null
+) {
+  const payload = {
+    conversationId,
+    status,
+    snoozedUntil,
+  };
+
+  if (customAttributes) {
+    payload.customAttributes = customAttributes;
+  }
+
+  store.dispatch('toggleStatus', payload).then(() => {
+    useAlert(t('CONVERSATION.CHANGE_STATUS'));
+  });
+}
+
+function handleResolveConversation(conversationId, status, snoozedUntil) {
+  if (status !== wootConstants.STATUS_TYPE.RESOLVED) {
+    toggleConversationStatus(conversationId, status, snoozedUntil);
+    return;
+  }
+
+  // Check for required attributes before resolving
+  const conversation = getConversationById.value(conversationId);
+  const currentCustomAttributes = conversation?.custom_attributes || {};
+  const { hasMissing, missing } = checkMissingAttributes(
+    currentCustomAttributes
+  );
+
+  if (hasMissing) {
+    // Pass conversation context through the modal's API
+    const conversationContext = {
+      id: conversationId,
       snoozedUntil,
-    })
-    .then(() => {
-      useAlert(t('CONVERSATION.CHANGE_STATUS'));
-    });
+    };
+    resolveAttributesModalRef.value?.open(
+      missing,
+      currentCustomAttributes,
+      conversationContext
+    );
+  } else {
+    toggleConversationStatus(conversationId, status, snoozedUntil);
+  }
+}
+
+function handleResolveWithAttributes({ attributes, context }) {
+  if (context) {
+    const existingConversation = getConversationById.value(context.id);
+    const currentCustomAttributes =
+      existingConversation?.custom_attributes || {};
+    const mergedAttributes = { ...currentCustomAttributes, ...attributes };
+
+    toggleConversationStatus(
+      context.id,
+      wootConstants.STATUS_TYPE.RESOLVED,
+      context.snoozedUntil,
+      mergedAttributes
+    );
+  }
 }
 
 function allSelectedConversationsStatus(status) {
   if (!selectedConversations.value.length) return false;
   return selectedConversations.value.every(item => {
-    return store.getters.getConversationById(item)?.status === status;
+    return getConversationById.value(item)?.status === status;
   });
 }
 
@@ -778,8 +818,6 @@ useEmitter('fetch_conversation_stats', () => {
   if (hasAppliedFiltersOrActiveFolders.value) return;
   store.dispatch('conversationStats/get', conversationFilters.value);
 });
-
-useEventListener(conversationDynamicScroller, 'scroll', handleScroll);
 
 onMounted(() => {
   store.dispatch('setChatListFilters', conversationFilters.value);
@@ -817,7 +855,8 @@ provide('deSelectConversation', deSelectConversation);
 provide('assignAgent', onAssignAgent);
 provide('assignTeam', onAssignTeam);
 provide('assignLabels', onAssignLabels);
-provide('updateConversationStatus', toggleConversationStatus);
+provide('removeLabels', onRemoveLabels);
+provide('updateConversationStatus', handleResolveConversation);
 provide('toggleContextMenu', onContextMenuToggle);
 provide('markAsUnread', markAsUnread);
 provide('markAsRead', markAsRead);
@@ -860,7 +899,7 @@ watch(conversationFilters, (newVal, oldVal) => {
 
 <template>
   <div
-    class="flex flex-col flex-shrink-0 bg-n-solid-1 conversations-list-wrap"
+    class="flex flex-col flex-shrink-0 conversations-list-wrap bg-n-surface-1"
     :class="[
       { hidden: !showConversationList },
       isOnExpandedLayout ? 'basis-full' : 'w-[340px] 2xl:w-[412px]',
@@ -917,14 +956,11 @@ watch(conversationFilters, (newVal, oldVal) => {
           class="conversation-load-more bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full dark:hover:bg-gray-700"
           @click="onClickLoadHistoryConversation"
         >
-          <span class="i-lucide-chevron-down"></span>
+          <span class="i-lucide-chevron-down" />
           {{ $t('CHAT_LIST.LOAD_MORE') }}
         </button>
       </div>
-      <p
-        v-else
-        class="flex items-center justify-center p-4 overflow-auto"
-      >
+      <p v-else class="flex items-center justify-center p-4 overflow-auto">
         {{ $t('CHAT_LIST.LIST.404') }}
       </p>
     </template>
@@ -944,73 +980,52 @@ watch(conversationFilters, (newVal, oldVal) => {
     />
     <div
       ref="conversationListRef"
-      class="flex-1 overflow-hidden conversations-list hover:overflow-y-auto"
-      :class="{ 'overflow-hidden': isContextMenuOpen }"
+      class="flex-1 min-h-0 overflow-y-auto conversations-list"
+      :class="{ '!overflow-hidden': isContextMenuOpen }"
     >
-      <DynamicScroller
-        ref="conversationDynamicScroller"
-        :items="conversationList"
-        :min-item-size="24"
-        class="w-full h-full overflow-auto"
+      <Virtualizer
+        ref="virtualListRef"
+        v-slot="{ item, index }"
+        :data="conversationList"
       >
-        <template #default="{ item, index, active }">
-          <!--
-            If we encounter resizing issues, we can set the `watchData` prop to true
-            this will deeply watch the entire object instead of just size dependencies
-            But it can impact performance
-          -->
-          <DynamicScrollerItem
-            :item="item"
-            :active="active"
-            :data-index="index"
-            :size-dependencies="[
-              item.messages,
-              item.labels,
-              item.uuid,
-              item.inbox_id,
-            ]"
+        <ConversationItem
+          :source="item"
+          :label="label"
+          :team-id="teamId"
+          :folders-id="foldersId"
+          :conversation-type="conversationType"
+          :show-assignee="showAssigneeInConversationCard"
+          :data-index="index"
+          @select-conversation="selectConversation"
+          @de-select-conversation="deSelectConversation"
+        />
+      </Virtualizer>
+      <div v-if="chatListLoading" class="flex justify-center my-4">
+        <Spinner class="text-n-orange" />
+      </div>
+      <template v-else-if="showEndOfListMessage">
+        <div
+          v-if="showLoadHistoryConversation"
+          class="flex justify-center my-4"
+        >
+          <button
+            class="conversation-load-more bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full dark:hover:bg-gray-700"
+            @click="onClickLoadHistoryConversation"
           >
-            <ConversationItem
-              :source="item"
-              :label="label"
-              :team-id="teamId"
-              :folders-id="foldersId"
-              :conversation-type="conversationType"
-              :show-assignee="showAssigneeInConversationCard"
-              @select-conversation="selectConversation"
-              @de-select-conversation="deSelectConversation"
-            />
-          </DynamicScrollerItem>
-        </template>
-        <template #after>
-          <div v-if="chatListLoading" class="flex justify-center my-4">
-            <Spinner class="text-n-brand" />
-          </div>
-          <template v-else-if="showEndOfListMessage">
-            <div v-if="showLoadHistoryConversation" class="flex justify-center my-4">
-              <button
-                class="conversation-load-more bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-full dark:hover:bg-gray-700"
-                @click="onClickLoadHistoryConversation"
-              >
-                <span class="i-lucide-chevron-down"></span>
-                {{ $t('CHAT_LIST.LOAD_MORE') }}
-              </button>
-            </div>
-            <p
-              v-else
-              class="p-4 text-center text-slate-400 dark:text-slate-300"
-            >
-              {{ $t('CHAT_LIST.EOF') }}
-            </p>
-          </template>
+            <span class="i-lucide-chevron-down" />
+            {{ $t('CHAT_LIST.LOAD_MORE') }}
+          </button>
+        </div>
+        <p v-else class="p-4 text-center text-slate-400 dark:text-slate-300">
+          {{ $t('CHAT_LIST.EOF') }}
+        </p>
+      </template>
 
-          <IntersectionObserver
-            v-else
-            :options="intersectionObserverOptions"
-            @observed="loadMoreConversations"
-          />
-        </template>
-      </DynamicScroller>
+      <IntersectionObserver
+        v-else
+        :options="intersectionObserverOptions"
+        @observed="loadMoreConversations"
+      />
     </div>
     <Dialog
       ref="deleteConversationDialogRef"
@@ -1038,10 +1053,15 @@ watch(conversationFilters, (newVal, oldVal) => {
         @close="closeAdvanceFiltersModal"
       />
     </TeleportWithDirection>
+    <ConversationResolveAttributesModal
+      ref="resolveAttributesModalRef"
+      @submit="handleResolveWithAttributes"
+    />
   </div>
 </template>
+
 <style lang="scss" scoped>
 .conversation-load-more {
-  @apply w-48 text-center px-2 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition w-32 flex items-center gap-1 justify-center;
+  @apply w-48 text-center px-2 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 transition w-32 flex items-center gap-1 justify-center;
 }
 </style>

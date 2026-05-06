@@ -6,10 +6,14 @@ import Index from './Index.vue';
 import Webhook from './Webhooks/Index.vue';
 import DashboardApps from './DashboardApps/Index.vue';
 import Slack from './Slack.vue';
-import SettingsContent from '../Wrapper.vue';
 import Linear from './Linear.vue';
 import Notion from './Notion.vue';
 import Shopify from './Shopify.vue';
+import Kiotviet from './Kiotviet.vue';
+import Haravan from './Haravan.vue';
+import Woocommerce from './Woocommerce.vue';
+import Sapo from './Sapo.vue';
+import Nhanhvn from './Nhanhvn.vue';
 
 export default {
   routes: [
@@ -49,28 +53,7 @@ export default {
     },
     {
       path: frontendURL('accounts/:accountId/settings/integrations'),
-      component: SettingsContent,
-      props: params => {
-        const integrationId = params.params?.integration_id;
-        const hideHeader = ['dialogflow'].includes(integrationId);
-
-        // Don't show header
-        if (hideHeader) {
-          return {};
-        }
-
-        const showBackButton = params.name !== 'settings_integrations';
-        const backUrl =
-          params.name === 'settings_integrations_integration'
-            ? { name: 'settings_integrations' }
-            : '';
-        return {
-          headerTitle: 'INTEGRATION_SETTINGS.HEADER',
-          icon: 'flash-on',
-          showBackButton,
-          backUrl,
-        };
-      },
+      component: SettingsWrapper,
       children: [
         {
           path: 'slack',
@@ -109,6 +92,51 @@ export default {
             permissions: ['administrator'],
           },
           props: route => ({ error: route.query.error }),
+        },
+        {
+          path: 'kiotviet',
+          name: 'settings_integrations_kiotviet',
+          component: Kiotviet,
+          meta: {
+            featureFlag: FEATURE_FLAGS.INTEGRATIONS,
+            permissions: ['administrator'],
+          },
+        },
+        {
+          path: 'haravan',
+          name: 'settings_integrations_haravan',
+          component: Haravan,
+          meta: {
+            featureFlag: FEATURE_FLAGS.INTEGRATIONS,
+            permissions: ['administrator'],
+          },
+        },
+        {
+          path: 'woocommerce',
+          name: 'settings_integrations_woocommerce',
+          component: Woocommerce,
+          meta: {
+            featureFlag: FEATURE_FLAGS.INTEGRATIONS,
+            permissions: ['administrator'],
+          },
+        },
+        {
+          path: 'sapo',
+          name: 'settings_integrations_sapo',
+          component: Sapo,
+          meta: {
+            featureFlag: FEATURE_FLAGS.INTEGRATIONS,
+            permissions: ['administrator'],
+          },
+        },
+        {
+          path: 'nhanhvn',
+          name: 'settings_integrations_nhanhvn',
+          component: Nhanhvn,
+          meta: {
+            featureFlag: FEATURE_FLAGS.INTEGRATIONS,
+            permissions: ['administrator'],
+          },
         },
         {
           path: ':integration_id',

@@ -22,6 +22,10 @@
       "UPDATE_SUCCESFUL": "Cập nhật trạng thái cuộc hội thoại thành công.",
       "UPDATE_FAILED": "Không thể cập nhật cuộc hội thoại. Vui lòng thử lại."
     },
+    "RESOLVE": {
+      "ALL_MISSING_ATTRIBUTES": "Không thể kết thúc cuộc trò chuyện do thiếu thuộc tính bắt buộc",
+      "PARTIAL_SUCCESS": "Một số cuộc trò chuyện cần thuộc tính bắt buộc trước khi kết thúc và đã bị bỏ qua"
+    },
     "LABELS": {
       "ASSIGN_LABELS": "Gán nhãn",
       "NO_LABELS_FOUND": "Không tìm thấy nhãn cho",

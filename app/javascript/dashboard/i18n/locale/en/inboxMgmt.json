@@ -1,8 +1,11 @@
 {
   "INBOX_MGMT": {
     "HEADER": "Inboxes",
-    "DESCRIPTION": "A channel is the mode of communication your customer chooses to interact with you. An inbox is where you manage interactions for a specific channel. It can include communications from various sources such as email, live chat, and social media.",
+    "DESCRIPTION": "A channel is the mode of communication your customer chooses to interact with you. An inbox is where you manage interactions for a specific channel. It can include communications from various sources such as live chat, social media, and e-commerce platforms.",
     "LEARN_MORE": "Learn more about inboxes",
+    "COUNT": "{n} inbox | {n} inboxes",
+    "SEARCH_PLACEHOLDER": "Search inboxes...",
+    "NO_RESULTS": "No inboxes found matching your search",
     "RECONNECTION_REQUIRED": "Your inbox is disconnected. You won't receive new messages until you reauthorize it.",
     "CLICK_TO_RECONNECT": "Click here to reconnect.",
     "WHATSAPP_REGISTRATION_INCOMPLETE": "Your WhatsApp Business registration isn’t complete. Please check your display name status in Meta Business Manager before reconnecting.",
@@ -70,10 +73,14 @@
         "HELP": "PS: By logging in, we only have access to Zalo messages of Zalo users.",
         "HELP_2": "Do not log in to your account on zalo web to ensure messages are continuously synchronized.",
         "DESC": "Log in to your ",
-        "DESC_2": "to connect to the"
+        "DESC_2": "to connect to the",
+        "DEFAULT_FRIEND_REQUEST_MESSAGE_TITLE": "Default Friend Request Message",
+        "DEFAULT_FRIEND_REQUEST_MESSAGE_SUBTITLE": "The message sent when requesting friendship.",
+        "DEFAULT_GREETING_MESSAGE_TITLE": "Default Greeting Message",
+        "DEFAULT_GREETING_MESSAGE_SUBTITLE": "The greeting message sent alongside the friend request."
       },
       "TIKTOK_SHOP": {
-        "HELP": "PS: By signing in, we only get access to your Tiktok messages. Your private messages can never be accessed by Salesman.",
+        "HELP": "PS: By signing in, we only get access to your TikTok Shop messages. Your private messages can never be accessed by Shopiz.",
         "INBOX_NAME": "Inbox Name",
         "ADD_NAME": "Add a name for your inbox",
         "PICK_NAME": "Pick A Name Your Inbox",
@@ -87,6 +94,13 @@
         "ERROR_AUTH": "There was an error connecting to Instagram, please try again",
         "NEW_INBOX_SUGGESTION": "This Instagram account was previously linked to a different inbox and has now been migrated here. All new messages will appear here. The old inbox will no longer be able to send or receive messages for this account.",
         "DUPLICATE_INBOX_BANNER": "This Instagram account was migrated to the new Instagram channel inbox. You won’t be able to send/receive Instagram messages from this inbox anymore."
+      },
+      "TIKTOK": {
+        "CONTINUE_WITH_TIKTOK": "Continue with TikTok",
+        "CONNECT_YOUR_TIKTOK_PROFILE": "Connect your TikTok Profile",
+        "HELP": "To add your TikTok profile as a channel, you need to authenticate your TikTok Profile by clicking on 'Continue with TikTok' ",
+        "ERROR_MESSAGE": "There was an error connecting to TikTok, please try again",
+        "ERROR_AUTH": "There was an error connecting to TikTok, please try again"
       },
       "TWITTER": {
         "HELP": "To add your Twitter profile as a channel, you need to authenticate your Twitter Profile by clicking on 'Sign in with Twitter' ",
@@ -533,6 +547,14 @@
             "TITLE": "Instagram",
             "DESCRIPTION": "Connect your instagram account"
           },
+          "TWITTER": {
+            "TITLE": "Twitter",
+            "DESCRIPTION": "Connect your twitter account"
+          },
+          "TIKTOK": {
+            "TITLE": "TikTok",
+            "DESCRIPTION": "Connect your TikTok account"
+          },
           "VOICE": {
             "TITLE": "Voice",
             "DESCRIPTION": "Integrate with Twilio Voice"
@@ -546,8 +568,8 @@
             "DESCRIPTION": "Connect your Zalo Personal account"
           },
           "TIKTOK_SHOP": {
-            "TITLE": "Tiktok Shop",
-            "DESCRIPTION": "Connect your Tiktok Shop"
+            "TITLE": "TikTok Shop",
+            "DESCRIPTION": "Connect your TikTok Shop"
           }
         }
       },
@@ -592,8 +614,8 @@
       "ERROR_FB_UNAUTHORIZED_HELP": "Please ensure you have access to the Facebook page with full control. You can read more about Facebook roles <a href=\" https://www.facebook.com/help/187316341316631\">here</a>.",
       "CREATING_CHANNEL": "Creating your Inbox...",
       "TITLE": "Configure Inbox Details",
-      "LOADING_TIKTOK_SHOP": "Authenticating you with Tiktok...",
-      "DESC_TIKTOK_SHOP": "TIKTOK_SHOP",
+      "LOADING_TIKTOK_SHOP": "Authenticating you with TikTok Shop...",
+      "DESC_TIKTOK_SHOP": "Connect your TikTok Shop account to Shopiz to manage your conversations.",
       "DESC": ""
     },
     "AGENTS": {
@@ -640,7 +662,7 @@
           "SUBTITLE": "Use only the configured business name as the sender name in the email header."
         },
         "BUSINESS_NAME": {
-          "BUTTON_TEXT": "+ Configure your business name",
+          "BUTTON_TEXT": "Configure your business name",
           "PLACEHOLDER": "Enter your business name",
           "SAVE_BUTTON_TEXT": "Save"
         }
@@ -654,8 +676,10 @@
         "DISABLED": "Disabled"
       },
       "LOCK_TO_SINGLE_CONVERSATION": {
-        "ENABLED": "Enabled",
-        "DISABLED": "Disabled"
+        "ENABLED": "Reopen same conversation",
+        "DISABLED": "Create new conversations",
+        "ENABLED_DESCRIPTION": "When a contact messages again, the previous conversation will be reopened.",
+        "DISABLED_DESCRIPTION": "A new conversation will be created each time after the previous one is resolved."
       },
       "ENABLE_HMAC": {
         "LABEL": "Enable"
@@ -688,8 +712,85 @@
       "WIDGET_BUILDER": "Widget Builder",
       "BOT_CONFIGURATION": "Bot Configuration",
       "ACCOUNT_HEALTH": "Account Health",
-      "CSAT": "CSAT"
+      "CSAT": "CSAT",
+      "POSTS_AND_COMMENTS": "Comment Management",
+      "MESSAGE_TEMPLATES": "Message Templates",
+      "ECOMMERCE": "eCommerce"
     },
+    "ECOMMERCE": {
+      "TITLE": "eCommerce Integration",
+      "DESCRIPTION": "Link this inbox to a sales platform. All conversations in this inbox will use this integration for product search and order management.",
+      "SELECT_PLATFORM": "Select integration",
+      "NO_INTEGRATIONS": "No e-commerce integrations found. Please configure an integration in Settings → Integrations first.",
+      "AUTO_LINKED": "Auto-linked to {platform}",
+      "MARKETPLACE_NOTE": "Marketplace channels are permanently linked to their native e-commerce platform and cannot be changed.",
+      "NONE": "No integration",
+      "SAVE": "Update",
+      "SAVE_SUCCESS": "eCommerce integration updated successfully",
+      "SAVE_ERROR": "Failed to update eCommerce integration. Please try again."
+    },
+    "ZALO_TEMPLATES": {
+      "TITLE": "Zalo OA Message Templates",
+      "SUBTITLE": "Manage message templates for transaction and promotion messages",
+      "ADD_BUTTON": "New Template",
+      "CREATE_TITLE": "Create Message Template",
+      "EDIT_TITLE": "Edit Message Template",
+      "DELETE_TITLE": "Delete Template",
+      "DELETE_CONFIRM": "Are you sure you want to delete this template? This action cannot be undone.",
+      "DELETE_BUTTON": "Delete",
+      "EMPTY_STATE": "No message templates yet. Create your first template to get started.",
+      "TYPES": {
+        "ORDER": "Order",
+        "PAYMENT": "Payment",
+        "SHIPPING": "Shipping",
+        "OTP": "OTP",
+        "REWARD": "Reward",
+        "PROMOTION": "Promotion"
+      },
+      "FORM": {
+        "NAME": {
+          "LABEL": "Template Name",
+          "PLACEHOLDER": "e.g. Order Confirmation"
+        },
+        "TYPE": {
+          "LABEL": "Template Type",
+          "PLACEHOLDER": "Select type"
+        },
+        "STATUS": {
+          "LABEL": "Status"
+        },
+        "HEADER": {
+          "LABEL": "Header",
+          "PLACEHOLDER": "e.g. Order Update"
+        },
+        "CONTENT": {
+          "LABEL": "Content",
+          "PLACEHOLDER": "e.g. Your order {{order_id}} has been confirmed"
+        },
+        "BUTTON_TITLE": {
+          "LABEL": "Button Title",
+          "PLACEHOLDER": "e.g. View Order"
+        },
+        "BUTTON_URL": {
+          "LABEL": "Button URL",
+          "PLACEHOLDER": "e.g. https://example.com/orders/{{order_id}}"
+        },
+        "CANCEL": "Cancel",
+        "CREATE": "Create Template",
+        "UPDATE": "Update Template"
+      },
+      "API": {
+        "FETCH_ERROR": "Failed to load templates",
+        "CREATE_SUCCESS": "Template created successfully",
+        "CREATE_ERROR": "Failed to create template",
+        "UPDATE_SUCCESS": "Template updated successfully",
+        "UPDATE_ERROR": "Failed to update template",
+        "DELETE_SUCCESS": "Template deleted successfully",
+        "DELETE_ERROR": "Failed to delete template"
+      }
+    },
+    "CHANNEL_PREFERENCES": "Channel Preferences",
+    "WIDGET_FEATURES": "Widget features",
     "ACCOUNT_HEALTH": {
       "TITLE": "Manage your WhatsApp account",
       "DESCRIPTION": "Review your WhatsApp account status, messaging limits, and quality. Update settings or resolve issues if needed",
@@ -743,6 +844,16 @@
           "SANDBOX": "Sandbox",
           "LIVE": "Live"
         }
+      },
+      "WEBHOOK": {
+        "TITLE": "Webhook Configuration",
+        "DESCRIPTION": "Webhook URL is required for your WhatsApp Business Account to receive messages from customers",
+        "ACTION_REQUIRED": "Webhook not configured",
+        "REGISTER_BUTTON": "Register Webhook",
+        "REGISTER_SUCCESS": "Webhook registered successfully",
+        "REGISTER_ERROR": "Failed to register webhook. Please try again.",
+        "CONFIGURED_SUCCESS": "Webhook configured successfully",
+        "URL_MISMATCH": "Webhook URL mismatch"
       }
     },
     "SETTINGS": "Settings",
@@ -758,8 +869,20 @@
       "MESSENGER_SUB_HEAD": "Place this button inside your body tag",
       "ALLOWED_DOMAINS": {
         "TITLE": "Allowed Domains",
-        "SUBTITLE": "Add wildcard or regular domains separated by commas (leave blank to allow all), e.g. *.shopiz.dev, shopiz.pro.",
-        "PLACEHOLDER": "Enter domains separated by commas (eg: *.shopiz.dev, shopiz.pro)"
+        "DESCRIPTION": "Restrict which websites can embed your chat widget. For security, only add domains you own and trust. Add one or more domains separated by commas. Leave blank to allow all domains (not recommended for production).",
+        "PLACEHOLDER": "example.com, www.example.com, app.example.com"
+      },
+      "ALLOW_MOBILE_WEBVIEW": {
+        "LABEL": "Enable widget in mobile apps",
+        "SUBTITLE": "Check this if you embed the widget in iOS or Android apps. Mobile apps don't send domain information, so they would be blocked by domain restrictions unless this is enabled."
+      },
+      "IDENTITY_VALIDATION": {
+        "TITLE": "Identity Validation",
+        "DESCRIPTION": "Verify user authenticity by generating secure tokens. This prevents unauthorized users from impersonating others in your chat.",
+        "SECRET_KEY": "Secret Key",
+        "VIEW_DOCS": "View documentation",
+        "REQUIRE_LABEL": "Require identity validation for all conversations",
+        "REQUIRE_DESCRIPTION": "When enabled, users must provide a valid identity token to start conversations. Requests without valid tokens will be rejected."
       },
       "INBOX_AGENTS": "Agents",
       "INBOX_AGENTS_SUB_TEXT": "Add or remove agents from this inbox",
@@ -773,13 +896,34 @@
       "UPDATE": "Update",
       "ENABLE_EMAIL_COLLECT_BOX": "Enable email collect box",
       "ENABLE_EMAIL_COLLECT_BOX_SUB_TEXT": "Enable or disable email collect box on new conversation",
+      "AUTO_FOLLOWUP_TITLE": "Auto Follow-up",
+      "AUTO_FOLLOWUP_TOGGLE": "Enable customer follow-up sequences",
+      "AUTO_FOLLOWUP_DESC": "Automatically trigger an automated message sequence if the customer becomes unresponsive.",
+      "AUTO_FOLLOWUP_DELAY_LABEL": "Interval (Hours)",
+      "AUTO_FOLLOWUP_MAX_ATTEMPTS": "Max Attempts",
+      "AUTO_FOLLOWUP_TIME_MODE": "Delivery Timing",
+      "AUTO_FOLLOWUP_TIME_MODE_RELATIVE": "Relative to last activity",
+      "AUTO_FOLLOWUP_TIME_MODE_FIXED": "Fixed time daily",
+      "AUTO_FOLLOWUP_FIXED_TIME_LABEL": "Execution Time",
+      "AUTO_FOLLOWUP_TIMEZONE_LABEL": "Timezone",
+      "AUTO_FOLLOWUP_ACTION_TYPE_LABEL": "Action type",
+      "AUTO_FOLLOWUP_ACTION_TYPE_AI_ASSISTANT": "Assign to AI Assistant",
+      "AUTO_FOLLOWUP_ACTION_TYPE_PREDEFINED": "Send predefined message",
+      "AUTO_FOLLOWUP_ACTION_TYPE_MACRO": "Execute a macro",
+      "AUTO_FOLLOWUP_PREDEFINED_MESSAGE": "Message for attempt",
+      "AUTO_FOLLOWUP_MACRO_SELECT": "Select macro for attempt",
+      "AUTO_FOLLOWUP_MACRO_EMPTY": "Please select a macro",
+      "AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_LABEL": "AI Strategy for attempt",
+      "AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_PLACEHOLDER": "E.g: Offer a 10% discount if the customer is hesitating. Leave blank to use default system instruction.",
+      "AUTO_FOLLOWUP_AI_HINT": "Note: Make sure your AI Assistant configuration (Features > AI Assistant Config) includes instructions on how to create follow-up content.",
+      "AUTO_FOLLOWUP_LIMIT_WARNING": "Warning: Channel platforms limit message reachouts after 24h/48h. Any scheduled attempt falling beyond connection thresholds will gracefully be discarded.",
       "AUTO_ASSIGNMENT": "Enable auto assignment",
       "SENDER_NAME_SECTION": "Enable Agent Name in Email",
       "SENDER_NAME_SECTION_TEXT": "Enable/Disable showing Agent's name in email, if disabled it will show business name",
       "ENABLE_CONTINUITY_VIA_EMAIL": "Enable conversation continuity via email",
       "ENABLE_CONTINUITY_VIA_EMAIL_SUB_TEXT": "Conversations will continue over email if the contact email address is available.",
-      "LOCK_TO_SINGLE_CONVERSATION": "Lock to single conversation",
-      "LOCK_TO_SINGLE_CONVERSATION_SUB_TEXT": "Enable or disable multiple conversations for the same contact in this inbox",
+      "LOCK_TO_SINGLE_CONVERSATION": "Conversation Routing",
+      "LOCK_TO_SINGLE_CONVERSATION_SUB_TEXT": "Configure conversation creation for existing contacts",
       "INBOX_UPDATE_TITLE": "Inbox Settings",
       "INBOX_UPDATE_SUB_TEXT": "Update your inbox settings",
       "AUTO_ASSIGNMENT_SUB_TEXT": "Enable or disable the automatic assignment of new conversations to the agents added to this inbox.",
@@ -828,6 +972,7 @@
       "LABEL": "Help Center",
       "PLACEHOLDER": "Select Help Center",
       "SELECT_PLACEHOLDER": "Select Help Center",
+      "NONE": "None",
       "REMOVE": "Remove Help Center",
       "SUB_TEXT": "Attach a Help Center with the inbox"
     },
@@ -836,11 +981,89 @@
       "MAX_ASSIGNMENT_LIMIT_RANGE_ERROR": "Please enter a value greater than 0",
       "MAX_ASSIGNMENT_LIMIT_SUB_TEXT": "Limit the maximum number of conversations from this inbox that can be auto assigned to an agent"
     },
+    "ASSIGNMENT": {
+      "TITLE": "Conversation Assignment",
+      "DESCRIPTION": "Automatically assign incoming conversations to available agents based on assignment policies",
+      "ENABLE_AUTO_ASSIGNMENT": "Enable automatic conversation assignment",
+      "DEFAULT_RULES_TITLE": "Default assignment rules",
+      "DEFAULT_RULES_DESCRIPTION": "Using the default assignment behavior for all conversations",
+      "DEFAULT_RULE_1": "Earliest created conversations first",
+      "DEFAULT_RULE_2": "Round robin distribution",
+      "CUSTOMIZE_WITH_POLICY": "Customize with assignment policy",
+      "USING_POLICY": "Using custom assignment policy for this inbox",
+      "CUSTOMIZE_POLICY": "Customize with assignment policy",
+      "DELETE_POLICY": "Delete policy",
+      "POLICY_LABEL": "Assignment policy",
+      "ASSIGNMENT_ORDER_LABEL": "Assignment Order",
+      "ASSIGNMENT_METHOD_LABEL": "Assignment Method",
+      "POLICY_STATUS": {
+        "ACTIVE": "Active",
+        "INACTIVE": "Inactive"
+      },
+      "PRIORITY": {
+        "EARLIEST_CREATED": "Earliest created",
+        "LONGEST_WAITING": "Longest waiting"
+      },
+      "METHOD": {
+        "ROUND_ROBIN": "Round robin",
+        "BALANCED": "Balanced assignment"
+      },
+      "UPGRADE_PROMPT": "Custom assignment policies are available on the Business plan",
+      "UPGRADE_TO_BUSINESS": "Upgrade to Business",
+      "DEFAULT_POLICY_LINKED": "Default policy linked",
+      "DEFAULT_POLICY_DESCRIPTION": "Link a custom assignment policy to customize how conversations are assigned to agents in this inbox.",
+      "LINK_EXISTING_POLICY": "Link existing policy",
+      "CREATE_NEW_POLICY": "Create new policy",
+      "NO_POLICIES": "No assignment policies found",
+      "VIEW_ALL_POLICIES": "View all policies",
+      "CURRENT_BEHAVIOR": "Currently using default assignment behavior:",
+      "LINK_SUCCESS": "Assignment policy linked successfully",
+      "LINK_ERROR": "Failed to link assignment policy"
+    },
+    "ASSIGNMENT_POLICY": {
+      "DELETE_CONFIRM_TITLE": "Delete assignment policy?",
+      "DELETE_CONFIRM_MESSAGE": "Are you sure you want to remove this assignment policy from this inbox? The inbox will revert to default assignment rules.",
+      "CANCEL": "Cancel",
+      "CONFIRM_DELETE": "Delete",
+      "DELETE_SUCCESS": "Assignment policy removed successfully",
+      "DELETE_ERROR": "Failed to remove assignment policy"
+    },
     "FACEBOOK_REAUTHORIZE": {
       "TITLE": "Reauthorize",
       "SUBTITLE": "Your Facebook connection has expired, please reconnect your Facebook page to continue services",
       "MESSAGE_SUCCESS": "Reconnection successful",
       "MESSAGE_ERROR": "There was an error, please try again"
+    },
+    "POSTS_AND_COMMENTS": {
+      "TITLE": "Posts & Comments Management",
+      "DESCRIPTION": "Manage how comments on your Facebook page posts are handled. You can automatically hide comments and send private replies to commenters.",
+      "COMMENT_MODERATION": {
+        "TITLE": "Comment Moderation",
+        "DESCRIPTION": "Configure automatic comment hiding rules for your page posts.",
+        "HIDE_ALL": "Hide all comments",
+        "HIDE_ALL_HELP": "Automatically hide all new comments on your page posts.",
+        "HIDE_PHONE": "Hide comments containing phone number",
+        "HIDE_PHONE_HELP": "Automatically hide comments that contain a phone number to protect customer contact info.",
+        "HIDE_EMAIL": "Hide comments containing email",
+        "HIDE_EMAIL_HELP": "Automatically hide comments that contain an email address to protect customer contact info."
+      },
+      "AUTO_REPLY": {
+        "TITLE": "Auto Reply (Private Message)",
+        "DESCRIPTION": "Automatically send a private message via Messenger to customers who comment on your posts.",
+        "ENABLE": "Enable auto reply to comments",
+        "ENABLE_HELP": "When enabled, a private message will be sent to the commenter's Messenger inbox.",
+        "USE_AI": "Reply using AI Assistant",
+        "USE_AI_HELP": "When enabled, an AI will generate the response based on the post and comment context instead of sending a static message.",
+        "AI_PROMPT_LABEL": "AI Assistant Strategy",
+        "AI_PROMPT_PLACEHOLDER": "E.g: Write a polite response, invite them to visit our store link, etc.",
+        "MESSAGE_LABEL": "Auto reply message",
+        "MESSAGE_PLACEHOLDER": "Hi! Thank you for your comment. We have sent you more details via Messenger.",
+        "NOTE": "Note: Facebook allows only one private reply per comment within 7 days."
+      },
+      "API": {
+        "SUCCESS_MESSAGE": "Posts & Comments settings updated successfully",
+        "ERROR_MESSAGE": "Failed to update Posts & Comments settings. Please try again."
+      }
     },
     "PRE_CHAT_FORM": {
       "DESCRIPTION": "Pre chat forms enable you to capture user information before they start conversation with you.",
@@ -878,6 +1101,49 @@
         "LABEL": "Message",
         "PLACEHOLDER": "Please enter a message to show users with the form"
       },
+      "BUTTON_TEXT": {
+        "LABEL": "Button text",
+        "PLACEHOLDER": "Please rate us"
+      },
+      "LANGUAGE": {
+        "LABEL": "Language",
+        "PLACEHOLDER": "Select template language"
+      },
+      "MESSAGE_PREVIEW": {
+        "LABEL": "Message preview",
+        "TOOLTIP": "This may vary slightly when rendered on WhatsApp's platform."
+      },
+      "TEMPLATE_STATUS": {
+        "APPROVED": "Approved by WhatsApp",
+        "PENDING": "Pending WhatsApp approval",
+        "REJECTED": "Meta rejected the template",
+        "DEFAULT": "Needs WhatsApp approval",
+        "NOT_FOUND": "The template does not exist in the Meta platform."
+      },
+      "TEMPLATE_CREATION": {
+        "SUCCESS_MESSAGE": "WhatsApp template created successfully and sent for approval",
+        "ERROR_MESSAGE": "Failed to create WhatsApp template"
+      },
+      "TEMPLATE_UPDATE_DIALOG": {
+        "TITLE": "Edit survey details",
+        "DESCRIPTION": "We will delete the previous template and make a new one which will be sent again for WhatsApp approval",
+        "CONFIRM": "Create new template",
+        "CANCEL": "Go back"
+      },
+      "UTILITY_ANALYZER": {
+        "ACTION": "Check utility fit",
+        "HELPER_NOTE": "Check this message before submission to improve Utility fit. The system creates a dedicated CSAT template with buttons for reporting and submits it as Utility; Meta may still reclassify it as Marketing based on content.",
+        "RESULT_LABEL": "Meta category prediction",
+        "GUIDANCE_NOTE": "This is a guidance check, not a guarantee of Meta approval.",
+        "SUGGESTION_LABEL": "Suggested utility-safe rewrite",
+        "APPLY": "Use this rewrite",
+        "ERROR_MESSAGE": "Couldn't analyze the message. Please try again.",
+        "CLASSIFICATION": {
+          "LIKELY_UTILITY": "Likely Utility",
+          "LIKELY_MARKETING": "Likely Marketing",
+          "UNCLEAR": "Needs clarification"
+        }
+      },
       "SURVEY_RULE": {
         "LABEL": "Survey rule",
         "DESCRIPTION_PREFIX": "Send the survey if the conversation",
@@ -889,6 +1155,7 @@
         "SELECT_PLACEHOLDER": "select labels"
       },
       "NOTE": "Note: CSAT surveys are sent only once per conversation",
+      "WHATSAPP_NOTE": "Note: When you save, the system creates a dedicated CSAT template in WhatsApp (used to capture rating and feedback in reports) and submits it as Utility for approval. Meta may still classify it as Marketing based on content. After approval, surveys are sent only once per conversation as per the survey rule.",
       "API": {
         "SUCCESS_MESSAGE": "CSAT settings updated successfully",
         "ERROR_MESSAGE": "We couldn't update CSAT settings. Please try again later."
@@ -904,9 +1171,11 @@
       "UNAVAILABLE_MESSAGE_LABEL": "Unavailable message for visitors",
       "TOGGLE_HELP": "Enabling business availability will show the available hours on live chat widget even if all the agents are offline. Outside available hours visitors can be warned with a message and a pre-chat form.",
       "DAY": {
+        "DAY": "Day",
+        "AVAILABILITY": "Availability",
+        "HOURS": "Hours",
         "ENABLE": "Enable availability for this day",
         "UNAVAILABLE": "Unavailable",
-        "HOURS": "hours",
         "VALIDATION_ERROR": "Starting time should be before closing time.",
         "CHOOSE": "Choose"
       },
@@ -993,6 +1262,24 @@
             }
           }
         },
+        "BUBBLE_AVATAR": {
+          "LABEL": "Bubble Icon",
+          "DELETE": {
+            "API": {
+              "SUCCESS_MESSAGE": "Bubble icon deleted successfully",
+              "ERROR_MESSAGE": "There was an error, please try again"
+            }
+          }
+        },
+        "CLOSE_BUBBLE_AVATAR": {
+          "LABEL": "Close Icon",
+          "DELETE": {
+            "API": {
+              "SUCCESS_MESSAGE": "Close icon deleted successfully",
+              "ERROR_MESSAGE": "There was an error, please try again"
+            }
+          }
+        },
         "WEBSITE_NAME": {
           "LABEL": "Website Name",
           "PLACE_HOLDER": "Enter your website name (eg: Acme Inc)",
@@ -1013,11 +1300,12 @@
           "IN_A_DAY": "In a day"
         },
         "WIDGET_COLOR_LABEL": "Widget Color",
-        "WIDGET_BUBBLE_POSITION_LABEL": "Widget Bubble Position",
-        "WIDGET_BUBBLE_TYPE_LABEL": "Widget Bubble Type",
+        "WIDGET_BUBBLE": "Bubble",
+        "WIDGET_BUBBLE_POSITION_LABEL": "Position:",
+        "WIDGET_BUBBLE_TYPE_LABEL": "Type:",
         "WIDGET_BUBBLE_LAUNCHER_TITLE": {
           "DEFAULT": "Chat with us",
-          "LABEL": "Widget Bubble Launcher Title",
+          "LABEL": "Launcher Title",
           "PLACE_HOLDER": "Chat with us"
         },
         "UPDATE": {
@@ -1042,7 +1330,7 @@
       },
       "WIDGET_SCREEN": {
         "DEFAULT": "Default",
-        "CHAT": "Chat"
+        "CHAT": "Chat mode"
       },
       "REPLY_TIME": {
         "IN_A_FEW_MINUTES": "Typically replies in a few minutes",
@@ -1091,9 +1379,10 @@
       "LINE": "Line",
       "API": "API Channel",
       "INSTAGRAM": "Instagram",
+      "TIKTOK": "TikTok",
       "ZALO_OA": "Zalo OA",
       "ZALO_PERSONAL": "Zalo Personal",
-      "TIKTOK_SHOP": "Tiktok Shop"
+      "TIKTOK_SHOP": "TikTok Shop"
     }
   }
 }

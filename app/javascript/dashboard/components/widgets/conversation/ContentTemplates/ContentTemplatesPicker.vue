@@ -41,6 +41,9 @@ const getTemplateType = template => {
   if (template.template_type === TWILIO_CONTENT_TEMPLATE_TYPES.QUICK_REPLY) {
     return t('CONTENT_TEMPLATES.PICKER.TYPES.QUICK_REPLY');
   }
+  if (template.template_type === TWILIO_CONTENT_TEMPLATE_TYPES.CALL_TO_ACTION) {
+    return t('CONTENT_TEMPLATES.PICKER.TYPES.CALL_TO_ACTION');
+  }
   return t('CONTENT_TEMPLATES.PICKER.TYPES.TEXT');
 };
 
@@ -61,7 +64,7 @@ const refreshTemplates = async () => {
   <div class="w-full">
     <div class="flex gap-2 mb-2.5">
       <div
-        class="flex flex-1 gap-1 items-center px-2.5 py-0 rounded-lg bg-n-alpha-black2 outline outline-1 outline-n-weak hover:outline-n-slate-6 dark:hover:outline-n-slate-6 focus-within:outline-n-brand dark:focus-within:outline-n-brand"
+        class="flex flex-1 gap-1 items-center px-2.5 py-0 rounded-lg bg-n-alpha-black2 outline outline-1 outline-n-weak hover:outline-n-slate-6 dark:hover:outline-n-slate-6 focus-within:outline-n-orange dark:focus-within:outline-n-orange"
       >
         <fluent-icon icon="search" class="text-n-slate-12" size="16" />
         <input

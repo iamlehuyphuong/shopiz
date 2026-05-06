@@ -22,7 +22,7 @@ export default {
     return {
       socket: null,
       countdownInterval: null,
-      qrCode: "",
+      qrCode: '',
       isCreating: false,
       hasError: false,
       omniauth_token: '',
@@ -55,7 +55,7 @@ export default {
     }),
   },
   created() {
-    //if (this.$route.query.code) this.getAccessToken();
+    // if (this.$route.query.code) this.getAccessToken();
     this.generateQR();
   },
   methods: {
@@ -73,46 +73,48 @@ export default {
         this.socket.close();
       }
       // Xác định URL WebSocket dựa trên URL hiện tại
-      //const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      // const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
       const wsUrl = `${window.shopizConfig?.zaloApiUrl.replace('http', 'ws')}/ws`;
       console.log('Đang kết nối đến WebSocket tại:', wsUrl);
       try {
-          this.socket = new WebSocket(wsUrl);
-          this.socket.onopen = function() {
-              console.log('WebSocket đã kết nối');
-              this.hasError = false;
-              this.emptyStateMessage = 'Kết nối WebSocket thành công. Vui lòng quét mã QR để đăng nhập.';
-          }.bind(this);
-          this.socket.onmessage = function(event) {
-            console.log('Nhận tin nhắn WebSocket:', event.data);
-            if (event.data.indexOf('login_success:') === 0) {
-                console.log('Đăng nhập thành công qua WebSocket',event);
-                this.emptyStateMessage = 'Đăng nhập thành công. Đang tải danh sách hội thoại';
-                this.hasLoginStarted = true;
-                this.hasError = false;
-                this.oa_id = event.data.split(':')[1];
-                this.access_token = this.oa_id;
-                this.refresh_token = this.oa_id;
-                this.expires_in = 90000;
-                console.log('oa_id:', this.oa_id);
-            }
-          }.bind(this);
+        this.socket = new WebSocket(wsUrl);
+        this.socket.onopen = function () {
+          console.log('WebSocket đã kết nối');
+          this.hasError = false;
+          this.emptyStateMessage =
+            'Kết nối WebSocket thành công. Vui lòng quét mã QR để đăng nhập.';
+        }.bind(this);
+        this.socket.onmessage = function (event) {
+          console.log('Nhận tin nhắn WebSocket:', event.data);
+          if (event.data.indexOf('login_success:') === 0) {
+            console.log('Đăng nhập thành công qua WebSocket', event);
+            this.emptyStateMessage =
+              'Đăng nhập thành công. Đang tải danh sách hội thoại';
+            this.hasLoginStarted = true;
+            this.hasError = false;
+            this.oa_id = event.data.split(':')[1];
+            this.access_token = this.oa_id;
+            this.refresh_token = this.oa_id;
+            this.expires_in = 90000;
+            console.log('oa_id:', this.oa_id);
+          }
+        }.bind(this);
 
-          this.socket.onerror = function(error) {
-              console.error('Lỗi WebSocket:', error);
-              this.hasError = true;
-              this.errorStateMessage = 'Lỗi kết nối WebSocket.Thử kết nối lại.';
-          }.bind(this);
-
-          this.socket.onclose = function() {
-              console.log('WebSocket đã đóng kết nối');
-              this.hasError = true;
-              this.errorStateMessage = 'Kết nối WebSocket đã đóng.';
-          }.bind(this);
-      } catch (err) {
-          console.error('Lỗi khi tạo WebSocket:', err);
+        this.socket.onerror = function (error) {
+          console.error('Lỗi WebSocket:', error);
           this.hasError = true;
-          this.errorStateMessage = 'Không thể tạo kết nối WebSocket.';
+          this.errorStateMessage = 'Lỗi kết nối WebSocket.Thử kết nối lại.';
+        }.bind(this);
+
+        this.socket.onclose = function () {
+          console.log('WebSocket đã đóng kết nối');
+          this.hasError = true;
+          this.errorStateMessage = 'Kết nối WebSocket đã đóng.';
+        }.bind(this);
+      } catch (err) {
+        console.error('Lỗi khi tạo WebSocket:', err);
+        this.hasError = true;
+        this.errorStateMessage = 'Không thể tạo kết nối WebSocket.';
       }
     },
   },
@@ -120,16 +122,34 @@ export default {
 </script>
 
 <template>
-  <div class="wizard-body w-[75%] flex-shrink-0 flex-grow-0 max-w-[75%]">
-    <div v-if="!hasLoginStarted" class="login-init h-full">
+  <div class="wizard-body w-full flex-shrink-0 flex-grow-0">
+    <div
+      v-if="!hasLoginStarted"
+      class="flex flex-col login-init items-start justify-start pt-6"
+    >
+      <div class="w-full">
+        <p class="font-bold mb-0 text-lg">
+          {{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.DESC') }}
+          <span class="text-n-orange">Zalo</span>
+        </p>
+        <p class="font-bold text-lg">
+          {{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.DESC_2') }}
+          <span class="text-n-orange">Shopiz</span>
+        </p>
+      </div>
       <img
         v-if="qrCode"
         :src="qrCode"
         alt="Zalo-Login-QR"
+        class="w-[300px] h-[300px] mt-4 border border-n-weak rounded-md shadow-sm"
       />
+      <div class="mt-6 text-n-slate-11">
+        <p class="mb-1">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.HELP') }}</p>
+        <p class="mb-0">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.HELP_2') }}</p>
+      </div>
     </div>
-    <div v-else>
-      <div v-if="hasError" class="max-w-lg mx-auto text-center">
+    <div v-else class="pt-6">
+      <div v-if="hasError" class="max-w-lg">
         <h5>{{ errorStateMessage }}</h5>
         <p
           v-if="errorStateDescription"
@@ -137,11 +157,7 @@ export default {
         />
       </div>
       <LoadingState v-else-if="showLoader" :message="emptyStateMessage" />
-      <p
-        v-else
-        v-dompurify-html="successStateDescription"
-      ></p>
-
+      <p v-else v-dompurify-html="successStateDescription" />
     </div>
   </div>
 </template>

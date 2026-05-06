@@ -1,0 +1,287 @@
+class Api::V1::Accounts::Conversations::ProductsController < Api::V1::Accounts::Conversations::BaseController
+  def index
+    hook = @conversation.inbox.effective_ecommerce_hook
+    return render json: { products: [], categories: [] }, status: :ok unless hook
+
+    if params[:categories].present?
+      render json: { categories: fetch_categories(hook) }
+    else
+      products = fetch_products(hook, params[:q].to_s.strip, params[:category_id], params[:page].to_i)
+      render json: { products: products }
+    end
+  end
+
+  private
+
+  def fetch_categories(hook)
+    case hook.app_id
+    when 'kiotviet'  then fetch_kiotviet_categories(hook)
+    when 'sapo'      then fetch_sapo_categories(hook)
+    when 'haravan'   then fetch_haravan_categories(hook)
+    when 'shopify'   then fetch_shopify_categories(hook)
+    when 'woocommerce' then fetch_woocommerce_categories(hook)
+    when 'nhanhvn'   then fetch_nhanhvn_categories(hook)
+    when 'tiktok_shop' then fetch_tiktok_shop_categories(hook)
+    else []
+    end
+  rescue StandardError => e
+    Rails.logger.error("Category fetch error for #{hook.app_id}: #{e.message}")
+    []
+  end
+
+  def fetch_products(hook, query, category_id, page)
+    case hook.app_id
+    when 'kiotviet'  then fetch_kiotviet_products(hook, query, category_id, page)
+    when 'sapo'      then fetch_sapo_products(hook, query, category_id, page)
+    when 'haravan'   then fetch_haravan_products(hook, query, category_id, page)
+    when 'shopify'   then fetch_shopify_products(hook, query, category_id, page)
+    when 'woocommerce' then fetch_woocommerce_products(hook, query, category_id, page)
+    when 'nhanhvn'   then fetch_nhanhvn_products(hook, query, category_id, page)
+    when 'tiktok_shop' then fetch_tiktok_shop_products(hook, query, category_id, page)
+    else []
+    end
+  rescue StandardError => e
+    Rails.logger.error("Product fetch error for #{hook.app_id}: #{e.message}")
+    []
+  end
+
+  # ===== KiotViet =====
+
+  def fetch_kiotviet_categories(hook)
+    ensure_kiotviet_token(hook)
+    response = Faraday.get('https://public.kiotapi.com/categories') do |req|
+      req.headers['Retailer'] = hook.settings['retailer']
+      req.headers['Authorization'] = "Bearer #{hook.access_token}"
+    end
+    data = JSON.parse(response.body)
+    (data['data'] || []).map { |c| { id: c['categoryId'].to_s, name: c['categoryName'] } }
+  end
+
+  def fetch_kiotviet_products(hook, query, category_id, page)
+    ensure_kiotviet_token(hook)
+    params = { pageSize: 20, currentItem: page * 20, isActive: true }
+    params[:name] = query if query.present?
+    params[:categoryId] = category_id if category_id.present?
+
+    response = Faraday.get('https://public.kiotapi.com/products') do |req|
+      req.headers['Retailer'] = hook.settings['retailer']
+      req.headers['Authorization'] = "Bearer #{hook.access_token}"
+      req.params = params
+    end
+    data = JSON.parse(response.body)
+    (data['data'] || []).map do |p|
+      { id: p['id'].to_s, name: p['name'], price: p['basePrice'].to_f,
+        thumbnail: p.dig('images', 0), source: 'kiotviet',
+        in_stock: (p['inventories']&.sum { |i| i['onHand'].to_i } || 0).positive?,
+        metadata: { code: p['code'] } }
+    end
+  end
+
+  # ===== Sapo =====
+
+  def fetch_sapo_categories(hook)
+    store_name = hook.settings&.dig('store_name') || hook.reference_id
+    response = Faraday.get("https://#{store_name}.mysapo.net/admin/custom_collections.json") do |req|
+      req.headers['X-Sapo-Access-Token'] = hook.access_token
+    end
+    data = JSON.parse(response.body)
+    (data['custom_collections'] || []).map { |c| { id: c['id'].to_s, name: c['title'] } }
+  end
+
+  def fetch_sapo_products(hook, query, category_id, page)
+    store_name = hook.settings&.dig('store_name') || hook.reference_id
+    params = { limit: 20, page: [page + 1, 1].max }
+    params[:title] = query if query.present?
+    params[:collection_id] = category_id if category_id.present?
+
+    response = Faraday.get("https://#{store_name}.mysapo.net/admin/products.json") do |req|
+      req.headers['X-Sapo-Access-Token'] = hook.access_token
+      req.params = params
+    end
+    data = JSON.parse(response.body)
+    (data['products'] || []).map do |p|
+      { id: p['id'].to_s, name: p['name'] || p['title'],
+        price: p['variants']&.first&.dig('price').to_f,
+        thumbnail: p.dig('image', 'src') || p.dig('images', 0, 'src'),
+        source: 'sapo', in_stock: true }
+    end
+  end
+
+  # ===== Haravan =====
+
+  def fetch_haravan_categories(hook)
+    response = Faraday.get('https://apis.haravan.com/com/custom_collections.json') do |req|
+      req.headers['Authorization'] = "Bearer #{hook.access_token}"
+    end
+    data = JSON.parse(response.body)
+    (data['custom_collections'] || []).map { |c| { id: c['id'].to_s, name: c['title'] } }
+  end
+
+  def fetch_haravan_products(hook, query, category_id, page)
+    params = { limit: 20, page: [page + 1, 1].max }
+    params[:title] = query if query.present?
+    params[:collection_id] = category_id if category_id.present?
+
+    response = Faraday.get('https://apis.haravan.com/com/products.json') do |req|
+      req.headers['Authorization'] = "Bearer #{hook.access_token}"
+      req.params = params
+    end
+    data = JSON.parse(response.body)
+    (data['products'] || []).map do |p|
+      { id: p['id'].to_s, name: p['title'],
+        price: p['variants']&.first&.dig('price').to_f,
+        thumbnail: p.dig('image', 'src'), source: 'haravan', in_stock: true }
+    end
+  end
+
+  # ===== Shopify =====
+
+  def fetch_shopify_categories(hook)
+    session = ShopifyAPI::Auth::Session.new(shop: hook.reference_id, access_token: hook.access_token)
+    client = ShopifyAPI::Clients::Rest::Admin.new(session: session)
+    collections = client.get(path: 'custom_collections.json', query: { limit: 50 }).body['custom_collections'] || []
+    collections.map { |c| { id: c['id'].to_s, name: c['title'] } }
+  end
+
+  def fetch_shopify_products(hook, query, category_id, _page)
+    session = ShopifyAPI::Auth::Session.new(shop: hook.reference_id, access_token: hook.access_token)
+    client = ShopifyAPI::Clients::Rest::Admin.new(session: session)
+    params = { limit: 20 }
+    params[:title] = query if query.present?
+    params[:collection_id] = category_id if category_id.present?
+    products = client.get(path: 'products.json', query: params).body['products'] || []
+
+    products.map do |p|
+      { id: p['id'].to_s, name: p['title'],
+        price: p['variants']&.first&.dig('price').to_f,
+        thumbnail: p.dig('image', 'src'), source: 'shopify', in_stock: true }
+    end
+  end
+
+  # ===== WooCommerce =====
+
+  def fetch_woocommerce_categories(hook)
+    conn = woo_connection(hook)
+    response = conn.get('products/categories', { per_page: 50 })
+    data = JSON.parse(response.body)
+    (data.is_a?(Array) ? data : []).map { |c| { id: c['id'].to_s, name: c['name'] } }
+  end
+
+  def fetch_woocommerce_products(hook, query, category_id, page)
+    conn = woo_connection(hook)
+    params = { per_page: 20, page: [page + 1, 1].max, status: 'publish' }
+    params[:search] = query if query.present?
+    params[:category] = category_id if category_id.present?
+
+    response = conn.get('products', params)
+    data = JSON.parse(response.body)
+    (data.is_a?(Array) ? data : []).map do |p|
+      { id: p['id'].to_s, name: p['name'], price: p['price'].to_f,
+        thumbnail: p.dig('images', 0, 'src'), source: 'woocommerce',
+        in_stock: p['stock_status'] == 'instock' }
+    end
+  end
+
+  def woo_connection(hook)
+    Faraday.new(url: "https://#{hook.reference_id}/wp-json/wc/v3") do |f|
+      f.request :authorization, :basic, hook.settings['consumer_key'], hook.settings['consumer_secret']
+      f.adapter Faraday.default_adapter
+    end
+  end
+
+  # ===== Nhanh.vn =====
+
+  def fetch_nhanhvn_categories(hook)
+    params = { version: '2.0', appId: hook.settings['app_id'],
+               businessId: hook.settings['business_id'], accessToken: hook.access_token }
+    response = Faraday.post('https://open.nhanh.vn/api/product/category') do |req|
+      req.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+      req.body = URI.encode_www_form(params)
+    end
+    parsed = JSON.parse(response.body)
+    return [] unless parsed['code'] == 1
+
+    categories = parsed['data'] || {}
+    categories.values.first(50).map { |c| { id: c['id'].to_s, name: c['name'] } }
+  end
+
+  def fetch_nhanhvn_products(hook, query, category_id, page)
+    data_payload = { page: [page + 1, 1].max }
+    data_payload[:name] = query if query.present?
+    data_payload[:categoryId] = category_id if category_id.present?
+
+    params = { version: '2.0', appId: hook.settings['app_id'],
+               businessId: hook.settings['business_id'], accessToken: hook.access_token,
+               data: data_payload.to_json }
+    response = Faraday.post('https://open.nhanh.vn/api/product/search') do |req|
+      req.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+      req.body = URI.encode_www_form(params)
+    end
+    parsed = JSON.parse(response.body)
+    return [] unless parsed['code'] == 1
+
+    products = parsed.dig('data', 'products') || {}
+    products.values.first(20).map do |p|
+      { id: p['idNhanh'].to_s, name: p['name'], price: p['price'].to_f,
+        thumbnail: p['image'], source: 'nhanhvn', in_stock: p.dig('inventory', 'remain').to_i.positive? }
+    end
+  end
+
+  # ===== TikTok Shop =====
+
+  def fetch_tiktok_shop_categories(hook)
+    app_key = GlobalConfigService.load('TIKTOK_SHOP_APP_KEY', '')
+    return [] if app_key.blank?
+
+    tts_params = { app_key: app_key, shop_cipher: hook.settings['shop_cipher'], timestamp: Time.now.to_i, locale: 'vi' }
+    url = 'https://open-api.tiktokglobalshop.com/product/202309/categories'
+    signed_url = ::TiktokShop::SignatureService.signed_url(url, params: tts_params, body: '', content_type: 'application/json')
+    headers = { 'Content-Type' => 'application/json', 'x-tts-access-token' => hook.access_token }
+    response = HTTParty.get(signed_url, headers: headers)
+    cats = JSON.parse(response.body).dig('data', 'categories') || []
+    cats.first(50).map { |c| { id: c['id'].to_s, name: c['local_name'] || c['name'] } }
+  end
+
+  def fetch_tiktok_shop_products(hook, query, _category_id, _page)
+    app_key = GlobalConfigService.load('TIKTOK_SHOP_APP_KEY', '')
+    return [] if app_key.blank?
+
+    tts_params = { app_key: app_key, shop_cipher: hook.settings['shop_cipher'],
+                   timestamp: Time.now.to_i, page_size: 20 }
+    body = query.present? ? { search_keyword: query } : {}
+    url = 'https://open-api.tiktokglobalshop.com/product/202309/products/search'
+    signed_url = ::TiktokShop::SignatureService.signed_url(url, params: tts_params, body: body.to_json, content_type: 'application/json')
+    headers = { 'Content-Type' => 'application/json', 'x-tts-access-token' => hook.access_token }
+    response = HTTParty.post(signed_url, headers: headers, body: body.to_json)
+    products = JSON.parse(response.body).dig('data', 'products') || []
+
+    products.map do |p|
+      { id: p['id'].to_s, name: p['title'],
+        price: p.dig('skus', 0, 'price', 'sale_price').to_f / 100.0,
+        thumbnail: p.dig('main_images', 0, 'url_list', 0),
+        source: 'tiktok_shop', in_stock: p['status']&.to_i == 4 }
+    end
+  end
+
+  # ===== Shared Helpers =====
+
+  def ensure_kiotviet_token(hook)
+    expires_at = hook.settings&.dig('token_expires_at')
+    return if expires_at.present? && Time.zone.parse(expires_at) > Time.current
+
+    token_data = Faraday.post('https://id.kiotviet.vn/connect/token') do |req|
+      req.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+      req.body = URI.encode_www_form(
+        scopes: 'PublicApi.Access', grant_type: 'client_credentials',
+        client_id: hook.settings['client_id'], client_secret: hook.settings['client_secret']
+      )
+    end
+    parsed = JSON.parse(token_data.body)
+    return if parsed['access_token'].blank?
+
+    hook.update!(
+      access_token: parsed['access_token'],
+      settings: hook.settings.merge('token_expires_at' => (Time.current + parsed['expires_in'].to_i.seconds).iso8601)
+    )
+  end
+end

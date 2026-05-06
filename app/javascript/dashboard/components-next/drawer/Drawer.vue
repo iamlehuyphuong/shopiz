@@ -1,3 +1,9 @@
+<script setup>
+import { ref } from 'vue';
+
+const isOpen = ref(true);
+</script>
+
 <template>
   <div
     class="relative z-10"
@@ -18,7 +24,7 @@
     <div
       class="fixed inset-0 bg-gray-500/ transition-opacity"
       aria-hidden="true"
-    ></div>
+    />
 
     <div class="fixed inset-0 overflow-hidden">
       <div class="absolute inset-0 overflow-hidden">
@@ -51,9 +57,9 @@
             >
               <button
                 type="button"
-                class="relative rounded-md text-gray-300 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden"
+                class="relative rounded-md text-gray-300 hover:text-white focus-visible:ring-2 focus-visible:ring-white focus:outline-hidden"
               >
-                <span class="absolute -inset-2.5"></span>
+                <span class="absolute -inset-2.5" />
                 <span class="sr-only">Close panel</span>
                 <svg
                   class="size-6"
@@ -78,8 +84,8 @@
             >
               <div class="px-4 sm:px-6">
                 <h2
-                  class="text-base font-semibold text-gray-900"
                   id="slide-over-title"
+                  class="text-base font-semibold text-gray-900"
                 >
                   Panel title
                 </h2>
@@ -94,10 +100,3 @@
     </div>
   </div>
 </template>
-  
-  <script setup>
-import { ref } from 'vue';
-
-const isOpen = ref(true);
-</script>
-  

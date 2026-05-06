@@ -100,7 +100,7 @@ const formattedMessage = computed(() => {
 
 const notificationDetails = computed(() => {
   const type = props.inboxItem?.notificationType?.toUpperCase() || '';
-  const [icon = '', color = 'text-n-blue-text'] =
+  const [icon = '', color = 'text-n-orange-11'] =
     NOTIFICATION_TYPES_MAPPING[type] || [];
   return { text: type ? t(`INBOX.TYPES_NEXT.${type}`) : '', icon, color };
 });
@@ -182,11 +182,11 @@ onBeforeMount(contextMenuActions.close);
                 : 'i-lucide-alarm-clock-off'
             "
             class="flex-shrink-0 size-4"
-            :class="!isUnread ? 'text-n-slate-11' : 'text-n-blue-text'"
+            :class="!isUnread ? 'text-n-slate-11' : 'text-n-orange-11'"
           />
           <span
             class="text-xs font-medium truncate"
-            :class="!isUnread ? 'text-n-slate-11' : 'text-n-blue-text'"
+            :class="!isUnread ? 'text-n-slate-11' : 'text-n-orange-11'"
           >
             {{ snoozedText }}
           </span>
@@ -215,7 +215,8 @@ onBeforeMount(contextMenuActions.close);
           :conversation="primaryActor"
           class="[&>span]:text-xs"
           :class="
-            !isUnread && '[&>span]:text-n-slate-11 [&>div>svg]:fill-n-slate-11'
+            !isUnread &&
+            '[&>span]:text-n-slate-11 [&>div>svg]:fill-current [&>div>svg]:text-n-slate-11'
           "
         />
         <div v-if="hasSlaThreshold" class="w-px h-3 rounded-sm bg-n-slate-4" />

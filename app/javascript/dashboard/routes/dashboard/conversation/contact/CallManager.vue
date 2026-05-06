@@ -29,8 +29,16 @@ export default {
     const transcription = ref('');
     const durationTimer = ref(null);
     const isCallActive = computed(
-      () => callStatus.value && 
-            !['completed', 'ended', 'missed', 'failed', 'busy', 'no-answer'].includes(callStatus.value)
+      () =>
+        callStatus.value &&
+        ![
+          'completed',
+          'ended',
+          'missed',
+          'failed',
+          'busy',
+          'no-answer',
+        ].includes(callStatus.value)
     );
 
     const callStatusText = computed(() => {
@@ -84,12 +92,20 @@ export default {
       if (status === 'in-progress' || status === 'in_progress') {
         startDurationTimer();
       } else if (
-        ['completed', 'ended', 'missed', 'failed', 'busy', 'no-answer', 'no_answer'].includes(status)
+        [
+          'completed',
+          'ended',
+          'missed',
+          'failed',
+          'busy',
+          'no-answer',
+          'no_answer',
+        ].includes(status)
       ) {
         console.log(`CallManager: Call ended with status ${status}`);
         stopDurationTimer();
         emit('callEnded');
-        
+
         // Forcefully hide the call widget after a short delay
         setTimeout(() => {
           if (window.app && window.app.$data) {
@@ -153,7 +169,7 @@ export default {
       try {
         // The actionCable events are already set up in App.vue
         // We don't need to create or add any rooms - we'll just watch the calls store
-        
+
         // Set up watch on the calls store to react to status changes
         const callStateUnwatch = store.watch(
           state => state.calls?.activeCall?.status,
@@ -161,12 +177,16 @@ export default {
             if (newStatus && callSid.value) {
               console.log(`Call status changed in store: ${newStatus}`);
               updateCallStatus(newStatus);
-              
+
               // If call is completed, refresh the conversation to get any recordings
-              if (newStatus === 'completed' || newStatus === 'canceled' || newStatus === 'missed') {
+              if (
+                newStatus === 'completed' ||
+                newStatus === 'canceled' ||
+                newStatus === 'missed'
+              ) {
                 // Notify parent component that call has ended
                 emit('callEnded');
-                
+
                 // Refresh the conversation to get updated messages with recordings
                 if (props.conversation?.id) {
                   store.dispatch('fetchConversation', {
@@ -177,7 +197,7 @@ export default {
             }
           }
         );
-        
+
         // Clean up the watcher when component is unmounted
         onBeforeUnmount(() => {
           if (callStateUnwatch) {
@@ -187,10 +207,13 @@ export default {
       } catch (error) {
         console.error('Error setting up call status watcher:', error);
       }
-      
-      try {  
+
+      try {
         // Set up message watcher to update UI elements related to recordings and transcriptions
-        if (store.state.conversations && store.state.conversations.conversations) {
+        if (
+          store.state.conversations &&
+          store.state.conversations.conversations
+        ) {
           const messageUnwatch = store.watch(
             state => {
               if (!props.conversation || !props.conversation.id) return null;
@@ -212,7 +235,8 @@ export default {
                 if (callMessage?.content_attributes?.data) {
                   // Update UI if recording URL is available
                   if (callMessage.content_attributes.data.recording_url) {
-                    recordingUrl.value = callMessage.content_attributes.data.recording_url;
+                    recordingUrl.value =
+                      callMessage.content_attributes.data.recording_url;
                   }
                 }
 

@@ -87,3 +87,5 @@ class Contacts::ContactableInboxesService
     { source_id: @contact.phone_number, inbox: inbox }
   end
 end
+
+Contacts::ContactableInboxesService.prepend_mod_with('Contacts::ContactableInboxesService')

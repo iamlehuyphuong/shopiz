@@ -1,0 +1,72 @@
+{
+  "SNOOZE_PARSER": {
+    "UNITS": {
+      "MINUTE": "phút",
+      "MINUTES": "phút",
+      "HOUR": "giờ",
+      "HOURS": "giờ",
+      "DAY": "ngày",
+      "DAYS": "ngày",
+      "WEEK": "ngày",
+      "WEEKS": "tuần",
+      "MONTH": "tuần",
+      "MONTHS": "tháng",
+      "YEAR": "tháng",
+      "YEARS": "năm"
+    },
+    "HALF": "nửa",
+    "NEXT": "kia",
+    "THIS": "này",
+    "AT": "lúc",
+    "IN": "vào",
+    "FROM_NOW": "tới đây",
+    "NEXT_YEAR": "năm sau",
+    "MERIDIEM": {
+      "AM": "sáng",
+      "PM": "chiều"
+    },
+    "RELATIVE": {
+      "TOMORROW": "ngày mai",
+      "DAY_AFTER_TOMORROW": "ngày mốt",
+      "NEXT_WEEK": "tuần sau",
+      "NEXT_MONTH": "tháng sau",
+      "THIS_WEEKEND": "cuối tuần này",
+      "NEXT_WEEKEND": "cuối tuần sau"
+    },
+    "TIME_OF_DAY": {
+      "MORNING": "buổi sáng",
+      "AFTERNOON": "buổi chiều",
+      "EVENING": "buổi tối",
+      "NIGHT": "đêm",
+      "NOON": "buổi trưa",
+      "MIDNIGHT": "nửa đêm"
+    },
+    "WORD_NUMBERS": {
+      "ONE": "một",
+      "TWO": "hai",
+      "THREE": "ba",
+      "FOUR": "bốn",
+      "FIVE": "năm",
+      "SIX": "sáu",
+      "SEVEN": "bảy",
+      "EIGHT": "tám",
+      "NINE": "chín",
+      "TEN": "mười",
+      "TWELVE": "mười hai",
+      "FIFTEEN": "mười lăm",
+      "TWENTY": "hai mươi",
+      "THIRTY": "ba mươi"
+    },
+    "ORDINALS": {
+      "FIRST": "đầu tiên",
+      "SECOND": "thứ hai",
+      "THIRD": "thứ ba",
+      "FOURTH": "thứ tư",
+      "FIFTH": "thứ năm"
+    },
+    "OF": "của",
+    "AFTER": "sau đó",
+    "WEEK": "ngày",
+    "DAY": "ngày"
+  }
+}

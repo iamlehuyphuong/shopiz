@@ -1,7 +1,6 @@
 class Enterprise::Webhooks::PayosController < ActionController::API
   def process_payload
     service = Payos::PaymentService.new
-    payload = params.to_unsafe_h
     payload = JSON.parse(request.raw_post)
 
     if payload['code'] != '00'
@@ -10,15 +9,19 @@ class Enterprise::Webhooks::PayosController < ActionController::API
     end
 
     if service.verify_callback(payload)
-      Rails.logger.info("Payos webhook verified successfully: #{params.inspect}")
+      Rails.logger.info("[PayOS Webhook] Verified successfully for orderCode: #{payload.dig('data', 'orderCode')}")
 
       ::Enterprise::Billing::HandlePayosEventService.new.perform(payload)
       head :ok
     else
-      Rails.logger.error("[PayOS Webhook] Invalid signature: #{payload.inspect}")
+      Rails.logger.error("[PayOS Webhook] Invalid signature: #{payload.dig('data', 'orderCode')}")
       head :bad_request
     end
-  rescue StandardError => e
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
+    Rails.logger.error("[PayOS Webhook] Processing error: #{e.class} - #{e.message}")
     head :bad_request
+  rescue StandardError => e
+    Rails.logger.error("[PayOS Webhook] Unexpected error: #{e.class} - #{e.message}")
+    head :internal_server_error
   end
 end

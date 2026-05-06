@@ -16,6 +16,12 @@ class AccountAPI extends ApiClient {
     );
     return response.data.cache_keys;
   }
+
+  getOrderAnalytics(accountId, params = {}) {
+    return axios.get(`/api/v1/accounts/${accountId}/order_analytics`, {
+      params,
+    });
+  }
 }
 
 export default new AccountAPI();

@@ -57,7 +57,7 @@ const inputOutlineClass = computed(() => {
     case 'error':
       return 'outline-n-ruby-8 dark:outline-n-ruby-8 hover:outline-n-ruby-9 dark:hover:outline-n-ruby-9 disabled:outline-n-ruby-8 dark:disabled:outline-n-ruby-8';
     default:
-      return 'outline-n-weak dark:outline-n-weak hover:outline-n-slate-6 dark:hover:outline-n-slate-6 disabled:outline-n-weak dark:disabled:outline-n-weak focus:outline-n-brand dark:focus:outline-n-brand';
+      return 'outline-n-weak dark:outline-n-weak hover:outline-n-slate-6 dark:hover:outline-n-slate-6 disabled:outline-n-weak dark:disabled:outline-n-weak focus:outline-n-orange dark:focus:outline-n-orange';
   }
 });
 
@@ -81,11 +81,11 @@ const handleFocus = event => {
 const sizeClass = computed(() => {
   switch (props.size) {
     case 'sm':
-      return 'h-8 !px-3 !py-2';
+      return 'h-8 px-3 py-2';
     case 'md':
-      return 'h-10 !px-3 !py-2.5';
+      return 'h-10 px-3 py-2.5';
     default:
-      return 'h-10 !px-3 !py-2.5';
+      return 'h-10 px-3 py-2.5';
   }
 });
 
@@ -112,20 +112,19 @@ onMounted(() => {
     <label
       v-if="label"
       :for="uniqueId"
-      class="mb-0.5 text-sm font-medium text-n-slate-12"
+      class="mb-0.5 text-heading-3 text-n-slate-12"
     >
       {{ label }}
     </label>
     <!-- Added prefix slot to allow adding icons to the input -->
-    <slot name="prefix" />
     <div class="relative">
+      <slot name="prefix" />
       <input
         :id="uniqueId"
         v-bind="$attrs"
         ref="inputRef"
         :value="modelValue"
         :class="[
-          customInputClass,
           inputOutlineClass,
           sizeClass,
           {
@@ -133,6 +132,7 @@ onMounted(() => {
             focus: isFocused,
           },
           showCharacterCount ? 'pr-16' : '',
+          customInputClass,
         ]"
         :type="type"
         :placeholder="placeholder"
@@ -164,7 +164,7 @@ onMounted(() => {
     </div>
     <p
       v-if="message"
-      class="min-w-0 mt-1 mb-0 text-xs truncate transition-all duration-500 ease-in-out"
+      class="min-w-0 mt-1 mb-0 text-label-small truncate transition-all duration-500 ease-in-out"
       :class="messageClass"
     >
       {{ message }}

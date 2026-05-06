@@ -63,12 +63,15 @@ class Contact < ApplicationRecord
   has_many :csat_survey_responses, dependent: :destroy_async
   has_many :inboxes, through: :contact_inboxes
   has_many :messages, as: :sender, dependent: :destroy_async
+  has_many :contact_optins, dependent: :destroy_async
   has_many :notes, dependent: :destroy_async
+  has_many :conversation_orders, dependent: :destroy_async
   before_validation :prepare_contact_attributes
   after_create_commit :dispatch_create_event, :ip_lookup
   after_update_commit :dispatch_update_event
-  after_destroy_commit :dispatch_destroy_event
   before_save :sync_contact_attributes
+  after_commit :trigger_auto_merge, on: [:create, :update]
+  after_destroy_commit :dispatch_destroy_event
 
   enum contact_type: { visitor: 0, lead: 1, customer: 2 }
   enum gender_id: { male: 0, female: 1 }
@@ -188,11 +191,9 @@ class Contact < ApplicationRecord
   end
 
   def self.resolved_contacts(use_crm_v2: false)
-    if use_crm_v2
-      where(contact_type: 'lead')
-    else
-      where("contacts.email <> '' OR contacts.phone_number <> '' OR contacts.identifier <> ''")
-    end
+    return where(contact_type: 'lead') if use_crm_v2
+
+    where("contacts.email <> '' OR contacts.phone_number <> '' OR contacts.identifier <> ''")
   end
 
   def discard_invalid_attrs
@@ -202,6 +203,23 @@ class Contact < ApplicationRecord
 
   def self.from_email(email)
     find_by(email: email&.downcase)
+  end
+
+  def trigger_auto_merge
+    return unless saved_change_to_phone_number? || saved_change_to_email?
+    return if phone_number.blank? && email.blank?
+    # Skip if no duplicate exists — avoids unnecessary job after ContactMergeAction#update!
+    return unless duplicate_contact_exists?
+
+    AutoMergeContactJob.perform_later(id)
+  end
+
+  def duplicate_contact_exists?
+    scope = self.class.where(account_id: account_id).where.not(id: id)
+    return true if phone_number.present? && scope.exists?(phone_number: phone_number)
+    return true if email.present? && scope.exists?(email: email)
+
+    false
   end
 
   private
@@ -252,7 +270,13 @@ class Contact < ApplicationRecord
   end
 
   def dispatch_destroy_event
-    Rails.configuration.dispatcher.dispatch(CONTACT_DELETED, Time.zone.now, contact: self)
+    # Pass serialized data instead of ActiveRecord object to avoid DeserializationError
+    # when the async EventDispatcherJob runs after the contact has been deleted
+    Rails.configuration.dispatcher.dispatch(
+      CONTACT_DELETED,
+      Time.zone.now,
+      contact_data: push_event_data.merge(account_id: account_id)
+    )
   end
 end
 Contact.include_mod_with('Concerns::Contact')

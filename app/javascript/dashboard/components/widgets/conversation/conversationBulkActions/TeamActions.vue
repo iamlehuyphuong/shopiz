@@ -116,7 +116,7 @@ export default {
     @apply block z-10 absolute text-left -top-3 ltr:right-[--triangle-position] rtl:left-[--triangle-position];
 
     svg path {
-      @apply fill-n-alpha-3 backdrop-blur-[100px]  stroke-n-weak;
+      @apply fill-current text-n-alpha-3 backdrop-blur-[100px]  stroke-n-weak;
     }
   }
 }

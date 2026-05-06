@@ -20,7 +20,9 @@ class Channel::ZaloPersonal < ApplicationRecord
   include Channelable
 
   self.table_name = 'channel_zalo_personal'
-  EDITABLE_ATTRS = [:oa_access_token, :refresh_token, :expires_in].freeze
+  store_accessor :provider_config, :default_friend_request_message, :default_greeting_message
+  
+  EDITABLE_ATTRS = [:oa_access_token, :refresh_token, :expires_in, :default_friend_request_message, :default_greeting_message].freeze
 
   validates :oa_access_token, presence: true, length: { maximum: 2048 }
   validates :refresh_token, presence: true, length: { maximum: 2048 }
@@ -82,19 +84,19 @@ class Channel::ZaloPersonal < ApplicationRecord
   private
 
   def url_message_cs
-    "#{GlobalConfigService.load('ZALO_OA_API_URL', nil)}/api/sendmessage"
+    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendmessage"
   end
 
   def send_image_to_user_url
-    "#{GlobalConfigService.load('ZALO_OA_API_URL', nil)}/api/sendImageToUser"
+    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendImageToUser"
   end
 
   def send_image_to_group_url
-    "#{GlobalConfigService.load('ZALO_OA_API_URL', nil)}/api/sendImageToGroup"
+    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendImageToGroup"
   end
 
   def send_file_url
-    "#{GlobalConfigService.load('ZALO_OA_API_URL', nil)}/api/sendFile"
+    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendFile"
   end
 
   def send_attachment(user_id, attachment, is_zalo_group)

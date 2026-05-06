@@ -10,9 +10,10 @@ module TeamActivityMessageHandler
     key = generate_team_change_activity_key
     params = { assignee_name: assignee&.name, team_name: team&.name, user_name: user_name }
     params[:team_name] = generate_team_name_for_activity if key == 'removed'
-    content = I18n.t("conversations.activity.team.#{key}", **params)
+    translation_key = "conversations.activity.team.#{key}"
+    content = I18n.t(translation_key, **params)
 
-    ::Conversations::ActivityMessageJob.perform_later(self, activity_message_params(content)) if content
+    ::Conversations::ActivityMessageJob.perform_later(self, activity_message_params(content, translation_key, params)) if content
   end
 
   def generate_team_change_activity_key

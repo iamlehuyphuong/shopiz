@@ -105,13 +105,18 @@ export const actions = {
 
         if (contactId) {
           // Use the regular contacts call endpoint for existing contacts
-          const response = await axios.post(`/api/v1/accounts/${accountId}/contacts/${contactId}/call`);
+          const response = await axios.post(
+            `/api/v1/accounts/${accountId}/contacts/${contactId}/call`
+          );
           data = response.data;
         } else {
           // For direct phone calls without a contact, use a special endpoint
           // Add phoneNumber to the payload for voice call
           payload.phone_number = params.phoneNumber || '';
-          const response = await axios.post(`/api/v1/accounts/${accountId}/conversations/trigger_voice`, payload);
+          const response = await axios.post(
+            `/api/v1/accounts/${accountId}/conversations/trigger_voice`,
+            payload
+          );
           data = response.data;
         }
       } else {
@@ -141,10 +146,15 @@ export const actions = {
       isCreating: true,
     });
     const { contactId, inboxId, sourceId, message } = params;
-    const payload = { contact_id: contactId, inbox_id: inboxId, source_id: sourceId, message: message["content"] };
+    const payload = {
+      contact_id: contactId,
+      inbox_id: inboxId,
+      source_id: sourceId,
+      message: message.content,
+    };
     try {
       const response = await ContactAPI.requestFriend(payload);
-      return response.data;;
+      return response.data;
     } catch (error) {
       throw new Error(error);
     } finally {

@@ -106,7 +106,10 @@ export default {
 <style lang="scss" scoped>
 .email-input-group {
   input {
-    @apply dark:bg-n-alpha-black1 rtl:rounded-tl-[0] ltr:rounded-tr-[0] rtl:rounded-bl-[0] ltr:rounded-br-[0] p-2.5 w-full focus:ring-0 focus:outline-n-brand;
+    @apply dark:bg-n-alpha-black1 rtl:rounded-tl-[0] ltr:rounded-tr-[0] rtl:rounded-bl-[0] ltr:rounded-br-[0] p-2.5 w-full focus:ring-0;
+    &:focus {
+      outline-color: #e06720;
+    }
 
     &::placeholder {
       @apply text-n-slate-10;

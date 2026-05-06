@@ -31,7 +31,8 @@ button {
 }
 
 .button {
-  @apply items-center bg-n-brand px-2.5 text-white dark:text-white inline-flex h-10 mb-0 gap-2 font-medium;
+  @apply items-center px-2.5 text-white dark:text-white inline-flex h-10 mb-0 gap-2 font-medium;
+  background-color: #e06720;
 
   .button__content {
     @apply w-full whitespace-nowrap overflow-hidden text-ellipsis;
@@ -45,7 +46,7 @@ button {
   &:hover:not(.secondary):not(.success):not(.alert):not(.warning):not(
       .clear
     ):not(.smooth):not(.hollow) {
-    @apply bg-n-brand/80 dark:bg-n-brand/80;
+    background-color: rgba(224, 103, 32, 0.8);
   }
 
   &:disabled,
@@ -62,11 +63,13 @@ button {
   }
 
   &.primary {
-    @apply bg-n-brand text-white dark:text-white;
+    @apply text-white dark:text-white;
+    background-color: #e06720;
   }
 
   &.clear {
-    @apply text-n-blue-text dark:text-n-blue-text bg-transparent dark:bg-transparent;
+    @apply bg-transparent dark:bg-transparent;
+    color: #582D1D;
   }
 
   &.alert {
@@ -117,7 +120,12 @@ button {
   }
 
   &.hollow {
-    @apply border border-n-brand/40 bg-transparent text-n-blue-text hover:bg-n-brand/20;
+    @apply bg-transparent;
+    border: 1px solid rgba(224, 103, 32, 0.4);
+    color: #582D1D;
+    &:hover {
+      background-color: rgba(224, 103, 32, 0.2);
+    }
 
     &.secondary {
       @apply text-n-slate-12 border-n-slate-5 hover:bg-n-slate-5;
@@ -138,7 +146,17 @@ button {
 
   // Smooth style
   &.smooth {
-    @apply bg-n-brand/10 dark:bg-n-brand/30 text-n-blue-text hover:bg-n-brand/20 dark:hover:bg-n-brand/40;
+    background-color: rgba(224, 103, 32, 0.1);
+    color: #582D1D;
+    html.dark & {
+      background-color: rgba(224, 103, 32, 0.3);
+    }
+    &:hover {
+      background-color: rgba(224, 103, 32, 0.2);
+      html.dark & {
+        background-color: rgba(224, 103, 32, 0.4);
+      }
+    }
 
     &.secondary {
       @apply bg-n-slate-4 text-n-slate-11 hover:text-n-slate-11 hover:bg-n-slate-5;
@@ -158,7 +176,13 @@ button {
   }
 
   &.clear {
-    @apply text-n-blue-text hover:bg-n-brand/10 dark:hover:bg-n-brand/30;
+    color: #582D1D;
+    &:hover {
+      background-color: rgba(224, 103, 32, 0.1);
+      html.dark & {
+        background-color: rgba(224, 103, 32, 0.3);
+      }
+    }
 
     &.secondary {
       @apply text-n-slate-12 hover:bg-n-slate-4;

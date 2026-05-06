@@ -101,6 +101,7 @@ const assistantRoutes = [
     name: 'captain_assistants_create_index',
     meta: {
       permissions: ['administrator', 'agent'],
+      featureFlag: FEATURE_FLAGS.CAPTAIN,
       installationTypes: [
         INSTALLATION_TYPES.CLOUD,
         INSTALLATION_TYPES.ENTERPRISE,

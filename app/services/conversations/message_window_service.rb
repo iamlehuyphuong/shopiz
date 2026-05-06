@@ -22,6 +22,8 @@ class Conversations::MessageWindowService
       messenger_messaging_window
     when 'Channel::Instagram'
       instagram_messaging_window
+    when 'Channel::Tiktok'
+      tiktok_messaging_window
     when 'Channel::Whatsapp'
       MESSAGING_WINDOW_24_HOURS
     when 'Channel::TwilioSms'
@@ -47,11 +49,26 @@ class Conversations::MessageWindowService
   end
 
   def messenger_messaging_window
+    # Comment conversations use Private Reply API (1 message within 7 days)
+    # They are NOT subject to the standard Messenger 24h messaging window.
+    # Once the customer replies to the DM, the standard window opens.
+    return nil if @conversation.additional_attributes['type'] == 'comment'
+
     meta_messaging_window('ENABLE_MESSENGER_CHANNEL_HUMAN_AGENT')
   end
 
   def instagram_messaging_window
+    # Comment conversations use Private Reply API (1 message within 7 days)
+    # They are NOT subject to the standard Instagram 24h messaging window.
+    return nil if @conversation.additional_attributes['type'] == 'comment'
+
     meta_messaging_window('ENABLE_INSTAGRAM_CHANNEL_HUMAN_AGENT')
+  end
+
+  def tiktok_messaging_window
+    return nil if @conversation.additional_attributes['type'] == 'comment'
+
+    48.hours
   end
 
   def meta_messaging_window(config_key)
@@ -59,6 +76,10 @@ class Conversations::MessageWindowService
   end
 
   def last_incoming_message
-    @last_incoming_message ||= @conversation.messages&.incoming&.last
+    @last_incoming_message ||= @conversation.messages
+                                             .where(account_id: @conversation.account_id)
+                                             .incoming
+                                             .reorder(created_at: :desc)
+                                             .first
   end
 end

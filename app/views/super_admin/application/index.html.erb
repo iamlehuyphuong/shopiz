@@ -47,6 +47,19 @@ It renders the `_table` partial to display details about the resources.
         </div>
       <% end %>
 
+      <% if ["Subscription Tier", "Subscription Plan", "Addon Package", "Email Template"].include?(page.resource_name.titleize) %>
+        <div class="flex items-center ml-4 space-x-2">
+          <%= link_to "Export CSV", url_for(action: :export_csv, controller: controller_name, format: :csv), class: "button !bg-slate-500 !border-slate-500 hover:!bg-slate-600 !text-white !px-3" %>
+          
+          <%= form_with url: url_for(action: :import_csv, controller: controller_name), local: true, multipart: true, class: "flex items-center m-0 ml-2" do |form| %>
+            <div class="relative overflow-hidden inline-block cursor-pointer">
+              <span class="button !bg-slate-500 !border-slate-500 hover:!bg-slate-600 !text-white whitespace-nowrap !px-3">Import CSV</span>
+              <%= form.file_field :file, accept: ".csv", class: "absolute inset-0 opacity-0 cursor-pointer w-full h-full", required: true, onchange: "this.form.submit();" %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
       <div class="whitespace-nowrap ml-4">
         <%= link_to(
           t(

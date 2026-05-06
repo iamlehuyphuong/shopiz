@@ -4,6 +4,9 @@
     "LOADING_EDITOR": "Đang tải trình chỉnh sửa...",
     "DESCRIPTION": "Trợ lý ảo hoạt động như những cộng sự đắc lực trong đội ngũ của bạn. Chúng xử lý các tác vụ lặp đi lặp lại, giúp bạn tập trung vào những việc quan trọng hơn. Hãy thử bắt đầu ngay! Bạn có thể quản lý trợ lý ảo tại đây hoặc tạo mới bằng nút 'Thêm Trợ lý ảo'.",
     "LEARN_MORE": "Tìm hiểu về Trợ lý ảo",
+    "COUNT": "{n} bot | {n} bot",
+    "SEARCH_PLACEHOLDER": "Tìm kiếm trợ lý ảo...",
+    "NO_RESULTS": "Không tìm thấy trợ lý ảo nào khớp với tìm kiếm của bạn",
     "GLOBAL_BOT": "Trợ lý ảo hệ thống",
     "GLOBAL_BOT_BADGE": "Hệ thống",
     "AVATAR": {
@@ -34,7 +37,8 @@
       "LOADING": "Đang tải danh sách...",
       "TABLE_HEADER": {
         "DETAILS": "Thông tin Trợ lý ảo",
-        "URL": "Webhook URL"
+        "URL": "Webhook URL",
+        "ACTIONS": "Hành động"
       }
     },
     "DELETE": {

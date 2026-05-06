@@ -3,6 +3,7 @@ import { useRoute } from 'vue-router';
 import { useFunctionGetter } from 'dashboard/composables/store';
 import { ref, onMounted, computed } from 'vue';
 import { format } from 'date-fns';
+import { useI18n } from 'vue-i18n';
 import { formatTime } from '@chatwoot/utils';
 import ReportHeader from './components/ReportHeader.vue';
 import ReportFilters from './components/ReportFilters.vue';
@@ -11,6 +12,7 @@ import BarChart from 'shared/components/charts/BarChart.vue';
 import { GROUP_BY_FILTER, GROUP_BY_OPTIONS } from './constants';
 
 const route = useRoute();
+const { t } = useI18n();
 const inbox = useFunctionGetter('inboxes/getInboxById', route.params.id);
 
 // For this dummy implementation, we'll show dummy data
@@ -42,7 +44,7 @@ const businessHours = ref(false);
 
 // Generate random chart data
 const generateRandomData = (min, max, count) => {
-  return Array.from({ length: count }, () => 
+  return Array.from({ length: count }, () =>
     Math.floor(Math.random() * (max - min + 1) + min)
   );
 };
@@ -51,13 +53,13 @@ const generateRandomData = (min, max, count) => {
 const generateDateLabels = (days = 7) => {
   const dates = [];
   const today = new Date();
-  
+
   for (let i = days - 1; i >= 0; i--) {
     const date = new Date();
     date.setDate(today.getDate() - i);
-    dates.push(format(date, 'dd-MMM'));
+    dates.push(format(date, t('GENERAL.REPORT_SHORT_DATE_FORMAT')));
   }
-  
+
   return dates;
 };
 
@@ -69,22 +71,22 @@ const callsByTypeChart = computed(() => {
       {
         label: 'Incoming Calls',
         data: generateRandomData(2, 8, 7),
-        backgroundColor: '#3B82F6', // blue
+        backgroundColor: '#E06720', // brand orange
         barPercentage: 0.6,
       },
       {
         label: 'Outgoing Calls',
         data: generateRandomData(1, 5, 7),
-        backgroundColor: '#6366F1', // indigo
+        backgroundColor: '#F97316', // light orange
         barPercentage: 0.6,
       },
       {
         label: 'Missed Calls',
         data: generateRandomData(0, 2, 7),
-        backgroundColor: '#F97316', // orange
+        backgroundColor: '#D15A10', // dark orange
         barPercentage: 0.6,
       },
-    ]
+    ],
   };
 });
 
@@ -96,10 +98,10 @@ const callDurationChart = computed(() => {
       {
         label: 'Average Call Duration (seconds)',
         data: generateRandomData(180, 320, 7),
-        backgroundColor: '#3B82F6', // blue (chatwoot standard)
+        backgroundColor: '#E06720',
         barPercentage: 0.6,
-      }
-    ]
+      },
+    ],
   };
 });
 
@@ -111,10 +113,10 @@ const waitingTimeChart = computed(() => {
       {
         label: 'Average Waiting Time (seconds)',
         data: generateRandomData(15, 60, 7),
-        backgroundColor: '#3B82F6', // blue (chatwoot standard)
+        backgroundColor: '#E06720',
         barPercentage: 0.6,
-      }
-    ]
+      },
+    ],
   };
 });
 
@@ -126,10 +128,10 @@ const successRateChart = computed(() => {
       {
         label: 'Call Success Rate (%)',
         data: generateRandomData(75, 100, 7),
-        backgroundColor: '#3B82F6', // blue (chatwoot standard)
+        backgroundColor: '#E06720', // brand orange
         barPercentage: 0.6,
-      }
-    ]
+      },
+    ],
   };
 });
 
@@ -145,26 +147,26 @@ const chartOptions = {
 };
 
 // Dummy handlers
-const onDateRangeChange = (payload) => {
+const onDateRangeChange = payload => {
   // In a real implementation, this would fetch new data based on date range
   console.log('Date range changed', payload);
 };
 
-const onGroupByFilterChange = (payload) => {
+const onGroupByFilterChange = payload => {
   selectedGroupByFilter.value = payload;
   groupBy.value = GROUP_BY_FILTER[payload.id];
   // In a real implementation, this would fetch new data based on grouping
   console.log('Group by filter changed', groupBy.value);
 };
 
-const onBusinessHoursToggle = (value) => {
+const onBusinessHoursToggle = value => {
   businessHours.value = value;
   // In a real implementation, this would fetch new data with business hours filter
   console.log('Business hours toggle', value);
 };
 
 // Format time helper (converts seconds to MM:SS format)
-const formatSecondsToTime = (seconds) => {
+const formatSecondsToTime = seconds => {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
   return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
@@ -177,8 +179,8 @@ const downloadReports = () => {
 
 <template>
   <div>
-    <ReportHeader 
-      :header-title="$t('INBOX_REPORTS.VOICE_HEADER')" 
+    <ReportHeader
+      :header-title="$t('INBOX_REPORTS.VOICE_HEADER')"
       has-back-button
     >
       <V4Button
@@ -188,7 +190,7 @@ const downloadReports = () => {
         @click="downloadReports"
       />
     </ReportHeader>
-    
+
     <ReportFilters
       type="inbox"
       :filter-items-list="[inbox]"
@@ -199,51 +201,107 @@ const downloadReports = () => {
       @group-by-filter-change="onGroupByFilterChange"
       @business-hours-toggle="onBusinessHoursToggle"
     />
-    
+
     <!-- Main container -->
     <div class="py-4">
       <!-- Metrics Cards -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <!-- Total Calls -->
-        <div class="bg-n-solid-2 p-4 rounded-lg shadow border border-n-container">
-          <div class="text-n-slate-11 text-sm mb-1">{{ $t('INBOX_REPORTS.VOICE_METRICS.TOTAL_CALLS') }}</div>
+        <div
+          class="bg-n-solid-2 p-4 rounded-lg shadow border border-n-container"
+        >
+          <div class="text-n-slate-11 text-sm mb-1">
+            {{ $t('INBOX_REPORTS.VOICE_METRICS.TOTAL_CALLS') }}
+          </div>
           <div class="flex items-end">
-            <span class="text-2xl font-semibold mr-2">{{ voiceMetrics.total_calls.value }}</span>
-            <span class="text-xs" :class="voiceMetrics.total_calls.trend > 0 ? 'text-n-emerald-6' : 'text-n-ruby-6'">
-              {{ voiceMetrics.total_calls.trend > 0 ? '↑' : '↓' }} {{ Math.abs(voiceMetrics.total_calls.trend) }}%
+            <span class="text-2xl font-semibold mr-2">{{
+              voiceMetrics.total_calls.value
+            }}</span>
+            <span
+              class="text-xs"
+              :class="
+                voiceMetrics.total_calls.trend > 0
+                  ? 'text-n-emerald-6'
+                  : 'text-n-ruby-6'
+              "
+            >
+              {{ voiceMetrics.total_calls.trend > 0 ? '↑' : '↓' }}
+              {{ Math.abs(voiceMetrics.total_calls.trend) }}%
             </span>
           </div>
         </div>
-        
+
         <!-- Incoming Calls -->
-        <div class="bg-n-solid-2 p-4 rounded-lg shadow border border-n-container">
-          <div class="text-n-slate-11 text-sm mb-1">{{ $t('INBOX_REPORTS.VOICE_METRICS.INCOMING_CALLS') }}</div>
+        <div
+          class="bg-n-solid-2 p-4 rounded-lg shadow border border-n-container"
+        >
+          <div class="text-n-slate-11 text-sm mb-1">
+            {{ $t('INBOX_REPORTS.VOICE_METRICS.INCOMING_CALLS') }}
+          </div>
           <div class="flex items-end">
-            <span class="text-2xl font-semibold mr-2">{{ voiceMetrics.incoming_calls.value }}</span>
-            <span class="text-xs" :class="voiceMetrics.incoming_calls.trend > 0 ? 'text-n-emerald-6' : 'text-n-ruby-6'">
-              {{ voiceMetrics.incoming_calls.trend > 0 ? '↑' : '↓' }} {{ Math.abs(voiceMetrics.incoming_calls.trend) }}%
+            <span class="text-2xl font-semibold mr-2">{{
+              voiceMetrics.incoming_calls.value
+            }}</span>
+            <span
+              class="text-xs"
+              :class="
+                voiceMetrics.incoming_calls.trend > 0
+                  ? 'text-n-emerald-6'
+                  : 'text-n-ruby-6'
+              "
+            >
+              {{ voiceMetrics.incoming_calls.trend > 0 ? '↑' : '↓' }}
+              {{ Math.abs(voiceMetrics.incoming_calls.trend) }}%
             </span>
           </div>
         </div>
-        
+
         <!-- Outgoing Calls -->
-        <div class="bg-n-solid-2 p-4 rounded-lg shadow border border-n-container">
-          <div class="text-n-slate-11 text-sm mb-1">{{ $t('INBOX_REPORTS.VOICE_METRICS.OUTGOING_CALLS') }}</div>
+        <div
+          class="bg-n-solid-2 p-4 rounded-lg shadow border border-n-container"
+        >
+          <div class="text-n-slate-11 text-sm mb-1">
+            {{ $t('INBOX_REPORTS.VOICE_METRICS.OUTGOING_CALLS') }}
+          </div>
           <div class="flex items-end">
-            <span class="text-2xl font-semibold mr-2">{{ voiceMetrics.outgoing_calls.value }}</span>
-            <span class="text-xs" :class="voiceMetrics.outgoing_calls.trend > 0 ? 'text-n-emerald-6' : 'text-n-ruby-6'">
-              {{ voiceMetrics.outgoing_calls.trend > 0 ? '↑' : '↓' }} {{ Math.abs(voiceMetrics.outgoing_calls.trend) }}%
+            <span class="text-2xl font-semibold mr-2">{{
+              voiceMetrics.outgoing_calls.value
+            }}</span>
+            <span
+              class="text-xs"
+              :class="
+                voiceMetrics.outgoing_calls.trend > 0
+                  ? 'text-n-emerald-6'
+                  : 'text-n-ruby-6'
+              "
+            >
+              {{ voiceMetrics.outgoing_calls.trend > 0 ? '↑' : '↓' }}
+              {{ Math.abs(voiceMetrics.outgoing_calls.trend) }}%
             </span>
           </div>
         </div>
-        
+
         <!-- Missed Calls -->
-        <div class="bg-n-solid-2 p-4 rounded-lg shadow border border-n-container">
-          <div class="text-n-slate-11 text-sm mb-1">{{ $t('INBOX_REPORTS.VOICE_METRICS.MISSED_CALLS') }}</div>
+        <div
+          class="bg-n-solid-2 p-4 rounded-lg shadow border border-n-container"
+        >
+          <div class="text-n-slate-11 text-sm mb-1">
+            {{ $t('INBOX_REPORTS.VOICE_METRICS.MISSED_CALLS') }}
+          </div>
           <div class="flex items-end">
-            <span class="text-2xl font-semibold mr-2">{{ voiceMetrics.missed_calls.value }}</span>
-            <span class="text-xs" :class="voiceMetrics.missed_calls.trend < 0 ? 'text-n-emerald-6' : 'text-n-ruby-6'">
-              {{ voiceMetrics.missed_calls.trend > 0 ? '↑' : '↓' }} {{ Math.abs(voiceMetrics.missed_calls.trend) }}%
+            <span class="text-2xl font-semibold mr-2">{{
+              voiceMetrics.missed_calls.value
+            }}</span>
+            <span
+              class="text-xs"
+              :class="
+                voiceMetrics.missed_calls.trend < 0
+                  ? 'text-n-emerald-6'
+                  : 'text-n-ruby-6'
+              "
+            >
+              {{ voiceMetrics.missed_calls.trend > 0 ? '↑' : '↓' }}
+              {{ Math.abs(voiceMetrics.missed_calls.trend) }}%
             </span>
           </div>
         </div>
@@ -252,80 +310,136 @@ const downloadReports = () => {
       <!-- More Metrics -->
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <!-- Average Call Duration -->
-        <div class="bg-n-solid-2 p-4 rounded-lg shadow border border-n-container">
-          <div class="text-n-slate-11 text-sm mb-1">{{ $t('INBOX_REPORTS.VOICE_METRICS.AVG_DURATION') }}</div>
+        <div
+          class="bg-n-solid-2 p-4 rounded-lg shadow border border-n-container"
+        >
+          <div class="text-n-slate-11 text-sm mb-1">
+            {{ $t('INBOX_REPORTS.VOICE_METRICS.AVG_DURATION') }}
+          </div>
           <div class="flex items-end">
-            <span class="text-2xl font-semibold mr-2">{{ formatSecondsToTime(voiceMetrics.average_duration.value) }}</span>
-            <span class="text-xs" :class="voiceMetrics.average_duration.trend > 0 ? 'text-n-emerald-6' : 'text-n-ruby-6'">
-              {{ voiceMetrics.average_duration.trend > 0 ? '↑' : '↓' }} {{ Math.abs(voiceMetrics.average_duration.trend) }}%
+            <span class="text-2xl font-semibold mr-2">{{
+              formatSecondsToTime(voiceMetrics.average_duration.value)
+            }}</span>
+            <span
+              class="text-xs"
+              :class="
+                voiceMetrics.average_duration.trend > 0
+                  ? 'text-n-emerald-6'
+                  : 'text-n-ruby-6'
+              "
+            >
+              {{ voiceMetrics.average_duration.trend > 0 ? '↑' : '↓' }}
+              {{ Math.abs(voiceMetrics.average_duration.trend) }}%
             </span>
           </div>
         </div>
-        
+
         <!-- Average Waiting Time -->
-        <div class="bg-n-solid-2 p-4 rounded-lg shadow border border-n-container">
-          <div class="text-n-slate-11 text-sm mb-1">{{ $t('INBOX_REPORTS.VOICE_METRICS.AVG_WAITING_TIME') }}</div>
+        <div
+          class="bg-n-solid-2 p-4 rounded-lg shadow border border-n-container"
+        >
+          <div class="text-n-slate-11 text-sm mb-1">
+            {{ $t('INBOX_REPORTS.VOICE_METRICS.AVG_WAITING_TIME') }}
+          </div>
           <div class="flex items-end">
-            <span class="text-2xl font-semibold mr-2">{{ formatSecondsToTime(voiceMetrics.average_waiting_time.value) }}</span>
-            <span class="text-xs" :class="voiceMetrics.average_waiting_time.trend < 0 ? 'text-n-emerald-6' : 'text-n-ruby-6'">
-              {{ voiceMetrics.average_waiting_time.trend > 0 ? '↑' : '↓' }} {{ Math.abs(voiceMetrics.average_waiting_time.trend) }}%
+            <span class="text-2xl font-semibold mr-2">{{
+              formatSecondsToTime(voiceMetrics.average_waiting_time.value)
+            }}</span>
+            <span
+              class="text-xs"
+              :class="
+                voiceMetrics.average_waiting_time.trend < 0
+                  ? 'text-n-emerald-6'
+                  : 'text-n-ruby-6'
+              "
+            >
+              {{ voiceMetrics.average_waiting_time.trend > 0 ? '↑' : '↓' }}
+              {{ Math.abs(voiceMetrics.average_waiting_time.trend) }}%
             </span>
           </div>
         </div>
-        
+
         <!-- Call Success Rate -->
-        <div class="bg-n-solid-2 p-4 rounded-lg shadow border border-n-container">
-          <div class="text-n-slate-11 text-sm mb-1">{{ $t('INBOX_REPORTS.VOICE_METRICS.SUCCESS_RATE') }}</div>
+        <div
+          class="bg-n-solid-2 p-4 rounded-lg shadow border border-n-container"
+        >
+          <div class="text-n-slate-11 text-sm mb-1">
+            {{ $t('INBOX_REPORTS.VOICE_METRICS.SUCCESS_RATE') }}
+          </div>
           <div class="flex items-end">
             <span class="text-2xl font-semibold mr-2">{{ voiceMetrics.call_success_rate.value }}%</span>
-            <span class="text-xs" :class="voiceMetrics.call_success_rate.trend > 0 ? 'text-n-emerald-6' : 'text-n-ruby-6'">
-              {{ voiceMetrics.call_success_rate.trend > 0 ? '↑' : '↓' }} {{ Math.abs(voiceMetrics.call_success_rate.trend) }}%
+            <span
+              class="text-xs"
+              :class="
+                voiceMetrics.call_success_rate.trend > 0
+                  ? 'text-n-emerald-6'
+                  : 'text-n-ruby-6'
+              "
+            >
+              {{ voiceMetrics.call_success_rate.trend > 0 ? '↑' : '↓' }}
+              {{ Math.abs(voiceMetrics.call_success_rate.trend) }}%
             </span>
           </div>
         </div>
       </div>
-      
+
       <!-- Charts -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <!-- Calls by Type -->
-        <div class="p-4 bg-n-solid-2 rounded-lg shadow border border-n-container">
-          <h3 class="text-md font-semibold mb-3">{{ $t('INBOX_REPORTS.VOICE_CHARTS.CALLS_BY_TYPE') }}</h3>
+        <div
+          class="p-4 bg-n-solid-2 rounded-lg shadow border border-n-container"
+        >
+          <h3 class="text-md font-semibold mb-3">
+            {{ $t('INBOX_REPORTS.VOICE_CHARTS.CALLS_BY_TYPE') }}
+          </h3>
           <div class="h-72">
-            <BarChart 
-              :collection="callsByTypeChart" 
+            <BarChart
+              :collection="callsByTypeChart"
               :chart-options="chartOptions"
             />
           </div>
         </div>
-        
+
         <!-- Average Call Duration -->
-        <div class="p-4 bg-n-solid-2 rounded-lg shadow border border-n-container">
-          <h3 class="text-md font-semibold mb-3">{{ $t('INBOX_REPORTS.VOICE_CHARTS.CALL_DURATION') }}</h3>
+        <div
+          class="p-4 bg-n-solid-2 rounded-lg shadow border border-n-container"
+        >
+          <h3 class="text-md font-semibold mb-3">
+            {{ $t('INBOX_REPORTS.VOICE_CHARTS.CALL_DURATION') }}
+          </h3>
           <div class="h-72">
-            <BarChart 
-              :collection="callDurationChart" 
+            <BarChart
+              :collection="callDurationChart"
               :chart-options="chartOptions"
             />
           </div>
         </div>
-        
+
         <!-- Waiting Time -->
-        <div class="p-4 bg-n-solid-2 rounded-lg shadow border border-n-container">
-          <h3 class="text-md font-semibold mb-3">{{ $t('INBOX_REPORTS.VOICE_CHARTS.WAITING_TIME') }}</h3>
+        <div
+          class="p-4 bg-n-solid-2 rounded-lg shadow border border-n-container"
+        >
+          <h3 class="text-md font-semibold mb-3">
+            {{ $t('INBOX_REPORTS.VOICE_CHARTS.WAITING_TIME') }}
+          </h3>
           <div class="h-72">
-            <BarChart 
-              :collection="waitingTimeChart" 
+            <BarChart
+              :collection="waitingTimeChart"
               :chart-options="chartOptions"
             />
           </div>
         </div>
-        
+
         <!-- Call Success Rate -->
-        <div class="p-4 bg-n-solid-2 rounded-lg shadow border border-n-container">
-          <h3 class="text-md font-semibold mb-3">{{ $t('INBOX_REPORTS.VOICE_CHARTS.SUCCESS_RATE') }}</h3>
+        <div
+          class="p-4 bg-n-solid-2 rounded-lg shadow border border-n-container"
+        >
+          <h3 class="text-md font-semibold mb-3">
+            {{ $t('INBOX_REPORTS.VOICE_CHARTS.SUCCESS_RATE') }}
+          </h3>
           <div class="h-72">
-            <BarChart 
-              :collection="successRateChart" 
+            <BarChart
+              :collection="successRateChart"
               :chart-options="chartOptions"
             />
           </div>

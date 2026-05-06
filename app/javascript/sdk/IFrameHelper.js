@@ -10,7 +10,6 @@ import {
   widgetHolder,
   createBubbleHolder,
   createBubbleIcon,
-  bubbleSVG,
   chatBubble,
   closeBubble,
   bubbleHolder,
@@ -179,6 +178,8 @@ export const IFrameHelper = {
       });
       IFrameHelper.onLoad({
         widgetColor: message.config.channelConfig.widgetColor,
+        bubbleAvatarUrl: message.config.channelConfig.bubbleAvatarUrl,
+        closeBubbleAvatarUrl: message.config.channelConfig.closeBubbleAvatarUrl,
       });
       IFrameHelper.toggleCloseButton();
 
@@ -186,7 +187,7 @@ export const IFrameHelper = {
         IFrameHelper.sendMessage('set-user', window.$shopiz.user);
       }
 
-      window.playAudioAlert = () => { };
+      window.playAudioAlert = () => {};
 
       initOnEvents.forEach(e => {
         document.addEventListener(e, IFrameHelper.setupAudioListeners, false);
@@ -299,7 +300,7 @@ export const IFrameHelper = {
     IFrameHelper.sendMessage('push-event', { eventName });
   },
 
-  onLoad: ({ widgetColor }) => {
+  onLoad: ({ widgetColor, bubbleAvatarUrl, closeBubbleAvatarUrl }) => {
     const iframe = IFrameHelper.getAppFrame();
     iframe.style.visibility = '';
     iframe.setAttribute('id', `chatwoot_live_chat_widget`);
@@ -325,15 +326,16 @@ export const IFrameHelper = {
 
     const chatIcon = createBubbleIcon({
       className,
-      path: bubbleSVG,
       target: chatBubble,
+      widgetColor,
+      bubbleAvatarUrl,
     });
 
     addClasses(closeBubble, closeBtnClassName);
-    addImageToButton({ target: closeBubble, imageName: 'bubble_off_chat.svg' });
-    chatIcon.style.background = widgetColor;
-    closeBubble.style.background = widgetColor;
-
+    addImageToButton({
+      target: closeBubble,
+      imageUrl: closeBubbleAvatarUrl,
+    });
     bubbleHolder.appendChild(chatIcon);
     bubbleHolder.appendChild(closeBubble);
     onClickChatBubble();

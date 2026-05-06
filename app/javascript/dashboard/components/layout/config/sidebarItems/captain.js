@@ -2,7 +2,13 @@ import { frontendURL } from '../../../../helper/URLHelper';
 
 const captain = accountId => ({
   parentNav: 'captain',
-  routes: ['captain_assistants_index', 'captain_assistants_edit', 'captain_assistants_inboxes_index','captain_documents_index','captain_responses_index'],
+  routes: [
+    'captain_assistants_index',
+    'captain_assistants_edit',
+    'captain_assistants_inboxes_index',
+    'captain_documents_index',
+    'captain_responses_index',
+  ],
   menuItems: [
     {
       icon: 'captain',

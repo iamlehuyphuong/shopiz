@@ -33,6 +33,8 @@ export const messageTimestamp = (time, dateFormat = 'MMM d, yyyy') => {
   return messageDate;
 };
 
+import { vi } from 'date-fns/locale';
+
 /**
  * Converts a Unix timestamp to a relative time string (e.g., 3 hours ago).
  * @param {number} time - Unix timestamp.
@@ -40,7 +42,14 @@ export const messageTimestamp = (time, dateFormat = 'MMM d, yyyy') => {
  */
 export const dynamicTime = time => {
   const unixTime = fromUnixTime(time);
-  return formatDistanceToNow(unixTime, { addSuffix: true });
+  const options = { addSuffix: true };
+  if (
+    typeof window !== 'undefined' &&
+    window.chatwootConfig?.selectedLocale === 'vi'
+  ) {
+    options.locale = vi;
+  }
+  return formatDistanceToNow(unixTime, options);
 };
 
 /**
@@ -68,6 +77,7 @@ export const shortTimestamp = (time, withAgo = false) => {
   const suffix = withAgo ? ' ago' : '';
   const timeMappings = {
     'less than a minute ago': 'now',
+    'in less than a minute': 'now',
     'a minute ago': `1m${suffix}`,
     'an hour ago': `1h${suffix}`,
     'a day ago': `1d${suffix}`,

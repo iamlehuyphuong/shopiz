@@ -1,9 +1,8 @@
 <script>
 import { ref, provide } from 'vue';
 // composable
-import { useConfig } from 'dashboard/composables/useConfig';
 import { useKeyboardEvents } from 'dashboard/composables/useKeyboardEvents';
-import { useAI } from 'dashboard/composables/useAI';
+import { useLabelSuggestions } from 'dashboard/composables/useLabelSuggestions';
 import { useSnakeCase } from 'dashboard/composables/useTransformKeys';
 
 // components
@@ -49,7 +48,6 @@ export default {
   setup() {
     const isPopOutReplyBox = ref(false);
     const conversationPanelRef = ref(null);
-    const { isEnterprise } = useConfig();
 
     const keyboardEvents = {
       Escape: {
@@ -62,21 +60,18 @@ export default {
     useKeyboardEvents(keyboardEvents);
 
     const {
-      isAIIntegrationEnabled,
+      captainTasksEnabled,
       isLabelSuggestionFeatureEnabled,
-      fetchIntegrationsIfRequired,
-      fetchLabelSuggestions,
-    } = useAI();
+      getLabelSuggestions,
+    } = useLabelSuggestions();
 
     provide('contextMenuElementTarget', conversationPanelRef);
 
     return {
-      isEnterprise,
       isPopOutReplyBox,
-      isAIIntegrationEnabled,
+      captainTasksEnabled,
+      getLabelSuggestions,
       isLabelSuggestionFeatureEnabled,
-      fetchIntegrationsIfRequired,
-      fetchLabelSuggestions,
       conversationPanelRef,
     };
   },
@@ -105,8 +100,8 @@ export default {
     shouldShowLabelSuggestions() {
       return (
         this.isOpen &&
-        this.isEnterprise &&
-        this.isAIIntegrationEnabled &&
+        this.captainTasksEnabled &&
+        this.isLabelSuggestionFeatureEnabled &&
         !this.messageSentSinceOpened
       );
     },
@@ -209,6 +204,9 @@ export default {
       if (this.isAWhatsAppCloudChannel) {
         return REPLY_POLICY.WHATSAPP_CLOUD;
       }
+      if (this.isATiktokChannel) {
+        return REPLY_POLICY.TIKTOK;
+      }
       if (!this.isAPIInbox) {
         return REPLY_POLICY.TWILIO_WHATSAPP;
       }
@@ -222,10 +220,29 @@ export default {
       ) {
         return this.$t('CONVERSATION.24_HOURS_WINDOW');
       }
+      if (this.isATiktokChannel) {
+        return this.$t('CONVERSATION.48_HOURS_WINDOW');
+      }
       if (!this.isAPIInbox) {
         return this.$t('CONVERSATION.TWILIO_WHATSAPP_24_HOURS_WINDOW');
       }
       return '';
+    },
+    isHumanAgentWindow() {
+      if (!this.currentChat.can_reply) return false;
+      if (!(this.isAFacebookInbox || this.isAnInstagramChannel)) return false;
+
+      if (!this.getMessages || this.getMessages.length === 0) return false;
+
+      const lastIncomingMessage = [...this.getMessages]
+        .reverse()
+        .find(m => m.message_type === 0);
+
+      if (!lastIncomingMessage) return false;
+
+      const timeDiffInSeconds =
+        Date.now() / 1000 - lastIncomingMessage.created_at;
+      return timeDiffInSeconds > 24 * 3600;
     },
     unreadMessageCount() {
       return this.currentChat.unread_count || 0;
@@ -272,8 +289,6 @@ export default {
 
   created() {
     emitter.on(BUS_EVENTS.SCROLL_TO_MESSAGE, this.onScrollToMessage);
-    // when a new message comes in, we refetch the label suggestions
-    emitter.on(BUS_EVENTS.FETCH_LABEL_SUGGESTIONS, this.fetchSuggestions);
     // when a message is sent we set the flag to true this hides the label suggestions,
     // until the chat is changed and the flag is reset in the watch for currentChat
     emitter.on(BUS_EVENTS.MESSAGE_SENT, () => {
@@ -301,20 +316,15 @@ export default {
         return;
       }
 
-      if (!this.isEnterprise) {
+      // Early exit if conversation already has labels - no need to suggest more
+      const existingLabels = this.currentChat?.labels || [];
+      if (existingLabels.length > 0) return;
+
+      if (!this.captainTasksEnabled || !this.isLabelSuggestionFeatureEnabled) {
         return;
       }
 
-      // method available in mixin, need to ensure that integrations are present
-      await this.fetchIntegrationsIfRequired();
-
-      if (!this.isLabelSuggestionFeatureEnabled) {
-        return;
-      }
-
-      this.labelSuggestions = await this.fetchLabelSuggestions({
-        conversationId: this.currentChat.id,
-      });
+      this.labelSuggestions = await this.getLabelSuggestions();
 
       // once the labels are fetched, we need to scroll to bottom
       // but we need to wait for the DOM to be updated
@@ -419,8 +429,8 @@ export default {
       const action = isLoadMore
         ? 'fetchPreviousMessages'
         : isLoadMoreHistory
-        ? 'fetchHistoryMessages'
-        : null;
+          ? 'fetchHistoryMessages'
+          : null;
       if (!action) return;
 
       const payload = {
@@ -483,6 +493,12 @@ export default {
       class="mx-2 mt-2 overflow-hidden rounded-lg"
       :banner-message="$t('CONVERSATION.OLD_INSTAGRAM_INBOX_REPLY_BANNER')"
     />
+    <Banner
+      v-else-if="isHumanAgentWindow"
+      color-scheme="warning"
+      class="mx-2 mt-2 overflow-hidden rounded-lg"
+      :banner-message="$t('CONVERSATION.HUMAN_AGENT_WARNING')"
+    />
     <MessageList
       ref="conversationPanelRef"
       class="conversation-panel flex-shrink flex-grow basis-px flex flex-col overflow-y-auto relative h-full m-0 pb-4"
@@ -499,7 +515,7 @@ export default {
           <li
             class="min-h-[4rem] flex flex-shrink-0 flex-grow-0 items-center flex-auto justify-center max-w-full mt-0 mr-0 mb-1 ml-0 relative first:mt-auto last:mb-0"
           >
-            <Spinner v-if="shouldShowSpinner" class="text-n-brand" />
+            <Spinner v-if="shouldShowSpinner" class="text-n-orange" />
           </li>
         </transition>
       </template>
@@ -509,7 +525,7 @@ export default {
           class="list-none flex justify-center items-center"
         >
           <span
-            class="shadow-lg rounded-full bg-n-brand text-white text-xs font-medium my-2.5 mx-auto px-2.5 py-1.5"
+            class="shadow-lg rounded-full bg-n-orange text-white text-xs font-medium my-2.5 mx-auto px-2.5 py-1.5"
           >
             {{ unreadMessageLabel }}
           </span>
@@ -533,7 +549,7 @@ export default {
       class="flex relative flex-col"
       :class="{
         'modal-mask': isPopOutReplyBox,
-        'bg-n-background': !isPopOutReplyBox,
+        'bg-n-surface-1': !isPopOutReplyBox,
       }"
     >
       <div

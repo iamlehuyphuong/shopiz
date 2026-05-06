@@ -31,6 +31,10 @@ const hasZaloConfigured = computed(() => {
   return window.shopizConfig?.zaloAppId;
 });
 
+const hasTiktokShopConfigured = computed(() => {
+  return window.shopizConfig?.tiktokShopAppId;
+});
+
 const hasTiktokConfigured = computed(() => {
   return window.shopizConfig?.tiktokAppId;
 });
@@ -51,9 +55,7 @@ const isActive = computed(() => {
   }
 
   if (key === 'zalo') {
-    return (
-      props.enabledFeatures.channel_zalo && hasZaloConfigured.value
-    );
+    return props.enabledFeatures.channel_zalo && hasZaloConfigured.value;
   }
 
   if (key === 'zalopersonal') {
@@ -63,9 +65,9 @@ const isActive = computed(() => {
     );
   }
 
-  if (key === 'tiktok') {
+  if (key === 'tiktok_shop') {
     return (
-      props.enabledFeatures.channel_tiktok && hasTiktokConfigured.value
+      props.enabledFeatures.channel_tiktok_shop && hasTiktokShopConfigured.value
     );
   }
 
@@ -75,8 +77,18 @@ const isActive = computed(() => {
     );
   }
 
+  if (key === 'tiktok') {
+    return props.enabledFeatures.channel_tiktok && hasTiktokConfigured.value;
+  }
+
   if (key === 'voice') {
     return props.enabledFeatures.channel_voice;
+  }
+  if (key === 'twitter') {
+    return (
+      props.enabledFeatures.channel_twitter &&
+      window.shopizConfig?.twitterConsumerKey
+    );
   }
 
   return [
@@ -88,8 +100,10 @@ const isActive = computed(() => {
     'telegram',
     'line',
     'instagram',
+    'twitter',
     'zalo',
     'zalopersonal',
+    'tiktok_shop',
     'tiktok',
     'voice',
   ].includes(key);

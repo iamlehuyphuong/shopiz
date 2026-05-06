@@ -92,7 +92,7 @@ class Api::V1::Accounts::Conversations::MessagesController < Api::V1::Accounts::
 
   def load_init_history_messages
     return if @conversation.next_cursor.present? || @conversation.is_load_all_message
-    return unless @conversation.messages.count == 1
+    return unless @conversation.messages.limit(2).count == 1
 
     Messages::LoadMoreHistoryService.new(@conversation).perform
   end

@@ -1,21 +1,31 @@
-<p>Hello there,</p>
-
-<p>We've noticed that your Chatwoot account <strong>{{ meta.account_name }}</strong> has been inactive for some time. Because of this, it's scheduled for deletion on <strong>{{ meta.deletion_date }}</strong>.</p>
-
-<p><strong>How do I keep my account?</strong></p>
-
-<p>Log in to your Chatwoot account before <strong>{{ meta.deletion_date }}</strong>. From your account settings, you can <a href="{{ action_url }}">cancel the deletion</a> and continue using your account.</p>
-
-<p><strong>What happens if I don't cancel?</strong></p>
-
-<p>Unless you cancel the account deletion before <strong>{{ meta.deletion_date }}</strong>, your account and all associated data — including conversations, contacts, reports, and settings — will be permanently deleted.</p>
-
-<p><strong>Why are we doing this?</strong></p>
-
-<p>To keep things secure and efficient, we regularly remove inactive accounts so our systems remain optimized for active teams.</p>
-
-<p>If you have any questions, feel free to reach us at <a href="mailto:hello@chatwoot.com">hello@chatwoot.com</a>.</p>
-
-<p>— The Chatwoot Team</p>
-
-
+<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Account Deletion Notice</h2>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
+  Your Shopiz account workspace (<strong>{{ meta['account_name'] }}</strong>) has been inactive for a long time. 
+  To optimize space, this account will be PERMANENTLY DELETED on <strong>{{ meta['deletion_date'] }}</strong>.
+</p>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
+  If you wish to retain it, simply log in before the deadline and select cancel deletion:
+</p>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 24px;">
+  <tr>
+    <td align="left">
+      <a href="{{ action_url }}" style="display: inline-block; background-color: #3B82F6; color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 12px;">Log In Now</a>
+    </td>
+  </tr>
+</table>
+<hr style="border: 0; border-bottom: 1px solid #E2E8F0; margin: 24px 0;" />
+<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Cảnh Báo Xóa Tài Khoản</h2>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
+  Tài khoản Shopiz của bạn (<strong>{{ meta['account_name'] }}</strong>) đã không hoạt động trong một thời gian dài. 
+  Để tối ưu hóa không gian cho các doanh nghiệp đang hoạt động, tài khoản này sẽ tự động bị XOÁ VĨNH VIỄN vào ngày <strong>{{ meta['deletion_date'] }}</strong>.
+</p>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
+  Nếu bạn muốn giữ lại tài khoản, đơn giản chỉ cần đăng nhập lại trước thời hạn trên và nhấn vào nút huỷ yêu cầu xoá:
+</p>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 24px;">
+  <tr>
+    <td align="left">
+      <a href="{{ action_url }}" style="display: inline-block; background-color: #3B82F6; color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 12px;">Đăng Nhập Ngay</a>
+    </td>
+  </tr>
+</table>

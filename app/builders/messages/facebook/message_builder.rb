@@ -23,7 +23,10 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
 
     ActiveRecord::Base.transaction do
       build_contact_inbox
-      build_message
+      merge_contact_if_reply_to_private_reply!
+      build_message unless response.content.blank? && @attachments.blank? && response.in_reply_to_external_id.blank?
+      build_referral_note if response.referral.present?
+      process_optin if response.optin.present?
     end
   rescue Koala::Facebook::AuthenticationError => e
     Rails.logger.warn("Facebook authentication error for inbox: #{@inbox.id} with error: #{e.message}")
@@ -44,12 +47,83 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
     ).perform
   end
 
+  def merge_contact_if_reply_to_private_reply!
+    return if response.in_reply_to_external_id.blank?
+
+    # Look for the outgoing private reply message
+    private_reply_message = Message.find_by(source_id: response.in_reply_to_external_id, account_id: @inbox.account_id)
+    return unless private_reply_message
+
+    asid_contact = private_reply_message.conversation.contact
+    psid_contact = @contact_inbox.contact
+
+    return if asid_contact.id == psid_contact.id
+
+    # Merge ASID contact (the one built from Comment feed) into PSID contact (the DM user)
+    ContactMergeAction.new(
+      account: @inbox.account,
+      base_contact: psid_contact,
+      mergee_contact: asid_contact
+    ).perform
+
+    # Reload the PSID contact inbox associations after merge
+    @contact_inbox.reload
+  end
+
   def build_message
     @message = conversation.messages.create!(message_params)
 
     @attachments.each do |attachment|
       process_attachment(attachment)
     end
+  end
+
+  def build_referral_note
+    return if response.referral.blank?
+
+    note_content = "Nguồn: Quảng cáo CTM\n"
+    note_content += "- Chiến dịch (Ad ID): #{response.ad_id}\n" if response.ad_id.present?
+    note_content += "- Mã sản phẩm (Ref): #{response.ref_payload}\n" if response.ref_payload.present?
+
+    conversation.messages.create!(
+      account_id: conversation.account_id,
+      inbox_id: conversation.inbox_id,
+      message_type: :outgoing,
+      private: true,
+      content: note_content
+    )
+  end
+
+  def process_optin
+    return if response.notification_messages_token.blank?
+
+    expires_at = nil
+    if response.notification_messages_frequency == 'MONTHLY'
+      expires_at = 1.month.from_now
+    elsif response.notification_messages_frequency == 'WEEKLY'
+      expires_at = 1.week.from_now
+    elsif response.notification_messages_frequency == 'DAILY'
+      expires_at = 1.day.from_now
+    end
+
+    status = if response.notification_messages_status == 'STOP_NOTIFICATIONS'
+               :revoked
+             else
+               :active
+             end
+
+    optin_record = ContactOptin.find_or_initialize_by(
+      contact_id: @contact_inbox.contact_id,
+      inbox_id: @inbox.id,
+      topic: response.optin_payload
+    )
+
+    optin_record.assign_attributes(
+      token: response.notification_messages_token,
+      status: status,
+      expires_at: expires_at
+    )
+    optin_record.save!
   end
 
   def conversation
@@ -105,24 +179,39 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
   end
 
   def message_params
+    content_attributes = {
+      in_reply_to_external_id: response.in_reply_to_external_id
+    }
+    content_attributes[:external_echo] = true if @outgoing_echo
+
     {
       account_id: conversation.account_id,
       inbox_id: conversation.inbox_id,
       message_type: @message_type,
+      status: @outgoing_echo ? :delivered : :sent,
       content: response.content,
       source_id: response.identifier,
-      content_attributes: {
-        in_reply_to_external_id: response.in_reply_to_external_id
-      },
+      content_attributes: content_attributes,
       sender: @outgoing_echo ? nil : @contact_inbox.contact
     }
   end
 
   def process_contact_params_result(result)
+    name = if result['first_name'].present? || result['last_name'].present?
+             "#{result['first_name']} #{result['last_name']}".strip
+           else
+             I18n.t('contacts.default_name', id: @sender_id.to_s.last(4))
+           end
+
     {
-      name: "#{result['first_name'] || 'John'} #{result['last_name'] || 'Doe'}",
+      name: name,
       account_id: @inbox.account_id,
-      avatar_url: result['profile_pic']
+      avatar_url: result['profile_pic'],
+      additional_attributes: {
+        gender: result['gender'],
+        locale: result['locale'],
+        timezone: result['timezone']
+      }.compact
     }
   end
 
@@ -131,7 +220,7 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
   def contact_params
     begin
       k = Koala::Facebook::API.new(@inbox.channel.page_access_token) if @inbox.facebook?
-      result = k.get_object(@sender_id) || {}
+      result = k.get_object(@sender_id, fields: 'first_name,last_name,profile_pic') || {}
     rescue Koala::Facebook::AuthenticationError => e
       Rails.logger.warn("Facebook authentication error for inbox: #{@inbox.id} with error: #{e.message}")
       Rails.logger.error e
@@ -150,7 +239,19 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
       result = {}
       ChatwootExceptionTracker.new(e, account: @inbox.account).capture_exception
     end
-    process_contact_params_result(result)
+    params = process_contact_params_result(result)
+    params[:avatar_url] ||= fetch_profile_picture_url(k)
+    params
+  end
+
+  def fetch_profile_picture_url(graph_api)
+    return nil unless graph_api
+
+    picture_data = graph_api.get_picture_data(@sender_id, type: 'large')
+    picture_data.dig('data', 'url') if picture_data && !picture_data.dig('data', 'is_silhouette')
+  rescue StandardError => e
+    Rails.logger.info("Could not fetch profile picture for #{@sender_id}: #{e.message}")
+    nil
   end
   # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/MethodLength

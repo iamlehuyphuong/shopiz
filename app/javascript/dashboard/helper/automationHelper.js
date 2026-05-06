@@ -169,19 +169,19 @@ export const getFileName = (action, files = []) => {
 
 export const getDefaultConditions = eventName => {
   if (eventName === 'message_created') {
-    return DEFAULT_MESSAGE_CREATED_CONDITION;
+    return structuredClone(DEFAULT_MESSAGE_CREATED_CONDITION);
   }
   if (
     eventName === 'conversation_opened' ||
     eventName === 'conversation_resolved'
   ) {
-    return DEFAULT_CONVERSATION_CONDITION;
+    return structuredClone(DEFAULT_CONVERSATION_CONDITION);
   }
-  return DEFAULT_OTHER_CONDITION;
+  return structuredClone(DEFAULT_OTHER_CONDITION);
 };
 
 export const getDefaultActions = () => {
-  return DEFAULT_ACTIONS;
+  return structuredClone(DEFAULT_ACTIONS);
 };
 
 export const filterCustomAttributes = customAttributes => {
@@ -334,7 +334,13 @@ export const getCustomAttributeType = (automationTypes, automation, key) => {
  * @returns {boolean} True if the action input should be shown, false otherwise.
  */
 export const showActionInput = (automationActionTypes, action) => {
-  if (action === 'send_email_to_team' || action === 'send_message')
+  if (
+    action === 'send_email_to_team' ||
+    action === 'send_message' ||
+    action === 'send_facebook_post_purchase_update' ||
+    action === 'send_facebook_confirmed_event_update' ||
+    action === 'send_facebook_account_update'
+  )
     return false;
   const type = automationActionTypes.find(i => i.key === action).inputType;
   return !!type;

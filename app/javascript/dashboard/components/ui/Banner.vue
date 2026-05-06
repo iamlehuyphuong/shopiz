@@ -118,7 +118,7 @@ export default {
 <style lang="scss" scoped>
 .banner {
   &.primary {
-    @apply bg-n-brand;
+    background-color: #e06720;
   }
 
   &.secondary {

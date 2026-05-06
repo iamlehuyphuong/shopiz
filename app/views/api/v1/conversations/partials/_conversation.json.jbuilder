@@ -28,14 +28,32 @@ json.meta do
 end
 
 json.id conversation.display_id
-if conversation.messages.where(account_id: conversation.account_id).last.blank?
-  json.messages []
-else
-  json.messages [
-    conversation.messages.where(account_id: conversation.account_id)
-                .includes([{ attachments: [{ file_attachment: [:blob] }] }]).last.try(:push_event_data)
-  ]
+
+# `messages[]` preview: MUST be the true last message of any type, because the frontend
+# uses messages[0].id as the pagination cursor in setActiveChat. Using non_activity only
+# would break pagination when a conversation's last message is an activity message.
+_last_message = conversation.messages
+                            .where(account_id: conversation.account_id)
+                            .reorder(created_at: :desc)
+                            .includes({ attachments: [{ file_attachment: [:blob] }] })
+                            .first
+
+# Build message event data directly WITHOUT calling push_event_data.
+# push_event_data internally calls conversation_push_event_data which triggers an
+# unread_incoming_messages query per message — an N+1 bomb across 25 conversations.
+# The nested `conversation` data inside messages is not needed in the list context;
+# `unread_count` is already a top-level field on the conversation payload.
+_last_message_event_data = if _last_message
+  data = _last_message.attributes.symbolize_keys.merge(
+    created_at: _last_message.created_at.to_i,
+    message_type: _last_message.message_type_before_type_cast,
+    conversation_id: conversation.display_id
+  )
+  data[:attachments] = _last_message.attachments.map(&:push_event_data) if _last_message.attachments.present?
+  data[:can_undo] = _last_message.can_undo?
+  _last_message.merge_sender_attributes(data)
 end
+json.messages _last_message_event_data ? [_last_message_event_data] : []
 
 json.account_id conversation.account_id
 json.uuid conversation.uuid
@@ -46,6 +64,7 @@ json.can_reply conversation.can_reply?
 json.contact_last_seen_at conversation.contact_last_seen_at.to_i
 json.custom_attributes conversation.custom_attributes
 json.inbox_id conversation.inbox_id
+json.active_bot conversation.inbox.active_bot?
 json.labels conversation.cached_label_list_array
 json.muted conversation.muted?
 json.snoozed_until conversation.snoozed_until
@@ -55,7 +74,24 @@ json.updated_at conversation.updated_at.to_f
 json.timestamp conversation.last_activity_at.to_i
 json.first_reply_created_at conversation.first_reply_created_at.to_i
 json.unread_count conversation.unread_incoming_messages.count
-json.last_non_activity_message conversation.messages.where(account_id: conversation.account_id).non_activity_messages.first.try(:push_event_data)
+# `last_non_activity_message`: if the last message is non-activity, reuse the already-fetched
+# event data. Only run a separate query when the last message is an activity message.
+_last_non_activity_event_data = if _last_message && _last_message.message_type != 'activity'
+                                  _last_message_event_data
+                                else
+                                  _non_activity_msg = conversation.last_non_activity_message_obj
+                                  if _non_activity_msg
+                                    na_data = _non_activity_msg.attributes.symbolize_keys.merge(
+                                      created_at: _non_activity_msg.created_at.to_i,
+                                      message_type: _non_activity_msg.message_type_before_type_cast,
+                                      conversation_id: conversation.display_id
+                                    )
+                                    na_data[:attachments] = _non_activity_msg.attachments.map(&:push_event_data) if _non_activity_msg.attachments.present?
+                                    na_data[:can_undo] = _non_activity_msg.can_undo?
+                                    _non_activity_msg.merge_sender_attributes(na_data)
+                                  end
+                                end
+json.last_non_activity_message _last_non_activity_event_data
 json.last_activity_at conversation.last_activity_at.to_i
 json.priority conversation.priority
 json.waiting_since conversation.waiting_since.to_i.to_i

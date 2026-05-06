@@ -18,11 +18,11 @@ defineProps({
       />
     </div>
     <div class="flex gap-2">
-      <Button label="Call us" slate class="!text-n-blue-text w-full" />
+      <Button label="Call us" slate class="!text-n-orange-11 w-full" />
       <Button
         label="Visit our website"
         slate
-        class="!text-n-blue-text w-full"
+        class="!text-n-orange-11 w-full"
       />
     </div>
   </div>

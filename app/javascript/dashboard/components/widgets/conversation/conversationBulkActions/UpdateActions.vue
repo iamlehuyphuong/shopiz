@@ -78,7 +78,7 @@ const actionLabel = key => {
           d="M20 12l-8-8-12 12"
           fill-rule="evenodd"
           stroke-width="1px"
-          class="fill-n-alpha-3 backdrop-blur-[100px] stroke-n-weak"
+          class="fill-current text-n-alpha-3 backdrop-blur-[100px] stroke-n-weak"
         />
       </svg>
     </div>

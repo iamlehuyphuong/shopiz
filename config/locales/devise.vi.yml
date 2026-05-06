@@ -57,4 +57,15 @@ vi:
       not_found: "không tìm thấy"
       not_locked: "không được khoá"
       not_saved:
+        one: "Có 1 lỗi được tìm thấy từ %{resource}:"
         other: "Có %{count} lỗi được tìm thấy từ %{resource}:"
+vi:
+  devise:
+    mailer:
+      unlock_instructions:
+        subject: "Mở khoá tài khoản"
+        title: "Tài khoản đã bị tạm khóa"
+        greeting: "Xin chào <strong>%{email}</strong>,"
+        message: "Vì lý do bảo mật, tài khoản của bạn đã tạm thời bị khóa do có quá nhiều lần đăng nhập không thành công. Để tiếp tục sử dụng dịch vụ, vui lòng xác nhận danh tính bằng cách nhấn vào nút bên dưới."
+        action: "Mở khóa tài khoản"
+        note: "<strong>Lưu ý:</strong> Nếu không phải bạn thực hiện nỗ lực đăng nhập này, chúng tôi khuyên bạn nên kiểm tra lại email và đổi mật khẩu sau khi mở khóa để đảm bảo an toàn cho tài khoản %{brand} của mình."

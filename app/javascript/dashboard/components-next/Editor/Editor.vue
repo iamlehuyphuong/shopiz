@@ -5,6 +5,7 @@ import WootEditor from 'dashboard/components/widgets/WootWriter/Editor.vue';
 
 const props = defineProps({
   modelValue: { type: String, default: '' },
+  editorKey: { type: String, default: '' },
   label: { type: String, default: '' },
   placeholder: { type: String, default: '' },
   focusOnMount: { type: Boolean, default: false },
@@ -19,15 +20,15 @@ const props = defineProps({
   },
   enableVariables: { type: Boolean, default: false },
   enableCannedResponses: { type: Boolean, default: true },
-  enabledMenuOptions: { type: Array, default: () => [] },
   enableCaptainTools: { type: Boolean, default: false },
   signature: { type: String, default: '' },
   allowSignature: { type: Boolean, default: false },
   sendWithSignature: { type: Boolean, default: false },
   channelType: { type: String, default: '' },
+  medium: { type: String, default: '' },
 });
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'executeCopilotAction']);
 
 const slots = useSlots();
 
@@ -87,7 +88,7 @@ watch(
         {
           'cursor-not-allowed opacity-50 pointer-events-none !bg-n-alpha-black2 disabled:border-n-weak dark:disabled:border-n-weak':
             disabled,
-          'border-n-brand dark:border-n-brand': isFocused,
+          'border-n-orange dark:border-n-orange': isFocused,
           'hover:border-n-slate-6 dark:hover:border-n-slate-6 border-n-weak dark:border-n-weak':
             !isFocused && messageType !== 'error',
           'border-n-ruby-8 dark:border-n-ruby-8 hover:border-n-ruby-9 dark:hover:border-n-ruby-9':
@@ -96,21 +97,25 @@ watch(
       ]"
     >
       <WootEditor
+        :editor-id="editorKey"
         :model-value="modelValue"
         :placeholder="placeholder"
         :focus-on-mount="focusOnMount"
         :disabled="disabled"
         :enable-variables="enableVariables"
         :enable-canned-responses="enableCannedResponses"
-        :enabled-menu-options="enabledMenuOptions"
         :enable-captain-tools="enableCaptainTools"
         :signature="signature"
         :allow-signature="allowSignature"
         :send-with-signature="sendWithSignature"
         :channel-type="channelType"
+        :medium="medium"
         @input="handleInput"
         @focus="handleFocus"
         @blur="handleBlur"
+        @execute-copilot-action="
+          (...args) => emit('executeCopilotAction', ...args)
+        "
       />
       <div
         v-if="showCharacterCount || slots.actions"
@@ -139,19 +144,6 @@ watch(
 .editor-wrapper {
   ::v-deep {
     .ProseMirror-menubar-wrapper {
-      @apply gap-2 !important;
-
-      .ProseMirror-menubar {
-        @apply bg-transparent dark:bg-transparent w-fit left-1 pt-0 h-5 !top-0 !relative !important;
-
-        .ProseMirror-menuitem {
-          @apply h-5 !important;
-        }
-
-        .ProseMirror-icon {
-          @apply p-1 w-3 h-3 text-n-slate-12 dark:text-n-slate-12 !important;
-        }
-      }
       .ProseMirror.ProseMirror-woot-style {
         p {
           @apply first:mt-0 !important;
@@ -164,6 +156,13 @@ watch(
             @apply text-n-slate-11 dark:text-n-slate-11;
           }
         }
+      }
+
+      .ProseMirror-menubar {
+        width: fit-content !important;
+        position: relative !important;
+        top: unset !important;
+        @apply ltr:left-[-0.188rem] rtl:right-[-0.188rem] !important;
       }
     }
   }

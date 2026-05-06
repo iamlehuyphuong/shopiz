@@ -5,8 +5,9 @@
       "LABEL": "Sắp xếp theo",
       "OPTIONS": {
         "NAME": "Tên",
-        "DOMAIN": "Tên miền",
-        "CREATED_AT": "Ngày tạo"
+        "DOMAIN": "Miền",
+        "CREATED_AT": "Tạo vào lúc",
+        "CONTACTS_COUNT": "Số lượng liên hệ"
       }
     },
     "ORDER": {
@@ -18,15 +19,15 @@
     },
     "SEARCH_PLACEHOLDER": "Tìm kiếm công ty...",
     "LOADING": "Đang tải danh sách công ty...",
-    "UNNAMED": "Công ty không tên",
-    "CONTACTS_COUNT": "{count} liên hệ",
+    "UNNAMED": "Công ty chưa đặt tên",
+    "CONTACTS_COUNT": "{n} liên hệ",
     "EMPTY_STATE": {
       "TITLE": "Không tìm thấy công ty nào"
     }
   },
   "COMPANIES_LAYOUT": {
     "PAGINATION_FOOTER": {
-      "SHOWING": "Hiển thị {startItem} - {endItem} trên tổng {totalItems} công ty"
+      "SHOWING": "Hiển thị {startItem} – {endItem} trong tổng số {totalItems} công ty"
     }
   }
 }

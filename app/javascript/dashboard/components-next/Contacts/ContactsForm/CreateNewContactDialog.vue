@@ -40,7 +40,12 @@ defineExpose({ dialogRef, contactsFormRef, onSuccess });
 </script>
 
 <template>
-  <Dialog ref="dialogRef" width="3xl" @confirm="handleDialogConfirm">
+  <Dialog
+    ref="dialogRef"
+    width="3xl"
+    overflow-y-auto
+    @confirm="handleDialogConfirm"
+  >
     <ContactsForm
       ref="contactsFormRef"
       is-new-contact
@@ -52,7 +57,7 @@ defineExpose({ dialogRef, contactsFormRef, onSuccess });
           :label="t('DIALOG.BUTTONS.CANCEL')"
           variant="link"
           type="reset"
-          class="h-10 hover:!no-underline hover:text-n-brand"
+          class="h-10 hover:!no-underline hover:text-n-orange"
           @click="closeDialog"
         />
         <Button

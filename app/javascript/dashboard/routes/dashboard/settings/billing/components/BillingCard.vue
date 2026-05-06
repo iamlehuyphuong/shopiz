@@ -8,7 +8,8 @@ defineProps({
   },
   price: {
     type: String,
-    required: true,
+    required: false,
+    default: '',
   },
   description: {
     type: String,
@@ -21,7 +22,12 @@ defineProps({
   <div
     class="rounded-xl shadow-sm border border-n-weak bg-n-solid-2 py-5 space-y-5"
   >
-    <BillingHeader :title :description :price class="px-5">
+    <BillingHeader
+      :title="title"
+      :description="description"
+      :price="price"
+      class="px-5"
+    >
       <slot name="action" />
     </BillingHeader>
     <slot />

@@ -90,7 +90,11 @@ defineExpose({
         height="13"
         viewBox="0 0 10 13"
         fill="none"
-        :class="isSlaMissed ? 'fill-n-ruby-10' : 'fill-n-slate-9'"
+        :class="
+          isSlaMissed
+            ? 'fill-current text-n-ruby-10'
+            : 'fill-current text-n-slate-9'
+        "
         xmlns="http://www.w3.org/2000/svg"
       >
         <path

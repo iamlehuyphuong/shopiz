@@ -16,6 +16,7 @@ class Api::V1::Accounts::Channels::ZaloPersonalChannelsController < Api::V1::Acc
       render json: zalo_inbox.as_json
     rescue StandardError => e
       handle_exception(e)
+      render json: { message: e.message }, status: :unprocessable_entity
     end
   
     private

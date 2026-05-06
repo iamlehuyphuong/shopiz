@@ -97,20 +97,8 @@
         },
         "CAMPAIGN_DETAILS": {
           "SENT_FROM": "Gửi từ",
-          "ON": "vào",
-          "FROM": " từ ",
-          "BOT": "Trợ lý ảo"
+          "ON": "vào"
         }
-      },
-      "EMPTY_STATE_BADGE": {
-        "ENABLED": "Đang hoạt động",
-        "DISABLED": "Không hoạt động"
-      },
-      "DETAILS": {
-        "MESSAGE": "Tin nhắn",
-        "INBOX": "Hộp thư",
-        "AUDIENCE": "Tập khách hàng",
-        "SCHEDULED_AT": "Thời gian dự kiến"
       },
       "CREATE": {
         "TITLE": "Tạo chiến dịch SMS",
@@ -217,80 +205,6 @@
         }
       }
     },
-    "VOICE": {
-      "HEADER_TITLE": "Chiến dịch Voice (Gọi tự động)",
-      "NEW_CAMPAIGN": "Tạo chiến dịch",
-      "EMPTY_STATE": {
-        "TITLE": "Chưa có chiến dịch Voice nào",
-        "SUBTITLE": "Liên hệ khách hàng cá nhân hóa qua cuộc gọi AI. Phù hợp cho nhắc lịch hẹn, xác minh, hoặc chăm sóc sau bán. Trợ lý AI có thể tương tác linh hoạt, thu thập thông tin và làm giàu dữ liệu khách hàng—giúp tiết kiệm thời gian cho đội ngũ.",
-        "JS_API_DESCRIPTION": "Bạn có thể kích hoạt chiến dịch Voice bằng JavaScript API:"
-      },
-      "CARD": {
-        "STATUS": {
-          "COMPLETED": "Đã hoàn thành",
-          "SCHEDULED": "Đã lên lịch"
-        },
-        "CAMPAIGN_DETAILS": {
-          "SENT_BY": "Gửi bởi ",
-          "FROM": " từ ",
-          "ON": " vào ",
-          "BOT": "Trợ lý ảo"
-        }
-      },
-      "EMPTY_STATE_BADGE": {
-        "ENABLED": "Đã bật",
-        "DISABLED": "Đã tắt"
-      },
-      "DETAILS": {
-        "MESSAGE": "Kịch bản",
-        "INBOX": "Hộp thư",
-        "AUDIENCE": "Tệp khách hàng",
-        "SCHEDULED_AT": "Thời gian gửi"
-      },
-      "CREATE": {
-        "TITLE": "Tạo chiến dịch Voice",
-        "FORM": {
-          "TITLE": {
-            "LABEL": "Tiêu đề",
-            "PLACEHOLDER": "Nhập tiêu đề chiến dịch",
-            "ERROR": "Tiêu đề là bắt buộc"
-          },
-          "MESSAGE": {
-            "LABEL": "Kịch bản cuộc gọi",
-            "PLACEHOLDER": "Nhập hướng dẫn cho AI: giọng điệu, thông tin cần thu thập, cách xử lý phản hồi...",
-            "ERROR": "Kịch bản cuộc gọi là bắt buộc"
-          },
-          "INBOX": {
-            "LABEL": "Hộp thư thoại",
-            "PLACEHOLDER": "Chọn Hộp thư thoại",
-            "ERROR": "Hộp thư thoại là bắt buộc"
-          },
-          "SENT_BY": {
-            "LABEL": "Gửi bởi",
-            "PLACEHOLDER": "Chọn người gửi",
-            "ERROR": "Người gửi là bắt buộc"
-          },
-          "AUDIENCE": {
-            "LABEL": "Tệp khách hàng",
-            "PLACEHOLDER": "Chọn nhãn khách hàng",
-            "ERROR": "Tệp khách hàng là bắt buộc"
-          },
-          "SCHEDULED_AT": {
-            "LABEL": "Thời gian gửi",
-            "PLACEHOLDER": "Chọn thời gian",
-            "ERROR": "Thời gian gửi là bắt buộc"
-          },
-          "BUTTONS": {
-            "CREATE": "Tạo",
-            "CANCEL": "Hủy"
-          },
-          "API": {
-            "SUCCESS_MESSAGE": "Tạo chiến dịch Voice thành công",
-            "ERROR_MESSAGE": "Đã xảy ra lỗi. Vui lòng thử lại."
-          }
-        }
-      }
-    },
     "ZALO_PERSONAL": {
       "HEADER_TITLE": "Chiến dịch Zalo cá nhân",
       "NEW_CAMPAIGN": "Tạo chiến dịch",
@@ -365,13 +279,167 @@
         }
       }
     },
-    "SURVEY": {
-      "HEADER_TITLE": "Chiến dịch khảo sát",
+    "ZALO_OA": {
+      "HEADER_TITLE": "Chiến dịch Zalo OA",
       "NEW_CAMPAIGN": "Tạo chiến dịch",
       "EMPTY_STATE": {
-        "TITLE": "Chưa có chiến dịch khảo sát nào",
-        "SUBTITLE": "Triển khai khảo sát tự động bằng AI để thu thập thông tin khách hàng. Thích hợp cho chăm sóc khách hàng, xác minh hoặc theo dõi sau bán hàng. AI xử lý linh hoạt và tiết kiệm thời gian.",
-        "JS_API_DESCRIPTION": "Bạn có thể kích hoạt chiến dịch khảo sát bằng JavaScript API:"
+        "TITLE": "Chưa có chiến dịch Zalo OA nào",
+        "SUBTITLE": "Gửi tin nhắn quảng bá đến người theo dõi Zalo OA. Tiếp cận khách hàng với ưu đãi, cập nhật và thông báo. Nhấn 'Tạo chiến dịch' để bắt đầu."
+      },
+      "CARD": {
+        "STATUS": {
+          "COMPLETED": "Hoàn tất",
+          "SCHEDULED": "Đã lên lịch"
+        },
+        "CAMPAIGN_DETAILS": {
+          "SENT_FROM": "Gửi từ",
+          "ON": "vào",
+          "SENT_BY": "Gửi bởi",
+          "BOT": "ShopizAI"
+        }
+      },
+      "CREATE": {
+        "TITLE": "Tạo chiến dịch Zalo OA",
+        "CANCEL_BUTTON_TEXT": "Huỷ",
+        "CREATE_BUTTON_TEXT": "Tạo",
+        "FORM": {
+          "TITLE": {
+            "LABEL": "Tiêu đề",
+            "PLACEHOLDER": "Nhập tiêu đề chiến dịch",
+            "ERROR": "Tiêu đề là bắt buộc"
+          },
+          "MESSAGE": {
+            "LABEL": "Tin nhắn",
+            "PLACEHOLDER": "Nhập nội dung tin nhắn quảng bá gửi đến người theo dõi OA",
+            "ERROR": "Tin nhắn là bắt buộc"
+          },
+          "INBOX": {
+            "LABEL": "Zalo OA",
+            "PLACEHOLDER": "Chọn Zalo OA",
+            "ERROR": "Zalo OA là bắt buộc"
+          },
+          "SENT_BY": {
+            "LABEL": "Người gửi",
+            "PLACEHOLDER": "Chọn người gửi",
+            "ERROR": "Người gửi là bắt buộc"
+          },
+          "AUDIENCE": {
+            "LABEL": "Tập khách hàng",
+            "PLACEHOLDER": "Chọn nhãn khách hàng",
+            "ERROR": "Tập khách hàng là bắt buộc"
+          },
+          "SCHEDULED_AT": {
+            "LABEL": "Thời gian gửi",
+            "PLACEHOLDER": "Chọn thời điểm bắt đầu chiến dịch",
+            "ERROR": "Thời gian gửi là bắt buộc"
+          },
+          "BUTTONS": {
+            "CREATE": "Tạo",
+            "CANCEL": "Huỷ"
+          },
+          "API": {
+            "SUCCESS_MESSAGE": "Tạo chiến dịch Zalo OA thành công",
+            "ERROR_MESSAGE": "Đã xảy ra lỗi. Vui lòng thử lại."
+          }
+        }
+      },
+      "EDIT": {
+        "TITLE": "Sửa chiến dịch Zalo OA",
+        "FORM": {
+          "API": {
+            "SUCCESS_MESSAGE": "Cập nhật thành công",
+            "ERROR_MESSAGE": "Đã xảy ra lỗi. Vui lòng thử lại."
+          }
+        }
+      }
+    },
+    "FACEBOOK": {
+      "HEADER_TITLE": "Chiến dịch Facebook Marketing",
+      "NEW_CAMPAIGN": "Tạo chiến dịch",
+      "EMPTY_STATE": {
+        "TITLE": "Chưa có chiến dịch Facebook Marketing nào",
+        "SUBTITLE": "Bắt đầu gửi tin nhắn quảng cáo đến khách hàng đã đồng ý nhận thông báo tiếp thị. Nhấn 'Tạo chiến dịch' để thiết lập chiến dịch đầu tiên."
+      },
+      "CARD": {
+        "STATUS": {
+          "COMPLETED": "Hoàn tất",
+          "SCHEDULED": "Đã lên lịch"
+        },
+        "CAMPAIGN_DETAILS": {
+          "SENT_FROM": "Gửi từ",
+          "ON": "vào",
+          "SENT_BY": "Gửi bởi",
+          "BOT": "ShopizAI"
+        },
+        "METRICS": {
+          "TOTAL_SENT": "Đã gửi",
+          "DELIVERED": "Thành công",
+          "FAILED": "Thất bại",
+          "DELIVERY_RATE": "Tỉ lệ gửi"
+        }
+      },
+      "CREATE": {
+        "TITLE": "Tạo chiến dịch Facebook Marketing",
+        "CANCEL_BUTTON_TEXT": "Hủy",
+        "CREATE_BUTTON_TEXT": "Tạo",
+        "FORM": {
+          "TITLE": {
+            "LABEL": "Tiêu đề",
+            "PLACEHOLDER": "Nhập tiêu đề chiến dịch",
+            "ERROR": "Tiêu đề là bắt buộc"
+          },
+          "MESSAGE": {
+            "LABEL": "Tin nhắn",
+            "PLACEHOLDER": "Nhập nội dung tin nhắn Marketing gửi đến khách hàng đã opt-in",
+            "ERROR": "Tin nhắn là bắt buộc"
+          },
+          "INBOX": {
+            "LABEL": "Trang Facebook",
+            "PLACEHOLDER": "Chọn trang Facebook",
+            "ERROR": "Trang Facebook là bắt buộc"
+          },
+          "SENT_BY": {
+            "LABEL": "Người gửi",
+            "PLACEHOLDER": "Chọn người gửi",
+            "ERROR": "Người gửi là bắt buộc"
+          },
+          "AUDIENCE": {
+            "LABEL": "Tập khách hàng",
+            "PLACEHOLDER": "Chọn nhãn khách hàng",
+            "ERROR": "Tập khách hàng là bắt buộc"
+          },
+          "SCHEDULED_AT": {
+            "LABEL": "Thời gian gửi",
+            "PLACEHOLDER": "Chọn thời điểm bắt đầu chiến dịch",
+            "ERROR": "Thời gian gửi là bắt buộc"
+          },
+          "BUTTONS": {
+            "CREATE": "Tạo",
+            "CANCEL": "Hủy"
+          },
+          "API": {
+            "SUCCESS_MESSAGE": "Tạo chiến dịch Facebook Marketing thành công",
+            "ERROR_MESSAGE": "Đã xảy ra lỗi. Vui lòng thử lại."
+          }
+        }
+      },
+      "EDIT": {
+        "TITLE": "Sửa chiến dịch Facebook Marketing",
+        "FORM": {
+          "API": {
+            "SUCCESS_MESSAGE": "Cập nhật thành công",
+            "ERROR_MESSAGE": "Đã xảy ra lỗi. Vui lòng thử lại."
+          }
+        }
+      }
+    },
+    "VOICE": {
+      "HEADER_TITLE": "Chiến dịch Voice (Gọi tự động)",
+      "NEW_CAMPAIGN": "Tạo chiến dịch",
+      "EMPTY_STATE": {
+        "TITLE": "Chưa có chiến dịch Voice nào",
+        "SUBTITLE": "Liên hệ khách hàng cá nhân hóa qua cuộc gọi AI. Phù hợp cho nhắc lịch hẹn, xác minh, hoặc chăm sóc sau bán. Trợ lý AI có thể tương tác linh hoạt, thu thập thông tin và làm giàu dữ liệu khách hàng—giúp tiết kiệm thời gian cho đội ngũ.",
+        "JS_API_DESCRIPTION": "Bạn có thể kích hoạt chiến dịch Voice bằng JavaScript API:"
       },
       "CARD": {
         "STATUS": {
@@ -390,13 +458,13 @@
         "DISABLED": "Đã tắt"
       },
       "DETAILS": {
-        "MESSAGE": "Kịch bản khảo sát",
+        "MESSAGE": "Kịch bản",
         "INBOX": "Hộp thư",
         "AUDIENCE": "Tệp khách hàng",
         "SCHEDULED_AT": "Thời gian gửi"
       },
       "CREATE": {
-        "TITLE": "Tạo chiến dịch khảo sát",
+        "TITLE": "Tạo chiến dịch Voice",
         "FORM": {
           "TITLE": {
             "LABEL": "Tiêu đề",
@@ -404,14 +472,14 @@
             "ERROR": "Tiêu đề là bắt buộc"
           },
           "MESSAGE": {
-            "LABEL": "Kịch bản khảo sát",
+            "LABEL": "Kịch bản cuộc gọi",
             "PLACEHOLDER": "Nhập hướng dẫn cho AI: giọng điệu, thông tin cần thu thập, cách xử lý phản hồi...",
-            "ERROR": "Kịch bản khảo sát là bắt buộc"
+            "ERROR": "Kịch bản cuộc gọi là bắt buộc"
           },
           "INBOX": {
-            "LABEL": "Hộp thư khảo sát",
-            "PLACEHOLDER": "Chọn Hộp thư khảo sát",
-            "ERROR": "Hộp thư khảo sát là bắt buộc"
+            "LABEL": "Hộp thư thoại",
+            "PLACEHOLDER": "Chọn Hộp thư thoại",
+            "ERROR": "Hộp thư thoại là bắt buộc"
           },
           "SENT_BY": {
             "LABEL": "Gửi bởi",
@@ -433,7 +501,7 @@
             "CANCEL": "Hủy"
           },
           "API": {
-            "SUCCESS_MESSAGE": "Tạo chiến dịch khảo sát thành công",
+            "SUCCESS_MESSAGE": "Tạo chiến dịch Voice thành công",
             "ERROR_MESSAGE": "Đã xảy ra lỗi. Vui lòng thử lại."
           }
         }
@@ -446,6 +514,122 @@
       "API": {
         "SUCCESS_MESSAGE": "Xóa chiến dịch thành công",
         "ERROR_MESSAGE": "Đã xảy ra lỗi. Vui lòng thử lại."
+      }
+    },
+    "TELEGRAM": {
+      "HEADER_TITLE": "Chiến dịch Telegram",
+      "NEW_CAMPAIGN": "Tạo chiến dịch",
+      "EMPTY_STATE": {
+        "TITLE": "Chưa có chiến dịch Telegram nào",
+        "SUBTITLE": "Bắt đầu gửi tin nhắn hàng loạt qua Telegram để kết nối khách hàng. Bấm 'Tạo chiến dịch' để bắt đầu."
+      },
+      "CARD": {
+        "STATUS": {
+          "COMPLETED": "Đã hoàn thành",
+          "SCHEDULED": "Đã lên lịch"
+        },
+        "CAMPAIGN_DETAILS": {
+          "SENT_FROM": "Gửi từ",
+          "ON": "vào"
+        }
+      },
+      "CREATE": {
+        "TITLE": "Tạo chiến dịch Telegram",
+        "CANCEL_BUTTON_TEXT": "Hủy",
+        "CREATE_BUTTON_TEXT": "Tạo",
+        "FORM": {
+          "TITLE": {
+            "LABEL": "Tiêu đề",
+            "PLACEHOLDER": "Nhập tiêu đề chiến dịch",
+            "ERROR": "Tiêu đề là bắt buộc"
+          },
+          "MESSAGE": {
+            "LABEL": "Tin nhắn",
+            "PLACEHOLDER": "Nhập nội dung tin nhắn",
+            "ERROR": "Tin nhắn là bắt buộc"
+          },
+          "INBOX": {
+            "LABEL": "Chọn hộp thư",
+            "PLACEHOLDER": "Chọn hộp thư",
+            "ERROR": "Hộp thư là bắt buộc"
+          },
+          "AUDIENCE": {
+            "LABEL": "Tệp khách hàng",
+            "PLACEHOLDER": "Chọn nhãn khách hàng",
+            "ERROR": "Tệp khách hàng là bắt buộc"
+          },
+          "SCHEDULED_AT": {
+            "LABEL": "Thời gian gửi",
+            "PLACEHOLDER": "Chọn thời gian",
+            "ERROR": "Thời gian gửi là bắt buộc"
+          },
+          "BUTTONS": {
+            "CREATE": "Tạo",
+            "CANCEL": "Hủy"
+          },
+          "API": {
+            "SUCCESS_MESSAGE": "Tạo chiến dịch Telegram thành công",
+            "ERROR_MESSAGE": "Đã xảy ra lỗi. Vui lòng thử lại."
+          }
+        }
+      }
+    },
+    "LINE": {
+      "HEADER_TITLE": "Chiến dịch LINE",
+      "NEW_CAMPAIGN": "Tạo chiến dịch",
+      "EMPTY_STATE": {
+        "TITLE": "Chưa có chiến dịch LINE nào",
+        "SUBTITLE": "Khởi tạo chiến dịch trên LINE dễ dàng. Bấm 'Tạo chiến dịch' để bắt đầu."
+      },
+      "CARD": {
+        "STATUS": {
+          "COMPLETED": "Đã hoàn thành",
+          "SCHEDULED": "Đã lên lịch"
+        },
+        "CAMPAIGN_DETAILS": {
+          "SENT_FROM": "Gửi từ",
+          "ON": "vào"
+        }
+      },
+      "CREATE": {
+        "TITLE": "Tạo chiến dịch LINE",
+        "CANCEL_BUTTON_TEXT": "Hủy",
+        "CREATE_BUTTON_TEXT": "Tạo",
+        "FORM": {
+          "TITLE": {
+            "LABEL": "Tiêu đề",
+            "PLACEHOLDER": "Nhập tiêu đề chiến dịch",
+            "ERROR": "Tiêu đề là bắt buộc"
+          },
+          "MESSAGE": {
+            "LABEL": "Tin nhắn",
+            "PLACEHOLDER": "Nhập nội dung tin nhắn",
+            "ERROR": "Tin nhắn là bắt buộc"
+          },
+          "INBOX": {
+            "LABEL": "Chọn hộp thư",
+            "PLACEHOLDER": "Chọn hộp thư",
+            "ERROR": "Hộp thư là bắt buộc"
+          },
+          "AUDIENCE": {
+            "LABEL": "Tệp khách hàng",
+            "PLACEHOLDER": "Chọn nhãn khách hàng",
+            "ERROR": "Tệp khách hàng là bắt buộc"
+          },
+          "SCHEDULED_AT": {
+            "LABEL": "Thời gian gửi",
+            "PLACEHOLDER": "Chọn thời gian",
+            "ERROR": "Thời gian gửi là bắt buộc"
+          },
+          "BUTTONS": {
+            "CREATE": "Tạo",
+            "CANCEL": "Hủy"
+          },
+          "API": {
+            "SUCCESS_MESSAGE": "Tạo chiến dịch LINE thành công",
+            "ERROR_MESSAGE": "Đã xảy ra lỗi. Vui lòng thử lại."
+          }
+        }
       }
     }
   }

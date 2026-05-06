@@ -1,0 +1,64 @@
+{
+  "YEAR_IN_REVIEW": {
+    "TITLE": "Nhìn lại năm qua",
+    "LOADING": "Đang tải hành trình năm qua của bạn...",
+    "ERROR": "Không thể tải hành trình năm qua",
+    "CLOSE": "Đóng",
+    "CONVERSATIONS": {
+      "TITLE": "Bạn đã xử lý",
+      "SUBTITLE": "các cuộc hội thoại",
+      "FALLBACK": "Năm qua không phải chỉ về những con số. Quan trọng là bạn đã không ngừng nỗ lực hiện diện.",
+      "COMPARISON": {
+        "0_50": "Bạn đã có mặt, và đó là cách những dịch vụ hỗ trợ tuyệt vời được sinh ra.",
+        "50_100": "Bạn đã giữ cho mạch hỗ trợ liên tục và nhịp độ cuộc trò chuyện luôn sống động.",
+        "100_500": "Bạn đã xử lý một khối lượng tin nhắn khá kinh khủng mà vẫn giữ mọi thứ đi đúng quỹ đạo.",
+        "500_2000": "Mọi khách hàng vẫn luôn được hỗ trợ mượt mà trong khi lượng tin nhắn tăng không ngừng.",
+        "2000_10000": "Bạn đã lướt qua một lưu lượng chat khổng lồ mà trông cứ như không hề đổ một giọt mồ hôi.",
+        "10000_PLUS": "Như thể cả một thành phố đập cửa nhờ bạn... vậy mà bạn khiến việc đó trở nên quá đỗi dễ dàng."
+      }
+    },
+    "BUSIEST_DAY": {
+      "TITLE": "Ngày bận rộn kỷ lục của bạn là",
+      "MESSAGE": "{count} cuộc trò chuyện diễn ra vào ngày hôm đó.",
+      "COMPARISON": {
+        "0_5": "Ngày khởi động sương sương chưa đủ để hộp thư tỉnh giấc.",
+        "5_10": "Đủ bận để phải lấy ngay cho mình ly cà phê thứ hai.",
+        "10_25": "Mọi thứ dồn dập khiến hộp thư phải căng mình vận hành liên tục.",
+        "25_50": "Một sự bận rộn được xử lý hoàn hảo trong tầm tay.",
+        "50_100": "Một mớ hỗn độn, nhưng được kiểm soát mượt mà như một ngày thứ Ba bình thường.",
+        "100_500": "Một cơn khủng hoảng hỗ trợ, bằng cách nào đó bạn vẫn kiên nhẫn trả lời.",
+        "500_PLUS": "Hộp thư kẹt cứng, nóng hừng hực và chưa lúc nào biết chậm lại."
+      }
+    },
+    "PERSONALITY": {
+      "TITLE": "Phong cách hỗ trợ của bạn là",
+      "MESSAGES": {
+        "SWIFT_HELPER": "Thời gian phản hồi TB là {time}. Tốc độ nhanh hơn cả việc hiển thị thông báo.",
+        "QUICK_RESPONDER": "Thời gian phản hồi TB là {time}. Khách hàng dường như không bao giờ phải đợi lời kết.",
+        "STEADY_SUPPORT": "Thời gian phản hồi TB là {time}. Nhịp độ rất điềm tĩnh, kết quả vô cùng chắc chắn.",
+        "THOUGHTFUL_ADVISOR": "Thời gian phản hồi TB là {time}. Dành thời gian để nghiên cứu và đưa ra câu trả lời xuất sắc."
+      }
+    },
+    "THANK_YOU": {
+      "TITLE": "Xin chúc mừng bạn đã anh dũng sống sót qua chảo lửa hộp thư năm {year}!",
+      "MESSAGE": "Xin chân thành cảm ơn những cống hiến không ngừng nghỉ của bạn để hỗ trợ khách hàng suốt năm nay. Sự tận tâm của bạn thực sự tạo ra sự khác biệt, và chúng tôi rất tự hào vì có bạn đồng hành. Cùng nhau hướng đến một năm {nextYear} rực rỡ hơn thế nữa!"
+    },
+    "SHARE_MODAL": {
+      "TITLE": "Chia sẻ năm qua của bạn",
+      "PREPARING": "Đang chuẩn bị tạo ảnh...",
+      "DOWNLOAD": "Tải xuống",
+      "SHARE_TITLE": "Dấu ấn nhìn lại năm {year} của tôi",
+      "SHARE_TEXT": "Cùng xem dấu ấn hành trình năm {year} của tôi tại Shopiz nào!",
+      "BRANDING": "Tạo bằng Shopiz"
+    },
+    "BANNER": {
+      "TITLE": "Báo cáo nhìn lại năm {year} của bạn đã có",
+      "BUTTON": "Nhìn lại thành quả"
+    },
+    "NAVIGATION": {
+      "PREVIOUS": "Trang trước",
+      "NEXT": "Trang sau",
+      "SHARE": "Chia sẻ cuộc trò chuyện"
+    }
+  }
+}

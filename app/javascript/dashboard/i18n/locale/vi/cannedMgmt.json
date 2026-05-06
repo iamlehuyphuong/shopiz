@@ -3,8 +3,11 @@
     "HEADER": "Tin nhắn mẫu",
     "LEARN_MORE": "Tìm hiểu thêm về tin nhắn mẫu",
     "DESCRIPTION": "Tin nhắn mẫu là các mẫu phản hồi được soạn trước giúp bạn trả lời hội thoại nhanh hơn. Nhân viên có thể gõ '/' kèm theo phím tắt để chèn nhanh tin nhắn mẫu vào cuộc trò chuyện.",
+    "COUNT": "{n} mẫu | {n} mẫu",
     "HEADER_BTN_TXT": "Thêm tin nhắn mẫu",
     "LOADING": "Đang tải danh sách tin nhắn mẫu...",
+    "SEARCH_PLACEHOLDER": "Tìm kiếm phản hồi mẫu...",
+    "NO_RESULTS": "Không tìm thấy phản hồi mẫu nào khớp với tìm kiếm của bạn",
     "SEARCH_404": "Không tìm thấy nội dung phù hợp.",
     "LIST": {
       "404": "Bạn chưa có tin nhắn mẫu nào.",

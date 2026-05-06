@@ -9,11 +9,32 @@
     "EMAIL_ADDRESS": "Địa chỉ email",
     "PHONE_NUMBER": "Số điện thoại",
     "IDENTIFIER": "Định danh",
+    "ZALO_PERSONAL": {
+      "CONNECT_TITLE": "Kết nối Zalo cá nhân",
+      "CONNECT_SUBTITLE": "Tạo hội thoại mới qua Zalo cá nhân",
+      "SELECT_INBOX": "Chọn kênh Zalo cá nhân",
+      "SELECT_INBOX_PLACEHOLDER": "Chọn kênh Zalo cá nhân",
+      "SELECT_INBOX_REQUIRED": "Vui lòng chọn kênh Zalo cá nhân",
+      "SEND_FRIEND_REQUEST": "Gửi lời mời kết bạn",
+      "FRIEND_REQUEST_MESSAGE": "Lời mời kết bạn",
+      "GREETING_MESSAGE": "Lời chào",
+      "CANCEL": "Hủy",
+      "SUBMIT": "Gửi",
+      "CONNECT_SUCCESS": "Kết nối thành công qua Zalo cá nhân.",
+      "CONNECT_ERROR": "Lỗi khi kết nối qua Zalo cá nhân.",
+      "CONNECT_TOOLTIP": "Kết nối Zalo cá nhân"
+    },
     "COPY_SUCCESSFUL": "Sao chép thành công",
+    "SAVE_CONTACT": "Lưu vào danh bạ",
+    "SAVE_CONTACT_SUCCESS": "Cập nhật liên hệ thành công",
+    "SAVE_CONTACT_ERROR": "Không thể cập nhật liên hệ",
+    "NO_CONTACT_FOUND": "Hội thoại này chưa được gán liên hệ",
     "COPY_EMAIL": "Sao chép email",
     "SEND_EMAIL": "Gửi email",
     "COPY_PHONE": "Sao chép số điện thoại",
     "LOOKUP_ZALO": "Tìm kiếm Zalo",
+    "ADDRESS": "Địa chỉ",
+    "NOT_AVAILABLE_ADDRESS": "Chưa có địa chỉ",
     "COMPANY": "Công ty",
     "LOCATION": "Vị trí",
     "BROWSER_LANGUAGE": "Ngôn ngữ trình duyệt",
@@ -26,9 +47,10 @@
     "IP_ADDRESS": "Địa chỉ IP",
     "CREATED_AT_LABEL": "Tạo lúc",
     "NEW_MESSAGE": "Tin nhắn mới",
-    "REQUEST_FRIEND": "Gửi yêu cầu kết bạn",
     "CALL": "Gọi",
-    "CALL_UNDER_DEVELOPMENT": "Tính năng gọi đang được phát triển",
+    "CALL_INITIATED": "Đang gọi liên hệ…",
+    "CALL_FAILED": "Không thể bắt đầu cuộc gọi. Vui lòng thử lại.",
+    "REQUEST_FRIEND": "Gửi yêu cầu kết bạn",
     "VOICE_INBOX_PICKER": {
       "TITLE": "Chọn voice inbox"
     },
@@ -130,6 +152,10 @@
       "COMPANY_NAME": {
         "PLACEHOLDER": "Nhập tên công ty",
         "LABEL": "Công ty"
+      },
+      "ADDRESS": {
+        "PLACEHOLDER": "Nhập địa chỉ chi tiết",
+        "LABEL": "Địa chỉ"
       },
       "COUNTRY": {
         "PLACEHOLDER": "Nhập tên quốc gia",
@@ -473,6 +499,12 @@
           "INSTAGRAM": {
             "PLACEHOLDER": "Thêm Instagram"
           },
+          "TELEGRAM": {
+            "PLACEHOLDER": "Thêm Telegram"
+          },
+          "TIKTOK": {
+            "PLACEHOLDER": "Thêm TikTok"
+          },
           "LINKEDIN": {
             "PLACEHOLDER": "Thêm LinkedIn"
           },
@@ -489,6 +521,8 @@
     "DETAILS": {
       "CREATED_AT": "Tạo lúc {date}",
       "LAST_ACTIVITY": "Hoạt động cuối {date}",
+      "SOURCE": "Nguồn: {source}",
+      "SOURCE_SYSTEM": "Hệ thống / Nhập thủ công",
       "DELETE_CONTACT_DESCRIPTION": "Xóa vĩnh viễn liên hệ này. Hành động không thể hoàn tác.",
       "DELETE_CONTACT": "Xóa liên hệ",
       "DELETE_DIALOG": {
@@ -586,7 +620,8 @@
       "SEARCH_EMPTY_STATE_TITLE": "Không khớp kết quả tìm kiếm 🔍",
       "LIST_EMPTY_STATE_TITLE": "Không có liên hệ nào trong chế độ xem hiện tại 📋",
       "ACTIVE_EMPTY_STATE_TITLE": "Không có liên hệ nào đang hoạt động 🌙"
-    }
+    },
+    "LOAD_MORE": "Tải thêm"
   },
   "CONTACTS_BULK_ACTIONS": {
     "ASSIGN_LABELS": "Gán nhãn",

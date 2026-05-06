@@ -1,17 +1,15 @@
-<p>Hello,</p>
-
-<p>Your contact import has been completed. Please check the contacts tab to view the imported contacts.</p>
-
-<p>Number of records imported: {{meta['imported_contacts']}}</p>
-
-<p>Number of records failed: {{meta['failed_contacts']}}</p>
-
-{% if meta['failed_contacts'] == 0 %}
-  <p>
-    Click <a href="{{action_url}}">here</a> to view the imported contacts.
-  </p>
-{% else %}
-  <p>
-  Click <a href="{{ action_url }}" target="_blank">here</a> to view failed records.
-  </p>
-{% endif %}
+<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Contact Import Completed</h2>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
+  The system has finished processing your recent contact import batch.
+</p>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
+  Status: <strong>Completed</strong>.
+</p>
+<hr style="border: 0; border-bottom: 1px solid #E2E8F0; margin: 24px 0;" />
+<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Nhập Danh Bạ Hoàn tất</h2>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
+  Hệ thống vừa hoàn tất tiến trình xử lý hàng loạt tệp danh bạ khách hàng bạn tải lên gần đây.
+</p>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
+  Trạng thái: <strong>Hoàn tất</strong>.
+</p>

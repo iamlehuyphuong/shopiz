@@ -54,6 +54,15 @@ class ContactMergeAction
     # attributes in base contact are given preference
     merged_attributes = mergee_contact_attributes.deep_merge(base_contact_attributes)
 
+    # specially merge sources to retain all channels
+    if mergee_contact_attributes.dig('additional_attributes', 'sources').is_a?(Array) &&
+       base_contact_attributes.dig('additional_attributes', 'sources').is_a?(Array)
+      merged_sources = mergee_contact_attributes['additional_attributes']['sources'] | base_contact_attributes['additional_attributes']['sources']
+      merged_attributes['additional_attributes']['sources'] = merged_sources.uniq.compact_blank
+    elsif mergee_contact_attributes.dig('additional_attributes', 'sources').is_a?(Array)
+      merged_attributes['additional_attributes']['sources'] = mergee_contact_attributes['additional_attributes']['sources'].uniq.compact_blank
+    end
+
     @mergee_contact.reload.destroy!
     Rails.configuration.dispatcher.dispatch(CONTACT_MERGED, Time.zone.now, contact: @base_contact,
                                                                            tokens: [@base_contact.contact_inboxes.filter_map(&:pubsub_token)])

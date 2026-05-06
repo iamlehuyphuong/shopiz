@@ -4,7 +4,7 @@ import { useReportMetrics } from 'dashboard/composables/useReportMetrics';
 import { GROUP_BY_FILTER, METRIC_CHART } from './constants';
 import fromUnixTime from 'date-fns/fromUnixTime';
 import format from 'date-fns/format';
-import { formatTime } from '@chatwoot/utils';
+import { formatTime } from 'dashboard/routes/dashboard/settings/reports/helper/reportTimeHelper';
 import ChartStats from './components/ChartElements/ChartStats.vue';
 import BarChart from 'shared/components/charts/BarChart.vue';
 
@@ -77,18 +77,27 @@ export default {
           const last_day = first_day + 6;
           const week_first_date = new Date(week_date.setDate(first_day));
           const week_last_date = new Date(week_date.setDate(last_day));
-          return `${format(week_first_date, 'dd-MMM')} - ${format(
+          return `${format(
+            week_first_date,
+            this.$t('GENERAL.REPORT_SHORT_DATE_FORMAT')
+          )} - ${format(
             week_last_date,
-            'dd-MMM'
+            this.$t('GENERAL.REPORT_SHORT_DATE_FORMAT')
           )}`;
         }
         if (this.groupBy?.period === GROUP_BY_FILTER[3].period) {
-          return format(fromUnixTime(element.timestamp), 'MMM-yyyy');
+          return format(
+            fromUnixTime(element.timestamp),
+            this.$t('GENERAL.REPORT_MONTH_YEAR_FORMAT')
+          );
         }
         if (this.groupBy?.period === GROUP_BY_FILTER[4].period) {
           return format(fromUnixTime(element.timestamp), 'yyyy');
         }
-        return format(fromUnixTime(element.timestamp), 'dd-MMM');
+        return format(
+          fromUnixTime(element.timestamp),
+          this.$t('GENERAL.REPORT_SHORT_DATE_FORMAT')
+        );
       });
       const datasets = METRIC_CHART[metric.KEY].datasets.map(dataset => {
         switch (dataset.type) {
@@ -127,7 +136,7 @@ export default {
             callbacks: {
               label: ({ raw, dataIndex }) => {
                 return this.$t(metric.TOOLTIP_TEXT, {
-                  metricValue: formatTime(raw || 0),
+                  metricValue: formatTime(raw || 0, this.$t),
                   conversationCount:
                     this.accountReport.data[metric.KEY][dataIndex]?.count || 0,
                 });
@@ -145,7 +154,7 @@ export default {
 
 <template>
   <div
-    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 px-6 py-5 shadow outline-1 outline outline-n-container rounded-xl bg-n-solid-2"
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 px-6 py-5 shadow outline-1 outline outline-n-container rounded-xl bg-n-solid-2 mt-4"
   >
     <div
       v-for="metric in metrics"

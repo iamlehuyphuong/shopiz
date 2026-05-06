@@ -1,0 +1,19 @@
+<div class="field-unit__label">
+  <%= f.label field.attribute %>
+</div>
+<div class="field-unit__field !max-w-none">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-4">
+    <% field.limit_keys.each do |key| %>
+      <div class="flex flex-col">
+        <label for="<%= f.object_name %>_limits_<%= key %>" class="text-sm font-semibold text-slate-500 mb-1">
+          <%= key.titleize %>
+        </label>
+        <%= number_field_tag "#{f.object_name}[limits][#{key}]", field.limit_value(key), 
+            id: "#{f.object_name}_limits_#{key}",
+            placeholder: "Unlimited",
+            class: "w-full rounded border-slate-200 text-sm focus:ring-woot-500 focus:border-woot-500" %>
+      </div>
+    <% end %>
+  </div>
+  <p class="text-xs text-slate-500 mt-4">Leave blank for unlimited or default value.</p>
+</div>

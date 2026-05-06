@@ -24,15 +24,17 @@ const addCampaign = async campaignDetails => {
       ...campaignDetails,
       campaign_type: CAMPAIGN_TYPES.VOICE,
     });
-    
+
     // tracking this here instead of the store to track the type of campaign
     useTrack(CAMPAIGNS_EVENTS.CREATE_CAMPAIGN, {
       type: CAMPAIGN_TYPES.VOICE,
     });
-    
+
     useAlert(t('CAMPAIGN.VOICE.CREATE.FORM.API.SUCCESS_MESSAGE'));
   } catch (error) {
-    const errorMessage = error?.response?.message || t('CAMPAIGN.VOICE.CREATE.FORM.API.ERROR_MESSAGE');
+    const errorMessage =
+      error?.response?.message ||
+      t('CAMPAIGN.VOICE.CREATE.FORM.API.ERROR_MESSAGE');
     useAlert(errorMessage);
   }
 };
@@ -52,9 +54,6 @@ const handleSubmit = campaignDetails => {
     <h3 class="text-base font-medium text-slate-900 dark:text-slate-50">
       {{ t(`CAMPAIGN.VOICE.CREATE.TITLE`) }}
     </h3>
-    <VoiceCampaignForm
-      @submit="handleSubmit"
-      @cancel="handleClose"
-    />
+    <VoiceCampaignForm @submit="handleSubmit" @cancel="handleClose" />
   </div>
 </template>

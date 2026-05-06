@@ -8,7 +8,7 @@ const {
 } = require('@egoist/tailwindcss-icons');
 
 const defaultSansFonts = [
-  "'Nunito Sans'",
+  'Nunito Sans',
   '-apple-system',
   'system-ui',
   'BlinkMacSystemFont',
@@ -17,7 +17,7 @@ const defaultSansFonts = [
   '"Helvetica Neue"',
   'Tahoma',
   'Arial',
-  'sans-serif !important',
+  'sans-serif',
 ];
 
 const tailwindConfig = {
@@ -32,9 +32,26 @@ const tailwindConfig = {
     './app/javascript/survey/**/*.vue',
     './app/javascript/dashboard/components-next/**/*.vue',
     './app/javascript/dashboard/helper/**/*.js',
+    './app/javascript/dashboard/composables/**/*.js',
     './app/javascript/dashboard/components-next/**/*.js',
     './app/javascript/dashboard/routes/dashboard/**/**/*.js',
     './app/views/**/*.html.erb',
+    './app/services/**/*.rb',
+  ],
+  safelist: [
+    // Critical brand color classes used in dynamic JS configs (Button.vue STYLE_CONFIG)
+    'bg-n-orange',
+    'bg-n-blue',
+    'text-n-orange-11',
+    'text-n-blue-11',
+    'outline-n-orange',
+    'outline-n-blue',
+    {
+      pattern: /bg-n-orange\/(5|10|20|30|50|80)/,
+    },
+    {
+      pattern: /bg-n-blue\/(5|10|20|30|50|80)/,
+    },
   ],
   theme: {
     extend: {
@@ -187,6 +204,7 @@ const tailwindConfig = {
       lg: '1024px',
       xl: '1280px',
       '2xl': '1536px',
+      '3xl': '1900px',
     },
     fontSize: {
       ...defaultTheme.fontSize,
@@ -259,6 +277,7 @@ const tailwindConfig = {
           'ph',
           'material-symbols',
           'teenyicons',
+          'fluent',
         ]),
       },
     }),

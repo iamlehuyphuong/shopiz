@@ -35,40 +35,31 @@ as well as a link to its edit page.
     <div class="pr-16">
       <% page.attributes.each do |title, attributes| %>
         <% if title.present? && title == 'all_features' %>
-          <% regular_features, premium_features =
-            attributes.partition do |attr|
-              !SuperAdmin::AccountFeaturesHelper.account_premium_features.include?(
-                attr.data.keys.first,
-              )
-            end %>
-
-          <div class="space-y-4">
-            <% regular_features.each do |attribute| %>
-              <div class="attribute-label" id="<%= attribute.name %>">
-                <%= t(
-                  "helpers.label.#{resource_name}.#{attribute.name}",
-                  default: page.resource.class.human_attribute_name(attribute.name),
-                ) %>
-              </div>
-
-              <div class="attribute-data attribute-data--<%=attribute.html_class%>"><%= render_field attribute, page: page %></div>
-            <% end %>
-          </div>
-
-          <hr class="my-8 border-n-weak">
-
-          <div class="space-y-4">
-            <% premium_features.each do |attribute| %>
-              <div class="attribute-label" id="<%= attribute.name %>">
-                <%= t(
-                  "helpers.label.#{resource_name}.#{attribute.name}",
-                  default: page.resource.class.human_attribute_name(attribute.name),
-                ) %>
-              </div>
-
-              <div class="attribute-data attribute-data--<%=attribute.html_class%>"><%= render_field attribute, page: page %></div>
-            <% end %>
-          </div>
+          <% SuperAdmin::AccountFeaturesHelper.categorized_features(attributes).each do |category, category_attributes| %>
+            <div class="mt-10 mb-6 first:mt-0">
+              <h3 class="text-xl font-bold border-b-2 border-n-weak pb-2 text-black"><%= category %></h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+              <% category_attributes.each do |attribute| %>
+                <div class="p-3 border border-n-weak rounded-lg bg-white shadow-sm hover:border-n-orange transition-colors duration-200">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="px-2 py-0.5 text-[10px] uppercase font-mono font-bold bg-n-alpha-2 text-n-muted border border-n-weak rounded">
+                      <%= attribute.data.keys.first %>
+                    </span>
+                    <div class="attribute-data attribute-data--<%=attribute.html_class%> transform scale-90 origin-right">
+                      <%= render_field attribute, page: page %>
+                    </div>
+                  </div>
+                  <div class="text-sm font-semibold truncate text-black" title="<%= SuperAdmin::AccountFeaturesHelper.feature_display_names[attribute.data.keys.first.to_s] || page.resource.class.human_attribute_name(attribute.name) %>">
+                    <%= SuperAdmin::AccountFeaturesHelper.feature_display_names[attribute.data.keys.first.to_s] || t(
+                      "helpers.label.#{resource_name}.#{attribute.name}",
+                      default: page.resource.class.human_attribute_name(attribute.name),
+                    ) %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
         <% else %>
           <fieldset class="<%= "field-unit--nested" if title.present? %>">
             <% if title.present? %>
@@ -93,7 +84,8 @@ as well as a link to its edit page.
 
   <%= render 'super_admin/shared/account_user_form', page: page, namespace: namespace, resource_type: 'account' %>
 
-  <%= render partial: "plan_form", locals: { page: page } %>
+  <%= render partial: "subscription_form", locals: { page: page } %>
+  <%= render partial: "addon_form", locals: { page: page } %>
 
   <%= render partial: "seed_data", locals: { page: page } %>
 

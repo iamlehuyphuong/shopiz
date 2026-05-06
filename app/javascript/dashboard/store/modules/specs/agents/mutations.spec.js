@@ -21,9 +21,7 @@ describe('#mutations', () => {
   describe('#ADD_AGENT', () => {
     it('push newly created agent data to the store', () => {
       const state = {
-        records: [
-          { id: 1, name: 'Agent1', email: 'agent1@shopiz.pro' },
-        ],
+        records: [{ id: 1, name: 'Agent1', email: 'agent1@shopiz.pro' }],
       };
       mutations[types.default.ADD_AGENT](state, {
         id: 2,
@@ -40,9 +38,7 @@ describe('#mutations', () => {
   describe('#EDIT_AGENT', () => {
     it('update agent record', () => {
       const state = {
-        records: [
-          { id: 1, name: 'Agent1', email: 'agent1@shopiz.pro' },
-        ],
+        records: [{ id: 1, name: 'Agent1', email: 'agent1@shopiz.pro' }],
       };
       mutations[types.default.EDIT_AGENT](state, {
         id: 1,
@@ -58,9 +54,7 @@ describe('#mutations', () => {
   describe('#DELETE_AGENT', () => {
     it('delete agent record', () => {
       const state = {
-        records: [
-          { id: 1, name: 'Agent1', email: 'agent1@shopiz.pro' },
-        ],
+        records: [{ id: 1, name: 'Agent1', email: 'agent1@shopiz.pro' }],
       };
       mutations[types.default.DELETE_AGENT](state, 1);
       expect(state.records).toEqual([]);

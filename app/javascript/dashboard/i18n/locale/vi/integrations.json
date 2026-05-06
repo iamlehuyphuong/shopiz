@@ -1,6 +1,7 @@
 {
   "INTEGRATION_SETTINGS": {
     "SHOPIFY": {
+      "HEADER": "Shopify",
       "DELETE": {
         "TITLE": "Xóa tích hợp Shopify",
         "MESSAGE": "Bạn có chắc chắn muốn xóa tích hợp Shopify không?"
@@ -8,17 +9,153 @@
       "STORE_URL": {
         "TITLE": "Kết nối cửa hàng Shopify",
         "LABEL": "URL cửa hàng",
-        "PLACEHOLDER": "your-store.myshopify.com",
+        "PLACEHOLDER": "ten-cua-hang.myshopify.com",
         "HELP": "Nhập URL cửa hàng myshopify.com của bạn",
         "CANCEL": "Hủy",
         "SUBMIT": "Kết nối cửa hàng"
       },
       "ERROR": "Đã xảy ra lỗi khi kết nối với Shopify. Vui lòng thử lại hoặc liên hệ hỗ trợ nếu lỗi vẫn tiếp diễn."
     },
+    "KIOTVIET": {
+      "HEADER": "KiotViet",
+      "DELETE": {
+        "TITLE": "Xóa tích hợp KiotViet",
+        "MESSAGE": "Bạn có chắc chắn muốn xóa tích hợp KiotViet không?"
+      },
+      "CONNECT": {
+        "TITLE": "Kết nối cửa hàng KiotViet",
+        "CLIENT_ID": {
+          "LABEL": "Client ID",
+          "PLACEHOLDER": "Nhập Client ID KiotViet của bạn"
+        },
+        "CLIENT_SECRET": {
+          "LABEL": "Client Secret",
+          "PLACEHOLDER": "Nhập Client Secret KiotViet của bạn"
+        },
+        "RETAILER": {
+          "LABEL": "Tên cửa hàng",
+          "PLACEHOLDER": "Nhập tên cửa hàng KiotViet của bạn",
+          "HELP": "Đây là tên subdomain của cửa hàng KiotViet"
+        },
+        "CANCEL": "Hủy",
+        "SUBMIT": "Kết nối cửa hàng"
+      },
+      "SUCCESS": "Kết nối cửa hàng KiotViet thành công.",
+      "ERROR": "Đã xảy ra lỗi khi kết nối KiotViet. Vui lòng kiểm tra thông tin xác thực và thử lại."
+    },
+    "HARAVAN": {
+      "HEADER": "Haravan",
+      "DELETE": {
+        "TITLE": "Xóa tích hợp Haravan",
+        "MESSAGE": "Bạn có chắc chắn muốn xóa tích hợp Haravan không?"
+      },
+      "CONNECT": {
+        "TITLE": "Kết nối cửa hàng Haravan",
+        "API_KEY": {
+          "LABEL": "Khóa API",
+          "PLACEHOLDER": "Nhập API key ứng dụng riêng Haravan của bạn"
+        },
+        "STORE_NAME": {
+          "LABEL": "Tên cửa hàng",
+          "PLACEHOLDER": "Nhập tên cửa hàng Haravan của bạn",
+          "HELP": "Tên cửa hàng được sử dụng trên bảng quản trị Haravan"
+        },
+        "CANCEL": "Hủy",
+        "SUBMIT": "Kết nối cửa hàng"
+      },
+      "SUCCESS": "Kết nối cửa hàng Haravan thành công.",
+      "ERROR": "Đã xảy ra lỗi khi kết nối Haravan. Vui lòng kiểm tra API key và thử lại."
+    },
+    "WOOCOMMERCE": {
+      "HEADER": "WooCommerce",
+      "DELETE": {
+        "TITLE": "Xóa tích hợp WooCommerce",
+        "MESSAGE": "Bạn có chắc chắn muốn xóa tích hợp WooCommerce không?"
+      },
+      "CONNECT": {
+        "TITLE": "Kết nối cửa hàng WooCommerce",
+        "STORE_URL": {
+          "LABEL": "URL cửa hàng",
+          "PLACEHOLDER": "ten-cua-hang.com",
+          "HELP": "Tên miền trang WordPress của bạn (không cần https://)"
+        },
+        "CONSUMER_KEY": {
+          "LABEL": "Consumer Key",
+          "PLACEHOLDER": "Nhập Consumer Key WooCommerce (ck_...)"
+        },
+        "CONSUMER_SECRET": {
+          "LABEL": "Consumer Secret",
+          "PLACEHOLDER": "Nhập Consumer Secret WooCommerce (cs_...)"
+        },
+        "CANCEL": "Hủy",
+        "SUBMIT": "Kết nối cửa hàng"
+      },
+      "SUCCESS": "Kết nối cửa hàng WooCommerce thành công.",
+      "ERROR": "Đã xảy ra lỗi khi kết nối WooCommerce. Vui lòng kiểm tra thông tin xác thực và URL cửa hàng."
+    },
+    "SAPO": {
+      "HEADER": "Sapo",
+      "DELETE": {
+        "TITLE": "Xóa tích hợp Sapo",
+        "MESSAGE": "Bạn có chắc chắn muốn xóa tích hợp Sapo không?"
+      },
+      "CONNECT": {
+        "TITLE": "Kết nối cửa hàng Sapo",
+        "ACCESS_TOKEN": {
+          "LABEL": "Access Token",
+          "PLACEHOLDER": "Nhập access token API Sapo của bạn"
+        },
+        "STORE_NAME": {
+          "LABEL": "Tên cửa hàng",
+          "PLACEHOLDER": "ten-cua-hang",
+          "HELP": "Tên subdomain cửa hàng Sapo (ví dụ: ten-cua-hang.mysapo.net)"
+        },
+        "CANCEL": "Hủy",
+        "SUBMIT": "Kết nối cửa hàng"
+      },
+      "SUCCESS": "Kết nối cửa hàng Sapo thành công.",
+      "ERROR": "Đã xảy ra lỗi khi kết nối Sapo. Vui lòng kiểm tra access token và tên cửa hàng."
+    },
+    "NHANHVN": {
+      "HEADER": "Nhanh.vn",
+      "DELETE": {
+        "TITLE": "Xóa tích hợp Nhanh.vn",
+        "MESSAGE": "Bạn có chắc chắn muốn xóa tích hợp Nhanh.vn không?"
+      },
+      "CONNECT": {
+        "TITLE": "Kết nối cửa hàng Nhanh.vn",
+        "APP_ID": {
+          "LABEL": "App ID",
+          "PLACEHOLDER": "Nhập App ID Nhanh.vn của bạn"
+        },
+        "ACCESS_TOKEN": {
+          "LABEL": "Access Token",
+          "PLACEHOLDER": "Nhập Access Token Nhanh.vn của bạn"
+        },
+        "BUSINESS_ID": {
+          "LABEL": "Business ID",
+          "PLACEHOLDER": "Nhập Business ID Nhanh.vn của bạn",
+          "HELP": "Đây là mã doanh nghiệp được cấp sau khi ủy quyền OAuth trên open.nhanh.vn"
+        },
+        "CANCEL": "Hủy",
+        "SUBMIT": "Kết nối cửa hàng"
+      },
+      "SUCCESS": "Kết nối cửa hàng Nhanh.vn thành công.",
+      "ERROR": "Đã xảy ra lỗi khi kết nối Nhanh.vn. Vui lòng kiểm tra thông tin xác thực và thử lại."
+    },
     "HEADER": "Tích hợp",
     "DESCRIPTION": "Shopiz tích hợp với nhiều công cụ và dịch vụ nhằm nâng cao hiệu quả cho đội ngũ của bạn. Khám phá danh sách bên dưới để cấu hình ứng dụng bạn yêu thích.",
     "LEARN_MORE": "Tìm hiểu thêm về tích hợp",
     "LOADING": "Đang lấy thông tin tích hợp",
+    "SEARCH_PLACEHOLDER": "Tìm kiếm tích hợp...",
+    "NO_RESULTS": "Không tìm thấy tích hợp nào khớp với tìm kiếm của bạn",
+    "SECTION": {
+      "WORKSPACE_SYNC": "Đồng bộ không gian làm việc",
+      "SHOP_SALES": "Cửa hàng & Bán hàng",
+      "AI_AUTOMATION": "AI & Tự động hóa",
+      "CUSTOM_EXTENSIONS": "Tiện ích mở rộng",
+      "MORE_INTEGRATIONS": "Tích hợp khác"
+    },
     "CAPTAIN": {
       "DISABLED": "Trợ lý AI không được kích hoạt trên tài khoản của bạn.",
       "CLICK_HERE_TO_CONFIGURE": "Nhấp vào đây để cấu hình",
@@ -28,6 +165,17 @@
     "WEBHOOK": {
       "SUBSCRIBED_EVENTS": "Sự kiện đã đăng ký",
       "LEARN_MORE": "Tìm hiểu thêm về webhook",
+      "SECRET": {
+        "LABEL": "Mã bí mật (Secret)",
+        "COPY": "Sao chép secret vào bộ nhớ tạm",
+        "COPY_SUCCESS": "Đã sao chép secret vào bộ nhớ tạm",
+        "TOGGLE": "Hiển thị/Ẩn secret",
+        "CREATED_DESC": "Webhook của bạn đã được tạo. Sử dụng secret bên dưới để xác minh chữ ký webhook. Vui lòng sao chép nó ngay bây giờ — bạn cũng có thể tìm thấy nó sau trong biểu mẫu chỉnh sửa webhook.",
+        "DONE": "Xong"
+      },
+      "COUNT": "{n} webhook | {n} webhooks",
+      "SEARCH_PLACEHOLDER": "Tìm kiếm webhook...",
+      "NO_RESULTS": "Không tìm thấy webhook nào khớp với tìm kiếm của bạn",
       "FORM": {
         "CANCEL": "Hủy",
         "DESC": "Webhook cung cấp thông tin thời gian thực về những gì đang xảy ra trong tài khoản Shopiz của bạn. Vui lòng nhập URL hợp lệ để cấu hình callback.",
@@ -104,6 +252,7 @@
       }
     },
     "SLACK": {
+      "HEADER": "Slack",
       "DELETE": "Xóa",
       "DELETE_CONFIRMATION": {
         "TITLE": "Xóa tích hợp",
@@ -145,7 +294,29 @@
         "EXPAND": "Mở rộng",
         "MAKE_FRIENDLY": "Thay đổi giọng nói thân thiện",
         "MAKE_FORMAL": "Sử dụng giọng chính thức",
-        "SIMPLIFY": "Đơn giản hóa"
+        "SIMPLIFY": "Đơn giản hóa",
+        "CONFIDENT": "Sử dụng giọng điệu tự tin",
+        "PROFESSIONAL": "Sử dụng giọng điệu chuyên nghiệp",
+        "CASUAL": "Sử dụng giọng điệu thân thiện thoải mái",
+        "STRAIGHTFORWARD": "Sử dụng giọng điệu thẳng thắn"
+      },
+      "REPLY_OPTIONS": {
+        "IMPROVE_REPLY": "Cải thiện câu trả lời",
+        "IMPROVE_REPLY_SELECTION": "Cải thiện đoạn đã chọn",
+        "CHANGE_TONE": {
+          "TITLE": "Đổi giọng điệu",
+          "OPTIONS": {
+            "PROFESSIONAL": "Chuyên nghiệp",
+            "CASUAL": "Thân thiện thoải mái",
+            "STRAIGHTFORWARD": "Thẳng thắn",
+            "CONFIDENT": "Tự tin",
+            "FRIENDLY": "Gần gũi"
+          }
+        },
+        "GRAMMAR": "Sửa lỗi chính tả & ngữ pháp",
+        "SUGGESTION": "Gợi ý câu trả lời",
+        "SUMMARIZE": "Tóm tắt cuộc trò chuyện",
+        "ASK_COPILOT": "Hỏi trợ lý AI"
       },
       "ASSISTANCE_MODAL": {
         "DRAFT_TITLE": "Nội dung nháp",
@@ -201,12 +372,16 @@
       "SIDEBAR_TXT": "<p><b>Ứng dụng Dashboard</b></p><p>Ứng dụng Dashboard cho phép tổ chức nhúng một ứng dụng bên trong bảng điều khiển của Shopiz để cung cấp ngữ cảnh cho nhân viên hỗ trợ khách hàng. Tính năng này cho phép bạn tạo ứng dụng độc lập và nhúng nó để hiển thị thông tin người dùng, đơn hàng hoặc lịch sử thanh toán.</p><p>Khi bạn nhúng ứng dụng vào bảng điều khiển Shopiz, ứng dụng sẽ nhận ngữ cảnh của cuộc đối thoại và thông tin liên hệ qua các sự kiện. Hãy triển khai trình lắng nghe sự kiện message trên trang của bạn để nhận dữ liệu ngữ cảnh.</p><p>Để thêm ứng dụng dashboard mới, nhấp vào nút 'Thêm ứng dụng dashboard mới'.</p>",
       "DESCRIPTION": "Ứng dụng Dashboard cho phép tổ chức nhúng một ứng dụng vào bảng điều khiển để cung cấp ngữ cảnh cho nhân viên hỗ trợ khách hàng. Tính năng này cho phép bạn tạo ứng dụng độc lập và nhúng nó để hiển thị thông tin người dùng, đơn hàng hoặc lịch sử thanh toán.",
       "LEARN_MORE": "Tìm hiểu thêm về ứng dụng Dashboard",
+      "COUNT": "Có {n} ứng dụng bảng điều khiển",
+      "SEARCH_PLACEHOLDER": "Tìm kiếm ứng dụng dashboard...",
+      "NO_RESULTS": "Không tìm thấy ứng dụng dashboard nào khớp với tìm kiếm của bạn",
       "LIST": {
         "404": "Chưa có ứng dụng dashboard nào được cấu hình cho tài khoản này",
         "LOADING": "Đang lấy ứng dụng dashboard...",
         "TABLE_HEADER": {
           "NAME": "Tên",
-          "ENDPOINT": "Đích"
+          "ENDPOINT": "Đích",
+          "ACTIONS": "Hành động"
         },
         "EDIT_TOOLTIP": "Chỉnh sửa ứng dụng",
         "DELETE_TOOLTIP": "Xóa ứng dụng"
@@ -243,6 +418,7 @@
       }
     },
     "LINEAR": {
+      "HEADER": "Linear",
       "ADD_OR_LINK_BUTTON": "Tạo/ Liên kết Vấn đề Linear",
       "LOADING": "Đang lấy các vấn đề Linear...",
       "LOADING_ERROR": "Có lỗi khi lấy các vấn đề Linear, vui lòng thử lại",
@@ -337,6 +513,7 @@
       }
     },
     "NOTION": {
+      "HEADER": "Notion",
       "DELETE": {
         "TITLE": "Bạn có chắc chắn muốn xoá tích hợp Notion?",
         "MESSAGE": "Việc xoá tích hợp này sẽ loại bỏ quyền truy cập vào không gian làm việc Notion của bạn và dừng tất cả các chức năng liên quan.",
@@ -358,7 +535,7 @@
       "TITLE": "Shopiz AI",
       "TRY_THESE_PROMPTS": "Thử các gợi ý này",
       "PANEL_TITLE": "Bắt đầu với trợ lý AI",
-      "KICK_OFF_MESSAGE": "Cần tóm tắt nhanh, xem lại cuộc trò chuyện trước đó, hoặc viết một phản hồi hay hơn? Copilot luôn sẵn sàng hỗ trợ.",
+      "KICK_OFF_MESSAGE": "Cần tóm tắt nhanh, xem lại cuộc trò chuyện trước đó, hoặc viết một phản hồi hay hơn? Trợ lý AI luôn sẵn sàng hỗ trợ.",
       "SEND_MESSAGE": "Gửi tin nhắn...",
       "EMPTY_MESSAGE": "Có lỗi khi tạo phản hồi. Vui lòng thử lại.",
       "LOADER": "Trợ lý AI đang xử lý",
@@ -406,6 +583,7 @@
       "CANCEL_ANYTIME": "Bạn có thể thay đổi hoặc hủy gói bất cứ lúc nào"
     },
     "ENTERPRISE_PAYWALL": {
+      "AVAILABLE_ON": "ShopizAI chỉ hỗ trợ trong các gói Enterprise.",
       "UPGRADE_PROMPT": "Nâng cấp để dùng trợ lý, copilot và nhiều tính năng khác.",
       "ASK_ADMIN": "Vui lòng liên hệ quản trị viên để được nâng cấp."
     },
@@ -484,7 +662,8 @@
           "TITLE": "Tính năng",
           "ALLOW_CONVERSATION_FAQS": "Tạo FAQ từ các cuộc trò chuyện đã giải quyết",
           "ALLOW_MEMORIES": "Ghi nhớ thông tin quan trọng từ tương tác khách hàng",
-          "ALLOW_CITATIONS": "Đính kèm nguồn tham khảo trong phản hồi"
+          "ALLOW_CITATIONS": "Đính kèm nguồn tham khảo trong phản hồi",
+          "ALLOW_CONTACT_ATTRIBUTES": "Cho phép truy cập thông tin liên hệ"
         }
       },
       "EDIT": {
@@ -508,11 +687,11 @@
           "DESCRIPTION": "Thêm các quy tắc để hướng dẫn trợ lý theo ngữ cảnh.",
           "OPTIONS": {
             "GUARDRAILS": {
-              "TITLE": "Giới hạn",
+              "TITLE": "Giới hạn an toàn (Guardrails)",
               "DESCRIPTION": "Định nghĩa phạm vi nội dung trợ lý được phép trả lời."
             },
             "RESPONSE_GUIDELINES": {
-              "TITLE": "Quy tắc trả lời",
+              "TITLE": "Chỉ dẫn phản hồi (Response Guidelines)",
               "DESCRIPTION": "Định hình phong cách trả lời: thân thiện, ngắn gọn, chi tiết, trang trọng..."
             }
           }
@@ -537,7 +716,7 @@
         }
       },
       "GUARDRAILS": {
-        "TITLE": "Giới hạn",
+        "TITLE": "Giới hạn an toàn (Guardrails)",
         "DESCRIPTION": "Xác định những nội dung trợ lý được phép và không được phép trả lời.",
         "BULK_ACTION": {
           "SELECTED": "{count} mục đã chọn",
@@ -547,14 +726,14 @@
         },
         "ADD": {
           "SUGGESTED": {
-            "TITLE": "Ví dụ giới hạn",
+            "TITLE": "Ví dụ giới hạn an toàn",
             "ADD": "Thêm tất cả",
             "ADD_SINGLE": "Thêm",
             "SAVE": "Thêm & lưu (↵)",
             "PLACEHOLDER": "Nhập giới hạn mới..."
           },
           "NEW": {
-            "TITLE": "Thêm giới hạn",
+            "TITLE": "Thêm giới hạn an toàn",
             "CREATE": "Tạo",
             "CANCEL": "Huỷ",
             "PLACEHOLDER": "Nhập giới hạn mới...",
@@ -568,21 +747,21 @@
         "SEARCH_EMPTY_MESSAGE": "Không tìm thấy giới hạn nào.",
         "API": {
           "ADD": {
-            "SUCCESS": "Thêm giới hạn thành công",
-            "ERROR": "Có lỗi khi thêm giới hạn"
+            "SUCCESS": "Thêm giới hạn an toàn thành công",
+            "ERROR": "Có lỗi khi thêm giới hạn an toàn"
           },
           "UPDATE": {
-            "SUCCESS": "Cập nhật giới hạn thành công",
-            "ERROR": "Có lỗi khi cập nhật giới hạn"
+            "SUCCESS": "Cập nhật giới hạn an toàn thành công",
+            "ERROR": "Có lỗi khi cập nhật giới hạn an toàn"
           },
           "DELETE": {
-            "SUCCESS": "Xóa giới hạn thành công",
-            "ERROR": "Có lỗi khi xóa giới hạn"
+            "SUCCESS": "Xóa giới hạn an toàn thành công",
+            "ERROR": "Có lỗi khi xóa giới hạn an toàn"
           }
         }
       },
       "RESPONSE_GUIDELINES": {
-        "TITLE": "Quy tắc trả lời",
+        "TITLE": "Chỉ dẫn phản hồi (Response Guidelines)",
         "DESCRIPTION": "Định hình phong cách phản hồi của trợ lý.",
         "BULK_ACTION": {
           "SELECTED": "{count} mục đã chọn",
@@ -592,14 +771,14 @@
         },
         "ADD": {
           "SUGGESTED": {
-            "TITLE": "Ví dụ quy tắc trả lời",
+            "TITLE": "Ví dụ chỉ dẫn phản hồi",
             "ADD": "Thêm tất cả",
             "ADD_SINGLE": "Thêm",
             "SAVE": "Lưu (↵)",
             "PLACEHOLDER": "Nhập quy tắc trả lời..."
           },
           "NEW": {
-            "TITLE": "Thêm quy tắc trả lời",
+            "TITLE": "Thêm chỉ dẫn phản hồi",
             "CREATE": "Tạo",
             "CANCEL": "Huỷ",
             "PLACEHOLDER": "Nhập quy tắc...",
@@ -609,8 +788,8 @@
         "LIST": {
           "SEARCH_PLACEHOLDER": "Tìm kiếm..."
         },
-        "EMPTY_MESSAGE": "Chưa có quy tắc nào.",
-        "SEARCH_EMPTY_MESSAGE": "Không tìm thấy quy tắc nào.",
+        "EMPTY_MESSAGE": "Chưa có chỉ dẫn nào.",
+        "SEARCH_EMPTY_MESSAGE": "Không tìm thấy chỉ dẫn nào.",
         "API": {
           "ADD": {
             "SUCCESS": "Thêm thành công",
@@ -633,11 +812,12 @@
           "SELECTED": "{count} mục đã chọn",
           "SELECT_ALL": "Chọn tất cả ({count})",
           "UNSELECT_ALL": "Bỏ chọn tất cả ({count})",
-          "BULK_DELETE_BUTTON": "Xóa"
+          "BULK_DELETE_BUTTON": "Xóa",
+          "BULK_EXPORT_BUTTON": "Xuất file"
         },
         "ADD": {
           "SUGGESTED": {
-            "TITLE": "Ví dụ kịch bản",
+            "TITLE": "Kịch bản mẫu",
             "ADD": "Thêm tất cả",
             "ADD_SINGLE": "Thêm",
             "TOOLS_USED": "Công cụ sử dụng:"
@@ -671,7 +851,8 @@
           "UPDATE": "Cập nhật thay đổi"
         },
         "LIST": {
-          "SEARCH_PLACEHOLDER": "Tìm kiếm..."
+          "SEARCH_PLACEHOLDER": "Tìm kiếm...",
+          "COUNT": "{count} kịch bản"
         },
         "EMPTY_MESSAGE": "Chưa có kịch bản nào.",
         "SEARCH_EMPTY_MESSAGE": "Không tìm thấy kịch bản.",
@@ -687,7 +868,16 @@
           "DELETE": {
             "SUCCESS": "Xóa kịch bản thành công",
             "ERROR": "Lỗi khi xóa kịch bản"
+          },
+          "IMPORT": {
+            "SUCCESS": "Nhập kịch bản thành công",
+            "ERROR": "Lỗi khi nhập kịch bản. Vui lòng kiểm tra định dạng file.",
+            "INVALID_FILE": "Định dạng file không hợp lệ. Vui lòng tải lên file JSON."
           }
+        },
+        "IMPORT_EXPORT": {
+          "IMPORT_BUTTON": "Nhập từ file",
+          "EXPORT_BUTTON": "Xuất ra file"
         }
       }
     },
@@ -743,7 +933,7 @@
         "TITLE": "Chưa có tài liệu",
         "SUBTITLE": "Tài liệu giúp trợ lý hiểu và trả lời chính xác hơn. Bạn có thể nhập tài liệu để làm nguồn tri thức.",
         "FEATURE_SPOTLIGHT": {
-          "TITLE": "ShopizAI Document",
+          "TITLE": "Tài liệu ShopizAI",
           "NOTE": "Tài liệu được dùng làm nguồn tri thức cho trợ lý. ShopizAI có thể phân tích và tạo phản hồi chính xác dựa trên nội dung của bạn."
         }
       }
@@ -762,7 +952,10 @@
       "FORM_DESCRIPTION": "Cấu hình Công cụ AI để kết nối API ngoài",
       "OPTIONS": {
         "EDIT_TOOL": "Chỉnh sửa Công cụ AI",
-        "DELETE_TOOL": "Xóa Công cụ AI"
+        "CLONE_TOOL": "Nhân bản",
+        "DELETE_TOOL": "Xóa Công cụ AI",
+        "CLONE_SUCCESS": "Nhân bản Công cụ AI thành công",
+        "CLONE_ERROR": "Lỗi khi nhân bản Công cụ AI"
       },
       "CREATE": {
         "TITLE": "Tạo Công cụ AI",
@@ -855,6 +1048,12 @@
         "ERRORS": {
           "PARAM_NAME_REQUIRED": "Tên tham số là bắt buộc"
         }
+      },
+      "IMPORT_EXPORT": {
+        "IMPORT_BUTTON": "Nhập từ file",
+        "EXPORT_BUTTON": "Xuất ra file",
+        "IMPORT_SUCCESS": "Nhập công cụ thành công",
+        "IMPORT_ERROR": "Lỗi khi nhập công cụ. Vui lòng kiểm tra định dạng file."
       }
     },
     "RESPONSES": {
@@ -938,7 +1137,7 @@
         "SUBTITLE": "FAQ giúp trợ lý trả lời nhanh và chính xác hơn. FAQ có thể được tạo tự động hoặc thêm thủ công.",
         "CLEAR_SEARCH": "Xóa bộ lọc",
         "FEATURE_SPOTLIGHT": {
-          "TITLE": "ShopizAI FAQ",
+          "TITLE": "Câu hỏi thường gặp ShopizAI FAQ",
           "NOTE": "ShopizAI phát hiện các câu hỏi thường gặp, tạo gợi ý, và cho phép bạn duyệt hoặc từ chối."
         }
       }

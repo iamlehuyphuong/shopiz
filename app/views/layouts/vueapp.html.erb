@@ -1,15 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>
-      <%= @global_config['INSTALLATION_NAME'] %>
-    </title>
+    <%
+      meta_title = @global_config['INSTALLATION_NAME']
+      meta_description = "#{@global_config['INSTALLATION_NAME']} is a customer support solution that helps companies engage customers over Messenger, Twitter, Telegram, Whatsapp. Simply connect your channels and converse with your customers from a single place. Easily add new agents to your system and have them own and resolve conversations with customers. #{@global_config['INSTALLATION_NAME']} also gives you real-time reports to measure your team's performance, canned responses to easily respond to frequently asked questions and private notes for agents to collaborate among themselves."
+      meta_image = @global_config['LOGO_THUMBNAIL'] # You can change this to a specific high-res banner image URL, e.g., '/brand-assets/social-share.png'
+    %>
+    <title><%= meta_title %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0"/>
     <% if @global_config['DISPLAY_MANIFEST'] %>
-      <meta name="msapplication-TileColor" content="#1f93ff">
+      <meta name="msapplication-TileColor" content="#E06720">
       <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-      <meta name="theme-color" content="#1f93ff">
-      <meta name="description" content="<%= @global_config['INSTALLATION_NAME'] %> is a customer support solution that helps companies engage customers over Messenger, Twitter, Telegram, WeChat, Whatsapp. Simply connect your channels and converse with your customers from a single place. Easily add new agents to your system and have them own and resolve conversations with customers. <%= @global_config['INSTALLATION_NAME'] %> also gives you real-time reports to measure your team's performance, canned responses to easily respond to frequently asked questions and private notes for agents to collaborate among themselves.">
+      <meta name="theme-color" content="#E06720">
+      
+      <!-- Standard Meta -->
+      <meta name="description" content="<%= meta_description %>">
+      
+      <!-- Open Graph / Facebook / Zalo -->
+      <meta property="og:type" content="website">
+      <meta property="og:title" content="<%= meta_title %>">
+      <meta property="og:description" content="<%= meta_description %>">
+      <meta property="og:image" content="<%= meta_image %>">
+
+      <!-- Twitter -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:title" content="<%= meta_title %>">
+      <meta name="twitter:description" content="<%= meta_description %>">
+      <meta name="twitter:image" content="<%= meta_image %>">
+
       <% if ENV['IOS_APP_IDENTIFIER'].present? %>
         <meta name="apple-itunes-app" content='app-id=<%= ENV['IOS_APP_IDENTIFIER'] %>'>
       <% end %>
@@ -37,14 +55,14 @@
         fbAppId: '<%= @global_config['FB_APP_ID'] %>',
         zaloAppId: '<%= @global_config['ZALO_OA_APP_ID'] %>',
         zaloAppSecret: '<%= @global_config['ZALO_OA_APP_SECRET'] %>',
-        zaloApiUrl: '<%= @global_config['ZALO_OA_API_URL'] %>',
-        tiktokAppId: '<%= @global_config['TIKTOK_SHOP_APP_ID'] %>',
-        tiktokAppSecret: '<%= @global_config['TIKTOK_SHOP_APP_SECRET'] %>',
-        activepiecesInstanceUrl: '<%= @global_config['ACTIVE_PIECES_INSTANCE_URL'] %>',
-        activepiecesJwtSecret: '<%= @global_config['ACTIVE_PIECES_JWT_SECRET'] %>',
+        zaloApiUrl: '<%= @global_config['ZALO_API_URL'] %>',
+        tiktokShopAppId: '<%= @global_config['TIKTOK_SHOP_APP_ID'] %>',
+        tiktokShopAppSecret: '<%= @global_config['TIKTOK_SHOP_APP_SECRET'] %>',
         instagramAppId: '<%= @global_config['INSTAGRAM_APP_ID'] %>',
-        googleOAuthClientId: '<%= ENV.fetch('GOOGLE_OAUTH_CLIENT_ID', '') %>',
-        googleOAuthCallbackUrl: '<%= ENV.fetch('GOOGLE_OAUTH_CALLBACK_URL', nil) %>',
+        tiktokAppId: '<%= @global_config['TIKTOK_APP_ID'] %>',
+        twitterConsumerKey: '<%= @global_config['TWITTER_CONSUMER_KEY'] %>',
+        googleOAuthClientId: '<%= @global_config['GOOGLE_OAUTH_CLIENT_ID'] %>',
+        googleOAuthCallbackUrl: '<%= @global_config['GOOGLE_OAUTH_REDIRECT_URI'] %>',
         allowedLoginMethods: <%= @global_config['ALLOWED_LOGIN_METHODS'].to_json.html_safe %>,
         fbApiVersion: '<%= @global_config['FACEBOOK_API_VERSION'] %>',
         whatsappAppId: '<%= @global_config['WHATSAPP_APP_ID'] %>',
@@ -69,13 +87,14 @@
       }
       window.errorLoggingConfig = '<%= ENV.fetch('SENTRY_FRONTEND_DSN', '') || ENV.fetch('SENTRY_DSN', '') %>'
     </script>
+    <% if ChatwootHub.support_config[:support_website_token].present? %>
     <script>
       window.shopizSettings = {
         hideMessageBubble: true,
       };
       window.addEventListener('DOMContentLoaded', function() {
         (function(d,t) {
-          var BASE_URL = '';
+          var BASE_URL = '<%= ChatwootHub.support_config[:support_website_url] %>';
           var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
           g.src= BASE_URL + "/packs/js/sdk.js";
           g.defer = true;
@@ -96,10 +115,11 @@
         })
       })
     </script>
-    <% if @global_config['ANALYTICS_TOKEN'].present? %>
+    <% end %>
+    <% if @global_config['CLOUD_ANALYTICS_TOKEN'].present? %>
     <script>
       window.analyticsConfig = {
-        token: '<%= @global_config['ANALYTICS_TOKEN'] %>',
+        token: '<%= @global_config['CLOUD_ANALYTICS_TOKEN'] %>',
       }
     </script>
     <% end %>

@@ -58,9 +58,17 @@ export default {
 
 <style lang="scss" scoped>
 button:disabled {
-  @apply bg-woot-100 dark:bg-woot-500/25 dark:text-slate-500 opacity-100;
+  background-color: rgba(224, 103, 32, 0.1);
+  opacity: 1;
+  html.dark & {
+    background-color: rgba(224, 103, 32, 0.25);
+    color: #64748b; /* slate-500 */
+  }
   &:hover {
-    @apply bg-woot-100 dark:bg-woot-500/25;
+    background-color: rgba(224, 103, 32, 0.1);
+    html.dark & {
+      background-color: rgba(224, 103, 32, 0.25);
+    }
   }
 }
 </style>

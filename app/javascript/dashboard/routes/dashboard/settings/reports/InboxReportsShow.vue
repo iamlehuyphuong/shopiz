@@ -17,22 +17,19 @@ const inbox = useFunctionGetter('inboxes/getInboxById', route.params.id);
 const isVoiceChannel = computed(() => {
   // If inbox data isn't loaded yet, return false
   if (!inbox.value) return false;
-  
+
   // Log for debugging purposes
   console.log('Inbox data for voice check:', inbox.value);
   console.log('Channel type (camelCase):', inbox.value.channelType);
   console.log('Expected channel type:', INBOX_TYPES.VOICE);
-  
+
   // Check against the channelType property (camelCase)
   return inbox.value.channelType === INBOX_TYPES.VOICE;
 });
 </script>
 
 <template>
-  <VoiceInboxReports
-    v-if="inbox.id && isVoiceChannel"
-    :key="inbox.id"
-  />
+  <VoiceInboxReports v-if="inbox.id && isVoiceChannel" :key="inbox.id" />
   <WootReports
     v-else-if="inbox.id"
     :key="inbox.id"
