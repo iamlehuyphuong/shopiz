@@ -128,7 +128,7 @@ onMounted(() => {
         :hide-actions="!isOnChatwootCloud"
         fallback-thumbnail="/assets/images/dashboard/captain/document-popover-light.svg"
         fallback-thumbnail-dark="/assets/images/dashboard/captain/document-popover-dark.svg"
-        learn-more-url="https://docs.shopiz.pro/features/shopiz-ai/document"
+        learn-more-url="https://www.shopiz.pro/docs/04-shopizai-copilot/02-knowledge-base"
       />
     </template>
 

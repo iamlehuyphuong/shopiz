@@ -79,7 +79,7 @@ const handleAfterCreate = newAssistant => {
         :hide-actions="!isOnChatwootCloud"
         fallback-thumbnail="/assets/images/dashboard/captain/assistant-popover-light.svg"
         fallback-thumbnail-dark="/assets/images/dashboard/captain/assistant-popover-dark.svg"
-        learn-more-url="https://docs.shopiz.pro/features/shopiz-ai/assistant"
+        learn-more-url="https://www.shopiz.pro/docs/04-shopizai-copilot/02-knowledge-base"
       />
     </template>
 
