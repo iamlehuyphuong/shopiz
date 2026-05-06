@@ -8,14 +8,24 @@ class Llm::BaseAiService
 
   attr_reader :model, :temperature
 
-  def initialize
+  def initialize(account: nil)
     Llm::Config.initialize!
+    @account = account
     setup_model
     setup_temperature
   end
 
   def chat(model: @model, temperature: @temperature)
-    RubyLLM.chat(model: model).with_temperature(temperature)
+    if system_api_key_available?
+      RubyLLM.chat(model: model).with_temperature(temperature)
+    elsif @account && user_hook_key_allowed? && user_hook_api_key.present?
+      api_base = user_hook_api_base
+      Llm::Config.with_api_key(user_hook_api_key, api_base: api_base) do |context|
+        return context.chat(model: model).with_temperature(temperature)
+      end
+    else
+      RubyLLM.chat(model: model).with_temperature(temperature)
+    end
   end
 
   private
@@ -35,5 +45,26 @@ class Llm::BaseAiService
 
   def setup_temperature
     @temperature = DEFAULT_TEMPERATURE
+  end
+
+  def system_api_key_available?
+    InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_API_KEY')&.value.present?
+  end
+
+  def user_hook_key_allowed?
+    config = InstallationConfig.find_by(name: 'CAPTAIN_ALLOW_USER_HOOK_KEY')
+    config.nil? || config.value == true
+  end
+
+  def user_hook_api_key
+    @account&.hooks&.find_by(app_id: 'openai', status: 'enabled')&.settings&.dig('api_key')
+  end
+
+  def user_hook_api_base
+    hook = @account&.hooks&.find_by(app_id: 'openai', status: 'enabled')
+    base = hook&.settings&.dig('api_base_url')
+    return nil if base.blank?
+
+    base.chomp('/').sub(/\/v1\z/, '')
   end
 end

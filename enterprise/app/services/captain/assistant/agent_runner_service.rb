@@ -26,6 +26,7 @@ class Captain::Assistant::AgentRunnerService
     @source = source
 
     Llm::Config.initialize!
+    Llm::Config.configure_for_account!(@assistant.account)
   end
 
   def generate_response(message_history: [])

@@ -2,7 +2,7 @@ class Captain::Llm::AssistantChatService < Llm::BaseAiService
   include Captain::ChatHelper
 
   def initialize(assistant: nil, conversation: nil, source: nil)
-    super()
+    super(account: assistant&.account)
 
     @assistant = assistant
     @conversation = conversation

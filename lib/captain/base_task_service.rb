@@ -151,11 +151,30 @@ class Captain::BaseTaskService
   end
 
   def api_key
-    @api_key ||= openai_hook&.settings&.dig('api_key') || system_api_key
+    @api_key ||= system_api_key.presence || user_hook_api_key
+  end
+
+  def using_system_key?
+    system_api_key.present?
+  end
+
+  def using_user_hook_key?
+    !using_system_key? && user_hook_api_key.present?
+  end
+
+  def user_hook_key_allowed?
+    config = InstallationConfig.find_by(name: 'CAPTAIN_ALLOW_USER_HOOK_KEY')
+    config.nil? || config.value == true
   end
 
   def openai_hook
     @openai_hook ||= account.hooks.find_by(app_id: 'openai', status: 'enabled')
+  end
+
+  def user_hook_api_key
+    return nil unless user_hook_key_allowed?
+
+    @user_hook_api_key ||= openai_hook&.settings&.dig('api_key')
   end
 
   def system_api_key

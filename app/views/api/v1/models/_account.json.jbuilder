@@ -40,3 +40,16 @@ json.name @account.name
 json.support_email @account.support_email
 json.status @account.status
 json.cache_keys @account.cache_keys
+json.captain_api_source begin
+  system_key = InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_API_KEY')&.value.present?
+  user_hook = @account.hooks.find_by(app_id: 'openai', status: 'enabled')&.settings&.dig('api_key').present?
+  allow_hook = (config = InstallationConfig.find_by(name: 'CAPTAIN_ALLOW_USER_HOOK_KEY')).nil? || config&.value == true
+
+  if system_key
+    'system'
+  elsif allow_hook && user_hook
+    'user_hook'
+  else
+    'none'
+  end
+end

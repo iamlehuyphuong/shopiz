@@ -42,6 +42,14 @@ const localizedPlanName = computed(() => {
   return te(key) ? t(key) : planName.value.toUpperCase();
 });
 
+const captainApiSource = computed(() => {
+  return currentAccount.value?.captain_api_source;
+});
+
+const isUsingUserHookKey = computed(() => {
+  return captainApiSource.value === 'user_hook';
+});
+
 const showLanguageDropdownDesktop = ref(false);
 const showLanguageDropdownMobile = ref(false);
 
@@ -209,6 +217,13 @@ onUnmounted(() => {
         />
       </div>
 
+      <span
+        v-if="isUsingUserHookKey"
+        class="hidden lg:flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-n-amber-5 text-n-amber-11 whitespace-nowrap shadow-sm"
+      >
+        {{ $t('GENERAL_SETTINGS.CAPTAIN_API_SOURCE.BADGE_PERSONAL_KEY') }}
+      </span>
+
       <RouterLink
         v-if="localizedPlanName"
         :to="accountScopedRoute('billing_settings_index')"
@@ -218,7 +233,7 @@ onUnmounted(() => {
       </RouterLink>
 
       <div
-        v-if="localizedPlanName"
+        v-if="isUsingUserHookKey || localizedPlanName"
         class="flex-shrink-0 w-px h-5 bg-n-strong mx-1 hidden lg:block"
       />
 
