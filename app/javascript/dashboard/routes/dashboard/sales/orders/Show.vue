@@ -99,10 +99,8 @@ const orderItems = computed(() => order.value?.items || []);
 </script>
 
 <template>
-  <div class="flex flex-col h-full bg-n-background w-full overflow-y-auto">
-    <div
-      class="flex justify-between items-center h-20 min-h-[3.5rem] px-6 py-2 bg-n-background max-w-5xl mx-auto w-full flex-shrink-0"
-    >
+  <div class="flex flex-col h-full bg-n-surface-1 w-full overflow-y-auto">
+    <div class="flex justify-between items-center h-20 min-h-[3.5rem] px-6 py-2 bg-n-surface-1 max-w-5xl mx-auto w-full flex-shrink-0">
       <h1 class="flex items-center mb-0 text-n-slate-12">
         <router-link
           :to="{ name: 'sales_orders_list' }"
