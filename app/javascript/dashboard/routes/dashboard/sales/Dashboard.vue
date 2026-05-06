@@ -130,7 +130,7 @@ onMounted(() => {
         </div>
 
         <!-- Revenue Chart -->
-        <RevenueChart :chart-data="reportData.chart_data || []" />
+        <RevenueChart :chart-data="reportData.chart_data || []" :date-range="customDateRange" />
 
         <!-- Orders By Inbox -->
         <OrdersByInboxTable :data="reportData.orders_by_inbox || []" />

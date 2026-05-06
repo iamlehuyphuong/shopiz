@@ -1,33 +1,67 @@
 <script setup>
-import { computed, watch } from 'vue';
+import { computed } from 'vue';
 import VueApexCharts from 'vue3-apexcharts';
+import { useI18n } from 'vue-i18n';
+import eachDayOfInterval from 'date-fns/eachDayOfInterval';
+import format from 'date-fns/format';
 
 const props = defineProps({
   chartData: { type: Array, default: () => [] },
+  dateRange: { type: Array, default: () => [] },
+});
+
+const { t } = useI18n();
+
+const paddedData = computed(() => {
+  if (!props.dateRange || props.dateRange.length !== 2) return props.chartData;
+  const [start, end] = props.dateRange;
+  
+  const days = eachDayOfInterval({ start, end });
+  return days.map(day => {
+    const dateStr = format(day, 'yyyy-MM-dd');
+    const existing = props.chartData.find(d => d.date === dateStr);
+    return {
+      date: dateStr,
+      revenue: existing ? existing.revenue : 0,
+      orders: existing ? existing.orders : 0,
+    };
+  });
+});
+
+const hasAnyData = computed(() => {
+  return paddedData.value.some(d => d.revenue > 0 || d.orders > 0);
 });
 
 const series = computed(() => [
   {
-    name: 'Revenue',
-    data: props.chartData.map(d => ({
+    name: t('SALES.MODULE_DASHBOARD.REVENUE_CHART.REVENUE'),
+    type: 'area',
+    data: paddedData.value.map(d => ({
       x: d.date,
       y: d.revenue,
     })),
   },
+  {
+    name: t('SALES.MODULE_DASHBOARD.REVENUE_CHART.ORDERS'),
+    type: 'line',
+    data: paddedData.value.map(d => ({
+      x: d.date,
+      y: d.orders,
+    })),
+  }
 ]);
 
 const chartOptions = computed(() => ({
   chart: {
-    type: 'area',
     height: 280,
     toolbar: { show: false },
     zoom: { enabled: false },
     fontFamily: 'Inter, sans-serif',
     background: 'transparent',
   },
-  colors: ['#6366f1'],
+  colors: ['#f97316', '#92400e'],
   fill: {
-    type: 'gradient',
+    type: ['gradient', 'solid'],
     gradient: {
       shadeIntensity: 1,
       opacityFrom: 0.4,
@@ -37,7 +71,7 @@ const chartOptions = computed(() => ({
   },
   stroke: {
     curve: 'smooth',
-    width: 2.5,
+    width: 1.5,
   },
   dataLabels: { enabled: false },
   grid: {
@@ -56,27 +90,43 @@ const chartOptions = computed(() => ({
     axisBorder: { show: false },
     axisTicks: { show: false },
   },
-  yaxis: {
-    labels: {
-      style: { colors: 'var(--n-slate-11)', fontSize: '11px' },
-      formatter: val => {
-        if (val >= 1_000_000) return `${(val / 1_000_000).toFixed(1)}M`;
-        if (val >= 1_000) return `${(val / 1_000).toFixed(0)}K`;
-        return val;
+  yaxis: [
+    {
+      seriesName: t('SALES.MODULE_DASHBOARD.REVENUE_CHART.REVENUE'),
+      labels: {
+        style: { colors: 'var(--n-slate-11)', fontSize: '11px' },
+        formatter: val => {
+          if (val >= 1_000_000) return `${(val / 1_000_000).toFixed(1)}M`;
+          if (val >= 1_000) return `${(val / 1_000).toFixed(0)}K`;
+          return val;
+        },
       },
     },
-  },
+    {
+      seriesName: t('SALES.MODULE_DASHBOARD.REVENUE_CHART.ORDERS'),
+      opposite: true,
+      labels: {
+        style: { colors: 'var(--n-slate-11)', fontSize: '11px' },
+        formatter: val => Math.round(val),
+      },
+    }
+  ],
   tooltip: {
     theme: 'dark',
     x: { format: 'dd/MM/yyyy' },
-    y: {
-      formatter: val =>
-        new Intl.NumberFormat('vi-VN', {
-          style: 'currency',
-          currency: 'VND',
-          maximumFractionDigits: 0,
-        }).format(val),
-    },
+    y: [
+      {
+        formatter: val =>
+          new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+            maximumFractionDigits: 0,
+          }).format(val),
+      },
+      {
+        formatter: val => val,
+      }
+    ],
   },
 }));
 </script>
@@ -92,8 +142,7 @@ const chartOptions = computed(() => ({
     </div>
     <div class="px-4 pb-4">
       <VueApexCharts
-        v-if="chartData.length"
-        type="area"
+        v-if="hasAnyData"
         height="280"
         :options="chartOptions"
         :series="series"

@@ -28,14 +28,13 @@ const showSettingsHeader = computed(
       class="z-20 max-w-7xl w-full mx-auto"
     />
 
-    <router-view
-      v-slot="{ Component }"
-      class="flex-1 flex flex-col px-4 overflow-hidden"
-    >
-      <component :is="Component" v-if="!keepAlive" :key="$route.fullPath" />
-      <keep-alive v-else>
-        <component :is="Component" :key="$route.fullPath" />
-      </keep-alive>
-    </router-view>
+    <div class="flex-1 flex flex-col overflow-auto">
+      <router-view v-slot="{ Component }">
+        <component :is="Component" v-if="!keepAlive" :key="$route.fullPath" class="flex-1" />
+        <keep-alive v-else>
+          <component :is="Component" :key="$route.fullPath" class="flex-1" />
+        </keep-alive>
+      </router-view>
+    </div>
   </div>
 </template>
