@@ -35,7 +35,9 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
       message.update!(source_id: parsed_result['message_id']) if parsed_result['message_id'].present?
       
       # Clear comment_id to prevent trying to reply multiple times to the same comment
+      # Also mark the message as a private reply so the frontend can style it appropriately
       if conversation.additional_attributes['comment_id'].present?
+        message.update!(content_attributes: message.content_attributes.merge(is_private_reply: true))
         conversation.update!(additional_attributes: conversation.additional_attributes.except('comment_id'))
       end
 

@@ -98,6 +98,9 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
 
     note_content += "- Mã sản phẩm (Ref): #{response.ref_payload}\n" if response.ref_payload.present?
 
+    # Verify if this exact note already exists to prevent duplication on multiple webhook deliveries
+    return if conversation.messages.where(message_type: :outgoing, private: true, content: note_content).exists?
+
     conversation.messages.create!(
       account_id: conversation.account_id,
       inbox_id: conversation.inbox_id,

@@ -71,6 +71,7 @@
     "SUCCESS_UNDO_MESSAGE": "Message recalled",
     "FAIL_UNDO_MESSSAGE": "Can't recall this message",
     "DELETED_OR_RETRACTED": "Message has been deleted or retracted",
+    "PRIVATE_REPLY": "Private Reply",
     "NO_RESPONSE": "No response",
     "RESPONSE": "Response",
     "RATING_TITLE": "Rating",

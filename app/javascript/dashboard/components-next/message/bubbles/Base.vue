@@ -63,6 +63,10 @@ const isDeletedOrUndone = computed(() => {
   return contentAttributes.value?.deleted || contentAttributes.value?.undo;
 });
 
+const isPrivateReply = computed(() => {
+  return contentAttributes.value?.is_private_reply;
+});
+
 const messageClass = computed(() => {
   let classToApply = [varaintBaseMap[variant.value]];
 
@@ -148,6 +152,12 @@ const showSenderInGroup = computed(() => {
       class="mb-1 text-xxs font-medium text-n-ruby-11 uppercase tracking-wider"
     >
       {{ t('CONVERSATION.DELETED_OR_RETRACTED') }}
+    </div>
+    <div
+      v-else-if="isPrivateReply"
+      class="mb-1 text-xxs font-medium text-n-amber-11 uppercase tracking-wider"
+    >
+      {{ t('CONVERSATION.PRIVATE_REPLY') }}
     </div>
     <slot />
     <MessageMeta
