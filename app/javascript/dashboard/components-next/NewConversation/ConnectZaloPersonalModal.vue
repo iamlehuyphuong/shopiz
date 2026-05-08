@@ -104,7 +104,11 @@ const handleSubmit = async () => {
       window.location = `/app/accounts/${store.getters.getCurrentAccountId}/conversations/${conversationId}`;
     }
   } catch (error) {
-    useAlert(t('CONTACT_PANEL.ZALO_PERSONAL.CONNECT_ERROR'));
+    const errorMessage =
+      error?.response?.data?.message ||
+      error?.response?.data?.error ||
+      'Số điện thoại đã thuộc liên hệ khác';
+    useAlert(errorMessage);
   } finally {
     isSubmitting.value = false;
   }
@@ -115,98 +119,77 @@ const handleSubmit = async () => {
   <div class="inline-block">
     <slot name="trigger" :toggle="openModal" />
     <woot-modal v-model:show="showModal" :on-close="closeModal">
-      <div
-        class="flex flex-col bg-white dark:bg-slate-900 rounded-xl overflow-hidden max-h-[90vh]"
-      >
+      <div class="flex flex-col h-auto overflow-auto">
         <woot-modal-header
           :header-title="$t('CONTACT_PANEL.ZALO_PERSONAL.CONNECT_TITLE')"
           :header-content="$t('CONTACT_PANEL.ZALO_PERSONAL.CONNECT_SUBTITLE')"
         />
-        <div class="flex-1 p-6 overflow-y-auto space-y-6">
-          <!-- Inbox Selection -->
-          <div class="space-y-2">
-            <label
-              class="text-sm font-medium text-slate-800 dark:text-slate-100"
-            >
+        <form class="flex flex-wrap mx-0" @submit.prevent="handleSubmit">
+          <div class="w-full mb-4">
+            <label>
               {{ $t('CONTACT_PANEL.ZALO_PERSONAL.SELECT_INBOX') }}
+              <select v-model="selectedInboxId">
+                <option value="" disabled>
+                  {{ $t('CONTACT_PANEL.ZALO_PERSONAL.SELECT_INBOX_PLACEHOLDER') }}
+                </option>
+                <option
+                  v-for="inbox in zaloPersonalInboxes"
+                  :key="inbox.id"
+                  :value="inbox.id"
+                >
+                  {{ inbox.name }}
+                </option>
+              </select>
             </label>
-            <select
-              v-model="selectedInboxId"
-              class="w-full px-3 py-2 border rounded-md dark:bg-slate-800 dark:border-slate-700 dark:text-slate-200"
-            >
-              <option value="" disabled>
-                {{ $t('CONTACT_PANEL.ZALO_PERSONAL.SELECT_INBOX_PLACEHOLDER') }}
-              </option>
-              <option
-                v-for="inbox in zaloPersonalInboxes"
-                :key="inbox.id"
-                :value="inbox.id"
-              >
-                {{ inbox.name }}
-              </option>
-            </select>
           </div>
 
-          <!-- Toggle Friend Request -->
-          <div class="flex items-center space-x-2">
+          <div class="flex items-center w-full gap-2 mb-4">
             <input
               id="sendFriendRequest"
               v-model="sendFriendRequest"
               type="checkbox"
-              class="w-4 h-4 text-brand-500 border-slate-300 rounded focus:ring-brand-500"
             />
-            <label
-              for="sendFriendRequest"
-              class="text-sm font-medium text-slate-800 dark:text-slate-100"
-            >
+            <label for="sendFriendRequest" class="mb-0">
               {{ $t('CONTACT_PANEL.ZALO_PERSONAL.SEND_FRIEND_REQUEST') }}
             </label>
           </div>
 
-          <!-- Friend Request Message -->
-          <div v-if="sendFriendRequest" class="space-y-2">
-            <label
-              class="text-sm font-medium text-slate-800 dark:text-slate-100"
-            >
-              {{ $t('CONTACT_PANEL.ZALO_PERSONAL.FRIEND_REQUEST_MESSAGE') }}
-            </label>
+          <div v-if="sendFriendRequest" class="w-full mb-4">
             <TextArea
               v-model="friendRequestMessage"
+              :label="$t('CONTACT_PANEL.ZALO_PERSONAL.FRIEND_REQUEST_MESSAGE')"
               auto-height
-              class="w-full"
             />
           </div>
 
-          <!-- Greeting Message -->
-          <div class="space-y-2">
-            <label
-              class="text-sm font-medium text-slate-800 dark:text-slate-100"
-            >
-              {{ $t('CONTACT_PANEL.ZALO_PERSONAL.GREETING_MESSAGE') }}
-            </label>
-            <TextArea v-model="greetingMessage" auto-height class="w-full" />
+          <div class="w-full mb-4">
+            <TextArea
+              v-model="greetingMessage"
+              :label="$t('CONTACT_PANEL.ZALO_PERSONAL.GREETING_MESSAGE')"
+              auto-height
+            />
           </div>
-        </div>
 
-        <div
-          class="p-6 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-3"
-        >
-          <NextButton color="slate" variant="ghost" @click="closeModal">
-            {{ $t('CONTACT_PANEL.ZALO_PERSONAL.CANCEL') }}
-          </NextButton>
-          <NextButton
-            color="brand"
-            :is-loading="isSubmitting"
-            :disabled="
-              !selectedInboxId ||
-              (!greetingMessage.trim() &&
-                !(sendFriendRequest && friendRequestMessage.trim()))
-            "
-            @click="handleSubmit"
-          >
-            {{ $t('CONTACT_PANEL.ZALO_PERSONAL.SUBMIT') }}
-          </NextButton>
-        </div>
+          <div class="flex items-center justify-end w-full gap-2 px-0 py-2">
+            <NextButton
+              faded
+              slate
+              type="reset"
+              :label="$t('CONTACT_PANEL.ZALO_PERSONAL.CANCEL')"
+              @click.prevent="closeModal"
+            />
+            <NextButton
+              type="submit"
+              :is-loading="isSubmitting"
+              :disabled="
+                !selectedInboxId ||
+                (!greetingMessage.trim() &&
+                  !(sendFriendRequest && friendRequestMessage.trim()))
+              "
+              :label="$t('CONTACT_PANEL.ZALO_PERSONAL.SUBMIT')"
+            />
+          </div>
+        </form>
       </div>
     </woot-modal>
   </div>
