@@ -65,14 +65,22 @@ const table = useVueTable({
 </script>
 
 <template>
-  <div class="bg-white dark:bg-n-solid-1 rounded-xl border border-n-weak shadow-sm flex flex-col">
+  <div
+    class="bg-white dark:bg-n-solid-1 rounded-xl border border-n-weak shadow-sm flex flex-col"
+  >
     <div class="px-6 py-4">
       <h3 class="text-sm font-medium text-n-slate-12 mb-0">
-        {{ t('SALES.MODULE_DASHBOARD.ORDERS_BY_INBOX.TITLE', 'Orders by inbox') }}
+        {{
+          t('SALES.MODULE_DASHBOARD.ORDERS_BY_INBOX.TITLE', 'Orders by inbox')
+        }}
       </h3>
     </div>
     <div class="flex flex-col flex-1 px-6 pb-6 pt-2">
-      <Table v-if="data.length" :table="table" class="max-h-[calc(100vh-21.875rem)]" />
+      <Table
+        v-if="data.length"
+        :table="table"
+        class="max-h-[calc(100vh-21.875rem)]"
+      />
       <Pagination
         v-if="data.length"
         class="mt-2"
@@ -82,7 +90,12 @@ const table = useVueTable({
       />
       <EmptyState
         v-if="!isLoading && !data.length"
-        :title="t('SALES.MODULE_DASHBOARD.ORDERS_BY_INBOX.NO_DATA', 'No data available')"
+        :title="
+          t(
+            'SALES.MODULE_DASHBOARD.ORDERS_BY_INBOX.NO_DATA',
+            'No data available'
+          )
+        "
       />
     </div>
   </div>

@@ -34,9 +34,12 @@ const filteredOrders = computed(() => {
       order.external_order_id,
       order.external_source,
       order.contact?.name,
-      order.contact?.phone_number
-    ].filter(Boolean).join(' ').toLowerCase();
-    
+      order.contact?.phone_number,
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase();
+
     return searchableString.includes(query.toLowerCase());
   });
 });
@@ -46,9 +49,7 @@ const paginatedOrders = computed(() => {
   return filteredOrders.value.slice(start, start + itemsPerPage);
 });
 
-const showPagination = computed(
-  () => filteredOrders.value.length > 0
-);
+const showPagination = computed(() => filteredOrders.value.length > 0);
 
 const tableHeaders = computed(() => [
   t('SALES.MODULE_ORDERS.TABLE.HEADERS.ORDER'),
@@ -245,9 +246,7 @@ onBeforeMount(() => {
                   <div
                     class="flex items-center gap-2 text-body-main text-n-slate-11"
                   >
-                    <span
-                      class="px-2 py-0.5 bg-n-alpha-2 rounded text-xs"
-                    >
+                    <span class="px-2 py-0.5 bg-n-alpha-2 rounded text-xs">
                       {{ formatSource(order.external_source) }}
                     </span>
                     <span>·</span>

@@ -37,7 +37,7 @@ const handleError = () => {
     <img
       v-else
       class="object-cover w-full h-full skip-context-menu"
-      :src="attachment.dataUrl"
+      :src="attachment.dataUrl || attachment.data_url"
       @error="handleError"
     />
   </div>

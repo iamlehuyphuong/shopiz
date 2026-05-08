@@ -10,6 +10,13 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
 
   def index
     @inboxes = policy_scope(Current.account.inboxes.order_by_name.includes(index_includes))
+
+    redis = Redis.new(Redis::Config.app)
+    deleted_inbox_ids = redis.smembers("deleted_inboxes_#{Current.account.id}")
+
+    return unless deleted_inbox_ids.any?
+
+    @inboxes = @inboxes.where.not(id: deleted_inbox_ids)
   end
 
   def show; end
@@ -84,7 +91,14 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   end
 
   def destroy
-    ::DeleteObjectJob.perform_later(@inbox, Current.user, request.ip) if @inbox.present?
+    if @inbox.present?
+      ::DeleteObjectJob.perform_later(@inbox, Current.user, request.ip)
+
+      # Mark inbox as deleted in Redis to prevent it from showing up in the index
+      redis = Redis.new(Redis::Config.app)
+      redis.sadd("deleted_inboxes_#{Current.account.id}", @inbox.id)
+      redis.expire("deleted_inboxes_#{Current.account.id}", 1.day.to_i)
+    end
     render status: :ok, json: { message: I18n.t('messages.inbox_deletetion_response') }
   end
 
@@ -184,8 +198,8 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
      :enable_auto_assignment, :working_hours_enabled, :out_of_office_message, :timezone, :allow_messages_after_resolved,
      :lock_to_single_conversation, :portal_id, :sender_name_type, :business_name, :ecommerce_integration_id,
      { followup_config: [:enabled, :delay_seconds, :action_type, :max_attempts, :interval_hours, :time_mode,
-                          :fixed_time, :timezone, :predefined_message, :custom_ai_prompt, :macro_id,
-                          { predefined_messages: [] }, { macros: [] }, { custom_ai_prompts: [] }] },
+                         :fixed_time, :timezone, :predefined_message, :custom_ai_prompt, :macro_id,
+                         { predefined_messages: [] }, { macros: [] }, { custom_ai_prompts: [] }] },
      { csat_config: [:display_type, :message, :button_text, :language,
                      { survey_rules: [:operator, { values: [] }],
                        template: [:name, :template_id, :friendly_name, :content_sid, :approval_sid, :created_at, :language, :status] }] }]

@@ -861,7 +861,9 @@ export default {
             <div class="flex flex-wrap gap-6 mb-4">
               <div class="flex flex-col gap-1 items-start">
                 <label class="text-heading-3 text-n-slate-12">
-                  {{ $t('INBOX_MGMT.ADD.WEBSITE_CHANNEL.CHANNEL_AVATAR.LABEL') }}
+                  {{
+                    $t('INBOX_MGMT.ADD.WEBSITE_CHANNEL.CHANNEL_AVATAR.LABEL')
+                  }}
                 </label>
                 <Avatar
                   :src="avatarUrl"
@@ -875,7 +877,10 @@ export default {
                   @delete="handleAvatarDelete"
                 />
               </div>
-              <div v-if="isAWebWidgetInbox" class="flex flex-col gap-1 items-start">
+              <div
+                v-if="isAWebWidgetInbox"
+                class="flex flex-col gap-1 items-start"
+              >
                 <label class="text-heading-3 text-n-slate-12">
                   Ảnh mở Bubble Chat
                 </label>
@@ -891,7 +896,10 @@ export default {
                   @delete="handleBubbleAvatarDelete"
                 />
               </div>
-              <div v-if="isAWebWidgetInbox" class="flex flex-col gap-1 items-start">
+              <div
+                v-if="isAWebWidgetInbox"
+                class="flex flex-col gap-1 items-start"
+              >
                 <label class="text-heading-3 text-n-slate-12">
                   Ảnh đóng Bubble Chat
                 </label>

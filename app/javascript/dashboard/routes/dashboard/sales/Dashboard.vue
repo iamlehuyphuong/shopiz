@@ -22,10 +22,16 @@ const reportData = ref(null);
 const customDateRange = ref([subDays(new Date(), 6), new Date()]);
 const selectedDateRange = ref(DATE_RANGE_TYPES.LAST_7_DAYS);
 
-const fromTimestamp = computed(() => getUnixStartOfDay(customDateRange.value[0]));
+const fromTimestamp = computed(() =>
+  getUnixStartOfDay(customDateRange.value[0])
+);
 const toTimestamp = computed(() => getUnixEndOfDay(customDateRange.value[1]));
-const numberOfDays = computed(() =>
-  differenceInCalendarDays(customDateRange.value[1], customDateRange.value[0]) + 1
+const numberOfDays = computed(
+  () =>
+    differenceInCalendarDays(
+      customDateRange.value[1],
+      customDateRange.value[0]
+    ) + 1
 );
 
 const fetchReports = async () => {
@@ -130,7 +136,10 @@ onMounted(() => {
         </div>
 
         <!-- Revenue Chart -->
-        <RevenueChart :chart-data="reportData.chart_data || []" :date-range="customDateRange" />
+        <RevenueChart
+          :chart-data="reportData.chart_data || []"
+          :date-range="customDateRange"
+        />
 
         <!-- Orders By Inbox -->
         <OrdersByInboxTable :data="reportData.orders_by_inbox || []" />

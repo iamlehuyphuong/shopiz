@@ -27,7 +27,7 @@ const itemsPerPage = 15;
 const showPullDialog = ref(false);
 
 const selectedProducts = ref([]);
-const toggleSelectAll = (event) => {
+const toggleSelectAll = event => {
   if (event.target.checked) {
     selectedProducts.value = products.value.map(p => p.id);
   } else {
@@ -39,9 +39,7 @@ const products = computed(() => getters['salesProducts/getProducts'].value);
 const meta = computed(() => getters['salesProducts/getMeta'].value);
 const uiFlags = computed(() => getters['salesProducts/getUIFlags'].value);
 
-const showPagination = computed(
-  () => meta.value.total_count > itemsPerPage
-);
+const showPagination = computed(() => meta.value.total_count > itemsPerPage);
 
 const fetchProducts = () => {
   store.dispatch('salesProducts/get', {
@@ -219,9 +217,19 @@ onBeforeMount(() => {
             <input
               type="checkbox"
               class="w-4 h-4 rounded border-n-weak dark:border-slate-700 bg-transparent text-woot-500 focus:ring-woot-500 transition-opacity"
-              :class="selectedProducts.length > 0 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'"
-              :checked="selectedProducts.length === products.length && products.length > 0"
-              :indeterminate="selectedProducts.length > 0 && selectedProducts.length < products.length"
+              :class="
+                selectedProducts.length > 0
+                  ? 'opacity-100'
+                  : 'opacity-0 group-hover:opacity-100'
+              "
+              :checked="
+                selectedProducts.length === products.length &&
+                products.length > 0
+              "
+              :indeterminate="
+                selectedProducts.length > 0 &&
+                selectedProducts.length < products.length
+              "
               @change="toggleSelectAll"
             />
           </div>
@@ -240,7 +248,11 @@ onBeforeMount(() => {
                   v-model="selectedProducts"
                   type="checkbox"
                   class="w-4 h-4 rounded border-n-weak dark:border-slate-700 bg-transparent text-woot-500 focus:ring-woot-500 transition-opacity"
-                  :class="selectedProducts.includes(product.id) ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'"
+                  :class="
+                    selectedProducts.includes(product.id)
+                      ? 'opacity-100'
+                      : 'opacity-0 group-hover:opacity-100'
+                  "
                   :value="product.id"
                 />
               </BaseTableCell>
@@ -261,9 +273,7 @@ onBeforeMount(() => {
                   <div
                     class="flex items-center gap-2 text-body-main text-n-slate-11"
                   >
-                    <span
-                      class="px-2 py-0.5 bg-n-alpha-2 rounded text-xs"
-                    >
+                    <span class="px-2 py-0.5 bg-n-alpha-2 rounded text-xs">
                       {{ formatSource(product.meta?.source) }}
                     </span>
                     <span v-if="product.sku || product.price || product.barcode">·</span>

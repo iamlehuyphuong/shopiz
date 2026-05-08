@@ -30,7 +30,12 @@ const showSettingsHeader = computed(
 
     <div class="flex-1 flex flex-col overflow-auto">
       <router-view v-slot="{ Component }">
-        <component :is="Component" v-if="!keepAlive" :key="$route.fullPath" class="flex-1" />
+        <component
+          :is="Component"
+          v-if="!keepAlive"
+          :key="$route.fullPath"
+          class="flex-1"
+        />
         <keep-alive v-else>
           <component :is="Component" :key="$route.fullPath" class="flex-1" />
         </keep-alive>

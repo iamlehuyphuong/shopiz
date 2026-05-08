@@ -52,7 +52,9 @@ const form = ref({
 // Step validation
 const canProceedToNextStep = computed(() => {
   if (currentStep.value === 0) {
-    return form.value.items.length > 0 && form.value.items.every(i => i.product_name);
+    return (
+      form.value.items.length > 0 && form.value.items.every(i => i.product_name)
+    );
   }
   if (currentStep.value === 2) {
     // Require contact selection for standalone orders
@@ -63,8 +65,10 @@ const canProceedToNextStep = computed(() => {
 
 const nextStep = () => {
   if (!canProceedToNextStep.value) {
-    if (currentStep.value === 0) useAlert(t('CONVERSATION.ORDER_PANEL.NO_PRODUCTS'));
-    if (currentStep.value === 2) useAlert(t('CONVERSATION.ORDER_PANEL.CUSTOMER_NAME')); // Provide better translation if available
+    if (currentStep.value === 0)
+      useAlert(t('CONVERSATION.ORDER_PANEL.NO_PRODUCTS'));
+    if (currentStep.value === 2)
+      useAlert(t('CONVERSATION.ORDER_PANEL.CUSTOMER_NAME')); // Provide better translation if available
     return;
   }
   if (currentStep.value < wizardItems.value.length - 1) {
@@ -314,7 +318,7 @@ const handleSave = async () => {
                       <i class="i-lucide-plus text-xs" />
                     </button>
                   </div>
-                  
+
                   <button
                     class="absolute -top-2 -right-2 p-1 rounded-full bg-n-slate-2 border border-n-weak text-n-slate-11 hover:text-n-red-11 hover:border-n-red-11 opacity-0 group-hover:opacity-100 transition-all cursor-pointer shadow-sm"
                     @click="removeProduct(index)"
@@ -330,10 +334,12 @@ const handleSave = async () => {
               <h2 class="text-lg font-medium text-n-slate-12 mb-2">
                 {{ $t('CONVERSATION.ORDER_PANEL.FINANCIAL') }}
               </h2>
-              
+
               <div class="grid grid-cols-2 gap-4">
                 <div class="flex flex-col gap-1.5">
-                  <label class="text-sm font-medium text-n-slate-11">{{ t('CONVERSATION.ORDER_PANEL.SHIPPING_FEE') }}</label>
+                  <label class="text-sm font-medium text-n-slate-11">{{
+                    t('CONVERSATION.ORDER_PANEL.SHIPPING_FEE')
+                  }}</label>
                   <input
                     v-model.number="form.shipping_fee"
                     type="number"
@@ -342,7 +348,9 @@ const handleSave = async () => {
                   />
                 </div>
                 <div class="flex flex-col gap-1.5">
-                  <label class="text-sm font-medium text-n-slate-11">{{ t('CONVERSATION.ORDER_PANEL.DISCOUNT') }}</label>
+                  <label class="text-sm font-medium text-n-slate-11">{{
+                    t('CONVERSATION.ORDER_PANEL.DISCOUNT')
+                  }}</label>
                   <input
                     v-model.number="form.discount_amount"
                     type="number"
@@ -351,7 +359,9 @@ const handleSave = async () => {
                   />
                 </div>
                 <div class="flex flex-col gap-1.5">
-                  <label class="text-sm font-medium text-n-slate-11">{{ t('CONVERSATION.ORDER_PANEL.TAX') }}</label>
+                  <label class="text-sm font-medium text-n-slate-11">{{
+                    t('CONVERSATION.ORDER_PANEL.TAX')
+                  }}</label>
                   <input
                     v-model.number="form.tax"
                     type="number"
@@ -360,10 +370,12 @@ const handleSave = async () => {
                   />
                 </div>
               </div>
-              
+
               <div class="grid grid-cols-2 gap-4">
                 <div class="flex flex-col gap-1.5">
-                  <label class="text-sm font-medium text-n-slate-11">{{ t('CONVERSATION.ORDER_PANEL.PAYMENT_METHOD') }}</label>
+                  <label class="text-sm font-medium text-n-slate-11">{{
+                    t('CONVERSATION.ORDER_PANEL.PAYMENT_METHOD')
+                  }}</label>
                   <div class="relative">
                     <select
                       v-model="form.payment_method"
@@ -373,18 +385,32 @@ const handleSave = async () => {
                       <option value="bank_transfer">Chuyển khoản</option>
                       <option value="card">Thẻ / Ví điện tử</option>
                     </select>
-                    <i class="i-lucide-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-n-slate-11 pointer-events-none text-base" />
+                    <i
+                      class="i-lucide-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-n-slate-11 pointer-events-none text-base"
+                    />
                   </div>
                 </div>
                 <div class="flex flex-col gap-1.5">
-                  <label class="text-sm font-medium text-n-slate-11">{{ t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.LABEL') }}</label>
+                  <label class="text-sm font-medium text-n-slate-11">{{
+                    t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.LABEL')
+                  }}</label>
                   <select
                     v-model="form.payment_status"
                     class="w-full px-3 py-2 text-sm rounded-lg border border-n-weak bg-n-alpha-1 text-n-slate-12 outline-none focus:border-n-brand cursor-pointer"
                   >
-                    <option value="unpaid">{{ t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.UNPAID') }}</option>
-                    <option value="paid">{{ t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PAID') }}</option>
-                    <option value="partially_refunded">{{ t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PARTIALLY_REFUNDED') }}</option>
+                    <option value="unpaid">
+                      {{ t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.UNPAID') }}
+                    </option>
+                    <option value="paid">
+                      {{ t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PAID') }}
+                    </option>
+                    <option value="partially_refunded">
+                      {{
+                        t(
+                          'CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PARTIALLY_REFUNDED'
+                        )
+                      }}
+                    </option>
                   </select>
                 </div>
               </div>
@@ -395,9 +421,9 @@ const handleSave = async () => {
               <h2 class="text-lg font-medium text-n-slate-12 mb-2">
                 {{ $t('CONVERSATION.ORDER_PANEL.CUSTOMER_INFO') }}
               </h2>
-              
+
               <ContactSearch @select-contact="handleContactSelect" />
-              
+
               <div class="grid grid-cols-2 gap-4 mt-2">
                 <div class="flex flex-col gap-1.5 col-span-2">
                   <input
@@ -439,45 +465,91 @@ const handleSave = async () => {
               <h2 class="text-lg font-medium text-n-slate-12 mb-2">
                 Hoàn thành Đơn hàng
               </h2>
-              
+
               <div class="flex flex-col gap-1.5">
-                <label class="text-sm font-medium text-n-slate-11">{{ t('CONVERSATION.ORDER_PANEL.STATUS_LABEL') }}</label>
+                <label class="text-sm font-medium text-n-slate-11">{{
+                  t('CONVERSATION.ORDER_PANEL.STATUS_LABEL')
+                }}</label>
                 <select
                   v-model="form.status"
                   class="w-full px-3 py-2 text-sm rounded-lg border border-n-weak bg-n-alpha-1 text-n-slate-12 outline-none focus:border-n-brand cursor-pointer"
                 >
-                  <option value="draft">{{ t('CONVERSATION.ORDER_PANEL.STATUS.DRAFT') }}</option>
-                  <option value="confirmed">{{ t('CONVERSATION.ORDER_PANEL.STATUS.CONFIRMED') }}</option>
-                  <option value="processing">{{ t('CONVERSATION.ORDER_PANEL.STATUS.PROCESSING') }}</option>
-                  <option value="shipped">{{ t('CONVERSATION.ORDER_PANEL.STATUS.SHIPPED') }}</option>
-                  <option value="delivered">{{ t('CONVERSATION.ORDER_PANEL.STATUS.DELIVERED') }}</option>
-                  <option value="cancelled">{{ t('CONVERSATION.ORDER_PANEL.STATUS.CANCELLED') }}</option>
+                  <option value="draft">
+                    {{ t('CONVERSATION.ORDER_PANEL.STATUS.DRAFT') }}
+                  </option>
+                  <option value="confirmed">
+                    {{ t('CONVERSATION.ORDER_PANEL.STATUS.CONFIRMED') }}
+                  </option>
+                  <option value="processing">
+                    {{ t('CONVERSATION.ORDER_PANEL.STATUS.PROCESSING') }}
+                  </option>
+                  <option value="shipped">
+                    {{ t('CONVERSATION.ORDER_PANEL.STATUS.SHIPPED') }}
+                  </option>
+                  <option value="delivered">
+                    {{ t('CONVERSATION.ORDER_PANEL.STATUS.DELIVERED') }}
+                  </option>
+                  <option value="cancelled">
+                    {{ t('CONVERSATION.ORDER_PANEL.STATUS.CANCELLED') }}
+                  </option>
                 </select>
               </div>
 
               <!-- Summary card -->
-              <div class="mt-4 p-5 rounded-xl border border-n-weak bg-n-solid-1 flex flex-col gap-4">
-                 <div class="flex justify-between items-center text-sm">
-                   <span class="text-n-slate-11">Sản phẩm ({{ form.items.length }})</span>
-                   <span class="text-n-slate-12 font-medium">{{ new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(form.items.reduce((sum, item) => sum + item.quantity * item.unit_price, 0)) }}</span>
-                 </div>
-                 <div class="flex justify-between items-center text-sm">
-                   <span class="text-n-slate-11">Phí vận chuyển</span>
-                   <span class="text-n-slate-12">{{ new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(form.shipping_fee) }}</span>
-                 </div>
-                 <div class="flex justify-between items-center text-sm">
-                   <span class="text-n-slate-11">Giảm giá</span>
-                   <span class="text-n-red-11">-{{ new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(form.discount_amount) }}</span>
-                 </div>
-                 <div class="flex justify-between items-center text-sm">
-                   <span class="text-n-slate-11">Thuế</span>
-                   <span class="text-n-slate-12">{{ new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(form.tax) }}</span>
-                 </div>
-                 <div class="h-px bg-n-weak w-full my-1"></div>
-                 <div class="flex justify-between items-center">
-                   <span class="text-base font-medium text-n-slate-12">Tổng thanh toán</span>
-                   <span class="text-lg font-bold text-n-brand">{{ new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(orderTotal) }}</span>
-                 </div>
+              <div
+                class="mt-4 p-5 rounded-xl border border-n-weak bg-n-solid-1 flex flex-col gap-4"
+              >
+                <div class="flex justify-between items-center text-sm">
+                  <span class="text-n-slate-11">Sản phẩm ({{ form.items.length }})</span>
+                  <span class="text-n-slate-12 font-medium">{{
+                    new Intl.NumberFormat('vi-VN', {
+                      style: 'currency',
+                      currency: 'VND',
+                    }).format(
+                      form.items.reduce(
+                        (sum, item) => sum + item.quantity * item.unit_price,
+                        0
+                      )
+                    )
+                  }}</span>
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                  <span class="text-n-slate-11">Phí vận chuyển</span>
+                  <span class="text-n-slate-12">{{
+                    new Intl.NumberFormat('vi-VN', {
+                      style: 'currency',
+                      currency: 'VND',
+                    }).format(form.shipping_fee)
+                  }}</span>
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                  <span class="text-n-slate-11">Giảm giá</span>
+                  <span class="text-n-red-11">-{{
+                      new Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND',
+                      }).format(form.discount_amount)
+                    }}</span>
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                  <span class="text-n-slate-11">Thuế</span>
+                  <span class="text-n-slate-12">{{
+                    new Intl.NumberFormat('vi-VN', {
+                      style: 'currency',
+                      currency: 'VND',
+                    }).format(form.tax)
+                  }}</span>
+                </div>
+                <div class="h-px bg-n-weak w-full my-1" />
+                <div class="flex justify-between items-center">
+                  <span class="text-base font-medium text-n-slate-12">Tổng thanh toán</span>
+                  <span class="text-lg font-bold text-n-brand">{{
+                    new Intl.NumberFormat('vi-VN', {
+                      style: 'currency',
+                      currency: 'VND',
+                    }).format(orderTotal)
+                  }}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -494,7 +566,7 @@ const handleSave = async () => {
               icon="i-lucide-arrow-left"
               @click="prevStep"
             />
-            <div v-else></div>
+            <div v-else />
 
             <Button
               v-if="currentStep < wizardItems.length - 1"

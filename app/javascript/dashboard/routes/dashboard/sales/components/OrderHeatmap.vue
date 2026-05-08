@@ -63,7 +63,7 @@ onMounted(fetchHeatmapData);
         :tooltip-messages="{
           noData: 'SALES.MODULE_DASHBOARD.HEATMAP.NO_ORDERS',
           singular: 'SALES.MODULE_DASHBOARD.HEATMAP.ORDER',
-          plural: 'SALES.MODULE_DASHBOARD.HEATMAP.ORDERS'
+          plural: 'SALES.MODULE_DASHBOARD.HEATMAP.ORDERS',
         }"
       />
     </div>

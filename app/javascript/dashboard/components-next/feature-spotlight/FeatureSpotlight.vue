@@ -29,8 +29,6 @@ const openLink = link => {
 <template>
   <section class="custom-dashed-border rounded-2xl py-5 px-6">
     <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
-
-
       <div class="flex flex-col flex-1 gap-3 ltr:pr-8 rtl:pl-8">
         <p v-if="note" class="text-n-slate-12 text-sm mb-0">{{ note }}</p>
 

@@ -22,7 +22,9 @@ defineProps({
 <template>
   <div class="flex flex-col w-full h-full m-0 bg-n-surface-1 overflow-hidden">
     <main class="flex-1 overflow-y-auto p-6 sm:py-8 lg:px-16">
-      <div class="flex flex-col w-full gap-4 font-inter max-w-5xl mx-auto min-h-full">
+      <div
+        class="flex flex-col w-full gap-4 font-inter max-w-5xl mx-auto min-h-full"
+      >
         <slot name="header" />
         <slot name="preBody" />
         <slot v-if="isLoading" name="loading">

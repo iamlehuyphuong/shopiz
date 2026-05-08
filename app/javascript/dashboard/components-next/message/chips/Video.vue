@@ -23,7 +23,7 @@ const { filteredCurrentChatAttachments } = useMessageContext();
     @click="showGallery = true"
   >
     <video
-      :src="attachment.dataUrl"
+      :src="attachment.dataUrl || attachment.data_url"
       class="w-full h-full object-cover"
       muted
       playsInline

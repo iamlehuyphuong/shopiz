@@ -47,7 +47,10 @@ const selectContact = contact => {
       <input
         v-model="searchQuery"
         type="text"
-        :placeholder="$t('SALES.ORDER_FORM.PLACEHOLDERS.SEARCH_CONTACT') || 'Tìm kiếm khách hàng theo tên, SĐT...'"
+        :placeholder="
+          $t('SALES.ORDER_FORM.PLACEHOLDERS.SEARCH_CONTACT') ||
+          'Tìm kiếm khách hàng theo tên, SĐT...'
+        "
         class="w-full px-3 pr-8 py-1.5 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 placeholder:text-n-slate-9 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 transition-all"
       />
       <fluent-icon
@@ -95,8 +98,13 @@ const selectContact = contact => {
           <div class="text-sm font-medium text-n-slate-12 truncate">
             {{ contact.name }}
           </div>
-          <div v-if="contact.phone_number || contact.email" class="text-xs text-n-slate-10 truncate">
-            {{ contact.phone_number }} {{ contact.phone_number && contact.email ? '•' : '' }} {{ contact.email }}
+          <div
+            v-if="contact.phone_number || contact.email"
+            class="text-xs text-n-slate-10 truncate"
+          >
+            {{ contact.phone_number }}
+            {{ contact.phone_number && contact.email ? '•' : '' }}
+            {{ contact.email }}
           </div>
         </div>
       </button>

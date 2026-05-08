@@ -204,7 +204,8 @@ const isSaving = computed(
 );
 
 const canSave = computed(() => {
-  const hasItems = form.value.items.length > 0 && form.value.items.every(i => i.product_name);
+  const hasItems =
+    form.value.items.length > 0 && form.value.items.every(i => i.product_name);
   if (!props.conversationId && !form.value.contact_id) {
     return false; // Require contact when creating standalone order
   }
@@ -249,15 +250,13 @@ const handleSave = async () => {
       } else {
         await SalesOrdersAPI.update(props.order.id, orderData);
       }
+    } else if (props.conversationId) {
+      await store.dispatch('conversationOrders/create', {
+        conversationId: props.conversationId,
+        orderData,
+      });
     } else {
-      if (props.conversationId) {
-        await store.dispatch('conversationOrders/create', {
-          conversationId: props.conversationId,
-          orderData,
-        });
-      } else {
-        await SalesOrdersAPI.create(orderData);
-      }
+      await SalesOrdersAPI.create(orderData);
     }
     emit('saved');
   } catch (error) {
@@ -280,7 +279,7 @@ const handleContactSelect = selectedContact => {
   form.value.contact_id = selectedContact.id;
   form.value.customer_name = selectedContact.name;
   form.value.customer_phone = selectedContact.phone_number || '';
-  
+
   const attrs = selectedContact.additional_attributes || {};
   form.value.customer_address =
     attrs.address ||
