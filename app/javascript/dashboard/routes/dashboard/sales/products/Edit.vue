@@ -208,7 +208,11 @@ const onSubmit = async () => {
     // Luôn gửi mảng variants (kể cả rỗng) để backend cập nhật (xoá/thêm/sửa)
     payload.product_variants_attributes = finalVariants;
 
-    await store.dispatch('salesProducts/update', payload);
+    const { id: productId, ...productData } = payload;
+    await store.dispatch('salesProducts/update', {
+      id: productId,
+      product: productData,
+    });
 
     useAlert(t('SALES.PRODUCT_FORM.ALERTS.UPDATE_SUCCESS'));
     router.push({ name: 'sales_products_list' });

@@ -82,6 +82,7 @@ const handleSave = async () => {
   try {
     await store.dispatch('inboxes/updateInbox', {
       id: props.inbox.id,
+      formData: false,
       ecommerce_integration_id: selectedIntegrationId.value,
     });
     useAlert(t('INBOX_MGMT.ECOMMERCE.SAVE_SUCCESS'));

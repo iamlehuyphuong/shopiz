@@ -163,7 +163,7 @@ const onSubmit = async () => {
       payload.product_variants_attributes = finalVariants;
     }
 
-    await store.dispatch('salesProducts/create', payload);
+    await store.dispatch('salesProducts/create', { product: payload });
 
     useAlert(t('SALES.PRODUCT_FORM.ALERTS.CREATE_SUCCESS'));
     router.push({ name: 'sales_products_list' });
