@@ -6,8 +6,7 @@ class DeleteObjectJob < ApplicationJob
   rescue_from(StandardError) do |exception|
     object = arguments.first
     if object.is_a?(Inbox)
-      redis = Redis.new(Redis::Config.app)
-      redis.srem("deleted_inboxes_#{object.account_id}", object.id)
+      $alfred.with { |conn| conn.srem("deleted_inboxes_#{object.account_id}", object.id) }
     end
     raise exception
   end

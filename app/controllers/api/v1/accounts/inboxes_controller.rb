@@ -11,8 +11,7 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   def index
     @inboxes = policy_scope(Current.account.inboxes.order_by_name.includes(index_includes))
 
-    redis = Redis.new(Redis::Config.app)
-    deleted_inbox_ids = redis.smembers("deleted_inboxes_#{Current.account.id}")
+    deleted_inbox_ids = $alfred.with { |conn| conn.smembers("deleted_inboxes_#{Current.account.id}") }
 
     return unless deleted_inbox_ids.any?
 
@@ -95,9 +94,10 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
       ::DeleteObjectJob.perform_later(@inbox, Current.user, request.ip)
 
       # Mark inbox as deleted in Redis to prevent it from showing up in the index
-      redis = Redis.new(Redis::Config.app)
-      redis.sadd("deleted_inboxes_#{Current.account.id}", @inbox.id)
-      redis.expire("deleted_inboxes_#{Current.account.id}", 1.day.to_i)
+      $alfred.with do |conn|
+        conn.sadd("deleted_inboxes_#{Current.account.id}", @inbox.id)
+        conn.expire("deleted_inboxes_#{Current.account.id}", 1.day.to_i)
+      end
     end
     render status: :ok, json: { message: I18n.t('messages.inbox_deletetion_response') }
   end
