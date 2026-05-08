@@ -86,6 +86,10 @@ export default {
     return {
       avatarFile: null,
       avatarUrl: '',
+      bubbleAvatarFile: null,
+      bubbleAvatarUrl: '',
+      closeBubbleAvatarFile: null,
+      closeBubbleAvatarUrl: '',
       greetingEnabled: true,
       greetingMessage: '',
       emailCollectEnabled: false,
@@ -473,6 +477,8 @@ export default {
       if (!this.inbox || !this.inbox.id) return;
 
       this.avatarUrl = this.inbox.avatar_url;
+      this.bubbleAvatarUrl = this.inbox.bubble_avatar_url;
+      this.closeBubbleAvatarUrl = this.inbox.close_bubble_avatar_url;
       this.selectedInboxName = this.inbox.name;
       this.webhookUrl = this.inbox.webhook_url;
       this.greetingEnabled = this.inbox.greeting_enabled || false;
@@ -663,6 +669,12 @@ export default {
         if (this.avatarFile) {
           payload.avatar = this.avatarFile;
         }
+        if (this.bubbleAvatarFile) {
+          payload.channel.bubble_avatar = this.bubbleAvatarFile;
+        }
+        if (this.closeBubbleAvatarFile) {
+          payload.channel.close_bubble_avatar = this.closeBubbleAvatarFile;
+        }
         await this.$store.dispatch('inboxes/updateInbox', payload);
         useAlert(this.$t('INBOX_MGMT.EDIT.API.SUCCESS_MESSAGE'));
         this.showBusinessNameInput = false;
@@ -674,6 +686,14 @@ export default {
       this.avatarFile = file;
       this.avatarUrl = url;
     },
+    handleBubbleImageUpload({ file, url }) {
+      this.bubbleAvatarFile = file;
+      this.bubbleAvatarUrl = url;
+    },
+    handleCloseBubbleImageUpload({ file, url }) {
+      this.closeBubbleAvatarFile = file;
+      this.closeBubbleAvatarUrl = url;
+    },
     async handleAvatarDelete() {
       try {
         await this.$store.dispatch(
@@ -682,6 +702,40 @@ export default {
         );
         this.avatarFile = null;
         this.avatarUrl = '';
+        useAlert(this.$t('INBOX_MGMT.DELETE.API.AVATAR_SUCCESS_MESSAGE'));
+      } catch (error) {
+        useAlert(
+          error.message
+            ? error.message
+            : this.$t('INBOX_MGMT.DELETE.API.AVATAR_ERROR_MESSAGE')
+        );
+      }
+    },
+    async handleBubbleAvatarDelete() {
+      try {
+        await this.$store.dispatch(
+          'inboxes/deleteBubbleAvatar',
+          this.currentInboxId
+        );
+        this.bubbleAvatarFile = null;
+        this.bubbleAvatarUrl = '';
+        useAlert(this.$t('INBOX_MGMT.DELETE.API.AVATAR_SUCCESS_MESSAGE'));
+      } catch (error) {
+        useAlert(
+          error.message
+            ? error.message
+            : this.$t('INBOX_MGMT.DELETE.API.AVATAR_ERROR_MESSAGE')
+        );
+      }
+    },
+    async handleCloseBubbleAvatarDelete() {
+      try {
+        await this.$store.dispatch(
+          'inboxes/deleteCloseBubbleAvatar',
+          this.currentInboxId
+        );
+        this.closeBubbleAvatarFile = null;
+        this.closeBubbleAvatarUrl = '';
         useAlert(this.$t('INBOX_MGMT.DELETE.API.AVATAR_SUCCESS_MESSAGE'));
       } catch (error) {
         useAlert(
@@ -804,21 +858,55 @@ export default {
               'max-w-4xl': !isAWebWidgetInbox,
             }"
           >
-            <div class="flex flex-col gap-1 items-start mb-4">
-              <label class="text-heading-3 text-n-slate-12">
-                {{ $t('INBOX_MGMT.ADD.WEBSITE_CHANNEL.CHANNEL_AVATAR.LABEL') }}
-              </label>
-              <Avatar
-                :src="avatarUrl"
-                :size="64"
-                :icon-name="inboxIcon"
-                name=""
-                allow-upload
-                branded
-                rounded-full
-                @upload="handleImageUpload"
-                @delete="handleAvatarDelete"
-              />
+            <div class="flex flex-wrap gap-6 mb-4">
+              <div class="flex flex-col gap-1 items-start">
+                <label class="text-heading-3 text-n-slate-12">
+                  {{ $t('INBOX_MGMT.ADD.WEBSITE_CHANNEL.CHANNEL_AVATAR.LABEL') }}
+                </label>
+                <Avatar
+                  :src="avatarUrl"
+                  :size="64"
+                  :icon-name="inboxIcon"
+                  name=""
+                  allow-upload
+                  branded
+                  rounded-full
+                  @upload="handleImageUpload"
+                  @delete="handleAvatarDelete"
+                />
+              </div>
+              <div v-if="isAWebWidgetInbox" class="flex flex-col gap-1 items-start">
+                <label class="text-heading-3 text-n-slate-12">
+                  Ảnh mở Bubble Chat
+                </label>
+                <Avatar
+                  :src="bubbleAvatarUrl"
+                  :size="64"
+                  icon-name="chat"
+                  name=""
+                  allow-upload
+                  branded
+                  rounded-full
+                  @upload="handleBubbleImageUpload"
+                  @delete="handleBubbleAvatarDelete"
+                />
+              </div>
+              <div v-if="isAWebWidgetInbox" class="flex flex-col gap-1 items-start">
+                <label class="text-heading-3 text-n-slate-12">
+                  Ảnh đóng Bubble Chat
+                </label>
+                <Avatar
+                  :src="closeBubbleAvatarUrl"
+                  :size="64"
+                  icon-name="dismiss"
+                  name=""
+                  allow-upload
+                  branded
+                  rounded-full
+                  @upload="handleCloseBubbleImageUpload"
+                  @delete="handleCloseBubbleAvatarDelete"
+                />
+              </div>
             </div>
             <SettingsFieldSection :label="inboxNameLabel">
               <woot-input

@@ -10,10 +10,15 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
   # ModelDrop class should exist in app/drops
+  # Supports STI: e.g. SuperAdmin < User will match "User" in droppables
   def to_drop
-    return unless droppables.include?(self.class.name)
+    drop_class_name = self.class.ancestors
+                          .map(&:name)
+                          .compact
+                          .find { |name| droppables.include?(name) }
+    return unless drop_class_name
 
-    "#{self.class.name}Drop".constantize.new(self)
+    "#{drop_class_name}Drop".constantize.new(self)
   end
 
   private

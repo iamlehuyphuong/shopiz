@@ -1,33 +1,4 @@
-<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Account Temporarily Locked</h2>
-
-<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
-  Hi <strong>{% if user.name %}{{ user.name }}{% else %}{{ user.available_name }}{% endif %}</strong>,
-</p>
-
-<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
-  Your account has been locked due to an excessive number of unsuccessful sign-in attempts.
-</p>
-
-<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
-  Click the link below to unlock your account and regain access:
-</p>
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 24px;">
-  <tr>
-    <td align="left">
-      <a href="{{ action_url }}" style="display: inline-block; background-color: #3B82F6; color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 12px;">
-        Unlock My Account
-      </a>
-    </td>
-  </tr>
-</table>
-
-<div style="background-color: #F8FAFC; border: 1px dashed #CBD5E1; border-radius: 8px; padding: 16px; margin-bottom: 24px; word-break: break-all;">
-  <a href="{{ action_url }}" style="color: #3B82F6; font-size: 13px; text-decoration: none;">{{ action_url }}</a>
-</div>
-
-<hr style="border: 0; border-bottom: 1px solid #E2E8F0; margin: 24px 0;" />
-
+{% if locale == 'vi' %}
 <h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Tài Khoản Tạm Thời Bị Khoá</h2>
 
 <p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
@@ -55,3 +26,32 @@
 <div style="background-color: #F8FAFC; border: 1px dashed #CBD5E1; border-radius: 8px; padding: 16px; margin-bottom: 24px; word-break: break-all;">
   <a href="{{ action_url }}" style="color: #3B82F6; font-size: 13px; text-decoration: none;">{{ action_url }}</a>
 </div>
+{% else %}
+<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Account Temporarily Locked</h2>
+
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
+  Hi <strong>{% if user.name %}{{ user.name }}{% else %}{{ user.available_name }}{% endif %}</strong>,
+</p>
+
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
+  Your account has been locked due to an excessive number of unsuccessful sign-in attempts.
+</p>
+
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
+  Click the link below to unlock your account and regain access:
+</p>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 24px;">
+  <tr>
+    <td align="left">
+      <a href="{{ action_url }}" style="display: inline-block; background-color: #3B82F6; color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 12px;">
+        Unlock My Account
+      </a>
+    </td>
+  </tr>
+</table>
+
+<div style="background-color: #F8FAFC; border: 1px dashed #CBD5E1; border-radius: 8px; padding: 16px; margin-bottom: 24px; word-break: break-all;">
+  <a href="{{ action_url }}" style="color: #3B82F6; font-size: 13px; text-decoration: none;">{{ action_url }}</a>
+</div>
+{% endif %}

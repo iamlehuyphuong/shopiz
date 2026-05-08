@@ -35,7 +35,7 @@
                     
                     <tr>
                         <td class="header-box" style="background: linear-gradient(180deg, #FFF7ED 0%, #FFFFFF 100%); padding: 30px 20px; text-align: center;">
-                            <img src="{% if frontend_url %}{{ frontend_url }}{% else %}https://beta.shopiz.pro{% endif %}/brand-assets/logo_thumbnail.svg" width="80" alt="Shopiz" style="display: block; margin: 0 auto;" />
+                            <img src="https://shopiz.pro/Logo.png" width="80" alt="Shopiz" style="display: block; margin: 0 auto;" />
                             
                             <div style="margin-top: 8px; color: #F97316; font-size: 12px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;">
                                 {% if global_config['BRAND_NAME'] != blank %}{{ global_config['BRAND_NAME'] }}{% else %}Shopiz{% endif %}
@@ -72,9 +72,9 @@
                 <table width="100%" cellpadding="0" cellspacing="0" border="0">
                     <tr>
                         <td style="text-align: center; padding: 25px 20px; font-size: 12px; color: #94A3B8;">
-                            <p style="margin: 0 0 5px;">&copy; {{ "now" | date: "%Y" }} <strong>{% if global_config['BRAND_NAME'] != blank %}{{ global_config['BRAND_NAME'] }}{% else %}Shopiz{% endif %}</strong>. All Rights Reserved.</p>
+                            <p style="margin: 0 0 5px;">&copy; {{ "now" | date: "%Y" }} <strong>{% if global_config['BRAND_NAME'] != blank %}{{ global_config['BRAND_NAME'] }}{% else %}Shopiz{% endif %}</strong>. {% if locale == 'vi' %}Bảo lưu mọi quyền.{% else %}All Rights Reserved.{% endif %}</p>
                             <div style="margin-top: 5px;">
-                                <a href="{% if frontend_url %}{{ frontend_url }}{% else %}https://beta.shopiz.pro{% endif %}" style="color: #F97316; text-decoration: none; font-weight: 600;">Trang chủ</a>
+                                <a href="{% if frontend_url %}{{ frontend_url }}{% else %}https://beta.shopiz.pro{% endif %}" style="color: #F97316; text-decoration: none; font-weight: 600;">{% if locale == 'vi' %}Trang chủ{% else %}Home{% endif %}</a>
                             </div>
                         </td>
                     </tr>

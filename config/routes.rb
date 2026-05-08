@@ -253,6 +253,8 @@ Rails.application.routes.draw do
             get :agent_bot, on: :member
             post :set_agent_bot, on: :member
             delete :avatar, on: :member
+            delete :bubble_avatar, on: :member
+            delete :close_bubble_avatar, on: :member
             post :sync_templates, on: :member
             get :health, on: :member
             post :register_webhook, on: :member

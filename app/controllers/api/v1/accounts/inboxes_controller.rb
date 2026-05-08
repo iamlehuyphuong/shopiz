@@ -28,6 +28,16 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
     head :ok
   end
 
+  def bubble_avatar
+    @inbox.channel.bubble_avatar.attachment.destroy! if @inbox.channel.bubble_avatar.attached?
+    head :ok
+  end
+
+  def close_bubble_avatar
+    @inbox.channel.close_bubble_avatar.attachment.destroy! if @inbox.channel.close_bubble_avatar.attached?
+    head :ok
+  end
+
   def sync_templates
     trigger_template_sync
     render status: :ok, json: { message: I18n.t('messages.template_sync_initiated') }

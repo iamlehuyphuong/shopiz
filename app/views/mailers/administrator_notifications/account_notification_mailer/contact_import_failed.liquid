@@ -1,9 +1,11 @@
-<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Contact Import Failed</h2>
-<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
-  Your CSV contact import process has failed. Please verify the file format and required fields before trying again.
-</p>
-<hr style="border: 0; border-bottom: 1px solid #E2E8F0; margin: 24px 0;" />
+{% if locale == 'vi' %}
 <h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Nhập Danh Bạ Thất Bại</h2>
 <p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
   Tiến trình nhập danh bạ từ tệp CSV của bạn đã bị lỗi. Vui lòng kiểm tra lại định dạng tệp và các thông tin bắt buộc trước khi thử lại.
 </p>
+{% else %}
+<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Contact Import Failed</h2>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
+  Your CSV contact import process has failed. Please verify the file format and required fields before trying again.
+</p>
+{% endif %}

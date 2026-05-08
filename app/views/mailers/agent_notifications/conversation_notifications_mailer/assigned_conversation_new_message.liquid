@@ -1,21 +1,4 @@
-<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">New Message in Assigned Conversation</h2>
-<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
-  Hi <strong>{{ user.available_name }}</strong>,
-</p>
-<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
-  The customer <strong>{{ conversation.contact_name }}</strong> just replied to a conversation that is assigned to you.
-</p>
-<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
-  <strong>Message:</strong> {{ message.text_content }}
-</p>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 24px;">
-  <tr>
-    <td align="left">
-      <a href="{{ action_url }}" style="display: inline-block; background-color: #3B82F6; color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 12px;">Reply Now</a>
-    </td>
-  </tr>
-</table>
-<hr style="border: 0; border-bottom: 1px solid #E2E8F0; margin: 24px 0;" />
+{% if locale == 'vi' %}
 <h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Tin Nhắn Mới - Hội Thoại Của Bạn</h2>
 <p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
   Hi <strong>{{ user.available_name }}</strong>,
@@ -33,3 +16,22 @@
     </td>
   </tr>
 </table>
+{% else %}
+<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">New Message in Assigned Conversation</h2>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
+  Hi <strong>{{ user.available_name }}</strong>,
+</p>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
+  The customer <strong>{{ conversation.contact_name }}</strong> just replied to a conversation that is assigned to you.
+</p>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
+  <strong>Message:</strong> {{ message.text_content }}
+</p>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 24px;">
+  <tr>
+    <td align="left">
+      <a href="{{ action_url }}" style="display: inline-block; background-color: #3B82F6; color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 12px;">Reply Now</a>
+    </td>
+  </tr>
+</table>
+{% endif %}
