@@ -52,17 +52,19 @@ class Messages::MessageBuilder
 
     @attachments.each do |uploaded_attachment|
       attachment = @message.attachments.build(
-        account_id: @message.account_id,
-        file: uploaded_attachment
+        account_id: @message.account_id
       )
 
-      attachment.file_type = if uploaded_attachment.is_a?(String)
-                               file_type_by_signed_id(
-                                 uploaded_attachment
-                               )
-                             else
-                               file_type(uploaded_attachment&.content_type)
-                             end
+      if uploaded_attachment.is_a?(String)
+        attachment.file = uploaded_attachment
+        attachment.file_type = file_type_by_signed_id(uploaded_attachment)
+      else
+        checksum = Digest::MD5.file(uploaded_attachment.tempfile.path).base64digest
+        existing_blob = ActiveStorage::Blob.find_by(checksum: checksum, byte_size: uploaded_attachment.size)
+
+        attachment.file = existing_blob || uploaded_attachment
+        attachment.file_type = file_type(uploaded_attachment&.content_type)
+      end
     end
   end
 

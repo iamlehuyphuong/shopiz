@@ -6,6 +6,13 @@ class Api::V1::Widget::DirectUploadsController < ActiveStorage::DirectUploadsCon
   def create
     return if @contact.nil? || @current_account.nil?
 
-    super
+    blob_args = params.require(:blob).permit(:filename, :byte_size, :checksum, :content_type, metadata: {}).to_h.symbolize_keys
+    existing_blob = ActiveStorage::Blob.find_by(checksum: blob_args[:checksum], byte_size: blob_args[:byte_size])
+
+    if existing_blob
+      render json: direct_upload_json(existing_blob)
+    else
+      super
+    end
   end
 end
