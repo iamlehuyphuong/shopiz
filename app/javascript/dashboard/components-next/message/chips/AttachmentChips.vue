@@ -76,17 +76,37 @@ const files = computed(() => {
       (attachment.fileType || attachment.file_type) === ATTACHMENT_TYPES.FILE
   );
 });
+const mediaContainerClass = computed(() => {
+  const count = Math.min(mediaAttachments.value.length, 6);
+  const baseClasses = [attrs.class, 'grid', 'gap-1', 'max-w-[500px]', 'w-full'];
+
+  if (orientation.value === 'right') {
+    baseClasses.push('ml-auto');
+  }
+
+  if (count === 1) {
+    baseClasses.push('grid-cols-1');
+  } else if (count === 2 || count === 4) {
+    baseClasses.push('grid-cols-2');
+  } else {
+    baseClasses.push('grid-cols-3');
+  }
+
+  return baseClasses;
+});
 </script>
 
 <template>
-  <div v-if="mediaAttachments.length" :class="classToApply">
-    <template v-for="attachment in mediaAttachments" :key="attachment.id">
+  <div v-if="mediaAttachments.length" :class="mediaContainerClass">
+    <template v-for="(attachment, index) in mediaAttachments.slice(0, 6)" :key="attachment.id">
       <ImageChip
         v-if="
           (attachment.fileType || attachment.file_type) ===
           ATTACHMENT_TYPES.IMAGE
         "
         :attachment="attachment"
+        :total-count="mediaAttachments.length"
+        :remaining-count="index === 5 ? mediaAttachments.length - 5 : 0"
       />
       <VideoChip
         v-else-if="
@@ -94,6 +114,8 @@ const files = computed(() => {
           ATTACHMENT_TYPES.VIDEO
         "
         :attachment="attachment"
+        :total-count="mediaAttachments.length"
+        :remaining-count="index === 5 ? mediaAttachments.length - 5 : 0"
       />
     </template>
   </div>
