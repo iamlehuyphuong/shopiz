@@ -485,12 +485,21 @@ vi:
       credit: 'Gói %{product_name}'
   conversation_orders:
     push_success_message: 'Đơn hàng của bạn đã được xác nhận thành công! Mã đơn hàng: %{order_id}. Tổng tiền: %{total}.'
+    status:
+      draft: 'Nháp'
+      confirmed: 'Đã xác nhận'
+      processing: 'Đang xử lý'
+      shipped: 'Đang giao hàng'
+      delivered: 'Giao hàng thành công'
+      cancelled: 'Đã hủy'
+    utility_messages:
+      status_update: "Xin chào, đơn hàng #%{order_id} của bạn đã được cập nhật trạng thái thành: %{status_label}.\n- Tổng giá trị: %{total_amount}\n\nChúng tôi sẽ tiếp tục cập nhật thông tin trong thời gian sớm nhất. Cảm ơn bạn!"
     activity:
-      created: '🛒 Đơn hàng #%{order_id} được tạo bởi %{user_name}'
-      pushed: '📤 Đơn hàng #%{order_id} đã đẩy lên %{platform} (Mã ngoài: %{external_id})'
-      synced: '🔄 Đơn hàng #%{order_id} đồng bộ từ %{platform} — Trạng thái: %{status}'
-      cancelled: '❌ Đơn hàng #%{order_id} đã hủy bởi %{user_name}'
-      deleted: '🗑️ Đơn hàng #%{order_id} đã xóa bởi %{user_name}'
+      created: 'Đơn hàng #%{order_id} được tạo bởi %{user_name}'
+      pushed: 'Đơn hàng #%{order_id} đã đẩy lên %{platform} (Mã ngoài: %{external_id})'
+      synced: 'Đơn hàng #%{order_id} đồng bộ từ %{platform} — Trạng thái: %{status}'
+      cancelled: 'Đơn hàng #%{order_id} đã hủy bởi %{user_name}'
+      deleted: 'Đơn hàng #%{order_id} đã xóa bởi %{user_name}'
   zalo_personal:
     calls:
       action:

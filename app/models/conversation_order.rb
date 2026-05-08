@@ -14,6 +14,7 @@ class ConversationOrder < ApplicationRecord
   validates :contact_id, presence: true, if: -> { conversation_id.blank? }
 
   before_save :calculate_total_amount
+  after_commit :send_status_update_message, on: :update
 
   scope :ordered, -> { order(created_at: :desc) }
 
@@ -22,5 +23,15 @@ class ConversationOrder < ApplicationRecord
   def calculate_total_amount
     subtotal = items.reject(&:marked_for_destruction?).sum { |item| item.quantity * item.unit_price }
     self.total_amount = subtotal + (shipping_fee || 0.0) + (tax || 0.0) - (discount_amount || 0.0)
+  end
+
+  def send_status_update_message
+    return unless saved_change_to_status?
+    return unless %w[confirmed processing shipped delivered].include?(status)
+
+    ConversationOrders::SendUtilityMessageService.new(
+      order: self,
+      conversation: conversation
+    ).perform
   end
 end

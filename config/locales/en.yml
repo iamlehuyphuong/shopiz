@@ -528,12 +528,21 @@ en:
       credit: '%{product_name} Package'
   conversation_orders:
     push_success_message: 'Order confirmed! Order ID: %{order_id}. Total: %{total}.'
+    status:
+      draft: 'Draft'
+      confirmed: 'Confirmed'
+      processing: 'Processing'
+      shipped: 'Shipped'
+      delivered: 'Delivered'
+      cancelled: 'Cancelled'
+    utility_messages:
+      status_update: "Hello, your order #%{order_id} has been updated to: %{status_label}.\n- Total: %{total_amount}\n\nWe will keep you updated. Thank you!"
     activity:
-      created: '🛒 Order #%{order_id} created by %{user_name}'
-      pushed: '📤 Order #%{order_id} pushed to %{platform} (External ID: %{external_id})'
-      synced: '🔄 Order #%{order_id} synced from %{platform} — Status: %{status}'
-      cancelled: '❌ Order #%{order_id} cancelled by %{user_name}'
-      deleted: '🗑️ Order #%{order_id} deleted by %{user_name}'
+      created: 'Order #%{order_id} created by %{user_name}'
+      pushed: 'Order #%{order_id} pushed to %{platform} (External ID: %{external_id})'
+      synced: 'Order #%{order_id} synced from %{platform} — Status: %{status}'
+      cancelled: 'Order #%{order_id} cancelled by %{user_name}'
+      deleted: 'Order #%{order_id} deleted by %{user_name}'
   zalo_personal:
     calls:
       action:
