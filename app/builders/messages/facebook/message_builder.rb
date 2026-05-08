@@ -82,7 +82,12 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
     return if response.referral.blank?
 
     note_content = "Nguồn: Quảng cáo CTM\n"
-    note_content += "- Chiến dịch (Ad ID): #{response.ad_id}\n" if response.ad_id.present?
+
+    if response.ad_id.present?
+      link_id = response.try(:post_id).presence || response.ad_id
+      note_content += "- Chiến dịch (Ad ID): [#{response.ad_id}](https://facebook.com/#{link_id})\n"
+    end
+
     note_content += "- Mã sản phẩm (Ref): #{response.ref_payload}\n" if response.ref_payload.present?
 
     conversation.messages.create!(

@@ -76,6 +76,10 @@ class Integrations::Facebook::MessageParser
     referral&.dig('ad_id')
   end
 
+  def post_id
+    referral&.dig('ads_context_data', 'post_id')
+  end
+
   def ref_payload
     referral&.dig('ref')
   end
