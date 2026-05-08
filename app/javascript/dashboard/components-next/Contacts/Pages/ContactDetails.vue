@@ -83,20 +83,25 @@ const formatSourceString = sourceStr => {
 
 const displaySource = computed(() => {
   const inboxes = props.selectedContact?.contactInboxes;
+  let inboxSources = [];
   if (inboxes && inboxes.length > 0) {
-    return inboxes
+    inboxSources = inboxes
       .map(ci => {
         if (!ci.inbox) return null;
         return `${mapChannelName(ci.inbox.channelType)} | ${ci.inbox.name}`;
       })
-      .filter(Boolean)
-      .join(', ');
+      .filter(Boolean);
   }
-  const sources = props.selectedContact?.additionalAttributes?.sources;
-  if (sources && Array.isArray(sources) && sources.length > 0) {
-    return sources.map(formatSourceString).join(', ');
+
+  const sourcesAttr = props.selectedContact?.additionalAttributes?.sources;
+  let attrSources = [];
+  if (sourcesAttr && Array.isArray(sourcesAttr) && sourcesAttr.length > 0) {
+    attrSources = sourcesAttr.map(formatSourceString).filter(Boolean);
   }
-  return null;
+
+  const allSources = [...new Set([...inboxSources, ...attrSources])];
+
+  return allSources.length > 0 ? allSources.join(', ') : null;
 });
 
 const avatarSrc = computed(() => {

@@ -115,11 +115,10 @@ const handleSubmit = async () => {
 <template>
   <div class="inline-block">
     <slot name="trigger" :toggle="openModal" />
-    <woot-modal
-      v-model:show="showModal"
-      :on-close="closeModal"
-    >
-      <div class="flex flex-col bg-white dark:bg-slate-900 rounded-xl overflow-hidden max-h-[90vh]">
+    <woot-modal v-model:show="showModal" :on-close="closeModal">
+      <div
+        class="flex flex-col bg-white dark:bg-slate-900 rounded-xl overflow-hidden max-h-[90vh]"
+      >
         <woot-modal-header
           :header-title="$t('CONTACT_PANEL.ZALO_PERSONAL.CONNECT_TITLE')"
           :header-content="$t('CONTACT_PANEL.ZALO_PERSONAL.CONNECT_SUBTITLE')"

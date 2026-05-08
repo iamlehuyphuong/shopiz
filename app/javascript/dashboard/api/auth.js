@@ -42,7 +42,10 @@ export default {
     const formData = new FormData();
     Object.keys(profileAttributes).forEach(key => {
       if (profileAttributes[key] !== undefined) {
-        formData.append(`profile[${key}]`, profileAttributes[key] === null ? '' : profileAttributes[key]);
+        formData.append(
+          `profile[${key}]`,
+          profileAttributes[key] === null ? '' : profileAttributes[key]
+        );
       }
     });
     formData.append('profile[display_name]', displayName || '');
