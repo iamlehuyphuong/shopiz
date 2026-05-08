@@ -57,17 +57,25 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
     asid_contact = private_reply_message.conversation.contact
     psid_contact = @contact_inbox.contact
 
-    return if asid_contact.id == psid_contact.id
+    if asid_contact.id != psid_contact.id
+      # Merge ASID contact (the one built from Comment feed) into PSID contact (the DM user)
+      ContactMergeAction.new(
+        account: @inbox.account,
+        base_contact: psid_contact,
+        mergee_contact: asid_contact
+      ).perform
 
-    # Merge ASID contact (the one built from Comment feed) into PSID contact (the DM user)
-    ContactMergeAction.new(
-      account: @inbox.account,
-      base_contact: psid_contact,
-      mergee_contact: asid_contact
-    ).perform
+      # Reload the PSID contact inbox associations after merge
+      @contact_inbox.reload
+    end
 
-    # Reload the PSID contact inbox associations after merge
-    @contact_inbox.reload
+    # Continue on the old conversation from the comment
+    @conversation = private_reply_message.conversation
+    
+    # Ensure the conversation uses the PSID contact_inbox so replies go to the PSID
+    if @conversation.contact_inbox_id != @contact_inbox.id
+      @conversation.update!(contact_inbox_id: @contact_inbox.id)
+    end
   end
 
   def build_message

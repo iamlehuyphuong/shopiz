@@ -33,6 +33,12 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
       track_campaign_metric(:failed)
     else
       message.update!(source_id: parsed_result['message_id']) if parsed_result['message_id'].present?
+      
+      # Clear comment_id to prevent trying to reply multiple times to the same comment
+      if conversation.additional_attributes['comment_id'].present?
+        conversation.update!(additional_attributes: conversation.additional_attributes.except('comment_id'))
+      end
+
       track_campaign_metric(:delivered)
     end
   end
@@ -61,6 +67,8 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
   def setup_recipient(base_params)
     if message.content_attributes['notification_messages_token'].present?
       base_params[:recipient] = { notification_messages_token: message.content_attributes['notification_messages_token'] }
+    elsif conversation.additional_attributes['comment_id'].present?
+      base_params[:recipient] = { comment_id: conversation.additional_attributes['comment_id'] }
     else
       base_params[:recipient] = { id: contact.get_source_id(inbox.id) }
       message_tag = message.content_attributes['message_tag']

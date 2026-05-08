@@ -45,6 +45,12 @@ class Facebook::CommentHandlerService
       last_conversation = Conversation.where(conversation_params).where.not(status: :resolved).order(created_at: :desc).first
       @conversation = last_conversation || build_new_conversation
     end
+
+    # Update the latest comment_id so we can use it to reply privately
+    @conversation.additional_attributes ||= {}
+    @conversation.additional_attributes['type'] = 'comment'
+    @conversation.additional_attributes['comment_id'] = @comment_id
+    @conversation.save!
   end
 
   def conversation_params
@@ -59,7 +65,7 @@ class Facebook::CommentHandlerService
     Conversation.create!(
       conversation_params.merge(
         contact_inbox_id: @contact_inbox.id,
-        additional_attributes: { type: 'comment' }
+        additional_attributes: { type: 'comment', comment_id: @comment_id }
       )
     )
   end
@@ -68,6 +74,7 @@ class Facebook::CommentHandlerService
     note_content = "Post: https://www.facebook.com/#{@post_id}\n"
     note_content += "Comment: #{@message}"
     note_content += "\n🚫 Comment đã được tự động ẩn" if @comment_hidden
+    note_content += "\n\n🔒 **Phản hồi riêng tư (Private Reply):** Tin nhắn tiếp theo bạn gửi sẽ được gửi dưới dạng phản hồi riêng tư cho bình luận này."
 
     # Verify if this exact note already exists to prevent duplication on multiple webhook deliveries
     return if @conversation.messages.where(message_type: :outgoing, private: true, content: note_content).exists?

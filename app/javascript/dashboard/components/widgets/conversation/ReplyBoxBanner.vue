@@ -62,6 +62,14 @@ const showBotHandoffBanner = computed(
     currentChat.value?.status === wootConstants.STATUS_TYPE.PENDING
 );
 
+const showPrivateReplyBanner = computed(() => {
+  return (
+    currentChat.value?.additional_attributes?.type === 'comment' &&
+    currentChat.value?.additional_attributes?.comment_id &&
+    !props.isOnPrivateNote
+  );
+});
+
 const botHandoffActionLabel = computed(() => {
   return assignedAgent.value?.id === currentUser.value?.id
     ? t('CONVERSATION.BOT_HANDOFF_REOPEN_ACTION')
@@ -128,5 +136,12 @@ const onClickBotHandoff = async () => {
     has-action-button
     :action-button-label="botHandoffActionLabel"
     @primary-action="onClickBotHandoff"
+  />
+  <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
+  <Banner
+    v-if="showPrivateReplyBanner"
+    color-scheme="warning"
+    class="mx-2 mb-2 rounded-lg !py-2"
+    banner-message="🔒 Phản hồi riêng tư (Private Reply): Tin nhắn tiếp theo sẽ được gửi riêng tư cho bình luận này. (Chỉ được gửi 1 lần)"
   />
 </template>

@@ -98,7 +98,10 @@ const mediaContainerClass = computed(() => {
 
 <template>
   <div v-if="mediaAttachments.length" :class="mediaContainerClass">
-    <template v-for="(attachment, index) in mediaAttachments.slice(0, 6)" :key="attachment.id">
+    <template
+      v-for="(attachment, index) in mediaAttachments.slice(0, 6)"
+      :key="attachment.id"
+    >
       <ImageChip
         v-if="
           (attachment.fileType || attachment.file_type) ===

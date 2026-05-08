@@ -130,7 +130,9 @@ const handleSubmit = async () => {
               {{ $t('CONTACT_PANEL.ZALO_PERSONAL.SELECT_INBOX') }}
               <select v-model="selectedInboxId">
                 <option value="" disabled>
-                  {{ $t('CONTACT_PANEL.ZALO_PERSONAL.SELECT_INBOX_PLACEHOLDER') }}
+                  {{
+                    $t('CONTACT_PANEL.ZALO_PERSONAL.SELECT_INBOX_PLACEHOLDER')
+                  }}
                 </option>
                 <option
                   v-for="inbox in zaloPersonalInboxes"
