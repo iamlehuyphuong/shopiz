@@ -8,6 +8,7 @@ import TextArea from 'next/textarea/TextArea.vue';
 
 const props = defineProps({
   contactId: { type: [String, Number], required: true },
+  phone: { type: String, default: '' },
 });
 
 const emit = defineEmits(['close']);
@@ -83,18 +84,16 @@ const handleSubmit = async () => {
 
     // 2. Send greeting message (creates conversation or adds to existing)
     if (greetingMessage.value.trim()) {
-      const messagePayload = {
-        inbox_id: selectedInbox.value.id,
-        contact_id: props.contactId,
-        message: {
-          content: greetingMessage.value,
+      const response = await store.dispatch('contactConversations/create', {
+        params: {
+          inboxId: selectedInbox.value.id,
+          contactId: props.contactId,
+          sourceId: props.phone,
+          message: {
+            content: greetingMessage.value,
+          },
         },
-      };
-
-      const response = await store.dispatch(
-        'contactConversations/create',
-        messagePayload
-      );
+      });
       conversationId = response.id || response.conversation_id;
     }
 
