@@ -50,8 +50,7 @@ class Webhooks::ZaloPersonalEventsJob < ApplicationJob
     message = find_message(channel, params)
     return unless message
 
-    message.update!(content: I18n.t('conversations.messages.undo'), content_type: :text, content_attributes: { undo: true })
-    message.attachments.destroy_all
+    message.update!(undo: true)
   end
 
   def find_message(channel, params)
