@@ -44,6 +44,7 @@ import ColorPicker from 'dashboard/components-next/colorpicker/ColorPicker.vue';
 import SelectInput from 'dashboard/components-next/select/Select.vue';
 import Widget from 'dashboard/modules/widget-preview/components/Widget.vue';
 import OrderTemplateMapping from './components/OrderTemplateMapping.vue';
+import InboxReconnectionRequired from './components/InboxReconnectionRequired.vue';
 
 export default {
   components: {
@@ -81,6 +82,7 @@ export default {
     EcommerceTab,
     OrderTemplateMapping,
     FeatureLockOverlay,
+    InboxReconnectionRequired,
   },
   mixins: [inboxMixin],
   setup() {
@@ -131,6 +133,7 @@ export default {
       followupMacros: Array.from({ length: 15 }, () => ''),
       followupCustomAIPrompts: Array.from({ length: 15 }, () => ''),
       autoLabelEnabled: false,
+      zaloReauthorizeModalVisible: false,
     };
   },
   computed: {
@@ -197,16 +200,6 @@ export default {
           {
             key: 'pre-chat-form',
             name: this.$t('INBOX_MGMT.TABS.PRE_CHAT_FORM'),
-          },
-        ];
-      }
-
-      if (this.isAZaloPersonalChannel) {
-        visibleToAllChannelTabs = [
-          ...visibleToAllChannelTabs,
-          {
-            key: 'zaloPersonalLogin',
-            name: this.$t('INBOX_MGMT.ADD.ZALO_OA.RELOGIN'),
           },
         ];
       }
@@ -368,6 +361,9 @@ export default {
     },
     instagramUnauthorized() {
       return this.isAnInstagramChannel && this.inbox.reauthorization_required;
+    },
+    zaloPersonalUnauthorized() {
+      return this.isAZaloPersonalChannel && this.inbox.reauthorization_required;
     },
     tiktokUnauthorized() {
       return this.isATiktokChannel && this.inbox.reauthorization_required;
@@ -873,6 +869,12 @@ export default {
           :content="$t('INBOX_MGMT.ADD.INSTAGRAM.DUPLICATE_INBOX_BANNER')"
           class="mx-6 mb-4"
           :class="bannerMaxWidth"
+        />
+        <InboxReconnectionRequired
+          v-if="zaloPersonalUnauthorized"
+          class="mx-6 mb-4"
+          :class="bannerMaxWidth"
+          @reauthorize="zaloReauthorizeModalVisible = true"
         />
 
         <div
@@ -1436,231 +1438,231 @@ export default {
                           />
                         </div>
                         <p class="text-[12px] text-n-slate-11">
-                        {{
-                          $t(
-                            'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_LIMIT_WARNING'
-                          )
-                        }}
-                      </p>
-                    </div>
-
-                    <div class="flex flex-col gap-1 mt-2">
-                      <label class="text-n-slate-11 text-small font-medium">
-                        {{
-                          $t(
-                            'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_MAX_ATTEMPTS'
-                          )
-                        }}
-                      </label>
-                      <SelectInput
-                        v-model="followupMaxAttempts"
-                        :options="dynamicMaxAttemptsOptions"
-                        class="w-full"
-                      />
-                    </div>
-
-                    <div class="flex flex-col gap-1 mt-2">
-                      <label class="text-n-slate-11 text-small font-medium">
-                        {{
-                          $t(
-                            'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIME_MODE'
-                          )
-                        }}
-                      </label>
-                      <SelectInput
-                        v-model="followupTimeMode"
-                        :options="[
-                          {
-                            value: 'relative',
-                            label: $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIME_MODE_RELATIVE'
-                            ),
-                          },
-                          {
-                            value: 'fixed',
-                            label: $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIME_MODE_FIXED'
-                            ),
-                          },
-                        ]"
-                        class="w-full"
-                      />
-                    </div>
-
-                    <div
-                      v-if="followupTimeMode === 'fixed'"
-                      class="flex gap-4 mt-2"
-                    >
-                      <div class="flex flex-col gap-1 w-1/2">
-                        <label class="text-n-slate-11 text-small font-medium">
                           {{
                             $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_FIXED_TIME_LABEL'
-                            )
-                          }}
-                        </label>
-                        <woot-input
-                          v-model="followupFixedTime"
-                          type="time"
-                          class="[&_input]:!mb-0"
-                        />
-                      </div>
-                      <div class="flex flex-col gap-1 w-1/2">
-                        <label class="text-n-slate-11 text-small font-medium">
-                          {{
-                            $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIMEZONE_LABEL'
-                            )
-                          }}
-                        </label>
-                        <woot-input
-                          v-model="followupTimezone"
-                          type="text"
-                          class="[&_input]:!mb-0"
-                        />
-                      </div>
-                    </div>
-
-                    <div class="flex flex-col gap-1 mt-2">
-                      <label class="text-n-slate-11 text-small font-medium">
-                        {{
-                          $t(
-                            'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_LABEL'
-                          )
-                        }}
-                      </label>
-                      <SelectInput
-                        v-model="followupActionType"
-                        :options="[
-                          {
-                            value: 'ai_assistant',
-                            label: $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_AI_ASSISTANT'
-                            ),
-                          },
-                          {
-                            value: 'macro',
-                            label: $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_MACRO'
-                            ),
-                          },
-                          {
-                            value: 'predefined_message',
-                            label: $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_PREDEFINED'
-                            ),
-                          },
-                        ]"
-                        class="w-full"
-                      />
-                    </div>
-                    <div
-                      v-if="followupActionType === 'ai_assistant'"
-                      class="flex flex-col gap-3 mt-3"
-                    >
-                      <div
-                        class="flex flex-col gap-1 p-3 bg-n-brand/10 text-n-brand rounded-md"
-                      >
-                        <p class="text-sm">
-                          {{
-                            $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_AI_HINT'
+                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_LIMIT_WARNING'
                             )
                           }}
                         </p>
                       </div>
 
-                      <div
-                        v-for="(n, index) in followupMaxAttempts"
-                        :key="'ai-' + index"
-                        class="flex flex-col gap-1 w-full bg-n-alpha-1 p-3 rounded-md border border-n-weak"
-                      >
+                      <div class="flex flex-col gap-1 mt-2">
                         <label class="text-n-slate-11 text-small font-medium">
                           {{
                             $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_LABEL'
+                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_MAX_ATTEMPTS'
                             )
                           }}
-                          {{ index + 1 }}
-                        </label>
-                        <textarea
-                          v-model="followupCustomAIPrompts[index]"
-                          rows="3"
-                          :placeholder="
-                            $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_PLACEHOLDER'
-                            )
-                          "
-                          class="w-full text-n-slate-12 bg-n-alpha-1 border-n-weak outline-none rounded-md px-3 py-2 border dark:bg-n-solid-1 text-sm focus:border-n-brand focus:ring-1 focus:ring-n-brand"
-                        />
-                      </div>
-                    </div>
-
-                    <div
-                      v-if="followupActionType === 'macro'"
-                      class="flex flex-col gap-3 mt-3"
-                    >
-                      <div
-                        v-for="(n, index) in followupMaxAttempts"
-                        :key="'macro-' + index"
-                        class="flex flex-col gap-1 w-full bg-n-alpha-1 p-3 rounded-md border border-n-weak"
-                      >
-                        <label class="text-n-slate-11 text-small font-medium">
-                          {{
-                            $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_MACRO_SELECT'
-                            )
-                          }}
-                          {{ index + 1 }}
                         </label>
                         <SelectInput
-                          v-model="followupMacros[index]"
+                          v-model="followupMaxAttempts"
+                          :options="dynamicMaxAttemptsOptions"
+                          class="w-full"
+                        />
+                      </div>
+
+                      <div class="flex flex-col gap-1 mt-2">
+                        <label class="text-n-slate-11 text-small font-medium">
+                          {{
+                            $t(
+                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIME_MODE'
+                            )
+                          }}
+                        </label>
+                        <SelectInput
+                          v-model="followupTimeMode"
                           :options="[
                             {
-                              value: '',
+                              value: 'relative',
                               label: $t(
-                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_MACRO_EMPTY'
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIME_MODE_RELATIVE'
                               ),
                             },
-                            ...macros.map(m => ({
-                              value: m.id,
-                              label: m.name,
-                            })),
+                            {
+                              value: 'fixed',
+                              label: $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIME_MODE_FIXED'
+                              ),
+                            },
                           ]"
                           class="w-full"
                         />
                       </div>
-                    </div>
 
-                    <div
-                      v-if="followupActionType === 'predefined_message'"
-                      class="flex flex-col gap-3 mt-3"
-                    >
                       <div
-                        v-for="(n, index) in followupMaxAttempts"
-                        :key="'predefined-' + index"
-                        class="flex flex-col gap-1 w-full bg-n-alpha-1 p-3 rounded-md border border-n-weak"
+                        v-if="followupTimeMode === 'fixed'"
+                        class="flex gap-4 mt-2"
                       >
+                        <div class="flex flex-col gap-1 w-1/2">
+                          <label class="text-n-slate-11 text-small font-medium">
+                            {{
+                              $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_FIXED_TIME_LABEL'
+                              )
+                            }}
+                          </label>
+                          <woot-input
+                            v-model="followupFixedTime"
+                            type="time"
+                            class="[&_input]:!mb-0"
+                          />
+                        </div>
+                        <div class="flex flex-col gap-1 w-1/2">
+                          <label class="text-n-slate-11 text-small font-medium">
+                            {{
+                              $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIMEZONE_LABEL'
+                              )
+                            }}
+                          </label>
+                          <woot-input
+                            v-model="followupTimezone"
+                            type="text"
+                            class="[&_input]:!mb-0"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="flex flex-col gap-1 mt-2">
                         <label class="text-n-slate-11 text-small font-medium">
                           {{
                             $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_PREDEFINED_MESSAGE'
+                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_LABEL'
                             )
                           }}
-                          {{ index + 1 }}
                         </label>
-                        <textarea
-                          v-model="followupPredefinedMessages[index]"
-                          rows="3"
-                          placeholder="Hello, are you still there?"
-                          class="w-full text-n-slate-12 bg-n-alpha-1 border-n-weak outline-none rounded-md px-3 py-2 border dark:bg-n-solid-1 text-sm focus:border-n-brand focus:ring-1 focus:ring-n-brand"
+                        <SelectInput
+                          v-model="followupActionType"
+                          :options="[
+                            {
+                              value: 'ai_assistant',
+                              label: $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_AI_ASSISTANT'
+                              ),
+                            },
+                            {
+                              value: 'macro',
+                              label: $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_MACRO'
+                              ),
+                            },
+                            {
+                              value: 'predefined_message',
+                              label: $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_PREDEFINED'
+                              ),
+                            },
+                          ]"
+                          class="w-full"
                         />
                       </div>
+                      <div
+                        v-if="followupActionType === 'ai_assistant'"
+                        class="flex flex-col gap-3 mt-3"
+                      >
+                        <div
+                          class="flex flex-col gap-1 p-3 bg-n-brand/10 text-n-brand rounded-md"
+                        >
+                          <p class="text-sm">
+                            {{
+                              $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_AI_HINT'
+                              )
+                            }}
+                          </p>
+                        </div>
+
+                        <div
+                          v-for="(n, index) in followupMaxAttempts"
+                          :key="'ai-' + index"
+                          class="flex flex-col gap-1 w-full bg-n-alpha-1 p-3 rounded-md border border-n-weak"
+                        >
+                          <label class="text-n-slate-11 text-small font-medium">
+                            {{
+                              $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_LABEL'
+                              )
+                            }}
+                            {{ index + 1 }}
+                          </label>
+                          <textarea
+                            v-model="followupCustomAIPrompts[index]"
+                            rows="3"
+                            :placeholder="
+                              $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_PLACEHOLDER'
+                              )
+                            "
+                            class="w-full text-n-slate-12 bg-n-alpha-1 border-n-weak outline-none rounded-md px-3 py-2 border dark:bg-n-solid-1 text-sm focus:border-n-brand focus:ring-1 focus:ring-n-brand"
+                          />
+                        </div>
+                      </div>
+
+                      <div
+                        v-if="followupActionType === 'macro'"
+                        class="flex flex-col gap-3 mt-3"
+                      >
+                        <div
+                          v-for="(n, index) in followupMaxAttempts"
+                          :key="'macro-' + index"
+                          class="flex flex-col gap-1 w-full bg-n-alpha-1 p-3 rounded-md border border-n-weak"
+                        >
+                          <label class="text-n-slate-11 text-small font-medium">
+                            {{
+                              $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_MACRO_SELECT'
+                              )
+                            }}
+                            {{ index + 1 }}
+                          </label>
+                          <SelectInput
+                            v-model="followupMacros[index]"
+                            :options="[
+                              {
+                                value: '',
+                                label: $t(
+                                  'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_MACRO_EMPTY'
+                                ),
+                              },
+                              ...macros.map(m => ({
+                                value: m.id,
+                                label: m.name,
+                              })),
+                            ]"
+                            class="w-full"
+                          />
+                        </div>
+                      </div>
+
+                      <div
+                        v-if="followupActionType === 'predefined_message'"
+                        class="flex flex-col gap-3 mt-3"
+                      >
+                        <div
+                          v-for="(n, index) in followupMaxAttempts"
+                          :key="'predefined-' + index"
+                          class="flex flex-col gap-1 w-full bg-n-alpha-1 p-3 rounded-md border border-n-weak"
+                        >
+                          <label class="text-n-slate-11 text-small font-medium">
+                            {{
+                              $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_PREDEFINED_MESSAGE'
+                              )
+                            }}
+                            {{ index + 1 }}
+                          </label>
+                          <textarea
+                            v-model="followupPredefinedMessages[index]"
+                            rows="3"
+                            placeholder="Hello, are you still there?"
+                            class="w-full text-n-slate-12 bg-n-alpha-1 border-n-weak outline-none rounded-md px-3 py-2 border dark:bg-n-solid-1 text-sm focus:border-n-brand focus:ring-1 focus:ring-n-brand"
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </template>
-              </SettingsToggleSection>
-            </SettingsAccordion>
+                  </template>
+                </SettingsToggleSection>
+              </SettingsAccordion>
             </div>
 
             <div class="w-full flex justify-end items-center py-4 mt-2">
@@ -1726,10 +1728,10 @@ export default {
         <div v-if="selectedTabKey === 'business-hours'">
           <WeeklyAvailability :inbox="inbox" />
         </div>
-        <div v-if="selectedTabKey === 'zaloPersonalLogin'">
-          <ZaloReauthorize :inbox="inbox" />
-        </div>
-        <div v-if="selectedTabKey === 'bot-configuration'" class="relative min-h-[400px]">
+        <div
+          v-if="selectedTabKey === 'bot-configuration'"
+          class="relative min-h-[400px]"
+        >
           <FeatureLockOverlay
             v-if="!isCaptainEnabled"
             feature-flag="captain_ai"
@@ -1758,5 +1760,24 @@ export default {
         </div>
       </div>
     </section>
+
+    <woot-modal
+      v-model:show="zaloReauthorizeModalVisible"
+      :on-close="
+        () => {
+          zaloReauthorizeModalVisible = false;
+        }
+      "
+    >
+      <div class="flex flex-col h-auto overflow-auto">
+        <woot-modal-header
+          :header-title="$t('INBOX_MGMT.ADD.ZALO_OA.RELOGIN')"
+          :header-content="$t('INBOX_MGMT.ADD.ZALO_OA.RELOGIN')"
+        />
+        <div class="px-8 pb-8 pt-2">
+          <ZaloReauthorize :inbox="inbox" />
+        </div>
+      </div>
+    </woot-modal>
   </div>
 </template>

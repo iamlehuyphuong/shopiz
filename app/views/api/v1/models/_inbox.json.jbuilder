@@ -151,3 +151,7 @@ if resource.channel_type == 'Channel::Voice'
   json.voice_call_webhook_url resource.channel.try(:voice_call_webhook_url)
   json.voice_status_webhook_url resource.channel.try(:voice_status_webhook_url)
 end
+
+if resource.zalo_personal?
+  json.reauthorization_required resource.channel.try(:reauthorization_required?)
+end

@@ -18,6 +18,7 @@
 
 class Channel::ZaloPersonal < ApplicationRecord
   include Channelable
+  include Reauthorizable
 
   self.table_name = 'channel_zalo_personal'
   store_accessor :provider_config, :default_friend_request_message, :default_greeting_message
