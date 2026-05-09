@@ -20,8 +20,8 @@ class ZaloPersonal::BaseService
     set_conversation
     build_message
     @message.save!
-  rescue ArgumentError
-    # Rails.logger.error "Unexpected format for params[:data][:content]: #{params[:data][:content]}"
+  rescue ArgumentError => e
+    Rails.logger.error "Zalo Personal Unhandled MsgType: #{params.dig(:data, :msgType)} - Payload: #{params[:data].to_json} - Error: #{e.message}"
   end
 
   private

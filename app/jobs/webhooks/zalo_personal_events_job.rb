@@ -4,7 +4,7 @@ class Webhooks::ZaloPersonalEventsJob < ApplicationJob
   def perform(params = {}, signature: '', post_body: '')
     oa_id = params[:_accountId]
     channel = Channel::ZaloPersonal.find_by(oa_id: oa_id)
-    Rails.logger.info("Zalo Personal webhook received events for channel: #{channel&.id}, oa_id: #{oa_id}")
+    Rails.logger.info("Zalo Personal webhook received events for channel: #{channel&.id}, oa_id: #{oa_id}, params: #{params.to_json}")
     return unless channel
 
     process_event_params(channel, params)
