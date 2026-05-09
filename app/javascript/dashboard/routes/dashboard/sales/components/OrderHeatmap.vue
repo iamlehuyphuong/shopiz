@@ -1,27 +1,38 @@
 <script setup>
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch, onMounted, computed } from 'vue';
 import BaseHeatmap from 'dashboard/routes/dashboard/settings/reports/components/heatmaps/BaseHeatmap.vue';
-import HeatmapDateRangeSelector from 'dashboard/routes/dashboard/settings/reports/components/heatmaps/HeatmapDateRangeSelector.vue';
 import { useI18n } from 'vue-i18n';
 import SalesReportsAPI from 'dashboard/api/sales/reports';
 import getUnixTime from 'date-fns/getUnixTime';
+import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
+
+const props = defineProps({
+  dateRange: {
+    type: Array,
+    required: true,
+  },
+});
 
 const { t } = useI18n();
 
 const heatmapData = ref([]);
 const isLoading = ref(false);
 
-const fromDate = ref(null);
-const MathToDate = ref(null); // Will be bound to 'to'
-const daysNum = ref(0);
+const fromDate = computed(() => props.dateRange?.[0]);
+const toDate = computed(() => props.dateRange?.[1]);
+
+const numberOfRows = computed(() => {
+  if (!fromDate.value || !toDate.value) return 7;
+  return differenceInCalendarDays(toDate.value, fromDate.value) + 1;
+});
 
 const fetchHeatmapData = async () => {
-  if (isLoading.value || !fromDate.value || !MathToDate.value) return;
+  if (isLoading.value || !fromDate.value || !toDate.value) return;
   isLoading.value = true;
   try {
     const response = await SalesReportsAPI.getHeatmap({
       from: getUnixTime(fromDate.value),
-      to: getUnixTime(MathToDate.value),
+      to: getUnixTime(toDate.value),
     });
     heatmapData.value = response.data;
   } catch (error) {
@@ -33,8 +44,9 @@ const fetchHeatmapData = async () => {
 };
 
 watch(
-  () => [fromDate.value, MathToDate.value],
-  () => fetchHeatmapData()
+  () => props.dateRange,
+  () => fetchHeatmapData(),
+  { deep: true }
 );
 
 onMounted(fetchHeatmapData);
@@ -48,16 +60,11 @@ onMounted(fetchHeatmapData);
       <h3 class="text-sm font-medium text-n-slate-12 mb-0">
         {{ t('SALES.MODULE_DASHBOARD.HEATMAP.TITLE') }}
       </h3>
-      <HeatmapDateRangeSelector
-        v-model:from="fromDate"
-        v-model:to="MathToDate"
-        v-model:days-num="daysNum"
-      />
     </div>
     <div class="p-6">
       <BaseHeatmap
         :heatmap-data="heatmapData"
-        :number-of-rows="daysNum + 1"
+        :number-of-rows="numberOfRows"
         :is-loading="isLoading"
         color-scheme="brand"
         :tooltip-messages="{

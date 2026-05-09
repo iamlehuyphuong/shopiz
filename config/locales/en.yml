@@ -536,7 +536,7 @@ en:
       delivered: 'Delivered'
       cancelled: 'Cancelled'
     utility_messages:
-      status_update: "Hello, your order #%{order_id} has been updated to: %{status_label}.\n- Total: %{total_amount}\n\nWe will keep you updated. Thank you!"
+      status_update: "Hi %{customer_name}, thank you for your order at %{fanpage_name}! 🎉 Your order #%{order_id} has been updated to: %{status_label}. We will ship it soon!"
     activity:
       created: 'Order #%{order_id} created by %{user_name}'
       pushed: 'Order #%{order_id} pushed to %{platform} (External ID: %{external_id})'

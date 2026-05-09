@@ -32,8 +32,7 @@ RSpec.describe ConversationOrders::SendUtilityMessageService do
         message = conversation.messages.last
         expect(message.message_type).to eq('outgoing')
         expect(message.content_attributes['message_tag']).to eq('POST_PURCHASE_UPDATE')
-        expect(message.content).to include("order ##{order.id}")
-        expect(message.content).to include("0 đ")
+        expect(message.content).to include("##{order.id}")
       end
     end
 
@@ -46,7 +45,7 @@ RSpec.describe ConversationOrders::SendUtilityMessageService do
         message = conversation.messages.last
         expect(message.message_type).to eq('outgoing')
         expect(message.content_attributes['message_tag']).to be_nil
-        expect(message.content).to include("order ##{order.id}")
+        expect(message.content).to include("##{order.id}")
       end
     end
 
@@ -59,7 +58,7 @@ RSpec.describe ConversationOrders::SendUtilityMessageService do
         message = conversation.messages.last
         expect(message.message_type).to eq('outgoing')
         expect(message.content_attributes['message_tag']).to be_nil
-        expect(message.content).to include("order ##{order.id}")
+        expect(message.content).to include("##{order.id}")
       end
     end
   end

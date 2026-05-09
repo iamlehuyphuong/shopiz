@@ -42,6 +42,7 @@ import Editor from 'dashboard/components-next/Editor/Editor.vue';
 import ColorPicker from 'dashboard/components-next/colorpicker/ColorPicker.vue';
 import SelectInput from 'dashboard/components-next/select/Select.vue';
 import Widget from 'dashboard/modules/widget-preview/components/Widget.vue';
+import OrderTemplateMapping from './components/OrderTemplateMapping.vue';
 
 export default {
   components: {
@@ -77,6 +78,7 @@ export default {
     AccountHealth,
     Widget,
     EcommerceTab,
+    OrderTemplateMapping,
   },
   mixins: [inboxMixin],
   setup() {
@@ -260,6 +262,21 @@ export default {
           {
             key: 'whatsapp-health',
             name: this.$t('INBOX_MGMT.TABS.ACCOUNT_HEALTH'),
+          },
+        ];
+      }
+
+      if (
+        this.isAZaloOaChannel ||
+        this.isAWhatsAppChannel ||
+        this.isATwilioWhatsAppChannel ||
+        this.isAWhatsAppCloudChannel
+      ) {
+        visibleToAllChannelTabs = [
+          ...visibleToAllChannelTabs,
+          {
+            key: 'order-templates',
+            name: 'Mẫu thông báo Đơn hàng',
           },
         ];
       }
@@ -1702,6 +1719,9 @@ export default {
         </div>
         <div v-if="selectedTabKey === 'ecommerce'">
           <EcommerceTab :inbox="inbox" />
+        </div>
+        <div v-if="selectedTabKey === 'order-templates'">
+          <OrderTemplateMapping :inbox="inbox" />
         </div>
       </div>
     </section>

@@ -493,7 +493,7 @@ vi:
       delivered: 'Giao hàng thành công'
       cancelled: 'Đã hủy'
     utility_messages:
-      status_update: "Xin chào, đơn hàng #%{order_id} của bạn đã được cập nhật trạng thái thành: %{status_label}.\n- Tổng giá trị: %{total_amount}\n\nChúng tôi sẽ tiếp tục cập nhật thông tin trong thời gian sớm nhất. Cảm ơn bạn!"
+      status_update: "Chào %{customer_name}, cảm ơn bạn đã đặt hàng tại %{fanpage_name}! 🎉 Đơn hàng #%{order_id} của bạn đã được cập nhật trạng thái thành: %{status_label}. Chúng mình sẽ sớm gửi hàng đi nhé!"
     activity:
       created: 'Đơn hàng #%{order_id} được tạo bởi %{user_name}'
       pushed: 'Đơn hàng #%{order_id} đã đẩy lên %{platform} (Mã ngoài: %{external_id})'

@@ -145,7 +145,7 @@ onMounted(() => {
         <OrdersByInboxTable :data="reportData.orders_by_inbox || []" />
 
         <!-- Order Heatmap -->
-        <OrderHeatmap />
+        <OrderHeatmap :date-range="customDateRange" />
       </div>
     </template>
   </SalesLayout>

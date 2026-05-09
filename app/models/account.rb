@@ -70,6 +70,22 @@ class Account < ApplicationRecord
             'help_center_search': { 'type': %w[boolean null] }
           },
           'additionalProperties': false
+        },
+        'sales_order_notification_templates': {
+          'type': %w[object null],
+          'properties': {
+            'draft': { 'type': %w[string null] },
+            'confirmed': { 'type': %w[string null] },
+            'processing': { 'type': %w[string null] },
+            'shipped': { 'type': %w[string null] },
+            'delivered': { 'type': %w[string null] },
+            'cancelled': { 'type': %w[string null] }
+          },
+          'additionalProperties': false
+        },
+        'sales_default_order_destination': {
+          'type': %w[string null],
+          'enum': ['shopiz', 'woocommerce', 'kiotviet', 'haravan', 'nhanhvn', 'sapo', 'shopify', nil]
         }
       },
     'required': [],
@@ -95,6 +111,7 @@ class Account < ApplicationRecord
   store_accessor :settings, :reporting_timezone
   store_accessor :settings, :keep_pending_on_bot_failure
   store_accessor :settings, :captain_auto_resolve_mode
+  store_accessor :settings, :sales_order_notification_templates, :sales_default_order_destination
   include AccountCaptainAutoResolve
 
   has_many :account_users, dependent: :destroy_async

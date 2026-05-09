@@ -539,6 +539,13 @@ const menuItems = computed(() => {
           ],
           to: accountScopedRoute('sales_orders_list'),
         },
+        {
+          name: 'Sales Settings',
+          label: t('SIDEBAR.SETTINGS'),
+          icon: 'i-lucide-settings',
+          activeOn: ['sales_settings'],
+          to: accountScopedRoute('sales_settings'),
+        },
       ],
     },
     {
