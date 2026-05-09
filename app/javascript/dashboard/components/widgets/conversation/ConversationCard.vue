@@ -325,7 +325,7 @@ const deleteConversation = () => {
       </div>
       <div class="flex gap-2 ltr:ml-2 rtl:mr-2 mt-1 items-center">
         <span
-          class="conversation--status text-white text-xxs font-medium leading-4 py-1 px-2 rounded-lg border border-solid border-n-strong text-n-slate-10 bg-n-slate-1 text-ellipsis overflow-hidden whitespace-nowrap"
+          class="conversation--status text-white text-xxs font-medium leading-4 py-1 px-2 rounded-full border border-solid border-n-strong text-n-slate-10 bg-n-slate-1 text-ellipsis overflow-hidden whitespace-nowrap"
           :class="chat.status"
         >
           {{
@@ -334,13 +334,13 @@ const deleteConversation = () => {
         </span>
         <div
           v-if="currentContact.phone_number"
-          class="inline-flex items-center justify-center size-6 bg-n-orange rounded-md"
+          class="inline-flex items-center justify-center size-6 bg-n-orange rounded-full"
         >
           <span class="i-lucide-phone text-white size-3" />
         </div>
         <div
           v-if="currentContact.email"
-          class="inline-flex items-center justify-center size-6 bg-n-orange rounded-md"
+          class="inline-flex items-center justify-center size-6 bg-n-orange rounded-full"
         >
           <span class="i-lucide-mail text-white size-3" />
         </div>

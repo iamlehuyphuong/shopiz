@@ -80,6 +80,8 @@ vi:
         not_supported: 'Cấp lại quyền truy cập không được hỗ trợ cho loại kênh WhatsApp này.'
     facebook:
       human_agent_error: '%{error_code} - %{error_message}\n(Lỗi): Bạn đang gửi tin nhắn quá 24h nhưng Fanpage chưa được cấp quyền Human Agent. Hãy vào Cài đặt Trang -> Trải nghiệm Trang mới -> Nhắn tin nâng cao -> Chọn Human Agent và Yêu cầu cấp quyền.'
+      only_one_private_reply: '%{error_code} - %{error_message}\n(Lỗi): Phản hồi riêng tư đã được gửi trước đó (trên Shopiz hoặc Meta Suite). Facebook chỉ cho phép gửi 1 lần duy nhất cho mỗi bình luận.'
+      private_reply_timeout: '%{error_code} - %{error_message}\n(Lỗi): Không thể gửi. Phản hồi riêng tư chỉ được phép gửi cho các bình luận được tạo trong vòng 7 ngày qua.'
       comment_handler:
         comment_hidden: 'Comment đã được tự động ẩn'
         private_reply_label: 'Phản hồi riêng tư (Private Reply)'

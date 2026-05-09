@@ -35,8 +35,21 @@ module Filters::FilterHelper
     case current_filter['attribute_type']
     when 'additional_attributes'
       handle_additional_attributes(query_hash, filter_operator_value, current_filter['data_type'])
+    when 'joined_contact'
+      handle_joined_contact(query_hash, filter_operator_value)
     else
       handle_standard_attributes(current_filter, query_hash, current_index, filter_operator_value)
+    end
+  end
+
+  def handle_joined_contact(query_hash, filter_operator_value)
+    column = query_hash[:attribute_key].sub('contact_', '')
+    if query_hash[:filter_operator] == 'is_present'
+      "EXISTS (SELECT 1 FROM contacts WHERE contacts.id = #{filter_config[:table_name]}.contact_id AND contacts.#{column} IS NOT NULL AND contacts.#{column} != '') #{query_hash[:query_operator]}"
+    elsif query_hash[:filter_operator] == 'is_not_present'
+      "EXISTS (SELECT 1 FROM contacts WHERE contacts.id = #{filter_config[:table_name]}.contact_id AND (contacts.#{column} IS NULL OR contacts.#{column} = '')) #{query_hash[:query_operator]}"
+    else
+      "EXISTS (SELECT 1 FROM contacts WHERE contacts.id = #{filter_config[:table_name]}.contact_id AND contacts.#{column} #{filter_operator_value}) #{query_hash[:query_operator]}"
     end
   end
 

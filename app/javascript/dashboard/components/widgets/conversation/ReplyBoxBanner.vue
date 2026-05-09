@@ -5,6 +5,7 @@ import { useMapGetter } from 'dashboard/composables/store';
 import { useAlert } from 'dashboard/composables';
 import { useI18n } from 'vue-i18n';
 import wootConstants from 'dashboard/constants/globals';
+import { useConversationLabels } from 'dashboard/composables/useConversationLabels';
 
 import Banner from 'dashboard/components/ui/Banner.vue';
 
@@ -62,13 +63,20 @@ const showBotHandoffBanner = computed(
     currentChat.value?.status === wootConstants.STATUS_TYPE.PENDING
 );
 
-const showPrivateReplyBanner = computed(() => {
-  return (
-    currentChat.value?.additional_attributes?.type === 'comment' &&
-    currentChat.value?.additional_attributes?.comment_id &&
-    !props.isOnPrivateNote
-  );
-});
+const {
+  accountLabels,
+  savedLabels,
+  addLabelToConversation,
+  removeLabelFromConversation,
+} = useConversationLabels();
+
+const toggleLabel = (label) => {
+  if (savedLabels.value.includes(label.title)) {
+    removeLabelFromConversation(label.title);
+  } else {
+    addLabelToConversation(label);
+  }
+};
 
 const botHandoffActionLabel = computed(() => {
   return assignedAgent.value?.id === currentUser.value?.id
@@ -137,11 +145,17 @@ const onClickBotHandoff = async () => {
     :action-button-label="botHandoffActionLabel"
     @primary-action="onClickBotHandoff"
   />
-  <!-- eslint-disable-next-line @intlify/vue-i18n/no-raw-text -->
-  <Banner
-    v-if="showPrivateReplyBanner"
-    color-scheme="warning"
-    class="mx-2 mb-2 rounded-lg !py-2"
-    banner-message="🔒 Phản hồi riêng tư (Private Reply): Tin nhắn tiếp theo sẽ được gửi riêng tư cho bình luận này. (Chỉ được gửi 1 lần)"
-  />
+
+  <div v-if="accountLabels && accountLabels.length > 0" class="mx-2 mb-2 flex flex-wrap gap-2">
+    <button
+      v-for="label in accountLabels"
+      :key="label.id"
+      :title="label.description || label.title"
+      class="text-xs px-2 py-1 rounded-full border border-solid transition-colors cursor-pointer"
+      :style="savedLabels.includes(label.title) ? `background-color: ${label.color}; border-color: ${label.color}; color: #fff;` : `border-color: ${label.color}; color: var(--color-body); background-color: transparent;`"
+      @click.prevent="toggleLabel(label)"
+    >
+      {{ label.title }}
+    </button>
+  </div>
 </template>

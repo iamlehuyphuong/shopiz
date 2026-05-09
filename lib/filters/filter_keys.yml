@@ -116,6 +116,18 @@ conversations:
       - "not_equal_to"
       - "contains"
       - "does_not_contain"
+  contact_phone_number:
+    attribute_type: "joined_contact"
+    data_type: "text"
+    filter_operators:
+      - "is_present"
+      - "is_not_present"
+  contact_email:
+    attribute_type: "joined_contact"
+    data_type: "text"
+    filter_operators:
+      - "is_present"
+      - "is_not_present"
 
 ### ----- End of Conversation Filters ----- ###
 

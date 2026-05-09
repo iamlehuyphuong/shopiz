@@ -3,6 +3,7 @@ import {
   OPERATOR_TYPES_2,
   OPERATOR_TYPES_3,
   OPERATOR_TYPES_5,
+  OPERATOR_TYPES_6,
 } from '../../FilterInput/FilterOperatorTypes';
 
 const filterTypes = [
@@ -110,6 +111,22 @@ const filterTypes = [
     filterOperators: OPERATOR_TYPES_5,
     attributeModel: 'standard',
   },
+  {
+    attributeKey: 'contact_phone_number',
+    attributeI18nKey: 'PHONE_NUMBER',
+    inputType: 'plain_text',
+    dataType: 'text',
+    filterOperators: OPERATOR_TYPES_6,
+    attributeModel: 'standard',
+  },
+  {
+    attributeKey: 'contact_email',
+    attributeI18nKey: 'EMAIL',
+    inputType: 'plain_text',
+    dataType: 'text',
+    filterOperators: OPERATOR_TYPES_6,
+    attributeModel: 'standard',
+  },
 ];
 
 export const filterAttributeGroups = [
@@ -152,6 +169,20 @@ export const filterAttributeGroups = [
       {
         key: 'last_activity_at',
         i18nKey: 'LAST_ACTIVITY',
+      },
+    ],
+  },
+  {
+    name: 'Contact Filters',
+    i18nGroup: 'CONTACT_FILTERS',
+    attributes: [
+      {
+        key: 'contact_phone_number',
+        i18nKey: 'PHONE_NUMBER',
+      },
+      {
+        key: 'contact_email',
+        i18nKey: 'EMAIL',
       },
     ],
   },

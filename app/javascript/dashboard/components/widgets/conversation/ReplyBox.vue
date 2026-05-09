@@ -192,6 +192,13 @@ export default {
       }
       return true;
     },
+    isPrivateReply() {
+      return (
+        this.currentChat?.additional_attributes?.type === 'comment' &&
+        this.currentChat?.additional_attributes?.comment_id &&
+        !this.isOnPrivateNote
+      );
+    },
     isReplyRestricted() {
       return (
         !this.currentChat?.can_reply &&
@@ -213,6 +220,9 @@ export default {
           return this.$t('CONVERSATION.FOOTER.MESSAGING_RESTRICTED_API');
         }
         return this.$t('CONVERSATION.FOOTER.MESSAGING_RESTRICTED');
+      }
+      if (this.isPrivateReply) {
+        return this.$t('facebook.comment_handler.private_reply_hint');
       }
       return this.isPrivate
         ? this.$t('CONVERSATION.FOOTER.PRIVATE_MSG_INPUT')
