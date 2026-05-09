@@ -72,6 +72,30 @@ class Captain::Llm::SystemPromptsService
       SYSTEM_PROMPT_MESSAGE
     end
 
+    def label_generator(labels, language = 'english')
+      <<~SYSTEM_PROMPT_MESSAGE
+        You are an intelligent customer support labeling assistant.
+        Your task is to analyze the conversation and assign appropriate labels based on the customer's behavior, intent, and sentiment.
+
+        Available Labels:
+        #{labels.map { |l| "- #{l.title}: #{l.description}" }.join("\n")}
+
+        Instructions:
+        1. Review the conversation carefully.
+        2. Identify which of the available labels apply to this conversation.
+        3. Identify any existing labels on the conversation that are no longer applicable and should be removed.
+        4. Generate the response only in #{language}, use no other language.
+        5. Return the result in valid JSON format.
+
+        ```json
+        {
+          "add_labels": ["label1", "label2"],
+          "remove_labels": ["label3"]
+        }
+        ```
+      SYSTEM_PROMPT_MESSAGE
+    end
+
     def attributes_generator
       <<~SYSTEM_PROMPT_MESSAGE
         You are a note taker looking to find the attributes of the contact from the conversation.

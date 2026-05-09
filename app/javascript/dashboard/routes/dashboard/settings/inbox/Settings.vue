@@ -38,6 +38,7 @@ import { INBOX_TYPES } from 'dashboard/helper/inbox';
 import { getInboxIconByType } from 'dashboard/helper/inbox';
 import { LOCAL_STORAGE_KEYS } from 'dashboard/constants/localStorage';
 import { LocalStorage } from 'shared/helpers/localStorage';
+import FeatureLockOverlay from 'dashboard/routes/dashboard/upgrade/FeatureLockOverlay.vue';
 import Editor from 'dashboard/components-next/Editor/Editor.vue';
 import ColorPicker from 'dashboard/components-next/colorpicker/ColorPicker.vue';
 import SelectInput from 'dashboard/components-next/select/Select.vue';
@@ -79,6 +80,7 @@ export default {
     Widget,
     EcommerceTab,
     OrderTemplateMapping,
+    FeatureLockOverlay,
   },
   mixins: [inboxMixin],
   setup() {
@@ -128,6 +130,7 @@ export default {
       followupPredefinedMessages: Array.from({ length: 15 }, () => ''),
       followupMacros: Array.from({ length: 15 }, () => ''),
       followupCustomAIPrompts: Array.from({ length: 15 }, () => ''),
+      autoLabelEnabled: false,
     };
   },
   computed: {
@@ -138,6 +141,12 @@ export default {
       portals: 'portals/allPortals',
       macros: 'macros/getMacros',
     }),
+    isCaptainEnabled() {
+      return this.isFeatureEnabledonAccount(
+        this.accountId,
+        FEATURE_FLAGS.CAPTAIN
+      );
+    },
     selectedTabKey() {
       return this.tabs[this.selectedTabIndex]?.key;
     },
@@ -542,6 +551,7 @@ export default {
         this.inbox.followup_config?.timezone || 'Asia/Ho_Chi_Minh';
       this.followupActionType =
         this.inbox.followup_config?.action_type || 'ai_assistant';
+      this.autoLabelEnabled = this.inbox.auto_label_enabled || false;
       this.followupPredefinedMessage =
         this.inbox.followup_config?.predefined_message || '';
 
@@ -659,6 +669,7 @@ export default {
           lock_to_single_conversation: this.locktoSingleConversation,
           sender_name_type: this.senderNameType,
           business_name: this.businessName || null,
+          auto_label_enabled: this.autoLabelEnabled,
           followup_config: {
             enabled: this.followupEnabled,
             max_attempts: this.followupMaxAttempts,
@@ -1375,40 +1386,56 @@ export default {
               />
             </SettingsAccordion>
 
-            <SettingsAccordion
-              :title="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TITLE')"
-              class="mt-6"
-            >
-              <SettingsToggleSection
-                v-model="followupEnabled"
-                :header="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TOGGLE')"
-                :description="
-                  $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_DESC')
-                "
+            <div class="relative mt-6">
+              <FeatureLockOverlay
+                v-if="!isCaptainEnabled"
+                feature-flag="captain_ai"
+                :feature-name="$t('SIDEBAR.CAPTAIN_AI')"
+              />
+              <SettingsAccordion
+                :title="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_LABEL_TITLE')"
               >
-                <template v-if="followupEnabled" #editor>
-                  <div
-                    class="flex flex-col gap-4 mt-2 mb-2 p-4 bg-n-surface-1 rounded-md border border-slate-100 dark:border-slate-800"
-                  >
-                    <div class="flex flex-col gap-1">
-                      <label class="text-n-slate-11 text-small font-medium">
-                        {{
-                          $t(
-                            'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_DELAY_LABEL'
-                          )
-                        }}
-                      </label>
-                      <div class="flex items-center gap-2">
-                        <woot-input
-                          v-model="followupIntervalHours"
-                          type="number"
-                          min="1"
-                          max="999"
-                          class="[&_input]:!mb-0"
-                          style="width: 150px"
-                        />
-                      </div>
-                      <p class="text-[12px] text-n-slate-11">
+                <SettingsToggleSection
+                  v-model="autoLabelEnabled"
+                  :header="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_LABEL_TOGGLE')"
+                  :description="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_LABEL_DESC')"
+                />
+              </SettingsAccordion>
+
+              <SettingsAccordion
+                :title="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TITLE')"
+                class="mt-6"
+              >
+                <SettingsToggleSection
+                  v-model="followupEnabled"
+                  :header="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TOGGLE')"
+                  :description="
+                    $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_DESC')
+                  "
+                >
+                  <template v-if="followupEnabled" #editor>
+                    <div
+                      class="flex flex-col gap-4 mt-2 mb-2 p-4 bg-n-surface-1 rounded-md border border-slate-100 dark:border-slate-800"
+                    >
+                      <div class="flex flex-col gap-1">
+                        <label class="text-n-slate-11 text-small font-medium">
+                          {{
+                            $t(
+                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_DELAY_LABEL'
+                            )
+                          }}
+                        </label>
+                        <div class="flex items-center gap-2">
+                          <woot-input
+                            v-model="followupIntervalHours"
+                            type="number"
+                            min="1"
+                            max="999"
+                            class="[&_input]:!mb-0"
+                            style="width: 150px"
+                          />
+                        </div>
+                        <p class="text-[12px] text-n-slate-11">
                         {{
                           $t(
                             'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_LIMIT_WARNING'
@@ -1634,6 +1661,7 @@ export default {
                 </template>
               </SettingsToggleSection>
             </SettingsAccordion>
+            </div>
 
             <div class="w-full flex justify-end items-center py-4 mt-2">
               <NextButton
@@ -1701,7 +1729,12 @@ export default {
         <div v-if="selectedTabKey === 'zaloPersonalLogin'">
           <ZaloReauthorize :inbox="inbox" />
         </div>
-        <div v-if="selectedTabKey === 'bot-configuration'">
+        <div v-if="selectedTabKey === 'bot-configuration'" class="relative min-h-[400px]">
+          <FeatureLockOverlay
+            v-if="!isCaptainEnabled"
+            feature-flag="captain_ai"
+            :feature-name="$t('SIDEBAR.CAPTAIN_AI')"
+          />
           <BotConfiguration :inbox="inbox" />
         </div>
         <div v-if="selectedTabKey === 'posts-and-comments'">

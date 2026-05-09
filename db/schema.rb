@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_09_110000) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_09_143325) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -1061,6 +1061,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_09_110000) do
     t.string "next_cursor"
     t.jsonb "followup_config", default: {}
     t.bigint "ecommerce_integration_id"
+    t.boolean "auto_label_enabled", default: false, null: false
     t.index ["account_id"], name: "index_inboxes_on_account_id"
     t.index ["channel_id", "channel_type"], name: "index_inboxes_on_channel_id_and_channel_type"
     t.index ["ecommerce_integration_id"], name: "index_inboxes_on_ecommerce_integration_id"
