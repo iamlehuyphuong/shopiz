@@ -151,7 +151,22 @@ class Messages::MessageBuilder
     # Directly add content_attributes from params if present
     message_attrs[:content_attributes] = content_attributes if @params[:content_attributes].present?
 
+    # Stamp comment_id per-message for Facebook private reply to avoid race conditions
+    # when multiple agents reply concurrently on the same conversation.
+    stamp_facebook_comment_id(message_attrs)
+
     message_attrs
+  end
+
+  def stamp_facebook_comment_id(message_attrs)
+    return unless @conversation.inbox&.channel_type == 'Channel::FacebookPage'
+    return unless @message_type == 'outgoing' && !@private
+
+    comment_id = @conversation.additional_attributes&.dig('comment_id')
+    return if comment_id.blank?
+
+    message_attrs[:content_attributes] ||= {}
+    message_attrs[:content_attributes] = message_attrs[:content_attributes].merge('target_comment_id' => comment_id)
   end
 
   def email_inbox?

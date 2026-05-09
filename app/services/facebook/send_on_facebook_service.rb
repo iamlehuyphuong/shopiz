@@ -34,10 +34,11 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
     else
       message.update!(source_id: parsed_result['message_id']) if parsed_result['message_id'].present?
       
-      # Clear comment_id to prevent trying to reply multiple times to the same comment
-      # Also mark the message as a private reply so the frontend can style it appropriately
-      if conversation.additional_attributes['comment_id'].present?
-        message.update!(content_attributes: message.content_attributes.merge(is_private_reply: true))
+      # Mark the message as a private reply so the frontend can style it appropriately.
+      # Clear conversation-level comment_id hint after successful delivery to prevent
+      # subsequent messages from also being sent as private replies.
+      if message.content_attributes['target_comment_id'].present?
+        message.update!(content_attributes: message.content_attributes.merge(is_private_reply: true).except('target_comment_id'))
         conversation.update!(additional_attributes: conversation.additional_attributes.except('comment_id'))
       end
 
@@ -69,8 +70,8 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
   def setup_recipient(base_params)
     if message.content_attributes['notification_messages_token'].present?
       base_params[:recipient] = { notification_messages_token: message.content_attributes['notification_messages_token'] }
-    elsif conversation.additional_attributes['comment_id'].present?
-      base_params[:recipient] = { comment_id: conversation.additional_attributes['comment_id'] }
+    elsif message.content_attributes['target_comment_id'].present?
+      base_params[:recipient] = { comment_id: message.content_attributes['target_comment_id'] }
     else
       base_params[:recipient] = { id: contact.get_source_id(inbox.id) }
       message_tag = message.content_attributes['message_tag']

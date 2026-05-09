@@ -48,21 +48,28 @@ class Llm::BaseAiService
   end
 
   def system_api_key_available?
-    InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_API_KEY')&.value.present?
+    return @system_key_available if defined?(@system_key_available)
+
+    @system_key_available = InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_API_KEY')&.value.present?
   end
 
   def user_hook_key_allowed?
+    return @user_hook_allowed if defined?(@user_hook_allowed)
+
     config = InstallationConfig.find_by(name: 'CAPTAIN_ALLOW_USER_HOOK_KEY')
-    config.nil? || config.value == true
+    @user_hook_allowed = config.nil? || config.value == true
+  end
+
+  def openai_hook
+    @openai_hook ||= @account&.hooks&.find_by(app_id: 'openai', status: 'enabled')
   end
 
   def user_hook_api_key
-    @account&.hooks&.find_by(app_id: 'openai', status: 'enabled')&.settings&.dig('api_key')
+    openai_hook&.settings&.dig('api_key')
   end
 
   def user_hook_api_base
-    hook = @account&.hooks&.find_by(app_id: 'openai', status: 'enabled')
-    base = hook&.settings&.dig('api_base_url')
+    base = openai_hook&.settings&.dig('api_base_url')
     return nil if base.blank?
 
     base.chomp('/').sub(/\/v1\z/, '')

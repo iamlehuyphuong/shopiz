@@ -11,7 +11,7 @@ class ConversationOrders::SendUtilityMessageService
 
   def perform
     return unless conversation.present? && order.present?
-    return unless SUPPORTED_CHANNELS.include?(conversation.inbox.channel_type)
+    return unless SUPPORTED_CHANNELS.include?(conversation.inbox&.channel_type)
 
     if send_mapped_template_message
       return # Handled by template

@@ -15,7 +15,10 @@ class Webhooks::HaravanController < ActionController::API
 
   def verify_hmac!
     secret = GlobalConfigService.load('HARAVAN_WEBHOOK_SECRET', nil)
-    return if secret.blank?
+    if secret.blank?
+      Rails.logger.warn('Webhooks::HaravanController: HARAVAN_WEBHOOK_SECRET not configured, rejecting webhook')
+      return head :unauthorized
+    end
 
     data = request.body.read
     request.body.rewind

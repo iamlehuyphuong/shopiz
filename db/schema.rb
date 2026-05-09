@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_05_144414) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_09_110000) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -808,8 +808,10 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_05_144414) do
     t.string "tracking_code"
     t.string "payment_method"
     t.string "payment_status", default: "unpaid"
+    t.index ["account_id", "contact_id"], name: "index_conversation_orders_on_account_id_and_contact_id"
     t.index ["account_id", "conversation_id"], name: "index_conversation_orders_on_account_id_and_conversation_id"
     t.index ["account_id", "created_at"], name: "index_conversation_orders_on_account_id_and_created_at"
+    t.index ["account_id", "external_source", "external_order_id"], name: "index_conv_orders_on_account_source_external_id"
     t.index ["account_id"], name: "index_conversation_orders_on_account_id"
     t.index ["contact_id"], name: "index_conversation_orders_on_contact_id"
     t.index ["conversation_id"], name: "index_conversation_orders_on_conversation_id"
@@ -1335,6 +1337,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_05_144414) do
     t.datetime "updated_at", null: false
     t.integer "inventory_quantity", default: 0
     t.jsonb "images", default: []
+    t.index ["account_id", "external_id"], name: "index_products_on_account_id_and_external_id"
+    t.index ["account_id", "name"], name: "index_products_on_account_id_and_name"
     t.index ["account_id"], name: "index_products_on_account_id"
   end
 

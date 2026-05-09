@@ -25,7 +25,10 @@ class Webhooks::KiotvietController < ActionController::API
     # KiotViet webhook uses a shared secret configured in the store settings.
     # The webhook_secret is stored in the integration hook settings.
     webhook_secret = GlobalConfigService.load('KIOTVIET_WEBHOOK_SECRET', nil)
-    return if webhook_secret.blank? # Skip verification if not configured
+    if webhook_secret.blank?
+      Rails.logger.warn('Webhooks::KiotvietController: KIOTVIET_WEBHOOK_SECRET not configured, rejecting webhook')
+      return head :unauthorized
+    end
 
     token = request.headers['X-Webhook-Secret'] || params[:webhookSecret]
     return head :unauthorized unless token.present? && ActiveSupport::SecurityUtils.secure_compare(token, webhook_secret)

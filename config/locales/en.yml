@@ -116,6 +116,10 @@ en:
         not_supported: 'Reauthorization is not supported for this type of WhatsApp channel.'
     facebook:
       human_agent_error: '%{error_code} - %{error_message}\n(Error): You are replying outside the 24h window but your Page lacks Human Agent approval. Please go to Page Settings -> New Page Experience -> Advanced Messaging -> Request Human Agent feature.'
+      comment_handler:
+        comment_hidden: 'Comment has been automatically hidden'
+        private_reply_label: 'Private Reply'
+        private_reply_hint: 'The next message you send will be delivered as a private reply to this comment.'
     inboxes:
       imap:
         socket_error: Please check the network connection, IMAP address and try again.

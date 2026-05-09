@@ -73,8 +73,8 @@ class Facebook::CommentHandlerService
   def log_internal_note
     note_content = "Post: https://www.facebook.com/#{@post_id}\n"
     note_content += "Comment: #{@message}"
-    note_content += "\n🚫 Comment đã được tự động ẩn" if @comment_hidden
-    note_content += "\n\n🔒 **Phản hồi riêng tư (Private Reply):** Tin nhắn tiếp theo bạn gửi sẽ được gửi dưới dạng phản hồi riêng tư cho bình luận này."
+    note_content += "\n🚫 #{I18n.t('facebook.comment_handler.comment_hidden')}" if @comment_hidden
+    note_content += "\n\n🔒 **#{I18n.t('facebook.comment_handler.private_reply_label')}:** #{I18n.t('facebook.comment_handler.private_reply_hint')}"
 
     # Verify if this exact note already exists to prevent duplication on multiple webhook deliveries
     return if @conversation.messages.where(message_type: :outgoing, private: true, content: note_content).exists?

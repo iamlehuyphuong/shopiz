@@ -14,7 +14,7 @@ class ConversationOrder < ApplicationRecord
   validates :contact_id, presence: true, if: -> { conversation_id.blank? }
 
   before_save :calculate_total_amount
-  after_commit :send_status_update_message, on: :update
+  after_commit :enqueue_status_update_message, on: :update
 
   scope :ordered, -> { order(created_at: :desc) }
 
@@ -25,13 +25,12 @@ class ConversationOrder < ApplicationRecord
     self.total_amount = subtotal + (shipping_fee || 0.0) + (tax || 0.0) - (discount_amount || 0.0)
   end
 
-  def send_status_update_message
+  def enqueue_status_update_message
     return unless saved_change_to_status?
     return unless %w[confirmed processing shipped delivered].include?(status)
 
-    ConversationOrders::SendUtilityMessageService.new(
-      order: self,
-      conversation: conversation
-    ).perform
+    ConversationOrders::SendStatusUpdateJob.perform_later(id)
+  rescue StandardError => e
+    Rails.logger.error("ConversationOrder#enqueue_status_update_message failed for order #{id}: #{e.message}")
   end
 end
