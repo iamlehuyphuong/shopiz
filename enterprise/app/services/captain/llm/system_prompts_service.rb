@@ -104,10 +104,10 @@ class Captain::Llm::SystemPromptsService
         Ensure that you only generate attributes from the information provided only.
 
         CRITICAL: If you extract any of the following standard features, you MUST use exactly these key names:
-        - "phone_number" (for any phone number detected)
+        - "phone_number" (for any phone number detected, remove all spaces, dots, hyphens to normalize it)
         - "email" (for any email address)
         - "identifier" (for national ID, CCCD, CMND, SSN, or Passport number)
-        - "address" (for physical delivery/home address)
+        - "address" (for physical delivery/home address. Note that users might use abbreviations like X or X. for Xã, P or P. for Phường, T or T. or TP. for Tỉnh/Thành phố, Q or Q. for Quận, H or H. for Huyện, also Toà nhà, khu phố, lô, ngõ, ngách, hẻm, tổ, ấp, thôn, bản, khóm, đường. Please extract the full readable address)
         For any other custom features, use a snake_case key name.
 
         Provide the attributes in the JSON format as shown below.
