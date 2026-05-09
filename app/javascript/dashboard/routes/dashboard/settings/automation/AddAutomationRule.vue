@@ -1,6 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useStore } from 'dashboard/composables/store';
+import { ref } from 'vue';
 import { useAutomation } from 'dashboard/composables/useAutomation';
 import AutomationRuleForm from './AutomationRuleForm.vue';
 
@@ -27,7 +26,6 @@ const START_VALUE = {
   ],
 };
 
-const store = useStore();
 const formRef = ref(null);
 
 const {
@@ -54,15 +52,6 @@ const close = () => formRef.value?.close();
 const onSave = (payload, mode) => {
   emit('saveAutomation', payload, mode);
 };
-
-onMounted(() => {
-  store.dispatch('inboxes/get');
-  store.dispatch('agents/get');
-  store.dispatch('contacts/get');
-  store.dispatch('teams/get');
-  store.dispatch('labels/get');
-  store.dispatch('campaigns/get');
-});
 
 defineExpose({ open, close });
 </script>

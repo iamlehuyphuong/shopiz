@@ -1,7 +1,5 @@
 <script setup>
 import { computed } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { mapGetters } from 'vuex';
 import { useStore } from 'vuex';
 import { INBOX_TYPES } from 'dashboard/helper/inbox';
 
@@ -19,16 +17,6 @@ const isLoading = computed(
 const voiceInboxes = computed(() => {
   return inboxes.value.filter(inbox => inbox.channelType === INBOX_TYPES.VOICE);
 });
-
-// For debugging
-console.log('All inboxes:', inboxes.value);
-console.log('Voice inboxes:', voiceInboxes.value);
-
-const fetchInboxes = async () => {
-  await store.dispatch('inboxes/get');
-};
-
-fetchInboxes();
 </script>
 
 <template>

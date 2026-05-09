@@ -17,7 +17,9 @@ const fetchData = () => store.dispatch('fetchAgentConversationMetric');
 const { startRefetching } = useLiveRefresh(fetchData);
 
 onMounted(() => {
-  store.dispatch('agents/get');
+  if (!store.getters['agents/getAgents'].length) {
+    store.dispatch('agents/get');
+  }
   fetchData();
   startRefetching();
 });

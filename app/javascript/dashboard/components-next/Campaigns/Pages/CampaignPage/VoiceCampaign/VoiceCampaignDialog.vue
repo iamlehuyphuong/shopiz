@@ -1,5 +1,4 @@
 <script setup>
-import { onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useStore } from 'dashboard/composables/store';
 import { useAlert, useTrack } from 'dashboard/composables';
@@ -12,11 +11,6 @@ const emit = defineEmits(['close']);
 
 const store = useStore();
 const { t } = useI18n();
-
-onMounted(() => {
-  store.dispatch('inboxes/get');
-  store.dispatch('labels/get');
-});
 
 const addCampaign = async campaignDetails => {
   try {

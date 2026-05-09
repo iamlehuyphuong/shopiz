@@ -212,7 +212,7 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   end
 
   def index_includes
-    [:channel, :portal, :agent_bot_inbox, :hooks, { avatar_attachment: [:blob] }]
+    [:channel, :portal, :agent_bot_inbox, :hooks, :ecommerce_integration, { avatar_attachment: [:blob] }]
   end
 
   def channel_type_from_params

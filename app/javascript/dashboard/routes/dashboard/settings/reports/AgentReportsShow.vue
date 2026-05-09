@@ -10,7 +10,11 @@ const route = useRoute();
 const store = useStore();
 const agent = useFunctionGetter('agents/getAgentById', route.params.id);
 
-onMounted(() => store.dispatch('agents/get'));
+onMounted(() => {
+  if (!store.getters['agents/getAgents'].length) {
+    store.dispatch('agents/get');
+  }
+});
 </script>
 
 <template>

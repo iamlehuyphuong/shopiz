@@ -42,9 +42,7 @@ class DeleteObjectJob < ApplicationJob
   end
 
   def batch_destroy(relation)
-    relation.find_in_batches(batch_size: BATCH_SIZE) do |batch|
-      batch.each(&:destroy!)
-    end
+    relation.in_batches(of: BATCH_SIZE, &:destroy_all)
   end
 end
 

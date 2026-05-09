@@ -106,9 +106,7 @@ const handleKeyDown = e => {
   }
 };
 
-// We need to fetch inboxes if they are not loaded
 onMounted(() => {
-  store.dispatch('inboxes/get');
   window.addEventListener('keydown', handleKeyDown);
 });
 

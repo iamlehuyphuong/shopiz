@@ -35,9 +35,9 @@ const uiFlags = computed(() => getters['macros/getUIFlags'].value);
 const macroId = computed(() => route.params.macroId);
 
 const fetchDropdownData = () => {
-  store.dispatch('agents/get');
-  store.dispatch('teams/get');
-  store.dispatch('labels/get');
+  if (!store.getters['agents/getAgents'].length) {
+    store.dispatch('agents/get');
+  }
 };
 
 const formatMacro = macroData => {
