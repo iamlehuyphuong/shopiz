@@ -1,9 +1,12 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useStore } from 'dashboard/composables/store';
 import { useAlert } from 'dashboard/composables';
+import { useAccount } from 'dashboard/composables/useAccount';
 import NextButton from 'dashboard/components-next/button/Button.vue';
+import WithLabel from 'v3/components/Form/WithLabel.vue';
+import Switch from 'dashboard/components-next/switch/Switch.vue';
 
 const props = defineProps({
   inbox: {
@@ -46,9 +49,23 @@ const PLATFORM_ICONS = {
 
 const { t } = useI18n();
 const store = useStore();
+const { accountId } = useAccount();
 
 const selectedIntegrationId = ref(null);
 const isSaving = ref(false);
+
+const isUpdatingSalesSettings = ref(false);
+const salesOrderNotificationTemplates = reactive({
+  draft: '',
+  confirmed: '',
+  processing: '',
+  shipped: '',
+  delivered: '',
+  cancelled: '',
+});
+const allowAiCreateOrder = ref(false);
+
+const account = computed(() => store.getters['accounts/getAccount'](accountId.value) || {});
 
 const integrations = computed(() => {
   const allIntegrations = store.getters['integrations/getAppIntegrations'];
@@ -70,9 +87,22 @@ const currentIntegration = computed(() =>
   integrations.value.find(i => i.hookId === selectedIntegrationId.value)
 );
 
+const loadSalesSettings = () => {
+  const settings = account.value.settings || {};
+  
+  if (settings.sales_order_notification_templates) {
+    Object.keys(salesOrderNotificationTemplates).forEach(key => {
+      salesOrderNotificationTemplates[key] = settings.sales_order_notification_templates[key] || '';
+    });
+  }
+  
+  allowAiCreateOrder.value = settings.sales_ai_allow_create_order ?? false;
+};
+
 onMounted(() => {
   store.dispatch('integrations/get');
   selectedIntegrationId.value = props.inbox.ecommerce_integration?.id || null;
+  loadSalesSettings();
 });
 
 const handleSave = async () => {
@@ -90,6 +120,24 @@ const handleSave = async () => {
     useAlert(error.message || t('INBOX_MGMT.ECOMMERCE.SAVE_ERROR'));
   } finally {
     isSaving.value = false;
+  }
+};
+
+const saveSalesSettings = async () => {
+  isUpdatingSalesSettings.value = true;
+  try {
+    await store.dispatch('accounts/update', {
+      settings: {
+        ...account.value.settings,
+        sales_order_notification_templates: salesOrderNotificationTemplates,
+        sales_ai_allow_create_order: allowAiCreateOrder.value,
+      },
+    });
+    useAlert(t('GENERAL_SETTINGS.UPDATE.SUCCESS'));
+  } catch (error) {
+    useAlert(t('GENERAL_SETTINGS.UPDATE.ERROR'));
+  } finally {
+    isUpdatingSalesSettings.value = false;
   }
 };
 </script>
@@ -255,6 +303,85 @@ const handleSave = async () => {
             @click="handleSave"
           />
         </div>
+      </div>
+
+      <div class="w-full h-[1px] bg-n-weak my-4" />
+
+      <!-- Mẫu thông báo đơn hàng -->
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1">
+          <h3 class="text-lg font-semibold text-n-slate-12">
+            {{ t('INBOX_MGMT.ECOMMERCE.TEMPLATES_TITLE') }}
+          </h3>
+          <p class="text-sm text-n-slate-11">
+            {{ t('INBOX_MGMT.ECOMMERCE.TEMPLATES_DESCRIPTION') }}
+          </p>
+        </div>
+        <form class="flex flex-col gap-6" @submit.prevent="saveSalesSettings">
+          <div class="grid gap-4">
+            <WithLabel name="template-draft" :label="$t('SALES.MODULE_ORDERS.STATUS.DRAFT')">
+              <textarea
+                v-model="salesOrderNotificationTemplates.draft"
+                class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+                :placeholder="t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_DRAFT')"
+              />
+            </WithLabel>
+            <WithLabel name="template-confirmed" :label="$t('SALES.MODULE_ORDERS.STATUS.CONFIRMED')">
+              <textarea
+                v-model="salesOrderNotificationTemplates.confirmed"
+                class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+              />
+            </WithLabel>
+            <WithLabel name="template-processing" :label="$t('SALES.MODULE_ORDERS.STATUS.PROCESSING')">
+              <textarea
+                v-model="salesOrderNotificationTemplates.processing"
+                class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+              />
+            </WithLabel>
+            <WithLabel name="template-shipped" :label="$t('SALES.MODULE_ORDERS.STATUS.SHIPPED')">
+              <textarea
+                v-model="salesOrderNotificationTemplates.shipped"
+                class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+              />
+            </WithLabel>
+            <WithLabel name="template-delivered" :label="$t('SALES.MODULE_ORDERS.STATUS.DELIVERED')">
+              <textarea
+                v-model="salesOrderNotificationTemplates.delivered"
+                class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+              />
+            </WithLabel>
+            <WithLabel name="template-cancelled" :label="$t('SALES.MODULE_ORDERS.STATUS.CANCELLED')">
+              <textarea
+                v-model="salesOrderNotificationTemplates.cancelled"
+                class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+              />
+            </WithLabel>
+          </div>
+
+          <div class="w-full h-[1px] bg-n-weak my-2" />
+
+          <!-- Trợ lý AI tạo đơn hàng -->
+          <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-1">
+              <h3 class="text-lg font-semibold text-n-slate-12">
+                {{ t('INBOX_MGMT.ECOMMERCE.AI_ORDER_TITLE') }}
+              </h3>
+              <p class="text-sm text-n-slate-11">
+                {{ t('INBOX_MGMT.ECOMMERCE.AI_ORDER_DESCRIPTION') }}
+              </p>
+            </div>
+            <div class="flex items-center gap-3">
+              <Switch v-model="allowAiCreateOrder" />
+              <span class="text-sm text-n-slate-12">{{ t('INBOX_MGMT.ECOMMERCE.AI_ORDER_TOGGLE') }}</span>
+            </div>
+          </div>
+          
+          <div class="flex justify-end pt-2 pb-6">
+            <NextButton :is-loading="isUpdatingSalesSettings" sm type="submit">
+              {{ t('INBOX_MGMT.ECOMMERCE.SAVE_SALES_SETTINGS') }}
+            </NextButton>
+          </div>
+        </form>
       </div>
     </div>
   </div>

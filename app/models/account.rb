@@ -83,10 +83,7 @@ class Account < ApplicationRecord
           },
           'additionalProperties': false
         },
-        'sales_default_order_destination': {
-          'type': %w[string null],
-          'enum': ['shopiz', 'woocommerce', 'kiotviet', 'haravan', 'nhanhvn', 'sapo', 'shopify', nil]
-        }
+        'sales_ai_allow_create_order': { 'type': %w[boolean null] }
       },
     'required': [],
     'additionalProperties': true
@@ -111,7 +108,7 @@ class Account < ApplicationRecord
   store_accessor :settings, :reporting_timezone
   store_accessor :settings, :keep_pending_on_bot_failure
   store_accessor :settings, :captain_auto_resolve_mode
-  store_accessor :settings, :sales_order_notification_templates, :sales_default_order_destination
+  store_accessor :settings, :sales_order_notification_templates, :sales_ai_allow_create_order
   include AccountCaptainAutoResolve
 
   has_many :account_users, dependent: :destroy_async

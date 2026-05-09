@@ -727,7 +727,14 @@
       "NONE": "No integration",
       "SAVE": "Update",
       "SAVE_SUCCESS": "eCommerce integration updated successfully",
-      "SAVE_ERROR": "Failed to update eCommerce integration. Please try again."
+      "SAVE_ERROR": "Failed to update eCommerce integration. Please try again.",
+      "TEMPLATES_TITLE": "Order Notification Templates",
+      "TEMPLATES_DESCRIPTION": "Configure the message templates to be sent automatically when an order changes status. You can use variables: %{customer_name}, %{fanpage_name}, %{order_id}, %{status_label}, %{total_amount}",
+      "AI_ORDER_TITLE": "AI Assistant Order Creation",
+      "AI_ORDER_DESCRIPTION": "Allow the AI Assistant to automatically create orders through the configured E-commerce platform above.",
+      "AI_ORDER_TOGGLE": "Allow AI Assistant to create orders",
+      "SAVE_SALES_SETTINGS": "Save sales configuration",
+      "TEMPLATES_PLACEHOLDER_DRAFT": "Example: Hello %{customer_name}, your draft order #%{order_id}..."
     },
     "ZALO_TEMPLATES": {
       "TITLE": "Zalo OA Message Templates",

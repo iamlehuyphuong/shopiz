@@ -255,7 +255,11 @@
         "PULL_START": "Đang đồng bộ sản phẩm từ {platform}...",
         "PUSH_START": "Đang đẩy '{name}' lên sàn...",
         "EDIT": "Chỉnh sửa: {name}",
-        "DELETE_CONFIRM": "Bạn có chắc chắn muốn xoá sản phẩm này?",
+        "DELETE_CONFIRM_TITLE": "Xác nhận xóa",
+        "DELETE_CONFIRM": "Bạn có chắc chắn muốn xóa {name}?",
+        "DELETE_CONFIRM_PLACEHOLDER": "Nhập {name} để xác nhận",
+        "DELETE_CONFIRM_YES": "Có, xóa sản phẩm",
+        "CANCEL": "Không, giữ lại",
         "DELETE_SUCCESS": "Đã xoá sản phẩm.",
         "SELECT_TO_PUSH": "Chọn sản phẩm để đẩy lên sàn."
       }

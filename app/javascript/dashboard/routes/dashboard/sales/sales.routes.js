@@ -103,13 +103,4 @@ export const routes = [
       },
     ],
   },
-  {
-    path: frontendURL('accounts/:accountId/sales/settings'),
-    name: 'sales_settings',
-    meta: {
-      permissions: ['administrator', 'sales_manage'],
-      featureFlag: FEATURE_FLAGS.SALES,
-    },
-    component: () => import('./settings/Index.vue'),
-  },
 ];

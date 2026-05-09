@@ -3,6 +3,7 @@ import { ref, computed, watch, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useStore, useMapGetter } from 'dashboard/composables/store';
 import { useAlert } from 'dashboard/composables';
+import { useToggle } from '@vueuse/core';
 import AccordionItem from 'dashboard/components/Accordion/AccordionItem.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 import OrderList from './OrderList.vue';
@@ -29,6 +30,10 @@ const editingOrder = ref(null);
 const initialProduct = ref(null);
 const isOrderListOpen = ref(true);
 const isContactOrdersOpen = ref(false);
+
+const [showDeleteModal, toggleDeleteModal] = useToggle(false);
+const [showPushModal, togglePushModal] = useToggle(false);
+const selectedOrder = ref(null);
 
 const currentConversation = useMapGetter('getSelectedChat');
 const isEcommerceChannel = computed(() => {
@@ -130,29 +135,43 @@ const handleFormClose = () => {
   initialProduct.value = null;
 };
 
-const handleDeleteOrder = async order => {
-  if (!window.confirm(t('CONVERSATION.ORDER_PANEL.DELETE_CONFIRM'))) return;
+const handleDeleteOrder = order => {
+  selectedOrder.value = order;
+  toggleDeleteModal(true);
+};
+
+const executeDeleteOrder = async () => {
   try {
     await store.dispatch('conversationOrders/delete', {
       conversationId: props.conversationId,
-      orderId: order.id,
+      orderId: selectedOrder.value.id,
     });
     useAlert(t('CONVERSATION.ORDER_PANEL.DELETE_SUCCESS'));
   } catch {
     useAlert(t('CONVERSATION.ORDER_PANEL.DELETE_ERROR'));
+  } finally {
+    toggleDeleteModal(false);
+    selectedOrder.value = null;
   }
 };
 
-const handlePushOrder = async order => {
-  if (!window.confirm(t('CONVERSATION.ORDER_PANEL.PUSH_CONFIRM'))) return;
+const handlePushOrder = order => {
+  selectedOrder.value = order;
+  togglePushModal(true);
+};
+
+const executePushOrder = async () => {
   try {
     await store.dispatch('conversationOrders/pushOrder', {
       conversationId: props.conversationId,
-      orderId: order.id,
+      orderId: selectedOrder.value.id,
     });
     useAlert(t('CONVERSATION.ORDER_PANEL.PUSH_SUCCESS'));
   } catch (err) {
     useAlert(err.message || t('CONVERSATION.ORDER_PANEL.PUSH_ERROR'));
+  } finally {
+    togglePushModal(false);
+    selectedOrder.value = null;
   }
 };
 
@@ -275,5 +294,30 @@ const handleSyncOrder = async order => {
         />
       </div>
     </div>
+
+    <!-- Modals -->
+    <woot-confirm-delete-modal
+      v-if="showDeleteModal"
+      v-model:show="showDeleteModal"
+      :title="t('CONVERSATION.ORDER_PANEL.DELETE_CONFIRM_TITLE')"
+      :message="t('CONVERSATION.ORDER_PANEL.DELETE_CONFIRM', { id: selectedOrder?.id })"
+      :confirm-text="t('CONVERSATION.ORDER_PANEL.DELETE_CONFIRM_YES')"
+      :reject-text="t('CONVERSATION.ORDER_PANEL.DELETE_CONFIRM_NO')"
+      :confirm-value="selectedOrder?.id?.toString()"
+      :confirm-place-holder-text="t('CONVERSATION.ORDER_PANEL.DELETE_CONFIRM_PLACEHOLDER', { id: selectedOrder?.id })"
+      @on-confirm="executeDeleteOrder"
+      @on-close="toggleDeleteModal(false)"
+    />
+
+    <woot-confirm-modal
+      v-if="showPushModal"
+      v-model:show="showPushModal"
+      :title="t('CONVERSATION.ORDER_PANEL.PUSH_CONFIRM_TITLE')"
+      :description="t('CONVERSATION.ORDER_PANEL.PUSH_CONFIRM')"
+      :confirm-label="t('CONVERSATION.ORDER_PANEL.PUSH')"
+      :cancel-label="t('CONVERSATION.ORDER_PANEL.CANCEL')"
+      @on-confirm="executePushOrder"
+      @on-close="togglePushModal(false)"
+    />
   </div>
 </template>

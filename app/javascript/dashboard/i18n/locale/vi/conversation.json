@@ -468,8 +468,12 @@
       "SYNC": "Đồng bộ",
       "SYNC_SUCCESS": "Đồng bộ đơn hàng thành công",
       "SYNC_ERROR": "Lỗi khi đồng bộ đơn hàng",
-      "PUSH_CONFIRM": "Bạn có chắc muốn đẩy đơn hàng này? Đơn sẽ được gửi đến sàn thương mại.",
-      "DELETE_CONFIRM": "Bạn có chắc muốn xóa đơn hàng này? Hành động này không thể hoàn tác.",
+      "PUSH_CONFIRM": "Bạn có chắc muốn đẩy đơn hàng này? Đơn hàng sẽ được gửi sang nền tảng bên ngoài.",
+      "DELETE_CONFIRM_TITLE": "Xác nhận xóa",
+      "DELETE_CONFIRM": "Bạn có chắc chắn muốn xóa đơn hàng #{id}?",
+      "DELETE_CONFIRM_PLACEHOLDER": "Nhập #{id} để xác nhận",
+      "DELETE_CONFIRM_YES": "Có, xóa đơn hàng",
+      "DELETE_CONFIRM_NO": "Không, giữ lại đơn hàng",
       "CONFIRM_YES": "Xác nhận"
     }
   },

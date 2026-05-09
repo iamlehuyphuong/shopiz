@@ -597,7 +597,14 @@
       "NONE": "Không tích hợp",
       "SAVE": "Cập nhật",
       "SAVE_SUCCESS": "Đã cập nhật tích hợp thương mại điện tử thành công",
-      "SAVE_ERROR": "Cập nhật thất bại. Vui lòng thử lại."
+      "SAVE_ERROR": "Cập nhật thất bại. Vui lòng thử lại.",
+      "TEMPLATES_TITLE": "Mẫu thông báo đơn hàng",
+      "TEMPLATES_DESCRIPTION": "Định cấu hình các mẫu tin nhắn được gửi tự động khi đơn hàng thay đổi trạng thái. Bạn có thể sử dụng các biến: %{customer_name}, %{fanpage_name}, %{order_id}, %{status_label}, %{total_amount}",
+      "AI_ORDER_TITLE": "Trợ lý AI tạo đơn hàng",
+      "AI_ORDER_DESCRIPTION": "Cho phép Trợ lý AI tự động tạo đơn hàng thông qua nền tảng E-commerce được cấu hình ở phía trên.",
+      "AI_ORDER_TOGGLE": "Cho phép Trợ lý AI tạo đơn hàng",
+      "SAVE_SALES_SETTINGS": "Lưu cấu hình bán hàng",
+      "TEMPLATES_PLACEHOLDER_DRAFT": "Ví dụ: Chào %{customer_name}, đơn nháp #%{order_id} của bạn..."
     },
     "AGENTS": {
       "BUTTON_TEXT": "Thêm nhân viên",

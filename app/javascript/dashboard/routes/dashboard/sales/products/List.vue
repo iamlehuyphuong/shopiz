@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n';
 import { useAlert } from 'dashboard/composables';
 import { useStoreGetters, useStore } from 'dashboard/composables/store';
 import { useDebounceFn } from '@vueuse/core';
+import { useToggle } from '@vueuse/core';
 
 import SalesLayout from '../components/SalesLayout.vue';
 import BaseSettingsHeader from 'dashboard/routes/dashboard/settings/components/BaseSettingsHeader.vue';
@@ -25,6 +26,8 @@ const currentPage = ref(1);
 const itemsPerPage = 15;
 
 const showPullDialog = ref(false);
+const [showDeleteModal, toggleDeleteModal] = useToggle(false);
+const deleteProduct = ref(null);
 
 const selectedProducts = ref([]);
 const toggleSelectAll = event => {
@@ -141,12 +144,20 @@ const onEditProduct = product => {
   router.push({ name: 'sales_products_edit', params: { id: product.id } });
 };
 
-const onDeleteProduct = productId => {
-  if (confirm(t('SALES.MODULE_PRODUCTS.ALERTS.DELETE_CONFIRM'))) {
-    store.dispatch('salesProducts/delete', productId).then(() => {
-      useAlert(t('SALES.MODULE_PRODUCTS.ALERTS.DELETE_SUCCESS'));
-    });
-  }
+const onDeleteProduct = product => {
+  deleteProduct.value = product;
+  toggleDeleteModal(true);
+};
+
+const confirmDeleteProduct = () => {
+  store.dispatch('salesProducts/delete', deleteProduct.value.id).then(() => {
+    useAlert(t('SALES.MODULE_PRODUCTS.ALERTS.DELETE_SUCCESS'));
+  }).catch(() => {
+    useAlert(t('SALES.MODULE_PRODUCTS.ALERTS.DELETE_ERROR'));
+  }).finally(() => {
+    toggleDeleteModal(false);
+    deleteProduct.value = null;
+  });
 };
 
 const onPageChange = page => {
@@ -332,7 +343,7 @@ onBeforeMount(() => {
                     sm
                     ghost
                     class="hover:enabled:text-n-ruby-11 hover:enabled:bg-n-ruby-2"
-                    @click="onDeleteProduct(product.id)"
+                    @click="onDeleteProduct(product)"
                   />
                 </div>
               </BaseTableCell>
@@ -360,5 +371,18 @@ onBeforeMount(() => {
         @sync="onPullProducts"
       />
     </woot-modal>
+
+    <woot-confirm-delete-modal
+      v-if="showDeleteModal"
+      v-model:show="showDeleteModal"
+      :title="$t('SALES.MODULE_PRODUCTS.ALERTS.DELETE_CONFIRM_TITLE')"
+      :message="$t('SALES.MODULE_PRODUCTS.ALERTS.DELETE_CONFIRM', { name: deleteProduct?.name })"
+      :confirm-text="$t('SALES.MODULE_PRODUCTS.ALERTS.DELETE_CONFIRM_YES', { name: deleteProduct?.name })"
+      :reject-text="$t('SALES.MODULE_PRODUCTS.ALERTS.CANCEL', { name: deleteProduct?.name })"
+      :confirm-value="deleteProduct?.name"
+      :confirm-place-holder-text="$t('SALES.MODULE_PRODUCTS.ALERTS.DELETE_CONFIRM_PLACEHOLDER', { name: deleteProduct?.name })"
+      @on-confirm="confirmDeleteProduct"
+      @on-close="toggleDeleteModal(false)"
+    />
   </SalesLayout>
 </template>
