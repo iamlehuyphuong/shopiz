@@ -734,7 +734,19 @@
       "AI_ORDER_DESCRIPTION": "Allow the AI Assistant to automatically create orders through the configured E-commerce platform above.",
       "AI_ORDER_TOGGLE": "Allow AI Assistant to create orders",
       "SAVE_SALES_SETTINGS": "Save sales configuration",
-      "TEMPLATES_PLACEHOLDER_DRAFT": "Example: Hello %{customer_name}, your draft order #%{order_id}..."
+      "TEMPLATES_PLACEHOLDER_DRAFT": "Example: Hello %{customer_name}, your draft order #%{order_id} has been created. Total: %{total_amount}. Please review and confirm.",
+      "TEMPLATES_PLACEHOLDER_CONFIRMED": "Example: Hello %{customer_name}, your order #%{order_id} for %{total_amount} has been confirmed and is being prepared.",
+      "TEMPLATES_PLACEHOLDER_PROCESSING": "Example: Hello %{customer_name}, your order #%{order_id} is currently being processed and packed.",
+      "TEMPLATES_PLACEHOLDER_SHIPPED": "Example: Hello %{customer_name}, your order #%{order_id} has been handed over to the shipping carrier.",
+      "TEMPLATES_PLACEHOLDER_DELIVERED": "Example: Hello %{customer_name}, your order #%{order_id} has been successfully delivered. Thank you for shopping with %{fanpage_name}!",
+      "TEMPLATES_PLACEHOLDER_CANCELLED": "Example: Hello %{customer_name}, your order #%{order_id} has been cancelled. If you need any assistance, please reply to %{fanpage_name}.",
+      "TEMPLATES_DEFAULT_DRAFT": "Hello %{customer_name}, your draft order #%{order_id} has been created. Total: %{total_amount}. Please review and confirm.",
+      "TEMPLATES_DEFAULT_CONFIRMED": "Hello %{customer_name}, your order #%{order_id} for %{total_amount} has been confirmed and is being prepared.",
+      "TEMPLATES_DEFAULT_PROCESSING": "Hello %{customer_name}, your order #%{order_id} is currently being processed and packed.",
+      "TEMPLATES_DEFAULT_SHIPPED": "Hello %{customer_name}, your order #%{order_id} has been handed over to the shipping carrier.",
+      "TEMPLATES_DEFAULT_DELIVERED": "Hello %{customer_name}, your order #%{order_id} has been successfully delivered. Thank you for shopping with %{fanpage_name}!",
+      "TEMPLATES_DEFAULT_CANCELLED": "Hello %{customer_name}, your order #%{order_id} has been cancelled. If you need any assistance, please reply to %{fanpage_name}.",
+      "FILL_DEFAULT_TEMPLATES": "Fill default templates"
     },
     "ZALO_TEMPLATES": {
       "TITLE": "Zalo OA Message Templates",

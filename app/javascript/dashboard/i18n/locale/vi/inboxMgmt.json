@@ -604,7 +604,19 @@
       "AI_ORDER_DESCRIPTION": "Cho phép Trợ lý AI tự động tạo đơn hàng thông qua nền tảng E-commerce được cấu hình ở phía trên.",
       "AI_ORDER_TOGGLE": "Cho phép Trợ lý AI tạo đơn hàng",
       "SAVE_SALES_SETTINGS": "Lưu cấu hình bán hàng",
-      "TEMPLATES_PLACEHOLDER_DRAFT": "Ví dụ: Chào %{customer_name}, đơn nháp #%{order_id} của bạn..."
+      "TEMPLATES_PLACEHOLDER_DRAFT": "Ví dụ: Xin chào %{customer_name}, đơn hàng #%{order_id} của bạn vừa được tạo dưới dạng nháp. Tổng tiền: %{total_amount}. Vui lòng kiểm tra và xác nhận.",
+      "TEMPLATES_PLACEHOLDER_CONFIRMED": "Ví dụ: Xin chào %{customer_name}, đơn hàng #%{order_id} trị giá %{total_amount} của bạn đã được xác nhận và đang trong quá trình chuẩn bị.",
+      "TEMPLATES_PLACEHOLDER_PROCESSING": "Ví dụ: Xin chào %{customer_name}, đơn hàng #%{order_id} của bạn đang được xử lý đóng gói.",
+      "TEMPLATES_PLACEHOLDER_SHIPPED": "Ví dụ: Xin chào %{customer_name}, đơn hàng #%{order_id} của bạn đã được bàn giao cho đơn vị vận chuyển.",
+      "TEMPLATES_PLACEHOLDER_DELIVERED": "Ví dụ: Xin chào %{customer_name}, đơn hàng #%{order_id} của bạn đã giao thành công. Cảm ơn bạn đã mua sắm tại %{fanpage_name}!",
+      "TEMPLATES_PLACEHOLDER_CANCELLED": "Ví dụ: Xin chào %{customer_name}, đơn hàng #%{order_id} của bạn đã bị hủy. Nếu cần hỗ trợ thêm, hãy nhắn lại cho %{fanpage_name} nhé.",
+      "TEMPLATES_DEFAULT_DRAFT": "Xin chào %{customer_name}, đơn hàng #%{order_id} của bạn vừa được tạo dưới dạng nháp. Tổng tiền: %{total_amount}. Vui lòng kiểm tra và xác nhận.",
+      "TEMPLATES_DEFAULT_CONFIRMED": "Xin chào %{customer_name}, đơn hàng #%{order_id} trị giá %{total_amount} của bạn đã được xác nhận và đang trong quá trình chuẩn bị.",
+      "TEMPLATES_DEFAULT_PROCESSING": "Xin chào %{customer_name}, đơn hàng #%{order_id} của bạn đang được xử lý đóng gói.",
+      "TEMPLATES_DEFAULT_SHIPPED": "Xin chào %{customer_name}, đơn hàng #%{order_id} của bạn đã được bàn giao cho đơn vị vận chuyển.",
+      "TEMPLATES_DEFAULT_DELIVERED": "Xin chào %{customer_name}, đơn hàng #%{order_id} của bạn đã giao thành công. Cảm ơn bạn đã mua sắm tại %{fanpage_name}!",
+      "TEMPLATES_DEFAULT_CANCELLED": "Xin chào %{customer_name}, đơn hàng #%{order_id} của bạn đã bị hủy. Nếu cần hỗ trợ thêm, hãy nhắn lại cho %{fanpage_name} nhé.",
+      "FILL_DEFAULT_TEMPLATES": "Điền mẫu mặc định"
     },
     "AGENTS": {
       "BUTTON_TEXT": "Thêm nhân viên",

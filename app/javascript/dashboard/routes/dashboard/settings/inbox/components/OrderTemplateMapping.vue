@@ -50,14 +50,18 @@ const isSaving = ref(false);
 const isLoadingTemplates = ref(false);
 const zaloTemplates = ref([]);
 
-const isWhatsApp = computed(() => props.inbox.channel_type === 'Channel::Whatsapp');
+const isWhatsApp = computed(
+  () => props.inbox.channel_type === 'Channel::Whatsapp'
+);
 const isZaloOA = computed(() => props.inbox.channel_type === 'Channel::ZaloOa');
 
 const fetchZaloTemplates = async () => {
   if (!isZaloOA.value || !props.inbox.channel_id) return;
   isLoadingTemplates.value = true;
   try {
-    const response = await ZaloMessageTemplatesAPI.getByChannel(props.inbox.channel_id);
+    const response = await ZaloMessageTemplatesAPI.getByChannel(
+      props.inbox.channel_id
+    );
     zaloTemplates.value = response.data;
   } catch (error) {
     useAlert(t('INBOX_MGMT.ZALO_TEMPLATES.API.FETCH_ERROR'));
@@ -75,9 +79,14 @@ onMounted(() => {
 });
 
 const templateOptions = computed(() => {
-  const options = [{ value: '', label: 'Không gửi / Sử dụng văn bản mặc định' }];
+  const options = [
+    { value: '', label: 'Không gửi / Sử dụng văn bản mặc định' },
+  ];
   zaloTemplates.value.forEach(tpl => {
-    options.push({ value: String(tpl.template_id), label: `${tpl.template_name} (${tpl.template_id})` });
+    options.push({
+      value: String(tpl.template_id),
+      label: `${tpl.template_name} (${tpl.template_id})`,
+    });
   });
   return options;
 });
@@ -110,24 +119,35 @@ const handleSave = async () => {
           Ánh xạ Mẫu tin nhắn Đơn hàng
         </h3>
         <p class="text-sm text-n-slate-11">
-          Cấu hình Mẫu tin nhắn ZNS hoặc WhatsApp tương ứng với từng trạng thái đơn hàng. Nếu để trống, hệ thống sẽ sử dụng Mẫu văn bản cấu hình trong Bán hàng.
+          Cấu hình Mẫu tin nhắn ZNS hoặc WhatsApp tương ứng với từng trạng thái
+          đơn hàng. Nếu để trống, hệ thống sẽ sử dụng Mẫu văn bản cấu hình trong
+          Bán hàng.
         </p>
       </div>
 
-      <div v-if="isLoadingTemplates" class="flex items-center justify-center py-10">
+      <div
+        v-if="isLoadingTemplates"
+        class="flex items-center justify-center py-10"
+      >
         <Spinner />
       </div>
 
       <div v-else class="flex flex-col gap-4">
-        <div v-for="status in ORDER_STATUSES" :key="status" class="flex flex-col gap-1.5">
-          <label class="text-sm font-medium text-n-slate-12">{{ STATUS_LABELS[status] }}</label>
-          
+        <div
+          v-for="status in ORDER_STATUSES"
+          :key="status"
+          class="flex flex-col gap-1.5"
+        >
+          <label class="text-sm font-medium text-n-slate-12">{{
+            STATUS_LABELS[status]
+          }}</label>
+
           <SelectInput
             v-if="isZaloOA"
             v-model="mappings[status]"
             :options="templateOptions"
           />
-          
+
           <Input
             v-else
             v-model="mappings[status]"

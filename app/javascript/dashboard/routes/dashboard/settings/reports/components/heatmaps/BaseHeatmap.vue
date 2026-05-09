@@ -41,10 +41,23 @@ const dataRows = computed(() => {
   const groupedData = groupHeatmapByDay(props.heatmapData);
   return Array.from(groupedData.keys()).map(dateKey => {
     const rowData = groupedData.get(dateKey);
+
+    // Ensure every day row has exactly 24 hours
+    const paddedData = Array.from({ length: 24 }, (_, i) => {
+      const existingData = rowData.find(d => d.hour === i);
+      return (
+        existingData || {
+          value: 0,
+          timestamp: new Date(dateKey).getTime() / 1000 + i * 3600,
+          hour: i,
+        }
+      );
+    });
+
     return {
       dateKey,
-      data: rowData,
-      dataHash: rowData.map(d => d.value).join(','),
+      data: paddedData,
+      dataHash: paddedData.map(d => d.value).join(','),
     };
   });
 });

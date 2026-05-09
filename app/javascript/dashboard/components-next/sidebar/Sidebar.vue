@@ -539,7 +539,6 @@ const menuItems = computed(() => {
           ],
           to: accountScopedRoute('sales_orders_list'),
         },
-
       ],
     },
     {

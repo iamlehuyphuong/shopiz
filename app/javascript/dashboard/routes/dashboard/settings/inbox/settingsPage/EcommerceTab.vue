@@ -65,7 +65,9 @@ const salesOrderNotificationTemplates = reactive({
 });
 const allowAiCreateOrder = ref(false);
 
-const account = computed(() => store.getters['accounts/getAccount'](accountId.value) || {});
+const account = computed(
+  () => store.getters['accounts/getAccount'](accountId.value) || {}
+);
 
 const integrations = computed(() => {
   const allIntegrations = store.getters['integrations/getAppIntegrations'];
@@ -89,13 +91,14 @@ const currentIntegration = computed(() =>
 
 const loadSalesSettings = () => {
   const settings = account.value.settings || {};
-  
+
   if (settings.sales_order_notification_templates) {
     Object.keys(salesOrderNotificationTemplates).forEach(key => {
-      salesOrderNotificationTemplates[key] = settings.sales_order_notification_templates[key] || '';
+      salesOrderNotificationTemplates[key] =
+        settings.sales_order_notification_templates[key] || '';
     });
   }
-  
+
   allowAiCreateOrder.value = settings.sales_ai_allow_create_order ?? false;
 };
 
@@ -139,6 +142,27 @@ const saveSalesSettings = async () => {
   } finally {
     isUpdatingSalesSettings.value = false;
   }
+};
+
+const fillDefaultTemplates = () => {
+  salesOrderNotificationTemplates.draft = t(
+    'INBOX_MGMT.ECOMMERCE.TEMPLATES_DEFAULT_DRAFT'
+  );
+  salesOrderNotificationTemplates.confirmed = t(
+    'INBOX_MGMT.ECOMMERCE.TEMPLATES_DEFAULT_CONFIRMED'
+  );
+  salesOrderNotificationTemplates.processing = t(
+    'INBOX_MGMT.ECOMMERCE.TEMPLATES_DEFAULT_PROCESSING'
+  );
+  salesOrderNotificationTemplates.shipped = t(
+    'INBOX_MGMT.ECOMMERCE.TEMPLATES_DEFAULT_SHIPPED'
+  );
+  salesOrderNotificationTemplates.delivered = t(
+    'INBOX_MGMT.ECOMMERCE.TEMPLATES_DEFAULT_DELIVERED'
+  );
+  salesOrderNotificationTemplates.cancelled = t(
+    'INBOX_MGMT.ECOMMERCE.TEMPLATES_DEFAULT_CANCELLED'
+  );
 };
 </script>
 
@@ -309,51 +333,98 @@ const saveSalesSettings = async () => {
 
       <!-- Mẫu thông báo đơn hàng -->
       <div class="flex flex-col gap-4">
-        <div class="flex flex-col gap-1">
-          <h3 class="text-lg font-semibold text-n-slate-12">
-            {{ t('INBOX_MGMT.ECOMMERCE.TEMPLATES_TITLE') }}
-          </h3>
-          <p class="text-sm text-n-slate-11">
-            {{ t('INBOX_MGMT.ECOMMERCE.TEMPLATES_DESCRIPTION') }}
-          </p>
+        <div class="flex flex-row items-start justify-between gap-4">
+          <div class="flex flex-col gap-1">
+            <h3 class="text-lg font-semibold text-n-slate-12">
+              {{ t('INBOX_MGMT.ECOMMERCE.TEMPLATES_TITLE') }}
+            </h3>
+            <p class="text-sm text-n-slate-11">
+              {{ t('INBOX_MGMT.ECOMMERCE.TEMPLATES_DESCRIPTION') }}
+            </p>
+          </div>
+          <NextButton
+            sm
+            outline
+            slate
+            icon="i-lucide-wand-2"
+            class="flex-shrink-0"
+            @click="fillDefaultTemplates"
+          >
+            {{ t('INBOX_MGMT.ECOMMERCE.FILL_DEFAULT_TEMPLATES') }}
+          </NextButton>
         </div>
         <form class="flex flex-col gap-6" @submit.prevent="saveSalesSettings">
           <div class="grid gap-4">
-            <WithLabel name="template-draft" :label="$t('SALES.MODULE_ORDERS.STATUS.DRAFT')">
+            <WithLabel
+              name="template-draft"
+              :label="$t('SALES.MODULE_ORDERS.STATUS.DRAFT')"
+            >
               <textarea
                 v-model="salesOrderNotificationTemplates.draft"
                 class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
-                :placeholder="t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_DRAFT')"
+                :placeholder="
+                  t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_DRAFT')
+                "
               />
             </WithLabel>
-            <WithLabel name="template-confirmed" :label="$t('SALES.MODULE_ORDERS.STATUS.CONFIRMED')">
+            <WithLabel
+              name="template-confirmed"
+              :label="$t('SALES.MODULE_ORDERS.STATUS.CONFIRMED')"
+            >
               <textarea
                 v-model="salesOrderNotificationTemplates.confirmed"
                 class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+                :placeholder="
+                  t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_CONFIRMED')
+                "
               />
             </WithLabel>
-            <WithLabel name="template-processing" :label="$t('SALES.MODULE_ORDERS.STATUS.PROCESSING')">
+            <WithLabel
+              name="template-processing"
+              :label="$t('SALES.MODULE_ORDERS.STATUS.PROCESSING')"
+            >
               <textarea
                 v-model="salesOrderNotificationTemplates.processing"
                 class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+                :placeholder="
+                  t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_PROCESSING')
+                "
               />
             </WithLabel>
-            <WithLabel name="template-shipped" :label="$t('SALES.MODULE_ORDERS.STATUS.SHIPPED')">
+            <WithLabel
+              name="template-shipped"
+              :label="$t('SALES.MODULE_ORDERS.STATUS.SHIPPED')"
+            >
               <textarea
                 v-model="salesOrderNotificationTemplates.shipped"
                 class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+                :placeholder="
+                  t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_SHIPPED')
+                "
               />
             </WithLabel>
-            <WithLabel name="template-delivered" :label="$t('SALES.MODULE_ORDERS.STATUS.DELIVERED')">
+            <WithLabel
+              name="template-delivered"
+              :label="$t('SALES.MODULE_ORDERS.STATUS.DELIVERED')"
+            >
               <textarea
                 v-model="salesOrderNotificationTemplates.delivered"
                 class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+                :placeholder="
+                  t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_DELIVERED')
+                "
               />
             </WithLabel>
-            <WithLabel name="template-cancelled" :label="$t('SALES.MODULE_ORDERS.STATUS.CANCELLED')">
+            <WithLabel
+              name="template-cancelled"
+              :label="$t('SALES.MODULE_ORDERS.STATUS.CANCELLED')"
+            >
               <textarea
                 v-model="salesOrderNotificationTemplates.cancelled"
                 class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+                :placeholder="
+                  t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_CANCELLED')
+                "
               />
             </WithLabel>
           </div>
@@ -372,10 +443,12 @@ const saveSalesSettings = async () => {
             </div>
             <div class="flex items-center gap-3">
               <Switch v-model="allowAiCreateOrder" />
-              <span class="text-sm text-n-slate-12">{{ t('INBOX_MGMT.ECOMMERCE.AI_ORDER_TOGGLE') }}</span>
+              <span class="text-sm text-n-slate-12">{{
+                t('INBOX_MGMT.ECOMMERCE.AI_ORDER_TOGGLE')
+              }}</span>
             </div>
           </div>
-          
+
           <div class="flex justify-end pt-2 pb-6">
             <NextButton :is-loading="isUpdatingSalesSettings" sm type="submit">
               {{ t('INBOX_MGMT.ECOMMERCE.SAVE_SALES_SETTINGS') }}

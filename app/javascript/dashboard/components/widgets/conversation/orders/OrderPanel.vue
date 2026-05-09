@@ -300,11 +300,17 @@ const handleSyncOrder = async order => {
       v-if="showDeleteModal"
       v-model:show="showDeleteModal"
       :title="t('CONVERSATION.ORDER_PANEL.DELETE_CONFIRM_TITLE')"
-      :message="t('CONVERSATION.ORDER_PANEL.DELETE_CONFIRM', { id: selectedOrder?.id })"
+      :message="
+        t('CONVERSATION.ORDER_PANEL.DELETE_CONFIRM', { id: selectedOrder?.id })
+      "
       :confirm-text="t('CONVERSATION.ORDER_PANEL.DELETE_CONFIRM_YES')"
       :reject-text="t('CONVERSATION.ORDER_PANEL.DELETE_CONFIRM_NO')"
       :confirm-value="selectedOrder?.id?.toString()"
-      :confirm-place-holder-text="t('CONVERSATION.ORDER_PANEL.DELETE_CONFIRM_PLACEHOLDER', { id: selectedOrder?.id })"
+      :confirm-place-holder-text="
+        t('CONVERSATION.ORDER_PANEL.DELETE_CONFIRM_PLACEHOLDER', {
+          id: selectedOrder?.id,
+        })
+      "
       @on-confirm="executeDeleteOrder"
       @on-close="toggleDeleteModal(false)"
     />

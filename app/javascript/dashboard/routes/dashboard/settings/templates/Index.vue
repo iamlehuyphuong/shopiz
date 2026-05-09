@@ -570,14 +570,16 @@ onMounted(() => {
       <div class="relative flex items-center gap-2">
         <Button
           icon="i-lucide-refresh-cw"
-          label="Đồng bộ mẫu"
+          :label="t('SETTINGS.TEMPLATES.ACTIONS.SYNC_ALL')"
           :is-loading="isSyncing"
           color-scheme="secondary"
+          sm
           @click="syncAllTemplates"
         />
         <Button
           icon="i-lucide-plus"
           blue
+          sm
           :label="t('SETTINGS.TEMPLATES.ACTIONS.NEW_TEMPLATE')"
           @click="openAddPopup"
         />
@@ -700,8 +702,11 @@ onMounted(() => {
 
       <!-- Template count -->
       <div class="ml-auto text-xs text-n-slate-10">
-        {{ filteredTemplates.length }} / {{ allTemplates.length }}
-        {{ allTemplates.length === 1 ? 'template' : 'templates' }}
+        {{
+          t('SETTINGS.TEMPLATES.CHANNEL_OVERVIEW.TEMPLATES_COUNT', {
+            count: `${filteredTemplates.length} / ${allTemplates.length}`,
+          })
+        }}
       </div>
     </div>
 
@@ -714,7 +719,6 @@ onMounted(() => {
       v-else-if="!filteredTemplates.length && !hasActiveFilters"
       class="flex flex-col items-center justify-center py-16 text-center"
     >
-      <span class="i-lucide-file-text text-4xl text-n-slate-8 mb-3" />
       <h3 class="text-base font-medium text-n-slate-11 mb-1">
         {{ t('SETTINGS.TEMPLATES.EMPTY_STATE.TITLE') }}
       </h3>

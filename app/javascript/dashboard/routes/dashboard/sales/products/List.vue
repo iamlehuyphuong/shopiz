@@ -150,14 +150,18 @@ const onDeleteProduct = product => {
 };
 
 const confirmDeleteProduct = () => {
-  store.dispatch('salesProducts/delete', deleteProduct.value.id).then(() => {
-    useAlert(t('SALES.MODULE_PRODUCTS.ALERTS.DELETE_SUCCESS'));
-  }).catch(() => {
-    useAlert(t('SALES.MODULE_PRODUCTS.ALERTS.DELETE_ERROR'));
-  }).finally(() => {
-    toggleDeleteModal(false);
-    deleteProduct.value = null;
-  });
+  store
+    .dispatch('salesProducts/delete', deleteProduct.value.id)
+    .then(() => {
+      useAlert(t('SALES.MODULE_PRODUCTS.ALERTS.DELETE_SUCCESS'));
+    })
+    .catch(() => {
+      useAlert(t('SALES.MODULE_PRODUCTS.ALERTS.DELETE_ERROR'));
+    })
+    .finally(() => {
+      toggleDeleteModal(false);
+      deleteProduct.value = null;
+    });
 };
 
 const onPageChange = page => {
@@ -376,11 +380,25 @@ onBeforeMount(() => {
       v-if="showDeleteModal"
       v-model:show="showDeleteModal"
       :title="$t('SALES.MODULE_PRODUCTS.ALERTS.DELETE_CONFIRM_TITLE')"
-      :message="$t('SALES.MODULE_PRODUCTS.ALERTS.DELETE_CONFIRM', { name: deleteProduct?.name })"
-      :confirm-text="$t('SALES.MODULE_PRODUCTS.ALERTS.DELETE_CONFIRM_YES', { name: deleteProduct?.name })"
-      :reject-text="$t('SALES.MODULE_PRODUCTS.ALERTS.CANCEL', { name: deleteProduct?.name })"
+      :message="
+        $t('SALES.MODULE_PRODUCTS.ALERTS.DELETE_CONFIRM', {
+          name: deleteProduct?.name,
+        })
+      "
+      :confirm-text="
+        $t('SALES.MODULE_PRODUCTS.ALERTS.DELETE_CONFIRM_YES', {
+          name: deleteProduct?.name,
+        })
+      "
+      :reject-text="
+        $t('SALES.MODULE_PRODUCTS.ALERTS.CANCEL', { name: deleteProduct?.name })
+      "
       :confirm-value="deleteProduct?.name"
-      :confirm-place-holder-text="$t('SALES.MODULE_PRODUCTS.ALERTS.DELETE_CONFIRM_PLACEHOLDER', { name: deleteProduct?.name })"
+      :confirm-place-holder-text="
+        $t('SALES.MODULE_PRODUCTS.ALERTS.DELETE_CONFIRM_PLACEHOLDER', {
+          name: deleteProduct?.name,
+        })
+      "
       @on-confirm="confirmDeleteProduct"
       @on-close="toggleDeleteModal(false)"
     />

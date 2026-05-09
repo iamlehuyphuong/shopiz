@@ -155,7 +155,7 @@ class ConversationOrders::PushService
 
     message_params = {
       content: content,
-      message_type: :outgoing,
+      message_type: 'outgoing',
       private: false
     }
 
