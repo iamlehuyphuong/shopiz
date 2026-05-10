@@ -2,6 +2,7 @@
 import { mapGetters } from 'vuex';
 import { shouldBeUrl } from 'shared/helpers/Validators';
 import { useAlert } from 'dashboard/composables';
+import Banner from 'dashboard/components-next/banner/Banner.vue';
 import { useVuelidate } from '@vuelidate/core';
 import Avatar from 'next/avatar/Avatar.vue';
 import SettingIntroBanner from 'dashboard/components/widgets/SettingIntroBanner.vue';
@@ -45,9 +46,11 @@ import SelectInput from 'dashboard/components-next/select/Select.vue';
 import Widget from 'dashboard/modules/widget-preview/components/Widget.vue';
 import OrderTemplateMapping from './components/OrderTemplateMapping.vue';
 import InboxReconnectionRequired from './components/InboxReconnectionRequired.vue';
+import InboxesAPI from 'dashboard/api/inboxes';
 
 export default {
   components: {
+    Banner,
     BotConfiguration,
     CollaboratorsPage,
     ConfigurationPage,
@@ -134,6 +137,7 @@ export default {
       followupCustomAIPrompts: Array.from({ length: 15 }, () => ''),
       autoLabelEnabled: false,
       zaloReauthorizeModalVisible: false,
+      isCheckingConnection: false,
     };
   },
   computed: {
@@ -488,6 +492,30 @@ export default {
     this.fetchSharedData();
   },
   methods: {
+    async checkZaloPersonalConnection() {
+      if (this.isCheckingConnection) return;
+
+      this.isCheckingConnection = true;
+      try {
+        const { data } = await InboxesAPI.checkConnection(this.inbox.id);
+        if (data.reauthorization_required) {
+          this.$store.dispatch('inboxes/get');
+          useAlert(
+            this.$t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.DISCONNECTED_ALERT')
+          );
+        } else {
+          useAlert(
+            this.$t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.CONNECTED_ALERT')
+          );
+        }
+      } catch (error) {
+        useAlert(
+          this.$t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.CHECK_ERROR')
+        );
+      } finally {
+        this.isCheckingConnection = false;
+      }
+    },
     fetchSharedData() {
       this.$store.dispatch('agents/get');
       this.$store.dispatch('teams/get');
@@ -876,6 +904,20 @@ export default {
           :class="bannerMaxWidth"
           @reauthorize="zaloReauthorizeModalVisible = true"
         />
+        <Banner
+          v-if="isAZaloPersonalChannel && !zaloPersonalUnauthorized"
+          color="teal"
+          class="mx-6 mb-4"
+          :class="bannerMaxWidth"
+          :action-label="
+            isCheckingConnection
+              ? $t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.CHECKING')
+              : $t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.CHECK_BUTTON')
+          "
+          @action="checkZaloPersonalConnection"
+        >
+          {{ $t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.CONNECTED') }}
+        </Banner>
 
         <div
           v-if="selectedTabKey === 'inbox-settings'"

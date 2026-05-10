@@ -146,7 +146,7 @@ const onClickBotHandoff = async () => {
     @primary-action="onClickBotHandoff"
   />
 
-  <div v-if="accountLabels && accountLabels.length > 0" class="mx-2 mb-2 flex flex-wrap gap-2">
+  <div v-if="accountLabels && accountLabels.length > 0" class="mx-2 mt-2 mb-2 flex flex-wrap gap-2">
     <button
       v-for="label in accountLabels"
       :key="label.id"

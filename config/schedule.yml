@@ -104,3 +104,10 @@ periodic_order_sync_job:
   class: 'ConversationOrders::PeriodicOrderSyncJob'
   queue: low
 
+# executed every 12 hours
+# checks Zalo Personal channel connection health via getUserInfo API
+zalo_personal_check_connection_health_job:
+  cron: '0 */12 * * *'
+  class: 'ZaloPersonal::CheckConnectionHealthJob'
+  queue: scheduled_jobs
+

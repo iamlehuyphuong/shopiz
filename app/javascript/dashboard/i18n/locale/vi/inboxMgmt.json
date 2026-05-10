@@ -777,6 +777,14 @@
         "DELETE_ERROR": "Không thể xóa mẫu"
       }
     },
+    "ZALO_PERSONAL_CONNECTION": {
+      "CONNECTED": "Zalo cá nhân đang kết nối.",
+      "CHECK_BUTTON": "Kiểm tra kết nối",
+      "CHECKING": "Đang kiểm tra...",
+      "CONNECTED_ALERT": "Kết nối Zalo cá nhân bình thường.",
+      "DISCONNECTED_ALERT": "Kết nối Zalo cá nhân đã bị ngắt. Vui lòng kết nối lại.",
+      "CHECK_ERROR": "Không thể kiểm tra kết nối. Vui lòng thử lại sau."
+    },
     "CHANNEL_PREFERENCES": "Cài đặt kênh",
     "WIDGET_FEATURES": "Tính năng widget",
     "ACCOUNT_HEALTH": {

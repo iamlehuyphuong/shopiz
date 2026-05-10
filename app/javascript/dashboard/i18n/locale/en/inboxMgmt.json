@@ -808,6 +808,14 @@
         "DELETE_ERROR": "Failed to delete template"
       }
     },
+    "ZALO_PERSONAL_CONNECTION": {
+      "CONNECTED": "Zalo Personal is connected.",
+      "CHECK_BUTTON": "Check connection",
+      "CHECKING": "Checking...",
+      "CONNECTED_ALERT": "Zalo Personal connection is healthy.",
+      "DISCONNECTED_ALERT": "Zalo Personal connection is lost. Please reconnect.",
+      "CHECK_ERROR": "Unable to check connection. Please try again later."
+    },
     "CHANNEL_PREFERENCES": "Channel Preferences",
     "WIDGET_FEATURES": "Widget features",
     "ACCOUNT_HEALTH": {

@@ -256,6 +256,7 @@ Rails.application.routes.draw do
             delete :bubble_avatar, on: :member
             delete :close_bubble_avatar, on: :member
             post :sync_templates, on: :member
+            post :check_connection, on: :member
             get :health, on: :member
             post :register_webhook, on: :member
             if ChatwootApp.enterprise?

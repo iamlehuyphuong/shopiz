@@ -51,6 +51,17 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
     render status: :internal_server_error, json: { error: e.message }
   end
 
+  def check_connection
+    channel = @inbox.channel
+    unless channel.respond_to?(:check_disconnection!)
+      render status: :unprocessable_entity, json: { error: 'Channel does not support connection check' }
+      return
+    end
+
+    channel.check_disconnection!
+    render status: :ok, json: { reauthorization_required: channel.reauthorization_required? }
+  end
+
   def create
     ActiveRecord::Base.transaction do
       channel = create_channel
