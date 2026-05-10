@@ -134,7 +134,7 @@ export default {
 </script>
 
 <template>
-  <div class="mx-6">
+  <div class="mx-6 max-w-4xl">
     <SettingsToggleSection
       v-model="isBusinessHoursEnabled"
       :header="$t('INBOX_MGMT.BUSINESS_HOURS.TOGGLE_AVAILABILITY')"

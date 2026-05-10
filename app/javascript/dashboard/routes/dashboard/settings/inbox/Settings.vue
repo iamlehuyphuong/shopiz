@@ -182,6 +182,10 @@ export default {
           key: 'collaborators',
           name: this.$t('INBOX_MGMT.TABS.COLLABORATORS'),
         },
+        {
+          key: 'ecommerce',
+          name: this.$t('INBOX_MGMT.TABS.ECOMMERCE'),
+        },
       ];
 
       if (!this.isAVoiceChannel) {
@@ -287,13 +291,7 @@ export default {
         ];
       }
 
-      visibleToAllChannelTabs = [
-        ...visibleToAllChannelTabs,
-        {
-          key: 'ecommerce',
-          name: this.$t('INBOX_MGMT.TABS.ECOMMERCE'),
-        },
-      ];
+
 
       return visibleToAllChannelTabs;
     },
@@ -308,7 +306,14 @@ export default {
       return getInboxIconByType(type, medium, 'line');
     },
     bannerMaxWidth() {
-      const narrowTabs = ['collaborators', 'bot-configuration'];
+      const narrowTabs = [
+        'collaborators',
+        'bot-configuration',
+        'business-hours',
+        'csat',
+        'ecommerce',
+        'posts-and-comments',
+      ];
       const wideIfWebWidget = ['configuration', 'inbox-settings'];
       if (narrowTabs.includes(this.selectedTabKey)) return 'max-w-4xl';
       if (wideIfWebWidget.includes(this.selectedTabKey)) {

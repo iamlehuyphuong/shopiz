@@ -88,11 +88,12 @@ class ConversationOrders::SendUtilityMessageService
     template = templates[order.status]
 
     if template.present?
-      template.gsub('%<customer_name>s', resolve_variable('customer_name').to_s)
-              .gsub('%<fanpage_name>s', resolve_variable('fanpage_name').to_s)
-              .gsub('%<order_id>s', resolve_variable('order_id').to_s)
-              .gsub('%<status_label>s', resolve_variable('status_label').to_s)
-              .gsub('%<total_amount>s', resolve_variable('total_amount').to_s)
+      template.gsub('%{customer_name}', resolve_variable('customer_name').to_s)
+              .gsub('%{inbox_name}', resolve_variable('inbox_name').to_s)
+              .gsub('%{fanpage_name}', resolve_variable('fanpage_name').to_s)
+              .gsub('%{order_id}', resolve_variable('order_id').to_s)
+              .gsub('%{status_label}', resolve_variable('status_label').to_s)
+              .gsub('%{total_amount}', resolve_variable('total_amount').to_s)
     else
       I18n.t(
         'conversation_orders.utility_messages.status_update',
@@ -110,7 +111,7 @@ class ConversationOrders::SendUtilityMessageService
     case sys_var
     when 'customer.name', 'customer_name'
       conversation.contact.name
-    when 'fanpage.name', 'fanpage_name'
+    when 'fanpage.name', 'fanpage_name', 'inbox_name'
       conversation.inbox.name
     when 'order.id', 'order_id'
       order.id

@@ -47,6 +47,14 @@ const PLATFORM_ICONS = {
   tiktok_shop: 'i-lucide-music',
 };
 
+const TEMPLATE_VARIABLES = [
+  { key: '%{customer_name}', labelKey: 'INBOX_MGMT.ECOMMERCE.VAR_CUSTOMER_NAME' },
+  { key: '%{inbox_name}', labelKey: 'INBOX_MGMT.ECOMMERCE.VAR_INBOX_NAME' },
+  { key: '%{order_id}', labelKey: 'INBOX_MGMT.ECOMMERCE.VAR_ORDER_ID' },
+  { key: '%{status_label}', labelKey: 'INBOX_MGMT.ECOMMERCE.VAR_STATUS_LABEL' },
+  { key: '%{total_amount}', labelKey: 'INBOX_MGMT.ECOMMERCE.VAR_TOTAL_AMOUNT' },
+];
+
 const { t } = useI18n();
 const store = useStore();
 const { accountId } = useAccount();
@@ -55,6 +63,7 @@ const selectedIntegrationId = ref(null);
 const isSaving = ref(false);
 
 const isUpdatingSalesSettings = ref(false);
+const customizeTemplates = ref(false);
 const salesOrderNotificationTemplates = reactive({
   draft: '',
   confirmed: '',
@@ -64,6 +73,9 @@ const salesOrderNotificationTemplates = reactive({
   cancelled: '',
 });
 const allowAiCreateOrder = ref(false);
+
+// Track which textarea is currently focused
+const activeTextareaRef = ref(null);
 
 const account = computed(
   () => store.getters['accounts/getAccount'](accountId.value) || {}
@@ -89,6 +101,12 @@ const currentIntegration = computed(() =>
   integrations.value.find(i => i.hookId === selectedIntegrationId.value)
 );
 
+const hasAnyTemplate = computed(() => {
+  return Object.values(salesOrderNotificationTemplates).some(
+    v => v && v.trim() !== ''
+  );
+});
+
 const loadSalesSettings = () => {
   const settings = account.value.settings || {};
 
@@ -100,6 +118,11 @@ const loadSalesSettings = () => {
   }
 
   allowAiCreateOrder.value = settings.sales_ai_allow_create_order ?? false;
+
+  // Auto-enable customize toggle if any template already has content
+  if (hasAnyTemplate.value) {
+    customizeTemplates.value = true;
+  }
 };
 
 onMounted(() => {
@@ -120,7 +143,7 @@ const handleSave = async () => {
     });
     useAlert(t('INBOX_MGMT.ECOMMERCE.SAVE_SUCCESS'));
   } catch (error) {
-    useAlert(error.message || t('INBOX_MGMT.ECOMMERCE.SAVE_ERROR'));
+    useAlert(t('INBOX_MGMT.ECOMMERCE.SAVE_ERROR'));
   } finally {
     isSaving.value = false;
   }
@@ -163,6 +186,37 @@ const fillDefaultTemplates = () => {
   salesOrderNotificationTemplates.cancelled = t(
     'INBOX_MGMT.ECOMMERCE.TEMPLATES_DEFAULT_CANCELLED'
   );
+};
+
+const onTextareaFocus = event => {
+  activeTextareaRef.value = event.target;
+};
+
+const insertVariable = variableKey => {
+  const textarea = activeTextareaRef.value;
+  if (!textarea) return;
+
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+  const currentValue = textarea.value;
+
+  const newValue =
+    currentValue.substring(0, start) +
+    variableKey +
+    currentValue.substring(end);
+
+  // Find which model key this textarea belongs to via its name attribute
+  const name = textarea.closest('[data-template-key]')?.dataset.templateKey;
+  if (name && name in salesOrderNotificationTemplates) {
+    salesOrderNotificationTemplates[name] = newValue;
+  }
+
+  // Restore cursor position after the inserted text
+  const newCursorPos = start + variableKey.length;
+  requestAnimationFrame(() => {
+    textarea.focus();
+    textarea.setSelectionRange(newCursorPos, newCursorPos);
+  });
 };
 </script>
 
@@ -331,131 +385,190 @@ const fillDefaultTemplates = () => {
 
       <div class="w-full h-[1px] bg-n-weak my-4" />
 
-      <!-- Mẫu thông báo đơn hàng -->
-      <div class="flex flex-col gap-4">
-        <div class="flex flex-row items-start justify-between gap-4">
+      <!-- Sales settings form: AI Order + Templates -->
+      <form class="flex flex-col gap-6" @submit.prevent="saveSalesSettings">
+        <!-- Trợ lý AI tạo đơn hàng -->
+        <div class="flex flex-col gap-4">
           <div class="flex flex-col gap-1">
             <h3 class="text-lg font-semibold text-n-slate-12">
-              {{ t('INBOX_MGMT.ECOMMERCE.TEMPLATES_TITLE') }}
+              {{ t('INBOX_MGMT.ECOMMERCE.AI_ORDER_TITLE') }}
             </h3>
             <p class="text-sm text-n-slate-11">
-              {{ t('INBOX_MGMT.ECOMMERCE.TEMPLATES_DESCRIPTION') }}
+              {{ t('INBOX_MGMT.ECOMMERCE.AI_ORDER_DESCRIPTION') }}
             </p>
           </div>
-          <NextButton
-            sm
-            outline
-            slate
-            icon="i-lucide-wand-2"
-            class="flex-shrink-0"
-            @click="fillDefaultTemplates"
-          >
-            {{ t('INBOX_MGMT.ECOMMERCE.FILL_DEFAULT_TEMPLATES') }}
-          </NextButton>
-        </div>
-        <form class="flex flex-col gap-6" @submit.prevent="saveSalesSettings">
-          <div class="grid gap-4">
-            <WithLabel
-              name="template-draft"
-              :label="$t('SALES.MODULE_ORDERS.STATUS.DRAFT')"
-            >
-              <textarea
-                v-model="salesOrderNotificationTemplates.draft"
-                class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
-                :placeholder="
-                  t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_DRAFT')
-                "
-              />
-            </WithLabel>
-            <WithLabel
-              name="template-confirmed"
-              :label="$t('SALES.MODULE_ORDERS.STATUS.CONFIRMED')"
-            >
-              <textarea
-                v-model="salesOrderNotificationTemplates.confirmed"
-                class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
-                :placeholder="
-                  t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_CONFIRMED')
-                "
-              />
-            </WithLabel>
-            <WithLabel
-              name="template-processing"
-              :label="$t('SALES.MODULE_ORDERS.STATUS.PROCESSING')"
-            >
-              <textarea
-                v-model="salesOrderNotificationTemplates.processing"
-                class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
-                :placeholder="
-                  t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_PROCESSING')
-                "
-              />
-            </WithLabel>
-            <WithLabel
-              name="template-shipped"
-              :label="$t('SALES.MODULE_ORDERS.STATUS.SHIPPED')"
-            >
-              <textarea
-                v-model="salesOrderNotificationTemplates.shipped"
-                class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
-                :placeholder="
-                  t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_SHIPPED')
-                "
-              />
-            </WithLabel>
-            <WithLabel
-              name="template-delivered"
-              :label="$t('SALES.MODULE_ORDERS.STATUS.DELIVERED')"
-            >
-              <textarea
-                v-model="salesOrderNotificationTemplates.delivered"
-                class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
-                :placeholder="
-                  t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_DELIVERED')
-                "
-              />
-            </WithLabel>
-            <WithLabel
-              name="template-cancelled"
-              :label="$t('SALES.MODULE_ORDERS.STATUS.CANCELLED')"
-            >
-              <textarea
-                v-model="salesOrderNotificationTemplates.cancelled"
-                class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
-                :placeholder="
-                  t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_CANCELLED')
-                "
-              />
-            </WithLabel>
+          <div class="flex items-center gap-3">
+            <Switch v-model="allowAiCreateOrder" />
+            <span class="text-sm text-n-slate-12">{{
+              t('INBOX_MGMT.ECOMMERCE.AI_ORDER_TOGGLE')
+            }}</span>
           </div>
+        </div>
 
-          <div class="w-full h-[1px] bg-n-weak my-2" />
+        <div class="w-full h-[1px] bg-n-weak my-2" />
 
-          <!-- Trợ lý AI tạo đơn hàng -->
-          <div class="flex flex-col gap-4">
+        <!-- Mẫu thông báo đơn hàng -->
+        <div class="flex flex-col gap-4">
+          <div class="flex flex-row items-start justify-between gap-4">
             <div class="flex flex-col gap-1">
               <h3 class="text-lg font-semibold text-n-slate-12">
-                {{ t('INBOX_MGMT.ECOMMERCE.AI_ORDER_TITLE') }}
+                {{ t('INBOX_MGMT.ECOMMERCE.TEMPLATES_TITLE') }}
               </h3>
               <p class="text-sm text-n-slate-11">
-                {{ t('INBOX_MGMT.ECOMMERCE.AI_ORDER_DESCRIPTION') }}
+                {{ t('INBOX_MGMT.ECOMMERCE.TEMPLATES_DESCRIPTION') }}
               </p>
-            </div>
-            <div class="flex items-center gap-3">
-              <Switch v-model="allowAiCreateOrder" />
-              <span class="text-sm text-n-slate-12">{{
-                t('INBOX_MGMT.ECOMMERCE.AI_ORDER_TOGGLE')
-              }}</span>
             </div>
           </div>
 
-          <div class="flex justify-end pt-2 pb-6">
-            <NextButton :is-loading="isUpdatingSalesSettings" sm type="submit">
-              {{ t('INBOX_MGMT.ECOMMERCE.SAVE_SALES_SETTINGS') }}
-            </NextButton>
+          <!-- Toggle customize templates -->
+          <div class="flex items-center gap-3">
+            <Switch v-model="customizeTemplates" />
+            <span class="text-sm text-n-slate-12">
+              {{ t('INBOX_MGMT.ECOMMERCE.CUSTOMIZE_TEMPLATES_TOGGLE') }}
+            </span>
           </div>
-        </form>
-      </div>
+
+          <template v-if="customizeTemplates">
+            <!-- Variable tags helper -->
+            <div class="flex flex-col gap-2">
+              <p class="text-xs font-medium text-n-slate-11">
+                {{ t('INBOX_MGMT.ECOMMERCE.VARIABLE_TAGS_LABEL') }}
+              </p>
+              <div class="flex flex-wrap gap-1.5">
+                <button
+                  v-for="variable in TEMPLATE_VARIABLES"
+                  :key="variable.key"
+                  type="button"
+                  class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-n-alpha-2 border border-n-weak text-xs font-mono text-n-slate-11 hover:bg-n-alpha-3 hover:text-n-slate-12 hover:border-n-slate-6 transition-all cursor-pointer select-none"
+                  :title="
+                    t('INBOX_MGMT.ECOMMERCE.VARIABLE_TAG_TOOLTIP', {
+                      variable: variable.key,
+                    })
+                  "
+                  @click="insertVariable(variable.key)"
+                >
+                  <i class="i-lucide-code text-[10px] opacity-60" />
+                  {{ t(variable.labelKey) }}
+                </button>
+              </div>
+            </div>
+
+            <div class="flex justify-end">
+              <NextButton
+                sm
+                outline
+                slate
+                icon="i-lucide-wand-2"
+                class="flex-shrink-0"
+                @click="fillDefaultTemplates"
+              >
+                {{ t('INBOX_MGMT.ECOMMERCE.FILL_DEFAULT_TEMPLATES') }}
+              </NextButton>
+            </div>
+
+            <div class="grid gap-4">
+              <WithLabel
+                name="template-draft"
+                :label="$t('SALES.MODULE_ORDERS.STATUS.DRAFT')"
+              >
+                <div data-template-key="draft" class="w-full">
+                  <textarea
+                    v-model="salesOrderNotificationTemplates.draft"
+                    class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+                    :placeholder="
+                      t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_DRAFT')
+                    "
+                    @focus="onTextareaFocus"
+                  />
+                </div>
+              </WithLabel>
+              <WithLabel
+                name="template-confirmed"
+                :label="$t('SALES.MODULE_ORDERS.STATUS.CONFIRMED')"
+              >
+                <div data-template-key="confirmed" class="w-full">
+                  <textarea
+                    v-model="salesOrderNotificationTemplates.confirmed"
+                    class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+                    :placeholder="
+                      t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_CONFIRMED')
+                    "
+                    @focus="onTextareaFocus"
+                  />
+                </div>
+              </WithLabel>
+              <WithLabel
+                name="template-processing"
+                :label="$t('SALES.MODULE_ORDERS.STATUS.PROCESSING')"
+              >
+                <div data-template-key="processing" class="w-full">
+                  <textarea
+                    v-model="salesOrderNotificationTemplates.processing"
+                    class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+                    :placeholder="
+                      t(
+                        'INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_PROCESSING'
+                      )
+                    "
+                    @focus="onTextareaFocus"
+                  />
+                </div>
+              </WithLabel>
+              <WithLabel
+                name="template-shipped"
+                :label="$t('SALES.MODULE_ORDERS.STATUS.SHIPPED')"
+              >
+                <div data-template-key="shipped" class="w-full">
+                  <textarea
+                    v-model="salesOrderNotificationTemplates.shipped"
+                    class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+                    :placeholder="
+                      t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_SHIPPED')
+                    "
+                    @focus="onTextareaFocus"
+                  />
+                </div>
+              </WithLabel>
+              <WithLabel
+                name="template-delivered"
+                :label="$t('SALES.MODULE_ORDERS.STATUS.DELIVERED')"
+              >
+                <div data-template-key="delivered" class="w-full">
+                  <textarea
+                    v-model="salesOrderNotificationTemplates.delivered"
+                    class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+                    :placeholder="
+                      t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_DELIVERED')
+                    "
+                    @focus="onTextareaFocus"
+                  />
+                </div>
+              </WithLabel>
+              <WithLabel
+                name="template-cancelled"
+                :label="$t('SALES.MODULE_ORDERS.STATUS.CANCELLED')"
+              >
+                <div data-template-key="cancelled" class="w-full">
+                  <textarea
+                    v-model="salesOrderNotificationTemplates.cancelled"
+                    class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+                    :placeholder="
+                      t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_CANCELLED')
+                    "
+                    @focus="onTextareaFocus"
+                  />
+                </div>
+              </WithLabel>
+            </div>
+          </template>
+        </div>
+
+        <div class="flex justify-end pt-2 pb-6">
+          <NextButton :is-loading="isUpdatingSalesSettings" sm type="submit">
+            {{ t('INBOX_MGMT.ECOMMERCE.SAVE_SALES_SETTINGS') }}
+          </NextButton>
+        </div>
+      </form>
     </div>
   </div>
 </template>
