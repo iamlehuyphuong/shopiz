@@ -114,7 +114,7 @@ onMounted(() => {
       />
     </template>
     <template #body>
-      <div v-if="reportData" class="flex flex-col gap-5">
+      <div class="flex flex-col gap-5">
         <!-- Date Range Picker -->
         <div class="flex items-center">
           <WootDatePicker
@@ -124,28 +124,49 @@ onMounted(() => {
           />
         </div>
 
-        <!-- KPI Cards -->
-        <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
-          <OverviewMetricCard
-            v-for="metric in metrics"
-            :key="metric.label"
-            :label="metric.label"
-            :value="metric.value"
-            :change-percent="metric.change"
+        <div v-if="reportData" class="flex flex-col gap-5">
+          <!-- KPI Cards -->
+          <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+            <OverviewMetricCard
+              v-for="metric in metrics"
+              :key="metric.label"
+              :label="metric.label"
+              :value="metric.value"
+              :change-percent="metric.change"
+            />
+          </div>
+
+          <!-- Revenue Chart -->
+          <RevenueChart
+            :chart-data="reportData.chart_data || []"
+            :date-range="customDateRange"
           />
+
+          <!-- Orders By Inbox -->
+          <OrdersByInboxTable :data="reportData.orders_by_inbox || []" />
+
+          <!-- Order Heatmap -->
+          <OrderHeatmap :date-range="customDateRange" />
         </div>
 
-        <!-- Revenue Chart -->
-        <RevenueChart
-          :chart-data="reportData.chart_data || []"
-          :date-range="customDateRange"
-        />
-
-        <!-- Orders By Inbox -->
-        <OrdersByInboxTable :data="reportData.orders_by_inbox || []" />
-
-        <!-- Order Heatmap -->
-        <OrderHeatmap :date-range="customDateRange" />
+        <div
+          v-else-if="!isLoading"
+          class="flex flex-col items-center justify-center p-12 bg-n-alpha-1 border border-n-weak rounded-xl"
+        >
+          <div class="text-n-slate-11 text-center">
+            <span class="i-lucide-alert-circle text-4xl mb-3 block mx-auto"></span>
+            <p class="font-medium text-n-slate-12 text-base m-0 mb-1">Không thể tải dữ liệu</p>
+            <p class="text-sm m-0 max-w-md mx-auto">
+              Có lỗi xảy ra khi tải báo cáo. Vui lòng thử lại hoặc kiểm tra xem trình duyệt có đang chặn request (AdBlocker) không.
+            </p>
+            <button
+              class="mt-4 px-4 py-2 bg-n-brand text-white rounded-lg text-sm hover:bg-n-brand-dark transition-colors"
+              @click="fetchReports"
+            >
+              Thử lại
+            </button>
+          </div>
+        </div>
       </div>
     </template>
   </SalesLayout>

@@ -80,7 +80,10 @@ class Api::V1::Accounts::Sales::ProductsController < Api::V1::Accounts::BaseCont
 
     # Inject account_id into nested product_variants_attributes
     if permitted[:product_variants_attributes].present?
-      permitted[:product_variants_attributes].each do |variant_attrs|
+      variants = permitted[:product_variants_attributes]
+      variants = variants.values if variants.is_a?(Hash) || variants.is_a?(ActionController::Parameters)
+
+      variants.each do |variant_attrs|
         variant_attrs[:account_id] = current_account.id
       end
     end
