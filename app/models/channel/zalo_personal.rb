@@ -101,6 +101,7 @@ class Channel::ZaloPersonal < ApplicationRecord
     end
   rescue StandardError => e
     Rails.logger.error "ZaloPersonal check_disconnection! failed for channel #{id}: #{e.message}"
+    raise
   end
 
   private

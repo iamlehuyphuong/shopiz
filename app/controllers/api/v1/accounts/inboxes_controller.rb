@@ -60,6 +60,9 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
 
     channel.check_disconnection!
     render status: :ok, json: { reauthorization_required: channel.reauthorization_required? }
+  rescue StandardError => e
+    Rails.logger.error "check_connection failed for inbox #{@inbox.id}: #{e.message}"
+    render status: :internal_server_error, json: { error: e.message }
   end
 
   def create
