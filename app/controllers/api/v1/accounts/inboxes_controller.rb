@@ -235,8 +235,10 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
                          :fixed_time, :timezone, :predefined_message, :custom_ai_prompt, :macro_id,
                          { predefined_messages: [] }, { macros: [] }, { custom_ai_prompts: [] }] },
      { csat_config: [:display_type, :message, :button_text, :language,
-                     { survey_rules: [:operator, { values: [] }],
-                       template: [:name, :template_id, :friendly_name, :content_sid, :approval_sid, :created_at, :language, :status] }] }]
+                      { survey_rules: [:operator, { values: [] }],
+                        template: [:name, :template_id, :friendly_name, :content_sid, :approval_sid, :created_at, :language, :status] }] },
+     { sales_config: [:ai_allow_create_order,
+                      { order_notification_templates: [:draft, :confirmed, :processing, :shipped, :delivered, :cancelled] }] }]
   end
 
   def permitted_params(channel_attributes = [])

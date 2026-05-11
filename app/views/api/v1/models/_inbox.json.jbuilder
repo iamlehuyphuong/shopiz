@@ -20,6 +20,9 @@ json.lock_to_single_conversation resource.lock_to_single_conversation
 json.sender_name_type resource.sender_name_type
 json.business_name resource.business_name
 json.active_bot resource.active_bot?
+json.followup_config resource.followup_config
+json.auto_label_enabled resource.auto_label_enabled
+json.sales_config resource.sales_config
 
 ## eCommerce integration
 ecommerce_hook = resource.effective_ecommerce_hook

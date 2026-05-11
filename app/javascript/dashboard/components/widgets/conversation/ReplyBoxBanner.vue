@@ -70,7 +70,7 @@ const {
   removeLabelFromConversation,
 } = useConversationLabels();
 
-const toggleLabel = (label) => {
+const toggleLabel = label => {
   if (savedLabels.value.includes(label.title)) {
     removeLabelFromConversation(label.title);
   } else {
@@ -146,13 +146,20 @@ const onClickBotHandoff = async () => {
     @primary-action="onClickBotHandoff"
   />
 
-  <div v-if="accountLabels && accountLabels.length > 0" class="mx-2 mt-2 mb-2 flex flex-wrap gap-2">
+  <div
+    v-if="accountLabels && accountLabels.length > 0"
+    class="mx-2 mt-2 mb-2 flex flex-wrap gap-2"
+  >
     <button
       v-for="label in accountLabels"
       :key="label.id"
       :title="label.description || label.title"
       class="text-xs px-2 py-1 rounded-full border border-solid transition-colors cursor-pointer"
-      :style="savedLabels.includes(label.title) ? `background-color: ${label.color}; border-color: ${label.color}; color: #fff;` : `border-color: ${label.color}; color: var(--color-body); background-color: transparent;`"
+      :style="
+        savedLabels.includes(label.title)
+          ? `background-color: ${label.color}; border-color: ${label.color}; color: #fff;`
+          : `border-color: ${label.color}; color: var(--color-body); background-color: transparent;`
+      "
       @click.prevent="toggleLabel(label)"
     >
       {{ label.title }}

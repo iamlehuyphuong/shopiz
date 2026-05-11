@@ -3,7 +3,6 @@ import { ref, computed, onMounted, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useStore } from 'dashboard/composables/store';
 import { useAlert } from 'dashboard/composables';
-import { useAccount } from 'dashboard/composables/useAccount';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import WithLabel from 'v3/components/Form/WithLabel.vue';
 import Switch from 'dashboard/components-next/switch/Switch.vue';
@@ -49,7 +48,10 @@ const PLATFORM_ICONS = {
 };
 
 const TEMPLATE_VARIABLES = [
-  { key: '%{customer_name}', labelKey: 'INBOX_MGMT.ECOMMERCE.VAR_CUSTOMER_NAME' },
+  {
+    key: '%{customer_name}',
+    labelKey: 'INBOX_MGMT.ECOMMERCE.VAR_CUSTOMER_NAME',
+  },
   { key: '%{inbox_name}', labelKey: 'INBOX_MGMT.ECOMMERCE.VAR_INBOX_NAME' },
   { key: '%{order_id}', labelKey: 'INBOX_MGMT.ECOMMERCE.VAR_ORDER_ID' },
   { key: '%{status_label}', labelKey: 'INBOX_MGMT.ECOMMERCE.VAR_STATUS_LABEL' },
@@ -58,12 +60,10 @@ const TEMPLATE_VARIABLES = [
 
 const { t } = useI18n();
 const store = useStore();
-const { accountId } = useAccount();
 
 const selectedIntegrationId = ref(null);
 const isSaving = ref(false);
 
-const isUpdatingSalesSettings = ref(false);
 const customizeTemplates = ref(false);
 const salesOrderNotificationTemplates = reactive({
   draft: '',
@@ -78,9 +78,6 @@ const allowAiCreateOrder = ref(false);
 // Track which textarea is currently focused
 const activeTextareaRef = ref(null);
 
-const account = computed(
-  () => store.getters['accounts/getAccount'](accountId.value) || {}
-);
 
 const integrations = computed(() => {
   const allIntegrations = store.getters['integrations/getAppIntegrations'];
@@ -98,10 +95,7 @@ const isMarketplaceLocked = computed(
   () => props.inbox.marketplace_locked || false
 );
 
-const TEMPLATE_MAPPING_CHANNELS = [
-  'Channel::ZaloOa',
-  'Channel::Whatsapp',
-];
+const TEMPLATE_MAPPING_CHANNELS = ['Channel::ZaloOa', 'Channel::Whatsapp'];
 
 const supportsOrderTemplateMapping = computed(() =>
   TEMPLATE_MAPPING_CHANNELS.includes(props.inbox.channel_type)
@@ -118,16 +112,14 @@ const hasAnyTemplate = computed(() => {
 });
 
 const loadSalesSettings = () => {
-  const settings = account.value.settings || {};
+  const config = props.inbox.sales_config || {};
+  const templates = config.order_notification_templates || {};
 
-  if (settings.sales_order_notification_templates) {
-    Object.keys(salesOrderNotificationTemplates).forEach(key => {
-      salesOrderNotificationTemplates[key] =
-        settings.sales_order_notification_templates[key] || '';
-    });
-  }
+  Object.keys(salesOrderNotificationTemplates).forEach(key => {
+    salesOrderNotificationTemplates[key] = templates[key] || '';
+  });
 
-  allowAiCreateOrder.value = settings.sales_ai_allow_create_order ?? false;
+  allowAiCreateOrder.value = config.ai_allow_create_order ?? false;
 
   // Auto-enable customize toggle if any template already has content
   if (hasAnyTemplate.value) {
@@ -150,27 +142,16 @@ const handleSave = async () => {
       id: props.inbox.id,
       formData: false,
       ecommerce_integration_id: selectedIntegrationId.value,
+      sales_config: {
+        ai_allow_create_order: allowAiCreateOrder.value,
+        order_notification_templates: salesOrderNotificationTemplates,
+      },
     });
     useAlert(t('INBOX_MGMT.ECOMMERCE.SAVE_SUCCESS'));
   } catch (error) {
-    useAlert(t('INBOX_MGMT.ECOMMERCE.SAVE_ERROR'));
+    useAlert(error.message || t('INBOX_MGMT.ECOMMERCE.SAVE_ERROR'));
   } finally {
     isSaving.value = false;
-  }
-};
-
-const saveSalesSettings = async () => {
-  isUpdatingSalesSettings.value = true;
-  try {
-    await store.dispatch('accounts/update', {
-      sales_order_notification_templates: salesOrderNotificationTemplates,
-      sales_ai_allow_create_order: allowAiCreateOrder.value,
-    });
-    useAlert(t('GENERAL_SETTINGS.UPDATE.SUCCESS'));
-  } catch (error) {
-    useAlert(t('GENERAL_SETTINGS.UPDATE.ERROR'));
-  } finally {
-    isUpdatingSalesSettings.value = false;
   }
 };
 
@@ -379,21 +360,12 @@ const insertVariable = variableKey => {
           </div>
         </div>
 
-        <!-- Save button -->
-        <div class="flex justify-end pt-2">
-          <NextButton
-            :label="t('INBOX_MGMT.ECOMMERCE.SAVE')"
-            sm
-            :is-loading="isSaving"
-            @click="handleSave"
-          />
-        </div>
       </div>
 
       <div class="w-full h-[1px] bg-n-weak my-4" />
 
-      <!-- Sales settings form: AI Order + Templates -->
-      <form class="flex flex-col gap-6" @submit.prevent="saveSalesSettings">
+      <!-- Sales settings: AI Order + Templates -->
+      <div class="flex flex-col gap-6">
         <!-- Trợ lý AI tạo đơn hàng -->
         <div class="flex flex-col gap-4">
           <div class="flex flex-col gap-1">
@@ -513,9 +485,7 @@ const insertVariable = variableKey => {
                     v-model="salesOrderNotificationTemplates.processing"
                     class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
                     :placeholder="
-                      t(
-                        'INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_PROCESSING'
-                      )
+                      t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_PROCESSING')
                     "
                     @focus="onTextareaFocus"
                   />
@@ -570,12 +540,17 @@ const insertVariable = variableKey => {
           </template>
         </div>
 
-        <div class="flex justify-end pt-2 pb-6">
-          <NextButton :is-loading="isUpdatingSalesSettings" sm type="submit">
-            {{ t('INBOX_MGMT.ECOMMERCE.SAVE_SALES_SETTINGS') }}
-          </NextButton>
-        </div>
-      </form>
+      </div>
+
+      <!-- Save button (unified: integration + sales settings) -->
+      <div class="flex justify-end pt-2 pb-6">
+        <NextButton
+          :label="t('INBOX_MGMT.ECOMMERCE.SAVE')"
+          sm
+          :is-loading="isSaving"
+          @click="handleSave"
+        />
+      </div>
 
       <!-- Order Template Mapping (ZaloOA / WhatsApp) -->
       <template v-if="supportsOrderTemplateMapping">

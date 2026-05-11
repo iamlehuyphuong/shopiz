@@ -1180,7 +1180,10 @@ export default {
       if (this.attachedFiles && this.attachedFiles.length) {
         messagePayload.files = [];
         this.attachedFiles.forEach(attachment => {
-          if (this.globalConfig.directUploadsEnabled || attachment.blobSignedId) {
+          if (
+            this.globalConfig.directUploadsEnabled ||
+            attachment.blobSignedId
+          ) {
             messagePayload.files.push(attachment.blobSignedId);
           } else {
             messagePayload.files.push(attachment.resource.file);

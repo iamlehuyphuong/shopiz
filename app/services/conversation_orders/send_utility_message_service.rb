@@ -84,7 +84,8 @@ class ConversationOrders::SendUtilityMessageService
   end
 
   def generate_message_content
-    templates = conversation.account.settings['sales_order_notification_templates'] || {}
+    sales_config = conversation.inbox.sales_config || {}
+    templates = sales_config['order_notification_templates'] || {}
     template = templates[order.status]
 
     if template.present?

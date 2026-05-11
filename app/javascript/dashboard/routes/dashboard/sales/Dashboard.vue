@@ -154,10 +154,13 @@ onMounted(() => {
           class="flex flex-col items-center justify-center p-12 bg-n-alpha-1 border border-n-weak rounded-xl"
         >
           <div class="text-n-slate-11 text-center">
-            <span class="i-lucide-alert-circle text-4xl mb-3 block mx-auto"></span>
-            <p class="font-medium text-n-slate-12 text-base m-0 mb-1">Không thể tải dữ liệu</p>
+            <span class="i-lucide-alert-circle text-4xl mb-3 block mx-auto" />
+            <p class="font-medium text-n-slate-12 text-base m-0 mb-1">
+              Không thể tải dữ liệu
+            </p>
             <p class="text-sm m-0 max-w-md mx-auto">
-              Có lỗi xảy ra khi tải báo cáo. Vui lòng thử lại hoặc kiểm tra xem trình duyệt có đang chặn request (AdBlocker) không.
+              Có lỗi xảy ra khi tải báo cáo. Vui lòng thử lại hoặc kiểm tra xem
+              trình duyệt có đang chặn request (AdBlocker) không.
             </p>
             <button
               class="mt-4 px-4 py-2 bg-n-brand text-white rounded-lg text-sm hover:bg-n-brand-dark transition-colors"
