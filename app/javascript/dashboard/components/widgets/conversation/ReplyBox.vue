@@ -1088,6 +1088,21 @@ export default {
     removeAttachment(attachments) {
       this.attachedFiles = attachments;
     },
+    onCannedFilesSelected(files) {
+      files.forEach(file => {
+        this.attachedFiles.push({
+          currentChatId: this.currentChat.id,
+          resource: {
+            name: file.filename,
+            type: file.content_type,
+            size: file.byte_size,
+          },
+          isPrivate: this.isPrivate,
+          thumb: file.url,
+          blobSignedId: file.blob_signed_id,
+        });
+      });
+    },
     setReplyToInPayload(payload) {
       if (this.inReplyTo?.id) {
         return {
@@ -1108,9 +1123,10 @@ export default {
         let caption =
           this.isAnInstagramChannel || this.isATiktokChannel ? '' : message;
         this.attachedFiles.forEach(attachment => {
-          const attachedFile = this.globalConfig.directUploadsEnabled
-            ? attachment.blobSignedId
-            : attachment.resource.file;
+          const attachedFile =
+            this.globalConfig.directUploadsEnabled || attachment.blobSignedId
+              ? attachment.blobSignedId
+              : attachment.resource.file;
           let attachmentPayload = {
             conversationId: this.currentChat.id,
             files: [attachedFile],
@@ -1164,7 +1180,7 @@ export default {
       if (this.attachedFiles && this.attachedFiles.length) {
         messagePayload.files = [];
         this.attachedFiles.forEach(attachment => {
-          if (this.globalConfig.directUploadsEnabled) {
+          if (this.globalConfig.directUploadsEnabled || attachment.blobSignedId) {
             messagePayload.files.push(attachment.blobSignedId);
           } else {
             messagePayload.files.push(attachment.resource.file);
@@ -1375,6 +1391,7 @@ export default {
           @toggle-variables-menu="toggleVariablesMenu"
           @clear-selection="clearEditorSelection"
           @execute-copilot-action="executeCopilotAction"
+          @canned-files-selected="onCannedFilesSelected"
         />
 
         <QuotedEmailPreview
