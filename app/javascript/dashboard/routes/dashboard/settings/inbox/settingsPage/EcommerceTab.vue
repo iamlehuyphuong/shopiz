@@ -163,11 +163,8 @@ const saveSalesSettings = async () => {
   isUpdatingSalesSettings.value = true;
   try {
     await store.dispatch('accounts/update', {
-      settings: {
-        ...account.value.settings,
-        sales_order_notification_templates: salesOrderNotificationTemplates,
-        sales_ai_allow_create_order: allowAiCreateOrder.value,
-      },
+      sales_order_notification_templates: salesOrderNotificationTemplates,
+      sales_ai_allow_create_order: allowAiCreateOrder.value,
     });
     useAlert(t('GENERAL_SETTINGS.UPDATE.SUCCESS'));
   } catch (error) {

@@ -154,4 +154,5 @@ end
 
 if resource.zalo_personal?
   json.reauthorization_required resource.channel.try(:reauthorization_required?)
+  json.provider_config resource.channel.try(:provider_config)
 end

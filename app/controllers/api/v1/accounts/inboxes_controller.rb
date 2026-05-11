@@ -81,14 +81,21 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   end
 
   def update
+    if params[:followup_config].is_a?(String)
+      begin
+        params[:followup_config] = JSON.parse(params[:followup_config])
+      rescue JSON::ParserError
+      end
+    end
+
     inbox_params = permitted_params.except(:channel, :csat_config)
     inbox_params[:csat_config] = format_csat_config(permitted_params[:csat_config]) if permitted_params[:csat_config].present?
-    
+
     begin
       @inbox.update!(inbox_params)
       update_inbox_working_hours
       update_channel if channel_update_required?
-    rescue => e
+    rescue StandardError => e
       if params.key?(:ecommerce_integration_id)
         Rails.logger.error "\n[ECOMMERCE_INTEGRATION_ERROR] Failed to link ecommerce to inbox #{@inbox.id}"
         Rails.logger.error "Params: #{params.inspect}"

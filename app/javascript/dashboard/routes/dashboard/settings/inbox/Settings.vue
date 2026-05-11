@@ -672,7 +672,19 @@ export default {
           sender_name_type: this.senderNameType,
           business_name: this.businessName || null,
           auto_label_enabled: this.autoLabelEnabled,
-          followup_config: {
+          followup_config: this.avatarFile || this.bubbleAvatarFile || this.closeBubbleAvatarFile ? JSON.stringify({
+            enabled: this.followupEnabled,
+            max_attempts: this.followupMaxAttempts,
+            interval_hours: this.followupIntervalHours,
+            time_mode: this.followupTimeMode,
+            fixed_time: this.followupFixedTime,
+            timezone: this.followupTimezone,
+            action_type: this.followupActionType,
+            predefined_message: this.followupPredefinedMessage,
+            predefined_messages: this.followupPredefinedMessages,
+            macros: this.followupMacros,
+            custom_ai_prompts: this.followupCustomAIPrompts,
+          }) : {
             enabled: this.followupEnabled,
             max_attempts: this.followupMaxAttempts,
             interval_hours: this.followupIntervalHours,
@@ -696,14 +708,12 @@ export default {
             continuity_via_email: this.continuityViaEmail,
           },
         };
-        if (this.avatarFile) {
-          payload.avatar = this.avatarFile;
-        }
-        if (this.bubbleAvatarFile) {
-          payload.channel.bubble_avatar = this.bubbleAvatarFile;
-        }
-        if (this.closeBubbleAvatarFile) {
-          payload.channel.close_bubble_avatar = this.closeBubbleAvatarFile;
+        if (this.avatarFile || this.bubbleAvatarFile || this.closeBubbleAvatarFile) {
+          if (this.avatarFile) payload.avatar = this.avatarFile;
+          if (this.bubbleAvatarFile) payload.channel.bubble_avatar = this.bubbleAvatarFile;
+          if (this.closeBubbleAvatarFile) payload.channel.close_bubble_avatar = this.closeBubbleAvatarFile;
+        } else {
+          payload.formData = false;
         }
         await this.$store.dispatch('inboxes/updateInbox', payload);
         useAlert(this.$t('INBOX_MGMT.EDIT.API.SUCCESS_MESSAGE'));
