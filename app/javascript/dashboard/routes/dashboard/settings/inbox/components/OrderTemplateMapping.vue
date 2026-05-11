@@ -112,57 +112,55 @@ const handleSave = async () => {
 </script>
 
 <template>
-  <div class="max-w-4xl mx-6">
-    <div class="flex flex-col gap-6">
-      <div class="flex flex-col gap-1">
-        <h3 class="text-lg font-semibold text-n-slate-12">
-          Ánh xạ Mẫu tin nhắn Đơn hàng
-        </h3>
-        <p class="text-sm text-n-slate-11">
-          Cấu hình Mẫu tin nhắn ZNS hoặc WhatsApp tương ứng với từng trạng thái
-          đơn hàng. Nếu để trống, hệ thống sẽ sử dụng Mẫu văn bản cấu hình trong
-          Bán hàng.
-        </p>
-      </div>
+  <div class="flex flex-col gap-6">
+    <div class="flex flex-col gap-1">
+      <h3 class="text-lg font-semibold text-n-slate-12">
+        Ánh xạ Mẫu tin nhắn Đơn hàng
+      </h3>
+      <p class="text-sm text-n-slate-11">
+        Cấu hình Mẫu tin nhắn ZNS hoặc WhatsApp tương ứng với từng trạng thái
+        đơn hàng. Nếu để trống, hệ thống sẽ sử dụng Mẫu văn bản cấu hình trong
+        Bán hàng.
+      </p>
+    </div>
 
+    <div
+      v-if="isLoadingTemplates"
+      class="flex items-center justify-center py-10"
+    >
+      <Spinner />
+    </div>
+
+    <div v-else class="flex flex-col gap-4">
       <div
-        v-if="isLoadingTemplates"
-        class="flex items-center justify-center py-10"
+        v-for="status in ORDER_STATUSES"
+        :key="status"
+        class="flex flex-col gap-1.5"
       >
-        <Spinner />
-      </div>
+        <label class="text-sm font-medium text-n-slate-12">{{
+          STATUS_LABELS[status]
+        }}</label>
 
-      <div v-else class="flex flex-col gap-4">
-        <div
-          v-for="status in ORDER_STATUSES"
-          :key="status"
-          class="flex flex-col gap-1.5"
-        >
-          <label class="text-sm font-medium text-n-slate-12">{{
-            STATUS_LABELS[status]
-          }}</label>
+        <SelectInput
+          v-if="isZaloOA"
+          v-model="mappings[status]"
+          :options="templateOptions"
+        />
 
-          <SelectInput
-            v-if="isZaloOA"
-            v-model="mappings[status]"
-            :options="templateOptions"
-          />
-
-          <Input
-            v-else
-            v-model="mappings[status]"
-            placeholder="Nhập Tên Template WhatsApp"
-          />
-        </div>
-      </div>
-
-      <div class="flex justify-end pt-2">
-        <NextButton
-          label="Lưu cấu hình"
-          :is-loading="isSaving"
-          @click="handleSave"
+        <Input
+          v-else
+          v-model="mappings[status]"
+          placeholder="Nhập Tên Template WhatsApp"
         />
       </div>
+    </div>
+
+    <div class="flex justify-end pt-2">
+      <NextButton
+        label="Lưu cấu hình"
+        :is-loading="isSaving"
+        @click="handleSave"
+      />
     </div>
   </div>
 </template>

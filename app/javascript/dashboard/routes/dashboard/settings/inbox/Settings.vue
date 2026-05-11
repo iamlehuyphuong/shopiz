@@ -17,7 +17,7 @@ import TiktokReauthorize from './channels/tiktok/Reauthorize.vue';
 import DuplicateInboxBanner from './channels/instagram/DuplicateInboxBanner.vue';
 import MicrosoftReauthorize from './channels/microsoft/Reauthorize.vue';
 import ZaloReauthorize from './channels/zalo/Reauthorize.vue';
-import ZaloTemplatesPage from './components/ZaloTemplatesPage.vue';
+
 import GoogleReauthorize from './channels/google/Reauthorize.vue';
 import WhatsappReauthorize from './channels/whatsapp/Reauthorize.vue';
 import InboxHealthAPI from 'dashboard/api/inboxHealth';
@@ -44,7 +44,7 @@ import Editor from 'dashboard/components-next/Editor/Editor.vue';
 import ColorPicker from 'dashboard/components-next/colorpicker/ColorPicker.vue';
 import SelectInput from 'dashboard/components-next/select/Select.vue';
 import Widget from 'dashboard/modules/widget-preview/components/Widget.vue';
-import OrderTemplateMapping from './components/OrderTemplateMapping.vue';
+
 import InboxReconnectionRequired from './components/InboxReconnectionRequired.vue';
 import InboxesAPI from 'dashboard/api/inboxes';
 
@@ -68,7 +68,7 @@ export default {
     LockToSingleConversationPreview,
     MicrosoftReauthorize,
     ZaloReauthorize,
-    ZaloTemplatesPage,
+
     GoogleReauthorize,
     NextButton,
     SpinnerLoader,
@@ -83,7 +83,7 @@ export default {
     AccountHealth,
     Widget,
     EcommerceTab,
-    OrderTemplateMapping,
+
     FeatureLockOverlay,
     InboxReconnectionRequired,
   },
@@ -212,16 +212,6 @@ export default {
         ];
       }
 
-      if (this.isAZaloOaChannel) {
-        visibleToAllChannelTabs = [
-          ...visibleToAllChannelTabs,
-          {
-            key: 'message-templates',
-            name: this.$t('INBOX_MGMT.TABS.MESSAGE_TEMPLATES'),
-          },
-        ];
-      }
-
       if (
         this.isATwilioChannel ||
         this.isALineChannel ||
@@ -275,23 +265,6 @@ export default {
           },
         ];
       }
-
-      if (
-        this.isAZaloOaChannel ||
-        this.isAWhatsAppChannel ||
-        this.isATwilioWhatsAppChannel ||
-        this.isAWhatsAppCloudChannel
-      ) {
-        visibleToAllChannelTabs = [
-          ...visibleToAllChannelTabs,
-          {
-            key: 'order-templates',
-            name: 'Mẫu thông báo Đơn hàng',
-          },
-        ];
-      }
-
-
 
       return visibleToAllChannelTabs;
     },
@@ -1789,9 +1762,7 @@ export default {
         <div v-if="selectedTabKey === 'posts-and-comments'">
           <FacebookPostsAndComments :inbox="inbox" />
         </div>
-        <div v-if="selectedTabKey === 'message-templates'">
-          <ZaloTemplatesPage :inbox="inbox" />
-        </div>
+
         <div v-if="selectedTabKey === 'whatsapp-health'">
           <AccountHealth
             :health-data="healthData"
@@ -1801,9 +1772,6 @@ export default {
         </div>
         <div v-if="selectedTabKey === 'ecommerce'">
           <EcommerceTab :inbox="inbox" />
-        </div>
-        <div v-if="selectedTabKey === 'order-templates'">
-          <OrderTemplateMapping :inbox="inbox" />
         </div>
       </div>
     </section>

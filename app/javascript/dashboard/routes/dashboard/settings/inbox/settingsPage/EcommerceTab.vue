@@ -7,6 +7,7 @@ import { useAccount } from 'dashboard/composables/useAccount';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import WithLabel from 'v3/components/Form/WithLabel.vue';
 import Switch from 'dashboard/components-next/switch/Switch.vue';
+import OrderTemplateMapping from '../components/OrderTemplateMapping.vue';
 
 const props = defineProps({
   inbox: {
@@ -95,6 +96,15 @@ const integrations = computed(() => {
 
 const isMarketplaceLocked = computed(
   () => props.inbox.marketplace_locked || false
+);
+
+const TEMPLATE_MAPPING_CHANNELS = [
+  'Channel::ZaloOa',
+  'Channel::Whatsapp',
+];
+
+const supportsOrderTemplateMapping = computed(() =>
+  TEMPLATE_MAPPING_CHANNELS.includes(props.inbox.channel_type)
 );
 
 const currentIntegration = computed(() =>
@@ -569,6 +579,12 @@ const insertVariable = variableKey => {
           </NextButton>
         </div>
       </form>
+
+      <!-- Order Template Mapping (ZaloOA / WhatsApp) -->
+      <template v-if="supportsOrderTemplateMapping">
+        <div class="w-full h-[1px] bg-n-weak my-4" />
+        <OrderTemplateMapping :inbox="inbox" />
+      </template>
     </div>
   </div>
 </template>
