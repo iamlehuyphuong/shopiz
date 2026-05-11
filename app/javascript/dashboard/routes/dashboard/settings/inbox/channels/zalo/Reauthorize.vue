@@ -117,6 +117,9 @@ export default {
         this.errorStateMessage = 'Không thể tạo kết nối WebSocket.';
       }
     },
+    reloadPage() {
+      window.location.reload();
+    },
   },
 };
 </script>
@@ -157,7 +160,12 @@ export default {
         />
       </div>
       <LoadingState v-else-if="showLoader" :message="emptyStateMessage" />
-      <p v-else v-dompurify-html="successStateDescription" />
+      <div v-else class="text-center">
+        <p v-dompurify-html="successStateDescription" />
+        <button class="button mt-4" @click="reloadPage">
+          {{ $t('INBOX_MGMT.GO_TO_CONFIGURATION') }}
+        </button>
+      </div>
     </div>
   </div>
 </template>

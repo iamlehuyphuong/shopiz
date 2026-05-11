@@ -642,6 +642,7 @@
       "TELEGRAM_QR_INSTRUCTION": "Quét mã QR để kiểm tra nhanh kênh Telegram"
     },
     "REAUTH": "Kết nối lại",
+    "GO_TO_CONFIGURATION": "Về trang cấu hình",
     "VIEW": "Xem",
     "EDIT": {
       "API": {

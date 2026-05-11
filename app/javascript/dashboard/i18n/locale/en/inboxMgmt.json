@@ -634,6 +634,7 @@
       "TELEGRAM_QR_INSTRUCTION": "Scan the QR code above to quickly test your Telegram inbox"
     },
     "REAUTH": "Reauthorize",
+    "GO_TO_CONFIGURATION": "Go to configuration page",
     "VIEW": "View",
     "EDIT": {
       "API": {
