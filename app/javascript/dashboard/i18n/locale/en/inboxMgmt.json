@@ -74,6 +74,7 @@
         "HELP_2": "Do not log in to your account on zalo web to ensure messages are continuously synchronized.",
         "DESC": "Log in to your ",
         "DESC_2": "to connect to the",
+        "CONFIGURATION_TITLE": "Zalo Extended Configuration",
         "DEFAULT_FRIEND_REQUEST_MESSAGE_TITLE": "Default Friend Request Message",
         "DEFAULT_FRIEND_REQUEST_MESSAGE_SUBTITLE": "The message sent when requesting friendship.",
         "DEFAULT_GREETING_MESSAGE_TITLE": "Default Greeting Message",
@@ -819,6 +820,7 @@
     "ZALO_PERSONAL_CONNECTION": {
       "CONNECTED": "Zalo Personal is connected.",
       "CHECK_BUTTON": "Check connection",
+      "RECONNECT_BUTTON": "Reconnect",
       "CHECKING": "Checking...",
       "CONNECTED_ALERT": "Zalo Personal connection is healthy.",
       "DISCONNECTED_ALERT": "Zalo Personal connection is lost. Please reconnect.",

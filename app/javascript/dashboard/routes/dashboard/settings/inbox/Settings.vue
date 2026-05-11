@@ -17,6 +17,7 @@ import TiktokReauthorize from './channels/tiktok/Reauthorize.vue';
 import DuplicateInboxBanner from './channels/instagram/DuplicateInboxBanner.vue';
 import MicrosoftReauthorize from './channels/microsoft/Reauthorize.vue';
 import ZaloReauthorize from './channels/zalo/Reauthorize.vue';
+import TextArea from 'next/textarea/TextArea.vue';
 
 import GoogleReauthorize from './channels/google/Reauthorize.vue';
 import WhatsappReauthorize from './channels/whatsapp/Reauthorize.vue';
@@ -63,6 +64,7 @@ export default {
     SettingsToggleSection,
     SettingsFieldSection,
     SettingsAccordion,
+    TextArea,
     WeeklyAvailability,
     SenderNameExamplePreview,
     LockToSingleConversationPreview,
@@ -138,6 +140,8 @@ export default {
       autoLabelEnabled: false,
       zaloReauthorizeModalVisible: false,
       isCheckingConnection: false,
+      zaloPersonalDefaultFriendRequestMessage: '',
+      zaloPersonalDefaultGreetingMessage: '',
     };
   },
   computed: {
@@ -219,7 +223,6 @@ export default {
         this.isAVoiceChannel ||
         (this.isAnEmailChannel && !this.inbox.provider) ||
         this.shouldShowWhatsAppConfiguration ||
-        this.isAZaloPersonalChannel ||
         this.isAWebWidgetInbox
       ) {
         visibleToAllChannelTabs = [
@@ -487,9 +490,7 @@ export default {
           );
         }
       } catch (error) {
-        useAlert(
-          this.$t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.CHECK_ERROR')
-        );
+        useAlert(this.$t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.CHECK_ERROR'));
       } finally {
         this.isCheckingConnection = false;
       }
@@ -572,6 +573,11 @@ export default {
       this.followupCustomAIPrompts =
         this.inbox.followup_config?.custom_ai_prompts ||
         Array.from({ length: 15 }, () => '');
+
+      this.zaloPersonalDefaultFriendRequestMessage =
+        this.inbox.provider_config?.default_friend_request_message || '';
+      this.zaloPersonalDefaultGreetingMessage =
+        this.inbox.provider_config?.default_greeting_message || '';
     },
     async fetchHealthData() {
       if (!this.inbox) return;
@@ -672,31 +678,36 @@ export default {
           sender_name_type: this.senderNameType,
           business_name: this.businessName || null,
           auto_label_enabled: this.autoLabelEnabled,
-          followup_config: this.avatarFile || this.bubbleAvatarFile || this.closeBubbleAvatarFile ? JSON.stringify({
-            enabled: this.followupEnabled,
-            max_attempts: this.followupMaxAttempts,
-            interval_hours: this.followupIntervalHours,
-            time_mode: this.followupTimeMode,
-            fixed_time: this.followupFixedTime,
-            timezone: this.followupTimezone,
-            action_type: this.followupActionType,
-            predefined_message: this.followupPredefinedMessage,
-            predefined_messages: this.followupPredefinedMessages,
-            macros: this.followupMacros,
-            custom_ai_prompts: this.followupCustomAIPrompts,
-          }) : {
-            enabled: this.followupEnabled,
-            max_attempts: this.followupMaxAttempts,
-            interval_hours: this.followupIntervalHours,
-            time_mode: this.followupTimeMode,
-            fixed_time: this.followupFixedTime,
-            timezone: this.followupTimezone,
-            action_type: this.followupActionType,
-            predefined_message: this.followupPredefinedMessage,
-            predefined_messages: this.followupPredefinedMessages,
-            macros: this.followupMacros,
-            custom_ai_prompts: this.followupCustomAIPrompts,
-          },
+          followup_config:
+            this.avatarFile ||
+            this.bubbleAvatarFile ||
+            this.closeBubbleAvatarFile
+              ? JSON.stringify({
+                  enabled: this.followupEnabled,
+                  max_attempts: this.followupMaxAttempts,
+                  interval_hours: this.followupIntervalHours,
+                  time_mode: this.followupTimeMode,
+                  fixed_time: this.followupFixedTime,
+                  timezone: this.followupTimezone,
+                  action_type: this.followupActionType,
+                  predefined_message: this.followupPredefinedMessage,
+                  predefined_messages: this.followupPredefinedMessages,
+                  macros: this.followupMacros,
+                  custom_ai_prompts: this.followupCustomAIPrompts,
+                })
+              : {
+                  enabled: this.followupEnabled,
+                  max_attempts: this.followupMaxAttempts,
+                  interval_hours: this.followupIntervalHours,
+                  time_mode: this.followupTimeMode,
+                  fixed_time: this.followupFixedTime,
+                  timezone: this.followupTimezone,
+                  action_type: this.followupActionType,
+                  predefined_message: this.followupPredefinedMessage,
+                  predefined_messages: this.followupPredefinedMessages,
+                  macros: this.followupMacros,
+                  custom_ai_prompts: this.followupCustomAIPrompts,
+                },
           channel: {
             widget_color: this.inbox.widget_color,
             website_url: this.channelWebsiteUrl,
@@ -706,12 +717,23 @@ export default {
             selectedFeatureFlags: this.selectedFeatureFlags,
             reply_time: this.replyTime || 'in_a_few_minutes',
             continuity_via_email: this.continuityViaEmail,
+            ...(this.isAZaloPersonalChannel && {
+              default_friend_request_message:
+                this.zaloPersonalDefaultFriendRequestMessage,
+              default_greeting_message: this.zaloPersonalDefaultGreetingMessage,
+            }),
           },
         };
-        if (this.avatarFile || this.bubbleAvatarFile || this.closeBubbleAvatarFile) {
+        if (
+          this.avatarFile ||
+          this.bubbleAvatarFile ||
+          this.closeBubbleAvatarFile
+        ) {
           if (this.avatarFile) payload.avatar = this.avatarFile;
-          if (this.bubbleAvatarFile) payload.channel.bubble_avatar = this.bubbleAvatarFile;
-          if (this.closeBubbleAvatarFile) payload.channel.close_bubble_avatar = this.closeBubbleAvatarFile;
+          if (this.bubbleAvatarFile)
+            payload.channel.bubble_avatar = this.bubbleAvatarFile;
+          if (this.closeBubbleAvatarFile)
+            payload.channel.close_bubble_avatar = this.closeBubbleAvatarFile;
         } else {
           payload.formData = false;
         }
@@ -902,7 +924,11 @@ export default {
               ? $t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.CHECKING')
               : $t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.CHECK_BUTTON')
           "
+          :action-label-secondary="
+            $t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.RECONNECT_BUTTON')
+          "
           @action="checkZaloPersonalConnection"
+          @secondary-action="zaloReauthorizeModalVisible = true"
         >
           {{ $t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.CONNECTED') }}
         </Banner>
@@ -1692,6 +1718,49 @@ export default {
                     </div>
                   </template>
                 </SettingsToggleSection>
+              </SettingsAccordion>
+            </div>
+
+            <div v-if="isAZaloPersonalChannel" class="mt-6">
+              <SettingsAccordion
+                :title="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.CONFIGURATION_TITLE')"
+              >
+                <SettingsFieldSection
+                  :label="
+                    $t(
+                      'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_TITLE'
+                    )
+                  "
+                  :help-text="
+                    $t(
+                      'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_SUBTITLE'
+                    )
+                  "
+                >
+                  <TextArea
+                    v-model="zaloPersonalDefaultFriendRequestMessage"
+                    auto-height
+                    class="w-full"
+                  />
+                </SettingsFieldSection>
+                <SettingsFieldSection
+                  :label="
+                    $t(
+                      'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_TITLE'
+                    )
+                  "
+                  :help-text="
+                    $t(
+                      'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_SUBTITLE'
+                    )
+                  "
+                >
+                  <TextArea
+                    v-model="zaloPersonalDefaultGreetingMessage"
+                    auto-height
+                    class="w-full"
+                  />
+                </SettingsFieldSection>
               </SettingsAccordion>
             </div>
 

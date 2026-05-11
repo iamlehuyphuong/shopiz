@@ -74,6 +74,7 @@
         "HELP_2": "Không đăng nhập Zalo Web để tránh gián đoạn đồng bộ tin nhắn.",
         "DESC": "Đăng nhập tài khoản ",
         "DESC_2": "để kết nối với",
+        "CONFIGURATION_TITLE": "Cấu hình mở rộng Zalo",
         "DEFAULT_FRIEND_REQUEST_MESSAGE_TITLE": "Lời mời kết bạn mặc định",
         "DEFAULT_FRIEND_REQUEST_MESSAGE_SUBTITLE": "Tin nhắn được gửi kèm khi yêu cầu kết bạn.",
         "DEFAULT_GREETING_MESSAGE_TITLE": "Lời chào mặc định",
@@ -788,6 +789,7 @@
     "ZALO_PERSONAL_CONNECTION": {
       "CONNECTED": "Zalo cá nhân đang kết nối.",
       "CHECK_BUTTON": "Kiểm tra kết nối",
+      "RECONNECT_BUTTON": "Kết nối lại",
       "CHECKING": "Đang kiểm tra...",
       "CONNECTED_ALERT": "Kết nối Zalo cá nhân bình thường.",
       "DISCONNECTED_ALERT": "Kết nối Zalo cá nhân đã bị ngắt. Vui lòng kết nối lại.",
