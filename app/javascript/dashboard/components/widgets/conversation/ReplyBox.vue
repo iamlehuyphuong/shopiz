@@ -222,7 +222,7 @@ export default {
         return this.$t('CONVERSATION.FOOTER.MESSAGING_RESTRICTED');
       }
       if (this.isPrivateReply) {
-        return this.$t('facebook.comment_handler.private_reply_hint');
+        return this.$t('CONVERSATION.REPLYBOX.PRIVATE_REPLY_HINT');
       }
       return this.isPrivate
         ? this.$t('CONVERSATION.FOOTER.PRIVATE_MSG_INPUT')

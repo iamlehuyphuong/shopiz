@@ -277,7 +277,8 @@
         "REMOVE_PREVIEW": "Xóa phần trích dẫn",
         "COLLAPSE": "Thu gọn",
         "EXPAND": "Mở rộng"
-      }
+      },
+      "PRIVATE_REPLY_HINT": "Tin nhắn tiếp theo bạn gửi sẽ được gửi dưới dạng phản hồi riêng tư cho bình luận này."
     },
     "VISIBLE_TO_AGENTS": "Ghi chú nội bộ: Chỉ bạn và đội của bạn có thể xem",
     "CHANGE_STATUS": "Đã thay đổi trạng thái cuộc hội thoại",

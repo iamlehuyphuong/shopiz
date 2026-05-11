@@ -59,21 +59,37 @@ class Facebook::CommentActionService
 
   def send_private_reply_and_log(comment_id, message, conversation)
     response = send_private_reply(comment_id, message)
-    return unless response&.success?
+    
+    if response&.success?
+      # Facebook returns `{"recipient_id":"...","message_id":"m_1234abc..."}` for the generated private reply
+      body = JSON.parse(response.body)
+      msg_id = body['message_id'] || body['id']
 
-    # Facebook returns `{"recipient_id":"...","message_id":"m_1234abc..."}` for the generated private reply
-    body = JSON.parse(response.body)
-    msg_id = body['message_id'] || body['id']
+      return unless msg_id.present?
 
-    return unless msg_id.present?
-
-    conversation.messages.create!(
-      account_id: conversation.account_id,
-      inbox_id: conversation.inbox_id,
-      message_type: :outgoing,
-      content: message,
-      source_id: msg_id
-    )
+      conversation.messages.create!(
+        account_id: conversation.account_id,
+        inbox_id: conversation.inbox_id,
+        message_type: :outgoing,
+        content: message,
+        source_id: msg_id,
+        content_attributes: { is_private_reply: true }
+      )
+    else
+      body = JSON.parse(response.body) rescue {}
+      error_msg = body.dig('error', 'message') || 'Failed to send private reply'
+      
+      msg = conversation.messages.create!(
+        account_id: conversation.account_id,
+        inbox_id: conversation.inbox_id,
+        message_type: :outgoing,
+        content: message,
+        status: :failed,
+        source_id: "failed_fb_#{SecureRandom.hex(4)}",
+        content_attributes: { is_private_reply: true }
+      )
+      Messages::StatusUpdateService.new(msg, 'failed', error_msg).perform
+    end
   end
 
   private
