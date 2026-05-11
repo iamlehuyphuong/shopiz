@@ -125,9 +125,9 @@ export default {
   <div class="wizard-body w-full flex-shrink-0 flex-grow-0">
     <div
       v-if="!hasLoginStarted"
-      class="flex flex-col login-init items-start justify-start pt-6"
+      class="flex flex-col login-init items-center justify-center pt-6"
     >
-      <div class="w-full">
+      <div class="w-full text-center">
         <p class="font-bold mb-0 text-lg">
           {{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.DESC') }}
           <span class="text-n-orange">Zalo</span>
@@ -143,7 +143,7 @@ export default {
         alt="Zalo-Login-QR"
         class="w-[300px] h-[300px] mt-4 border border-n-weak rounded-md shadow-sm"
       />
-      <div class="mt-6 text-n-slate-11">
+      <div class="mt-6 text-n-slate-11 text-center">
         <p class="mb-1">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.HELP') }}</p>
         <p class="mb-0">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.HELP_2') }}</p>
       </div>
