@@ -11,10 +11,12 @@ class Llm::LegacyBaseOpenAiService
 
   attr_reader :client, :model
 
-  def initialize
+  def initialize(account: nil)
+    api_key, uri_base_url = resolve_credentials(account)
+
     @client = OpenAI::Client.new(
-      access_token: InstallationConfig.find_by!(name: 'CAPTAIN_OPEN_AI_API_KEY').value,
-      uri_base: uri_base,
+      access_token: api_key,
+      uri_base: uri_base_url,
       log_errors: Rails.env.development?
     )
     setup_model
@@ -23,6 +25,33 @@ class Llm::LegacyBaseOpenAiService
   end
 
   private
+
+  def resolve_credentials(account)
+    system_api_key = InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_API_KEY')&.value
+    return [system_api_key, uri_base] if system_api_key.present?
+
+    user_credentials = fetch_user_credentials(account)
+    return user_credentials if user_credentials
+
+    raise 'OpenAI API key not configured'
+  end
+
+  def fetch_user_credentials(account)
+    return nil unless account && user_hook_key_allowed?
+
+    hook = account.hooks.find_by(app_id: 'openai', status: 'enabled')
+    hook_api_key = hook&.settings&.dig('api_key')
+    return nil if hook_api_key.blank?
+
+    hook_api_base = hook&.settings&.dig('api_base_url')
+    base_url = hook_api_base.present? ? hook_api_base.chomp('/').delete_suffix('/v1') : uri_base
+    [hook_api_key, base_url]
+  end
+
+  def user_hook_key_allowed?
+    config = InstallationConfig.find_by(name: 'CAPTAIN_ALLOW_USER_HOOK_KEY')
+    config.nil? || config.value == true
+  end
 
   # Strips markdown code fences (```json ... ``` or ``` ... ```) that some
   # LLM providers/gateways wrap around JSON responses despite response_format hints.
