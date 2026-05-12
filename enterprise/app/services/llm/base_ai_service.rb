@@ -72,6 +72,6 @@ class Llm::BaseAiService
     base = openai_hook&.settings&.dig('api_base_url')
     return nil if base.blank?
 
-    base.chomp('/').sub(/\/v1\z/, '')
+    base.chomp('/')
   end
 end
