@@ -26,7 +26,10 @@ module Llm::Config
       return unless hook_api_key.present?
 
       hook_api_base = hook&.settings&.dig('api_base_url')
-      base_url = hook_api_base.present? ? hook_api_base.chomp('/').sub(/\/v1\z/, '') : nil
+      # For standard OpenAI endpoints, keep nil so RubyLLM/Agents use built-in defaults.
+      base_url = if hook_api_base.present? && !hook_api_base.chomp('/').match?(%r{\Ahttps://api\.openai\.com(/v1)?\z})
+                   hook_api_base.chomp('/').sub(%r{/v1\z}, '')
+                 end
       model = InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_MODEL')&.value.presence || DEFAULT_MODEL
 
       RubyLLM.configure do |config|
@@ -63,10 +66,14 @@ module Llm::Config
     def configure_ruby_llm
       api_key = system_api_key
       endpoint = openai_endpoint
+      # For standard OpenAI endpoints, keep nil so RubyLLM uses built-in defaults.
+      normalized_endpoint = if endpoint.present? && !endpoint.chomp('/').match?(%r{\Ahttps://api\.openai\.com(/v1)?\z})
+                              endpoint.chomp('/')
+                            end
 
       RubyLLM.configure do |config|
         config.openai_api_key = api_key if api_key.present?
-        config.openai_api_base = endpoint.chomp('/') if endpoint.present?
+        config.openai_api_base = normalized_endpoint if normalized_endpoint.present?
         config.logger = Rails.logger
       end
 
@@ -74,7 +81,7 @@ module Llm::Config
 
       Agents.configure do |config|
         config.openai_api_key = api_key
-        config.openai_api_base = "#{endpoint.chomp('/')}/v1" if endpoint.present?
+        config.openai_api_base = "#{normalized_endpoint}/v1" if normalized_endpoint.present?
         config.default_model = InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_MODEL')&.value.presence || DEFAULT_MODEL
         config.debug = false
       end

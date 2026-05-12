@@ -214,3 +214,28 @@
   title: 'TikTok Shop: Search Orders'
   description: 'Look up order details on TikTok Shop by Order ID to provide status, packing, and shipping information'
   icon: 'shopping-bag'
+
+- id: search_products
+  title: 'Search Products'
+  description: 'Search products by keyword (auto-routes to connected e-commerce platform, or searches internal store)'
+  icon: 'box'
+
+- id: get_product_details
+  title: 'Get Product Details'
+  description: 'Retrieve detailed product information (auto-routes to connected e-commerce platform, or searches internal store)'
+  icon: 'box'
+
+- id: search_orders
+  title: 'Search Orders'
+  description: 'Check order status and details (auto-routes to connected e-commerce platform, or searches internal orders)'
+  icon: 'receipt'
+
+- id: suggest_products
+  title: 'Suggest Products'
+  description: 'Suggest upsell and cross-sell products based on current product selection (auto-routes to connected e-commerce platform)'
+  icon: 'lightbulb'
+
+- id: create_order_draft
+  title: 'Create Order Draft'
+  description: 'Create a draft order for the current contact (auto-routes to connected e-commerce platform)'
+  icon: 'cart-plus'

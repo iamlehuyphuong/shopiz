@@ -61,7 +61,13 @@ class Captain::Llm::EmbeddingService
     base = openai_hook&.settings&.dig('api_base_url')
     return nil if base.blank?
 
-    base.chomp('/').delete_suffix('/v1')
+    normalized = base.chomp('/')
+    # For standard OpenAI endpoints, return nil to let RubyLLM use built-in defaults.
+    # RubyLLM already knows the correct OpenAI base URL internally.
+    return nil if normalized.match?(%r{\Ahttps://api\.openai\.com(/v1)?\z})
+
+    # For custom endpoints (e.g. Azure, proxies), strip /v1 as RubyLLM appends its own path.
+    normalized.delete_suffix('/v1')
   end
 
   def instrumentation_params(content, model)
