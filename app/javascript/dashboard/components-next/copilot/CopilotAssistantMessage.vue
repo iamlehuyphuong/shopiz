@@ -66,7 +66,7 @@ const useCopilotResponse = () => {
         icon-name="i-lucide-sparkles"
         branded
       />
-      <span>{{ $t('CAPTAIN.NAME') }}</span>
+      <span class="font-semibold">{{ $t('CAPTAIN.NAME') }}</span>
     </div>
     <span v-if="hasEmptyMessageContent" class="text-n-ruby-11">
       {{ $t('CAPTAIN.COPILOT.EMPTY_MESSAGE') }}

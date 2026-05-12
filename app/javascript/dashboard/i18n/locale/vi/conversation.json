@@ -313,6 +313,8 @@
       "TRANSLATE": "Dịch",
       "COPY_PERMALINK": "Sao chép link tin nhắn",
       "LINK_COPIED": "Đã sao chép URL tin nhắn",
+      "SUGGEST_REPLY_PROMPT": "Hãy soạn câu trả lời cho khách hàng. Phân tích câu hỏi và soạn một câu trả lời rõ ràng, ngắn gọn, hữu ích.",
+      "ASK_COPILOT_PROMPT": "Phân tích tin nhắn của khách hàng, giải thích ý nghĩa và đề xuất cách xử lý phù hợp.",
       "DELETE_CONFIRMATION": {
         "TITLE": "Bạn có chắc muốn xóa tin nhắn này?",
         "MESSAGE": "Hành động này không thể hoàn tác",

@@ -36,6 +36,7 @@ const isSmallScreen = computed(
 );
 
 const selectedCopilotThreadId = ref(null);
+const copilotPrefill = ref('');
 const messages = computed(() =>
   store.getters['copilotMessages/getMessagesByThreadId'](
     selectedCopilotThreadId.value
@@ -128,7 +129,15 @@ const handleTriggerCopilot = async payload => {
   if (!uiSettings.value?.is_copilot_panel_open) {
     await updateUISettings({ is_copilot_panel_open: true });
   }
-  sendMessage(payload.message);
+  if (payload.message) {
+    sendMessage(payload.message);
+  } else if (payload.prefill) {
+    copilotPrefill.value = payload.prefill;
+    // Reset sau 1 chút thời gian để lần sau có thể kích hoạt lại nếu muốn prefill cùng nội dung
+    setTimeout(() => {
+      copilotPrefill.value = '';
+    }, 500);
+  }
 };
 
 onMounted(() => {
@@ -161,6 +170,7 @@ onUnmounted(() => {
       :conversation-inbox-type="conversationInboxType"
       :assistants="assistants"
       :active-assistant="activeAssistant"
+      :prefill="copilotPrefill"
       @set-assistant="setAssistant"
       @send-message="sendMessage"
       @reset="handleReset"

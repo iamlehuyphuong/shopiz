@@ -136,7 +136,12 @@ export default {
       this.handleClose();
     },
     handleSuggestReply() {
-      const prompt = `Gợi ý trả lời cho tin nhắn này:\n\n> ${this.plainTextContent}`;
+      const prompt = `${this.$t('CONVERSATION.CONTEXT_MENU.SUGGEST_REPLY_PROMPT')}\n\n> ${this.plainTextContent}`;
+      emitter.emit(BUS_EVENTS.TRIGGER_COPILOT, { message: prompt });
+      this.handleClose();
+    },
+    handleAskCopilot() {
+      const prompt = `${this.$t('CONVERSATION.CONTEXT_MENU.ASK_COPILOT_PROMPT')}\n\n> ${this.plainTextContent}`;
       emitter.emit(BUS_EVENTS.TRIGGER_COPILOT, { message: prompt });
       this.handleClose();
     },
@@ -237,11 +242,20 @@ export default {
         <MenuItem
           v-if="enabledOptions['suggestReply']"
           :option="{
-            icon: 'i-lucide-sparkles',
+            icon: 'i-fluent-chat-sparkle-16-regular',
             label: 'Gợi ý trả lời',
           }"
           variant="lucide"
           @click.stop="handleSuggestReply"
+        />
+        <MenuItem
+          v-if="enabledOptions['askCopilot']"
+          :option="{
+            icon: 'i-fluent-circle-sparkle-24-regular',
+            label: $t('INTEGRATION_SETTINGS.OPEN_AI.REPLY_OPTIONS.ASK_COPILOT'),
+          }"
+          variant="lucide"
+          @click.stop="handleAskCopilot"
         />
         <MenuItem
           v-if="enabledOptions['copy']"

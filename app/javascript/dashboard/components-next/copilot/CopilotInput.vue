@@ -1,5 +1,12 @@
 <script setup>
-import { ref, nextTick, onMounted } from 'vue';
+import { ref, nextTick, onMounted, watch } from 'vue';
+
+const props = defineProps({
+  prefill: {
+    type: String,
+    default: '',
+  },
+});
 
 const emit = defineEmits(['send']);
 const message = ref('');
@@ -34,6 +41,20 @@ const handleEnterKey = event => {
   event.preventDefault();
   sendMessage();
 };
+
+watch(
+  () => props.prefill,
+  newVal => {
+    if (newVal) {
+      message.value = newVal;
+      nextTick(() => {
+        adjustHeight();
+        textareaRef.value?.focus();
+        textareaRef.value?.setSelectionRange(0, 0); // Focus at the beginning
+      });
+    }
+  }
+);
 
 onMounted(() => {
   nextTick(adjustHeight);

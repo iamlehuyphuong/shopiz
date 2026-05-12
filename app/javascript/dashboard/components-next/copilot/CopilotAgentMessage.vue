@@ -26,7 +26,7 @@ const currentUserAvatar = computed(() => currentUser.value?.avatar_url);
         rounded-full
         icon-name="i-lucide-user"
       />
-      <span>{{ $t('CAPTAIN.COPILOT.YOU') }}</span>
+      <span class="font-semibold">{{ $t('CAPTAIN.COPILOT.YOU') }}</span>
     </div>
     <div class="break-words">
       {{ message.content }}
