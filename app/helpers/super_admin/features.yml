@@ -201,3 +201,9 @@ payment:
   config_key: 'payment'
 
 
+channels:
+  name: 'Channels Availablity'
+  description: 'Configuration for enabling or disabling messaging channels from inbox creation.'
+  enabled: true
+  icon: 'icon-chat-smile-3-line'
+  config_key: 'channels'

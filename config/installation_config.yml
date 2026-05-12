@@ -697,3 +697,61 @@
   value: 'https://us.cloud.langfuse.com'
   locked: false
 ## ---- End of LLM Observability ---- ##
+
+# ------- Messaging Channel Feature Flags ------- #
+- name: ENABLE_CHANNEL_FACEBOOK
+  display_title: 'Enable Facebook Channel'
+  value: true
+  type: boolean
+  locked: false
+- name: ENABLE_CHANNEL_ZALO_OA
+  display_title: 'Enable Zalo OA Channel'
+  value: true
+  type: boolean
+  locked: false
+- name: ENABLE_CHANNEL_ZALO_PERSONAL
+  display_title: 'Enable Zalo Personal Channel'
+  value: true
+  type: boolean
+  locked: false
+- name: ENABLE_CHANNEL_TIKTOK
+  display_title: 'Enable TikTok Channel'
+  value: true
+  type: boolean
+  locked: false
+- name: ENABLE_CHANNEL_TIKTOK_SHOP
+  display_title: 'Enable TikTok Shop Channel'
+  value: true
+  type: boolean
+  locked: false
+- name: ENABLE_CHANNEL_WHATSAPP
+  display_title: 'Enable WhatsApp Channel'
+  value: true
+  type: boolean
+  locked: false
+- name: ENABLE_CHANNEL_INSTAGRAM
+  display_title: 'Enable Instagram Channel'
+  value: true
+  type: boolean
+  locked: false
+- name: ENABLE_CHANNEL_TELEGRAM
+  display_title: 'Enable Telegram Channel'
+  value: true
+  type: boolean
+  locked: false
+- name: ENABLE_CHANNEL_LINE
+  display_title: 'Enable LINE Channel'
+  value: true
+  type: boolean
+  locked: false
+- name: ENABLE_CHANNEL_TWITTER
+  display_title: 'Enable Twitter Channel'
+  value: true
+  type: boolean
+  locked: false
+- name: ENABLE_CHANNEL_WEBSITE
+  display_title: 'Enable Website Channel'
+  value: true
+  type: boolean
+  locked: false
+# ------- End of Messaging Channel Feature Flags ------- #
