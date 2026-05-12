@@ -24,16 +24,18 @@ class Captain::Tools::BasePublicTool < Agents::Tool
   end
 
   def find_conversation(state)
-    conversation_id = state&.dig(:conversation, :id)
-    return nil unless conversation_id
+    conv_data = state[:conversation]
+    return nil unless conv_data
 
+    conversation_id = conv_data.is_a?(Hash) ? conv_data[:id] : conv_data.id
     account_scoped(::Conversation).find_by(id: conversation_id)
   end
 
   def find_contact(state)
-    contact_id = state&.dig(:contact, :id)
-    return nil unless contact_id
+    contact_data = state[:contact]
+    return nil unless contact_data
 
+    contact_id = contact_data.is_a?(Hash) ? contact_data[:id] : contact_data.id
     account_scoped(::Contact).find_by(id: contact_id)
   end
 

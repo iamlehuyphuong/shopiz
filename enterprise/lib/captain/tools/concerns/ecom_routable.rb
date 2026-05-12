@@ -30,10 +30,10 @@ module Captain::Tools::Concerns::EcomRoutable
   # Resolves the e-commerce platform app_id from the conversation's inbox.
   # Returns nil when the inbox has no e-commerce integration.
   def resolve_ecom_platform(tool_context)
-    inbox_id = tool_context.state&.dig(:conversation, :inbox_id)
-    return nil unless inbox_id
+    conversation = find_conversation(tool_context.state)
+    return nil unless conversation
 
-    inbox = Inbox.find_by(id: inbox_id)
+    inbox = conversation.inbox
     return nil unless inbox
 
     hook = inbox.effective_ecommerce_hook
