@@ -3,14 +3,19 @@ class Captain::Tools::ExecuteMacroTool < Captain::Tools::BasePublicTool
   param :macro_name, type: 'string', desc: 'The exact name of the macro to execute', required: true
 
   def perform(tool_context, macro_name:)
-    conversation = find_conversation(tool_context.state)
-    return 'Conversation not found' unless conversation
-
-    log_tool_usage('execute_macro', { conversation_id: conversation.id, macro_name: macro_name })
-
     # Search for the macro by name in the account
     macro = account_scoped(Macro).find_by('name ILIKE ?', macro_name)
     return "Macro '#{macro_name}' not found. Please ensure the exact macro name is used." unless macro
+
+    conversation = find_conversation(tool_context.state)
+    if conversation.nil?
+      if tool_context.state[:source] == 'playground'
+        return "Playground Mode: Macro '#{macro.name}' would be executed on a real conversation. (Simulation successful)"
+      end
+      return 'Conversation not found'
+    end
+
+    log_tool_usage('execute_macro', { conversation_id: conversation.id, macro_name: macro_name })
 
     # Execute the macro asynchronously for the current conversation.
     # User is nil because it's executed by the AI (system).

@@ -3,10 +3,7 @@ class Captain::Tools::GetCannedResponseTool < Captain::Tools::BasePublicTool
   param :query, type: 'string', desc: 'The short code or keyword of the canned response (e.g., "hello", "pricing")', required: true
 
   def perform(tool_context, query:)
-    conversation = find_conversation(tool_context.state)
-    return 'Conversation not found' unless conversation
-
-    log_tool_usage('get_canned_response', { conversation_id: conversation.id, query: query })
+    log_tool_usage('get_canned_response', { query: query })
 
     canned_responses = account_scoped(CannedResponse)
                        .where('short_code ILIKE :query OR content ILIKE :query', query: "%#{query}%")

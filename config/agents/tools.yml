@@ -1,63 +1,75 @@
 ---
 - id: add_contact_note
-  title: Add Contact Note
-  description: Add a note to a contact profile
+  title: Add Contact Note (Thêm ghi chú khách hàng)
+  description: Add a note to a contact profile (Thêm ghi chú vào hồ sơ khách hàng)
   icon: note-add
 - id: add_private_note
-  title: Add Private Note
-  description: Add a private note to a conversation (internal only)
+  title: Add Private Note (Thêm ghi chú nội bộ)
+  description: Add a private note to a conversation [internal only] (Thêm ghi chú
+    nội bộ vào cuộc hội thoại)
   icon: eye-off
 - id: update_priority
-  title: Update Priority
-  description: Update conversation priority level
+  title: Update Priority (Cập nhật độ ưu tiên)
+  description: Update conversation priority level (Cập nhật mức độ ưu tiên của hội
+    thoại)
   icon: exclamation-triangle
 - id: add_label_to_conversation
-  title: Add Label to Conversation
-  description: Add a label to a conversation
+  title: Add Label (Gắn nhãn hội thoại)
+  description: Add a label to a conversation (Gắn một nhãn vào cuộc hội thoại)
   icon: tag
 - id: add_interactive_message_to_conversation
-  title: Add Interactive Message to Conversation
-  description: Add an interactive message to a conversation
+  title: Send Interactive Message (Gửi tin nhắn tương tác)
+  description: Add an interactive message to a conversation (Gửi một tin nhắn tương
+    tác như Nút bấm/Danh sách vào cuộc hội thoại)
   icon: tag
 - id: faq_lookup
-  title: FAQ Lookup
-  description: Search FAQ responses using semantic similarity
+  title: FAQ Lookup (Tra cứu FAQ)
+  description: Search FAQ responses using semantic similarity (Tìm kiếm câu trả lời
+    từ tài liệu tri thức bằng AI)
   icon: search
 - id: resolve_conversation
-  title: Resolve Conversation
-  description: Resolve a conversation when the issue has been addressed
+  title: Resolve Conversation (Đóng hội thoại)
+  description: Resolve a conversation when the issue has been addressed (Đánh dấu
+    đóng hội thoại khi vấn đề đã được xử lý xong)
   icon: checkmark
 - id: handoff
-  title: Handoff to Human
-  description: Hand off the conversation to a human agent
+  title: Handoff to Human (Chuyển cho nhân viên)
+  description: Hand off the conversation to a human agent (Chuyển cuộc trò chuyện
+    cho nhân viên hỗ trợ)
   icon: user-switch
 - id: assign_conversation
-  title: Assign Conversation
-  description: Assign a conversation to a specific team or agent
+  title: Assign Conversation (Phân công hội thoại)
+  description: Assign a conversation to a specific team or agent (Phân công hội thoại
+    cho một nhóm hoặc nhân viên cụ thể)
   icon: people-team
 - id: update_contact
-  title: Update Contact
+  title: Update Contact (Cập nhật thông tin khách hàng)
   description: Update contact profile information (name, email, phone, custom attributes)
+    (Cập nhật thông tin hồ sơ của khách hàng)
   icon: person-edit
 - id: get_contact_detail
-  title: Get Contact Details
-  description: Get detailed information about the current contact
+  title: Get Contact Details (Xem chi tiết khách hàng)
+  description: Get detailed information about the current contact (Lấy thông tin chi
+    tiết về khách hàng hiện tại)
   icon: person-info
 - id: snooze_conversation
-  title: Snooze Conversation
-  description: Snooze a conversation to follow up later
+  title: Snooze Conversation (Tạm hoãn hội thoại)
+  description: Snooze a conversation to follow up later (Tạm hoãn cuộc hội thoại để
+    xử lý sau)
   icon: clock
 - id: remove_label_from_conversation
-  title: Remove Label from Conversation
-  description: Remove a label from a conversation
+  title: Remove Label (Gỡ nhãn hội thoại)
+  description: Remove a label from a conversation (Gỡ bỏ một nhãn khỏi cuộc hội thoại)
   icon: tag-dismiss
 - id: set_conversation_custom_attribute
-  title: Set Conversation Custom Attributes
-  description: Set or update custom attributes on a conversation
+  title: Set Custom Attributes (Cập nhật thuộc tính tùy chỉnh)
+  description: Set or update custom attributes on a conversation (Cập nhật thông tin
+    thuộc tính tùy chỉnh của hội thoại)
   icon: document-data
 - id: search_previous_conversation
-  title: Search Previous Conversations
-  description: Search previous conversations of the current contact
+  title: Search Previous Conversations (Lịch sử trò chuyện)
+  description: Search previous conversations of the current contact (Tra cứu lại các
+    lịch sử hội thoại trước đó của khách)
   icon: history
 - id: shopify_search_orders
   title: 'Shopify: Search Orders'
@@ -184,8 +196,8 @@
   icon: lightbulb
   hidden: true
 - id: send_marketing_optin
-  title: Send Marketing Opt-in
-  description: Send a Meta Marketing Messages Opt-in request to the customer
+  title: Send Marketing Opt-in (Gửi yêu cầu nhận tin Marketing)
+  description: Send a Meta Marketing Messages Opt-in request to the customer (Gửi yêu cầu đăng ký nhận tin nhắn tiếp thị qua Meta/Facebook)
   icon: mail-open
 - id: tiktok_shop_suggest_products
   title: 'TikTok Shop: Suggest Products'
@@ -199,37 +211,41 @@
   icon: shopping-bag
   hidden: true
 - id: search_products
-  title: Search Products
+  title: Search Products (Tìm kiếm sản phẩm)
   description: Search products by keyword (auto-routes to connected e-commerce platform,
-    or searches internal store)
+    or searches internal store) (Tìm kiếm sản phẩm theo từ khóa - tự động điều hướng
+    tới nền tảng kết nối)
   icon: box
 - id: get_product_details
-  title: Get Product Details
+  title: Get Product Details (Lấy chi tiết sản phẩm)
   description: Retrieve detailed product information (auto-routes to connected e-commerce
-    platform, or searches internal store)
+    platform, or searches internal store) (Lấy thông tin chi tiết và phân loại của
+    sản phẩm)
   icon: box
 - id: search_orders
-  title: Search Orders
+  title: Search Orders (Tra cứu đơn hàng)
   description: Check order status and details (auto-routes to connected e-commerce
-    platform, or searches internal orders)
+    platform, or searches internal orders) (Kiểm tra trạng thái và thông tin chi tiết
+    đơn hàng)
   icon: receipt
 - id: suggest_products
-  title: Suggest Products
+  title: Suggest Products (Gợi ý sản phẩm)
   description: Suggest upsell and cross-sell products based on current product selection
-    (auto-routes to connected e-commerce platform)
+    (auto-routes to connected e-commerce platform) (Gợi ý các sản phẩm bán chéo, bán
+    thêm dựa trên ngữ cảnh)
   icon: lightbulb
 - id: create_order_draft
-  title: Create Order Draft
+  title: Create Order Draft (Tạo đơn hàng nháp)
   description: Create a draft order for the current contact (auto-routes to connected
-    e-commerce platform)
+    e-commerce platform) (Tạo đơn hàng nháp cho khách hàng hiện tại)
   icon: cart-plus
-
 - id: get_canned_response
-  title: 'Get Canned Response'
-  description: 'Search and retrieve a canned response (saved template) by its short code or keywords'
-  icon: 'chat-centered-text'
-
+  title: Get Canned Response (Lấy câu trả lời mẫu)
+  description: Search and retrieve a canned response (saved template) by its short
+    code or keywords (Tìm và lấy nội dung câu trả lời mẫu đã được soạn sẵn)
+  icon: chat-centered-text
 - id: execute_macro
-  title: 'Execute Macro'
-  description: 'Execute an automation macro on the current conversation'
-  icon: 'lightning'
+  title: Execute Macro (Chạy kịch bản tự động)
+  description: Execute an automation macro on the current conversation (Kích hoạt
+    chạy một kịch bản tự động/Macro trên cuộc hội thoại hiện tại)
+  icon: lightning
