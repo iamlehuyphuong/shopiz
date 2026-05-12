@@ -11,6 +11,8 @@ import {
   ACCOUNT_EVENTS,
   CONVERSATION_EVENTS,
 } from '../../../helper/AnalyticsHelper/events';
+import { emitter } from 'shared/helpers/mitt';
+import { BUS_EVENTS } from 'shared/constants/busEvents';
 import MenuItem from '../../../components/widgets/conversation/contextMenu/menuItem.vue';
 import { useTrack } from 'dashboard/composables';
 import NextButton from 'dashboard/components-next/button/Button.vue';
@@ -133,6 +135,11 @@ export default {
       this.$emit('replyTo', this.message);
       this.handleClose();
     },
+    handleSuggestReply() {
+      const prompt = `Gợi ý trả lời cho tin nhắn này:\n\n> ${this.plainTextContent}`;
+      emitter.emit(BUS_EVENTS.TRIGGER_COPILOT, { message: prompt });
+      this.handleClose();
+    },
     async handleUndo() {
       try {
         await this.$store.dispatch('undoMessage', {
@@ -226,6 +233,15 @@ export default {
           }"
           variant="icon"
           @click.stop="handleReplyTo"
+        />
+        <MenuItem
+          v-if="enabledOptions['suggestReply']"
+          :option="{
+            icon: 'i-lucide-sparkles',
+            label: 'Gợi ý trả lời',
+          }"
+          variant="lucide"
+          @click.stop="handleSuggestReply"
         />
         <MenuItem
           v-if="enabledOptions['copy']"

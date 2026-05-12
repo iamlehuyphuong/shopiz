@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useAlert } from 'dashboard/composables';
 import { useStore } from 'dashboard/composables/store';
 import Copilot from 'dashboard/components-next/copilot/Copilot.vue';
@@ -10,6 +10,8 @@ import { useWindowSize } from '@vueuse/core';
 import { vOnClickOutside } from '@vueuse/components';
 import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 import wootConstants from 'dashboard/constants/globals';
+import { emitter } from 'shared/helpers/mitt';
+import { BUS_EVENTS } from 'shared/constants/busEvents';
 
 defineProps({
   conversationInboxType: {
@@ -122,10 +124,22 @@ const sendMessage = async message => {
   }
 };
 
+const handleTriggerCopilot = async payload => {
+  if (!uiSettings.value?.is_copilot_panel_open) {
+    await updateUISettings({ is_copilot_panel_open: true });
+  }
+  sendMessage(payload.message);
+};
+
 onMounted(() => {
   if (isEnterprise) {
     store.dispatch('captainAssistants/get');
   }
+  emitter.on(BUS_EVENTS.TRIGGER_COPILOT, handleTriggerCopilot);
+});
+
+onUnmounted(() => {
+  emitter.off(BUS_EVENTS.TRIGGER_COPILOT, handleTriggerCopilot);
 });
 </script>
 

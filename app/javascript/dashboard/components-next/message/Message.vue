@@ -12,6 +12,7 @@ import { ACCOUNT_EVENTS } from 'dashboard/helper/AnalyticsHelper/events';
 import { LOCAL_STORAGE_KEYS } from 'dashboard/constants/localStorage';
 import { getInboxIconByType } from 'dashboard/helper/inbox';
 import { BUS_EVENTS } from 'shared/constants/busEvents';
+import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 import {
   MESSAGE_TYPES,
   ATTACHMENT_TYPES,
@@ -377,11 +378,24 @@ const payloadForContextMenu = computed(() => {
   };
 });
 
+const currentAccountId = useMapGetter('getCurrentAccountId');
+const isFeatureEnabledonAccount = useMapGetter(
+  'accounts/isFeatureEnabledonAccount'
+);
+
+const isCaptainEnabled = computed(() => {
+  return isFeatureEnabledonAccount.value(
+    currentAccountId.value,
+    FEATURE_FLAGS.CAPTAIN
+  );
+});
+
 const contextMenuEnabledOptions = computed(() => {
   const hasText = !!props.content;
   const hasAttachments = !!(props.attachments && props.attachments.length > 0);
 
   const isOutgoing = props.messageType === MESSAGE_TYPES.OUTGOING;
+  const isIncoming = props.messageType === MESSAGE_TYPES.INCOMING;
   const isFailedOrProcessing =
     props.status === MESSAGE_STATUS.FAILED ||
     props.status === MESSAGE_STATUS.PROGRESS;
@@ -399,6 +413,11 @@ const contextMenuEnabledOptions = computed(() => {
       !props.private &&
       props.inboxSupportsReplyTo.outgoing &&
       !isFailedOrProcessing,
+    suggestReply:
+      isCaptainEnabled.value &&
+      isIncoming &&
+      hasText &&
+      !isMessageDeleted.value,
     undo: props.canUndo,
   };
 });
