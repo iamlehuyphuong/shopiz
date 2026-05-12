@@ -23,7 +23,6 @@ import {
 import ReconnectService from 'dashboard/helper/ReconnectService';
 import { useUISettings } from 'dashboard/composables/useUISettings';
 import ContextMenu from 'dashboard/components/ui/ContextMenu.vue';
-import DropdownMenu from 'dashboard/components-next/dropdown-menu/DropdownMenu.vue';
 import CreateNewContactDialog from 'dashboard/components-next/Contacts/ContactsForm/CreateNewContactDialog.vue';
 import LimitationModal from './components/widgets/modal/LimitationModal.vue';
 
@@ -39,7 +38,6 @@ export default {
     WootSnackbarBox,
     PendingEmailVerificationBanner,
     ContextMenu,
-    DropdownMenu,
     CreateNewContactDialog,
     LimitationModal,
   },
@@ -501,10 +499,18 @@ export default {
       :y="contactMenuConfig.y"
       @close="closeContactMenu"
     >
-      <DropdownMenu
-        :menu-items="contactMenuItems"
-        @action="handleContactMenuAction"
-      />
+      <div class="contact-menu-container">
+        <div 
+          v-for="(item, index) in contactMenuItems" 
+          :key="index"
+          class="contact-menu-item" 
+          role="button"
+          @click.stop="handleContactMenuAction(item)"
+        >
+          <span :class="[item.icon, 'flex-shrink-0 size-3.5']" />
+          <p class="contact-menu-label truncate">{{ item.label }}</p>
+        </div>
+      </div>
     </ContextMenu>
     <CreateNewContactDialog
       ref="createNewContactDialog"
@@ -528,5 +534,23 @@ export default {
 
 .v-popper--theme-tooltip .v-popper__arrow-container {
   display: none;
+}
+
+.contact-menu-container {
+  @apply p-1 bg-n-background shadow-xl rounded-md;
+}
+
+.contact-menu-item {
+  width: calc(6.25rem * 2.5);
+  @apply flex items-center flex-nowrap p-1 rounded-md overflow-hidden cursor-pointer text-n-slate-12 min-h-7 min-w-0;
+
+  .contact-menu-label {
+    @apply my-0 mx-2 text-xs flex-shrink-0 flex-1 min-w-0;
+  }
+
+  &:hover {
+    background-color: #e06720;
+    color: #fff;
+  }
 }
 </style>
