@@ -1,241 +1,235 @@
-######  Captain Agent Tools Configuration #######
-# id: Tool identifier used to resolve the class (Captain::Tools::{PascalCase(id)}Tool)
-# title: Human-readable tool name for frontend display
-# description: Brief description of what the tool does
-# icon: Icon name for frontend display (frontend icon system)
-#######################################################
-
+---
 - id: add_contact_note
-  title: 'Add Contact Note'
-  description: 'Add a note to a contact profile'
-  icon: 'note-add'
-
+  title: Add Contact Note
+  description: Add a note to a contact profile
+  icon: note-add
 - id: add_private_note
-  title: 'Add Private Note'
-  description: 'Add a private note to a conversation (internal only)'
-  icon: 'eye-off'
-
+  title: Add Private Note
+  description: Add a private note to a conversation (internal only)
+  icon: eye-off
 - id: update_priority
-  title: 'Update Priority'
-  description: 'Update conversation priority level'
-  icon: 'exclamation-triangle'
-
+  title: Update Priority
+  description: Update conversation priority level
+  icon: exclamation-triangle
 - id: add_label_to_conversation
-  title: 'Add Label to Conversation'
-  description: 'Add a label to a conversation'
-  icon: 'tag'
-
+  title: Add Label to Conversation
+  description: Add a label to a conversation
+  icon: tag
 - id: add_interactive_message_to_conversation
-  title: 'Add Interactive Message to Conversation'
-  description: 'Add an interactive message to a conversation'
-  icon: 'tag'
-
+  title: Add Interactive Message to Conversation
+  description: Add an interactive message to a conversation
+  icon: tag
 - id: faq_lookup
-  title: 'FAQ Lookup'
-  description: 'Search FAQ responses using semantic similarity'
-  icon: 'search'
-
+  title: FAQ Lookup
+  description: Search FAQ responses using semantic similarity
+  icon: search
 - id: resolve_conversation
-  title: 'Resolve Conversation'
-  description: 'Resolve a conversation when the issue has been addressed'
-  icon: 'checkmark'
-
+  title: Resolve Conversation
+  description: Resolve a conversation when the issue has been addressed
+  icon: checkmark
 - id: handoff
-  title: 'Handoff to Human'
-  description: 'Hand off the conversation to a human agent'
-  icon: 'user-switch'
-
+  title: Handoff to Human
+  description: Hand off the conversation to a human agent
+  icon: user-switch
 - id: assign_conversation
-  title: 'Assign Conversation'
-  description: 'Assign a conversation to a specific team or agent'
-  icon: 'people-team'
-
+  title: Assign Conversation
+  description: Assign a conversation to a specific team or agent
+  icon: people-team
 - id: update_contact
-  title: 'Update Contact'
-  description: 'Update contact profile information (name, email, phone, custom attributes)'
-  icon: 'person-edit'
-
+  title: Update Contact
+  description: Update contact profile information (name, email, phone, custom attributes)
+  icon: person-edit
 - id: get_contact_detail
-  title: 'Get Contact Details'
-  description: 'Get detailed information about the current contact'
-  icon: 'person-info'
-
+  title: Get Contact Details
+  description: Get detailed information about the current contact
+  icon: person-info
 - id: snooze_conversation
-  title: 'Snooze Conversation'
-  description: 'Snooze a conversation to follow up later'
-  icon: 'clock'
-
+  title: Snooze Conversation
+  description: Snooze a conversation to follow up later
+  icon: clock
 - id: remove_label_from_conversation
-  title: 'Remove Label from Conversation'
-  description: 'Remove a label from a conversation'
-  icon: 'tag-dismiss'
-
+  title: Remove Label from Conversation
+  description: Remove a label from a conversation
+  icon: tag-dismiss
 - id: set_conversation_custom_attribute
-  title: 'Set Conversation Custom Attributes'
-  description: 'Set or update custom attributes on a conversation'
-  icon: 'document-data'
-
+  title: Set Conversation Custom Attributes
+  description: Set or update custom attributes on a conversation
+  icon: document-data
 - id: search_previous_conversation
-  title: 'Search Previous Conversations'
-  description: 'Search previous conversations of the current contact'
-  icon: 'history'
-
+  title: Search Previous Conversations
+  description: Search previous conversations of the current contact
+  icon: history
 - id: shopify_search_orders
   title: 'Shopify: Search Orders'
-  description: 'Search Shopify orders for the current contact'
-  icon: 'shopping-bag'
-
+  description: Search Shopify orders for the current contact
+  icon: shopping-bag
+  hidden: true
 - id: shopify_get_product
   title: 'Shopify: Get Product'
-  description: 'Search Shopify products by name or keyword'
-  icon: 'box'
-
+  description: Search Shopify products by name or keyword
+  icon: box
+  hidden: true
 - id: shopify_create_order_draft
   title: 'Shopify: Create Order Draft'
-  description: 'Create a draft order with Shopify products for the current contact'
-  icon: 'cart-plus'
-
+  description: Create a draft order with Shopify products for the current contact
+  icon: cart-plus
+  hidden: true
 - id: shopify_suggest_products
   title: 'Shopify: Suggest Products'
-  description: 'Suggest upsell and cross-sell products based on current product selection'
-  icon: 'lightbulb'
-
+  description: Suggest upsell and cross-sell products based on current product selection
+  icon: lightbulb
+  hidden: true
 - id: kiotviet_search_orders
   title: 'KiotViet: Search Orders'
-  description: 'Search KiotViet orders (invoices) for the current contact'
-  icon: 'shopping-bag'
-
+  description: Search KiotViet orders (invoices) for the current contact
+  icon: shopping-bag
+  hidden: true
 - id: kiotviet_get_product
   title: 'KiotViet: Get Product'
-  description: 'Search KiotViet products by name or keyword'
-  icon: 'box'
-
+  description: Search KiotViet products by name or keyword
+  icon: box
+  hidden: true
 - id: kiotviet_create_order_draft
   title: 'KiotViet: Create Order Draft'
-  description: 'Create a draft order with KiotViet products for the current contact'
-  icon: 'cart-plus'
-
+  description: Create a draft order with KiotViet products for the current contact
+  icon: cart-plus
+  hidden: true
 - id: kiotviet_suggest_products
   title: 'KiotViet: Suggest Products'
-  description: 'Suggest upsell and cross-sell products based on current product selection and conversation context'
-  icon: 'lightbulb'
-
+  description: Suggest upsell and cross-sell products based on current product selection
+    and conversation context
+  icon: lightbulb
+  hidden: true
 - id: haravan_search_orders
   title: 'Haravan: Search Orders'
-  description: 'Search Haravan orders for the current contact'
-  icon: 'shopping-bag'
-
+  description: Search Haravan orders for the current contact
+  icon: shopping-bag
+  hidden: true
 - id: haravan_get_product
   title: 'Haravan: Get Product'
-  description: 'Search Haravan products by name or keyword'
-  icon: 'box'
-
+  description: Search Haravan products by name or keyword
+  icon: box
+  hidden: true
 - id: haravan_create_order_draft
   title: 'Haravan: Create Order Draft'
-  description: 'Create a draft order with Haravan products for the current contact'
-  icon: 'cart-plus'
-
+  description: Create a draft order with Haravan products for the current contact
+  icon: cart-plus
+  hidden: true
 - id: haravan_suggest_products
   title: 'Haravan: Suggest Products'
-  description: 'Suggest upsell and cross-sell products based on current product selection and conversation context'
-  icon: 'lightbulb'
-
+  description: Suggest upsell and cross-sell products based on current product selection
+    and conversation context
+  icon: lightbulb
+  hidden: true
 - id: woocommerce_search_orders
   title: 'WooCommerce: Search Orders'
-  description: 'Search WooCommerce orders for the current contact'
-  icon: 'shopping-bag'
-
+  description: Search WooCommerce orders for the current contact
+  icon: shopping-bag
+  hidden: true
 - id: woocommerce_get_product
   title: 'WooCommerce: Get Product'
-  description: 'Search WooCommerce products by name or keyword'
-  icon: 'box'
-
+  description: Search WooCommerce products by name or keyword
+  icon: box
+  hidden: true
 - id: woocommerce_create_order_draft
   title: 'WooCommerce: Create Order Draft'
-  description: 'Create a draft order with WooCommerce products for the current contact'
-  icon: 'cart-plus'
-
+  description: Create a draft order with WooCommerce products for the current contact
+  icon: cart-plus
+  hidden: true
 - id: woocommerce_suggest_products
   title: 'WooCommerce: Suggest Products'
-  description: 'Suggest upsell and cross-sell products based on current product selection'
-  icon: 'lightbulb'
-
+  description: Suggest upsell and cross-sell products based on current product selection
+  icon: lightbulb
+  hidden: true
 - id: sapo_search_orders
   title: 'Sapo: Search Orders'
-  description: 'Search Sapo orders for the current contact'
-  icon: 'shopping-bag'
-
+  description: Search Sapo orders for the current contact
+  icon: shopping-bag
+  hidden: true
 - id: sapo_get_product
   title: 'Sapo: Get Product'
-  description: 'Search Sapo products by name or keyword'
-  icon: 'box'
-
+  description: Search Sapo products by name or keyword
+  icon: box
+  hidden: true
 - id: sapo_create_order_draft
   title: 'Sapo: Create Order Draft'
-  description: 'Create a draft order with Sapo products for the current contact'
-  icon: 'cart-plus'
-
+  description: Create a draft order with Sapo products for the current contact
+  icon: cart-plus
+  hidden: true
 - id: sapo_suggest_products
   title: 'Sapo: Suggest Products'
-  description: 'Suggest upsell and cross-sell products based on current product selection and conversation context'
-  icon: 'lightbulb'
-
+  description: Suggest upsell and cross-sell products based on current product selection
+    and conversation context
+  icon: lightbulb
+  hidden: true
 - id: nhanhvn_search_orders
   title: 'Nhanh.vn: Search Orders'
-  description: 'Search Nhanh.vn orders for the current contact'
-  icon: 'shopping-bag'
-
+  description: Search Nhanh.vn orders for the current contact
+  icon: shopping-bag
+  hidden: true
 - id: nhanhvn_get_product
   title: 'Nhanh.vn: Get Product'
-  description: 'Search Nhanh.vn products by name or keyword'
-  icon: 'box'
-
+  description: Search Nhanh.vn products by name or keyword
+  icon: box
+  hidden: true
 - id: nhanhvn_create_order_draft
   title: 'Nhanh.vn: Create Order Draft'
-  description: 'Create a draft order with Nhanh.vn products for the current contact'
-  icon: 'cart-plus'
-
+  description: Create a draft order with Nhanh.vn products for the current contact
+  icon: cart-plus
+  hidden: true
 - id: nhanhvn_suggest_products
   title: 'Nhanh.vn: Suggest Products'
-  description: 'Suggest upsell and cross-sell products based on current product selection and conversation context'
-  icon: 'lightbulb'
-
+  description: Suggest upsell and cross-sell products based on current product selection
+    and conversation context
+  icon: lightbulb
+  hidden: true
 - id: send_marketing_optin
-  title: 'Send Marketing Opt-in'
-  description: 'Send a Meta Marketing Messages Opt-in request to the customer'
-  icon: 'mail-open'
-
+  title: Send Marketing Opt-in
+  description: Send a Meta Marketing Messages Opt-in request to the customer
+  icon: mail-open
 - id: tiktok_shop_suggest_products
   title: 'TikTok Shop: Suggest Products'
-  description: 'Suggest products to buyers from TikTok Shop based on chat context'
-  icon: 'lightbulb'
-
+  description: Suggest products to buyers from TikTok Shop based on chat context
+  icon: lightbulb
+  hidden: true
 - id: tiktok_shop_search_orders
   title: 'TikTok Shop: Search Orders'
-  description: 'Look up order details on TikTok Shop by Order ID to provide status, packing, and shipping information'
-  icon: 'shopping-bag'
-
+  description: Look up order details on TikTok Shop by Order ID to provide status,
+    packing, and shipping information
+  icon: shopping-bag
+  hidden: true
 - id: search_products
-  title: 'Search Products'
-  description: 'Search products by keyword (auto-routes to connected e-commerce platform, or searches internal store)'
-  icon: 'box'
-
+  title: Search Products
+  description: Search products by keyword (auto-routes to connected e-commerce platform,
+    or searches internal store)
+  icon: box
 - id: get_product_details
-  title: 'Get Product Details'
-  description: 'Retrieve detailed product information (auto-routes to connected e-commerce platform, or searches internal store)'
-  icon: 'box'
-
+  title: Get Product Details
+  description: Retrieve detailed product information (auto-routes to connected e-commerce
+    platform, or searches internal store)
+  icon: box
 - id: search_orders
-  title: 'Search Orders'
-  description: 'Check order status and details (auto-routes to connected e-commerce platform, or searches internal orders)'
-  icon: 'receipt'
-
+  title: Search Orders
+  description: Check order status and details (auto-routes to connected e-commerce
+    platform, or searches internal orders)
+  icon: receipt
 - id: suggest_products
-  title: 'Suggest Products'
-  description: 'Suggest upsell and cross-sell products based on current product selection (auto-routes to connected e-commerce platform)'
-  icon: 'lightbulb'
-
+  title: Suggest Products
+  description: Suggest upsell and cross-sell products based on current product selection
+    (auto-routes to connected e-commerce platform)
+  icon: lightbulb
 - id: create_order_draft
-  title: 'Create Order Draft'
-  description: 'Create a draft order for the current contact (auto-routes to connected e-commerce platform)'
-  icon: 'cart-plus'
+  title: Create Order Draft
+  description: Create a draft order for the current contact (auto-routes to connected
+    e-commerce platform)
+  icon: cart-plus
+
+- id: get_canned_response
+  title: 'Get Canned Response'
+  description: 'Search and retrieve a canned response (saved template) by its short code or keywords'
+  icon: 'chat-centered-text'
+
+- id: execute_macro
+  title: 'Execute Macro'
+  description: 'Execute an automation macro on the current conversation'
+  icon: 'lightning'

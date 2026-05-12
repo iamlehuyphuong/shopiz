@@ -50,8 +50,8 @@ class Captain::Assistant < ApplicationRecord
     name
   end
 
-  def available_agent_tools
-    tools = self.class.built_in_agent_tools.dup
+  def available_agent_tools(include_hidden: true)
+    tools = self.class.built_in_agent_tools(include_hidden: include_hidden).dup
 
     custom_tools = account.captain_custom_tools.enabled.map(&:to_tool_metadata)
     tools.concat(custom_tools)
@@ -59,8 +59,8 @@ class Captain::Assistant < ApplicationRecord
     tools
   end
 
-  def available_tool_ids
-    available_agent_tools.pluck(:id)
+  def available_tool_ids(include_hidden: true)
+    available_agent_tools(include_hidden: include_hidden).pluck(:id)
   end
 
   def push_event_data
