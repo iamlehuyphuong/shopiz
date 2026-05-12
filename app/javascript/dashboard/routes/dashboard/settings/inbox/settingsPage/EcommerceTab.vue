@@ -129,7 +129,12 @@ const loadSalesSettings = () => {
 
 onMounted(() => {
   store.dispatch('integrations/get');
-  selectedIntegrationId.value = props.inbox.ecommerce_integration?.id || null;
+  const config = props.inbox.sales_config || {};
+  if (config.platform === 'shopiz') {
+    selectedIntegrationId.value = 'shopiz';
+  } else {
+    selectedIntegrationId.value = props.inbox.ecommerce_integration?.id || null;
+  }
   loadSalesSettings();
 });
 
@@ -138,11 +143,15 @@ const handleSave = async () => {
 
   isSaving.value = true;
   try {
+    const payloadIntegrationId = selectedIntegrationId.value === 'shopiz' ? null : selectedIntegrationId.value;
+    const platform = selectedIntegrationId.value === 'shopiz' ? 'shopiz' : null;
+
     await store.dispatch('inboxes/updateInbox', {
       id: props.inbox.id,
       formData: false,
-      ecommerce_integration_id: selectedIntegrationId.value,
+      ecommerce_integration_id: payloadIntegrationId,
       sales_config: {
+        platform: platform,
         ai_allow_create_order: allowAiCreateOrder.value,
         order_notification_templates: salesOrderNotificationTemplates,
       },
@@ -318,6 +327,49 @@ const insertVariable = variableKey => {
               >
                 {{ t('INBOX_MGMT.ECOMMERCE.NONE') }}
               </span>
+            </button>
+
+            <!-- Shopiz (Native) option -->
+            <button
+              class="flex items-center gap-3 px-4 py-3 rounded-xl border transition-all"
+              :class="
+                selectedIntegrationId === 'shopiz'
+                  ? 'border-n-brand bg-n-brand/5 ring-1 ring-n-brand/30'
+                  : 'border-n-weak bg-n-solid-1 hover:bg-n-alpha-1'
+              "
+              @click="selectedIntegrationId = 'shopiz'"
+            >
+              <div
+                class="w-8 h-8 rounded-lg flex items-center justify-center"
+                :class="
+                  selectedIntegrationId === 'shopiz'
+                    ? 'bg-n-brand/10'
+                    : 'bg-n-solid-3'
+                "
+              >
+                <i
+                  class="i-lucide-shopping-bag text-sm"
+                  :class="
+                    selectedIntegrationId === 'shopiz'
+                      ? 'text-n-brand'
+                      : 'text-n-slate-10'
+                  "
+                />
+              </div>
+              <span
+                class="text-sm"
+                :class="
+                  selectedIntegrationId === 'shopiz'
+                    ? 'text-n-slate-12 font-medium'
+                    : 'text-n-slate-11'
+                "
+              >
+                Shopiz
+              </span>
+              <i
+                v-if="selectedIntegrationId === 'shopiz'"
+                class="i-lucide-check text-n-brand text-sm ml-auto"
+              />
             </button>
 
             <!-- Platform options -->

@@ -37,7 +37,7 @@ const currentInbox = computed(() => {
 });
 
 const hasEcommerceIntegration = computed(() => {
-  return !!currentInbox.value?.ecommerce_integration;
+  return !!currentInbox.value?.ecommerce_integration || currentInbox.value?.sales_config?.platform === 'shopiz';
 });
 
 const products = computed(

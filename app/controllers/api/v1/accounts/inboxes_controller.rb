@@ -237,7 +237,7 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
      { csat_config: [:display_type, :message, :button_text, :language,
                       { survey_rules: [:operator, { values: [] }],
                         template: [:name, :template_id, :friendly_name, :content_sid, :approval_sid, :created_at, :language, :status] }] },
-     { sales_config: [:ai_allow_create_order,
+     { sales_config: [:ai_allow_create_order, :platform,
                       { order_notification_templates: [:draft, :confirmed, :processing, :shipped, :delivered, :cancelled] }] }]
   end
 

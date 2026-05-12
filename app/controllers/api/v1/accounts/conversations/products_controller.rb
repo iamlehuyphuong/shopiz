@@ -1,12 +1,15 @@
 class Api::V1::Accounts::Conversations::ProductsController < Api::V1::Accounts::Conversations::BaseController
   def index
+    platform = @conversation.inbox.sales_config&.dig('platform')
     hook = @conversation.inbox.effective_ecommerce_hook
-    return render json: { products: [], categories: [] }, status: :ok unless hook
+
+    return render json: { products: [], categories: [] }, status: :ok unless hook || platform == 'shopiz'
 
     if params[:categories].present?
-      render json: { categories: fetch_categories(hook) }
+      categories = platform == 'shopiz' ? fetch_shopiz_categories : fetch_categories(hook)
+      render json: { categories: categories }
     else
-      products = fetch_products(hook, params[:q].to_s.strip, params[:category_id], params[:page].to_i)
+      products = platform == 'shopiz' ? fetch_shopiz_products(params[:q].to_s.strip, params[:category_id], params[:page].to_i) : fetch_products(hook, params[:q].to_s.strip, params[:category_id], params[:page].to_i)
       render json: { products: products }
     end
   end
@@ -43,6 +46,41 @@ class Api::V1::Accounts::Conversations::ProductsController < Api::V1::Accounts::
   rescue StandardError => e
     Rails.logger.error("Product fetch error for #{hook.app_id}: #{e.message}")
     []
+  end
+
+  # ===== Shopiz (Native) =====
+
+  def fetch_shopiz_categories
+    []
+  end
+
+  def fetch_shopiz_products(query, _category_id, page)
+    products = Current.account.products.active.order(created_at: :desc)
+    
+    if query.present?
+      search_term = "%#{query}%"
+      products = products.where('name ILIKE ? OR sku ILIKE ?', search_term, search_term)
+    end
+
+    products = products.page(page + 1).per(20)
+
+    products.map do |p|
+      thumbnail = nil
+      if p.respond_to?(:images) && p.images.is_a?(Array)
+        thumbnail = p.images.first
+      elsif p.meta.is_a?(Hash) && p.meta['images'].is_a?(Array)
+        thumbnail = p.meta['images'].first
+      end
+
+      { 
+        id: p.id.to_s, 
+        name: p.name, 
+        price: p.price.to_f,
+        thumbnail: thumbnail, 
+        source: 'shopiz', 
+        in_stock: true 
+      }
+    end
   end
 
   # ===== KiotViet =====
