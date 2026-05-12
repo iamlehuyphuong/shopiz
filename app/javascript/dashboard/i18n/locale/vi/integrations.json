@@ -638,9 +638,9 @@
           "ERROR": "Mô tả là bắt buộc"
         },
         "PRODUCT_NAME": {
-          "LABEL": "Tên sản phẩm",
-          "PLACEHOLDER": "Nhập tên sản phẩm",
-          "ERROR": "Tên sản phẩm là bắt buộc"
+          "LABEL": "Tên sản phẩm / Cửa hàng / Lĩnh vực",
+          "PLACEHOLDER": "Nhập tên sản phẩm hoặc cửa hàng",
+          "ERROR": "Tên sản phẩm / cửa hàng là bắt buộc"
         },
         "WELCOME_MESSAGE": {
           "LABEL": "Tin nhắn chào mừng",

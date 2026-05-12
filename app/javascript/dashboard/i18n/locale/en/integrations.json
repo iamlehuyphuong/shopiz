@@ -638,9 +638,9 @@
           "ERROR": "The description is required"
         },
         "PRODUCT_NAME": {
-          "LABEL": "Product Name",
-          "PLACEHOLDER": "Enter product name",
-          "ERROR": "The product name is required"
+          "LABEL": "Product Name / Store / Domain",
+          "PLACEHOLDER": "Enter product or store name",
+          "ERROR": "The product or store name is required"
         },
         "WELCOME_MESSAGE": {
           "LABEL": "Welcome Message",
