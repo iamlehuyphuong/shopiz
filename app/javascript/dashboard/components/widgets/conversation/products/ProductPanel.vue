@@ -1,8 +1,9 @@
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 import { useStore, useMapGetter } from 'dashboard/composables/store';
-import { useAlert } from 'dashboard/composables';
+import { useAlert, useAccount } from 'dashboard/composables';
 import { emitter } from 'shared/helpers/mitt';
 import { BUS_EVENTS } from 'shared/constants/busEvents';
 import ProductCategoryBar from './ProductCategoryBar.vue';
@@ -18,6 +19,8 @@ const props = defineProps({
 
 const { t } = useI18n();
 const store = useStore();
+const router = useRouter();
+const { accountScopedUrl } = useAccount();
 
 const searchQuery = ref('');
 const selectedCategoryId = ref(null);
@@ -114,6 +117,12 @@ const handleAddToOrder = product => {
   emitter.emit(BUS_EVENTS.ADD_PRODUCT_TO_ORDER, product);
   useAlert(t('CONVERSATION.PRODUCT_PANEL.ADDED_TO_ORDER'));
 };
+
+const goToEcommerceSettings = () => {
+  const inboxId = currentConversation.value?.inbox_id;
+  if (!inboxId) return;
+  router.push(accountScopedUrl(`settings/inboxes/${inboxId}/ecommerce`));
+};
 </script>
 
 <template>
@@ -133,6 +142,14 @@ const handleAddToOrder = product => {
       >
         {{ t('CONVERSATION.PRODUCT_PANEL.NO_INTEGRATION') }}
       </p>
+      <Button
+        :label="t('CONVERSATION.PRODUCT_PANEL.CONNECT_NOW')"
+        xs
+        faded
+        class="mt-3"
+        icon="i-lucide-plug"
+        @click="goToEcommerceSettings"
+      />
     </div>
 
     <!-- Products view -->
