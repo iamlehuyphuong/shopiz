@@ -28,7 +28,13 @@ class ConversationOrders::SendUtilityMessageService
       private: false
     }
 
-    message_params[:content_attributes] = { message_tag: 'POST_PURCHASE_UPDATE' } if conversation.inbox.channel_type == 'Channel::FacebookPage'
+    if conversation.inbox.channel_type == 'Channel::FacebookPage'
+      message_params[:content_attributes] = if conversation.additional_attributes && conversation.additional_attributes['comment_id'].present?
+                                              { target_comment_id: conversation.additional_attributes['comment_id'] }
+                                            else
+                                              { message_tag: 'POST_PURCHASE_UPDATE' }
+                                            end
+    end
 
     Messages::MessageBuilder.new(nil, conversation, message_params).perform
   end
@@ -89,12 +95,12 @@ class ConversationOrders::SendUtilityMessageService
     template = templates[order.status]
 
     if template.present?
-      template.gsub('%{customer_name}', resolve_variable('customer_name').to_s)
-              .gsub('%{inbox_name}', resolve_variable('inbox_name').to_s)
-              .gsub('%{fanpage_name}', resolve_variable('fanpage_name').to_s)
-              .gsub('%{order_id}', resolve_variable('order_id').to_s)
-              .gsub('%{status_label}', resolve_variable('status_label').to_s)
-              .gsub('%{total_amount}', resolve_variable('total_amount').to_s)
+      template.gsub('%<customer_name>s', resolve_variable('customer_name').to_s)
+              .gsub('%<inbox_name>s', resolve_variable('inbox_name').to_s)
+              .gsub('%<fanpage_name>s', resolve_variable('fanpage_name').to_s)
+              .gsub('%<order_id>s', resolve_variable('order_id').to_s)
+              .gsub('%<status_label>s', resolve_variable('status_label').to_s)
+              .gsub('%<total_amount>s', resolve_variable('total_amount').to_s)
     else
       I18n.t(
         'conversation_orders.utility_messages.status_update',

@@ -62,13 +62,18 @@ class AutomationRules::ActionService < ActionService
   def send_facebook_utility_message(message_content, tag)
     return if conversation_a_tweet?
 
+    content_attributes = { automation_rule_id: @rule.id }
+
+    if @conversation.additional_attributes && @conversation.additional_attributes['comment_id'].present?
+      content_attributes[:target_comment_id] = @conversation.additional_attributes['comment_id']
+    else
+      content_attributes[:message_tag] = tag
+    end
+
     params = {
       content: message_content,
       private: false,
-      content_attributes: {
-        automation_rule_id: @rule.id,
-        message_tag: tag
-      }
+      content_attributes: content_attributes
     }
     Messages::MessageBuilder.new(nil, @conversation, params).perform
   end
