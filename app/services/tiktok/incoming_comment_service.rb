@@ -132,8 +132,23 @@ class Tiktok::IncomingCommentService
         comment_created_at: tt_created_at.to_s
       )
     elsif channel.auto_reply_message.present?
-      send_comment_auto_reply(tt_comment_id, channel.auto_reply_message)
+      processed_message = process_liquid_message(channel.auto_reply_message, conversation)
+      send_comment_auto_reply(tt_comment_id, processed_message)
     end
+  end
+
+  def process_liquid_message(message, conversation)
+    return message if message.blank?
+
+    template = Liquid::Template.parse(message)
+    template.render({
+      'contact' => ContactDrop.new(conversation.contact),
+      'conversation' => ConversationDrop.new(conversation),
+      'inbox' => InboxDrop.new(conversation.inbox),
+      'account' => AccountDrop.new(conversation.account)
+    })
+  rescue Liquid::Error
+    message
   end
 
   def send_comment_auto_reply(comment_id, reply_text)

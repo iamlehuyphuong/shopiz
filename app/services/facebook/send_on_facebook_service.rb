@@ -6,8 +6,8 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
   end
 
   def perform_reply
-    if message.content_type? && message.content_attributes?
-      send_message_to_facebook fb_internative_message_params message
+    if %w[input_select cards marketing_optin].include?(message.content_type)
+      send_message_to_facebook fb_internative_message_params(message)
     elsif message.content.present?
       send_message_to_facebook fb_text_message_params
     end
