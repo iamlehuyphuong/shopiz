@@ -9,7 +9,13 @@ module Captain::Tools::Concerns::HaravanClient
   private
 
   def haravan_hook
-    @haravan_hook ||= Integrations::Hook.find_by(account_id: @assistant.account_id, app_id: 'haravan')
+    @haravan_hook ||= begin
+      if respond_to?(:conversation) && conversation
+        hook = conversation.inbox&.effective_ecommerce_hook
+        return hook if hook&.app_id == 'haravan'
+      end
+      Integrations::Hook.find_by(account_id: @assistant.account_id, app_id: 'haravan')
+    end
   end
 
   def haravan_active?

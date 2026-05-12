@@ -7,7 +7,13 @@ module Captain::Tools::Concerns::SapoClient
   private
 
   def sapo_hook
-    @sapo_hook ||= Integrations::Hook.find_by(account_id: @assistant.account_id, app_id: 'sapo')
+    @sapo_hook ||= begin
+      if respond_to?(:conversation) && conversation
+        hook = conversation.inbox&.effective_ecommerce_hook
+        return hook if hook&.app_id == 'sapo'
+      end
+      Integrations::Hook.find_by(account_id: @assistant.account_id, app_id: 'sapo')
+    end
   end
 
   def sapo_active?

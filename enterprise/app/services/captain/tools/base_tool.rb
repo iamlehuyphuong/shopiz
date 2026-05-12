@@ -1,11 +1,12 @@
 class Captain::Tools::BaseTool < RubyLLM::Tool
   prepend Captain::Tools::Instrumentation
 
-  attr_accessor :assistant
+  attr_accessor :assistant, :user, :conversation
 
-  def initialize(assistant, user: nil)
+  def initialize(assistant, user: nil, conversation: nil)
     @assistant = assistant
     @user = user
+    @conversation = conversation
     super()
   end
 

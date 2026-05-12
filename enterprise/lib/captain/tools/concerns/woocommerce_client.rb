@@ -7,7 +7,13 @@ module Captain::Tools::Concerns::WoocommerceClient
   private
 
   def woocommerce_hook
-    @woocommerce_hook ||= Integrations::Hook.find_by(account_id: @assistant.account_id, app_id: 'woocommerce')
+    @woocommerce_hook ||= begin
+      if respond_to?(:conversation) && conversation
+        hook = conversation.inbox&.effective_ecommerce_hook
+        return hook if hook&.app_id == 'woocommerce'
+      end
+      Integrations::Hook.find_by(account_id: @assistant.account_id, app_id: 'woocommerce')
+    end
   end
 
   def woocommerce_active?
