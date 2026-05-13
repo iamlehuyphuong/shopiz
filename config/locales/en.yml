@@ -390,6 +390,10 @@ en:
       name: 'Nhanh.vn'
       short_description: 'Access order details and customer data from your Nhanh.vn store.'
       description: 'Connect your Nhanh.vn store to access order details, customer information, and product data directly within your conversations and helps your support team provide faster, more contextual assistance to your customers.'
+    calendly:
+      name: 'Calendly'
+      short_description: 'Appointment scheduling via Calendly directly within conversations.'
+      description: 'Connect your Calendly account to enable appointment booking directly within conversations. List available services, check time slots, and book appointments on behalf of customers.'
     leadsquared:
       name: 'LeadSquared'
       short_description: 'Sync your contacts and conversations with LeadSquared CRM.'

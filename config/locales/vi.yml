@@ -351,6 +351,10 @@ vi:
       name: 'Nhanh.vn'
       short_description: 'Truy cập chi tiết đơn hàng và dữ liệu khách hàng từ cửa hàng Nhanh.vn của bạn.'
       description: 'Kết nối cửa hàng Nhanh.vn của bạn để truy cập chi tiết đơn hàng, thông tin khách hàng và dữ liệu sản phẩm trực tiếp trong cuộc trò chuyện, giúp đội ngũ hỗ trợ của bạn cung cấp hỗ trợ nhanh chóng và có bối cảnh hơn cho khách hàng.'
+    calendly:
+      name: 'Calendly'
+      short_description: 'Đặt lịch hẹn với khách hàng trực tiếp trong cuộc trò chuyện.'
+      description: 'Kết nối tài khoản Calendly để tự động đặt lịch hẹn, kiểm tra khung giờ trống và quản lý cuộc hẹn trực tiếp trong cuộc trò chuyện với khách hàng.'
     leadsquared:
       name: 'LeadSquared'
       short_description: 'Đồng bộ hóa danh bạ và cuộc trò chuyện của bạn với CRM LeadSquared.'

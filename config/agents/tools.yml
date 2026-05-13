@@ -249,3 +249,28 @@
   description: Execute an automation macro on the current conversation (Kích hoạt
     chạy một kịch bản tự động/Macro trên cuộc hội thoại hiện tại)
   icon: lightning
+- id: calendly_list_event_types
+  title: 'Calendly: List Event Types (Danh sách dịch vụ)'
+  description: List available Calendly appointment types/services for booking (Liệt
+    kê các loại cuộc hẹn/dịch vụ có sẵn trên Calendly)
+  icon: calendar
+- id: calendly_get_available_times
+  title: 'Calendly: Check Availability (Kiểm tra lịch trống)'
+  description: Get available time slots from Calendly for a specific appointment type
+    (Kiểm tra các khung giờ trống cho một dịch vụ cụ thể)
+  icon: clock
+- id: calendly_book_appointment
+  title: 'Calendly: Book Appointment (Đặt lịch hẹn)'
+  description: Book a Calendly appointment for the customer with selected time slot
+    (Đặt lịch hẹn cho khách hàng theo khung giờ đã chọn)
+  icon: calendar-checkmark
+- id: calendly_get_scheduled_events
+  title: 'Calendly: View Appointments (Xem lịch hẹn)'
+  description: Get upcoming scheduled Calendly appointments, optionally filtered by
+    customer email (Xem các cuộc hẹn sắp tới trên Calendly)
+  icon: calendar-list
+- id: calendly_manage_booking
+  title: 'Calendly: Manage Booking (Quản lý lịch hẹn)'
+  description: Get reschedule or cancel link for an existing Calendly booking (Lấy
+    link dời lịch hoặc hủy cuộc hẹn đã đặt)
+  icon: calendar-edit

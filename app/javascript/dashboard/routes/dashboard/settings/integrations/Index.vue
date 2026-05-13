@@ -29,6 +29,7 @@ const CATEGORIES = [
       'sapo',
       'nhanhvn',
       'leadsquared',
+      'calendly',
     ],
   },
   {

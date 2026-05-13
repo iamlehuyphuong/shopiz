@@ -702,6 +702,7 @@ Rails.application.routes.draw do
   post 'webhooks/haravan', to: 'webhooks/haravan#events'
   post 'webhooks/woocommerce', to: 'webhooks/woocommerce#events'
   post 'webhooks/nhanhvn', to: 'webhooks/nhanhvn#events'
+  post 'webhooks/calendly', to: 'webhooks/calendly#events'
 
   namespace :twitter do
     resource :callback, only: [:show]
