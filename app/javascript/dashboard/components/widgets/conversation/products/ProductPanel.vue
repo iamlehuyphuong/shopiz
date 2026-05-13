@@ -7,7 +7,6 @@ import { useAlert } from 'dashboard/composables';
 import { useAccount } from 'dashboard/composables/useAccount';
 import { emitter } from 'shared/helpers/mitt';
 import { BUS_EVENTS } from 'shared/constants/busEvents';
-import ProductCategoryBar from './ProductCategoryBar.vue';
 import ProductCard from './ProductCard.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 
@@ -24,7 +23,6 @@ const router = useRouter();
 const { accountScopedUrl } = useAccount();
 
 const searchQuery = ref('');
-const selectedCategoryId = ref(null);
 const currentPage = ref(0);
 let searchTimer = null;
 
@@ -37,38 +35,26 @@ const currentInbox = computed(() => {
 });
 
 const hasEcommerceIntegration = computed(() => {
-  return !!currentInbox.value?.ecommerce_integration || currentInbox.value?.sales_config?.platform === 'shopiz';
+  return (
+    !!currentInbox.value?.ecommerce_integration ||
+    currentInbox.value?.sales_config?.platform === 'shopiz'
+  );
 });
 
 const products = computed(
   () => store.getters['conversationProducts/getProducts']
 );
-const categories = computed(
-  () => store.getters['conversationProducts/getCategories']
-);
 const uiFlags = computed(
   () => store.getters['conversationProducts/getUIFlags']
 );
-
-const fetchCategories = () => {
-  store.dispatch('conversationProducts/fetchCategories', {
-    conversationId: props.conversationId,
-  });
-};
 
 const fetchProducts = (page = 0) => {
   currentPage.value = page;
   store.dispatch('conversationProducts/fetchProducts', {
     conversationId: props.conversationId,
     query: searchQuery.value,
-    categoryId: selectedCategoryId.value,
     page,
   });
-};
-
-const handleCategoryChange = categoryId => {
-  selectedCategoryId.value = categoryId;
-  fetchProducts(0);
 };
 
 const handleSearch = () => {
@@ -82,7 +68,6 @@ const handleLoadMore = () => {
 
 onMounted(() => {
   if (hasEcommerceIntegration.value) {
-    fetchCategories();
     fetchProducts(0);
   }
 });
@@ -92,8 +77,6 @@ watch(
   () => {
     if (hasEcommerceIntegration.value) {
       searchQuery.value = '';
-      selectedCategoryId.value = null;
-      fetchCategories();
       fetchProducts(0);
     }
   }
@@ -177,15 +160,6 @@ const goToEcommerceSettings = () => {
           />
         </div>
       </div>
-
-      <!-- Categories -->
-      <ProductCategoryBar
-        v-if="categories && categories.length"
-        :categories="categories"
-        :selected-id="selectedCategoryId"
-        :is-loading="uiFlags.isFetchingCategories"
-        @select="handleCategoryChange"
-      />
 
       <!-- Products list -->
       <div class="flex-1 overflow-y-auto px-3 pb-6">

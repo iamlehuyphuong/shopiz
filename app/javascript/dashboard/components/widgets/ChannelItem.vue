@@ -57,10 +57,7 @@ const isActive = computed(() => {
     return false;
   if (key === 'tiktok' && isFalse(globalConfig.ENABLE_CHANNEL_TIKTOK))
     return false;
-  if (
-    key === 'tiktok_shop' &&
-    isFalse(globalConfig.ENABLE_CHANNEL_TIKTOK_SHOP)
-  )
+  if (key === 'tiktok_shop' && isFalse(globalConfig.ENABLE_CHANNEL_TIKTOK_SHOP))
     return false;
   if (key === 'whatsapp' && isFalse(globalConfig.ENABLE_CHANNEL_WHATSAPP))
     return false;
@@ -68,8 +65,7 @@ const isActive = computed(() => {
     return false;
   if (key === 'telegram' && isFalse(globalConfig.ENABLE_CHANNEL_TELEGRAM))
     return false;
-  if (key === 'line' && isFalse(globalConfig.ENABLE_CHANNEL_LINE))
-    return false;
+  if (key === 'line' && isFalse(globalConfig.ENABLE_CHANNEL_LINE)) return false;
   if (key === 'twitter' && isFalse(globalConfig.ENABLE_CHANNEL_TWITTER))
     return false;
   if (key === 'website' && isFalse(globalConfig.ENABLE_CHANNEL_WEBSITE))
@@ -148,7 +144,7 @@ const isComingSoon = computed(() => {
 
   const globalConfig = window.globalConfig || {};
   const isFalse = val => val === false || val === 'false';
-  
+
   const isGloballyDisabled =
     (key === 'facebook' && isFalse(globalConfig.ENABLE_CHANNEL_FACEBOOK)) ||
     (key === 'zalo' && isFalse(globalConfig.ENABLE_CHANNEL_ZALO_OA)) ||

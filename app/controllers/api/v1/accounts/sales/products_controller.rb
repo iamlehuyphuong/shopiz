@@ -10,6 +10,14 @@ class Api::V1::Accounts::Sales::ProductsController < Api::V1::Accounts::BaseCont
       @products = @products.where('name ILIKE ? OR sku ILIKE ?', search_term, search_term)
     end
 
+    if params[:source].present?
+      @products = if params[:source] == 'shopiz'
+                    @products.where("meta->>'source' IS NULL OR meta->>'source' = 'shopiz'")
+                  else
+                    @products.where("meta->>'source' = ?", params[:source])
+                  end
+    end
+
     @products = @products.page(params[:page]).per(params[:per_page] || 15)
 
     render json: {

@@ -39,11 +39,27 @@ class Api::V1::Accounts::Sales::ReportsController < Api::V1::Accounts::BaseContr
   end
 
   def orders_scope
-    current_account.conversation_orders
+    scope = current_account.conversation_orders
+    if params[:source].present?
+      scope = if params[:source] == 'shopiz'
+                scope.where("external_source IS NULL OR external_source = 'shopiz'")
+              else
+                scope.where(external_source: params[:source])
+              end
+    end
+    scope
   end
 
   def products_scope
-    current_account.products
+    scope = current_account.products
+    if params[:source].present?
+      scope = if params[:source] == 'shopiz'
+                scope.where("meta->>'source' IS NULL OR meta->>'source' = 'shopiz'")
+              else
+                scope.where("meta->>'source' = ?", params[:source])
+              end
+    end
+    scope
   end
 
 

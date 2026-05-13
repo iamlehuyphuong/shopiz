@@ -500,14 +500,14 @@ export default {
       @close="closeContactMenu"
     >
       <div class="contact-menu-container">
-        <div 
-          v-for="(item, index) in contactMenuItems" 
+        <div
+          v-for="(item, index) in contactMenuItems"
           :key="index"
-          class="contact-menu-item" 
+          class="contact-menu-item"
           role="button"
           @click.stop="handleContactMenuAction(item)"
         >
-          <span :class="[item.icon, 'flex-shrink-0 size-3.5']" />
+          <span class="flex-shrink-0 size-3.5" :class="[item.icon]" />
           <p class="contact-menu-label truncate">{{ item.label }}</p>
         </div>
       </div>

@@ -11,6 +11,10 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  source: {
+    type: String,
+    default: 'all',
+  },
 });
 
 const { t } = useI18n();
@@ -33,6 +37,7 @@ const fetchHeatmapData = async () => {
     const response = await SalesReportsAPI.getHeatmap({
       from: getUnixTime(fromDate.value),
       to: getUnixTime(toDate.value),
+      source: props.source === 'all' ? undefined : props.source,
     });
     heatmapData.value = response.data;
   } catch (error) {
@@ -44,7 +49,7 @@ const fetchHeatmapData = async () => {
 };
 
 watch(
-  () => props.dateRange,
+  () => [props.dateRange, props.source],
   () => fetchHeatmapData(),
   { deep: true }
 );

@@ -78,7 +78,6 @@ const allowAiCreateOrder = ref(false);
 // Track which textarea is currently focused
 const activeTextareaRef = ref(null);
 
-
 const integrations = computed(() => {
   const allIntegrations = store.getters['integrations/getAppIntegrations'];
   return allIntegrations
@@ -143,7 +142,10 @@ const handleSave = async () => {
 
   isSaving.value = true;
   try {
-    const payloadIntegrationId = selectedIntegrationId.value === 'shopiz' ? null : selectedIntegrationId.value;
+    const payloadIntegrationId =
+      selectedIntegrationId.value === 'shopiz'
+        ? null
+        : selectedIntegrationId.value;
     const platform = selectedIntegrationId.value === 'shopiz' ? 'shopiz' : null;
 
     await store.dispatch('inboxes/updateInbox', {
@@ -411,7 +413,6 @@ const insertVariable = variableKey => {
             </button>
           </div>
         </div>
-
       </div>
 
       <div class="w-full h-[1px] bg-n-weak my-4" />
@@ -591,7 +592,6 @@ const insertVariable = variableKey => {
             </div>
           </template>
         </div>
-
       </div>
 
       <!-- Save button (unified: integration + sales settings) -->

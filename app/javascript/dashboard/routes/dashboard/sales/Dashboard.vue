@@ -13,11 +13,61 @@ import { getUnixStartOfDay, getUnixEndOfDay } from 'helpers/DateHelper';
 import subDays from 'date-fns/subDays';
 import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
 import { useI18n } from 'vue-i18n';
+import { useStoreGetters, useStore } from 'dashboard/composables/store';
+import Button from 'dashboard/components-next/button/Button.vue';
+import Icon from 'dashboard/components-next/icon/Icon.vue';
+import { OnClickOutside } from '@vueuse/components';
 
 const { t } = useI18n();
+const store = useStore();
+const getters = useStoreGetters();
 
 const isLoading = ref(true);
 const reportData = ref(null);
+
+const sourceFilter = ref('all');
+const sources = [
+  { label: 'Tất cả nền tảng', value: 'all' },
+  { label: 'Shopiz', value: 'shopiz' },
+  { label: 'KiotViet', value: 'kiotviet' },
+  { label: 'Sapo', value: 'sapo' },
+  { label: 'Haravan', value: 'haravan' },
+  { label: 'Shopify', value: 'shopify' },
+  { label: 'WooCommerce', value: 'woocommerce' },
+  { label: 'Nhanh.vn', value: 'nhanhvn' },
+  { label: 'TikTok Shop', value: 'tiktok_shop' },
+];
+
+const showSourceDropdown = ref(false);
+const activeSourceName = computed(
+  () => sources.find(s => s.value === sourceFilter.value)?.label
+);
+
+const appIntegrations = computed(
+  () => getters['integrations/getAppIntegrations'].value
+);
+
+const isSourceConnected = sourceValue => {
+  if (sourceValue === 'all' || sourceValue === 'shopiz') return true;
+  const integration = appIntegrations.value?.find(i => i.id === sourceValue);
+  return integration && integration.hooks && integration.hooks.length > 0;
+};
+
+const sortedSources = computed(() => {
+  return [...sources].sort((a, b) => {
+    const getWeight = s => {
+      if (s.value === 'all') return 0;
+      if (s.value === 'shopiz') return 1;
+      return isSourceConnected(s.value) ? 2 : 3;
+    };
+    return getWeight(a) - getWeight(b);
+  });
+});
+
+const sourceLogo = source => {
+  if (!source) return null;
+  return `/dashboard/images/integrations/${source}.png`;
+};
 
 const customDateRange = ref([subDays(new Date(), 6), new Date()]);
 const selectedDateRange = ref(DATE_RANGE_TYPES.LAST_7_DAYS);
@@ -40,6 +90,7 @@ const fetchReports = async () => {
     const response = await SalesReportsAPI.getReports({
       from: fromTimestamp.value,
       to: toTimestamp.value,
+      source: sourceFilter.value === 'all' ? undefined : sourceFilter.value,
     });
     reportData.value = response.data;
   } catch (error) {
@@ -99,7 +150,12 @@ const onDateRangeChange = value => {
   fetchReports();
 };
 
+watch(sourceFilter, () => {
+  fetchReports();
+});
+
 onMounted(() => {
+  store.dispatch('integrations/get');
   fetchReports();
 });
 </script>
@@ -107,11 +163,102 @@ onMounted(() => {
 <template>
   <SalesLayout :is-loading="isLoading">
     <template #header>
-      <BaseSettingsHeader
-        :title="$t('SALES.MODULE_DASHBOARD.HEADER.TITLE')"
-        :description="$t('SALES.MODULE_DASHBOARD.HEADER.DESCRIPTION')"
-        feature-name="salesDashboard"
-      />
+      <div class="flex flex-col items-start w-full mb-4">
+        <div
+          class="flex items-center justify-between w-full gap-4 min-h-8 mb-2"
+        >
+          <div class="flex items-center gap-2">
+            <span class="text-heading-1 text-n-slate-12">
+              {{ activeSourceName }}
+            </span>
+            <div class="relative group z-20">
+              <OnClickOutside @trigger="showSourceDropdown = false">
+                <Button
+                  icon="i-lucide-chevron-down"
+                  :variant="showSourceDropdown ? 'faded' : 'ghost'"
+                  color="slate"
+                  size="xs"
+                  class="rounded-md group-hover:bg-n-slate-3 hover:bg-n-slate-3 [&>span]:size-4"
+                  @click="showSourceDropdown = !showSourceDropdown"
+                />
+
+                <div
+                  v-if="showSourceDropdown"
+                  class="py-3 bg-n-alpha-3 backdrop-blur-[100px] outline outline-n-container outline-1 z-50 absolute ltr:left-0 rtl:right-0 top-9 min-w-[20rem] max-w-[24rem] rounded-xl shadow-lg flex flex-col gap-2 mt-1"
+                >
+                  <div
+                    class="flex items-center justify-between gap-4 px-4 pb-3 border-b border-n-alpha-2 mx-2"
+                  >
+                    <div class="flex flex-col gap-0.5">
+                      <h2 class="text-sm font-semibold text-n-slate-12">
+                        Nền tảng
+                      </h2>
+                      <p class="text-xs text-n-slate-11">
+                        Chuyển đổi giữa các nền tảng bán hàng
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="flex flex-col gap-0.5 px-2 max-h-[60vh] overflow-y-auto"
+                  >
+                    <Button
+                      v-for="s in sortedSources"
+                      :key="s.value"
+                      variant="ghost"
+                      color="slate"
+                      class="!justify-between !px-3 !py-2 hover:!bg-n-alpha-2 h-10 w-full"
+                      :disabled="!isSourceConnected(s.value)"
+                      @click="
+                        () => {
+                          sourceFilter = s.value;
+                          showSourceDropdown = false;
+                        }
+                      "
+                    >
+                      <div class="flex items-center gap-2.5 min-w-0">
+                        <img
+                          v-if="s.value !== 'all' && s.value !== 'shopiz'"
+                          :src="sourceLogo(s.value)"
+                          class="w-5 h-5 rounded-full object-cover flex-shrink-0"
+                        />
+                        <Icon
+                          v-else-if="s.value === 'all'"
+                          icon="i-lucide-globe"
+                          class="w-5 h-5 text-n-slate-11"
+                        />
+                        <Icon
+                          v-else
+                          icon="i-lucide-store"
+                          class="w-5 h-5 text-n-brand-9"
+                        />
+                        <span
+                          class="text-sm font-medium truncate text-n-slate-12"
+                          >{{ s.label }}</span>
+                      </div>
+                      <Icon
+                        v-if="sourceFilter === s.value"
+                        icon="i-lucide-check"
+                        class="w-4 h-4 text-n-teal-10 flex-shrink-0"
+                      />
+                    </Button>
+                  </div>
+                </div>
+              </OnClickOutside>
+            </div>
+
+            <div class="w-0.5 h-4 rounded-2xl bg-n-weak ml-2 mr-2" />
+            <span class="text-heading-1 text-n-slate-11">
+              {{ $t('SALES.MODULE_DASHBOARD.HEADER.TITLE') }}
+            </span>
+          </div>
+        </div>
+
+        <div class="flex flex-col w-full gap-1.5 text-n-slate-11">
+          <p class="mb-0 max-w-3xl text-body-main">
+            {{ $t('SALES.MODULE_DASHBOARD.HEADER.DESCRIPTION') }}
+          </p>
+        </div>
+      </div>
     </template>
     <template #body>
       <div class="flex flex-col gap-5">
@@ -146,7 +293,7 @@ onMounted(() => {
           <OrdersByInboxTable :data="reportData.orders_by_inbox || []" />
 
           <!-- Order Heatmap -->
-          <OrderHeatmap :date-range="customDateRange" />
+          <OrderHeatmap :date-range="customDateRange" :source="sourceFilter" />
         </div>
 
         <div

@@ -225,8 +225,7 @@
         "COUNT": "sản phẩm"
       },
       "ACTIONS": {
-        "PULL": "Kéo từ sàn",
-        "PUSH": "Đẩy lên sàn",
+        "PULL": "Đồng bộ dữ liệu",
         "ADD": "Thêm sản phẩm"
       },
       "TABLE": {
@@ -239,7 +238,6 @@
           "ACTIONS": "Hành động"
         },
         "ACTIONS": {
-          "PUSH": "Đẩy lên sàn",
           "EDIT": "Chỉnh sửa",
           "DELETE": "Xoá"
         }
@@ -260,8 +258,7 @@
         "DELETE_CONFIRM_PLACEHOLDER": "Nhập {name} để xác nhận",
         "DELETE_CONFIRM_YES": "Có, xóa sản phẩm",
         "CANCEL": "Không, giữ lại",
-        "DELETE_SUCCESS": "Đã xoá sản phẩm.",
-        "SELECT_TO_PUSH": "Chọn sản phẩm để đẩy lên sàn."
+        "DELETE_SUCCESS": "Đã xoá sản phẩm."
       }
     },
     "MODULE_ORDERS": {
@@ -540,7 +537,7 @@
       }
     },
     "DIALOG_PULL_PRODUCTS": {
-      "TITLE": "Kéo sản phẩm từ sàn",
+      "TITLE": "Đồng bộ dữ liệu sản phẩm",
       "DESC": "Chọn nền tảng bán hàng để đồng bộ danh sách sản phẩm về Shopiz.",
       "FORM": {
         "CANCEL": "Huỷ",

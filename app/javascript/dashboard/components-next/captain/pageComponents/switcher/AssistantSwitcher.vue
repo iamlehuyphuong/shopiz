@@ -111,8 +111,11 @@ const openCreateAssistantDialog = () => {
         @click="openCreateAssistantDialog"
       />
     </div>
-    
-    <div v-if="assistants.length > 0" class="flex flex-col gap-0.5 px-2 max-h-[60vh] overflow-y-auto">
+
+    <div
+      v-if="assistants.length > 0"
+      class="flex flex-col gap-0.5 px-2 max-h-[60vh] overflow-y-auto"
+    >
       <Button
         v-for="assistant in assistants"
         :key="assistant.id"
@@ -135,14 +138,14 @@ const openCreateAssistantDialog = () => {
             {{ assistant.name || '' }}
           </span>
         </div>
-        <Icon 
-          v-if="isAssistantActive(assistant)" 
-          icon="i-lucide-check" 
-          class="w-4 h-4 text-n-teal-10 flex-shrink-0" 
+        <Icon
+          v-if="isAssistantActive(assistant)"
+          icon="i-lucide-check"
+          class="w-4 h-4 text-n-teal-10 flex-shrink-0"
         />
       </Button>
     </div>
-    
+
     <div v-else class="flex flex-col items-center gap-2 px-4 py-4">
       <p class="text-sm text-n-slate-11 text-center">
         {{ t('CAPTAIN.ASSISTANT_SWITCHER.EMPTY_LIST') }}

@@ -418,10 +418,7 @@ const contextMenuEnabledOptions = computed(() => {
       isIncoming &&
       hasText &&
       !isMessageDeleted.value,
-    askCopilot:
-      isCaptainEnabled.value &&
-      hasText &&
-      !isMessageDeleted.value,
+    askCopilot: isCaptainEnabled.value && hasText && !isMessageDeleted.value,
     undo: props.canUndo,
   };
 });
