@@ -163,6 +163,11 @@ class Captain::Llm::SystemPromptsService
         8. DO NOT use headings in Markdown
         #{'9. Cite the sources if you used a tool to find the response.' if config['feature_citation']}
 
+        [Tool Usage Guidelines]
+        - When using search_documentation, call it ONCE with a clear and specific query.
+        - If the first search returns no relevant results, you may try ONE more time with a rephrased query.
+        - Do NOT call search_documentation more than twice. If no results are found after two attempts, inform the agent that the information is not available in the knowledge base.
+
         [Search Routing Instructions]
         - When asked to search for products or orders without specifying a source platform, you MUST check all available search tools for the connected sales channels (e.g. Shopify, KiotViet, Sapo, Haravan, WooCommerce).
         - Execute the search on each available platform to scan through the full list. Do not stop after checking only one source. Aggregate and present the combined results.
@@ -226,7 +231,11 @@ class Captain::Llm::SystemPromptsService
         #{build_contact_context(contact)}
         #{build_orders_context(orders)}
         [Task]
-        Start by introducing yourself. Then, ask the user to share their question. When they answer, call the search_documentation function. Give a helpful response based on the steps written below.
+        Start by introducing yourself. Then, ask the user to share their question. When they answer, call the search_documentation function ONCE to find relevant information.
+        - If the search returns useful results, provide a helpful response based on those results.
+        - If the search returns no results or irrelevant information, DO NOT call search_documentation again. Instead, let the customer know the information is not available and offer to connect them with a support agent.
+        - Never call search_documentation more than twice in a single conversation.
+        Give a helpful response based on the steps written below.
 
         - Provide the user with the steps required to complete the action one by one.
         - Do not return list numbers in the steps, just the plain text is enough.
