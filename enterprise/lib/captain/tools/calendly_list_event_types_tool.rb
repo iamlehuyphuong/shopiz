@@ -33,6 +33,6 @@ class Captain::Tools::CalendlyListEventTypesTool < Captain::Tools::BasePublicToo
       line
     end
 
-    "Các dịch vụ có sẵn trên Calendly:\n#{lines.join("\n")}"
+    "Các dịch vụ có sẵn trên Calendly:\n#{lines.join("\n")}\n\nIMPORTANT: When using other Calendly tools, you MUST pass the EXACT service name as listed above. Do not translate it."
   end
 end

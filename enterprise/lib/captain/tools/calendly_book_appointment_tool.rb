@@ -2,8 +2,10 @@
 class Captain::Tools::CalendlyBookAppointmentTool < Captain::Tools::BasePublicTool
   include Captain::Tools::Concerns::CalendlyClient
 
-  description 'Book a Calendly appointment for the customer. Requires event type name, ' \
-              'selected start time, customer name and email. Use after the customer has chosen a time slot.'
+  description 'Book a Calendly appointment for the customer. ' \
+              'IMPORTANT: You MUST use calendly_list_event_types first to get the EXACT event_type_name. ' \
+              'NEVER hallucinate or translate the event name. ' \
+              'You MUST use calendly_get_available_times to find a valid start_time before booking.'
 
   param :event_type_name, type: 'string', desc: 'Name or keyword of the event type to book', required: true
   param :start_time, type: 'string', desc: 'Selected time slot in UTC ISO-8601 format (e.g. 2025-01-15T07:00:00Z)', required: true
@@ -66,6 +68,8 @@ class Captain::Tools::CalendlyBookAppointmentTool < Captain::Tools::BasePublicTo
       "Không thể đặt lịch '#{event_type_name}'. Khung giờ này có thể đã được đặt. Hãy chọn khung giờ khác."
     when 403
       "Calendly account cần nâng cấp lên gói trả phí để sử dụng tính năng đặt lịch."
+    when 429
+      "Hệ thống đang bị giới hạn do gọi API quá nhiều lần (Rate Limit). Vui lòng thử lại sau 1-2 phút."
     else
       "Lỗi khi đặt lịch: #{error.message}"
     end

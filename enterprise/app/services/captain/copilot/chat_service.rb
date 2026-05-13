@@ -87,7 +87,12 @@ class Captain::Copilot::ChatService < Llm::BaseAiService
     Captain::Tools::Copilot::CreateCustomerService,
     Captain::Tools::Copilot::UpdateCustomerService,
     Captain::Tools::Copilot::PushOrderService,
-    Captain::Tools::Copilot::CreateScenarioService
+    Captain::Tools::Copilot::CreateScenarioService,
+    Captain::Tools::Copilot::CalendlyListEventTypesService,
+    Captain::Tools::Copilot::CalendlyGetAvailableTimesService,
+    Captain::Tools::Copilot::CalendlyBookAppointmentService,
+    Captain::Tools::Copilot::CalendlyGetScheduledEventsService,
+    Captain::Tools::Copilot::CalendlyManageBookingService
   ].freeze
 
   def build_tools

@@ -3,13 +3,25 @@ class Captain::Tools::CalendlyGetAvailableTimesTool < Captain::Tools::BasePublic
   include Captain::Tools::Concerns::CalendlyClient
 
   description 'Get available time slots from Calendly for a specific appointment type. ' \
-              'Use after identifying the event type the customer wants. Max 7 days per query.'
+              'IMPORTANT: You MUST use calendly_list_event_types first to get the EXACT event_type_name. ' \
+              'NEVER hallucinate or translate the event name. ' \
+              'If the specific time the user requested is NOT in the returned slots, DO NOT retry this tool. ' \
+              'Immediately tell the user it is unavailable. ' \
+              'CRITICAL: If the user requested a specific time of day (e.g. afternoon/buổi chiều), you MUST strictly filter the returned list and ONLY present the slots that match their request.'
 
   param :event_type_name, type: 'string', desc: 'Name or keyword of the event type (e.g. "Tư vấn", "Demo")', required: true
   param :preferred_date, type: 'string', desc: 'Preferred date in YYYY-MM-DD format', required: false
   param :days_ahead, type: 'integer', desc: 'Number of days to look ahead from preferred_date (max 7)', required: false
 
   def perform(tool_context, event_type_name:, preferred_date: nil, days_ahead: 7)
+    # Anti-loop measure
+    cache_key = "calendly_times_#{event_type_name}_#{preferred_date}_#{days_ahead}"
+    tool_context.state[:calendly_calls] ||= {}
+    if tool_context.state[:calendly_calls][cache_key]
+      return "ERROR: You have already executed this tool with these exact parameters. DO NOT retry. The requested time is NOT available. Stop immediately and inform the user."
+    end
+    tool_context.state[:calendly_calls][cache_key] = true
+
     hook = find_calendly_hook(tool_context)
     return calendly_not_connected_message unless hook
 
@@ -20,7 +32,9 @@ class Captain::Tools::CalendlyGetAvailableTimesTool < Captain::Tools::BasePublic
     return "Không tìm thấy dịch vụ '#{event_type_name}' trên Calendly." unless event_type
 
     # 2. Build time range (max 7 days per Calendly API constraint)
-    start_time = preferred_date.present? ? Time.parse("#{preferred_date}T00:00:00") : Time.current
+    parsed_time = preferred_date.present? ? Time.parse("#{preferred_date}T00:00:00") : Time.current
+    start_time = [parsed_time, Time.current + 1.minute].max
+    
     capped_days = [days_ahead.to_i, 7].min
     capped_days = 7 if capped_days <= 0
     end_time = start_time + capped_days.days
@@ -39,7 +53,7 @@ class Captain::Tools::CalendlyGetAvailableTimesTool < Captain::Tools::BasePublic
     log_tool_usage('get_available_times', event_type: event_type['name'], slots: slots.size)
     format_available_times(slots, event_type, timezone)
   rescue Calendly::ApiClient::ApiError => e
-    "Calendly error: #{e.message}"
+    "Calendly error: #{e.message} - #{e.body}"
   end
 
   private

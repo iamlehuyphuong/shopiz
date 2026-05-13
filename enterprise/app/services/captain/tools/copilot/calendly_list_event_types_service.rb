@@ -1,0 +1,31 @@
+# Copilot tool: Lists available Calendly event types for the agent.
+class Captain::Tools::Copilot::CalendlyListEventTypesService < Captain::Tools::BaseTool
+  def self.name
+    'calendly_list_event_types'
+  end
+
+  description 'List available Calendly appointment types/services (e.g. Consultation, Demo)'
+
+  def execute
+    hook = find_calendly_hook
+    return calendly_not_connected_message unless hook
+
+    client = calendly_client(hook)
+    response = client.event_types(user_uri: hook.settings['user_uri'])
+    collection = response['collection'] || []
+
+    return 'No active event types found on Calendly.' if collection.empty?
+
+    format_event_types(collection)
+  rescue Calendly::ApiClient::ApiError => e
+    "Calendly error: #{e.message}"
+  end
+
+  def active?
+    @user.present? && find_calendly_hook.present?
+  end
+
+  private
+
+  include Captain::Tools::Copilot::Concerns::CalendlyHelper
+end

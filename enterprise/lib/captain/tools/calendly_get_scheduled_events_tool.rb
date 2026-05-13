@@ -30,7 +30,7 @@ class Captain::Tools::CalendlyGetScheduledEventsTool < Captain::Tools::BasePubli
     end
 
     log_tool_usage('get_scheduled_events', count: events.size, email_filter: customer_email)
-    format_events(events, timezone)
+    format_events(client, events, timezone)
   rescue Calendly::ApiClient::ApiError => e
     "Calendly error: #{e.message}"
   end
@@ -48,15 +48,30 @@ class Captain::Tools::CalendlyGetScheduledEventsTool < Captain::Tools::BasePubli
     end
   end
 
-  def format_events(events, timezone)
+  def format_events(client, events, timezone)
     lines = ["Các cuộc hẹn sắp tới (#{events.size}):"]
 
     events.first(10).each do |event|
       name = event['name'] || event.dig('event_type', 'name') || 'N/A'
       start_time = event['start_time'] ? format_time_local(event['start_time'], timezone) : 'N/A'
       status = event['status']
+      
+      uuid = event['uri']&.split('/')&.last
+      invitee_info = "N/A"
+      if uuid
+        begin
+          invitees_response = client.event_invitees(event_uuid: uuid)
+          invitees = invitees_response['collection'] || []
+          if invitees.any?
+            inv = invitees.first
+            invitee_info = "#{inv['name']} (#{inv['email']})"
+          end
+        rescue Calendly::ApiClient::ApiError
+          # Ignore if we can't fetch invitees
+        end
+      end
 
-      lines << "- #{name} | #{start_time} | #{status}"
+      lines << "- Dịch vụ: #{name} | Khách: #{invitee_info} | Thời gian: #{start_time} | Trạng thái: #{status}"
     end
 
     lines << "... và #{events.size - 10} cuộc hẹn khác" if events.size > 10

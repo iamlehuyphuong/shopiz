@@ -92,10 +92,33 @@ class Captain::Assistant < ApplicationRecord
   end
 
   def agent_tools
-    [
+    tools = [
       self.class.resolve_tool_class('faq_lookup').new(self),
       self.class.resolve_tool_class('handoff').new(self)
     ]
+
+    tools.concat(calendly_agent_tools) if calendly_hook_active?
+
+    tools
+  end
+
+  CALENDLY_TOOL_IDS = %w[
+    calendly_list_event_types
+    calendly_get_available_times
+    calendly_book_appointment
+    calendly_get_scheduled_events
+    calendly_manage_booking
+  ].freeze
+
+  def calendly_hook_active?
+    account.hooks.exists?(app_id: 'calendly', status: :enabled)
+  end
+
+  def calendly_agent_tools
+    CALENDLY_TOOL_IDS.filter_map do |tool_id|
+      tool_class = self.class.resolve_tool_class(tool_id)
+      tool_class&.new(self)
+    end
   end
 
   def prompt_context

@@ -8,10 +8,10 @@ module Captain::Tools::Concerns::CalendlyClient
 
   # Find the active Calendly integration hook for the account.
   def find_calendly_hook(tool_context)
-    conversation = find_conversation(tool_context.state)
-    return nil unless conversation
+    account_id = tool_context.state[:account_id] || tool_context.state['account_id']
+    return nil unless account_id
 
-    conversation.account.hooks.find_by(app_id: 'calendly', status: :enabled)
+    Integrations::Hook.find_by(account_id: account_id, app_id: 'calendly', status: :enabled)
   end
 
   def calendly_client(hook)
@@ -25,7 +25,22 @@ module Captain::Tools::Concerns::CalendlyClient
     response = client.event_types(user_uri: hook.settings['user_uri'])
     collection = response['collection'] || []
 
-    collection.find { |et| et['name']&.downcase&.include?(name.downcase) }
+    # 1. Exact or substring match (case insensitive)
+    match = collection.find do |et|
+      et_name = et['name']&.downcase || ''
+      query = name.downcase
+      et_name.include?(query) || query.include?(et_name)
+    end
+    return match if match
+
+    # 2. Extract number from name (duration) as a fallback
+    duration = name.scan(/\d+/).first&.to_i
+    if duration
+      match = collection.find { |et| et['duration'] == duration }
+      return match if match
+    end
+
+    nil
   end
 
   # Format a UTC ISO-8601 time into a human-readable local time.
