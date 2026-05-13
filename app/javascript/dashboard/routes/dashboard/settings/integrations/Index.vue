@@ -46,10 +46,15 @@ const CATEGORIES = [
   },
 ];
 
+const HIDDEN_IDS = ['dialogflow'];
+
 const filteredIntegrationList = computed(() => {
+  const visible = integrationList.value.filter(
+    item => !HIDDEN_IDS.includes(item.id)
+  );
   const query = searchQuery.value.trim();
-  if (!query) return integrationList.value;
-  return picoSearch(integrationList.value, query, ['name', 'description']);
+  if (!query) return visible;
+  return picoSearch(visible, query, ['name', 'description']);
 });
 
 const categorizedIntegrations = computed(() => {
