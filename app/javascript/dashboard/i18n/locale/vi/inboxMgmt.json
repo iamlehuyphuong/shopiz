@@ -589,8 +589,10 @@
       "DESC": ""
     },
     "ECOMMERCE": {
-      "TITLE": "Tích hợp thương mại điện tử",
-      "DESCRIPTION": "Liên kết hộp thư này với nền tảng bán hàng. Mọi hội thoại trong hộp thư này sẽ sử dụng tính năng tìm kiếm sản phẩm và quản lý đơn hàng của nền tảng đó.",
+      "INTEGRATIONS_TITLE": "Tích hợp thương mại điện tử",
+      "INTEGRATIONS_DESCRIPTION": "Liên kết tài khoản với nền tảng bán hàng. Mọi hội thoại sẽ sử dụng tính năng tìm kiếm sản phẩm và quản lý đơn hàng của nền tảng đó.",
+      "TITLE": "Cài đặt bán hàng",
+      "DESCRIPTION": "Cấu hình cài đặt bán hàng cho hộp thư này, bao gồm liên kết nền tảng eCommerce, kích hoạt trợ lý AI tự động tạo đơn và thiết lập các mẫu tin nhắn thông báo trạng thái đơn hàng tự động.",
       "SELECT_PLATFORM": "Chọn nền tảng tích hợp",
       "NO_INTEGRATIONS": "Chưa có kết nối thương mại điện tử nào. Vui lòng cấu hình trong Cài đặt → Tích hợp trước.",
       "AUTO_LINKED": "Tự động liên kết với {platform}",

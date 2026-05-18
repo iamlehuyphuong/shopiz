@@ -1,27 +1,27 @@
 <script setup>
-import { ref, computed, onMounted, reactive } from 'vue';
+import { ref, computed, onMounted, reactive, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useStore } from 'dashboard/composables/store';
+import { useAccount } from 'dashboard/composables/useAccount';
 import { useAlert } from 'dashboard/composables';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import WithLabel from 'v3/components/Form/WithLabel.vue';
 import Switch from 'dashboard/components-next/switch/Switch.vue';
-import OrderTemplateMapping from '../components/OrderTemplateMapping.vue';
+import IntegrationItem from 'dashboard/routes/dashboard/settings/integrations/IntegrationItem.vue';
+import { OnClickOutside } from '@vueuse/components';
 
-const props = defineProps({
-  inbox: {
-    type: Object,
-    required: true,
-  },
-});
+const { t } = useI18n();
+const store = useStore();
+const { currentAccount } = useAccount();
 
 const ECOMMERCE_APP_IDS = [
-  'kiotviet',
-  'sapo',
-  'haravan',
   'shopify',
   'woocommerce',
+  'calendly',
+  'kiotviet',
   'nhanhvn',
+  'haravan',
+  'sapo',
   'tiktok_shop',
 ];
 
@@ -33,6 +33,7 @@ const PLATFORM_LABELS = {
   woocommerce: 'WooCommerce',
   nhanhvn: 'Nhanh.vn',
   tiktok_shop: 'TikTok Shop',
+  calendly: 'Calendly',
 };
 
 const PLATFORM_ICONS = {
@@ -43,6 +44,7 @@ const PLATFORM_ICONS = {
   woocommerce: 'i-lucide-globe',
   nhanhvn: 'i-lucide-zap',
   tiktok_shop: 'i-lucide-music',
+  calendly: 'i-lucide-calendar',
 };
 
 const TEMPLATE_VARIABLES = [
@@ -56,11 +58,11 @@ const TEMPLATE_VARIABLES = [
   { key: '%{total_amount}', labelKey: 'INBOX_MGMT.ECOMMERCE.VAR_TOTAL_AMOUNT' },
 ];
 
-const { t } = useI18n();
-const store = useStore();
+const SHOPIZ_LOGO_PATH = '/brand-assets/logo_thumbnail.svg';
 
 const selectedIntegrationId = ref(null);
 const isSaving = ref(false);
+const showPlatformDropdown = ref(false);
 
 const customizeTemplates = ref(false);
 const salesOrderNotificationTemplates = reactive({
@@ -76,27 +78,40 @@ const allowAiCreateOrder = ref(false);
 // Track which textarea is currently focused
 const activeTextareaRef = ref(null);
 
+const ecomIntegrations = computed(() => {
+  const allIntegrations =
+    store.getters['integrations/getAppIntegrations'] || [];
+  const filtered = allIntegrations.filter(app =>
+    ECOMMERCE_APP_IDS.includes(app.id)
+  );
+  return filtered.sort((a, b) => {
+    return ECOMMERCE_APP_IDS.indexOf(a.id) - ECOMMERCE_APP_IDS.indexOf(b.id);
+  });
+});
+
 const integrations = computed(() => {
-  const allIntegrations = store.getters['integrations/getAppIntegrations'];
-  return allIntegrations
-    .filter(app => ECOMMERCE_APP_IDS.includes(app.id) && app.hooks?.length > 0)
+  return ecomIntegrations.value
+    .filter(app => app.hooks?.length > 0)
     .map(app => ({
-      hookId: app.hooks[0].id,
+      hookId: app.id,
       appId: app.id,
       label: PLATFORM_LABELS[app.id] || app.id,
       icon: PLATFORM_ICONS[app.id] || 'i-lucide-box',
     }));
 });
 
-const isMarketplaceLocked = computed(
-  () => props.inbox.marketplace_locked || false
-);
+const activePlatformLabel = computed(() => {
+  if (selectedIntegrationId.value === 'shopiz') return 'Shopiz';
+  const found = integrations.value.find(
+    item => item.hookId === selectedIntegrationId.value
+  );
+  return found ? found.label : selectedIntegrationId.value;
+});
 
-const TEMPLATE_MAPPING_CHANNELS = ['Channel::ZaloOa', 'Channel::Whatsapp'];
-
-const supportsOrderTemplateMapping = computed(() =>
-  TEMPLATE_MAPPING_CHANNELS.includes(props.inbox.channel_type)
-);
+const activePlatformLogo = computed(() => {
+  if (selectedIntegrationId.value === 'shopiz') return SHOPIZ_LOGO_PATH;
+  return `/dashboard/images/integrations/${selectedIntegrationId.value}.png`;
+});
 
 const hasAnyTemplate = computed(() => {
   return Object.values(salesOrderNotificationTemplates).some(
@@ -105,7 +120,7 @@ const hasAnyTemplate = computed(() => {
 });
 
 const loadSalesSettings = () => {
-  const config = props.inbox.sales_config || {};
+  const config = currentAccount.value?.settings || {};
   const templates = config.order_notification_templates || {};
 
   Object.keys(salesOrderNotificationTemplates).forEach(key => {
@@ -122,35 +137,27 @@ const loadSalesSettings = () => {
 
 onMounted(() => {
   store.dispatch('integrations/get');
-  const config = props.inbox.sales_config || {};
-  if (config.platform === 'shopiz') {
-    selectedIntegrationId.value = 'shopiz';
-  } else {
-    selectedIntegrationId.value = props.inbox.ecommerce_integration?.id || null;
-  }
-  loadSalesSettings();
 });
 
-const handleSave = async () => {
-  if (isMarketplaceLocked.value) return;
+watch(
+  currentAccount,
+  () => {
+    const config = currentAccount.value?.settings || {};
+    selectedIntegrationId.value = config.active_ecommerce_platform || 'shopiz';
+    loadSalesSettings();
+  },
+  { deep: true, immediate: true }
+);
 
+const handleSave = async () => {
   isSaving.value = true;
   try {
-    const payloadIntegrationId =
-      selectedIntegrationId.value === 'shopiz'
-        ? null
-        : selectedIntegrationId.value;
-    const platform = selectedIntegrationId.value === 'shopiz' ? 'shopiz' : null;
+    const platform = selectedIntegrationId.value;
 
-    await store.dispatch('inboxes/updateInbox', {
-      id: props.inbox.id,
-      formData: false,
-      ecommerce_integration_id: payloadIntegrationId,
-      sales_config: {
-        platform: platform,
-        ai_allow_create_order: allowAiCreateOrder.value,
-        order_notification_templates: salesOrderNotificationTemplates,
-      },
+    await store.dispatch('accounts/update', {
+      active_ecommerce_platform: platform,
+      ai_allow_create_order: allowAiCreateOrder.value,
+      order_notification_templates: salesOrderNotificationTemplates,
     });
     useAlert(t('INBOX_MGMT.ECOMMERCE.SAVE_SUCCESS'));
   } catch (error) {
@@ -158,6 +165,11 @@ const handleSave = async () => {
   } finally {
     isSaving.value = false;
   }
+};
+
+const selectIntegration = async id => {
+  selectedIntegrationId.value = id;
+  await handleSave();
 };
 
 const fillDefaultTemplates = () => {
@@ -216,395 +228,360 @@ const insertVariable = variableKey => {
 <template>
   <!-- eslint-disable vue/no-bare-strings-in-template -->
   <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
-  <div class="max-w-4xl mx-6">
-    <div class="flex flex-col gap-6">
-      <!-- Header -->
-      <div class="flex flex-col gap-1">
-        <h3 class="text-lg font-semibold text-n-slate-12">
-          {{ t('INBOX_MGMT.ECOMMERCE.TITLE') }}
-        </h3>
-        <p class="text-sm text-n-slate-11">
-          {{ t('INBOX_MGMT.ECOMMERCE.DESCRIPTION') }}
-        </p>
-      </div>
-
-      <!-- Marketplace locked banner -->
-      <div
-        v-if="isMarketplaceLocked"
-        class="flex items-center gap-3 rounded-xl border border-n-teal-6 bg-n-teal-2 px-4 py-3"
-      >
-        <i class="i-lucide-lock text-n-teal-11 text-base" />
-        <div class="flex-1">
-          <p class="text-sm font-medium text-n-teal-12">
-            {{
-              t('INBOX_MGMT.ECOMMERCE.AUTO_LINKED', {
-                platform:
-                  PLATFORM_LABELS[inbox.ecommerce_integration?.app_id] ||
-                  'Marketplace',
-              })
-            }}
-          </p>
-          <p class="text-xs text-n-teal-11 mt-0.5">
-            {{ t('INBOX_MGMT.ECOMMERCE.MARKETPLACE_NOTE') }}
+  <div class="w-full h-full overflow-auto">
+    <div class="max-w-5xl mx-auto px-6 py-6">
+      <div class="flex flex-col gap-6">
+        <!-- Header -->
+        <div class="flex flex-col gap-1">
+          <h3 class="text-lg font-semibold text-n-slate-12">
+            {{ t('INBOX_MGMT.ECOMMERCE.TITLE') }}
+          </h3>
+          <p class="text-sm text-n-slate-11">
+            {{ t('INBOX_MGMT.ECOMMERCE.DESCRIPTION') }}
           </p>
         </div>
-        <span
-          v-if="inbox.ecommerce_integration"
-          class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-n-teal-4 text-sm font-medium text-n-teal-12"
-        >
-          <i
-            :class="
-              PLATFORM_ICONS[inbox.ecommerce_integration.app_id] ||
-              'i-lucide-box'
-            "
-            class="text-sm"
-          />
-          {{
-            PLATFORM_LABELS[inbox.ecommerce_integration.app_id] ||
-            inbox.ecommerce_integration.app_id
-          }}
-        </span>
-      </div>
 
-      <!-- Integration selector -->
-      <div v-else class="flex flex-col gap-4">
-        <div class="flex flex-col gap-1.5">
-          <label class="text-sm font-medium text-n-slate-12">
-            {{ t('INBOX_MGMT.ECOMMERCE.SELECT_PLATFORM') }}
-          </label>
+        <!-- Integration selector -->
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex flex-col gap-1">
+            <h3 class="text-base font-semibold text-n-slate-12">
+              {{ t('INBOX_MGMT.ECOMMERCE.INTEGRATIONS_TITLE') }}
+            </h3>
+            <p class="text-sm text-n-slate-11 leading-relaxed">
+              {{ t('INBOX_MGMT.ECOMMERCE.INTEGRATIONS_DESCRIPTION') }}
+            </p>
+          </div>
 
           <div
             v-if="integrations.length === 0"
-            class="flex flex-col items-center py-8 px-4"
+            class="flex items-center gap-2 text-xs text-n-slate-10 py-2.5"
           >
-            <div
-              class="w-12 h-12 rounded-xl bg-n-solid-3 flex items-center justify-center mb-3"
-            >
-              <i class="i-lucide-unplug text-xl text-n-slate-10" />
-            </div>
-            <p class="text-sm text-n-slate-11 text-center">
-              {{ t('INBOX_MGMT.ECOMMERCE.NO_INTEGRATIONS') }}
-            </p>
+            <i class="i-lucide-unplug text-sm" />
+            <span>{{ t('INBOX_MGMT.ECOMMERCE.NO_INTEGRATIONS') }}</span>
           </div>
 
-          <div v-else class="flex flex-col gap-2">
-            <!-- None option -->
-            <button
-              class="flex items-center gap-3 px-4 py-3 rounded-xl border transition-all"
-              :class="
-                selectedIntegrationId === null
-                  ? 'border-n-brand bg-n-brand/5 ring-1 ring-n-brand/30'
-                  : 'border-n-weak bg-n-solid-1 hover:bg-n-alpha-1'
-              "
-              @click="selectedIntegrationId = null"
-            >
-              <div
-                class="w-8 h-8 rounded-lg flex items-center justify-center"
-                :class="
-                  selectedIntegrationId === null
-                    ? 'bg-n-brand/10'
-                    : 'bg-n-solid-3'
-                "
+          <OnClickOutside v-else @trigger="showPlatformDropdown = false">
+            <div class="relative">
+              <button
+                type="button"
+                class="flex items-center gap-3 px-4 py-2.5 rounded-xl border border-n-weak hover:border-n-brand bg-n-solid-1 hover:bg-n-solid-2 active:scale-[0.98] transition-all min-w-[240px] justify-between cursor-pointer select-none text-left"
+                @click="showPlatformDropdown = !showPlatformDropdown"
               >
+                <div class="flex items-center gap-2.5 min-w-0">
+                  <div
+                    class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 bg-n-alpha-2 border border-n-weak"
+                  >
+                    <img
+                      :src="activePlatformLogo"
+                      class="w-5 h-5 object-contain"
+                      alt="logo"
+                    />
+                  </div>
+                  <span class="text-sm font-medium text-n-slate-12 truncate">
+                    {{ activePlatformLabel }}
+                  </span>
+                </div>
                 <i
-                  class="i-lucide-x text-sm"
-                  :class="
-                    selectedIntegrationId === null
-                      ? 'text-n-brand'
-                      : 'text-n-slate-10'
-                  "
+                  class="i-lucide-chevron-down text-n-slate-10 text-sm flex-shrink-0"
                 />
-              </div>
-              <span
-                class="text-sm"
-                :class="
-                  selectedIntegrationId === null
-                    ? 'text-n-slate-12 font-medium'
-                    : 'text-n-slate-11'
-                "
-              >
-                {{ t('INBOX_MGMT.ECOMMERCE.NONE') }}
-              </span>
-            </button>
+              </button>
 
-            <!-- Shopiz (Native) option -->
-            <button
-              class="flex items-center gap-3 px-4 py-3 rounded-xl border transition-all"
-              :class="
-                selectedIntegrationId === 'shopiz'
-                  ? 'border-n-brand bg-n-brand/5 ring-1 ring-n-brand/30'
-                  : 'border-n-weak bg-n-solid-1 hover:bg-n-alpha-1'
-              "
-              @click="selectedIntegrationId = 'shopiz'"
-            >
               <div
-                class="w-8 h-8 rounded-lg flex items-center justify-center"
-                :class="
-                  selectedIntegrationId === 'shopiz'
-                    ? 'bg-n-brand/10'
-                    : 'bg-n-solid-3'
-                "
+                v-if="showPlatformDropdown"
+                class="py-2 bg-n-alpha-3 backdrop-blur-[100px] outline outline-n-container outline-1 z-50 absolute ltr:right-0 rtl:left-0 top-12 min-w-[240px] rounded-xl shadow-lg flex flex-col gap-1 mt-1"
               >
-                <i
-                  class="i-lucide-shopping-bag text-sm"
+                <!-- Shopiz Option -->
+                <button
+                  type="button"
+                  class="flex items-center justify-between px-3 py-2 mx-1 rounded-lg transition-all hover:bg-n-alpha-2 cursor-pointer text-left w-[calc(100%-8px)]"
                   :class="
                     selectedIntegrationId === 'shopiz'
-                      ? 'text-n-brand'
-                      : 'text-n-slate-10'
+                      ? 'bg-n-brand/10 hover:bg-n-brand/15'
+                      : ''
                   "
-                />
-              </div>
-              <span
-                class="text-sm"
-                :class="
-                  selectedIntegrationId === 'shopiz'
-                    ? 'text-n-slate-12 font-medium'
-                    : 'text-n-slate-11'
-                "
-              >
-                Shopiz
-              </span>
-              <i
-                v-if="selectedIntegrationId === 'shopiz'"
-                class="i-lucide-check text-n-brand text-sm ml-auto"
-              />
-            </button>
-
-            <!-- Platform options -->
-            <button
-              v-for="integration in integrations"
-              :key="integration.hookId"
-              class="flex items-center gap-3 px-4 py-3 rounded-xl border transition-all"
-              :class="
-                selectedIntegrationId === integration.hookId
-                  ? 'border-n-brand bg-n-brand/5 ring-1 ring-n-brand/30'
-                  : 'border-n-weak bg-n-solid-1 hover:bg-n-alpha-1'
-              "
-              @click="selectedIntegrationId = integration.hookId"
-            >
-              <div
-                class="w-8 h-8 rounded-lg flex items-center justify-center"
-                :class="
-                  selectedIntegrationId === integration.hookId
-                    ? 'bg-n-brand/10'
-                    : 'bg-n-solid-3'
-                "
-              >
-                <i :class="integration.icon" class="text-sm" />
-              </div>
-              <span
-                class="text-sm"
-                :class="
-                  selectedIntegrationId === integration.hookId
-                    ? 'text-n-slate-12 font-medium'
-                    : 'text-n-slate-11'
-                "
-              >
-                {{ integration.label }}
-              </span>
-              <i
-                v-if="selectedIntegrationId === integration.hookId"
-                class="i-lucide-check text-n-brand text-sm ml-auto"
-              />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="w-full h-[1px] bg-n-weak my-4" />
-
-      <!-- Sales settings: AI Order + Templates -->
-      <div class="flex flex-col gap-6">
-        <!-- Trợ lý AI tạo đơn hàng -->
-        <div class="flex flex-col gap-4">
-          <div class="flex flex-col gap-1">
-            <h3 class="text-lg font-semibold text-n-slate-12">
-              {{ t('INBOX_MGMT.ECOMMERCE.AI_ORDER_TITLE') }}
-            </h3>
-            <p class="text-sm text-n-slate-11">
-              {{ t('INBOX_MGMT.ECOMMERCE.AI_ORDER_DESCRIPTION') }}
-            </p>
-          </div>
-          <div class="flex items-center gap-3">
-            <Switch v-model="allowAiCreateOrder" />
-            <span class="text-sm text-n-slate-12">{{
-              t('INBOX_MGMT.ECOMMERCE.AI_ORDER_TOGGLE')
-            }}</span>
-          </div>
-        </div>
-
-        <div class="w-full h-[1px] bg-n-weak my-2" />
-
-        <!-- Mẫu thông báo đơn hàng -->
-        <div class="flex flex-col gap-4">
-          <div class="flex flex-row items-start justify-between gap-4">
-            <div class="flex flex-col gap-1">
-              <h3 class="text-lg font-semibold text-n-slate-12">
-                {{ t('INBOX_MGMT.ECOMMERCE.TEMPLATES_TITLE') }}
-              </h3>
-              <p class="text-sm text-n-slate-11">
-                {{ t('INBOX_MGMT.ECOMMERCE.TEMPLATES_DESCRIPTION') }}
-              </p>
-            </div>
-          </div>
-
-          <!-- Toggle customize templates -->
-          <div class="flex items-center gap-3">
-            <Switch v-model="customizeTemplates" />
-            <span class="text-sm text-n-slate-12">
-              {{ t('INBOX_MGMT.ECOMMERCE.CUSTOMIZE_TEMPLATES_TOGGLE') }}
-            </span>
-          </div>
-
-          <template v-if="customizeTemplates">
-            <!-- Variable tags helper -->
-            <div class="flex flex-col gap-2">
-              <p class="text-xs font-medium text-n-slate-11">
-                {{ t('INBOX_MGMT.ECOMMERCE.VARIABLE_TAGS_LABEL') }}
-              </p>
-              <div class="flex flex-wrap gap-1.5">
-                <button
-                  v-for="variable in TEMPLATE_VARIABLES"
-                  :key="variable.key"
-                  type="button"
-                  class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-n-alpha-2 border border-n-weak text-xs font-mono text-n-slate-11 hover:bg-n-alpha-3 hover:text-n-slate-12 hover:border-n-slate-6 transition-all cursor-pointer select-none"
-                  :title="
-                    t('INBOX_MGMT.ECOMMERCE.VARIABLE_TAG_TOOLTIP', {
-                      variable: variable.key,
-                    })
+                  @click="
+                    () => {
+                      selectIntegration('shopiz');
+                      showPlatformDropdown = false;
+                    }
                   "
-                  @click="insertVariable(variable.key)"
                 >
-                  <i class="i-lucide-code text-[10px] opacity-60" />
-                  {{ t(variable.labelKey) }}
+                  <div class="flex items-center gap-2.5 min-w-0">
+                    <div
+                      class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 bg-n-alpha-2 border border-n-weak"
+                    >
+                      <img
+                        :src="SHOPIZ_LOGO_PATH"
+                        class="w-5 h-5 object-contain"
+                        alt="Shopiz"
+                      />
+                    </div>
+                    <span class="text-sm font-medium text-n-slate-12 truncate">
+                      Shopiz
+                    </span>
+                  </div>
+                  <i
+                    v-if="selectedIntegrationId === 'shopiz'"
+                    class="i-lucide-check text-n-brand text-sm flex-shrink-0"
+                  />
+                </button>
+
+                <!-- Connected Integration Options -->
+                <button
+                  v-for="integration in integrations"
+                  :key="integration.hookId"
+                  type="button"
+                  class="flex items-center justify-between px-3 py-2 mx-1 rounded-lg transition-all hover:bg-n-alpha-2 cursor-pointer text-left w-[calc(100%-8px)]"
+                  :class="
+                    selectedIntegrationId === integration.hookId
+                      ? 'bg-n-brand/10 hover:bg-n-brand/15'
+                      : ''
+                  "
+                  @click="
+                    () => {
+                      selectIntegration(integration.hookId);
+                      showPlatformDropdown = false;
+                    }
+                  "
+                >
+                  <div class="flex items-center gap-2.5 min-w-0">
+                    <div
+                      class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 bg-n-alpha-2 border border-n-weak"
+                    >
+                      <img
+                        :src="`/dashboard/images/integrations/${integration.appId}.png`"
+                        class="w-5 h-5 object-contain"
+                        alt="logo"
+                      />
+                    </div>
+                    <span class="text-sm font-medium text-n-slate-12 truncate">
+                      {{ integration.label }}
+                    </span>
+                  </div>
+                  <i
+                    v-if="selectedIntegrationId === integration.hookId"
+                    class="i-lucide-check text-n-brand text-sm flex-shrink-0"
+                  />
                 </button>
               </div>
             </div>
+          </OnClickOutside>
+        </div>
 
-            <div class="flex justify-end">
-              <NextButton
-                sm
-                outline
-                slate
-                icon="i-lucide-wand-2"
-                class="flex-shrink-0"
-                @click="fillDefaultTemplates"
-              >
-                {{ t('INBOX_MGMT.ECOMMERCE.FILL_DEFAULT_TEMPLATES') }}
-              </NextButton>
+        <!-- Sales settings: AI Order + Templates -->
+        <div class="flex flex-col gap-6">
+          <!-- Trợ lý AI tạo đơn hàng -->
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex flex-col gap-1">
+              <h3 class="text-base font-semibold text-n-slate-12">
+                {{ t('INBOX_MGMT.ECOMMERCE.AI_ORDER_TITLE') }}
+              </h3>
+              <p class="text-sm text-n-slate-11 leading-relaxed">
+                {{ t('INBOX_MGMT.ECOMMERCE.AI_ORDER_DESCRIPTION') }}
+              </p>
+            </div>
+            <Switch
+              v-model="allowAiCreateOrder"
+              class="flex-shrink-0 mt-0.5"
+              @update:model-value="handleSave"
+            />
+          </div>
+
+          <!-- Mẫu thông báo đơn hàng -->
+          <div class="flex flex-col gap-4">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex flex-col gap-1">
+                <h3 class="text-base font-semibold text-n-slate-12">
+                  {{ t('INBOX_MGMT.ECOMMERCE.TEMPLATES_TITLE') }}
+                </h3>
+                <p class="text-sm text-n-slate-11 leading-relaxed">
+                  {{ t('INBOX_MGMT.ECOMMERCE.TEMPLATES_DESCRIPTION') }}
+                </p>
+              </div>
+              <Switch
+                v-model="customizeTemplates"
+                class="flex-shrink-0 mt-0.5"
+              />
             </div>
 
-            <div class="grid gap-4">
-              <WithLabel
-                name="template-draft"
-                :label="$t('SALES.MODULE_ORDERS.STATUS.DRAFT')"
-              >
-                <div data-template-key="draft" class="w-full">
-                  <textarea
-                    v-model="salesOrderNotificationTemplates.draft"
-                    class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
-                    :placeholder="
-                      t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_DRAFT')
+            <template v-if="customizeTemplates">
+              <!-- Variable tags helper -->
+              <div class="flex flex-col gap-2">
+                <p class="text-sm font-medium text-n-slate-11">
+                  {{ t('INBOX_MGMT.ECOMMERCE.VARIABLE_TAGS_LABEL') }}
+                </p>
+                <div class="flex flex-wrap gap-1.5">
+                  <button
+                    v-for="variable in TEMPLATE_VARIABLES"
+                    :key="variable.key"
+                    type="button"
+                    class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-n-alpha-2 border border-n-weak text-xs font-mono text-n-slate-11 hover:bg-n-alpha-3 hover:text-n-slate-12 hover:border-n-slate-6 transition-all cursor-pointer select-none"
+                    :title="
+                      t('INBOX_MGMT.ECOMMERCE.VARIABLE_TAG_TOOLTIP', {
+                        variable: variable.key,
+                      })
                     "
-                    @focus="onTextareaFocus"
-                  />
+                    @click="insertVariable(variable.key)"
+                  >
+                    <i class="i-lucide-code text-[10px] opacity-60" />
+                    {{ t(variable.labelKey) }}
+                  </button>
                 </div>
-              </WithLabel>
-              <WithLabel
-                name="template-confirmed"
-                :label="$t('SALES.MODULE_ORDERS.STATUS.CONFIRMED')"
-              >
-                <div data-template-key="confirmed" class="w-full">
-                  <textarea
-                    v-model="salesOrderNotificationTemplates.confirmed"
-                    class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
-                    :placeholder="
-                      t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_CONFIRMED')
-                    "
-                    @focus="onTextareaFocus"
-                  />
-                </div>
-              </WithLabel>
-              <WithLabel
-                name="template-processing"
-                :label="$t('SALES.MODULE_ORDERS.STATUS.PROCESSING')"
-              >
-                <div data-template-key="processing" class="w-full">
-                  <textarea
-                    v-model="salesOrderNotificationTemplates.processing"
-                    class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
-                    :placeholder="
-                      t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_PROCESSING')
-                    "
-                    @focus="onTextareaFocus"
-                  />
-                </div>
-              </WithLabel>
-              <WithLabel
-                name="template-shipped"
-                :label="$t('SALES.MODULE_ORDERS.STATUS.SHIPPED')"
-              >
-                <div data-template-key="shipped" class="w-full">
-                  <textarea
-                    v-model="salesOrderNotificationTemplates.shipped"
-                    class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
-                    :placeholder="
-                      t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_SHIPPED')
-                    "
-                    @focus="onTextareaFocus"
-                  />
-                </div>
-              </WithLabel>
-              <WithLabel
-                name="template-delivered"
-                :label="$t('SALES.MODULE_ORDERS.STATUS.DELIVERED')"
-              >
-                <div data-template-key="delivered" class="w-full">
-                  <textarea
-                    v-model="salesOrderNotificationTemplates.delivered"
-                    class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
-                    :placeholder="
-                      t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_DELIVERED')
-                    "
-                    @focus="onTextareaFocus"
-                  />
-                </div>
-              </WithLabel>
-              <WithLabel
-                name="template-cancelled"
-                :label="$t('SALES.MODULE_ORDERS.STATUS.CANCELLED')"
-              >
-                <div data-template-key="cancelled" class="w-full">
-                  <textarea
-                    v-model="salesOrderNotificationTemplates.cancelled"
-                    class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
-                    :placeholder="
-                      t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_CANCELLED')
-                    "
-                    @focus="onTextareaFocus"
-                  />
-                </div>
-              </WithLabel>
-            </div>
-          </template>
+              </div>
+
+              <div class="flex justify-end">
+                <NextButton
+                  sm
+                  outline
+                  slate
+                  icon="i-lucide-wand-2"
+                  class="flex-shrink-0"
+                  @click="fillDefaultTemplates"
+                >
+                  {{ t('INBOX_MGMT.ECOMMERCE.FILL_DEFAULT_TEMPLATES') }}
+                </NextButton>
+              </div>
+
+              <div class="grid gap-4">
+                <WithLabel
+                  name="template-draft"
+                  :label="$t('SALES.MODULE_ORDERS.STATUS.DRAFT')"
+                >
+                  <div data-template-key="draft" class="w-full">
+                    <textarea
+                      v-model="salesOrderNotificationTemplates.draft"
+                      class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+                      :placeholder="
+                        t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_DRAFT')
+                      "
+                      @focus="onTextareaFocus"
+                    />
+                  </div>
+                </WithLabel>
+                <WithLabel
+                  name="template-confirmed"
+                  :label="$t('SALES.MODULE_ORDERS.STATUS.CONFIRMED')"
+                >
+                  <div data-template-key="confirmed" class="w-full">
+                    <textarea
+                      v-model="salesOrderNotificationTemplates.confirmed"
+                      class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+                      :placeholder="
+                        t(
+                          'INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_CONFIRMED'
+                        )
+                      "
+                      @focus="onTextareaFocus"
+                    />
+                  </div>
+                </WithLabel>
+                <WithLabel
+                  name="template-processing"
+                  :label="$t('SALES.MODULE_ORDERS.STATUS.PROCESSING')"
+                >
+                  <div data-template-key="processing" class="w-full">
+                    <textarea
+                      v-model="salesOrderNotificationTemplates.processing"
+                      class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+                      :placeholder="
+                        t(
+                          'INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_PROCESSING'
+                        )
+                      "
+                      @focus="onTextareaFocus"
+                    />
+                  </div>
+                </WithLabel>
+                <WithLabel
+                  name="template-shipped"
+                  :label="$t('SALES.MODULE_ORDERS.STATUS.SHIPPED')"
+                >
+                  <div data-template-key="shipped" class="w-full">
+                    <textarea
+                      v-model="salesOrderNotificationTemplates.shipped"
+                      class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+                      :placeholder="
+                        t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_SHIPPED')
+                      "
+                      @focus="onTextareaFocus"
+                    />
+                  </div>
+                </WithLabel>
+                <WithLabel
+                  name="template-delivered"
+                  :label="$t('SALES.MODULE_ORDERS.STATUS.DELIVERED')"
+                >
+                  <div data-template-key="delivered" class="w-full">
+                    <textarea
+                      v-model="salesOrderNotificationTemplates.delivered"
+                      class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+                      :placeholder="
+                        t(
+                          'INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_DELIVERED'
+                        )
+                      "
+                      @focus="onTextareaFocus"
+                    />
+                  </div>
+                </WithLabel>
+                <WithLabel
+                  name="template-cancelled"
+                  :label="$t('SALES.MODULE_ORDERS.STATUS.CANCELLED')"
+                >
+                  <div data-template-key="cancelled" class="w-full">
+                    <textarea
+                      v-model="salesOrderNotificationTemplates.cancelled"
+                      class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+                      :placeholder="
+                        t(
+                          'INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_CANCELLED'
+                        )
+                      "
+                      @focus="onTextareaFocus"
+                    />
+                  </div>
+                </WithLabel>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <!-- Save button (unified: integration + sales settings) -->
+        <div class="flex justify-end pt-2">
+          <NextButton
+            :label="t('INBOX_MGMT.ECOMMERCE.SAVE')"
+            sm
+            :is-loading="isSaving"
+            @click="handleSave"
+          />
+        </div>
+
+        <!-- Ecom Integrations -->
+        <div class="flex flex-col gap-4">
+          <div class="flex flex-col gap-1">
+            <h3 class="text-lg font-semibold text-n-slate-12">
+              {{ t('INBOX_MGMT.ECOMMERCE.INTEGRATIONS_TITLE') }}
+            </h3>
+            <p class="text-sm text-n-slate-11">
+              {{ t('INBOX_MGMT.ECOMMERCE.INTEGRATIONS_DESCRIPTION') }}
+            </p>
+          </div>
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6"
+          >
+            <IntegrationItem
+              v-for="item in ecomIntegrations"
+              :id="item.id"
+              :key="item.id"
+              :logo="item.logo"
+              :name="item.name"
+              :description="item.description"
+              :enabled="item.enabled"
+              :is-active="item.is_active"
+            />
+          </div>
         </div>
       </div>
-
-      <!-- Save button (unified: integration + sales settings) -->
-      <div class="flex justify-end pt-2 pb-6">
-        <NextButton
-          :label="t('INBOX_MGMT.ECOMMERCE.SAVE')"
-          sm
-          :is-loading="isSaving"
-          @click="handleSave"
-        />
-      </div>
-
-      <!-- Order Template Mapping (ZaloOA / WhatsApp) -->
-      <template v-if="supportsOrderTemplateMapping">
-        <div class="w-full h-[1px] bg-n-weak my-4" />
-        <OrderTemplateMapping :inbox="inbox" />
-      </template>
     </div>
   </div>
 </template>

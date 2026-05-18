@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_11_082526) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_12_154323) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -200,6 +200,23 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_11_082526) do
     t.index ["account_id"], name: "index_applied_slas_on_account_id"
     t.index ["conversation_id"], name: "index_applied_slas_on_conversation_id"
     t.index ["sla_policy_id"], name: "index_applied_slas_on_sla_policy_id"
+  end
+
+  create_table "appointments", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "contact_id", null: false
+    t.bigint "assignee_id"
+    t.bigint "product_id", null: false
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer "status", default: 0
+    t.text "notes"
+    t.jsonb "meta", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_appointments_on_account_id"
+    t.index ["contact_id"], name: "index_appointments_on_contact_id"
+    t.index ["product_id"], name: "index_appointments_on_product_id"
   end
 
   create_table "article_embeddings", force: :cascade do |t|
@@ -1339,6 +1356,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_11_082526) do
     t.datetime "updated_at", null: false
     t.integer "inventory_quantity", default: 0
     t.jsonb "images", default: []
+    t.integer "product_type", default: 0
+    t.integer "duration"
     t.index ["account_id", "external_id"], name: "index_products_on_account_id_and_external_id"
     t.index ["account_id", "name"], name: "index_products_on_account_id_and_name"
     t.index ["account_id"], name: "index_products_on_account_id"
@@ -1419,6 +1438,21 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_11_082526) do
     t.string "description"
     t.float "resolution_time_threshold"
     t.index ["account_id"], name: "index_sla_policies_on_account_id"
+  end
+
+  create_table "staff_schedules", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "day_of_week"
+    t.integer "open_hour"
+    t.integer "open_minutes"
+    t.integer "close_hour"
+    t.integer "close_minutes"
+    t.boolean "closed_all_day", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_staff_schedules_on_account_id"
+    t.index ["user_id"], name: "index_staff_schedules_on_user_id"
   end
 
   create_table "subscription_plans", force: :cascade do |t|
@@ -1592,6 +1626,9 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_11_082526) do
   add_foreign_key "account_subscriptions", "subscription_plans"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "appointments", "accounts"
+  add_foreign_key "appointments", "contacts"
+  add_foreign_key "appointments", "products"
   add_foreign_key "contact_optins", "contacts"
   add_foreign_key "contact_optins", "inboxes"
   add_foreign_key "inboxes", "integrations_hooks", column: "ecommerce_integration_id"
@@ -1599,6 +1636,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_11_082526) do
   add_foreign_key "product_variants", "accounts"
   add_foreign_key "product_variants", "products"
   add_foreign_key "products", "accounts"
+  add_foreign_key "staff_schedules", "accounts"
+  add_foreign_key "staff_schedules", "users"
   add_foreign_key "subscription_plans", "subscription_tiers"
   create_trigger("accounts_after_insert_row_tr", :generated => true, :compatibility => 1).
       on("accounts").

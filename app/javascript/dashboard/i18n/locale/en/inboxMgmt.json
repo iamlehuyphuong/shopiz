@@ -720,8 +720,10 @@
       "ECOMMERCE": "eCommerce"
     },
     "ECOMMERCE": {
-      "TITLE": "eCommerce Integration",
-      "DESCRIPTION": "Link this inbox to a sales platform. All conversations in this inbox will use this integration for product search and order management.",
+      "INTEGRATIONS_TITLE": "E-commerce Integration",
+      "INTEGRATIONS_DESCRIPTION": "Link the account to a sales platform. All conversations will use this integration for product search and order management.",
+      "TITLE": "Sales Settings",
+      "DESCRIPTION": "Configure sales settings for this inbox, including linking eCommerce platforms, enabling the AI assistant for automated order creation, and setting up automated status change notification templates.",
       "SELECT_PLATFORM": "Select integration",
       "NO_INTEGRATIONS": "No e-commerce integrations found. Please configure an integration in Settings → Integrations first.",
       "AUTO_LINKED": "Auto-linked to {platform}",

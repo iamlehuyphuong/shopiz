@@ -25,7 +25,7 @@ const CATEGORIES = [
   },
   {
     key: 'WORKSPACE_SYNC',
-    ids: ['linear', 'notion', 'slack'],
+    ids: ['linear', 'notion', 'slack', 'leadsquared'],
   },
   {
     key: 'CUSTOM_EXTENSIONS',
@@ -41,7 +41,6 @@ const HIDDEN_IDS = [
   'haravan',
   'sapo',
   'nhanhvn',
-  'leadsquared',
   'calendly',
 ];
 
