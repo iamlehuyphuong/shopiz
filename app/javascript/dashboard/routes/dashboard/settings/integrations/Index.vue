@@ -20,19 +20,6 @@ const integrationList = computed(
 
 const CATEGORIES = [
   {
-    key: 'SHOP_SALES',
-    ids: [
-      'shopify',
-      'woocommerce',
-      'kiotviet',
-      'haravan',
-      'sapo',
-      'nhanhvn',
-      'leadsquared',
-      'calendly',
-    ],
-  },
-  {
     key: 'AI_AUTOMATION',
     ids: ['openai', 'dialogflow', 'webhook', 'google_translate'],
   },
@@ -46,7 +33,17 @@ const CATEGORIES = [
   },
 ];
 
-const HIDDEN_IDS = ['dialogflow'];
+const HIDDEN_IDS = [
+  'dialogflow',
+  'shopify',
+  'woocommerce',
+  'kiotviet',
+  'haravan',
+  'sapo',
+  'nhanhvn',
+  'leadsquared',
+  'calendly',
+];
 
 const filteredIntegrationList = computed(() => {
   const visible = integrationList.value.filter(
@@ -107,8 +104,8 @@ onMounted(() => {
       />
     </template>
     <template #body>
-      <div class="flex-grow flex-shrink overflow-auto p-4 sm:p-6 lg:p-8">
-        <div class="max-w-7xl mx-auto flex flex-col gap-10">
+      <div class="w-full flex-grow flex-shrink overflow-auto mt-6">
+        <div class="max-w-7xl flex flex-col gap-10">
           <div
             v-if="!categorizedIntegrations.length"
             class="flex-1 flex items-center justify-center py-20 text-center text-body-main !text-base text-n-slate-11"
@@ -122,7 +119,7 @@ onMounted(() => {
               class="flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700"
             >
               <h2
-                class="text-xs font-bold uppercase tracking-widest text-n-slate-11 ml-1 px-4"
+                class="text-xs font-bold uppercase tracking-widest text-n-slate-11"
               >
                 {{ $t(`INTEGRATION_SETTINGS.SECTION.${category.key}`) }}
               </h2>

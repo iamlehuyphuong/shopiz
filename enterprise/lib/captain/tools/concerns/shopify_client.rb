@@ -4,13 +4,7 @@ module Captain::Tools::Concerns::ShopifyClient
   private
 
   def shopify_hook
-    @shopify_hook ||= begin
-      if respond_to?(:conversation) && conversation
-        hook = conversation.inbox&.effective_ecommerce_hook
-        return hook if hook&.app_id == 'shopify'
-      end
-      Integrations::Hook.find_by(account_id: @assistant.account_id, app_id: 'shopify')
-    end
+    @shopify_hook ||= Integrations::Hook.find_by(account_id: @assistant.account_id, app_id: 'shopify')
   end
 
   def shopify_active?

@@ -506,6 +506,7 @@ const menuItems = computed(() => {
         'sales_products_new',
         'sales_products_show',
         'sales_products_edit',
+        'sales_settings_index',
       ],
       children: [
         {
@@ -538,6 +539,13 @@ const menuItems = computed(() => {
             'sales_orders_edit',
           ],
           to: accountScopedRoute('sales_orders_list'),
+        },
+        {
+          name: 'Sales Settings',
+          label: t('SIDEBAR.SETTINGS'),
+          icon: 'i-lucide-settings-2',
+          activeOn: ['sales_settings_index'],
+          to: accountScopedRoute('sales_settings_index'),
         },
       ],
     },

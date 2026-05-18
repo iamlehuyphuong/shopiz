@@ -27,17 +27,19 @@ module Captain::Tools::Concerns::EcomRoutable
     raise NotImplementedError, "#{self.class} must implement ecom_platform_tools"
   end
 
-  # Resolves the e-commerce platform app_id from the conversation's inbox.
-  # Returns nil when the inbox has no e-commerce integration.
+  # Resolves the e-commerce platform app_id from the account settings.
+  # Returns nil when no active integration is selected or if Shopiz native is used.
   def resolve_ecom_platform(tool_context)
     conversation = find_conversation(tool_context.state)
     return nil unless conversation
 
-    inbox = conversation.inbox
-    return nil unless inbox
+    account = conversation.account
+    return nil unless account
 
-    hook = inbox.effective_ecommerce_hook
-    hook&.app_id
+    active_platform = account.active_ecommerce_platform
+    return nil if active_platform.blank? || active_platform == 'shopiz'
+
+    active_platform
   end
 
   # Instantiates the platform-specific tool and delegates the perform call.

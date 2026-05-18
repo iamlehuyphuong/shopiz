@@ -1,16 +1,16 @@
 class Api::V1::Accounts::Conversations::ProductsController < Api::V1::Accounts::Conversations::BaseController
   def index
-    platform = @conversation.inbox.sales_config&.dig('platform')
-    hook = @conversation.inbox.effective_ecommerce_hook
+    platform = params[:source] || @conversation.inbox.sales_config&.dig('platform') || 'shopiz'
 
-    return render json: { products: [] }, status: :ok unless hook || platform == 'shopiz'
+    if platform == 'shopiz'
+      products = fetch_shopiz_products(params[:q].to_s.strip, params[:page].to_i)
+      return render json: { products: products }
+    end
 
-    products = if platform == 'shopiz'
-                 fetch_shopiz_products(params[:q].to_s.strip,
-                                       params[:page].to_i)
-               else
-                 fetch_products(hook, params[:q].to_s.strip, params[:page].to_i)
-               end
+    hook = Current.account.hooks.find_by(app_id: platform)
+    return render json: { products: [] }, status: :ok unless hook
+
+    products = fetch_products(hook, params[:q].to_s.strip, params[:page].to_i)
     render json: { products: products }
   end
 

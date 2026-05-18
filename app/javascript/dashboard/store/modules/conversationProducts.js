@@ -14,12 +14,12 @@ export const getters = {
 };
 
 export const actions = {
-  async fetchProducts({ commit }, { conversationId, query, page }) {
+  async fetchProducts({ commit }, { conversationId, query, page, source }) {
     commit(types.SET_CONVERSATION_PRODUCTS_UI_FLAG, { isFetching: true });
     try {
       const { data } = await ConversationProductsAPI.getProducts(
         conversationId,
-        { query, page }
+        { query, page, source }
       );
       commit(types.SET_CONVERSATION_PRODUCTS, {
         products: data.products || [],

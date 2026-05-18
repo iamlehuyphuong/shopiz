@@ -130,40 +130,45 @@ const isActive = computed(() => {
 // nested correctly, so we need to check the active state ourselves
 // TODO: Audit the routes and fix the nesting and remove this
 const activeChild = computed(() => {
-  const pathSame = navigableChildren.value.find(
-    child => child.to && route.path === resolvePath(child.to)
-  );
-  if (pathSame) return pathSame;
+  try {
+    const pathSame = navigableChildren.value.find(
+      child => child.to && route.path === resolvePath(child.to)
+    );
+    if (pathSame) return pathSame;
 
-  // Rank the activeOn Prop higher than the path match
-  // There will be cases where the path name is the same but the params are different
-  // So we need to rank them based on the params
-  // For example, contacts segment list in the sidebar effectively has the same name
-  // But the params are different
-  const activeOnPages = navigableChildren.value.filter(child =>
-    child.activeOn?.includes(route.name)
-  );
+    // Rank the activeOn Prop higher than the path match
+    // There will be cases where the path name is the same but the params are different
+    // So we need to rank them based on the params
+    // For example, contacts segment list in the sidebar effectively has the same name
+    // But the params are different
+    const activeOnPages = navigableChildren.value.filter(child =>
+      child.activeOn?.includes(route.name)
+    );
 
-  if (activeOnPages.length > 0) {
-    const rankedPage = activeOnPages.find(child => {
-      return Object.keys(child.to.params)
-        .map(key => {
-          return String(child.to.params[key]) === String(route.params[key]);
-        })
-        .every(match => match);
-    });
+    if (activeOnPages.length > 0) {
+      const rankedPage = activeOnPages.find(child => {
+        return Object.keys(child.to?.params || {})
+          .map(key => {
+            return String(child.to?.params?.[key]) === String(route.params?.[key]);
+          })
+          .every(match => match);
+      });
 
-    // If there is no ranked page, return the first activeOn page anyway
-    // Since this takes higher precedence over the path match
-    // This is not perfect, ideally we should rank each route based on all the techniques
-    // and then return the highest ranked one
-    // But this is good enough for now
-    return rankedPage ?? activeOnPages[0];
+      // If there is no ranked page, return the first activeOn page anyway
+      // Since this takes higher precedence over the path match
+      // This is not perfect, ideally we should rank each route based on all the techniques
+      // and then return the highest ranked one
+      // But this is good enough for now
+      return rankedPage ?? activeOnPages[0];
+    }
+
+    return navigableChildren.value.find(
+      child => child.to && route.path.startsWith(resolvePath(child.to))
+    );
+  } catch (e) {
+    console.error('[SidebarGroup] activeChild computation failed for:', props.name, e);
+    return undefined;
   }
-
-  return navigableChildren.value.find(
-    child => child.to && route.path.startsWith(resolvePath(child.to))
-  );
 });
 
 const hasActiveChild = computed(() => {
@@ -191,17 +196,33 @@ const toggleTrigger = () => {
 };
 
 onMounted(async () => {
-  await nextTick();
-  if (hasActiveChild.value) {
-    setExpandedItem(props.name);
+  try {
+    await nextTick();
+    if (hasActiveChild.value) {
+      setExpandedItem(props.name);
+    }
+    if (typeof window !== 'undefined') {
+      window.addEventListener('blur', handleWindowBlur);
+    }
+    if (typeof document !== 'undefined') {
+      document.addEventListener('mouseleave', handleWindowBlur);
+    }
+  } catch (e) {
+    console.error('[SidebarGroup] mounted hook failed for:', props.name, e);
   }
-  window.addEventListener('blur', handleWindowBlur);
-  document.addEventListener('mouseleave', handleWindowBlur);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('blur', handleWindowBlur);
-  document.removeEventListener('mouseleave', handleWindowBlur);
+  try {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('blur', handleWindowBlur);
+    }
+    if (typeof document !== 'undefined') {
+      document.removeEventListener('mouseleave', handleWindowBlur);
+    }
+  } catch (e) {
+    console.error('[SidebarGroup] unmounted hook failed:', e);
+  }
 });
 
 watch(

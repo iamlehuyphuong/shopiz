@@ -4,13 +4,12 @@ class Api::V1::Accounts::ProductsSearchController < Api::V1::Accounts::BaseContr
     conversation_id = params[:conversation_id]
     sources = []
 
-    # If scoped to a conversation, only search the linked ecommerce platform
+    # Use account-level active ecommerce platform
     if conversation_id.present?
-      conversation = Current.account.conversations.find_by(id: conversation_id)
-      hook = conversation&.inbox&.effective_ecommerce_hook
-      
-      if hook
-        sources.concat(fetch_products_from_integration(hook, query))
+      active_platform = Current.account.active_ecommerce_platform
+      if active_platform.present? && active_platform != 'shopiz'
+        hook = Current.account.hooks.find_by(app_id: active_platform)
+        sources.concat(fetch_products_from_integration(hook, query)) if hook
       end
     else
       # Aggregate products from all connected integrations (Fallback)

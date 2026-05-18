@@ -15,8 +15,6 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['update']);
-
 const ECOMMERCE_APP_IDS = [
   'kiotviet',
   'sapo',
@@ -98,10 +96,6 @@ const TEMPLATE_MAPPING_CHANNELS = ['Channel::ZaloOa', 'Channel::Whatsapp'];
 
 const supportsOrderTemplateMapping = computed(() =>
   TEMPLATE_MAPPING_CHANNELS.includes(props.inbox.channel_type)
-);
-
-const currentIntegration = computed(() =>
-  integrations.value.find(i => i.hookId === selectedIntegrationId.value)
 );
 
 const hasAnyTemplate = computed(() => {
@@ -220,6 +214,8 @@ const insertVariable = variableKey => {
 </script>
 
 <template>
+  <!-- eslint-disable vue/no-bare-strings-in-template -->
+  <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
   <div class="max-w-4xl mx-6">
     <div class="flex flex-col gap-6">
       <!-- Header -->
