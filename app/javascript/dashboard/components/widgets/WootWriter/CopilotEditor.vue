@@ -188,6 +188,13 @@ watch(
   }
 );
 
+watch(
+  () => props.placeholder,
+  () => {
+    reloadState();
+  }
+);
+
 // lifecycle
 onMounted(() => {
   state = createState(

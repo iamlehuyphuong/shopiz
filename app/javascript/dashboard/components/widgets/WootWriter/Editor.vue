@@ -793,6 +793,13 @@ watch(
 );
 
 watch(
+  () => props.placeholder,
+  () => {
+    reloadState(props.modelValue);
+  }
+);
+
+watch(
   computed(() => props.updateSelectionWith),
   (newValue, oldValue) => {
     if (!editorView) return;
