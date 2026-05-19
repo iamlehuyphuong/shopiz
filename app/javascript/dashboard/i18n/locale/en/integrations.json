@@ -637,10 +637,20 @@
           "PLACEHOLDER": "Enter assistant description",
           "ERROR": "The description is required"
         },
-        "PRODUCT_NAME": {
-          "LABEL": "Product Name / Store / Domain",
-          "PLACEHOLDER": "Enter product or store name",
-          "ERROR": "The product or store name is required"
+        "COMPANY_NAME": {
+          "LABEL": "Company / Store Name",
+          "PLACEHOLDER": "e.g., Shopiz",
+          "ERROR": "The company name is required"
+        },
+        "INDUSTRY": {
+          "LABEL": "Industry",
+          "PLACEHOLDER": "e.g., Fashion, F&B, Software",
+          "ERROR": "The industry is required"
+        },
+        "CORE_PRODUCTS": {
+          "LABEL": "Core Products / Services",
+          "PLACEHOLDER": "e.g., Women's clothing, Seafood",
+          "ERROR": "The core products are required"
         },
         "WELCOME_MESSAGE": {
           "LABEL": "Welcome Message",

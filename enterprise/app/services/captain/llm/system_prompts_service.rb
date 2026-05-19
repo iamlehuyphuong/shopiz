@@ -119,7 +119,10 @@ class Captain::Llm::SystemPromptsService
     end
 
     # rubocop:disable Metrics/MethodLength
-    def copilot_response_generator(product_name, available_tools, config = {}, orders: nil)
+    def copilot_response_generator(config, available_tools, orders: nil)
+      company_name = config['company_name'] || config['product_name']
+      industry = config['industry']
+      core_products = config['core_products'] || config['product_name']
       citation_guidelines = if config['feature_citation']
                               <<~CITATION_TEXT
                                 - Always include citations for any information provided, referencing the specific source.
@@ -133,8 +136,8 @@ class Captain::Llm::SystemPromptsService
 
       <<~SYSTEM_PROMPT_MESSAGE
         [Identity]
-        You are Captain, a helpful and friendly copilot assistant for support agents using the product #{product_name}. Your primary role is to assist support agents by retrieving information, compiling accurate responses, and guiding them through customer interactions.
-        You should only provide information related to #{product_name} and must not address queries about other products or external events.
+        You are Captain, a helpful and friendly copilot assistant for support agents representing #{company_name}, a company in the #{industry} sector. Your primary role is to assist support agents by retrieving information, compiling accurate responses, and guiding them through customer interactions.
+        You should only provide information related to #{company_name} and its core products (#{core_products}) and must not address queries about other products or external events.
 
         [Context]
         Identify unresolved queries, and ensure responses are relevant and consistent with previous interactions. Always maintain a coherent and professional tone throughout the conversation.
@@ -155,7 +158,7 @@ class Captain::Llm::SystemPromptsService
         When responding to a query, follow these steps:
         1. Review the provided conversation to ensure responses align with previous context and avoid repetition.
         2. If the answer is available, list the steps required to complete the action.
-        3. Share only the details relevant to #{product_name}, and avoid unrelated topics.
+        3. Share only the details relevant to #{company_name} and its products, and avoid unrelated topics.
         4. Offer an explanation of how the response was derived based on the given context.
         5. Always return responses in valid JSON format as shown below:
         6. Never suggest contacting support, as you are assisting the support agent directly.
@@ -194,7 +197,10 @@ class Captain::Llm::SystemPromptsService
     # rubocop:enable Metrics/MethodLength
 
     # rubocop:disable Metrics/MethodLength
-    def assistant_response_generator(assistant_name, product_name, config = {}, contact: nil, orders: nil)
+    def assistant_response_generator(assistant_name, config = {}, contact: nil, orders: nil)
+      company_name = config['company_name'] || config['product_name']
+      industry = config['industry']
+      core_products = config['core_products'] || config['product_name']
       assistant_citation_guidelines = if config['feature_citation']
                                         <<~CITATION_TEXT
                                           - Always include citations for any information provided, referencing the specific source (document only - skip if it was derived from a conversation).
@@ -208,7 +214,7 @@ class Captain::Llm::SystemPromptsService
 
       <<~SYSTEM_PROMPT_MESSAGE
         [Identity]
-        Your name is #{assistant_name || 'Captain'}, a helpful, friendly, and knowledgeable assistant for the product #{product_name}. You will not answer anything about other products or events outside of the product #{product_name}.
+        Your name is #{assistant_name || 'Captain'}, a helpful, friendly, and knowledgeable assistant representing #{company_name}, which operates in the #{industry} industry. Your business specializes in: #{core_products}. You will not answer anything about topics or events outside the scope of your industry and products.
 
         [Response Guideline]
         - Do not rush giving a response, always give step-by-step instructions to the customer. If there are multiple steps, provide only one step at a time and check with the user whether they have completed the steps and wait for their confirmation. If the user has said okay or yes, continue with the steps.

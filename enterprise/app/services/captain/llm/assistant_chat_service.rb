@@ -53,7 +53,7 @@ class Captain::Llm::AssistantChatService < Llm::BaseAiService
     {
       role: 'system',
       content: Captain::Llm::SystemPromptsService.assistant_response_generator(
-        @assistant.name, @assistant.config['product_name'], @assistant.config,
+        @assistant.name, @assistant.config,
         contact: contact_attributes,
         orders: recent_orders
       )
