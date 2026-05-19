@@ -37,6 +37,19 @@ import { isFlatWidgetStyle } from './settingsHelper';
 import { popoutChatWindow } from '../widget/helpers/popoutHelper';
 import addHours from 'date-fns/addHours';
 
+const getImageUrl = url => {
+  if (!url) return '';
+  if (
+    url.startsWith('http://') ||
+    url.startsWith('https://') ||
+    url.startsWith('data:')
+  ) {
+    return url;
+  }
+  const baseUrl = window.$shopiz.baseUrl.replace(/\/$/, '');
+  return `${baseUrl}${url.startsWith('/') ? '' : '/'}${url}`;
+};
+
 const updateAuthCookie = (cookieContent, baseDomain = '') =>
   setCookieWithDomain('cw_conversation', cookieContent, {
     baseDomain,
@@ -175,6 +188,9 @@ export const IFrameHelper = {
         enableFileUpload: window.$shopiz.enableFileUpload,
         enableEmojiPicker: window.$shopiz.enableEmojiPicker,
         enableEndConversation: window.$shopiz.enableEndConversation,
+        widgetColor:
+          window.$shopiz.widgetColor ||
+          message.config.channelConfig.widgetColor,
       });
       IFrameHelper.onLoad({
         widgetColor: message.config.channelConfig.widgetColor,
@@ -319,7 +335,9 @@ export const IFrameHelper = {
       closeBtnClassName += ' woot-widget-bubble--flat';
     }
 
-    if (isWidgetColorLighter(widgetColor)) {
+    const activeColor = window.$shopiz.widgetColor || widgetColor;
+
+    if (isWidgetColorLighter(activeColor)) {
       className += ' woot-widget-bubble-color--lighter';
       closeBtnClassName += ' woot-widget-bubble-color--lighter';
     }
@@ -327,12 +345,12 @@ export const IFrameHelper = {
     const chatIcon = createBubbleIcon({
       className,
       target: chatBubble,
-      widgetColor,
-      bubbleAvatarUrl,
+      widgetColor: activeColor,
+      bubbleAvatarUrl: getImageUrl(bubbleAvatarUrl),
     });
 
     const closeAvatarUrl =
-      closeBubbleAvatarUrl ||
+      getImageUrl(closeBubbleAvatarUrl) ||
       `${window.$shopiz.baseUrl}/assets/images/bubble_off_chat.svg`;
     addClasses(closeBubble, closeBtnClassName);
     closeBubble.style.background = 'transparent';

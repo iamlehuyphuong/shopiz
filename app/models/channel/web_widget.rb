@@ -61,13 +61,35 @@ class Channel::WebWidget < ApplicationRecord
   enum reply_time: { in_a_few_minutes: 0, in_a_few_hours: 1, in_a_day: 2 }
 
   def bubble_avatar_url
-    return Rails.application.routes.url_helpers.url_for(bubble_avatar.representation(resize_to_fill: [250, nil])) if bubble_avatar.attached? && bubble_avatar.representable?
+    if bubble_avatar.attached? && bubble_avatar.representable?
+      host = ENV.fetch('FRONTEND_URL', nil)
+      if host.present?
+        begin
+          return Rails.application.routes.url_helpers.url_for(bubble_avatar.representation(resize_to_fill: [250, nil]), host: host)
+        rescue => e
+          return Rails.application.routes.url_helpers.url_for(bubble_avatar.representation(resize_to_fill: [250, nil]))
+        end
+      else
+        return Rails.application.routes.url_helpers.url_for(bubble_avatar.representation(resize_to_fill: [250, nil]))
+      end
+    end
 
     ''
   end
 
   def close_bubble_avatar_url
-    return Rails.application.routes.url_helpers.url_for(close_bubble_avatar.representation(resize_to_fill: [250, nil])) if close_bubble_avatar.attached? && close_bubble_avatar.representable?
+    if close_bubble_avatar.attached? && close_bubble_avatar.representable?
+      host = ENV.fetch('FRONTEND_URL', nil)
+      if host.present?
+        begin
+          return Rails.application.routes.url_helpers.url_for(close_bubble_avatar.representation(resize_to_fill: [250, nil]), host: host)
+        rescue => e
+          return Rails.application.routes.url_helpers.url_for(close_bubble_avatar.representation(resize_to_fill: [250, nil]))
+        end
+      else
+        return Rails.application.routes.url_helpers.url_for(close_bubble_avatar.representation(resize_to_fill: [250, nil]))
+      end
+    end
 
     ''
   end

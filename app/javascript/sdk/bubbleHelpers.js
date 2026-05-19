@@ -58,6 +58,7 @@ export const createBubbleIcon = ({
       target,
       imageUrl: bubbleAvatarUrl,
     });
+    target.style.background = 'transparent';
   } else {
     const container = document.createElement('div');
     container.className = 'bubble-icon-container';
@@ -71,6 +72,9 @@ export const createBubbleIcon = ({
     svg.appendChild(path);
     container.appendChild(svg);
     target.appendChild(container);
+    target.style.setProperty('background', widgetColor, 'important');
+    target.style.borderRadius = '50%';
+    target.style.boxShadow = '0 8px 24px rgba(0, 0, 0, .16)';
   }
 
   if (window.$shopiz.launcherTitle) {
