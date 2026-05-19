@@ -281,11 +281,10 @@ class Account < ApplicationRecord
 
     return if sales_config.blank?
 
-    inboxes.find_each do |inbox|
-      # Merge new sales_config into existing inbox sales_config
-      existing_config = inbox.sales_config || {}
-      inbox.update!(sales_config: existing_config.merge(sales_config))
-    end
+    # Merge into all inboxes in a single query using PostgreSQL JSONB concat operator
+    inboxes.update_all(
+      ["sales_config = COALESCE(sales_config, '{}'::jsonb) || ?::jsonb", sales_config.to_json]
+    )
   end
 end
 

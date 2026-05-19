@@ -20,6 +20,10 @@ class Captain::Tools::CreateOrderDraftTool < Captain::Tools::BasePublicTool
     conversation = find_conversation(tool_context.state)
     return 'Conversation not found' unless conversation
 
+    unless conversation.account.ai_allow_create_order
+      return 'AI order creation is disabled for this account. Please ask an agent to create the order manually.'
+    end
+
     platform = resolve_ecom_platform(tool_context)
     if platform
       args = build_platform_args(platform, product_identifiers, quantities, customer_note)

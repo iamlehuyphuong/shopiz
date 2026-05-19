@@ -14,6 +14,10 @@ class Captain::Tools::Copilot::CreateOrderService < Captain::Tools::BaseTool
   param :note, type: :string, desc: "Order note", required: false
 
   def execute(**args)
+    unless @conversation&.account&.ai_allow_create_order
+      return 'AI order creation is disabled for this account. Enable it in Sales Settings.'
+    end
+
     delegate_to_ecom_tool(**args)
   end
 

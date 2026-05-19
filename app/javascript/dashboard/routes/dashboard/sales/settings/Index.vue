@@ -14,6 +14,13 @@ const { t } = useI18n();
 const store = useStore();
 const { currentAccount } = useAccount();
 
+const isLoading = computed(() => {
+  return (
+    store.getters['integrations/getUIFlags'].isFetching ||
+    store.getters['accounts/getUIFlags'].isFetchingItem
+  );
+});
+
 const ECOMMERCE_APP_IDS = [
   'shopify',
   'woocommerce',
@@ -229,7 +236,11 @@ const insertVariable = variableKey => {
   <!-- eslint-disable vue/no-bare-strings-in-template -->
   <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
   <div class="w-full h-full overflow-auto">
-    <div class="max-w-5xl mx-auto px-6 py-6">
+    <woot-loading-state
+      v-if="isLoading"
+      :message="t('INBOX_MGMT.ECOMMERCE.LOADING_MESSAGE')"
+    />
+    <div v-else class="max-w-5xl mx-auto px-6 py-6">
       <div class="flex flex-col gap-6">
         <!-- Header -->
         <div class="flex flex-col gap-1">
