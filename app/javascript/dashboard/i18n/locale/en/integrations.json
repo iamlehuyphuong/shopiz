@@ -652,6 +652,11 @@
           "PLACEHOLDER": "e.g., Women's clothing, Seafood",
           "ERROR": "The core products are required"
         },
+        "PRODUCT_NAME": {
+          "LABEL": "Core Products / Services",
+          "PLACEHOLDER": "e.g., Women's clothing, Seafood",
+          "ERROR": "The core products are required"
+        },
         "WELCOME_MESSAGE": {
           "LABEL": "Welcome Message",
           "PLACEHOLDER": "Enter welcome message"

@@ -652,6 +652,11 @@
           "PLACEHOLDER": "VD: Đầm váy công sở",
           "ERROR": "Vui lòng nhập sản phẩm cốt lõi"
         },
+        "PRODUCT_NAME": {
+          "LABEL": "Sản phẩm / Dịch vụ cốt lõi",
+          "PLACEHOLDER": "VD: Đầm váy công sở",
+          "ERROR": "Vui lòng nhập sản phẩm cốt lõi"
+        },
         "WELCOME_MESSAGE": {
           "LABEL": "Tin nhắn chào mừng",
           "PLACEHOLDER": "Nhập tin nhắn chào mừng"
