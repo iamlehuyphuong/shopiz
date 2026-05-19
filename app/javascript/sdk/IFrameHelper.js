@@ -331,10 +331,13 @@ export const IFrameHelper = {
       bubbleAvatarUrl,
     });
 
+    const closeAvatarUrl =
+      closeBubbleAvatarUrl ||
+      `${window.$shopiz.baseUrl}/assets/images/bubble_off_chat.svg`;
     addClasses(closeBubble, closeBtnClassName);
     addImageToButton({
       target: closeBubble,
-      imageUrl: closeBubbleAvatarUrl,
+      imageUrl: closeAvatarUrl,
     });
     bubbleHolder.appendChild(chatIcon);
     bubbleHolder.appendChild(closeBubble);

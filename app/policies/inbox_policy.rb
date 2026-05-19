@@ -58,6 +58,14 @@ class InboxPolicy < ApplicationPolicy
     @account_user.administrator?
   end
 
+  def bubble_avatar?
+    @account_user.administrator?
+  end
+
+  def close_bubble_avatar?
+    @account_user.administrator?
+  end
+
   def sync_templates?
     @account_user.administrator?
   end

@@ -830,7 +830,7 @@
       "CHECK_ERROR": "Unable to check connection. Please try again later."
     },
     "CHANNEL_PREFERENCES": "Channel Preferences",
-    "WIDGET_FEATURES": "Widget features",
+    "WIDGET_FEATURES": "Customize Chat Window",
     "ACCOUNT_HEALTH": {
       "TITLE": "Manage your WhatsApp account",
       "DESCRIPTION": "Review your WhatsApp account status, messaging limits, and quality. Update settings or resolve issues if needed",
@@ -1307,6 +1307,8 @@
         },
         "BUBBLE_AVATAR": {
           "LABEL": "Bubble Icon",
+          "OPEN_LABEL": "Open Chat Image",
+          "CLOSE_LABEL": "Close Chat Image",
           "DELETE": {
             "API": {
               "SUCCESS_MESSAGE": "Bubble icon deleted successfully",
@@ -1344,8 +1346,8 @@
         },
         "WIDGET_COLOR_LABEL": "Widget Color",
         "WIDGET_BUBBLE": "Bubble",
-        "WIDGET_BUBBLE_POSITION_LABEL": "Position:",
-        "WIDGET_BUBBLE_TYPE_LABEL": "Type:",
+        "WIDGET_BUBBLE_POSITION_LABEL": "Position",
+        "WIDGET_BUBBLE_TYPE_LABEL": "Type",
         "WIDGET_BUBBLE_LAUNCHER_TITLE": {
           "DEFAULT": "Chat with us",
           "LABEL": "Launcher Title",
@@ -1368,7 +1370,7 @@
         },
         "WIDGET_BUBBLE_TYPE": {
           "STANDARD": "Standard",
-          "EXPANDED_BUBBLE": "Expanded Bubble"
+          "EXPANDED_BUBBLE": "Expanded"
         }
       },
       "WIDGET_SCREEN": {

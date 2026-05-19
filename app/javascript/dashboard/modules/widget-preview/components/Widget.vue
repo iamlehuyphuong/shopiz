@@ -222,7 +222,17 @@ const handleToggleWidget = () => {
             @click="handleToggleWidget"
           >
             <img
-              v-if="!isWidgetVisible"
+              v-if="!isWidgetVisible && props.bubbleLogo"
+              :src="props.bubbleLogo"
+              alt=""
+              draggable="false"
+              class="mx-auto rounded-full object-cover"
+              :class="
+                isBubbleExpanded ? 'w-6 h-6' : 'w-full h-full absolute inset-0'
+              "
+            />
+            <img
+              v-else-if="!isWidgetVisible && !props.bubbleLogo"
               src="~dashboard/assets/images/bubble-logo.svg"
               alt=""
               draggable="false"
@@ -231,7 +241,14 @@ const handleToggleWidget = () => {
             <div v-if="isBubbleExpanded" class="ltr:pl-2.5 rtl:pr-2.5">
               {{ getWidgetBubbleLauncherTitle }}
             </div>
-            <div v-if="isWidgetVisible" class="relative">
+            <img
+              v-if="isWidgetVisible && props.closeBubbleLogo"
+              :src="props.closeBubbleLogo"
+              alt=""
+              draggable="false"
+              class="w-full h-full mx-auto rounded-full object-cover absolute inset-0"
+            />
+            <div v-else-if="isWidgetVisible" class="relative">
               <div
                 class="absolute w-0.5 h-8 rotate-45 -translate-y-1/2 bg-white"
               />

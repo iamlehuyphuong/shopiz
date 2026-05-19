@@ -132,7 +132,7 @@
         },
         "CHANNEL_WELCOME_TAGLINE": {
           "LABEL": "Thông điệp chào mừng",
-          "PLACEHOLDER": "Chúng tôi luôn sẵn sàng hỗ trợ bạn."
+          "PLACEHOLDER": "Chúng tôi giúp việc kết nối trở nên đơn giản. Hãy hỏi chúng tôi bất cứ điều gì, hoặc chia sẻ phản hồi của bạn."
         },
         "CHANNEL_GREETING_MESSAGE": {
           "LABEL": "Tin nhắn chào mừng",
@@ -799,7 +799,7 @@
       "CHECK_ERROR": "Không thể kiểm tra kết nối. Vui lòng thử lại sau."
     },
     "CHANNEL_PREFERENCES": "Cài đặt kênh",
-    "WIDGET_FEATURES": "Tính năng widget",
+    "WIDGET_FEATURES": "Tuỳ chỉnh khung trò chuyện",
     "ACCOUNT_HEALTH": {
       "TITLE": "Quản lý tài khoản WhatsApp",
       "DESCRIPTION": "Xem trạng thái, giới hạn nhắn tin và chất lượng tài khoản WhatsApp. Cập nhật cài đặt hoặc xử lý vấn đề nếu cần.",
@@ -1276,6 +1276,8 @@
         },
         "BUBBLE_AVATAR": {
           "LABEL": "Biểu tượng bong bóng (Bubble)",
+          "OPEN_LABEL": "Ảnh mở hội thoại",
+          "CLOSE_LABEL": "Ảnh đóng hội thoại",
           "DELETE": {
             "API": {
               "SUCCESS_MESSAGE": "Xoá biểu tượng bong bóng thành công",
@@ -1303,7 +1305,7 @@
         },
         "WELCOME_TAGLINE": {
           "LABEL": "Câu chào mừng",
-          "PLACE_HOLDER": "Hãy hỏi chúng tôi bất cứ điều gì hoặc chia sẻ phản hồi của bạn."
+          "PLACE_HOLDER": "Chúng tôi giúp việc kết nối trở nên đơn giản. Hãy hỏi chúng tôi bất cứ điều gì, hoặc chia sẻ phản hồi của bạn."
         },
         "REPLY_TIME": {
           "LABEL": "Thời gian phản hồi",
@@ -1313,11 +1315,11 @@
         },
         "WIDGET_COLOR_LABEL": "Màu tiện ích",
         "WIDGET_BUBBLE": "Bong bóng",
-        "WIDGET_BUBBLE_POSITION_LABEL": "Vị trí bong bóng widget",
-        "WIDGET_BUBBLE_TYPE_LABEL": "Kiểu bong bóng widget",
+        "WIDGET_BUBBLE_POSITION_LABEL": "Vị trí",
+        "WIDGET_BUBBLE_TYPE_LABEL": "Kiểu",
         "WIDGET_BUBBLE_LAUNCHER_TITLE": {
           "DEFAULT": "Trò chuyện với chúng tôi",
-          "LABEL": "Tiêu đề trình khởi chạy bong bóng widget",
+          "LABEL": "Tiêu đề mở hội thoại",
           "PLACE_HOLDER": "Trò chuyện với chúng tôi"
         },
         "UPDATE": {
@@ -1337,7 +1339,7 @@
         },
         "WIDGET_BUBBLE_TYPE": {
           "STANDARD": "Tiêu chuẩn",
-          "EXPANDED_BUBBLE": "Bong bóng mở rộng"
+          "EXPANDED_BUBBLE": "Mở rộng"
         }
       },
       "WIDGET_SCREEN": {

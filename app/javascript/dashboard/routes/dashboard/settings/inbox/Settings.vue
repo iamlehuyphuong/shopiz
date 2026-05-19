@@ -956,44 +956,6 @@ export default {
                   @delete="handleAvatarDelete"
                 />
               </div>
-              <div
-                v-if="isAWebWidgetInbox"
-                class="flex flex-col gap-1 items-start"
-              >
-                <label class="text-heading-3 text-n-slate-12">
-                  Ảnh mở Bubble Chat
-                </label>
-                <Avatar
-                  :src="bubbleAvatarUrl"
-                  :size="64"
-                  icon-name="chat"
-                  name=""
-                  allow-upload
-                  branded
-                  rounded-full
-                  @upload="handleBubbleImageUpload"
-                  @delete="handleBubbleAvatarDelete"
-                />
-              </div>
-              <div
-                v-if="isAWebWidgetInbox"
-                class="flex flex-col gap-1 items-start"
-              >
-                <label class="text-heading-3 text-n-slate-12">
-                  Ảnh đóng Bubble Chat
-                </label>
-                <Avatar
-                  :src="closeBubbleAvatarUrl"
-                  :size="64"
-                  icon-name="dismiss"
-                  name=""
-                  allow-upload
-                  branded
-                  rounded-full
-                  @upload="handleCloseBubbleImageUpload"
-                  @delete="handleCloseBubbleAvatarDelete"
-                />
-              </div>
             </div>
             <SettingsFieldSection :label="inboxNameLabel">
               <woot-input
@@ -1202,61 +1164,111 @@ export default {
                   $t('INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE')
                 "
               >
-                <div class="flex items-center gap-6">
-                  <div class="flex items-center gap-2">
-                    <label class="text-n-slate-11 text-heading-3">
-                      {{
-                        $t(
-                          'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_POSITION_LABEL'
-                        )
-                      }}
-                    </label>
-                    <SelectInput
-                      v-model="widgetBubblePosition"
-                      :options="[
-                        {
-                          label: $t(
-                            'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_POSITION.LEFT'
-                          ),
-                          value: 'left',
-                        },
-                        {
-                          label: $t(
-                            'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_POSITION.RIGHT'
-                          ),
-                          value: 'right',
-                        },
-                      ]"
-                      class="[&>select]:!p-0 min-w-16 [&>select]:!outline-none"
-                    />
+                <div class="flex flex-col gap-6">
+                  <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-2">
+                      <label class="text-n-slate-11 text-heading-3">
+                        {{
+                          $t(
+                            'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_POSITION_LABEL'
+                          )
+                        }}
+                      </label>
+                      <SelectInput
+                        v-model="widgetBubblePosition"
+                        :options="[
+                          {
+                            label: $t(
+                              'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_POSITION.LEFT'
+                            ),
+                            value: 'left',
+                          },
+                          {
+                            label: $t(
+                              'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_POSITION.RIGHT'
+                            ),
+                            value: 'right',
+                          },
+                        ]"
+                        class="[&>select]:!py-0 [&>select]:!pl-0 [&>select]:!pr-6 min-w-16 [&>select]:!outline-none"
+                      />
+                    </div>
+                    <div class="h-3 w-px bg-n-weak rounded-lg" />
+                    <div class="flex items-center gap-2">
+                      <label class="text-n-slate-11 text-heading-3">
+                        {{
+                          $t(
+                            'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_TYPE_LABEL'
+                          )
+                        }}
+                      </label>
+                      <SelectInput
+                        v-model="widgetBubbleType"
+                        :options="[
+                          {
+                            label: $t(
+                              'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_TYPE.STANDARD'
+                            ),
+                            value: 'standard',
+                          },
+                          {
+                            label: $t(
+                              'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_TYPE.EXPANDED_BUBBLE'
+                            ),
+                            value: 'expanded_bubble',
+                          },
+                        ]"
+                        class="[&>select]:!py-0 [&>select]:!pl-0 [&>select]:!pr-6 min-w-16 [&>select]:!outline-none"
+                      />
+                    </div>
                   </div>
-                  <div class="h-3 w-px bg-n-weak rounded-lg" />
-                  <div class="flex items-center gap-2">
-                    <label class="text-n-slate-11 text-heading-3">
-                      {{
-                        $t(
-                          'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_TYPE_LABEL'
-                        )
-                      }}
-                    </label>
-                    <SelectInput
-                      v-model="widgetBubbleType"
-                      :options="[
-                        {
-                          label: $t(
-                            'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_TYPE.STANDARD'
-                          ),
-                          value: 'standard',
-                        },
-                        {
-                          label: $t(
-                            'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_TYPE.EXPANDED_BUBBLE'
-                          ),
-                          value: 'expanded_bubble',
-                        },
-                      ]"
-                      class="[&>select]:!p-0 min-w-16 [&>select]:!outline-none"
-                    />
+                  <div class="flex items-center gap-6">
+                    <div class="flex flex-col gap-1 items-start">
+                      <label class="text-heading-3 text-n-slate-12">
+                        {{
+                          $t(
+                            'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.BUBBLE_AVATAR.OPEN_LABEL'
+                          )
+                        }}
+                      </label>
+                      <Avatar
+                        :src="
+                          bubbleAvatarUrl ||
+                          '/assets/images/bubble_chat_icon.svg'
+                        "
+                        :hide-delete="!bubbleAvatarUrl"
+                        :size="64"
+                        name=""
+                        allow-upload
+                        branded
+                        rounded-full
+                        @upload="handleBubbleImageUpload"
+                        @delete="handleBubbleAvatarDelete"
+                      />
+                    </div>
+                    <div class="flex flex-col gap-1 items-start">
+                      <label class="text-heading-3 text-n-slate-12">
+                        {{
+                          $t(
+                            'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.BUBBLE_AVATAR.CLOSE_LABEL'
+                          )
+                        }}
+                      </label>
+                      <Avatar
+                        :src="
+                          closeBubbleAvatarUrl ||
+                          '/assets/images/bubble_off_chat.svg'
+                        "
+                        :hide-delete="!closeBubbleAvatarUrl"
+                        :size="64"
+                        name=""
+                        allow-upload
+                        branded
+                        rounded-full
+                        @upload="handleCloseBubbleImageUpload"
+                        @delete="handleCloseBubbleAvatarDelete"
+                      />
+                    </div>
                   </div>
                 </div>
               </SettingsFieldSection>
@@ -1482,8 +1494,7 @@ export default {
                             type="number"
                             min="1"
                             max="999"
-                            class="[&_input]:!mb-0"
-                            style="width: 150px"
+                            class="[&_input]:!mb-0 w-[150px]"
                           />
                         </div>
                         <p class="text-[12px] text-n-slate-11">
@@ -1795,6 +1806,8 @@ export default {
                 :widget-bubble-position="widgetBubblePosition"
                 :widget-bubble-launcher-title="widgetBubbleLauncherTitle"
                 :widget-bubble-type="widgetBubbleType"
+                :bubble-logo="bubbleAvatarUrl"
+                :close-bubble-logo="closeBubbleAvatarUrl"
                 :web-widget-script="inbox.web_widget_script"
               />
             </div>
