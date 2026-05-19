@@ -335,6 +335,8 @@ export const IFrameHelper = {
       closeBubbleAvatarUrl ||
       `${window.$shopiz.baseUrl}/assets/images/bubble_off_chat.svg`;
     addClasses(closeBubble, closeBtnClassName);
+    closeBubble.style.background = 'transparent';
+    closeBubble.style.boxShadow = 'none';
     addImageToButton({
       target: closeBubble,
       imageUrl: closeAvatarUrl,

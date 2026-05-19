@@ -1241,7 +1241,6 @@ export default {
                         name=""
                         allow-upload
                         branded
-                        rounded-full
                         @upload="handleBubbleImageUpload"
                         @delete="handleBubbleAvatarDelete"
                       />
@@ -1264,7 +1263,6 @@ export default {
                         name=""
                         allow-upload
                         branded
-                        rounded-full
                         @upload="handleCloseBubbleImageUpload"
                         @delete="handleCloseBubbleAvatarDelete"
                       />
@@ -1466,6 +1464,7 @@ export default {
               </SettingsAccordion>
 
               <SettingsAccordion
+                v-if="!isAWebWidgetInbox"
                 :title="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TITLE')"
                 class="mt-6"
               >
