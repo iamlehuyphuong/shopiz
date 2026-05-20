@@ -39,8 +39,9 @@ class Llm::BaseAiService
   end
 
   def setup_model
+    user_model = openai_hook&.settings&.dig('model') if @account && user_hook_key_allowed? && user_hook_api_key.present? && !system_api_key_available?
     config_value = InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_MODEL')&.value
-    @model = (config_value.presence || DEFAULT_MODEL)
+    @model = user_model.presence || config_value.presence || DEFAULT_MODEL
   end
 
   def setup_temperature

@@ -30,7 +30,8 @@ module Llm::Config
       base_url = if hook_api_base.present? && !hook_api_base.chomp('/').match?(%r{\Ahttps://api\.openai\.com(/v1)?\z})
                    hook_api_base.chomp('/').sub(%r{/v1\z}, '')
                  end
-      model = InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_MODEL')&.value.presence || DEFAULT_MODEL
+      user_model = hook&.settings&.dig('model')
+      model = user_model.presence || InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_MODEL')&.value.presence || DEFAULT_MODEL
 
       RubyLLM.configure do |config|
         config.openai_api_key = hook_api_key

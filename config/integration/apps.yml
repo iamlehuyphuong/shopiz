@@ -36,6 +36,7 @@ openai:
         {
           'api_base_url': { 'type': 'string' },
           'model': { 'type': 'string' },
+          'embedding_model': { 'type': 'string' },
           'api_key': { 'type': 'string' },
           'label_suggestion': { 'type': 'boolean' },
         },
@@ -55,8 +56,17 @@ openai:
         'label': 'Model',
         'type': 'text',
         'name': 'model',
-        'value': 'gpt-4o-mini',
-        'validation': 'required',
+        'placeholder': 'e.g. gpt-4o-mini',
+        'help': 'Default model to use if not configured: gpt-4o-mini',
+        'validation': '',
+      },
+      {
+        'label': 'Embedding Model',
+        'type': 'text',
+        'name': 'embedding_model',
+        'placeholder': 'e.g. text-embedding-3-small',
+        'help': 'Default model to use if not configured: text-embedding-3-small',
+        'validation': '',
       },
       {
         'label': 'API Key',
@@ -71,7 +81,7 @@ openai:
         'validation': '',
       },
     ]
-  visible_properties: ['api_base_url', 'api_key', 'label_suggestion']
+  visible_properties: ['api_base_url', 'api_key', 'model', 'embedding_model', 'label_suggestion']
 linear:
   id: linear
   logo: linear.png

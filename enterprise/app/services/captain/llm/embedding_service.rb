@@ -6,7 +6,12 @@ class Captain::Llm::EmbeddingService
   def initialize(account_id: nil)
     Llm::Config.initialize!
     @account_id = account_id
-    @embedding_model = InstallationConfig.find_by(name: 'CAPTAIN_EMBEDDING_MODEL')&.value.presence || LlmConstants::DEFAULT_EMBEDDING_MODEL
+    
+    if !system_api_key_available? && @account_id && user_hook_key_allowed? && user_hook_api_key.present?
+      @embedding_model = user_hook_embedding_model.presence || LlmConstants::DEFAULT_EMBEDDING_MODEL
+    else
+      @embedding_model = InstallationConfig.find_by(name: 'CAPTAIN_EMBEDDING_MODEL')&.value.presence || LlmConstants::DEFAULT_EMBEDDING_MODEL
+    end
   end
 
   def self.embedding_model
@@ -55,6 +60,10 @@ class Captain::Llm::EmbeddingService
 
   def user_hook_api_key
     openai_hook&.settings&.dig('api_key')
+  end
+
+  def user_hook_embedding_model
+    openai_hook&.settings&.dig('embedding_model')
   end
 
   def user_hook_api_base
