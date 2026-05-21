@@ -24,13 +24,13 @@ export const setBubbleText = bubbleText => {
     if (textNode) {
       textNode.innerText = bubbleText;
     }
-  }
 
-  const launcherTextNode = document.getElementById(
-    'woot-widget--launcher__text'
-  );
-  if (launcherTextNode) {
-    launcherTextNode.innerText = bubbleText;
+    const launcherTextNode = document.getElementById(
+      'woot-widget--launcher__text'
+    );
+    if (launcherTextNode) {
+      launcherTextNode.innerText = bubbleText;
+    }
   }
 };
 
@@ -77,7 +77,7 @@ export const createBubbleIcon = ({
     target.style.boxShadow = '0 8px 24px rgba(0, 0, 0, .16)';
   }
 
-  if (window.$shopiz.launcherTitle) {
+  if (isExpandedView(window.$shopiz.type) && window.$shopiz.launcherTitle) {
     const title = document.createElement('span');
     title.id = 'woot-widget--launcher__text';
     title.className = 'woot-widget--bubble__text';
