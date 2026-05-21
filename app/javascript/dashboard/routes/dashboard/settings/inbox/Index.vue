@@ -141,14 +141,13 @@ const onAddInbox = () => {
           <div class="flex items-center gap-4">
             <div
               v-if="inbox.avatar_url"
-              class="bg-n-alpha-3 rounded-xl size-10 ring ring-n-solid-1 border border-n-strong shadow-sm grid place-items-center"
+              class="bg-n-alpha-3 rounded-xl size-10 ring ring-n-solid-1 border border-n-strong shadow-sm grid place-items-center overflow-hidden"
             >
               <Avatar
                 :src="inbox.avatar_url"
                 :name="inbox.name"
-                :size="24"
+                :size="40"
                 branded
-                rounded-full
               />
             </div>
             <div

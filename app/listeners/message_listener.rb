@@ -10,6 +10,7 @@ class MessageListener < BaseListener
     ::Contacts::ContactInfoExtractorService.new(message).perform
 
     schedule_followup(message)
+    schedule_auto_label(message)
   end
   
   private
@@ -91,5 +92,19 @@ class MessageListener < BaseListener
     message = event.data[:message]
     account = message.account
     [message, account]
+  end
+
+  def schedule_auto_label(message)
+    return unless message.incoming?
+    return unless message.account.feature_enabled?('captain_tasks')
+
+    # Trigger 1: Every 5 incoming messages
+    incoming_count = message.conversation.messages.incoming.count
+    if incoming_count > 0 && incoming_count % 5 == 0
+      Captain::AutoLabelJob.perform_async(message.conversation_id, 'count')
+    end
+
+    # Trigger 2: 15 minutes after the last incoming message (if customer stops responding)
+    Captain::AutoLabelJob.set(wait: 15.minutes).perform_later(message.conversation_id, 'delay')
   end
 end
