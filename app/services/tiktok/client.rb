@@ -3,7 +3,7 @@ class Tiktok::Client
   pattr_initialize [:business_id!, :access_token!]
 
   def business_account_details
-    fetch_business_details(%w[username display_name avatar_url profile_image])
+    fetch_business_details(%w[display_name profile_image])
   rescue StandardError => e
     # If full field list fails (likely scope issues), try with minimal fields
     Rails.logger.warn "TikTok business_account_details full fetch failed: #{e.message}, trying minimal fields"
@@ -65,7 +65,7 @@ class Tiktok::Client
   def fetch_business_details(fields)
     endpoint = "#{api_base_url}/business/get/"
     headers = { 'Access-Token': access_token }
-    params = { business_id: business_id, fields: fields.to_s }
+    params = { business_id: business_id, fields: fields.to_json }
     response = HTTParty.get(endpoint, query: params, headers: headers)
 
     json = process_json_response(response, 'Failed to fetch TikTok user details')
@@ -94,7 +94,7 @@ class Tiktok::Client
       body[:image] = { media_id: payload }
     else
       body[:message_type] = 'TEXT'
-      body[:text] = { body: payload }
+      body[:text] = { text: payload }
     end
 
     response = HTTParty.post(endpoint, body: body.to_json, headers: headers)

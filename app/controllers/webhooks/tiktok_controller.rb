@@ -32,11 +32,11 @@ class Webhooks::TiktokController < ActionController::API
 
     return head :unauthorized unless ActiveSupport::SecurityUtils.secure_compare(computed_signature, received_signature)
 
-    # Check timestamp delay (acceptable delay: 5 seconds)
+    # Check timestamp delay (acceptable delay: 5 minutes)
     current_timestamp = Time.current.to_i
     delay = current_timestamp - received_timestamp
 
-    return head :unauthorized if delay > 5
+    return head :unauthorized if delay > 300
   end
 
   def extract_signature_parts(signature_header)
