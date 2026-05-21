@@ -199,6 +199,7 @@
       "OPEN_IN_NEW_TAB": "Mở trong tab mới",
       "COPY_LINK": "Sao chép link cuộc hội thoại",
       "COPY_LINK_SUCCESS": "Đã sao chép link vào clipboard",
+      "CANCEL_FOLLOWUP": "Hủy gửi tin nhắn đeo bám",
       "API": {
         "AGENT_ASSIGNMENT": {
           "SUCCESFUL": "Đã gán cuộc hội thoại {conversationId} cho \"{agentName}\"",

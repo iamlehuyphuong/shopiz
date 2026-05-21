@@ -132,6 +132,9 @@ const isFollowupActive = computed(() => {
   const followupConfig = inbox.value?.followup_config;
   if (!followupConfig?.enabled) return false;
 
+  const isCancelled = props.chat.custom_attributes?.followup_cancelled === true;
+  if (isCancelled) return false;
+
   const isBotPending = props.chat.status === 'pending' && props.chat.meta?.assignee_type === 'AgentBot';
   if (!['open', 'snoozed'].includes(props.chat.status) && !isBotPending) return false;
 
@@ -224,6 +227,18 @@ const closeContextMenu = () => {
   showContextMenu.value = false;
   contextMenu.value.x = null;
   contextMenu.value.y = null;
+};
+
+const cancelFollowup = async () => {
+  closeContextMenu();
+  try {
+    await store.dispatch('conversations/updateCustomAttributes', {
+      conversationId: props.chat.id,
+      customAttributes: { followup_cancelled: true },
+    });
+  } catch (error) {
+    // Ignore error
+  }
 };
 
 const onUpdateConversation = (status, snoozedUntil) => {
@@ -461,6 +476,7 @@ const deleteConversation = () => {
         :conversation-labels="chat.labels"
         :conversation-url="conversationPath"
         :allowed-options="allowedContextMenuOptions"
+        :is-followup-active="isFollowupActive"
         @update-conversation="onUpdateConversation"
         @assign-agent="onAssignAgent"
         @assign-label="onAssignLabel"
@@ -470,6 +486,7 @@ const deleteConversation = () => {
         @mark-as-read="markAsRead"
         @assign-priority="assignPriority"
         @delete-conversation="deleteConversation"
+        @cancel-followup="cancelFollowup"
         @close="closeContextMenu"
       />
     </ContextMenu>

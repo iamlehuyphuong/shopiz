@@ -20,6 +20,12 @@ class Conversations::FollowupExecutionJob < ApplicationJob
     followup_config = inbox.followup_config || {}
     return unless followup_config['enabled']
 
+    # Guard: check if follow-up is manually cancelled
+    if conversation.custom_attributes['followup_cancelled'] == true
+      Rails.logger.info("[FollowupExecutionJob] Follow-up manually cancelled for #{conversation.id}. Aborting.")
+      return
+    end
+
     # Guard: check if channel policy allows freeform messaging at this time
     unless channel_policy_allows_followup?(conversation)
       Rails.logger.info("[FollowupExecutionJob] Follow-up aborted due to strict channel policy limits on timestamp for #{conversation.id}.")

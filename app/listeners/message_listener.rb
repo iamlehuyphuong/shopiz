@@ -32,9 +32,10 @@ class MessageListener < BaseListener
       # Bail if we reached the maximum loop of sequence
       return if current_count >= max_attempts
     else
-      # Real agent message resets the count back to 0
+      # Real agent message resets the count back to 0 and removes cancelled state
       conversation.with_lock do
         conversation.custom_attributes['followup_count'] = 0
+        conversation.custom_attributes['followup_cancelled'] = false
         conversation.save!
       end
     end
