@@ -94,7 +94,7 @@ class Tiktok::Client
       body[:image] = { media_id: payload }
     else
       body[:message_type] = 'TEXT'
-      body[:text] = { text: payload }
+      body[:text] = { body: payload }
     end
 
     response = HTTParty.post(endpoint, body: body.to_json, headers: headers)
