@@ -128,6 +128,29 @@ const showLabelsSection = computed(() => {
   return props.chat.labels?.length > 0 || hasSlaPolicyId.value;
 });
 
+const isFollowupActive = computed(() => {
+  const followupConfig = inbox.value?.followup_config;
+  if (!followupConfig?.enabled) return false;
+
+  const isBotPending = props.chat.status === 'pending' && props.chat.meta?.assignee_type === 'AgentBot';
+  if (!['open', 'snoozed'].includes(props.chat.status) && !isBotPending) return false;
+
+  const lastMsg = props.chat.last_non_activity_message;
+  // 1 is OUTGOING
+  if (!lastMsg || lastMsg.message_type !== 1) return false;
+
+  const maxAttempts = followupConfig.max_attempts || 1;
+  const currentCount = props.chat.custom_attributes?.followup_count || 0;
+
+  return currentCount < maxAttempts;
+});
+
+const followupText = computed(() => {
+  const currentCount = props.chat.custom_attributes?.followup_count || 0;
+  const maxAttempts = inbox.value?.followup_config?.max_attempts || 1;
+  return `Follow-up ${currentCount}/${maxAttempts}`;
+});
+
 const messagePreviewClass = computed(() => {
   return [
     hasUnread.value ? 'font-medium text-n-slate-12' : 'text-n-slate-11',
@@ -331,6 +354,12 @@ const deleteConversation = () => {
           {{
             $t(`CHAT_LIST.CHAT_STATUS_FILTER_ITEMS.${props.chat.status}.TEXT`)
           }}
+        </span>
+        <span
+          v-if="isFollowupActive"
+          class="text-xxs font-medium leading-4 py-1 px-2 rounded-full border border-solid border-n-orange text-n-orange-11 bg-n-orange-2 text-ellipsis overflow-hidden whitespace-nowrap"
+        >
+          {{ followupText }}
         </span>
         <div
           v-if="currentContact.phone_number"

@@ -401,7 +401,14 @@
       },
       "muted": "{user_name} has muted the conversation",
       "unmuted": "{user_name} has unmuted the conversation",
-      "auto_resolution_message": "Resolving the conversation as it has been inactive for a while. Please start a new conversation if you need further assistance."
+      "auto_resolution_message": "Resolving the conversation as it has been inactive for a while. Please start a new conversation if you need further assistance.",
+      "followup": {
+        "scheduled": "Auto follow-up has been scheduled at {time}.",
+        "cancelled_channel_policy": "Auto follow-up schedule cancelled due to channel policy timeout.",
+        "cancelled_customer_replied": "Auto follow-up schedule cancelled as the customer has replied.",
+        "cancelled_no_ai": "Auto follow-up schedule cancelled due to missing AI Assistant configuration.",
+        "completed": "Auto follow-up successfully sent (attempt {attempt})."
+      }
     },
     "ORDER_PANEL": {
       "TITLE": "Orders",

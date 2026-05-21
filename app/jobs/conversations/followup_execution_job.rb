@@ -5,8 +5,9 @@ class Conversations::FollowupExecutionJob < ApplicationJob
     conversation = Conversation.find_by(id: conversation_id)
     return unless conversation
 
-    # Abort if the conversation is no longer open
-    return unless conversation.status == 'open' || conversation.status == 'snoozed'
+    # Abort if the conversation is no longer open, unless it is pending and assigned to a bot
+    is_bot_pending = conversation.status == 'pending' && conversation.assigned_entity.is_a?(AgentBot)
+    return unless conversation.status == 'open' || conversation.status == 'snoozed' || is_bot_pending
 
     trigger_message = Message.find_by(id: trigger_message_id)
     return unless trigger_message
@@ -22,18 +23,29 @@ class Conversations::FollowupExecutionJob < ApplicationJob
     # Guard: check if channel policy allows freeform messaging at this time
     unless channel_policy_allows_followup?(conversation)
       Rails.logger.info("[FollowupExecutionJob] Follow-up aborted due to strict channel policy limits on timestamp for #{conversation.id}.")
+      log_activity(
+        conversation,
+        "Đã huỷ lịch gửi tin nhắn follow-up do vượt quá thời gian cho phép của nền tảng (Channel Policy).",
+        'CONVERSATION.ACTIVITY.followup.cancelled_channel_policy'
+      )
       return
     end
 
     # Guard: check if the customer has replied since the trigger message
     if customer_replied_after?(conversation, trigger_message.created_at)
       Rails.logger.info("[FollowupExecutionJob] Customer has replied to #{conversation.id} after the scheduled followup. Aborting.")
+      log_activity(
+        conversation,
+        "Đã huỷ lịch gửi tin nhắn follow-up tự động do khách hàng đã phản hồi.",
+        'CONVERSATION.ACTIVITY.followup.cancelled_customer_replied'
+      )
       return
     end
 
     # Guard: check if a newer outgoing message was sent by an agent after the trigger
     if agent_messaged_after?(conversation, trigger_message.created_at)
       Rails.logger.info("[FollowupExecutionJob] Agent sent a newer message. The followup will be handled by the newer message's job. Aborting.")
+      # Không log "huỷ" ở đây vì sẽ bị spam (job mới đã được tạo và log kích hoạt mới rồi).
       return
     end
 
@@ -51,6 +63,13 @@ class Conversations::FollowupExecutionJob < ApplicationJob
       content = messages_list[attempt_count].presence || followup_config['predefined_message']
       trigger_predefined_message(conversation, content, attempt_count) if content.present?
     end
+
+    log_activity(
+      conversation,
+      "Đã hoàn thành gửi tin nhắn follow-up tự động (lần #{attempt_count + 1}).",
+      'CONVERSATION.ACTIVITY.followup.completed',
+      { attempt: attempt_count + 1 }
+    )
   end
 
   private
@@ -95,6 +114,11 @@ class Conversations::FollowupExecutionJob < ApplicationJob
     
     unless assistant
       Rails.logger.warn("[FollowupExecutionJob] No AI Assistant found for Inbox #{inbox.id}. Aborting follow-up.")
+      log_activity(
+        conversation,
+        "Đã huỷ lịch gửi tin nhắn follow-up tự động do chưa cấu hình AI Assistant.",
+        'CONVERSATION.ACTIVITY.followup.cancelled_no_ai'
+      )
       return
     end
 
@@ -137,5 +161,18 @@ class Conversations::FollowupExecutionJob < ApplicationJob
 
     builder = MessageBuilder.new(message_params, conversation)
     builder.perform
+  end
+
+  def log_activity(conversation, content, translation_key, translation_values = {})
+    conversation.messages.create(
+      account_id: conversation.account_id,
+      inbox_id: conversation.inbox_id,
+      message_type: :activity,
+      content: content,
+      content_attributes: {
+        translation_key: translation_key,
+        translation_values: translation_values
+      }
+    )
   end
 end

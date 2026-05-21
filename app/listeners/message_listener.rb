@@ -50,6 +50,18 @@ class MessageListener < BaseListener
     
     unless wait_until_time.nil? || wait_until_time <= Time.current
       Conversations::FollowupExecutionJob.set(wait_until: wait_until_time).perform_later(conversation.id, message.id)
+      
+      formatted_time = wait_until_time.in_time_zone('Asia/Ho_Chi_Minh').strftime('%H:%M %d/%m/%Y')
+      conversation.messages.create(
+        account_id: conversation.account_id,
+        inbox_id: conversation.inbox_id,
+        message_type: :activity,
+        content: "Hệ thống đã kích hoạt lên lịch gửi tin nhắn bám đuổi (follow-up) tự động vào lúc #{formatted_time}.",
+        content_attributes: {
+          translation_key: 'CONVERSATION.ACTIVITY.followup.scheduled',
+          translation_values: { time: formatted_time }
+        }
+      )
     end
   end
 

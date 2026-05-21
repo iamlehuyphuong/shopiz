@@ -149,7 +149,9 @@ const activeChild = computed(() => {
       const rankedPage = activeOnPages.find(child => {
         return Object.keys(child.to?.params || {})
           .map(key => {
-            return String(child.to?.params?.[key]) === String(route.params?.[key]);
+            return (
+              String(child.to?.params?.[key]) === String(route.params?.[key])
+            );
           })
           .every(match => match);
       });
@@ -166,7 +168,11 @@ const activeChild = computed(() => {
       child => child.to && route.path.startsWith(resolvePath(child.to))
     );
   } catch (e) {
-    console.error('[SidebarGroup] activeChild computation failed for:', props.name, e);
+    console.error(
+      '[SidebarGroup] activeChild computation failed for:',
+      props.name,
+      e
+    );
     return undefined;
   }
 });

@@ -401,7 +401,14 @@
       },
       "muted": "{user_name} đã tắt tiếng hội thoại",
       "unmuted": "{user_name} đã bật tiếng cuộc trò chuyện",
-      "auto_resolution_message": "Đang giải quyết cuộc trò chuyện vì đã không hoạt động trong một thời gian. Vui lòng bắt đầu một cuộc trò chuyện mới nếu cần hỗ trợ thêm."
+      "auto_resolution_message": "Đang giải quyết cuộc trò chuyện vì đã không hoạt động trong một thời gian. Vui lòng bắt đầu một cuộc trò chuyện mới nếu cần hỗ trợ thêm.",
+      "followup": {
+        "scheduled": "Hệ thống đã kích hoạt lên lịch gửi tin nhắn bám đuổi (follow-up) tự động vào lúc {time}.",
+        "cancelled_channel_policy": "Đã huỷ lịch gửi tin nhắn follow-up do vượt quá thời gian cho phép của nền tảng (Channel Policy).",
+        "cancelled_customer_replied": "Đã huỷ lịch gửi tin nhắn follow-up tự động do khách hàng đã phản hồi.",
+        "cancelled_no_ai": "Đã huỷ lịch gửi tin nhắn follow-up tự động do chưa cấu hình AI Assistant.",
+        "completed": "Đã hoàn thành gửi tin nhắn follow-up tự động (lần {attempt})."
+      }
     },
     "PRODUCT_PANEL": {
       "TITLE": "Sản phẩm",
