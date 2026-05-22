@@ -179,6 +179,10 @@
       "DESCRIPTION": "Are you sure you want to delete this conversation?",
       "CONFIRM": "Delete"
     },
+    "FOLLOW_UP": {
+      "SUCCESS": "Follow-up reminder set successfully.",
+      "ERROR": "Couldn't set follow-up reminder. Please try again."
+    },
     "CARD_CONTEXT_MENU": {
       "PENDING": "Mark as pending",
       "RESOLVED": "Mark as resolved",
@@ -540,6 +544,8 @@
     "ASSIGNEE_LABEL": "Assigned Agent",
     "SELF_ASSIGN": "Assign to me",
     "TEAM_LABEL": "Assigned Team",
+    "FOLLOW_UP_TITLE": "Follow-up Reminder",
+    "FOLLOW_UP_PLACEHOLDER": "Select date & time",
     "SELECT": {
       "PLACEHOLDER": "None"
     },

@@ -139,7 +139,11 @@ export default {
             </label>
           </div>
           <div class="w-full text-right">
-            <input type="submit" value="Create Inbox" class="button" />
+            <input
+              type="submit"
+              :value="$t('INBOX_MGMT.ADD.TIKTOK_SHOP.CREATE_INBOX')"
+              class="button"
+            />
           </div>
         </div>
       </form>

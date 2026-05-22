@@ -179,6 +179,10 @@
       "DESCRIPTION": "Bạn có chắc muốn xóa cuộc hội thoại này?",
       "CONFIRM": "Xóa"
     },
+    "FOLLOW_UP": {
+      "SUCCESS": "Đã đặt lịch hẹn chăm sóc thành công.",
+      "ERROR": "Không thể đặt lịch hẹn chăm sóc. Vui lòng thử lại."
+    },
     "CARD_CONTEXT_MENU": {
       "PENDING": "Đánh dấu đang chờ",
       "RESOLVED": "Đánh dấu đã giải quyết",
@@ -539,6 +543,8 @@
     "ASSIGNEE_LABEL": "Nhân viên phụ trách",
     "SELF_ASSIGN": "Tự giao cho tôi",
     "TEAM_LABEL": "Nhóm phụ trách",
+    "FOLLOW_UP_TITLE": "Hẹn chăm sóc",
+    "FOLLOW_UP_PLACEHOLDER": "Chọn thời gian",
     "SELECT": {
       "PLACEHOLDER": "Không có"
     },

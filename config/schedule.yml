@@ -111,3 +111,10 @@ zalo_personal_check_connection_health_job:
   class: 'ZaloPersonal::CheckConnectionHealthJob'
   queue: scheduled_jobs
 
+# executed every 1 hour
+# sends reminder for follow-up conversations
+agent_follow_up_reminder_job:
+  cron: '0 * * * *'
+  class: 'Conversations::AgentFollowUpReminderJob'
+  queue: scheduled_jobs
+

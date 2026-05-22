@@ -241,6 +241,8 @@ en:
     attachment: 'Attachment'
     no_content: 'No content'
   conversations:
+    follow_up:
+      reminder: '⏰ Follow-up reminder for customer.'
     captain:
       handoff: 'Transferring to another agent for further assistance.'
     messages:

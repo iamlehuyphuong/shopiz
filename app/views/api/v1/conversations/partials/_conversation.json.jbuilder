@@ -68,6 +68,7 @@ json.active_bot conversation.inbox.active_bot?
 json.labels conversation.cached_label_list_array
 json.muted conversation.muted?
 json.snoozed_until conversation.snoozed_until
+json.follow_up_at conversation.follow_up_at
 json.status conversation.status_display
 json.created_at conversation.created_at.to_i
 json.updated_at conversation.updated_at.to_f

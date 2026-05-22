@@ -205,6 +205,8 @@ vi:
     attachment: 'Tệp đính kèm'
     no_content: 'Không có nội dung'
   conversations:
+    follow_up:
+      reminder: '⏰ Đã đến lịch hẹn chăm sóc khách hàng.'
     captain:
       handoff: 'Đang chuyển cuộc trò chuyện cho nhân viên khác để hỗ trợ thêm.'
     messages:

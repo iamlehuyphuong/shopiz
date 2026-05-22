@@ -85,7 +85,8 @@
         "INBOX_NAME": "Tên hộp thư",
         "ADD_NAME": "Nhập tên hộp thư",
         "PICK_NAME": "Chọn tên hộp thư",
-        "PICK_A_VALUE": "Chọn giá trị"
+        "PICK_A_VALUE": "Chọn giá trị",
+        "CREATE_INBOX": "Tạo hộp thư"
       },
       "INSTAGRAM": {
         "CONTINUE_WITH_INSTAGRAM": "Tiếp tục với Instagram",
@@ -585,7 +586,7 @@
       "CREATING_CHANNEL": "Đang tạo hộp thư...",
       "TITLE": "Cấu hình chi tiết hộp thư",
       "LOADING_TIKTOK_SHOP": "Đang xác thực với Tiktok...",
-      "DESC_TIKTOK_SHOP": "TIKTOK_SHOP",
+      "DESC_TIKTOK_SHOP": "Kết nối tài khoản TikTok Shop của bạn với Shopiz để quản lý hội thoại.",
       "DESC": ""
     },
     "ECOMMERCE": {
