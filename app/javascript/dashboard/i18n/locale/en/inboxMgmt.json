@@ -43,6 +43,8 @@
       },
       "FB": {
         "TITLE": "Facebook Message Channel",
+        "CONNECT_FB": "Connect Facebook Page",
+        "CONTINUE_WITH_FB": "Continue with Facebook",
         "DESC": "PS: By signing in, we only get access to your Page's messages. Your private messages can never be accessed by Shopiz.",
         "HELP": "PS: By signing in, we only get access to your Page's messages. Your private messages can never be accessed by Shopiz.",
         "CHOOSE_PAGE": "Choose Page",
@@ -55,6 +57,8 @@
       },
       "ZALO_OA": {
         "TITLE": "Zalo OA Channel",
+        "CONNECT_ZALO_OA": "Connect Zalo OA",
+        "CONTINUE_WITH_ZALO_OA": "Continue with Zalo OA",
         "LOADING": "Authenticating you with Zalo...",
         "RELOGIN": "Reauthorize",
         "DESC": "PS: By signing in, we only get access to your Zalo OA's messages. Your private messages can never be accessed by Shopiz.",
@@ -89,6 +93,8 @@
         "QR_NETWORK_ERROR": "Unable to connect to the server. Please check your network connection and try again."
       },
       "TIKTOK_SHOP": {
+        "CONNECT_TIKTOK_SHOP": "Connect TikTok Shop",
+        "CONTINUE_WITH_TIKTOK_SHOP": "Continue with TikTok Shop",
         "HELP": "PS: By signing in, we only get access to your TikTok Shop messages. Your private messages can never be accessed by Shopiz.",
         "INBOX_NAME": "Inbox Name",
         "ADD_NAME": "Add a name for your inbox",

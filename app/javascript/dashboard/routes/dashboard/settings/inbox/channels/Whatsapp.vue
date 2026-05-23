@@ -55,7 +55,7 @@ const handleManualLinkClick = () => {
 <template>
   <div class="overflow-auto col-span-6 p-6 w-full h-full">
     <div v-if="showConfiguration">
-      <div class="px-6 py-5 rounded-2xl border border-n-weak">
+      <div class="px-6 py-5 rounded-2xl">
         <!-- Show embedded signup if app ID is configured -->
         <div
           v-if="

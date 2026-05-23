@@ -5,11 +5,13 @@ import { required } from '@vuelidate/validators';
 import LoadingState from 'dashboard/components/widgets/LoadingState.vue';
 import PageHeader from '../../SettingsSubPageHeader.vue';
 import router from '../../../../index';
+import Button from 'dashboard/components-next/button/Button.vue';
 
 export default {
   components: {
     LoadingState,
     PageHeader,
+    Button,
   },
   setup() {
     return {
@@ -89,19 +91,24 @@ export default {
 </script>
 
 <template>
-  <div class="wizard-body w-[90%] flex-shrink-0 flex-grow-0 max-w-[90%] p-6">
+  <div class="h-full p-6 w-full max-w-full flex-shrink-0 flex-grow-0">
     <div
       v-if="!hasLoginStarted"
-      class="flex flex-col items-center justify-center pt-36"
+      class="flex flex-col items-center justify-start mt-20 h-full text-center"
     >
-      <a href="#" @click="startLogin()">
-        <img
-          src="~dashboard/assets/images/channels/tiktok_shop_login.png"
-          alt="TikTok-logo"
-          style="height: 150px; width: auto"
-        />
-      </a>
-      <p>{{ $t('INBOX_MGMT.ADD.TIKTOK_SHOP.HELP') }}</p>
+      <h6 class="text-2xl font-medium">
+        {{ $t('INBOX_MGMT.ADD.TIKTOK_SHOP.CONNECT_TIKTOK_SHOP') }}
+      </h6>
+      <p class="py-6 text-sm text-n-slate-11">
+        {{ $t('INBOX_MGMT.ADD.TIKTOK_SHOP.HELP') }}
+      </p>
+      <Button
+        class="text-white !rounded-full !px-6 bg-gradient-to-r from-[#00f2ea] via-[#ff0050] to-[#000000]"
+        lg
+        icon="i-woot-tiktok-shop"
+        :label="$t('INBOX_MGMT.ADD.TIKTOK_SHOP.CONTINUE_WITH_TIKTOK_SHOP')"
+        @click="startLogin()"
+      />
     </div>
     <div v-else>
       <div v-if="hasError" class="max-w-lg mx-auto text-center">

@@ -8,10 +8,13 @@ import { useAlert } from 'dashboard/composables';
 import axios from 'axios';
 import PageHeader from '../../SettingsSubPageHeader.vue';
 import router from '../../../../index';
+import Button from 'dashboard/components-next/button/Button.vue';
+
 export default {
   components: {
     LoadingState,
     PageHeader,
+    Button,
   },
   setup() {
     const { accountId } = useAccount();
@@ -153,22 +156,25 @@ export default {
 </script>
 
 <template>
-  <div class="wizard-body w-[90%] flex-shrink-0 flex-grow-0 max-w-[90%] p-6">
+  <div class="h-full p-6 w-full max-w-full flex-shrink-0 flex-grow-0">
     <div
       v-if="!hasLoginStarted"
-      class="flex flex-col items-center justify-center pt-36"
+      class="flex flex-col items-center justify-start mt-20 h-full text-center"
     >
-      <a href="#" @click="startLogin()">
-        <img
-          src="~dashboard/assets/images/channels/zalo_login.png"
-          alt="Zalo-logo"
-          style="height: 150px; width: auto"
-        />
-      </a>
-      <p class="pt-6 mb-0 text-center">
+      <h6 class="text-2xl font-medium">
+        {{ $t('INBOX_MGMT.ADD.ZALO_OA.CONNECT_ZALO_OA') }}
+      </h6>
+      <p class="py-6 text-sm text-n-slate-11">
         {{ $t('INBOX_MGMT.ADD.ZALO_OA.HELP') }}
+        {{ $t('INBOX_MGMT.ADD.ZALO_OA.HELP_2') }}
       </p>
-      <p class="text-center">{{ $t('INBOX_MGMT.ADD.ZALO_OA.HELP_2') }}</p>
+      <Button
+        class="text-white !rounded-full !px-6 bg-gradient-to-r from-[#0068FF] to-[#004BBF]"
+        lg
+        icon="i-woot-zalo-oa"
+        :label="$t('INBOX_MGMT.ADD.ZALO_OA.CONTINUE_WITH_ZALO_OA')"
+        @click="startLogin()"
+      />
     </div>
     <div v-else>
       <div v-if="hasError" class="max-w-lg mx-auto text-center">

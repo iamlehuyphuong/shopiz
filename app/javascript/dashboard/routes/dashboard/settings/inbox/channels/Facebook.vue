@@ -224,19 +224,21 @@ export default {
   <div class="w-full h-full col-span-6 p-6 overflow-auto">
     <div
       v-if="!hasLoginStarted"
-      class="flex flex-col items-center justify-center h-full text-center"
+      class="flex flex-col items-center justify-start mt-20 h-full text-center"
     >
-      <a href="#" @click="startLogin()">
-        <img
-          style="height: 150px; width: auto"
-          class="rounded-md"
-          src="~dashboard/assets/images/channels/facebook_login.png"
-          alt="Facebook-logo"
-        />
-      </a>
-      <p class="py-6">
+      <h6 class="text-2xl font-medium">
+        {{ $t('INBOX_MGMT.ADD.FB.CONNECT_FB') }}
+      </h6>
+      <p class="py-6 text-sm text-n-slate-11">
         {{ replaceInstallationName($t('INBOX_MGMT.ADD.FB.HELP')) }}
       </p>
+      <NextButton
+        class="text-white !rounded-full !px-6 bg-gradient-to-r from-[#1877F2] to-[#0A4BBF]"
+        lg
+        icon="i-ri-messenger-line"
+        :label="$t('INBOX_MGMT.ADD.FB.CONTINUE_WITH_FB')"
+        @click="startLogin()"
+      />
     </div>
     <div v-else>
       <div v-if="hasError" class="max-w-lg mx-auto text-center">
