@@ -78,7 +78,15 @@
         "DEFAULT_FRIEND_REQUEST_MESSAGE_TITLE": "Default Friend Request Message",
         "DEFAULT_FRIEND_REQUEST_MESSAGE_SUBTITLE": "The message sent when requesting friendship.",
         "DEFAULT_GREETING_MESSAGE_TITLE": "Default Greeting Message",
-        "DEFAULT_GREETING_MESSAGE_SUBTITLE": "The greeting message sent alongside the friend request."
+        "DEFAULT_GREETING_MESSAGE_SUBTITLE": "The greeting message sent alongside the friend request.",
+        "CUSTOM_PROXY": "Custom Proxy (Optional)",
+        "CUSTOM_PROXY_PLACEHOLDER": "http://user:pass@ip:port",
+        "GENERATE_QR": "Generate QR",
+        "GENERATING_QR": "Generating...",
+        "PROXY_USED": "Proxy in use:",
+        "QR_PLACEHOLDER": "Your QR code will appear here",
+        "QR_ERROR": "Unable to generate QR code. Please check your proxy and try again.",
+        "QR_NETWORK_ERROR": "Unable to connect to the server. Please check your network connection and try again."
       },
       "TIKTOK_SHOP": {
         "HELP": "PS: By signing in, we only get access to your TikTok Shop messages. Your private messages can never be accessed by Shopiz.",
@@ -978,6 +986,12 @@
       "HMAC_MANDATORY_DESCRIPTION": "If enabled, requests that cannot be verified will be rejected.",
       "INBOX_IDENTIFIER": "Inbox Identifier",
       "INBOX_IDENTIFIER_SUB_TEXT": "Use the `inbox_identifier` token shown here to authentication your API clients.",
+      "PROXY_CONFIGURATION": {
+        "TITLE": "Proxy Configuration",
+        "SUBTITLE": "This is the proxy URL currently configured for this Zalo inbox.",
+        "HELP": "To change the Proxy, please re-authorize.",
+        "NO_PROXY": "No proxy configured"
+      },
       "FORWARD_EMAIL_TITLE": "Forward to Email",
       "FORWARD_EMAIL_SUB_TEXT": "Start forwarding your emails to the following email address.",
       "FORWARD_EMAIL_NOT_CONFIGURED": "Forwarding emails to your inbox is currently disabled on this installation. To use this feature, it must be enabled by your administrator. Please get in touch with them to proceed.",

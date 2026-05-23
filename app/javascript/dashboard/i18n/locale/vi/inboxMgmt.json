@@ -78,7 +78,15 @@
         "DEFAULT_FRIEND_REQUEST_MESSAGE_TITLE": "Lời mời kết bạn mặc định",
         "DEFAULT_FRIEND_REQUEST_MESSAGE_SUBTITLE": "Tin nhắn được gửi kèm khi yêu cầu kết bạn.",
         "DEFAULT_GREETING_MESSAGE_TITLE": "Lời chào mặc định",
-        "DEFAULT_GREETING_MESSAGE_SUBTITLE": "Lời chào được tự động gửi kèm theo lời mời kết bạn."
+        "DEFAULT_GREETING_MESSAGE_SUBTITLE": "Lời chào được tự động gửi kèm theo lời mời kết bạn.",
+        "CUSTOM_PROXY": "Proxy tùy chỉnh (Tùy chọn)",
+        "CUSTOM_PROXY_PLACEHOLDER": "http://user:pass@ip:port",
+        "GENERATE_QR": "Tạo mới QR",
+        "GENERATING_QR": "Đang tạo...",
+        "PROXY_USED": "Proxy đang dùng:",
+        "QR_PLACEHOLDER": "Mã QR sẽ hiển thị tại đây",
+        "QR_ERROR": "Không thể tạo mã QR. Vui lòng kiểm tra lại thông tin proxy và thử lại.",
+        "QR_NETWORK_ERROR": "Không thể kết nối đến máy chủ. Vui lòng kiểm tra kết nối mạng và thử lại."
       },
       "TIKTOK_SHOP": {
         "HELP": "Lưu ý: Shopiz chỉ truy cập tin nhắn TikTok Shop. Tin nhắn riêng tư không bao giờ được truy cập.",
@@ -947,6 +955,12 @@
       "HMAC_MANDATORY_DESCRIPTION": "Nếu bật, các yêu cầu không hợp lệ sẽ bị từ chối.",
       "INBOX_IDENTIFIER": "Mã định danh hộp thư",
       "INBOX_IDENTIFIER_SUB_TEXT": "Dùng mã này để xác thực API client.",
+      "PROXY_CONFIGURATION": {
+        "TITLE": "Cấu hình Proxy",
+        "SUBTITLE": "Đây là địa chỉ Proxy đang được cấu hình cho hộp thư Zalo này.",
+        "HELP": "Để thay đổi Proxy, hãy đăng nhập lại ở tab 'Kết nối lại'.",
+        "NO_PROXY": "Không có proxy nào được cấu hình"
+      },
       "FORWARD_EMAIL_TITLE": "Chuyển tiếp email",
       "FORWARD_EMAIL_SUB_TEXT": "Chuyển tiếp email của bạn đến địa chỉ sau.",
       "FORWARD_EMAIL_NOT_CONFIGURED": "Tính năng chuyển tiếp email tới hộp thư hiện đang bị vô hiệu hoá. Để sử dụng tính năng này, quản trị viên cần bật nó lên. Vui lòng liên hệ với quản trị viên của bạn để tiếp tục.",

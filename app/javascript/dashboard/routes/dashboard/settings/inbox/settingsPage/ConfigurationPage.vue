@@ -210,6 +210,17 @@ export default {
       <woot-code :script="inbox.callback_webhook_url" lang="html" />
     </SettingsFieldSection>
   </div>
+  <div v-else-if="isAZaloPersonalChannel">
+    <SettingsFieldSection
+      :label="$t('INBOX_MGMT.SETTINGS_POPUP.PROXY_CONFIGURATION.TITLE')"
+      :help-text="$t('INBOX_MGMT.SETTINGS_POPUP.PROXY_CONFIGURATION.SUBTITLE')"
+    >
+      <woot-code :script="inbox.provider_config?.proxy_used || $t('INBOX_MGMT.SETTINGS_POPUP.PROXY_CONFIGURATION.NO_PROXY')" lang="text" />
+      <p class="mt-2 text-sm text-n-slate-11">
+        {{ $t('INBOX_MGMT.SETTINGS_POPUP.PROXY_CONFIGURATION.HELP') }}
+      </p>
+    </SettingsFieldSection>
+  </div>
   <div v-else-if="isAWebWidgetInbox">
     <div class="space-y-4">
       <SettingsToggleSection
