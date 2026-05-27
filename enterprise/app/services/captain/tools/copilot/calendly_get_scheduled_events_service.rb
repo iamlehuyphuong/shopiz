@@ -32,7 +32,9 @@ class Captain::Tools::Copilot::CalendlyGetScheduledEventsService < Captain::Tool
 
     format_events(client, events, timezone)
   rescue Calendly::ApiClient::ApiError => e
-    "Calendly error: #{e.message}"
+    "Lỗi API Calendly: #{e.message} - #{e.body.to_json}"
+  rescue StandardError => e
+    "Lỗi hệ thống khi gọi Calendly: #{e.message}"
   end
 
   def active?

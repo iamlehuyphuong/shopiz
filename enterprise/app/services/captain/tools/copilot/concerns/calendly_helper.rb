@@ -72,11 +72,13 @@ module Captain::Tools::Copilot::Concerns::CalendlyHelper
       time_list = day_slots.map do |slot|
         time = Time.parse(slot['start_time'])
         tz = ActiveSupport::TimeZone[timezone] || ActiveSupport::TimeZone['Asia/Ho_Chi_Minh']
-        time.in_time_zone(tz).strftime('%H:%M')
+        local_time = time.in_time_zone(tz).strftime('%H:%M')
+        "#{local_time} (start_time: #{slot['start_time']})"
       end
-      lines << "📅 #{date}: #{time_list.join(', ')}"
+      lines << "📅 #{date}:\n  - #{time_list.join("\n  - ")}"
     end
 
+    lines << "\nIMPORTANT: When using the calendly_book_appointment tool, you MUST pass the exact `start_time` string provided in parentheses (e.g. 2024-05-25T03:30:00.000000Z). Do NOT construct the UTC time yourself."
     lines.join("\n")
   end
 

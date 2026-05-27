@@ -25,7 +25,9 @@ class Captain::Tools::Copilot::CalendlyManageBookingService < Captain::Tools::Ba
 
     format_manage_response(invitee, action, timezone)
   rescue Calendly::ApiClient::ApiError => e
-    "Calendly error: #{e.message}"
+    "Lỗi API Calendly: #{e.message} - #{e.body.to_json}"
+  rescue StandardError => e
+    "Lỗi hệ thống khi gọi Calendly: #{e.message}"
   end
 
   def active?

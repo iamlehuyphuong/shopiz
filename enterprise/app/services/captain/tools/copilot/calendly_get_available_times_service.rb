@@ -19,10 +19,15 @@ class Captain::Tools::Copilot::CalendlyGetAvailableTimesService < Captain::Tools
     event_type = find_event_type_by_name(client, hook, event_type_name)
     return "Không tìm thấy dịch vụ '#{event_type_name}' trên Calendly." unless event_type
 
-    parsed_time = preferred_date.present? ? Time.parse("#{preferred_date}T00:00:00") : Time.current
+    begin
+      parsed_time = preferred_date.present? ? Time.parse(preferred_date) : Time.current
+    rescue ArgumentError
+      return "Lỗi: preferred_date '#{preferred_date}' không hợp lệ. Vui lòng truyền định dạng YYYY-MM-DD."
+    end
+
     start_time = [parsed_time, Time.current + 1.minute].max
     capped_days = [[days_ahead.to_i, 7].min, 1].max
-    end_time = start_time + capped_days.days
+    end_time = start_time + capped_days.days - 1.minute
 
     response = client.available_times(
       event_type_uri: event_type['uri'],
@@ -31,12 +36,14 @@ class Captain::Tools::Copilot::CalendlyGetAvailableTimesService < Captain::Tools
     )
     slots = response['collection'] || []
 
-    return "Không có khung giờ trống cho '#{event_type['name']}' trong #{capped_days} ngày tới." if slots.empty?
+    return "Không có khung giờ trống cho '#{event_type['name']}' từ #{start_time.strftime('%Y-%m-%d')} đến #{end_time.strftime('%Y-%m-%d')}." if slots.empty?
 
     timezone = hook.settings['default_timezone'] || 'Asia/Ho_Chi_Minh'
     format_available_times(slots, event_type, timezone)
   rescue Calendly::ApiClient::ApiError => e
-    "Calendly error: #{e.message}"
+    "Lỗi API Calendly: #{e.message} - #{e.body.to_json}"
+  rescue StandardError => e
+    "Lỗi hệ thống khi gọi Calendly: #{e.message}"
   end
 
   def active?
