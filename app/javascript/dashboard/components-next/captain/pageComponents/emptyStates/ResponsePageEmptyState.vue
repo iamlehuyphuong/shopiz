@@ -45,7 +45,7 @@ const onClearFilters = () => {
     :note="$t('CAPTAIN.RESPONSES.EMPTY_STATE.FEATURE_SPOTLIGHT.NOTE')"
     fallback-thumbnail="/assets/images/dashboard/captain/faqs-light.svg"
     fallback-thumbnail-dark="/assets/images/dashboard/captain/faqs-dark.svg"
-    learn-more-url="https://shopiz.pro/docs/features/knowledge-base"
+    learn-more-url="https://flowify.vn/docs/features/knowledge-base"
     class="mb-8"
   />
   <EmptyStateLayout

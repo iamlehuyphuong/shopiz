@@ -2,9 +2,9 @@ export default [
   {
     id: 1,
     provider: 'email',
-    uid: 'agent1@shopiz.pro',
+    uid: 'agent1@flowify.vn',
     name: 'Agent1',
-    email: 'agent1@shopiz.pro',
+    email: 'agent1@flowify.vn',
     account_id: 1,
     created_at: '2019-11-18T02:21:06.225Z',
     updated_at: '2019-12-20T07:43:35.794Z',
@@ -15,9 +15,9 @@ export default [
   {
     id: 2,
     provider: 'email',
-    uid: 'agent2@shopiz.pro',
+    uid: 'agent2@flowify.vn',
     name: 'Agent2',
-    email: 'agent2@shopiz.pro',
+    email: 'agent2@flowify.vn',
     account_id: 1,
     created_at: '2019-11-18T02:21:06.225Z',
     updated_at: '2019-12-20T07:43:35.794Z',

@@ -33,7 +33,7 @@ class Captain::Tools::Copilot::ListAutomationRulesService < Captain::Tools::Base
       Event: #{rule.event_name}
       Conditions: #{conditions_summary}
       Actions: #{actions_summary}
-      #{rule.description.present? ? "Description: #{rule.description.truncate(200)}" : ''}
+      #{rule.description.present? ? "Description: #{rule.description.truncate(200)}": ''}
     RULE
   end
 end

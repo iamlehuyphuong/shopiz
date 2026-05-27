@@ -3,7 +3,7 @@
 ### Usage #####
 #
 #   # Seed an account with all data types in this class
-#   Seeders::InboxSeeder.new(account: @Account.find(1), company_data:  {name: 'Shopiz', doamin: 'shopiz.pro'}).perform!
+#   Seeders::InboxSeeder.new(account: @Account.find(1), company_data:  {name: 'Flowify', doamin: 'flowify.vn'}).perform!
 #
 #
 ############################################################

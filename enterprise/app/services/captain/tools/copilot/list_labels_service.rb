@@ -11,7 +11,7 @@ class Captain::Tools::Copilot::ListLabelsService < Captain::Tools::BaseTool
 
     <<~RESPONSE
       Total labels: #{labels.count}
-      #{labels.map { |l| "- #{l.title}#{l.description.present? ? " (#{l.description})" : ''}" }.join("\n")}
+      #{labels.map { |l| "- #{l.title}#{l.description.present? ? "(#{l.description})": ''}" }.join("\n")}
     RESPONSE
   end
 

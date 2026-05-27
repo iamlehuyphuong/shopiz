@@ -91,16 +91,16 @@ export default {
       return this.globalConfig.installationName === 'Chatwoot';
     },
     allowedLoginMethods() {
-      return window.shopizConfig.allowedLoginMethods || ['email'];
+      return window.flowifyConfig.allowedLoginMethods || ['email'];
     },
     showGoogleOAuth() {
       return (
         this.allowedLoginMethods.includes('google_oauth') &&
-        Boolean(window.shopizConfig.googleOAuthClientId)
+        Boolean(window.flowifyConfig.googleOAuthClientId)
       );
     },
     showSignupLink() {
-      return window.shopizConfig.signupEnabled === 'true';
+      return window.flowifyConfig.signupEnabled === 'true';
     },
     showSamlLogin() {
       return this.allowedLoginMethods.includes('saml');

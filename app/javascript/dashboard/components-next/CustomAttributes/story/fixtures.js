@@ -9,7 +9,7 @@ export default [
     attributeKey: 'linkContact',
     attributeDisplayName: 'URL Input',
     attributeDisplayType: 'link',
-    value: 'https://www.shopiz.pro',
+    value: 'https://www.flowify.vn',
   },
   {
     attributeKey: 'numberContact',

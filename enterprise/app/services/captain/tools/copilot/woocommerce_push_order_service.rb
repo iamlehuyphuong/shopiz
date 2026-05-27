@@ -6,8 +6,8 @@ class Captain::Tools::Copilot::WoocommercePushOrderService < Captain::Tools::Bas
     'woocommerce_push_order'
   end
 
-  description 'Push a confirmed Shopiz order to WooCommerce and sync the external order ID.'
-  param :conversation_order_id, type: :integer, desc: 'Shopiz ConversationOrder ID to push', required: true
+  description 'Push a confirmed Flowify order to WooCommerce and sync the external order ID.'
+  param :conversation_order_id, type: :integer, desc: 'Flowify ConversationOrder ID to push', required: true
 
   def execute(conversation_order_id:)
     return 'WooCommerce integration is not connected' unless woocommerce_active?
@@ -58,9 +58,9 @@ class Captain::Tools::Copilot::WoocommercePushOrderService < Captain::Tools::Bas
 
   def format_success(order, woo_order)
     <<~RESPONSE.strip
-      ✅ Order pushed to WooCommerce!
+       Order pushed to WooCommerce!
 
-      Shopiz Order: ##{order.id}
+      Flowify Order: ##{order.id}
       WooCommerce Order: ##{woo_order['number']} (ID: #{woo_order['id']})
       Customer: #{order.customer_name} | #{order.customer_phone}
       Items: #{order.items.count} product(s)

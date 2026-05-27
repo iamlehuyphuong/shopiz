@@ -43,7 +43,7 @@ class Captain::Tools::Copilot::ShopifyUpdateCustomerService < Captain::Tools::Ba
 
   def format_success(customer)
     <<~RESPONSE.strip
-      ✅ Customer updated on Shopify!
+       Customer updated on Shopify!
 
       ID: #{customer['id']}
       Name: #{customer['first_name']} #{customer['last_name']}

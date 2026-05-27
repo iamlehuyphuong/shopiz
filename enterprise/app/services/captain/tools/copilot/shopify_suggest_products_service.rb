@@ -53,11 +53,11 @@ class Captain::Tools::Copilot::ShopifySuggestProductsService < Captain::Tools::B
 
   def format_suggestions(product, suggestions, context)
     price = product['variants']&.first&.dig('price').to_f
-    lines = ["📦 Base: #{product['title']} (ID: #{product['id']}) — #{format_currency(price, 'VND')}"]
-    lines << "🎯 Context: #{context}" if context.present?
+    lines = ["Base: #{product['title']} (ID: #{product['id']}) — #{format_currency(price, 'VND')}"]
+    lines << "Context: #{context}" if context.present?
     if suggestions[:same_type].present?
-      lines << "\n🔄 Related products:"
-      suggestions[:same_type].each { |s| lines << "  • #{s[:name]} — #{format_currency(s[:price], 'VND')} | Stock: #{s[:stock]}" }
+      lines << "\nRelated products:"
+      suggestions[:same_type].each { |s| lines << " • #{s[:name]} — #{format_currency(s[:price], 'VND')} | Stock: #{s[:stock]}" }
     else
       lines << 'No suggestions available.'
     end

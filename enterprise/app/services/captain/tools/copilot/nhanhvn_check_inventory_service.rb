@@ -66,10 +66,10 @@ class Captain::Tools::Copilot::NhanhvnCheckInventoryService < Captain::Tools::Ba
   end
 
   def stock_icon(available)
-    return '🟢' if available > 10
-    return '🟡' if available.positive?
+    return '' if available > 10
+    return '' if available.positive?
 
-    '🔴'
+    ''
   end
 
   def format_inventory_results(results)
@@ -80,11 +80,11 @@ class Captain::Tools::Copilot::NhanhvnCheckInventoryService < Captain::Tools::Ba
 
   def format_single_result(result)
     if result[:error]
-      ["❌ #{result[:code]}: #{result[:error]}", '']
+      ["#{result[:code]}: #{result[:error]}", '']
     else
       [
         "#{result[:icon]} #{result[:name]} (#{result[:code]}) — #{result[:status]}",
-        "   Available: #{result[:available]} | Shipping: #{result[:shipping]} | Holding: #{result[:holding]} | Actual: #{result[:actual]}",
+        "  Available: #{result[:available]} | Shipping: #{result[:shipping]} | Holding: #{result[:holding]} | Actual: #{result[:actual]}",
         ''
       ]
     end

@@ -6,8 +6,8 @@ class Captain::Tools::Copilot::SapoPushOrderService < Captain::Tools::BaseTool
     'sapo_push_order'
   end
 
-  description 'Push a confirmed Shopiz order to Sapo. Creates the order and syncs the external order ID.'
-  param :conversation_order_id, type: :integer, desc: 'Shopiz ConversationOrder ID to push', required: true
+  description 'Push a confirmed Flowify order to Sapo. Creates the order and syncs the external order ID.'
+  param :conversation_order_id, type: :integer, desc: 'Flowify ConversationOrder ID to push', required: true
 
   def execute(conversation_order_id:)
     return 'Sapo integration is not connected' unless sapo_active?
@@ -59,9 +59,9 @@ class Captain::Tools::Copilot::SapoPushOrderService < Captain::Tools::BaseTool
 
   def format_success(order, sapo_order)
     <<~RESPONSE.strip
-      ✅ Order pushed to Sapo!
+       Order pushed to Sapo!
 
-      Shopiz Order: ##{order.id}
+      Flowify Order: ##{order.id}
       Sapo Order: ##{sapo_order['order_number']} (ID: #{sapo_order['id']})
       Customer: #{order.customer_name} | #{order.customer_phone}
       Items: #{order.items.count} product(s)

@@ -9,7 +9,7 @@ export default {
   mounted() {
     this.setColorTheme();
     this.listenToThemeChanges();
-    let locale = window.shopizConfig.selectedLocale;
+    let locale = window.flowifyConfig.selectedLocale;
     if (locale === 'en') {
       const browserLocale = navigator.language || navigator.userLanguage;
       if (browserLocale.startsWith('vi')) {

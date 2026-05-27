@@ -33,7 +33,7 @@ class Captain::Tools::Copilot::TiktokShopCheckInventoryService < Captain::Tools:
   end
 
   def format_inventory(product)
-    lines = ["📦 **Inventory Status for: #{product['title']}** (ID: #{product['id']})\n"]
+    lines = ["**Inventory Status for: #{product['title']}** (ID: #{product['id']})\n"]
 
     total_stock = 0
     skus = product['skus'] || []

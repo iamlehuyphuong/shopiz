@@ -1,6 +1,6 @@
 {
   "LOGIN": {
-    "TITLE": "Kirjaudu sisään Shopiziin",
+    "TITLE": "Kirjaudu sisään Flowifyiin",
     "EMAIL": {
       "LABEL": "Sähköposti",
       "PLACEHOLDER": "example{'@'}companyname.com",

@@ -407,7 +407,7 @@
         "SLUG": {
           "LABEL": "Метка",
           "PLACEHOLDER": "Метка категории для url",
-          "HELP_TEXT": "shopiz.pro/hc/my-portal/en-US/categories/my-slug",
+          "HELP_TEXT": "flowify.vn/hc/my-portal/en-US/categories/my-slug",
           "ERROR": "Необходимо указать метку"
         },
         "DESCRIPTION": {
@@ -438,7 +438,7 @@
         "SLUG": {
           "LABEL": "Метка",
           "PLACEHOLDER": "Метка категории для url",
-          "HELP_TEXT": "shopiz.pro/hc/my-portal/en-US/categories/my-slug",
+          "HELP_TEXT": "flowify.vn/hc/my-portal/en-US/categories/my-slug",
           "ERROR": "Необходимо указать метку"
         },
         "DESCRIPTION": {
@@ -622,7 +622,7 @@
             "LABEL": "Метка",
             "PLACEHOLDER": "Метка категории для url",
             "ERROR": "Необходимо указать метку",
-            "HELP_TEXT": "shopiz.pro/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
+            "HELP_TEXT": "flowify.vn/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
           },
           "DESCRIPTION": {
             "LABEL": "Описание",
@@ -705,7 +705,7 @@
       "CONFIRM_BUTTON_LABEL": "Создать",
       "NAME": {
         "LABEL": "Имя",
-        "PLACEHOLDER": "Руководство пользователя | Shopiz",
+        "PLACEHOLDER": "Руководство пользователя | Flowify",
         "MESSAGE": "Выберите имя для вашего портала.",
         "ERROR": "Необходимо указать имя"
       },

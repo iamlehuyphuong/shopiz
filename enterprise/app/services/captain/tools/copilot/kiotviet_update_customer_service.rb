@@ -49,7 +49,7 @@ class Captain::Tools::Copilot::KiotvietUpdateCustomerService < Captain::Tools::B
 
   def format_result(customer)
     <<~RESULT.strip
-      ✅ Customer updated successfully on KiotViet!
+       Customer updated successfully on KiotViet!
 
       Code: #{customer['code']}
       Name: #{customer['name']}

@@ -28,7 +28,7 @@ const reportData = ref(null);
 const sourceFilter = ref('all');
 const sources = [
   { label: 'Tất cả nền tảng', value: 'all' },
-  { label: 'Shopiz', value: 'shopiz' },
+  { label: 'Flowify', value: 'flowify' },
   { label: 'KiotViet', value: 'kiotviet' },
   { label: 'Sapo', value: 'sapo' },
   { label: 'Haravan', value: 'haravan' },
@@ -48,7 +48,7 @@ const appIntegrations = computed(
 );
 
 const isSourceConnected = sourceValue => {
-  if (sourceValue === 'all' || sourceValue === 'shopiz') return true;
+  if (sourceValue === 'all' || sourceValue === 'flowify') return true;
   const integration = appIntegrations.value?.find(i => i.id === sourceValue);
   return integration && integration.hooks && integration.hooks.length > 0;
 };
@@ -57,7 +57,7 @@ const sortedSources = computed(() => {
   return [...sources].sort((a, b) => {
     const getWeight = s => {
       if (s.value === 'all') return 0;
-      if (s.value === 'shopiz') return 1;
+      if (s.value === 'flowify') return 1;
       return isSourceConnected(s.value) ? 2 : 3;
     };
     return getWeight(a) - getWeight(b);
@@ -217,7 +217,7 @@ onMounted(() => {
                     >
                       <div class="flex items-center gap-2.5 min-w-0">
                         <img
-                          v-if="s.value !== 'all' && s.value !== 'shopiz'"
+                          v-if="s.value !== 'all' && s.value !== 'flowify'"
                           :src="sourceLogo(s.value)"
                           class="w-5 h-5 rounded-full object-cover flex-shrink-0"
                         />

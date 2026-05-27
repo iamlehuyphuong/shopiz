@@ -9,7 +9,7 @@ export default [
   {
     id: 4,
     title: 'saas-customer',
-    description: 'Customers who have account on shopiz.pro',
+    description: 'Customers who have account on flowify.vn',
     color: '#A8DBCB',
     show_on_sidebar: false,
   },

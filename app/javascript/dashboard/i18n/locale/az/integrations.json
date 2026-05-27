@@ -400,8 +400,8 @@
     "COPILOT": {
       "TITLE": "Copilot",
       "TRY_THESE_PROMPTS": "Bu təklifləri sınayın",
-      "PANEL_TITLE": "Get started with ShopizAI Assistant",
-      "KICK_OFF_MESSAGE": "Need a quick summary, want to check past conversations, or draft a better reply? ShopizAI Assistant’s here to speed things up.",
+      "PANEL_TITLE": "Get started with FlowifyAI Assistant",
+      "KICK_OFF_MESSAGE": "Need a quick summary, want to check past conversations, or draft a better reply? FlowifyAI Assistant’s here to speed things up.",
       "SEND_MESSAGE": "Mesaj göndər...",
       "EMPTY_MESSAGE": "There was an error generating the response. Please try again.",
       "LOADER": "Captain düşünür",

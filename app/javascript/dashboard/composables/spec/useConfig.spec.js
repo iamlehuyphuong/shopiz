@@ -1,10 +1,10 @@
 import { useConfig } from '../useConfig';
 
 describe('useConfig', () => {
-  const originalChatwootConfig = window.shopizConfig;
+  const originalChatwootConfig = window.flowifyConfig;
 
   beforeEach(() => {
-    window.shopizConfig = {
+    window.flowifyConfig = {
       hostURL: 'https://example.com',
       vapidPublicKey: 'vapid-key',
       enabledLanguages: ['en', 'fr'],
@@ -14,7 +14,7 @@ describe('useConfig', () => {
   });
 
   afterEach(() => {
-    window.shopizConfig = originalChatwootConfig;
+    window.flowifyConfig = originalChatwootConfig;
   });
 
   it('returns the correct configuration values', () => {
@@ -28,7 +28,7 @@ describe('useConfig', () => {
   });
 
   it('handles missing configuration values', () => {
-    window.shopizConfig = {};
+    window.flowifyConfig = {};
     const config = useConfig();
 
     expect(config.hostURL).toBeUndefined();
@@ -38,8 +38,8 @@ describe('useConfig', () => {
     expect(config.enterprisePlanName).toBeUndefined();
   });
 
-  it('handles undefined window.shopizConfig', () => {
-    window.shopizConfig = undefined;
+  it('handles undefined window.flowifyConfig', () => {
+    window.flowifyConfig = undefined;
     const config = useConfig();
 
     expect(config.hostURL).toBeUndefined();

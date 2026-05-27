@@ -8,7 +8,6 @@ class Captain::Tools::Copilot::WoocommerceSearchCustomersService < Captain::Tool
   description 'Search WooCommerce customers by email, name, or phone number'
   param :query, type: :string, desc: 'Customer email, name, or phone to search'
 
-
   def active?
     woocommerce_active?
   end
@@ -41,10 +40,10 @@ class Captain::Tools::Copilot::WoocommerceSearchCustomersService < Captain::Tool
     billing = customer['billing'] || {}
     [
       "#{customer['first_name']} #{customer['last_name']}".strip,
-      "  Email: #{customer['email'] || 'N/A'}",
-      "  Phone: #{billing['phone'] || 'N/A'}",
-      "  Orders: #{customer['orders_count'] || 0}",
-      "  Total Spent: #{customer['total_spent'] || '0'}"
+      " Email: #{customer['email'] || 'N/A'}",
+      " Phone: #{billing['phone'] || 'N/A'}",
+      " Orders: #{customer['orders_count'] || 0}",
+      " Total Spent: #{customer['total_spent'] || '0'}"
     ].join("\n")
   end
 end

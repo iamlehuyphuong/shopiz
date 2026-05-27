@@ -39,13 +39,13 @@ describe('#buildPopoutURL', () => {
   it('returns popout URL', () => {
     expect(
       buildPopoutURL({
-        origin: 'https://www.shopiz.pro',
+        origin: 'https://www.flowify.vn',
         conversationCookie: 'random-jwt-token',
         websiteToken: 'random-website-token',
         locale: 'ar',
       })
     ).toEqual(
-      'https://www.shopiz.pro/widget?cw_conversation=random-jwt-token&website_token=random-website-token&locale=ar'
+      'https://www.flowify.vn/widget?cw_conversation=random-jwt-token&website_token=random-website-token&locale=ar'
     );
   });
 });

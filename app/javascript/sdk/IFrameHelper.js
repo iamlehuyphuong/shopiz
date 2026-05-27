@@ -46,7 +46,7 @@ const getImageUrl = url => {
   ) {
     return url;
   }
-  const baseUrl = window.$shopiz.baseUrl.replace(/\/$/, '');
+  const baseUrl = window.$flowify.baseUrl.replace(/\/$/, '');
   return `${baseUrl}${url.startsWith('/') ? '' : '/'}${url}`;
 };
 
@@ -85,11 +85,11 @@ export const IFrameHelper = {
     iframe.id = 'chatwoot_live_chat_widget';
     iframe.style.visibility = 'hidden';
 
-    let holderClassName = `woot-widget-holder woot--hide woot-elements--${window.$shopiz.position}`;
-    if (window.$shopiz.hideMessageBubble) {
+    let holderClassName = `woot-widget-holder woot--hide woot-elements--${window.$flowify.position}`;
+    if (window.$flowify.hideMessageBubble) {
       holderClassName += ` woot-widget--without-bubble`;
     }
-    if (isFlatWidgetStyle(window.$shopiz.widgetStyle)) {
+    if (isFlatWidgetStyle(window.$flowify.widgetStyle)) {
       holderClassName += ` woot-widget-holder--flat`;
     }
 
@@ -155,7 +155,7 @@ export const IFrameHelper = {
   },
 
   setupAudioListeners: () => {
-    const { baseUrl = '' } = window.$shopiz;
+    const { baseUrl = '' } = window.$flowify;
     getAlertAudio(baseUrl, { type: 'widget', alertTone: 'ding' }).then(() =>
       initOnEvents.forEach(event => {
         document.removeEventListener(
@@ -169,27 +169,27 @@ export const IFrameHelper = {
 
   events: {
     loaded: message => {
-      updateAuthCookie(message.config.authToken, window.$shopiz.baseDomain);
-      window.$shopiz.hasLoaded = true;
+      updateAuthCookie(message.config.authToken, window.$flowify.baseDomain);
+      window.$flowify.hasLoaded = true;
       const campaignsSnoozedTill = Cookies.get('cw_snooze_campaigns_till');
       IFrameHelper.sendMessage('config-set', {
-        locale: window.$shopiz.locale,
-        position: window.$shopiz.position,
-        hideMessageBubble: window.$shopiz.hideMessageBubble,
-        showPopoutButton: window.$shopiz.showPopoutButton,
-        widgetStyle: window.$shopiz.widgetStyle,
-        darkMode: window.$shopiz.darkMode,
-        showUnreadMessagesDialog: window.$shopiz.showUnreadMessagesDialog,
+        locale: window.$flowify.locale,
+        position: window.$flowify.position,
+        hideMessageBubble: window.$flowify.hideMessageBubble,
+        showPopoutButton: window.$flowify.showPopoutButton,
+        widgetStyle: window.$flowify.widgetStyle,
+        darkMode: window.$flowify.darkMode,
+        showUnreadMessagesDialog: window.$flowify.showUnreadMessagesDialog,
         campaignsSnoozedTill,
-        welcomeTitle: window.$shopiz.welcomeTitle,
-        welcomeDescription: window.$shopiz.welcomeDescription,
-        availableMessage: window.$shopiz.availableMessage,
-        unavailableMessage: window.$shopiz.unavailableMessage,
-        enableFileUpload: window.$shopiz.enableFileUpload,
-        enableEmojiPicker: window.$shopiz.enableEmojiPicker,
-        enableEndConversation: window.$shopiz.enableEndConversation,
+        welcomeTitle: window.$flowify.welcomeTitle,
+        welcomeDescription: window.$flowify.welcomeDescription,
+        availableMessage: window.$flowify.availableMessage,
+        unavailableMessage: window.$flowify.unavailableMessage,
+        enableFileUpload: window.$flowify.enableFileUpload,
+        enableEmojiPicker: window.$flowify.enableEmojiPicker,
+        enableEndConversation: window.$flowify.enableEndConversation,
         widgetColor:
-          window.$shopiz.widgetColor ||
+          window.$flowify.widgetColor ||
           message.config.channelConfig.widgetColor,
       });
       IFrameHelper.onLoad({
@@ -199,8 +199,8 @@ export const IFrameHelper = {
       });
       IFrameHelper.toggleCloseButton();
 
-      if (window.$shopiz.user) {
-        IFrameHelper.sendMessage('set-user', window.$shopiz.user);
+      if (window.$flowify.user) {
+        IFrameHelper.sendMessage('set-user', window.$flowify.user);
       }
 
       window.playAudioAlert = () => {};
@@ -209,7 +209,7 @@ export const IFrameHelper = {
         document.addEventListener(e, IFrameHelper.setupAudioListeners, false);
       });
 
-      if (!window.$shopiz.resetTriggered) {
+      if (!window.$flowify.resetTriggered) {
         dispatchWindowEvent({ eventName: CHATWOOT_READY });
       }
     },
@@ -224,15 +224,15 @@ export const IFrameHelper = {
       dispatchWindowEvent({ eventName, data });
     },
     setBubbleLabel(message) {
-      setBubbleText(window.$shopiz.launcherTitle || message.label);
+      setBubbleText(window.$flowify.launcherTitle || message.label);
     },
 
     setAuthCookie({ data: { widgetAuthToken } }) {
-      updateAuthCookie(widgetAuthToken, window.$shopiz.baseDomain);
+      updateAuthCookie(widgetAuthToken, window.$flowify.baseDomain);
     },
 
     setCampaignReadOn() {
-      updateCampaignReadStatus(window.$shopiz.baseDomain);
+      updateCampaignReadStatus(window.$flowify.baseDomain);
     },
 
     postback(data) {
@@ -255,7 +255,7 @@ export const IFrameHelper = {
 
     popoutChatWindow: ({ baseUrl, websiteToken, locale }) => {
       const cwCookie = Cookies.get('cw_conversation');
-      window.$shopiz.toggle('close');
+      window.$flowify.toggle('close');
       popoutChatWindow(baseUrl, websiteToken, locale, cwCookie);
     },
 
@@ -289,7 +289,7 @@ export const IFrameHelper = {
 
     resetUnreadMode: () => removeUnreadClass(),
     handleNotificationDot: event => {
-      if (window.$shopiz.hideMessageBubble) {
+      if (window.$flowify.hideMessageBubble) {
         return;
       }
 
@@ -324,18 +324,18 @@ export const IFrameHelper = {
     if (IFrameHelper.getBubbleHolder().length) {
       return;
     }
-    createBubbleHolder(window.$shopiz.hideMessageBubble);
+    createBubbleHolder(window.$flowify.hideMessageBubble);
     onLocationChangeListener();
 
     let className = 'woot-widget-bubble';
-    let closeBtnClassName = `woot-elements--${window.$shopiz.position} woot-widget-bubble woot--close woot--hide`;
+    let closeBtnClassName = `woot-elements--${window.$flowify.position} woot-widget-bubble woot--close woot--hide`;
 
-    if (isFlatWidgetStyle(window.$shopiz.widgetStyle)) {
+    if (isFlatWidgetStyle(window.$flowify.widgetStyle)) {
       className += ' woot-widget-bubble--flat';
       closeBtnClassName += ' woot-widget-bubble--flat';
     }
 
-    const activeColor = window.$shopiz.widgetColor || widgetColor;
+    const activeColor = window.$flowify.widgetColor || widgetColor;
 
     if (isWidgetColorLighter(activeColor)) {
       className += ' woot-widget-bubble-color--lighter';
@@ -351,7 +351,7 @@ export const IFrameHelper = {
 
     const closeAvatarUrl =
       getImageUrl(closeBubbleAvatarUrl) ||
-      `${window.$shopiz.baseUrl}/assets/images/bubble_off_chat.svg`;
+      `${window.$flowify.baseUrl}/assets/images/bubble_off_chat.svg`;
     addClasses(closeBubble, closeBtnClassName);
     closeBubble.style.background = 'transparent';
     closeBubble.style.boxShadow = 'none';

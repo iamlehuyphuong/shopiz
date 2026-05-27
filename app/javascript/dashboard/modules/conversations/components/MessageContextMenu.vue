@@ -87,7 +87,7 @@ export default {
   methods: {
     async copyLinkToMessage() {
       const fullConversationURL =
-        window.shopizConfig.hostURL +
+        window.flowifyConfig.hostURL +
         frontendURL(
           conversationUrl({
             id: this.conversationId,

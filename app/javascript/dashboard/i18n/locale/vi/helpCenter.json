@@ -419,7 +419,7 @@
         "SLUG": {
           "LABEL": "Đường dẫn (Slug)",
           "PLACEHOLDER": "Slug danh mục cho URL",
-          "HELP_TEXT": "shopiz.pro/hc/my-portal/vi-VN/categories/my-slug",
+          "HELP_TEXT": "flowify.vn/hc/my-portal/vi-VN/categories/my-slug",
           "ERROR": "Phải có Slug"
         },
         "DESCRIPTION": {
@@ -450,7 +450,7 @@
         "SLUG": {
           "LABEL": "Đường dẫn (Slug)",
           "PLACEHOLDER": "Slug danh mục cho URL",
-          "HELP_TEXT": "shopiz.pro/hc/my-portal/vi-VN/categories/my-slug",
+          "HELP_TEXT": "flowify.vn/hc/my-portal/vi-VN/categories/my-slug",
           "ERROR": "Phải có Slug"
         },
         "DESCRIPTION": {
@@ -634,7 +634,7 @@
             "LABEL": "Đường dẫn (Slug)",
             "PLACEHOLDER": "Slug danh mục cho URL",
             "ERROR": "Phải có Slug",
-            "HELP_TEXT": "shopiz.pro/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
+            "HELP_TEXT": "flowify.vn/hc/{portalSlug}/{localeCode}/categories/{categorySlug}"
           },
           "DESCRIPTION": {
             "LABEL": "Mô tả",
@@ -727,7 +727,7 @@
       "CONFIRM_BUTTON_LABEL": "Tạo",
       "NAME": {
         "LABEL": "Tên",
-        "PLACEHOLDER": "Hướng dẫn sử dụng | Shopiz",
+        "PLACEHOLDER": "Hướng dẫn sử dụng | Flowify",
         "MESSAGE": "Chọn một tên cho cổng của bạn.",
         "ERROR": "Tên bắt buộc có"
       },
@@ -807,7 +807,7 @@
           },
           "DNS_CONFIGURATION_DIALOG": {
             "HEADER": "Cấu hình DNS",
-            "DESCRIPTION": "Đăng nhập vào tài khoản của bạn với nhà cung cấp DNS và thêm một bản ghi CNAME cho tên miền phụ trỏ đến shopiz.help",
+            "DESCRIPTION": "Đăng nhập vào tài khoản của bạn với nhà cung cấp DNS và thêm một bản ghi CNAME cho tên miền phụ trỏ đến flowify.help",
             "COPY": "Đã sao chép CNAME thành công",
             "SEND_INSTRUCTIONS": {
               "HEADER": "Gửi hướng dẫn",

@@ -5,7 +5,7 @@ class Captain::Tools::Copilot::CreateScenarioService < Captain::Tools::BaseTool
 
   description <<~DESC
     FINAL STEP ONLY: Call this tool to bulk create multiple Captain Scenarios into the database.
-    
+
     WORKFLOW REQUIREMENTS:
     1. Ask and extract information gradually from the user. Don't rush.
     2. Deconstruct the user's main intent into multiple specialized, interconnected scenarios (e.g., instead of 1 huge workflow, break it into "Identify Intent", "Handle Refund", "Handle Exchange", etc.) so they can support each other.
@@ -15,11 +15,12 @@ class Captain::Tools::Copilot::CreateScenarioService < Captain::Tools::BaseTool
     Pass the scenarios as a JSON-encoded string.
   DESC
 
-  param :scenarios_json, type: :string, desc: 'A JSON string representing an array of objects. Example: "[{\"title\": \"A\", \"description\": \"B\", \"instruction\": \"C\"}]"'
+  param :scenarios_json, type: :string,
+                         desc: 'A JSON string representing an array of objects. Example: "[{\"title\": \"A\", \"description\": \"B\", \"instruction\": \"C\"}]"'
 
   def execute(scenarios_json:)
     parsed_scenarios = parse_scenarios(scenarios_json)
-    return "Invalid JSON format for scenarios_json" unless parsed_scenarios.is_a?(Array)
+    return 'Invalid JSON format for scenarios_json' unless parsed_scenarios.is_a?(Array)
 
     results = []
     ActiveRecord::Base.transaction do
@@ -34,9 +35,9 @@ class Captain::Tools::Copilot::CreateScenarioService < Captain::Tools::BaseTool
       end
     end
 
-    "Successfully created the following scenarios:\n" + results.join("\n")
+    "Successfully created the following scenarios:\n"+ results.join("\n")
   rescue JSON::ParserError
-    "Failed to create scenarios: scenarios_json must be a valid JSON array."
+    'Failed to create scenarios: scenarios_json must be a valid JSON array.'
   rescue ActiveRecord::RecordInvalid => e
     "Failed to create scenarios: #{e.message}"
   rescue StandardError => e

@@ -28,7 +28,7 @@ module Captain::Tools::Concerns::EcomRoutable
   end
 
   # Resolves the e-commerce platform app_id from the account settings.
-  # Returns nil when no active integration is selected or if Shopiz native is used.
+  # Returns nil when no active integration is selected or if Flowify native is used.
   def resolve_ecom_platform(tool_context)
     conversation = find_conversation(tool_context.state)
     return nil unless conversation

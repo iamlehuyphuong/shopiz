@@ -51,10 +51,10 @@ class Captain::Tools::Copilot::HaravanCheckInventoryService < Captain::Tools::Ba
   end
 
   def stock_icon(total)
-    return '🟢' if total > 10
-    return '🟡' if total.positive?
+    return '' if total > 10
+    return '' if total.positive?
 
-    '🔴'
+    ''
   end
 
   def format_results(results)
@@ -64,10 +64,10 @@ class Captain::Tools::Copilot::HaravanCheckInventoryService < Captain::Tools::Ba
   end
 
   def format_single(result)
-    return ["❌ ID #{result[:id]}: #{result[:error]}", ''] if result[:error]
+    return ["ID #{result[:id]}: #{result[:error]}", ''] if result[:error]
 
-    lines = ["#{result[:icon]} #{result[:name]} (ID: #{result[:id]}) — #{result[:status]}", "   Total: #{result[:total]}"]
-    result[:variants]&.each { |v| lines << "   - #{v[:title]}: #{v[:stock]} (SKU: #{v[:sku] || 'N/A'})" }
+    lines = ["#{result[:icon]} #{result[:name]} (ID: #{result[:id]}) — #{result[:status]}", "  Total: #{result[:total]}"]
+    result[:variants]&.each { |v| lines << "  - #{v[:title]}: #{v[:stock]} (SKU: #{v[:sku] || 'N/A'})" }
     lines << ''
     lines
   end

@@ -1,13 +1,13 @@
 export const contactData = {
   id: 370,
   name: 'John Doe',
-  email: 'johndoe@shopiz.pro',
+  email: 'johndoe@flowify.vn',
   phoneNumber: '+918634322418',
   additionalAttributes: {
     city: 'Kerala',
     country: 'India',
     description: 'Curious about the web.',
-    companyName: 'Shopiz',
+    companyName: 'Flowify',
     countryCode: 'IN',
     socialProfiles: {
       github: 'johndoe',
@@ -23,7 +23,7 @@ export const primaryContactList = [
   {
     id: 1,
     name: 'Jane Smith',
-    email: 'jane@shopiz.pro',
+    email: 'jane@flowify.vn',
     thumbnail: '',
     label: '(ID: 1) Jane Smith',
     value: 1,
@@ -31,7 +31,7 @@ export const primaryContactList = [
   {
     id: 2,
     name: 'Mike Johnson',
-    email: 'mike@shopiz.pro',
+    email: 'mike@flowify.vn',
     thumbnail: '',
     label: '(ID: 2) Mike Johnson',
     value: 2,
@@ -39,7 +39,7 @@ export const primaryContactList = [
   {
     id: 3,
     name: 'Sarah Wilson',
-    email: 'sarah@shopiz.pro',
+    email: 'sarah@flowify.vn',
     thumbnail: '',
     label: '(ID: 3) Sarah Wilson',
     value: 3,

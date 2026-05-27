@@ -12,11 +12,11 @@ class Captain::Tools::Copilot::ShopifySearchProductsService < Captain::Tools::Ba
     return 'Shopify integration is not connected' unless shopify_active?
 
     products = fetch_products(query)
-    return "No products found#{query.present? ? " matching '#{query}'" : ''}" if products.blank?
+    return "No products found#{query.present? ? "matching '#{query}'": ''}" if products.blank?
 
     total_count = products.size
     <<~RESPONSE
-      #{total_count > 25 ? "Found #{total_count} products (showing first 25)" : "Found #{total_count} product(s)"}
+      #{total_count > 25 ? "Found #{total_count} products (showing first 25)": "Found #{total_count} product(s)"}
       #{products.first(25).map { |p| format_product(p) }.join("\n---\n")}
     RESPONSE
   end
@@ -72,7 +72,7 @@ class Captain::Tools::Copilot::ShopifySearchProductsService < Captain::Tools::Ba
     prices = variants&.map { |v| v['price'].to_f } || []
     return '0' if prices.empty?
 
-    prices.uniq.size > 1 ? "#{prices.min} - #{prices.max}" : prices.first.to_s
+    prices.uniq.size > 1 ? "#{prices.min} - #{prices.max}": prices.first.to_s
   end
 
   def extract_variant_names(variants)

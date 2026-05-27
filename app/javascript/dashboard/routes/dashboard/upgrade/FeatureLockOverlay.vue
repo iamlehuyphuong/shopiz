@@ -40,7 +40,7 @@ const upgradeMessage = computed(() => {
     return t('GENERAL_SETTINGS.LIMIT_MESSAGES.UPGRADE_PROMPT_CRM', { allowed });
   }
 
-  // Handle ShopizAI (Captain) features
+  // Handle FlowifyAI (Captain) features
   if (flag.startsWith('captain_')) {
     return t('GENERAL_SETTINGS.LIMIT_MESSAGES.UPGRADE_PROMPT_CAPTAIN');
   }

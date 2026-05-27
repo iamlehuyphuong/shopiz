@@ -9,7 +9,7 @@ module Captain::Tools::Copilot::Concerns::EcomRoutable
   end
 
   # Resolves the e-commerce platform app_id from the account settings.
-  # Returns nil when no active integration is selected or if Shopiz native is used.
+  # Returns nil when no active integration is selected or if Flowify native is used.
   def resolve_ecom_platform
     return nil unless @conversation
 
@@ -35,9 +35,9 @@ module Captain::Tools::Copilot::Concerns::EcomRoutable
     return "Tool class #{tool_class_name} not found." unless tool_class
 
     tool = tool_class.new(@assistant, user: @user, conversation: @conversation)
-    
+
     # If the tool is not active for the current user/assistant, we should notify the AI
-    return "Integration is not fully configured or user lacks permission." unless tool.active?
+    return 'Integration is not fully configured or user lacks permission.' unless tool.active?
 
     tool.execute(**args)
   end

@@ -1,6 +1,6 @@
 # Handles Zalo OA 'user_submit_info' webhook event
 # When a user submits their personal info (phone, address, etc.) through the OA's info request form,
-# this service syncs that data to the corresponding Shopiz Contact record
+# this service syncs that data to the corresponding Flowify Contact record
 #
 # Webhook payload structure:
 # {

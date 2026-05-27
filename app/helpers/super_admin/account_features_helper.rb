@@ -20,7 +20,7 @@ module SuperAdmin::AccountFeaturesHelper
     'Tích hợp (Integrations)' => %w[
       integrations linear_integration shopify_integration notion_integration crm_integration
     ],
-    'AI & ShopizAI (AI & Captain)' => %w[
+    'AI & FlowifyAI (AI & Captain)' => %w[
       captain_integration captain_integration_v2 captain_tasks
     ],
     'Hệ thống & Giao diện (System & Interface)' => %w[

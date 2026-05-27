@@ -1,7 +1,7 @@
 # TODO: lets use HTTParty instead of RestClient
 class ChatwootHub
   def self.base_url
-    ENV.fetch('CHATWOOT_HUB_URL', 'https://hub.2.shopiz.pro')
+    ENV.fetch('CHATWOOT_HUB_URL', 'https://hub.2.flowify.vn')
   end
 
   def self.ping_url

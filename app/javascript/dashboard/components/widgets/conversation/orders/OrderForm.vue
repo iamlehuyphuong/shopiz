@@ -44,8 +44,8 @@ const currentInbox = computed(() => {
 });
 
 const inboxEcommerceAppId = computed(() => {
-  if (currentInbox.value?.sales_config?.platform === 'shopiz') {
-    return 'shopiz';
+  if (currentInbox.value?.sales_config?.platform === 'flowify') {
+    return 'flowify';
   }
   return currentInbox.value?.ecommerce_integration?.app_id || '';
 });
@@ -88,7 +88,7 @@ const PLATFORM_OPTIONS = [
   { value: 'woocommerce', label: 'WooCommerce' },
   { value: 'nhanhvn', label: 'Nhanh.vn' },
   { value: 'tiktok_shop', label: 'TikTok Shop' },
-  { value: 'shopiz', label: 'Shopiz' },
+  { value: 'flowify', label: 'Flowify' },
 ];
 
 watch(

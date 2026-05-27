@@ -220,7 +220,7 @@
     "MODULE_PRODUCTS": {
       "HEADER": {
         "TITLE": "Quản lý Sản phẩm",
-        "DESCRIPTION": "Quản lý danh sách sản phẩm Shopiz và đồng bộ với nền tảng bán hàng.",
+        "DESCRIPTION": "Quản lý danh sách sản phẩm Flowify và đồng bộ với nền tảng bán hàng.",
         "SEARCH": "Tìm kiếm sản phẩm...",
         "COUNT": "sản phẩm"
       },
@@ -334,11 +334,11 @@
       "DESCRIPTIONS": {
         "SHOPIFY": "Kết nối cửa hàng Shopify của bạn để đồng bộ đơn hàng, khách hàng và dữ liệu sản phẩm trực tiếp trong ứng dụng.",
         "KIOTVIET": "Đồng bộ hoá tồn kho và quản lý đơn hàng bán lẻ với hệ thống KiotViet một cách tự động và liên tục.",
-        "HARAVAN": "Quản lý bán hàng đa kênh Haravan hiệu quả hơn với khả năng kéo thông tin đơn hàng và đẩy sản phẩm từ Shopiz.",
+        "HARAVAN": "Quản lý bán hàng đa kênh Haravan hiệu quả hơn với khả năng kéo thông tin đơn hàng và đẩy sản phẩm từ Flowify.",
         "WOOCOMMERCE": "Tích hợp WooCommerce giúp đồng bộ sản phẩm, tồn kho và trạng thái đơn hàng trực tiếp vào quy trình làm việc.",
         "SAPO": "Quản lý cửa hàng trực tuyến trên Sapo một cách chuyên nghiệp với tính năng đồng bộ hoá sản phẩm 2 chiều.",
         "NHANHVN": "Giải pháp kết nối với Nhanh.vn để theo dõi và hỗ trợ quy trình xử lý đơn hàng liền mạch từ kho đến khách hàng.",
-        "TIKTOK_SHOP": "Đồng bộ đơn hàng, quản lý tin nhắn và sản phẩm từ TikTok Shop Seller Center vào Shopiz."
+        "TIKTOK_SHOP": "Đồng bộ đơn hàng, quản lý tin nhắn và sản phẩm từ TikTok Shop Seller Center vào Flowify."
       }
     },
     "PRODUCT_FORM": {
@@ -504,7 +504,7 @@
     },
     "DIALOG_ADD_PRODUCT": {
       "TITLE": "Thêm sản phẩm mới",
-      "DESC": "Thêm sản phẩm mới vào danh sách quản lý của Shopiz.",
+      "DESC": "Thêm sản phẩm mới vào danh sách quản lý của Flowify.",
       "FORM": {
         "NAME": {
           "LABEL": "Tên sản phẩm *",
@@ -538,7 +538,7 @@
     },
     "DIALOG_PULL_PRODUCTS": {
       "TITLE": "Đồng bộ dữ liệu sản phẩm",
-      "DESC": "Chọn nền tảng bán hàng để đồng bộ danh sách sản phẩm về Shopiz.",
+      "DESC": "Chọn nền tảng bán hàng để đồng bộ danh sách sản phẩm về Flowify.",
       "FORM": {
         "CANCEL": "Huỷ",
         "SUBMIT": "Đồng bộ sản phẩm"
@@ -578,7 +578,7 @@
       },
       "FALLBACKS": {
         "GUEST": "Khách lẻ",
-        "SHOPIZ": "Shopiz",
+        "FLOWIFY": "Flowify",
         "NO_DATA": "--"
       }
     }

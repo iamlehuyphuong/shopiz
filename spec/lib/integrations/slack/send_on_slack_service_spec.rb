@@ -141,7 +141,7 @@ describe Integrations::Slack::SendOnSlackService do
         unflur_payload = { :channel => 'channel',
                            :ts => 'timestamp',
                            :unfurls =>
-           { :'https://qa.shopiz.pro/app/accounts/1/conversations/1' =>
+           { :'https://qa.flowify.vn/app/accounts/1/conversations/1' =>
              { :blocks => [{ :type => 'section',
                              :text => { :type => 'plain_text', :text => 'This is a plain text section block.', :emoji => true } }] } } }
         allow(slack_client).to receive(:chat_unfurl).with(unflur_payload)

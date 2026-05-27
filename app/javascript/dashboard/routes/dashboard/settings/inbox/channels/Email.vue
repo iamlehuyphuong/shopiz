@@ -29,7 +29,7 @@ const emailProviderList = computed(() => {
     {
       title: t('INBOX_MGMT.EMAIL_PROVIDERS.GOOGLE.TITLE'),
       description: t('INBOX_MGMT.EMAIL_PROVIDERS.GOOGLE.DESCRIPTION'),
-      isEnabled: !!window.shopizConfig.googleOAuthClientId,
+      isEnabled: !!window.flowifyConfig.googleOAuthClientId,
       key: 'google',
       icon: 'i-woot-gmail',
     },

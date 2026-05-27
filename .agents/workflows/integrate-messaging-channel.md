@@ -1,10 +1,10 @@
 ---
-description: Hướng dẫn chi tiết quy trình tích hợp một kênh nhắn tin mới (Messaging Channel) vào hệ thống Shopiz, dựa trên thực tế triển khai TikTok và Zalo.
+description: Hướng dẫn chi tiết quy trình tích hợp một kênh nhắn tin mới (Messaging Channel) vào hệ thống Flowify, dựa trên thực tế triển khai TikTok và Zalo.
 ---
 
 # Quy trình Tích hợp Kênh Nhắn tin Mới
 
-Tài liệu này hướng dẫn các bước kỹ thuật để tích hợp một kênh nhắn tin (như TikTok Messenger, Zalo, WhatsApp, v.v.) vào Shopiz. Quy trình này đảm bảo tính nhất quán về kiến trúc và độ tin cậy của dữ liệu.
+Tài liệu này hướng dẫn các bước kỹ thuật để tích hợp một kênh nhắn tin (như TikTok Messenger, Zalo, WhatsApp, v.v.) vào Flowify. Quy trình này đảm bảo tính nhất quán về kiến trúc và độ tin cậy của dữ liệu.
 
 ## 1. Nghiên cứu & Chuẩn bị
 Trước khi viết mã, hãy thực hiện các bước sau:
@@ -50,13 +50,13 @@ Tổ chức code trong thư mục `app/services/<provider>/` để dễ bảo tr
 1.  **`auth_client.rb`**: Xử lý logic OAuth, lấy và làm mới Access Token.
 2.  **`client.rb`**: Wrapper cho các HTTP request (GET profile, POST message, POST upload media).
 3.  **`token_service.rb`**: Quản lý lifecycle của token. Sử dụng `Redis::LockManager` để tránh race condition khi nhiều process cùng refresh token.
-4.  **`message_service.rb`**: Logic core để biến payload webhook thành bản ghi `Message` trong Shopiz.
+4.  **`message_service.rb`**: Logic core để biến payload webhook thành bản ghi `Message` trong Flowify.
     - Xử lý tạo/tìm `Contact`.
     - Xử lý tạo/tìm `Conversation`.
     - Xử lý `attachments` (Download media từ provider -> Upload lên ActiveStorage).
     - Hỗ trợ `outgoing_echo` (đồng bộ tin nhắn nhân viên nhắn từ app ngoài).
 5.  **`messaging_helpers.rb`**: Các method phụ trợ cho việc tìm kiếm hội thoại, xử lý attributes.
-6.  **`send_on_<provider>_service.rb`**: Gọi bởi `Message#send_to_external_channel` khi nhân viên nhắn tin từ dashboard Shopiz.
+6.  **`send_on_<provider>_service.rb`**: Gọi bởi `Message#send_to_external_channel` khi nhân viên nhắn tin từ dashboard Flowify.
 
 ## 5. Xử lý Inbound (Webhooks)
 - **Controller**: `app/controllers/webhooks/<provider>_controller.rb`.

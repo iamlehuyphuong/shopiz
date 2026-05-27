@@ -42,7 +42,7 @@ class Captain::Tools::Copilot::TiktokShopSearchProductsService < Captain::Tools:
         sku_details = [format_tiktok_currency(price, currency).to_s, "Stock: #{stock}"]
         sku_details << "SKU: #{v['seller_sku']}" if v['seller_sku'].present?
 
-        "  - #{v['id']}: #{sku_details.join(' | ')}"
+        " - #{v['id']}: #{sku_details.join(' | ')}"
       end
       "**#{p['title']}** (ID: #{p['id']})\n#{variants_info&.join("\n") || '  No SKUs available'}"
     end.join("\n\n")

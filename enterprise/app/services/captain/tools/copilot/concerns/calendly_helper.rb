@@ -42,7 +42,7 @@ module Captain::Tools::Copilot::Concerns::CalendlyHelper
   end
 
   def calendly_not_connected_message
-    'Calendly chưa được kết nối. Vui lòng kết nối Calendly trong Cài đặt > Tích hợp.'
+    'Calendly is not connected. Please connect Calendly in Settings > Integrations.'
   end
 
   # --- Formatting helpers ---
@@ -52,12 +52,12 @@ module Captain::Tools::Copilot::Concerns::CalendlyHelper
       duration = et['duration'] || 0
       name = et['name']
       desc = et['description_plain'].presence
-      line = "- #{name} (#{duration} phút)"
-      line += " — #{desc}" if desc
+      line = "- #{name} (#{duration} minutes)"
+      line += "— #{desc}" if desc
       line
     end
 
-    "Các dịch vụ có sẵn trên Calendly:\n#{lines.join("\n")}\n\nIMPORTANT: When using other Calendly tools, you MUST pass the EXACT service name as listed above. Do not translate it."
+    "Available services on Calendly:\n#{lines.join("\n")}\n\nIMPORTANT: When using other Calendly tools, you MUST pass the EXACT service name as listed above. Do not translate it."
   end
 
   def format_available_times(slots, event_type, timezone)
@@ -67,7 +67,7 @@ module Captain::Tools::Copilot::Concerns::CalendlyHelper
       time.in_time_zone(tz).strftime('%A, %d/%m/%Y')
     end
 
-    lines = ["Các khung giờ trống cho #{event_type['name']} (#{event_type['duration']} phút):"]
+    lines = ["Available time slots for #{event_type['name']} (#{event_type['duration']} minutes):"]
     grouped.each do |date, day_slots|
       time_list = day_slots.map do |slot|
         time = Time.parse(slot['start_time'])
@@ -75,7 +75,7 @@ module Captain::Tools::Copilot::Concerns::CalendlyHelper
         local_time = time.in_time_zone(tz).strftime('%H:%M')
         "#{local_time} (start_time: #{slot['start_time']})"
       end
-      lines << "📅 #{date}:\n  - #{time_list.join("\n  - ")}"
+      lines << "#{date}: #{time_list.join("\n - ")}"
     end
 
     lines << "\nIMPORTANT: When using the calendly_book_appointment tool, you MUST pass the exact `start_time` string provided in parentheses (e.g. 2024-05-25T03:30:00.000000Z). Do NOT construct the UTC time yourself."
@@ -88,14 +88,14 @@ module Captain::Tools::Copilot::Concerns::CalendlyHelper
     cancel_url = invitee['cancel_url']
 
     lines = [
-      "✅ Đặt lịch thành công!",
-      "📋 Dịch vụ: #{event_type['name']}",
-      "📅 Thời gian: #{start}",
-      "👤 Khách: #{invitee.dig('invitee', 'name') || invitee['name']}",
-      "📧 Email: #{invitee.dig('invitee', 'email') || invitee['email']}"
+      'Booking successful!',
+      "Service: #{event_type['name']}",
+      "Time: #{start}",
+      "Guest: #{invitee.dig('invitee', 'name') || invitee['name']}",
+      "Email: #{invitee.dig('invitee', 'email') || invitee['email']}"
     ]
-    lines << "🔄 Thay đổi lịch: #{reschedule_url}" if reschedule_url.present?
-    lines << "❌ Hủy lịch: #{cancel_url}" if cancel_url.present?
+    lines << "Reschedule: #{reschedule_url}" if reschedule_url.present?
+    lines << "Cancel: #{cancel_url}" if cancel_url.present?
 
     lines.join("\n")
   end
@@ -112,14 +112,14 @@ module Captain::Tools::Copilot::Concerns::CalendlyHelper
   end
 
   def format_events(client, events, timezone)
-    lines = ["Các cuộc hẹn sắp tới (#{events.size}):"]
+    lines = ["Upcoming appointments (#{events.size}):"]
     events.first(10).each do |event|
       name = event['name'] || event.dig('event_type', 'name') || 'N/A'
       start_time = event['start_time'] ? format_time_local(event['start_time'], timezone) : 'N/A'
       status = event['status']
-      
+
       uuid = event['uri']&.split('/')&.last
-      invitee_info = "N/A"
+      invitee_info = 'N/A'
       if uuid
         begin
           invitees_response = client.event_invitees(event_uuid: uuid)
@@ -132,10 +132,10 @@ module Captain::Tools::Copilot::Concerns::CalendlyHelper
           # Ignore if we can't fetch invitees
         end
       end
-      
-      lines << "- Dịch vụ: #{name} | Khách: #{invitee_info} | Thời gian: #{start_time} | Trạng thái: #{status}"
+
+      lines << "- Service: #{name} | Guest: #{invitee_info} | Time: #{start_time} | Status: #{status}"
     end
-    lines << "... và #{events.size - 10} cuộc hẹn khác" if events.size > 10
+    lines << "... and #{events.size - 10} other appointments" if events.size > 10
     lines.join("\n")
   end
 
@@ -143,7 +143,7 @@ module Captain::Tools::Copilot::Concerns::CalendlyHelper
     response = client.scheduled_events(
       user_uri: hook.settings['user_uri'],
       min_start_time: Time.current,
-      max_start_time: Time.current + 30.days
+      max_start_time: 30.days.from_now
     )
     events = response['collection'] || []
 
@@ -167,14 +167,14 @@ module Captain::Tools::Copilot::Concerns::CalendlyHelper
 
     if action == 'reschedule'
       url = invitee['reschedule_url']
-      return "Không có link dời lịch cho cuộc hẹn này." unless url
+      return 'No reschedule link available for this appointment.' unless url
 
-      "🔄 Dời lịch cuộc hẹn:\n📋 Dịch vụ: #{event_name}\n📅 Lịch hiện tại: #{start_time}\n🔗 Link dời lịch: #{url}"
+      "Reschedule appointment:\nService: #{event_name}\nCurrent schedule: #{start_time}\nReschedule link: #{url}"
     else
       url = invitee['cancel_url']
-      return "Không có link hủy lịch cho cuộc hẹn này." unless url
+      return 'No cancel link available for this appointment.' unless url
 
-      "❌ Hủy cuộc hẹn:\n📋 Dịch vụ: #{event_name}\n📅 Lịch hiện tại: #{start_time}\n🔗 Link hủy: #{url}"
+      "Cancel appointment:\nService: #{event_name}\nCurrent schedule: #{start_time}\nCancel link: #{url}"
     end
   end
 end

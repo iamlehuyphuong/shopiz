@@ -6,7 +6,7 @@ class Captain::Tools::Copilot::TiktokShopSuggestProductsService < Captain::Tools
   end
 
   description 'Suggest products to buyers from TikTok Shop based on chat context. ' \
-              'Useful for answering "Do you have X?" or recommending items.'
+              'Useful for answering "Do you have X?"or recommending items.'
   param :context, type: :string, desc: 'What the customer is looking for (e.g., "red t-shirt")'
 
   def execute(**args)
@@ -43,9 +43,9 @@ class Captain::Tools::Copilot::TiktokShopSuggestProductsService < Captain::Tools
       stock = p['skus']&.sum { |v| v.dig('inventory', 'quantity').to_i } || 0
 
       lines << "- **#{p['title']}**"
-      lines << "  Price: #{format_tiktok_currency(price, currency)}"
-      lines << "  Stock: #{stock} available"
-      lines << "  Product ID: #{p['id']}"
+      lines << " Price: #{format_tiktok_currency(price, currency)}"
+      lines << " Stock: #{stock} available"
+      lines << " Product ID: #{p['id']}"
     end
 
     lines.join("\n")

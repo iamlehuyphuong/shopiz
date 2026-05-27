@@ -57,7 +57,7 @@ export default {
       this.hasLoginStarted = true;
       window.location.replace(
         'https://services.tiktokshop.com/open/authorize?service_id=' +
-          window.shopizConfig.tiktokShopAppId +
+          window.flowifyConfig.tiktokShopAppId +
           '&state=' +
           encodeURIComponent(this.initial_account_id)
       );

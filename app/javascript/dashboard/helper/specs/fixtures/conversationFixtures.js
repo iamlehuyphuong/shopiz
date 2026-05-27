@@ -17,7 +17,7 @@ export const conversationData = {
       account_id: 1,
       availability_status: 'offline',
       confirmed: true,
-      email: 'muhsin@shopiz.pro',
+      email: 'muhsin@flowify.vn',
       available_name: 'Muhsin Keloth',
       id: 21,
       name: 'Muhsin Keloth',

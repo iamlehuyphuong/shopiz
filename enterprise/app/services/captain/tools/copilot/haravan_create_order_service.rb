@@ -106,15 +106,15 @@ class Captain::Tools::Copilot::HaravanCreateOrderService < Captain::Tools::BaseT
   end
 
   def format_order_result(order, resolved)
-    lines = ["✅ Draft order ##{order.id} created for conversation ##{order.conversation.display_id}\n"]
-    resolved[:items].each { |item| lines << "  • #{item[:product_name]} × #{item[:quantity]} — #{format_haravan_currency(item[:unit_price])}" }
+    lines = ["Draft order ##{order.id} created for conversation ##{order.conversation.display_id}\n"]
+    resolved[:items].each { |item| lines << " • #{item[:product_name]} × #{item[:quantity]} — #{format_haravan_currency(item[:unit_price])}" }
     lines << "\nTotal: #{format_haravan_currency(order.total_amount)}"
     lines << "Customer: #{order.customer_name} | #{order.customer_phone}"
     if resolved[:warnings].present?
-      lines << "\n⚠️ Stock warnings:"
-      resolved[:warnings].each { |w| lines << "  • #{w}" }
+      lines << "\nStock warnings:"
+      resolved[:warnings].each { |w| lines << " • #{w}" }
     end
-    lines << "\n📋 Status: DRAFT — Confirm in Orders panel to push to Haravan."
+    lines << "\nStatus: DRAFT — Confirm in Orders panel to push to Haravan."
     lines.join("\n")
   end
 end

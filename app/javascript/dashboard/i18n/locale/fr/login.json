@@ -1,6 +1,6 @@
 {
   "LOGIN": {
-    "TITLE": "Se connecter à Shopiz",
+    "TITLE": "Se connecter à Flowify",
     "EMAIL": {
       "LABEL": "Courriel",
       "PLACEHOLDER": "example{'@'}companyname.com",

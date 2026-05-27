@@ -1,5 +1,5 @@
 # Copilot tool: Agent creates a draft order via AI with Nhanh.vn products.
-# Validates stock, creates ConversationOrder in Shopiz for review.
+# Validates stock, creates ConversationOrder in Flowify for review.
 class Captain::Tools::Copilot::NhanhvnCreateOrderService < Captain::Tools::BaseTool
   include Captain::Tools::Concerns::NhanhvnClient
 
@@ -8,7 +8,7 @@ class Captain::Tools::Copilot::NhanhvnCreateOrderService < Captain::Tools::BaseT
   end
 
   description 'Create a draft order with Nhanh.vn products. Validates stock availability ' \
-              'and creates the order in Shopiz for agent review before pushing to Nhanh.vn.'
+              'and creates the order in Flowify for agent review before pushing to Nhanh.vn.'
   param :conversation_id, type: :integer, desc: 'Conversation display ID to attach the order to', required: true
   param :product_items, type: :string, desc: 'JSON array of items: [{"code":"SP001","qty":2},{"code":"SP002","qty":1}]', required: true
   param :customer_name, type: :string, desc: 'Customer name (auto-filled from contact if blank)', required: false
@@ -115,20 +115,20 @@ class Captain::Tools::Copilot::NhanhvnCreateOrderService < Captain::Tools::BaseT
   end
 
   def format_order_result(order, resolved)
-    lines = ["✅ Draft order ##{order.id} created for conversation ##{order.conversation.display_id}\n"]
-    resolved[:items].each { |item| lines << "  • #{item[:product_name]} (#{item[:code]}) × #{item[:quantity]} — #{format_vnd(item[:unit_price])}" }
+    lines = ["Draft order ##{order.id} created for conversation ##{order.conversation.display_id}\n"]
+    resolved[:items].each { |item| lines << " • #{item[:product_name]} (#{item[:code]}) × #{item[:quantity]} — #{format_vnd(item[:unit_price])}" }
     lines << "\nTotal: #{format_vnd(order.total_amount)}"
     lines << "Customer: #{order.customer_name} | #{order.customer_phone}"
     lines << "Address: #{order.customer_address}" if order.customer_address.present?
     append_warnings(lines, resolved[:warnings])
-    lines << "\n📋 Status: DRAFT — Review and confirm in the Orders panel to push to Nhanh.vn."
+    lines << "\nStatus: DRAFT — Review and confirm in the Orders panel to push to Nhanh.vn."
     lines.join("\n")
   end
 
   def append_warnings(lines, warnings)
     return if warnings.blank?
 
-    lines << "\n⚠️ Stock warnings:"
-    warnings.each { |w| lines << "  • #{w}" }
+    lines << "\nStock warnings:"
+    warnings.each { |w| lines << " • #{w}" }
   end
 end

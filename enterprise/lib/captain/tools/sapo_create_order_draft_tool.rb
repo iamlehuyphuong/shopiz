@@ -1,6 +1,6 @@
 # Public tool: Create a draft ConversationOrder from Sapo products.
 # Looks up products by name, validates stock from variants, and creates
-# a draft order in Shopiz for agent review.
+# a draft order in Flowify for agent review.
 class Captain::Tools::SapoCreateOrderDraftTool < Captain::Tools::BasePublicTool
   include Captain::Tools::Concerns::SapoClient
 

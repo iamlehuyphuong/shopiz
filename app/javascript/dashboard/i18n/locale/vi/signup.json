@@ -5,7 +5,7 @@
     "TITLE": "Đăng ký",
     "TESTIMONIAL_HEADER": "Chỉ cần một bước để tiến về phía trước",
     "TESTIMONIAL_CONTENT": "Bạn chỉ còn một bước nữa để bắt đầu tương tác, giữ chân và tìm thêm khách hàng.",
-    "TERMS_ACCEPT": "Bằng việc tạo tài khoản, bạn đồng ý với <a href=\"https://www.shopiz.pro/terms\">Điều khoản sử dụng</a> và <a href=\"https://www.shopiz.pro/privacy-policy\">Chính sách bảo mật</a> của chúng tôi",
+    "TERMS_ACCEPT": "Bằng việc tạo tài khoản, bạn đồng ý với <a href=\"https://www.flowify.vn/terms\">Điều khoản sử dụng</a> và <a href=\"https://www.flowify.vn/privacy-policy\">Chính sách bảo mật</a> của chúng tôi",
     "OAUTH": {
       "GOOGLE_SIGNUP": "Đăng ký với Google"
     },
@@ -78,7 +78,7 @@
         }
       },
       "SOURCE": {
-        "LABEL": "Bạn biết đến Shopiz từ đâu?",
+        "LABEL": "Bạn biết đến Flowify từ đâu?",
         "PLACEHOLDER": "Chọn kênh thông tin",
         "ERROR": "Vui lòng chọn một tuỳ chọn",
         "OPTIONS": {

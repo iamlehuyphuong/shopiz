@@ -567,7 +567,7 @@ export const sampleActiveFilters = [
   {
     attributeKey: 'email',
     filterOperator: 'does_not_contain',
-    values: 'test@shopiz.pro',
+    values: 'test@flowify.vn',
     queryOperator: 'or',
   },
   {

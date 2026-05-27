@@ -23,25 +23,23 @@ class Captain::Tools::Copilot::CalendlyGetScheduledEventsService < Captain::Tool
     )
     events = response['collection'] || []
 
-    return 'Không có cuộc hẹn nào trong thời gian tới.' if events.empty?
+    return 'No upcoming appointments found.' if events.empty?
 
     if customer_email.present?
       events = filter_events_by_email(client, events, customer_email)
-      return "Không tìm thấy cuộc hẹn nào cho email #{customer_email}." if events.empty?
+      return "No appointments found for email #{customer_email}." if events.empty?
     end
 
     format_events(client, events, timezone)
   rescue Calendly::ApiClient::ApiError => e
-    "Lỗi API Calendly: #{e.message} - #{e.body.to_json}"
+    "Calendly API Error: #{e.message} - #{e.body.to_json}"
   rescue StandardError => e
-    "Lỗi hệ thống khi gọi Calendly: #{e.message}"
+    "System error calling Calendly: #{e.message}"
   end
 
   def active?
     @user.present? && find_calendly_hook.present?
   end
-
-  private
 
   include Captain::Tools::Copilot::Concerns::CalendlyHelper
 end

@@ -16,7 +16,7 @@
     "CREATE_FLOW": {
       "CHANNEL": {
         "TITLE": "Scegli il canale",
-        "BODY": "Scegli il provider che vuoi integrare con Shopiz."
+        "BODY": "Scegli il provider che vuoi integrare con Flowify."
       },
       "INBOX": {
         "TITLE": "Crea Inbox",
@@ -1115,8 +1115,8 @@
         "USER_MESSAGE": "Salve",
         "AGENT_MESSAGE": "Ciao"
       },
-      "BRANDING_TEXT": "Offerto da Shopiz",
-      "SCRIPT_SETTINGS": "\n      window.shopizSettings = {options};"
+      "BRANDING_TEXT": "Offerto da Flowify",
+      "SCRIPT_SETTINGS": "\n      window.flowifySettings = {options};"
     },
     "EMAIL_PROVIDERS": {
       "MICROSOFT": {

@@ -6,8 +6,8 @@ class Captain::Tools::Copilot::HaravanPushOrderService < Captain::Tools::BaseToo
     'haravan_push_order'
   end
 
-  description 'Push a confirmed Shopiz order to Haravan. Creates the order and syncs the external order ID.'
-  param :conversation_order_id, type: :integer, desc: 'Shopiz ConversationOrder ID to push', required: true
+  description 'Push a confirmed Flowify order to Haravan. Creates the order and syncs the external order ID.'
+  param :conversation_order_id, type: :integer, desc: 'Flowify ConversationOrder ID to push', required: true
 
   def execute(conversation_order_id:)
     return 'Haravan integration is not connected' unless haravan_active?
@@ -59,9 +59,9 @@ class Captain::Tools::Copilot::HaravanPushOrderService < Captain::Tools::BaseToo
 
   def format_success(order, haravan_order)
     <<~RESPONSE.strip
-      ✅ Order pushed to Haravan!
+       Order pushed to Haravan!
 
-      Shopiz Order: ##{order.id}
+      Flowify Order: ##{order.id}
       Haravan Order: #{haravan_order['name'] || haravan_order['id']}
       Customer: #{order.customer_name} | #{order.customer_phone}
       Items: #{order.items.count} product(s)

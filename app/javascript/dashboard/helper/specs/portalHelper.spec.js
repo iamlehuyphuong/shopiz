@@ -7,33 +7,33 @@ import {
 describe('PortalHelper', () => {
   describe('buildPortalURL', () => {
     it('returns the correct url', () => {
-      window.shopizConfig = {
-        hostURL: 'https://www.shopiz.pro',
-        helpCenterURL: 'https://help.shopiz.pro',
+      window.flowifyConfig = {
+        hostURL: 'https://www.flowify.vn',
+        helpCenterURL: 'https://help.flowify.vn',
       };
       expect(buildPortalURL('handbook')).toEqual(
-        'https://help.shopiz.pro/hc/handbook'
+        'https://help.flowify.vn/hc/handbook'
       );
-      window.shopizConfig = {};
+      window.flowifyConfig = {};
     });
   });
 
   describe('buildPortalArticleURL', () => {
     it('returns the correct url', () => {
-      window.shopizConfig = {
-        hostURL: 'https://www.shopiz.pro',
-        helpCenterURL: 'https://help.shopiz.pro',
+      window.flowifyConfig = {
+        hostURL: 'https://www.flowify.vn',
+        helpCenterURL: 'https://help.flowify.vn',
       };
       expect(
         buildPortalArticleURL('handbook', 'culture', 'fr', 'article-slug')
-      ).toEqual('https://help.shopiz.pro/hc/handbook/articles/article-slug');
-      window.shopizConfig = {};
+      ).toEqual('https://help.flowify.vn/hc/handbook/articles/article-slug');
+      window.flowifyConfig = {};
     });
 
     it('returns the correct url with custom domain', () => {
-      window.shopizConfig = {
-        hostURL: 'https://app.shopiz.pro',
-        helpCenterURL: 'https://help.shopiz.pro',
+      window.flowifyConfig = {
+        hostURL: 'https://app.flowify.vn',
+        helpCenterURL: 'https://help.flowify.vn',
       };
       expect(
         buildPortalArticleURL(
@@ -47,9 +47,9 @@ describe('PortalHelper', () => {
     });
 
     it('handles https in custom domain correctly', () => {
-      window.shopizConfig = {
-        hostURL: 'https://app.shopiz.pro',
-        helpCenterURL: 'https://help.shopiz.pro',
+      window.flowifyConfig = {
+        hostURL: 'https://app.flowify.vn',
+        helpCenterURL: 'https://help.flowify.vn',
       };
       expect(
         buildPortalArticleURL(
@@ -63,13 +63,13 @@ describe('PortalHelper', () => {
     });
 
     it('uses hostURL when helpCenterURL is not available', () => {
-      window.shopizConfig = {
-        hostURL: 'https://app.shopiz.pro',
+      window.flowifyConfig = {
+        hostURL: 'https://app.flowify.vn',
         helpCenterURL: '',
       };
       expect(
         buildPortalArticleURL('handbook', 'culture', 'fr', 'article-slug')
-      ).toEqual('https://app.shopiz.pro/hc/handbook/articles/article-slug');
+      ).toEqual('https://app.flowify.vn/hc/handbook/articles/article-slug');
     });
   });
 

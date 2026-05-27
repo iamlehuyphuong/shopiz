@@ -80,7 +80,7 @@ vi:
         not_supported: 'Cấp lại quyền truy cập không được hỗ trợ cho loại kênh WhatsApp này.'
     facebook:
       human_agent_error: '%{error_code} - %{error_message}\n(Lỗi): Bạn đang gửi tin nhắn quá 24h nhưng Fanpage chưa được cấp quyền Human Agent. Hãy vào Cài đặt Trang -> Trải nghiệm Trang mới -> Nhắn tin nâng cao -> Chọn Human Agent và Yêu cầu cấp quyền.'
-      only_one_private_reply: '%{error_code} - %{error_message}\n(Lỗi): Phản hồi riêng tư đã được gửi trước đó (trên Shopiz hoặc Meta Suite). Facebook chỉ cho phép gửi 1 lần duy nhất cho mỗi bình luận.'
+      only_one_private_reply: '%{error_code} - %{error_message}\n(Lỗi): Phản hồi riêng tư đã được gửi trước đó (trên Flowify hoặc Meta Suite). Facebook chỉ cho phép gửi 1 lần duy nhất cho mỗi bình luận.'
       private_reply_timeout: '%{error_code} - %{error_message}\n(Lỗi): Không thể gửi. Phản hồi riêng tư chỉ được phép gửi cho các bình luận được tạo trong vòng 7 ngày qua.'
       comment_handler:
         comment_hidden: 'Comment đã được tự động ẩn'
@@ -299,16 +299,16 @@ vi:
       description: 'Ứng dụng bảng điều khiển cho phép bạn tạo và nhúng các ứng dụng hiển thị thông tin người dùng, đơn hàng hoặc lịch sử thanh toán, cung cấp thêm bối cảnh cho nhân viên hỗ trợ khách hàng.'
     dyte:
       name: 'Dyte'
-      short_description: 'Bắt đầu cuộc gọi video/âm thanh với khách hàng trực tiếp từ Shopiz.'
-      description: 'Dyte là một sản phẩm tích hợp chức năng âm thanh và video vào ứng dụng của bạn. Với tính năng này, nhân viên của bạn có thể bắt đầu cuộc gọi video/âm thanh với khách hàng trực tiếp từ Shopiz.'
+      short_description: 'Bắt đầu cuộc gọi video/âm thanh với khách hàng trực tiếp từ Flowify.'
+      description: 'Dyte là một sản phẩm tích hợp chức năng âm thanh và video vào ứng dụng của bạn. Với tính năng này, nhân viên của bạn có thể bắt đầu cuộc gọi video/âm thanh với khách hàng trực tiếp từ Flowify.'
       meeting_name: '%{agent_name} đã bắt đầu một cuộc họp'
     slack:
       name: 'Slack'
       short_description: 'Nhận thông báo và trả lời cuộc trò chuyện trực tiếp trên Slack.'
-      description: 'Tích hợp Shopiz với Slack để giữ cho đội ngũ của bạn đồng bộ. Tính năng này cho phép bạn nhận thông báo về các cuộc trò chuyện mới và trả lời trực tiếp từ giao diện của Slack.'
+      description: 'Tích hợp Flowify với Slack để giữ cho đội ngũ của bạn đồng bộ. Tính năng này cho phép bạn nhận thông báo về các cuộc trò chuyện mới và trả lời trực tiếp từ giao diện của Slack.'
     webhooks:
       name: 'Webhooks'
-      description: 'Sự kiện webhook cung cấp cập nhật thời gian thực về các hoạt động trong tài khoản Shopiz của bạn. Bạn có thể đăng ký các sự kiện ưa thích, và Shopiz sẽ gửi cho bạn các callback HTTP với các cập nhật.'
+      description: 'Sự kiện webhook cung cấp cập nhật thời gian thực về các hoạt động trong tài khoản Flowify của bạn. Bạn có thể đăng ký các sự kiện ưa thích, và Flowify sẽ gửi cho bạn các callback HTTP với các cập nhật.'
     dialogflow:
       name: 'Dialogflow'
       short_description: 'Xây dựng chatbot để xử lý các truy vấn ban đầu trước khi chuyển cho nhân viên.'
@@ -327,8 +327,8 @@ vi:
       description: 'Tạo các vấn đề trong Linear trực tiếp từ cửa sổ hội thoại. Ngoài ra, hãy liên kết các vấn đề Linear hiện có để quy trình theo dõi vấn đề hiệu quả và hợp lý hơn.'
     notion:
       name: 'Notion'
-      short_description: 'Tích hợp cơ sở dữ liệu, tài liệu và trang trực tiếp với Shopiz AI.'
-      description: 'Kết nối không gian làm việc Notion của bạn để Shopiz AI có thể truy cập và tạo ra các phản hồi thông minh bằng cách sử dụng nội dung từ cơ sở dữ liệu, tài liệu và trang của bạn nhằm cung cấp hỗ trợ khách hàng có bối cảnh hơn.'
+      short_description: 'Tích hợp cơ sở dữ liệu, tài liệu và trang trực tiếp với Flowify AI.'
+      description: 'Kết nối không gian làm việc Notion của bạn để Flowify AI có thể truy cập và tạo ra các phản hồi thông minh bằng cách sử dụng nội dung từ cơ sở dữ liệu, tài liệu và trang của bạn nhằm cung cấp hỗ trợ khách hàng có bối cảnh hơn.'
     shopify:
       name: 'Shopify'
       short_description: 'Truy cập chi tiết đơn hàng và dữ liệu khách hàng từ cửa hàng Shopify của bạn.'
@@ -365,9 +365,9 @@ vi:
     copilot_message_required: Thông điệp bắt buộc
     copilot_error: 'Đã xảy ra lỗi với Copilot. Vui lòng thử lại.'
     copilot_limit: 'Bạn đã hết tín dụng Copilot. Bạn có thể mua thêm tín dụng từ phần thanh toán.'
-    upgrade: 'Nâng cấp gói để bật ShopizAI'
-    disabled: 'ShopizAI đã bị vô hiệu hóa cho tài khoản này.'
-    api_key_missing: 'Khóa API ShopizAI chưa được cấu hình.'
+    upgrade: 'Nâng cấp gói để bật FlowifyAI'
+    disabled: 'FlowifyAI đã bị vô hiệu hóa cho tài khoản này.'
+    api_key_missing: 'Khóa API FlowifyAI chưa được cấu hình.'
     copilot:
       using_tool: 'Đang sử dụng công cụ %{function_name}'
       completed_tool_call: 'Đã hoàn thành cuộc gọi công cụ %{function_name}'
@@ -505,7 +505,7 @@ vi:
       delivered: 'Giao hàng thành công'
       cancelled: 'Đã hủy'
     utility_messages:
-      status_update: "Chào %{customer_name}, cảm ơn bạn đã đặt hàng tại %{fanpage_name}! 🎉 Đơn hàng #%{order_id} của bạn đã được cập nhật trạng thái thành: %{status_label}. Chúng mình sẽ sớm gửi hàng đi nhé!"
+      status_update: 'Chào %{customer_name}, cảm ơn bạn đã đặt hàng tại %{fanpage_name}! 🎉 Đơn hàng #%{order_id} của bạn đã được cập nhật trạng thái thành: %{status_label}. Chúng mình sẽ sớm gửi hàng đi nhé!'
     activity:
       created: 'Đơn hàng #%{order_id} được tạo bởi %{user_name}'
       pushed: 'Đơn hàng #%{order_id} đã đẩy lên %{platform} (Mã ngoài: %{external_id})'

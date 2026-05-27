@@ -9,8 +9,8 @@ describe('#getters', () => {
   });
   describe('#getReferrerHost', () => {
     it('returns correct value', () => {
-      const state = { referrerHost: 'shopiz.pro' };
-      expect(getters.getReferrerHost(state)).toEqual('shopiz.pro');
+      const state = { referrerHost: 'flowify.vn' };
+      expect(getters.getReferrerHost(state)).toEqual('flowify.vn');
     });
   });
   describe('#getShowUnreadMessagesDialog', () => {

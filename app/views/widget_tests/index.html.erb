@@ -13,7 +13,7 @@
 %>
 <script>
 
-window.shopizSettings = {
+window.flowifySettings = {
   hideMessageBubble: false,
   // showUnreadMessagesDialog: false,
   // baseDomain: '.loca.lt',
@@ -33,7 +33,7 @@ window.shopizSettings = {
   g.async = true;
   s.parentNode.insertBefore(g,s);
   g.onload=function(){
-    window.shopizSDK.run({
+    window.flowifySDK.run({
       websiteToken: '<%= @web_widget.website_token %>',
       baseUrl: BASE_URL
     })
@@ -41,9 +41,9 @@ window.shopizSettings = {
 })(document,"script");
 
 window.addEventListener('chatwoot:ready', function() {
-  console.log('chatwoot:ready', window.$shopiz);
+  console.log('chatwoot:ready', window.$flowify);
   if (window.location.search.includes('setUser')) {
-    window.$shopiz.setUser('<%= user_id %>', {
+    window.$flowify.setUser('<%= user_id %>', {
       identifier_hash: '<%= user_hash %>',
       email: 'jane@example.com',
       name: 'Jane Doe',

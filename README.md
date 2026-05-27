@@ -14,8 +14,8 @@ The modern customer support platform, an open-source alternative to Intercom, Ze
   <img src="https://img.shields.io/github/commit-activity/m/chatwoot/chatwoot" alt="Commits-per-month">
   <a title="Crowdin" target="_self" href="https://chatwoot.crowdin.com/chatwoot"><img src="https://badges.crowdin.net/e/37ced7eba411064bd792feb3b7a28b16/localized.svg"></a>
   <a href="https://discord.gg/cJXdrwS"><img src="https://img.shields.io/discord/647412545203994635" alt="Discord"></a>
-  <a href="https://status.shopiz.pro"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fchatwoot%2Fstatus%2Fmaster%2Fapi%2Fchatwoot%2Fuptime.json" alt="uptime"></a>
-  <a href="https://status.shopiz.pro"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fchatwoot%2Fstatus%2Fmaster%2Fapi%2Fchatwoot%2Fresponse-time.json" alt="response time"></a>
+  <a href="https://status.flowify.vn"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fchatwoot%2Fstatus%2Fmaster%2Fapi%2Fchatwoot%2Fuptime.json" alt="uptime"></a>
+  <a href="https://status.flowify.vn"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fchatwoot%2Fstatus%2Fmaster%2Fapi%2Fchatwoot%2Fresponse-time.json" alt="response time"></a>
   <a href="https://artifacthub.io/packages/helm/chatwoot/chatwoot"><img src="https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/artifact-hub" alt="Artifact HUB"></a>
 </p>
 
@@ -38,7 +38,7 @@ Chatwoot is the modern, open-source, and self-hosted customer support platform d
 
 ### ✨ Captain – AI Agent for Support
 
-Supercharge your support with Captain, Chatwoot’s AI agent. Captain helps automate responses, handle common queries, and reduce agent workload—ensuring customers get instant, accurate answers. With Captain, your team can focus on complex conversations while routine questions are resolved automatically. Read more about Captain [here](https://www.shopiz.pro/captain-docs).
+Supercharge your support with Captain, Chatwoot’s AI agent. Captain helps automate responses, handle common queries, and reduce agent workload—ensuring customers get instant, accurate answers. With Captain, your team can focus on complex conversations while routine questions are resolved automatically. Read more about Captain [here](https://www.flowify.vn/captain-docs).
 
 ### 💬 Omnichannel Support Desk
 
@@ -87,11 +87,11 @@ Publish help articles, FAQs, and guides through the built-in Help Center Portal.
 
 ## Documentation
 
-Detailed documentation is available at [shopiz.pro/help-center](https://www.shopiz.pro/help-center).
+Detailed documentation is available at [flowify.vn/help-center](https://www.flowify.vn/help-center).
 
 ## Translation process
 
-The translation process for Chatwoot web and mobile app is managed at [https://translate.shopiz.pro](https://translate.shopiz.pro) using Crowdin. Please read the [translation guide](https://www.shopiz.pro/docs/contributing/translating-chatwoot-to-your-language) for contributing to Chatwoot.
+The translation process for Chatwoot web and mobile app is managed at [https://translate.flowify.vn](https://translate.flowify.vn) using Crowdin. Please read the [translation guide](https://www.flowify.vn/docs/contributing/translating-chatwoot-to-your-language) for contributing to Chatwoot.
 
 ## Branching model
 
@@ -106,7 +106,7 @@ Deploying Chatwoot to Heroku is a breeze. It's as simple as clicking this button
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/chatwoot/chatwoot/tree/master)
 
-Follow this [link](https://www.shopiz.pro/docs/environment-variables) to understand setting the correct environment variables for the app to work with all the features. There might be breakages if you do not set the relevant environment variables.
+Follow this [link](https://www.flowify.vn/docs/environment-variables) to understand setting the correct environment variables for the app to work with all the features. There might be breakages if you do not set the relevant environment variables.
 
 
 ### DigitalOcean 1-Click Kubernetes deployment
@@ -119,7 +119,7 @@ Chatwoot now supports 1-Click deployment to DigitalOcean as a kubernetes app.
 
 ### Other deployment options
 
-For other supported options, checkout our [deployment page](https://www.shopiz.pro/deploy).
+For other supported options, checkout our [deployment page](https://www.flowify.vn/deploy).
 
 ## Security
 
@@ -131,7 +131,7 @@ If you need help or just want to hang out, come, say hi on our [Discord](https:/
 
 ## Contributors
 
-Thanks goes to all these [wonderful people](https://www.shopiz.pro/docs/contributors):
+Thanks goes to all these [wonderful people](https://www.flowify.vn/docs/contributors):
 
 <a href="https://github.com/chatwoot/chatwoot/graphs/contributors"><img src="https://opencollective.com/chatwoot/contributors.svg?width=890&button=false" /></a>
 

@@ -8,7 +8,6 @@ class Captain::Tools::Copilot::WoocommerceSearchProductsService < Captain::Tools
   description 'Search WooCommerce products by name or keyword to check pricing, inventory, and details'
   param :query, type: :string, desc: 'Product name or keyword to search'
 
-
   def active?
     woocommerce_active?
   end
@@ -40,11 +39,11 @@ class Captain::Tools::Copilot::WoocommerceSearchProductsService < Captain::Tools
   def format_product(product)
     [
       product['name'].to_s,
-      "  Price: #{product['price'] || '0'}",
-      "  Regular: #{product['regular_price'] || '0'}",
-      product['sale_price'].present? ? "  Sale: #{product['sale_price']}" : nil,
-      "  Stock: #{product['stock_quantity'] || 0} (#{product['stock_status']})",
-      product['categories'].present? ? "  Category: #{product['categories'].pluck('name').join(', ')}" : nil
+      " Price: #{product['price'] || '0'}",
+      " Regular: #{product['regular_price'] || '0'}",
+      product['sale_price'].present? ? " Sale: #{product['sale_price']}": nil,
+      " Stock: #{product['stock_quantity'] || 0} (#{product['stock_status']})",
+      product['categories'].present? ? " Category: #{product['categories'].pluck('name').join(', ')}": nil
     ].compact.join("\n")
   end
 end

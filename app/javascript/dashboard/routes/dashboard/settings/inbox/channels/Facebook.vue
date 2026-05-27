@@ -122,9 +122,9 @@ export default {
 
     runFBInit() {
       FB.init({
-        appId: window.shopizConfig.fbAppId,
+        appId: window.flowifyConfig.fbAppId,
         xfbml: true,
-        version: window.shopizConfig.fbApiVersion,
+        version: window.flowifyConfig.fbApiVersion,
         status: true,
       });
       window.fbSDKLoaded = true;

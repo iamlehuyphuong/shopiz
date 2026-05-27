@@ -1,6 +1,6 @@
 {
   "LOGIN": {
-    "TITLE": "Shopiz belépés",
+    "TITLE": "Flowify belépés",
     "EMAIL": {
       "LABEL": "E-mail",
       "PLACEHOLDER": "example{'@'}companyname.com",

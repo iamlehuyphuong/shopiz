@@ -1,5 +1,5 @@
 # Copilot tool: Push a confirmed ConversationOrder to KiotViet as a real order.
-# Links the Shopiz order to KiotViet via external_order_id and external_source.
+# Links the Flowify order to KiotViet via external_order_id and external_source.
 class Captain::Tools::Copilot::KiotvietPushOrderService < Captain::Tools::BaseTool
   include Captain::Tools::Concerns::KiotvietClient
 
@@ -7,10 +7,10 @@ class Captain::Tools::Copilot::KiotvietPushOrderService < Captain::Tools::BaseTo
     'kiotviet_push_order'
   end
 
-  description 'Push a confirmed Shopiz order to KiotViet as a real order. ' \
-              'The order must be in "confirmed" status. Creates or matches the customer on KiotViet ' \
+  description 'Push a confirmed Flowify order to KiotViet as a real order. ' \
+              'The order must be in "confirmed"status. Creates or matches the customer on KiotViet ' \
               'and syncs all order items.'
-  param :conversation_order_id, type: :integer, desc: 'Shopiz ConversationOrder ID to push to KiotViet', required: true
+  param :conversation_order_id, type: :integer, desc: 'Flowify ConversationOrder ID to push to KiotViet', required: true
 
   def execute(conversation_order_id:)
     return 'KiotViet integration is not connected' unless kiotviet_active?
@@ -95,9 +95,9 @@ class Captain::Tools::Copilot::KiotvietPushOrderService < Captain::Tools::BaseTo
 
   def format_success(order, kv_order)
     <<~RESULT.strip
-      ✅ Order pushed to KiotViet successfully!
+       Order pushed to KiotViet successfully!
 
-      Shopiz Order: ##{order.id}
+      Flowify Order: ##{order.id}
       KiotViet Order: #{kv_order['code'] || kv_order['id']}
       Customer: #{order.customer_name}
       Items: #{order.items.count} product(s)

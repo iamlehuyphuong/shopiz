@@ -6,11 +6,11 @@
     "DESCRIPTION": "Nhật ký hoạt động lưu lại toàn bộ hành động trong tài khoản của bạn, giúp bạn theo dõi và kiểm tra hoạt động của tài khoản, đội ngũ hoặc các dịch vụ.",
     "LEARN_MORE": "Tìm hiểu thêm về nhật ký hoạt động",
     "SEARCH_404": "Không có mục nào khớp với tìm kiếm",
-    "SIDEBAR_TXT": "<p><b>Nhật ký hoạt động</b></p><p> Nhật ký hoạt động là dấu vết của các sự kiện và hành động trong hệ thống Shopiz. </p>",
+    "SIDEBAR_TXT": "<p><b>Nhật ký hoạt động</b></p><p> Nhật ký hoạt động là dấu vết của các sự kiện và hành động trong hệ thống Flowify. </p>",
     "LIST": {
       "404": "Không có nhật ký hoạt động nào trong tài khoản này.",
       "TITLE": "Quản lý nhật ký hoạt động",
-      "DESC": "Nhật ký hoạt động là dấu vết của các sự kiện và hành động trong hệ thống Shopiz.",
+      "DESC": "Nhật ký hoạt động là dấu vết của các sự kiện và hành động trong hệ thống Flowify.",
       "TABLE_HEADER": {
         "ACTIVITY": "Hoạt động",
         "TIME": "Thời gian",

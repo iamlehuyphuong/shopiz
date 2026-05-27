@@ -54,8 +54,8 @@ const { t } = useI18n();
         <code
           class="block px-5 py-4 overflow-auto text-xs rounded bg-slate-800 text-slate-200 text-left"
         >
-          shopiz.triggerVoiceCampaign({ campaignId: 'CAMPAIGN_ID', user: { name:
-          'John Doe', phone: '+1234567890' } });
+          flowify.triggerVoiceCampaign({ campaignId: 'CAMPAIGN_ID', user: {
+          name: 'John Doe', phone: '+1234567890' } });
         </code>
       </div>
     </template>

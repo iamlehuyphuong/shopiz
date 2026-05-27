@@ -29,7 +29,7 @@ RSpec.describe 'Devise::Mailer' do
 
     it 'contains welcome content' do
       mail = Devise::Mailer.confirmation_instructions(confirmable_user.reload, confirmation_token, {})
-      expect(mail.body.to_s).to include('Welcome to Shopiz!')
+      expect(mail.body.to_s).to include('Welcome to Flowify!')
       expect(mail.body.to_s).to include('powerful customer engagement toolkit')
     end
 

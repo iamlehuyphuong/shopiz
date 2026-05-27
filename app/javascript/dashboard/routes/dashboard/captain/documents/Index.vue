@@ -128,7 +128,7 @@ onMounted(() => {
         :hide-actions="!isOnChatwootCloud"
         fallback-thumbnail="/assets/images/dashboard/captain/document-popover-light.svg"
         fallback-thumbnail-dark="/assets/images/dashboard/captain/document-popover-dark.svg"
-        learn-more-url="https://shopiz.pro/docs/features/knowledge-base"
+        learn-more-url="https://flowify.vn/docs/features/knowledge-base"
       />
     </template>
 

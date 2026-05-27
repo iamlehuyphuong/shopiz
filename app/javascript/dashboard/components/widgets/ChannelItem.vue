@@ -16,27 +16,27 @@ const props = defineProps({
 const emit = defineEmits(['channelItemClick']);
 
 const hasFbConfigured = computed(() => {
-  return window.shopizConfig?.fbAppId;
+  return window.flowifyConfig?.fbAppId;
 });
 
 const hasInstagramConfigured = computed(() => {
-  return window.shopizConfig?.instagramAppId;
+  return window.flowifyConfig?.instagramAppId;
 });
 
 const hasZaloPersonalConfigured = computed(() => {
-  return window.shopizConfig?.zaloApiUrl;
+  return window.flowifyConfig?.zaloApiUrl;
 });
 
 const hasZaloConfigured = computed(() => {
-  return window.shopizConfig?.zaloAppId;
+  return window.flowifyConfig?.zaloAppId;
 });
 
 const hasTiktokShopConfigured = computed(() => {
-  return window.shopizConfig?.tiktokShopAppId;
+  return window.flowifyConfig?.tiktokShopAppId;
 });
 
 const hasTiktokConfigured = computed(() => {
-  return window.shopizConfig?.tiktokAppId;
+  return window.flowifyConfig?.tiktokAppId;
 });
 
 const isActive = computed(() => {
@@ -117,7 +117,7 @@ const isActive = computed(() => {
   if (key === 'twitter') {
     return (
       props.enabledFeatures.channel_twitter &&
-      window.shopizConfig?.twitterConsumerKey
+      window.flowifyConfig?.twitterConsumerKey
     );
   }
 

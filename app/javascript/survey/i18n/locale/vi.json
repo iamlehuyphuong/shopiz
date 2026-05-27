@@ -12,8 +12,8 @@
     },
     "API": {
       "SUCCESS_MESSAGE": "Đã ghi nhận khảo sát thành công",
-      "ERROR_MESSAGE": "Không thể kết nối với máy chủ Shopiz, vui lòng thử lại sau"
+      "ERROR_MESSAGE": "Không thể kết nối với máy chủ Flowify, vui lòng thử lại sau"
     }
   },
-  "POWERED_BY": "Cung cấp bởi Shopiz"
+  "POWERED_BY": "Cung cấp bởi Flowify"
 }

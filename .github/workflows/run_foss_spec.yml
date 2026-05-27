@@ -1,4 +1,4 @@
-name: Run Shopiz CE spec
+name: Run Flowify CE spec
 on:
   push:
     branches:

@@ -52,7 +52,7 @@ const onConfirm = dialog => {};
           <Input
             id="portal-name"
             type="text"
-            placeholder="User Guide | Shopiz"
+            placeholder="User Guide | Flowify"
             label="Name"
             message="This will be the name of your public facing portal"
           />
@@ -61,7 +61,7 @@ const onConfirm = dialog => {};
             type="text"
             placeholder="user-guide"
             label="Slug"
-            message="shopiz.pro/hc/my-portal/en-US/categories/my-slug"
+            message="flowify.vn/hc/my-portal/en-US/categories/my-slug"
           />
         </div>
       </Dialog>

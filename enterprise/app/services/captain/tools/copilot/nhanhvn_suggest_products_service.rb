@@ -113,8 +113,8 @@ class Captain::Tools::Copilot::NhanhvnSuggestProductsService < Captain::Tools::B
   end
 
   def format_suggestions(product, suggestions, context)
-    lines = ["📦 Base product: #{product['name']} (#{product['code']}) — #{format_vnd(product['price'])}"]
-    lines << "🎯 Customer context: #{context}" if context.present?
+    lines = ["Base product: #{product['name']} (#{product['code']}) — #{format_vnd(product['price'])}"]
+    lines << "Customer context: #{context}" if context.present?
     append_companion_lines(lines, suggestions[:companion])
     append_upsell_lines(lines, suggestions[:upsell])
     append_category_lines(lines, suggestions[:category])
@@ -126,20 +126,20 @@ class Captain::Tools::Copilot::NhanhvnSuggestProductsService < Captain::Tools::B
     return if companions.blank?
 
     lines << "\n🔗 Frequently bought together:"
-    companions.each { |s| lines << "  • #{s[:name]} — #{format_vnd(s[:price])} | Bought together #{s[:count]} time(s)" }
+    companions.each { |s| lines << " • #{s[:name]} — #{format_vnd(s[:price])} | Bought together #{s[:count]} time(s)" }
   end
 
   def append_upsell_lines(lines, upsells)
     return if upsells.blank?
 
-    lines << "\n⬆️ Upsell recommendations:"
-    upsells.each { |s| lines << "  • #{s[:name]} (#{s[:code]}) — #{format_vnd(s[:price])} | Stock: #{s[:stock]} | #{s[:reason]}" }
+    lines << "\nUpsell recommendations:"
+    upsells.each { |s| lines << " • #{s[:name]} (#{s[:code]}) — #{format_vnd(s[:price])} | Stock: #{s[:stock]} | #{s[:reason]}" }
   end
 
   def append_category_lines(lines, items)
     return if items.blank?
 
-    lines << "\n🔄 Category alternatives:"
-    items.each { |s| lines << "  • #{s[:name]} (#{s[:code]}) — #{format_vnd(s[:price])} | Stock: #{s[:stock]}" }
+    lines << "\nCategory alternatives:"
+    items.each { |s| lines << " • #{s[:name]} (#{s[:code]}) — #{format_vnd(s[:price])} | Stock: #{s[:stock]}" }
   end
 end

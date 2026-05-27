@@ -29,7 +29,7 @@ class Captain::Tools::Copilot::SapoSearchProductsService < Captain::Tools::BaseT
   def format_products(products)
     products.map do |p|
       variants_info = p['variants']&.map do |v|
-        "  - #{v['title']}: #{format_sapo_currency(v['price'])} (SKU: #{v['sku'] || 'N/A'})"
+        " - #{v['title']}: #{format_sapo_currency(v['price'])} (SKU: #{v['sku'] || 'N/A'})"
       end
       "**#{p['name']}** (ID: #{p['id']})\n#{variants_info&.join("\n") || '  No variants'}"
     end.join("\n\n")

@@ -1,5 +1,5 @@
 {
-  "name": "Shopiz Development Codespace",
+  "name": "Flowify Development Codespace",
   "service": "app",
   "dockerComposeFile": "docker-compose.yml",
   "workspaceFolder": "/workspace",

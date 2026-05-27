@@ -215,7 +215,7 @@ const orderItems = computed(() => order.value?.items || []);
               <p class="text-sm font-medium text-n-slate-12 mb-0 capitalize">
                 {{
                   order.external_source ||
-                  $t('SALES.DIALOG_ORDER_DETAIL.FALLBACKS.SHOPIZ')
+                  $t('SALES.DIALOG_ORDER_DETAIL.FALLBACKS.FLOWIFY')
                 }}
               </p>
             </div>

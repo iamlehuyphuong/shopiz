@@ -1,16 +1,16 @@
 openapi: '3.1.0'
 info:
-  title: Shopiz - Platform API
-  description: Platform API endpoints for Shopiz
+  title: Flowify - Platform API
+  description: Platform API endpoints for Flowify
   version: 1.1.0
-  termsOfService: https://www.shopiz.pro/terms-of-service/
+  termsOfService: https://www.flowify.vn/terms-of-service/
   contact:
-    email: hello@shopiz.pro
+    email: hello@flowify.vn
   license:
     name: MIT License
     url: https://opensource.org/licenses/MIT
 servers:
-  - url: https://app.shopiz.pro/
+  - url: https://app.flowify.vn/
 tags:
   - name: Accounts
     description: Platform account management
@@ -37,4 +37,4 @@ components:
       type: apiKey
       in: header
       name: api_access_token
-      description: This token can be obtained by the system admin after creating a platformApp. This token should be used to provision agent bots, accounts, users and their roles. 
+      description: This token can be obtained by the system admin after creating a platformApp. This token should be used to provision agent bots, accounts, users and their roles.

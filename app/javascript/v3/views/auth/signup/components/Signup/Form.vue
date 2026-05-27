@@ -64,9 +64,9 @@ export default {
     ...mapGetters({ globalConfig: 'globalConfig/get' }),
     termsLink() {
       return this.$t('REGISTER.TERMS_ACCEPT')
-        .replace('https://www.shopiz.pro/terms', this.globalConfig.termsURL)
+        .replace('https://www.flowify.vn/terms', this.globalConfig.termsURL)
         .replace(
-          'https://www.shopiz.pro/privacy-policy',
+          'https://www.flowify.vn/privacy-policy',
           this.globalConfig.privacyURL
         );
     },
@@ -77,12 +77,12 @@ export default {
       return true;
     },
     allowedLoginMethods() {
-      return window.shopizConfig.allowedLoginMethods || ['email'];
+      return window.flowifyConfig.allowedLoginMethods || ['email'];
     },
     showGoogleOAuth() {
       return (
         this.allowedLoginMethods.includes('google_oauth') &&
-        Boolean(window.shopizConfig.googleOAuthClientId)
+        Boolean(window.flowifyConfig.googleOAuthClientId)
       );
     },
     isFormValid() {

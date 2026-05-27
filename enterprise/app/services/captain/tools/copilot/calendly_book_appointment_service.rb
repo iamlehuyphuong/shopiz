@@ -20,7 +20,7 @@ class Captain::Tools::Copilot::CalendlyBookAppointmentService < Captain::Tools::
     tz = timezone || hook.settings['default_timezone'] || 'Asia/Ho_Chi_Minh'
 
     event_type = find_event_type_by_name(client, hook, event_type_name)
-    return "Không tìm thấy dịch vụ '#{event_type_name}' trên Calendly." unless event_type
+    return "Could not find service '#{event_type_name}' on Calendly." unless event_type
 
     response = client.create_invitee(
       event_type_uri: event_type['uri'],
@@ -45,13 +45,13 @@ class Captain::Tools::Copilot::CalendlyBookAppointmentService < Captain::Tools::
   def handle_booking_error(error, event_type_name)
     case error.status
     when 400
-      "Không thể đặt lịch '#{event_type_name}'. Lỗi API (400): #{error.body.to_json}. (Lưu ý: start_time phải đúng định dạng UTC trả về từ calendly_get_available_times)"
+      "Cannot book '#{event_type_name}'. API Error (400): #{error.body.to_json}. (Note: start_time must be the exact UTC format returned by calendly_get_available_times)"
     when 403
-      "Calendly account cần nâng cấp lên gói trả phí để sử dụng tính năng đặt lịch."
+      'Calendly account needs to be upgraded to a paid plan to use the booking feature.'
     when 429
-      "Hệ thống đang bị giới hạn do gọi API quá nhiều lần (Rate Limit). Vui lòng thử lại sau 1-2 phút."
+      'System is rate limited due to too many API calls. Please try again in 1-2 minutes.'
     else
-      "Lỗi khi đặt lịch: #{error.message} - #{error.body.to_json}"
+      "Error when booking: #{error.message} - #{error.body.to_json}"
     end
   end
 end

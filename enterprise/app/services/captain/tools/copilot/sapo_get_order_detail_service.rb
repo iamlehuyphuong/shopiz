@@ -39,7 +39,7 @@ class Captain::Tools::Copilot::SapoGetOrderDetailService < Captain::Tools::BaseT
 
   def build_header(order)
     [
-      "📋 Order ##{order['order_number']} (ID: #{order['id']})",
+      "Order ##{order['order_number']} (ID: #{order['id']})",
       "Status: #{order['status']}",
       "Financial: #{order['financial_status']}",
       "Fulfillment: #{order['fulfillment_status'] || 'unfulfilled'}",
@@ -50,29 +50,29 @@ class Captain::Tools::Copilot::SapoGetOrderDetailService < Captain::Tools::BaseT
   def build_customer(order)
     customer = order['customer'] || {}
     [
-      "\n👤 Customer:",
-      "  Name: #{customer['first_name']} #{customer['last_name']}",
-      "  Phone: #{customer['phone'] || 'N/A'}",
-      "  Email: #{customer['email'] || 'N/A'}"
+      "\nCustomer:",
+      " Name: #{customer['first_name']} #{customer['last_name']}",
+      " Phone: #{customer['phone'] || 'N/A'}",
+      " Email: #{customer['email'] || 'N/A'}"
     ]
   end
 
   def build_items(order)
     items = order['line_items'] || []
-    return ["\n📦 Items: None"] if items.blank?
+    return ["\nItems: None"] if items.blank?
 
-    lines = ["\n📦 Items (#{items.size}):"]
-    items.each { |item| lines << "  • #{item['name']} — #{format_sapo_currency(item['price'])} × #{item['quantity']}" }
+    lines = ["\nItems (#{items.size}):"]
+    items.each { |item| lines << " • #{item['name']} — #{format_sapo_currency(item['price'])} × #{item['quantity']}" }
     lines
   end
 
   def build_payment(order)
     [
-      "\n💰 Payment:",
-      "  Subtotal: #{format_sapo_currency(order['subtotal_price'])}",
-      "  Discount: #{format_sapo_currency(order['total_discounts'])}",
-      "  Shipping: #{format_sapo_currency(order['total_shipping'])}",
-      "  Total: #{format_sapo_currency(order['total_price'])}"
+      "\nPayment:",
+      " Subtotal: #{format_sapo_currency(order['subtotal_price'])}",
+      " Discount: #{format_sapo_currency(order['total_discounts'])}",
+      " Shipping: #{format_sapo_currency(order['total_shipping'])}",
+      " Total: #{format_sapo_currency(order['total_price'])}"
     ]
   end
 end

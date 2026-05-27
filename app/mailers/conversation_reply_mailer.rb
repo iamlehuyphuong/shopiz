@@ -5,7 +5,7 @@ class ConversationReplyMailer < ApplicationMailer
 
   include ConversationReplyMailerHelper
   include ReferencesHeaderBuilder
-  default from: ENV.fetch('MAILER_SENDER_EMAIL', 'Shopiz <accounts@shopiz.pro>')
+  default from: ENV.fetch('MAILER_SENDER_EMAIL', 'Flowify <accounts@flowify.vn>')
   layout :choose_layout
 
   def reply_with_summary(conversation, last_queued_id)

@@ -7,19 +7,19 @@ describe('#mutations', () => {
     it('set contact records', () => {
       const state = { records: {} };
       mutations[types.SET_CONTACTS](state, [
-        { id: 2, name: 'contact2', email: 'contact2@shopiz.pro' },
-        { id: 1, name: 'contact1', email: 'contact1@shopiz.pro' },
+        { id: 2, name: 'contact2', email: 'contact2@flowify.vn' },
+        { id: 1, name: 'contact1', email: 'contact1@flowify.vn' },
       ]);
       expect(state.records).toEqual({
         1: {
           id: 1,
           name: 'contact1',
-          email: 'contact1@shopiz.pro',
+          email: 'contact1@flowify.vn',
         },
         2: {
           id: 2,
           name: 'contact2',
-          email: 'contact2@shopiz.pro',
+          email: 'contact2@flowify.vn',
         },
       });
       expect(state.sortOrder).toEqual([2, 1]);
@@ -30,18 +30,18 @@ describe('#mutations', () => {
     it('push contact data to the store', () => {
       const state = {
         records: {
-          1: { id: 1, name: 'contact1', email: 'contact1@shopiz.pro' },
+          1: { id: 1, name: 'contact1', email: 'contact1@flowify.vn' },
         },
         sortOrder: [1],
       };
       mutations[types.SET_CONTACT_ITEM](state, {
         id: 2,
         name: 'contact2',
-        email: 'contact2@shopiz.pro',
+        email: 'contact2@flowify.vn',
       });
       expect(state.records).toEqual({
-        1: { id: 1, name: 'contact1', email: 'contact1@shopiz.pro' },
-        2: { id: 2, name: 'contact2', email: 'contact2@shopiz.pro' },
+        1: { id: 1, name: 'contact1', email: 'contact1@flowify.vn' },
+        2: { id: 2, name: 'contact2', email: 'contact2@flowify.vn' },
       });
       expect(state.sortOrder).toEqual([1, 2]);
     });
@@ -51,16 +51,16 @@ describe('#mutations', () => {
     it('update contact', () => {
       const state = {
         records: {
-          1: { id: 1, name: 'contact1', email: 'contact1@shopiz.pro' },
+          1: { id: 1, name: 'contact1', email: 'contact1@flowify.vn' },
         },
       };
       mutations[types.EDIT_CONTACT](state, {
         id: 1,
         name: 'contact2',
-        email: 'contact2@shopiz.pro',
+        email: 'contact2@flowify.vn',
       });
       expect(state.records).toEqual({
-        1: { id: 1, name: 'contact2', email: 'contact2@shopiz.pro' },
+        1: { id: 1, name: 'contact2', email: 'contact2@flowify.vn' },
       });
     });
   });

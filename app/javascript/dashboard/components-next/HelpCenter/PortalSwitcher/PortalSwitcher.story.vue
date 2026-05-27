@@ -20,7 +20,7 @@ const portals = [
     id: 3,
     name: 'Developer Documentation',
     articles: 89,
-    domain: 'dev.shopiz.pro',
+    domain: 'dev.flowify.vn',
     slug: 'docs',
   },
 ];

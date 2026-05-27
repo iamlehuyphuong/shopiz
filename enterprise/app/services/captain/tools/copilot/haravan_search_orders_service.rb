@@ -8,7 +8,6 @@ class Captain::Tools::Copilot::HaravanSearchOrdersService < Captain::Tools::Base
   description 'Search Haravan orders by customer phone, email, or order name/number'
   param :query, type: :string, desc: 'Customer phone, email, or order name to search'
 
-
   def active?
     haravan_active?
   end
@@ -52,11 +51,11 @@ class Captain::Tools::Copilot::HaravanSearchOrdersService < Captain::Tools::Base
   def format_order(order)
     [
       "Order #{order['name'] || "##{order['id']}"}",
-      "  Customer: #{order.dig('customer', 'first_name')} #{order.dig('customer', 'last_name')}".strip,
-      "  Total: #{order['total_price']} #{order['currency']}",
-      "  Payment: #{order['financial_status']}",
-      "  Fulfillment: #{order['fulfillment_status'] || 'unfulfilled'}",
-      "  Date: #{order['created_at']}"
+      " Customer: #{order.dig('customer', 'first_name')} #{order.dig('customer', 'last_name')}".strip,
+      " Total: #{order['total_price']} #{order['currency']}",
+      " Payment: #{order['financial_status']}",
+      " Fulfillment: #{order['fulfillment_status'] || 'unfulfilled'}",
+      " Date: #{order['created_at']}"
     ].join("\n")
   end
 end

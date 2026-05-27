@@ -4,8 +4,8 @@ const commit = vi.fn();
 describe('#actions', () => {
   describe('#setReferrerHost', () => {
     it('creates actions properly', () => {
-      actions.setReferrerHost({ commit }, 'shopiz.pro');
-      expect(commit.mock.calls).toEqual([['SET_REFERRER_HOST', 'shopiz.pro']]);
+      actions.setReferrerHost({ commit }, 'flowify.vn');
+      expect(commit.mock.calls).toEqual([['SET_REFERRER_HOST', 'flowify.vn']]);
     });
   });
 

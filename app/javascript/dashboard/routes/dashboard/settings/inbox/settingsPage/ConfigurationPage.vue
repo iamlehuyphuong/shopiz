@@ -53,7 +53,7 @@ export default {
       return this.inbox.provider_config?.source === 'embedded_signup';
     },
     whatsappAppId() {
-      return window.shopizConfig?.whatsappAppId;
+      return window.flowifyConfig?.whatsappAppId;
     },
     isForwardingEnabled() {
       return !!this.inbox.forwarding_enabled;
@@ -215,7 +215,13 @@ export default {
       :label="$t('INBOX_MGMT.SETTINGS_POPUP.PROXY_CONFIGURATION.TITLE')"
       :help-text="$t('INBOX_MGMT.SETTINGS_POPUP.PROXY_CONFIGURATION.SUBTITLE')"
     >
-      <woot-code :script="inbox.provider_config?.proxy_used || $t('INBOX_MGMT.SETTINGS_POPUP.PROXY_CONFIGURATION.NO_PROXY')" lang="text" />
+      <woot-code
+        :script="
+          inbox.provider_config?.proxy_used ||
+          $t('INBOX_MGMT.SETTINGS_POPUP.PROXY_CONFIGURATION.NO_PROXY')
+        "
+        lang="text"
+      />
       <p class="mt-2 text-sm text-n-slate-11">
         {{ $t('INBOX_MGMT.SETTINGS_POPUP.PROXY_CONFIGURATION.HELP') }}
       </p>
@@ -279,7 +285,7 @@ export default {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://www.shopiz.pro/docs/product/channels/live-chat/sdk/identity-validation/"
+              href="https://www.flowify.vn/docs/product/channels/live-chat/sdk/identity-validation/"
               class="text-n-orange-11 hover:underline text-label-small"
             >
               {{

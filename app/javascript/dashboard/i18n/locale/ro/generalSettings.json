@@ -123,11 +123,11 @@
         "CUSTOM_EMAIL_DOMAIN_ENABLED": "Puteți primi e-mailuri în domeniul dvs. personalizat acum."
       }
     },
-    "UPDATE_CHATWOOT": "Este disponibilă o actualizare {latestShopizVersion} pentru Shopiz. Vă rugăm să actualizați instanța.",
+    "UPDATE_CHATWOOT": "Este disponibilă o actualizare {latestFlowifyVersion} pentru Flowify. Vă rugăm să actualizați instanța.",
     "LEARN_MORE": "Află mai mult",
-    "PAYMENT_PENDING": "Plata dvs. este în așteptare. Vă rugăm să actualizați informațiile de plată pentru a continua să utilizați Shopiz",
-    "UPGRADE": "Upgrade to continue using Shopiz",
-    "LIMITS_UPGRADE": "Contul dvs. a depășit limitele de utilizare, vă rugăm să vă actualizați planul pentru a continua să utilizați Shopiz",
+    "PAYMENT_PENDING": "Plata dvs. este în așteptare. Vă rugăm să actualizați informațiile de plată pentru a continua să utilizați Flowify",
+    "UPGRADE": "Upgrade to continue using Flowify",
+    "LIMITS_UPGRADE": "Contul dvs. a depășit limitele de utilizare, vă rugăm să vă actualizați planul pentru a continua să utilizați Flowify",
     "OPEN_BILLING": "Deschide facturarea"
   },
   "FORMS": {

@@ -22,7 +22,7 @@ RSpec.describe 'Devise::Mailer' do
         it 'shows welcome message' do
           token = confirmable_user.instance_variable_get(:@raw_confirmation_token) || confirmable_user.confirmation_token
           mail = Devise::Mailer.confirmation_instructions(confirmable_user.reload, token, {})
-          expect(mail.body.to_s).to include('Welcome to Shopiz!')
+          expect(mail.body.to_s).to include('Welcome to Flowify!')
         end
 
         it 'shows confirmation link' do
@@ -54,7 +54,7 @@ RSpec.describe 'Devise::Mailer' do
         it 'shows welcome message and verify email button' do
           token = confirmable_user.instance_variable_get(:@raw_confirmation_token) || confirmable_user.confirmation_token
           mail = Devise::Mailer.confirmation_instructions(confirmable_user.reload, token, {})
-          expect(mail.body.to_s).to include('Welcome to Shopiz!')
+          expect(mail.body.to_s).to include('Welcome to Flowify!')
           expect(mail.body.to_s).to include('Verify Email')
         end
 

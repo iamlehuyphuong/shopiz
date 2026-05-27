@@ -37,7 +37,7 @@
       },
       "INTERFACE_SECTION": {
         "TITLE": "Giao diện",
-        "NOTE": "Tùy chỉnh giao diện và trải nghiệm của bảng điều khiển Shopiz.",
+        "NOTE": "Tùy chỉnh giao diện và trải nghiệm của bảng điều khiển Flowify.",
         "FONT_SIZE": {
           "TITLE": "Kích thước chữ",
           "NOTE": "Điều chỉnh kích thước chữ trên toàn bộ bảng điều khiển theo nhu cầu của bạn.",
@@ -582,7 +582,7 @@
     "ACTIVE": "Đang hoạt động",
     "COMPANIES": "Công ty",
     "ALL_COMPANIES": "Tất cả công ty",
-    "CAPTAIN": "ShopizAI",
+    "CAPTAIN": "FlowifyAI",
     "CAPTAIN_ASSISTANTS": "Trợ lý",
     "CAPTAIN_DOCUMENTS": "Tài liệu",
     "CAPTAIN_RESPONSES": "FAQ",
@@ -666,18 +666,18 @@
     },
     "DOCS": "Xem tài liệu",
     "SECURITY": "Bảo mật",
-    "CAPTAIN_AI": "ShopizAI",
+    "CAPTAIN_AI": "FlowifyAI",
     "CONVERSATION_WORKFLOW": "Quy trình hội thoại"
   },
   "DATABASE": {
     "LOADING": "Đang tải dữ liệu..."
   },
   "CAPTAIN_SETTINGS": {
-    "TITLE": "Cài đặt ShopizAI",
-    "DESCRIPTION": "Cấu hình các mô hình AI và tính năng cho ShopizAI. ShopizAI sử dụng hệ thống tính phí dựa trên tín dụng, bạn sẽ bị tính tín dụng cho mỗi hành động ShopizAI thực hiện dựa trên mô hình đã chọn.",
-    "LOADING": "Đang tải cấu hình ShopizAI...",
-    "LINK_TEXT": "Tìm hiểu thêm về Tín dụng ShopizAI",
-    "NOT_ENABLED": "ShopizAI chưa được bật cho tài khoản của bạn. Vui lòng nâng cấp gói để truy cập các tính năng của ShopizAI.",
+    "TITLE": "Cài đặt FlowifyAI",
+    "DESCRIPTION": "Cấu hình các mô hình AI và tính năng cho FlowifyAI. FlowifyAI sử dụng hệ thống tính phí dựa trên tín dụng, bạn sẽ bị tính tín dụng cho mỗi hành động FlowifyAI thực hiện dựa trên mô hình đã chọn.",
+    "LOADING": "Đang tải cấu hình FlowifyAI...",
+    "LINK_TEXT": "Tìm hiểu thêm về Tín dụng FlowifyAI",
+    "NOT_ENABLED": "FlowifyAI chưa được bật cho tài khoản của bạn. Vui lòng nâng cấp gói để truy cập các tính năng của FlowifyAI.",
     "MODEL_CONFIG": {
       "TITLE": "Cấu hình mô hình",
       "DESCRIPTION": "Chọn mô hình AI cho các tính năng khác nhau.",
@@ -716,8 +716,8 @@
       }
     },
     "API": {
-      "SUCCESS": "Đã cập nhật cài đặt ShopizAI thành công.",
-      "ERROR": "Không thể cập nhật cấu hình ShopizAI. Vui lòng thử lại."
+      "SUCCESS": "Đã cập nhật cài đặt FlowifyAI thành công.",
+      "ERROR": "Không thể cập nhật cấu hình FlowifyAI. Vui lòng thử lại."
     }
   },
   "BILLING_SETTINGS": {
@@ -737,9 +737,9 @@
       "CONTACT": "Danh bạ",
       "AUTOMATION": "Tự động hoá",
       "AI_RESOURCE": "Tài nguyên AI",
-      "AI_DOCUMENT": "Tài liệu ShopizAI",
-      "AI_FAQ": "FAQ ShopizAI",
-      "AI_ASSISTANT": "Trợ lý ShopizAI",
+      "AI_DOCUMENT": "Tài liệu FlowifyAI",
+      "AI_FAQ": "FAQ FlowifyAI",
+      "AI_ASSISTANT": "Trợ lý FlowifyAI",
       "AI_RESPONSE": "Tin nhắn AI mỗi tháng",
       "AI_RESPONSE_CREDIT": "Tín dụng AI vĩnh viễn",
       "LIMITATION_TITLE": "Giới hạn tài nguyên",
@@ -783,7 +783,7 @@
     "TOPUP": {
       "BUY_CREDITS": "Mua thêm tín dụng",
       "MODAL_TITLE": "Mua tín dụng AI",
-      "MODAL_DESCRIPTION": "Mua thêm tín dụng cho ShopizAI.",
+      "MODAL_DESCRIPTION": "Mua thêm tín dụng cho FlowifyAI.",
       "CREDITS": "TÍN DỤNG",
       "ONE_TIME": "Một lần",
       "POPULAR": "Phổ biến nhất",
@@ -834,10 +834,10 @@
           "INBOXES": "{count} Hộp thư",
           "CONTACTS": "{count} Liên hệ",
           "AUTOMATIONS": "{count} Quy tắc tự động",
-          "CAPTAIN_ASSISTANTS": "{count} Trợ lý ShopizAI",
-          "CAPTAIN_DOCUMENTS": "{count} Tài liệu ShopizAI",
-          "CAPTAIN_FAQS": "{count} FAQs ShopizAI",
-          "CAPTAIN_RESPONSES": "{count} Phản hồi ShopizAI"
+          "CAPTAIN_ASSISTANTS": "{count} Trợ lý FlowifyAI",
+          "CAPTAIN_DOCUMENTS": "{count} Tài liệu FlowifyAI",
+          "CAPTAIN_FAQS": "{count} FAQs FlowifyAI",
+          "CAPTAIN_RESPONSES": "{count} Phản hồi FlowifyAI"
         },
         "CHANNELS": {
           "WEBSITE": "Website",
@@ -901,8 +901,8 @@
       "COPY_SUCCESS": "Đã sao chép vào clipboard",
       "SP_ENTITY_ID": {
         "LABEL": "SP Entity ID",
-        "HELP": "Mã định danh duy nhất của Shopiz với vai trò Service Provider.",
-        "TOOLTIP": "Định danh duy nhất của Shopiz với tư cách Nhà cung cấp Dịch vụ"
+        "HELP": "Mã định danh duy nhất của Flowify với vai trò Service Provider.",
+        "TOOLTIP": "Định danh duy nhất của Flowify với tư cách Nhà cung cấp Dịch vụ"
       },
       "IDP_ENTITY_ID": {
         "LABEL": "Định danh IdP",
@@ -997,7 +997,7 @@
     }
   },
   "CREATE_ACCOUNT": {
-    "NO_ACCOUNT_WARNING": "Không tìm thấy tài khoản Shopiz. Vui lòng tạo tài khoản mới để tiếp tục.",
+    "NO_ACCOUNT_WARNING": "Không tìm thấy tài khoản Flowify. Vui lòng tạo tài khoản mới để tiếp tục.",
     "NEW_ACCOUNT": "Tạo tài khoản mới",
     "SELECTOR_SUBTITLE": "Tạo tài khoản mới",
     "API": {
