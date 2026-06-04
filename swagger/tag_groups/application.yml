@@ -1,16 +1,16 @@
 openapi: '3.1.0'
 info:
-  title: Flowify - Application API
-  description: Application API endpoints for Flowify
+  title: Shopiz - Application API
+  description: Application API endpoints for Shopiz
   version: 1.1.0
-  termsOfService: https://www.flowify.vn/terms-of-service/
+  termsOfService: https://www.shopiz.pro/terms-of-service/
   contact:
-    email: hello@flowify.vn
+    email: hello@shopiz.pro
   license:
     name: MIT License
     url: https://opensource.org/licenses/MIT
 servers:
-  - url: https://app.flowify.vn/
+  - url: https://app.shopiz.pro/
 tags:
   - name: Account AgentBots
     description: Manage agent bots within accounts

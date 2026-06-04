@@ -37,8 +37,8 @@ class Captain::Tools::Copilot::SearchLinearIssuesService < Captain::Tools::BaseT
       ID: #{issue['id']}
       State: #{issue['state']['name']}
       Priority: #{format_priority(issue['priority'])}
-      #{issue['assignee'] ? "Assignee: #{issue['assignee']['name']}": 'Assignee: Unassigned'}
-      #{issue['description'].present? ? "\nDescription: #{issue['description']}": ''}
+      #{issue['assignee'] ? "Assignee: #{issue['assignee']['name']}" : 'Assignee: Unassigned'}
+      #{issue['description'].present? ? "\nDescription: #{issue['description']}" : ''}
     ISSUE
   end
 

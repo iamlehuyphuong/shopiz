@@ -1,10 +1,10 @@
 company:
-  name: 'Flowify'
-  domain: 'flowify.vn'
+  name: 'Shopiz'
+  domain: 'shopiz.test'
 users:
   - name: 'Nguyễn Văn Minh'
     gender: male
-    email: 'michael_scott@flowify.vn'
+    email: 'michael_scott@shopiz.test'
     team:
       - 'Kinh doanh'
       - 'Quản lý'
@@ -13,169 +13,169 @@ users:
     role: 'administrator'
   - name: 'Trần Quốc Dũng'
     gender: male
-    email: 'david@flowify.vn'
+    email: 'david@shopiz.test'
     team:
       - 'Quản lý'
   - name: 'Phạm Văn Hùng'
     gender: male
-    email: 'deangelo@flowify.vn'
+    email: 'deangelo@shopiz.test'
     team:
       - 'Quản lý'
   - name: 'Lê Thị Mai'
     gender: female
-    email: 'jo@flowify.vn'
+    email: 'jo@shopiz.test'
     team:
       - 'Quản lý'
   - name: 'Ngô Minh Tuấn'
     gender: male
-    email: 'josh@flowify.vn'
+    email: 'josh@shopiz.test'
     team:
       - 'Quản lý'
   - name: 'Đỗ Quang Khải'
     gender: male
-    email: 'charles@flowify.vn'
+    email: 'charles@shopiz.test'
     team:
       - 'Quản lý'
   - name: 'Vũ Văn Thành'
     gender: male
-    email: 'ed@flowify.vn'
+    email: 'ed@shopiz.test'
     team:
       - 'Quản lý'
   - name: 'Bùi Đức Anh'
     gender: male
-    email: 'dan@flowify.vn'
+    email: 'dan@shopiz.test'
     team:
       - 'Quản lý'
   - name: 'Nguyễn Văn Cường'
     gender: male
-    email: 'craig@flowify.vn'
+    email: 'craig@shopiz.test'
     team:
       - 'Quản lý'
   - name: 'Trịnh Văn Hòa'
     gender: male
-    email: 'troy@flowify.vn'
+    email: 'troy@shopiz.test'
     team:
       - 'Quản lý'
   - name: 'Nguyễn Thị Hương'
     gender: female
-    email: 'karn@flowify.vn'
+    email: 'karn@shopiz.test'
     team:
       - 'Kinh doanh'
     custom_role: 'Nhân viên Kinh doanh'
   - name: 'Phạm Thị Lan'
     gender: female
-    email: 'danny@flowify.vn'
+    email: 'danny@shopiz.test'
     team:
       - 'Kinh doanh'
     custom_role: 'Trưởng nhóm Hỗ trợ Khách hàng'
   - name: 'Lê Văn Bình'
     gender: male
-    email: 'ben@flowify.vn'
+    email: 'ben@shopiz.test'
     team:
       - 'Kinh doanh'
     custom_role: 'Nhân viên Mới'
   - name: 'Trần Văn Phúc'
     gender: male
-    email: 'todd@flowify.vn'
+    email: 'todd@shopiz.test'
     team:
       - 'Kinh doanh'
     custom_role: 'Nhân viên Kinh doanh'
   - name: 'Vũ Thị Mai'
     gender: female
-    email: 'cathy@flowify.vn'
+    email: 'cathy@shopiz.test'
     team:
       - 'Hành chính'
     custom_role: 'Quản lý Kiến thức'
   - name: 'Nguyễn Văn Hoàng'
     gender: male
-    email: 'hunter@flowify.vn'
+    email: 'hunter@shopiz.test'
     team:
       - 'Hành chính'
     custom_role: 'Chuyên viên Phân tích'
   - name: 'Phan Văn Quang'
     gender: male
-    email: 'rolando@flowify.vn'
+    email: 'rolando@shopiz.test'
     team:
       - 'Hành chính'
     custom_role: 'Nhân viên Mới'
   - name: 'Trần Thị Thu'
     gender: female
-    email: 'stephanie@flowify.vn'
+    email: 'stephanie@shopiz.test'
     team:
       - 'Hành chính'
     custom_role: 'Nhân viên Xử lý Leo thang'
   - name: 'Đặng Văn Nam'
     gender: male
-    email: 'jorodan@flowify.vn'
+    email: 'jorodan@shopiz.test'
     team:
       - 'Hành chính'
   - name: 'Lý Văn Sơn'
     gender: male
-    email: 'ronni@flowify.vn'
+    email: 'ronni@shopiz.test'
     team:
       - 'Hành chính'
   - name: 'Nguyễn Thị Loan'
     gender: female
-    email: 'lonny@flowify.vn'
+    email: 'lonny@shopiz.test'
     team:
       - 'Kho'
     custom_role: 'Trưởng nhóm Hỗ trợ Khách hàng'
   - name: 'Phạm Thị Ngọc'
     gender: female
-    email: 'madge@flowify.vn'
+    email: 'madge@shopiz.test'
     team:
       - 'Kho'
   - name: 'Trần Thị Hạnh'
     gender: female
-    email: 'glenn@flowify.vn'
+    email: 'glenn@shopiz.test'
     team:
       - 'Kho'
   - name: 'Nguyễn Văn Duy'
     gender: male
-    email: 'jerry@flowify.vn'
+    email: 'jerry@shopiz.test'
     team:
       - 'Kho'
   - name: 'Lê Văn Phát'
     gender: male
-    email: 'phillip@flowify.vn'
+    email: 'phillip@shopiz.test'
     team:
       - 'Kho'
   - name: 'Phạm Minh Quân'
     gender: male
-    email: 'michale_josh@flowify.vn'
+    email: 'michale_josh@shopiz.test'
     team:
       - 'Kho'
   - name: 'Ngô Văn Hải'
     gender: male
-    email: 'matt@flowify.vn'
+    email: 'matt@shopiz.test'
     team:
       - 'Kho'
   - name: 'Đỗ Văn Kiên'
     gender: male
-    email: 'gideon@flowify.vn'
+    email: 'gideon@shopiz.test'
     team:
       - 'Kho'
   - name: 'Trần Văn Bảo'
     gender: male
-    email: 'bruce@flowify.vn'
+    email: 'bruce@shopiz.test'
     team:
       - 'Kho'
   - name: 'Nguyễn Văn Phong'
     gender: male
-    email: 'frank@flowify.vn'
+    email: 'frank@shopiz.test'
     team:
       - 'Kho'
   - name: 'Lê Thị Kim'
     gender: female
-    email: 'louanne@flowify.vn'
+    email: 'louanne@shopiz.test'
   - name: 'Phan Văn Đức'
     gender: male
-    email: 'devon@flowify.vn'
+    email: 'devon@shopiz.test'
     custom_role: 'Nhân viên Xử lý Leo thang'
   - name: 'Vũ Minh Khánh'
     gender: male
-    email: 'kendall@flowify.vn'
-  - email: 'sadiq@flowify.vn'
+    email: 'kendall@shopiz.test'
+  - email: 'sadiq@shopiz.test'
     name: 'Sadiq'
     gender: male
 teams:
@@ -217,27 +217,27 @@ custom_roles:
       - 'conversation_participating_manage'
       - 'contact_manage'
 labels:
-  - title: 'billing'
-    color: '#28AD21'
-    show_on_sidebar: true
-  - title: 'software'
-    color: '#8F6EF2'
-    show_on_sidebar: true
-  - title: 'delivery'
-    color: '#A2FDD5'
-    show_on_sidebar: true
-  - title: 'ops-handover'
-    color: '#A53326'
-    show_on_sidebar: true
-  - title: 'premium-customer'
-    color: '#6FD4EF'
-    show_on_sidebar: true
-  - title: 'lead'
-    color: '#F161C8'
-    show_on_sidebar: true
+    - title: 'billing'
+      color: '#28AD21'
+      show_on_sidebar: true
+    - title: 'software'
+      color: '#8F6EF2'
+      show_on_sidebar: true
+    - title: 'delivery'
+      color: '#A2FDD5'
+      show_on_sidebar: true
+    - title: 'ops-handover'
+      color: '#A53326'
+      show_on_sidebar: true
+    - title: 'premium-customer'
+      color: '#6FD4EF'
+      show_on_sidebar: true
+    - title: 'lead'
+      color: '#F161C8'
+      show_on_sidebar: true
 contacts:
-  - name: 'Nguyễn Thị Lệ'
-    email: 'ltrosdall0@bravesites.test'
+  - name: "Nguyễn Thị Lệ"
+    email: "ltrosdall0@bravesites.test"
     gender: 'female'
     conversations:
       - channel: Channel::WebWidget
@@ -245,10 +245,10 @@ contacts:
           - message_type: incoming
             content: Xin chào, tôi gặp khó khăn khi đăng nhập vào tài khoản của mình.
           - message_type: outgoing
-            sender: michael_scott@flowify.vn
+            sender: michael_scott@shopiz.test
             content: Xin chào! Rất tiếc về sự cố này. Bạn vui lòng cung cấp tên người dùng và địa chỉ email để tôi kiểm tra giúp bạn nhé?
-  - name: 'Trần Thị Hồng'
-    email: 'tcloughton1@newyorker.test'
+  - name: "Trần Thị Hồng"
+    email: "tcloughton1@newyorker.test"
     gender: 'female'
     conversations:
       - channel: Channel::FacebookPage
@@ -256,10 +256,10 @@ contacts:
           - message_type: incoming
             content: Xin chào, tôi cần hỗ trợ về bảng sao kê thanh toán.
           - message_type: outgoing
-            sender: michael_scott@flowify.vn
+            sender: michael_scott@shopiz.test
             content: Xin chào! Tôi rất sẵn lòng hỗ trợ bạn. Bạn vui lòng cho biết bạn đang nói đến bảng sao kê nào nhé?
-  - name: 'Lê Thị Mai'
-    email: 'mkeatch2@reuters.test'
+  - name: "Lê Thị Mai"
+    email: "mkeatch2@reuters.test"
     gender: 'female'
     conversations:
       - channel: Channel::TwitterProfile
@@ -267,45 +267,45 @@ contacts:
           - message_type: incoming
             content: Xin chào, tôi nghĩ mình đã xóa nhầm một số tệp quan trọng. Bạn có thể giúp tôi khôi phục không?
           - message_type: outgoing
-            sender: michael_scott@flowify.vn
+            sender: michael_scott@shopiz.test
             content: Tất nhiên! Bạn vui lòng cho biết loại tệp và vị trí lưu trữ trên thiết bị để tôi hỗ trợ nhé?
-  - name: 'Phạm Văn Hùng'
-    email: 'ocanniffe3@feedburner.test'
+  - name: "Phạm Văn Hùng"
+    email: "ocanniffe3@feedburner.test"
     gender: 'male'
     conversations:
       - channel: Channel::Whatsapp
-        source_id: '123456723'
+        source_id: "123456723"
         messages:
           - message_type: incoming
             content: Xin chào, tôi gặp sự cố khi kết nối Internet.
           - message_type: outgoing
-            sender: michael_scott@flowify.vn
+            sender: michael_scott@shopiz.test
             content: Tôi rất tiếc về sự cố này. Bạn đã thử khởi động lại modem/router chưa? Nếu vẫn không được, vui lòng báo lại để tôi hỗ trợ thêm.
-  - name: 'Ngô Thị Thu'
-    email: 'vcorp4@instagram.test'
+  - name: "Ngô Thị Thu"
+    email: "vcorp4@instagram.test"
     gender: 'female'
     conversations:
       - channel: Channel::Sms
-        source_id: '+1234567'
+        source_id: "+1234567"
         messages:
           - message_type: incoming
             content: Xin chào, tôi gặp sự cố với ứng dụng di động. Ứng dụng liên tục bị treo.
           - message_type: outgoing
-            sender: michael_scott@flowify.vn
+            sender: michael_scott@shopiz.test
             content: Tôi rất tiếc về sự cố này. Bạn vui lòng thử gỡ cài đặt và cài lại ứng dụng xem có khắc phục được không? Nếu không, hãy báo lại để tôi kiểm tra thêm nhé.
-  - name: 'Đặng Văn Nam'
-    email: 'dpittway5@chron.test'
+  - name: "Đặng Văn Nam"
+    email: "dpittway5@chron.test"
     gender: 'male'
     conversations:
-      - channel: Channel::Line
-        messages:
-          - message_type: incoming
-            content: Xin chào, tôi đang cố cập nhật thông tin tài khoản nhưng không lưu được.
-          - message_type: outgoing
-            sender: michael_scott@flowify.vn
-            content: Xin lỗi vì sự bất tiện này. Bạn vui lòng cho biết thông tin cụ thể bạn muốn cập nhật và thông báo lỗi nhận được nhé?
-  - name: 'Vũ Minh Khánh'
-    email: 'kcrawley6@narod.ru'
+    - channel: Channel::Line
+      messages:
+        - message_type: incoming
+          content: Xin chào, tôi đang cố cập nhật thông tin tài khoản nhưng không lưu được.
+        - message_type: outgoing
+          sender: michael_scott@shopiz.test
+          content: Xin lỗi vì sự bất tiện này. Bạn vui lòng cho biết thông tin cụ thể bạn muốn cập nhật và thông báo lỗi nhận được nhé?
+  - name: "Vũ Minh Khánh"
+    email: "kcrawley6@narod.ru"
     gender: 'male'
     conversations:
       - channel: Channel::WebWidget
@@ -313,10 +313,10 @@ contacts:
           - message_type: incoming
             content: Xin chào, tôi cần hỗ trợ thiết lập thiết bị mới.
           - message_type: outgoing
-            sender: michael_scott@flowify.vn
+            sender: michael_scott@shopiz.test
             content: Không vấn đề gì! Bạn vui lòng cho biết hãng và model thiết bị, cũng như bạn cần hỗ trợ gì cụ thể nhé?
-  - name: 'Nguyễn Văn Duy'
-    email: 'bcusworth7@arstechnica.test'
+  - name: "Nguyễn Văn Duy"
+    email: "bcusworth7@arstechnica.test"
     gender: 'male'
     conversations:
       - channel: Channel::TwitterProfile
@@ -324,34 +324,34 @@ contacts:
           - message_type: incoming
             content: Xin chào, tôi lỡ đặt nhầm sản phẩm. Tôi có thể hủy đơn hàng không?
           - message_type: outgoing
-            sender: michael_scott@flowify.vn
+            sender: michael_scott@shopiz.test
             content: Tôi rất tiếc về sự cố này. Bạn vui lòng cung cấp mã đơn hàng để tôi kiểm tra và hỗ trợ hủy giúp bạn nhé?
-  - name: 'Trần Văn Bảo'
-    email: 'cjira8@comcast.net'
+  - name: "Trần Văn Bảo"
+    email: "cjira8@comcast.net"
     gender: 'male'
     conversations:
       - channel: Channel::Whatsapp
-        source_id: '12323432'
+        source_id: "12323432"
         messages:
           - message_type: incoming
             content: Xin chào, tôi gặp sự cố với email. Tôi không thể gửi hoặc nhận thư.
           - message_type: outgoing
-            sender: michael_scott@flowify.vn
+            sender: michael_scott@shopiz.test
             content: Tôi rất tiếc về sự cố này. Bạn vui lòng cho biết bạn đang dùng ứng dụng email nào và có nhận được thông báo lỗi gì không?
-  - name: 'Lý Thị Hạnh'
-    email: 'qdalliston9@zimbio.test'
+  - name: "Lý Thị Hạnh"
+    email: "qdalliston9@zimbio.test"
     gender: 'male'
     conversations:
       - channel: Channel::Whatsapp
-        source_id: '12342234324'
+        source_id: "12342234324"
         messages:
           - message_type: incoming
             content: Xin chào, tôi cần hỗ trợ đặt lại mật khẩu.
           - message_type: outgoing
-            sender: michael_scott@flowify.vn
+            sender: michael_scott@shopiz.test
             content: Được thôi! Bạn vui lòng cung cấp tên đăng nhập hoặc email để tôi gửi liên kết đặt lại mật khẩu nhé?
-  - name: 'Phạm Thị Lan'
-    email: 'cmewetta@home.pl'
+  - name: "Phạm Thị Lan"
+    email: "cmewetta@home.pl"
     gender: 'female'
     conversations:
       - channel: Channel::FacebookPage
@@ -359,10 +359,10 @@ contacts:
           - message_type: incoming
             content: Xin chào, tôi nghĩ ai đó đã truy cập trái phép vào tài khoản của tôi. Tôi nên làm gì?
           - message_type: outgoing
-            sender: michael_scott@flowify.vn
+            sender: michael_scott@shopiz.test
             content: Tôi rất tiếc khi nghe điều này. Bạn hãy đổi mật khẩu ngay lập tức và bật xác thực hai yếu tố nếu chưa làm. Tôi cũng có thể hỗ trợ bạn kiểm tra hoạt động tài khoản nếu cần.
-  - name: 'Nguyễn Văn Phúc'
-    email: 'bjanewayb@ustream.tv'
+  - name: "Nguyễn Văn Phúc"
+    email: "bjanewayb@ustream.tv"
     gender: 'male'
     conversations:
       - channel: Channel::Line
@@ -370,59 +370,59 @@ contacts:
           - message_type: incoming
             content: Xin chào, tôi có câu hỏi về các tính năng của sản phẩm.
           - message_type: outgoing
-            sender: michael_scott@flowify.vn
+            sender: michael_scott@shopiz.test
             content: Dĩ nhiên! Bạn quan tâm đến tính năng nào của sản phẩm?
-  - name: 'Đỗ Thị Kim'
-    email: 'cdalinderc@msn.test'
+  - name: "Đỗ Thị Kim"
+    email: "cdalinderc@msn.test"
     gender: 'male'
     conversations:
       - channel: Channel::Email
-        source_id: 'cdalinderc@msn.test'
+        source_id: "cdalinderc@msn.test"
         messages:
           - message_type: incoming
             content: Xin chào, tôi cần hỗ trợ cài đặt máy in mới.
           - message_type: outgoing
-            sender: michael_scott@flowify.vn
+            sender: michael_scott@shopiz.test
             content: Không vấn đề gì! Bạn vui lòng cho biết hãng và model máy in, cũng như thiết bị bạn sẽ kết nối để tôi hỗ trợ nhé?
-  - name: 'Lê Thị Hương'
-    email: 'mpetrukd@wunderground.test'
+  - name: "Lê Thị Hương"
+    email: "mpetrukd@wunderground.test"
     gender: 'female'
     conversations:
       - channel: Channel::Email
-        source_id: 'mpetrukd@wunderground.test'
+        source_id: "mpetrukd@wunderground.test"
         priority: urgent
         messages:
           - message_type: incoming
             content: Xin chào, tôi gặp khó khăn khi truy cập tệp đã chia sẻ với người khác.
           - message_type: outgoing
-            sender: michael_scott@flowify.vn
+            sender: michael_scott@shopiz.test
             content: Tôi rất tiếc về sự cố này. Bạn vui lòng cho biết tệp nào bạn không truy cập được và bạn đã chia sẻ với ai? Tôi sẽ cố gắng giúp bạn lấy lại quyền truy cập.
-  - name: 'Trần Văn Cường'
-    email: 'nvannuchie@photobucket.test'
+  - name: "Trần Văn Cường"
+    email: "nvannuchie@photobucket.test"
     gender: 'male'
     conversations:
       - channel: Channel::FacebookPage
         priority: high
         messages:
           - message_type: incoming
-            content: 'Chào bạn, tôi cần hỗ trợ về thanh toán, thẻ của tôi không hoạt động trên website.'
-  - name: 'Ngô Thị Mai'
-    email: 'oolenchenkof@bluehost.test'
+            content: "Chào bạn, tôi cần hỗ trợ về thanh toán, thẻ của tôi không hoạt động trên website."
+  - name: "Ngô Thị Mai"
+    email: "oolenchenkof@bluehost.test"
     gender: 'female'
     conversations:
       - channel: Channel::WebWidget
         priority: high
-        assignee: michael_scott@flowify.vn
+        assignee: michael_scott@shopiz.test
         messages:
           - message_type: incoming
-            content: 'Phần thanh toán không hoạt động, hệ thống báo lỗi.'
-  - name: 'Phạm Văn Quang'
-    email: 'ederingtong@printfriendly.test'
+            content: "Phần thanh toán không hoạt động, hệ thống báo lỗi."
+  - name: "Phạm Văn Quang"
+    email: "ederingtong@printfriendly.test"
     gender: 'female'
     conversations:
       - channel: Channel::Whatsapp
         priority: high
-        source_id: '1223423567'
+        source_id: "1223423567"
         labels:
           - billing
           - delivery
@@ -430,9 +430,9 @@ contacts:
           - premium-customer
         messages:
           - message_type: incoming
-            content: 'Chào bạn, tôi chưa nhận được sản phẩm nhưng hệ thống báo đã giao hàng. Vui lòng kiểm tra giúp tôi.'
-  - name: 'Lê Văn Bình'
-    email: 'wcasteloth@exblog.jp'
+            content: "Chào bạn, tôi chưa nhận được sản phẩm nhưng hệ thống báo đã giao hàng. Vui lòng kiểm tra giúp tôi."
+  - name: "Lê Văn Bình"
+    email: "wcasteloth@exblog.jp"
     gender: 'male'
     conversations:
       - channel: Channel::WebWidget
@@ -442,90 +442,90 @@ contacts:
           - ops-handover
         messages:
           - message_type: incoming
-            content: 'Chào bạn, tôi cần hỗ trợ về sản phẩm, nút bấm trên website không hoạt động.'
-  - name: 'Nguyễn Thị Hạnh'
-    email: 'ofolkardi@taobao.test'
+            content: "Chào bạn, tôi cần hỗ trợ về sản phẩm, nút bấm trên website không hoạt động."
+  - name: "Nguyễn Thị Hạnh"
+    email: "ofolkardi@taobao.test"
     gender: 'female'
     conversations:
       - channel: Channel::WebWidget
         priority: low
-        assignee: michael_scott@flowify.vn
+        assignee: michael_scott@shopiz.test
         labels:
           - billing
           - software
           - lead
         messages:
           - message_type: incoming
-            content: 'Chào bạn, thẻ của tôi không hoạt động trên website. Xin hãy giúp tôi.'
-  - name: 'Đặng Thị Hoa'
-    email: 'cmathersonj@va.test'
+            content: "Chào bạn, thẻ của tôi không hoạt động trên website. Xin hãy giúp tôi."
+  - name: "Đặng Thị Hoa"
+    email: "cmathersonj@va.test"
     gender: 'female'
     conversations:
       - channel: Channel::Email
         priority: urgent
-        source_id: 'cmathersonj@va.test'
-        assignee: michael_scott@flowify.vn
+        source_id: "cmathersonj@va.test"
+        assignee: michael_scott@shopiz.test
         labels:
           - billing
           - lead
         messages:
           - message_type: incoming
-            content: 'Chào bạn, tôi muốn được tư vấn để biết sản phẩm này có phù hợp với tôi không.'
+            content: "Chào bạn, tôi muốn được tư vấn để biết sản phẩm này có phù hợp với tôi không."
           - message_type: outgoing
-            sender: michael_scott@flowify.vn
-            content: Chào mừng bạn đến với Flowify. Đội ngũ của chúng tôi sẽ liên hệ lại với bạn sớm nhất.
+            sender: michael_scott@shopiz.test
+            content: Chào mừng bạn đến với Shopiz. Đội ngũ của chúng tôi sẽ liên hệ lại với bạn sớm nhất.
           - message_type: outgoing
-            sender: michael_scott@flowify.vn
+            sender: michael_scott@shopiz.test
             content: Tôi có thể giúp gì cho bạn?
-  - name: 'Phan Văn Đức'
-    email: 'rmaxwell@example.test'
+  - name: "Phan Văn Đức"
+    email: "rmaxwell@example.test"
     gender: 'male'
     conversations:
       - channel: Channel::WebWidget
-        assignee: karn@flowify.vn
+        assignee: karn@shopiz.test
         messages:
           - message_type: incoming
-            content: 'Chào bạn, tôi cần hỗ trợ cài đặt tài khoản.'
+            content: "Chào bạn, tôi cần hỗ trợ cài đặt tài khoản."
           - message_type: outgoing
-            sender: karn@flowify.vn
-            content: 'Tôi sẵn sàng hỗ trợ bạn cài đặt tài khoản. Bạn muốn thay đổi thông tin gì?'
+            sender: karn@shopiz.test
+            content: "Tôi sẵn sàng hỗ trợ bạn cài đặt tài khoản. Bạn muốn thay đổi thông tin gì?"
           - message_type: incoming
-            content: 'Tôi muốn cập nhật thông tin thanh toán.'
+            content: "Tôi muốn cập nhật thông tin thanh toán."
           - message_type: outgoing
-            sender: karn@flowify.vn
-            content: 'Tuyệt vời! Tôi đã gửi cho bạn một liên kết bảo mật để cập nhật thông tin thanh toán. Vui lòng kiểm tra email.'
-  - name: 'Nguyễn Thị Hương'
-    email: 'sjohnson@demo.test'
+            sender: karn@shopiz.test
+            content: "Tuyệt vời! Tôi đã gửi cho bạn một liên kết bảo mật để cập nhật thông tin thanh toán. Vui lòng kiểm tra email."
+  - name: "Nguyễn Thị Hương"
+    email: "sjohnson@demo.test"
     gender: 'female'
     conversations:
       - channel: Channel::FacebookPage
-        assignee: danny@flowify.vn
+        assignee: danny@shopiz.test
         messages:
           - message_type: incoming
-            content: 'Xin chào, tôi gặp sự cố với ứng dụng di động.'
+            content: "Xin chào, tôi gặp sự cố với ứng dụng di động."
           - message_type: outgoing
-            sender: danny@flowify.vn
-            content: 'Rất tiếc khi nghe điều đó! Bạn có thể cho tôi biết cụ thể sự cố bạn gặp phải không?'
+            sender: danny@shopiz.test
+            content: "Rất tiếc khi nghe điều đó! Bạn có thể cho tôi biết cụ thể sự cố bạn gặp phải không?"
           - message_type: incoming
-            content: 'Ứng dụng bị treo khi tôi tải tài liệu lên.'
+            content: "Ứng dụng bị treo khi tôi tải tài liệu lên."
           - message_type: outgoing
-            sender: danny@flowify.vn
-            content: 'Tôi hiểu điều đó thật khó chịu. Để tôi hỗ trợ bạn xử lý sự cố này ngay.'
-  - name: 'Trần Quốc Dũng'
-    email: 'dchen@sample.test'
+            sender: danny@shopiz.test
+            content: "Tôi hiểu điều đó thật khó chịu. Để tôi hỗ trợ bạn xử lý sự cố này ngay."
+  - name: "Trần Quốc Dũng"
+    email: "dchen@sample.test"
     gender: 'male'
     conversations:
       - channel: Channel::Email
-        source_id: 'dchen@sample.test'
-        assignee: ben@flowify.vn
+        source_id: "dchen@sample.test"
+        assignee: ben@shopiz.test
         messages:
           - message_type: incoming
-            content: 'Tôi cần hỗ trợ tích hợp API của bạn.'
+            content: "Tôi cần hỗ trợ tích hợp API của bạn."
           - message_type: outgoing
-            sender: ben@flowify.vn
-            content: 'Tôi rất sẵn lòng hỗ trợ tích hợp API. Bạn đang sử dụng ngôn ngữ lập trình nào?'
+            sender: ben@shopiz.test
+            content: "Tôi rất sẵn lòng hỗ trợ tích hợp API. Bạn đang sử dụng ngôn ngữ lập trình nào?"
           - message_type: incoming
-            content: 'Chúng tôi dùng Python cho backend.'
+            content: "Chúng tôi dùng Python cho backend."
           - message_type: outgoing
-            sender: ben@flowify.vn
-            content: 'Tuyệt vời! Tôi sẽ gửi cho bạn tài liệu SDK Python và một số ví dụ để bạn bắt đầu.'
+            sender: ben@shopiz.test
+            content: "Tuyệt vời! Tôi sẽ gửi cho bạn tài liệu SDK Python và một số ví dụ để bạn bắt đầu."

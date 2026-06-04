@@ -29,10 +29,10 @@ class Captain::Tools::Copilot::SapoSearchCustomersService < Captain::Tools::Base
 
   def format_customers(customers)
     customers.map do |c|
-      "**#{c['first_name']} #{c['last_name']}** (ID: #{c['id']})\n " \
-        "Email: #{c['email'] || 'N/A'}\n " \
-        "Phone: #{c['phone'] || 'N/A'}\n " \
-        "Orders: #{c['orders_count'] || 0}\n " \
+      "**#{c['first_name']} #{c['last_name']}** (ID: #{c['id']})\n  " \
+        "Email: #{c['email'] || 'N/A'}\n  " \
+        "Phone: #{c['phone'] || 'N/A'}\n  " \
+        "Orders: #{c['orders_count'] || 0}\n  " \
         "Total spent: #{format_sapo_currency(c['total_spent'] || 0)}"
     end.join("\n\n")
   end

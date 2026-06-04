@@ -10,7 +10,7 @@ import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 const { shouldShow } = usePolicy();
 
 const allowedLoginMethods = computed(
-  () => window.flowifyConfig.allowedLoginMethods || ['email']
+  () => window.shopizConfig.allowedLoginMethods || ['email']
 );
 
 const isSamlSsoEnabled = computed(() =>

@@ -28,13 +28,13 @@ class Captain::Tools::Copilot::KiotvietGetOrderDetailService < Captain::Tools::B
   private
 
   def fetch_invoice(code, id)
-    endpoint = code.present? ? "invoices/code/#{code}": "invoices/#{id}"
+    endpoint = code.present? ? "invoices/code/#{code}" : "invoices/#{id}"
     result = kiotviet_get(endpoint)
     result.is_a?(Hash) && result['id'] ? result : nil
   end
 
   def build_not_found_message(code, id)
-    identifier = code.present? ? "with code '#{code}'": "with ID #{id}"
+    identifier = code.present? ? "with code '#{code}'" : "with ID #{id}"
     "Invoice not found #{identifier}"
   end
 
@@ -50,7 +50,7 @@ class Captain::Tools::Copilot::KiotvietGetOrderDetailService < Captain::Tools::B
 
   def format_header(inv)
     [
-      "Invoice #{inv['code']} (ID: #{inv['id']})",
+      "📋 Invoice #{inv['code']} (ID: #{inv['id']})",
       "Status: #{resolve_status(inv['status'])}",
       "Date: #{parse_date(inv['createdDate'])}",
       "Branch: #{inv['branchName'] || 'N/A'}"
@@ -60,30 +60,30 @@ class Captain::Tools::Copilot::KiotvietGetOrderDetailService < Captain::Tools::B
   def format_customer(inv)
     return nil if inv['customerName'].blank?
 
-    "\nCustomer: #{inv['customerName']}\n  Phone: #{inv['customerContactNumber'] || 'N/A'}"
+    "\n👤 Customer: #{inv['customerName']}\n   Phone: #{inv['customerContactNumber'] || 'N/A'}"
   end
 
   def format_items(inv)
     items = inv['invoiceDetails'] || []
     return nil if items.blank?
 
-    lines = ["\nItems (#{items.size}):"]
+    lines = ["\n📦 Items (#{items.size}):"]
     items.each { |item| lines << format_single_item(item) }
     lines.join("\n")
   end
 
   def format_single_item(item)
     price_info = "#{format_vnd(item['price'])} × #{item['quantity']}"
-    discount_info = item['discount'].to_f.positive? ? "(discount: #{format_vnd(item['discount'])})": ''
-    " • #{item['productName']} (#{item['productCode']}) — #{price_info}#{discount_info}"
+    discount_info = item['discount'].to_f.positive? ? " (discount: #{format_vnd(item['discount'])})" : ''
+    "  • #{item['productName']} (#{item['productCode']}) — #{price_info}#{discount_info}"
   end
 
   def format_payment(inv)
-    lines = ["\nPayment:", " Subtotal: #{format_vnd(inv['total'])}"]
-    lines << " Discount: #{format_vnd(inv['discount'])}" if inv['discount'].to_f.positive?
-    lines << " Total Paid: #{format_vnd(inv['totalPayment'])}"
+    lines = ["\n💰 Payment:", "  Subtotal: #{format_vnd(inv['total'])}"]
+    lines << "  Discount: #{format_vnd(inv['discount'])}" if inv['discount'].to_f.positive?
+    lines << "  Total Paid: #{format_vnd(inv['totalPayment'])}"
     remaining = inv['total'].to_f - inv['totalPayment'].to_f
-    lines << " Remaining: #{format_vnd(remaining)}" if remaining.positive?
+    lines << "  Remaining: #{format_vnd(remaining)}" if remaining.positive?
     lines.join("\n")
   end
 
@@ -92,22 +92,22 @@ class Captain::Tools::Copilot::KiotvietGetOrderDetailService < Captain::Tools::B
     return nil if delivery.blank?
 
     lines = delivery_base_lines(delivery)
-    lines << " Status: #{resolve_delivery_status(delivery['status'])}" if delivery['status'].present?
-    lines << " Tracking: #{delivery['deliveryCode']}" if delivery['deliveryCode'].present?
+    lines << "  Status: #{resolve_delivery_status(delivery['status'])}" if delivery['status'].present?
+    lines << "  Tracking: #{delivery['deliveryCode']}" if delivery['deliveryCode'].present?
     lines.join("\n")
   end
 
   def delivery_base_lines(delivery)
     [
       "\n🚚 Delivery:",
-      " Receiver: #{delivery['receiver'] || 'N/A'}",
-      " Phone: #{delivery['contactNumber'] || 'N/A'}",
-      " Address: #{delivery['address'] || 'N/A'}"
+      "  Receiver: #{delivery['receiver'] || 'N/A'}",
+      "  Phone: #{delivery['contactNumber'] || 'N/A'}",
+      "  Address: #{delivery['address'] || 'N/A'}"
     ]
   end
 
   def resolve_status(status)
-    { 1 => ' Active', 2 => ' Cancelled', 3 => '↩️ Returned' }[status] || "Unknown (#{status})"
+    { 1 => '✅ Active', 2 => '❌ Cancelled', 3 => '↩️ Returned' }[status] || "Unknown (#{status})"
   end
 
   def resolve_delivery_status(status)

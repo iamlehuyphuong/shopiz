@@ -48,7 +48,7 @@ class Captain::Tools::Copilot::TiktokShopSearchOrdersService < Captain::Tools::B
       currency = order.dig('payment', 'currency') || 'VND'
       status = order['status'] || 'UNKNOWN'
 
-      lines = ["**Order ##{order['id']}** - #{status}"]
+      lines = ["📦 **Order ##{order['id']}** - #{status}"]
       lines << "Total: #{format_tiktok_currency(total, currency)}"
       lines << "Created At: #{Time.zone.at(order['create_time'].to_i).strftime('%Y-%m-%d %H:%M')}" if order['create_time'].present?
 

@@ -96,15 +96,15 @@ class Captain::Tools::Copilot::ShopifyCreateOrderService < Captain::Tools::BaseT
   end
 
   def format_result(order, resolved)
-    lines = ["Draft order ##{order.id} created for conversation ##{order.conversation.display_id}\n"]
-    resolved[:items].each { |i| lines << " • #{i[:product_name]} × #{i[:quantity]} — #{format_currency(i[:unit_price], 'VND')}" }
+    lines = ["✅ Draft order ##{order.id} created for conversation ##{order.conversation.display_id}\n"]
+    resolved[:items].each { |i| lines << "  • #{i[:product_name]} × #{i[:quantity]} — #{format_currency(i[:unit_price], 'VND')}" }
     lines << "\nTotal: #{format_currency(order.total_amount, 'VND')}"
     lines << "Customer: #{order.customer_name} | #{order.customer_phone}"
     if resolved[:warnings].present?
-      lines << "\nStock warnings:"
-      resolved[:warnings].each { |w| lines << " • #{w}" }
+      lines << "\n⚠️ Stock warnings:"
+      resolved[:warnings].each { |w| lines << "  • #{w}" }
     end
-    lines << "\nStatus: DRAFT — Confirm in Orders panel to push to Shopify."
+    lines << "\n📋 Status: DRAFT — Confirm in Orders panel to push to Shopify."
     lines.join("\n")
   end
 end

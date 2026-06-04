@@ -1,4 +1,4 @@
-# Base class for platform-specific "Check Inventory"copilot tools.
+# Base class for platform-specific "Check Inventory" copilot tools.
 # Subclasses only need to implement:
 #   - platform_name       (e.g. 'kiotviet')
 #   - platform_active?    (check integration)
@@ -68,17 +68,17 @@ class Captain::Tools::Copilot::BaseCheckInventoryService < Captain::Tools::BaseT
   end
 
   def stock_emoji(status)
-    { 'In Stock' => '', 'Low Stock' => '' }[status] || ''
+    { 'In Stock' => '🟢', 'Low Stock' => '🟡' }[status] || '🔴'
   end
 
   def format_results(results)
-    lines = ["#{platform_label} Inventory Check:\n"]
+    lines = ["📊 #{platform_label} Inventory Check:\n"]
     results.each { |r| lines.concat(format_single_result(r)) }
     lines.join("\n")
   end
 
   def format_single_result(result)
-    return ["#{result[:identifier]} — Product not found", ''] unless result[:found]
+    return ["❓ #{result[:identifier]} — Product not found", ''] unless result[:found]
 
     status = result[:status]
     lines = ["#{stock_emoji(status)} #{result[:name]} (#{result[:identifier]}) — Total: #{result[:total]} (#{status})"]
@@ -88,6 +88,6 @@ class Captain::Tools::Copilot::BaseCheckInventoryService < Captain::Tools::BaseT
   end
 
   def append_details(lines, details)
-    details.each { |d| lines << "  └ #{d[:label]}: #{d[:quantity]}" }
+    details.each { |d| lines << "   └ #{d[:label]}: #{d[:quantity]}" }
   end
 end

@@ -426,7 +426,7 @@ onMounted(fetchAccountDetails);
             </SpecialItem>
             <SpecialItem v-if="enterpisePlan" :plan="enterpisePlan">
               <a
-                href="https://flowify.vn/contact-us"
+                href="https://shopiz.pro/contact-us"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -473,7 +473,7 @@ onMounted(fetchAccountDetails);
             <!-- AI Toggle -->
             <div class="flex items-center justify-center gap-2 mb-2">
               <span class="text-[14px] font-bold text-n-slate-12">
-                {{ isVietnamese ? 'Sử dụng FlowifyAI' : 'Using FlowifyAI' }}
+                {{ isVietnamese ? 'Sử dụng ShopizAI' : 'Using ShopizAI' }}
               </span>
               <Switch v-model="globalAiIncluded" />
             </div>
@@ -551,7 +551,7 @@ onMounted(fetchAccountDetails);
         >
           <div class="flex flex-wrap gap-3 mt-4">
             <a
-              href="https://m.me/flowify.vn"
+              href="https://m.me/shopiz.pro"
               target="_blank"
               rel="noopener noreferrer"
             >

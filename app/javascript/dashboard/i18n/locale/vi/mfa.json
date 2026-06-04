@@ -98,7 +98,7 @@
       "BACKUP_TITLE": "Dùng mã dự phòng",
       "BACKUP_DESC": "Nếu bạn không thể truy cập ứng dụng xác thực, hãy dùng một trong các mã dự phòng đã lưu khi thiết lập 2FA. Mỗi mã chỉ dùng một lần.",
       "CONTACT_TITLE": "Cần hỗ trợ thêm?",
-      "CONTACT_DESC_CLOUD": "Nếu bạn mất cả ứng dụng xác thực và mã dự phòng, vui lòng liên hệ hỗ trợ Flowify.",
+      "CONTACT_DESC_CLOUD": "Nếu bạn mất cả ứng dụng xác thực và mã dự phòng, vui lòng liên hệ hỗ trợ Shopiz.",
       "CONTACT_DESC_SELF_HOSTED": "Nếu bạn mất cả ứng dụng xác thực và mã dự phòng, vui lòng liên hệ quản trị viên."
     },
     "VERIFICATION_FAILED": "Xác minh thất bại. Vui lòng thử lại."

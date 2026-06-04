@@ -39,7 +39,7 @@ class Captain::Tools::Copilot::HaravanGetOrderDetailService < Captain::Tools::Ba
 
   def build_header(order)
     [
-      "Order #{order['name'] || "##{order['id']}"}",
+      "📋 Order #{order['name'] || "##{order['id']}"}",
       "Financial: #{order['financial_status']}",
       "Fulfillment: #{order['fulfillment_status'] || 'unfulfilled'}",
       "Date: #{order['created_at']}"
@@ -50,30 +50,30 @@ class Captain::Tools::Copilot::HaravanGetOrderDetailService < Captain::Tools::Ba
     customer = order['customer'] || {}
     shipping = order['shipping_address'] || {}
     [
-      "\nCustomer:",
-      " Name: #{customer['first_name']} #{customer['last_name']}",
-      " Phone: #{customer['phone'] || shipping['phone'] || 'N/A'}",
-      " Email: #{customer['email'] || 'N/A'}",
-      " Address: #{shipping['address1'] || 'N/A'}"
+      "\n👤 Customer:",
+      "  Name: #{customer['first_name']} #{customer['last_name']}",
+      "  Phone: #{customer['phone'] || shipping['phone'] || 'N/A'}",
+      "  Email: #{customer['email'] || 'N/A'}",
+      "  Address: #{shipping['address1'] || 'N/A'}"
     ]
   end
 
   def build_items(order)
     items = order['line_items'] || []
-    return ["\nItems: None"] if items.blank?
+    return ["\n📦 Items: None"] if items.blank?
 
-    lines = ["\nItems (#{items.size}):"]
-    items.each { |item| lines << " • #{item['title']} — #{format_haravan_currency(item['price'])} × #{item['quantity']}" }
+    lines = ["\n📦 Items (#{items.size}):"]
+    items.each { |item| lines << "  • #{item['title']} — #{format_haravan_currency(item['price'])} × #{item['quantity']}" }
     lines
   end
 
   def build_payment(order)
     [
-      "\nPayment:",
-      " Subtotal: #{format_haravan_currency(order['subtotal_price'])}",
-      " Discount: #{format_haravan_currency(order['total_discounts'])}",
-      " Shipping: #{format_haravan_currency(order['total_shipping_price'])}",
-      " Total: #{format_haravan_currency(order['total_price'])}"
+      "\n💰 Payment:",
+      "  Subtotal: #{format_haravan_currency(order['subtotal_price'])}",
+      "  Discount: #{format_haravan_currency(order['total_discounts'])}",
+      "  Shipping: #{format_haravan_currency(order['total_shipping_price'])}",
+      "  Total: #{format_haravan_currency(order['total_price'])}"
     ]
   end
 end

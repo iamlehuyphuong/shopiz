@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :webhook do
     account_id { 1 }
     inbox_id { 1 }
-    url { 'https://api.flowify.vn' }
+    url { 'https://api.shopiz.pro' }
     name { 'My Webhook' }
     subscriptions do
       %w[

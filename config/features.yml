@@ -4,7 +4,7 @@
 # display_name: the name to be used in the UI
 # enabled: whether the feature is enabled by default
 # help_url: the url to the help center article
-# chatwoot_internal: whether the feature is internal to Flowify and should not be shown in the UI for other self hosted installations
+# chatwoot_internal: whether the feature is internal to Shopiz and should not be shown in the UI for other self hosted installations
 # deprecated: purpose of feature flag is done, no need to show it in the UI anymore
 - name: inbound_emails
   display_name: Inbound Emails
@@ -12,11 +12,11 @@
 - name: channel_email
   display_name: Email Channel
   enabled: false
-  help_url: https://help.flowify.vn/hc/email
+  help_url: https://help.shopiz.pro/hc/email
 - name: channel_facebook
   display_name: Facebook Channel
   enabled: true
-  help_url: https://help.flowify.vn/hc/fb
+  help_url: https://help.shopiz.pro/hc/fb
 - name: channel_twitter
   display_name: Twitter Channel
   enabled: true
@@ -34,11 +34,11 @@
 - name: help_center
   display_name: Help Center
   enabled: true
-  help_url: https://help.flowify.vn/hc/help-center
+  help_url: https://help.shopiz.pro/hc/help-center
 - name: agent_bots
   display_name: Agent Bots
   enabled: false
-  help_url: https://help.flowify.vn/hc/agent-bots
+  help_url: https://help.shopiz.pro/hc/agent-bots
 - name: macros
   display_name: Macros
   enabled: true
@@ -48,29 +48,29 @@
 - name: team_management
   display_name: Team Management
   enabled: true
-  help_url: https://help.flowify.vn/hc/teams
+  help_url: https://help.shopiz.pro/hc/teams
 - name: inbox_management
   display_name: Inbox Management
   enabled: true
 - name: labels
   display_name: Labels
   enabled: true
-  help_url: https://help.flowify.vn/hc/labels
+  help_url: https://help.shopiz.pro/hc/labels
 - name: custom_attributes
   display_name: Custom Attributes
   enabled: false
-  help_url: https://help.flowify.vn/hc/custom-attributes
+  help_url: https://help.shopiz.pro/hc/custom-attributes
 - name: automations
   display_name: Automations
   enabled: false
 - name: canned_responses
   display_name: Canned Responses
   enabled: true
-  help_url: https://help.flowify.vn/hc/canned
+  help_url: https://help.shopiz.pro/hc/canned
 - name: integrations
   display_name: Integrations
   enabled: true
-  help_url: https://help.flowify.vn/hc/integrations
+  help_url: https://help.shopiz.pro/hc/integrations
 - name: voice_recorder
   display_name: Voice Recorder
   enabled: true
@@ -83,11 +83,11 @@
 - name: campaigns
   display_name: Campaigns
   enabled: false
-  help_url: https://help.flowify.vn/hc/campaigns
+  help_url: https://help.shopiz.pro/hc/campaigns
 - name: reports
   display_name: Reports
   enabled: true
-  help_url: https://help.flowify.vn/hc/reports
+  help_url: https://help.shopiz.pro/hc/reports
 - name: crm
   display_name: CRM
   enabled: true
@@ -111,7 +111,7 @@
 - name: message_reply_to
   display_name: Message Reply To
   enabled: true
-  help_url: https://help.flowify.vn/hc/reply-to
+  help_url: https://help.shopiz.pro/hc/reply-to
   deprecated: true
 - name: insert_article_in_reply
   display_name: Insert Article in Reply
@@ -125,7 +125,7 @@
   display_name: SLA
   enabled: true
   premium: true
-  help_url: https://help.flowify.vn/hc/sla
+  help_url: https://help.shopiz.pro/hc/sla
 - name: help_center_embedding_search
   display_name: Help Center Embedding Search
   enabled: true
@@ -143,14 +143,14 @@
   enabled: false
   premium: true
 - name: chatwoot_v4
-  display_name: Flowify V4
+  display_name: Shopiz V4
   enabled: true
 - name: report_v4
   display_name: Report V4
   enabled: false
   deprecated: true
 - name: contact_chatwoot_support_team
-  display_name: Contact Flowify Support Team
+  display_name: Contact Shopiz Support Team
   enabled: true
   chatwoot_internal: false
 - name: shopify_integration
@@ -171,7 +171,7 @@
   enabled: false
   premium: true
   deprecated: true
-  help_url: https://help.flowify.vn/hc/voice
+  help_url: https://help.shopiz.pro/hc/voice
 - name: notion_integration
   display_name: Notion Integration
   enabled: true
@@ -236,31 +236,31 @@
 - name: channel_zalopersonal
   display_name: Zalo Personal Channel
   enabled: false
-  help_url: https://help.flowify.vn/hc/zalo-personal
+  help_url: https://help.shopiz.pro/hc/zalo-personal
 - name: channel_telegram
   display_name: Telegram Channel
   enabled: false
-  help_url: https://help.flowify.vn/hc/telegram
+  help_url: https://help.shopiz.pro/hc/telegram
 - name: channel_api
   display_name: API Channel
   enabled: false
   deprecated: true
-  help_url: https://help.flowify.vn/hc/api
+  help_url: https://help.shopiz.pro/hc/api
 - name: deprecated_feature_64
   display_name: Deprecated Feature 64
   enabled: false
 - name: channel_line
   display_name: Line Channel
   enabled: false
-  help_url: https://help.flowify.vn/hc/line
+  help_url: https://help.shopiz.pro/hc/line
 - name: channel_whatsapp
   display_name: Whatsapp Channel
   enabled: false
-  help_url: https://help.flowify.vn/hc/whatsapp
+  help_url: https://help.shopiz.pro/hc/whatsapp
 - name: channel_tiktok_shop
   display_name: TikTok Shop Channel
   enabled: false
-  help_url: https://help.flowify.vn/hc/tiktok-shop
+  help_url: https://help.shopiz.pro/hc/tiktok-shop
 - name: channel_tiktok
   display_name: TikTok Channel
   enabled: true

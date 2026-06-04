@@ -36,7 +36,7 @@ class Captain::Tools::Copilot::ShopifyGetOrderDetailService < Captain::Tools::Ba
 
   def build_header(order)
     [
-      "Order #{order['name'] || "##{order['id']}"}",
+      "📋 Order #{order['name'] || "##{order['id']}"}",
       "Financial: #{order['financial_status']}",
       "Fulfillment: #{order['fulfillment_status'] || 'unfulfilled'}",
       "Date: #{order['created_at']}"
@@ -46,28 +46,28 @@ class Captain::Tools::Copilot::ShopifyGetOrderDetailService < Captain::Tools::Ba
   def build_customer(order)
     customer = order['customer'] || {}
     [
-      "\nCustomer:",
-      " Name: #{customer['first_name']} #{customer['last_name']}",
-      " Phone: #{customer['phone'] || 'N/A'}",
-      " Email: #{customer['email'] || 'N/A'}"
+      "\n👤 Customer:",
+      "  Name: #{customer['first_name']} #{customer['last_name']}",
+      "  Phone: #{customer['phone'] || 'N/A'}",
+      "  Email: #{customer['email'] || 'N/A'}"
     ]
   end
 
   def build_items(order)
     items = order['line_items'] || []
-    return ["\nItems: None"] if items.blank?
+    return ["\n📦 Items: None"] if items.blank?
 
-    lines = ["\nItems (#{items.size}):"]
-    items.each { |i| lines << " • #{i['title']} — #{format_currency(i['price'], order['currency'])} × #{i['quantity']}" }
+    lines = ["\n📦 Items (#{items.size}):"]
+    items.each { |i| lines << "  • #{i['title']} — #{format_currency(i['price'], order['currency'])} × #{i['quantity']}" }
     lines
   end
 
   def build_payment(order)
     [
-      "\nPayment:",
-      " Subtotal: #{format_currency(order['subtotal_price'], order['currency'])}",
-      " Discount: #{format_currency(order['total_discounts'], order['currency'])}",
-      " Total: #{format_currency(order['total_price'], order['currency'])}"
+      "\n💰 Payment:",
+      "  Subtotal: #{format_currency(order['subtotal_price'], order['currency'])}",
+      "  Discount: #{format_currency(order['total_discounts'], order['currency'])}",
+      "  Total: #{format_currency(order['total_price'], order['currency'])}"
     ]
   end
 end

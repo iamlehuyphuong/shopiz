@@ -51,7 +51,7 @@ RSpec.describe 'Api::V2::Accounts::OrderAnalytics', type: :request do
             headers: agent.create_new_auth_token,
             as: :json
 
-        # Update expectation based on actual authorization policy for reports/analytics in Flowify
+        # Update expectation based on actual authorization policy for reports/analytics in Shopiz
         expect(response).to have_http_status(:unauthorized)
       end
     end

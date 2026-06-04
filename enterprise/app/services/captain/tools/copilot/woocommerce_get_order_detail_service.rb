@@ -36,7 +36,7 @@ class Captain::Tools::Copilot::WoocommerceGetOrderDetailService < Captain::Tools
 
   def build_header(order)
     [
-      "Order ##{order['number']} (ID: #{order['id']})",
+      "📋 Order ##{order['number']} (ID: #{order['id']})",
       "Status: #{order['status']}",
       "Payment: #{order['payment_method_title']}",
       "Date: #{order['date_created']}"
@@ -46,30 +46,30 @@ class Captain::Tools::Copilot::WoocommerceGetOrderDetailService < Captain::Tools
   def build_customer(order)
     billing = order['billing'] || {}
     [
-      "\nCustomer:",
-      " Name: #{billing['first_name']} #{billing['last_name']}",
-      " Phone: #{billing['phone'] || 'N/A'}",
-      " Email: #{billing['email'] || 'N/A'}",
-      " Address: #{[billing['address_1'], billing['city'], billing['state']].compact.join(', ')}"
+      "\n👤 Customer:",
+      "  Name: #{billing['first_name']} #{billing['last_name']}",
+      "  Phone: #{billing['phone'] || 'N/A'}",
+      "  Email: #{billing['email'] || 'N/A'}",
+      "  Address: #{[billing['address_1'], billing['city'], billing['state']].compact.join(', ')}"
     ]
   end
 
   def build_items(order)
     items = order['line_items'] || []
-    return ["\nItems: None"] if items.blank?
+    return ["\n📦 Items: None"] if items.blank?
 
-    lines = ["\nItems (#{items.size}):"]
-    items.each { |i| lines << " • #{i['name']} — #{format_woo_currency(i['price'])} × #{i['quantity']}" }
+    lines = ["\n📦 Items (#{items.size}):"]
+    items.each { |i| lines << "  • #{i['name']} — #{format_woo_currency(i['price'])} × #{i['quantity']}" }
     lines
   end
 
   def build_payment(order)
     [
-      "\nPayment:",
-      " Subtotal: #{format_woo_currency(order['subtotal'])}",
-      " Discount: #{format_woo_currency(order['discount_total'])}",
-      " Shipping: #{format_woo_currency(order['shipping_total'])}",
-      " Total: #{format_woo_currency(order['total'])}"
+      "\n💰 Payment:",
+      "  Subtotal: #{format_woo_currency(order['subtotal'])}",
+      "  Discount: #{format_woo_currency(order['discount_total'])}",
+      "  Shipping: #{format_woo_currency(order['shipping_total'])}",
+      "  Total: #{format_woo_currency(order['total'])}"
     ]
   end
 end

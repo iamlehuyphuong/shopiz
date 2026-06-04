@@ -43,7 +43,7 @@ class Captain::Tools::Copilot::HaravanUpdateCustomerService < Captain::Tools::Ba
 
   def format_success(customer)
     <<~RESPONSE.strip
-       Customer updated on Haravan!
+      ✅ Customer updated on Haravan!
 
       ID: #{customer['id']}
       Name: #{customer['first_name']} #{customer['last_name']}

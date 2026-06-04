@@ -127,7 +127,7 @@ const submit = async () => {
     <div class="px-2 pb-2 pt-6 flex flex-col gap-6">
       <div class="text-center">
         <h2 class="text-2xl font-semibold text-n-slate-12 mb-2">
-          Chào mừng đến với Flowify 👋
+          Chào mừng đến với Shopiz 👋
         </h2>
         <p class="text-n-slate-11">
           Hãy cung cấp thêm một số thông tin cơ bản để chúng tôi phục vụ bạn tốt

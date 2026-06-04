@@ -220,7 +220,7 @@
     "MODULE_PRODUCTS": {
       "HEADER": {
         "TITLE": "Products",
-        "DESCRIPTION": "Manage Flowify product catalog and sync with sales channels.",
+        "DESCRIPTION": "Manage Shopiz product catalog and sync with sales channels.",
         "SEARCH": "Search products...",
         "COUNT": "products"
       },
@@ -337,11 +337,11 @@
       "DESCRIPTIONS": {
         "SHOPIFY": "Connect your Shopify store to sync orders, customers, and product data directly within the app.",
         "KIOTVIET": "Automatically and continuously sync inventory and manage retail orders with KiotViet.",
-        "HARAVAN": "Manage omnichannel sales on Haravan more efficiently with the ability to pull order info and push products from Flowify.",
+        "HARAVAN": "Manage omnichannel sales on Haravan more efficiently with the ability to pull order info and push products from Shopiz.",
         "WOOCOMMERCE": "WooCommerce integration syncs products, inventory, and order status directly into your workflow.",
         "SAPO": "Professionally manage your Sapo online store with two-way product sync.",
         "NHANHVN": "Solution to connect with Nhanh.vn to track and support seamless order processing from warehouse to customer.",
-        "TIKTOK_SHOP": "Sync orders, manage messages and products from TikTok Shop Seller Center into Flowify."
+        "TIKTOK_SHOP": "Sync orders, manage messages and products from TikTok Shop Seller Center into Shopiz."
       }
     },
     "PRODUCT_FORM": {
@@ -507,7 +507,7 @@
     },
     "DIALOG_ADD_PRODUCT": {
       "TITLE": "Add new product",
-      "DESC": "Add a new product to Flowify catalog.",
+      "DESC": "Add a new product to Shopiz catalog.",
       "FORM": {
         "NAME": {
           "LABEL": "Product Name *",
@@ -541,7 +541,7 @@
     },
     "DIALOG_PULL_PRODUCTS": {
       "TITLE": "Sync products from platform",
-      "DESC": "Select a sales platform to sync the product list to Flowify.",
+      "DESC": "Select a sales platform to sync the product list to Shopiz.",
       "FORM": {
         "CANCEL": "Cancel",
         "SUBMIT": "Sync products"
@@ -581,7 +581,7 @@
       },
       "FALLBACKS": {
         "GUEST": "Guest",
-        "FLOWIFY": "Flowify",
+        "SHOPIZ": "Shopiz",
         "NO_DATA": "--"
       }
     }

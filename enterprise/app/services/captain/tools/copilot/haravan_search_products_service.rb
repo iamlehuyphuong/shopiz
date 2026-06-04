@@ -8,6 +8,7 @@ class Captain::Tools::Copilot::HaravanSearchProductsService < Captain::Tools::Ba
   description 'Search Haravan products by name or keyword to check pricing, inventory, and details'
   param :query, type: :string, desc: 'Product name or keyword to search'
 
+
   def active?
     haravan_active?
   end
@@ -48,9 +49,9 @@ class Captain::Tools::Copilot::HaravanSearchProductsService < Captain::Tools::Ba
     stock = product['variants']&.sum { |v| v['inventory_quantity'].to_i } || 0
     [
       product['title'].to_s,
-      " Price: #{compute_price_range(product['variants'])}",
-      " Stock: #{stock}",
-      product['product_type'].present? ? " Type: #{product['product_type']}": nil
+      "  Price: #{compute_price_range(product['variants'])}",
+      "  Stock: #{stock}",
+      product['product_type'].present? ? "  Type: #{product['product_type']}" : nil
     ].compact.join("\n")
   end
 
@@ -58,6 +59,6 @@ class Captain::Tools::Copilot::HaravanSearchProductsService < Captain::Tools::Ba
     prices = variants&.map { |v| v['price'].to_f }&.uniq || []
     return '0' if prices.empty?
 
-    prices.size > 1 ? "#{prices.min} - #{prices.max}": prices.first.to_s
+    prices.size > 1 ? "#{prices.min} - #{prices.max}" : prices.first.to_s
   end
 end

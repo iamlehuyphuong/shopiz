@@ -33,7 +33,7 @@ class Captain::Tools::Copilot::WoocommerceCreateCustomerService < Captain::Tools
 
   def format_success(customer)
     <<~RESPONSE.strip
-       Customer created on WooCommerce!
+      ✅ Customer created on WooCommerce!
 
       ID: #{customer['id']}
       Name: #{customer['first_name']} #{customer['last_name']}

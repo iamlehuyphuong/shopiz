@@ -57,7 +57,7 @@ const canDeleteOrder = order => {
   // Always allow deleting manual/local orders
   if (!order.external_source) return true;
 
-  // Define which external platforms allow order deletion from Flowify
+  // Define which external platforms allow order deletion from Shopiz
   const ALLOW_DELETE_SOURCES = ['woocommerce', 'shopify']; // Example: custom website platforms might allow it
 
   return ALLOW_DELETE_SOURCES.includes(order.external_source);

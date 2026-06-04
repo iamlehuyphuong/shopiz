@@ -16,7 +16,7 @@
     "CREATE_FLOW": {
       "CHANNEL": {
         "TITLE": "Chọn kênh",
-        "BODY": "Chọn nhà cung cấp bạn muốn tích hợp với Flowify."
+        "BODY": "Chọn nhà cung cấp bạn muốn tích hợp với Shopiz."
       },
       "INBOX": {
         "TITLE": "Tạo hộp thư",
@@ -45,7 +45,7 @@
         "TITLE": "Kênh Facebook",
         "CONNECT_FB": "Kết nối trang Facebook",
         "CONTINUE_WITH_FB": "Tiếp tục với Facebook",
-        "DESC": "Lưu ý: Khi đăng nhập, Flowify chỉ có quyền truy cập tin nhắn từ Trang của bạn. Tin nhắn cá nhân sẽ không bao giờ bị truy cập.",
+        "DESC": "Lưu ý: Khi đăng nhập, Shopiz chỉ có quyền truy cập tin nhắn từ Trang của bạn. Tin nhắn cá nhân sẽ không bao giờ bị truy cập.",
         "HELP": "Chúng tôi chỉ có quyền truy cập tin nhắn của Trang, không phải tin nhắn cá nhân.",
         "CHOOSE_PAGE": "Chọn Trang",
         "CHOOSE_PLACEHOLDER": "Chọn một Trang từ danh sách",
@@ -61,7 +61,7 @@
         "CONTINUE_WITH_ZALO_OA": "Tiếp tục với Zalo OA",
         "LOADING": "Đang xác thực với Zalo...",
         "RELOGIN": "Kết nối lại",
-        "DESC": "Lưu ý: Flowify chỉ có quyền truy cập tin nhắn Zalo OA của bạn. Tin nhắn cá nhân không được truy cập.",
+        "DESC": "Lưu ý: Shopiz chỉ có quyền truy cập tin nhắn Zalo OA của bạn. Tin nhắn cá nhân không được truy cập.",
         "HELP": "Chúng tôi chỉ truy cập tin nhắn OA.",
         "HELP_2": "Tin nhắn cá nhân không bao giờ bị truy cập.",
         "CHOOSE_PAGE": "Chọn OA",
@@ -74,7 +74,7 @@
       },
       "ZALO_PERSONAL": {
         "TITLE": "Kênh Zalo Cá Nhân",
-        "HELP": "Lưu ý: Flowify chỉ có quyền truy cập tin nhắn của người dùng Zalo.",
+        "HELP": "Lưu ý: Shopiz chỉ có quyền truy cập tin nhắn của người dùng Zalo.",
         "HELP_2": "Không đăng nhập Zalo Web để tránh gián đoạn đồng bộ tin nhắn.",
         "DESC": "Đăng nhập tài khoản ",
         "DESC_2": "để kết nối với",
@@ -95,7 +95,7 @@
       "TIKTOK_SHOP": {
         "CONNECT_TIKTOK_SHOP": "Kết nối Tiktok Shop",
         "CONTINUE_WITH_TIKTOK_SHOP": "Tiếp tục với Tiktok Shop",
-        "HELP": "Lưu ý: Flowify chỉ truy cập tin nhắn TikTok Shop. Tin nhắn riêng tư không bao giờ được truy cập.",
+        "HELP": "Lưu ý: Shopiz chỉ truy cập tin nhắn TikTok Shop. Tin nhắn riêng tư không bao giờ được truy cập.",
         "INBOX_NAME": "Tên hộp thư",
         "ADD_NAME": "Nhập tên hộp thư",
         "PICK_NAME": "Chọn tên hộp thư",
@@ -492,7 +492,7 @@
       },
       "AUTH": {
         "TITLE": "Chọn kênh",
-        "DESC": "Flowify hỗ trợ Live Chat, Facebook Messenger, WhatsApp, Email, SMS, API, Telegram, Line, Instagram, Voice, Zalo, TikTok Shop và nhiều hơn nữa. Chọn một kênh để bắt đầu.",
+        "DESC": "Shopiz hỗ trợ Live Chat, Facebook Messenger, WhatsApp, Email, SMS, API, Telegram, Line, Instagram, Voice, Zalo, TikTok Shop và nhiều hơn nữa. Chọn một kênh để bắt đầu.",
         "TITLE_NEXT": "Hoàn tất thiết lập",
         "TITLE_FINISH": "Hoàn tất!",
         "CHANNEL": {
@@ -566,11 +566,11 @@
       },
       "DETAILS": {
         "TITLE": "Chi tiết hộp thư",
-        "DESC": "Từ danh sách thả xuống bên dưới, hãy chọn Trang Facebook bạn muốn kết nối với Flowify. Bạn cũng có thể đặt tên tuỳ chỉnh để dễ nhận diện hơn."
+        "DESC": "Từ danh sách thả xuống bên dưới, hãy chọn Trang Facebook bạn muốn kết nối với Shopiz. Bạn cũng có thể đặt tên tuỳ chỉnh để dễ nhận diện hơn."
       },
       "FINISH": {
         "TITLE": "Hoàn tất!",
-        "DESC": "Bạn đã kết nối Trang Facebook thành công. Khi khách hàng nhắn tin Trang, cuộc trò chuyện sẽ xuất hiện ngay trong hộp thư của bạn.<br>Chúng tôi cũng cung cấp đoạn mã widget để bạn gắn vào website. Khi widget hoạt động, khách có thể nhắn tin trực tiếp từ website và hội thoại sẽ xuất hiện ngay tại Flowify.<br>Tuyệt đúng không? Chúng tôi luôn cố gắng mang lại trải nghiệm tốt nhất :)"
+        "DESC": "Bạn đã kết nối Trang Facebook thành công. Khi khách hàng nhắn tin Trang, cuộc trò chuyện sẽ xuất hiện ngay trong hộp thư của bạn.<br>Chúng tôi cũng cung cấp đoạn mã widget để bạn gắn vào website. Khi widget hoạt động, khách có thể nhắn tin trực tiếp từ website và hội thoại sẽ xuất hiện ngay tại Shopiz.<br>Tuyệt đúng không? Chúng tôi luôn cố gắng mang lại trải nghiệm tốt nhất :)"
       },
       "EMAIL_PROVIDER": {
         "TITLE": "Chọn nhà cung cấp email",
@@ -600,7 +600,7 @@
       "CREATING_CHANNEL": "Đang tạo hộp thư...",
       "TITLE": "Cấu hình chi tiết hộp thư",
       "LOADING_TIKTOK_SHOP": "Đang xác thực với Tiktok...",
-      "DESC_TIKTOK_SHOP": "Kết nối tài khoản TikTok Shop của bạn với Flowify để quản lý hội thoại.",
+      "DESC_TIKTOK_SHOP": "Kết nối tài khoản TikTok Shop của bạn với Shopiz để quản lý hội thoại.",
       "DESC": ""
     },
     "ECOMMERCE": {
@@ -923,7 +923,7 @@
       "AUTO_FOLLOWUP_TITLE": "Tự động Follow-up",
       "AUTO_LABEL_TITLE": "Gắn nhãn thông minh",
       "AUTO_LABEL_TOGGLE": "Tự động gắn nhãn bằng AI",
-      "AUTO_LABEL_DESC": "Tự động gán nhãn phù hợp với hành vi, ý định và đánh giá chấm điểm khách hàng thông qua phân tích của FlowifyAI.",
+      "AUTO_LABEL_DESC": "Tự động gán nhãn phù hợp với hành vi, ý định và đánh giá chấm điểm khách hàng thông qua phân tích của ShopizAI.",
       "AUTO_FOLLOWUP_TOGGLE": "Kích hoạt chuỗi hành động bám đuổi",
       "AUTO_FOLLOWUP_DESC": "Tự động kích hoạt chuỗi hành động theo bám định kỳ để chốt đơn nếu khách hàng rời đi.",
       "AUTO_FOLLOWUP_DELAY_LABEL": "Khoảng cách giữa các lần (Tính theo Giờ)",
@@ -1384,8 +1384,8 @@
         "USER_MESSAGE": "Xin chào",
         "AGENT_MESSAGE": "Chào bạn"
       },
-      "BRANDING_TEXT": "Được hỗ trợ bởi Flowify",
-      "SCRIPT_SETTINGS": "\nwindow.flowifySettings = {options};"
+      "BRANDING_TEXT": "Được hỗ trợ bởi Shopiz",
+      "SCRIPT_SETTINGS": "\nwindow.shopizSettings = {options};"
     },
     "EMAIL_PROVIDERS": {
       "MICROSOFT": {

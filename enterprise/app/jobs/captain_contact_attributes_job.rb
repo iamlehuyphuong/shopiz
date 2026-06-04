@@ -9,7 +9,7 @@ class CaptainContactAttributesJob < ApplicationJob
     return unless account.feature_enabled?('captain_copilot') || account.feature_enabled?('captain_assistant')
 
     # ContactAttributesService needs an assistant instance.
-    # In general Flowify usage, we pass a dummy or the default assistant config if any.
+    # In general Shopiz usage, we pass a dummy or the default assistant config if any.
     # Assuming the Assistant parameter provides .id, .feature_contact_attributes for telemetry and prompts
     assistant = account.captain_assistant || Captain::Assistant.new(id: 0, account: account)
 

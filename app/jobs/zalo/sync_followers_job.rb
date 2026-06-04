@@ -1,4 +1,4 @@
-# Background job to sync all Zalo OA followers to Flowify contacts
+# Background job to sync all Zalo OA followers to Shopiz contacts
 # Triggered when a new Zalo OA channel is created or manually via admin
 class Zalo::SyncFollowersJob < ApplicationJob
   queue_as :low

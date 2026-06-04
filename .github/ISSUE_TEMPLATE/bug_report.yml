@@ -27,9 +27,9 @@ body:
     id: environment
     attributes:
       label: Environment
-      description: Describe whether you are using Flowify Cloud (flowify.vn) or a self-hosted installation of Flowify. If you are using a self-hosted installation of Flowify, describe the type of deployment (Docker/Linux VM installation/Heroku/Kubernetes/Other).
+      description: Describe whether you are using Shopiz Cloud (shopiz.pro) or a self-hosted installation of Shopiz. If you are using a self-hosted installation of Shopiz, describe the type of deployment (Docker/Linux VM installation/Heroku/Kubernetes/Other).
       options:
-        - flowify.vn
+        - shopiz.pro
         - Linux VM
         - Docker
         - Kubernetes

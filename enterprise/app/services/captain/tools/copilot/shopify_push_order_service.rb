@@ -6,8 +6,8 @@ class Captain::Tools::Copilot::ShopifyPushOrderService < Captain::Tools::BaseToo
     'shopify_push_order'
   end
 
-  description 'Push a confirmed Flowify order to Shopify. Creates the order and syncs the external order ID.'
-  param :conversation_order_id, type: :integer, desc: 'Flowify ConversationOrder ID to push', required: true
+  description 'Push a confirmed Shopiz order to Shopify. Creates the order and syncs the external order ID.'
+  param :conversation_order_id, type: :integer, desc: 'Shopiz ConversationOrder ID to push', required: true
 
   def execute(conversation_order_id:)
     return 'Shopify integration is not connected' unless shopify_active?
@@ -60,9 +60,9 @@ class Captain::Tools::Copilot::ShopifyPushOrderService < Captain::Tools::BaseToo
 
   def format_success(order, shopify_order)
     <<~RESPONSE.strip
-       Order pushed to Shopify!
+      ✅ Order pushed to Shopify!
 
-      Flowify Order: ##{order.id}
+      Shopiz Order: ##{order.id}
       Shopify Order: #{shopify_order['name'] || shopify_order['id']}
       Customer: #{order.customer_name} | #{order.customer_phone}
       Items: #{order.items.count} product(s)

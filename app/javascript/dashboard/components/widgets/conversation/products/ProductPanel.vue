@@ -16,7 +16,7 @@ const props = defineProps({
 });
 
 const PLATFORM_LABELS = {
-  flowify: 'Flowify',
+  shopiz: 'Shopiz',
   kiotviet: 'KiotViet',
   sapo: 'Sapo',
   haravan: 'Haravan',
@@ -38,7 +38,7 @@ const account = computed(() =>
 );
 
 const sourceFilter = computed(
-  () => account.value?.settings?.active_ecommerce_platform || 'flowify'
+  () => account.value?.settings?.active_ecommerce_platform || 'shopiz'
 );
 
 const activeSourceName = computed(

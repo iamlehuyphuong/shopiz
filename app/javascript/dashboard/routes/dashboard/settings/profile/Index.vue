@@ -108,7 +108,7 @@ export default {
       globalConfig: 'globalConfig/get',
     }),
     isMfaEnabled() {
-      return parseBoolean(window.flowifyConfig?.isMfaEnabled);
+      return parseBoolean(window.shopizConfig?.isMfaEnabled);
     },
   },
   mounted() {

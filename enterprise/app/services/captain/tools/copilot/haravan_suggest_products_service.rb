@@ -71,10 +71,10 @@ class Captain::Tools::Copilot::HaravanSuggestProductsService < Captain::Tools::B
 
   def format_suggestions(product, suggestions, context)
     price = product['variants']&.first&.dig('price').to_f
-    lines = ["Base: #{product['title']} (ID: #{product['id']}) — #{format_haravan_currency(price)}"]
-    lines << "Context: #{context}" if context.present?
-    append_section(lines, ' Upsell:', suggestions[:upsell])
-    append_section(lines, ' Same type:', suggestions[:same_type])
+    lines = ["📦 Base: #{product['title']} (ID: #{product['id']}) — #{format_haravan_currency(price)}"]
+    lines << "🎯 Context: #{context}" if context.present?
+    append_section(lines, '⬆️ Upsell:', suggestions[:upsell])
+    append_section(lines, '🔄 Same type:', suggestions[:same_type])
     lines << 'No suggestions available.' if suggestions.values.all?(&:blank?)
     lines.join("\n")
   end
@@ -83,6 +83,6 @@ class Captain::Tools::Copilot::HaravanSuggestProductsService < Captain::Tools::B
     return if items.blank?
 
     lines << "\n#{title}"
-    items.each { |s| lines << " • #{s[:name]} — #{format_haravan_currency(s[:price])} | Stock: #{s[:stock]} (#{s[:reason]})" }
+    items.each { |s| lines << "  • #{s[:name]} — #{format_haravan_currency(s[:price])} | Stock: #{s[:stock]} (#{s[:reason]})" }
   end
 end

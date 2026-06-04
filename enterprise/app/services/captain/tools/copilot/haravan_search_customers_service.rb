@@ -8,6 +8,7 @@ class Captain::Tools::Copilot::HaravanSearchCustomersService < Captain::Tools::B
   description 'Search Haravan customers by phone number, email address, or name'
   param :query, type: :string, desc: 'Customer phone, email, or name to search'
 
+
   def active?
     haravan_active?
   end
@@ -39,10 +40,10 @@ class Captain::Tools::Copilot::HaravanSearchCustomersService < Captain::Tools::B
   def format_customer(customer)
     [
       "#{customer['first_name']} #{customer['last_name']}".strip,
-      " Email: #{customer['email'] || 'N/A'}",
-      " Phone: #{customer['phone'] || 'N/A'}",
-      " Orders: #{customer['orders_count'] || 0}",
-      " Total Spent: #{customer['total_spent'] || '0'}"
+      "  Email: #{customer['email'] || 'N/A'}",
+      "  Phone: #{customer['phone'] || 'N/A'}",
+      "  Orders: #{customer['orders_count'] || 0}",
+      "  Total Spent: #{customer['total_spent'] || '0'}"
     ].join("\n")
   end
 end

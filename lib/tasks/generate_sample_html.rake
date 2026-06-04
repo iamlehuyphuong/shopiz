@@ -3,7 +3,7 @@ namespace :email_templates do
     layout = EmailTemplate.find_by(name: 'layouts/mailer/base')
 
     liquid_content = <<~LIQUID
-      <h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Welcome to {% if global_config['BRAND_NAME'] %}{{ global_config['BRAND_NAME'] }}{% else %}Flowify{% endif %}! 👋</h2>
+      <h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Welcome to {% if global_config['BRAND_NAME'] %}{{ global_config['BRAND_NAME'] }}{% else %}Shopiz{% endif %}! 👋</h2>
       
       <p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
         Hi <strong>{% if user.name %}{{ user.name }}{% else %}there{% endif %}</strong>,
@@ -32,14 +32,14 @@ namespace :email_templates do
       </div>
       
       <p style="color: #64748B; font-size: 13px; line-height: 1.6; margin-top: 24px; margin-bottom: 0;">
-        Nếu bạn không tạo tài khoản với Flowify, bạn có thể bỏ qua email này một cách an toàn.
+        Nếu bạn không tạo tài khoản với Shopiz, bạn có thể bỏ qua email này một cách an toàn.
       </p>
     LIQUID
 
     mock_data = {
       'user' => { 'name' => 'Nguyễn Văn A', 'email' => 'alice@example.com' },
-      'action_url' => 'https://app.flowify.vn/auth/confirmation?confirmation_token=abcdef123456',
-      'global_config' => { 'BRAND_NAME' => 'Flowify Enterprise' }
+      'action_url' => 'https://app.shopiz.pro/auth/confirmation?confirmation_token=abcdef123456',
+      'global_config' => { 'BRAND_NAME' => 'Shopiz Enterprise' }
     }
 
     content_parsed = Liquid::Template.parse(liquid_content).render(mock_data, strict_variables: false)

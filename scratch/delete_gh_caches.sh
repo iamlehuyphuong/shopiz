@@ -2,7 +2,7 @@
 # Xóa tất cả GitHub Actions cache cho repo
 # Usage: GITHUB_TOKEN=ghp_xxx bash scratch/delete_gh_caches.sh
 
-REPO="effiai-one/app.flowify.vn"
+REPO="effiai-one/app.shopiz.pro"
 TOKEN="${GITHUB_TOKEN}"
 
 if [ -z "$TOKEN" ]; then

@@ -19,7 +19,7 @@ export const closeBubble = document.createElement('button');
 export const notificationBubble = document.createElement('span');
 
 export const setBubbleText = bubbleText => {
-  if (isExpandedView(window.$flowify.type)) {
+  if (isExpandedView(window.$shopiz.type)) {
     const textNode = document.getElementById('woot-widget--expanded__text');
     if (textNode) {
       textNode.innerText = bubbleText;
@@ -52,7 +52,7 @@ export const createBubbleIcon = ({
   widgetColor,
   bubbleAvatarUrl,
 }) => {
-  let bubbleClassName = `${className} woot-elements--${window.$flowify.position}`;
+  let bubbleClassName = `${className} woot-elements--${window.$shopiz.position}`;
   if (bubbleAvatarUrl) {
     addImageToButton({
       target,
@@ -77,11 +77,11 @@ export const createBubbleIcon = ({
     target.style.boxShadow = '0 8px 24px rgba(0, 0, 0, .16)';
   }
 
-  if (isExpandedView(window.$flowify.type) && window.$flowify.launcherTitle) {
+  if (isExpandedView(window.$shopiz.type) && window.$shopiz.launcherTitle) {
     const title = document.createElement('span');
     title.id = 'woot-widget--launcher__text';
     title.className = 'woot-widget--bubble__text';
-    title.innerText = window.$flowify.launcherTitle;
+    title.innerText = window.$shopiz.launcherTitle;
     title.style.background = widgetColor;
     target.insertBefore(title, target.firstChild);
   }
@@ -114,11 +114,11 @@ const handleBubbleToggle = newIsOpen => {
 
 export const onBubbleClick = (props = {}) => {
   const { toggleValue } = props;
-  const { isOpen } = window.$flowify;
+  const { isOpen } = window.$shopiz;
   if (isOpen === toggleValue) return;
 
   const newIsOpen = toggleValue === undefined ? !isOpen : toggleValue;
-  window.$flowify.isOpen = newIsOpen;
+  window.$shopiz.isOpen = newIsOpen;
 
   toggleClass(chatBubble, 'woot--hide');
   toggleClass(closeBubble, 'woot--hide');

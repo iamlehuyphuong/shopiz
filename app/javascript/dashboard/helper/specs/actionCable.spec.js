@@ -13,8 +13,8 @@ vi.mock('dashboard/composables/useImpersonation', () => ({
   }),
 }));
 
-global.flowifyConfig = {
-  websocketURL: 'wss://test.flowify.vn',
+global.shopizConfig = {
+  websocketURL: 'wss://test.shopiz.pro',
 };
 
 describe('ActionCableConnector - Copilot Tests', () => {

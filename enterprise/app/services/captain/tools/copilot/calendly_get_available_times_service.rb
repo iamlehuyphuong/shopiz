@@ -17,15 +17,15 @@ class Captain::Tools::Copilot::CalendlyGetAvailableTimesService < Captain::Tools
     client = calendly_client(hook)
 
     event_type = find_event_type_by_name(client, hook, event_type_name)
-    return "Could not find service '#{event_type_name}' on Calendly." unless event_type
+    return "Không tìm thấy dịch vụ '#{event_type_name}' trên Calendly." unless event_type
 
     begin
       parsed_time = preferred_date.present? ? Time.parse(preferred_date) : Time.current
     rescue ArgumentError
-      return "Error: preferred_date '#{preferred_date}' is invalid. Please provide the date in YYYY-MM-DD format."
+      return "Lỗi: preferred_date '#{preferred_date}' không hợp lệ. Vui lòng truyền định dạng YYYY-MM-DD."
     end
 
-    start_time = [parsed_time, 1.minute.from_now].max
+    start_time = [parsed_time, Time.current + 1.minute].max
     capped_days = [[days_ahead.to_i, 7].min, 1].max
     end_time = start_time + capped_days.days - 1.minute
 
@@ -36,21 +36,21 @@ class Captain::Tools::Copilot::CalendlyGetAvailableTimesService < Captain::Tools
     )
     slots = response['collection'] || []
 
-    if slots.empty?
-      return "No available time slots found for '#{event_type['name']}' from #{start_time.strftime('%Y-%m-%d')} to #{end_time.strftime('%Y-%m-%d')}."
-    end
+    return "Không có khung giờ trống cho '#{event_type['name']}' từ #{start_time.strftime('%Y-%m-%d')} đến #{end_time.strftime('%Y-%m-%d')}." if slots.empty?
 
     timezone = hook.settings['default_timezone'] || 'Asia/Ho_Chi_Minh'
     format_available_times(slots, event_type, timezone)
   rescue Calendly::ApiClient::ApiError => e
-    "Calendly API Error: #{e.message} - #{e.body.to_json}"
+    "Lỗi API Calendly: #{e.message} - #{e.body.to_json}"
   rescue StandardError => e
-    "System error calling Calendly: #{e.message}"
+    "Lỗi hệ thống khi gọi Calendly: #{e.message}"
   end
 
   def active?
     @user.present? && find_calendly_hook.present?
   end
+
+  private
 
   include Captain::Tools::Copilot::Concerns::CalendlyHelper
 end

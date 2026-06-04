@@ -16,7 +16,7 @@ class Captain::Tools::Copilot::SearchCannedResponsesService < Captain::Tools::Ba
     responses = responses.limit(50)
 
     <<~RESPONSE
-      #{total_count > 50 ? "Found #{total_count} canned responses (showing first 50)": "Total canned responses: #{total_count}"}
+      #{total_count > 50 ? "Found #{total_count} canned responses (showing first 50)" : "Total canned responses: #{total_count}"}
       #{responses.map { |r| format_response(r) }.join("\n---\n")}
     RESPONSE
   end

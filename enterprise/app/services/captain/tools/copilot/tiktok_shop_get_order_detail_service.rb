@@ -37,7 +37,7 @@ class Captain::Tools::Copilot::TiktokShopGetOrderDetailService < Captain::Tools:
     total = order.dig('payment', 'total_amount').to_f
     currency = order.dig('payment', 'currency') || 'VND'
 
-    lines = ["**Order ##{order['id']} Detail**"]
+    lines = ["📦 **Order ##{order['id']} Detail**"]
     lines << "Status: **#{status}**"
     lines << "Created At: #{Time.zone.at(order['create_time'].to_i).strftime('%Y-%m-%d %H:%M')}" if order['create_time'].present?
 
@@ -50,10 +50,10 @@ class Captain::Tools::Copilot::TiktokShopGetOrderDetailService < Captain::Tools:
     (order['line_items'] || []).each do |item|
       item_price = item['sale_price'].to_f
       lines << "- #{item['product_name']} x#{item['quantity']}"
-      lines << " SKU: #{item['seller_sku'] || item['sku_id']} | Price: #{format_tiktok_currency(item_price, currency)}"
+      lines << "  SKU: #{item['seller_sku'] || item['sku_id']} | Price: #{format_tiktok_currency(item_price, currency)}"
     end
 
-    lines << "\n**Total Amount:** #{format_tiktok_currency(total, currency)}"
+    lines << "\n💰 **Total Amount:** #{format_tiktok_currency(total, currency)}"
     lines.join("\n")
   end
 end

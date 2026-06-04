@@ -9,14 +9,14 @@ function getWrapper() {
 
 describe('GoogleOAuthButton.vue', () => {
   beforeEach(() => {
-    window.flowifyConfig = {
+    window.shopizConfig = {
       googleOAuthClientId: 'clientId',
       googleOAuthCallbackUrl: 'http://localhost:3000/test-callback',
     };
   });
 
   afterEach(() => {
-    window.flowifyConfig = {};
+    window.shopizConfig = {};
   });
 
   it('generates the correct Google Auth URL', () => {

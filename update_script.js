@@ -1,10 +1,8 @@
 const fs = require('fs');
-const filePath =
-  'app/javascript/dashboard/routes/dashboard/sales/settings/Index.vue';
+const filePath = 'app/javascript/dashboard/routes/dashboard/sales/settings/Index.vue';
 let content = fs.readFileSync(filePath, 'utf8');
 
-const regex =
-  /<!-- Ecom Integrations -->[\s\S]*?(?=<\/div>\n  <\/div>\n<\/template>)/;
+const regex = /<!-- Ecom Integrations -->[\s\S]*?(?=<\/div>\n  <\/div>\n<\/template>)/;
 const replacement = `<!-- Integration selector -->
       <div class="flex flex-col gap-4">
         <div class="flex flex-col gap-1.5">
@@ -27,7 +25,7 @@ const replacement = `<!-- Integration selector -->
           </div>
 
           <div v-else class="flex flex-col gap-2">
-            <!-- Flowify (Native) option -->
+            <!-- Shopiz (Native) option -->
             <button
               class="flex items-center gap-3 px-4 py-3 rounded-xl border transition-all"
               :class="
@@ -62,7 +60,7 @@ const replacement = `<!-- Integration selector -->
                     : 'text-n-slate-11'
                 "
               >
-                Flowify
+                Shopiz
               </span>
               <i
                 v-if="selectedIntegrationId === 'shopiz'"

@@ -1,12 +1,12 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Flowify",
-    "description": "This is the API documentation for Flowify server.",
+    "title": "Shopiz",
+    "description": "This is the API documentation for Shopiz server.",
     "version": "1.1.0",
-    "termsOfService": "https://www.flowify.vn/terms-of-service/",
+    "termsOfService": "https://www.shopiz.pro/terms-of-service/",
     "contact": {
-      "email": "hello@flowify.vn"
+      "email": "hello@shopiz.pro"
     },
     "license": {
       "name": "MIT License",
@@ -15,7 +15,7 @@
   },
   "servers": [
     {
-      "url": "https://app.flowify.vn/"
+      "url": "https://app.shopiz.pro/"
     }
   ],
   "paths": {
@@ -1083,7 +1083,7 @@
               "busy",
               "offline"
             ],
-            "description": "The availability status of the agent computed by Flowify."
+            "description": "The availability status of the agent computed by Shopiz."
           },
           "auto_offline": {
             "type": "boolean",
@@ -1671,7 +1671,7 @@
                   "string",
                   "null"
                 ],
-                "description": "Latest version of Flowify available",
+                "description": "Latest version of Shopiz available",
                 "example": "3.0.0"
               },
               "subscribed_features": {
@@ -3045,7 +3045,7 @@
                     "type": "object",
                     "description": "The processed param values for template variables in template",
                     "example": {
-                      "1": "Flowify"
+                      "1": "Shopiz"
                     }
                   }
                 }
@@ -3646,7 +3646,7 @@
           "custom_domain": {
             "type": "string",
             "description": "Custom domain to display help center.",
-            "example": "help.flowify.vn"
+            "example": "shopiz.help"
           },
           "header_text": {
             "type": "string",
@@ -3656,7 +3656,7 @@
           "homepage_link": {
             "type": "string",
             "description": "link to main dashboard",
-            "example": "https://www.flowify.vn/"
+            "example": "https://www.shopiz.pro/"
           },
           "name": {
             "type": "string",
@@ -5730,7 +5730,7 @@
         "schema": {
           "type": "string"
         },
-        "description": "Id of the session for which the conversation is created.\n\n\n\n Source Ids can be obtained through contactable inboxes API or via generated.<br/><br/>Website: Flowify generated string which can be obtained from webhook events. <br/> Phone Channels(Twilio): Phone number in e164 format <br/> Email Channels: Contact Email address <br/> API Channel: Any Random String"
+        "description": "Id of the session for which the conversation is created.\n\n\n\n Source Ids can be obtained through contactable inboxes API or via generated.<br/><br/>Website: Shopiz generated string which can be obtained from webhook events. <br/> Phone Channels(Twilio): Phone number in e164 format <br/> Email Channels: Contact Email address <br/> API Channel: Any Random String"
       },
       "contact_sort_param": {
         "in": "query",

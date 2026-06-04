@@ -1,5 +1,5 @@
 # Copilot tool: Push a confirmed ConversationOrder to Nhanh.vn via /api/order/add.
-# Only confirmed orders can be pushed. Syncs external_order_id back to Flowify.
+# Only confirmed orders can be pushed. Syncs external_order_id back to Shopiz.
 class Captain::Tools::Copilot::NhanhvnPushOrderService < Captain::Tools::BaseTool
   include Captain::Tools::Concerns::NhanhvnClient
 
@@ -7,9 +7,9 @@ class Captain::Tools::Copilot::NhanhvnPushOrderService < Captain::Tools::BaseToo
     'nhanhvn_push_order'
   end
 
-  description 'Push a confirmed Flowify order to Nhanh.vn. The order must be in confirmed status. ' \
+  description 'Push a confirmed Shopiz order to Nhanh.vn. The order must be in confirmed status. ' \
               'Creates the order on Nhanh.vn and syncs the external order ID back.'
-  param :conversation_order_id, type: :integer, desc: 'The Flowify ConversationOrder ID to push', required: true
+  param :conversation_order_id, type: :integer, desc: 'The Shopiz ConversationOrder ID to push', required: true
 
   def execute(conversation_order_id:)
     return 'Nhanh.vn integration is not connected' unless nhanhvn_active?
@@ -84,14 +84,14 @@ class Captain::Tools::Copilot::NhanhvnPushOrderService < Captain::Tools::BaseToo
   def format_success(order, nhanhvn_order_id, result)
     carrier_code = result.dig('data', 'carrierCode')
     <<~RESPONSE.strip
-       Order pushed to Nhanh.vn successfully!
+      ✅ Order pushed to Nhanh.vn successfully!
 
-      Flowify Order: ##{order.id}
+      Shopiz Order: ##{order.id}
       Nhanh.vn Order ID: #{nhanhvn_order_id}
       Customer: #{order.customer_name} | #{order.customer_phone}
       Items: #{order.items.count} product(s)
       Total: #{format_vnd(order.total_amount)}
-      #{carrier_code.present? ? "Tracking: #{carrier_code}": ''}
+      #{carrier_code.present? ? "Tracking: #{carrier_code}" : ''}
     RESPONSE
   end
 end

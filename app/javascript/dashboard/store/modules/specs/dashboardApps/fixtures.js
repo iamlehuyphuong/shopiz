@@ -2,7 +2,7 @@ export const payload = {
   title: 'Test',
   content: [
     { url: 'https://example.com', type: 'frame' },
-    { url: 'https://www.flowify.vn', type: 'frame' },
+    { url: 'https://www.shopiz.pro', type: 'frame' },
   ],
 };
 
@@ -12,7 +12,7 @@ export const automationsList = [
     title: 'Test',
     content: [
       { url: 'https://example.com', type: 'frame' },
-      { url: 'https://www.flowify.vn', type: 'frame' },
+      { url: 'https://www.shopiz.pro', type: 'frame' },
     ],
     created_at: '2022-06-27T08:28:29.841Z',
   },

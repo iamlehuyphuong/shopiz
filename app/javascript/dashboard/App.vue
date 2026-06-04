@@ -182,7 +182,7 @@ export default {
     this.listenToThemeChanges();
     // If user locale is set, use it; otherwise use account locale
     this.setLocale(
-      this.uiSettings?.locale || window.flowifyConfig.selectedLocale
+      this.uiSettings?.locale || window.shopizConfig.selectedLocale
     );
     document.addEventListener('click', this.handleGlobalClick);
   },

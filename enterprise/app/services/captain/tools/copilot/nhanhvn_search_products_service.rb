@@ -13,11 +13,11 @@ class Captain::Tools::Copilot::NhanhvnSearchProductsService < Captain::Tools::Ba
     return 'Nhanh.vn integration is not connected' unless nhanhvn_active?
 
     products = fetch_products(query)
-    return "No products found#{query.present? ? "matching '#{query}'": ''}" if products.blank?
+    return "No products found#{query.present? ? " matching '#{query}'" : ''}" if products.blank?
 
     total_count = products.size
     <<~RESPONSE
-      #{total_count > 25 ? "Found #{total_count} products (showing first 25)": "Found #{total_count} product(s)"}
+      #{total_count > 25 ? "Found #{total_count} products (showing first 25)" : "Found #{total_count} product(s)"}
       #{products.first(25).map { |p| format_product(p) }.join("\n---\n")}
     RESPONSE
   end

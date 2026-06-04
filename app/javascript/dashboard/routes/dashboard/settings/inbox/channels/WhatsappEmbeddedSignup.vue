@@ -170,13 +170,13 @@ const launchEmbeddedSignup = async () => {
     );
 
     await setupFacebookSdk(
-      window.flowifyConfig?.whatsappAppId,
-      window.flowifyConfig?.whatsappApiVersion
+      window.shopizConfig?.whatsappAppId,
+      window.shopizConfig?.whatsappApiVersion
     );
     fbSdkLoaded.value = true;
 
     const code = await initWhatsAppEmbeddedSignup(
-      window.flowifyConfig?.whatsappConfigurationId
+      window.shopizConfig?.whatsappConfigurationId
     );
 
     authCode.value = code;

@@ -4,8 +4,8 @@ describe('#mutations', () => {
   describe('#SET_REFERRER_HOST', () => {
     it('sets referrer host properly', () => {
       const state = { referrerHost: '' };
-      mutations.SET_REFERRER_HOST(state, 'flowify.vn');
-      expect(state.referrerHost).toEqual('flowify.vn');
+      mutations.SET_REFERRER_HOST(state, 'shopiz.pro');
+      expect(state.referrerHost).toEqual('shopiz.pro');
     });
   });
 

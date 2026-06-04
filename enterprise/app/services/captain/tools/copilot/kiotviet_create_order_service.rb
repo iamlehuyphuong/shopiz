@@ -1,5 +1,5 @@
 # Copilot tool: Agent creates a draft order via AI with KiotViet products.
-# Validates stock, creates ConversationOrder in Flowify for review.
+# Validates stock, creates ConversationOrder in Shopiz for review.
 class Captain::Tools::Copilot::KiotvietCreateOrderService < Captain::Tools::Copilot::BaseCreateOrderService
   include Captain::Tools::Concerns::KiotvietClient
 
@@ -8,7 +8,7 @@ class Captain::Tools::Copilot::KiotvietCreateOrderService < Captain::Tools::Copi
   end
 
   description 'Create a draft order with KiotViet products. Validates stock availability ' \
-              'and creates the order in Flowify for agent review before pushing to KiotViet.'
+              'and creates the order in Shopiz for agent review before pushing to KiotViet.'
 
   private
 

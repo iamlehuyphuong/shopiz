@@ -36,19 +36,19 @@ export const initializeAudioAlerts = user => {
 
 export const initializeChatwootEvents = () => {
   emitter.on(CHATWOOT_RESET, () => {
-    if (window.$flowify) {
-      window.$flowify.reset();
+    if (window.$shopiz) {
+      window.$shopiz.reset();
     }
   });
   emitter.on(CHATWOOT_SET_USER, ({ user }) => {
-    if (window.$flowify) {
-      window.$flowify.setUser(user.email, {
+    if (window.$shopiz) {
+      window.$shopiz.setUser(user.email, {
         avatar_url: user.avatar_url,
         email: user.email,
         identifier_hash: user.hmac_identifier,
         name: user.name,
       });
-      window.$flowify.setCustomAttributes({
+      window.$shopiz.setCustomAttributes({
         signedUpAt: user.created_at,
         cloudCustomer: 'true',
         account_id: user.account_id,

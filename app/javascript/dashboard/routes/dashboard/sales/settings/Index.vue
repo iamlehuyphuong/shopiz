@@ -65,7 +65,7 @@ const TEMPLATE_VARIABLES = [
   { key: '%{total_amount}', labelKey: 'INBOX_MGMT.ECOMMERCE.VAR_TOTAL_AMOUNT' },
 ];
 
-const FLOWIFY_LOGO_PATH = '/brand-assets/logo_thumbnail.svg';
+const SHOPIZ_LOGO_PATH = '/brand-assets/logo_thumbnail.svg';
 
 const selectedIntegrationId = ref(null);
 const isSaving = ref(false);
@@ -108,7 +108,7 @@ const integrations = computed(() => {
 });
 
 const activePlatformLabel = computed(() => {
-  if (selectedIntegrationId.value === 'flowify') return 'Flowify';
+  if (selectedIntegrationId.value === 'shopiz') return 'Shopiz';
   const found = integrations.value.find(
     item => item.hookId === selectedIntegrationId.value
   );
@@ -116,7 +116,7 @@ const activePlatformLabel = computed(() => {
 });
 
 const activePlatformLogo = computed(() => {
-  if (selectedIntegrationId.value === 'flowify') return FLOWIFY_LOGO_PATH;
+  if (selectedIntegrationId.value === 'shopiz') return SHOPIZ_LOGO_PATH;
   return `/dashboard/images/integrations/${selectedIntegrationId.value}.png`;
 });
 
@@ -150,7 +150,7 @@ watch(
   currentAccount,
   () => {
     const config = currentAccount.value?.settings || {};
-    selectedIntegrationId.value = config.active_ecommerce_platform || 'flowify';
+    selectedIntegrationId.value = config.active_ecommerce_platform || 'shopiz';
     loadSalesSettings();
   },
   { deep: true, immediate: true }
@@ -301,18 +301,18 @@ const insertVariable = variableKey => {
                 v-if="showPlatformDropdown"
                 class="py-2 bg-n-alpha-3 backdrop-blur-[100px] outline outline-n-container outline-1 z-50 absolute ltr:right-0 rtl:left-0 top-12 min-w-[240px] rounded-xl shadow-lg flex flex-col gap-1 mt-1"
               >
-                <!-- Flowify Option -->
+                <!-- Shopiz Option -->
                 <button
                   type="button"
                   class="flex items-center justify-between px-3 py-2 mx-1 rounded-lg transition-all hover:bg-n-alpha-2 cursor-pointer text-left w-[calc(100%-8px)]"
                   :class="
-                    selectedIntegrationId === 'flowify'
+                    selectedIntegrationId === 'shopiz'
                       ? 'bg-n-brand/10 hover:bg-n-brand/15'
                       : ''
                   "
                   @click="
                     () => {
-                      selectIntegration('flowify');
+                      selectIntegration('shopiz');
                       showPlatformDropdown = false;
                     }
                   "
@@ -322,17 +322,17 @@ const insertVariable = variableKey => {
                       class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 bg-n-alpha-2 border border-n-weak"
                     >
                       <img
-                        :src="FLOWIFY_LOGO_PATH"
+                        :src="SHOPIZ_LOGO_PATH"
                         class="w-5 h-5 object-contain"
-                        alt="Flowify"
+                        alt="Shopiz"
                       />
                     </div>
                     <span class="text-sm font-medium text-n-slate-12 truncate">
-                      Flowify
+                      Shopiz
                     </span>
                   </div>
                   <i
-                    v-if="selectedIntegrationId === 'flowify'"
+                    v-if="selectedIntegrationId === 'shopiz'"
                     class="i-lucide-check text-n-brand text-sm flex-shrink-0"
                   />
                 </button>

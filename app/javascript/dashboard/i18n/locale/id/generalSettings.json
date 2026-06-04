@@ -123,11 +123,11 @@
         "CUSTOM_EMAIL_DOMAIN_ENABLED": "Anda dapat menerima email di domain kustom Anda sekarang."
       }
     },
-    "UPDATE_CHATWOOT": "Pembaharuan Flowify {latestFlowifyVersion} telah tersedia. Silahkan lakukan pembaharuan instance Anda.",
+    "UPDATE_CHATWOOT": "Pembaharuan Shopiz {latestShopizVersion} telah tersedia. Silahkan lakukan pembaharuan instance Anda.",
     "LEARN_MORE": "Pelajari lebih lanjut",
-    "PAYMENT_PENDING": "Pembayaran Anda tertunda. Harap perbarui informasi pembayaran Anda untuk melanjutkan menggunakan Flowify",
-    "UPGRADE": "Upgrade to continue using Flowify",
-    "LIMITS_UPGRADE": "Akun Anda telah melebihi batas penggunaan, harap tingkatkan paket Anda untuk terus menggunakan Flowify",
+    "PAYMENT_PENDING": "Pembayaran Anda tertunda. Harap perbarui informasi pembayaran Anda untuk melanjutkan menggunakan Shopiz",
+    "UPGRADE": "Upgrade to continue using Shopiz",
+    "LIMITS_UPGRADE": "Akun Anda telah melebihi batas penggunaan, harap tingkatkan paket Anda untuk terus menggunakan Shopiz",
     "OPEN_BILLING": "Buka tagihan"
   },
   "FORMS": {

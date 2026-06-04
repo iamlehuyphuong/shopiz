@@ -400,8 +400,8 @@
     "COPILOT": {
       "TITLE": "Copilot",
       "TRY_THESE_PROMPTS": "Isprobajte ove upite",
-      "PANEL_TITLE": "Get started with FlowifyAI Assistant",
-      "KICK_OFF_MESSAGE": "Need a quick summary, want to check past conversations, or draft a better reply? FlowifyAI Assistant’s here to speed things up.",
+      "PANEL_TITLE": "Get started with ShopizAI Assistant",
+      "KICK_OFF_MESSAGE": "Need a quick summary, want to check past conversations, or draft a better reply? ShopizAI Assistant’s here to speed things up.",
       "SEND_MESSAGE": "Pošalji poruku...",
       "EMPTY_MESSAGE": "Došlo je do pogreške pri generiranju odgovora. Molimo pokušajte ponovno.",
       "LOADER": "Kapetan razmišlja",

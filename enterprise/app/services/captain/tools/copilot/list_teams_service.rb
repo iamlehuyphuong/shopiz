@@ -23,7 +23,7 @@ class Captain::Tools::Copilot::ListTeamsService < Captain::Tools::BaseTool
   private
 
   def format_team(team)
-    members_list = team.members.map { |m| " - #{m.name} (ID: #{m.id})" }.join("\n")
+    members_list = team.members.map { |m| "  - #{m.name} (ID: #{m.id})" }.join("\n")
     <<~TEAM.strip
       Team: #{team.name} (ID: #{team.id})
       Description: #{team.description.presence || 'N/A'}

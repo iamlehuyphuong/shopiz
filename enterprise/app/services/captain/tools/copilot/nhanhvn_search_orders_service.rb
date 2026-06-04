@@ -17,7 +17,7 @@ class Captain::Tools::Copilot::NhanhvnSearchOrdersService < Captain::Tools::Base
 
     total_count = orders.size
     <<~RESPONSE
-      #{total_count > 50 ? "Found #{total_count} orders (showing first 50)": "Found #{total_count} order(s)"}
+      #{total_count > 50 ? "Found #{total_count} orders (showing first 50)" : "Found #{total_count} order(s)"}
       #{orders.first(50).map { |order| format_order(order) }.join("\n---\n")}
     RESPONSE
   end

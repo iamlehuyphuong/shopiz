@@ -8,6 +8,7 @@ class Captain::Tools::Copilot::WoocommerceSearchOrdersService < Captain::Tools::
   description 'Search WooCommerce orders by customer email, phone, or order ID'
   param :query, type: :string, desc: 'Customer email, phone, or order ID to search'
 
+
   def active?
     woocommerce_active?
   end
@@ -45,12 +46,12 @@ class Captain::Tools::Copilot::WoocommerceSearchOrdersService < Captain::Tools::
     billing = order['billing'] || {}
     [
       "Order ##{order['id']}",
-      " Customer: #{billing['first_name']} #{billing['last_name']}".strip,
-      " Email: #{billing['email'] || 'N/A'}",
-      " Total: #{order['total']} #{order['currency']}",
-      " Status: #{order['status']}",
-      " Payment: #{order['payment_method_title'] || 'N/A'}",
-      " Date: #{order['date_created']}"
+      "  Customer: #{billing['first_name']} #{billing['last_name']}".strip,
+      "  Email: #{billing['email'] || 'N/A'}",
+      "  Total: #{order['total']} #{order['currency']}",
+      "  Status: #{order['status']}",
+      "  Payment: #{order['payment_method_title'] || 'N/A'}",
+      "  Date: #{order['date_created']}"
     ].join("\n")
   end
 end

@@ -1,6 +1,6 @@
 # Public tool: Create a draft ConversationOrder from the current conversation.
 # Looks up products on KiotViet by code, validates stock, and creates
-# a draft order in Flowify for agent review — does NOT push to KiotViet.
+# a draft order in Shopiz for agent review — does NOT push to KiotViet.
 class Captain::Tools::KiotvietCreateOrderDraftTool < Captain::Tools::BasePublicTool
   include Captain::Tools::Concerns::KiotvietClient
 

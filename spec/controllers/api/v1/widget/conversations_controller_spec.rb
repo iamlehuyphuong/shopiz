@@ -18,7 +18,7 @@ RSpec.describe '/api/v1/widget/conversations/toggle_typing', type: :request do
       website_token: web_widget.website_token,
       contact: {
         name: 'contact-name',
-        email: 'contact-email@flowify.vn',
+        email: 'contact-email@shopiz.pro',
         phone_number: '+919745313456'
       },
       message: {
@@ -71,7 +71,7 @@ RSpec.describe '/api/v1/widget/conversations/toggle_typing', type: :request do
       expect(response).to have_http_status(:success)
       json_response = response.parsed_body
       expect(json_response['id']).not_to be_nil
-      expect(json_response['contact']['email']).to eq 'contact-email@flowify.vn'
+      expect(json_response['contact']['email']).to eq 'contact-email@shopiz.pro'
       expect(json_response['contact']['phone_number']).to eq '+919745313456'
       expect(json_response['contact']['name']).to eq 'contact-name'
     end
@@ -112,7 +112,7 @@ RSpec.describe '/api/v1/widget/conversations/toggle_typing', type: :request do
     end
 
     it 'does not update the name if the contact already exist' do
-      existing_contact = create(:contact, account: account, email: 'contact-email@flowify.vn')
+      existing_contact = create(:contact, account: account, email: 'contact-email@shopiz.pro')
 
       post '/api/v1/widget/conversations',
            headers: { 'X-Auth-Token' => token },
@@ -296,7 +296,7 @@ RSpec.describe '/api/v1/widget/conversations/toggle_typing', type: :request do
 
         expect(response).to have_http_status(:success)
         conversation.reload
-        # conversation custom attributes should have "product_name" key with value "Flowify"
+        # conversation custom attributes should have "product_name" key with value "Shopiz"
         expect(conversation.custom_attributes).to include('product_name' => 'Chatwoot')
       end
     end
@@ -326,7 +326,7 @@ RSpec.describe '/api/v1/widget/conversations/toggle_typing', type: :request do
 
         expect(response).to have_http_status(:success)
         conversation.reload
-        # conversation custom attributes should not have "product_name" key with value "Flowify"
+        # conversation custom attributes should not have "product_name" key with value "Shopiz"
         expect(conversation.custom_attributes).not_to include('product_name' => 'Chatwoot')
       end
     end

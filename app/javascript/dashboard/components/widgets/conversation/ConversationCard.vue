@@ -135,11 +135,8 @@ const isFollowupActive = computed(() => {
   const isCancelled = props.chat.custom_attributes?.followup_cancelled === true;
   if (isCancelled) return false;
 
-  const isBotPending =
-    props.chat.status === 'pending' &&
-    props.chat.meta?.assignee_type === 'AgentBot';
-  if (!['open', 'snoozed'].includes(props.chat.status) && !isBotPending)
-    return false;
+  const isBotPending = props.chat.status === 'pending' && props.chat.meta?.assignee_type === 'AgentBot';
+  if (!['open', 'snoozed'].includes(props.chat.status) && !isBotPending) return false;
 
   const lastMsg = props.chat.last_non_activity_message;
   // 1 is OUTGOING
@@ -187,7 +184,7 @@ const onCardClick = e => {
   if (e.metaKey || e.ctrlKey) {
     e.preventDefault();
     window.open(
-      `${window.flowifyConfig.hostURL}${path}`,
+      `${window.shopizConfig.hostURL}${path}`,
       '_blank',
       'noopener,noreferrer'
     );

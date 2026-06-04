@@ -12,7 +12,7 @@ const formatCustomDomain = customDomain =>
  * @throws {Error} If no valid base URL is found
  */
 const getDefaultBaseURL = () => {
-  const { hostURL, helpCenterURL } = window.flowifyConfig || {};
+  const { hostURL, helpCenterURL } = window.shopizConfig || {};
   const baseURL = helpCenterURL || hostURL || '';
 
   if (!baseURL) {

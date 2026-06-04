@@ -1,4 +1,4 @@
-# Base class for platform-specific "Create Order"copilot tools.
+# Base class for platform-specific "Create Order" copilot tools.
 # Subclasses only need to implement:
 #   - platform_name      (e.g. 'kiotviet')
 #   - platform_active?   (check integration status)
@@ -156,18 +156,18 @@ class Captain::Tools::Copilot::BaseCreateOrderService < Captain::Tools::BaseTool
   end
 
   def format_order_result(order, resolved)
-    lines = ["Draft order ##{order.id} created for conversation ##{order.conversation.display_id}\n"]
-    resolved[:items].each { |item| lines << " • #{item[:product_name]} × #{item[:quantity]} — #{format_currency(item[:unit_price])}" }
+    lines = ["✅ Draft order ##{order.id} created for conversation ##{order.conversation.display_id}\n"]
+    resolved[:items].each { |item| lines << "  • #{item[:product_name]} × #{item[:quantity]} — #{format_currency(item[:unit_price])}" }
     lines << "\nTotal: #{format_currency(order.total_amount)}"
     lines << "Customer: #{order.customer_name} | #{order.customer_phone}"
     lines << "Address: #{order.customer_address}" if order.customer_address.present?
 
     if resolved[:warnings].present?
-      lines << "\nStock warnings:"
-      resolved[:warnings].each { |w| lines << " • #{w}" }
+      lines << "\n⚠️ Stock warnings:"
+      resolved[:warnings].each { |w| lines << "  • #{w}" }
     end
 
-    lines << "\nStatus: DRAFT — Review and confirm in the Orders panel to push to #{platform_label}."
+    lines << "\n📋 Status: DRAFT — Review and confirm in the Orders panel to push to #{platform_label}."
     lines.join("\n")
   end
 end

@@ -144,7 +144,7 @@
       "ERROR": "Đã xảy ra lỗi khi kết nối Nhanh.vn. Vui lòng kiểm tra thông tin xác thực và thử lại."
     },
     "HEADER": "Tích hợp",
-    "DESCRIPTION": "Flowify tích hợp với nhiều công cụ và dịch vụ nhằm nâng cao hiệu quả cho đội ngũ của bạn. Khám phá danh sách bên dưới để cấu hình ứng dụng bạn yêu thích.",
+    "DESCRIPTION": "Shopiz tích hợp với nhiều công cụ và dịch vụ nhằm nâng cao hiệu quả cho đội ngũ của bạn. Khám phá danh sách bên dưới để cấu hình ứng dụng bạn yêu thích.",
     "LEARN_MORE": "Tìm hiểu thêm về tích hợp",
     "LOADING": "Đang lấy thông tin tích hợp",
     "SEARCH_PLACEHOLDER": "Tìm kiếm tích hợp...",
@@ -178,7 +178,7 @@
       "NO_RESULTS": "Không tìm thấy webhook nào khớp với tìm kiếm của bạn",
       "FORM": {
         "CANCEL": "Hủy",
-        "DESC": "Webhook cung cấp thông tin thời gian thực về những gì đang xảy ra trong tài khoản Flowify của bạn. Vui lòng nhập URL hợp lệ để cấu hình callback.",
+        "DESC": "Webhook cung cấp thông tin thời gian thực về những gì đang xảy ra trong tài khoản Shopiz của bạn. Vui lòng nhập URL hợp lệ để cấu hình callback.",
         "SUBSCRIPTIONS": {
           "LABEL": "Sự kiện",
           "EVENTS": {
@@ -212,7 +212,7 @@
       "HEADER_BTN_TXT": "Thêm webhook mới",
       "LOADING": "Đang tải webhook được đính kèm",
       "SEARCH_404": "Không có mục nào khớp với truy vấn",
-      "SIDEBAR_TXT": "<p><b>Webhook</b></p> <p>Webhook là các callback HTTP có thể được thiết lập cho mỗi tài khoản. Chúng được kích hoạt bởi các sự kiện như tạo tin nhắn trong Flowify. Bạn có thể tạo nhiều webhook cho tài khoản này. <br /><br /> Để tạo một <b>webhook</b>, nhấp vào nút <b>Thêm webhook mới</b>. Bạn cũng có thể xóa webhook hiện có bằng cách nhấp vào nút Xóa.</p>",
+      "SIDEBAR_TXT": "<p><b>Webhook</b></p> <p>Webhook là các callback HTTP có thể được thiết lập cho mỗi tài khoản. Chúng được kích hoạt bởi các sự kiện như tạo tin nhắn trong Shopiz. Bạn có thể tạo nhiều webhook cho tài khoản này. <br /><br /> Để tạo một <b>webhook</b>, nhấp vào nút <b>Thêm webhook mới</b>. Bạn cũng có thể xóa webhook hiện có bằng cách nhấp vào nút Xóa.</p>",
       "LIST": {
         "404": "Chưa có webhook nào được cấu hình cho tài khoản này.",
         "TITLE": "Quản lý webhook",
@@ -226,7 +226,7 @@
         "TITLE": "Chỉnh sửa webhook",
         "API": {
           "SUCCESS_MESSAGE": "Cấu hình webhook đã được cập nhật thành công",
-          "ERROR_MESSAGE": "Không thể kết nối với máy chủ Flowify, vui lòng thử lại sau"
+          "ERROR_MESSAGE": "Không thể kết nối với máy chủ Shopiz, vui lòng thử lại sau"
         }
       },
       "ADD": {
@@ -234,7 +234,7 @@
         "TITLE": "Thêm webhook mới",
         "API": {
           "SUCCESS_MESSAGE": "Cấu hình webhook đã được thêm thành công",
-          "ERROR_MESSAGE": "Không thể kết nối với máy chủ Flowify, vui lòng thử lại sau"
+          "ERROR_MESSAGE": "Không thể kết nối với máy chủ Shopiz, vui lòng thử lại sau"
         }
       },
       "DELETE": {
@@ -260,14 +260,14 @@
       },
       "HELP_TEXT": {
         "TITLE": "Cách sử dụng tích hợp Slack?",
-        "BODY": "Với tích hợp này, tất cả cuộc đối thoại đến sẽ được đồng bộ vào kênh ***{selectedChannelName}*** trên workspace Slack của bạn. Bạn có thể quản lý các cuộc đối thoại khách hàng ngay trong kênh mà không bỏ sót tin nhắn nào.\n\nCác tính năng chính:\n\n**Trả lời từ Slack:** Để trả lời một đối thoại trong kênh ***{selectedChannelName}***, chỉ cần gõ và gửi dưới dạng chuỗi. Điều này sẽ tạo phản hồi gửi trở lại khách hàng thông qua Flowify. Đơn giản như vậy!\n\n**Tạo ghi chú riêng:** Nếu muốn tạo ghi chú thay vì trả lời, hãy bắt đầu tin nhắn với ***`note:`***. Như vậy, tin nhắn sẽ được giữ riêng tư và không hiển thị cho khách hàng.\n\n**Liên kết hồ sơ nhân viên:** Nếu người trả lời trên Slack có hồ sơ nhân viên trong Flowify với cùng email, câu trả lời sẽ tự động được liên kết với hồ sơ đó. Ngược lại, nếu không có hồ sơ liên kết, các phản hồi sẽ hiển thị từ hồ sơ bot.",
+        "BODY": "Với tích hợp này, tất cả cuộc đối thoại đến sẽ được đồng bộ vào kênh ***{selectedChannelName}*** trên workspace Slack của bạn. Bạn có thể quản lý các cuộc đối thoại khách hàng ngay trong kênh mà không bỏ sót tin nhắn nào.\n\nCác tính năng chính:\n\n**Trả lời từ Slack:** Để trả lời một đối thoại trong kênh ***{selectedChannelName}***, chỉ cần gõ và gửi dưới dạng chuỗi. Điều này sẽ tạo phản hồi gửi trở lại khách hàng thông qua Shopiz. Đơn giản như vậy!\n\n**Tạo ghi chú riêng:** Nếu muốn tạo ghi chú thay vì trả lời, hãy bắt đầu tin nhắn với ***`note:`***. Như vậy, tin nhắn sẽ được giữ riêng tư và không hiển thị cho khách hàng.\n\n**Liên kết hồ sơ nhân viên:** Nếu người trả lời trên Slack có hồ sơ nhân viên trong Shopiz với cùng email, câu trả lời sẽ tự động được liên kết với hồ sơ đó. Ngược lại, nếu không có hồ sơ liên kết, các phản hồi sẽ hiển thị từ hồ sơ bot.",
         "SELECTED": "đã chọn"
       },
       "SELECT_CHANNEL": {
         "OPTION_LABEL": "Chọn kênh",
         "UPDATE": "Cập nhật",
         "BUTTON_TEXT": "Kết nối kênh",
-        "DESCRIPTION": "Workspace Slack của bạn hiện đã được liên kết với Flowify. Tuy nhiên, tích hợp chưa hoạt động. Để kích hoạt và kết nối kênh với Flowify, vui lòng nhấp vào nút bên dưới.\n\n**Lưu ý:** Nếu đang kết nối kênh riêng tư, hãy thêm ứng dụng Flowify vào kênh Slack trước khi tiếp tục.",
+        "DESCRIPTION": "Workspace Slack của bạn hiện đã được liên kết với Shopiz. Tuy nhiên, tích hợp chưa hoạt động. Để kích hoạt và kết nối kênh với Shopiz, vui lòng nhấp vào nút bên dưới.\n\n**Lưu ý:** Nếu đang kết nối kênh riêng tư, hãy thêm ứng dụng Shopiz vào kênh Slack trước khi tiếp tục.",
         "ATTENTION_REQUIRED": "Yêu cầu chú ý",
         "EXPIRED": "Tích hợp Slack của bạn đã hết hạn. Để tiếp tục nhận tin nhắn trên Slack, vui lòng xóa tích hợp và kết nối lại workspace."
       },
@@ -369,7 +369,7 @@
     "DASHBOARD_APPS": {
       "TITLE": "Ứng dụng Dashboard",
       "HEADER_BTN_TXT": "Thêm ứng dụng dashboard mới",
-      "SIDEBAR_TXT": "<p><b>Ứng dụng Dashboard</b></p><p>Ứng dụng Dashboard cho phép tổ chức nhúng một ứng dụng bên trong bảng điều khiển của Flowify để cung cấp ngữ cảnh cho nhân viên hỗ trợ khách hàng. Tính năng này cho phép bạn tạo ứng dụng độc lập và nhúng nó để hiển thị thông tin người dùng, đơn hàng hoặc lịch sử thanh toán.</p><p>Khi bạn nhúng ứng dụng vào bảng điều khiển Flowify, ứng dụng sẽ nhận ngữ cảnh của cuộc đối thoại và thông tin liên hệ qua các sự kiện. Hãy triển khai trình lắng nghe sự kiện message trên trang của bạn để nhận dữ liệu ngữ cảnh.</p><p>Để thêm ứng dụng dashboard mới, nhấp vào nút 'Thêm ứng dụng dashboard mới'.</p>",
+      "SIDEBAR_TXT": "<p><b>Ứng dụng Dashboard</b></p><p>Ứng dụng Dashboard cho phép tổ chức nhúng một ứng dụng bên trong bảng điều khiển của Shopiz để cung cấp ngữ cảnh cho nhân viên hỗ trợ khách hàng. Tính năng này cho phép bạn tạo ứng dụng độc lập và nhúng nó để hiển thị thông tin người dùng, đơn hàng hoặc lịch sử thanh toán.</p><p>Khi bạn nhúng ứng dụng vào bảng điều khiển Shopiz, ứng dụng sẽ nhận ngữ cảnh của cuộc đối thoại và thông tin liên hệ qua các sự kiện. Hãy triển khai trình lắng nghe sự kiện message trên trang của bạn để nhận dữ liệu ngữ cảnh.</p><p>Để thêm ứng dụng dashboard mới, nhấp vào nút 'Thêm ứng dụng dashboard mới'.</p>",
       "DESCRIPTION": "Ứng dụng Dashboard cho phép tổ chức nhúng một ứng dụng vào bảng điều khiển để cung cấp ngữ cảnh cho nhân viên hỗ trợ khách hàng. Tính năng này cho phép bạn tạo ứng dụng độc lập và nhúng nó để hiển thị thông tin người dùng, đơn hàng hoặc lịch sử thanh toán.",
       "LEARN_MORE": "Tìm hiểu thêm về ứng dụng Dashboard",
       "COUNT": "Có {n} ứng dụng bảng điều khiển",
@@ -532,7 +532,7 @@
       "EMPTY_LIST": "Không tìm thấy trợ lý nào, vui lòng tạo một trợ lý để bắt đầu"
     },
     "COPILOT": {
-      "TITLE": "Flowify AI",
+      "TITLE": "Shopiz AI",
       "TRY_THESE_PROMPTS": "Thử các gợi ý này",
       "PANEL_TITLE": "Bắt đầu với trợ lý AI",
       "KICK_OFF_MESSAGE": "Cần tóm tắt nhanh, xem lại cuộc trò chuyện trước đó, hoặc viết một phản hồi hay hơn? Trợ lý AI luôn sẵn sàng hỗ trợ.",
@@ -573,7 +573,7 @@
       "MESSAGE_PLACEHOLDER": "Nhập tin nhắn...",
       "HEADER": "Thử nghiệm",
       "DESCRIPTION": "Dùng khu vực này để gửi tin nhắn đến trợ lý và kiểm tra độ chính xác, tốc độ và giọng văn phản hồi.",
-      "CREDIT_NOTE": "Tin nhắn tại đây sẽ tính vào hạn mức FlowifyAI của bạn."
+      "CREDIT_NOTE": "Tin nhắn tại đây sẽ tính vào hạn mức ShopizAI của bạn."
     },
     "PAYWALL": {
       "TITLE": "Nâng cấp để sử dụng Trợ lý AI",
@@ -583,14 +583,14 @@
       "CANCEL_ANYTIME": "Bạn có thể thay đổi hoặc hủy gói bất cứ lúc nào"
     },
     "ENTERPRISE_PAYWALL": {
-      "AVAILABLE_ON": "FlowifyAI chỉ hỗ trợ trong các gói Enterprise.",
+      "AVAILABLE_ON": "ShopizAI chỉ hỗ trợ trong các gói Enterprise.",
       "UPGRADE_PROMPT": "Nâng cấp để dùng trợ lý, copilot và nhiều tính năng khác.",
       "ASK_ADMIN": "Vui lòng liên hệ quản trị viên để được nâng cấp."
     },
     "BANNER": {
-      "RESPONSES": "Bạn đã đạt giới hạn phản hồi. Nâng cấp để tiếp tục sử dụng FlowifyAI.",
-      "DOCUMENTS": "Đã đạt giới hạn tài liệu. Nâng cấp để tiếp tục sử dụng FlowifyAI.",
-      "ASSISTANTS": "Đã đạt giới hạn số lượng trợ lý. Nâng cấp để tiếp tục sử dụng FlowifyAI."
+      "RESPONSES": "Bạn đã đạt giới hạn phản hồi. Nâng cấp để tiếp tục sử dụng ShopizAI.",
+      "DOCUMENTS": "Đã đạt giới hạn tài liệu. Nâng cấp để tiếp tục sử dụng ShopizAI.",
+      "ASSISTANTS": "Đã đạt giới hạn số lượng trợ lý. Nâng cấp để tiếp tục sử dụng ShopizAI."
     },
     "FORM": {
       "CANCEL": "Huỷ",
@@ -639,7 +639,7 @@
         },
         "COMPANY_NAME": {
           "LABEL": "Tên Doanh nghiệp / Thương hiệu / Cửa hàng",
-          "PLACEHOLDER": "VD: Thời trang Flowify",
+          "PLACEHOLDER": "VD: Thời trang Shopiz",
           "ERROR": "Tên cửa hàng là bắt buộc"
         },
         "INDUSTRY": {
@@ -726,8 +726,8 @@
         "TITLE": "Không có trợ lý nào",
         "SUBTITLE": "Tạo một trợ lý để hỗ trợ khách hàng tự động bằng cách học từ tài liệu và lịch sử hội thoại.",
         "FEATURE_SPOTLIGHT": {
-          "TITLE": "Trợ lý FlowifyAI",
-          "NOTE": "Trợ lý FlowifyAI hỗ trợ khách hàng tức thời, học từ tài liệu và hội thoại cũ, giúp giảm tải cho đội ngũ của bạn."
+          "TITLE": "Trợ lý ShopizAI",
+          "NOTE": "Trợ lý ShopizAI hỗ trợ khách hàng tức thời, học từ tài liệu và hội thoại cũ, giúp giảm tải cho đội ngũ của bạn."
         }
       },
       "GUARDRAILS": {
@@ -948,8 +948,8 @@
         "TITLE": "Chưa có tài liệu",
         "SUBTITLE": "Tài liệu giúp trợ lý hiểu và trả lời chính xác hơn. Bạn có thể nhập tài liệu để làm nguồn tri thức.",
         "FEATURE_SPOTLIGHT": {
-          "TITLE": "Tài liệu FlowifyAI",
-          "NOTE": "Tài liệu được dùng làm nguồn tri thức cho trợ lý. FlowifyAI có thể phân tích và tạo phản hồi chính xác dựa trên nội dung của bạn."
+          "TITLE": "Tài liệu ShopizAI",
+          "NOTE": "Tài liệu được dùng làm nguồn tri thức cho trợ lý. ShopizAI có thể phân tích và tạo phản hồi chính xác dựa trên nội dung của bạn."
         }
       }
     },
@@ -1152,8 +1152,8 @@
         "SUBTITLE": "FAQ giúp trợ lý trả lời nhanh và chính xác hơn. FAQ có thể được tạo tự động hoặc thêm thủ công.",
         "CLEAR_SEARCH": "Xóa bộ lọc",
         "FEATURE_SPOTLIGHT": {
-          "TITLE": "Câu hỏi thường gặp FlowifyAI FAQ",
-          "NOTE": "FlowifyAI phát hiện các câu hỏi thường gặp, tạo gợi ý, và cho phép bạn duyệt hoặc từ chối."
+          "TITLE": "Câu hỏi thường gặp ShopizAI FAQ",
+          "NOTE": "ShopizAI phát hiện các câu hỏi thường gặp, tạo gợi ý, và cho phép bạn duyệt hoặc từ chối."
         }
       }
     },

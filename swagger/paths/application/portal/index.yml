@@ -17,41 +17,41 @@ responses:
         example:
           payload:
             - id: 4
-              color: '#1F93FF'
-              custom_domain: 'help.flowify.vn'
-              header_text: 'Handbook'
-              homepage_link: 'https://www.flowify.vn'
-              name: 'Handbook'
-              page_title: 'Handbook'
-              slug: 'handbook'
+              color: "#1F93FF"
+              custom_domain: "shopiz.help"
+              header_text: "Handbook"
+              homepage_link: "https://www.shopiz.pro"
+              name: "Handbook"
+              page_title: "Handbook"
+              slug: "handbook"
               archived: false
               account_id: 1
               config:
                 allowed_locales:
-                  - code: 'en'
+                  - code: "en"
                     articles_count: 32
                     categories_count: 9
               inbox:
                 id: 37
-                avatar_url: 'https://example.com/avatar.png'
+                avatar_url: "https://example.com/avatar.png"
                 channel_id: 1
-                name: 'Flowify'
-                channel_type: 'Channel::WebWidget'
+                name: "Shopiz"
+                channel_type: "Channel::WebWidget"
                 greeting_enabled: true
-                widget_color: '#1F93FF'
-                website_url: 'flowify.vn'
+                widget_color: "#1F93FF"
+                website_url: "shopiz.pro"
               logo:
                 id: 19399916
                 portal_id: 4
-                file_type: 'image/png'
+                file_type: "image/png"
                 account_id: 1
-                file_url: 'https://example.com/logo.png'
+                file_url: "https://example.com/logo.png"
                 blob_id: 21239614
-                filename: 'square.png'
+                filename: "square.png"
               meta:
                 all_articles_count: 0
                 categories_count: 9
-                default_locale: 'en'
+                default_locale: "en"
   '403':
     description: Access denied
     content:

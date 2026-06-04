@@ -18,7 +18,7 @@ class Captain::Tools::Copilot::SearchConversationsService < Captain::Tools::Base
     conversations = conversations.limit(100)
 
     <<~RESPONSE
-      #{total_count > 100 ? "Found #{total_count} conversations (showing first 100)": "Total number of conversations: #{total_count}"}
+      #{total_count > 100 ? "Found #{total_count} conversations (showing first 100)" : "Total number of conversations: #{total_count}"}
       #{conversations.map { |conversation| conversation.to_llm_text(include_contact_details: true, include_private_messages: true) }.join("\n---\n")}
     RESPONSE
   end

@@ -53,11 +53,11 @@ class Captain::Tools::Copilot::WoocommerceCheckInventoryService < Captain::Tools
   end
 
   def stock_icon(quantity, woo_status)
-    return '' if woo_status == 'instock' && quantity > 10
-    return '' if woo_status == 'instock'
+    return '🟢' if woo_status == 'instock' && quantity > 10
+    return '🟡' if woo_status == 'instock'
     return '🟠' if woo_status == 'onbackorder'
 
-    ''
+    '🔴'
   end
 
   def format_results(results)
@@ -67,11 +67,11 @@ class Captain::Tools::Copilot::WoocommerceCheckInventoryService < Captain::Tools
   end
 
   def format_single(result)
-    return ["ID #{result[:id]}: #{result[:error]}", ''] if result[:error]
+    return ["❌ ID #{result[:id]}: #{result[:error]}", ''] if result[:error]
 
     [
       "#{result[:icon]} #{result[:name]} (ID: #{result[:id]}) — #{result[:status]}",
-      "  Quantity: #{result[:total]} | WooCommerce Status: #{result[:stock_status]}",
+      "   Quantity: #{result[:total]} | WooCommerce Status: #{result[:stock_status]}",
       ''
     ]
   end

@@ -1,7 +1,7 @@
 class ApplicationMailer < ActionMailer::Base
   include ActionView::Helpers::SanitizeHelper
 
-  default from: ENV.fetch('MAILER_SENDER_EMAIL', 'Flowify <accounts@flowify.vn>')
+  default from: ENV.fetch('MAILER_SENDER_EMAIL', 'Shopiz <accounts@shopiz.pro>')
   before_action { ensure_current_account(params.try(:[], :account)) }
   around_action :switch_locale
   layout 'mailer/base'
@@ -61,7 +61,7 @@ class ApplicationMailer < ActionMailer::Base
       global_config: GlobalConfig.get('BRAND_NAME', 'BRAND_URL'),
       action_url: resolved_action_url,
       mailer_action: action_name,
-      frontend_url: ENV.fetch('FRONTEND_URL', 'https://beta.flowify.vn'),
+      frontend_url: ENV.fetch('FRONTEND_URL', 'https://beta.shopiz.pro'),
       locale: resolved_locale
     }
     # Provide user drop for Devise mailers via locals (bypasses to_drop conversion)
@@ -75,7 +75,7 @@ class ApplicationMailer < ActionMailer::Base
   def devise_action_url
     return nil unless @resource.is_a?(User) && @token.present?
 
-    frontend_base = ENV.fetch('FRONTEND_URL', 'https://beta.flowify.vn')
+    frontend_base = ENV.fetch('FRONTEND_URL', 'https://beta.shopiz.pro')
     case action_name
     when 'confirmation_instructions'
       "#{frontend_base}/app/auth/confirmation?confirmation_token=#{@token}"

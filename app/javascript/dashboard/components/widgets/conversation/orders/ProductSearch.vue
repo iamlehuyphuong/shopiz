@@ -38,7 +38,7 @@ const sourceLabel = source => {
     sapo: 'Sapo',
     woocommerce: 'WooCommerce',
     nhanhvn: 'NhanhVN',
-    flowify: 'Flowify',
+    shopiz: 'Shopiz',
     helpcenter: 'Help Center',
     other: 'Other',
   };

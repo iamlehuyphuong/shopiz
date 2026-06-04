@@ -196,7 +196,7 @@ const handleExport = async () => {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `flowify_ai_tools_${new Date().getTime()}.json`;
+  a.download = `shopiz_ai_tools_${new Date().getTime()}.json`;
   a.click();
   URL.revokeObjectURL(url);
 };

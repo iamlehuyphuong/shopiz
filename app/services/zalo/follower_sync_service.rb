@@ -1,4 +1,4 @@
-# Syncs all followers from Zalo OA to Flowify contacts
+# Syncs all followers from Zalo OA to Shopiz contacts
 # Creates Contact + ContactInbox for each follower and fetches their profile data
 # Uses pagination to handle large follower lists
 class Zalo::FollowerSyncService

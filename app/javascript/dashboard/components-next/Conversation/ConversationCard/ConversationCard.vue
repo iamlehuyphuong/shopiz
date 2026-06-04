@@ -192,7 +192,7 @@ const onCardClick = e => {
 
   if (e.metaKey || e.ctrlKey) {
     window.open(
-      window.flowifyConfig.hostURL + path,
+      window.shopizConfig.hostURL + path,
       '_blank',
       'noopener noreferrer nofollow'
     );

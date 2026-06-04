@@ -4,7 +4,7 @@ export const ONGOING_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Chatbot Assistance',
     inbox: {
       id: 2,
-      name: 'Flowify Website',
+      name: 'Shopiz Website',
       channel_type: 'Channel::WebWidget',
       phone_number: '',
     },
@@ -17,7 +17,7 @@ export const ONGOING_CAMPAIGN_EMPTY_STATE_CONTENT = [
     enabled: true,
     campaign_type: 'ongoing',
     trigger_rules: {
-      url: 'https://www.flowify.vn/features/chatbot/',
+      url: 'https://www.shopiz.pro/features/chatbot/',
       time_on_page: 10,
     },
     trigger_only_during_business_hours: true,
@@ -29,7 +29,7 @@ export const ONGOING_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Pricing Information Support',
     inbox: {
       id: 2,
-      name: 'Flowify Website',
+      name: 'Shopiz Website',
       channel_type: 'Channel::WebWidget',
       phone_number: '',
     },
@@ -42,7 +42,7 @@ export const ONGOING_CAMPAIGN_EMPTY_STATE_CONTENT = [
     enabled: false,
     campaign_type: 'ongoing',
     trigger_rules: {
-      url: 'https://www.flowify.vn/pricings',
+      url: 'https://www.shopiz.pro/pricings',
       time_on_page: 10,
     },
     trigger_only_during_business_hours: false,
@@ -54,21 +54,21 @@ export const ONGOING_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Product Setup Assistance',
     inbox: {
       id: 2,
-      name: 'Flowify Website',
+      name: 'Shopiz Website',
       channel_type: 'Channel::WebWidget',
       phone_number: '',
     },
     sender: {
       id: 1,
-      name: 'Flowify',
+      name: 'Shopiz',
       thumbnail: 'SP',
     },
-    message: 'Hi! Flowify here. Need help setting up? Let me know!',
+    message: 'Hi! Shopiz here. Need help setting up? Let me know!',
     campaign_status: 'active',
     enabled: false,
     campaign_type: 'ongoing',
     trigger_rules: {
-      url: 'https://{*.}?flowify.vn/apps/account/*/settings/inboxes/new/',
+      url: 'https://{*.}?shopiz.pro/apps/account/*/settings/inboxes/new/',
       time_on_page: 10,
     },
     trigger_only_during_business_hours: false,
@@ -80,7 +80,7 @@ export const ONGOING_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'General Assistance Campaign',
     inbox: {
       id: 2,
-      name: 'Flowify Website',
+      name: 'Shopiz Website',
       channel_type: 'Channel::WebWidget',
       phone_number: '',
     },
@@ -109,13 +109,13 @@ export const ONE_OFF_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Customer Feedback Request',
     inbox: {
       id: 6,
-      name: 'Flowify Mobile',
+      name: 'Shopiz Mobile',
       channel_type: 'Channel::Sms',
       phone_number: '+29818373149903',
       provider: 'default',
     },
     message:
-      'Hello! Enjoying our product? Share your feedback on G2 and earn a $25 Amazon coupon: https://www.flowify.vn/g2-review',
+      'Hello! Enjoying our product? Share your feedback on G2 and earn a $25 Amazon coupon: https://www.shopiz.pro/g2-review',
     campaign_status: 'active',
     enabled: true,
     campaign_type: 'one_off',
@@ -135,7 +135,7 @@ export const ONE_OFF_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Welcome New Customer',
     inbox: {
       id: 6,
-      name: 'Flowify Mobile',
+      name: 'Shopiz Mobile',
       channel_type: 'Channel::Sms',
       phone_number: '+29818373149903',
       provider: 'default',
@@ -162,7 +162,7 @@ export const ONE_OFF_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'New Business Welcome',
     inbox: {
       id: 6,
-      name: 'Flowify Mobile',
+      name: 'Shopiz Mobile',
       channel_type: 'Channel::Sms',
       phone_number: '+29818373149903',
       provider: 'default',
@@ -190,7 +190,7 @@ export const ONE_OFF_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'New Member Onboarding',
     inbox: {
       id: 6,
-      name: 'Flowify Mobile',
+      name: 'Shopiz Mobile',
       channel_type: 'Channel::Sms',
       phone_number: '+29818373149903',
       provider: 'default',
@@ -218,13 +218,13 @@ export const VOICE_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Signup Confirmation Call',
     inbox: {
       id: 10,
-      name: 'Flowify Phone Support',
+      name: 'Shopiz Phone Support',
       channel_type: 'Channel::Voice',
       avatar_url: '',
       phone_number: '+14155552671',
     },
     message:
-      'Hello! 👋 Thanks for signing up with Flowify. I am calling to confirm your account setup and see if you have any questions about getting started.',
+      'Hello! 👋 Thanks for signing up with Shopiz. I am calling to confirm your account setup and see if you have any questions about getting started.',
     campaign_status: 'scheduled',
     enabled: true,
     campaign_type: 'voice',
@@ -246,13 +246,13 @@ export const VOICE_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Support Ticket Follow-Up',
     inbox: {
       id: 10,
-      name: 'Flowify Phone Support',
+      name: 'Shopiz Phone Support',
       channel_type: 'Channel::Voice',
       avatar_url: '',
       phone_number: '+14155552671',
     },
     message:
-      'Hi, this is Flowify support calling to follow up on your recent ticket #12345. Has your issue been resolved to your satisfaction? If not, I can connect you with a specialist right away.',
+      'Hi, this is Shopiz support calling to follow up on your recent ticket #12345. Has your issue been resolved to your satisfaction? If not, I can connect you with a specialist right away.',
     campaign_status: 'completed',
     enabled: true,
     campaign_type: 'voice',
@@ -274,7 +274,7 @@ export const VOICE_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Appointment Reminder',
     inbox: {
       id: 10,
-      name: 'Flowify Phone Support',
+      name: 'Shopiz Phone Support',
       channel_type: 'Channel::Voice',
       avatar_url: '',
       phone_number: '+14155552671',
@@ -302,13 +302,13 @@ export const VOICE_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Customer Feedback Survey',
     inbox: {
       id: 10,
-      name: 'Flowify Phone Support',
+      name: 'Shopiz Phone Support',
       channel_type: 'Channel::Voice',
       avatar_url: '',
       phone_number: '+14155552671',
     },
     message:
-      "Hello, this is Flowify reaching out for your valuable feedback. We noticed you've been using our service for 30 days now. I'd like to ask a few quick questions about your experience. Your feedback helps us improve our service. Would you have a moment to share your thoughts?",
+      "Hello, this is Shopiz reaching out for your valuable feedback. We noticed you've been using our service for 30 days now. I'd like to ask a few quick questions about your experience. Your feedback helps us improve our service. Would you have a moment to share your thoughts?",
     campaign_status: 'scheduled',
     enabled: true,
     campaign_type: 'voice',
@@ -333,13 +333,13 @@ export const SURVEY_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Signup Confirmation Call',
     inbox: {
       id: 10,
-      name: 'Flowify Phone Support',
+      name: 'Shopiz Phone Support',
       channel_type: 'Channel::Voice',
       avatar_url: '',
       phone_number: '+14155552671',
     },
     message:
-      'Hello! 👋 Thanks for signing up with Flowify. I am calling to confirm your account setup and see if you have any questions about getting started.',
+      'Hello! 👋 Thanks for signing up with Shopiz. I am calling to confirm your account setup and see if you have any questions about getting started.',
     campaign_status: 'scheduled',
     enabled: true,
     campaign_type: 'voice',
@@ -361,13 +361,13 @@ export const SURVEY_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Support Ticket Follow-Up',
     inbox: {
       id: 10,
-      name: 'Flowify Phone Support',
+      name: 'Shopiz Phone Support',
       channel_type: 'Channel::Voice',
       avatar_url: '',
       phone_number: '+14155552671',
     },
     message:
-      'Hi, this is Flowify support calling to follow up on your recent ticket #12345. Has your issue been resolved to your satisfaction? If not, I can connect you with a specialist right away.',
+      'Hi, this is Shopiz support calling to follow up on your recent ticket #12345. Has your issue been resolved to your satisfaction? If not, I can connect you with a specialist right away.',
     campaign_status: 'completed',
     enabled: true,
     campaign_type: 'voice',
@@ -389,7 +389,7 @@ export const SURVEY_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Appointment Reminder',
     inbox: {
       id: 10,
-      name: 'Flowify Phone Support',
+      name: 'Shopiz Phone Support',
       channel_type: 'Channel::Voice',
       avatar_url: '',
       phone_number: '+14155552671',
@@ -417,13 +417,13 @@ export const SURVEY_CAMPAIGN_EMPTY_STATE_CONTENT = [
     title: 'Customer Feedback Survey',
     inbox: {
       id: 10,
-      name: 'Flowify Phone Support',
+      name: 'Shopiz Phone Support',
       channel_type: 'Channel::Voice',
       avatar_url: '',
       phone_number: '+14155552671',
     },
     message:
-      "Hello, this is Flowify reaching out for your valuable feedback. We noticed you've been using our service for 30 days now. I'd like to ask a few quick questions about your experience. Your feedback helps us improve our service. Would you have a moment to share your thoughts?",
+      "Hello, this is Shopiz reaching out for your valuable feedback. We noticed you've been using our service for 30 days now. I'd like to ask a few quick questions about your experience. Your feedback helps us improve our service. Would you have a moment to share your thoughts?",
     campaign_status: 'scheduled',
     enabled: true,
     campaign_type: 'voice',

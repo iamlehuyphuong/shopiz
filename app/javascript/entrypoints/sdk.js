@@ -19,7 +19,7 @@ import { setCookieWithDomain } from '../sdk/cookieHelpers';
 import { SDK_SET_BUBBLE_VISIBILITY } from 'shared/constants/sharedFrameEvents';
 
 const runSDK = ({ baseUrl, websiteToken }) => {
-  if (window.$flowify) {
+  if (window.$shopiz) {
     return;
   }
 
@@ -47,39 +47,39 @@ const runSDK = ({ baseUrl, websiteToken }) => {
     restoreWidgetInDOM(event.newDocument.body)
   );
 
-  const flowifySettings = window.flowifySettings || {};
-  let locale = flowifySettings.locale;
-  let baseDomain = flowifySettings.baseDomain;
+  const shopizSettings = window.shopizSettings || {};
+  let locale = shopizSettings.locale;
+  let baseDomain = shopizSettings.baseDomain;
 
-  if (flowifySettings.useBrowserLanguage) {
+  if (shopizSettings.useBrowserLanguage) {
     locale = window.navigator.language.replace('-', '_');
   }
 
-  window.$flowify = {
+  window.$shopiz = {
     baseUrl,
     baseDomain,
     hasLoaded: false,
-    hideMessageBubble: flowifySettings.hideMessageBubble || false,
+    hideMessageBubble: shopizSettings.hideMessageBubble || false,
     isOpen: false,
-    position: flowifySettings.position === 'left' ? 'left' : 'right',
+    position: shopizSettings.position === 'left' ? 'left' : 'right',
     websiteToken,
     locale,
-    useBrowserLanguage: flowifySettings.useBrowserLanguage || false,
-    type: getBubbleView(flowifySettings.type),
-    launcherTitle: flowifySettings.launcherTitle || '',
-    showPopoutButton: flowifySettings.showPopoutButton || false,
-    showUnreadMessagesDialog: flowifySettings.showUnreadMessagesDialog ?? true,
-    widgetStyle: getWidgetStyle(flowifySettings.widgetStyle) || 'standard',
+    useBrowserLanguage: shopizSettings.useBrowserLanguage || false,
+    type: getBubbleView(shopizSettings.type),
+    launcherTitle: shopizSettings.launcherTitle || '',
+    showPopoutButton: shopizSettings.showPopoutButton || false,
+    showUnreadMessagesDialog: shopizSettings.showUnreadMessagesDialog ?? true,
+    widgetStyle: getWidgetStyle(shopizSettings.widgetStyle) || 'standard',
     resetTriggered: false,
-    darkMode: getDarkMode(flowifySettings.darkMode),
-    welcomeTitle: flowifySettings.welcomeTitle || '',
-    welcomeDescription: flowifySettings.welcomeDescription || '',
-    availableMessage: flowifySettings.availableMessage || '',
-    unavailableMessage: flowifySettings.unavailableMessage || '',
-    enableFileUpload: flowifySettings.enableFileUpload,
-    enableEmojiPicker: flowifySettings.enableEmojiPicker ?? true,
-    enableEndConversation: flowifySettings.enableEndConversation ?? true,
-    widgetColor: flowifySettings.widgetColor || '',
+    darkMode: getDarkMode(shopizSettings.darkMode),
+    welcomeTitle: shopizSettings.welcomeTitle || '',
+    welcomeDescription: shopizSettings.welcomeDescription || '',
+    availableMessage: shopizSettings.availableMessage || '',
+    unavailableMessage: shopizSettings.unavailableMessage || '',
+    enableFileUpload: shopizSettings.enableFileUpload,
+    enableEmojiPicker: shopizSettings.enableEmojiPicker ?? true,
+    enableEndConversation: shopizSettings.enableEndConversation ?? true,
+    widgetColor: shopizSettings.widgetColor || '',
 
     toggle(state) {
       IFrameHelper.events.toggleBubble(state);
@@ -91,21 +91,21 @@ const runSDK = ({ baseUrl, websiteToken }) => {
       if (visibility === 'hide') {
         addClasses(widgetHolder, 'woot-widget--without-bubble');
         addClasses(widgetElm, 'woot-hidden');
-        window.$flowify.hideMessageBubble = true;
+        window.$shopiz.hideMessageBubble = true;
       } else if (visibility === 'show') {
         removeClasses(widgetElm, 'woot-hidden');
         removeClasses(widgetHolder, 'woot-widget--without-bubble');
-        window.$flowify.hideMessageBubble = false;
+        window.$shopiz.hideMessageBubble = false;
       }
       IFrameHelper.sendMessage(SDK_SET_BUBBLE_VISIBILITY, {
-        hideMessageBubble: window.$flowify.hideMessageBubble,
+        hideMessageBubble: window.$shopiz.hideMessageBubble,
       });
     },
 
     popoutChatWindow() {
       IFrameHelper.events.popoutChatWindow({
-        baseUrl: window.$flowify.baseUrl,
-        websiteToken: window.$flowify.websiteToken,
+        baseUrl: window.$shopiz.baseUrl,
+        websiteToken: window.$shopiz.websiteToken,
         locale,
       });
     },
@@ -128,8 +128,8 @@ const runSDK = ({ baseUrl, websiteToken }) => {
         return;
       }
 
-      window.$flowify.identifier = identifier;
-      window.$flowify.user = user;
+      window.$shopiz.identifier = identifier;
+      window.$shopiz.user = user;
       IFrameHelper.sendMessage('set-user', { identifier, user });
 
       setCookieWithDomain(userCookieName, hashToBeStored, {
@@ -194,7 +194,7 @@ const runSDK = ({ baseUrl, websiteToken }) => {
     },
 
     reset() {
-      if (window.$flowify.isOpen) {
+      if (window.$shopiz.isOpen) {
         IFrameHelper.events.toggleBubble();
       }
 
@@ -203,11 +203,11 @@ const runSDK = ({ baseUrl, websiteToken }) => {
 
       const iframe = IFrameHelper.getAppFrame();
       iframe.src = IFrameHelper.getUrl({
-        baseUrl: window.$flowify.baseUrl,
-        websiteToken: window.$flowify.websiteToken,
+        baseUrl: window.$shopiz.baseUrl,
+        websiteToken: window.$shopiz.websiteToken,
       });
 
-      window.$flowify.resetTriggered = true;
+      window.$shopiz.resetTriggered = true;
     },
   };
 
@@ -217,6 +217,6 @@ const runSDK = ({ baseUrl, websiteToken }) => {
   });
 };
 
-window.flowifySDK = {
+window.shopizSDK = {
   run: runSDK,
 };

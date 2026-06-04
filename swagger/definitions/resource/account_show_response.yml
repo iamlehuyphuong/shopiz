@@ -6,8 +6,8 @@ allOf:
         type:
           - string
           - 'null'
-        description: Latest version of Flowify available
-        example: '3.0.0'
+        description: Latest version of Shopiz available
+        example: "3.0.0"
       subscribed_features:
         type: array
         items:

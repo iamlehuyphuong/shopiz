@@ -16,16 +16,16 @@ class Captain::Tools::VisionTextExtractorService
 
   def extract_text_from_multiple_images(image_paths)
     Rails.logger.info "Using #{@use_vision ? 'Google Vision' : 'Tesseract'} for text extraction"
-
+    
     extracted_texts = []
-
+    
     image_paths.each_with_index do |image_path, index|
       Rails.logger.info "Extracting text from image #{index + 1}/#{image_paths.length}"
-
+      
       text = extract_text_from_image(image_path)
       extracted_texts << text if text.present?
     end
-
+    
     extracted_texts.join("\n\n")
   end
 
@@ -43,12 +43,14 @@ class Captain::Tools::VisionTextExtractorService
   def extract_with_vision(image_path)
     image = Google::Cloud::Vision::Image.new(image_path)
     response = @vision.text_detection(image: image)
-
-    raise TextExtractionError, "Vision API error: #{response.error.message}" if response.error
-
+    
+    if response.error
+      raise TextExtractionError, "Vision API error: #{response.error.message}"
+    end
+    
     text_annotation = response.full_text_annotation
-    return '' unless text_annotation
-
+    return "" unless text_annotation
+    
     text_annotation.text
   rescue Google::Cloud::Error => e
     Rails.logger.error "Google Vision API error: #{e.message}"
@@ -57,7 +59,7 @@ class Captain::Tools::VisionTextExtractorService
 
   def extract_with_tesseract(image_path)
     require 'rtesseract'
-
+    
     RTesseract.new(image_path).to_s.strip
   rescue StandardError => e
     Rails.logger.error "Tesseract extraction error: #{e.message}"

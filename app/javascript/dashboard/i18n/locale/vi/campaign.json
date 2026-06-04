@@ -221,7 +221,7 @@
           "SENT_FROM": "Gửi từ",
           "ON": "vào",
           "SENT_BY": "Gửi bởi",
-          "BOT": "FlowifyAI"
+          "BOT": "ShopizAI"
         }
       },
       "CREATE": {
@@ -295,7 +295,7 @@
           "SENT_FROM": "Gửi từ",
           "ON": "vào",
           "SENT_BY": "Gửi bởi",
-          "BOT": "FlowifyAI"
+          "BOT": "ShopizAI"
         }
       },
       "CREATE": {
@@ -369,7 +369,7 @@
           "SENT_FROM": "Gửi từ",
           "ON": "vào",
           "SENT_BY": "Gửi bởi",
-          "BOT": "FlowifyAI"
+          "BOT": "ShopizAI"
         },
         "METRICS": {
           "TOTAL_SENT": "Đã gửi",

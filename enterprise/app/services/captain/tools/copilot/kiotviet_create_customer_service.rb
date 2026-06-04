@@ -45,7 +45,7 @@ class Captain::Tools::Copilot::KiotvietCreateCustomerService < Captain::Tools::B
 
   def format_result(customer)
     <<~RESULT.strip
-       Customer created successfully on KiotViet!
+      ✅ Customer created successfully on KiotViet!
 
       Code: #{customer['code']}
       Name: #{customer['name']}

@@ -32,7 +32,7 @@ class Api::V1::Accounts::Conversations::ProductsController < Api::V1::Accounts::
     []
   end
 
-  # ===== Flowify (Native) =====
+  # ===== Shopiz (Native) =====
 
   def fetch_shopiz_products(query, page)
     products = Current.account.products.active.order(created_at: :desc)

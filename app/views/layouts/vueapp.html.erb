@@ -49,7 +49,7 @@
     <link rel="icon" type="image/png" sizes="512x512" href="<%= @global_config['LOGO_THUMBNAIL'] %>">
     <%= csrf_meta_tags %>
     <script>
-      window.flowifyConfig = {
+      window.shopizConfig = {
         hostURL: '<%= ENV.fetch('FRONTEND_URL', '') %>',
         helpCenterURL: '<%= ENV.fetch('HELPCENTER_URL', '') %>',
         fbAppId: '<%= @global_config['FB_APP_ID'] %>',
@@ -89,7 +89,7 @@
     </script>
     <% if ChatwootHub.support_config[:support_website_token].present? %>
     <script>
-      window.flowifySettings = {
+      window.shopizSettings = {
         hideMessageBubble: true,
       };
       window.addEventListener('DOMContentLoaded', function() {
@@ -100,14 +100,14 @@
           g.defer = true;
           s.parentNode.insertBefore(g,s);
           g.onload=function(){
-            window.flowifySDK.run({
+            window.shopizSDK.run({
               websiteToken: '<%= ChatwootHub.support_config[:support_website_token] %>',
               baseUrl: '<%= ChatwootHub.support_config[:support_script_url] %>'
             });
           }
         })(document,"script");
         window.addEventListener('chatwoot:ready', function() {
-          window.$flowify.setUser('<%= ChatwootHub.installation_identifier %>', {
+          window.$shopiz.setUser('<%= ChatwootHub.installation_identifier %>', {
             identifier_hash: '<%= ChatwootHub.support_config[:support_identifier_hash] %>',
             email: '<%= SuperAdmin.first.email %>',
             name: '<%= SuperAdmin.first.name %>'

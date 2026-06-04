@@ -61,11 +61,11 @@ class Captain::Tools::Copilot::WoocommerceSuggestProductsService < Captain::Tool
   end
 
   def format_suggestions(product, suggestions, context)
-    lines = ["Base: #{product['name']} (ID: #{product['id']}) — #{format_woo_currency(product['price'])}"]
-    lines << "Context: #{context}" if context.present?
-    append_section(lines, ' Upsell:', suggestions[:upsell])
+    lines = ["📦 Base: #{product['name']} (ID: #{product['id']}) — #{format_woo_currency(product['price'])}"]
+    lines << "🎯 Context: #{context}" if context.present?
+    append_section(lines, '⬆️ Upsell:', suggestions[:upsell])
     append_section(lines, '🔗 Cross-sell:', suggestions[:cross_sell])
-    append_section(lines, ' Same category:', suggestions[:same_category])
+    append_section(lines, '📦 Same category:', suggestions[:same_category])
     lines << 'No suggestions available.' if suggestions.values.all?(&:blank?)
     lines.join("\n")
   end
@@ -74,6 +74,6 @@ class Captain::Tools::Copilot::WoocommerceSuggestProductsService < Captain::Tool
     return if items.blank?
 
     lines << "\n#{title}"
-    items.each { |s| lines << " • #{s[:name]} — #{format_woo_currency(s[:price])} | Stock: #{s[:stock]} (#{s[:reason]})" }
+    items.each { |s| lines << "  • #{s[:name]} — #{format_woo_currency(s[:price])} | Stock: #{s[:stock]} (#{s[:reason]})" }
   end
 end

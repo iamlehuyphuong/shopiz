@@ -13,29 +13,29 @@ describe('#Campaigns Helper', () => {
     it('returns correct value if a valid URL is passed', () => {
       expect(
         isPatternMatchingWithURL(
-          'https://www.flowify.vn/pricing*',
-          'https://www.flowify.vn/pricing/'
+          'https://www.shopiz.pro/pricing*',
+          'https://www.shopiz.pro/pricing/'
         )
       ).toBe(true);
 
       expect(
         isPatternMatchingWithURL(
-          'https://*.flowify.vn/pricing/',
-          'https://www.flowify.vn/pricing/'
+          'https://*.shopiz.pro/pricing/',
+          'https://www.shopiz.pro/pricing/'
         )
       ).toBe(true);
 
       expect(
         isPatternMatchingWithURL(
-          'https://{*.}?flowify.vn/pricing?test=true',
-          'https://www.flowify.vn/pricing/?test=true'
+          'https://{*.}?shopiz.pro/pricing?test=true',
+          'https://www.shopiz.pro/pricing/?test=true'
         )
       ).toBe(true);
 
       expect(
         isPatternMatchingWithURL(
-          'https://{*.}?flowify.vn/pricing*\\?*',
-          'https://www.flowify.vn/pricing/?test=true'
+          'https://{*.}?shopiz.pro/pricing*\\?*',
+          'https://www.shopiz.pro/pricing/?test=true'
         )
       ).toBe(true);
     });
@@ -48,13 +48,13 @@ describe('#Campaigns Helper', () => {
           id: 1,
           timeOnPage: 3,
           triggerOnlyDuringBusinessHours: false,
-          url: 'https://www.flowify.vn/pricing',
+          url: 'https://www.shopiz.pro/pricing',
         },
         {
           id: 2,
           triggerOnlyDuringBusinessHours: false,
           timeOnPage: 6,
-          url: 'https://www.flowify.vn/about',
+          url: 'https://www.shopiz.pro/about',
         },
       ]);
     });
@@ -67,23 +67,23 @@ describe('#Campaigns Helper', () => {
             {
               id: 1,
               timeOnPage: 3,
-              url: 'https://www.flowify.vn/pricing',
+              url: 'https://www.shopiz.pro/pricing',
               triggerOnlyDuringBusinessHours: false,
             },
             {
               id: 2,
               timeOnPage: 6,
-              url: 'https://www.flowify.vn/about',
+              url: 'https://www.shopiz.pro/about',
               triggerOnlyDuringBusinessHours: false,
             },
           ],
-          currentURL: 'https://www.flowify.vn/about/',
+          currentURL: 'https://www.shopiz.pro/about/',
         })
       ).toStrictEqual([
         {
           id: 2,
           timeOnPage: 6,
-          url: 'https://www.flowify.vn/about',
+          url: 'https://www.shopiz.pro/about',
           triggerOnlyDuringBusinessHours: false,
         },
       ]);
@@ -95,24 +95,24 @@ describe('#Campaigns Helper', () => {
             {
               id: 1,
               timeOnPage: 3,
-              url: 'https://www.flowify.vn/pricing',
+              url: 'https://www.shopiz.pro/pricing',
               triggerOnlyDuringBusinessHours: false,
             },
             {
               id: 2,
               timeOnPage: 6,
-              url: 'https://www.flowify.vn/about',
+              url: 'https://www.shopiz.pro/about',
               triggerOnlyDuringBusinessHours: true,
             },
           ],
-          currentURL: 'https://www.flowify.vn/about/',
+          currentURL: 'https://www.shopiz.pro/about/',
           isInBusinessHours: true,
         })
       ).toStrictEqual([
         {
           id: 2,
           timeOnPage: 6,
-          url: 'https://www.flowify.vn/about',
+          url: 'https://www.shopiz.pro/about',
           triggerOnlyDuringBusinessHours: true,
         },
       ]);
@@ -124,17 +124,17 @@ describe('#Campaigns Helper', () => {
             {
               id: 1,
               timeOnPage: 3,
-              url: 'https://www.flowify.vn/pricing',
+              url: 'https://www.shopiz.pro/pricing',
               triggerOnlyDuringBusinessHours: true,
             },
             {
               id: 2,
               timeOnPage: 6,
-              url: 'https://www.flowify.vn/about',
+              url: 'https://www.shopiz.pro/about',
               triggerOnlyDuringBusinessHours: true,
             },
           ],
-          currentURL: 'https://www.flowify.vn/about/',
+          currentURL: 'https://www.shopiz.pro/about/',
           isInBusinessHours: false,
         })
       ).toStrictEqual([]);

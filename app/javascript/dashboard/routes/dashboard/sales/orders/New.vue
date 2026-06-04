@@ -97,7 +97,7 @@ const addProduct = product => {
     form.value.items.push({
       product_name: product.name,
       product_id: product.id,
-      product_source: 'flowify',
+      product_source: 'shopiz',
       variant_id: product.variant_id,
       quantity: 1,
       unit_price: product.price,

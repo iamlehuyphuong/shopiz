@@ -20,8 +20,8 @@ const PROVIDER_TYPES = {
 
 const hasWhatsappAppId = computed(() => {
   return (
-    window.flowifyConfig?.whatsappAppId &&
-    window.flowifyConfig.whatsappAppId !== 'none'
+    window.shopizConfig?.whatsappAppId &&
+    window.shopizConfig.whatsappAppId !== 'none'
   );
 });
 

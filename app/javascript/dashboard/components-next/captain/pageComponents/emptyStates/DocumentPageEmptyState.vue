@@ -23,7 +23,7 @@ const onClick = () => {
     :note="$t('CAPTAIN.DOCUMENTS.EMPTY_STATE.FEATURE_SPOTLIGHT.NOTE')"
     fallback-thumbnail="/assets/images/dashboard/captain/document-light.svg"
     fallback-thumbnail-dark="/assets/images/dashboard/captain/document-dark.svg"
-    learn-more-url="https://flowify.vn/docs/features/knowledge-base"
+    learn-more-url="https://shopiz.pro/docs/features/knowledge-base"
     class="mb-8"
   />
   <EmptyStateLayout

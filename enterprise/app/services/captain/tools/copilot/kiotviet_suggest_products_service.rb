@@ -10,7 +10,7 @@ class Captain::Tools::Copilot::KiotvietSuggestProductsService < Captain::Tools::
   description 'Suggest upsell and cross-sell products based on a KiotViet product. ' \
               'Returns frequently bought together items, premium alternatives, and same-category options.'
   param :product_code, type: :string, desc: 'KiotViet product code to base suggestions on', required: true
-  param :strategy, type: :string, desc: 'Suggestion strategy: "upsell", "cross_sell", or "both"(default: "both")', required: false
+  param :strategy, type: :string, desc: 'Suggestion strategy: "upsell", "cross_sell", or "both" (default: "both")', required: false
   param :context, type: :string, desc: 'Customer needs context extracted from conversation', required: false
 
   def execute(product_code:, strategy: 'both', context: nil)
@@ -110,7 +110,7 @@ class Captain::Tools::Copilot::KiotvietSuggestProductsService < Captain::Tools::
 
   def format_product_entry(product, base_price)
     stock = compute_stock(product['inventories'])
-    reason = base_price ? "Premium option (+#{format_vnd((product['basePrice'].to_f - base_price.to_f).round)})": 'Same category alternative'
+    reason = base_price ? "Premium option (+#{format_vnd((product['basePrice'].to_f - base_price.to_f).round)})" : 'Same category alternative'
     { name: product['fullName'] || product['name'], code: product['code'], price: product['basePrice'], stock: stock[:total], reason: reason }
   end
 
@@ -129,15 +129,15 @@ class Captain::Tools::Copilot::KiotvietSuggestProductsService < Captain::Tools::
   end
 
   def build_header_sections(product, context)
-    sections = ["Base product: #{product['fullName'] || product['name']} (#{product['code']}) — #{format_vnd(product['basePrice'])}"]
-    sections << "Customer context: #{context}" if context.present?
+    sections = ["📦 Base product: #{product['fullName'] || product['name']} (#{product['code']}) — #{format_vnd(product['basePrice'])}"]
+    sections << "🎯 Customer context: #{context}" if context.present?
     sections
   end
 
   def append_suggestion_sections(sections, suggestions)
     append_section(sections, suggestions[:companion], '🔗 Frequently bought together') { |s| format_companion_line(s) }
-    append_section(sections, suggestions[:upsell], ' Upsell recommendations') { |s| format_upsell_line(s) }
-    append_section(sections, suggestions[:alternatives], ' Category alternatives') { |s| format_alt_line(s) }
+    append_section(sections, suggestions[:upsell], '⬆️ Upsell recommendations') { |s| format_upsell_line(s) }
+    append_section(sections, suggestions[:alternatives], '🔄 Category alternatives') { |s| format_alt_line(s) }
   end
 
   def append_section(sections, items, title, &)
@@ -148,14 +148,14 @@ class Captain::Tools::Copilot::KiotvietSuggestProductsService < Captain::Tools::
   end
 
   def format_companion_line(suggestion)
-    " • #{suggestion[:name]} (#{suggestion[:code]}) — #{format_vnd(suggestion[:price])} | #{suggestion[:reason]}"
+    "  • #{suggestion[:name]} (#{suggestion[:code]}) — #{format_vnd(suggestion[:price])} | #{suggestion[:reason]}"
   end
 
   def format_upsell_line(suggestion)
-    " • #{suggestion[:name]} (#{suggestion[:code]}) — #{format_vnd(suggestion[:price])} | Stock: #{suggestion[:stock]} | #{suggestion[:reason]}"
+    "  • #{suggestion[:name]} (#{suggestion[:code]}) — #{format_vnd(suggestion[:price])} | Stock: #{suggestion[:stock]} | #{suggestion[:reason]}"
   end
 
   def format_alt_line(suggestion)
-    " • #{suggestion[:name]} (#{suggestion[:code]}) — #{format_vnd(suggestion[:price])} | Stock: #{suggestion[:stock]}"
+    "  • #{suggestion[:name]} (#{suggestion[:code]}) — #{format_vnd(suggestion[:price])} | Stock: #{suggestion[:stock]}"
   end
 end

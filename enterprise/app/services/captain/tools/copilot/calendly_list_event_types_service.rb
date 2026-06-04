@@ -18,14 +18,16 @@ class Captain::Tools::Copilot::CalendlyListEventTypesService < Captain::Tools::B
 
     format_event_types(collection)
   rescue Calendly::ApiClient::ApiError => e
-    "Calendly API Error: #{e.message} - #{e.body.to_json}"
+    "Lỗi API Calendly: #{e.message} - #{e.body.to_json}"
   rescue StandardError => e
-    "System error calling Calendly: #{e.message}"
+    "Lỗi hệ thống khi gọi Calendly: #{e.message}"
   end
 
   def active?
     @user.present? && find_calendly_hook.present?
   end
+
+  private
 
   include Captain::Tools::Copilot::Concerns::CalendlyHelper
 end

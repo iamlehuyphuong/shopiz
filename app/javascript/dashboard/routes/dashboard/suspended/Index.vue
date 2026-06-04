@@ -3,8 +3,8 @@ import EmptyState from 'dashboard/components/widgets/EmptyState.vue';
 import { onMounted } from 'vue';
 
 const toggleSupportWidgetVisibility = () => {
-  if (window.$flowify) {
-    window.$flowify.toggleBubbleVisibility('show');
+  if (window.$shopiz) {
+    window.$shopiz.toggleBubbleVisibility('show');
   }
 };
 
