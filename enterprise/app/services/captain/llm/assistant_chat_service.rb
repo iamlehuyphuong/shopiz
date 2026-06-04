@@ -30,17 +30,30 @@ class Captain::Llm::AssistantChatService < Llm::BaseAiService
   private
 
   def build_tools
-    [
+    tools = [
       Captain::Tools::SearchDocumentationService.new(@assistant, user: nil),
       Captain::Tools::ExecuteMacroService.new(@assistant, user: nil, conversation: @conversation)
     ]
+
+    if @assistant.account.hooks.exists?(app_id: 'calendly', status: :enabled)
+      %w[
+        calendly_list_event_types calendly_get_available_times
+        calendly_book_appointment calendly_get_scheduled_events
+        calendly_manage_booking
+      ].each do |tool_id|
+        tool_class = Captain::Assistant.resolve_tool_class(tool_id)
+        tools << tool_class.new(@assistant) if tool_class
+      end
+    end
+
+    tools
   end
 
   def system_message
     {
       role: 'system',
       content: Captain::Llm::SystemPromptsService.assistant_response_generator(
-        @assistant.name, @assistant.config['product_name'], @assistant.config,
+        @assistant.name, @assistant.config,
         contact: contact_attributes,
         orders: recent_orders
       )

@@ -10,7 +10,6 @@ const store = useStore();
 
 onMounted(() => {
   store.dispatch('campaigns/get');
-  store.dispatch('labels/get');
 });
 </script>
 

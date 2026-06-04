@@ -163,7 +163,7 @@ const onSubmit = async () => {
       payload.product_variants_attributes = finalVariants;
     }
 
-    await store.dispatch('salesProducts/create', payload);
+    await store.dispatch('salesProducts/create', { product: payload });
 
     useAlert(t('SALES.PRODUCT_FORM.ALERTS.CREATE_SUCCESS'));
     router.push({ name: 'sales_products_list' });
@@ -298,7 +298,9 @@ const onSubmit = async () => {
                     class="w-full p-2.5 pr-10 rounded-lg border border-n-weak bg-n-alpha-1 bg-none focus:outline-none focus:ring-1 focus:ring-n-brand focus:border-n-brand text-sm text-n-slate-12 appearance-none cursor-pointer"
                   >
                     <option value="physical">
-                      {{ $t('SALES.PRODUCT_FORM.FIELDS.TYPE.OPTIONS.PHYSICAL') }}
+                      {{
+                        $t('SALES.PRODUCT_FORM.FIELDS.TYPE.OPTIONS.PHYSICAL')
+                      }}
                     </option>
                     <option value="digital">
                       {{ $t('SALES.PRODUCT_FORM.FIELDS.TYPE.OPTIONS.DIGITAL') }}
@@ -307,7 +309,9 @@ const onSubmit = async () => {
                       {{ $t('SALES.PRODUCT_FORM.FIELDS.TYPE.OPTIONS.SERVICE') }}
                     </option>
                   </select>
-                  <i class="i-lucide-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-n-slate-11 pointer-events-none text-base" />
+                  <i
+                    class="i-lucide-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-n-slate-11 pointer-events-none text-base"
+                  />
                 </div>
               </div>
               <woot-input
@@ -652,7 +656,9 @@ const onSubmit = async () => {
                     {{ $t('SALES.PRODUCT_FORM.FIELDS.STATUS.OPTIONS.DRAFT') }}
                   </option>
                 </select>
-                <i class="i-lucide-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-n-slate-11 pointer-events-none text-base" />
+                <i
+                  class="i-lucide-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-n-slate-11 pointer-events-none text-base"
+                />
               </div>
             </div>
 

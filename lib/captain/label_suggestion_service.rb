@@ -58,7 +58,9 @@ class Captain::LabelSuggestionService < Captain::BaseTaskService
   def labels_with_messages
     return nil unless valid_conversation?(conversation)
 
-    labels = account.labels.pluck(:title).join(', ')
+    labels = account.labels.select(:title, :description).map do |l|
+      "#{l.title}: #{l.description.presence || 'No description'}"
+    end.join("\n")
     messages = format_messages_as_string(start_from: labels.length)
 
     return nil if messages.blank? || labels.blank?

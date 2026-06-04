@@ -17,7 +17,6 @@ const fetchData = () => store.dispatch('fetchTeamConversationMetric');
 const { startRefetching } = useLiveRefresh(fetchData);
 
 onMounted(() => {
-  store.dispatch('teams/get');
   fetchData();
   startRefetching();
 });

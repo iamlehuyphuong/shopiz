@@ -1,18 +1,4 @@
-<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Workspace Deletion Request</h2>
-<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
-  An administrator has requested the deletion of Workspace <strong>{{ meta['account_name'] }}</strong> from the Shopiz system. This process fully completes on <strong>{{ meta['deletion_date'] }}</strong>.
-</p>
-<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
-  Note that while the workspace hasn't been removed, you can access the system settings to cancel this execution at any time:
-</p>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 24px;">
-  <tr>
-    <td align="left">
-      <a href="{{ action_url }}" style="display: inline-block; background-color: #3B82F6; color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 12px;">Cancel Deletion</a>
-    </td>
-  </tr>
-</table>
-<hr style="border: 0; border-bottom: 1px solid #E2E8F0; margin: 24px 0;" />
+{% if locale == 'vi' %}
 <h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Yêu Cầu Xóa Workspace</h2>
 <p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
   Một Quản trị viên (Admin) vừa gửi yêu cầu xoá Workspace <strong>{{ meta['account_name'] }}</strong> khỏi hệ thống Shopiz. Tiến trình này sẽ được thực thi hoàn tất vào ngày <strong>{{ meta['deletion_date'] }}</strong>.
@@ -27,3 +13,19 @@
     </td>
   </tr>
 </table>
+{% else %}
+<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Workspace Deletion Request</h2>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
+  An administrator has requested the deletion of Workspace <strong>{{ meta['account_name'] }}</strong> from the Shopiz system. This process fully completes on <strong>{{ meta['deletion_date'] }}</strong>.
+</p>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
+  Note that while the workspace hasn't been removed, you can access the system settings to cancel this execution at any time:
+</p>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 24px;">
+  <tr>
+    <td align="left">
+      <a href="{{ action_url }}" style="display: inline-block; background-color: #3B82F6; color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 12px;">Cancel Deletion</a>
+    </td>
+  </tr>
+</table>
+{% endif %}

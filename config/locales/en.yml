@@ -116,6 +116,12 @@ en:
         not_supported: 'Reauthorization is not supported for this type of WhatsApp channel.'
     facebook:
       human_agent_error: '%{error_code} - %{error_message}\n(Error): You are replying outside the 24h window but your Page lacks Human Agent approval. Please go to Page Settings -> New Page Experience -> Advanced Messaging -> Request Human Agent feature.'
+      only_one_private_reply: '%{error_code} - %{error_message}\n(Error): A private reply was already sent (via Shopiz or Meta Suite). Facebook only allows 1 private reply per comment.'
+      private_reply_timeout: '%{error_code} - %{error_message}\n(Error): Cannot send. Private replies are only allowed for comments made within the last 7 days.'
+      comment_handler:
+        comment_hidden: 'Comment has been automatically hidden'
+        private_reply_label: 'Private Reply'
+        private_reply_hint: 'The next message you send will be delivered as a private reply to this comment.'
     inboxes:
       imap:
         socket_error: Please check the network connection, IMAP address and try again.
@@ -235,6 +241,8 @@ en:
     attachment: 'Attachment'
     no_content: 'No content'
   conversations:
+    follow_up:
+      reminder: '⏰ Follow-up reminder for customer.'
     captain:
       handoff: 'Transferring to another agent for further assistance.'
     messages:
@@ -384,6 +392,10 @@ en:
       name: 'Nhanh.vn'
       short_description: 'Access order details and customer data from your Nhanh.vn store.'
       description: 'Connect your Nhanh.vn store to access order details, customer information, and product data directly within your conversations and helps your support team provide faster, more contextual assistance to your customers.'
+    calendly:
+      name: 'Calendly'
+      short_description: 'Appointment scheduling via Calendly directly within conversations.'
+      description: 'Connect your Calendly account to enable appointment booking directly within conversations. List available services, check time slots, and book appointments on behalf of customers.'
     leadsquared:
       name: 'LeadSquared'
       short_description: 'Sync your contacts and conversations with LeadSquared CRM.'
@@ -528,12 +540,21 @@ en:
       credit: '%{product_name} Package'
   conversation_orders:
     push_success_message: 'Order confirmed! Order ID: %{order_id}. Total: %{total}.'
+    status:
+      draft: 'Draft'
+      confirmed: 'Confirmed'
+      processing: 'Processing'
+      shipped: 'Shipped'
+      delivered: 'Delivered'
+      cancelled: 'Cancelled'
+    utility_messages:
+      status_update: "Hi %{customer_name}, thank you for your order at %{fanpage_name}! 🎉 Your order #%{order_id} has been updated to: %{status_label}. We will ship it soon!"
     activity:
-      created: '🛒 Order #%{order_id} created by %{user_name}'
-      pushed: '📤 Order #%{order_id} pushed to %{platform} (External ID: %{external_id})'
-      synced: '🔄 Order #%{order_id} synced from %{platform} — Status: %{status}'
-      cancelled: '❌ Order #%{order_id} cancelled by %{user_name}'
-      deleted: '🗑️ Order #%{order_id} deleted by %{user_name}'
+      created: 'Order #%{order_id} created by %{user_name}'
+      pushed: 'Order #%{order_id} pushed to %{platform} (External ID: %{external_id})'
+      synced: 'Order #%{order_id} synced from %{platform} — Status: %{status}'
+      cancelled: 'Order #%{order_id} cancelled by %{user_name}'
+      deleted: 'Order #%{order_id} deleted by %{user_name}'
   zalo_personal:
     calls:
       action:

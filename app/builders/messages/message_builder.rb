@@ -52,17 +52,19 @@ class Messages::MessageBuilder
 
     @attachments.each do |uploaded_attachment|
       attachment = @message.attachments.build(
-        account_id: @message.account_id,
-        file: uploaded_attachment
+        account_id: @message.account_id
       )
 
-      attachment.file_type = if uploaded_attachment.is_a?(String)
-                               file_type_by_signed_id(
-                                 uploaded_attachment
-                               )
-                             else
-                               file_type(uploaded_attachment&.content_type)
-                             end
+      if uploaded_attachment.is_a?(String)
+        attachment.file = uploaded_attachment
+        attachment.file_type = file_type_by_signed_id(uploaded_attachment)
+      else
+        checksum = Digest::MD5.file(uploaded_attachment.tempfile.path).base64digest
+        existing_blob = ActiveStorage::Blob.find_by(checksum: checksum, byte_size: uploaded_attachment.size)
+
+        attachment.file = existing_blob || uploaded_attachment
+        attachment.file_type = file_type(uploaded_attachment&.content_type)
+      end
     end
   end
 
@@ -149,7 +151,22 @@ class Messages::MessageBuilder
     # Directly add content_attributes from params if present
     message_attrs[:content_attributes] = content_attributes if @params[:content_attributes].present?
 
+    # Stamp comment_id per-message for Facebook private reply to avoid race conditions
+    # when multiple agents reply concurrently on the same conversation.
+    stamp_facebook_comment_id(message_attrs)
+
     message_attrs
+  end
+
+  def stamp_facebook_comment_id(message_attrs)
+    return unless @conversation.inbox&.channel_type == 'Channel::FacebookPage'
+    return unless @message_type == 'outgoing' && !@private
+
+    comment_id = @conversation.additional_attributes&.dig('comment_id')
+    return if comment_id.blank?
+
+    message_attrs[:content_attributes] ||= {}
+    message_attrs[:content_attributes] = message_attrs[:content_attributes].merge('target_comment_id' => comment_id)
   end
 
   def email_inbox?

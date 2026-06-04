@@ -18,7 +18,10 @@ class Webhooks::NhanhvnController < ActionController::API
 
   def verify_token!
     verify_token = GlobalConfigService.load('NHANHVN_WEBHOOK_TOKEN', nil)
-    return if verify_token.blank?
+    if verify_token.blank?
+      Rails.logger.warn('Webhooks::NhanhvnController: NHANHVN_WEBHOOK_TOKEN not configured, rejecting webhook')
+      return head :unauthorized
+    end
 
     auth_header = request.headers['Authorization']
     return head :unauthorized if auth_header.blank?

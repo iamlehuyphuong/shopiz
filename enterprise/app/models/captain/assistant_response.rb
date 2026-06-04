@@ -44,9 +44,15 @@ class Captain::AssistantResponse < ApplicationRecord
 
   enum status: { pending: 0, approved: 1 }
 
+  # Cosine distance on pgvector: 0 (identical) → 2 (opposite)
+  # Results beyond this threshold are considered irrelevant.
+  MAX_COSINE_DISTANCE = 0.6
+
   def self.search(query, account_id: nil)
     embedding = Captain::Llm::EmbeddingService.new(account_id: account_id).get_embedding(query)
-    nearest_neighbors(:embedding, embedding, distance: 'cosine').limit(5)
+    nearest_neighbors(:embedding, embedding, distance: 'cosine')
+      .limit(5)
+      .select { |r| r.neighbor_distance <= MAX_COSINE_DISTANCE }
   end
 
   private

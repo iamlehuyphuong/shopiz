@@ -22,12 +22,15 @@ const { t } = useI18n();
 const initialState = {
   name: '',
   description: '',
-  productName: '',
+  companyName: '',
+  industry: '',
+  coreProducts: '',
   features: {
     conversationFaqs: false,
     memories: false,
     citations: false,
     contactAttributes: false,
+    orderCreation: false,
   },
 };
 
@@ -36,7 +39,9 @@ const state = reactive({ ...initialState });
 const validationRules = {
   name: { required, minLength: minLength(1) },
   description: { required, minLength: minLength(1) },
-  productName: { required, minLength: minLength(1) },
+  companyName: { required, minLength: minLength(1) },
+  industry: { required, minLength: minLength(1) },
+  coreProducts: { required, minLength: minLength(1) },
 };
 
 const v$ = useVuelidate(validationRules, state);
@@ -48,19 +53,24 @@ const getErrorMessage = field => {
 const formErrors = computed(() => ({
   name: getErrorMessage('name'),
   description: getErrorMessage('description'),
-  productName: getErrorMessage('productName'),
+  companyName: getErrorMessage('companyName'),
+  industry: getErrorMessage('industry'),
+  coreProducts: getErrorMessage('coreProducts'),
 }));
 
 const updateStateFromAssistant = assistant => {
   const { config = {} } = assistant;
   state.name = assistant.name;
   state.description = assistant.description;
-  state.productName = config.product_name;
+  state.companyName = config.company_name || '';
+  state.industry = config.industry || '';
+  state.coreProducts = config.core_products || config.product_name || '';
   state.features = {
     conversationFaqs: config.feature_faq || false,
     memories: config.feature_memory || false,
     citations: config.feature_citation || false,
     contactAttributes: config.feature_contact_attributes || false,
+    orderCreation: config.feature_order_creation || false,
   };
 };
 
@@ -68,7 +78,9 @@ const handleBasicInfoUpdate = async () => {
   const result = await Promise.all([
     v$.value.name.$validate(),
     v$.value.description.$validate(),
-    v$.value.productName.$validate(),
+    v$.value.companyName.$validate(),
+    v$.value.industry.$validate(),
+    v$.value.coreProducts.$validate(),
   ]).then(results => results.every(Boolean));
   if (!result) return;
 
@@ -77,11 +89,14 @@ const handleBasicInfoUpdate = async () => {
     description: state.description,
     config: {
       ...props.assistant.config,
-      product_name: state.productName,
+      company_name: state.companyName,
+      industry: state.industry,
+      core_products: state.coreProducts,
       feature_faq: state.features.conversationFaqs,
       feature_memory: state.features.memories,
       feature_citation: state.features.citations,
       feature_contact_attributes: state.features.contactAttributes,
+      feature_order_creation: state.features.orderCreation,
     },
   };
 
@@ -108,11 +123,27 @@ watch(
     />
 
     <Input
-      v-model="state.productName"
-      :label="t('CAPTAIN.ASSISTANTS.FORM.PRODUCT_NAME.LABEL')"
-      :placeholder="t('CAPTAIN.ASSISTANTS.FORM.PRODUCT_NAME.PLACEHOLDER')"
-      :message="formErrors.productName"
-      :message-type="formErrors.productName ? 'error' : 'info'"
+      v-model="state.companyName"
+      :label="t('CAPTAIN.ASSISTANTS.FORM.COMPANY_NAME.LABEL')"
+      :placeholder="t('CAPTAIN.ASSISTANTS.FORM.COMPANY_NAME.PLACEHOLDER')"
+      :message="formErrors.companyName"
+      :message-type="formErrors.companyName ? 'error' : 'info'"
+    />
+
+    <Input
+      v-model="state.industry"
+      :label="t('CAPTAIN.ASSISTANTS.FORM.INDUSTRY.LABEL')"
+      :placeholder="t('CAPTAIN.ASSISTANTS.FORM.INDUSTRY.PLACEHOLDER')"
+      :message="formErrors.industry"
+      :message-type="formErrors.industry ? 'error' : 'info'"
+    />
+
+    <Input
+      v-model="state.coreProducts"
+      :label="t('CAPTAIN.ASSISTANTS.FORM.CORE_PRODUCTS.LABEL')"
+      :placeholder="t('CAPTAIN.ASSISTANTS.FORM.CORE_PRODUCTS.PLACEHOLDER')"
+      :message="formErrors.coreProducts"
+      :message-type="formErrors.coreProducts ? 'error' : 'info'"
     />
 
     <Editor
@@ -144,6 +175,10 @@ watch(
         <label class="flex items-center gap-2">
           <input v-model="state.features.contactAttributes" type="checkbox" />
           {{ t('CAPTAIN.ASSISTANTS.FORM.FEATURES.ALLOW_CONTACT_ATTRIBUTES') }}
+        </label>
+        <label class="flex items-center gap-2">
+          <input v-model="state.features.orderCreation" type="checkbox" />
+          Cho phép tạo đơn hàng
         </label>
       </div>
     </div>

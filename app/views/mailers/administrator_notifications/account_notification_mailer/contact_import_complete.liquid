@@ -1,12 +1,4 @@
-<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Contact Import Completed</h2>
-<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
-  Your internal contact import sequence has finished successfully.
-</p>
-<ul style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
-  <li>Succeeded: <strong>{{ meta['imported_contacts'] }}</strong> records</li>
-  <li>Failed: <strong>{{ meta['failed_contacts'] }}</strong> records</li>
-</ul>
-<hr style="border: 0; border-bottom: 1px solid #E2E8F0; margin: 24px 0;" />
+{% if locale == 'vi' %}
 <h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Nhập Danh Bạ Hoàn Tất</h2>
 <p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
   Tiến trình nhập danh bạ nội bộ của bạn đã hoàn tất thành công.
@@ -15,3 +7,13 @@
   <li>Thành công: <strong>{{ meta['imported_contacts'] }}</strong> bản ghi</li>
   <li>Lỗi: <strong>{{ meta['failed_contacts'] }}</strong> bản ghi</li>
 </ul>
+{% else %}
+<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Contact Import Completed</h2>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
+  Your internal contact import sequence has finished successfully.
+</p>
+<ul style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
+  <li>Succeeded: <strong>{{ meta['imported_contacts'] }}</strong> records</li>
+  <li>Failed: <strong>{{ meta['failed_contacts'] }}</strong> records</li>
+</ul>
+{% endif %}

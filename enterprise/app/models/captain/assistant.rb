@@ -36,7 +36,7 @@ class Captain::Assistant < ApplicationRecord
   has_many :copilot_threads, dependent: :destroy_async
   has_many :scenarios, class_name: 'Captain::Scenario', dependent: :destroy_async
 
-  store_accessor :config, :temperature, :feature_faq, :feature_memory, :feature_contact_attributes, :product_name
+  store_accessor :config, :temperature, :feature_faq, :feature_memory, :feature_contact_attributes, :feature_order_creation, :product_name
 
   validates :name, presence: true
   validates :description, presence: true
@@ -50,8 +50,8 @@ class Captain::Assistant < ApplicationRecord
     name
   end
 
-  def available_agent_tools
-    tools = self.class.built_in_agent_tools.dup
+  def available_agent_tools(include_hidden: true)
+    tools = self.class.built_in_agent_tools(include_hidden: include_hidden).dup
 
     custom_tools = account.captain_custom_tools.enabled.map(&:to_tool_metadata)
     tools.concat(custom_tools)
@@ -59,8 +59,8 @@ class Captain::Assistant < ApplicationRecord
     tools
   end
 
-  def available_tool_ids
-    available_agent_tools.pluck(:id)
+  def available_tool_ids(include_hidden: true)
+    available_agent_tools(include_hidden: include_hidden).pluck(:id)
   end
 
   def push_event_data
@@ -92,10 +92,33 @@ class Captain::Assistant < ApplicationRecord
   end
 
   def agent_tools
-    [
+    tools = [
       self.class.resolve_tool_class('faq_lookup').new(self),
       self.class.resolve_tool_class('handoff').new(self)
     ]
+
+    tools.concat(calendly_agent_tools) if calendly_hook_active?
+
+    tools
+  end
+
+  CALENDLY_TOOL_IDS = %w[
+    calendly_list_event_types
+    calendly_get_available_times
+    calendly_book_appointment
+    calendly_get_scheduled_events
+    calendly_manage_booking
+  ].freeze
+
+  def calendly_hook_active?
+    account.hooks.exists?(app_id: 'calendly', status: :enabled)
+  end
+
+  def calendly_agent_tools
+    CALENDLY_TOOL_IDS.filter_map do |tool_id|
+      tool_class = self.class.resolve_tool_class(tool_id)
+      tool_class&.new(self)
+    end
   end
 
   def prompt_context

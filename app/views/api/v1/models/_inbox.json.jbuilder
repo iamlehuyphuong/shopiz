@@ -20,14 +20,17 @@ json.lock_to_single_conversation resource.lock_to_single_conversation
 json.sender_name_type resource.sender_name_type
 json.business_name resource.business_name
 json.active_bot resource.active_bot?
+json.followup_config resource.try(:followup_config)
+json.auto_label_enabled resource.try(:auto_label_enabled) || false
+json.sales_config resource.try(:sales_config)
 
 ## eCommerce integration
+ecommerce_hook = resource.effective_ecommerce_hook
 json.marketplace_locked resource.marketplace_channel?
-if resource.effective_ecommerce_hook.present?
+if ecommerce_hook.present?
   json.ecommerce_integration do
-    hook = resource.effective_ecommerce_hook
-    json.id hook.id
-    json.app_id hook.app_id
+    json.id ecommerce_hook.id
+    json.app_id ecommerce_hook.app_id
   end
 else
   json.ecommerce_integration nil
@@ -58,6 +61,7 @@ json.selected_feature_flags resource.channel.try(:selected_feature_flags)
 json.reply_time resource.channel.try(:reply_time)
 if resource.web_widget?
   json.bubble_avatar_url resource.channel.try(:bubble_avatar_url)
+  json.close_bubble_avatar_url resource.channel.try(:close_bubble_avatar_url)
   json.hmac_token resource.channel.try(:hmac_token) if Current.account_user&.administrator?
   json.pre_chat_form_enabled resource.channel.try(:pre_chat_form_enabled)
   json.pre_chat_form_options resource.channel.try(:pre_chat_form_options)
@@ -149,4 +153,9 @@ end
 if resource.channel_type == 'Channel::Voice'
   json.voice_call_webhook_url resource.channel.try(:voice_call_webhook_url)
   json.voice_status_webhook_url resource.channel.try(:voice_status_webhook_url)
+end
+
+if resource.zalo_personal?
+  json.reauthorization_required resource.channel.try(:reauthorization_required?)
+  json.provider_config resource.channel.try(:provider_config)
 end

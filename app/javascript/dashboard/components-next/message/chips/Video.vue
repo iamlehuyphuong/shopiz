@@ -5,10 +5,18 @@ import { useSnakeCase } from 'dashboard/composables/useTransformKeys';
 import { useMessageContext } from '../provider.js';
 import GalleryView from 'dashboard/components/widgets/conversation/components/GalleryView.vue';
 
-defineProps({
+const props = defineProps({
   attachment: {
     type: Object,
     required: true,
+  },
+  totalCount: {
+    type: Number,
+    default: 1,
+  },
+  remainingCount: {
+    type: Number,
+    default: 0,
   },
 });
 
@@ -19,12 +27,18 @@ const { filteredCurrentChatAttachments } = useMessageContext();
 
 <template>
   <div
-    class="size-[72px] overflow-hidden contain-content rounded-xl cursor-pointer relative group"
+    class="overflow-hidden contain-content rounded-xl cursor-pointer relative group w-full"
+    :class="{
+      'max-h-[350px]': props.totalCount <= 3,
+      'h-[200px]': props.totalCount > 3,
+      'aspect-square': props.totalCount !== 1 && props.totalCount <= 3,
+    }"
     @click="showGallery = true"
   >
     <video
-      :src="attachment.dataUrl"
-      class="w-full h-full object-cover"
+      :src="attachment.dataUrl || attachment.data_url"
+      class="w-full h-full"
+      :class="props.totalCount === 1 ? 'object-contain' : 'object-cover'"
       muted
       playsInline
     />
@@ -39,6 +53,12 @@ const { filteredCurrentChatAttachments } = useMessageContext();
           class="size-7 text-n-slate-12/80 backdrop-blur"
         />
       </div>
+    </div>
+    <div
+      v-if="props.remainingCount > 0"
+      class="absolute inset-0 bg-black/50 flex items-center justify-center text-white text-2xl font-medium"
+    >
+      +{{ props.remainingCount }}
     </div>
   </div>
   <GalleryView

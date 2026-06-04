@@ -38,6 +38,7 @@ const sourceLabel = source => {
     sapo: 'Sapo',
     woocommerce: 'WooCommerce',
     nhanhvn: 'NhanhVN',
+    shopiz: 'Shopiz',
     helpcenter: 'Help Center',
     other: 'Other',
   };

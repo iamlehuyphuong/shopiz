@@ -155,7 +155,7 @@
     "CAPTAIN_API_SOURCE": {
       "USER_HOOK_BANNER": "AI đang sử dụng API key OpenAI cá nhân của bạn. Bạn sẽ không bị trừ credit hệ thống.",
       "NO_KEY_BANNER": "Chưa cấu hình API key AI. Vui lòng thiết lập tích hợp OpenAI hoặc liên hệ quản trị viên.",
-      "BADGE_PERSONAL_KEY": "API Key cá nhân",
+      "BADGE_PERSONAL_KEY": "OpenAI Key cá nhân",
       "BADGE_SYSTEM_KEY": "AI hệ thống",
       "CONFIGURE_OPENAI": "Cấu hình OpenAI"
     }

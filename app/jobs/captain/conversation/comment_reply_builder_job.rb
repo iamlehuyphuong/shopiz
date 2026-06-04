@@ -14,7 +14,20 @@ class Captain::Conversation::CommentReplyBuilderJob < ApplicationJob
     return if comment_too_old?(comment_id, comment_created_at)
 
     generated_text = generate_reply_text(message, post_id, platform)
-    return if generated_text.blank?
+    
+    if generated_text.blank?
+      msg = @conversation.messages.create!(
+        account_id: @conversation.account_id,
+        inbox_id: @conversation.inbox_id,
+        message_type: :outgoing,
+        content: 'AI Assistant failed to generate a reply.',
+        status: :failed,
+        source_id: "failed_ai_#{SecureRandom.hex(4)}",
+        content_attributes: { is_private_reply: true }
+      )
+      Messages::StatusUpdateService.new(msg, 'failed', 'AI Generation Failed or not configured.').perform
+      return
+    end
 
     send_reply(comment_id, generated_text)
   end

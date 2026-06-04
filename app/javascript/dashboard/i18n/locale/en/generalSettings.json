@@ -155,7 +155,7 @@
     "CAPTAIN_API_SOURCE": {
       "USER_HOOK_BANNER": "AI is using your personal OpenAI API key. You won't be charged system credits.",
       "NO_KEY_BANNER": "No AI API key configured. Please set up OpenAI integration or contact admin.",
-      "BADGE_PERSONAL_KEY": "Personal API Key",
+      "BADGE_PERSONAL_KEY": "Personal OpenAI Key",
       "BADGE_SYSTEM_KEY": "System AI",
       "CONFIGURE_OPENAI": "Configure OpenAI"
     }

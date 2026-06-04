@@ -1,17 +1,33 @@
 module Tiktok::MessagingHelpers
   private
 
-  def create_contact_inbox(channel, tt_conversation_id, from, from_id)
-    ::ContactInboxWithContactBuilder.new(
+  def create_contact_inbox(channel, tt_conversation_id, from, from_id, user_info = {})
+    contact_inbox = ::ContactInboxWithContactBuilder.new(
       source_id: tt_conversation_id,
       inbox: channel.inbox,
-      contact_attributes: contact_attributes(from, from_id)
+      contact_attributes: contact_attributes(from, from_id, user_info)
     ).perform
+
+    if user_info && user_info[:avatar_url].present? && contact_inbox.contact.avatar.blank?
+      Avatar::AvatarFromUrlJob.perform_later(contact_inbox.contact, user_info[:avatar_url])
+    end
+
+    contact_inbox
   end
 
-  def contact_attributes(from, from_id)
+  def contact_attributes(from, from_id, user_info = {})
+    display_name = user_info[:display_name] || user_info[:nickname] if user_info
+
+    name = if display_name.present? && from.present? && display_name != from
+             "#{display_name} (#{from})"
+           elsif display_name.present?
+             display_name
+           else
+             from
+           end
+
     {
-      name: from,
+      name: name,
       additional_attributes: contact_additional_attributes(from, from_id)
     }
   end

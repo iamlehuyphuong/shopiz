@@ -262,9 +262,14 @@ RSpec.describe Captain::BaseTaskService do
 
   describe '#api_key' do
     context 'when openai hook is configured' do
-      let(:hook) { create(:integrations_hook, account: account, app_id: 'openai', status: 'enabled', settings: { 'api_key' => 'hook-key' }) }
+      let(:hook) { create(:integrations_hook, account: account, app_id: 'openai', status: 'enabled', settings: { 'api_key' => 'hook-key', 'api_base_url' => 'https://api.openai.com/v1' }) }
 
-      before { hook }
+      before do
+        hook
+        InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_API_KEY')&.destroy
+        service.instance_variable_set(:@api_key, nil)
+        service.instance_variable_set(:@system_api_key, nil)
+      end
 
       it 'uses api key from hook' do
         expect(service.send(:api_key)).to eq('hook-key')

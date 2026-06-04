@@ -36,6 +36,7 @@ openai:
         {
           'api_base_url': { 'type': 'string' },
           'model': { 'type': 'string' },
+          'embedding_model': { 'type': 'string' },
           'api_key': { 'type': 'string' },
           'label_suggestion': { 'type': 'boolean' },
         },
@@ -55,8 +56,17 @@ openai:
         'label': 'Model',
         'type': 'text',
         'name': 'model',
-        'value': 'gpt-4o-mini',
-        'validation': 'required',
+        'placeholder': 'e.g. gpt-4o-mini',
+        'help': 'Default model to use if not configured: gpt-4o-mini',
+        'validation': '',
+      },
+      {
+        'label': 'Embedding Model',
+        'type': 'text',
+        'name': 'embedding_model',
+        'placeholder': 'e.g. text-embedding-3-small',
+        'help': 'Default model to use if not configured: text-embedding-3-small',
+        'validation': '',
       },
       {
         'label': 'API Key',
@@ -71,7 +81,7 @@ openai:
         'validation': '',
       },
     ]
-  visible_properties: ['api_base_url', 'api_key', 'label_suggestion']
+  visible_properties: ['api_base_url', 'api_key', 'model', 'embedding_model', 'label_suggestion']
 linear:
   id: linear
   logo: linear.png
@@ -258,6 +268,45 @@ nhanhvn:
   i18n_key: nhanhvn
   hook_type: account
   allow_multiple_hooks: false
+
+calendly:
+  id: calendly
+  logo: calendly.png
+  i18n_key: calendly
+  hook_type: account
+  allow_multiple_hooks: false
+  settings_json_schema:
+    {
+      'type': 'object',
+      'properties':
+        {
+          'access_token': { 'type': 'string' },
+          'user_uri': { 'type': 'string' },
+          'organization_uri': { 'type': 'string' },
+          'user_name': { 'type': 'string' },
+          'default_timezone': { 'type': 'string' },
+          'webhook_subscription_uri': { 'type': 'string' },
+        },
+      'required': ['access_token'],
+      'additionalProperties': false,
+    }
+  settings_form_schema:
+    [
+      {
+        'label': 'Personal Access Token',
+        'type': 'text',
+        'name': 'access_token',
+        'validation': 'required',
+        'help': 'Get your token from https://calendly.com/integrations/api_webhooks',
+      },
+      {
+        'label': 'Default Timezone',
+        'type': 'text',
+        'name': 'default_timezone',
+        'value': 'Asia/Ho_Chi_Minh',
+      },
+    ]
+  visible_properties: ['user_name', 'default_timezone']
 
 leadsquared:
   id: leadsquared

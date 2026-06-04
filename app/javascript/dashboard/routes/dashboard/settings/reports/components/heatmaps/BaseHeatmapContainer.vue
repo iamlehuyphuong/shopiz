@@ -255,7 +255,6 @@ watch(
 );
 
 onMounted(() => {
-  store.dispatch('inboxes/get');
   startRefetching();
 });
 </script>

@@ -128,6 +128,32 @@ const showLabelsSection = computed(() => {
   return props.chat.labels?.length > 0 || hasSlaPolicyId.value;
 });
 
+const isFollowupActive = computed(() => {
+  const followupConfig = inbox.value?.followup_config;
+  if (!followupConfig?.enabled) return false;
+
+  const isCancelled = props.chat.custom_attributes?.followup_cancelled === true;
+  if (isCancelled) return false;
+
+  const isBotPending = props.chat.status === 'pending' && props.chat.meta?.assignee_type === 'AgentBot';
+  if (!['open', 'snoozed'].includes(props.chat.status) && !isBotPending) return false;
+
+  const lastMsg = props.chat.last_non_activity_message;
+  // 1 is OUTGOING
+  if (!lastMsg || lastMsg.message_type !== 1) return false;
+
+  const maxAttempts = followupConfig.max_attempts || 1;
+  const currentCount = props.chat.custom_attributes?.followup_count || 0;
+
+  return currentCount < maxAttempts;
+});
+
+const followupText = computed(() => {
+  const currentCount = props.chat.custom_attributes?.followup_count || 0;
+  const maxAttempts = inbox.value?.followup_config?.max_attempts || 1;
+  return `Follow-up ${currentCount}/${maxAttempts}`;
+});
+
 const messagePreviewClass = computed(() => {
   return [
     hasUnread.value ? 'font-medium text-n-slate-12' : 'text-n-slate-11',
@@ -201,6 +227,18 @@ const closeContextMenu = () => {
   showContextMenu.value = false;
   contextMenu.value.x = null;
   contextMenu.value.y = null;
+};
+
+const cancelFollowup = async () => {
+  closeContextMenu();
+  try {
+    await store.dispatch('conversations/updateCustomAttributes', {
+      conversationId: props.chat.id,
+      customAttributes: { followup_cancelled: true },
+    });
+  } catch (error) {
+    // Ignore error
+  }
 };
 
 const onUpdateConversation = (status, snoozedUntil) => {
@@ -325,22 +363,28 @@ const deleteConversation = () => {
       </div>
       <div class="flex gap-2 ltr:ml-2 rtl:mr-2 mt-1 items-center">
         <span
-          class="conversation--status text-white text-xxs font-medium leading-4 py-1 px-2 rounded-lg border border-solid border-n-strong text-n-slate-10 bg-n-slate-1 text-ellipsis overflow-hidden whitespace-nowrap"
+          class="conversation--status text-white text-xxs font-medium leading-4 py-1 px-2 rounded-full border border-solid border-n-strong text-n-slate-10 bg-n-slate-1 text-ellipsis overflow-hidden whitespace-nowrap"
           :class="chat.status"
         >
           {{
             $t(`CHAT_LIST.CHAT_STATUS_FILTER_ITEMS.${props.chat.status}.TEXT`)
           }}
         </span>
+        <span
+          v-if="isFollowupActive"
+          class="text-xxs font-medium leading-4 py-1 px-2 rounded-full border border-solid border-n-orange text-n-orange-11 bg-n-orange-2 text-ellipsis overflow-hidden whitespace-nowrap"
+        >
+          {{ followupText }}
+        </span>
         <div
           v-if="currentContact.phone_number"
-          class="inline-flex items-center justify-center size-6 bg-n-orange rounded-md"
+          class="inline-flex items-center justify-center size-6 bg-n-orange rounded-full"
         >
           <span class="i-lucide-phone text-white size-3" />
         </div>
         <div
           v-if="currentContact.email"
-          class="inline-flex items-center justify-center size-6 bg-n-orange rounded-md"
+          class="inline-flex items-center justify-center size-6 bg-n-orange rounded-full"
         >
           <span class="i-lucide-mail text-white size-3" />
         </div>
@@ -432,6 +476,7 @@ const deleteConversation = () => {
         :conversation-labels="chat.labels"
         :conversation-url="conversationPath"
         :allowed-options="allowedContextMenuOptions"
+        :is-followup-active="isFollowupActive"
         @update-conversation="onUpdateConversation"
         @assign-agent="onAssignAgent"
         @assign-label="onAssignLabel"
@@ -441,6 +486,7 @@ const deleteConversation = () => {
         @mark-as-read="markAsRead"
         @assign-priority="assignPriority"
         @delete-conversation="deleteConversation"
+        @cancel-followup="cancelFollowup"
         @close="closeContextMenu"
       />
     </ContextMenu>

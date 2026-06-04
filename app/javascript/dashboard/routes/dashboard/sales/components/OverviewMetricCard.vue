@@ -19,11 +19,7 @@ defineProps({
     <div v-if="changePercent !== null" class="flex items-center gap-1">
       <span
         class="text-xs font-medium"
-        :class="
-          changePercent >= 0
-            ? 'text-n-teal-11'
-            : 'text-n-ruby-11'
-        "
+        :class="changePercent >= 0 ? 'text-n-teal-11' : 'text-n-ruby-11'"
       >
         <span v-if="changePercent >= 0">↑</span>
         <span v-else>↓</span>

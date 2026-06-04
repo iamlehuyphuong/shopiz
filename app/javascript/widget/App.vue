@@ -268,6 +268,10 @@ export default {
           this.fetchOldConversations().then(() => this.setUnreadView());
           this.fetchAvailableAgents(websiteToken);
           this.setAppConfig(message);
+          if (message.widgetColor) {
+            this.setWidgetColor(message.widgetColor);
+            this.setWidgetColorVariable(message.widgetColor);
+          }
           this.$store.dispatch('contacts/get');
           this.setCampaignReadData(message.campaignsSnoozedTill);
         } else if (message.event === 'widget-visible') {

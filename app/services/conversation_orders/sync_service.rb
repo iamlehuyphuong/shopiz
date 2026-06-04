@@ -1,16 +1,6 @@
 # Service to sync a ConversationOrder's status from its external sales platform.
 # Supports all platforms including tiktok_shop (sync-only).
 class ConversationOrders::SyncService
-  PROXY_MAP = {
-    'kiotviet' => 'ConversationOrders::KiotvietProxy',
-    'sapo' => 'ConversationOrders::SapoProxy',
-    'haravan' => 'ConversationOrders::HaravanProxy',
-    'woocommerce' => 'ConversationOrders::WoocommerceProxy',
-    'shopify' => 'ConversationOrders::ShopifyProxy',
-    'nhanhvn' => 'ConversationOrders::NhanhvnProxy',
-    'tiktok_shop' => 'ConversationOrders::TiktokShopProxy'
-  }.freeze
-
   def initialize(order:, user: nil)
     @order = order
     @user = user
@@ -20,10 +10,10 @@ class ConversationOrders::SyncService
     return { success: false, error: 'Order not pushed yet' } if @order.external_order_id.blank?
     return { success: false, error: 'Platform not specified' } if @order.external_source.blank?
 
-    proxy_class = PROXY_MAP[@order.external_source]
+    proxy_class = ConversationOrders::PlatformRegistry.proxy_for(@order.external_source)
     return { success: false, error: "Unsupported platform: #{@order.external_source}" } if proxy_class.nil?
 
-    sync_order(proxy_class.constantize)
+    sync_order(proxy_class)
   end
 
   private
@@ -44,18 +34,21 @@ class ConversationOrders::SyncService
   end
 
   def update_order_from_result(client, result)
-    attrs = {}
+    columns = {}
 
     # Map status — delegate extraction to platform-specific proxy
     raw_status = client.extract_raw_status(result)
     mapped = client.map_status(raw_status)
-    attrs[:status] = mapped if mapped.present?
-
-    @order.update!(attrs) if attrs.present?
+    columns[:status] = ConversationOrder.statuses[mapped.to_s] if mapped.present?
 
     # Update total if available — delegate extraction to proxy
     total = client.extract_total(result)
-    @order.update_column(:total_amount, total) if total.present? # bypass before_save calculate_total_amount
+    columns[:total_amount] = total if total.present?
+
+    # Use update_columns to bypass before_save :calculate_total_amount
+    # which would overwrite the platform-reported total with a local calculation.
+    @order.update_columns(columns) if columns.present?
+    @order.reload
   end
 
   def log_activity(action_type)

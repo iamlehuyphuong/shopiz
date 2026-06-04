@@ -15,7 +15,7 @@ const { t } = useI18n();
 const paddedData = computed(() => {
   if (!props.dateRange || props.dateRange.length !== 2) return props.chartData;
   const [start, end] = props.dateRange;
-  
+
   const days = eachDayOfInterval({ start, end });
   return days.map(day => {
     const dateStr = format(day, 'yyyy-MM-dd');
@@ -48,7 +48,7 @@ const series = computed(() => [
       x: d.date,
       y: d.orders,
     })),
-  }
+  },
 ]);
 
 const chartOptions = computed(() => ({
@@ -109,7 +109,7 @@ const chartOptions = computed(() => ({
         style: { colors: 'var(--n-slate-11)', fontSize: '11px' },
         formatter: val => Math.round(val),
       },
-    }
+    },
   ],
   tooltip: {
     theme: 'dark',
@@ -125,7 +125,7 @@ const chartOptions = computed(() => ({
       },
       {
         formatter: val => val,
-      }
+      },
     ],
   },
 }));

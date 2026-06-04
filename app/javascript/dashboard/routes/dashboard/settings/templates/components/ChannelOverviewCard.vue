@@ -50,11 +50,6 @@ const inboxLabel = computed(() => {
   return `${props.inboxCount} ${props.inboxCount === 1 ? 'inbox' : 'inboxes'}`;
 });
 
-const maxCount = computed(() => {
-  if (totalTemplates.value === 0) return 1;
-  return totalTemplates.value;
-});
-
 const handleSelect = () => {
   emit('select', props.channelKey);
 };
@@ -67,7 +62,7 @@ const handleSelect = () => {
     :class="[
       isActive
         ? 'border-n-orange-7 bg-n-orange-2 ring-1 ring-n-orange-7 shadow-sm'
-        : 'border-n-weak bg-n-solid-2 hover:bg-n-solid-3 hover:border-n-strong',
+        : 'border-n-strong bg-n-solid-1 shadow-sm hover:bg-n-solid-2 hover:border-n-strong',
     ]"
     @click="handleSelect"
   >
@@ -102,25 +97,19 @@ const handleSelect = () => {
     </div>
 
     <!-- Status Bars -->
-    <div v-if="statusGroups.length > 0" class="flex flex-col gap-2 w-full">
+    <div
+      v-if="statusGroups.length > 0"
+      class="flex flex-wrap items-center gap-2 w-full pt-1"
+    >
       <div
         v-for="group in statusGroups"
         :key="group.key"
-        class="flex items-center gap-2.5"
+        class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-n-weak bg-n-solid-1 shadow-sm"
       >
-        <div class="flex-1 h-1.5 rounded-full bg-n-solid-3 overflow-hidden">
-          <div
-            class="h-full rounded-full transition-all duration-500"
-            :class="group.barColor"
-            :style="{
-              width: `${Math.max((group.count / maxCount) * 100, group.count > 0 ? 8 : 0)}%`,
-            }"
-          />
-        </div>
-        <span class="text-xs text-n-slate-10 whitespace-nowrap min-w-[80px]">
-          <span class="font-medium" :class="group.textColor">
-            {{ group.count }}
-          </span>
+        <span class="text-xs font-semibold" :class="group.textColor">
+          {{ group.count }}
+        </span>
+        <span class="text-xs text-n-slate-11 font-medium">
           {{ group.label }}
         </span>
       </div>

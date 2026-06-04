@@ -43,6 +43,8 @@
       },
       "FB": {
         "TITLE": "Facebook Message Channel",
+        "CONNECT_FB": "Connect Facebook Page",
+        "CONTINUE_WITH_FB": "Continue with Facebook",
         "DESC": "PS: By signing in, we only get access to your Page's messages. Your private messages can never be accessed by Shopiz.",
         "HELP": "PS: By signing in, we only get access to your Page's messages. Your private messages can never be accessed by Shopiz.",
         "CHOOSE_PAGE": "Choose Page",
@@ -55,6 +57,8 @@
       },
       "ZALO_OA": {
         "TITLE": "Zalo OA Channel",
+        "CONNECT_ZALO_OA": "Connect Zalo OA",
+        "CONTINUE_WITH_ZALO_OA": "Continue with Zalo OA",
         "LOADING": "Authenticating you with Zalo...",
         "RELOGIN": "Reauthorize",
         "DESC": "PS: By signing in, we only get access to your Zalo OA's messages. Your private messages can never be accessed by Shopiz.",
@@ -74,17 +78,29 @@
         "HELP_2": "Do not log in to your account on zalo web to ensure messages are continuously synchronized.",
         "DESC": "Log in to your ",
         "DESC_2": "to connect to the",
+        "CONFIGURATION_TITLE": "Zalo Extended Configuration",
         "DEFAULT_FRIEND_REQUEST_MESSAGE_TITLE": "Default Friend Request Message",
         "DEFAULT_FRIEND_REQUEST_MESSAGE_SUBTITLE": "The message sent when requesting friendship.",
         "DEFAULT_GREETING_MESSAGE_TITLE": "Default Greeting Message",
-        "DEFAULT_GREETING_MESSAGE_SUBTITLE": "The greeting message sent alongside the friend request."
+        "DEFAULT_GREETING_MESSAGE_SUBTITLE": "The greeting message sent alongside the friend request.",
+        "CUSTOM_PROXY": "Custom Proxy (Optional)",
+        "CUSTOM_PROXY_PLACEHOLDER": "http://user:pass@ip:port",
+        "GENERATE_QR": "Generate QR",
+        "GENERATING_QR": "Generating...",
+        "PROXY_USED": "Proxy in use:",
+        "QR_PLACEHOLDER": "Your QR code will appear here",
+        "QR_ERROR": "Unable to generate QR code. Please check your proxy and try again.",
+        "QR_NETWORK_ERROR": "Unable to connect to the server. Please check your network connection and try again."
       },
       "TIKTOK_SHOP": {
+        "CONNECT_TIKTOK_SHOP": "Connect TikTok Shop",
+        "CONTINUE_WITH_TIKTOK_SHOP": "Continue with TikTok Shop",
         "HELP": "PS: By signing in, we only get access to your TikTok Shop messages. Your private messages can never be accessed by Shopiz.",
         "INBOX_NAME": "Inbox Name",
         "ADD_NAME": "Add a name for your inbox",
         "PICK_NAME": "Pick A Name Your Inbox",
-        "PICK_A_VALUE": "Pick a value"
+        "PICK_A_VALUE": "Pick a value",
+        "CREATE_INBOX": "Create Inbox"
       },
       "INSTAGRAM": {
         "CONTINUE_WITH_INSTAGRAM": "Continue with Instagram",
@@ -633,6 +649,7 @@
       "TELEGRAM_QR_INSTRUCTION": "Scan the QR code above to quickly test your Telegram inbox"
     },
     "REAUTH": "Reauthorize",
+    "GO_TO_CONFIGURATION": "Go to configuration page",
     "VIEW": "View",
     "EDIT": {
       "API": {
@@ -718,8 +735,10 @@
       "ECOMMERCE": "eCommerce"
     },
     "ECOMMERCE": {
-      "TITLE": "eCommerce Integration",
-      "DESCRIPTION": "Link this inbox to a sales platform. All conversations in this inbox will use this integration for product search and order management.",
+      "INTEGRATIONS_TITLE": "E-commerce Integration",
+      "INTEGRATIONS_DESCRIPTION": "Link the account to a sales platform. All conversations will use this integration for product search and order management.",
+      "TITLE": "Sales Settings",
+      "DESCRIPTION": "Configure sales settings for this inbox, including linking eCommerce platforms, enabling the AI assistant for automated order creation, and setting up automated status change notification templates.",
       "SELECT_PLATFORM": "Select integration",
       "NO_INTEGRATIONS": "No e-commerce integrations found. Please configure an integration in Settings → Integrations first.",
       "AUTO_LINKED": "Auto-linked to {platform}",
@@ -727,7 +746,34 @@
       "NONE": "No integration",
       "SAVE": "Update",
       "SAVE_SUCCESS": "eCommerce integration updated successfully",
-      "SAVE_ERROR": "Failed to update eCommerce integration. Please try again."
+      "SAVE_ERROR": "Failed to update eCommerce integration. Please try again.",
+      "TEMPLATES_TITLE": "Order Notification Templates",
+      "TEMPLATES_DESCRIPTION": "Configure the message templates to be sent automatically when an order changes status. You can use variables: %{customer_name}, %{fanpage_name}, %{order_id}, %{status_label}, %{total_amount}",
+      "AI_ORDER_TITLE": "AI Assistant Order Creation",
+      "AI_ORDER_DESCRIPTION": "Allow the AI Assistant to automatically create orders through the configured E-commerce platform above.",
+      "AI_ORDER_TOGGLE": "Allow AI Assistant to create orders",
+      "SAVE_SALES_SETTINGS": "Save sales configuration",
+      "TEMPLATES_PLACEHOLDER_DRAFT": "Example: Hello %{customer_name}, your draft order #%{order_id} has been created. Total: %{total_amount}. Please review and confirm.",
+      "TEMPLATES_PLACEHOLDER_CONFIRMED": "Example: Hello %{customer_name}, your order #%{order_id} for %{total_amount} has been confirmed and is being prepared.",
+      "TEMPLATES_PLACEHOLDER_PROCESSING": "Example: Hello %{customer_name}, your order #%{order_id} is currently being processed and packed.",
+      "TEMPLATES_PLACEHOLDER_SHIPPED": "Example: Hello %{customer_name}, your order #%{order_id} has been handed over to the shipping carrier.",
+      "TEMPLATES_PLACEHOLDER_DELIVERED": "Example: Hello %{customer_name}, your order #%{order_id} has been successfully delivered. Thank you for shopping with %{inbox_name}!",
+      "TEMPLATES_PLACEHOLDER_CANCELLED": "Example: Hello %{customer_name}, your order #%{order_id} has been cancelled. If you need any assistance, please reply to %{inbox_name}.",
+      "TEMPLATES_DEFAULT_DRAFT": "Hello %{customer_name}, your draft order #%{order_id} has been created. Total: %{total_amount}. Please review and confirm.",
+      "TEMPLATES_DEFAULT_CONFIRMED": "Hello %{customer_name}, your order #%{order_id} for %{total_amount} has been confirmed and is being prepared.",
+      "TEMPLATES_DEFAULT_PROCESSING": "Hello %{customer_name}, your order #%{order_id} is currently being processed and packed.",
+      "TEMPLATES_DEFAULT_SHIPPED": "Hello %{customer_name}, your order #%{order_id} has been handed over to the shipping carrier.",
+      "TEMPLATES_DEFAULT_DELIVERED": "Hello %{customer_name}, your order #%{order_id} has been successfully delivered. Thank you for shopping with %{inbox_name}!",
+      "TEMPLATES_DEFAULT_CANCELLED": "Hello %{customer_name}, your order #%{order_id} has been cancelled. If you need any assistance, please reply to %{inbox_name}.",
+      "FILL_DEFAULT_TEMPLATES": "Fill default templates",
+      "CUSTOMIZE_TEMPLATES_TOGGLE": "Customize notification templates",
+      "VARIABLE_TAGS_LABEL": "Click a variable tag to insert it into the template you're editing:",
+      "VARIABLE_TAG_TOOLTIP": "Click to insert {variable} at cursor position",
+      "VAR_CUSTOMER_NAME": "Customer name (customer_name)",
+      "VAR_INBOX_NAME": "Inbox name (inbox_name)",
+      "VAR_ORDER_ID": "Order ID (order_id)",
+      "VAR_STATUS_LABEL": "Status (status_label)",
+      "VAR_TOTAL_AMOUNT": "Total amount (total_amount)"
     },
     "ZALO_TEMPLATES": {
       "TITLE": "Zalo OA Message Templates",
@@ -789,8 +835,17 @@
         "DELETE_ERROR": "Failed to delete template"
       }
     },
+    "ZALO_PERSONAL_CONNECTION": {
+      "CONNECTED": "Zalo Personal is connected.",
+      "CHECK_BUTTON": "Check connection",
+      "RECONNECT_BUTTON": "Reconnect",
+      "CHECKING": "Checking...",
+      "CONNECTED_ALERT": "Zalo Personal connection is healthy.",
+      "DISCONNECTED_ALERT": "Zalo Personal connection is lost. Please reconnect.",
+      "CHECK_ERROR": "Unable to check connection. Please try again later."
+    },
     "CHANNEL_PREFERENCES": "Channel Preferences",
-    "WIDGET_FEATURES": "Widget features",
+    "WIDGET_FEATURES": "Customize Chat Window",
     "ACCOUNT_HEALTH": {
       "TITLE": "Manage your WhatsApp account",
       "DESCRIPTION": "Review your WhatsApp account status, messaging limits, and quality. Update settings or resolve issues if needed",
@@ -897,6 +952,9 @@
       "ENABLE_EMAIL_COLLECT_BOX": "Enable email collect box",
       "ENABLE_EMAIL_COLLECT_BOX_SUB_TEXT": "Enable or disable email collect box on new conversation",
       "AUTO_FOLLOWUP_TITLE": "Auto Follow-up",
+      "AUTO_LABEL_TITLE": "Auto-labeling",
+      "AUTO_LABEL_TOGGLE": "AI-powered auto-labeling",
+      "AUTO_LABEL_DESC": "Automatically assigns contextually relevant labels to conversations by analyzing customer behavior, sentiment, and intent.",
       "AUTO_FOLLOWUP_TOGGLE": "Enable customer follow-up sequences",
       "AUTO_FOLLOWUP_DESC": "Automatically trigger an automated message sequence if the customer becomes unresponsive.",
       "AUTO_FOLLOWUP_DELAY_LABEL": "Interval (Hours)",
@@ -934,6 +992,12 @@
       "HMAC_MANDATORY_DESCRIPTION": "If enabled, requests that cannot be verified will be rejected.",
       "INBOX_IDENTIFIER": "Inbox Identifier",
       "INBOX_IDENTIFIER_SUB_TEXT": "Use the `inbox_identifier` token shown here to authentication your API clients.",
+      "PROXY_CONFIGURATION": {
+        "TITLE": "Proxy Configuration",
+        "SUBTITLE": "This is the proxy URL currently configured for this Zalo inbox.",
+        "HELP": "To change the Proxy, please re-authorize.",
+        "NO_PROXY": "No proxy configured"
+      },
       "FORWARD_EMAIL_TITLE": "Forward to Email",
       "FORWARD_EMAIL_SUB_TEXT": "Start forwarding your emails to the following email address.",
       "FORWARD_EMAIL_NOT_CONFIGURED": "Forwarding emails to your inbox is currently disabled on this installation. To use this feature, it must be enabled by your administrator. Please get in touch with them to proceed.",
@@ -1264,6 +1328,8 @@
         },
         "BUBBLE_AVATAR": {
           "LABEL": "Bubble Icon",
+          "OPEN_LABEL": "Open Chat Image",
+          "CLOSE_LABEL": "Close Chat Image",
           "DELETE": {
             "API": {
               "SUCCESS_MESSAGE": "Bubble icon deleted successfully",
@@ -1301,8 +1367,8 @@
         },
         "WIDGET_COLOR_LABEL": "Widget Color",
         "WIDGET_BUBBLE": "Bubble",
-        "WIDGET_BUBBLE_POSITION_LABEL": "Position:",
-        "WIDGET_BUBBLE_TYPE_LABEL": "Type:",
+        "WIDGET_BUBBLE_POSITION_LABEL": "Position",
+        "WIDGET_BUBBLE_TYPE_LABEL": "Type",
         "WIDGET_BUBBLE_LAUNCHER_TITLE": {
           "DEFAULT": "Chat with us",
           "LABEL": "Launcher Title",
@@ -1325,7 +1391,7 @@
         },
         "WIDGET_BUBBLE_TYPE": {
           "STANDARD": "Standard",
-          "EXPANDED_BUBBLE": "Expanded Bubble"
+          "EXPANDED_BUBBLE": "Expanded"
         }
       },
       "WIDGET_SCREEN": {

@@ -36,7 +36,9 @@ class Channel::FacebookPage < ApplicationRecord
                  :hide_phone_comments,      # Boolean - hide comments containing phone number
                  :hide_email_comments,      # Boolean - hide comments containing email
                  :auto_reply_to_comments,   # Boolean - send private reply to commenters
-                 :auto_reply_message        # String  - message content for private reply
+                 :auto_reply_use_ai,        # Boolean - use AI to generate reply
+                 :auto_reply_message,       # String  - message content for private reply
+                 :auto_reply_ai_prompt      # String  - AI prompt for generating reply
 
   validates :page_id, uniqueness: { scope: :account_id }
 

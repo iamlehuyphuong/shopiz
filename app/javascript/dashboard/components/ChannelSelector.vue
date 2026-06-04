@@ -47,7 +47,7 @@ defineProps({
 
     <div
       v-if="isComingSoon"
-      class="absolute inset-0 flex items-center justify-center backdrop-blur-[2px] rounded-2xl bg-gradient-to-br from-n-surface-1/90 via-n-surface-1/70 to-n-surface-1/95 cursor-not-allowed"
+      class="absolute inset-0 flex items-center justify-center backdrop-blur-[1px] rounded-2xl bg-gradient-to-br from-n-surface-1/50 via-n-surface-1/40 to-n-surface-1/60 cursor-not-allowed"
     >
       <span class="text-n-slate-12 font-medium text-sm">
         {{ $t('CHANNEL_SELECTOR.COMING_SOON') }} 🚀

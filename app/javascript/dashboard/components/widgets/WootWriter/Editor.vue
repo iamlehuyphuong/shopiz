@@ -108,6 +108,7 @@ const emit = defineEmits([
   'input',
   'update:modelValue',
   'executeCopilotAction',
+  'cannedFilesSelected',
 ]);
 
 const { t } = useI18n();
@@ -693,6 +694,13 @@ function insertSpecialContent(type, content) {
   useTrack(event_map[type]);
 }
 
+function onCannedResponseSelected({ content, files }) {
+  insertSpecialContent('cannedResponse', content);
+  if (files?.length) {
+    emit('cannedFilesSelected', files);
+  }
+}
+
 function handleLineBreakWhenCmdAndEnterToSendEnabled(event) {
   if (
     hasPressedCommandAndEnter(event) &&
@@ -785,6 +793,13 @@ watch(
 );
 
 watch(
+  () => props.placeholder,
+  () => {
+    reloadState(props.modelValue);
+  }
+);
+
+watch(
   computed(() => props.updateSelectionWith),
   (newValue, oldValue) => {
     if (!editorView) return;
@@ -853,7 +868,7 @@ useEmitter(BUS_EVENTS.INSERT_INTO_RICH_EDITOR, insertContentIntoEditor);
     <CannedResponse
       v-if="shouldShowCannedResponses"
       :search-key="cannedSearchTerm"
-      @replace="content => insertSpecialContent('cannedResponse', content)"
+      @replace="onCannedResponseSelected"
     />
     <VariableList
       v-if="shouldShowVariables"

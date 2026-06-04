@@ -1,10 +1,14 @@
 # Base proxy class for all platform-specific order integrations.
 # Subclasses only need to implement #create_order and #fetch_order.
 class ConversationOrders::PlatformProxy
+  attr_reader :account
+
   def initialize(account)
     @account = account
-    # KiotvietClient concern looks up via @assistant.account_id
-    @assistant = OpenStruct.new(account_id: account.id)
+    # Copilot client concerns (e.g., KiotvietClient) look up credentials via
+    # @assistant.account_id. We provide a lightweight compatibility shim so
+    # those concerns work in both Copilot and PlatformProxy contexts.
+    @assistant = Struct.new(:account_id).new(account.id)
   end
 
   def create_order(_payload)

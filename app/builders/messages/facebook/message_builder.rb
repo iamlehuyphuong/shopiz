@@ -57,17 +57,25 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
     asid_contact = private_reply_message.conversation.contact
     psid_contact = @contact_inbox.contact
 
-    return if asid_contact.id == psid_contact.id
+    if asid_contact.id != psid_contact.id
+      # Merge ASID contact (the one built from Comment feed) into PSID contact (the DM user)
+      ContactMergeAction.new(
+        account: @inbox.account,
+        base_contact: psid_contact,
+        mergee_contact: asid_contact
+      ).perform
 
-    # Merge ASID contact (the one built from Comment feed) into PSID contact (the DM user)
-    ContactMergeAction.new(
-      account: @inbox.account,
-      base_contact: psid_contact,
-      mergee_contact: asid_contact
-    ).perform
+      # Reload the PSID contact inbox associations after merge
+      @contact_inbox.reload
+    end
 
-    # Reload the PSID contact inbox associations after merge
-    @contact_inbox.reload
+    # Continue on the old conversation from the comment
+    @conversation = private_reply_message.conversation
+    
+    # Ensure the conversation uses the PSID contact_inbox so replies go to the PSID
+    if @conversation.contact_inbox_id != @contact_inbox.id
+      @conversation.update!(contact_inbox_id: @contact_inbox.id)
+    end
   end
 
   def build_message
@@ -82,8 +90,16 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
     return if response.referral.blank?
 
     note_content = "Nguồn: Quảng cáo CTM\n"
-    note_content += "- Chiến dịch (Ad ID): #{response.ad_id}\n" if response.ad_id.present?
+
+    if response.ad_id.present?
+      link_id = response.try(:post_id).presence || response.ad_id
+      note_content += "- Chiến dịch (Ad ID): [#{response.ad_id}](https://facebook.com/#{link_id})\n"
+    end
+
     note_content += "- Mã sản phẩm (Ref): #{response.ref_payload}\n" if response.ref_payload.present?
+
+    # Verify if this exact note already exists to prevent duplication on multiple webhook deliveries
+    return if conversation.messages.where(message_type: :outgoing, private: true, content: note_content).exists?
 
     conversation.messages.create!(
       account_id: conversation.account_id,

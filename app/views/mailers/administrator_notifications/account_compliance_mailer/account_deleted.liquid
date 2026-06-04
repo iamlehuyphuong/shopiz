@@ -1,9 +1,11 @@
-<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Account Deleted</h2>
-<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
-  We regret to inform you that your company's account on Shopiz has been successfully deleted according to data compliance laws. All contact data and conversations belonging to this workspace have been purged.
-</p>
-<hr style="border: 0; border-bottom: 1px solid #E2E8F0; margin: 24px 0;" />
+{% if locale == 'vi' %}
 <h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Tài Khoản Đã Bị Xoá</h2>
 <p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
   Rất tiếc phải thông báo rằng tài khoản công ty của bạn trên hệ thống Shopiz đã được xoá thành công theo luật tuân thủ dữ liệu. Tất cả dữ liệu danh bạ và các hộp thoại thuộc về không gian hoạt động này đã được làm sạch.
 </p>
+{% else %}
+<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Account Deleted</h2>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
+  We regret to inform you that your company's account on Shopiz has been successfully deleted according to data compliance laws. All contact data and conversations belonging to this workspace have been purged.
+</p>
+{% endif %}

@@ -17,8 +17,7 @@ import Spinner from 'shared/components/Spinner.vue';
 import Icon from 'dashboard/components-next/icon/Icon.vue';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import MfaVerification from 'dashboard/components/auth/MfaVerification.vue';
-import signupBg from 'assets/images/auth/signup-bg.jpg';
-import Testimonials from 'v3/views/auth/signup/components/Testimonials/Index.vue';
+import NetworkIllustration from 'v3/components/NetworkIllustration.vue';
 
 const ERROR_MESSAGES = {
   'no-account-found': 'LOGIN.OAUTH.NO_ACCOUNT_FOUND',
@@ -38,7 +37,7 @@ export default {
     SimpleDivider,
     MfaVerification,
     Icon,
-    Testimonials,
+    NetworkIllustration,
   },
   props: {
     ssoAuthToken: { type: String, default: '' },
@@ -104,9 +103,6 @@ export default {
     },
     showSamlLogin() {
       return this.allowedLoginMethods.includes('saml');
-    },
-    signupBg() {
-      return signupBg;
     },
   },
   created() {
@@ -228,29 +224,14 @@ export default {
 </script>
 
 <template>
-  <div
-    class="relative w-full h-full min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat p-4"
-    :style="{ backgroundImage: `url(${signupBg})` }"
-  >
-    <div
-      class="absolute inset-0 bg-n-gray-12/60 dark:bg-n-gray-1/80 backdrop-blur-sm"
-    />
-    <div
-      class="relative flex max-w-[960px] bg-white dark:bg-n-solid-2 rounded-lg outline outline-1 outline-n-container shadow-sm overflow-hidden w-auto xl:w-full"
-    >
-      <div class="flex-1 flex items-center justify-center py-10 px-10">
-        <div class="max-w-5xl w-full">
+  <div class="flex min-h-screen w-full bg-white dark:bg-n-solid-2">
+    <div class="flex-1 flex flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:w-[45%] lg:min-w-[500px] lg:max-w-[650px] lg:px-20 xl:px-24">
+      <div class="mx-auto w-full max-w-sm lg:max-w-md">
           <div class="mb-6">
             <img
               :src="globalConfig.logo"
               :alt="globalConfig.installationName"
-              class="block w-auto h-7 dark:hidden"
-            />
-            <img
-              v-if="globalConfig.logoDark"
-              :src="globalConfig.logoDark"
-              :alt="globalConfig.installationName"
-              class="hidden w-auto h-7 dark:block"
+              class="block w-auto h-14"
             />
             <h2
               class="mt-6 text-2xl font-semibold text-n-slate-12 text-center md:text-left"
@@ -293,7 +274,7 @@ export default {
                 <div v-if="showSamlLogin" class="text-center">
                   <router-link
                     to="/app/login/sso"
-                    class="inline-flex justify-center w-full px-4 py-3 items-center bg-n-background dark:bg-n-solid-3 rounded-md shadow-sm ring-1 ring-inset ring-n-container dark:ring-n-container focus:outline-offset-0 hover:bg-n-alpha-2 dark:hover:bg-n-alpha-2"
+                    class="inline-flex justify-center w-full px-4 py-3 items-center bg-n-background rounded-md shadow-sm ring-1 ring-inset ring-n-container focus:outline-offset-0 hover:bg-n-alpha-2"
                   >
                     <Icon
                       icon="i-lucide-lock-keyhole"
@@ -366,7 +347,8 @@ export default {
           </section>
         </div>
       </div>
-      <Testimonials class="flex-1 hidden xl:flex" />
+    <div class="hidden lg:flex flex-1 relative">
+      <NetworkIllustration />
     </div>
   </div>
 </template>

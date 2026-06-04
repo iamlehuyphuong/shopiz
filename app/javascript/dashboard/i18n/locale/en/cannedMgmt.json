@@ -36,6 +36,12 @@
         },
         "SUBMIT": "Submit"
       },
+      "ATTACHMENTS": {
+        "LABEL": "Attachments",
+        "BUTTON": "Add files",
+        "LIMIT_ERROR": "Maximum 5 files allowed",
+        "SIZE_ERROR": "File size must be under {size}MB"
+      },
       "API": {
         "SUCCESS_MESSAGE": "Canned response added successfully.",
         "ERROR_MESSAGE": "Could not connect to server. Please try again."
@@ -56,6 +62,10 @@
           "ERROR": "Message is required."
         },
         "SUBMIT": "Submit"
+      },
+      "ATTACHMENTS": {
+        "LABEL": "Attachments",
+        "BUTTON": "Add files"
       },
       "BUTTON_TEXT": "Edit",
       "API": {

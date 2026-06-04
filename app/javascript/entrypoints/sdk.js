@@ -79,6 +79,7 @@ const runSDK = ({ baseUrl, websiteToken }) => {
     enableFileUpload: shopizSettings.enableFileUpload,
     enableEmojiPicker: shopizSettings.enableEmojiPicker ?? true,
     enableEndConversation: shopizSettings.enableEndConversation ?? true,
+    widgetColor: shopizSettings.widgetColor || '',
 
     toggle(state) {
       IFrameHelper.events.toggleBubble(state);

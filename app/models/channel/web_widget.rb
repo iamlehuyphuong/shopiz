@@ -61,15 +61,67 @@ class Channel::WebWidget < ApplicationRecord
   enum reply_time: { in_a_few_minutes: 0, in_a_few_hours: 1, in_a_day: 2 }
 
   def bubble_avatar_url
-    return Rails.application.routes.url_helpers.url_for(bubble_avatar.representation(resize_to_fill: [250, nil])) if bubble_avatar.attached? && bubble_avatar.representable?
+    return '' unless bubble_avatar.attached?
 
-    ''
+    host = ENV.fetch('FRONTEND_URL', nil)
+
+    if bubble_avatar.content_type == 'image/svg+xml' || bubble_avatar.filename.to_s.downcase.end_with?('.svg')
+      if host.present?
+        return Rails.application.routes.url_helpers.url_for(bubble_avatar, host: host)
+      else
+        return Rails.application.routes.url_helpers.url_for(bubble_avatar)
+      end
+    end
+
+    if bubble_avatar.representable?
+      begin
+        if host.present?
+          return Rails.application.routes.url_helpers.url_for(bubble_avatar.representation(resize_to_fill: [250, nil]), host: host)
+        else
+          return Rails.application.routes.url_helpers.url_for(bubble_avatar.representation(resize_to_fill: [250, nil]))
+        end
+      rescue => e
+        # fallback to direct url if representation fails
+      end
+    end
+
+    if host.present?
+      Rails.application.routes.url_helpers.url_for(bubble_avatar, host: host)
+    else
+      Rails.application.routes.url_helpers.url_for(bubble_avatar)
+    end
   end
 
   def close_bubble_avatar_url
-    return Rails.application.routes.url_helpers.url_for(close_bubble_avatar.representation(resize_to_fill: [250, nil])) if close_bubble_avatar.attached? && close_bubble_avatar.representable?
+    return '' unless close_bubble_avatar.attached?
 
-    ''
+    host = ENV.fetch('FRONTEND_URL', nil)
+
+    if close_bubble_avatar.content_type == 'image/svg+xml' || close_bubble_avatar.filename.to_s.downcase.end_with?('.svg')
+      if host.present?
+        return Rails.application.routes.url_helpers.url_for(close_bubble_avatar, host: host)
+      else
+        return Rails.application.routes.url_helpers.url_for(close_bubble_avatar)
+      end
+    end
+
+    if close_bubble_avatar.representable?
+      begin
+        if host.present?
+          return Rails.application.routes.url_helpers.url_for(close_bubble_avatar.representation(resize_to_fill: [250, nil]), host: host)
+        else
+          return Rails.application.routes.url_helpers.url_for(close_bubble_avatar.representation(resize_to_fill: [250, nil]))
+        end
+      rescue => e
+        # fallback to direct url if representation fails
+      end
+    end
+
+    if host.present?
+      Rails.application.routes.url_helpers.url_for(close_bubble_avatar, host: host)
+    else
+      Rails.application.routes.url_helpers.url_for(close_bubble_avatar)
+    end
   end
 
   def name

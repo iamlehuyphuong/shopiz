@@ -31,19 +31,19 @@ class ContactMergeAction
   end
 
   def merge_conversations
-    Conversation.where(contact_id: @mergee_contact.id).update(contact_id: @base_contact.id)
+    Conversation.where(contact_id: @mergee_contact.id).update_all(contact_id: @base_contact.id)
   end
 
   def merge_contact_notes
-    Note.where(contact_id: @mergee_contact.id, account_id: @mergee_contact.account_id).update(contact_id: @base_contact.id)
+    Note.where(contact_id: @mergee_contact.id, account_id: @mergee_contact.account_id).update_all(contact_id: @base_contact.id)
   end
 
   def merge_messages
-    Message.where(sender: @mergee_contact).update(sender: @base_contact)
+    Message.where(sender: @mergee_contact).update_all(sender_id: @base_contact.id)
   end
 
   def merge_contact_inboxes
-    ContactInbox.where(contact_id: @mergee_contact.id).update(contact_id: @base_contact.id)
+    ContactInbox.where(contact_id: @mergee_contact.id).update_all(contact_id: @base_contact.id)
   end
 
   def merge_and_remove_mergee_contact

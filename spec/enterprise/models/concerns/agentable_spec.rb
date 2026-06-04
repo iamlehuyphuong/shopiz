@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'agents'
 
 RSpec.describe Concerns::Agentable do
   let(:dummy_class) do

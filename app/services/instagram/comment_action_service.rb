@@ -62,20 +62,36 @@ class Instagram::CommentActionService
 
   def send_private_reply_and_log(comment_id, message_text, conversation)
     response = send_private_reply(comment_id, message_text)
-    return unless response&.success?
+    
+    if response&.success?
+      body = JSON.parse(response.body)
+      msg_id = body['message_id'] || body['id']
 
-    body = JSON.parse(response.body)
-    msg_id = body['message_id'] || body['id']
+      return unless msg_id.present?
 
-    return unless msg_id.present?
-
-    conversation.messages.create!(
-      account_id: conversation.account_id,
-      inbox_id: conversation.inbox_id,
-      message_type: :outgoing,
-      content: message_text,
-      source_id: msg_id
-    )
+      conversation.messages.create!(
+        account_id: conversation.account_id,
+        inbox_id: conversation.inbox_id,
+        message_type: :outgoing,
+        content: message_text,
+        source_id: msg_id,
+        content_attributes: { is_private_reply: true }
+      )
+    else
+      body = JSON.parse(response.body) rescue {}
+      error_msg = body.dig('error', 'message') || 'Failed to send private reply'
+      
+      msg = conversation.messages.create!(
+        account_id: conversation.account_id,
+        inbox_id: conversation.inbox_id,
+        message_type: :outgoing,
+        content: message_text,
+        status: :failed,
+        source_id: "failed_ig_#{SecureRandom.hex(4)}",
+        content_attributes: { is_private_reply: true }
+      )
+      Messages::StatusUpdateService.new(msg, 'failed', error_msg).perform
+    end
   end
 
   private

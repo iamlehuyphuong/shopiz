@@ -43,6 +43,20 @@ class Account < ApplicationRecord
         'auto_resolve_label': { 'type': %w[string null] },
         'keep_pending_on_bot_failure': { 'type': %w[boolean null] },
         'captain_auto_resolve_mode': { 'type': %w[string null], 'enum': ['evaluated', 'legacy', 'disabled', nil] },
+        'active_ecommerce_platform': { 'type': %w[string null] },
+        'ai_allow_create_order': { 'type': %w[boolean null] },
+        'order_notification_templates': {
+          'type': %w[object null],
+          'properties': {
+            'draft': { 'type': %w[string null] },
+            'confirmed': { 'type': %w[string null] },
+            'processing': { 'type': %w[string null] },
+            'shipped': { 'type': %w[string null] },
+            'delivered': { 'type': %w[string null] },
+            'cancelled': { 'type': %w[string null] }
+          },
+          'additionalProperties': false
+        },
         'conversation_required_attributes': {
           'type': %w[array null],
           'items': { 'type': 'string' }
@@ -95,6 +109,7 @@ class Account < ApplicationRecord
   store_accessor :settings, :reporting_timezone
   store_accessor :settings, :keep_pending_on_bot_failure
   store_accessor :settings, :captain_auto_resolve_mode
+  store_accessor :settings, :active_ecommerce_platform, :ai_allow_create_order, :order_notification_templates
   include AccountCaptainAutoResolve
 
   has_many :account_users, dependent: :destroy_async
@@ -161,6 +176,8 @@ class Account < ApplicationRecord
 
   before_validation :validate_limit_keys
   after_create_commit :notify_creation, :assign_default_plan
+  after_destroy :remove_account_sequences
+  after_save :sync_sales_config_to_inboxes, if: :saved_change_to_settings?
 
   def assign_default_plan
     default_plan = SubscriptionPlan.free_plan.first
@@ -169,7 +186,6 @@ class Account < ApplicationRecord
     # Use SubscribeService to handle the full subscription logic (creating record and provisioning)
     Subscriptions::SubscribeService.new(self, default_plan).execute
   end
-  after_destroy :remove_account_sequences
 
   def agents
     users.where(account_users: { role: :agent })
@@ -247,6 +263,28 @@ class Account < ApplicationRecord
   def remove_account_sequences
     ActiveRecord::Base.connection.exec_query("drop sequence IF EXISTS camp_dpid_seq_#{id}")
     ActiveRecord::Base.connection.exec_query("drop sequence IF EXISTS conv_dpid_seq_#{id}")
+  end
+
+  def sync_sales_config_to_inboxes
+    return unless settings.is_a?(Hash)
+
+    # Extract sales config attributes from account settings (JSON keys are strings)
+    platform = settings['active_ecommerce_platform']
+    ai_allow = settings['ai_allow_create_order']
+    templates = settings['order_notification_templates']
+
+    # Build the sales_config hash
+    sales_config = {}
+    sales_config['platform'] = platform if settings.key?('active_ecommerce_platform')
+    sales_config['ai_allow_create_order'] = ai_allow if settings.key?('ai_allow_create_order')
+    sales_config['order_notification_templates'] = templates if settings.key?('order_notification_templates')
+
+    return if sales_config.blank?
+
+    # Merge into all inboxes in a single query using PostgreSQL JSONB concat operator
+    inboxes.update_all(
+      ["sales_config = COALESCE(sales_config, '{}'::jsonb) || ?::jsonb", sales_config.to_json]
+    )
   end
 end
 

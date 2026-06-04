@@ -255,7 +255,11 @@
         "PULL_START": "Syncing products from {platform}...",
         "PUSH_START": "Pushing '{name}' to platform...",
         "EDIT": "Editing: {name}",
-        "DELETE_CONFIRM": "Are you sure you want to delete this product?",
+        "DELETE_CONFIRM_TITLE": "Confirm deletion",
+        "DELETE_CONFIRM": "Are you sure you want to delete {name}?",
+        "DELETE_CONFIRM_PLACEHOLDER": "Enter {name} to confirm",
+        "DELETE_CONFIRM_YES": "Yes, delete product",
+        "CANCEL": "No, keep it",
         "DELETE_SUCCESS": "Product deleted.",
         "SELECT_TO_PUSH": "Select a product to push to platform."
       }

@@ -1,6 +1,6 @@
 <script setup>
 import { useI18n } from 'vue-i18n';
-import { ref, watch, nextTick } from 'vue';
+import { ref, watch, nextTick, reactive } from 'vue';
 import Avatar from 'dashboard/components-next/avatar/Avatar.vue';
 import { useMessageFormatter } from 'shared/composables/useMessageFormatter';
 
@@ -45,6 +45,17 @@ const scrollToBottom = async () => {
   }
 };
 
+const expandedTools = reactive({});
+
+const toggleToolExpansion = (msgIndex, toolIndex) => {
+  const key = `${msgIndex}-${toolIndex}`;
+  expandedTools[key] = !expandedTools[key];
+};
+
+const isToolExpanded = (msgIndex, toolIndex) => {
+  return !!expandedTools[`${msgIndex}-${toolIndex}`];
+};
+
 watch(() => props.messages.length, scrollToBottom);
 </script>
 
@@ -60,7 +71,7 @@ watch(() => props.messages.length, scrollToBottom);
       :class="getMessageAlignment(message.sender)"
     >
       <div
-        class="flex items-end gap-1.5 max-w-[90%] md:max-w-[60%]"
+        class="flex items-end gap-1.5 max-w-[90%] md:max-w-[75%]"
         :class="getMessageDirection(message.sender)"
       >
         <Avatar
@@ -71,10 +82,61 @@ watch(() => props.messages.length, scrollToBottom);
           class="shrink-0"
         />
         <div
-          class="px-4 py-3 text-sm [overflow-wrap:break-word]"
-          :class="getMessageStyle(message.sender)"
+          class="flex flex-col gap-2 min-w-0"
+          :class="[isUserMessage(message.sender) ? 'items-end' : 'items-start']"
         >
-          <div v-html="formatMessage(message.content)" />
+          <div
+            v-if="message.toolCalls && message.toolCalls.length > 0"
+            class="flex flex-col gap-2 w-full mb-1"
+          >
+            <div
+              v-for="(tool, tIndex) in message.toolCalls"
+              :key="tIndex"
+              class="bg-n-background outline outline-1 outline-n-weak text-n-slate-11 text-xs rounded-xl font-mono break-words shadow-sm overflow-hidden"
+            >
+              <div
+                class="flex items-center justify-between p-3 cursor-pointer hover:bg-n-alpha-1 transition-colors"
+                @click="toggleToolExpansion(index, tIndex)"
+              >
+                <div
+                  class="flex items-center gap-1.5 font-medium text-n-slate-12 truncate pr-2"
+                >
+                  <span
+                    class="i-lucide-wrench w-3.5 h-3.5 text-n-brand-9 shrink-0"
+                  />
+                  <span class="truncate">Gọi công cụ:
+                    <span class="font-bold">@{{ tool.name }}</span></span>
+                </div>
+                <span
+                  class="shrink-0 w-4 h-4 text-n-slate-10 transition-transform duration-200"
+                  :class="
+                    isToolExpanded(index, tIndex)
+                      ? 'i-lucide-chevron-up'
+                      : 'i-lucide-chevron-down'
+                  "
+                />
+              </div>
+
+              <div
+                v-show="isToolExpanded(index, tIndex)"
+                class="px-3 pb-3 pt-1 border-t border-n-weak"
+              >
+                <div
+                  class="pl-5 opacity-90 leading-relaxed whitespace-pre-wrap max-h-48 overflow-y-auto"
+                >
+                  <span class="font-semibold text-n-slate-11 block mb-1">Kết quả:</span>
+                  <div class="mt-0.5 text-n-slate-12">{{ tool.result }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="px-4 py-3 text-sm [overflow-wrap:break-word] w-fit"
+            :class="getMessageStyle(message.sender)"
+          >
+            <div v-html="formatMessage(message.content)" />
+          </div>
         </div>
       </div>
     </div>

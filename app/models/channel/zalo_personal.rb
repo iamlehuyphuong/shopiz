@@ -18,6 +18,7 @@
 
 class Channel::ZaloPersonal < ApplicationRecord
   include Channelable
+  include Reauthorizable
 
   self.table_name = 'channel_zalo_personal'
   store_accessor :provider_config, :default_friend_request_message, :default_greeting_message
@@ -75,10 +76,32 @@ class Channel::ZaloPersonal < ApplicationRecord
     )
     if res['error'].present?
       Rails.logger.error "ZaloPersonal send_message_cs error: #{res['message']}"
+      check_disconnection!
       { 'error' => 1, 'message' => res['error'] }
     else
       { 'error' => 0, 'data' => { 'message_id' => res['data']['message']['msgId'] } }
     end
+  end
+
+  # Verifies connection health by calling getUserInfo API on the wrapper.
+  # If the wrapper confirms disconnection, marks the channel for reauthorization.
+  def check_disconnection!
+    return if reauthorization_required?
+
+    response = HTTParty.post(
+      "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/getUserInfo",
+      body: { userId: oa_id, ownId: oa_id }.to_json,
+      headers: { 'Content-Type' => 'application/json' },
+      timeout: 10
+    )
+
+    if response['error'].present?
+      Rails.logger.warn "ZaloPersonal channel #{id} disconnected: #{response['error']}"
+      prompt_reauthorization!
+    end
+  rescue StandardError => e
+    Rails.logger.error "ZaloPersonal check_disconnection! failed for channel #{id}: #{e.message}"
+    raise
   end
 
   private
@@ -105,6 +128,7 @@ class Channel::ZaloPersonal < ApplicationRecord
 
     if response['error'].present?
       Rails.logger.error "ZaloPersonal file error: #{response['message']}"
+      check_disconnection!
       { 'error' => 1, 'message' => response['error'] }
     else
       { 'error' => 0, 'data' => { 'message_id' => response['data']['attachment'][0]['msgId'] } }
@@ -141,6 +165,7 @@ class Channel::ZaloPersonal < ApplicationRecord
       body: body.to_json
     )
   end
+
 
   def message_body(user_id, message)
     payload = {

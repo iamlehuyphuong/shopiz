@@ -90,7 +90,18 @@ class DashboardController < ActionController::Base
       GIT_SHA: GIT_HASH,
       ALLOWED_LOGIN_METHODS: allowed_login_methods,
       GOOGLE_OAUTH_CLIENT_ID: GlobalConfigService.load('GOOGLE_OAUTH_CLIENT_ID', nil),
-      GOOGLE_OAUTH_REDIRECT_URI: GlobalConfigService.load('GOOGLE_OAUTH_REDIRECT_URI', nil)
+      GOOGLE_OAUTH_REDIRECT_URI: GlobalConfigService.load('GOOGLE_OAUTH_REDIRECT_URI', nil),
+      ENABLE_CHANNEL_FACEBOOK: GlobalConfigService.load('ENABLE_CHANNEL_FACEBOOK', 'true'),
+      ENABLE_CHANNEL_ZALO_OA: GlobalConfigService.load('ENABLE_CHANNEL_ZALO_OA', 'true'),
+      ENABLE_CHANNEL_ZALO_PERSONAL: GlobalConfigService.load('ENABLE_CHANNEL_ZALO_PERSONAL', 'true'),
+      ENABLE_CHANNEL_TIKTOK: GlobalConfigService.load('ENABLE_CHANNEL_TIKTOK', 'true'),
+      ENABLE_CHANNEL_TIKTOK_SHOP: GlobalConfigService.load('ENABLE_CHANNEL_TIKTOK_SHOP', 'true'),
+      ENABLE_CHANNEL_WHATSAPP: GlobalConfigService.load('ENABLE_CHANNEL_WHATSAPP', 'true'),
+      ENABLE_CHANNEL_INSTAGRAM: GlobalConfigService.load('ENABLE_CHANNEL_INSTAGRAM', 'true'),
+      ENABLE_CHANNEL_TELEGRAM: GlobalConfigService.load('ENABLE_CHANNEL_TELEGRAM', 'true'),
+      ENABLE_CHANNEL_LINE: GlobalConfigService.load('ENABLE_CHANNEL_LINE', 'true'),
+      ENABLE_CHANNEL_TWITTER: GlobalConfigService.load('ENABLE_CHANNEL_TWITTER', 'true'),
+      ENABLE_CHANNEL_WEBSITE: GlobalConfigService.load('ENABLE_CHANNEL_WEBSITE', 'true')
     }
   end
 

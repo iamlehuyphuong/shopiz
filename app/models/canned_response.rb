@@ -17,6 +17,11 @@ class CannedResponse < ApplicationRecord
   validates :short_code, uniqueness: { scope: :account_id }
 
   belongs_to :account
+  has_many_attached :files
+
+  validate :validate_file_count
+
+  MAX_FILES = 5
 
   scope :order_by_search, lambda { |search|
     short_code_starts_with = sanitize_sql_array(['WHEN short_code ILIKE ? THEN 1', "#{search}%"])
@@ -27,4 +32,10 @@ class CannedResponse < ApplicationRecord
 
     order(Arel.sql(order_clause) => :desc)
   }
+
+  private
+
+  def validate_file_count
+    errors.add(:files, "cannot exceed #{MAX_FILES}") if files.length > MAX_FILES
+  end
 end

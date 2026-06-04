@@ -101,7 +101,7 @@ describe Messages::MessageBuilder do
       end
 
       it 'creates throws error when channel is not api' do
-        expect { message_builder }.to raise_error 'Incoming messages are only allowed in Api inboxes'
+        expect { message_builder }.to raise_error 'Incoming messages are only allowed in Api and Voice inboxes'
       end
     end
 

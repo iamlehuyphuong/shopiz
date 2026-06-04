@@ -73,6 +73,7 @@ const uiFlags = useMapGetter('captainAssistants/getUIFlags');
 const inboxAssistant = useMapGetter('getCopilotAssistant');
 
 const selectedCopilotThreadId = ref(null);
+const copilotPrefill = ref('');
 const messages = computed(() =>
   store.getters['copilotMessages/getMessagesByThreadId'](
     selectedCopilotThreadId.value
@@ -144,6 +145,20 @@ const sendCopilotMessage = async message => {
   }
 };
 
+const handleTriggerCopilot = payload => {
+  if (!uiSettings.value?.is_copilot_panel_open) {
+    switchToCopilotTab();
+  }
+  if (payload.message) {
+    sendCopilotMessage(payload.message);
+  } else if (payload.prefill) {
+    copilotPrefill.value = payload.prefill;
+    setTimeout(() => {
+      copilotPrefill.value = '';
+    }, 500);
+  }
+};
+
 // --- Tab switching ---
 const switchToContactTab = () => {
   updateUISettings({
@@ -212,10 +227,12 @@ onMounted(() => {
     store.dispatch('captainAssistants/get');
   }
   emitter.on(BUS_EVENTS.ADD_PRODUCT_TO_ORDER, handleAddProductToOrder);
+  emitter.on(BUS_EVENTS.TRIGGER_COPILOT, handleTriggerCopilot);
 });
 
 onUnmounted(() => {
   emitter.off(BUS_EVENTS.ADD_PRODUCT_TO_ORDER, handleAddProductToOrder);
+  emitter.off(BUS_EVENTS.TRIGGER_COPILOT, handleTriggerCopilot);
 });
 </script>
 
@@ -304,6 +321,7 @@ onUnmounted(() => {
         :conversation-inbox-type="conversationInboxType"
         :assistants="assistants"
         :active-assistant="activeAssistant"
+        :prefill="copilotPrefill"
         @set-assistant="setAssistant"
         @send-message="sendCopilotMessage"
         @reset="handleCopilotReset"

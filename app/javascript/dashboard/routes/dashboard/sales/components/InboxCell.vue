@@ -19,12 +19,7 @@ const isRTL = useMapGetter('accounts/isRTL');
       class="items-center flex text-left"
       :class="{ 'flex-row-reverse': isRTL }"
     >
-      <Avatar
-        :name="row.original.name"
-        :size="32"
-        branded
-        rounded-full
-      />
+      <Avatar :name="row.original.name" :size="32" branded rounded-full />
       <div class="items-start flex flex-col min-w-0 my-0 mx-2">
         <h6
           class="overflow-hidden text-sm m-0 leading-[1.2] text-n-slate-12 whitespace-nowrap text-ellipsis"

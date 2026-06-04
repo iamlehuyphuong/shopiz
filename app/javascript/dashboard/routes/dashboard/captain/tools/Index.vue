@@ -136,13 +136,17 @@ const handleFileUpload = async event => {
     }
 
     if (errorCount === 0) {
-      useAlert(`${t('CAPTAIN.CUSTOM_TOOLS.IMPORT_EXPORT.IMPORT_SUCCESS')} (${successCount}/${tools.length})`);
+      useAlert(
+        `${t('CAPTAIN.CUSTOM_TOOLS.IMPORT_EXPORT.IMPORT_SUCCESS')} (${successCount}/${tools.length})`
+      );
     } else if (successCount > 0) {
-      useAlert(`${t('CAPTAIN.CUSTOM_TOOLS.IMPORT_EXPORT.IMPORT_SUCCESS')} (${successCount}/${tools.length})`);
+      useAlert(
+        `${t('CAPTAIN.CUSTOM_TOOLS.IMPORT_EXPORT.IMPORT_SUCCESS')} (${successCount}/${tools.length})`
+      );
     } else {
       useAlert(t('CAPTAIN.CUSTOM_TOOLS.IMPORT_EXPORT.IMPORT_ERROR'));
     }
-    
+
     fetchCustomTools(customToolsMeta.value.page);
 
     if (fileInputRef.value) {
@@ -162,12 +166,16 @@ const handleExport = async () => {
     while (true) {
       const response = await CaptainCustomTools.get({ page: currentPage });
       const { payload, meta } = response.data;
-      
+
       if (payload && payload.length > 0) {
         allTools = [...allTools, ...payload];
       }
-      
-      if (allTools.length >= meta.total_count || !payload || payload.length === 0) {
+
+      if (
+        allTools.length >= meta.total_count ||
+        !payload ||
+        payload.length === 0
+      ) {
         break;
       }
       currentPage++;
@@ -235,12 +243,12 @@ onMounted(() => {
           :label="$t('CAPTAIN.CUSTOM_TOOLS.IMPORT_EXPORT.EXPORT_BUTTON')"
           @click="handleExport"
         />
-        <input 
+        <input
           ref="fileInputRef"
-          type="file" 
-          accept=".json" 
-          class="hidden" 
-          @change="handleFileUpload" 
+          type="file"
+          accept=".json"
+          class="hidden"
+          @change="handleFileUpload"
         />
       </div>
     </template>

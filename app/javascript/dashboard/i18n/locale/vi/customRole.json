@@ -39,7 +39,9 @@
       "CONTACT_MANAGE": "Quản lý liên hệ",
       "REPORT_MANAGE": "Quản lý báo cáo",
       "KNOWLEDGE_BASE_MANAGE": "Quản lý kho kiến thức",
-      "SALES_MANAGE": "Quản lý bán hàng"
+      "SALES_MANAGE": "Quản lý bán hàng",
+      "CAMPAIGN_MANAGE": "Quản lý chiến dịch",
+      "CAPTAIN_MANAGE": "Quản lý Captain AI"
     },
     "FORM": {
       "NAME": {

@@ -43,6 +43,8 @@
       },
       "FB": {
         "TITLE": "Kênh Facebook",
+        "CONNECT_FB": "Kết nối trang Facebook",
+        "CONTINUE_WITH_FB": "Tiếp tục với Facebook",
         "DESC": "Lưu ý: Khi đăng nhập, Shopiz chỉ có quyền truy cập tin nhắn từ Trang của bạn. Tin nhắn cá nhân sẽ không bao giờ bị truy cập.",
         "HELP": "Chúng tôi chỉ có quyền truy cập tin nhắn của Trang, không phải tin nhắn cá nhân.",
         "CHOOSE_PAGE": "Chọn Trang",
@@ -55,6 +57,8 @@
       },
       "ZALO_OA": {
         "TITLE": "Kênh Zalo OA",
+        "CONNECT_ZALO_OA": "Kết nối Zalo OA",
+        "CONTINUE_WITH_ZALO_OA": "Tiếp tục với Zalo OA",
         "LOADING": "Đang xác thực với Zalo...",
         "RELOGIN": "Kết nối lại",
         "DESC": "Lưu ý: Shopiz chỉ có quyền truy cập tin nhắn Zalo OA của bạn. Tin nhắn cá nhân không được truy cập.",
@@ -74,17 +78,29 @@
         "HELP_2": "Không đăng nhập Zalo Web để tránh gián đoạn đồng bộ tin nhắn.",
         "DESC": "Đăng nhập tài khoản ",
         "DESC_2": "để kết nối với",
+        "CONFIGURATION_TITLE": "Cấu hình mở rộng Zalo",
         "DEFAULT_FRIEND_REQUEST_MESSAGE_TITLE": "Lời mời kết bạn mặc định",
         "DEFAULT_FRIEND_REQUEST_MESSAGE_SUBTITLE": "Tin nhắn được gửi kèm khi yêu cầu kết bạn.",
         "DEFAULT_GREETING_MESSAGE_TITLE": "Lời chào mặc định",
-        "DEFAULT_GREETING_MESSAGE_SUBTITLE": "Lời chào được tự động gửi kèm theo lời mời kết bạn."
+        "DEFAULT_GREETING_MESSAGE_SUBTITLE": "Lời chào được tự động gửi kèm theo lời mời kết bạn.",
+        "CUSTOM_PROXY": "Proxy tùy chỉnh (Tùy chọn)",
+        "CUSTOM_PROXY_PLACEHOLDER": "http://user:pass@ip:port",
+        "GENERATE_QR": "Tạo mới QR",
+        "GENERATING_QR": "Đang tạo...",
+        "PROXY_USED": "Proxy đang dùng:",
+        "QR_PLACEHOLDER": "Mã QR sẽ hiển thị tại đây",
+        "QR_ERROR": "Không thể tạo mã QR. Vui lòng kiểm tra lại thông tin proxy và thử lại.",
+        "QR_NETWORK_ERROR": "Không thể kết nối đến máy chủ. Vui lòng kiểm tra kết nối mạng và thử lại."
       },
       "TIKTOK_SHOP": {
+        "CONNECT_TIKTOK_SHOP": "Kết nối Tiktok Shop",
+        "CONTINUE_WITH_TIKTOK_SHOP": "Tiếp tục với Tiktok Shop",
         "HELP": "Lưu ý: Shopiz chỉ truy cập tin nhắn TikTok Shop. Tin nhắn riêng tư không bao giờ được truy cập.",
         "INBOX_NAME": "Tên hộp thư",
         "ADD_NAME": "Nhập tên hộp thư",
         "PICK_NAME": "Chọn tên hộp thư",
-        "PICK_A_VALUE": "Chọn giá trị"
+        "PICK_A_VALUE": "Chọn giá trị",
+        "CREATE_INBOX": "Tạo hộp thư"
       },
       "INSTAGRAM": {
         "CONTINUE_WITH_INSTAGRAM": "Tiếp tục với Instagram",
@@ -131,7 +147,7 @@
         },
         "CHANNEL_WELCOME_TAGLINE": {
           "LABEL": "Thông điệp chào mừng",
-          "PLACEHOLDER": "Chúng tôi luôn sẵn sàng hỗ trợ bạn."
+          "PLACEHOLDER": "Chúng tôi giúp việc kết nối trở nên đơn giản. Hãy hỏi chúng tôi bất cứ điều gì, hoặc chia sẻ phản hồi của bạn."
         },
         "CHANNEL_GREETING_MESSAGE": {
           "LABEL": "Tin nhắn chào mừng",
@@ -584,12 +600,14 @@
       "CREATING_CHANNEL": "Đang tạo hộp thư...",
       "TITLE": "Cấu hình chi tiết hộp thư",
       "LOADING_TIKTOK_SHOP": "Đang xác thực với Tiktok...",
-      "DESC_TIKTOK_SHOP": "TIKTOK_SHOP",
+      "DESC_TIKTOK_SHOP": "Kết nối tài khoản TikTok Shop của bạn với Shopiz để quản lý hội thoại.",
       "DESC": ""
     },
     "ECOMMERCE": {
-      "TITLE": "Tích hợp thương mại điện tử",
-      "DESCRIPTION": "Liên kết hộp thư này với nền tảng bán hàng. Mọi hội thoại trong hộp thư này sẽ sử dụng tính năng tìm kiếm sản phẩm và quản lý đơn hàng của nền tảng đó.",
+      "INTEGRATIONS_TITLE": "Tích hợp thương mại điện tử",
+      "INTEGRATIONS_DESCRIPTION": "Liên kết tài khoản với nền tảng bán hàng. Mọi hội thoại sẽ sử dụng tính năng tìm kiếm sản phẩm và quản lý đơn hàng của nền tảng đó.",
+      "TITLE": "Cài đặt bán hàng",
+      "DESCRIPTION": "Cấu hình cài đặt bán hàng cho hộp thư này, bao gồm liên kết nền tảng eCommerce, kích hoạt trợ lý AI tự động tạo đơn và thiết lập các mẫu tin nhắn thông báo trạng thái đơn hàng tự động.",
       "SELECT_PLATFORM": "Chọn nền tảng tích hợp",
       "NO_INTEGRATIONS": "Chưa có kết nối thương mại điện tử nào. Vui lòng cấu hình trong Cài đặt → Tích hợp trước.",
       "AUTO_LINKED": "Tự động liên kết với {platform}",
@@ -597,7 +615,34 @@
       "NONE": "Không tích hợp",
       "SAVE": "Cập nhật",
       "SAVE_SUCCESS": "Đã cập nhật tích hợp thương mại điện tử thành công",
-      "SAVE_ERROR": "Cập nhật thất bại. Vui lòng thử lại."
+      "SAVE_ERROR": "Cập nhật thất bại. Vui lòng thử lại.",
+      "TEMPLATES_TITLE": "Mẫu thông báo đơn hàng",
+      "TEMPLATES_DESCRIPTION": "Định cấu hình các mẫu tin nhắn được gửi tự động khi đơn hàng thay đổi trạng thái. Bạn có thể sử dụng các biến: %{customer_name}, %{fanpage_name}, %{order_id}, %{status_label}, %{total_amount}",
+      "AI_ORDER_TITLE": "Trợ lý AI tạo đơn hàng",
+      "AI_ORDER_DESCRIPTION": "Cho phép Trợ lý AI tự động tạo đơn hàng thông qua nền tảng E-commerce được cấu hình ở phía trên.",
+      "AI_ORDER_TOGGLE": "Cho phép Trợ lý AI tạo đơn hàng",
+      "SAVE_SALES_SETTINGS": "Lưu cấu hình bán hàng",
+      "TEMPLATES_PLACEHOLDER_DRAFT": "Ví dụ: Xin chào %{customer_name}, đơn hàng #%{order_id} của bạn vừa được tạo dưới dạng nháp. Tổng tiền: %{total_amount}. Vui lòng kiểm tra và xác nhận.",
+      "TEMPLATES_PLACEHOLDER_CONFIRMED": "Ví dụ: Xin chào %{customer_name}, đơn hàng #%{order_id} trị giá %{total_amount} của bạn đã được xác nhận và đang trong quá trình chuẩn bị.",
+      "TEMPLATES_PLACEHOLDER_PROCESSING": "Ví dụ: Xin chào %{customer_name}, đơn hàng #%{order_id} của bạn đang được xử lý đóng gói.",
+      "TEMPLATES_PLACEHOLDER_SHIPPED": "Ví dụ: Xin chào %{customer_name}, đơn hàng #%{order_id} của bạn đã được bàn giao cho đơn vị vận chuyển.",
+      "TEMPLATES_PLACEHOLDER_DELIVERED": "Ví dụ: Xin chào %{customer_name}, đơn hàng #%{order_id} của bạn đã giao thành công. Cảm ơn bạn đã mua sắm tại %{inbox_name}!",
+      "TEMPLATES_PLACEHOLDER_CANCELLED": "Ví dụ: Xin chào %{customer_name}, đơn hàng #%{order_id} của bạn đã bị hủy. Nếu cần hỗ trợ thêm, hãy nhắn lại cho %{inbox_name} nhé.",
+      "TEMPLATES_DEFAULT_DRAFT": "Xin chào %{customer_name}, đơn hàng #%{order_id} của bạn vừa được tạo dưới dạng nháp. Tổng tiền: %{total_amount}. Vui lòng kiểm tra và xác nhận.",
+      "TEMPLATES_DEFAULT_CONFIRMED": "Xin chào %{customer_name}, đơn hàng #%{order_id} trị giá %{total_amount} của bạn đã được xác nhận và đang trong quá trình chuẩn bị.",
+      "TEMPLATES_DEFAULT_PROCESSING": "Xin chào %{customer_name}, đơn hàng #%{order_id} của bạn đang được xử lý đóng gói.",
+      "TEMPLATES_DEFAULT_SHIPPED": "Xin chào %{customer_name}, đơn hàng #%{order_id} của bạn đã được bàn giao cho đơn vị vận chuyển.",
+      "TEMPLATES_DEFAULT_DELIVERED": "Xin chào %{customer_name}, đơn hàng #%{order_id} của bạn đã giao thành công. Cảm ơn bạn đã mua sắm tại %{inbox_name}!",
+      "TEMPLATES_DEFAULT_CANCELLED": "Xin chào %{customer_name}, đơn hàng #%{order_id} của bạn đã bị hủy. Nếu cần hỗ trợ thêm, hãy nhắn lại cho %{inbox_name} nhé.",
+      "FILL_DEFAULT_TEMPLATES": "Điền mẫu mặc định",
+      "CUSTOMIZE_TEMPLATES_TOGGLE": "Tuỳ biến mẫu thông báo",
+      "VARIABLE_TAGS_LABEL": "Nhấn vào thẻ biến số để chèn vào mẫu thông báo đang soạn:",
+      "VARIABLE_TAG_TOOLTIP": "Nhấn để chèn {variable} vào vị trí con trỏ",
+      "VAR_CUSTOMER_NAME": "Tên khách hàng (customer_name)",
+      "VAR_INBOX_NAME": "Tên hộp thư (inbox_name)",
+      "VAR_ORDER_ID": "Mã đơn hàng (order_id)",
+      "VAR_STATUS_LABEL": "Trạng thái (status_label)",
+      "VAR_TOTAL_AMOUNT": "Tổng tiền (total_amount)"
     },
     "AGENTS": {
       "BUTTON_TEXT": "Thêm nhân viên",
@@ -614,6 +659,7 @@
       "TELEGRAM_QR_INSTRUCTION": "Quét mã QR để kiểm tra nhanh kênh Telegram"
     },
     "REAUTH": "Kết nối lại",
+    "GO_TO_CONFIGURATION": "Về trang cấu hình",
     "VIEW": "Xem",
     "EDIT": {
       "API": {
@@ -758,8 +804,17 @@
         "DELETE_ERROR": "Không thể xóa mẫu"
       }
     },
+    "ZALO_PERSONAL_CONNECTION": {
+      "CONNECTED": "Zalo cá nhân đang kết nối.",
+      "CHECK_BUTTON": "Kiểm tra kết nối",
+      "RECONNECT_BUTTON": "Kết nối lại",
+      "CHECKING": "Đang kiểm tra...",
+      "CONNECTED_ALERT": "Kết nối Zalo cá nhân bình thường.",
+      "DISCONNECTED_ALERT": "Kết nối Zalo cá nhân đã bị ngắt. Vui lòng kết nối lại.",
+      "CHECK_ERROR": "Không thể kiểm tra kết nối. Vui lòng thử lại sau."
+    },
     "CHANNEL_PREFERENCES": "Cài đặt kênh",
-    "WIDGET_FEATURES": "Tính năng widget",
+    "WIDGET_FEATURES": "Tuỳ chỉnh khung trò chuyện",
     "ACCOUNT_HEALTH": {
       "TITLE": "Quản lý tài khoản WhatsApp",
       "DESCRIPTION": "Xem trạng thái, giới hạn nhắn tin và chất lượng tài khoản WhatsApp. Cập nhật cài đặt hoặc xử lý vấn đề nếu cần.",
@@ -866,6 +921,9 @@
       "ENABLE_EMAIL_COLLECT_BOX": "Bật hộp thu thập email",
       "ENABLE_EMAIL_COLLECT_BOX_SUB_TEXT": "Bật hoặc tắt hộp thu thập email trên cuộc trò chuyện mới",
       "AUTO_FOLLOWUP_TITLE": "Tự động Follow-up",
+      "AUTO_LABEL_TITLE": "Gắn nhãn thông minh",
+      "AUTO_LABEL_TOGGLE": "Tự động gắn nhãn bằng AI",
+      "AUTO_LABEL_DESC": "Tự động gán nhãn phù hợp với hành vi, ý định và đánh giá chấm điểm khách hàng thông qua phân tích của ShopizAI.",
       "AUTO_FOLLOWUP_TOGGLE": "Kích hoạt chuỗi hành động bám đuổi",
       "AUTO_FOLLOWUP_DESC": "Tự động kích hoạt chuỗi hành động theo bám định kỳ để chốt đơn nếu khách hàng rời đi.",
       "AUTO_FOLLOWUP_DELAY_LABEL": "Khoảng cách giữa các lần (Tính theo Giờ)",
@@ -903,6 +961,12 @@
       "HMAC_MANDATORY_DESCRIPTION": "Nếu bật, các yêu cầu không hợp lệ sẽ bị từ chối.",
       "INBOX_IDENTIFIER": "Mã định danh hộp thư",
       "INBOX_IDENTIFIER_SUB_TEXT": "Dùng mã này để xác thực API client.",
+      "PROXY_CONFIGURATION": {
+        "TITLE": "Cấu hình Proxy",
+        "SUBTITLE": "Đây là địa chỉ Proxy đang được cấu hình cho hộp thư Zalo này.",
+        "HELP": "Để thay đổi Proxy, hãy đăng nhập lại ở tab 'Kết nối lại'.",
+        "NO_PROXY": "Không có proxy nào được cấu hình"
+      },
       "FORWARD_EMAIL_TITLE": "Chuyển tiếp email",
       "FORWARD_EMAIL_SUB_TEXT": "Chuyển tiếp email của bạn đến địa chỉ sau.",
       "FORWARD_EMAIL_NOT_CONFIGURED": "Tính năng chuyển tiếp email tới hộp thư hiện đang bị vô hiệu hoá. Để sử dụng tính năng này, quản trị viên cần bật nó lên. Vui lòng liên hệ với quản trị viên của bạn để tiếp tục.",
@@ -1233,6 +1297,8 @@
         },
         "BUBBLE_AVATAR": {
           "LABEL": "Biểu tượng bong bóng (Bubble)",
+          "OPEN_LABEL": "Ảnh mở hội thoại",
+          "CLOSE_LABEL": "Ảnh đóng hội thoại",
           "DELETE": {
             "API": {
               "SUCCESS_MESSAGE": "Xoá biểu tượng bong bóng thành công",
@@ -1260,7 +1326,7 @@
         },
         "WELCOME_TAGLINE": {
           "LABEL": "Câu chào mừng",
-          "PLACE_HOLDER": "Hãy hỏi chúng tôi bất cứ điều gì hoặc chia sẻ phản hồi của bạn."
+          "PLACE_HOLDER": "Chúng tôi giúp việc kết nối trở nên đơn giản. Hãy hỏi chúng tôi bất cứ điều gì, hoặc chia sẻ phản hồi của bạn."
         },
         "REPLY_TIME": {
           "LABEL": "Thời gian phản hồi",
@@ -1270,11 +1336,11 @@
         },
         "WIDGET_COLOR_LABEL": "Màu tiện ích",
         "WIDGET_BUBBLE": "Bong bóng",
-        "WIDGET_BUBBLE_POSITION_LABEL": "Vị trí bong bóng widget",
-        "WIDGET_BUBBLE_TYPE_LABEL": "Kiểu bong bóng widget",
+        "WIDGET_BUBBLE_POSITION_LABEL": "Vị trí",
+        "WIDGET_BUBBLE_TYPE_LABEL": "Kiểu",
         "WIDGET_BUBBLE_LAUNCHER_TITLE": {
           "DEFAULT": "Trò chuyện với chúng tôi",
-          "LABEL": "Tiêu đề trình khởi chạy bong bóng widget",
+          "LABEL": "Tiêu đề mở hội thoại",
           "PLACE_HOLDER": "Trò chuyện với chúng tôi"
         },
         "UPDATE": {
@@ -1294,7 +1360,7 @@
         },
         "WIDGET_BUBBLE_TYPE": {
           "STANDARD": "Tiêu chuẩn",
-          "EXPANDED_BUBBLE": "Bong bóng mở rộng"
+          "EXPANDED_BUBBLE": "Mở rộng"
         }
       },
       "WIDGET_SCREEN": {

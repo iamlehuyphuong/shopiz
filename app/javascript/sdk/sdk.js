@@ -111,7 +111,6 @@ export const SDK_CSS = `
   width: 100% !important;
   height: 100% !important;
   object-fit: cover !important;
-  border-radius: 50% !important;
   pointer-events: none;
 }
 
@@ -221,24 +220,6 @@ export const SDK_CSS = `
   }
 }
 
-.woot--close::before,
-.woot--close::after {
-  background: #fff;
-  content: "";
-  height: 2px;
-  left: 31px;
-  position: absolute;
-  top: 44px;
-  width: 28px;
-}
-
-.woot--close::before {
-  transform: rotate(45deg);
-}
-
-.woot--close::after {
-  transform: rotate(-45deg);
-}
 
 .woot--hide {
   bottom: -100vh !important;

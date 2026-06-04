@@ -499,7 +499,7 @@ const handleConfirmTemplateUpdate = async () => {
 </script>
 
 <template>
-  <div class="mx-6">
+  <div class="mx-6 max-w-4xl">
     <SettingsToggleSection
       v-model="state.csatSurveyEnabled"
       :header="$t('INBOX_MGMT.CSAT.TITLE')"

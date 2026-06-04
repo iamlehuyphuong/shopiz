@@ -139,16 +139,26 @@ export function useSidebarContext() {
   };
 
   const isAllowed = to => {
-    const permissions = resolvePermissions(to);
-    const featureFlag = resolveFeatureFlag(to);
-    const installationType = resolveInstallationType(to);
+    try {
+      const permissions = resolvePermissions(to);
+      const featureFlag = resolveFeatureFlag(to);
+      const installationType = resolveInstallationType(to);
 
-    return shouldShow(featureFlag, permissions, installationType);
+      return shouldShow(featureFlag, permissions, installationType);
+    } catch (e) {
+      console.error('[Sidebar] isAllowed error for route:', to, e);
+      return true;
+    }
   };
 
   const isLocked = to => {
-    const featureFlag = resolveFeatureFlag(to);
-    return shouldShowPaywall(featureFlag);
+    try {
+      const featureFlag = resolveFeatureFlag(to);
+      return shouldShowPaywall(featureFlag);
+    } catch (e) {
+      console.error('[Sidebar] isLocked error for route:', to, e);
+      return false;
+    }
   };
 
   return {

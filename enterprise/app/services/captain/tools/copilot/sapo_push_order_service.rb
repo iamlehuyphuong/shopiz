@@ -59,7 +59,7 @@ class Captain::Tools::Copilot::SapoPushOrderService < Captain::Tools::BaseTool
 
   def format_success(order, sapo_order)
     <<~RESPONSE.strip
-      ✅ Order pushed to Sapo!
+      Order pushed to Sapo!
 
       Shopiz Order: ##{order.id}
       Sapo Order: ##{sapo_order['order_number']} (ID: #{sapo_order['id']})

@@ -442,6 +442,20 @@ export const actions = {
       throw new Error(error);
     }
   },
+  deleteBubbleAvatar: async (_, inboxId) => {
+    try {
+      await InboxesAPI.deleteBubbleAvatar(inboxId);
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
+  deleteCloseBubbleAvatar: async (_, inboxId) => {
+    try {
+      await InboxesAPI.deleteCloseBubbleAvatar(inboxId);
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
   syncTemplates: async (_, inboxId) => {
     try {
       await InboxesAPI.syncTemplates(inboxId);

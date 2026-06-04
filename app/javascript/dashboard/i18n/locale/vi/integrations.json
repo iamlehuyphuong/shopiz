@@ -637,10 +637,25 @@
           "PLACEHOLDER": "Nhập mô tả trợ lý",
           "ERROR": "Mô tả là bắt buộc"
         },
+        "COMPANY_NAME": {
+          "LABEL": "Tên Doanh nghiệp / Thương hiệu / Cửa hàng",
+          "PLACEHOLDER": "VD: Thời trang Shopiz",
+          "ERROR": "Tên cửa hàng là bắt buộc"
+        },
+        "INDUSTRY": {
+          "LABEL": "Lĩnh vực / Ngành nghề",
+          "PLACEHOLDER": "VD: F&B, Thời trang nữ, Phần mềm",
+          "ERROR": "Lĩnh vực kinh doanh là bắt buộc"
+        },
+        "CORE_PRODUCTS": {
+          "LABEL": "Sản phẩm / Dịch vụ cốt lõi",
+          "PLACEHOLDER": "VD: Đầm váy công sở",
+          "ERROR": "Vui lòng nhập sản phẩm cốt lõi"
+        },
         "PRODUCT_NAME": {
-          "LABEL": "Tên sản phẩm",
-          "PLACEHOLDER": "Nhập tên sản phẩm",
-          "ERROR": "Tên sản phẩm là bắt buộc"
+          "LABEL": "Sản phẩm / Dịch vụ cốt lõi",
+          "PLACEHOLDER": "VD: Đầm váy công sở",
+          "ERROR": "Vui lòng nhập sản phẩm cốt lõi"
         },
         "WELCOME_MESSAGE": {
           "LABEL": "Tin nhắn chào mừng",

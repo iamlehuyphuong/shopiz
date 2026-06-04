@@ -55,8 +55,9 @@ class Captain::BaseTaskService
   end
 
   def execute_ruby_llm_request(model:, messages:, schema: nil, tools: [])
+    resolved_model = using_user_hook_key? ? (openai_hook&.settings&.dig('model').presence || model) : model
     Llm::Config.with_api_key(api_key, api_base: api_base) do |context|
-      chat = build_chat(context, model: model, messages: messages, schema: schema, tools: tools)
+      chat = build_chat(context, model: resolved_model, messages: messages, schema: schema, tools: tools)
 
       conversation_messages = messages.reject { |m| m[:role] == 'system' }
       return { error: 'No conversation messages provided', error_code: 400, request_messages: messages } if conversation_messages.empty?
@@ -159,7 +160,7 @@ class Captain::BaseTaskService
   end
 
   def using_user_hook_key?
-    !using_system_key? && user_hook_api_key.present?
+    api_key.present? && api_key == user_hook_api_key
   end
 
   def user_hook_key_allowed?

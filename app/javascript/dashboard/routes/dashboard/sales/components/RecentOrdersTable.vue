@@ -142,7 +142,9 @@ const statusLabel = status => {
             <td class="px-4 py-3">
               <span
                 class="text-xs px-2 py-0.5 rounded-full font-medium"
-                :class="statusColors[order.status] || 'bg-n-slate-3 text-n-slate-11'"
+                :class="
+                  statusColors[order.status] || 'bg-n-slate-3 text-n-slate-11'
+                "
               >
                 {{ statusLabel(order.status) }}
               </span>

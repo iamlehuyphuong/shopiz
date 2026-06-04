@@ -59,7 +59,7 @@ class Captain::Tools::Copilot::HaravanPushOrderService < Captain::Tools::BaseToo
 
   def format_success(order, haravan_order)
     <<~RESPONSE.strip
-      ✅ Order pushed to Haravan!
+      Order pushed to Haravan!
 
       Shopiz Order: ##{order.id}
       Haravan Order: #{haravan_order['name'] || haravan_order['id']}

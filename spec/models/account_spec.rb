@@ -244,6 +244,24 @@ RSpec.describe Account do
       end
     end
 
+    context 'when updating sales settings' do
+      let!(:inbox) { create(:inbox, account: account) }
+
+      it 'synchronizes sales settings to all inboxes' do
+        templates = { 'draft' => 'draft template', 'confirmed' => 'confirmed template' }
+        account.update!(
+          active_ecommerce_platform: 'shopify',
+          ai_allow_create_order: true,
+          order_notification_templates: templates
+        )
+
+        inbox.reload
+        expect(inbox.sales_config['platform']).to eq('shopify')
+        expect(inbox.sales_config['ai_allow_create_order']).to be true
+        expect(inbox.sales_config['order_notification_templates']).to eq(templates)
+      end
+    end
+
     context 'when using with_auto_resolve scope' do
       it 'finds accounts with auto_resolve_after set' do
         account.update(auto_resolve_after: 40 * 24 * 60)

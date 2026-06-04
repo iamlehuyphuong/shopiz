@@ -45,7 +45,7 @@ class Captain::Tools::Copilot::NhanhvnCreateCustomerService < Captain::Tools::Ba
 
   def format_success(data, result)
     <<~RESPONSE.strip
-      ✅ Customer created/updated successfully on Nhanh.vn!
+      Customer created/updated successfully on Nhanh.vn!
 
       Name: #{data[:name]}
       Phone: #{data[:mobile]}

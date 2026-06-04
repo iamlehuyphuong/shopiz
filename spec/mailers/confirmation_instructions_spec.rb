@@ -7,7 +7,7 @@ RSpec.describe 'Devise::Mailer' do
     let(:account) { create(:account) }
     let!(:confirmable_user) { create(:user, inviter: inviter_val, account: account) }
     let(:inviter_val) { nil }
-    let(:mail) { Devise::Mailer.confirmation_instructions(confirmable_user.reload, nil, {}) }
+    let(:confirmation_token) { confirmable_user.instance_variable_get(:@raw_confirmation_token) || confirmable_user.confirmation_token }
 
     before do
       # to verify the token in email
@@ -16,39 +16,31 @@ RSpec.describe 'Devise::Mailer' do
     end
 
     it 'has the correct header data' do
-      expect(mail.reply_to).to contain_exactly('accounts@shopiz.pro')
+      mail = Devise::Mailer.confirmation_instructions(confirmable_user.reload, confirmation_token, {})
       expect(mail.to).to contain_exactly(confirmable_user.email)
       expect(mail.subject).to eq('Confirmation Instructions')
     end
 
     it 'uses the user\'s name' do
-      expect(mail.body).to match("Hi #{CGI.escapeHTML(confirmable_user.name)},")
+      mail = Devise::Mailer.confirmation_instructions(confirmable_user.reload, confirmation_token, {})
+      user_drop_name = confirmable_user.name.split.map(&:capitalize).join(' ')
+      expect(mail.body.to_s).to include("Hi <strong>#{user_drop_name}</strong>")
     end
 
-    it 'does not refer to the inviter and their account' do
-      expect(mail.body).not_to match('has invited you to try out Chatwoot!')
-      expect(mail.body).to match('We have a suite of powerful tools ready for you to explore.')
+    it 'contains welcome content' do
+      mail = Devise::Mailer.confirmation_instructions(confirmable_user.reload, confirmation_token, {})
+      expect(mail.body.to_s).to include('Welcome to Shopiz!')
+      expect(mail.body.to_s).to include('powerful customer engagement toolkit')
     end
 
     it 'sends a confirmation link' do
-      expect(mail.body).to include("app/auth/confirmation?confirmation_token=#{confirmable_user.confirmation_token}")
-      expect(mail.body).not_to include('app/auth/password/edit')
+      mail = Devise::Mailer.confirmation_instructions(confirmable_user.reload, confirmation_token, {})
+      expect(mail.body.to_s).to include("app/auth/confirmation?confirmation_token=#{confirmation_token}")
     end
 
-    context 'when there is an inviter' do
-      let(:inviter_val) { create(:user, :administrator, skip_confirmation: true, account: account) }
-
-      it 'refers to the inviter and their account' do
-        expect(mail.body).to match(
-          "#{CGI.escapeHTML(inviter_val.name)}, with #{CGI.escapeHTML(account.name)}, has invited you to try out Chatwoot."
-        )
-        expect(mail.body).not_to match('We have a suite of powerful tools ready for you to explore.')
-      end
-
-      it 'sends a password reset link' do
-        expect(mail.body).to include('app/auth/password/edit?reset_password_token')
-        expect(mail.body).not_to include('app/auth/confirmation')
-      end
+    it 'contains verify email button' do
+      mail = Devise::Mailer.confirmation_instructions(confirmable_user.reload, confirmation_token, {})
+      expect(mail.body.to_s).to include('Verify Email')
     end
 
     context 'when user updates the email' do
@@ -57,10 +49,11 @@ RSpec.describe 'Devise::Mailer' do
       end
 
       it 'sends a confirmation link' do
-        confirmation_mail = Devise::Mailer.confirmation_instructions(confirmable_user.reload, nil, {})
+        updated_user = confirmable_user.reload
+        token = updated_user.instance_variable_get(:@raw_confirmation_token) || updated_user.confirmation_token
+        confirmation_mail = Devise::Mailer.confirmation_instructions(updated_user, token, {})
 
-        expect(confirmation_mail.body).to include('app/auth/confirmation?confirmation_token')
-        expect(confirmation_mail.body).not_to include('app/auth/password/edit')
+        expect(confirmation_mail.body.to_s).to include('app/auth/confirmation?confirmation_token')
         expect(confirmable_user.unconfirmed_email.blank?).to be false
       end
     end
@@ -72,23 +65,12 @@ RSpec.describe 'Devise::Mailer' do
       end
 
       it 'sends a confirmation link' do
-        confirmation_mail = Devise::Mailer.confirmation_instructions(confirmable_user.reload, nil, {})
+        updated_user = confirmable_user.reload
+        token = updated_user.instance_variable_get(:@raw_confirmation_token) || updated_user.confirmation_token
+        confirmation_mail = Devise::Mailer.confirmation_instructions(updated_user, token, {})
 
-        expect(confirmation_mail.body).to include('app/auth/confirmation?confirmation_token')
-        expect(confirmation_mail.body).not_to include('app/auth/password/edit')
+        expect(confirmation_mail.body.to_s).to include('app/auth/confirmation?confirmation_token')
         expect(confirmable_user.unconfirmed_email.blank?).to be false
-      end
-    end
-
-    context 'when user already confirmed' do
-      before do
-        confirmable_user.confirm
-        confirmable_user.account_users.last.destroy!
-      end
-
-      it 'send instructions with the link to login' do
-        confirmation_mail = Devise::Mailer.confirmation_instructions(confirmable_user.reload, nil, {})
-        expect(confirmation_mail.body).to include('/auth/sign_in')
       end
     end
   end

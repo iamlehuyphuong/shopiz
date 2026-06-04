@@ -2,18 +2,6 @@
 # Supports: kiotviet, sapo, haravan, woocommerce, shopify, nhanhvn.
 # TikTok Shop does not support order creation via API.
 class ConversationOrders::PushService
-  PROXY_MAP = {
-    'kiotviet' => 'ConversationOrders::KiotvietProxy',
-    'sapo' => 'ConversationOrders::SapoProxy',
-    'haravan' => 'ConversationOrders::HaravanProxy',
-    'woocommerce' => 'ConversationOrders::WoocommerceProxy',
-    'shopify' => 'ConversationOrders::ShopifyProxy',
-    'nhanhvn' => 'ConversationOrders::NhanhvnProxy'
-  }.freeze
-
-  # Platforms where we cannot create orders via API
-  SYNC_ONLY_PLATFORMS = %w[tiktok_shop].freeze
-
   def initialize(order:, user:)
     @order = order
     @user = user
@@ -23,14 +11,14 @@ class ConversationOrders::PushService
     return { success: false, error: 'Order is not in draft status' } unless @order.draft?
     return { success: false, error: 'Platform (external_source) not specified' } if @order.external_source.blank?
 
-    if SYNC_ONLY_PLATFORMS.include?(@order.external_source)
+    unless ConversationOrders::PlatformRegistry.pushable?(@order.external_source)
       return { success: false, error: "#{@order.external_source} does not support creating orders via API" }
     end
 
-    proxy_class = PROXY_MAP[@order.external_source]
+    proxy_class = ConversationOrders::PlatformRegistry.proxy_for(@order.external_source)
     return { success: false, error: "Unsupported platform: #{@order.external_source}" } if proxy_class.nil?
 
-    push_order(proxy_class.constantize)
+    push_order(proxy_class)
   end
 
   private
@@ -155,7 +143,7 @@ class ConversationOrders::PushService
 
     message_params = {
       content: content,
-      message_type: :outgoing,
+      message_type: 'outgoing',
       private: false
     }
 

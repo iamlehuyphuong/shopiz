@@ -38,12 +38,10 @@ class Sales::ProductsSyncService
   private
 
   def build_proxy
-    # e.g., 'kiotviet' -> ConversationOrders::KiotvietProxy
-    proxy_class_name = "ConversationOrders::#{@platform.classify}Proxy"
-    proxy_class = proxy_class_name.safe_constantize
+    proxy_class = ConversationOrders::PlatformRegistry.proxy_for(@platform)
 
     unless proxy_class
-      Rails.logger.error("Proxy class #{proxy_class_name} not found for platform #{@platform}")
+      Rails.logger.error("Proxy class not found for platform #{@platform}")
       return nil
     end
 

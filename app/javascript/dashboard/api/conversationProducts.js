@@ -6,18 +6,11 @@ class ConversationProductsAPI extends ApiClient {
     super('', { accountScoped: true });
   }
 
-  getCategories(conversationId) {
-    return axios.get(
-      `${this.baseUrl()}/conversations/${conversationId}/products`,
-      { params: { categories: true } }
-    );
-  }
-
-  getProducts(conversationId, { query, categoryId, page } = {}) {
+  getProducts(conversationId, { query, page, source } = {}) {
     const params = {};
     if (query) params.q = query;
-    if (categoryId) params.category_id = categoryId;
     if (page) params.page = page;
+    if (source) params.source = source;
 
     return axios.get(
       `${this.baseUrl()}/conversations/${conversationId}/products`,

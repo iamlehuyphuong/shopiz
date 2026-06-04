@@ -80,6 +80,12 @@ vi:
         not_supported: 'Cấp lại quyền truy cập không được hỗ trợ cho loại kênh WhatsApp này.'
     facebook:
       human_agent_error: '%{error_code} - %{error_message}\n(Lỗi): Bạn đang gửi tin nhắn quá 24h nhưng Fanpage chưa được cấp quyền Human Agent. Hãy vào Cài đặt Trang -> Trải nghiệm Trang mới -> Nhắn tin nâng cao -> Chọn Human Agent và Yêu cầu cấp quyền.'
+      only_one_private_reply: '%{error_code} - %{error_message}\n(Lỗi): Phản hồi riêng tư đã được gửi trước đó (trên Shopiz hoặc Meta Suite). Facebook chỉ cho phép gửi 1 lần duy nhất cho mỗi bình luận.'
+      private_reply_timeout: '%{error_code} - %{error_message}\n(Lỗi): Không thể gửi. Phản hồi riêng tư chỉ được phép gửi cho các bình luận được tạo trong vòng 7 ngày qua.'
+      comment_handler:
+        comment_hidden: 'Comment đã được tự động ẩn'
+        private_reply_label: 'Phản hồi riêng tư (Private Reply)'
+        private_reply_hint: 'Tin nhắn tiếp theo bạn gửi sẽ được gửi dưới dạng phản hồi riêng tư cho bình luận này.'
     inboxes:
       imap:
         socket_error: 'Vui lòng kiểm tra kết nối mạng, địa chỉ IMAP và thử lại.'
@@ -199,6 +205,8 @@ vi:
     attachment: 'Tệp đính kèm'
     no_content: 'Không có nội dung'
   conversations:
+    follow_up:
+      reminder: '⏰ Đã đến lịch hẹn chăm sóc khách hàng.'
     captain:
       handoff: 'Đang chuyển cuộc trò chuyện cho nhân viên khác để hỗ trợ thêm.'
     messages:
@@ -345,6 +353,10 @@ vi:
       name: 'Nhanh.vn'
       short_description: 'Truy cập chi tiết đơn hàng và dữ liệu khách hàng từ cửa hàng Nhanh.vn của bạn.'
       description: 'Kết nối cửa hàng Nhanh.vn của bạn để truy cập chi tiết đơn hàng, thông tin khách hàng và dữ liệu sản phẩm trực tiếp trong cuộc trò chuyện, giúp đội ngũ hỗ trợ của bạn cung cấp hỗ trợ nhanh chóng và có bối cảnh hơn cho khách hàng.'
+    calendly:
+      name: 'Calendly'
+      short_description: 'Đặt lịch hẹn với khách hàng trực tiếp trong cuộc trò chuyện.'
+      description: 'Kết nối tài khoản Calendly để tự động đặt lịch hẹn, kiểm tra khung giờ trống và quản lý cuộc hẹn trực tiếp trong cuộc trò chuyện với khách hàng.'
     leadsquared:
       name: 'LeadSquared'
       short_description: 'Đồng bộ hóa danh bạ và cuộc trò chuyện của bạn với CRM LeadSquared.'
@@ -485,12 +497,21 @@ vi:
       credit: 'Gói %{product_name}'
   conversation_orders:
     push_success_message: 'Đơn hàng của bạn đã được xác nhận thành công! Mã đơn hàng: %{order_id}. Tổng tiền: %{total}.'
+    status:
+      draft: 'Nháp'
+      confirmed: 'Đã xác nhận'
+      processing: 'Đang xử lý'
+      shipped: 'Đang giao hàng'
+      delivered: 'Giao hàng thành công'
+      cancelled: 'Đã hủy'
+    utility_messages:
+      status_update: "Chào %{customer_name}, cảm ơn bạn đã đặt hàng tại %{fanpage_name}! 🎉 Đơn hàng #%{order_id} của bạn đã được cập nhật trạng thái thành: %{status_label}. Chúng mình sẽ sớm gửi hàng đi nhé!"
     activity:
-      created: '🛒 Đơn hàng #%{order_id} được tạo bởi %{user_name}'
-      pushed: '📤 Đơn hàng #%{order_id} đã đẩy lên %{platform} (Mã ngoài: %{external_id})'
-      synced: '🔄 Đơn hàng #%{order_id} đồng bộ từ %{platform} — Trạng thái: %{status}'
-      cancelled: '❌ Đơn hàng #%{order_id} đã hủy bởi %{user_name}'
-      deleted: '🗑️ Đơn hàng #%{order_id} đã xóa bởi %{user_name}'
+      created: 'Đơn hàng #%{order_id} được tạo bởi %{user_name}'
+      pushed: 'Đơn hàng #%{order_id} đã đẩy lên %{platform} (Mã ngoài: %{external_id})'
+      synced: 'Đơn hàng #%{order_id} đồng bộ từ %{platform} — Trạng thái: %{status}'
+      cancelled: 'Đơn hàng #%{order_id} đã hủy bởi %{user_name}'
+      deleted: 'Đơn hàng #%{order_id} đã xóa bởi %{user_name}'
   zalo_personal:
     calls:
       action:

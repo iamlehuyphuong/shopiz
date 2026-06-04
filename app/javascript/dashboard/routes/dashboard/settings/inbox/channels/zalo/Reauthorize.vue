@@ -5,6 +5,7 @@ import { required } from '@vuelidate/validators';
 import LoadingState from 'dashboard/components/widgets/LoadingState.vue';
 import { useAccount } from 'dashboard/composables/useAccount';
 import { mapGetters } from 'vuex';
+import { useAlert } from 'dashboard/composables';
 import axios from 'axios';
 
 export default {
@@ -38,6 +39,9 @@ export default {
       errorStateDescription: '',
       successStateDescription: this.$t('LOGIN.API.SUCCESS_MESSAGE'),
       hasLoginStarted: false,
+      proxyUrl: '',
+      proxyUsed: '',
+      isGeneratingQR: false,
     };
   },
   validations: {
@@ -56,16 +60,40 @@ export default {
   },
   created() {
     // if (this.$route.query.code) this.getAccessToken();
-    this.generateQR();
   },
   methods: {
     startLogin() {
       this.generateQR();
     },
-    generateQR() {
-      this.qrCode = `${window.shopizConfig?.zaloApiUrl}/api/zalo-login?proxy`;
-      this.connectWebSocket();
-      this.hasLoginStarted = false;
+    async generateQR() {
+      try {
+        this.isGeneratingQR = true;
+        this.qrCode = ''; // Clear old QR code
+        if (this.socket) {
+          this.socket.close();
+        }
+        
+        const payload = {};
+        if (this.proxyUrl) {
+          payload.proxy = this.proxyUrl;
+        }
+        
+        const response = await axios.post(`${window.shopizConfig?.zaloApiUrl}/api/zalo-login`, payload);
+        
+        if (response.data.success) {
+          this.qrCode = response.data.qrCodeImage;
+          this.proxyUsed = response.data.proxyUsed;
+          this.connectWebSocket();
+          this.hasLoginStarted = false;
+          this.hasError = false;
+        } else {
+          useAlert(this.$t('INBOX_MGMT.ADD.ZALO_PERSONAL.QR_ERROR'));
+        }
+      } catch (error) {
+        useAlert(this.$t('INBOX_MGMT.ADD.ZALO_PERSONAL.QR_NETWORK_ERROR'));
+      } finally {
+        this.isGeneratingQR = false;
+      }
     },
     connectWebSocket() {
       // Đóng kết nối WebSocket cũ nếu có
@@ -117,6 +145,9 @@ export default {
         this.errorStateMessage = 'Không thể tạo kết nối WebSocket.';
       }
     },
+    reloadPage() {
+      window.location.reload();
+    },
   },
 };
 </script>
@@ -125,9 +156,9 @@ export default {
   <div class="wizard-body w-full flex-shrink-0 flex-grow-0">
     <div
       v-if="!hasLoginStarted"
-      class="flex flex-col login-init items-start justify-start pt-6"
+      class="flex flex-col login-init items-center justify-center pt-6"
     >
-      <div class="w-full">
+      <div class="w-full text-center">
         <p class="font-bold mb-0 text-lg">
           {{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.DESC') }}
           <span class="text-n-orange">Zalo</span>
@@ -137,13 +168,42 @@ export default {
           <span class="text-n-orange">Shopiz</span>
         </p>
       </div>
-      <img
-        v-if="qrCode"
-        :src="qrCode"
-        alt="Zalo-Login-QR"
-        class="w-[300px] h-[300px] mt-4 border border-n-weak rounded-md shadow-sm"
-      />
-      <div class="mt-6 text-n-slate-11">
+      <div class="w-[300px] h-[300px] mt-4 border border-n-weak rounded-md shadow-sm flex items-center justify-center bg-n-alpha-1 overflow-hidden">
+        <img
+          v-if="qrCode && !isGeneratingQR"
+          :src="qrCode"
+          alt="Zalo-Login-QR"
+          class="w-full h-full object-contain"
+        />
+        <div v-else-if="isGeneratingQR" class="flex flex-col items-center gap-2 text-n-slate-11">
+          <span class="i-lucide-loader-2 animate-spin text-2xl" />
+          <span class="text-sm">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.GENERATING_QR') }}</span>
+        </div>
+        <div v-else class="flex flex-col items-center gap-2 text-n-slate-11 px-4">
+          <span class="i-lucide-qr-code text-4xl opacity-30" />
+          <span class="text-sm text-center">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.QR_PLACEHOLDER') }}</span>
+        </div>
+      </div>
+
+      <div class="mt-4 flex flex-col items-center w-full max-w-xs">
+        <label class="w-full">
+          <span class="text-sm font-medium text-n-slate-12">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.CUSTOM_PROXY') }}</span>
+          <input
+            v-model="proxyUrl"
+            type="text"
+            :placeholder="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.CUSTOM_PROXY_PLACEHOLDER')"
+            class="w-full mt-1"
+            @keyup.enter="generateQR"
+          />
+        </label>
+        <button class="button w-full mt-2 py-3 bg-n-orange hover:bg-n-orange/90 text-white" :disabled="isGeneratingQR" @click="generateQR">
+          {{ isGeneratingQR ? $t('INBOX_MGMT.ADD.ZALO_PERSONAL.GENERATING_QR') : $t('INBOX_MGMT.ADD.ZALO_PERSONAL.GENERATE_QR') }}
+        </button>
+        <p v-if="proxyUsed" class="text-xs text-n-slate-11 mt-2 text-center">
+          {{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.PROXY_USED') }} <span class="font-medium text-n-slate-12">{{ proxyUsed }}</span>
+        </p>
+      </div>
+      <div class="mt-6 text-n-slate-11 text-center">
         <p class="mb-1">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.HELP') }}</p>
         <p class="mb-0">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.HELP_2') }}</p>
       </div>
@@ -157,7 +217,12 @@ export default {
         />
       </div>
       <LoadingState v-else-if="showLoader" :message="emptyStateMessage" />
-      <p v-else v-dompurify-html="successStateDescription" />
+      <div v-else class="text-center">
+        <p v-dompurify-html="successStateDescription" />
+        <button class="button mt-4" @click="reloadPage">
+          {{ $t('INBOX_MGMT.GO_TO_CONFIGURATION') }}
+        </button>
+      </div>
     </div>
   </div>
 </template>

@@ -1,9 +1,12 @@
 json.additional_attributes resource.additional_attributes
 json.availability_status resource.availability_status
-json.email resource.email
+
+can_manage_contact = Current.account_user.blank? || Current.account_user.administrator? || Current.account_user.permissions.include?('contact_manage')
+
+json.email can_manage_contact ? resource.email : MaskingHelper.mask_email(resource.email)
 json.id resource.id
 json.name resource.name
-json.phone_number resource.phone_number
+json.phone_number can_manage_contact ? resource.phone_number : MaskingHelper.mask_phone(resource.phone_number)
 json.blocked resource.blocked
 json.identifier resource.identifier
 json.thumbnail resource.avatar_url

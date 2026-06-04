@@ -11,9 +11,14 @@ module Concerns::CaptainToolsHelpers
     # Returns all built-in agent tools with their metadata.
     # Only includes tools that have corresponding class files and can be resolved.
     #
+    # @param include_hidden [Boolean] Whether to include tools marked as hidden in the configuration
     # @return [Array<Hash>] Array of tool hashes with :id, :title, :description, :icon
-    def built_in_agent_tools
-      @built_in_agent_tools ||= load_agent_tools
+    def built_in_agent_tools(include_hidden: true)
+      if include_hidden
+        @all_built_in_agent_tools ||= load_agent_tools(include_hidden: true)
+      else
+        @visible_built_in_agent_tools ||= load_agent_tools(include_hidden: false)
+      end
     end
 
     # Resolves a tool class from a tool ID.
@@ -22,16 +27,17 @@ module Concerns::CaptainToolsHelpers
     # @param tool_id [String] The snake_case tool identifier
     # @return [Class, nil] The tool class if found, nil if not resolvable
     def resolve_tool_class(tool_id)
-      class_name = "Captain::Tools::#{tool_id.classify}Tool"
+      class_name = "Captain::Tools::#{tool_id.camelize}Tool"
       class_name.safe_constantize
     end
 
     # Returns an array of all built-in tool IDs.
     # Convenience method that extracts just the IDs from built_in_agent_tools.
     #
+    # @param include_hidden [Boolean] Whether to include hidden tools
     # @return [Array<String>] Array of built-in tool IDs
-    def built_in_tool_ids
-      @built_in_tool_ids ||= built_in_agent_tools.map { |tool| tool[:id] }
+    def built_in_tool_ids(include_hidden: true)
+      built_in_agent_tools(include_hidden: include_hidden).map { |tool| tool[:id] }
     end
 
     private
@@ -39,12 +45,15 @@ module Concerns::CaptainToolsHelpers
     # Loads agent tools from the YAML configuration file.
     # Filters out tools that cannot be resolved to actual classes.
     #
+    # @param include_hidden [Boolean] Whether to include hidden tools
     # @return [Array<Hash>] Array of resolvable tools with metadata
     # @api private
-    def load_agent_tools
+    def load_agent_tools(include_hidden:)
       tools_config = YAML.load_file(Rails.root.join('config/agents/tools.yml'))
 
       tools_config.filter_map do |tool_config|
+        next if !include_hidden && tool_config['hidden']
+
         tool_class = resolve_tool_class(tool_config['id'])
 
         if tool_class

@@ -24,6 +24,17 @@ const {
   WIDGET_BRAND_URL: widgetBrandURL,
   DISABLE_USER_PROFILE_UPDATE: disableUserProfileUpdate,
   DEPLOYMENT_ENV: deploymentEnv,
+  ENABLE_CHANNEL_FACEBOOK: enableChannelFacebook,
+  ENABLE_CHANNEL_ZALO_OA: enableChannelZaloOa,
+  ENABLE_CHANNEL_ZALO_PERSONAL: enableChannelZaloPersonal,
+  ENABLE_CHANNEL_TIKTOK: enableChannelTiktok,
+  ENABLE_CHANNEL_TIKTOK_SHOP: enableChannelTiktokShop,
+  ENABLE_CHANNEL_WHATSAPP: enableChannelWhatsapp,
+  ENABLE_CHANNEL_INSTAGRAM: enableChannelInstagram,
+  ENABLE_CHANNEL_TELEGRAM: enableChannelTelegram,
+  ENABLE_CHANNEL_LINE: enableChannelLine,
+  ENABLE_CHANNEL_TWITTER: enableChannelTwitter,
+  ENABLE_CHANNEL_WEBSITE: enableChannelWebsite,
 } = window.globalConfig || {};
 
 const state = {
@@ -49,6 +60,17 @@ const state = {
   termsURL,
   widgetBrandURL,
   isEnterprise: parseBoolean(isEnterprise),
+  enableChannelFacebook: parseBoolean(enableChannelFacebook ?? true),
+  enableChannelZaloOa: parseBoolean(enableChannelZaloOa ?? true),
+  enableChannelZaloPersonal: parseBoolean(enableChannelZaloPersonal ?? true),
+  enableChannelTiktok: parseBoolean(enableChannelTiktok ?? true),
+  enableChannelTiktokShop: parseBoolean(enableChannelTiktokShop ?? true),
+  enableChannelWhatsapp: parseBoolean(enableChannelWhatsapp ?? true),
+  enableChannelInstagram: parseBoolean(enableChannelInstagram ?? true),
+  enableChannelTelegram: parseBoolean(enableChannelTelegram ?? true),
+  enableChannelLine: parseBoolean(enableChannelLine ?? true),
+  enableChannelTwitter: parseBoolean(enableChannelTwitter ?? true),
+  enableChannelWebsite: parseBoolean(enableChannelWebsite ?? true),
 };
 
 export const getters = {

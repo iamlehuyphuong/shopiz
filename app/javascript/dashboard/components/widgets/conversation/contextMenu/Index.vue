@@ -24,6 +24,7 @@ const MENU = {
   DELETE: 'delete',
   OPEN_NEW_TAB: 'open-new-tab',
   COPY_LINK: 'copy-link',
+  CANCEL_FOLLOWUP: 'cancel-followup',
 };
 
 export default {
@@ -65,6 +66,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    isFollowupActive: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: [
     'updateConversation',
@@ -76,6 +81,7 @@ export default {
     'assignLabel',
     'removeLabel',
     'deleteConversation',
+    'cancelFollowup',
     'close',
   ],
   setup() {
@@ -174,6 +180,11 @@ export default {
         key: MENU.COPY_LINK,
         icon: 'copy',
         label: this.$t('CONVERSATION.CARD_CONTEXT_MENU.COPY_LINK'),
+      },
+      cancelFollowupOption: {
+        key: MENU.CANCEL_FOLLOWUP,
+        icon: 'dismiss-circle',
+        label: this.$t('CONVERSATION.CARD_CONTEXT_MENU.CANCEL_FOLLOWUP'),
       },
     };
   },
@@ -396,6 +407,15 @@ export default {
         :option="copyLinkOption"
         variant="icon"
         @click.stop="copyConversationLink"
+      />
+    </template>
+    <template v-if="isFollowupActive">
+      <hr class="m-1 rounded border-b border-n-weak dark:border-n-weak" />
+      <MenuItem
+        :option="cancelFollowupOption"
+        variant="icon"
+        class="!text-n-ruby-11 hover:!bg-n-ruby-3 hover:!text-n-ruby-11"
+        @click.stop="$emit('cancelFollowup')"
       />
     </template>
     <template v-if="isAdmin && isAllowed([MENU.DELETE])">

@@ -167,6 +167,8 @@ export default {
       handler(value) {
         if (value === 'personal' || value === 'company') {
           this.userTypeId = value;
+        } else {
+          this.userTypeId = 'personal';
         }
       },
       immediate: true,
@@ -256,6 +258,7 @@ export default {
       :error="`${
         v$.userEmail.$error ? $t('PROFILE_SETTINGS.FORM.EMAIL.ERROR') : ''
       }`"
+      readonly
       @input="v$.userEmail.$touch"
       @blur="v$.userEmail.$touch"
     />

@@ -6,8 +6,8 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
   end
 
   def perform_reply
-    if message.content_type? && message.content_attributes?
-      send_message_to_facebook fb_internative_message_params message
+    if %w[input_select cards marketing_optin].include?(message.content_type)
+      send_message_to_facebook fb_internative_message_params(message)
     elsif message.content.present?
       send_message_to_facebook fb_text_message_params
     end
@@ -33,6 +33,15 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
       track_campaign_metric(:failed)
     else
       message.update!(source_id: parsed_result['message_id']) if parsed_result['message_id'].present?
+      
+      # Mark the message as a private reply so the frontend can style it appropriately.
+      # Clear conversation-level comment_id hint after successful delivery to prevent
+      # subsequent messages from also being sent as private replies.
+      if message.content_attributes['target_comment_id'].present?
+        message.update!(content_attributes: message.content_attributes.merge(is_private_reply: true).except('target_comment_id'))
+        conversation.update!(additional_attributes: conversation.additional_attributes.except('comment_id'))
+      end
+
       track_campaign_metric(:delivered)
     end
   end
@@ -61,6 +70,8 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
   def setup_recipient(base_params)
     if message.content_attributes['notification_messages_token'].present?
       base_params[:recipient] = { notification_messages_token: message.content_attributes['notification_messages_token'] }
+    elsif message.content_attributes['target_comment_id'].present?
+      base_params[:recipient] = { comment_id: message.content_attributes['target_comment_id'] }
     else
       base_params[:recipient] = { id: contact.get_source_id(inbox.id) }
       message_tag = message.content_attributes['message_tag']
@@ -109,6 +120,17 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
 
     if error_code == 100 && error_message.include?('HUMAN_AGENT')
       return I18n.t('errors.facebook.human_agent_error', error_code: error_code, error_message: error_message)
+    end
+
+    if error_code == 100 && error_message.include?('Only one message can be sent per comment')
+      if message.content_attributes['target_comment_id'].present?
+        conversation.update!(additional_attributes: conversation.additional_attributes.except('comment_id'))
+      end
+      return I18n.t('errors.facebook.only_one_private_reply', error_code: error_code, error_message: error_message)
+    end
+
+    if error_code == 10 && error_message.include?('Private replies are only allowed')
+      return I18n.t('errors.facebook.private_reply_timeout', error_code: error_code, error_message: error_message)
     end
 
     "#{error_code} - #{error_message}"

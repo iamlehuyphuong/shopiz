@@ -11,6 +11,8 @@ import {
   ACCOUNT_EVENTS,
   CONVERSATION_EVENTS,
 } from '../../../helper/AnalyticsHelper/events';
+import { emitter } from 'shared/helpers/mitt';
+import { BUS_EVENTS } from 'shared/constants/busEvents';
 import MenuItem from '../../../components/widgets/conversation/contextMenu/menuItem.vue';
 import { useTrack } from 'dashboard/composables';
 import NextButton from 'dashboard/components-next/button/Button.vue';
@@ -133,6 +135,16 @@ export default {
       this.$emit('replyTo', this.message);
       this.handleClose();
     },
+    handleSuggestReply() {
+      const prompt = `${this.$t('CONVERSATION.CONTEXT_MENU.SUGGEST_REPLY_PROMPT')}\n\n> ${this.plainTextContent}`;
+      emitter.emit(BUS_EVENTS.TRIGGER_COPILOT, { message: prompt });
+      this.handleClose();
+    },
+    handleAskCopilot() {
+      const prompt = `${this.$t('CONVERSATION.CONTEXT_MENU.ASK_COPILOT_PROMPT')}\n\n> ${this.plainTextContent}`;
+      emitter.emit(BUS_EVENTS.TRIGGER_COPILOT, { message: prompt });
+      this.handleClose();
+    },
     async handleUndo() {
       try {
         await this.$store.dispatch('undoMessage', {
@@ -226,6 +238,24 @@ export default {
           }"
           variant="icon"
           @click.stop="handleReplyTo"
+        />
+        <MenuItem
+          v-if="enabledOptions['suggestReply']"
+          :option="{
+            icon: 'i-fluent-chat-sparkle-16-regular',
+            label: 'Gợi ý trả lời',
+          }"
+          variant="lucide"
+          @click.stop="handleSuggestReply"
+        />
+        <MenuItem
+          v-if="enabledOptions['askCopilot']"
+          :option="{
+            icon: 'i-fluent-circle-sparkle-24-regular',
+            label: $t('INTEGRATION_SETTINGS.OPEN_AI.REPLY_OPTIONS.ASK_COPILOT'),
+          }"
+          variant="lucide"
+          @click.stop="handleAskCopilot"
         />
         <MenuItem
           v-if="enabledOptions['copy']"

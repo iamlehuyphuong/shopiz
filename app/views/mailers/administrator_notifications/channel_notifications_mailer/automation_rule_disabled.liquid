@@ -1,9 +1,11 @@
-<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Automation Rule Disabled</h2>
-<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
-  One of your Automation Rules was automatically disabled due to invalid configurations, bad parameters, or system limits.
-</p>
-<hr style="border: 0; border-bottom: 1px solid #E2E8F0; margin: 24px 0;" />
+{% if locale == 'vi' %}
 <h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Bộ Quy Tắc Đã Bị Vô Hiệu</h2>
 <p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
   Một trong số các bộ quy tắc tự động hóa Automation Rule của bạn vừa bị vô hiệu hoá do lỗi cấu hình, chứa tham số không hợp lệ hoặc bị giới hạn bởi hệ thống.
 </p>
+{% else %}
+<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Automation Rule Disabled</h2>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
+  One of your Automation Rules was automatically disabled due to invalid configurations, bad parameters, or system limits.
+</p>
+{% endif %}

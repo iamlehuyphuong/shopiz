@@ -6,10 +6,18 @@ import { useMessageContext } from '../provider.js';
 
 import GalleryView from 'dashboard/components/widgets/conversation/components/GalleryView.vue';
 
-defineProps({
+const props = defineProps({
   attachment: {
     type: Object,
     required: true,
+  },
+  totalCount: {
+    type: Number,
+    default: 1,
+  },
+  remainingCount: {
+    type: Number,
+    default: 0,
   },
 });
 const hasError = ref(false);
@@ -24,7 +32,12 @@ const handleError = () => {
 
 <template>
   <div
-    class="size-[72px] overflow-hidden contain-content rounded-xl cursor-pointer"
+    class="relative overflow-hidden contain-content rounded-xl cursor-pointer w-full"
+    :class="{
+      'max-h-[350px]': props.totalCount <= 3,
+      'h-[200px]': props.totalCount > 3,
+      'aspect-square': props.totalCount !== 1 && props.totalCount <= 3,
+    }"
     @click="showGallery = true"
   >
     <div
@@ -34,12 +47,20 @@ const handleError = () => {
       <Icon icon="i-lucide-circle-off" class="text-n-slate-11" />
       {{ $t('COMPONENTS.MEDIA.LOADING_FAILED') }}
     </div>
-    <img
-      v-else
-      class="object-cover w-full h-full skip-context-menu"
-      :src="attachment.dataUrl"
-      @error="handleError"
-    />
+    <template v-else>
+      <img
+        class="w-full h-full skip-context-menu"
+        :class="props.totalCount === 1 ? 'object-contain' : 'object-cover'"
+        :src="attachment.dataUrl || attachment.data_url"
+        @error="handleError"
+      />
+      <div
+        v-if="props.remainingCount > 0"
+        class="absolute inset-0 bg-black/50 flex items-center justify-center text-white text-2xl font-medium"
+      >
+        +{{ props.remainingCount }}
+      </div>
+    </template>
   </div>
   <GalleryView
     v-if="showGallery"

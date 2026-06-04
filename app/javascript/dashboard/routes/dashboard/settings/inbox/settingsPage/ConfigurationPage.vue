@@ -43,8 +43,6 @@ export default {
       allowedDomains: '',
       isUpdatingAllowedDomains: false,
       isSettingDefaults: false,
-      defaultFriendRequestMessage: '',
-      defaultGreetingMessage: '',
     };
   },
   validations: {
@@ -84,10 +82,6 @@ export default {
         this.inbox.selected_feature_flags || []
       ).includes('allow_mobile_webview');
       this.allowedDomains = this.inbox.allowed_domains || '';
-      this.defaultFriendRequestMessage =
-        this.inbox.provider_config?.default_friend_request_message || '';
-      this.defaultGreetingMessage =
-        this.inbox.provider_config?.default_greeting_message || '';
       this.$nextTick(() => {
         this.isSettingDefaults = false;
       });
@@ -171,22 +165,6 @@ export default {
         useAlert(this.$t('INBOX_MGMT.EDIT.API.ERROR_MESSAGE'));
       }
     },
-    async updateZaloPersonalConfig() {
-      try {
-        const payload = {
-          id: this.inbox.id,
-          formData: false,
-          channel: {
-            default_friend_request_message: this.defaultFriendRequestMessage,
-            default_greeting_message: this.defaultGreetingMessage,
-          },
-        };
-        await this.$store.dispatch('inboxes/updateInbox', payload);
-        useAlert(this.$t('INBOX_MGMT.EDIT.API.SUCCESS_MESSAGE'));
-      } catch (error) {
-        useAlert(this.$t('INBOX_MGMT.EDIT.API.ERROR_MESSAGE'));
-      }
-    },
     async handleReconfigure() {
       if (this.$refs.whatsappReauth) {
         await this.$refs.whatsappReauth.requestAuthorization();
@@ -230,6 +208,17 @@ export default {
       :help-text="$t('INBOX_MGMT.ADD.LINE_CHANNEL.API_CALLBACK.SUBTITLE')"
     >
       <woot-code :script="inbox.callback_webhook_url" lang="html" />
+    </SettingsFieldSection>
+  </div>
+  <div v-else-if="isAZaloPersonalChannel">
+    <SettingsFieldSection
+      :label="$t('INBOX_MGMT.SETTINGS_POPUP.PROXY_CONFIGURATION.TITLE')"
+      :help-text="$t('INBOX_MGMT.SETTINGS_POPUP.PROXY_CONFIGURATION.SUBTITLE')"
+    >
+      <woot-code :script="inbox.provider_config?.proxy_used || $t('INBOX_MGMT.SETTINGS_POPUP.PROXY_CONFIGURATION.NO_PROXY')" lang="text" />
+      <p class="mt-2 text-sm text-n-slate-11">
+        {{ $t('INBOX_MGMT.SETTINGS_POPUP.PROXY_CONFIGURATION.HELP') }}
+      </p>
     </SettingsFieldSection>
   </div>
   <div v-else-if="isAWebWidgetInbox">
@@ -446,37 +435,6 @@ export default {
       :inbox="inbox"
       class="hidden"
     />
-  </div>
-  <div v-else-if="isAZaloPersonalChannel" class="space-y-4">
-    <SettingsFieldSection
-      :label="
-        $t('INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_TITLE')
-      "
-      :help-text="
-        $t(
-          'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_SUBTITLE'
-        )
-      "
-    >
-      <TextArea
-        v-model="defaultFriendRequestMessage"
-        auto-height
-        class="w-full"
-      />
-    </SettingsFieldSection>
-    <SettingsFieldSection
-      :label="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_TITLE')"
-      :help-text="
-        $t('INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_SUBTITLE')
-      "
-    >
-      <TextArea v-model="defaultGreetingMessage" auto-height class="w-full" />
-    </SettingsFieldSection>
-    <div class="flex justify-start">
-      <NextButton @click="updateZaloPersonalConfig">
-        {{ $t('INBOX_MGMT.SETTINGS_POPUP.UPDATE') }}
-      </NextButton>
-    </div>
   </div>
 </template>
 

@@ -26,7 +26,9 @@ const chartData = computed(() => {
   statusConfig.forEach(s => {
     const count = props.breakdown[s.key] || 0;
     if (count > 0) {
-      labels.push(t(`SALES.MODULE_DASHBOARD.STATUS_BREAKDOWN.${s.key.toUpperCase()}`));
+      labels.push(
+        t(`SALES.MODULE_DASHBOARD.STATUS_BREAKDOWN.${s.key.toUpperCase()}`)
+      );
       series.push(count);
       colors.push(s.color);
     }

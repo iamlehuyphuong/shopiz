@@ -71,6 +71,7 @@ const sendMessage = async () => {
       content: data.response,
       sender: 'assistant',
       agentName: data.agent_name,
+      toolCalls: data.tool_execution_trace || [],
       timestamp: new Date().toISOString(),
     });
   } catch (error) {

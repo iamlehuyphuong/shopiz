@@ -10,6 +10,7 @@ class MessageListener < BaseListener
     ::Contacts::ContactInfoExtractorService.new(message).perform
 
     schedule_followup(message)
+    schedule_auto_label(message)
   end
   
   private
@@ -32,9 +33,10 @@ class MessageListener < BaseListener
       # Bail if we reached the maximum loop of sequence
       return if current_count >= max_attempts
     else
-      # Real agent message resets the count back to 0
+      # Real agent message resets the count back to 0 and removes cancelled state
       conversation.with_lock do
         conversation.custom_attributes['followup_count'] = 0
+        conversation.custom_attributes['followup_cancelled'] = false
         conversation.save!
       end
     end
@@ -50,6 +52,18 @@ class MessageListener < BaseListener
     
     unless wait_until_time.nil? || wait_until_time <= Time.current
       Conversations::FollowupExecutionJob.set(wait_until: wait_until_time).perform_later(conversation.id, message.id)
+      
+      formatted_time = wait_until_time.in_time_zone('Asia/Ho_Chi_Minh').strftime('%H:%M %d/%m/%Y')
+      conversation.messages.create(
+        account_id: conversation.account_id,
+        inbox_id: conversation.inbox_id,
+        message_type: :activity,
+        content: "Hệ thống đã kích hoạt lên lịch gửi tin nhắn bám đuổi (follow-up) tự động vào lúc #{formatted_time}.",
+        content_attributes: {
+          translation_key: 'CONVERSATION.ACTIVITY.followup.scheduled',
+          translation_values: { time: formatted_time }
+        }
+      )
     end
   end
 
@@ -78,5 +92,19 @@ class MessageListener < BaseListener
     message = event.data[:message]
     account = message.account
     [message, account]
+  end
+
+  def schedule_auto_label(message)
+    return unless message.incoming?
+    return unless message.account.feature_enabled?('captain_tasks')
+
+    # Trigger 1: Every 5 incoming messages
+    incoming_count = message.conversation.messages.incoming.count
+    if incoming_count > 0 && incoming_count % 5 == 0
+      Captain::AutoLabelJob.perform_async(message.conversation_id, 'count')
+    end
+
+    # Trigger 2: 15 minutes after the last incoming message (if customer stops responding)
+    Captain::AutoLabelJob.set(wait: 15.minutes).perform_later(message.conversation_id, 'delay')
   end
 end

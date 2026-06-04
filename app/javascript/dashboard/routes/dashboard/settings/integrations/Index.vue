@@ -20,24 +20,12 @@ const integrationList = computed(
 
 const CATEGORIES = [
   {
-    key: 'SHOP_SALES',
-    ids: [
-      'shopify',
-      'woocommerce',
-      'kiotviet',
-      'haravan',
-      'sapo',
-      'nhanhvn',
-      'leadsquared',
-    ],
-  },
-  {
     key: 'AI_AUTOMATION',
     ids: ['openai', 'dialogflow', 'webhook', 'google_translate'],
   },
   {
     key: 'WORKSPACE_SYNC',
-    ids: ['linear', 'notion', 'slack'],
+    ids: ['linear', 'notion', 'slack', 'leadsquared'],
   },
   {
     key: 'CUSTOM_EXTENSIONS',
@@ -45,10 +33,24 @@ const CATEGORIES = [
   },
 ];
 
+const HIDDEN_IDS = [
+  'dialogflow',
+  'shopify',
+  'woocommerce',
+  'kiotviet',
+  'haravan',
+  'sapo',
+  'nhanhvn',
+  'calendly',
+];
+
 const filteredIntegrationList = computed(() => {
+  const visible = integrationList.value.filter(
+    item => !HIDDEN_IDS.includes(item.id)
+  );
   const query = searchQuery.value.trim();
-  if (!query) return integrationList.value;
-  return picoSearch(integrationList.value, query, ['name', 'description']);
+  if (!query) return visible;
+  return picoSearch(visible, query, ['name', 'description']);
 });
 
 const categorizedIntegrations = computed(() => {
@@ -101,8 +103,8 @@ onMounted(() => {
       />
     </template>
     <template #body>
-      <div class="flex-grow flex-shrink overflow-auto p-4 sm:p-6 lg:p-8">
-        <div class="max-w-7xl mx-auto flex flex-col gap-10">
+      <div class="w-full flex-grow flex-shrink overflow-auto mt-6">
+        <div class="max-w-7xl flex flex-col gap-10">
           <div
             v-if="!categorizedIntegrations.length"
             class="flex-1 flex items-center justify-center py-20 text-center text-body-main !text-base text-n-slate-11"
@@ -116,7 +118,7 @@ onMounted(() => {
               class="flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700"
             >
               <h2
-                class="text-xs font-bold uppercase tracking-widest text-n-slate-11 ml-1 px-4"
+                class="text-xs font-bold uppercase tracking-widest text-n-slate-11"
               >
                 {{ $t(`INTEGRATION_SETTINGS.SECTION.${category.key}`) }}
               </h2>

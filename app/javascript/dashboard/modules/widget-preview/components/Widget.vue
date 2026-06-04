@@ -213,7 +213,13 @@ const handleToggleWidget = () => {
         <div class="flex w-[320px]" :style="getBubblePositionStyle">
           <button
             class="relative flex items-center justify-center rounded-full cursor-pointer"
-            :style="{ background: props.color }"
+            :style="{
+              background:
+                isWidgetVisible || !isBubbleExpanded
+                  ? 'transparent'
+                  : props.color,
+              boxShadow: isWidgetVisible || !isBubbleExpanded ? 'none' : '',
+            }"
             :class="
               isBubbleExpanded
                 ? 'w-auto font-medium text-base text-white dark:text-white h-12 px-4'
@@ -222,23 +228,44 @@ const handleToggleWidget = () => {
             @click="handleToggleWidget"
           >
             <img
-              v-if="!isWidgetVisible"
-              src="~dashboard/assets/images/bubble-logo.svg"
+              v-if="!isWidgetVisible && props.bubbleLogo"
+              :src="props.bubbleLogo"
               alt=""
               draggable="false"
-              class="w-6 h-6 mx-auto"
+              class="mx-auto object-cover"
+              :class="
+                isBubbleExpanded ? 'w-6 h-6' : 'w-full h-full absolute inset-0'
+              "
+            />
+            <img
+              v-else-if="!isWidgetVisible && !props.bubbleLogo"
+              :src="props.bubbleLogo || '/assets/images/bubble_chat_icon.svg'"
+              alt=""
+              draggable="false"
+              class="mx-auto object-cover"
+              :class="
+                isBubbleExpanded ? 'w-6 h-6' : 'w-full h-full absolute inset-0'
+              "
             />
             <div v-if="isBubbleExpanded" class="ltr:pl-2.5 rtl:pr-2.5">
               {{ getWidgetBubbleLauncherTitle }}
             </div>
-            <div v-if="isWidgetVisible" class="relative">
-              <div
-                class="absolute w-0.5 h-8 rotate-45 -translate-y-1/2 bg-white"
-              />
-              <div
-                class="absolute w-0.5 h-8 -rotate-45 -translate-y-1/2 bg-white"
-              />
-            </div>
+            <img
+              v-if="isWidgetVisible && props.closeBubbleLogo"
+              :src="props.closeBubbleLogo"
+              alt=""
+              draggable="false"
+              class="w-full h-full mx-auto object-cover absolute inset-0"
+            />
+            <img
+              v-else-if="isWidgetVisible"
+              :src="
+                props.closeBubbleLogo || '/assets/images/bubble_off_chat.svg'
+              "
+              alt=""
+              draggable="false"
+              class="w-full h-full mx-auto object-cover absolute inset-0"
+            />
           </button>
         </div>
       </div>

@@ -2,6 +2,7 @@
 import { mapGetters } from 'vuex';
 import { shouldBeUrl } from 'shared/helpers/Validators';
 import { useAlert } from 'dashboard/composables';
+import Banner from 'dashboard/components-next/banner/Banner.vue';
 import { useVuelidate } from '@vuelidate/core';
 import Avatar from 'next/avatar/Avatar.vue';
 import SettingIntroBanner from 'dashboard/components/widgets/SettingIntroBanner.vue';
@@ -16,7 +17,8 @@ import TiktokReauthorize from './channels/tiktok/Reauthorize.vue';
 import DuplicateInboxBanner from './channels/instagram/DuplicateInboxBanner.vue';
 import MicrosoftReauthorize from './channels/microsoft/Reauthorize.vue';
 import ZaloReauthorize from './channels/zalo/Reauthorize.vue';
-import ZaloTemplatesPage from './components/ZaloTemplatesPage.vue';
+import TextArea from 'next/textarea/TextArea.vue';
+
 import GoogleReauthorize from './channels/google/Reauthorize.vue';
 import WhatsappReauthorize from './channels/whatsapp/Reauthorize.vue';
 import InboxHealthAPI from 'dashboard/api/inboxHealth';
@@ -31,20 +33,24 @@ import AccountHealth from './components/AccountHealth.vue';
 import { FEATURE_FLAGS } from '../../../../featureFlags';
 import SenderNameExamplePreview from './components/SenderNameExamplePreview.vue';
 import LockToSingleConversationPreview from './components/LockToSingleConversationPreview.vue';
-import EcommerceTab from './settingsPage/EcommerceTab.vue';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import SpinnerLoader from 'dashboard/components-next/spinner/Spinner.vue';
 import { INBOX_TYPES } from 'dashboard/helper/inbox';
 import { getInboxIconByType } from 'dashboard/helper/inbox';
 import { LOCAL_STORAGE_KEYS } from 'dashboard/constants/localStorage';
 import { LocalStorage } from 'shared/helpers/localStorage';
+import FeatureLockOverlay from 'dashboard/routes/dashboard/upgrade/FeatureLockOverlay.vue';
 import Editor from 'dashboard/components-next/Editor/Editor.vue';
 import ColorPicker from 'dashboard/components-next/colorpicker/ColorPicker.vue';
 import SelectInput from 'dashboard/components-next/select/Select.vue';
 import Widget from 'dashboard/modules/widget-preview/components/Widget.vue';
 
+import InboxReconnectionRequired from './components/InboxReconnectionRequired.vue';
+import InboxesAPI from 'dashboard/api/inboxes';
+
 export default {
   components: {
+    Banner,
     BotConfiguration,
     CollaboratorsPage,
     ConfigurationPage,
@@ -57,12 +63,13 @@ export default {
     SettingsToggleSection,
     SettingsFieldSection,
     SettingsAccordion,
+    TextArea,
     WeeklyAvailability,
     SenderNameExamplePreview,
     LockToSingleConversationPreview,
     MicrosoftReauthorize,
     ZaloReauthorize,
-    ZaloTemplatesPage,
+
     GoogleReauthorize,
     NextButton,
     SpinnerLoader,
@@ -76,7 +83,9 @@ export default {
     SelectInput,
     AccountHealth,
     Widget,
-    EcommerceTab,
+
+    FeatureLockOverlay,
+    InboxReconnectionRequired,
   },
   mixins: [inboxMixin],
   setup() {
@@ -86,6 +95,10 @@ export default {
     return {
       avatarFile: null,
       avatarUrl: '',
+      bubbleAvatarFile: null,
+      bubbleAvatarUrl: '',
+      closeBubbleAvatarFile: null,
+      closeBubbleAvatarUrl: '',
       greetingEnabled: true,
       greetingMessage: '',
       emailCollectEnabled: false,
@@ -122,6 +135,11 @@ export default {
       followupPredefinedMessages: Array.from({ length: 15 }, () => ''),
       followupMacros: Array.from({ length: 15 }, () => ''),
       followupCustomAIPrompts: Array.from({ length: 15 }, () => ''),
+      autoLabelEnabled: false,
+      zaloReauthorizeModalVisible: false,
+      isCheckingConnection: false,
+      zaloPersonalDefaultFriendRequestMessage: '',
+      zaloPersonalDefaultGreetingMessage: '',
     };
   },
   computed: {
@@ -132,6 +150,12 @@ export default {
       portals: 'portals/allPortals',
       macros: 'macros/getMacros',
     }),
+    isCaptainEnabled() {
+      return this.isFeatureEnabledonAccount(
+        this.accountId,
+        FEATURE_FLAGS.CAPTAIN
+      );
+    },
     selectedTabKey() {
       return this.tabs[this.selectedTabIndex]?.key;
     },
@@ -186,34 +210,14 @@ export default {
         ];
       }
 
-      if (this.isAZaloPersonalChannel) {
-        visibleToAllChannelTabs = [
-          ...visibleToAllChannelTabs,
-          {
-            key: 'zaloPersonalLogin',
-            name: this.$t('INBOX_MGMT.ADD.ZALO_OA.RELOGIN'),
-          },
-        ];
-      }
-
-      if (this.isAZaloOaChannel) {
-        visibleToAllChannelTabs = [
-          ...visibleToAllChannelTabs,
-          {
-            key: 'message-templates',
-            name: this.$t('INBOX_MGMT.TABS.MESSAGE_TEMPLATES'),
-          },
-        ];
-      }
-
       if (
         this.isATwilioChannel ||
         this.isALineChannel ||
+        this.isAZaloPersonalChannel ||
         this.isAPIInbox ||
         this.isAVoiceChannel ||
         (this.isAnEmailChannel && !this.inbox.provider) ||
         this.shouldShowWhatsAppConfiguration ||
-        this.isAZaloPersonalChannel ||
         this.isAWebWidgetInbox
       ) {
         visibleToAllChannelTabs = [
@@ -260,14 +264,6 @@ export default {
         ];
       }
 
-      visibleToAllChannelTabs = [
-        ...visibleToAllChannelTabs,
-        {
-          key: 'ecommerce',
-          name: this.$t('INBOX_MGMT.TABS.ECOMMERCE'),
-        },
-      ];
-
       return visibleToAllChannelTabs;
     },
     currentInboxId() {
@@ -281,7 +277,13 @@ export default {
       return getInboxIconByType(type, medium, 'line');
     },
     bannerMaxWidth() {
-      const narrowTabs = ['collaborators', 'bot-configuration'];
+      const narrowTabs = [
+        'collaborators',
+        'bot-configuration',
+        'business-hours',
+        'csat',
+        'posts-and-comments',
+      ];
       const wideIfWebWidget = ['configuration', 'inbox-settings'];
       if (narrowTabs.includes(this.selectedTabKey)) return 'max-w-4xl';
       if (wideIfWebWidget.includes(this.selectedTabKey)) {
@@ -338,6 +340,9 @@ export default {
     },
     instagramUnauthorized() {
       return this.isAnInstagramChannel && this.inbox.reauthorization_required;
+    },
+    zaloPersonalUnauthorized() {
+      return this.isAZaloPersonalChannel && this.inbox.reauthorization_required;
     },
     tiktokUnauthorized() {
       return this.isATiktokChannel && this.inbox.reauthorization_required;
@@ -462,6 +467,28 @@ export default {
     this.fetchSharedData();
   },
   methods: {
+    async checkZaloPersonalConnection() {
+      if (this.isCheckingConnection) return;
+
+      this.isCheckingConnection = true;
+      try {
+        const { data } = await InboxesAPI.checkConnection(this.inbox.id);
+        if (data.reauthorization_required) {
+          this.$store.dispatch('inboxes/get');
+          useAlert(
+            this.$t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.DISCONNECTED_ALERT')
+          );
+        } else {
+          useAlert(
+            this.$t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.CONNECTED_ALERT')
+          );
+        }
+      } catch (error) {
+        useAlert(this.$t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.CHECK_ERROR'));
+      } finally {
+        this.isCheckingConnection = false;
+      }
+    },
     fetchSharedData() {
       this.$store.dispatch('agents/get');
       this.$store.dispatch('teams/get');
@@ -473,6 +500,8 @@ export default {
       if (!this.inbox || !this.inbox.id) return;
 
       this.avatarUrl = this.inbox.avatar_url;
+      this.bubbleAvatarUrl = this.inbox.bubble_avatar_url;
+      this.closeBubbleAvatarUrl = this.inbox.close_bubble_avatar_url;
       this.selectedInboxName = this.inbox.name;
       this.webhookUrl = this.inbox.webhook_url;
       this.greetingEnabled = this.inbox.greeting_enabled || false;
@@ -519,6 +548,7 @@ export default {
         this.inbox.followup_config?.timezone || 'Asia/Ho_Chi_Minh';
       this.followupActionType =
         this.inbox.followup_config?.action_type || 'ai_assistant';
+      this.autoLabelEnabled = this.inbox.auto_label_enabled || false;
       this.followupPredefinedMessage =
         this.inbox.followup_config?.predefined_message || '';
 
@@ -537,6 +567,11 @@ export default {
       this.followupCustomAIPrompts =
         this.inbox.followup_config?.custom_ai_prompts ||
         Array.from({ length: 15 }, () => '');
+
+      this.zaloPersonalDefaultFriendRequestMessage =
+        this.inbox.provider_config?.default_friend_request_message || '';
+      this.zaloPersonalDefaultGreetingMessage =
+        this.inbox.provider_config?.default_greeting_message || '';
     },
     async fetchHealthData() {
       if (!this.inbox) return;
@@ -636,19 +671,37 @@ export default {
           lock_to_single_conversation: this.locktoSingleConversation,
           sender_name_type: this.senderNameType,
           business_name: this.businessName || null,
-          followup_config: {
-            enabled: this.followupEnabled,
-            max_attempts: this.followupMaxAttempts,
-            interval_hours: this.followupIntervalHours,
-            time_mode: this.followupTimeMode,
-            fixed_time: this.followupFixedTime,
-            timezone: this.followupTimezone,
-            action_type: this.followupActionType,
-            predefined_message: this.followupPredefinedMessage,
-            predefined_messages: this.followupPredefinedMessages,
-            macros: this.followupMacros,
-            custom_ai_prompts: this.followupCustomAIPrompts,
-          },
+          auto_label_enabled: this.autoLabelEnabled,
+          followup_config:
+            this.avatarFile ||
+            this.bubbleAvatarFile ||
+            this.closeBubbleAvatarFile
+              ? JSON.stringify({
+                  enabled: this.followupEnabled,
+                  max_attempts: this.followupMaxAttempts,
+                  interval_hours: this.followupIntervalHours,
+                  time_mode: this.followupTimeMode,
+                  fixed_time: this.followupFixedTime,
+                  timezone: this.followupTimezone,
+                  action_type: this.followupActionType,
+                  predefined_message: this.followupPredefinedMessage,
+                  predefined_messages: this.followupPredefinedMessages,
+                  macros: this.followupMacros,
+                  custom_ai_prompts: this.followupCustomAIPrompts,
+                })
+              : {
+                  enabled: this.followupEnabled,
+                  max_attempts: this.followupMaxAttempts,
+                  interval_hours: this.followupIntervalHours,
+                  time_mode: this.followupTimeMode,
+                  fixed_time: this.followupFixedTime,
+                  timezone: this.followupTimezone,
+                  action_type: this.followupActionType,
+                  predefined_message: this.followupPredefinedMessage,
+                  predefined_messages: this.followupPredefinedMessages,
+                  macros: this.followupMacros,
+                  custom_ai_prompts: this.followupCustomAIPrompts,
+                },
           channel: {
             widget_color: this.inbox.widget_color,
             website_url: this.channelWebsiteUrl,
@@ -658,10 +711,25 @@ export default {
             selectedFeatureFlags: this.selectedFeatureFlags,
             reply_time: this.replyTime || 'in_a_few_minutes',
             continuity_via_email: this.continuityViaEmail,
+            ...(this.isAZaloPersonalChannel && {
+              default_friend_request_message:
+                this.zaloPersonalDefaultFriendRequestMessage,
+              default_greeting_message: this.zaloPersonalDefaultGreetingMessage,
+            }),
           },
         };
-        if (this.avatarFile) {
-          payload.avatar = this.avatarFile;
+        if (
+          this.avatarFile ||
+          this.bubbleAvatarFile ||
+          this.closeBubbleAvatarFile
+        ) {
+          if (this.avatarFile) payload.avatar = this.avatarFile;
+          if (this.bubbleAvatarFile)
+            payload.channel.bubble_avatar = this.bubbleAvatarFile;
+          if (this.closeBubbleAvatarFile)
+            payload.channel.close_bubble_avatar = this.closeBubbleAvatarFile;
+        } else {
+          payload.formData = false;
         }
         await this.$store.dispatch('inboxes/updateInbox', payload);
         useAlert(this.$t('INBOX_MGMT.EDIT.API.SUCCESS_MESSAGE'));
@@ -674,6 +742,14 @@ export default {
       this.avatarFile = file;
       this.avatarUrl = url;
     },
+    handleBubbleImageUpload({ file, url }) {
+      this.bubbleAvatarFile = file;
+      this.bubbleAvatarUrl = url;
+    },
+    handleCloseBubbleImageUpload({ file, url }) {
+      this.closeBubbleAvatarFile = file;
+      this.closeBubbleAvatarUrl = url;
+    },
     async handleAvatarDelete() {
       try {
         await this.$store.dispatch(
@@ -682,6 +758,40 @@ export default {
         );
         this.avatarFile = null;
         this.avatarUrl = '';
+        useAlert(this.$t('INBOX_MGMT.DELETE.API.AVATAR_SUCCESS_MESSAGE'));
+      } catch (error) {
+        useAlert(
+          error.message
+            ? error.message
+            : this.$t('INBOX_MGMT.DELETE.API.AVATAR_ERROR_MESSAGE')
+        );
+      }
+    },
+    async handleBubbleAvatarDelete() {
+      try {
+        await this.$store.dispatch(
+          'inboxes/deleteBubbleAvatar',
+          this.currentInboxId
+        );
+        this.bubbleAvatarFile = null;
+        this.bubbleAvatarUrl = '';
+        useAlert(this.$t('INBOX_MGMT.DELETE.API.AVATAR_SUCCESS_MESSAGE'));
+      } catch (error) {
+        useAlert(
+          error.message
+            ? error.message
+            : this.$t('INBOX_MGMT.DELETE.API.AVATAR_ERROR_MESSAGE')
+        );
+      }
+    },
+    async handleCloseBubbleAvatarDelete() {
+      try {
+        await this.$store.dispatch(
+          'inboxes/deleteCloseBubbleAvatar',
+          this.currentInboxId
+        );
+        this.closeBubbleAvatarFile = null;
+        this.closeBubbleAvatarUrl = '';
         useAlert(this.$t('INBOX_MGMT.DELETE.API.AVATAR_SUCCESS_MESSAGE'));
       } catch (error) {
         useAlert(
@@ -792,6 +902,30 @@ export default {
           class="mx-6 mb-4"
           :class="bannerMaxWidth"
         />
+        <InboxReconnectionRequired
+          v-if="zaloPersonalUnauthorized"
+          class="mx-6 mb-4"
+          :class="bannerMaxWidth"
+          @reauthorize="zaloReauthorizeModalVisible = true"
+        />
+        <Banner
+          v-if="isAZaloPersonalChannel && !zaloPersonalUnauthorized"
+          color="teal"
+          class="mx-6 mb-4"
+          :class="bannerMaxWidth"
+          :action-label="
+            isCheckingConnection
+              ? $t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.CHECKING')
+              : $t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.CHECK_BUTTON')
+          "
+          :action-label-secondary="
+            $t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.RECONNECT_BUTTON')
+          "
+          @action="checkZaloPersonalConnection"
+          @secondary-action="zaloReauthorizeModalVisible = true"
+        >
+          {{ $t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.CONNECTED') }}
+        </Banner>
 
         <div
           v-if="selectedTabKey === 'inbox-settings'"
@@ -804,21 +938,25 @@ export default {
               'max-w-4xl': !isAWebWidgetInbox,
             }"
           >
-            <div class="flex flex-col gap-1 items-start mb-4">
-              <label class="text-heading-3 text-n-slate-12">
-                {{ $t('INBOX_MGMT.ADD.WEBSITE_CHANNEL.CHANNEL_AVATAR.LABEL') }}
-              </label>
-              <Avatar
-                :src="avatarUrl"
-                :size="64"
-                :icon-name="inboxIcon"
-                name=""
-                allow-upload
-                branded
-                rounded-full
-                @upload="handleImageUpload"
-                @delete="handleAvatarDelete"
-              />
+            <div class="flex flex-wrap gap-6 mb-4">
+              <div class="flex flex-col gap-1 items-start">
+                <label class="text-heading-3 text-n-slate-12">
+                  {{
+                    $t('INBOX_MGMT.ADD.WEBSITE_CHANNEL.CHANNEL_AVATAR.LABEL')
+                  }}
+                </label>
+                <Avatar
+                  :src="avatarUrl"
+                  :size="64"
+                  :icon-name="inboxIcon"
+                  name=""
+                  allow-upload
+                  branded
+                  rounded-full
+                  @upload="handleImageUpload"
+                  @delete="handleAvatarDelete"
+                />
+              </div>
             </div>
             <SettingsFieldSection :label="inboxNameLabel">
               <woot-input
@@ -1027,61 +1165,109 @@ export default {
                   $t('INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE')
                 "
               >
-                <div class="flex items-center gap-6">
-                  <div class="flex items-center gap-2">
-                    <label class="text-n-slate-11 text-heading-3">
-                      {{
-                        $t(
-                          'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_POSITION_LABEL'
-                        )
-                      }}
-                    </label>
-                    <SelectInput
-                      v-model="widgetBubblePosition"
-                      :options="[
-                        {
-                          label: $t(
-                            'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_POSITION.LEFT'
-                          ),
-                          value: 'left',
-                        },
-                        {
-                          label: $t(
-                            'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_POSITION.RIGHT'
-                          ),
-                          value: 'right',
-                        },
-                      ]"
-                      class="[&>select]:!p-0 min-w-16 [&>select]:!outline-none"
-                    />
+                <div class="flex flex-col gap-6">
+                  <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-2">
+                      <label class="text-n-slate-11 text-heading-3">
+                        {{
+                          $t(
+                            'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_POSITION_LABEL'
+                          )
+                        }}
+                      </label>
+                      <SelectInput
+                        v-model="widgetBubblePosition"
+                        :options="[
+                          {
+                            label: $t(
+                              'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_POSITION.LEFT'
+                            ),
+                            value: 'left',
+                          },
+                          {
+                            label: $t(
+                              'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_POSITION.RIGHT'
+                            ),
+                            value: 'right',
+                          },
+                        ]"
+                        class="[&>select]:!py-0 [&>select]:!pl-0 [&>select]:!pr-6 min-w-16 [&>select]:!outline-none"
+                      />
+                    </div>
+                    <div class="h-3 w-px bg-n-weak rounded-lg" />
+                    <div class="flex items-center gap-2">
+                      <label class="text-n-slate-11 text-heading-3">
+                        {{
+                          $t(
+                            'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_TYPE_LABEL'
+                          )
+                        }}
+                      </label>
+                      <SelectInput
+                        v-model="widgetBubbleType"
+                        :options="[
+                          {
+                            label: $t(
+                              'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_TYPE.STANDARD'
+                            ),
+                            value: 'standard',
+                          },
+                          {
+                            label: $t(
+                              'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_TYPE.EXPANDED_BUBBLE'
+                            ),
+                            value: 'expanded_bubble',
+                          },
+                        ]"
+                        class="[&>select]:!py-0 [&>select]:!pl-0 [&>select]:!pr-6 min-w-16 [&>select]:!outline-none"
+                      />
+                    </div>
                   </div>
-                  <div class="h-3 w-px bg-n-weak rounded-lg" />
-                  <div class="flex items-center gap-2">
-                    <label class="text-n-slate-11 text-heading-3">
-                      {{
-                        $t(
-                          'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_TYPE_LABEL'
-                        )
-                      }}
-                    </label>
-                    <SelectInput
-                      v-model="widgetBubbleType"
-                      :options="[
-                        {
-                          label: $t(
-                            'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_TYPE.STANDARD'
-                          ),
-                          value: 'standard',
-                        },
-                        {
-                          label: $t(
-                            'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_TYPE.EXPANDED_BUBBLE'
-                          ),
-                          value: 'expanded_bubble',
-                        },
-                      ]"
-                      class="[&>select]:!p-0 min-w-16 [&>select]:!outline-none"
-                    />
+                  <div class="flex items-center gap-6">
+                    <div class="flex flex-col gap-1 items-start">
+                      <label class="text-heading-3 text-n-slate-12">
+                        {{
+                          $t(
+                            'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.BUBBLE_AVATAR.OPEN_LABEL'
+                          )
+                        }}
+                      </label>
+                      <Avatar
+                        :src="
+                          bubbleAvatarUrl ||
+                          '/assets/images/bubble_chat_icon.svg'
+                        "
+                        :hide-delete="!bubbleAvatarUrl"
+                        :size="64"
+                        name=""
+                        allow-upload
+                        branded
+                        @upload="handleBubbleImageUpload"
+                        @delete="handleBubbleAvatarDelete"
+                      />
+                    </div>
+                    <div class="flex flex-col gap-1 items-start">
+                      <label class="text-heading-3 text-n-slate-12">
+                        {{
+                          $t(
+                            'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.BUBBLE_AVATAR.CLOSE_LABEL'
+                          )
+                        }}
+                      </label>
+                      <Avatar
+                        :src="
+                          closeBubbleAvatarUrl ||
+                          '/assets/images/bubble_off_chat.svg'
+                        "
+                        :hide-delete="!closeBubbleAvatarUrl"
+                        :size="64"
+                        name=""
+                        allow-upload
+                        branded
+                        @upload="handleCloseBubbleImageUpload"
+                        @delete="handleCloseBubbleAvatarDelete"
+                      />
+                    </div>
                   </div>
                 </div>
               </SettingsFieldSection>
@@ -1262,265 +1448,325 @@ export default {
               />
             </SettingsAccordion>
 
-            <SettingsAccordion
-              :title="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TITLE')"
-              class="mt-6"
-            >
-              <SettingsToggleSection
-                v-model="followupEnabled"
-                :header="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TOGGLE')"
-                :description="
-                  $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_DESC')
-                "
+            <div class="relative mt-6">
+              <FeatureLockOverlay
+                v-if="!isCaptainEnabled"
+                feature-flag="captain_ai"
+                :feature-name="$t('SIDEBAR.CAPTAIN_AI')"
+              />
+              <SettingsAccordion
+                :title="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_LABEL_TITLE')"
               >
-                <template v-if="followupEnabled" #editor>
-                  <div
-                    class="flex flex-col gap-4 mt-2 mb-2 p-4 bg-n-surface-1 rounded-md border border-slate-100 dark:border-slate-800"
-                  >
-                    <div class="flex flex-col gap-1">
-                      <label class="text-n-slate-11 text-small font-medium">
-                        {{
-                          $t(
-                            'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_DELAY_LABEL'
-                          )
-                        }}
-                      </label>
-                      <div class="flex items-center gap-2">
-                        <woot-input
-                          v-model="followupIntervalHours"
-                          type="number"
-                          min="1"
-                          max="999"
-                          class="[&_input]:!mb-0"
-                          style="width: 150px"
-                        />
-                      </div>
-                      <p class="text-[12px] text-n-slate-11">
-                        {{
-                          $t(
-                            'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_LIMIT_WARNING'
-                          )
-                        }}
-                      </p>
-                    </div>
+                <SettingsToggleSection
+                  v-model="autoLabelEnabled"
+                  :header="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_LABEL_TOGGLE')"
+                  :description="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_LABEL_DESC')"
+                />
+              </SettingsAccordion>
 
-                    <div class="flex flex-col gap-1 mt-2">
-                      <label class="text-n-slate-11 text-small font-medium">
-                        {{
-                          $t(
-                            'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_MAX_ATTEMPTS'
-                          )
-                        }}
-                      </label>
-                      <SelectInput
-                        v-model="followupMaxAttempts"
-                        :options="dynamicMaxAttemptsOptions"
-                        class="w-full"
-                      />
-                    </div>
-
-                    <div class="flex flex-col gap-1 mt-2">
-                      <label class="text-n-slate-11 text-small font-medium">
-                        {{
-                          $t(
-                            'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIME_MODE'
-                          )
-                        }}
-                      </label>
-                      <SelectInput
-                        v-model="followupTimeMode"
-                        :options="[
-                          {
-                            value: 'relative',
-                            label: $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIME_MODE_RELATIVE'
-                            ),
-                          },
-                          {
-                            value: 'fixed',
-                            label: $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIME_MODE_FIXED'
-                            ),
-                          },
-                        ]"
-                        class="w-full"
-                      />
-                    </div>
-
+              <SettingsAccordion
+                v-if="!isAWebWidgetInbox"
+                :title="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TITLE')"
+                class="mt-6"
+              >
+                <SettingsToggleSection
+                  v-model="followupEnabled"
+                  :header="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TOGGLE')"
+                  :description="
+                    $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_DESC')
+                  "
+                >
+                  <template v-if="followupEnabled" #editor>
                     <div
-                      v-if="followupTimeMode === 'fixed'"
-                      class="flex gap-4 mt-2"
+                      class="flex flex-col gap-4 mt-2 mb-2 p-4 bg-n-surface-1 rounded-md border border-slate-100 dark:border-slate-800"
                     >
-                      <div class="flex flex-col gap-1 w-1/2">
+                      <div class="flex flex-col gap-1">
                         <label class="text-n-slate-11 text-small font-medium">
                           {{
                             $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_FIXED_TIME_LABEL'
+                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_DELAY_LABEL'
                             )
                           }}
                         </label>
-                        <woot-input
-                          v-model="followupFixedTime"
-                          type="time"
-                          class="[&_input]:!mb-0"
-                        />
-                      </div>
-                      <div class="flex flex-col gap-1 w-1/2">
-                        <label class="text-n-slate-11 text-small font-medium">
+                        <div class="flex items-center gap-2">
+                          <woot-input
+                            v-model="followupIntervalHours"
+                            type="number"
+                            min="1"
+                            max="999"
+                            class="[&_input]:!mb-0 w-[150px]"
+                          />
+                        </div>
+                        <p class="text-[12px] text-n-slate-11">
                           {{
                             $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIMEZONE_LABEL'
-                            )
-                          }}
-                        </label>
-                        <woot-input
-                          v-model="followupTimezone"
-                          type="text"
-                          class="[&_input]:!mb-0"
-                        />
-                      </div>
-                    </div>
-
-                    <div class="flex flex-col gap-1 mt-2">
-                      <label class="text-n-slate-11 text-small font-medium">
-                        {{
-                          $t(
-                            'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_LABEL'
-                          )
-                        }}
-                      </label>
-                      <SelectInput
-                        v-model="followupActionType"
-                        :options="[
-                          {
-                            value: 'ai_assistant',
-                            label: $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_AI_ASSISTANT'
-                            ),
-                          },
-                          {
-                            value: 'macro',
-                            label: $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_MACRO'
-                            ),
-                          },
-                          {
-                            value: 'predefined_message',
-                            label: $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_PREDEFINED'
-                            ),
-                          },
-                        ]"
-                        class="w-full"
-                      />
-                    </div>
-                    <div
-                      v-if="followupActionType === 'ai_assistant'"
-                      class="flex flex-col gap-3 mt-3"
-                    >
-                      <div
-                        class="flex flex-col gap-1 p-3 bg-n-brand/10 text-n-brand rounded-md"
-                      >
-                        <p class="text-sm">
-                          {{
-                            $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_AI_HINT'
+                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_LIMIT_WARNING'
                             )
                           }}
                         </p>
                       </div>
 
-                      <div
-                        v-for="(n, index) in followupMaxAttempts"
-                        :key="'ai-' + index"
-                        class="flex flex-col gap-1 w-full bg-n-alpha-1 p-3 rounded-md border border-n-weak"
-                      >
+                      <div class="flex flex-col gap-1 mt-2">
                         <label class="text-n-slate-11 text-small font-medium">
                           {{
                             $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_LABEL'
+                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_MAX_ATTEMPTS'
                             )
                           }}
-                          {{ index + 1 }}
-                        </label>
-                        <textarea
-                          v-model="followupCustomAIPrompts[index]"
-                          rows="3"
-                          :placeholder="
-                            $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_PLACEHOLDER'
-                            )
-                          "
-                          class="w-full text-n-slate-12 bg-n-alpha-1 border-n-weak outline-none rounded-md px-3 py-2 border dark:bg-n-solid-1 text-sm focus:border-n-brand focus:ring-1 focus:ring-n-brand"
-                        />
-                      </div>
-                    </div>
-
-                    <div
-                      v-if="followupActionType === 'macro'"
-                      class="flex flex-col gap-3 mt-3"
-                    >
-                      <div
-                        v-for="(n, index) in followupMaxAttempts"
-                        :key="'macro-' + index"
-                        class="flex flex-col gap-1 w-full bg-n-alpha-1 p-3 rounded-md border border-n-weak"
-                      >
-                        <label class="text-n-slate-11 text-small font-medium">
-                          {{
-                            $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_MACRO_SELECT'
-                            )
-                          }}
-                          {{ index + 1 }}
                         </label>
                         <SelectInput
-                          v-model="followupMacros[index]"
+                          v-model="followupMaxAttempts"
+                          :options="dynamicMaxAttemptsOptions"
+                          class="w-full"
+                        />
+                      </div>
+
+                      <div class="flex flex-col gap-1 mt-2">
+                        <label class="text-n-slate-11 text-small font-medium">
+                          {{
+                            $t(
+                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIME_MODE'
+                            )
+                          }}
+                        </label>
+                        <SelectInput
+                          v-model="followupTimeMode"
                           :options="[
                             {
-                              value: '',
+                              value: 'relative',
                               label: $t(
-                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_MACRO_EMPTY'
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIME_MODE_RELATIVE'
                               ),
                             },
-                            ...macros.map(m => ({
-                              value: m.id,
-                              label: m.name,
-                            })),
+                            {
+                              value: 'fixed',
+                              label: $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIME_MODE_FIXED'
+                              ),
+                            },
                           ]"
                           class="w-full"
                         />
                       </div>
-                    </div>
 
-                    <div
-                      v-if="followupActionType === 'predefined_message'"
-                      class="flex flex-col gap-3 mt-3"
-                    >
                       <div
-                        v-for="(n, index) in followupMaxAttempts"
-                        :key="'predefined-' + index"
-                        class="flex flex-col gap-1 w-full bg-n-alpha-1 p-3 rounded-md border border-n-weak"
+                        v-if="followupTimeMode === 'fixed'"
+                        class="flex gap-4 mt-2"
                       >
+                        <div class="flex flex-col gap-1 w-1/2">
+                          <label class="text-n-slate-11 text-small font-medium">
+                            {{
+                              $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_FIXED_TIME_LABEL'
+                              )
+                            }}
+                          </label>
+                          <woot-input
+                            v-model="followupFixedTime"
+                            type="time"
+                            class="[&_input]:!mb-0"
+                          />
+                        </div>
+                        <div class="flex flex-col gap-1 w-1/2">
+                          <label class="text-n-slate-11 text-small font-medium">
+                            {{
+                              $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIMEZONE_LABEL'
+                              )
+                            }}
+                          </label>
+                          <woot-input
+                            v-model="followupTimezone"
+                            type="text"
+                            class="[&_input]:!mb-0"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="flex flex-col gap-1 mt-2">
                         <label class="text-n-slate-11 text-small font-medium">
                           {{
                             $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_PREDEFINED_MESSAGE'
+                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_LABEL'
                             )
                           }}
-                          {{ index + 1 }}
                         </label>
-                        <textarea
-                          v-model="followupPredefinedMessages[index]"
-                          rows="3"
-                          placeholder="Hello, are you still there?"
-                          class="w-full text-n-slate-12 bg-n-alpha-1 border-n-weak outline-none rounded-md px-3 py-2 border dark:bg-n-solid-1 text-sm focus:border-n-brand focus:ring-1 focus:ring-n-brand"
+                        <SelectInput
+                          v-model="followupActionType"
+                          :options="[
+                            {
+                              value: 'ai_assistant',
+                              label: $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_AI_ASSISTANT'
+                              ),
+                            },
+                            {
+                              value: 'macro',
+                              label: $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_MACRO'
+                              ),
+                            },
+                            {
+                              value: 'predefined_message',
+                              label: $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_PREDEFINED'
+                              ),
+                            },
+                          ]"
+                          class="w-full"
                         />
                       </div>
+                      <div
+                        v-if="followupActionType === 'ai_assistant'"
+                        class="flex flex-col gap-3 mt-3"
+                      >
+                        <div
+                          class="flex flex-col gap-1 p-3 bg-n-brand/10 text-n-brand rounded-md"
+                        >
+                          <p class="text-sm">
+                            {{
+                              $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_AI_HINT'
+                              )
+                            }}
+                          </p>
+                        </div>
+
+                        <div
+                          v-for="(n, index) in followupMaxAttempts"
+                          :key="'ai-' + index"
+                          class="flex flex-col gap-1 w-full bg-n-alpha-1 p-3 rounded-md border border-n-weak"
+                        >
+                          <label class="text-n-slate-11 text-small font-medium">
+                            {{
+                              $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_LABEL'
+                              )
+                            }}
+                            {{ index + 1 }}
+                          </label>
+                          <textarea
+                            v-model="followupCustomAIPrompts[index]"
+                            rows="3"
+                            :placeholder="
+                              $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_PLACEHOLDER'
+                              )
+                            "
+                            class="w-full text-n-slate-12 bg-n-alpha-1 border-n-weak outline-none rounded-md px-3 py-2 border dark:bg-n-solid-1 text-sm focus:border-n-brand focus:ring-1 focus:ring-n-brand"
+                          />
+                        </div>
+                      </div>
+
+                      <div
+                        v-if="followupActionType === 'macro'"
+                        class="flex flex-col gap-3 mt-3"
+                      >
+                        <div
+                          v-for="(n, index) in followupMaxAttempts"
+                          :key="'macro-' + index"
+                          class="flex flex-col gap-1 w-full bg-n-alpha-1 p-3 rounded-md border border-n-weak"
+                        >
+                          <label class="text-n-slate-11 text-small font-medium">
+                            {{
+                              $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_MACRO_SELECT'
+                              )
+                            }}
+                            {{ index + 1 }}
+                          </label>
+                          <SelectInput
+                            v-model="followupMacros[index]"
+                            :options="[
+                              {
+                                value: '',
+                                label: $t(
+                                  'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_MACRO_EMPTY'
+                                ),
+                              },
+                              ...macros.map(m => ({
+                                value: m.id,
+                                label: m.name,
+                              })),
+                            ]"
+                            class="w-full"
+                          />
+                        </div>
+                      </div>
+
+                      <div
+                        v-if="followupActionType === 'predefined_message'"
+                        class="flex flex-col gap-3 mt-3"
+                      >
+                        <div
+                          v-for="(n, index) in followupMaxAttempts"
+                          :key="'predefined-' + index"
+                          class="flex flex-col gap-1 w-full bg-n-alpha-1 p-3 rounded-md border border-n-weak"
+                        >
+                          <label class="text-n-slate-11 text-small font-medium">
+                            {{
+                              $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_PREDEFINED_MESSAGE'
+                              )
+                            }}
+                            {{ index + 1 }}
+                          </label>
+                          <textarea
+                            v-model="followupPredefinedMessages[index]"
+                            rows="3"
+                            placeholder="Hello, are you still there?"
+                            class="w-full text-n-slate-12 bg-n-alpha-1 border-n-weak outline-none rounded-md px-3 py-2 border dark:bg-n-solid-1 text-sm focus:border-n-brand focus:ring-1 focus:ring-n-brand"
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </template>
-              </SettingsToggleSection>
-            </SettingsAccordion>
+                  </template>
+                </SettingsToggleSection>
+              </SettingsAccordion>
+            </div>
+
+            <div v-if="isAZaloPersonalChannel" class="mt-6">
+              <SettingsAccordion
+                :title="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.CONFIGURATION_TITLE')"
+              >
+                <SettingsFieldSection
+                  :label="
+                    $t(
+                      'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_TITLE'
+                    )
+                  "
+                  :help-text="
+                    $t(
+                      'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_SUBTITLE'
+                    )
+                  "
+                >
+                  <TextArea
+                    v-model="zaloPersonalDefaultFriendRequestMessage"
+                    auto-height
+                    class="w-full"
+                  />
+                </SettingsFieldSection>
+                <SettingsFieldSection
+                  :label="
+                    $t(
+                      'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_TITLE'
+                    )
+                  "
+                  :help-text="
+                    $t(
+                      'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_SUBTITLE'
+                    )
+                  "
+                >
+                  <TextArea
+                    v-model="zaloPersonalDefaultGreetingMessage"
+                    auto-height
+                    class="w-full"
+                  />
+                </SettingsFieldSection>
+              </SettingsAccordion>
+            </div>
 
             <div class="w-full flex justify-end items-center py-4 mt-2">
               <NextButton
@@ -1560,6 +1806,8 @@ export default {
                 :widget-bubble-position="widgetBubblePosition"
                 :widget-bubble-launcher-title="widgetBubbleLauncherTitle"
                 :widget-bubble-type="widgetBubbleType"
+                :bubble-logo="bubbleAvatarUrl"
+                :close-bubble-logo="closeBubbleAvatarUrl"
                 :web-widget-script="inbox.web_widget_script"
               />
             </div>
@@ -1585,18 +1833,21 @@ export default {
         <div v-if="selectedTabKey === 'business-hours'">
           <WeeklyAvailability :inbox="inbox" />
         </div>
-        <div v-if="selectedTabKey === 'zaloPersonalLogin'">
-          <ZaloReauthorize :inbox="inbox" />
-        </div>
-        <div v-if="selectedTabKey === 'bot-configuration'">
+        <div
+          v-if="selectedTabKey === 'bot-configuration'"
+          class="relative min-h-[400px]"
+        >
+          <FeatureLockOverlay
+            v-if="!isCaptainEnabled"
+            feature-flag="captain_ai"
+            :feature-name="$t('SIDEBAR.CAPTAIN_AI')"
+          />
           <BotConfiguration :inbox="inbox" />
         </div>
         <div v-if="selectedTabKey === 'posts-and-comments'">
           <FacebookPostsAndComments :inbox="inbox" />
         </div>
-        <div v-if="selectedTabKey === 'message-templates'">
-          <ZaloTemplatesPage :inbox="inbox" />
-        </div>
+
         <div v-if="selectedTabKey === 'whatsapp-health'">
           <AccountHealth
             :health-data="healthData"
@@ -1604,10 +1855,26 @@ export default {
             @register-webhook="registerWebhook"
           />
         </div>
-        <div v-if="selectedTabKey === 'ecommerce'">
-          <EcommerceTab :inbox="inbox" />
-        </div>
       </div>
     </section>
+
+    <woot-modal
+      v-model:show="zaloReauthorizeModalVisible"
+      :on-close="
+        () => {
+          zaloReauthorizeModalVisible = false;
+        }
+      "
+    >
+      <div class="flex flex-col h-auto overflow-auto">
+        <woot-modal-header
+          :header-title="$t('INBOX_MGMT.ADD.ZALO_OA.RELOGIN')"
+          :header-content="$t('INBOX_MGMT.ADD.ZALO_OA.RELOGIN')"
+        />
+        <div class="px-8 pb-8 pt-2">
+          <ZaloReauthorize :inbox="inbox" />
+        </div>
+      </div>
+    </woot-modal>
   </div>
 </template>

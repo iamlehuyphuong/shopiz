@@ -71,6 +71,7 @@
     "SUCCESS_UNDO_MESSAGE": "Thu hồi tin nhắn thành công",
     "FAIL_UNDO_MESSSAGE": "Không thể thu hồi tin nhắn! Thử lại",
     "DELETED_OR_RETRACTED": "Tin nhắn đã được xoá hoặc thu hồi",
+    "PRIVATE_REPLY": "Phản hồi riêng tư",
     "NO_RESPONSE": "Chưa có phản hồi",
     "RESPONSE": "Phản hồi",
     "RATING_TITLE": "Đánh giá",
@@ -178,6 +179,10 @@
       "DESCRIPTION": "Bạn có chắc muốn xóa cuộc hội thoại này?",
       "CONFIRM": "Xóa"
     },
+    "FOLLOW_UP": {
+      "SUCCESS": "Đã đặt lịch hẹn chăm sóc thành công.",
+      "ERROR": "Không thể đặt lịch hẹn chăm sóc. Vui lòng thử lại."
+    },
     "CARD_CONTEXT_MENU": {
       "PENDING": "Đánh dấu đang chờ",
       "RESOLVED": "Đánh dấu đã giải quyết",
@@ -198,6 +203,7 @@
       "OPEN_IN_NEW_TAB": "Mở trong tab mới",
       "COPY_LINK": "Sao chép link cuộc hội thoại",
       "COPY_LINK_SUCCESS": "Đã sao chép link vào clipboard",
+      "CANCEL_FOLLOWUP": "Hủy gửi tin nhắn đeo bám",
       "API": {
         "AGENT_ASSIGNMENT": {
           "SUCCESFUL": "Đã gán cuộc hội thoại {conversationId} cho \"{agentName}\"",
@@ -276,7 +282,8 @@
         "REMOVE_PREVIEW": "Xóa phần trích dẫn",
         "COLLAPSE": "Thu gọn",
         "EXPAND": "Mở rộng"
-      }
+      },
+      "PRIVATE_REPLY_HINT": "Tin nhắn tiếp theo bạn gửi sẽ được gửi dưới dạng phản hồi riêng tư cho bình luận này."
     },
     "VISIBLE_TO_AGENTS": "Ghi chú nội bộ: Chỉ bạn và đội của bạn có thể xem",
     "CHANGE_STATUS": "Đã thay đổi trạng thái cuộc hội thoại",
@@ -311,6 +318,8 @@
       "TRANSLATE": "Dịch",
       "COPY_PERMALINK": "Sao chép link tin nhắn",
       "LINK_COPIED": "Đã sao chép URL tin nhắn",
+      "SUGGEST_REPLY_PROMPT": "Hãy soạn câu trả lời cho khách hàng. Phân tích câu hỏi và soạn một câu trả lời rõ ràng, ngắn gọn, hữu ích.",
+      "ASK_COPILOT_PROMPT": "Phân tích tin nhắn của khách hàng, giải thích ý nghĩa và đề xuất cách xử lý phù hợp.",
       "DELETE_CONFIRMATION": {
         "TITLE": "Bạn có chắc muốn xóa tin nhắn này?",
         "MESSAGE": "Hành động này không thể hoàn tác",
@@ -397,14 +406,22 @@
       },
       "muted": "{user_name} đã tắt tiếng hội thoại",
       "unmuted": "{user_name} đã bật tiếng cuộc trò chuyện",
-      "auto_resolution_message": "Đang giải quyết cuộc trò chuyện vì đã không hoạt động trong một thời gian. Vui lòng bắt đầu một cuộc trò chuyện mới nếu cần hỗ trợ thêm."
+      "auto_resolution_message": "Đang giải quyết cuộc trò chuyện vì đã không hoạt động trong một thời gian. Vui lòng bắt đầu một cuộc trò chuyện mới nếu cần hỗ trợ thêm.",
+      "followup": {
+        "scheduled": "Hệ thống đã kích hoạt lên lịch gửi tin nhắn bám đuổi (follow-up) tự động vào lúc {time}.",
+        "cancelled_channel_policy": "Đã huỷ lịch gửi tin nhắn follow-up do vượt quá thời gian cho phép của nền tảng (Channel Policy).",
+        "cancelled_customer_replied": "Đã huỷ lịch gửi tin nhắn follow-up tự động do khách hàng đã phản hồi.",
+        "cancelled_no_ai": "Đã huỷ lịch gửi tin nhắn follow-up tự động do chưa cấu hình AI Assistant.",
+        "completed": "Đã hoàn thành gửi tin nhắn follow-up tự động (lần {attempt})."
+      }
     },
     "PRODUCT_PANEL": {
       "TITLE": "Sản phẩm",
       "SEARCH": "Tìm kiếm sản phẩm...",
       "ALL_CATEGORIES": "Tất cả",
       "NO_PRODUCTS": "Không tìm thấy sản phẩm",
-      "NO_INTEGRATION": "Không có liên kết thương mại điện tử nào với hộp thư này. Vui lòng cấu hình trong Cài đặt → Thương mại điện tử.",
+      "NO_INTEGRATION": "Không có liên kết thương mại điện tử nào với hộp thư này.",
+      "CONNECT_NOW": "Kết nối ngay",
       "ADD_TO_ORDER": "Thêm vào đơn",
       "SEND_TO_CHAT": "Gửi tin nhắn",
       "IN_STOCK": "Còn hàng",
@@ -467,8 +484,12 @@
       "SYNC": "Đồng bộ",
       "SYNC_SUCCESS": "Đồng bộ đơn hàng thành công",
       "SYNC_ERROR": "Lỗi khi đồng bộ đơn hàng",
-      "PUSH_CONFIRM": "Bạn có chắc muốn đẩy đơn hàng này? Đơn sẽ được gửi đến sàn thương mại.",
-      "DELETE_CONFIRM": "Bạn có chắc muốn xóa đơn hàng này? Hành động này không thể hoàn tác.",
+      "PUSH_CONFIRM": "Bạn có chắc muốn đẩy đơn hàng này? Đơn hàng sẽ được gửi sang nền tảng bên ngoài.",
+      "DELETE_CONFIRM_TITLE": "Xác nhận xóa",
+      "DELETE_CONFIRM": "Bạn có chắc chắn muốn xóa đơn hàng #{id}?",
+      "DELETE_CONFIRM_PLACEHOLDER": "Nhập #{id} để xác nhận",
+      "DELETE_CONFIRM_YES": "Có, xóa đơn hàng",
+      "DELETE_CONFIRM_NO": "Không, giữ lại đơn hàng",
       "CONFIRM_YES": "Xác nhận"
     }
   },
@@ -522,6 +543,8 @@
     "ASSIGNEE_LABEL": "Nhân viên phụ trách",
     "SELF_ASSIGN": "Tự giao cho tôi",
     "TEAM_LABEL": "Nhóm phụ trách",
+    "FOLLOW_UP_TITLE": "Hẹn chăm sóc",
+    "FOLLOW_UP_PLACEHOLDER": "Chọn thời gian",
     "SELECT": {
       "PLACEHOLDER": "Không có"
     },

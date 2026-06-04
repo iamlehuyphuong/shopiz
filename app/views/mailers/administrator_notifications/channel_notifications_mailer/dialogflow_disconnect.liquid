@@ -1,11 +1,4 @@
-<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Channel Disconnected</h2>
-<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
-  Your connection to the <strong>Dialogflow</strong> platform has been disconnected. You won't be able to receive or send messages from this channel until it is reconnected.
-</p>
-<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
-  Please go to your channel settings to re-authenticate as soon as possible.
-</p>
-<hr style="border: 0; border-bottom: 1px solid #E2E8F0; margin: 24px 0;" />
+{% if locale == 'vi' %}
 <h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Kênh Mất Kết Nối</h2>
 <p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
   Kết nối với nền tảng <strong>Dialogflow</strong> của bạn đã bị ngắt. Bạn sẽ không thể tiếp tục nhận tin nhắn từ kênh này cho đến khi kết nối được khôi phục.
@@ -13,3 +6,12 @@
 <p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
   Vui lòng truy cập trang quản lý các kênh kết nối để xác thực lại sớm nhất có thể.
 </p>
+{% else %}
+<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Channel Disconnected</h2>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
+  Your connection to the <strong>Dialogflow</strong> platform has been disconnected. You won't be able to receive or send messages from this channel until it is reconnected.
+</p>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
+  Please go to your channel settings to re-authenticate as soon as possible.
+</p>
+{% endif %}

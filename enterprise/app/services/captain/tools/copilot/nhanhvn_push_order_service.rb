@@ -84,7 +84,7 @@ class Captain::Tools::Copilot::NhanhvnPushOrderService < Captain::Tools::BaseToo
   def format_success(order, nhanhvn_order_id, result)
     carrier_code = result.dig('data', 'carrierCode')
     <<~RESPONSE.strip
-      ✅ Order pushed to Nhanh.vn successfully!
+      Order pushed to Nhanh.vn successfully!
 
       Shopiz Order: ##{order.id}
       Nhanh.vn Order ID: #{nhanhvn_order_id}

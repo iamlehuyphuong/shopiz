@@ -10,6 +10,12 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
 
   def index
     @inboxes = policy_scope(Current.account.inboxes.order_by_name.includes(index_includes))
+
+    deleted_inbox_ids = $alfred.with { |conn| conn.smembers("deleted_inboxes_#{Current.account.id}") }
+
+    return unless deleted_inbox_ids.any?
+
+    @inboxes = @inboxes.where.not(id: deleted_inbox_ids)
   end
 
   def show; end
@@ -28,10 +34,34 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
     head :ok
   end
 
+  def bubble_avatar
+    @inbox.channel.bubble_avatar.attachment.destroy! if @inbox.channel.bubble_avatar.attached?
+    head :ok
+  end
+
+  def close_bubble_avatar
+    @inbox.channel.close_bubble_avatar.attachment.destroy! if @inbox.channel.close_bubble_avatar.attached?
+    head :ok
+  end
+
   def sync_templates
     trigger_template_sync
     render status: :ok, json: { message: I18n.t('messages.template_sync_initiated') }
   rescue StandardError => e
+    render status: :internal_server_error, json: { error: e.message }
+  end
+
+  def check_connection
+    channel = @inbox.channel
+    unless channel.respond_to?(:check_disconnection!)
+      render status: :unprocessable_entity, json: { error: 'Channel does not support connection check' }
+      return
+    end
+
+    channel.check_disconnection!
+    render status: :ok, json: { reauthorization_required: channel.reauthorization_required? }
+  rescue StandardError => e
+    Rails.logger.error "check_connection failed for inbox #{@inbox.id}: #{e.message}"
     render status: :internal_server_error, json: { error: e.message }
   end
 
@@ -51,11 +81,31 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   end
 
   def update
+    if params[:followup_config].is_a?(String)
+      begin
+        params[:followup_config] = JSON.parse(params[:followup_config])
+      rescue JSON::ParserError
+      end
+    end
+
     inbox_params = permitted_params.except(:channel, :csat_config)
     inbox_params[:csat_config] = format_csat_config(permitted_params[:csat_config]) if permitted_params[:csat_config].present?
-    @inbox.update!(inbox_params)
-    update_inbox_working_hours
-    update_channel if channel_update_required?
+
+    begin
+      @inbox.update!(inbox_params)
+      update_inbox_working_hours
+      update_channel if channel_update_required?
+    rescue StandardError => e
+      if params.key?(:ecommerce_integration_id)
+        Rails.logger.error "\n[ECOMMERCE_INTEGRATION_ERROR] Failed to link ecommerce to inbox #{@inbox.id}"
+        Rails.logger.error "Params: #{params.inspect}"
+        Rails.logger.error "Inbox Params: #{inbox_params.inspect}"
+        Rails.logger.error "Error Class: #{e.class}"
+        Rails.logger.error "Error Message: #{e.message}"
+        Rails.logger.error "Backtrace:\n#{e.backtrace.first(20).join("\n")}\n"
+      end
+      raise e
+    end
   end
 
   def agent_bot
@@ -74,7 +124,15 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   end
 
   def destroy
-    ::DeleteObjectJob.perform_later(@inbox, Current.user, request.ip) if @inbox.present?
+    if @inbox.present?
+      ::DeleteObjectJob.perform_later(@inbox, Current.user, request.ip)
+
+      # Mark inbox as deleted in Redis to prevent it from showing up in the index
+      $alfred.with do |conn|
+        conn.sadd("deleted_inboxes_#{Current.account.id}", @inbox.id)
+        conn.expire("deleted_inboxes_#{Current.account.id}", 1.day.to_i)
+      end
+    end
     render status: :ok, json: { message: I18n.t('messages.inbox_deletetion_response') }
   end
 
@@ -172,23 +230,26 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   def inbox_attributes
     [:name, :avatar, :greeting_enabled, :greeting_message, :enable_email_collect, :csat_survey_enabled,
      :enable_auto_assignment, :working_hours_enabled, :out_of_office_message, :timezone, :allow_messages_after_resolved,
-     :lock_to_single_conversation, :portal_id, :sender_name_type, :business_name, :ecommerce_integration_id,
+     :lock_to_single_conversation, :portal_id, :sender_name_type, :business_name, :ecommerce_integration_id, :auto_label_enabled,
      { followup_config: [:enabled, :delay_seconds, :action_type, :max_attempts, :interval_hours, :time_mode,
-                          :fixed_time, :timezone, :predefined_message, :custom_ai_prompt, :macro_id,
-                          { predefined_messages: [] }, { macros: [] }, { custom_ai_prompts: [] }] },
+                         :fixed_time, :timezone, :predefined_message, :custom_ai_prompt, :macro_id,
+                         { predefined_messages: [] }, { macros: [] }, { custom_ai_prompts: [] }] },
      { csat_config: [:display_type, :message, :button_text, :language,
-                     { survey_rules: [:operator, { values: [] }],
-                       template: [:name, :template_id, :friendly_name, :content_sid, :approval_sid, :created_at, :language, :status] }] }]
+                      { survey_rules: [:operator, { values: [] }],
+                        template: [:name, :template_id, :friendly_name, :content_sid, :approval_sid, :created_at, :language, :status] }] },
+     { sales_config: [:ai_allow_create_order, :platform,
+                      { order_notification_templates: [:draft, :confirmed, :processing, :shipped, :delivered, :cancelled] }] }]
   end
 
   def permitted_params(channel_attributes = [])
     # We will remove this line after fixing https://linear.app/chatwoot/issue/CW-1567/null-value-passed-as-null-string-to-backend
-    params.each { |k, v| params[k] = params[k] == 'null' ? nil : v }
-    params.permit(*inbox_attributes, channel: [:type, *channel_attributes])
+    sanitized_params = params.deep_dup
+    sanitized_params.each { |k, v| sanitized_params[k] = nil if v == 'null' }
+    sanitized_params.permit(*inbox_attributes, channel: [:type, *channel_attributes])
   end
 
   def index_includes
-    [:channel, :portal, :agent_bot_inbox, :hooks, { avatar_attachment: [:blob] }]
+    [:channel, :portal, :agent_bot_inbox, :hooks, :ecommerce_integration, { avatar_attachment: [:blob] }]
   end
 
   def channel_type_from_params

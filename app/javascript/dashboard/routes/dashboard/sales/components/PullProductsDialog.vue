@@ -10,9 +10,9 @@ const props = defineProps({
   },
 });
 
-const store = useStore();
-
 const emit = defineEmits(['close', 'sync']);
+
+const store = useStore();
 
 const platforms = [
   { id: 'kiotviet', name: 'KiotViet', logo: 'kiotviet' },
@@ -79,7 +79,7 @@ const onClose = () => {
                 : 'border-n-weak bg-white dark:bg-n-solid-1 hover:border-n-strong',
               !isPlatformConnected(platform.id)
                 ? '!opacity-50 cursor-not-allowed hover:border-n-weak !bg-n-alpha-1'
-                : ''
+                : '',
             ]"
             :disabled="!isPlatformConnected(platform.id)"
             @click="selectPlatform(platform)"
@@ -106,7 +106,9 @@ const onClose = () => {
           </button>
         </div>
       </div>
-      <div class="flex items-center justify-end w-full gap-2 px-8 py-4 border-t border-n-strong/10 bg-n-alpha-1/50">
+      <div
+        class="flex items-center justify-end w-full gap-2 px-8 py-4 border-t border-n-strong/10 bg-n-alpha-1/50"
+      >
         <NextButton
           faded
           slate

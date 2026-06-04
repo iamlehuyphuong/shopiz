@@ -106,9 +106,7 @@ const handleKeyDown = e => {
   }
 };
 
-// We need to fetch inboxes if they are not loaded
 onMounted(() => {
-  store.dispatch('inboxes/get');
   window.addEventListener('keydown', handleKeyDown);
 });
 
@@ -119,7 +117,7 @@ onUnmounted(() => {
 
 <template>
   <header
-    class="flex items-center justify-between px-4 py-2 bg-n-solid-1 border-b border-n-weak w-full z-50 h-14"
+    class="flex items-center justify-between px-4 py-2 bg-n-solid-1 border-b border-n-weak w-full z-[60] h-14"
   >
     <!-- Left Section: Mobile Toggle, Logo, Workspace, Search, Compose -->
     <div class="flex items-center flex-1 gap-4">

@@ -6,6 +6,7 @@ import { useMapGetter, useStore } from 'dashboard/composables/store.js';
 
 import Button from 'dashboard/components-next/button/Button.vue';
 import Avatar from 'dashboard/components-next/avatar/Avatar.vue';
+import Icon from 'dashboard/components-next/icon/Icon.vue';
 
 const emit = defineEmits(['close', 'createAssistant']);
 
@@ -88,20 +89,16 @@ const openCreateAssistantDialog = () => {
 
 <template>
   <div
-    class="pt-5 pb-3 bg-n-alpha-3 backdrop-blur-[100px] outline outline-n-container outline-1 z-50 absolute w-[27.5rem] rounded-xl shadow-md flex flex-col gap-4"
+    class="py-3 bg-n-alpha-3 backdrop-blur-[100px] outline outline-n-container outline-1 z-50 absolute min-w-[20rem] max-w-[24rem] rounded-xl shadow-lg flex flex-col gap-2 mt-1"
   >
     <div
-      class="flex items-center justify-between gap-4 px-6 pb-3 border-b border-n-alpha-2"
+      class="flex items-center justify-between gap-4 px-4 pb-3 border-b border-n-alpha-2 mx-2"
     >
-      <div class="flex flex-col gap-1">
-        <div class="flex items-center gap-2">
-          <h2
-            class="text-base font-medium cursor-pointer text-n-slate-12 w-fit hover:underline"
-          >
-            {{ t('CAPTAIN.ASSISTANT_SWITCHER.ASSISTANTS') }}
-          </h2>
-        </div>
-        <p class="text-sm text-n-slate-11">
+      <div class="flex flex-col gap-0.5">
+        <h2 class="text-sm font-semibold text-n-slate-12">
+          {{ t('CAPTAIN.ASSISTANT_SWITCHER.ASSISTANTS') }}
+        </h2>
+        <p class="text-xs text-n-slate-11">
           {{ t('CAPTAIN.ASSISTANT_SWITCHER.SWITCH_ASSISTANT') }}
         </p>
       </div>
@@ -109,39 +106,48 @@ const openCreateAssistantDialog = () => {
         :label="t('CAPTAIN.ASSISTANT_SWITCHER.NEW_ASSISTANT')"
         color="slate"
         icon="i-lucide-plus"
-        size="sm"
-        class="!bg-n-alpha-2 hover:!bg-n-alpha-3"
+        size="xs"
+        class="!bg-n-alpha-2 hover:!bg-n-alpha-3 flex-shrink-0"
         @click="openCreateAssistantDialog"
       />
     </div>
-    <div v-if="assistants.length > 0" class="flex flex-col gap-2 px-4">
+
+    <div
+      v-if="assistants.length > 0"
+      class="flex flex-col gap-0.5 px-2 max-h-[60vh] overflow-y-auto"
+    >
       <Button
         v-for="assistant in assistants"
         :key="assistant.id"
-        :label="assistant.name"
         variant="ghost"
         color="slate"
-        trailing-icon
-        :icon="isAssistantActive(assistant) ? 'i-lucide-check' : ''"
-        class="!justify-end !px-2 !py-2 hover:!bg-n-alpha-2 [&>.i-lucide-check]:text-n-teal-10 h-9"
-        size="sm"
+        class="!justify-between !px-3 !py-2 hover:!bg-n-alpha-2 h-10 w-full"
         @click="handleAssistantChange(assistant)"
       >
-        <span class="text-sm font-medium truncate text-n-slate-12">
-          {{ assistant.name || '' }}
-        </span>
-        <Avatar
-          v-if="assistant"
-          :name="assistant.name"
-          :size="20"
-          icon-name="i-lucide-bot"
-          branded
-          rounded-full
+        <div class="flex items-center gap-2.5 min-w-0">
+          <Avatar
+            v-if="assistant"
+            :name="assistant.name"
+            :size="20"
+            icon-name="i-lucide-bot"
+            branded
+            rounded-full
+            class="flex-shrink-0"
+          />
+          <span class="text-sm font-medium truncate text-n-slate-12">
+            {{ assistant.name || '' }}
+          </span>
+        </div>
+        <Icon
+          v-if="isAssistantActive(assistant)"
+          icon="i-lucide-check"
+          class="w-4 h-4 text-n-teal-10 flex-shrink-0"
         />
       </Button>
     </div>
-    <div v-else class="flex flex-col items-center gap-2 px-4 py-3">
-      <p class="text-sm text-n-slate-11">
+
+    <div v-else class="flex flex-col items-center gap-2 px-4 py-4">
+      <p class="text-sm text-n-slate-11 text-center">
         {{ t('CAPTAIN.ASSISTANT_SWITCHER.EMPTY_LIST') }}
       </p>
     </div>

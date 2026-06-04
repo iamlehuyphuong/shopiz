@@ -10,6 +10,14 @@ class Api::V1::Accounts::Sales::ProductsController < Api::V1::Accounts::BaseCont
       @products = @products.where('name ILIKE ? OR sku ILIKE ?', search_term, search_term)
     end
 
+    if params[:source].present?
+      @products = if params[:source] == 'shopiz'
+                    @products.where("meta->>'source' IS NULL OR meta->>'source' = 'shopiz'")
+                  else
+                    @products.where("meta->>'source' = ?", params[:source])
+                  end
+    end
+
     @products = @products.page(params[:page]).per(params[:per_page] || 15)
 
     render json: {
@@ -69,7 +77,7 @@ class Api::V1::Accounts::Sales::ProductsController < Api::V1::Accounts::BaseCont
       :name, :description, :price, :currency, :sku, :barcode, :status, :external_id,
       images: [],
       product_variants_attributes: [
-        :id, :name, :sku, :barcode, :price, :compare_at_price, 
+        :id, :account_id, :name, :sku, :barcode, :price, :compare_at_price, 
         :inventory_quantity, :weight, :_destroy, meta: {}
       ]
     )
@@ -77,6 +85,17 @@ class Api::V1::Accounts::Sales::ProductsController < Api::V1::Accounts::BaseCont
       meta_params = params.dig(:product, :meta)
       permitted[:meta] = meta_params.respond_to?(:permit!) ? meta_params.permit! : meta_params
     end
+
+    # Inject account_id into nested product_variants_attributes
+    if permitted[:product_variants_attributes].present?
+      variants = permitted[:product_variants_attributes]
+      variants = variants.values if variants.is_a?(Hash) || variants.is_a?(ActionController::Parameters)
+
+      variants.each do |variant_attrs|
+        variant_attrs[:account_id] = current_account.id
+      end
+    end
+
     permitted
   end
 end

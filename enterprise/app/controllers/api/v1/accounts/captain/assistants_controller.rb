@@ -40,7 +40,7 @@ class Api::V1::Accounts::Captain::AssistantsController < Api::V1::Accounts::Base
 
   def tools
     assistant = Captain::Assistant.new(account: Current.account)
-    @tools = assistant.available_agent_tools
+    @tools = assistant.available_agent_tools(include_hidden: false)
   end
 
   private
@@ -57,7 +57,7 @@ class Api::V1::Accounts::Captain::AssistantsController < Api::V1::Accounts::Base
     permitted = params.require(:assistant).permit(:name, :description,
                                                   config: [
                                                     :product_name, :feature_faq, :feature_memory, :feature_citation,
-                                                    :feature_contact_attributes,
+                                                    :feature_contact_attributes, :feature_order_creation,
                                                     :welcome_message, :handoff_message, :resolution_message,
                                                     :instructions, :temperature
                                                   ])

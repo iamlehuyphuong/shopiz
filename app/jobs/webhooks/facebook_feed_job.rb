@@ -92,14 +92,29 @@ class Webhooks::FacebookFeedJob < ApplicationJob
         comment_created_at: data[:created_time].to_s
       )
     elsif channel.auto_reply_message.present?
+      processed_message = process_liquid_message(channel.auto_reply_message, conversation)
       Facebook::CommentActionService.new(channel: channel).send_private_reply_and_log(
         data[:comment_id],
-        channel.auto_reply_message,
+        processed_message,
         conversation
       )
     end
   end
   # rubocop:enable Metrics/MethodLength
+
+  def process_liquid_message(message, conversation)
+    return message if message.blank?
+
+    template = Liquid::Template.parse(message)
+    template.render({
+      'contact' => ContactDrop.new(conversation.contact),
+      'conversation' => ConversationDrop.new(conversation),
+      'inbox' => InboxDrop.new(conversation.inbox),
+      'account' => AccountDrop.new(conversation.account)
+    })
+  rescue Liquid::Error
+    message
+  end
 
   def comment_too_old?(data)
     return false if data[:created_time].blank?

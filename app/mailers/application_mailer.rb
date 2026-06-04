@@ -53,16 +53,44 @@ class ApplicationMailer < ActionMailer::Base
 
   def liquid_locals
     # expose variables you want to be exposed in liquid
+    # Build action_url from Devise context when @action_url is not set
+    resolved_action_url = @action_url || devise_action_url
+    # Build user drop for Devise mailers where @agent is nil but @resource is set
+    user_for_devise = devise_user_drop
     locals = {
       global_config: GlobalConfig.get('BRAND_NAME', 'BRAND_URL'),
-      action_url: @action_url,
+      action_url: resolved_action_url,
       mailer_action: action_name,
-      frontend_url: ENV.fetch('FRONTEND_URL', 'https://beta.shopiz.pro')
+      frontend_url: ENV.fetch('FRONTEND_URL', 'https://beta.shopiz.pro'),
+      locale: resolved_locale
     }
+    # Provide user drop for Devise mailers via locals (bypasses to_drop conversion)
+    locals[:user] = user_for_devise if user_for_devise
 
     locals.merge({ attachment_url: @attachment_url }) if @attachment_url
     locals.merge({ failed_contacts: @failed_contacts, imported_contacts: @imported_contacts })
     locals
+  end
+
+  def devise_action_url
+    return nil unless @resource.is_a?(User) && @token.present?
+
+    frontend_base = ENV.fetch('FRONTEND_URL', 'https://beta.shopiz.pro')
+    case action_name
+    when 'confirmation_instructions'
+      "#{frontend_base}/app/auth/confirmation?confirmation_token=#{@token}"
+    when 'reset_password_instructions'
+      "#{frontend_base}/app/auth/password/edit?reset_password_token=#{@token}"
+    when 'unlock_instructions'
+      "#{frontend_base}/app/auth/unlock?unlock_token=#{@token}"
+    end
+  end
+
+  def devise_user_drop
+    return nil if @agent.present? # Already handled by liquid_droppables
+    return nil unless @resource.is_a?(User)
+
+    UserDrop.new(@resource)
   end
 
   def locale_from_account(account)
@@ -76,9 +104,21 @@ class ApplicationMailer < ActionMailer::Base
     Current.account = account if account.present?
   end
 
+  # Resolve locale for Liquid templates — checks @mailer_locale (from Current.account),
+  # then falls back to @resource's account for Devise mailers, then I18n default
+  def resolved_locale
+    return @mailer_locale if @mailer_locale.present? && @mailer_locale != I18n.default_locale.to_s
+
+    # For Devise mailers, @resource is available at render time but not at switch_locale time
+    devise_locale = locale_from_account(@resource.try(:accounts)&.first)
+    devise_locale || @mailer_locale || I18n.locale.to_s
+  end
+
   def switch_locale(&)
     locale ||= locale_from_account(Current.account)
     locale ||= I18n.default_locale
+    # Capture locale from Current.account for liquid_locals
+    @mailer_locale = locale.to_s
     # ensure locale won't bleed into other requests
     # https://guides.rubyonrails.org/i18n.html#managing-the-locale-across-requests
     I18n.with_locale(locale, &)

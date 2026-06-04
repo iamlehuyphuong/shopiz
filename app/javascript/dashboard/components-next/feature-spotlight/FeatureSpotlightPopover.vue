@@ -57,8 +57,6 @@ const openLink = link => {
         />
 
         <div class="relative flex flex-col items-start gap-4 z-20">
-
-
           <p v-if="note" class="text-n-slate-12 text-start text-sm mb-0">
             {{ note }}
           </p>

@@ -28,6 +28,10 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
+  prefill: {
+    type: String,
+    default: '',
+  },
 });
 
 const emit = defineEmits(['sendMessage', 'reset', 'setAssistant']);
@@ -152,6 +156,7 @@ watch(
       <CopilotInput
         v-if="hasAssistants"
         class="mb-1 w-full"
+        :prefill="prefill"
         @send="sendMessage"
       />
     </div>

@@ -60,7 +60,12 @@ const actionURL = computed(() =>
         />
       </div>
       <div
-        class="flex items-center justify-center h-6 w-6 rounded-full bg-n-slate-5 dark:bg-n-slate-6"
+        class="flex items-center justify-center h-6 w-6 rounded-full transition-colors"
+        :class="
+          enabled
+            ? 'bg-n-teal-9 shadow-sm shadow-n-teal-9/30'
+            : 'bg-n-slate-5 dark:bg-n-slate-6'
+        "
       >
         <span class="i-lucide-check text-white size-3.5" />
       </div>

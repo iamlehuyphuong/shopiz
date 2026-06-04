@@ -14,9 +14,13 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  actionLabelSecondary: {
+    type: String,
+    default: null,
+  },
 });
 
-const emit = defineEmits(['action']);
+const emit = defineEmits(['action', 'secondary-action']);
 
 const bannerClass = computed(() => {
   const classMap = {
@@ -61,7 +65,15 @@ const triggerAction = () => {
     <div>
       <slot />
     </div>
-    <div>
+    <div class="flex items-center gap-2">
+      <button
+        v-if="actionLabelSecondary"
+        class="px-3 py-1 w-auto grid place-content-center rounded-lg"
+        :class="buttonClass"
+        @click="emit('secondary-action')"
+      >
+        {{ actionLabelSecondary }}
+      </button>
       <button
         v-if="actionLabel"
         class="px-3 py-1 w-auto grid place-content-center rounded-lg"

@@ -13,6 +13,7 @@ class Conversations::EventDataPresenter < SimpleDelegator
       status: status_display,
       custom_attributes: custom_attributes,
       snoozed_until: snoozed_until,
+      follow_up_at: follow_up_at,
       unread_count: unread_incoming_messages.count,
       first_reply_created_at: first_reply_created_at,
       priority: priority,

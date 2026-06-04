@@ -1,84 +1,98 @@
-<script>
+<script setup>
+import { ref, computed } from 'vue';
 import { useVuelidate } from '@vuelidate/core';
 import { required, minLength } from '@vuelidate/validators';
 import { useAlert } from 'dashboard/composables';
+import { useI18n } from 'vue-i18n';
+import { useStore } from 'dashboard/composables/store';
 
 import NextButton from 'dashboard/components-next/button/Button.vue';
+import Icon from 'dashboard/components-next/icon/Icon.vue';
 import Modal from '../../../../components/Modal.vue';
 import WootMessageEditor from 'dashboard/components/widgets/WootWriter/Editor.vue';
 
-export default {
-  name: 'AddCanned',
-  components: {
-    NextButton,
-    Modal,
-    WootMessageEditor,
-  },
-  props: {
-    responseContent: {
-      type: String,
-      default: '',
-    },
-    onClose: {
-      type: Function,
-      default: () => {},
-    },
-  },
-  setup() {
-    return { v$: useVuelidate() };
-  },
-  data() {
-    return {
-      shortCode: '',
-      content: this.responseContent || '',
-      addCanned: {
-        showLoading: false,
-        message: '',
-      },
-      show: true,
-    };
-  },
-  validations: {
-    shortCode: {
-      required,
-      minLength: minLength(2),
-    },
-    content: {
-      required,
-    },
-  },
-  methods: {
-    resetForm() {
-      this.shortCode = '';
-      this.content = '';
-      this.v$.shortCode.$reset();
-      this.v$.content.$reset();
-    },
-    addCannedResponse() {
-      // Show loading on button
-      this.addCanned.showLoading = true;
-      // Make API Calls
-      this.$store
-        .dispatch('createCannedResponse', {
-          short_code: this.shortCode,
-          content: this.content,
-        })
-        .then(() => {
-          // Reset Form, Show success message
-          this.addCanned.showLoading = false;
-          useAlert(this.$t('CANNED_MGMT.ADD.API.SUCCESS_MESSAGE'));
-          this.resetForm();
-          this.onClose();
-        })
-        .catch(error => {
-          this.addCanned.showLoading = false;
-          const errorMessage =
-            error?.message || this.$t('CANNED_MGMT.ADD.API.ERROR_MESSAGE');
-          useAlert(errorMessage);
-        });
-    },
-  },
+const props = defineProps({
+  responseContent: { type: String, default: '' },
+  onClose: { type: Function, default: () => {} },
+});
+
+const MAX_FILES = 5;
+
+const store = useStore();
+const { t } = useI18n();
+
+const shortCode = ref('');
+const content = ref(props.responseContent || '');
+const show = ref(true);
+const showLoading = ref(false);
+const selectedFiles = ref([]);
+
+const rules = {
+  shortCode: { required, minLength: minLength(2) },
+  content: { required },
 };
+const v$ = useVuelidate(rules, { shortCode, content });
+
+function isImage(file) {
+  return file.type?.startsWith('image/');
+}
+
+function onFilesSelected(e) {
+  const files = Array.from(e.target.files);
+  if (selectedFiles.value.length + files.length > MAX_FILES) {
+    useAlert(t('CANNED_MGMT.ADD.ATTACHMENTS.LIMIT_ERROR'));
+    return;
+  }
+  files.forEach(file => {
+    const preview = isImage(file) ? URL.createObjectURL(file) : null;
+    selectedFiles.value.push({ file, preview, type: file.type });
+  });
+  // Reset input so same file can be re-selected
+  e.target.value = '';
+}
+
+function removeFile(idx) {
+  const removed = selectedFiles.value.splice(idx, 1);
+  if (removed[0]?.preview) URL.revokeObjectURL(removed[0].preview);
+}
+
+const fileButtonLabel = computed(() => {
+  if (selectedFiles.value.length) {
+    return `${selectedFiles.value.length} / ${MAX_FILES}`;
+  }
+  return t('CANNED_MGMT.ADD.ATTACHMENTS.BUTTON');
+});
+
+function resetForm() {
+  shortCode.value = '';
+  content.value = '';
+  selectedFiles.value = [];
+  v$.value.shortCode.$reset();
+  v$.value.content.$reset();
+}
+
+async function addCannedResponse() {
+  showLoading.value = true;
+  try {
+    const payload = {
+      short_code: shortCode.value,
+      content: content.value,
+    };
+    if (selectedFiles.value.length) {
+      payload.files = selectedFiles.value.map(f => f.file);
+    }
+    await store.dispatch('createCannedResponse', payload);
+    showLoading.value = false;
+    useAlert(t('CANNED_MGMT.ADD.API.SUCCESS_MESSAGE'));
+    resetForm();
+    props.onClose();
+  } catch (error) {
+    showLoading.value = false;
+    const errorMessage =
+      error?.message || t('CANNED_MGMT.ADD.API.ERROR_MESSAGE');
+    useAlert(errorMessage);
+  }
+}
 </script>
 
 <template>
@@ -118,6 +132,58 @@ export default {
             />
           </div>
         </div>
+
+        <div class="w-full mt-3">
+          <label>{{ $t('CANNED_MGMT.ADD.ATTACHMENTS.LABEL') }}</label>
+          <label
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg cursor-pointer transition-colors bg-n-alpha-2 text-n-slate-12 hover:bg-n-alpha-3 border border-n-weak"
+            :class="{
+              'opacity-50 pointer-events-none':
+                selectedFiles.length >= MAX_FILES,
+            }"
+          >
+            <Icon icon="i-ph-paperclip" class="size-4" />
+            {{ fileButtonLabel }}
+            <input
+              type="file"
+              multiple
+              accept="image/*,video/*,audio/*,application/pdf,.doc,.docx,.xls,.xlsx,.csv,.txt,.zip,.rar"
+              class="hidden"
+              :disabled="selectedFiles.length >= MAX_FILES"
+              @change="onFilesSelected"
+            />
+          </label>
+          <div v-if="selectedFiles.length" class="flex flex-wrap gap-2 mt-2">
+            <div
+              v-for="(item, idx) in selectedFiles"
+              :key="idx"
+              class="relative group"
+            >
+              <img
+                v-if="item.preview"
+                :src="item.preview"
+                class="size-16 object-cover rounded-lg border border-n-weak"
+              />
+              <div
+                v-else
+                class="size-16 rounded-lg border border-n-weak bg-n-slate-2 flex items-center justify-center"
+              >
+                <Icon icon="i-lucide-file" class="size-5 text-n-slate-11" />
+              </div>
+              <button
+                type="button"
+                class="absolute -top-2 -right-2 bg-n-ruby-9 text-white rounded-full w-5 h-5 p-0 border-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                @click="removeFile(idx)"
+              >
+                <span class="text-xs leading-none font-bold mb-[1px]">&times;</span>
+              </button>
+              <p class="text-xs text-n-slate-10 truncate w-16 mt-0.5">
+                {{ item.file.name }}
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div class="flex flex-row justify-end w-full gap-2 px-0 py-2">
           <NextButton
             faded
@@ -130,11 +196,9 @@ export default {
             type="submit"
             :label="$t('CANNED_MGMT.ADD.FORM.SUBMIT')"
             :disabled="
-              v$.content.$invalid ||
-              v$.shortCode.$invalid ||
-              addCanned.showLoading
+              v$.content.$invalid || v$.shortCode.$invalid || showLoading
             "
-            :is-loading="addCanned.showLoading"
+            :is-loading="showLoading"
           />
         </div>
       </form>

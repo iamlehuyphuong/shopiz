@@ -43,7 +43,30 @@ module Concerns::Agentable
   end
 
   def agent_model
+    if respond_to?(:account) && account && user_hook_key_allowed? && user_hook_api_key.present? && !system_api_key_available?
+      user_model = openai_hook&.settings&.dig('model')
+      return user_model.presence || InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_MODEL')&.value.presence || LlmConstants::DEFAULT_MODEL
+    end
+
     InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_MODEL')&.value.presence || LlmConstants::DEFAULT_MODEL
+  end
+
+  def user_hook_key_allowed?
+    config = InstallationConfig.find_by(name: 'CAPTAIN_ALLOW_USER_HOOK_KEY')
+    config.nil? || config.value == true
+  end
+
+  def openai_hook
+    return nil unless respond_to?(:account)
+    @openai_hook ||= account&.hooks&.find_by(app_id: 'openai', status: 'enabled')
+  end
+
+  def user_hook_api_key
+    openai_hook&.settings&.dig('api_key')
+  end
+
+  def system_api_key_available?
+    InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_API_KEY')&.value.present?
   end
 
   def agent_response_schema

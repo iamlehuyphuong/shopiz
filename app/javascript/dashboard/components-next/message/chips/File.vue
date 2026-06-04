@@ -16,7 +16,7 @@ const { attachment } = defineProps({
 const { t } = useI18n();
 
 const fileDetails = computed(() => {
-  return getFileInfo(attachment?.dataUrl || '');
+  return getFileInfo(attachment?.dataUrl || attachment?.data_url || '');
 });
 
 const displayFileName = computed(() => {
@@ -70,7 +70,7 @@ const textColorClass = computed(() => {
     <a
       v-tooltip="t('CONVERSATION.DOWNLOAD')"
       class="flex-shrink-0 size-9 grid place-content-center cursor-pointer text-n-slate-11 hover:text-n-slate-12 transition-colors"
-      :href="attachment.dataUrl"
+      :href="attachment?.dataUrl || attachment?.data_url"
       rel="noreferrer noopener nofollow"
       target="_blank"
     >

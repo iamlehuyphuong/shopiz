@@ -1,11 +1,4 @@
-<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Automation Rule Disabled</h2>
-<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
-  Please note, your automation rule <strong>{{ meta['rule_name'] }}</strong> was disabled by the system due to an invalid configuration.
-</p>
-<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
-  This usually happens when you remove a "Custom Attribute" that is used in this rule. Please verify your settings to prevent further service interruptions.
-</p>
-<hr style="border: 0; border-bottom: 1px solid #E2E8F0; margin: 24px 0;" />
+{% if locale == 'vi' %}
 <h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Quy Tắc Tự Động Hoá Bị Vô Hiệu</h2>
 <p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
   Xin lưu ý, quy tắc tự động hóa <strong>{{ meta['rule_name'] }}</strong> đã tự động bị vô hiệu hệ thống do cấu hình không hợp lệ.
@@ -13,3 +6,12 @@
 <p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
   Lỗi này thường xảy ra khi bạn lỡ tay xóa một "Thuộc tính tùy chỉnh" (Custom Attribute) đang được sử dụng trong quy tắc này. Vui lòng kiểm tra lại thiết lập để phòng tránh gián đoạn dịch vụ.
 </p>
+{% else %}
+<h2 style="color: #1E293B; font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Automation Rule Disabled</h2>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
+  Please note, your automation rule <strong>{{ meta['rule_name'] }}</strong> was disabled by the system due to an invalid configuration.
+</p>
+<p style="color: #475569; font-size: 16px; line-height: 1.6; margin-top: 0; margin-bottom: 24px;">
+  This usually happens when you remove a "Custom Attribute" that is used in this rule. Please verify your settings to prevent further service interruptions.
+</p>
+{% endif %}
