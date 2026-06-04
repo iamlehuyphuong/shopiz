@@ -42,7 +42,7 @@ class Captain::Tools::Copilot::SapoCreateCustomerService < Captain::Tools::BaseT
 
   def format_success(customer)
     <<~RESPONSE.strip
-      ✅ Customer created on Sapo!
+      Customer created on Sapo!
 
       ID: #{customer['id']}
       Name: #{customer['first_name']} #{customer['last_name']}

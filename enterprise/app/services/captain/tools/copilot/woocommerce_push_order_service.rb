@@ -58,7 +58,7 @@ class Captain::Tools::Copilot::WoocommercePushOrderService < Captain::Tools::Bas
 
   def format_success(order, woo_order)
     <<~RESPONSE.strip
-      ✅ Order pushed to WooCommerce!
+      Order pushed to WooCommerce!
 
       Shopiz Order: ##{order.id}
       WooCommerce Order: ##{woo_order['number']} (ID: #{woo_order['id']})

@@ -60,7 +60,7 @@ class Captain::Tools::Copilot::ShopifyPushOrderService < Captain::Tools::BaseToo
 
   def format_success(order, shopify_order)
     <<~RESPONSE.strip
-      ✅ Order pushed to Shopify!
+      Order pushed to Shopify!
 
       Shopiz Order: ##{order.id}
       Shopify Order: #{shopify_order['name'] || shopify_order['id']}
