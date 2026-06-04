@@ -37,6 +37,10 @@
       "API": {
         "ERROR_MESSAGE": "Xác thực SSO không thành công. Vui lòng kiểm tra thông tin và thử lại."
       }
+    },
+    "ILLUSTRATION": {
+      "TITLE_GRAY": "Giải pháp chăm sóc khách hàng đa kênh",
+      "TITLE_ORANGE": "Kết nối đa sàn, Chatbot AI & Automation"
     }
   }
 }

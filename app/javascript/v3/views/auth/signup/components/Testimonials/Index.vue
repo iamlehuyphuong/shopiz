@@ -43,7 +43,7 @@ onBeforeMount(() => {
 
 <template>
   <div
-    class="relative flex-1 flex flex-col items-start justify-center bg-n-alpha-black2 dark:bg-n-solid-3 px-12 py-14 rounded-e-lg"
+    class="relative flex-1 flex flex-col items-start justify-center bg-n-alpha-black2 px-12 py-14"
   >
     <TestimonialCard
       v-if="testimonial"
