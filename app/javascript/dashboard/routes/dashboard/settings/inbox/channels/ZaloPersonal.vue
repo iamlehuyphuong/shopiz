@@ -7,7 +7,7 @@ import { useAccount } from 'dashboard/composables/useAccount';
 import { mapGetters } from 'vuex';
 import { useAlert } from 'dashboard/composables';
 import axios from 'axios';
-import zalopersonalChannel from '../../../../api/channel/zalopersonalChannel';
+import zalopersonalChannel from 'dashboard/api/channel/zalopersonalChannel';
 import PageHeader from '../../SettingsSubPageHeader.vue';
 import router from '../../../../index';
 export default {
