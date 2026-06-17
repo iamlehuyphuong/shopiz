@@ -17,7 +17,7 @@ class ZaloPersonal::CheckConnectionHealthJob < ApplicationJob
     response = HTTParty.post(
       "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/getUserInfo",
       body: { userId: channel.oa_id, ownId: channel.oa_id }.to_json,
-      headers: { 'Content-Type' => 'application/json' },
+      headers: ZaloPersonal::ApiHelper.request_headers,
       timeout: 10
     )
 

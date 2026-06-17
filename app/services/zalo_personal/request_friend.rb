@@ -17,7 +17,7 @@ class ZaloPersonal::RequestFriend
 
     response = HTTParty.post(
       request_friend_url,
-      headers: { 'Content-Type' => 'application/json' },
+      headers: ZaloPersonal::ApiHelper.request_headers,
       body: body.to_json
     )
 
@@ -32,7 +32,7 @@ class ZaloPersonal::RequestFriend
 
     res = HTTParty.post(
       info_url,
-      headers: { 'Content-Type' => 'application/json' },
+      headers: ZaloPersonal::ApiHelper.request_headers,
       body: body.to_json
     )
     return unless res['success']

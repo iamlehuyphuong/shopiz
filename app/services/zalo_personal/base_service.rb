@@ -397,7 +397,7 @@ class ZaloPersonal::BaseService
     response = HTTParty.post(
       "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/getUserInfo",
       :body => { :userId => user_id, :ownId => channel.oa_access_token }.to_json,
-      :headers => { 'Content-Type' => 'application/json' }
+      :headers => ZaloPersonal::ApiHelper.request_headers
     )
     return {} if response['error']
 
@@ -411,7 +411,7 @@ class ZaloPersonal::BaseService
     response = HTTParty.post(
       "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/getGroupInfo",
       :body => { :groupId => group_id, :ownId => channel.oa_access_token }.to_json,
-      :headers => { 'Content-Type' => 'application/json' }
+      :headers => ZaloPersonal::ApiHelper.request_headers
     )
     return {} if response['error']
 

@@ -29,7 +29,7 @@ class ZaloPersonal::ContactInboxBuilder
 
     res = HTTParty.post(
       info_url,
-      headers: { 'Content-Type' => 'application/json' },
+      headers: ZaloPersonal::ApiHelper.request_headers,
       body: body.to_json
     )
     return unless res['success']

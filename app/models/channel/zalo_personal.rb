@@ -71,7 +71,7 @@ class Channel::ZaloPersonal < ApplicationRecord
   def send_message_cs(body)
     res = HTTParty.post(
       url_message_cs,
-      headers: { 'Content-Type' => 'application/json' },
+      headers: ZaloPersonal::ApiHelper.request_headers,
       body: body.to_json
     )
     if res['error'].present?
@@ -91,7 +91,7 @@ class Channel::ZaloPersonal < ApplicationRecord
     response = HTTParty.post(
       "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/getUserInfo",
       body: { userId: oa_id, ownId: oa_id }.to_json,
-      headers: { 'Content-Type' => 'application/json' },
+      headers: ZaloPersonal::ApiHelper.request_headers,
       timeout: 10
     )
 
@@ -145,7 +145,7 @@ class Channel::ZaloPersonal < ApplicationRecord
 
     HTTParty.post(
       send_file_url,
-      headers: { 'Content-Type' => 'application/json' },
+      headers: ZaloPersonal::ApiHelper.request_headers,
       body: body.to_json
     )
   end
@@ -161,7 +161,7 @@ class Channel::ZaloPersonal < ApplicationRecord
 
     HTTParty.post(
       url_upload,
-      headers: { 'Content-Type' => 'application/json' },
+      headers: ZaloPersonal::ApiHelper.request_headers,
       body: body.to_json
     )
   end
