@@ -21,7 +21,7 @@
     },
     "EMAIL": {
       "LABEL": "Email",
-      "PLACEHOLDER": "Nhập email của bạn. Ví dụ: bruce@wayne.enterprises",
+      "PLACEHOLDER": "Nhập email của bạn. Ví dụ: bruce{'@'}wayne.enterprises",
       "ERROR": "Vui lòng nhập địa chỉ email hợp lệ."
     },
     "PASSWORD": {

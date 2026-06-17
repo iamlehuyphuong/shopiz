@@ -84,7 +84,7 @@
         "DEFAULT_GREETING_MESSAGE_TITLE": "Default Greeting Message",
         "DEFAULT_GREETING_MESSAGE_SUBTITLE": "The greeting message sent alongside the friend request.",
         "CUSTOM_PROXY": "Custom Proxy (Optional)",
-        "CUSTOM_PROXY_PLACEHOLDER": "http://user:pass@ip:port",
+        "CUSTOM_PROXY_PLACEHOLDER": "http://user:pass{'@'}ip:port",
         "GENERATE_QR": "Generate QR",
         "GENERATING_QR": "Generating...",
         "PROXY_USED": "Proxy in use:",

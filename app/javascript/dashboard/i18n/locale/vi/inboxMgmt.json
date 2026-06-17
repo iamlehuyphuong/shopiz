@@ -84,7 +84,7 @@
         "DEFAULT_GREETING_MESSAGE_TITLE": "Lời chào mặc định",
         "DEFAULT_GREETING_MESSAGE_SUBTITLE": "Lời chào được tự động gửi kèm theo lời mời kết bạn.",
         "CUSTOM_PROXY": "Proxy tùy chỉnh (Tùy chọn)",
-        "CUSTOM_PROXY_PLACEHOLDER": "http://user:pass@ip:port",
+        "CUSTOM_PROXY_PLACEHOLDER": "http://user:pass{'@'}ip:port",
         "GENERATE_QR": "Tạo mới QR",
         "GENERATING_QR": "Đang tạo...",
         "PROXY_USED": "Proxy đang dùng:",
