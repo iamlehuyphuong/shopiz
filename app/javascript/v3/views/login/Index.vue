@@ -225,128 +225,130 @@ export default {
 
 <template>
   <div class="flex min-h-screen w-full bg-white dark:bg-n-solid-2">
-    <div class="flex-1 flex flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:w-[45%] lg:min-w-[500px] lg:max-w-[650px] lg:px-20 xl:px-24">
+    <div
+      class="flex-1 flex flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:w-[45%] lg:min-w-[500px] lg:max-w-[650px] lg:px-20 xl:px-24"
+    >
       <div class="mx-auto w-full max-w-sm lg:max-w-md">
-          <div class="mb-6">
-            <img
-              :src="globalConfig.logo"
-              :alt="globalConfig.installationName"
-              class="block w-auto h-14"
-            />
-            <h2
-              class="mt-6 text-2xl font-semibold text-n-slate-12 text-center md:text-left"
-            >
-              {{ replaceInstallationName($t('LOGIN.TITLE')) }}
-            </h2>
-            <p
-              v-if="showSignupLink"
-              class="mt-2 text-sm text-n-slate-11 text-center md:text-left"
-            >
-              {{ $t('LOGIN.CREATE_NEW_ACCOUNT_LABEL') || 'New here?' }}
-              <router-link
-                class="text-n-orange-10 font-medium hover:text-n-orange-11"
-                to="/app/auth/signup"
-              >
-                {{ $t('LOGIN.CREATE_NEW_ACCOUNT') }}
-              </router-link>
-            </p>
-          </div>
-
-          <!-- MFA Verification Section -->
-          <section v-if="mfaRequired">
-            <MfaVerification
-              :mfa-token="mfaToken"
-              @verified="handleMfaVerified"
-              @cancel="handleMfaCancel"
-            />
-          </section>
-
-          <!-- Regular Login Section -->
-          <section
-            v-else
-            :class="{
-              'animate-wiggle': loginApi.hasErrored,
-            }"
+        <div class="mb-6">
+          <img
+            :src="globalConfig.logo"
+            :alt="globalConfig.installationName"
+            class="block w-auto h-14"
+          />
+          <h2
+            class="mt-6 text-2xl font-semibold text-n-slate-12 text-center md:text-left"
           >
-            <div v-if="!email">
-              <div class="flex flex-col gap-4">
-                <GoogleOAuthButton v-if="showGoogleOAuth" />
-                <div v-if="showSamlLogin" class="text-center">
-                  <router-link
-                    to="/app/login/sso"
-                    class="inline-flex justify-center w-full px-4 py-3 items-center bg-n-background rounded-md shadow-sm ring-1 ring-inset ring-n-container focus:outline-offset-0 hover:bg-n-alpha-2"
-                  >
-                    <Icon
-                      icon="i-lucide-lock-keyhole"
-                      class="size-5 text-n-slate-11"
-                    />
-                    <span class="ml-2 text-base font-medium text-n-slate-12">
-                      {{ $t('LOGIN.SAML.LABEL') }}
-                    </span>
-                  </router-link>
-                </div>
-                <SimpleDivider
-                  v-if="showGoogleOAuth || showSamlLogin"
-                  :label="$t('COMMON.OR')"
-                  class="uppercase"
-                />
-              </div>
-              <form class="space-y-4" @submit.prevent="submitFormLogin">
-                <FormInput
-                  v-model="credentials.email"
-                  name="email_address"
-                  type="text"
-                  data-testid="email_input"
-                  :tabindex="1"
-                  required
-                  :label="$t('LOGIN.EMAIL.LABEL')"
-                  :placeholder="$t('LOGIN.EMAIL.PLACEHOLDER')"
-                  :has-error="v$.credentials.email.$error"
-                  @input="v$.credentials.email.$touch"
-                />
-                <FormInput
-                  v-model="credentials.password"
-                  type="password"
-                  name="password"
-                  data-testid="password_input"
-                  required
-                  :tabindex="2"
-                  :label="$t('LOGIN.PASSWORD.LABEL')"
-                  :placeholder="$t('LOGIN.PASSWORD.PLACEHOLDER')"
-                  :has-error="v$.credentials.password.$error"
-                  @input="v$.credentials.password.$touch"
-                >
-                  <p
-                    v-if="!globalConfig.disableUserProfileUpdate"
-                    class="text-right"
-                  >
-                    <router-link
-                      to="auth/reset/password"
-                      class="text-sm text-link"
-                      tabindex="4"
-                    >
-                      {{ $t('LOGIN.FORGOT_PASSWORD') }}
-                    </router-link>
-                  </p>
-                </FormInput>
-                <NextButton
-                  lg
-                  type="submit"
-                  data-testid="submit_button"
-                  class="w-full"
-                  :tabindex="3"
-                  :label="$t('LOGIN.SUBMIT')"
-                  :disabled="loginApi.showLoading"
-                  :is-loading="loginApi.showLoading"
-                />
-              </form>
-            </div>
-            <div v-else class="flex items-center justify-center">
-              <Spinner color-scheme="primary" size="" />
-            </div>
-          </section>
+            {{ replaceInstallationName($t('LOGIN.TITLE')) }}
+          </h2>
+          <p
+            v-if="showSignupLink"
+            class="mt-2 text-sm text-n-slate-11 text-center md:text-left"
+          >
+            {{ $t('LOGIN.CREATE_NEW_ACCOUNT_LABEL') || 'New here?' }}
+            <router-link
+              class="text-n-orange-10 font-medium hover:text-n-orange-11"
+              to="/app/auth/signup"
+            >
+              {{ $t('LOGIN.CREATE_NEW_ACCOUNT') }}
+            </router-link>
+          </p>
         </div>
+
+        <!-- MFA Verification Section -->
+        <section v-if="mfaRequired">
+          <MfaVerification
+            :mfa-token="mfaToken"
+            @verified="handleMfaVerified"
+            @cancel="handleMfaCancel"
+          />
+        </section>
+
+        <!-- Regular Login Section -->
+        <section
+          v-else
+          :class="{
+            'animate-wiggle': loginApi.hasErrored,
+          }"
+        >
+          <div v-if="!email">
+            <div class="flex flex-col gap-4">
+              <GoogleOAuthButton v-if="showGoogleOAuth" />
+              <div v-if="showSamlLogin" class="text-center">
+                <router-link
+                  to="/app/login/sso"
+                  class="inline-flex justify-center w-full px-4 py-3 items-center bg-n-background rounded-md shadow-sm ring-1 ring-inset ring-n-container focus:outline-offset-0 hover:bg-n-alpha-2"
+                >
+                  <Icon
+                    icon="i-lucide-lock-keyhole"
+                    class="size-5 text-n-slate-11"
+                  />
+                  <span class="ml-2 text-base font-medium text-n-slate-12">
+                    {{ $t('LOGIN.SAML.LABEL') }}
+                  </span>
+                </router-link>
+              </div>
+              <SimpleDivider
+                v-if="showGoogleOAuth || showSamlLogin"
+                :label="$t('COMMON.OR')"
+                class="uppercase"
+              />
+            </div>
+            <form class="space-y-4" @submit.prevent="submitFormLogin">
+              <FormInput
+                v-model="credentials.email"
+                name="email_address"
+                type="text"
+                data-testid="email_input"
+                :tabindex="1"
+                required
+                :label="$t('LOGIN.EMAIL.LABEL')"
+                :placeholder="$t('LOGIN.EMAIL.PLACEHOLDER')"
+                :has-error="v$.credentials.email.$error"
+                @input="v$.credentials.email.$touch"
+              />
+              <FormInput
+                v-model="credentials.password"
+                type="password"
+                name="password"
+                data-testid="password_input"
+                required
+                :tabindex="2"
+                :label="$t('LOGIN.PASSWORD.LABEL')"
+                :placeholder="$t('LOGIN.PASSWORD.PLACEHOLDER')"
+                :has-error="v$.credentials.password.$error"
+                @input="v$.credentials.password.$touch"
+              >
+                <p
+                  v-if="!globalConfig.disableUserProfileUpdate"
+                  class="text-right"
+                >
+                  <router-link
+                    to="auth/reset/password"
+                    class="text-sm text-link"
+                    tabindex="4"
+                  >
+                    {{ $t('LOGIN.FORGOT_PASSWORD') }}
+                  </router-link>
+                </p>
+              </FormInput>
+              <NextButton
+                lg
+                type="submit"
+                data-testid="submit_button"
+                class="w-full"
+                :tabindex="3"
+                :label="$t('LOGIN.SUBMIT')"
+                :disabled="loginApi.showLoading"
+                :is-loading="loginApi.showLoading"
+              />
+            </form>
+          </div>
+          <div v-else class="flex items-center justify-center">
+            <Spinner color-scheme="primary" size="" />
+          </div>
+        </section>
       </div>
+    </div>
     <div class="hidden lg:flex flex-1 relative">
       <NetworkIllustration />
     </div>

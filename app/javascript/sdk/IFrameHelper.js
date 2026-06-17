@@ -10,6 +10,7 @@ import {
   widgetHolder,
   createBubbleHolder,
   createBubbleIcon,
+  createCloseBubbleIcon,
   chatBubble,
   closeBubble,
   bubbleHolder,
@@ -349,16 +350,12 @@ export const IFrameHelper = {
       bubbleAvatarUrl: getImageUrl(bubbleAvatarUrl),
     });
 
-    const closeAvatarUrl =
-      getImageUrl(closeBubbleAvatarUrl) ||
-      `${window.$shopiz.baseUrl}/assets/images/bubble_off_chat.svg`;
-    addClasses(closeBubble, closeBtnClassName);
-    closeBubble.style.background = 'transparent';
-    closeBubble.style.boxShadow = 'none';
-    addImageToButton({
+    const closeBubbleIcon = createCloseBubbleIcon({
+      className: className,
       target: closeBubble,
-      imageUrl: closeAvatarUrl,
+      widgetColor: activeColor,
     });
+    addClasses(closeBubbleIcon, closeBtnClassName);
     bubbleHolder.appendChild(chatIcon);
     bubbleHolder.appendChild(closeBubble);
     onClickChatBubble();

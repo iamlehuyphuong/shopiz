@@ -72,14 +72,17 @@ export default {
         if (this.socket) {
           this.socket.close();
         }
-        
+
         const payload = {};
         if (this.proxyUrl) {
           payload.proxy = this.proxyUrl;
         }
-        
-        const response = await axios.post(`${window.shopizConfig?.zaloApiUrl}/api/zalo-login`, payload);
-        
+
+        const response = await axios.post(
+          `${window.shopizConfig?.zaloApiUrl}/api/zalo-login`,
+          payload
+        );
+
         if (response.data.success) {
           this.qrCode = response.data.qrCodeImage;
           this.proxyUsed = response.data.proxyUsed;
@@ -168,39 +171,64 @@ export default {
           <span class="text-n-orange">Shopiz</span>
         </p>
       </div>
-      <div class="w-[300px] h-[300px] mt-4 border border-n-weak rounded-md shadow-sm flex items-center justify-center bg-n-alpha-1 overflow-hidden">
+      <div
+        class="w-[300px] h-[300px] mt-4 border border-n-weak rounded-md shadow-sm flex items-center justify-center bg-n-alpha-1 overflow-hidden"
+      >
         <img
           v-if="qrCode && !isGeneratingQR"
           :src="qrCode"
           alt="Zalo-Login-QR"
           class="w-full h-full object-contain"
         />
-        <div v-else-if="isGeneratingQR" class="flex flex-col items-center gap-2 text-n-slate-11">
+        <div
+          v-else-if="isGeneratingQR"
+          class="flex flex-col items-center gap-2 text-n-slate-11"
+        >
           <span class="i-lucide-loader-2 animate-spin text-2xl" />
-          <span class="text-sm">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.GENERATING_QR') }}</span>
+          <span class="text-sm">{{
+            $t('INBOX_MGMT.ADD.ZALO_PERSONAL.GENERATING_QR')
+          }}</span>
         </div>
-        <div v-else class="flex flex-col items-center gap-2 text-n-slate-11 px-4">
+        <div
+          v-else
+          class="flex flex-col items-center gap-2 text-n-slate-11 px-4"
+        >
           <span class="i-lucide-qr-code text-4xl opacity-30" />
-          <span class="text-sm text-center">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.QR_PLACEHOLDER') }}</span>
+          <span class="text-sm text-center">{{
+            $t('INBOX_MGMT.ADD.ZALO_PERSONAL.QR_PLACEHOLDER')
+          }}</span>
         </div>
       </div>
 
       <div class="mt-4 flex flex-col items-center w-full max-w-xs">
         <label class="w-full">
-          <span class="text-sm font-medium text-n-slate-12">{{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.CUSTOM_PROXY') }}</span>
+          <span class="text-sm font-medium text-n-slate-12">{{
+            $t('INBOX_MGMT.ADD.ZALO_PERSONAL.CUSTOM_PROXY')
+          }}</span>
           <input
             v-model="proxyUrl"
             type="text"
-            :placeholder="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.CUSTOM_PROXY_PLACEHOLDER')"
+            :placeholder="
+              $t('INBOX_MGMT.ADD.ZALO_PERSONAL.CUSTOM_PROXY_PLACEHOLDER')
+            "
             class="w-full mt-1"
             @keyup.enter="generateQR"
           />
         </label>
-        <button class="button w-full mt-2 py-3 bg-n-orange hover:bg-n-orange/90 text-white" :disabled="isGeneratingQR" @click="generateQR">
-          {{ isGeneratingQR ? $t('INBOX_MGMT.ADD.ZALO_PERSONAL.GENERATING_QR') : $t('INBOX_MGMT.ADD.ZALO_PERSONAL.GENERATE_QR') }}
+        <button
+          class="button w-full mt-2 py-3 bg-n-orange hover:bg-n-orange/90 text-white"
+          :disabled="isGeneratingQR"
+          @click="generateQR"
+        >
+          {{
+            isGeneratingQR
+              ? $t('INBOX_MGMT.ADD.ZALO_PERSONAL.GENERATING_QR')
+              : $t('INBOX_MGMT.ADD.ZALO_PERSONAL.GENERATE_QR')
+          }}
         </button>
         <p v-if="proxyUsed" class="text-xs text-n-slate-11 mt-2 text-center">
-          {{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.PROXY_USED') }} <span class="font-medium text-n-slate-12">{{ proxyUsed }}</span>
+          {{ $t('INBOX_MGMT.ADD.ZALO_PERSONAL.PROXY_USED') }}
+          <span class="font-medium text-n-slate-12">{{ proxyUsed }}</span>
         </p>
       </div>
       <div class="mt-6 text-n-slate-11 text-center">
