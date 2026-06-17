@@ -7,6 +7,7 @@ import { useAccount } from 'dashboard/composables/useAccount';
 import { mapGetters } from 'vuex';
 import { useAlert } from 'dashboard/composables';
 import axios from 'axios';
+import zalopersonalChannel from '../../../../api/channel/zalopersonalChannel';
 import PageHeader from '../../SettingsSubPageHeader.vue';
 import router from '../../../../index';
 export default {
@@ -79,7 +80,7 @@ export default {
           payload.proxy = this.proxyUrl;
         }
         
-        const response = await axios.post(`${window.shopizConfig?.zaloApiUrl}/api/zalo-login`, payload);
+        const response = await zalopersonalChannel.generateQR(payload);
         
         if (response.data.success) {
           this.qrCode = response.data.qrCodeImage;

@@ -18,6 +18,25 @@ class Api::V1::Accounts::Channels::ZaloPersonalChannelsController < Api::V1::Acc
       handle_exception(e)
       render json: { message: e.message }, status: :unprocessable_entity
     end
+
+    def generate_qr
+      proxy = params[:proxy]
+      url = "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/zalo-login"
+      
+      body = {}
+      body[:proxy] = proxy if proxy.present?
+      
+      response = HTTParty.post(
+        url,
+        headers: ZaloPersonal::ApiHelper.request_headers,
+        body: body.to_json
+      )
+      
+      render json: response.parsed_response
+    rescue StandardError => e
+      handle_exception(e)
+      render json: { success: false, message: e.message }, status: :unprocessable_entity
+    end
   
     private
   

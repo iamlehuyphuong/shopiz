@@ -141,6 +141,7 @@ Rails.application.routes.draw do
               collection do
                 post :create
                 get :create
+                post :generate_qr
               end
             end
             resource :tiktok_shop_channel, only: [:show, :create]
