@@ -5,7 +5,10 @@ import NetworkNotification from './components/NetworkNotification.vue';
 import UpdateBanner from './components/app/UpdateBanner.vue';
 import PaymentPendingBanner from './components/app/PaymentPendingBanner.vue';
 import PendingEmailVerificationBanner from './components/app/PendingEmailVerificationBanner.vue';
-import FloatingCallWidget from './components/widgets/FloatingCallWidget.vue';
+import { defineAsyncComponent } from 'vue';
+const FloatingCallWidget = defineAsyncComponent(
+  () => import('./components/widgets/FloatingCallWidget.vue')
+);
 import vueActionCable from './helper/actionCable';
 import { useRouter } from 'vue-router';
 import { useStore } from 'dashboard/composables/store';
