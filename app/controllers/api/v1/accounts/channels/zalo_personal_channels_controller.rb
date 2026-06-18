@@ -24,7 +24,24 @@ class Api::V1::Accounts::Channels::ZaloPersonalChannelsController < Api::V1::Acc
       url = "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/zalo-login"
       
       body = {}
-      body[:proxy] = proxy if proxy.present?
+      if proxy.present?
+        # Auto parse format: IP:PORT:USER:PASS
+        parts = proxy.split(':')
+        if parts.length == 4
+          ip, port, user, pass = parts
+          proxy_url = "http://#{ip}:#{port}"
+          
+          # Send multiple standard variables to cover different Node.js implementations
+          body[:proxy] = proxy_url
+          body[:proxyUrl] = proxy_url
+          body[:proxyUsername] = user
+          body[:proxyPassword] = pass
+          body[:proxy_username] = user
+          body[:proxy_password] = pass
+        else
+          body[:proxy] = proxy
+        end
+      end
       
       response = HTTParty.post(
         url,

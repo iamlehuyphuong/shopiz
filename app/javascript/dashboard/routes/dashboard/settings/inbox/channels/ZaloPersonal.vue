@@ -43,6 +43,7 @@ export default {
       hasLoginStarted: false,
       proxyUrl: '',
       proxyUsed: '',
+      sessionId: '',
       isGeneratingQR: false,
     };
   },
@@ -85,6 +86,7 @@ export default {
         if (response.data.success) {
           this.qrCode = response.data.qrCodeImage;
           this.proxyUsed = response.data.proxyUsed;
+          this.sessionId = response.data.sessionId;
           this.connectWebSocket();
           this.hasLoginStarted = false;
           this.hasError = false;
@@ -116,17 +118,30 @@ export default {
         }.bind(this);
         this.socket.onmessage = function (event) {
           console.log('Nhận tin nhắn WebSocket:', event.data);
-          if (event.data.indexOf('login_success:') === 0) {
+          const msgStr = event.data;
+          
+          if (msgStr.startsWith('login_success:')) {
+            const items = msgStr.split(':');
+            const receivedSessionId = items[1];
+            
+            // Kiểm tra session ID có khớp không
+            if (receivedSessionId !== this.sessionId) {
+              console.log('Bỏ qua tín hiệu: Session ID không khớp. Nhận được:', receivedSessionId, '- Của máy này:', this.sessionId);
+              return;
+            }
+
             console.log('Đăng nhập thành công qua WebSocket', event);
             this.emptyStateMessage =
               'Đăng nhập thành công. Đang tải danh sách hội thoại';
             this.hasLoginStarted = true;
             this.hasError = false;
-            this.oa_id = event.data.split(':')[1];
+            
+            const ownId = items[2];
+            this.oa_id = ownId;
             this.access_token = this.oa_id;
             this.refresh_token = this.oa_id;
             this.expires_in = 90000;
-            console.log('oa_id:', this.oa_id);
+            console.log('Tài khoản vừa đăng nhập thành công có ID là (ownId):', ownId);
           }
         }.bind(this);
 

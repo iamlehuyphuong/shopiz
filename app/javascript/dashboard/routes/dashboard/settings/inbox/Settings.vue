@@ -879,7 +879,7 @@ export default {
         />
         <Banner
           v-if="isAZaloPersonalChannel && !zaloPersonalUnauthorized"
-          color="teal"
+          color="blue"
           class="mx-6 mb-4"
           :class="bannerMaxWidth"
           :action-label="
