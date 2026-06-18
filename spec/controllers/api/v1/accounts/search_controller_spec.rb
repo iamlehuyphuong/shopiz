@@ -104,8 +104,8 @@ RSpec.describe 'Search', type: :request do
           response_data = JSON.parse(response.body, symbolize_names: true)
 
           contact_emails = response_data[:payload][:contacts].pluck(:email)
-          expect(contact_emails).to include('recent@test.com')
-          expect(contact_emails).not_to include('old@test.com')
+          expect(contact_emails).to include('re***nt@test.com')
+          expect(contact_emails).not_to include('o***d@test.com')
         end
 
         it 'filters contacts by until parameter' do
@@ -121,8 +121,8 @@ RSpec.describe 'Search', type: :request do
           response_data = JSON.parse(response.body, symbolize_names: true)
 
           contact_emails = response_data[:payload][:contacts].pluck(:email)
-          expect(contact_emails).to include('old@test.com')
-          expect(contact_emails).not_to include('recent@test.com')
+          expect(contact_emails).to include('o***d@test.com')
+          expect(contact_emails).not_to include('re***nt@test.com')
         end
 
         it 'filters contacts by both since and until parameters' do
@@ -139,8 +139,8 @@ RSpec.describe 'Search', type: :request do
           response_data = JSON.parse(response.body, symbolize_names: true)
 
           contact_emails = response_data[:payload][:contacts].pluck(:email)
-          expect(contact_emails).to include('old@test.com')
-          expect(contact_emails).not_to include('veryold@test.com', 'recent@test.com')
+          expect(contact_emails).to include('o***d@test.com')
+          expect(contact_emails).not_to include('ve***ld@test.com', 're***nt@test.com')
         end
       end
     end
