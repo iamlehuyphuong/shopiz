@@ -1,5 +1,5 @@
 <script setup>
-import { computed, watch, onMounted, ref } from 'vue';
+import { computed, watch, onMounted, ref, onErrorCaptured } from 'vue';
 import {
   useMapGetter,
   useFunctionGetter,
@@ -12,6 +12,7 @@ import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 import AccordionItem from 'dashboard/components/Accordion/AccordionItem.vue';
 import ContactConversations from './ContactConversations.vue';
 import ConversationAction from './ConversationAction.vue';
+import ConversationFollowUp from './ConversationFollowUp.vue';
 import ConversationParticipant from './ConversationParticipant.vue';
 import ContactInfo from './contact/ContactInfo.vue';
 import ContactNotes from './contact/ContactNotes.vue';
@@ -124,10 +125,17 @@ onMounted(() => {
   // Load integrations to ensure linear integration state is available
   store.dispatch('integrations/get', 'linear');
 });
+
+const errorMsg = ref('');
+onErrorCaptured((err) => {
+  errorMsg.value = err.message + '\n' + err.stack;
+  return false;
+});
 </script>
 
 <template>
   <div class="w-full">
+    <div v-if="errorMsg" class="p-4 bg-red-100 text-red-800 text-xs whitespace-pre-wrap">{{ errorMsg }}</div>
     <ContactInfo :contact="contact" :channel-type="channelType" />
     <div class="px-2 pb-8 list-group">
       <Draggable
@@ -153,6 +161,23 @@ onMounted(() => {
               "
             >
               <ConversationAction
+                :conversation-id="conversationId"
+                :inbox-id="inboxId"
+              />
+            </AccordionItem>
+          </div>
+          <div
+            v-else-if="element.name === 'conversation_follow_up'"
+            class="conversation--actions"
+          >
+            <AccordionItem
+              :title="$t('CONVERSATION_SIDEBAR.FOLLOW_UP_TITLE')"
+              :is-open="isContactSidebarItemOpen('is_conv_follow_up_open')"
+              @toggle="
+                value => toggleSidebarUIState('is_conv_follow_up_open', value)
+              "
+            >
+              <ConversationFollowUp
                 :conversation-id="conversationId"
                 :inbox-id="inboxId"
               />

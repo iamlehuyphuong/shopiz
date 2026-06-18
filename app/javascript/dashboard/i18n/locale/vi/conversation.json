@@ -545,6 +545,26 @@
     "TEAM_LABEL": "Nhóm phụ trách",
     "FOLLOW_UP_TITLE": "Hẹn chăm sóc",
     "FOLLOW_UP_PLACEHOLDER": "Chọn thời gian",
+    "FOLLOW_UP": {
+      "EMPTY_TEXT": "Chưa đặt lịch hẹn chăm sóc",
+      "ADD_BUTTON": "Đặt lịch hẹn",
+      "TIME_LABEL": "Thời điểm hẹn",
+      "REMIND_LABEL": "Nhắc trước",
+      "REMIND_VALUE": "1 ngày",
+      "EDIT_BUTTON": "Điều chỉnh",
+      "DELETE_BUTTON": "Xóa lịch hẹn",
+      "TYPE_CUSTOM": "Tuỳ chỉnh",
+      "TYPE_WEEKS": "Tuần",
+      "TYPE_MONTHS": "Tháng",
+      "TYPE_YEARS": "Năm",
+      "WEEKS_COUNT": "Số tuần",
+      "MONTHS_COUNT": "Số tháng",
+      "YEARS_COUNT": "Số năm",
+      "REMIND_BEFORE": "Nhắc trước",
+      "REMIND_BEFORE_DESC": "Gửi thông báo nhắc trước 1 ngày",
+      "SAVE": "Xác nhận",
+      "CANCEL": "Hủy hẹn"
+    },
     "SELECT": {
       "PLACEHOLDER": "Không có"
     },
