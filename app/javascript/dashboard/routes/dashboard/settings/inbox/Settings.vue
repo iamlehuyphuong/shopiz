@@ -1747,7 +1747,7 @@ export default {
                 :website-name="selectedInboxName"
                 :logo="avatarUrl"
                 is-online
-                :reply-time="replyTime"
+                :reply-time="inbox.active_bot ? 'in_a_few_minutes' : replyTime"
                 :color="inbox.widget_color"
                 :widget-bubble-position="widgetBubblePosition"
                 :widget-bubble-launcher-title="widgetBubbleLauncherTitle"
