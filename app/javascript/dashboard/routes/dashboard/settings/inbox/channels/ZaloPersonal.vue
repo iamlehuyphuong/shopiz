@@ -106,7 +106,7 @@ export default {
       }
       // Xác định URL WebSocket dựa trên URL hiện tại
       // const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-      const wsUrl = `${window.shopizConfig?.zaloApiUrl.replace('http', 'ws')}/ws`;
+      const wsUrl = `${window.shopizConfig?.zaloApiUrl.replace('https', 'wss').replace('http', 'ws')}/ws`;
       console.log('Đang kết nối đến WebSocket tại:', wsUrl);
       try {
         this.socket = new WebSocket(wsUrl);
@@ -117,7 +117,6 @@ export default {
             'Kết nối WebSocket thành công. Vui lòng quét mã QR để đăng nhập.';
         }.bind(this);
         this.socket.onmessage = function (event) {
-          console.log('Nhận tin nhắn WebSocket:', event.data);
           const msgStr = event.data;
           
           if (msgStr.startsWith('login_success:')) {
@@ -126,11 +125,9 @@ export default {
             
             // Kiểm tra session ID có khớp không
             if (receivedSessionId !== this.sessionId) {
-              console.log('Bỏ qua tín hiệu: Session ID không khớp. Nhận được:', receivedSessionId, '- Của máy này:', this.sessionId);
               return;
             }
 
-            console.log('Đăng nhập thành công qua WebSocket', event);
             this.emptyStateMessage =
               'Đăng nhập thành công. Đang tải danh sách hội thoại';
             this.hasLoginStarted = true;
@@ -142,6 +139,19 @@ export default {
             this.refresh_token = this.oa_id;
             this.expires_in = 90000;
             console.log('Tài khoản vừa đăng nhập thành công có ID là (ownId):', ownId);
+          } else if (msgStr.startsWith('login_error:')) {
+            const items = msgStr.split(':');
+            const receivedSessionId = items[1];
+            
+            if (receivedSessionId !== this.sessionId) {
+              return;
+            }
+            
+            const errorMessage = items.slice(2).join(':'); // Mọi text phía sau là message
+            useAlert(`Đăng nhập thất bại: ${errorMessage}`);
+            this.hasLoginStarted = false; // Reset to allow regenerating QR
+            this.isGeneratingQR = false;
+            this.qrCode = ''; // Clear failed QR code
           }
         }.bind(this);
 

@@ -25,21 +25,19 @@ class Api::V1::Accounts::Channels::ZaloPersonalChannelsController < Api::V1::Acc
       
       body = {}
       if proxy.present?
-        # Auto parse format: IP:PORT:USER:PASS
-        parts = proxy.split(':')
-        if parts.length == 4
-          ip, port, user, pass = parts
-          proxy_url = "http://#{ip}:#{port}"
-          
-          # Send multiple standard variables to cover different Node.js implementations
-          body[:proxy] = proxy_url
-          body[:proxyUrl] = proxy_url
-          body[:proxyUsername] = user
-          body[:proxyPassword] = pass
-          body[:proxy_username] = user
-          body[:proxy_password] = pass
-        else
+        if proxy.start_with?('http://', 'https://', 'socks4://', 'socks5://')
           body[:proxy] = proxy
+        else
+          # Auto parse format: IP:PORT:USER:PASS or IP:PORT
+          parts = proxy.split(':')
+          if parts.length == 4
+            ip, port, user, pass = parts
+            body[:proxy] = "http://#{user}:#{pass}@#{ip}:#{port}"
+          elsif parts.length == 2
+            body[:proxy] = "http://#{proxy}"
+          else
+            body[:proxy] = proxy
+          end
         end
       end
       
