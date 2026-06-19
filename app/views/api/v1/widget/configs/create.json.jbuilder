@@ -14,7 +14,9 @@ json.website_channel_config do
   json.portal @web_widget.inbox.portal
   json.pre_chat_form_enabled @web_widget.pre_chat_form_enabled
   json.pre_chat_form_options @web_widget.pre_chat_form_options
-  json.reply_time @web_widget.reply_time
+  has_active_bot = @web_widget.inbox.active_bot?
+  json.has_active_bot has_active_bot
+  json.reply_time has_active_bot ? 'in_a_few_minutes' : @web_widget.reply_time
   json.timezone @web_widget.inbox.timezone
   json.utc_off_set ActiveSupport::TimeZone[@web_widget.inbox.timezone].now.formatted_offset
   json.website_name @web_widget.inbox.name

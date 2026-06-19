@@ -39,17 +39,16 @@ export const SDK_CSS = `
 }
 
 .woot-widget-bubble {
-  background: transparent !important;
-  border-radius: 0px !important;
+  border-radius: 100px !important;
   border: none !important;
   bottom: 20px;
   cursor: pointer;
-  height: 90px !important;
-  width: 90px !important;
-  min-width: 90px !important;
-  min-height: 90px !important;
-  max-width: 90px !important;
-  max-height: 90px !important;
+  height: 64px !important;
+  width: 64px !important;
+  min-width: 64px !important;
+  min-height: 64px !important;
+  max-width: 64px !important;
+  max-height: 64px !important;
   padding: 0px !important;
   position: fixed;
   user-select: none;
@@ -59,7 +58,6 @@ export const SDK_CSS = `
   justify-content: center !important;
   box-sizing: border-box !important;
   outline: none !important;
-  aspect-ratio: 1 / 1 !important;
   flex-shrink: 0 !important;
 }
 
@@ -236,7 +234,6 @@ export const SDK_CSS = `
   transform: translateY(40px);
 }
 .woot-widget-bubble.woot--close {
-  background: transparent !important;
   transform: translateX(0px) scale(1) rotate(0deg);
   transition: transform 300ms ease, opacity 100ms ease, visibility 0ms linear 0ms, bottom 0ms linear 0ms;
 }

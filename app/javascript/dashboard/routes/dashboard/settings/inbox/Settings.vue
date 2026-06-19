@@ -95,10 +95,7 @@ export default {
     return {
       avatarFile: null,
       avatarUrl: '',
-      bubbleAvatarFile: null,
       bubbleAvatarUrl: '',
-      closeBubbleAvatarFile: null,
-      closeBubbleAvatarUrl: '',
       greetingEnabled: true,
       greetingMessage: '',
       emailCollectEnabled: false,
@@ -501,7 +498,6 @@ export default {
 
       this.avatarUrl = this.inbox.avatar_url;
       this.bubbleAvatarUrl = this.inbox.bubble_avatar_url;
-      this.closeBubbleAvatarUrl = this.inbox.close_bubble_avatar_url;
       this.selectedInboxName = this.inbox.name;
       this.webhookUrl = this.inbox.webhook_url;
       this.greetingEnabled = this.inbox.greeting_enabled || false;
@@ -673,9 +669,7 @@ export default {
           business_name: this.businessName || null,
           auto_label_enabled: this.autoLabelEnabled,
           followup_config:
-            this.avatarFile ||
-            this.bubbleAvatarFile ||
-            this.closeBubbleAvatarFile
+            this.avatarFile || this.bubbleAvatarFile
               ? JSON.stringify({
                   enabled: this.followupEnabled,
                   max_attempts: this.followupMaxAttempts,
@@ -718,16 +712,10 @@ export default {
             }),
           },
         };
-        if (
-          this.avatarFile ||
-          this.bubbleAvatarFile ||
-          this.closeBubbleAvatarFile
-        ) {
+        if (this.avatarFile || this.bubbleAvatarFile) {
           if (this.avatarFile) payload.avatar = this.avatarFile;
           if (this.bubbleAvatarFile)
             payload.channel.bubble_avatar = this.bubbleAvatarFile;
-          if (this.closeBubbleAvatarFile)
-            payload.channel.close_bubble_avatar = this.closeBubbleAvatarFile;
         } else {
           payload.formData = false;
         }
@@ -746,10 +734,7 @@ export default {
       this.bubbleAvatarFile = file;
       this.bubbleAvatarUrl = url;
     },
-    handleCloseBubbleImageUpload({ file, url }) {
-      this.closeBubbleAvatarFile = file;
-      this.closeBubbleAvatarUrl = url;
-    },
+
     async handleAvatarDelete() {
       try {
         await this.$store.dispatch(
@@ -784,23 +769,7 @@ export default {
         );
       }
     },
-    async handleCloseBubbleAvatarDelete() {
-      try {
-        await this.$store.dispatch(
-          'inboxes/deleteCloseBubbleAvatar',
-          this.currentInboxId
-        );
-        this.closeBubbleAvatarFile = null;
-        this.closeBubbleAvatarUrl = '';
-        useAlert(this.$t('INBOX_MGMT.DELETE.API.AVATAR_SUCCESS_MESSAGE'));
-      } catch (error) {
-        useAlert(
-          error.message
-            ? error.message
-            : this.$t('INBOX_MGMT.DELETE.API.AVATAR_ERROR_MESSAGE')
-        );
-      }
-    },
+
     toggleSenderNameType(key) {
       this.senderNameType = key;
     },
@@ -910,7 +879,7 @@ export default {
         />
         <Banner
           v-if="isAZaloPersonalChannel && !zaloPersonalUnauthorized"
-          color="teal"
+          color="blue"
           class="mx-6 mb-4"
           :class="bannerMaxWidth"
           :action-label="
@@ -1223,7 +1192,7 @@ export default {
                       />
                     </div>
                   </div>
-                  <div class="flex items-center gap-6">
+                  <div v-if="false" class="flex items-center gap-6">
                     <div class="flex flex-col gap-1 items-start">
                       <label class="text-heading-3 text-n-slate-12">
                         {{
@@ -1233,10 +1202,8 @@ export default {
                         }}
                       </label>
                       <Avatar
-                        :src="
-                          bubbleAvatarUrl ||
-                          '/assets/images/bubble_chat_icon.svg'
-                        "
+                        :src="bubbleAvatarUrl"
+                        icon-name="i-lucide-message-circle-more"
                         :hide-delete="!bubbleAvatarUrl"
                         :size="64"
                         name=""
@@ -1246,33 +1213,12 @@ export default {
                         @delete="handleBubbleAvatarDelete"
                       />
                     </div>
-                    <div class="flex flex-col gap-1 items-start">
-                      <label class="text-heading-3 text-n-slate-12">
-                        {{
-                          $t(
-                            'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.BUBBLE_AVATAR.CLOSE_LABEL'
-                          )
-                        }}
-                      </label>
-                      <Avatar
-                        :src="
-                          closeBubbleAvatarUrl ||
-                          '/assets/images/bubble_off_chat.svg'
-                        "
-                        :hide-delete="!closeBubbleAvatarUrl"
-                        :size="64"
-                        name=""
-                        allow-upload
-                        branded
-                        @upload="handleCloseBubbleImageUpload"
-                        @delete="handleCloseBubbleAvatarDelete"
-                      />
-                    </div>
                   </div>
                 </div>
               </SettingsFieldSection>
 
               <SettingsFieldSection
+                v-if="widgetBubbleType === 'expanded_bubble'"
                 :label="
                   $t(
                     'INBOX_MGMT.WIDGET_BUILDER.WIDGET_OPTIONS.WIDGET_BUBBLE_LAUNCHER_TITLE.LABEL'
@@ -1801,13 +1747,12 @@ export default {
                 :website-name="selectedInboxName"
                 :logo="avatarUrl"
                 is-online
-                :reply-time="replyTime"
+                :reply-time="inbox.active_bot ? 'in_a_few_minutes' : replyTime"
                 :color="inbox.widget_color"
                 :widget-bubble-position="widgetBubblePosition"
                 :widget-bubble-launcher-title="widgetBubbleLauncherTitle"
                 :widget-bubble-type="widgetBubbleType"
                 :bubble-logo="bubbleAvatarUrl"
-                :close-bubble-logo="closeBubbleAvatarUrl"
                 :web-widget-script="inbox.web_widget_script"
               />
             </div>

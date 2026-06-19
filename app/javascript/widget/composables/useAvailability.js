@@ -49,15 +49,16 @@ export function useAvailability(agents = []) {
   );
 
   // Check if online (considering both working hours and agents)
-  const isOnline = computed(() =>
-    checkIsOnline(
+  const isOnline = computed(() => {
+    if (channelConfig.value.hasActiveBot) return true;
+    return checkIsOnline(
       inboxConfig.value.workingHoursEnabled,
       currentTime.value,
       inboxConfig.value.utcOffset,
       inboxConfig.value.workingHours,
       hasOnlineAgents.value
-    )
-  );
+    );
+  });
 
   return {
     channelConfig,

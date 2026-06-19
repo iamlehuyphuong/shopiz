@@ -13,6 +13,13 @@ class ZaloPersonalChannel extends ApiClient {
     );
   }
 
+  generateQR(params) {
+    return axios.post(
+      `${this.url.replace(this.resource, '')}channels/zalo_personal_channel/generate_qr`,
+      params
+    );
+  }
+
   reauthorizeZaloOa({ omniauthToken, inboxId }) {
     return axios.post(`${this.baseUrl()}/zalopersonal/reauthorize_oa`, {
       omniauth_token: omniauthToken,

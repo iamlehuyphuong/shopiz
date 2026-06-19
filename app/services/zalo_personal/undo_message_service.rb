@@ -15,7 +15,7 @@ class ZaloPersonal::UndoMessageService
 
     response = HTTParty.post(
       undo_url,
-      headers: { 'Content-Type' => 'application/json' },
+      headers: ZaloPersonal::ApiHelper.request_headers,
       body: body.to_json
     )
     raise StandardError, 'Fail request' unless response['success']

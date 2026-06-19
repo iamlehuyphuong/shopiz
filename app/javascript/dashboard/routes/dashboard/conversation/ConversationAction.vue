@@ -10,7 +10,6 @@ import { CONVERSATION_PRIORITY } from '../../../../shared/constants/messages';
 import { CONVERSATION_EVENTS } from '../../../helper/AnalyticsHelper/events';
 import { useTrack } from 'dashboard/composables';
 import NextButton from 'dashboard/components-next/button/Button.vue';
-import DatePicker from 'vue-datepicker-next';
 import ConversationApi from 'dashboard/api/inbox/conversation';
 
 export default {
@@ -19,7 +18,6 @@ export default {
     MultiselectDropdown,
     ConversationLabels,
     NextButton,
-    DatePicker,
   },
   props: {
     conversationId: {
@@ -160,27 +158,6 @@ export default {
       }
       return false;
     },
-    followUpTime: {
-      get() {
-        return this.currentChat?.follow_up_at
-          ? new Date(this.currentChat.follow_up_at)
-          : null;
-      },
-      async set(val) {
-        const conversationId = this.currentChat.id;
-        const followUpAt = val ? val.toISOString() : null;
-
-        try {
-          const response = await ConversationApi.update(conversationId, {
-            follow_up_at: followUpAt,
-          });
-          this.$store.dispatch('updateConversation', response.data);
-          useAlert(this.$t('CONVERSATION.FOLLOW_UP.SUCCESS'));
-        } catch (error) {
-          useAlert(this.$t('CONVERSATION.FOLLOW_UP.ERROR'));
-        }
-      },
-    },
   },
   methods: {
     onSelfAssign() {
@@ -228,11 +205,6 @@ export default {
         this.assignedPriority.id === selectedPriorityItem.id;
 
       this.assignedPriority = isSamePriority ? null : selectedPriorityItem;
-    },
-    disabledDate(date) {
-      const yesterday = new Date();
-      yesterday.setDate(yesterday.getDate() - 1);
-      return date < yesterday;
     },
   },
 };
@@ -307,22 +279,6 @@ export default {
         "
         @select="onClickAssignPriority"
       />
-    </div>
-    <div>
-      <ContactDetailsItem
-        compact
-        :title="$t('CONVERSATION_SIDEBAR.FOLLOW_UP_TITLE')"
-      />
-      <div class="date-picker">
-        <DatePicker
-          v-model:value="followUpTime"
-          type="datetime"
-          confirm
-          clearable
-          :placeholder="$t('CONVERSATION_SIDEBAR.FOLLOW_UP_PLACEHOLDER')"
-          :disabled-date="disabledDate"
-        />
-      </div>
     </div>
     <ContactDetailsItem
       compact

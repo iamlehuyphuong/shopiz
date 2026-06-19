@@ -459,6 +459,11 @@
 # ------- End of Zalo OA Channel Related Config ------- #
 
 # ------- Zalo Personal Channel Related Config ------- #
+- name: ZALO_API_KEY
+  display_title: 'Zalo Personal API Key'
+  description: 'The API key used for authenticating requests to the Zalo Server'
+  locked: false
+  type: secret
 - name: ZALO_API_URL
   display_title: 'Zalo Personal API URL'
   description: 'The base URL for Zalo Personal API'

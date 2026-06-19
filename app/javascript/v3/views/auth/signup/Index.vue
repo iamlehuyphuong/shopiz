@@ -55,7 +55,7 @@ const resizeContainers = () => {
         <SignupForm />
       </div>
     </div>
-    
+
     <div v-show="!isLoading" class="hidden lg:flex flex-1 relative">
       <NetworkIllustration />
     </div>

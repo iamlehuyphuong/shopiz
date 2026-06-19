@@ -546,6 +546,26 @@
     "TEAM_LABEL": "Assigned Team",
     "FOLLOW_UP_TITLE": "Follow-up Reminder",
     "FOLLOW_UP_PLACEHOLDER": "Select date & time",
+    "FOLLOW_UP": {
+      "EMPTY_TEXT": "No follow-up set",
+      "ADD_BUTTON": "Add follow-up",
+      "TIME_LABEL": "Follow-up time",
+      "REMIND_LABEL": "Remind",
+      "REMIND_VALUE": "1 day before",
+      "EDIT_BUTTON": "Edit",
+      "DELETE_BUTTON": "Delete",
+      "TYPE_CUSTOM": "Custom",
+      "TYPE_WEEKS": "Weeks",
+      "TYPE_MONTHS": "Months",
+      "TYPE_YEARS": "Years",
+      "WEEKS_COUNT": "Number of weeks",
+      "MONTHS_COUNT": "Number of months",
+      "YEARS_COUNT": "Number of years",
+      "REMIND_BEFORE": "Remind before",
+      "REMIND_BEFORE_DESC": "Send notification 1 day before",
+      "SAVE": "Save",
+      "CANCEL": "Cancel"
+    },
     "SELECT": {
       "PLACEHOLDER": "None"
     },

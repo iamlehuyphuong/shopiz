@@ -23,6 +23,9 @@ class Channel::ZaloPersonal < ApplicationRecord
   self.table_name = 'channel_zalo_personal'
   store_accessor :provider_config, :default_friend_request_message, :default_greeting_message
   
+  after_create :setup_webhooks
+  after_destroy :teardown_webhooks
+  
   EDITABLE_ATTRS = [:oa_access_token, :refresh_token, :expires_in, :default_friend_request_message, :default_greeting_message].freeze
 
   validates :oa_access_token, presence: true, length: { maximum: 2048 }
@@ -71,7 +74,7 @@ class Channel::ZaloPersonal < ApplicationRecord
   def send_message_cs(body)
     res = HTTParty.post(
       url_message_cs,
-      headers: { 'Content-Type' => 'application/json' },
+      headers: ZaloPersonal::ApiHelper.request_headers,
       body: body.to_json
     )
     if res['error'].present?
@@ -91,7 +94,7 @@ class Channel::ZaloPersonal < ApplicationRecord
     response = HTTParty.post(
       "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/getUserInfo",
       body: { userId: oa_id, ownId: oa_id }.to_json,
-      headers: { 'Content-Type' => 'application/json' },
+      headers: ZaloPersonal::ApiHelper.request_headers,
       timeout: 10
     )
 
@@ -102,6 +105,34 @@ class Channel::ZaloPersonal < ApplicationRecord
   rescue StandardError => e
     Rails.logger.error "ZaloPersonal check_disconnection! failed for channel #{id}: #{e.message}"
     raise
+  end
+
+  def setup_webhooks
+    webhook_url = "#{ENV.fetch('FRONTEND_URL', '')}/webhooks/zalo_personal"
+    
+    body = {
+      ownId: oa_id,
+      messageWebhookUrl: webhook_url,
+      groupEventWebhookUrl: webhook_url,
+      reactionWebhookUrl: webhook_url
+    }
+
+    HTTParty.post(
+      "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/account-webhook",
+      headers: ZaloPersonal::ApiHelper.request_headers,
+      body: body.to_json
+    )
+  rescue StandardError => e
+    Rails.logger.error "ZaloPersonal setup_webhooks failed for channel #{id}: #{e.message}"
+  end
+
+  def teardown_webhooks
+    HTTParty.delete(
+      "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/account-webhook/#{oa_id}",
+      headers: ZaloPersonal::ApiHelper.request_headers
+    )
+  rescue StandardError => e
+    Rails.logger.error "ZaloPersonal teardown_webhooks failed for channel #{id}: #{e.message}"
   end
 
   private
@@ -145,7 +176,7 @@ class Channel::ZaloPersonal < ApplicationRecord
 
     HTTParty.post(
       send_file_url,
-      headers: { 'Content-Type' => 'application/json' },
+      headers: ZaloPersonal::ApiHelper.request_headers,
       body: body.to_json
     )
   end
@@ -161,7 +192,7 @@ class Channel::ZaloPersonal < ApplicationRecord
 
     HTTParty.post(
       url_upload,
-      headers: { 'Content-Type' => 'application/json' },
+      headers: ZaloPersonal::ApiHelper.request_headers,
       body: body.to_json
     )
   end
