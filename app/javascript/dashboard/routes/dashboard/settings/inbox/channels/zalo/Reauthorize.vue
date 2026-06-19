@@ -12,6 +12,12 @@ export default {
   components: {
     LoadingState,
   },
+  props: {
+    inbox: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
   setup() {
     const { accountId } = useAccount();
     return {
@@ -128,6 +134,29 @@ export default {
             this.refresh_token = this.oa_id;
             this.expires_in = 90000;
             console.log('oa_id:', this.oa_id);
+
+            if (this.inbox && this.inbox.id) {
+              try {
+                const payload = {
+                  id: this.inbox.id,
+                  formData: false,
+                  channel: {
+                    oa_access_token: this.access_token,
+                    refresh_token: this.refresh_token,
+                    expires_in: this.expires_in,
+                    provider_config: {
+                      ...(this.inbox.provider_config || {}),
+                      proxy_used: this.proxyUsed,
+                    },
+                  },
+                };
+                this.$store.dispatch('inboxes/updateInbox', payload).catch(error => {
+                  console.error('Failed to update inbox proxy:', error);
+                });
+              } catch (error) {
+                console.error('Update inbox error:', error);
+              }
+            }
           }
         }.bind(this);
 

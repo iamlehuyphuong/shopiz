@@ -6,10 +6,17 @@ class Api::V1::Accounts::Channels::ZaloPersonalChannelsController < Api::V1::Acc
       expires_in = params[:expires_in]
       inbox_name = params[:inbox_name]
       avatar_url = params[:avatar_url]
+      proxy_used = params[:proxy_used]
       zalo_inbox = nil
       
       ActiveRecord::Base.transaction do
-        channel = Current.account.zalo_personals.create!(oa_id: oa_id, oa_access_token: access_token, refresh_token: refresh_token, expires_in: expires_in)
+        channel = Current.account.zalo_personals.create!(
+          oa_id: oa_id, 
+          oa_access_token: access_token, 
+          refresh_token: refresh_token, 
+          expires_in: expires_in,
+          provider_config: { proxy_used: proxy_used }.compact
+        )
         zalo_inbox = Current.account.inboxes.create!(name: inbox_name, channel: channel)
         Avatar::AvatarFromUrlJob.perform_later(zalo_inbox, avatar_url)
       end

@@ -26,7 +26,7 @@ class Channel::ZaloPersonal < ApplicationRecord
   after_create :setup_webhooks
   after_destroy :teardown_webhooks
   
-  EDITABLE_ATTRS = [:oa_access_token, :refresh_token, :expires_in, :default_friend_request_message, :default_greeting_message].freeze
+  EDITABLE_ATTRS = [:oa_access_token, :refresh_token, :expires_in, :default_friend_request_message, :default_greeting_message, { provider_config: {} }].freeze
 
   validates :oa_access_token, presence: true, length: { maximum: 2048 }
   validates :refresh_token, presence: true, length: { maximum: 2048 }
