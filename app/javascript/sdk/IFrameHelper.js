@@ -355,7 +355,7 @@ export const IFrameHelper = {
     });
 
     const closeBubbleIcon = createCloseBubbleIcon({
-      className: className,
+      className: className.replace(' woot-widget--expanded', ''),
       target: closeBubble,
       widgetColor: activeColor,
     });
