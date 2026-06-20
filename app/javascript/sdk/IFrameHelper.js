@@ -34,7 +34,7 @@ import {
   getAlertAudio,
   initOnEvents,
 } from 'shared/helpers/AudioNotificationHelper';
-import { isFlatWidgetStyle } from './settingsHelper';
+import { isFlatWidgetStyle, isExpandedView } from './settingsHelper';
 import { popoutChatWindow } from '../widget/helpers/popoutHelper';
 import addHours from 'date-fns/addHours';
 
@@ -334,6 +334,10 @@ export const IFrameHelper = {
     if (isFlatWidgetStyle(window.$shopiz.widgetStyle)) {
       className += ' woot-widget-bubble--flat';
       closeBtnClassName += ' woot-widget-bubble--flat';
+    }
+
+    if (isExpandedView(window.$shopiz.type)) {
+      className += ' woot-widget--expanded';
     }
 
     const activeColor = window.$shopiz.widgetColor || widgetColor;

@@ -965,7 +965,7 @@
         "TITLE": "Cấu hình Proxy",
         "SUBTITLE": "Đây là địa chỉ Proxy đang được cấu hình cho hộp thư Zalo này.",
         "HELP": "Để thay đổi Proxy, hãy đăng nhập lại ở tab 'Kết nối lại'.",
-        "NO_PROXY": "Không có proxy nào được cấu hình"
+        "NO_PROXY": "Không có Proxy nào được cấu hình"
       },
       "FORWARD_EMAIL_TITLE": "Chuyển tiếp email",
       "FORWARD_EMAIL_SUB_TEXT": "Chuyển tiếp email của bạn đến địa chỉ sau.",

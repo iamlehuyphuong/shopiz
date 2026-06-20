@@ -996,7 +996,7 @@
         "TITLE": "Proxy Configuration",
         "SUBTITLE": "This is the proxy URL currently configured for this Zalo inbox.",
         "HELP": "To change the Proxy, please re-authorize.",
-        "NO_PROXY": "No proxy configured"
+        "NO_PROXY": "No Proxy configured"
       },
       "FORWARD_EMAIL_TITLE": "Forward to Email",
       "FORWARD_EMAIL_SUB_TEXT": "Start forwarding your emails to the following email address.",

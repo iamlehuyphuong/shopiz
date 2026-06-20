@@ -748,6 +748,13 @@ const menuItems = computed(() => {
           to: accountScopedRoute('auditlogs_list'),
         },
         {
+          name: 'Settings Security',
+          label: `${t('SECURITY_SETTINGS.TITLE')} (SAML SSO)`,
+          icon: 'i-lucide-shield',
+          activeOn: ['security_settings_index'],
+          to: accountScopedRoute('security_settings_index'),
+        },
+        {
           name: 'Settings Custom Roles',
           label: t('SIDEBAR.CUSTOM_ROLES'),
           icon: 'i-lucide-shield-plus',

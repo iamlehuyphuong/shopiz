@@ -10,10 +10,13 @@ import axios from 'axios';
 import zalopersonalChannel from 'dashboard/api/channel/zalopersonalChannel';
 import PageHeader from '../../SettingsSubPageHeader.vue';
 import router from '../../../../index';
+import NextButton from 'dashboard/components-next/button/Button.vue';
+
 export default {
   components: {
     LoadingState,
     PageHeader,
+    NextButton,
   },
   setup() {
     const { accountId } = useAccount();
@@ -180,6 +183,7 @@ export default {
         expires_in: this.expires_in,
         inbox_name: this.pageName,
         avatar_url: this.avatar,
+        proxy_used: this.proxyUsed,
       };
     },
     createChannel() {
@@ -322,11 +326,7 @@ export default {
             </label>
           </div>
           <div class="w-full text-right">
-            <input
-              type="submit"
-              :value="$t('INBOX_MGMT.ADD.ZALO_OA.CREATE_INBOX')"
-              class="button"
-            />
+            <NextButton :label="$t('INBOX_MGMT.ADD.ZALO_OA.CREATE_INBOX')" />
           </div>
         </div>
       </form>
