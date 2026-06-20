@@ -149,28 +149,28 @@ export const SDK_CSS = `
 }
 
 .woot-widget-bubble.woot-widget--expanded {
-  bottom: 24px;
-  display: flex !important;
-  height: 90px !important;
-  width: 90px !important;
-  min-width: 90px !important;
-  min-height: 90px !important;
-  align-items: center !important;
-  justify-content: center !important;
+  width: auto !important;
+  border-radius: 100px !important;
+  padding: 0 16px !important;
 }
 
-.woot-widget-bubble.woot-widget--expanded div {
-  display: none !important;
+.woot-widget-bubble.woot-widget--expanded .woot-widget--bubble__text {
+  position: static !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+  color: white !important;
+  padding: 0 !important;
+  margin-left: 8px !important;
 }
 
-.woot-widget-bubble.woot-widget--expanded.woot-widget-bubble-color--lighter div{
-  color: var(--s-700);
+.woot-elements--left.woot-widget-bubble.woot-widget--expanded .woot-widget--bubble__text {
+  margin-left: 0 !important;
+  margin-right: 8px !important;
 }
 
-.woot-widget-bubble.woot-widget--expanded svg {
-  height: 20px;
-  margin: 14px 8px 14px 16px;
-  width: 20px;
+.woot-widget-bubble.woot-widget--expanded.woot-widget-bubble-color--lighter .woot-widget--bubble__text {
+  color: var(--s-700) !important;
 }
 
 .woot-widget-bubble.woot-elements--left {
@@ -182,7 +182,6 @@ export const SDK_CSS = `
 }
 
 .woot-widget-bubble svg {
-  all: revert;
   height: 24px;
   margin: 20px;
   width: 24px;

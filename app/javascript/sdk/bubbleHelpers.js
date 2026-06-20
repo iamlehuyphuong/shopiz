@@ -73,8 +73,7 @@ export const createBubbleIcon = ({
     title.id = 'woot-widget--launcher__text';
     title.className = 'woot-widget--bubble__text';
     title.innerText = window.$shopiz.launcherTitle;
-    title.style.background = widgetColor;
-    target.insertBefore(title, target.firstChild);
+    target.appendChild(title);
   }
 
   target.className = bubbleClassName;
