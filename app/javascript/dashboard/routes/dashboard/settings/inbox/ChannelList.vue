@@ -87,7 +87,32 @@ const channelList = computed(() => {
     },
   ];
 
-  return channels;
+  const globalConfig = window.globalConfig || {};
+  const isFalse = val => val === false || val === 'false';
+
+  const isGloballyDisabled = key =>
+    (key === 'facebook' && isFalse(globalConfig.ENABLE_CHANNEL_FACEBOOK)) ||
+    (key === 'zalo' && isFalse(globalConfig.ENABLE_CHANNEL_ZALO_OA)) ||
+    (key === 'zalopersonal' &&
+      isFalse(globalConfig.ENABLE_CHANNEL_ZALO_PERSONAL)) ||
+    (key === 'tiktok' && isFalse(globalConfig.ENABLE_CHANNEL_TIKTOK)) ||
+    (key === 'tiktok_shop' &&
+      isFalse(globalConfig.ENABLE_CHANNEL_TIKTOK_SHOP)) ||
+    (key === 'whatsapp' && isFalse(globalConfig.ENABLE_CHANNEL_WHATSAPP)) ||
+    (key === 'instagram' && isFalse(globalConfig.ENABLE_CHANNEL_INSTAGRAM)) ||
+    (key === 'telegram' && isFalse(globalConfig.ENABLE_CHANNEL_TELEGRAM)) ||
+    (key === 'line' && isFalse(globalConfig.ENABLE_CHANNEL_LINE)) ||
+    (key === 'twitter' && isFalse(globalConfig.ENABLE_CHANNEL_TWITTER)) ||
+    (key === 'website' && isFalse(globalConfig.ENABLE_CHANNEL_WEBSITE));
+
+  return channels.sort((a, b) => {
+    const aComingSoon = isGloballyDisabled(a.key) || ['voice'].includes(a.key);
+    const bComingSoon = isGloballyDisabled(b.key) || ['voice'].includes(b.key);
+
+    if (aComingSoon && !bComingSoon) return 1;
+    if (!aComingSoon && bComingSoon) return -1;
+    return 0;
+  });
 });
 
 const initializeEnabledFeatures = async () => {
