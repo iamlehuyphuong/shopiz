@@ -122,11 +122,11 @@ export default {
         }.bind(this);
         this.socket.onmessage = function (event) {
           const msgStr = event.data;
-          
+
           if (msgStr.startsWith('login_success:')) {
             const items = msgStr.split(':');
             const receivedSessionId = items[1];
-            
+
             // Kiểm tra session ID có khớp không
             if (receivedSessionId !== this.sessionId) {
               return;
@@ -137,13 +137,16 @@ export default {
               'Đăng nhập thành công. Đang tải danh sách hội thoại';
             this.hasLoginStarted = true;
             this.hasError = false;
-            
+
             const ownId = items[2];
             this.oa_id = ownId;
             this.access_token = this.oa_id;
             this.refresh_token = this.oa_id;
             this.expires_in = 90000;
-            console.log('Tài khoản vừa đăng nhập thành công có ID là (ownId):', ownId);
+            console.log(
+              'Tài khoản vừa đăng nhập thành công có ID là (ownId):',
+              ownId
+            );
 
             if (this.inbox && this.inbox.id) {
               try {
@@ -160,9 +163,11 @@ export default {
                     },
                   },
                 };
-                this.$store.dispatch('inboxes/updateInbox', payload).catch(error => {
-                  console.error('Failed to update inbox proxy:', error);
-                });
+                this.$store
+                  .dispatch('inboxes/updateInbox', payload)
+                  .catch(error => {
+                    console.error('Failed to update inbox proxy:', error);
+                  });
               } catch (error) {
                 console.error('Update inbox error:', error);
               }
@@ -170,11 +175,11 @@ export default {
           } else if (msgStr.startsWith('login_error:')) {
             const items = msgStr.split(':');
             const receivedSessionId = items[1];
-            
+
             if (receivedSessionId !== this.sessionId) {
               return;
             }
-            
+
             const errorMessage = items.slice(2).join(':'); // Mọi text phía sau là message
             useAlert(`Đăng nhập thất bại: ${errorMessage}`);
             this.hasLoginStarted = false; // Reset to allow regenerating QR

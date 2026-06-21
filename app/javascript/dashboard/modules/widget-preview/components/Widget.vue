@@ -246,12 +246,16 @@ const handleToggleWidget = () => {
               stroke-linecap="round"
               stroke-linejoin="round"
               class="lucide lucide-message-circle-more-icon lucide-message-circle-more mx-auto object-cover"
-              :class="isBubbleExpanded ? 'w-6 h-6' : 'w-8 h-8 absolute inset-0 m-auto'"
+              :class="
+                isBubbleExpanded ? 'w-6 h-6' : 'w-8 h-8 absolute inset-0 m-auto'
+              "
             >
-              <path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/>
-              <path d="M8 12h.01"/>
-              <path d="M12 12h.01"/>
-              <path d="M16 12h.01"/>
+              <path
+                d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"
+              />
+              <path d="M8 12h.01" />
+              <path d="M12 12h.01" />
+              <path d="M16 12h.01" />
             </svg>
             <div v-if="isBubbleExpanded" class="ltr:pl-2.5 rtl:pr-2.5">
               {{ getWidgetBubbleLauncherTitle }}
@@ -276,8 +280,8 @@ const handleToggleWidget = () => {
               stroke-linejoin="round"
               class="lucide lucide-x-icon lucide-x mx-auto object-cover absolute inset-0 m-auto w-8 h-8"
             >
-              <path d="M18 6 6 18"/>
-              <path d="m6 6 12 12"/>
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
             </svg>
           </button>
         </div>
