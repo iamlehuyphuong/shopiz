@@ -67,6 +67,9 @@ export default {
   },
   created() {
     // if (this.$route.query.code) this.getAccessToken();
+    if (this.inbox && this.inbox.provider_config && this.inbox.provider_config.proxy_used) {
+      this.proxyUrl = this.inbox.provider_config.proxy_used;
+    }
   },
   methods: {
     startLogin() {
