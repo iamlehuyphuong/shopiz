@@ -20,6 +20,10 @@ class Api::V1::Accounts::Channels::ZaloPersonalChannelsController < Api::V1::Acc
         zalo_inbox = Current.account.inboxes.create!(name: inbox_name, channel: channel)
         Avatar::AvatarFromUrlJob.perform_later(zalo_inbox, avatar_url)
       end
+
+      # Automatically sync friends after successful connection
+      ZaloPersonal::SyncFriendsJob.perform_later(zalo_inbox.id) if zalo_inbox
+
       render json: zalo_inbox.as_json
     rescue StandardError => e
       handle_exception(e)
