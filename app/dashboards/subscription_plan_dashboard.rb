@@ -7,7 +7,7 @@ class SubscriptionPlanDashboard < Administrate::BaseDashboard
     account_subscriptions: Field::HasMany,
     accounts: Field::HasMany,
     currency: Field::String,
-    duration_days: Field::Select.with_options(collection: [180, 365, 730]),
+    duration_days: Field::Select.with_options(collection: [7, 30, 180, 365, 730]),
     price_amount: Field::String.with_options(searchable: false),
     sku: Field::String,
     visible: Field::Boolean,
