@@ -33,7 +33,7 @@ export default {
       default: () => {},
     },
   },
-  emits: ['cancel', 'success'],
+  emits: ['cancel', 'success', 'duplicate-phone-merge'],
   setup() {
     return { v$: useVuelidate() };
   },
@@ -251,7 +251,14 @@ export default {
           if (error.data.includes('email')) {
             useAlert(this.$t('CONTACT_FORM.FORM.EMAIL_ADDRESS.DUPLICATE'));
           } else if (error.data.includes('phone_number')) {
-            useAlert(this.$t('CONTACT_FORM.FORM.PHONE_NUMBER.DUPLICATE'));
+            if (this.contact && this.contact.id && error.existingContactId) {
+              const ok = await this.$refs.confirmDialog.showConfirmation();
+              if (ok) {
+                this.$emit('duplicate-phone-merge', error.existingContactId);
+              }
+            } else {
+              useAlert(this.$t('CONTACT_FORM.FORM.PHONE_NUMBER.DUPLICATE'));
+            }
           }
         } else if (error instanceof ExceptionWithMessage) {
           useAlert(error.data);
@@ -434,5 +441,13 @@ export default {
         @click.prevent="onCancel"
       />
     </div>
+
+    <woot-confirm-modal
+      ref="confirmDialog"
+      title="Số điện thoại đã tồn tại"
+      description="Số điện thoại này đã được sử dụng bởi một liên hệ khác. Bạn có muốn gộp danh bạ ngay bây giờ không?"
+      confirm-text="Gộp liên hệ"
+      reject-text="Hủy"
+    />
   </form>
 </template>

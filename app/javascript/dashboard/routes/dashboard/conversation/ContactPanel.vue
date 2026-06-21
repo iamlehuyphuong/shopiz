@@ -127,7 +127,7 @@ onMounted(() => {
 });
 
 const errorMsg = ref('');
-onErrorCaptured((err) => {
+onErrorCaptured(err => {
   errorMsg.value = err.message + '\n' + err.stack;
   return false;
 });
@@ -135,7 +135,12 @@ onErrorCaptured((err) => {
 
 <template>
   <div class="w-full">
-    <div v-if="errorMsg" class="p-4 bg-red-100 text-red-800 text-xs whitespace-pre-wrap">{{ errorMsg }}</div>
+    <div
+      v-if="errorMsg"
+      class="p-4 bg-red-100 text-red-800 text-xs whitespace-pre-wrap"
+    >
+      {{ errorMsg }}
+    </div>
     <ContactInfo :contact="contact" :channel-type="channelType" />
     <div class="px-2 pb-8 list-group">
       <Draggable

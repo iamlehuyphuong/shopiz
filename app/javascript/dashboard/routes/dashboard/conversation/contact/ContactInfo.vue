@@ -513,6 +513,18 @@ export default {
         this.initiateVoiceCall();
       }
     },
+    async handleDuplicatePhoneMerge(existingContactId) {
+      this.toggleEditModal();
+      try {
+        await this.$store.dispatch('contacts/merge', {
+          childId: this.contact.id,
+          parentId: existingContactId,
+        });
+        useAlert(this.$t('MERGE_CONTACTS.FORM.SUCCESS_MESSAGE'));
+      } catch (error) {
+        useAlert(this.$t('MERGE_CONTACTS.FORM.ERROR_MESSAGE'));
+      }
+    },
   },
 };
 </script>
@@ -714,6 +726,7 @@ export default {
         :show="showEditModal"
         :contact="contact"
         @cancel="toggleEditModal"
+        @duplicate-phone-merge="handleDuplicatePhoneMerge"
       />
       <ContactMergeModal ref="mergeModal" :primary-contact="contact" />
     </div>

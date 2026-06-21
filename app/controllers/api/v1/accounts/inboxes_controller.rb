@@ -65,6 +65,19 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
     render status: :internal_server_error, json: { error: e.message }
   end
 
+  def sync_friends
+    unless @inbox.channel.is_a?(Channel::ZaloPersonal)
+      render status: :unprocessable_entity, json: { error: 'Channel does not support syncing friends' }
+      return
+    end
+
+    ZaloPersonal::SyncFriendsJob.perform_later(@inbox.id)
+    render status: :ok, json: { message: I18n.t('messages.friends_sync_initiated', default: 'Friends sync has been initiated successfully') }
+  rescue StandardError => e
+    render status: :internal_server_error, json: { error: e.message }
+  end
+
+
   def create
     ActiveRecord::Base.transaction do
       channel = create_channel

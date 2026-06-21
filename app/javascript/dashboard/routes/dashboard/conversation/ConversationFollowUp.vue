@@ -37,29 +37,47 @@ export default {
     formattedFollowUpTime() {
       if (!this.currentChat?.follow_up_at) return '';
       const d = new Date(this.currentChat.follow_up_at);
-      const time = d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+      const time = d.toLocaleTimeString('vi-VN', {
+        hour: '2-digit',
+        minute: '2-digit',
+      });
       const date = d.toLocaleDateString('vi-VN');
       return `${time} - ${date}`;
     },
     followUpTypes() {
       return [
-        { value: 'custom', label: this.$t('CONVERSATION_SIDEBAR.FOLLOW_UP.TYPE_CUSTOM') },
-        { value: 'weeks', label: this.$t('CONVERSATION_SIDEBAR.FOLLOW_UP.TYPE_WEEKS') },
-        { value: 'months', label: this.$t('CONVERSATION_SIDEBAR.FOLLOW_UP.TYPE_MONTHS') },
-        { value: 'years', label: this.$t('CONVERSATION_SIDEBAR.FOLLOW_UP.TYPE_YEARS') },
+        {
+          value: 'custom',
+          label: this.$t('CONVERSATION_SIDEBAR.FOLLOW_UP.TYPE_CUSTOM'),
+        },
+        {
+          value: 'weeks',
+          label: this.$t('CONVERSATION_SIDEBAR.FOLLOW_UP.TYPE_WEEKS'),
+        },
+        {
+          value: 'months',
+          label: this.$t('CONVERSATION_SIDEBAR.FOLLOW_UP.TYPE_MONTHS'),
+        },
+        {
+          value: 'years',
+          label: this.$t('CONVERSATION_SIDEBAR.FOLLOW_UP.TYPE_YEARS'),
+        },
       ];
     },
     unitLabel() {
-      if (this.selectedType === 'weeks') return this.$t('CONVERSATION_SIDEBAR.FOLLOW_UP.WEEKS_COUNT');
-      if (this.selectedType === 'months') return this.$t('CONVERSATION_SIDEBAR.FOLLOW_UP.MONTHS_COUNT');
-      if (this.selectedType === 'years') return this.$t('CONVERSATION_SIDEBAR.FOLLOW_UP.YEARS_COUNT');
+      if (this.selectedType === 'weeks')
+        return this.$t('CONVERSATION_SIDEBAR.FOLLOW_UP.WEEKS_COUNT');
+      if (this.selectedType === 'months')
+        return this.$t('CONVERSATION_SIDEBAR.FOLLOW_UP.MONTHS_COUNT');
+      if (this.selectedType === 'years')
+        return this.$t('CONVERSATION_SIDEBAR.FOLLOW_UP.YEARS_COUNT');
       return '';
     },
     defaultDate() {
       const d = new Date();
       d.setHours(9, 0, 0, 0);
       return d;
-    }
+    },
   },
   watch: {
     conversationId: {
@@ -146,7 +164,7 @@ export default {
       } finally {
         this.isUpdating = false;
       }
-    }
+    },
   },
 };
 </script>
@@ -156,7 +174,9 @@ export default {
     <!-- State 1: No Follow-Up and Not Editing -->
     <div v-if="!currentChat?.follow_up_at && !isEditing" class="relative">
       <div class="flex justify-between w-full mb-1">
-        <p class="m-0 text-sm text-n-slate-10">{{ $t('CONVERSATION_SIDEBAR.FOLLOW_UP.EMPTY_TEXT') }}</p>
+        <p class="m-0 text-sm text-n-slate-10">
+          {{ $t('CONVERSATION_SIDEBAR.FOLLOW_UP.EMPTY_TEXT') }}
+        </p>
       </div>
       <div class="flex items-center justify-end mt-1">
         <NextButton
@@ -171,18 +191,30 @@ export default {
     </div>
 
     <!-- State 2: Active Follow-Up (View Mode) -->
-    <div v-else-if="currentChat?.follow_up_at && !isEditing" class="flex flex-col gap-3">
+    <div
+      v-else-if="currentChat?.follow_up_at && !isEditing"
+      class="flex flex-col gap-3"
+    >
       <div class="flex flex-col gap-1">
-        <span class="text-xs font-medium text-slate-500 dark:text-slate-400">{{ $t('CONVERSATION_SIDEBAR.FOLLOW_UP.TIME_LABEL') }}</span>
+        <span class="text-xs font-medium text-slate-500 dark:text-slate-400">{{
+          $t('CONVERSATION_SIDEBAR.FOLLOW_UP.TIME_LABEL')
+        }}</span>
         <span class="text-sm font-medium text-slate-800 dark:text-slate-200">
           {{ formattedFollowUpTime }}
         </span>
       </div>
-      <div v-if="currentChat.follow_up_remind_before === 1" class="flex flex-col gap-1">
-        <span class="text-xs font-medium text-slate-500 dark:text-slate-400">{{ $t('CONVERSATION_SIDEBAR.FOLLOW_UP.REMIND_LABEL') }}</span>
-        <span class="text-sm font-medium text-slate-800 dark:text-slate-200">{{ $t('CONVERSATION_SIDEBAR.FOLLOW_UP.REMIND_VALUE') }}</span>
+      <div
+        v-if="currentChat.follow_up_remind_before === 1"
+        class="flex flex-col gap-1"
+      >
+        <span class="text-xs font-medium text-slate-500 dark:text-slate-400">{{
+          $t('CONVERSATION_SIDEBAR.FOLLOW_UP.REMIND_LABEL')
+        }}</span>
+        <span class="text-sm font-medium text-slate-800 dark:text-slate-200">{{
+          $t('CONVERSATION_SIDEBAR.FOLLOW_UP.REMIND_VALUE')
+        }}</span>
       </div>
-      
+
       <div class="flex items-center gap-2 mt-1">
         <NextButton
           sm
@@ -223,8 +255,8 @@ export default {
           {{ unitLabel }}
         </label>
         <input
-          type="number"
           v-model.number="unitCount"
+          type="number"
           min="1"
           class="w-full h-10 px-3 text-sm border rounded-md border-slate-200 bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-woot-500 dark:bg-slate-900 dark:border-slate-700 dark:text-slate-200"
         />
@@ -245,7 +277,11 @@ export default {
       </div>
 
       <div class="flex items-center gap-2 mt-1">
-        <input type="checkbox" v-model="remindBefore" class="w-4 h-4 mt-0.5 self-start text-woot-500 rounded border-slate-300 focus:ring-woot-500 dark:border-slate-600 dark:bg-slate-900" />
+        <input
+          v-model="remindBefore"
+          type="checkbox"
+          class="w-4 h-4 mt-0.5 self-start text-woot-500 rounded border-slate-300 focus:ring-woot-500 dark:border-slate-600 dark:bg-slate-900"
+        />
         <div class="flex flex-col gap-0.5">
           <span class="text-sm font-medium text-slate-800 dark:text-slate-200">
             {{ $t('CONVERSATION_SIDEBAR.FOLLOW_UP.REMIND_BEFORE') }}

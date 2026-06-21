@@ -48,7 +48,9 @@ const useConversationSidebarItemsOrder = uiSettings => {
       if (!itemsOrderCopy.find(i => i.name === item.name)) {
         if (index > 0) {
           const prevItem = DEFAULT_CONVERSATION_SIDEBAR_ITEMS_ORDER[index - 1];
-          const prevIndexInCopy = itemsOrderCopy.findIndex(i => i.name === prevItem.name);
+          const prevIndexInCopy = itemsOrderCopy.findIndex(
+            i => i.name === prevItem.name
+          );
           if (prevIndexInCopy !== -1) {
             itemsOrderCopy.splice(prevIndexInCopy + 1, 0, item);
             return;

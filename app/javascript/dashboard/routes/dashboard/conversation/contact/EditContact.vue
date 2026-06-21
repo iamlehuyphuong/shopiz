@@ -16,7 +16,7 @@ export default {
       default: () => ({}),
     },
   },
-  emits: ['cancel', 'update:show'],
+  emits: ['cancel', 'update:show', 'duplicate-phone-merge'],
   computed: {
     ...mapGetters({
       uiFlags: 'contacts/getUIFlags',
@@ -45,6 +45,10 @@ export default {
         this.contact.id
       );
     },
+    onDuplicatePhoneMerge(existingContactId) {
+      this.$emit('duplicate-phone-merge', existingContactId);
+      this.$emit('cancel');
+    },
   },
 };
 </script>
@@ -68,6 +72,7 @@ export default {
         :on-submit="onSubmit"
         @success="onSuccess"
         @cancel="onCancel"
+        @duplicate-phone-merge="onDuplicatePhoneMerge"
       />
     </div>
   </woot-modal>

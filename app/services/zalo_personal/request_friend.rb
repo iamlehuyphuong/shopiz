@@ -7,10 +7,14 @@ class ZaloPersonal::RequestFriend
 
   def execute
     return { status: false } unless @inbox&.zalo_personal?
-    return { status: false } unless uid = load_user_id
+    
+    user_info = load_user_info
+    return { status: false } unless user_info
+
+    return { status: true, already_friend: true } if user_info['isFr']
 
     body = {
-      userId: uid,
+      userId: user_info['uid'],
       ownId: @inbox.channel.oa_id,
       message: @message
     }
@@ -24,7 +28,7 @@ class ZaloPersonal::RequestFriend
     { status: response['success'] }
   end
 
-  def load_user_id
+  def load_user_info
     body = {
       phone: @phone_number,
       ownId: @inbox.channel.oa_id
@@ -37,7 +41,7 @@ class ZaloPersonal::RequestFriend
     )
     return unless res['success']
 
-    res['data']['uid']
+    res['data']
   end
 
   def info_url

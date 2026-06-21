@@ -7,6 +7,9 @@ class ContactMergeAction
     # while the contact also update his email via email collect box
     return @base_contact if base_contact.id == mergee_contact.id
 
+    @base_is_livechat = from_livechat?(@base_contact)
+    @mergee_is_livechat = from_livechat?(@mergee_contact)
+
     ActiveRecord::Base.transaction do
       validate_contacts
       merge_conversations
@@ -19,6 +22,10 @@ class ContactMergeAction
   end
 
   private
+
+  def from_livechat?(contact)
+    ContactInbox.joins(:inbox).exists?(contact_id: contact.id, inboxes: { channel_type: 'Channel::WebWidget' })
+  end
 
   def validate_contacts
     return if belongs_to_account?(@base_contact) && belongs_to_account?(@mergee_contact)
@@ -61,6 +68,14 @@ class ContactMergeAction
       merged_attributes['additional_attributes']['sources'] = merged_sources.uniq.compact_blank
     elsif mergee_contact_attributes.dig('additional_attributes', 'sources').is_a?(Array)
       merged_attributes['additional_attributes']['sources'] = mergee_contact_attributes['additional_attributes']['sources'].uniq.compact_blank
+    end
+
+    if @base_is_livechat && !@mergee_is_livechat
+      merged_attributes['name'] = mergee_contact_attributes['name'] if mergee_contact_attributes['name'].present?
+      merged_attributes['email'] = mergee_contact_attributes['email'] if mergee_contact_attributes['email'].present?
+    elsif !@base_is_livechat && @mergee_is_livechat
+      merged_attributes['name'] = base_contact_attributes['name'] if base_contact_attributes['name'].present?
+      merged_attributes['email'] = base_contact_attributes['email'] if base_contact_attributes['email'].present?
     end
 
     @mergee_contact.reload.destroy!

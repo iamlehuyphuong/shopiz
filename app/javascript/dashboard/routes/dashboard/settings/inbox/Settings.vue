@@ -135,6 +135,7 @@ export default {
       autoLabelEnabled: false,
       zaloReauthorizeModalVisible: false,
       isCheckingConnection: false,
+      isSyncingFriends: false,
       zaloPersonalDefaultFriendRequestMessage: '',
       zaloPersonalDefaultGreetingMessage: '',
     };
@@ -484,6 +485,23 @@ export default {
         useAlert(this.$t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.CHECK_ERROR'));
       } finally {
         this.isCheckingConnection = false;
+      }
+    },
+    async syncZaloPersonalFriends() {
+      if (this.isSyncingFriends) return;
+
+      this.isSyncingFriends = true;
+      try {
+        await InboxesAPI.syncFriends(this.inbox.id);
+        useAlert(
+          this.$t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.SYNC_FRIENDS_SUCCESS')
+        );
+      } catch (error) {
+        useAlert(
+          this.$t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.SYNC_FRIENDS_ERROR')
+        );
+      } finally {
+        this.isSyncingFriends = false;
       }
     },
     fetchSharedData() {
@@ -890,8 +908,14 @@ export default {
           :action-label-secondary="
             $t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.RECONNECT_BUTTON')
           "
+          :action-label-tertiary="
+            isSyncingFriends
+              ? $t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.CHECKING')
+              : $t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.SYNC_FRIENDS_BUTTON')
+          "
           @action="checkZaloPersonalConnection"
           @secondary-action="zaloReauthorizeModalVisible = true"
+          @tertiary-action="syncZaloPersonalFriends"
         >
           {{ $t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.CONNECTED') }}
         </Banner>

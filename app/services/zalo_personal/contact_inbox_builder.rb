@@ -14,11 +14,23 @@ class ZaloPersonal::ContactInboxBuilder
       phone_number: @phone_number
     }
 
-    ::ContactInboxWithContactBuilder.new(
+    contact_inbox = ::ContactInboxWithContactBuilder.new(
       source_id: data['uid'],
       inbox: @inbox,
       contact_attributes: contact_attributes
     ).perform
+
+    if contact_inbox.contact_id != @contact.id
+      ContactMergeAction.new(
+        account: @inbox.account,
+        base_contact: @contact,
+        mergee_contact: contact_inbox.contact
+      ).perform
+
+      contact_inbox.reload
+    end
+
+    contact_inbox
   end
 
   def load_user_info
