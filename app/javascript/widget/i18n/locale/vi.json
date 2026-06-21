@@ -18,20 +18,20 @@
     }
   },
   "TEAM_AVAILABILITY": {
-    "ONLINE": "Chúng tôi đang trực tuyến",
-    "OFFLINE": "Hiện tại chúng tôi đang vắng mặt",
+    "ONLINE": "Chúng tôi đang sẵn sàng hỗ trợ",
+    "OFFLINE": "Chúng tôi luôn sẵn sàng hỗ trợ",
     "BACK_AS_SOON_AS_POSSIBLE": "Chúng tôi sẽ quay lại sớm nhất có thể"
   },
   "REPLY_TIME": {
     "IN_A_FEW_MINUTES": "Thường trả lời sau vài phút",
     "IN_A_FEW_HOURS": "Thường trả lời sau vài giờ",
     "IN_A_DAY": "Thường trả lời trong một ngày",
-    "BACK_IN_HOURS": "Chúng tôi sẽ trực tuyến trở lại sau {n} giờ",
-    "BACK_IN_MINUTES": "Chúng tôi sẽ trực tuyến trở lại sau {time} phút",
-    "BACK_AT_TIME": "Chúng tôi sẽ trực tuyến trở lại lúc {time}",
-    "BACK_ON_DAY": "Chúng tôi sẽ trực tuyến trở lại vào {day}",
-    "BACK_TOMORROW": "Chúng tôi sẽ trực tuyến trở lại vào ngày mai",
-    "BACK_IN_SOME_TIME": "Chúng tôi sẽ trực tuyến trở lại sớm"
+    "BACK_IN_HOURS": "Chúng tôi sẽ phản hồi sau {n} giờ",
+    "BACK_IN_MINUTES": "Chúng tôi sẽ phản hồi sau {time} phút",
+    "BACK_AT_TIME": "Chúng tôi sẽ phản hồi lúc {time}",
+    "BACK_ON_DAY": "Chúng tôi sẽ phản hồi vào {day}",
+    "BACK_TOMORROW": "Chúng tôi sẽ phản hồi vào ngày mai",
+    "BACK_IN_SOME_TIME": "Chúng tôi sẽ phản hồi sớm"
   },
   "DAY_NAMES": {
     "SUNDAY": "Chủ Nhật",
