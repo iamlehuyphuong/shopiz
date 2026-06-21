@@ -93,6 +93,17 @@ class Api::V1::Accounts::ContactsController < Api::V1::Accounts::BaseController
 
   def update
     @contact.assign_attributes(contact_update_params)
+    if @contact.invalid?
+      existing_contact = find_existing_duplicate_contact(@contact)
+      if existing_contact
+        return render json: {
+          message: @contact.errors.full_messages.join(', '),
+          attributes: @contact.errors.attribute_names,
+          existing_contact_id: existing_contact.id
+        }, status: :unprocessable_entity
+      end
+    end
+
     @contact.save!
     process_avatar_from_url
   end
@@ -215,6 +226,16 @@ class Api::V1::Accounts::ContactsController < Api::V1::Accounts::BaseController
                                else
                                  true
                                end
+  end
+
+  def find_existing_duplicate_contact(contact)
+    if contact.errors.added?(:phone_number, :taken)
+      Current.account.contacts.find_by(phone_number: contact.phone_number)
+    elsif contact.errors.added?(:email, :taken)
+      Current.account.contacts.find_by(email: contact.email)
+    elsif contact.errors.added?(:identifier, :taken)
+      Current.account.contacts.find_by(identifier: contact.identifier)
+    end
   end
 
   def fetch_contact

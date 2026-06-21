@@ -5,6 +5,7 @@ import { useI18n } from 'vue-i18n';
 import { useAlert } from 'dashboard/composables';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import TextArea from 'next/textarea/TextArea.vue';
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
   contactId: { type: [String, Number], required: true },
@@ -15,6 +16,7 @@ const emit = defineEmits(['close']);
 
 const store = useStore();
 const { t } = useI18n();
+const router = useRouter();
 
 const showModal = ref(false);
 const selectedInboxId = ref('');
@@ -108,7 +110,9 @@ const handleSubmit = async () => {
     closeModal();
 
     if (conversationId) {
-      window.location = `/app/accounts/${store.getters.getCurrentAccountId}/conversations/${conversationId}`;
+      router.push({
+        path: `/app/accounts/${store.getters.getCurrentAccountId}/conversations/${conversationId}`,
+      });
     }
   } catch (error) {
     const errorMessage =

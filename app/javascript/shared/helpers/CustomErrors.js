@@ -1,8 +1,9 @@
 /* eslint-disable max-classes-per-file */
 export class DuplicateContactException extends Error {
-  constructor(data) {
+  constructor(data, existingContactId = null) {
     super('DUPLICATE_CONTACT');
     this.data = data;
+    this.existingContactId = existingContactId;
     this.name = 'DuplicateContactException';
   }
 }
