@@ -144,6 +144,10 @@ class User < ApplicationRecord
     administrator? ? Current.account.inboxes : inboxes.where(account_id: Current.account.id)
   end
 
+  def globally_online
+    account_users.any?(&:online_presence?)
+  end
+
   def serializable_hash(options = nil)
     super(options).merge(confirmed: confirmed?)
   end
