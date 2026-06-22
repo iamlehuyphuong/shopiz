@@ -9,5 +9,7 @@ class SuperAdmin::BillingHistoriesController < SuperAdmin::ApplicationController
   #     per(10)
   # end
 
-  # Define a custom finder to handle the "subclasses" of BillingHistories if any
+  def scoped_resource
+    resource_class.where('price_amount > 0')
+  end
 end

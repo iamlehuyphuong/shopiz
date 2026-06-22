@@ -34,8 +34,8 @@ class AccountDashboard < Administrate::BaseDashboard
     locale: Field::Select.with_options(collection: LANGUAGES_CONFIG.map { |_x, y| y[:iso_639_1_code] }),
     status: Field::Select.with_options(collection: [%w[Active active], %w[Suspended suspended]]),
     account_users: Field::HasMany,
-    custom_attributes: Field::String,
-    plan_name: Field::String,
+    custom_attributes: Field::String.with_options(searchable: false),
+    plan_name: Field::String.with_options(searchable: false),
     subscription_end_at: Field::DateTime,
     onboarding: Field::HasOne
   }.merge(enterprise_attribute_types).freeze
