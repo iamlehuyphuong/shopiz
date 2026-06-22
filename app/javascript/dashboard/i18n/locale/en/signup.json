@@ -47,49 +47,77 @@
     "SUBMIT": "Create account",
     "HAVE_AN_ACCOUNT": "Already have an account?",
     "ONBOARDING": {
-      "WELCOME_TITLE": "Welcome to Shopiz 👋",
-      "WELCOME_DESCRIPTION": "Please provide some basic information so we can serve you better!",
-      "NEXT_STEP": "Continue",
-      "GO_BACK": "Go back",
-      "BUSINESS_NAME": {
-        "LABEL": "Business / Store Name",
-        "PLACEHOLDER": "Enter your business name",
-        "ERROR": "Please enter your business name"
-      },
-      "INDUSTRY": {
-        "LABEL": "Industry",
-        "PLACEHOLDER": "Select your industry",
-        "ERROR": "Please select your industry",
-        "OPTIONS": {
+      "STEP_PROGRESS": "Step {step}/4",
+      "STEP_1": {
+        "TITLE": "Welcome to Shopiz! 🎉",
+        "SUBTITLE": "Please provide some basic information so we can optimize your workspace.",
+        "BUSINESS_NAME_LABEL": "What is your Store / Business Name?",
+        "BUSINESS_NAME_PLACEHOLDER": "Enter store name... (e.g. Shopiz Fashion)",
+        "BUSINESS_NAME_ERROR": "Please enter your store name",
+        "INDUSTRY_LABEL": "What is your main industry? (Select 1)",
+        "INDUSTRY_ERROR": "Please select an industry",
+        "INDUSTRY_OPTIONS": {
           "FASHION": "Fashion & Accessories",
-          "HEALTH_BEAUTY": "Health & Beauty",
-          "F_B": "F&B (Restaurants, Cafe)",
-          "TECH": "Technology / Electronics",
-          "OTHER": "Other"
-        }
+          "BEAUTY": "Beauty & Personal Care",
+          "F_B": "Food & Beverage",
+          "MOM_BABY": "Mom & Baby",
+          "SPA": "Spa & Salon",
+          "TECH": "Electronics & Technology",
+          "HOME": "Home & Lifestyle",
+          "EDU": "Education & Training",
+          "HEALTH": "Health & Supplements",
+          "OTHER": "Other..."
+        },
+        "OTHER_PLACEHOLDER": "Enter other industry...",
+        "NEXT_BUTTON": "Continue"
       },
-      "COMPANY_SIZE": {
-        "LABEL": "Company Size",
-        "PLACEHOLDER": "Select your company size",
-        "ERROR": "Please select your company size",
-        "OPTIONS": {
-          "SIZE_1_5": "1-5 employees",
-          "SIZE_6_20": "6-20 employees",
-          "SIZE_21_50": "21-50 employees",
-          "SIZE_50_PLUS": "50+ employees"
-        }
+      "STEP_2": {
+        "TITLE": "What is your main goal using Shopiz?",
+        "SUBTITLE": "Select your top priorities so we can suggest features to solve your problems. (You can select multiple)",
+        "GOALS_ERROR": "Please select at least one goal",
+        "GOALS_OPTIONS": {
+          "MANAGE_MESSAGES": "Centralize messages from multiple channels (Fanpage, Zalo...)",
+          "PREVENT_MISSED": "Prevent missed messages and comments from customers",
+          "TRACK_PERFORMANCE": "Track and evaluate agent performance",
+          "REMARKETING": "Manage info, tag, and remarket to existing customers",
+          "AUTOMATION": "Automate customer support (Chatbot, Auto-reply)"
+        },
+        "NEXT_BUTTON": "Continue"
       },
-      "SOURCE": {
-        "LABEL": "How did you hear about Shopiz?",
-        "PLACEHOLDER": "Select an option",
-        "ERROR": "Please select an option",
-        "OPTIONS": {
-          "FACEBOOK": "Facebook",
-          "TIKTOK": "TikTok",
-          "GOOGLE": "Google",
-          "REFERRAL": "Referral",
-          "OTHER": "Other"
-        }
+      "STEP_3": {
+        "TITLE": "What is your current operational scale?",
+        "SUBTITLE": "Share more about your scale so we can prepare the best server resources for you.",
+        "TEAM_SIZE_LABEL": "Current number of agents:",
+        "TEAM_SIZE_ERROR": "Please select team size",
+        "TEAM_SIZE_OPTIONS": {
+          "UNDER_5": "Under 5 people",
+          "5_TO_10": "5 - 10 people",
+          "OVER_10": "Over 10 people"
+        },
+        "DAILY_MESSAGES_LABEL": "Average daily messages to process:",
+        "DAILY_MESSAGES_ERROR": "Please select daily message volume",
+        "DAILY_MESSAGES_OPTIONS": {
+          "UNDER_100": "Under 100 messages",
+          "100_TO_500": "100 - 500 messages",
+          "OVER_500": "Over 500 messages"
+        },
+        "NEXT_BUTTON": "Continue"
+      },
+      "STEP_4": {
+        "TITLE": "Which sales software or CRM are you using?",
+        "SUBTITLE": "Shopiz supports powerful data synchronization, helping you look up orders and manage customer info right in the chat interface.",
+        "CRM_ERROR": "Please select an option",
+        "CRM_OPTIONS": {
+          "NONE": "None (I don't use any)",
+          "ECOMMERCE": "E-commerce Website",
+          "KIOTVIET": "KiotViet",
+          "SAPO": "Sapo",
+          "HARAVAN": "Haravan",
+          "NHANHVN": "Nhanh.vn",
+          "OTHER": "Other..."
+        },
+        "OTHER_PLACEHOLDER": "Enter other software name...",
+        "FINISH_BUTTON": "Finish"
       }
     }
   }
