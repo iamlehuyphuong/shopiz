@@ -47,6 +47,8 @@
     "SUBMIT": "Create account",
     "HAVE_AN_ACCOUNT": "Already have an account?",
     "ONBOARDING": {
+      "WELCOME_TITLE": "Welcome to Shopiz 👋",
+      "WELCOME_DESCRIPTION": "Please provide some basic information so we can serve you better!",
       "NEXT_STEP": "Continue",
       "GO_BACK": "Go back",
       "BUSINESS_NAME": {
