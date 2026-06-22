@@ -48,13 +48,15 @@
     "HAVE_AN_ACCOUNT": "Already have an account?",
     "ONBOARDING": {
       "STEP_PROGRESS": "Step {step}/4",
+      "GO_BACK": "Go back",
       "STEP_1": {
         "TITLE": "Welcome to Shopiz! 🎉",
         "SUBTITLE": "Please provide some basic information so we can optimize your workspace.",
+        "LANGUAGE_LABEL": "Choose your language:",
         "BUSINESS_NAME_LABEL": "What is your Store / Business Name?",
         "BUSINESS_NAME_PLACEHOLDER": "Enter store name... (e.g. Shopiz Fashion)",
         "BUSINESS_NAME_ERROR": "Please enter your store name",
-        "INDUSTRY_LABEL": "What is your main industry? (Select 1)",
+        "INDUSTRY_LABEL": "What is your main industry?",
         "INDUSTRY_ERROR": "Please select an industry",
         "INDUSTRY_OPTIONS": {
           "FASHION": "Fashion & Accessories",
@@ -66,7 +68,7 @@
           "HOME": "Home & Lifestyle",
           "EDU": "Education & Training",
           "HEALTH": "Health & Supplements",
-          "OTHER": "Other..."
+          "OTHER": "Other"
         },
         "OTHER_PLACEHOLDER": "Enter other industry...",
         "NEXT_BUTTON": "Continue"
@@ -108,13 +110,13 @@
         "SUBTITLE": "Shopiz supports powerful data synchronization, helping you look up orders and manage customer info right in the chat interface.",
         "CRM_ERROR": "Please select an option",
         "CRM_OPTIONS": {
-          "NONE": "None (I don't use any)",
+          "NONE": "I don't use any",
           "ECOMMERCE": "E-commerce Website",
           "KIOTVIET": "KiotViet",
           "SAPO": "Sapo",
           "HARAVAN": "Haravan",
           "NHANHVN": "Nhanh.vn",
-          "OTHER": "Other..."
+          "OTHER": "Other"
         },
         "OTHER_PLACEHOLDER": "Enter other software name...",
         "FINISH_BUTTON": "Finish"

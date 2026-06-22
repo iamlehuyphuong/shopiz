@@ -36,7 +36,8 @@ class AccountDashboard < Administrate::BaseDashboard
     account_users: Field::HasMany,
     custom_attributes: Field::String,
     plan_name: Field::String,
-    subscription_end_at: Field::DateTime
+    subscription_end_at: Field::DateTime,
+    onboarding: Field::HasOne
   }.merge(enterprise_attribute_types).freeze
 
   # COLLECTION_ATTRIBUTES
@@ -74,6 +75,7 @@ class AccountDashboard < Administrate::BaseDashboard
     status
     conversations
     account_users
+    onboarding
   ] + enterprise_show_page_attributes).freeze
 
   # FORM_ATTRIBUTES

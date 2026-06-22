@@ -4,12 +4,15 @@ import { useVuelidate } from '@vuelidate/core';
 import { required, minLength } from '@vuelidate/validators';
 import Modal from 'dashboard/components/Modal.vue';
 import FormInput from 'v3/components/Form/Input.vue';
+import FormSelect from 'v3/components/Form/Select.vue';
 import WithLabel from 'v3/components/Form/WithLabel.vue';
 import NextButton from 'next/button/Button.vue';
 import { useStore } from 'dashboard/composables/store';
 import { useAccount } from 'dashboard/composables/useAccount';
 import { useAlert } from 'dashboard/composables';
 import { useI18n } from 'vue-i18n';
+import { useConfig } from 'dashboard/composables/useConfig';
+import { useUISettings } from 'dashboard/composables/useUISettings';
 
 const props = defineProps({
   show: {
@@ -21,14 +24,31 @@ const props = defineProps({
 const emit = defineEmits(['completed']);
 const store = useStore();
 const { currentAccount } = useAccount();
-const { t } = useI18n();
+const { t, locale } = useI18n();
+const { updateUISettings } = useUISettings();
+const { enabledLanguages } = useConfig();
 
 const step = ref(1);
 const isUpdating = ref(false);
 
+const currentLanguage = computed({
+  get: () => locale.value,
+  set: async (val) => {
+    locale.value = val;
+    await updateUISettings({ locale: val });
+  }
+});
+
+const languageOptions = computed(() => {
+  return (enabledLanguages || []).map(l => ({
+    label: l.name,
+    value: l.iso_639_1_code
+  }));
+});
+
 // Form fields
 const accountName = ref('');
-const industry = ref('');
+const industry = ref('other');
 const industryOther = ref('');
 
 const primaryGoals = ref([]);
@@ -36,7 +56,7 @@ const primaryGoals = ref([]);
 const teamSize = ref('');
 const dailyMessages = ref('');
 
-const currentCrm = ref('');
+const currentCrm = ref('other');
 const currentCrmOther = ref('');
 
 onMounted(() => {
@@ -119,6 +139,14 @@ const v2$ = useVuelidate(rulesStep2, { primaryGoals });
 const v3$ = useVuelidate(rulesStep3, { teamSize, dailyMessages });
 const v4$ = useVuelidate(rulesStep4, { currentCrm, currentCrmOther });
 
+const isNextDisabled = computed(() => {
+  if (step.value === 1) return v1$.value.$invalid;
+  if (step.value === 2) return v2$.value.$invalid;
+  if (step.value === 3) return v3$.value.$invalid;
+  if (step.value === 4) return v4$.value.$invalid;
+  return false;
+});
+
 // Handlers
 const toggleGoal = (value) => {
   if (primaryGoals.value.includes(value)) {
@@ -129,7 +157,25 @@ const toggleGoal = (value) => {
   v2$.value.$touch();
 };
 
-const nextStep = () => {
+const currentErrorMessage = computed(() => {
+  if (step.value === 1) {
+    if (v1$.value.accountName.$error) return t('REGISTER.ONBOARDING.STEP_1.BUSINESS_NAME_ERROR');
+    if (v1$.value.industry.$error || v1$.value.industryOther.$error) return t('REGISTER.ONBOARDING.STEP_1.INDUSTRY_ERROR');
+  }
+  if (step.value === 2) {
+    if (v2$.value.primaryGoals.$error) return t('REGISTER.ONBOARDING.STEP_2.GOALS_ERROR');
+  }
+  if (step.value === 3) {
+    if (v3$.value.teamSize.$error) return t('REGISTER.ONBOARDING.STEP_3.TEAM_SIZE_ERROR');
+    if (v3$.value.dailyMessages.$error) return t('REGISTER.ONBOARDING.STEP_3.DAILY_MESSAGES_ERROR');
+  }
+  if (step.value === 4) {
+    if (v4$.value.currentCrm.$error || v4$.value.currentCrmOther.$error) return t('REGISTER.ONBOARDING.STEP_4.CRM_ERROR');
+  }
+  return '';
+});
+
+const handleNext = async () => {
   if (step.value === 1) {
     v1$.value.$touch();
     if (!v1$.value.$invalid) step.value = 2;
@@ -139,6 +185,8 @@ const nextStep = () => {
   } else if (step.value === 3) {
     v3$.value.$touch();
     if (!v3$.value.$invalid) step.value = 4;
+  } else if (step.value === 4) {
+    submit();
   }
 };
 
@@ -178,262 +226,206 @@ const submit = async () => {
     :close-on-backdrop-click="false"
     :show-close-button="false"
   >
-    <div class="px-2 pb-2 pt-6 flex flex-col gap-6">
-      <!-- Header -->
-      <div class="text-center">
-        <div class="inline-flex items-center justify-center px-3 py-1 bg-n-alpha-black2 text-n-slate-11 text-[13px] font-medium tracking-wide rounded-full mb-4">
-          {{ $t('REGISTER.ONBOARDING.STEP_PROGRESS', { step }) }}
-        </div>
-        <h2 class="text-2xl font-semibold text-n-slate-12 mb-2">
-          {{ $t(`REGISTER.ONBOARDING.STEP_${step}.TITLE`) }}
+    <form class="flex flex-col w-full h-[520px] overflow-hidden" @submit.prevent="handleNext">
+      
+      <!-- Fixed Header -->
+      <div class="p-2 flex flex-col gap-4">
+        <h2 class="text-[22px] font-semibold text-n-slate-12 text-center">
+          {{ $t('REGISTER.ONBOARDING.STEP_1.TITLE') }}
         </h2>
-        <p class="text-n-slate-11">
-          {{ $t(`REGISTER.ONBOARDING.STEP_${step}.SUBTITLE`) }}
-        </p>
+        
+        <!-- Process steps bar -->
+        <div class="flex items-center gap-2">
+          <div 
+            v-for="i in 4" 
+            :key="i"
+            class="h-1.5 flex-1 rounded-full transition-colors duration-300"
+            :class="i <= step ? 'bg-n-orange' : 'bg-n-alpha-black2'"
+          ></div>
+        </div>
       </div>
 
-      <!-- STEP 1 -->
-      <form v-if="step === 1" class="space-y-4" @submit.prevent="nextStep">
-        <FormInput
-          v-model="accountName"
-          type="text"
-          name="account_name"
-          :class="{ error: v1$.accountName.$error }"
-          :label="$t('REGISTER.ONBOARDING.STEP_1.BUSINESS_NAME_LABEL')"
-          :placeholder="$t('REGISTER.ONBOARDING.STEP_1.BUSINESS_NAME_PLACEHOLDER')"
-          :has-error="v1$.accountName.$error"
-          :error-message="$t('REGISTER.ONBOARDING.STEP_1.BUSINESS_NAME_ERROR')"
-          @blur="v1$.accountName.$touch"
-        />
-
-        <WithLabel
-          :label="$t('REGISTER.ONBOARDING.STEP_1.INDUSTRY_LABEL')"
-          name="industry"
-          :has-error="v1$.industry.$error || v1$.industryOther.$error"
-          :error-message="$t('REGISTER.ONBOARDING.STEP_1.INDUSTRY_ERROR')"
-        >
-          <div class="flex flex-wrap gap-2 pt-1">
-            <button
-              v-for="option in industryOptions"
-              :key="option.value"
-              type="button"
-              class="px-3.5 py-1.5 rounded-full text-[13px] font-medium border transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-n-orange/50"
-              :class="[
-                industry === option.value
-                  ? 'bg-n-orange border-n-orange text-white shadow-sm'
-                  : 'bg-n-alpha-black2 border-n-strong text-n-slate-11 hover:bg-n-alpha-black3 hover:text-n-slate-12',
-              ]"
-              @click="
-                industry = option.value;
-                if(industry !== 'other') industryOther = '';
-                v1$.industry.$touch();
-              "
-            >
-              {{ option.label }}
-            </button>
-          </div>
-          <div v-if="industry === 'other'" class="mt-3">
-            <FormInput
-              v-model="industryOther"
-              type="text"
-              name="industry_other"
-              :class="{ error: v1$.industryOther.$error }"
-              :placeholder="$t('REGISTER.ONBOARDING.STEP_1.OTHER_PLACEHOLDER')"
-              @blur="v1$.industryOther.$touch"
+      <!-- Scrollable Body -->
+      <div class="flex-1 overflow-y-auto p-2">
+        
+        <!-- STEP 1 -->
+        <div v-if="step === 1" class="space-y-5">
+          <div>
+            <h3 class="text-[15px] font-semibold text-n-slate-12 mb-2">{{ $t('REGISTER.ONBOARDING.STEP_1.LANGUAGE_LABEL') || 'Chọn ngôn ngữ của bạn:' }}</h3>
+            <FormSelect
+              v-model="currentLanguage"
+              :options="languageOptions"
+              name="language"
             />
           </div>
-        </WithLabel>
 
-        <div class="pt-4">
-          <NextButton
-            lg
-            type="submit"
-            class="w-full font-medium"
-            :label="$t('REGISTER.ONBOARDING.STEP_1.NEXT_BUTTON')"
-            :disabled="v1$.$invalid"
-          />
-        </div>
-      </form>
+          <div>
+            <h3 class="text-[15px] font-semibold text-n-slate-12 mb-2">{{ $t('REGISTER.ONBOARDING.STEP_1.BUSINESS_NAME_LABEL') }}</h3>
+            <FormInput
+              v-model="accountName"
+              type="text"
+              name="account_name"
+              :class="{ error: v1$.accountName.$error }"
+              :placeholder="$t('REGISTER.ONBOARDING.STEP_1.BUSINESS_NAME_PLACEHOLDER')"
+              :has-error="v1$.accountName.$error"
+              @blur="v1$.accountName.$touch"
+            />
+          </div>
 
-      <!-- STEP 2 -->
-      <form v-if="step === 2" class="space-y-4" @submit.prevent="nextStep">
-        <div class="flex flex-col gap-2">
-          <label
-            v-for="option in goalsOptions"
-            :key="option.value"
-            class="flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-colors"
-            :class="[
-              primaryGoals.includes(option.value)
-                ? 'bg-n-alpha-orange1 border-n-orange'
-                : 'bg-n-alpha-black2 border-n-strong hover:bg-n-alpha-black3',
-            ]"
-          >
-            <div class="flex items-center h-5">
-              <input
-                type="checkbox"
-                class="w-4 h-4 rounded border-n-strong text-n-orange focus:ring-n-orange/50 cursor-pointer"
-                :checked="primaryGoals.includes(option.value)"
-                @change="toggleGoal(option.value)"
+          <div>
+            <h3 class="text-[15px] font-semibold text-n-slate-12 mb-2">{{ $t('REGISTER.ONBOARDING.STEP_1.INDUSTRY_LABEL') }}</h3>
+            <FormSelect
+              v-model="industry"
+              :options="industryOptions"
+              name="industry"
+              :has-error="v1$.industry.$error || v1$.industryOther.$error"
+              @update:model-value="(val) => { if (val !== 'other') industryOther = ''; v1$.industry.$touch(); }"
+            />
+            <div v-if="industry === 'other'" class="mt-3">
+              <FormInput
+                v-model="industryOther"
+                type="text"
+                name="industry_other"
+                :class="{ error: v1$.industryOther.$error }"
+                :placeholder="$t('REGISTER.ONBOARDING.STEP_1.OTHER_PLACEHOLDER')"
+                @blur="v1$.industryOther.$touch"
               />
             </div>
-            <div class="text-sm font-medium text-n-slate-12 leading-5">
-              {{ option.label }}
+          </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div v-if="step === 2" class="space-y-4">
+          <div>
+            <h3 class="text-[15px] font-semibold text-n-slate-12 mb-3">{{ $t('REGISTER.ONBOARDING.STEP_2.TITLE') }}</h3>
+            <div class="flex flex-col gap-2">
+            <label
+              v-for="option in goalsOptions"
+              :key="option.value"
+              class="flex items-start gap-3 p-3.5 rounded-lg border cursor-pointer transition-colors"
+              :class="[
+                primaryGoals.includes(option.value)
+                  ? 'bg-n-alpha-orange1 border-n-orange'
+                  : 'bg-n-alpha-black2 border-n-strong hover:bg-n-alpha-black3',
+              ]"
+            >
+              <div class="flex items-center h-5">
+                <input
+                  type="checkbox"
+                  class="w-4 h-4 rounded border-n-strong text-n-orange focus:ring-n-orange/50 cursor-pointer"
+                  :checked="primaryGoals.includes(option.value)"
+                  @change="toggleGoal(option.value)"
+                />
+              </div>
+              <div class="text-sm font-medium text-n-slate-12 leading-5">
+                {{ option.label }}
+              </div>
+            </label>
+          </div>
+        </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div v-if="step === 3" class="space-y-6">
+          <div :class="{ 'has-error': v3$.teamSize.$error }">
+            <h3 class="text-[15px] font-semibold text-n-slate-12 mb-3">
+              {{ $t('REGISTER.ONBOARDING.STEP_3.TEAM_SIZE_LABEL') }}
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
+              <button
+                v-for="option in teamSizeOptions"
+                :key="option.value"
+                type="button"
+                class="p-3 rounded-lg border text-[13px] font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-n-orange/50"
+                :class="[
+                  teamSize === option.value
+                    ? 'bg-n-orange border-n-orange text-white shadow-sm'
+                    : 'bg-n-alpha-black2 border-n-strong text-n-slate-11 hover:bg-n-alpha-black3 hover:text-n-slate-12',
+                ]"
+                @click="
+                  teamSize = option.value;
+                  v3$.teamSize.$touch();
+                "
+              >
+                {{ option.label }}
+              </button>
             </div>
-          </label>
-          <span v-if="v2$.primaryGoals.$error" class="text-xs text-n-ruby mt-1">
-            {{ $t('REGISTER.ONBOARDING.STEP_2.GOALS_ERROR') }}
-          </span>
+          </div>
+
+          <div :class="{ 'has-error': v3$.dailyMessages.$error }">
+            <h3 class="text-[15px] font-semibold text-n-slate-12 mb-3">
+              {{ $t('REGISTER.ONBOARDING.STEP_3.DAILY_MESSAGES_LABEL') }}
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
+              <button
+                v-for="option in dailyMessagesOptions"
+                :key="option.value"
+                type="button"
+                class="p-3 rounded-lg border text-[13px] font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-n-orange/50"
+                :class="[
+                  dailyMessages === option.value
+                    ? 'bg-n-orange border-n-orange text-white shadow-sm'
+                    : 'bg-n-alpha-black2 border-n-strong text-n-slate-11 hover:bg-n-alpha-black3 hover:text-n-slate-12',
+                ]"
+                @click="
+                  dailyMessages = option.value;
+                  v3$.dailyMessages.$touch();
+                "
+              >
+                {{ option.label }}
+              </button>
+            </div>
+          </div>
         </div>
 
-        <div class="pt-4 flex gap-3">
-          <NextButton
-            lg
-            type="button"
-            class="w-1/3 font-medium !bg-n-alpha-black2 hover:!bg-n-alpha-black3 !text-n-slate-11 hover:!text-n-slate-12"
-            label="Quay lại"
-            @click="step = 1"
-          />
-          <NextButton
-            lg
-            type="submit"
-            class="w-2/3 font-medium"
-            :label="$t('REGISTER.ONBOARDING.STEP_2.NEXT_BUTTON')"
-            :disabled="v2$.$invalid"
-          />
-        </div>
-      </form>
-
-      <!-- STEP 3 -->
-      <form v-if="step === 3" class="space-y-6" @submit.prevent="nextStep">
-        <WithLabel
-          :label="$t('REGISTER.ONBOARDING.STEP_3.TEAM_SIZE_LABEL')"
-          name="team_size"
-          :has-error="v3$.teamSize.$error"
-          :error-message="$t('REGISTER.ONBOARDING.STEP_3.TEAM_SIZE_ERROR')"
-        >
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
-            <button
-              v-for="option in teamSizeOptions"
-              :key="option.value"
-              type="button"
-              class="p-3 rounded-lg border text-[13px] font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-n-orange/50"
-              :class="[
-                teamSize === option.value
-                  ? 'bg-n-alpha-orange1 border-n-orange text-n-orange'
-                  : 'bg-n-alpha-black2 border-n-strong text-n-slate-11 hover:bg-n-alpha-black3 hover:text-n-slate-12',
-              ]"
-              @click="
-                teamSize = option.value;
-                v3$.teamSize.$touch();
-              "
-            >
-              {{ option.label }}
-            </button>
-          </div>
-        </WithLabel>
-
-        <WithLabel
-          :label="$t('REGISTER.ONBOARDING.STEP_3.DAILY_MESSAGES_LABEL')"
-          name="daily_messages"
-          :has-error="v3$.dailyMessages.$error"
-          :error-message="$t('REGISTER.ONBOARDING.STEP_3.DAILY_MESSAGES_ERROR')"
-        >
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
-            <button
-              v-for="option in dailyMessagesOptions"
-              :key="option.value"
-              type="button"
-              class="p-3 rounded-lg border text-[13px] font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-n-orange/50"
-              :class="[
-                dailyMessages === option.value
-                  ? 'bg-n-alpha-orange1 border-n-orange text-n-orange'
-                  : 'bg-n-alpha-black2 border-n-strong text-n-slate-11 hover:bg-n-alpha-black3 hover:text-n-slate-12',
-              ]"
-              @click="
-                dailyMessages = option.value;
-                v3$.dailyMessages.$touch();
-              "
-            >
-              {{ option.label }}
-            </button>
-          </div>
-        </WithLabel>
-
-        <div class="pt-4 flex gap-3">
-          <NextButton
-            lg
-            type="button"
-            class="w-1/3 font-medium !bg-n-alpha-black2 hover:!bg-n-alpha-black3 !text-n-slate-11 hover:!text-n-slate-12"
-            label="Quay lại"
-            @click="step = 2"
-          />
-          <NextButton
-            lg
-            type="submit"
-            class="w-2/3 font-medium"
-            :label="$t('REGISTER.ONBOARDING.STEP_3.NEXT_BUTTON')"
-            :disabled="v3$.$invalid"
-          />
-        </div>
-      </form>
-
-      <!-- STEP 4 -->
-      <form v-if="step === 4" class="space-y-4" @submit.prevent="submit">
-        <WithLabel
-          :has-error="v4$.currentCrm.$error || v4$.currentCrmOther.$error"
-          :error-message="$t('REGISTER.ONBOARDING.STEP_4.CRM_ERROR')"
-        >
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-3 pt-1">
-            <button
-              v-for="option in crmOptions"
-              :key="option.value"
-              type="button"
-              class="p-3 rounded-lg border text-[13px] font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-n-orange/50 flex flex-col items-center justify-center text-center h-full min-h-[60px]"
-              :class="[
-                currentCrm === option.value
-                  ? 'bg-n-alpha-orange1 border-n-orange text-n-orange'
-                  : 'bg-n-alpha-black2 border-n-strong text-n-slate-11 hover:bg-n-alpha-black3 hover:text-n-slate-12',
-              ]"
-              @click="
-                currentCrm = option.value;
-                if(currentCrm !== 'other') currentCrmOther = '';
-                v4$.currentCrm.$touch();
-              "
-            >
-              {{ option.label }}
-            </button>
-          </div>
-          <div v-if="currentCrm === 'other'" class="mt-3">
-            <FormInput
-              v-model="currentCrmOther"
-              type="text"
-              name="current_crm_other"
-              :class="{ error: v4$.currentCrmOther.$error }"
-              :placeholder="$t('REGISTER.ONBOARDING.STEP_4.OTHER_PLACEHOLDER')"
-              @blur="v4$.currentCrmOther.$touch"
+        <!-- STEP 4 -->
+        <div v-if="step === 4" class="space-y-4">
+          <div>
+            <h3 class="text-[15px] font-semibold text-n-slate-12 mb-2">{{ $t('REGISTER.ONBOARDING.STEP_4.TITLE') }}</h3>
+            <FormSelect
+              v-model="currentCrm"
+              :options="crmOptions"
+              name="current_crm"
+              :has-error="v4$.currentCrm.$error || v4$.currentCrmOther.$error"
+              @update:model-value="(val) => { if (val !== 'other') currentCrmOther = ''; v4$.currentCrm.$touch(); }"
             />
+            <div v-if="currentCrm === 'other'" class="mt-3">
+              <FormInput
+                v-model="currentCrmOther"
+                type="text"
+                name="current_crm_other"
+                :class="{ error: v4$.currentCrmOther.$error }"
+                :placeholder="$t('REGISTER.ONBOARDING.STEP_4.OTHER_PLACEHOLDER')"
+                @blur="v4$.currentCrmOther.$touch"
+              />
+            </div>
           </div>
-        </WithLabel>
+        </div>
+      </div>
 
-        <div class="pt-4 flex gap-3">
+      <!-- Fixed Footer -->
+      <div class="p-2 mt-auto flex justify-between items-center gap-3">
+        <div class="text-[13px] text-n-ruby font-medium pl-1">
+          {{ currentErrorMessage }}
+        </div>
+        <div class="flex gap-3">
           <NextButton
-            lg
+            v-if="step > 1"
             type="button"
-            class="w-1/3 font-medium !bg-n-alpha-black2 hover:!bg-n-alpha-black3 !text-n-slate-11 hover:!text-n-slate-12"
-            label="Quay lại"
-            @click="step = 3"
+            class="font-medium !bg-n-alpha-black2 hover:!bg-n-alpha-black3 !text-n-slate-11 hover:!text-n-slate-12 px-6"
+            :label="$t('REGISTER.ONBOARDING.GO_BACK')"
+            @click="step--"
           />
           <NextButton
-            lg
             type="submit"
-            class="w-2/3 font-medium"
-            :label="$t('REGISTER.ONBOARDING.STEP_4.FINISH_BUTTON')"
-            :disabled="isUpdating || v4$.$invalid"
+            class="font-medium px-8"
+            :label="step === 4 ? $t('REGISTER.ONBOARDING.STEP_4.FINISH_BUTTON') : $t(`REGISTER.ONBOARDING.STEP_${step}.NEXT_BUTTON`)"
+            :disabled="isNextDisabled || isUpdating"
             :is-loading="isUpdating"
           />
         </div>
-      </form>
+      </div>
 
-    </div>
+    </form>
   </Modal>
 </template>

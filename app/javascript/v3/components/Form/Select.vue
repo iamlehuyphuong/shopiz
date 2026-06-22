@@ -61,7 +61,7 @@ export default {
   >
     <select
       :id="id"
-      :selected="modelValue"
+      :value="modelValue"
       :name="name"
       :class="{
         'text-n-slate-9': !modelValue,

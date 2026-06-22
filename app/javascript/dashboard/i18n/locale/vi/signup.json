@@ -48,13 +48,15 @@
     "HAVE_AN_ACCOUNT": "Bạn đã có tài khoản?",
     "ONBOARDING": {
       "STEP_PROGRESS": "Bước {step}/4",
+      "GO_BACK": "Quay lại",
       "STEP_1": {
         "TITLE": "Chào mừng bạn đến với Shopiz! 🎉",
         "SUBTITLE": "Hãy cho Shopiz biết một vài thông tin cơ bản để chúng tôi tối ưu không gian làm việc dành riêng cho cửa hàng của bạn nhé.",
+        "LANGUAGE_LABEL": "Chọn ngôn ngữ của bạn:",
         "BUSINESS_NAME_LABEL": "Tên cửa hàng / Doanh nghiệp của bạn là gì?",
         "BUSINESS_NAME_PLACEHOLDER": "Nhập tên cửa hàng... (Ví dụ: Shopiz Fashion)",
         "BUSINESS_NAME_ERROR": "Vui lòng nhập tên cửa hàng",
-        "INDUSTRY_LABEL": "Lĩnh vực kinh doanh chính của bạn? (Chọn 1 lĩnh vực)",
+        "INDUSTRY_LABEL": "Lĩnh vực kinh doanh chính của bạn?",
         "INDUSTRY_ERROR": "Vui lòng chọn lĩnh vực kinh doanh",
         "INDUSTRY_OPTIONS": {
           "FASHION": "Thời trang & Phụ kiện",
@@ -66,7 +68,7 @@
           "HOME": "Nhà cửa & Đời sống",
           "EDU": "Giáo dục & Đào tạo",
           "HEALTH": "Sức khỏe & TPCN",
-          "OTHER": "Khác..."
+          "OTHER": "Khác"
         },
         "OTHER_PLACEHOLDER": "Nhập lĩnh vực khác...",
         "NEXT_BUTTON": "Tiếp tục"
@@ -108,13 +110,13 @@
         "SUBTITLE": "Shopiz hỗ trợ đồng bộ dữ liệu mạnh mẽ, giúp bạn tra cứu đơn hàng và quản lý thông tin khách hàng xuyên suốt ngay trên giao diện chat.",
         "CRM_ERROR": "Vui lòng chọn một tuỳ chọn",
         "CRM_OPTIONS": {
-          "NONE": "Không (Tôi chưa sử dụng)",
+          "NONE": "Tôi chưa sử dụng",
           "ECOMMERCE": "Website thương mại điện tử",
           "KIOTVIET": "KiotViet",
           "SAPO": "Sapo",
           "HARAVAN": "Haravan",
           "NHANHVN": "Nhanh.vn",
-          "OTHER": "Khác..."
+          "OTHER": "Khác"
         },
         "OTHER_PLACEHOLDER": "Nhập tên phần mềm khác...",
         "FINISH_BUTTON": "Hoàn thành"
