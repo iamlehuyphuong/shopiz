@@ -17,6 +17,8 @@ import ComposeConversation from 'dashboard/components-next/NewConversation/Compo
 import { BUS_EVENTS } from 'shared/constants/busEvents';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import VoiceCallButton from 'dashboard/components-next/Contacts/VoiceCallButton.vue';
+import DropdownMenu from 'dashboard/components-next/dropdown-menu/DropdownMenu.vue';
+import zalopersonalChannel from 'dashboard/api/channel/zalopersonalChannel';
 import inboxMixin, { INBOX_FEATURES } from 'shared/mixins/inboxMixin';
 
 import {
@@ -38,6 +40,7 @@ export default {
     SocialIcons,
     ContactMergeModal,
     VoiceCallButton,
+    DropdownMenu,
   },
   mixins: [inboxMixin],
   props: {
@@ -68,6 +71,13 @@ export default {
       isCallLoading: false,
       activeCallConversation: null,
       isHoveringCallButton: false,
+      showZaloDropdown: false,
+      showZaloConnectModal: false,
+      isFetchingZaloUser: false,
+      zaloProfileData: {},
+      selectedZaloInboxId: null,
+      initialZaloFriendMessage: '',
+      initialZaloGreetingMessage: '',
     };
   },
   computed: {
@@ -137,12 +147,27 @@ export default {
       return inbox?.channel_type === 'Channel::ZaloPersonal';
     },
     zaloFriendshipStatus() {
-      return this.contact.additional_attributes?.zalo_is_friend;
+      if (!this.currentConversation) return false;
+      
+      const friendInboxIds = this.contact.additional_attributes?.zalo_friend_inbox_ids || [];
+      return friendInboxIds.includes(this.currentConversation.inbox_id);
     },
     hasZaloPersonalInboxes() {
       return this.$store.getters['inboxes/getInboxes'].some(
         inbox => inbox.channel_type === 'Channel::ZaloPersonal'
       );
+    },
+    zaloPersonalInboxes() {
+      return this.$store.getters['inboxes/getInboxes'].filter(
+        inbox => inbox.channel_type === 'Channel::ZaloPersonal'
+      );
+    },
+    zaloDropdownItems() {
+      return this.zaloPersonalInboxes.map(inbox => ({
+        label: inbox.name,
+        value: inbox.id,
+        action: 'select_zalo_inbox',
+      }));
     },
   },
   watch: {
@@ -163,16 +188,67 @@ export default {
     toggleEditModal() {
       this.showEditModal = !this.showEditModal;
     },
-    openComposeConversationModal(toggleFn) {
-      toggleFn();
+    openComposeConversationModal() {
+      this.showZaloConnectModal = true;
       // Flag to prevent triggering drag n drop,
       // When compose modal is active
       emitter.emit(BUS_EVENTS.NEW_CONVERSATION_MODAL, true);
     },
     closeComposeConversationModal() {
+      this.showZaloConnectModal = false;
       // Flag to enable drag n drop,
       // When compose modal is closed
       emitter.emit(BUS_EVENTS.NEW_CONVERSATION_MODAL, false);
+    },
+    handleZaloButtonClick() {
+      if (this.zaloPersonalInboxes.length === 1) {
+        this.handleZaloDropdownAction({
+          action: 'select_zalo_inbox',
+          value: this.zaloPersonalInboxes[0].id
+        });
+      } else if (this.zaloPersonalInboxes.length > 1) {
+        this.showZaloDropdown = !this.showZaloDropdown;
+      }
+    },
+    async handleZaloDropdownAction(item) {
+      this.showZaloDropdown = false;
+      if (item.action === 'select_zalo_inbox') {
+        const inboxId = item.value;
+        this.selectedZaloInboxId = inboxId;
+        
+        const inbox = this.zaloPersonalInboxes.find(i => i.id === inboxId);
+        if (inbox) {
+          this.initialZaloFriendMessage = inbox.provider_config?.default_friend_request_message || '';
+          this.initialZaloGreetingMessage = inbox.provider_config?.default_greeting_message || '';
+        }
+
+        try {
+          this.isFetchingZaloUser = true;
+          const response = await zalopersonalChannel.findUser({
+            phone: this.contact.phone_number,
+            inboxId: inboxId,
+          });
+          const data = response.data?.data || response.data;
+          
+          if (data && data.name) {
+            this.zaloProfileData = {
+              name: data.name,
+              avatar: data.avatar,
+              cover: data.cover,
+              bio: data.bio,
+              gender: data.gender,
+              dob: data.dob,
+            };
+            this.openComposeConversationModal();
+          } else {
+            useAlert('Số điện thoại chưa đăng ký hoặc không cho phép tìm kiếm');
+          }
+        } catch (error) {
+          useAlert('Số điện thoại chưa đăng ký hoặc không cho phép tìm kiếm');
+        } finally {
+          this.isFetchingZaloUser = false;
+        }
+      }
     },
     toggleDeleteModal() {
       this.showDeleteModal = !this.showDeleteModal;
@@ -659,14 +735,8 @@ export default {
       <div class="flex items-center w-full mt-0.5 gap-2">
         <!-- Zalo Personal Integration -->
         <template v-if="contact.phone_number">
-          <!-- Connect Zalo Personal (Non-Zalo conversation) -->
-          <ConnectZaloPersonalModal
-            v-if="!isCurrentConversationZaloPersonal"
-            :contact-id="String(contact.id)"
-            :phone="contact.phone_number"
-            @close="closeComposeConversationModal"
-          >
-            <template #trigger="{ toggle }">
+          <template v-if="!isCurrentConversationZaloPersonal">
+            <div class="relative inline-block">
               <NextButton
                 v-tooltip.top-end="
                   $t('CONTACT_PANEL.ZALO_PERSONAL.CONNECT_TOOLTIP')
@@ -675,23 +745,39 @@ export default {
                 slate
                 faded
                 sm
+                :is-loading="isFetchingZaloUser"
                 :disabled="!hasZaloPersonalInboxes"
-                @click="openComposeConversationModal(toggle)"
+                @click="handleZaloButtonClick"
               />
-            </template>
-          </ConnectZaloPersonalModal>
+              <DropdownMenu
+                v-if="showZaloDropdown"
+                :menu-items="zaloDropdownItems"
+                class="bottom-full left-0 mb-2 whitespace-nowrap !min-w-[150px]"
+                @action="handleZaloDropdownAction"
+              />
+            </div>
+
+            <ConnectZaloPersonalModal
+              v-if="showZaloConnectModal"
+              v-model:show="showZaloConnectModal"
+              :contact-id="String(contact.id)"
+              :phone="contact.phone_number"
+              :selected-inbox-id="selectedZaloInboxId"
+              :zalo-profile="zaloProfileData"
+              :initial-friend-request-message="initialZaloFriendMessage"
+              :initial-greeting-message="initialZaloGreetingMessage"
+              @close="closeComposeConversationModal"
+            />
+          </template>
 
           <!-- Friendship Status (Zalo conversation) -->
           <div
-            v-else
+            v-else-if="zaloFriendshipStatus"
             class="flex items-center gap-1 px-2 py-1 bg-slate-50 dark:bg-slate-800 rounded-md text-xs"
           >
-            <span
-              class="w-2 h-2 rounded-full"
-              :class="zaloFriendshipStatus ? 'bg-green-500' : 'bg-slate-400'"
-            />
+            <span class="w-2 h-2 rounded-full bg-green-500" />
             <span class="text-slate-600 dark:text-slate-300 font-medium">
-              {{ zaloFriendshipStatus ? 'Đã là bạn bè' : 'Chưa là bạn bè' }}
+              Đã là bạn bè
             </span>
           </div>
         </template>

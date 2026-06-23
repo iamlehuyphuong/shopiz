@@ -361,7 +361,16 @@ class ZaloPersonal::BaseService
 
     attributes = @contact.additional_attributes || {}
     attributes[:description] = @user_info['status']
-    attributes[:zalo_is_friend] = @user_info['isFr'] unless @user_info['isFr'].nil?
+    
+    unless @user_info['isFr'].nil?
+      inbox_ids = Array(attributes['zalo_friend_inbox_ids'] || attributes[:zalo_friend_inbox_ids] || [])
+      if @user_info['isFr']
+        inbox_ids |= [@inbox.id]
+      else
+        inbox_ids -= [@inbox.id]
+      end
+      attributes[:zalo_friend_inbox_ids] = inbox_ids.uniq.compact
+    end
 
     name = @user_info['zaloName'] || @user_info['displayName']
     update_params = {

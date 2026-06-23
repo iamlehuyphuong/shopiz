@@ -38,7 +38,7 @@ class ZaloPersonal::SyncFriendsService
     phone_number = "+#{phone_number}" if phone_number.present? && !phone_number.start_with?('+')
     
     additional_attributes = {
-      zalo_is_friend: friend_data['isFr'],
+      zalo_friend_inbox_ids: friend_data['isFr'] ? [@inbox.id] : [],
       source_id: friend_data['userId']
     }
     additional_attributes[:description] = friend_data['status'] if friend_data['status'].present?
@@ -75,7 +75,17 @@ class ZaloPersonal::SyncFriendsService
     
     # BaseService also updates attributes directly in case ContactInboxBuilder reused an existing contact
     attrs = contact.additional_attributes || {}
-    attrs[:zalo_is_friend] = friend_data['isFr'] unless friend_data['isFr'].nil?
+    
+    unless friend_data['isFr'].nil?
+      inbox_ids = Array(attrs['zalo_friend_inbox_ids'] || attrs[:zalo_friend_inbox_ids] || [])
+      if friend_data['isFr']
+        inbox_ids |= [@inbox.id]
+      else
+        inbox_ids -= [@inbox.id]
+      end
+      attrs[:zalo_friend_inbox_ids] = inbox_ids.uniq.compact
+    end
+    
     attrs[:description] = friend_data['status'] if friend_data['status'].present?
     
     update_params[:additional_attributes] = attrs

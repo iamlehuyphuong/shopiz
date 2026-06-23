@@ -145,13 +145,6 @@ export default {
             icon: 'i-lucide-phone',
             disabled: !this.canManageContacts,
           },
-          {
-            label: this.$t('CONTACT_PANEL.LOOKUP_ZALO'),
-            action: 'zalo',
-            value: 'zalo',
-            icon: 'i-lucide-search',
-            disabled: !this.canManageContacts,
-          },
         ];
       }
       return [];
