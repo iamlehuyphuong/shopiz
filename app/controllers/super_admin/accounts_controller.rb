@@ -84,8 +84,6 @@ class SuperAdmin::AccountsController < SuperAdmin::ApplicationController
       )
 
       plan = SubscriptionPlan.create!(
-        name_en: "Custom Plan for Account #{account.id}",
-        name_vi: "Gói Tuỳ chỉnh cho Tài khoản #{account.id}",
         subscription_tier: custom_tier,
         price_amount: params[:custom_price_amount].to_f,
         currency: base_plan.currency,
