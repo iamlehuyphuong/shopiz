@@ -17,7 +17,7 @@ json.custom_attributes do
     json.subscription_ends_on resource.custom_attributes&.dig('subscription_ends_on')
   end
 
-  json.captain_responses_credit resource.limits['captain_responses_credit']
+  json.captain_responses_credit resource.limits&.dig('captain_responses_credit').to_i
 
   if resource.custom_attributes.present?
     json.industry resource.custom_attributes['industry'] if resource.custom_attributes['industry'].present?
