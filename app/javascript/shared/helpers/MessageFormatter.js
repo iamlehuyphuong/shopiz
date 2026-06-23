@@ -59,7 +59,7 @@ const TWITTER_HASH_REGEX = /(^|\s)#(\w+)/g;
 const TWITTER_HASH_REPLACEMENT = '$1[#$2](https://twitter.com/hashtag/$2)';
 
 const EMAIL_REGEX = /\b[A-Za-z0-9._%+-]+@(?:[A-Za-z0-9-]+\.)+[A-Za-z]{2,}\b/g;
-const VN_PHONE_REGEX = /(?:\+84|0)([35789]\d{8})\b/g;
+const VN_PHONE_REGEX = /(?:\+84|0)(?:[\s\-.]?\d{2,4}){2,4}\b/g;
 
 class MessageFormatter {
   constructor(
