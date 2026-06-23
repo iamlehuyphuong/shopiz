@@ -68,7 +68,36 @@ class SuperAdmin::AccountsController < SuperAdmin::ApplicationController
 
   def subscribe
     account = Account.find(params[:id])
-    plan = SubscriptionPlan.find(params[:plan_id])
+
+    if params[:is_custom] == 'true'
+      base_plan = SubscriptionPlan.find(params[:base_plan_id])
+
+      custom_tier = SubscriptionTier.create!(
+        name_en: "Custom Tier for Account #{account.id}",
+        name_vi: "Gói Tuỳ chỉnh cho Tài khoản #{account.id}",
+        description_en: "Custom limits based on #{base_plan.name_en}",
+        description_vi: "Gói tuỳ chỉnh dựa trên #{base_plan.name_vi}",
+        limits: params[:custom_limits].to_unsafe_h.transform_values(&:to_i),
+        features: base_plan.subscription_tier.features,
+        visible: false,
+        is_free: false
+      )
+
+      plan = SubscriptionPlan.create!(
+        name_en: "Custom Plan for Account #{account.id}",
+        name_vi: "Gói Tuỳ chỉnh cho Tài khoản #{account.id}",
+        subscription_tier: custom_tier,
+        price_amount: params[:custom_price_amount].to_f,
+        currency: base_plan.currency,
+        duration_days: params[:custom_duration_days].to_i,
+        ai_included: base_plan.ai_included,
+        sku: "CUSTOM-#{account.id}-#{Time.current.to_i}",
+        visible: false
+      )
+    else
+      plan = SubscriptionPlan.find(params[:plan_id])
+    end
+
     status = Subscriptions::SubscribeService.new(account, plan).execute
     message = status ? 'Plan subscribed successfully!' : 'Failed to subscribe plan.'
     redirect_to super_admin_account_path(account), notice: message

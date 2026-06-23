@@ -39,7 +39,7 @@
 
     <!-- Modal Dialog -->
     <div id="subscription-change-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[9999] hidden items-center justify-center p-4">
-      <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden transform transition-all animate-in fade-in zoom-in duration-200">
+      <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full overflow-hidden transform transition-all animate-in fade-in zoom-in duration-200">
         <div class="px-8 py-6 border-b border-slate-100 flex items-center justify-between bg-white">
           <h3 class="text-xl font-bold text-slate-900 tracking-tight">Change Subscription Plan</h3>
           <button type="button" class="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded-full transition-all" onclick="toggleSubscriptionModal(false)">
@@ -47,17 +47,71 @@
           </button>
         </div>
         
+        <% 
+          visible_plans = SubscriptionPlan.visible.includes(:subscription_tier) 
+          plans_data = visible_plans.map do |p|
+            {
+              id: p.id,
+              duration_days: p.duration_days,
+              price_amount: p.price_amount.to_f,
+              limits: p.limits
+            }
+          end
+        %>
+        
         <%= form_with url: subscribe_super_admin_account_path(page.resource), method: :post, local: true do |f| %>
-          <div class="p-8 space-y-6">
+          <div class="p-8 space-y-6 max-h-[70vh] overflow-y-auto">
             <div class="bg-indigo-50 rounded-xl p-4 flex items-start space-x-3 border border-indigo-100">
               <svg class="w-5 h-5 text-indigo-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
               <p class="text-sm text-indigo-800 leading-relaxed font-medium">Changing the plan will immediately deactivate the current subscription. Please ensure you have selected the correct plan.</p>
             </div>
             
-            <div class="space-y-3">
-              <%= f.label :plan_id, "Choose New Plan", class: "text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-1" %>
+            <div class="flex items-center justify-between mb-2">
+              <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-1">Plan Selection</label>
+              <div class="flex items-center space-x-2">
+                <input type="checkbox" id="is_custom" name="is_custom" value="true" class="rounded border-slate-300 text-woot-500 focus:ring-woot-500" onchange="toggleCustomPlanUI(this.checked)">
+                <label for="is_custom" class="text-sm font-semibold text-slate-700 cursor-pointer">Create Custom Plan</label>
+              </div>
+            </div>
+
+            <!-- Standard Plan Selection -->
+            <div id="standard-plan-section" class="space-y-3 block">
               <div class="relative">
-                <%= f.select :plan_id, SubscriptionPlan.all.map { |p| ["#{p.name_en} (#{p.duration_days} days - #{p.price_amount} #{p.currency})", p.id] }, { include_blank: "Select a plan to continue..." }, class: "select border-slate-200 bg-slate-50 focus:bg-white focus:ring-woot-500 focus:border-woot-500 rounded-xl w-full py-4 px-4 text-sm transition-all appearance-none" %>
+                <%= f.select :plan_id, visible_plans.map { |p| ["#{p.name_en} (#{p.duration_days} days - #{number_with_delimiter(p.price_amount.to_i)} #{p.currency})", p.id] }, { include_blank: "Select a standard plan to continue..." }, class: "select border-slate-200 bg-slate-50 focus:bg-white focus:ring-woot-500 focus:border-woot-500 rounded-xl w-full py-4 px-4 text-sm transition-all appearance-none" %>
+              </div>
+            </div>
+
+            <!-- Custom Plan Section -->
+            <div id="custom-plan-section" class="space-y-6 hidden mt-4 border-t border-slate-100 pt-4">
+              <div class="space-y-3">
+                <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-1">Base Plan</label>
+                <div class="relative">
+                  <%= select_tag :base_plan_id, options_for_select(visible_plans.map { |p| ["#{p.name_en} (#{p.duration_days} days - #{number_with_delimiter(p.price_amount.to_i)} #{p.currency})", p.id] }), prompt: "Select a base plan...", class: "select border-slate-200 bg-slate-50 focus:bg-white focus:ring-woot-500 focus:border-woot-500 rounded-xl w-full py-4 px-4 text-sm transition-all appearance-none", onchange: "populateCustomFields(this.value)" %>
+                </div>
+                <p class="text-xs text-slate-500">The custom plan will inherit all non-editable features from this base plan.</p>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-2">
+                  <label class="text-xs font-semibold text-slate-700">Duration (Days)</label>
+                  <input type="number" id="custom_duration_days" name="custom_duration_days" class="w-full border-slate-200 rounded-lg focus:ring-woot-500 focus:border-woot-500">
+                </div>
+                <div class="space-y-2">
+                  <label class="text-xs font-semibold text-slate-700">Price (VND)</label>
+                  <input type="number" id="custom_price_amount" name="custom_price_amount" class="w-full border-slate-200 rounded-lg focus:ring-woot-500 focus:border-woot-500">
+                </div>
+              </div>
+
+              <div class="space-y-4">
+                <h4 class="text-sm font-bold text-slate-800 border-b border-slate-100 pb-2">Limitation Overrides</h4>
+                <div class="grid grid-cols-2 gap-4">
+                  <% ['agents', 'inboxes', 'contacts', 'automations', 'captain_responses', 'captain_documents', 'captain_faqs', 'captain_assistants'].each do |limit_key| %>
+                    <div class="space-y-1">
+                      <label class="text-xs font-medium text-slate-600 capitalize"><%= limit_key.gsub('_', ' ') %></label>
+                      <input type="number" id="custom_limit_<%= limit_key %>" name="custom_limits[<%= limit_key %>]" class="w-full text-sm border-slate-200 rounded-lg focus:ring-woot-500 focus:border-woot-500 px-3 py-2">
+                    </div>
+                  <% end %>
+                </div>
               </div>
             </div>
           </div>
@@ -71,6 +125,8 @@
     </div>
 
     <script>
+      const plansData = <%= plans_data.to_json.html_safe %>;
+
       function toggleSubscriptionModal(show) {
         const modal = document.getElementById('subscription-change-modal');
         if (show) {
@@ -82,6 +138,46 @@
           modal.classList.remove('flex');
           document.body.style.overflow = 'auto';
         }
+      }
+
+      function toggleCustomPlanUI(isCustom) {
+        const standardSection = document.getElementById('standard-plan-section');
+        const customSection = document.getElementById('custom-plan-section');
+        const standardSelect = document.getElementById('plan_id');
+        const basePlanSelect = document.getElementById('base_plan_id');
+
+        if (isCustom) {
+          standardSection.classList.add('hidden');
+          standardSection.classList.remove('block');
+          customSection.classList.remove('hidden');
+          customSection.classList.add('block');
+          standardSelect.removeAttribute('required');
+          basePlanSelect.setAttribute('required', 'required');
+        } else {
+          standardSection.classList.remove('hidden');
+          standardSection.classList.add('block');
+          customSection.classList.add('hidden');
+          customSection.classList.remove('block');
+          standardSelect.setAttribute('required', 'required');
+          basePlanSelect.removeAttribute('required');
+        }
+      }
+
+      function populateCustomFields(planId) {
+        if (!planId) return;
+        const plan = plansData.find(p => p.id == planId);
+        if (!plan) return;
+
+        document.getElementById('custom_duration_days').value = plan.duration_days;
+        document.getElementById('custom_price_amount').value = plan.price_amount;
+
+        const limitKeys = ['agents', 'inboxes', 'contacts', 'automations', 'captain_responses', 'captain_documents', 'captain_faqs', 'captain_assistants'];
+        limitKeys.forEach(key => {
+          const el = document.getElementById('custom_limit_' + key);
+          if (el) {
+            el.value = plan.limits[key] || 0;
+          }
+        });
       }
 
       // Close on backdrop click
