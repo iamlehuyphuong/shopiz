@@ -57,7 +57,7 @@ class CaptainListener < BaseListener
   end
 
   def contains_pii?(content)
-    phone_regex = /(?:\+84|0)(?:[\s\-\.]?[0-9]){8,10}\b/
+    phone_regex = /(?:\+84|0)(?:[\s\-\.]?\d{2,4}){2,4}\b/
     email_regex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/
     address_regex = /(?:xã|phường|tỉnh|thành phố|quận|huyện|toà nhà|khu phố|lô|ngõ|ngách|hẻm|đường|tổ|ấp|thôn|bản|khóm|x\.|p\.|t\.|tp\.|q\.|h\.|tp)[\s,:-]*[\p{L}0-9]+/i
 
