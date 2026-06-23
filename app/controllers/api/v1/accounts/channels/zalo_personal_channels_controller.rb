@@ -64,6 +64,52 @@ class Api::V1::Accounts::Channels::ZaloPersonalChannelsController < Api::V1::Acc
       render json: { success: false, message: e.message }, status: :unprocessable_entity
     end
   
+    def find_user
+      inbox = Current.account.inboxes.find_by(id: params[:inbox_id])
+      return render json: { error: 'Inbox not found' }, status: :not_found unless inbox&.channel&.is_a?(Channel::ZaloPersonal)
+
+      url = "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/findUser"
+      
+      phone = params[:phone]
+      # Clean up phone if needed, but we pass it exactly as it is for now
+      body = {
+        phone: phone,
+        ownId: inbox.channel.oa_id
+      }
+      
+      response = HTTParty.post(
+        url,
+        headers: ZaloPersonal::ApiHelper.request_headers,
+        body: body.to_json
+      )
+      
+      if response['success']
+        user_info = response['data'] || {}
+        
+        gender_str = case user_info['gender']
+                     when 0 then 'Nam'
+                     when 1 then 'Nữ'
+                     else 'Chưa cập nhật'
+                     end
+
+        render json: {
+          data: {
+            name: user_info['zaloName'] || user_info['displayName'] || user_info['zalo_name'] || user_info['display_name'],
+            avatar: user_info['avatar'],
+            cover: user_info['cover'],
+            bio: user_info['status'],
+            gender: gender_str,
+            dob: user_info['sdob']
+          }
+        }
+      else
+        render json: { error: response['message'] || 'User not found' }, status: :not_found
+      end
+    rescue StandardError => e
+      handle_exception(e)
+      render json: { error: e.message }, status: :unprocessable_entity
+    end
+  
     private
   
     def handle_exception(exception)

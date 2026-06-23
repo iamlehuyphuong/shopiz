@@ -18,7 +18,11 @@ const props = defineProps({
 const emit = defineEmits(['toggle']);
 
 const { t } = useI18n();
-const { formatMessage } = useMessageFormatter();
+
+import { usePolicy } from 'dashboard/composables/usePolicy';
+const { checkPermissions } = usePolicy();
+const maskContactInfo = computed(() => !checkPermissions(['contact_manage']));
+const { formatMessage } = useMessageFormatter(maskContactInfo);
 
 const isExpanded = ref(false);
 

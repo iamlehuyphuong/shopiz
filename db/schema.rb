@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_18_031058) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_22_133610) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -41,6 +41,19 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_18_031058) do
     t.index ["addon_package_id"], name: "index_account_addons_on_addon_package_id"
     t.index ["addon_type"], name: "index_account_addons_on_addon_type"
     t.index ["expired_at"], name: "index_account_addons_on_expired_at"
+  end
+
+  create_table "account_onboardings", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.string "industry"
+    t.text "primary_goals", default: [], array: true
+    t.string "team_size"
+    t.string "daily_messages"
+    t.string "current_crm"
+    t.boolean "onboarding_completed", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_account_onboardings_on_account_id"
   end
 
   create_table "account_saml_settings", force: :cascade do |t|
@@ -102,6 +115,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_18_031058) do
     t.jsonb "internal_attributes", default: {}, null: false
     t.jsonb "settings", default: {}
     t.bigint "feature_flags_2", default: 0, null: false
+    t.bigint "partner_sso_id"
+    t.index ["partner_sso_id"], name: "index_accounts_on_partner_sso_id"
     t.index ["status"], name: "index_accounts_on_status"
   end
 
@@ -1282,6 +1297,16 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_18_031058) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
+  create_table "partner_ssos", force: :cascade do |t|
+    t.string "name"
+    t.string "sso_url"
+    t.string "idp_entity_id"
+    t.text "certificate"
+    t.string "sp_entity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "platform_app_permissibles", force: :cascade do |t|
     t.bigint "platform_app_id", null: false
     t.string "permissible_type", null: false
@@ -1626,8 +1651,10 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_18_031058) do
 
   add_foreign_key "account_addons", "accounts"
   add_foreign_key "account_addons", "addon_packages"
+  add_foreign_key "account_onboardings", "accounts"
   add_foreign_key "account_subscriptions", "accounts"
   add_foreign_key "account_subscriptions", "subscription_plans"
+  add_foreign_key "accounts", "partner_ssos"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "appointments", "accounts"

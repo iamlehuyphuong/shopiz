@@ -2,8 +2,8 @@ class Contacts::ContactInfoExtractorService
   # Regex patterns
   EMAIL_REGEX = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/
   # Detects Vietnamese phone numbers starting with 0 or +84
-  # Examples: 0901234567, +84901234567
-  VN_PHONE_REGEX = /(?:\+84|0)([35789]\d{8})\b/
+  # Examples: 0901234567, +84901234567, 0987 123 456, 0987.123.456
+  VN_PHONE_REGEX = /(?:\+84|0)(?:[\s\-\.]?\d{2,4}){2,4}\b/
   CCCD_REGEX = /\b\d{12}\b/
   ADDRESS_KEYWORDS_REGEX = /(phường|xã|quận|huyện|đường|thành phố|tỉnh|cccd|cmnd|căn cước)/i
 
@@ -26,7 +26,15 @@ class Contacts::ContactInfoExtractorService
     return if content.blank?
 
     email = content.scan(EMAIL_REGEX).first
-    phone = content.scan(VN_PHONE_REGEX).first&.first # The first capture group is the number without 0 or +84
+
+    phone = nil
+    content.scan(VN_PHONE_REGEX).each do |match|
+      digits_only = match.gsub(/[\s\-\.]/, '')
+      if digits_only.match?(/^(?:\+84|0)([35789]\d{7,8})$/)
+        phone = ::Regexp.last_match(1)
+        break
+      end
+    end
 
     # Keep the fast synchronous legacy contact update
     update_contact_fast(email, phone)
@@ -39,19 +47,16 @@ class Contacts::ContactInfoExtractorService
     has_address = content.match?(ADDRESS_KEYWORDS_REGEX)
 
     # Nếu phát hiện bất kỳ dấu hiệu thông tin nào chưa có, hoặc có CCCD/Địa chỉ, ta gọi AI đọc lại ngữ cảnh.
-    if has_email || has_phone || has_cccd || has_address
-      if @account.feature_enabled?('captain_copilot') || @account.feature_enabled?('captain_assistant')
-        CaptainContactAttributesJob.perform_later(@message.conversation_id)
-      end
-    end
+    return unless has_email || has_phone || has_cccd || has_address
+    return unless @account.feature_enabled?('captain_copilot') || @account.feature_enabled?('captain_assistant')
+
+    CaptainContactAttributesJob.perform_later(@message.conversation_id)
   end
 
   def update_contact_fast(email, phone)
     attributes_to_update = {}
 
-    if email.present? && @contact.email.blank?
-      attributes_to_update[:email] = email.downcase
-    end
+    attributes_to_update[:email] = email.downcase if email.present? && @contact.email.blank?
 
     if phone.present? && @contact.phone_number.blank?
       # Normalize to +84 for Vietnamese numbers

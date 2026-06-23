@@ -47,47 +47,79 @@
     "SUBMIT": "Tạo tài khoản",
     "HAVE_AN_ACCOUNT": "Bạn đã có tài khoản?",
     "ONBOARDING": {
-      "NEXT_STEP": "Tiếp tục",
+      "STEP_PROGRESS": "Bước {step}/4",
       "GO_BACK": "Quay lại",
-      "BUSINESS_NAME": {
-        "LABEL": "Tên Doanh nghiệp / Cửa hàng",
-        "PLACEHOLDER": "Nhập tên doanh nghiệp của bạn",
-        "ERROR": "Vui lòng nhập tên doanh nghiệp"
-      },
-      "INDUSTRY": {
-        "LABEL": "Lĩnh vực kinh doanh",
-        "PLACEHOLDER": "Chọn lĩnh vực kinh doanh",
-        "ERROR": "Vui lòng chọn lĩnh vực kinh doanh",
-        "OPTIONS": {
+      "STEP_1": {
+        "TITLE": "Chào mừng bạn đến với Shopiz! 🎉",
+        "SUBTITLE": "Hãy cho Shopiz biết một vài thông tin cơ bản để chúng tôi tối ưu không gian làm việc dành riêng cho cửa hàng của bạn nhé.",
+        "LANGUAGE_LABEL": "Chọn ngôn ngữ của bạn:",
+        "BUSINESS_NAME_LABEL": "Tên cửa hàng / Doanh nghiệp của bạn là gì?",
+        "BUSINESS_NAME_PLACEHOLDER": "Nhập tên cửa hàng... (Ví dụ: Shopiz Fashion)",
+        "BUSINESS_NAME_ERROR": "Vui lòng nhập tên cửa hàng",
+        "INDUSTRY_LABEL": "Lĩnh vực kinh doanh chính của bạn?",
+        "INDUSTRY_ERROR": "Vui lòng chọn lĩnh vực kinh doanh",
+        "INDUSTRY_OPTIONS": {
           "FASHION": "Thời trang & Phụ kiện",
-          "HEALTH_BEAUTY": "Sức khoẻ & Làm đẹp",
-          "F_B": "F&B (Nhà hàng, Quán cafe)",
-          "TECH": "Công nghệ / Điện tử",
+          "BEAUTY": "Mỹ phẩm & Chăm sóc cá nhân",
+          "F_B": "Thực phẩm & Đồ uống (F&B)",
+          "MOM_BABY": "Mẹ & Bé",
+          "SPA": "Spa, Thẩm mỹ viện & Salon",
+          "TECH": "Thiết bị điện tử & Công nghệ",
+          "HOME": "Nhà cửa & Đời sống",
+          "EDU": "Giáo dục & Đào tạo",
+          "HEALTH": "Sức khỏe & TPCN",
           "OTHER": "Khác"
-        }
+        },
+        "OTHER_PLACEHOLDER": "Nhập lĩnh vực khác...",
+        "NEXT_BUTTON": "Tiếp tục"
       },
-      "COMPANY_SIZE": {
-        "LABEL": "Quy mô nhân sự",
-        "PLACEHOLDER": "Chọn quy mô nhân sự",
-        "ERROR": "Vui lòng chọn quy mô nhân sự",
-        "OPTIONS": {
-          "SIZE_1_5": "1-5 người",
-          "SIZE_6_20": "6-20 người",
-          "SIZE_21_50": "21-50 người",
-          "SIZE_50_PLUS": "50+ người"
-        }
+      "STEP_2": {
+        "TITLE": "Mục tiêu lớn nhất của bạn khi dùng Shopiz là gì?",
+        "SUBTITLE": "Chọn các ưu tiên hàng đầu để Shopiz gợi ý những tính năng giải quyết đúng vấn đề của bạn. (Có thể chọn nhiều)",
+        "GOALS_ERROR": "Vui lòng chọn ít nhất một mục tiêu",
+        "GOALS_OPTIONS": {
+          "MANAGE_MESSAGES": "Quản lý tập trung tin nhắn từ nhiều kênh (Fanpage, Zalo,...)",
+          "PREVENT_MISSED": "Chống trôi, sót tin nhắn và bình luận của khách hàng",
+          "TRACK_PERFORMANCE": "Theo dõi và đánh giá hiệu suất nhân viên trực page",
+          "REMARKETING": "Quản lý thông tin, gắn thẻ (tag) và remarketing khách hàng cũ",
+          "AUTOMATION": "Tự động hóa chăm sóc khách hàng (Chatbot, Auto-reply)"
+        },
+        "NEXT_BUTTON": "Tiếp tục"
       },
-      "SOURCE": {
-        "LABEL": "Bạn biết đến Shopiz từ đâu?",
-        "PLACEHOLDER": "Chọn kênh thông tin",
-        "ERROR": "Vui lòng chọn một tuỳ chọn",
-        "OPTIONS": {
-          "FACEBOOK": "Facebook",
-          "TIKTOK": "TikTok",
-          "GOOGLE": "Google",
-          "REFERRAL": "Bạn bè giới thiệu",
+      "STEP_3": {
+        "TITLE": "Quy mô vận hành hiện tại của cửa hàng thế nào?",
+        "SUBTITLE": "Chia sẻ thêm về quy mô để Shopiz chuẩn bị máy chủ và cấu hình tốc độ xử lý tốt nhất cho bạn nhé.",
+        "TEAM_SIZE_LABEL": "Số lượng nhân sự trực page hiện tại:",
+        "TEAM_SIZE_ERROR": "Vui lòng chọn số lượng nhân sự",
+        "TEAM_SIZE_OPTIONS": {
+          "UNDER_5": "Dưới 5 người",
+          "5_TO_10": "5 - 10 người",
+          "OVER_10": "Trên 10 người"
+        },
+        "DAILY_MESSAGES_LABEL": "Lượng tin nhắn trung bình cần xử lý mỗi ngày:",
+        "DAILY_MESSAGES_ERROR": "Vui lòng chọn lượng tin nhắn trung bình",
+        "DAILY_MESSAGES_OPTIONS": {
+          "UNDER_100": "Dưới 100 tin",
+          "100_TO_500": "100 - 500 tin",
+          "OVER_500": "Trên 500 tin"
+        },
+        "NEXT_BUTTON": "Tiếp tục"
+      },
+      "STEP_4": {
+        "TITLE": "Bạn đang sử dụng phần mềm bán hàng hoặc CRM nào?",
+        "SUBTITLE": "Shopiz hỗ trợ đồng bộ dữ liệu mạnh mẽ, giúp bạn tra cứu đơn hàng và quản lý thông tin khách hàng xuyên suốt ngay trên giao diện chat.",
+        "CRM_ERROR": "Vui lòng chọn một tuỳ chọn",
+        "CRM_OPTIONS": {
+          "NONE": "Tôi chưa sử dụng",
+          "ECOMMERCE": "Website thương mại điện tử",
+          "KIOTVIET": "KiotViet",
+          "SAPO": "Sapo",
+          "HARAVAN": "Haravan",
+          "NHANHVN": "Nhanh.vn",
           "OTHER": "Khác"
-        }
+        },
+        "OTHER_PLACEHOLDER": "Nhập tên phần mềm khác...",
+        "FINISH_BUTTON": "Hoàn thành"
       }
     }
   }

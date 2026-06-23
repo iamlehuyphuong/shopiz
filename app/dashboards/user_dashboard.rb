@@ -37,7 +37,8 @@ class UserDashboard < Administrate::BaseDashboard
     pubsub_token: Field::String,
     type: Field::Select.with_options(collection: [nil, 'SuperAdmin']),
     accounts: CountField,
-    access_token: Field::HasOne
+    access_token: Field::HasOne,
+    globally_online: OnlineStatusField.with_options(searchable: false)
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -51,6 +52,7 @@ class UserDashboard < Administrate::BaseDashboard
     name
     email
     accounts
+    globally_online
     type
   ].freeze
 
@@ -69,6 +71,7 @@ class UserDashboard < Administrate::BaseDashboard
     confirmed_at
     account_users
     access_token
+    globally_online
   ].freeze
 
   # FORM_ATTRIBUTES

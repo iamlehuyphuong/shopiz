@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useMessageFormatter } from 'shared/composables/useMessageFormatter';
+import { usePolicy } from 'dashboard/composables/usePolicy';
 
 import Avatar from 'dashboard/components-next/avatar/Avatar.vue';
 import CardLabels from 'dashboard/components-next/Conversation/ConversationCard/CardLabels.vue';
@@ -22,7 +23,9 @@ const { t } = useI18n();
 
 const slaCardLabelRef = ref(null);
 
-const { getPlainText } = useMessageFormatter();
+const { checkPermissions } = usePolicy();
+const maskContactInfo = computed(() => !checkPermissions(['contact_manage']));
+const { getPlainText } = useMessageFormatter(maskContactInfo);
 
 // Simple check: Is this a voice channel conversation?
 const isVoiceChannel = computed(() => {

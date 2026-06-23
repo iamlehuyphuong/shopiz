@@ -1,9 +1,10 @@
 <script setup>
-import { useTemplateRef, onMounted, ref } from 'vue';
+import { computed, useTemplateRef, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { dynamicTime } from 'shared/helpers/timeHelper';
 import { useToggle } from '@vueuse/core';
 import { useMessageFormatter } from 'shared/composables/useMessageFormatter';
+import { usePolicy } from 'dashboard/composables/usePolicy';
 import Avatar from 'dashboard/components-next/avatar/Avatar.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 
@@ -31,7 +32,9 @@ const noteContentRef = useTemplateRef('noteContentRef');
 const needsCollapse = ref(false);
 const [isExpanded, toggleExpanded] = useToggle();
 const { t } = useI18n();
-const { formatMessage } = useMessageFormatter();
+const { checkPermissions } = usePolicy();
+const maskContactInfo = computed(() => !checkPermissions(['contact_manage']));
+const { formatMessage } = useMessageFormatter(maskContactInfo);
 
 const handleDelete = () => {
   emit('delete', props.note.id);

@@ -3,6 +3,8 @@ import { ref, computed, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import { useAlert } from 'dashboard/composables';
+import { usePolicy } from 'dashboard/composables/usePolicy';
+import { useMessageFormatter } from 'shared/composables/useMessageFormatter';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import TextArea from 'next/textarea/TextArea.vue';
 import { useRouter } from 'vue-router';
@@ -10,60 +12,45 @@ import { useRouter } from 'vue-router';
 const props = defineProps({
   contactId: { type: [String, Number], required: true },
   phone: { type: String, default: '' },
+  selectedInboxId: { type: [String, Number], required: true },
+  initialFriendRequestMessage: { type: String, default: '' },
+  initialGreetingMessage: { type: String, default: '' },
+  zaloProfile: { type: Object, default: () => ({}) },
+  show: { type: Boolean, default: false }
 });
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close', 'update:show']);
 
 const store = useStore();
 const { t } = useI18n();
 const router = useRouter();
 
-const showModal = ref(false);
-const selectedInboxId = ref('');
+const { checkPermissions } = usePolicy();
+const maskContactInfo = computed(() => !checkPermissions(['contact_manage']));
+const { getPlainText } = useMessageFormatter(maskContactInfo);
+
 const sendFriendRequest = ref(true);
-const friendRequestMessage = ref('');
-const greetingMessage = ref('');
+const friendRequestMessage = ref(props.initialFriendRequestMessage);
+const greetingMessage = ref(props.initialGreetingMessage);
 const isSubmitting = ref(false);
 
-const contact = computed(() => {
-  return store.getters['contacts/getContact'](props.contactId);
-});
+watch(
+  () => props.initialFriendRequestMessage,
+  (newVal) => { friendRequestMessage.value = newVal; }
+);
 
-const zaloPersonalInboxes = computed(() => {
-  return store.getters['inboxes/getInboxes'].filter(
-    inbox => inbox.channel_type === 'Channel::ZaloPersonal'
-  );
-});
-
-const selectedInbox = computed(() => {
-  return zaloPersonalInboxes.value.find(
-    inbox => inbox.id === selectedInboxId.value
-  );
-});
-
-watch(selectedInbox, newInbox => {
-  if (newInbox) {
-    friendRequestMessage.value =
-      newInbox.provider_config?.default_friend_request_message || '';
-    greetingMessage.value =
-      newInbox.provider_config?.default_greeting_message || '';
-  } else {
-    friendRequestMessage.value = '';
-    greetingMessage.value = '';
-  }
-});
-
-const openModal = () => {
-  showModal.value = true;
-};
+watch(
+  () => props.initialGreetingMessage,
+  (newVal) => { greetingMessage.value = newVal; }
+);
 
 const closeModal = () => {
-  showModal.value = false;
+  emit('update:show', false);
   emit('close');
 };
 
 const handleSubmit = async () => {
-  if (!selectedInbox.value) {
+  if (!props.selectedInboxId) {
     useAlert(t('CONTACT_PANEL.ZALO_PERSONAL.SELECT_INBOX_REQUIRED'));
     return;
   }
@@ -72,14 +59,13 @@ const handleSubmit = async () => {
   try {
     let conversationId = null;
 
-    // 1. Send friend request if checked
     if (sendFriendRequest.value) {
       const friendResponse = await store.dispatch(
         'contactConversations/requestFriend',
         {
           params: {
             contactId: props.contactId,
-            inboxId: selectedInbox.value.id,
+            inboxId: props.selectedInboxId,
             sourceId: props.phone,
             message: { content: friendRequestMessage.value },
           },
@@ -91,11 +77,10 @@ const handleSubmit = async () => {
       }
     }
 
-    // 2. Send greeting message (creates conversation or adds to existing)
     if (greetingMessage.value.trim()) {
       const response = await store.dispatch('contactConversations/create', {
         params: {
-          inboxId: selectedInbox.value.id,
+          inboxId: props.selectedInboxId,
           contactId: props.contactId,
           sourceId: props.phone,
           message: {
@@ -127,70 +112,70 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <div class="inline-block">
-    <slot name="trigger" :toggle="openModal" />
-    <woot-modal v-model:show="showModal" :on-close="closeModal">
-      <div class="flex flex-col h-auto overflow-auto">
-        <woot-modal-header
-          :header-title="$t('CONTACT_PANEL.ZALO_PERSONAL.CONNECT_TITLE')"
-          :header-content="$t('CONTACT_PANEL.ZALO_PERSONAL.CONNECT_SUBTITLE')"
-        />
-        <form class="flex flex-wrap mx-0" @submit.prevent="handleSubmit">
-          <div v-if="phone" class="w-full mb-4">
-            <label>
-              Số điện thoại
-              <input type="text" :value="phone" disabled />
-            </label>
+  <teleport to="body">
+    <woot-modal :show="show" :on-close="closeModal">
+      <div class="flex flex-col h-auto w-full relative">
+        <div class="px-6 py-4 text-lg font-semibold text-slate-900 dark:text-slate-50 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 sticky top-0 z-10">
+          Thông tin tài khoản
+        </div>
+
+        <div class="relative bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 pb-4">
+          <div class="h-[140px] w-full">
+            <img :src="zaloProfile.cover || 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=600&h=200&fit=crop'" class="w-full h-full object-cover" />
+          </div>
+          <div class="flex items-end px-6 -mt-12 relative z-10">
+            <div class="w-24 h-24 rounded-full border-4 border-white dark:border-slate-800 overflow-hidden bg-slate-200 dark:bg-slate-700 shrink-0">
+              <img :src="zaloProfile.avatar || 'https://i.pravatar.cc/150?img=5'" class="w-full h-full object-cover" />
+            </div>
+            <div class="ml-4 pb-2">
+              <h3 class="text-xl font-semibold text-slate-900 dark:text-slate-50 m-0 flex items-center gap-2">
+                {{ zaloProfile.name || 'Người dùng Zalo' }}
+              </h3>
+            </div>
+          </div>
+        </div>
+
+        <form class="!p-0 flex flex-col mx-0" @submit.prevent="handleSubmit">
+          <div class="px-6 py-4 bg-white dark:bg-slate-800">
+            <h4 class="font-semibold text-base mb-4 text-slate-900 dark:text-slate-50">Thông tin cá nhân</h4>
+            <div class="grid grid-cols-[100px_1fr] gap-x-2 gap-y-3 text-sm">
+              <div class="text-slate-500 dark:text-slate-400">Bio</div>
+              <div class="text-slate-900 dark:text-slate-100 whitespace-pre-line">{{ zaloProfile.bio || 'Chưa cập nhật' }}</div>
+
+              <div class="text-slate-500 dark:text-slate-400">Giới tính</div>
+              <div class="text-slate-900 dark:text-slate-100">{{ zaloProfile.gender || 'Chưa cập nhật' }}</div>
+
+              <div class="text-slate-500 dark:text-slate-400">Ngày sinh</div>
+              <div class="text-slate-900 dark:text-slate-100">{{ zaloProfile.dob || 'Chưa cập nhật' }}</div>
+            </div>
           </div>
 
-          <div class="w-full mb-4">
-            <label>
-              {{ $t('CONTACT_PANEL.ZALO_PERSONAL.SELECT_INBOX') }}
-              <select v-model="selectedInboxId">
-                <option value="" disabled>
-                  {{
-                    $t('CONTACT_PANEL.ZALO_PERSONAL.SELECT_INBOX_PLACEHOLDER')
-                  }}
-                </option>
-                <option
-                  v-for="inbox in zaloPersonalInboxes"
-                  :key="inbox.id"
-                  :value="inbox.id"
-                >
-                  {{ inbox.name }}
-                </option>
-              </select>
-            </label>
+          <div class="px-6 py-4 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+            <div class="flex items-center w-full gap-2 mb-4">
+              <input id="sendFriendRequest" v-model="sendFriendRequest" type="checkbox" />
+              <label for="sendFriendRequest" class="mb-0 text-sm font-medium text-slate-900 dark:text-slate-100">
+                {{ $t('CONTACT_PANEL.ZALO_PERSONAL.SEND_FRIEND_REQUEST') }}
+              </label>
+            </div>
+
+            <div v-if="sendFriendRequest" class="w-full mb-4">
+              <TextArea
+                v-model="friendRequestMessage"
+                :label="$t('CONTACT_PANEL.ZALO_PERSONAL.FRIEND_REQUEST_MESSAGE')"
+                auto-height
+              />
+            </div>
+
+            <div class="w-full mb-4">
+              <TextArea
+                v-model="greetingMessage"
+                :label="$t('CONTACT_PANEL.ZALO_PERSONAL.GREETING_MESSAGE')"
+                auto-height
+              />
+            </div>
           </div>
 
-          <div class="flex items-center w-full gap-2 mb-4">
-            <input
-              id="sendFriendRequest"
-              v-model="sendFriendRequest"
-              type="checkbox"
-            />
-            <label for="sendFriendRequest" class="mb-0">
-              {{ $t('CONTACT_PANEL.ZALO_PERSONAL.SEND_FRIEND_REQUEST') }}
-            </label>
-          </div>
-
-          <div v-if="sendFriendRequest" class="w-full mb-4">
-            <TextArea
-              v-model="friendRequestMessage"
-              :label="$t('CONTACT_PANEL.ZALO_PERSONAL.FRIEND_REQUEST_MESSAGE')"
-              auto-height
-            />
-          </div>
-
-          <div class="w-full mb-4">
-            <TextArea
-              v-model="greetingMessage"
-              :label="$t('CONTACT_PANEL.ZALO_PERSONAL.GREETING_MESSAGE')"
-              auto-height
-            />
-          </div>
-
-          <div class="flex items-center justify-end w-full gap-2 px-0 py-2">
+          <div class="flex items-center justify-end w-full gap-2 px-6 py-4 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700">
             <NextButton
               faded
               slate
@@ -201,16 +186,12 @@ const handleSubmit = async () => {
             <NextButton
               type="submit"
               :is-loading="isSubmitting"
-              :disabled="
-                !selectedInboxId ||
-                (!greetingMessage.trim() &&
-                  !(sendFriendRequest && friendRequestMessage.trim()))
-              "
+              :disabled="!greetingMessage.trim() && !(sendFriendRequest && friendRequestMessage.trim())"
               :label="$t('CONTACT_PANEL.ZALO_PERSONAL.SUBMIT')"
             />
           </div>
         </form>
       </div>
     </woot-modal>
-  </div>
+  </teleport>
 </template>

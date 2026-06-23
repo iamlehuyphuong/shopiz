@@ -25,11 +25,23 @@ json.custom_attributes do
     json.timezone resource.custom_attributes['timezone'] if resource.custom_attributes['timezone'].present?
     json.logo resource.custom_attributes['logo'] if resource.custom_attributes['logo'].present?
     json.onboarding_step resource.custom_attributes['onboarding_step'] if resource.custom_attributes['onboarding_step'].present?
-    json.onboarding_completed resource.custom_attributes['onboarding_completed'] if resource.custom_attributes.key?('onboarding_completed')
     json.marked_for_deletion_at resource.custom_attributes['marked_for_deletion_at'] if resource.custom_attributes['marked_for_deletion_at'].present?
     if resource.custom_attributes['marked_for_deletion_reason'].present?
       json.marked_for_deletion_reason resource.custom_attributes['marked_for_deletion_reason']
     end
+  end
+end
+
+json.onboarding do
+  if resource.onboarding.present?
+    json.industry resource.onboarding.industry
+    json.primary_goals resource.onboarding.primary_goals
+    json.team_size resource.onboarding.team_size
+    json.daily_messages resource.onboarding.daily_messages
+    json.current_crm resource.onboarding.current_crm
+    json.onboarding_completed resource.onboarding.onboarding_completed
+  else
+    json.onboarding_completed resource.custom_attributes&.dig('onboarding_completed') || false
   end
 end
 json.domain @account.domain

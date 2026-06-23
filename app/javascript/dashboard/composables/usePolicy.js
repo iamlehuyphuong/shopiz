@@ -1,6 +1,7 @@
 import { computed, unref } from 'vue';
 import { useMapGetter } from 'dashboard/composables/store';
 import { useAccount } from 'dashboard/composables/useAccount';
+import { useAdmin } from 'dashboard/composables/useAdmin';
 import { useConfig } from 'dashboard/composables/useConfig';
 import {
   getUserPermissions,
@@ -20,6 +21,7 @@ export function usePolicy() {
 
   const { isEnterprise, enterprisePlanName } = useConfig();
   const { accountId } = useAccount();
+  const { isAdmin } = useAdmin();
 
   const getUserPermissionsForAccount = () => {
     return getUserPermissions(user.value, accountId.value);
@@ -32,6 +34,7 @@ export function usePolicy() {
 
   const checkPermissions = requiredPermissions => {
     if (!requiredPermissions || !requiredPermissions.length) return true;
+    if (isAdmin.value) return true;
     const userPermissions = getUserPermissionsForAccount();
     return hasPermissions(requiredPermissions, userPermissions);
   };

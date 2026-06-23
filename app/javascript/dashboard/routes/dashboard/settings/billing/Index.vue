@@ -18,7 +18,6 @@ import BaseSettingsHeader from '../components/BaseSettingsHeader.vue';
 import SettingsLayout from '../SettingsLayout.vue';
 import ButtonV4 from 'next/button/Button.vue';
 import BillingMeter from './components/BillingMeter.vue';
-import Switch from 'dashboard/components-next/switch/Switch.vue';
 
 const { currentAccount } = useAccount();
 const { fetchLimits } = useCaptain();
@@ -245,12 +244,11 @@ const handleTopupSuccess = () => {
 };
 
 const globalDuration = ref(365);
-const globalAiIncluded = ref(false);
+const globalAiIncluded = ref(true);
 
 const durationTabs = computed(() => [
   { value: 180, label: isVietnamese.value ? '6 Tháng' : '6 Months' },
   { value: 365, label: isVietnamese.value ? '1 Năm' : '1 Year' },
-  { value: 730, label: isVietnamese.value ? '2 Năm' : '2 Years' },
 ]);
 
 const selectDuration = val => {
@@ -266,8 +264,8 @@ watch(
       if (tier.packages) {
         const match = tier.packages.find(p => p.id === cPlanId);
         if (match) {
-          globalDuration.value = match.duration_days;
-          globalAiIncluded.value = !!match.ai_included;
+          globalDuration.value = match.duration_days === 730 ? 365 : match.duration_days;
+          globalAiIncluded.value = true;
           break;
         }
       }
@@ -470,20 +468,6 @@ onMounted(fetchAccountDetails);
               </button>
             </div>
 
-            <!-- AI Toggle -->
-            <div class="flex items-center justify-center gap-2 mb-2">
-              <span class="text-[14px] font-bold text-n-slate-12">
-                {{ isVietnamese ? 'Sử dụng ShopizAI' : 'Using ShopizAI' }}
-              </span>
-              <Switch v-model="globalAiIncluded" />
-            </div>
-            <p class="text-xs text-n-slate-10 text-center max-w-md mt-1">
-              {{
-                isVietnamese
-                  ? 'Kích hoạt tuỳ chọn này nếu bạn muốn hệ thống trang bị trợ lý ảo siêu việt hỗ trợ bạn trả lời tin nhắn.'
-                  : 'Enable this option if you want to equip the system with a super virtual assistant to help you reply to messages.'
-              }}
-            </p>
           </div>
 
           <div

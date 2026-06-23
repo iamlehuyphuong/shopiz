@@ -1,4 +1,5 @@
 <script>
+import { computed } from 'vue';
 import { useAlert } from 'dashboard/composables';
 import { mapGetters } from 'vuex';
 import { useMessageFormatter } from 'shared/composables/useMessageFormatter';
@@ -16,6 +17,7 @@ import { BUS_EVENTS } from 'shared/constants/busEvents';
 import MenuItem from '../../../components/widgets/conversation/contextMenu/menuItem.vue';
 import { useTrack } from 'dashboard/composables';
 import NextButton from 'dashboard/components-next/button/Button.vue';
+import { usePolicy } from 'dashboard/composables/usePolicy';
 
 export default {
   components: {
@@ -48,7 +50,11 @@ export default {
   },
   emits: ['open', 'close', 'replyTo'],
   setup() {
-    const { getPlainText } = useMessageFormatter();
+    const { checkPermissions } = usePolicy();
+    const maskContactInfo = computed(
+      () => !checkPermissions(['contact_manage'])
+    );
+    const { getPlainText } = useMessageFormatter(maskContactInfo);
 
     return {
       getPlainText,

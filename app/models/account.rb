@@ -112,6 +112,7 @@ class Account < ApplicationRecord
   store_accessor :settings, :active_ecommerce_platform, :ai_allow_create_order, :order_notification_templates
   include AccountCaptainAutoResolve
 
+  has_one :onboarding, class_name: 'AccountOnboarding', dependent: :destroy
   has_many :account_users, dependent: :destroy_async
   has_many :agent_bot_inboxes, dependent: :destroy_async
   has_many :agent_bots, dependent: :destroy_async

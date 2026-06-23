@@ -5,7 +5,10 @@ class Enterprise::Billing::HandlePayosEventService
 
   def perform(payload)
     prepare_data(payload)
-    return if @account.blank? || @record.blank?
+    if @account.blank? || @record.blank?
+      Rails.logger.error("[PayOS] Aborting perform due to missing account or record. Payload: #{payload.inspect}")
+      return
+    end
 
     # Idempotency: skip if already processed
     reference = payload.dig('data', 'reference').to_s
@@ -37,10 +40,19 @@ class Enterprise::Billing::HandlePayosEventService
     sku_match = description.match(/TT SHOPIZ\s+(.+)/i)
     sku = sku_match ? sku_match[1].strip : nil
 
-    @record = (SubscriptionPlan.find_by(sku: sku) || AddonPackage.find_by(sku: sku)) if sku.present?
-
     @customer_id = order_code_str.length > 10 ? order_code_str[0...-10].to_i : 0
     @account = Account.find_by(id: @customer_id)
+
+    # Fallback: find the last pending bill for this account to get the accurate sku
+    @pending_bill = @account&.billing_histories&.where(status: :pending)&.last
+    
+    if @pending_bill.present?
+      @record = SubscriptionPlan.find_by(sku: @pending_bill.sku) || AddonPackage.find_by(sku: @pending_bill.sku)
+    elsif sku.present?
+      @record = SubscriptionPlan.find_by(sku: sku) || AddonPackage.find_by(sku: sku)
+    end
+
+    Rails.logger.warn("[PayOS] Record not found for SKU: #{sku} (or pending bill)") if @record.blank?
     Rails.logger.warn("[PayOS] Account not found for parsed ID: #{@customer_id}") if @account.blank?
   end
 

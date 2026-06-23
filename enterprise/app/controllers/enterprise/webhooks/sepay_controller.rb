@@ -16,14 +16,19 @@ class Enterprise::Webhooks::SepayController < ActionController::API
     # Check payment status - only process successful payments
     notification_type = payload['notification_type'].to_s.upcase
     order_status = payload.dig('order', 'order_status').to_s.upcase
-    unless notification_type == 'ORDER_PAID' || order_status == 'CAPTURED' || order_status == 'PAID'
-      Rails.logger.info("[SePay Webhook] Non-success status: #{notification_type}/#{order_status} for order #{payload.dig('order', 'order_invoice_number')}")
+    
+    # Support both SePay Checkout (ORDER_PAID/CAPTURED/PAID) and Standard Transaction Webhook (transferAmount > 0)
+    is_checkout_success = notification_type == 'ORDER_PAID' || order_status == 'CAPTURED' || order_status == 'PAID'
+    is_standard_success = payload['transferAmount'].to_i > 0 && payload['id'].present?
+    
+    unless is_checkout_success || is_standard_success
+      Rails.logger.info("[SePay Webhook] Non-success status: #{notification_type}/#{order_status} for order #{payload.dig('order', 'order_invoice_number') || payload['content']}")
       render json: { success: true }, status: :ok
       return
     end
 
     # Idempotency: check transaction reference
-    transaction_ref = payload.dig('transaction', 'transaction_id').to_s.presence || payload.dig('transaction', 'id').to_s
+    transaction_ref = payload.dig('transaction', 'transaction_id').to_s.presence || payload.dig('transaction', 'id').to_s.presence || payload['id'].to_s
     if transaction_ref.present? && BillingHistory.exists?(transaction_id: transaction_ref)
       Rails.logger.info("[SePay Webhook] Skipping duplicate transaction: #{transaction_ref}")
       render json: { success: true }, status: :ok

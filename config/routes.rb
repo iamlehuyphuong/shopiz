@@ -142,6 +142,7 @@ Rails.application.routes.draw do
                 post :create
                 get :create
                 post :generate_qr
+                get :find_user
               end
             end
             resource :tiktok_shop_channel, only: [:show, :create]
@@ -788,12 +789,6 @@ Rails.application.routes.draw do
       end
 
       resources :access_tokens, only: [:index, :show]
-      resources :email_templates do
-        collection do
-          get :export_csv
-          post :import_csv
-        end
-      end
       resources :installation_configs, only: [:index, :new, :create, :show, :edit, :update]
       resources :agent_bots, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
         delete :avatar, on: :member, action: :destroy_avatar

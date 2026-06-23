@@ -59,20 +59,62 @@ const TWITTER_HASH_REGEX = /(^|\s)#(\w+)/g;
 const TWITTER_HASH_REPLACEMENT = '$1[#$2](https://twitter.com/hashtag/$2)';
 
 const EMAIL_REGEX = /\b[A-Za-z0-9._%+-]+@(?:[A-Za-z0-9-]+\.)+[A-Za-z]{2,}\b/g;
-const VN_PHONE_REGEX = /(?:\+84|0)([35789]\d{8})\b/g;
+const VN_PHONE_REGEX = /(?:\+84|0)(?:[\s\-.]?\d{2,4}){2,4}\b/g;
 
 class MessageFormatter {
   constructor(
     message,
     isATweet = false,
     isAPrivateNote = false,
-    linkify = true
+    linkify = true,
+    maskContactInfo = false
   ) {
     this.message = message || '';
     this.isAPrivateNote = isAPrivateNote;
     this.isATweet = isATweet;
     this.linkify = linkify;
+    this.maskContactInfo = maskContactInfo;
     this.md = createMarkdownInstance(linkify);
+  }
+
+  maskEmail(email) {
+    if (!email) return '';
+    const parts = email.split('@');
+    if (parts.length !== 2) return email;
+    const [name, domain] = parts;
+    const maskedName = name.length > 2 ? `${name.substring(0, 2)}***` : `*`;
+    return `${maskedName}@${domain}`;
+  }
+
+  maskPhoneNumber(phone) {
+    if (!phone) return '';
+    const digitsIndices = [];
+    for (let i = 0; i < phone.length; i++) {
+      if (/\d/.test(phone[i])) {
+        digitsIndices.push(i);
+      }
+    }
+    
+    const numDigits = digitsIndices.length;
+    let masked = phone;
+    
+    if (numDigits > 5) {
+      const indicesToMask = digitsIndices.slice(3, numDigits - 2);
+      const chars = phone.split('');
+      indicesToMask.forEach(idx => {
+        chars[idx] = '*';
+      });
+      masked = chars.join('');
+    } else {
+      const indicesToMask = digitsIndices.slice(0, Math.max(0, numDigits - 2));
+      const chars = phone.split('');
+      indicesToMask.forEach(idx => {
+        chars[idx] = '*';
+      });
+      masked = chars.join('');
+    }
+    
+    return masked;
   }
 
   formatMessage() {
@@ -82,7 +124,8 @@ class MessageFormatter {
     renderedMessage = renderedMessage.replace(
       /<a [^>]*href="mailto:([^"]+)"[^>]*>.*?<\/a>/gi,
       (match, email) => {
-        return `<strong class="highlight-link underline cursor-pointer text-n-orange-10 hover:text-n-orange dark:text-n-orange-5 transition-colors" data-type="email" data-value="${email}"><u>${email}</u></strong>`;
+        const displayValue = this.maskContactInfo ? this.maskEmail(email) : email;
+        return `<strong class="highlight-link underline cursor-pointer text-n-orange-10 hover:text-n-orange dark:text-n-orange-5 transition-colors" data-type="email" data-value="${email}"><u>${displayValue}</u></strong>`;
       }
     );
 
@@ -90,12 +133,14 @@ class MessageFormatter {
     renderedMessage = renderedMessage.replace(EMAIL_REGEX, match => {
       // Avoid replacing if it's already inside our custom tag (very simple check)
       if (renderedMessage.includes(`data-value="${match}"`)) return match;
-      return `<strong class="highlight-link underline cursor-pointer text-n-orange-10 hover:text-n-orange dark:text-n-orange-5 transition-colors" data-type="email" data-value="${match}"><u>${match}</u></strong>`;
+      const displayValue = this.maskContactInfo ? this.maskEmail(match) : match;
+      return `<strong class="highlight-link underline cursor-pointer text-n-orange-10 hover:text-n-orange dark:text-n-orange-5 transition-colors" data-type="email" data-value="${match}"><u>${displayValue}</u></strong>`;
     });
 
     // Highlight phone numbers (usually not linkified by markdown-it)
     renderedMessage = renderedMessage.replace(VN_PHONE_REGEX, match => {
-      return `<strong class="highlight-link underline cursor-pointer text-n-orange-10 hover:text-n-orange dark:text-n-orange-5 transition-colors" data-type="phone" data-value="${match}"><u>${match}</u></strong>`;
+      const displayValue = this.maskContactInfo ? this.maskPhoneNumber(match) : match;
+      return `<strong class="highlight-link underline cursor-pointer text-n-orange-10 hover:text-n-orange dark:text-n-orange-5 transition-colors" data-type="phone" data-value="${match}"><u>${displayValue}</u></strong>`;
     });
 
     if (this.isATweet && !this.isAPrivateNote) {

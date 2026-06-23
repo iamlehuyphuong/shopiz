@@ -69,8 +69,8 @@ export default {
       const account = currentAccount.value || {};
       if (!account.id) return false; // wait until fully loaded
 
-      const customAttrs = account.custom_attributes || {};
-      return customAttrs.onboarding_completed !== true;
+      const onboarding = account.onboarding || {};
+      return onboarding.onboarding_completed !== true;
     });
 
     return {

@@ -8,7 +8,10 @@ class Enterprise::Billing::HandleSepayEventService
 
   def perform(payload)
     prepare_data(payload)
-    return if @account.blank? || @record.blank?
+    if @account.blank? || @record.blank?
+      Rails.logger.error("[SePay] Aborting perform due to missing account or record. Payload: #{payload.inspect}")
+      return
+    end
 
     ActiveRecord::Base.transaction do
       @record.is_a?(SubscriptionPlan) ? activate_plan : activate_addon
@@ -20,7 +23,8 @@ class Enterprise::Billing::HandleSepayEventService
   private
 
   def prepare_data(payload)
-    order_id = payload.dig('order', 'order_invoice_number').to_s.strip.upcase
+    order_id_raw = payload.dig('order', 'order_invoice_number') || payload['content']
+    order_id = order_id_raw.to_s.strip.upcase
 
     @pending_bill = BillingHistory.find_by(order_id: order_id)
     if @pending_bill.present?
@@ -39,10 +43,17 @@ class Enterprise::Billing::HandleSepayEventService
     sku = match[1]
     account_id = match[2].to_i
 
-    @record = SubscriptionPlan.find_by(sku: sku) || AddonPackage.find_by(sku: sku)
     @account = Account.find_by(id: account_id)
+    # Fallback: find the last pending bill for this account to get the accurate sku
+    @pending_bill = @account&.billing_histories&.where(status: :pending)&.last
+    
+    if @pending_bill.present?
+      @record = SubscriptionPlan.find_by(sku: @pending_bill.sku) || AddonPackage.find_by(sku: @pending_bill.sku)
+    else
+      @record = SubscriptionPlan.find_by(sku: sku) || AddonPackage.find_by(sku: sku)
+    end
 
-    Rails.logger.warn("[SePay] Record not found for SKU: #{sku}") if @record.blank?
+    Rails.logger.warn("[SePay] Record not found for SKU: #{sku} (or pending bill)") if @record.blank?
     Rails.logger.warn("[SePay] Account not found for ID: #{account_id}") if @account.blank?
   end
 
@@ -89,8 +100,8 @@ class Enterprise::Billing::HandleSepayEventService
   end
 
   def save_billing_history(payload)
-    transaction_ref = payload.dig('transaction', 'transaction_id').to_s.presence || payload.dig('transaction', 'id').to_s
-    transaction_date_time = payload.dig('transaction', 'transaction_date') || payload['timestamp']
+    transaction_ref = payload.dig('transaction', 'transaction_id').to_s.presence || payload.dig('transaction', 'id').to_s.presence || payload['id'].to_s
+    transaction_date_time = payload.dig('transaction', 'transaction_date') || payload['transactionDate'] || payload['timestamp']
     parsed_paid_at = Time.zone.parse(transaction_date_time.to_s) rescue Time.current
 
     if @pending_bill.present?
@@ -104,8 +115,11 @@ class Enterprise::Billing::HandleSepayEventService
       @pending_bill
     else
       product_name = @record.is_a?(SubscriptionPlan) ? @record.name(@account.locale) : @record.name
+      price_amount = payload.dig('order', 'order_amount') || payload['transferAmount']
+      order_id_raw = payload.dig('order', 'order_invoice_number') || payload['content']
+      
       @account.billing_histories.create!(
-        price_amount: payload.dig('order', 'order_amount').to_i,
+        price_amount: price_amount.to_i,
         price_currency: payload.dig('order', 'order_currency') || 'VND',
         product_name: product_name,
         sku: @record.sku,
@@ -123,7 +137,7 @@ class Enterprise::Billing::HandleSepayEventService
         payment_method: 'sepay',
         gateway_payload: payload,
         paid_at: parsed_paid_at,
-        order_id: payload.dig('order', 'order_invoice_number').to_s.strip.upcase
+        order_id: order_id_raw.to_s.strip.upcase
       )
     end
   end

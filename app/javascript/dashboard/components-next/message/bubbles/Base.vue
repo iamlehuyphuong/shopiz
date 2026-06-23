@@ -6,6 +6,7 @@ import MessageMeta from '../MessageMeta.vue';
 import { emitter } from 'shared/helpers/mitt';
 import { useMessageContext } from '../provider.js';
 import { useI18n } from 'vue-i18n';
+import { usePolicy } from 'dashboard/composables/usePolicy';
 
 import MessageFormatter from 'shared/helpers/MessageFormatter.js';
 import { BUS_EVENTS } from 'shared/constants/busEvents';
@@ -26,6 +27,8 @@ const {
   contentAttributes,
 } = useMessageContext();
 const { t } = useI18n();
+const { checkPermissions } = usePolicy();
+const maskContactInfo = computed(() => !checkPermissions(['contact_manage']));
 
 const varaintBaseMap = {
   [MESSAGE_VARIANTS.AGENT]: 'bg-n-iris-3 text-n-slate-12',
@@ -101,7 +104,7 @@ const replyToPreview = computed(() => {
 
   const { content, attachments } = inReplyTo.value;
 
-  if (content) return new MessageFormatter(content).formattedMessage;
+  if (content) return new MessageFormatter(content, false, false, true, maskContactInfo).formattedMessage;
   if (attachments?.length) {
     const firstAttachment = attachments[0];
     const fileType = firstAttachment.fileType ?? firstAttachment.file_type;
