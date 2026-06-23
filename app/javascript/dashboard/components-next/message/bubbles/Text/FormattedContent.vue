@@ -15,7 +15,7 @@ const props = defineProps({
 
 const { variant } = useMessageContext();
 const { checkPermissions } = usePolicy();
-const maskContactInfo = !checkPermissions(['contact_manage']);
+const maskContactInfo = computed(() => !checkPermissions(['contact_manage']));
 
 const formattedContent = computed(() => {
   if (variant.value === MESSAGE_VARIANTS.ACTIVITY) {
@@ -27,7 +27,7 @@ const formattedContent = computed(() => {
     false,
     false,
     true,
-    maskContactInfo
+    maskContactInfo.value
   ).formattedMessage;
 });
 </script>

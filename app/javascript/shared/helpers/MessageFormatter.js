@@ -90,7 +90,7 @@ class MessageFormatter {
     if (!phone) return '';
     const digitsIndices = [];
     for (let i = 0; i < phone.length; i++) {
-      if (/\\d/.test(phone[i])) {
+      if (/\d/.test(phone[i])) {
         digitsIndices.push(i);
       }
     }
@@ -124,8 +124,8 @@ class MessageFormatter {
     renderedMessage = renderedMessage.replace(
       /<a [^>]*href="mailto:([^"]+)"[^>]*>.*?<\/a>/gi,
       (match, email) => {
-        if (this.maskContactInfo) return this.maskEmail(email);
-        return `<strong class="highlight-link underline cursor-pointer text-n-orange-10 hover:text-n-orange dark:text-n-orange-5 transition-colors" data-type="email" data-value="${email}"><u>${email}</u></strong>`;
+        const displayValue = this.maskContactInfo ? this.maskEmail(email) : email;
+        return `<strong class="highlight-link underline cursor-pointer text-n-orange-10 hover:text-n-orange dark:text-n-orange-5 transition-colors" data-type="email" data-value="${email}"><u>${displayValue}</u></strong>`;
       }
     );
 
@@ -133,14 +133,14 @@ class MessageFormatter {
     renderedMessage = renderedMessage.replace(EMAIL_REGEX, match => {
       // Avoid replacing if it's already inside our custom tag (very simple check)
       if (renderedMessage.includes(`data-value="${match}"`)) return match;
-      if (this.maskContactInfo) return this.maskEmail(match);
-      return `<strong class="highlight-link underline cursor-pointer text-n-orange-10 hover:text-n-orange dark:text-n-orange-5 transition-colors" data-type="email" data-value="${match}"><u>${match}</u></strong>`;
+      const displayValue = this.maskContactInfo ? this.maskEmail(match) : match;
+      return `<strong class="highlight-link underline cursor-pointer text-n-orange-10 hover:text-n-orange dark:text-n-orange-5 transition-colors" data-type="email" data-value="${match}"><u>${displayValue}</u></strong>`;
     });
 
     // Highlight phone numbers (usually not linkified by markdown-it)
     renderedMessage = renderedMessage.replace(VN_PHONE_REGEX, match => {
-      if (this.maskContactInfo) return this.maskPhoneNumber(match);
-      return `<strong class="highlight-link underline cursor-pointer text-n-orange-10 hover:text-n-orange dark:text-n-orange-5 transition-colors" data-type="phone" data-value="${match}"><u>${match}</u></strong>`;
+      const displayValue = this.maskContactInfo ? this.maskPhoneNumber(match) : match;
+      return `<strong class="highlight-link underline cursor-pointer text-n-orange-10 hover:text-n-orange dark:text-n-orange-5 transition-colors" data-type="phone" data-value="${match}"><u>${displayValue}</u></strong>`;
     });
 
     if (this.isATweet && !this.isAPrivateNote) {

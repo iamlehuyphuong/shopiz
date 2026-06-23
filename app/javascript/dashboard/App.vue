@@ -28,6 +28,8 @@ import { useUISettings } from 'dashboard/composables/useUISettings';
 import ContextMenu from 'dashboard/components/ui/ContextMenu.vue';
 import CreateNewContactDialog from 'dashboard/components-next/Contacts/ContactsForm/CreateNewContactDialog.vue';
 import LimitationModal from './components/widgets/modal/LimitationModal.vue';
+import { usePolicy } from 'dashboard/composables/usePolicy';
+import { computed } from 'vue';
 
 export default {
   name: 'App',
@@ -51,6 +53,8 @@ export default {
     // Use the font size composable (it automatically sets up the watcher)
     const { currentFontSize } = useFontSize();
     const { uiSettings } = useUISettings();
+    const { checkPermissions } = usePolicy();
+    const canManageContacts = computed(() => checkPermissions(['contact_manage']));
 
     return {
       router,
@@ -58,6 +62,7 @@ export default {
       currentAccountId: accountId,
       currentFontSize,
       uiSettings,
+      canManageContacts,
     };
   },
   data() {
@@ -99,18 +104,21 @@ export default {
             action: 'save',
             value: 'save',
             icon: 'i-lucide-user-plus',
+            disabled: false,
           },
           {
             label: this.$t('CONTACT_PANEL.COPY_EMAIL'),
             action: 'copy',
             value: 'copy',
             icon: 'i-lucide-copy',
+            disabled: !this.canManageContacts,
           },
           {
             label: this.$t('CONTACT_PANEL.SEND_EMAIL'),
             action: 'email',
             value: 'email',
             icon: 'i-lucide-mail',
+            disabled: !this.canManageContacts,
           },
         ];
       }
@@ -121,24 +129,28 @@ export default {
             action: 'save',
             value: 'save',
             icon: 'i-lucide-user-plus',
+            disabled: false,
           },
           {
             label: this.$t('CONTACT_PANEL.COPY_PHONE'),
             action: 'copy',
             value: 'copy',
             icon: 'i-lucide-copy',
+            disabled: !this.canManageContacts,
           },
           {
             label: this.$t('CONTACT_PANEL.CALL'),
             action: 'call',
             value: 'call',
             icon: 'i-lucide-phone',
+            disabled: !this.canManageContacts,
           },
           {
             label: this.$t('CONTACT_PANEL.LOOKUP_ZALO'),
             action: 'zalo',
             value: 'zalo',
             icon: 'i-lucide-search',
+            disabled: !this.canManageContacts,
           },
         ];
       }
@@ -507,8 +519,9 @@ export default {
           v-for="(item, index) in contactMenuItems"
           :key="index"
           class="contact-menu-item"
+          :class="{ 'is-disabled': item.disabled }"
           role="button"
-          @click.stop="handleContactMenuAction(item)"
+          @click.stop="item.disabled ? null : handleContactMenuAction(item)"
         >
           <span class="flex-shrink-0 size-3.5" :class="[item.icon]" />
           <p class="contact-menu-label truncate">{{ item.label }}</p>
@@ -554,6 +567,15 @@ export default {
   &:hover {
     background-color: #e06720;
     color: #fff;
+  }
+
+  &.is-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    &:hover {
+      background-color: transparent;
+      color: inherit;
+    }
   }
 }
 </style>

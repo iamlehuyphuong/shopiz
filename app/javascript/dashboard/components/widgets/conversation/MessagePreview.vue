@@ -1,4 +1,5 @@
 <script>
+import { computed } from 'vue';
 import { MESSAGE_TYPE } from 'widget/helpers/constants';
 import { useMessageFormatter } from 'shared/composables/useMessageFormatter';
 import { ATTACHMENT_ICONS } from 'shared/constants/messages';
@@ -26,7 +27,9 @@ export default {
   },
   setup() {
     const { checkPermissions } = usePolicy();
-    const maskContactInfo = !checkPermissions(['contact_manage']);
+    const maskContactInfo = computed(
+      () => !checkPermissions(['contact_manage'])
+    );
     const { getPlainText } = useMessageFormatter(maskContactInfo);
     return {
       getPlainText,
@@ -70,6 +73,7 @@ export default {
       if (direction) {
         return direction === 'inbound';
       }
+      return false;
     },
     // Get normalized call status
     callStatus() {

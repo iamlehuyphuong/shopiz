@@ -24,7 +24,7 @@ const { t } = useI18n();
 const slaCardLabelRef = ref(null);
 
 const { checkPermissions } = usePolicy();
-const maskContactInfo = !checkPermissions(['contact_manage']);
+const maskContactInfo = computed(() => !checkPermissions(['contact_manage']));
 const { getPlainText } = useMessageFormatter(maskContactInfo);
 
 // Simple check: Is this a voice channel conversation?

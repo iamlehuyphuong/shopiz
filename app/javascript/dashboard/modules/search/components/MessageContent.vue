@@ -20,7 +20,10 @@ const props = defineProps({
 });
 
 const { t } = useI18n();
-const { highlightContent } = useMessageFormatter();
+import { usePolicy } from 'dashboard/composables/usePolicy';
+const { checkPermissions } = usePolicy();
+const maskContactInfo = computed(() => !checkPermissions(['contact_manage']));
+const { highlightContent } = useMessageFormatter(maskContactInfo);
 
 const { contentElement, showReadMore, showReadLess, toggleExpanded } =
   useExpandableContent();

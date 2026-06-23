@@ -3,6 +3,8 @@ import { ref, computed, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import { useAlert } from 'dashboard/composables';
+import { usePolicy } from 'dashboard/composables/usePolicy';
+import { useMessageFormatter } from 'shared/composables/useMessageFormatter';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import TextArea from 'next/textarea/TextArea.vue';
 import { useRouter } from 'vue-router';
@@ -17,6 +19,10 @@ const emit = defineEmits(['close']);
 const store = useStore();
 const { t } = useI18n();
 const router = useRouter();
+
+const { checkPermissions } = usePolicy();
+const maskContactInfo = computed(() => !checkPermissions(['contact_manage']));
+const { getPlainText } = useMessageFormatter(maskContactInfo);
 
 const showModal = ref(false);
 const selectedInboxId = ref('');
@@ -139,7 +145,7 @@ const handleSubmit = async () => {
           <div v-if="phone" class="w-full mb-4">
             <label>
               Số điện thoại
-              <input type="text" :value="phone" disabled />
+              <input type="text" :value="getPlainText(phone)" disabled />
             </label>
           </div>
 

@@ -1,9 +1,12 @@
 <script>
+import { computed } from 'vue';
 import { mapGetters } from 'vuex';
 import { format, parseISO, isValid } from 'date-fns';
 import { useAlert } from 'dashboard/composables';
 import { dynamicTime } from 'shared/helpers/timeHelper';
 import { useAdmin } from 'dashboard/composables/useAdmin';
+import { usePolicy } from 'dashboard/composables/usePolicy';
+import MessageFormatter from 'shared/helpers/MessageFormatter';
 import ContactInfoRow from './ContactInfoRow.vue';
 import Avatar from 'next/avatar/Avatar.vue';
 import SocialIcons from './SocialIcons.vue';
@@ -50,8 +53,12 @@ export default {
   emits: ['panelClose'],
   setup() {
     const { isAdmin } = useAdmin();
+    const { checkPermissions } = usePolicy();
+    const maskContactInfo = computed(() => !checkPermissions(['contact_manage']));
+
     return {
       isAdmin,
+      maskContactInfo,
     };
   },
   data() {
@@ -147,6 +154,11 @@ export default {
     },
   },
   methods: {
+    getPlainText(text) {
+      if (!text) return '';
+      const formatter = new MessageFormatter(text, false, false, true, this.maskContactInfo);
+      return formatter.plainText;
+    },
     dynamicTime,
     toggleEditModal() {
       this.showEditModal = !this.showEditModal;
@@ -586,8 +598,8 @@ export default {
         </p>
         <div class="flex flex-col items-start w-full gap-2">
           <ContactInfoRow
-            :href="contact.email ? `mailto:${contact.email}` : ''"
-            :value="contact.email"
+            :href="!maskContactInfo && contact.email ? `mailto:${contact.email}` : ''"
+            :value="contact.email ? getPlainText(contact.email) : ''"
             icon="mail"
             emoji="✉️"
             :title="$t('CONTACT_PANEL.EMAIL_ADDRESS')"
@@ -595,8 +607,8 @@ export default {
             show-copy
           />
           <ContactInfoRow
-            :href="contact.phone_number ? `tel:${contact.phone_number}` : ''"
-            :value="contact.phone_number"
+            :href="!maskContactInfo && contact.phone_number ? `tel:${contact.phone_number}` : ''"
+            :value="contact.phone_number ? getPlainText(contact.phone_number) : ''"
             icon="call"
             emoji="📞"
             :title="$t('CONTACT_PANEL.PHONE_NUMBER')"
