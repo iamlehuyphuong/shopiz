@@ -814,7 +814,12 @@
       "CHECK_ERROR": "Không thể kiểm tra kết nối. Vui lòng thử lại sau.",
       "SYNC_FRIENDS_BUTTON": "Đồng bộ bạn bè",
       "SYNC_FRIENDS_SUCCESS": "Đã bắt đầu đồng bộ bạn bè",
-      "SYNC_FRIENDS_ERROR": "Lỗi khi đồng bộ bạn bè"
+      "SYNC_FRIENDS_ERROR": "Lỗi khi đồng bộ bạn bè",
+      "RECONNECT_SUCCESS": {
+        "TITLE": "Kết nối thành công",
+        "DESCRIPTION": "Bạn đã kết nối lại thành công Zalo cá nhân",
+        "CLOSE": "Đóng"
+      }
     },
     "CHANNEL_PREFERENCES": "Cài đặt kênh",
     "WIDGET_FEATURES": "Tuỳ chỉnh khung trò chuyện",
