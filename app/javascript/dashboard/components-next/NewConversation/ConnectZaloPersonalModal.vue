@@ -113,10 +113,17 @@ const handleSubmit = async () => {
 
 <template>
   <teleport to="body">
-    <woot-modal :show="show" :on-close="closeModal">
-      <div class="flex flex-col h-auto w-full relative">
-        <div class="px-6 py-4 text-lg font-semibold text-slate-900 dark:text-slate-50 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 sticky top-0 z-10">
-          Thông tin tài khoản
+    <woot-modal :show="show" :on-close="closeModal" :show-close-button="false">
+      <div class="flex flex-col h-auto w-full sm:w-[600px] max-w-full relative bg-white dark:bg-slate-800 rounded-xl overflow-hidden">
+        <div class="px-6 py-4 flex items-center justify-between border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 sticky top-0 z-20">
+          <div class="text-lg font-semibold text-slate-900 dark:text-slate-50">Thông tin tài khoản</div>
+          <NextButton
+            ghost
+            slate
+            icon="i-lucide-x"
+            class="!m-0 !p-1 -mr-2"
+            @click.prevent="closeModal"
+          />
         </div>
 
         <div class="relative bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 pb-4">
@@ -135,7 +142,7 @@ const handleSubmit = async () => {
           </div>
         </div>
 
-        <form class="!p-0 flex flex-col mx-0" @submit.prevent="handleSubmit">
+        <form class="!p-0 flex flex-col w-full mx-0" @submit.prevent="handleSubmit">
           <div class="px-6 py-4 bg-white dark:bg-slate-800">
             <h4 class="font-semibold text-base mb-4 text-slate-900 dark:text-slate-50">Thông tin cá nhân</h4>
             <div class="grid grid-cols-[100px_1fr] gap-x-2 gap-y-3 text-sm">
