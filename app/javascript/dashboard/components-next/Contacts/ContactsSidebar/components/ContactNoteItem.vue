@@ -59,7 +59,7 @@ onMounted(() => {
           :src="
             note?.user?.name
               ? note?.user?.thumbnail
-              : '/assets/images/chatwoot_bot.png'
+              : '/assets/images/shopiz_bot.svg'
           "
           :size="16"
           branded
