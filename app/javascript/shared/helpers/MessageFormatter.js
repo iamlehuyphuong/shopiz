@@ -66,13 +66,55 @@ class MessageFormatter {
     message,
     isATweet = false,
     isAPrivateNote = false,
-    linkify = true
+    linkify = true,
+    maskContactInfo = false
   ) {
     this.message = message || '';
     this.isAPrivateNote = isAPrivateNote;
     this.isATweet = isATweet;
     this.linkify = linkify;
+    this.maskContactInfo = maskContactInfo;
     this.md = createMarkdownInstance(linkify);
+  }
+
+  maskEmail(email) {
+    if (!email) return '';
+    const parts = email.split('@');
+    if (parts.length !== 2) return email;
+    const [name, domain] = parts;
+    const maskedName = name.length > 2 ? `${name.substring(0, 2)}***` : `*`;
+    return `${maskedName}@${domain}`;
+  }
+
+  maskPhoneNumber(phone) {
+    if (!phone) return '';
+    const digitsIndices = [];
+    for (let i = 0; i < phone.length; i++) {
+      if (/\\d/.test(phone[i])) {
+        digitsIndices.push(i);
+      }
+    }
+    
+    const numDigits = digitsIndices.length;
+    let masked = phone;
+    
+    if (numDigits > 5) {
+      const indicesToMask = digitsIndices.slice(3, numDigits - 2);
+      const chars = phone.split('');
+      indicesToMask.forEach(idx => {
+        chars[idx] = '*';
+      });
+      masked = chars.join('');
+    } else {
+      const indicesToMask = digitsIndices.slice(0, Math.max(0, numDigits - 2));
+      const chars = phone.split('');
+      indicesToMask.forEach(idx => {
+        chars[idx] = '*';
+      });
+      masked = chars.join('');
+    }
+    
+    return masked;
   }
 
   formatMessage() {
@@ -82,6 +124,7 @@ class MessageFormatter {
     renderedMessage = renderedMessage.replace(
       /<a [^>]*href="mailto:([^"]+)"[^>]*>.*?<\/a>/gi,
       (match, email) => {
+        if (this.maskContactInfo) return this.maskEmail(email);
         return `<strong class="highlight-link underline cursor-pointer text-n-orange-10 hover:text-n-orange dark:text-n-orange-5 transition-colors" data-type="email" data-value="${email}"><u>${email}</u></strong>`;
       }
     );
@@ -90,11 +133,13 @@ class MessageFormatter {
     renderedMessage = renderedMessage.replace(EMAIL_REGEX, match => {
       // Avoid replacing if it's already inside our custom tag (very simple check)
       if (renderedMessage.includes(`data-value="${match}"`)) return match;
+      if (this.maskContactInfo) return this.maskEmail(match);
       return `<strong class="highlight-link underline cursor-pointer text-n-orange-10 hover:text-n-orange dark:text-n-orange-5 transition-colors" data-type="email" data-value="${match}"><u>${match}</u></strong>`;
     });
 
     // Highlight phone numbers (usually not linkified by markdown-it)
     renderedMessage = renderedMessage.replace(VN_PHONE_REGEX, match => {
+      if (this.maskContactInfo) return this.maskPhoneNumber(match);
       return `<strong class="highlight-link underline cursor-pointer text-n-orange-10 hover:text-n-orange dark:text-n-orange-5 transition-colors" data-type="phone" data-value="${match}"><u>${match}</u></strong>`;
     });
 

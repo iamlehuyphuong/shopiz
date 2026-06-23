@@ -1,3 +1,4 @@
+import { unref } from 'vue';
 import MessageFormatter from '../helpers/MessageFormatter';
 
 /**
@@ -5,7 +6,7 @@ import MessageFormatter from '../helpers/MessageFormatter';
  *
  * @returns {Object} A set of functions for message formatting.
  */
-export const useMessageFormatter = () => {
+export const useMessageFormatter = (maskContactInfo = false) => {
   /**
    * Formats a message based on specified conditions.
    *
@@ -16,11 +17,13 @@ export const useMessageFormatter = () => {
    */
   // TODO: ref:https://github.com/chatwoot/chatwoot/pull/10725#discussion_r1925300874
   const formatMessage = (message, isATweet, isAPrivateNote, linkify) => {
+    const shouldMask = unref(maskContactInfo);
     const messageFormatter = new MessageFormatter(
       message,
       isATweet,
       isAPrivateNote,
-      linkify
+      linkify,
+      shouldMask
     );
     return messageFormatter.formattedMessage;
   };
@@ -33,7 +36,14 @@ export const useMessageFormatter = () => {
    * @returns {string} - The plain text message.
    */
   const getPlainText = (message, isATweet) => {
-    const messageFormatter = new MessageFormatter(message, isATweet);
+    const shouldMask = unref(maskContactInfo);
+    const messageFormatter = new MessageFormatter(
+      message,
+      isATweet,
+      false,
+      true,
+      shouldMask
+    );
     return messageFormatter.plainText;
   };
 

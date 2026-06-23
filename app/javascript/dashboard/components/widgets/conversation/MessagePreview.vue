@@ -2,6 +2,7 @@
 import { MESSAGE_TYPE } from 'widget/helpers/constants';
 import { useMessageFormatter } from 'shared/composables/useMessageFormatter';
 import { ATTACHMENT_ICONS } from 'shared/constants/messages';
+import { usePolicy } from 'dashboard/composables/usePolicy';
 
 export default {
   name: 'MessagePreview',
@@ -24,7 +25,9 @@ export default {
     },
   },
   setup() {
-    const { getPlainText } = useMessageFormatter();
+    const { checkPermissions } = usePolicy();
+    const maskContactInfo = !checkPermissions(['contact_manage']);
+    const { getPlainText } = useMessageFormatter(maskContactInfo);
     return {
       getPlainText,
     };
