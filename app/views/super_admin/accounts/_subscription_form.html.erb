@@ -12,7 +12,7 @@
       <div class="attribute-data md:w-3/4">
         <% if page.resource.active_subscription %>
           <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 inline-block min-w-[300px]">
-            <p class="mb-1"><strong>Plan:</strong> <span class="text-woot-500"><%= page.resource.active_subscription.subscription_plan.name_en %></span></p>
+            <p class="mb-1"><strong>Plan:</strong> <span class="text-woot-500"><%= page.resource.active_subscription.subscription_plan&.name_en || 'Unknown Plan' %></span></p>
             <p class="mb-1"><strong>Status:</strong> <span class="capitalize text-slate-600"><%= page.resource.active_subscription.status %></span></p>
             <p class="mb-0 text-slate-500 text-sm"><strong>Expires:</strong> <%= page.resource.active_subscription.ends_at.strftime('%d %b %Y') %></p>
           </div>
