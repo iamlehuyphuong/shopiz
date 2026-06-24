@@ -16,7 +16,7 @@
               <% page.resource.account_addons.active.each do |addon| %>
                 <li class="flex items-center text-sm">
                   <div class="w-2 h-2 rounded-full bg-woot-400 mr-2"></div>
-                  <span class="font-medium text-slate-700"><%= addon.addon_package.name %></span>
+                  <span class="font-medium text-slate-700"><%= addon.addon_package&.name || 'Unknown Addon' %></span>
                   <span class="mx-2 text-slate-300">|</span>
                   <span class="text-slate-600"><%= addon.quantity %> <%= addon.addon_type.to_s.humanize %></span>
                   <% if addon.expired_at %>

@@ -48,10 +48,9 @@ export default {
       }`;
     },
     avatarUrl() {
-      // eslint-disable-next-line
       const displayImage = this.useInboxAvatarForBot
         ? this.inboxAvatarUrl
-        : '/assets/images/chatwoot_bot.png';
+        : '/assets/images/shopiz_bot.svg';
       if (this.isSenderExist(this.sender)) {
         const { avatar_url: avatarUrl } = this.sender;
         return avatarUrl;

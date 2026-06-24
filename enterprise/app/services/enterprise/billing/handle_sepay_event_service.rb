@@ -23,10 +23,18 @@ class Enterprise::Billing::HandleSepayEventService
   private
 
   def prepare_data(payload)
-    order_id_raw = payload.dig('order', 'order_invoice_number') || payload['content']
+    order_invoice = payload.dig('order', 'order_invoice_number')
+    order_id_raw = order_invoice || payload['content']
     order_id = order_id_raw.to_s.strip.upcase
 
-    @pending_bill = BillingHistory.find_by(order_id: order_id)
+    # If order_invoice is present, we can reliably find the exact bill (pending or completed duplicate)
+    # If it's missing and we use content, we should only look for pending bills to avoid matching old completed bills
+    if order_invoice.present?
+      @pending_bill = BillingHistory.find_by(order_id: order_id)
+    else
+      @pending_bill = BillingHistory.find_by(order_id: order_id, status: :pending)
+    end
+
     if @pending_bill.present?
       @account = @pending_bill.account
       @record = SubscriptionPlan.find_by(sku: @pending_bill.sku) || AddonPackage.find_by(sku: @pending_bill.sku)

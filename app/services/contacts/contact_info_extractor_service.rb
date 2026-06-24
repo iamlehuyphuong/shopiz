@@ -30,8 +30,9 @@ class Contacts::ContactInfoExtractorService
     phone = nil
     content.scan(VN_PHONE_REGEX).each do |match|
       digits_only = match.gsub(/[\s\-\.]/, '')
-      if digits_only.match?(/^(?:\+84|0)([35789]\d{7,8})$/)
-        phone = ::Regexp.last_match(1)
+      match_data = digits_only.match(/^(?:\+84|0)([35789]\d{7,8})$/)
+      if match_data
+        phone = match_data[1]
         break
       end
     end

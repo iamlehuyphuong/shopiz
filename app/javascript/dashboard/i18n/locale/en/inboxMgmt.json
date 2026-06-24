@@ -845,7 +845,12 @@
       "CHECK_ERROR": "Unable to check connection. Please try again later.",
       "SYNC_FRIENDS_BUTTON": "Sync Friends",
       "SYNC_FRIENDS_SUCCESS": "Started syncing friends",
-      "SYNC_FRIENDS_ERROR": "Error syncing friends"
+      "SYNC_FRIENDS_ERROR": "Error syncing friends",
+      "RECONNECT_SUCCESS": {
+        "TITLE": "Connection successful",
+        "DESCRIPTION": "You have successfully reconnected your Zalo Personal account",
+        "CLOSE": "Close"
+      }
     },
     "CHANNEL_PREFERENCES": "Channel Preferences",
     "WIDGET_FEATURES": "Customize Chat Window",

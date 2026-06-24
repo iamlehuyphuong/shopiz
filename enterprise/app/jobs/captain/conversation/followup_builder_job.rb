@@ -136,18 +136,25 @@ class Captain::Conversation::FollowupBuilderJob < ApplicationJob
   end
 
   def create_outgoing_message(message_content, agent_name: nil)
-    additional_attrs = {}
-    additional_attrs[:agent_name] = agent_name if agent_name.present?
-
-    @conversation.messages.create!(
-      message_type: :outgoing,
+    message_params = {
       account_id: account.id,
       inbox_id: inbox.id,
-      sender: @assistant,
+      message_type: 'outgoing',
       content: message_content,
-      additional_attributes: additional_attrs,
+      private: false,
+      sender_type: 'AgentBot',
+      sender_id: @assistant.id,
       content_attributes: { followup_automated: true }
-    )
+    }
+
+    builder = Messages::MessageBuilder.new(nil, @conversation, message_params)
+    message = builder.perform
+
+    if agent_name.present?
+      message.update!(additional_attributes: message.additional_attributes.merge('agent_name' => agent_name))
+    end
+
+    message
   end
 
   def handle_error(error)

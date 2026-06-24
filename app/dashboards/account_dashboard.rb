@@ -35,7 +35,7 @@ class AccountDashboard < Administrate::BaseDashboard
     status: Field::Select.with_options(collection: [%w[Active active], %w[Suspended suspended]]),
     account_users: Field::HasMany,
     custom_attributes: Field::String.with_options(searchable: false),
-    plan_name: Field::String.with_options(searchable: false),
+    plan_name: Field::String.with_options(searchable: false, sortable: false),
     subscription_end_at: Field::DateTime,
     onboarding: Field::HasOne
   }.merge(enterprise_attribute_types).freeze

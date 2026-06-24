@@ -146,7 +146,7 @@ class Conversations::FollowupExecutionJob < ApplicationJob
       conversation.save!
     end
 
-    Macros::ExecutionService.new(macro, nil, conversation).perform
+    Macros::ExecutionService.new(macro, conversation, nil).perform
   end
 
   def trigger_predefined_message(conversation, content, attempt_count)
@@ -165,7 +165,7 @@ class Conversations::FollowupExecutionJob < ApplicationJob
       content_attributes: { followup_automated: true }
     }
 
-    builder = MessageBuilder.new(message_params, conversation)
+    builder = Messages::MessageBuilder.new(nil, conversation, message_params)
     builder.perform
   end
 

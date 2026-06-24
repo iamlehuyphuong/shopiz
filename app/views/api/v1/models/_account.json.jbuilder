@@ -17,7 +17,7 @@ json.custom_attributes do
     json.subscription_ends_on resource.custom_attributes&.dig('subscription_ends_on')
   end
 
-  json.captain_responses_credit resource.limits['captain_responses_credit']
+  json.captain_responses_credit resource.limits&.dig('captain_responses_credit').to_i
 
   if resource.custom_attributes.present?
     json.industry resource.custom_attributes['industry'] if resource.custom_attributes['industry'].present?
@@ -44,17 +44,17 @@ json.onboarding do
     json.onboarding_completed resource.custom_attributes&.dig('onboarding_completed') || false
   end
 end
-json.domain @account.domain
-json.features @account.enabled_features
-json.id @account.id
-json.locale @account.locale
-json.name @account.name
-json.support_email @account.support_email
-json.status @account.status
-json.cache_keys @account.cache_keys
+json.domain resource.domain
+json.features resource.enabled_features
+json.id resource.id
+json.locale resource.locale
+json.name resource.name
+json.support_email resource.support_email
+json.status resource.status
+json.cache_keys resource.cache_keys
 json.captain_api_source begin
   system_key = InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_API_KEY')&.value.present?
-  user_hook = @account.hooks.find_by(app_id: 'openai', status: 'enabled')&.settings&.dig('api_key').present?
+  user_hook = resource.hooks.find_by(app_id: 'openai', status: 'enabled')&.settings&.dig('api_key').present?
   allow_hook = (config = InstallationConfig.find_by(name: 'CAPTAIN_ALLOW_USER_HOOK_KEY')).nil? || config&.value == true
 
   if system_key

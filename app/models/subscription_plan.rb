@@ -32,24 +32,15 @@ class SubscriptionPlan < ApplicationRecord
            :is_free, :is_free?, to: :subscription_tier, allow_nil: true
 
   def name(locale = 'en')
-    base_name = subscription_tier&.name(locale)
-    return "#{base_name} + AI" if ai_included? && base_name.present?
-
-    base_name
+    subscription_tier&.name(locale)
   end
 
   def name_en
-    base_name = subscription_tier&.name_en
-    return "#{base_name} + AI" if ai_included? && base_name.present?
-
-    base_name
+    subscription_tier&.name_en
   end
 
   def name_vi
-    base_name = subscription_tier&.name_vi
-    return "#{base_name} + AI" if ai_included? && base_name.present?
-
-    base_name
+    subscription_tier&.name_vi
   end
 
   AI_FEATURES = %w[captain captain_v2 captain_task].freeze

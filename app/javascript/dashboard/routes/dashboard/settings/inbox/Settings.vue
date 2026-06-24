@@ -44,6 +44,7 @@ import Editor from 'dashboard/components-next/Editor/Editor.vue';
 import ColorPicker from 'dashboard/components-next/colorpicker/ColorPicker.vue';
 import SelectInput from 'dashboard/components-next/select/Select.vue';
 import Widget from 'dashboard/modules/widget-preview/components/Widget.vue';
+import Dialog from 'dashboard/components-next/dialog/Dialog.vue';
 
 import InboxReconnectionRequired from './components/InboxReconnectionRequired.vue';
 import InboxesAPI from 'dashboard/api/inboxes';
@@ -83,6 +84,7 @@ export default {
     SelectInput,
     AccountHealth,
     Widget,
+    Dialog,
 
     FeatureLockOverlay,
     InboxReconnectionRequired,
@@ -796,6 +798,21 @@ export default {
       this.$nextTick(() => {
         this.$refs.businessNameInput?.focus();
       });
+    },
+    handleZaloReauthorizeSuccess() {
+      this.zaloReauthorizeModalVisible = false;
+      this.$refs.zaloReauthorizeSuccessDialog.open();
+      this.$store.dispatch('inboxes/get');
+      setTimeout(() => {
+        if (this.$refs.zaloReauthorizeSuccessDialog) {
+          this.$refs.zaloReauthorizeSuccessDialog.close();
+        }
+      }, 3000);
+    },
+    closeZaloSuccessDialog() {
+      if (this.$refs.zaloReauthorizeSuccessDialog) {
+        this.$refs.zaloReauthorizeSuccessDialog.close();
+      }
     },
     hideBusinessNameInput() {
       this.showBusinessNameInput = false;
@@ -1841,9 +1858,24 @@ export default {
           :header-content="$t('INBOX_MGMT.ADD.ZALO_OA.RELOGIN')"
         />
         <div class="px-8 pb-8 pt-2">
-          <ZaloReauthorize :inbox="inbox" />
+          <ZaloReauthorize :inbox="inbox" @success="handleZaloReauthorizeSuccess" />
         </div>
       </div>
     </woot-modal>
+
+    <Dialog
+      ref="zaloReauthorizeSuccessDialog"
+      :title="$t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.RECONNECT_SUCCESS.TITLE')"
+      :description="$t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.RECONNECT_SUCCESS.DESCRIPTION')"
+      width="sm"
+      :show-cancel-button="false"
+      :show-confirm-button="false"
+    >
+      <template #footer>
+        <div class="w-full">
+          <NextButton class="w-full" color="blue" :label="$t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.RECONNECT_SUCCESS.CLOSE')" @click="closeZaloSuccessDialog" />
+        </div>
+      </template>
+    </Dialog>
   </div>
 </template>

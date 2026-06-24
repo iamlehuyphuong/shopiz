@@ -127,7 +127,7 @@ export default {
           this.emptyStateMessage =
             'Kết nối WebSocket thành công. Vui lòng quét mã QR để đăng nhập.';
         }.bind(this);
-        this.socket.onmessage = function (event) {
+        this.socket.onmessage = async function (event) {
           const msgStr = event.data;
 
           if (msgStr.startsWith('login_success:')) {
@@ -170,7 +170,7 @@ export default {
                     },
                   },
                 };
-                this.$store
+                await this.$store
                   .dispatch('inboxes/updateInbox', payload)
                   .catch(error => {
                     console.error('Failed to update inbox proxy:', error);
@@ -179,6 +179,7 @@ export default {
                 console.error('Update inbox error:', error);
               }
             }
+            this.$emit('success');
           } else if (msgStr.startsWith('login_error:')) {
             const items = msgStr.split(':');
             const receivedSessionId = items[1];
