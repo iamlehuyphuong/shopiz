@@ -151,10 +151,10 @@ const isFollowupActive = computed(() => {
   return currentCount < maxAttempts;
 });
 
-const followupText = computed(() => {
+const followupTextParams = computed(() => {
   const currentCount = props.chat.custom_attributes?.followup_count || 0;
   const maxAttempts = inbox.value?.followup_config?.max_attempts || 1;
-  return `Follow-up ${currentCount}/${maxAttempts}`;
+  return { currentCount, maxAttempts };
 });
 
 const messagePreviewClass = computed(() => {
@@ -377,7 +377,7 @@ const deleteConversation = () => {
           v-if="isFollowupActive"
           class="text-xxs font-medium leading-4 py-1 px-2 rounded-full border border-solid border-n-orange text-n-orange-11 bg-n-orange-2 text-ellipsis overflow-hidden whitespace-nowrap"
         >
-          {{ followupText }}
+          {{ $t('CHAT_LIST.FOLLOW_UP_BADGE', followupTextParams) }}
         </span>
         <div
           v-if="currentContact.phone_number"

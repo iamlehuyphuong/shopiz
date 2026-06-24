@@ -928,7 +928,7 @@
       "UPDATE": "Cập nhật",
       "ENABLE_EMAIL_COLLECT_BOX": "Bật hộp thu thập email",
       "ENABLE_EMAIL_COLLECT_BOX_SUB_TEXT": "Bật hoặc tắt hộp thu thập email trên cuộc trò chuyện mới",
-      "AUTO_FOLLOWUP_TITLE": "Tự động Follow-up",
+      "AUTO_FOLLOWUP_TITLE": "Tự động bám đuổi",
       "AUTO_LABEL_TITLE": "Gắn nhãn thông minh",
       "AUTO_LABEL_TOGGLE": "Tự động gắn nhãn bằng AI",
       "AUTO_LABEL_DESC": "Tự động gán nhãn phù hợp với hành vi, ý định và đánh giá chấm điểm khách hàng thông qua phân tích của ShopizAI.",
