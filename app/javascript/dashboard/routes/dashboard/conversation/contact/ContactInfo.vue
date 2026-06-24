@@ -640,7 +640,7 @@ export default {
       <div class="flex flex-row justify-between">
         <Avatar
           v-if="showAvatar"
-          :src="contact.thumbnail"
+          :src="contact.thumbnail || (zaloGroupInfo && (zaloGroupInfo.avatar || zaloGroupInfo.avt)) || ''"
           :name="contact.name"
           :status="contact.availability_status"
           :size="48"
@@ -754,6 +754,7 @@ export default {
               :value="zaloGroupInfo.desc || zaloGroupInfo.description"
               icon="document"
               title="Mô tả"
+              multiline
             />
             <ContactInfoRow
               v-if="zaloGroupInfo && (zaloGroupInfo.link || zaloGroupInfo.groupLink)"

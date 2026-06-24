@@ -171,7 +171,11 @@ Rails.application.routes.draw do
               resource :participants, only: [:show, :create, :update, :destroy]
               resource :direct_uploads, only: [:create]
               resource :draft_messages, only: [:show, :update, :destroy]
-              resources :zalo_group_members, only: [:index]
+              resources :zalo_group_members, only: [:index] do
+                collection do
+                  post :sync
+                end
+              end
               resources :orders, only: [:index, :create, :show, :update, :destroy] do
                 member do
                   post :push

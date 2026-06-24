@@ -17,6 +17,7 @@ const props = defineProps({
   initialGreetingMessage: { type: String, default: '' },
   zaloProfile: { type: Object, default: () => ({}) },
   isFriend: { type: Boolean, default: false },
+  isYou: { type: Boolean, default: false },
   show: { type: Boolean, default: false }
 });
 
@@ -158,7 +159,10 @@ const handleSubmit = async () => {
             </div>
           </div>
 
-          <div class="px-6 py-4 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+          <div v-if="isYou" class="px-6 py-4 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-center">
+            <div class="text-slate-500 font-medium">Đây là thông tin tài khoản của bạn</div>
+          </div>
+          <div v-else class="px-6 py-4 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
             <template v-if="!isFriend">
               <div class="flex items-center w-full gap-2 mb-4">
                 <input id="sendFriendRequest" v-model="sendFriendRequest" type="checkbox" />
@@ -189,19 +193,29 @@ const handleSubmit = async () => {
           </div>
 
           <div class="flex items-center justify-end w-full gap-2 px-6 py-4 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700">
-            <NextButton
-              faded
-              slate
-              type="reset"
-              :label="$t('CONTACT_PANEL.ZALO_PERSONAL.CANCEL')"
-              @click.prevent="closeModal"
-            />
-            <NextButton
-              type="submit"
-              :is-loading="isSubmitting"
-              :disabled="!greetingMessage.trim() && !(sendFriendRequest && friendRequestMessage.trim())"
-              :label="$t('CONTACT_PANEL.ZALO_PERSONAL.SUBMIT')"
-            />
+            <template v-if="isYou">
+              <NextButton
+                faded
+                slate
+                label="Đóng"
+                @click.prevent="closeModal"
+              />
+            </template>
+            <template v-else>
+              <NextButton
+                faded
+                slate
+                type="reset"
+                :label="$t('CONTACT_PANEL.ZALO_PERSONAL.CANCEL')"
+                @click.prevent="closeModal"
+              />
+              <NextButton
+                type="submit"
+                :is-loading="isSubmitting"
+                :disabled="!greetingMessage.trim() && !(sendFriendRequest && friendRequestMessage.trim())"
+                :label="$t('CONTACT_PANEL.ZALO_PERSONAL.SUBMIT')"
+              />
+            </template>
           </div>
         </form>
       </div>
