@@ -20,6 +20,7 @@ import ConversationInfo from './ConversationInfo.vue';
 import CustomAttributes from './customAttributes/CustomAttributes.vue';
 import Draggable from 'vuedraggable';
 import MacrosList from './Macros/List.vue';
+import ZaloGroupMembers from './zalo/ZaloGroupMembers.vue';
 import ShopifyOrdersList from 'dashboard/components/widgets/conversation/ShopifyOrdersList.vue';
 
 import LinearIssuesList from 'dashboard/components/widgets/conversation/linear/IssuesList.vue';
@@ -98,6 +99,15 @@ const contact = computed(() => contactGetter.value(contactId.value));
 const contactAdditionalAttributes = computed(
   () => contact.value.additional_attributes || {}
 );
+
+const conversationInboxId = computed(() => currentChat.value?.inbox_id);
+
+const isZaloGroupConversation = computed(() => {
+  const isZalo = channelType.value === 'Channel::ZaloPersonal';
+  if (!isZalo) return false;
+  const type = conversationAdditionalAttributes.value?.type;
+  return type === 1 || !!conversationAdditionalAttributes.value?.group;
+});
 
 const getContactDetails = () => {
   if (contactId.value) {
@@ -275,6 +285,25 @@ onErrorCaptured(err => {
               <MacrosList :conversation-id="conversationId" />
             </AccordionItem>
           </woot-feature-toggle>
+          <div
+            v-else-if="
+              element.name === 'zalo_group_members' && isZaloGroupConversation
+            "
+          >
+            <AccordionItem
+              title="Thành viên nhóm"
+              :is-open="isContactSidebarItemOpen('is_zalo_group_members_open')"
+              compact
+              @toggle="
+                value => toggleSidebarUIState('is_zalo_group_members_open', value)
+              "
+            >
+              <ZaloGroupMembers 
+                :conversation-id="conversationId"
+                :conversation-inbox-id="conversationInboxId"
+              />
+            </AccordionItem>
+          </div>
           <div
             v-else-if="
               element.name === 'linear_issues' &&

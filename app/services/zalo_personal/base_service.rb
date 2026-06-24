@@ -131,7 +131,7 @@ class ZaloPersonal::BaseService
     attrs = { group_id: params[:data][:idTo] }
     return attrs if @group_info.blank?
 
-    @group_info.slice('name', 'avt').merge(attrs)
+    @group_info.slice('name', 'avt', 'desc', 'description', 'link', 'groupLink').merge(attrs)
   end
 
   def build_message

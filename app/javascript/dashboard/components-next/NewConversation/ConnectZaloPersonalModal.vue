@@ -16,6 +16,7 @@ const props = defineProps({
   initialFriendRequestMessage: { type: String, default: '' },
   initialGreetingMessage: { type: String, default: '' },
   zaloProfile: { type: Object, default: () => ({}) },
+  isFriend: { type: Boolean, default: false },
   show: { type: Boolean, default: false }
 });
 
@@ -158,19 +159,24 @@ const handleSubmit = async () => {
           </div>
 
           <div class="px-6 py-4 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
-            <div class="flex items-center w-full gap-2 mb-4">
-              <input id="sendFriendRequest" v-model="sendFriendRequest" type="checkbox" />
-              <label for="sendFriendRequest" class="mb-0 text-sm font-medium text-slate-900 dark:text-slate-100">
-                {{ $t('CONTACT_PANEL.ZALO_PERSONAL.SEND_FRIEND_REQUEST') }}
-              </label>
-            </div>
+            <template v-if="!isFriend">
+              <div class="flex items-center w-full gap-2 mb-4">
+                <input id="sendFriendRequest" v-model="sendFriendRequest" type="checkbox" />
+                <label for="sendFriendRequest" class="mb-0 text-sm font-medium text-slate-900 dark:text-slate-100">
+                  {{ $t('CONTACT_PANEL.ZALO_PERSONAL.SEND_FRIEND_REQUEST') }}
+                </label>
+              </div>
 
-            <div v-if="sendFriendRequest" class="w-full mb-4">
-              <TextArea
-                v-model="friendRequestMessage"
-                :label="$t('CONTACT_PANEL.ZALO_PERSONAL.FRIEND_REQUEST_MESSAGE')"
-                auto-height
-              />
+              <div v-if="sendFriendRequest" class="w-full mb-4">
+                <TextArea
+                  v-model="friendRequestMessage"
+                  :label="$t('CONTACT_PANEL.ZALO_PERSONAL.FRIEND_REQUEST_MESSAGE')"
+                  auto-height
+                />
+              </div>
+            </template>
+            <div v-else class="flex items-center gap-1.5 text-green-600 font-medium mb-4 text-sm bg-green-50 px-3 py-2 rounded-lg">
+              <fluent-icon icon="checkmark-circle" size="16" /> Đã là bạn bè
             </div>
 
             <div class="w-full mb-4">
