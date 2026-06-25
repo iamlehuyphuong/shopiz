@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_22_133610) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_24_153432) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -1634,6 +1634,25 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_22_133610) do
     t.index ["inbox_id"], name: "index_working_hours_on_inbox_id"
   end
 
+  create_table "zalo_group_members", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "conversation_id", null: false
+    t.string "uid"
+    t.string "name"
+    t.string "avatar"
+    t.string "cover"
+    t.string "bio"
+    t.string "gender"
+    t.string "dob"
+    t.boolean "is_creator"
+    t.boolean "is_admin"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_zalo_group_members_on_account_id"
+    t.index ["conversation_id", "uid"], name: "index_zalo_group_members_on_conversation_id_and_uid", unique: true
+    t.index ["conversation_id"], name: "index_zalo_group_members_on_conversation_id"
+  end
+
   create_table "zalo_message_templates", force: :cascade do |t|
     t.string "template_name", null: false
     t.integer "template_type", default: 0, null: false
@@ -1670,6 +1689,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_22_133610) do
   add_foreign_key "staff_schedules", "accounts"
   add_foreign_key "staff_schedules", "users"
   add_foreign_key "subscription_plans", "subscription_tiers"
+  add_foreign_key "zalo_group_members", "accounts"
+  add_foreign_key "zalo_group_members", "conversations"
   create_trigger("accounts_after_insert_row_tr", :generated => true, :compatibility => 1).
       on("accounts").
       after(:insert).

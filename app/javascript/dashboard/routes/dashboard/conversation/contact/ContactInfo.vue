@@ -146,6 +146,15 @@ export default {
       );
       return inbox?.channel_type === 'Channel::ZaloPersonal';
     },
+    isZaloGroupConversation() {
+      if (!this.isCurrentConversationZaloPersonal) return false;
+      const type = this.currentConversation.additional_attributes?.type;
+      return type === 1 || !!this.currentConversation.additional_attributes?.group;
+    },
+    zaloGroupInfo() {
+      if (!this.isZaloGroupConversation) return null;
+      return this.currentConversation.additional_attributes?.group || null;
+    },
     zaloFriendshipStatus() {
       if (!this.currentConversation) return false;
       
@@ -631,7 +640,7 @@ export default {
       <div class="flex flex-row justify-between">
         <Avatar
           v-if="showAvatar"
-          :src="contact.thumbnail"
+          :src="contact.thumbnail || (zaloGroupInfo && (zaloGroupInfo.avatar || zaloGroupInfo.avt)) || ''"
           :name="contact.name"
           :status="contact.availability_status"
           :size="48"
@@ -673,63 +682,89 @@ export default {
           {{ additionalAttributes.description }}
         </p>
         <div class="flex flex-col items-start w-full gap-2">
-          <ContactInfoRow
-            :href="!maskContactInfo && contact.email ? `mailto:${contact.email}` : ''"
-            :value="contact.email ? getPlainText(contact.email) : ''"
-            icon="mail"
-            emoji="✉️"
-            :title="$t('CONTACT_PANEL.EMAIL_ADDRESS')"
-            :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_EMAIL')"
-            show-copy
-          />
-          <ContactInfoRow
-            :href="!maskContactInfo && contact.phone_number ? `tel:${contact.phone_number}` : ''"
-            :value="contact.phone_number ? getPlainText(contact.phone_number) : ''"
-            icon="call"
-            emoji="📞"
-            :title="$t('CONTACT_PANEL.PHONE_NUMBER')"
-            :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_PHONE')"
-            show-copy
-            value-class="!text-[13px]"
-          />
-          <ContactInfoRow
-            :value="formattedBirthday"
-            icon="calendar"
-            :title="$t('CONTACT_PANEL.BIRTHDAY')"
-            :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_BIRTHDAY')"
-          />
-          <ContactInfoRow
-            :value="
-              contact.gender_id
-                ? $t(`CONTACT_PANEL.GENDERS.${contact.gender_id}`)
-                : ''
-            "
-            icon="person"
-            :title="$t('CONTACT_PANEL.GENDER')"
-            :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_GENDER')"
-          />
-          <ContactInfoRow
-            v-if="contact.identifier"
-            :value="contact.identifier"
-            icon="contact-identify"
-            emoji="🪪"
-            :title="$t('CONTACT_PANEL.IDENTIFIER')"
-          />
-          <ContactInfoRow
-            :value="additionalAttributes.address"
-            icon="location"
-            emoji="📍"
-            :title="$t('CONTACT_PANEL.ADDRESS')"
-            :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_ADDRESS')"
-          />
-          <ContactInfoRow
-            v-if="location || additionalAttributes.location"
-            :value="location || additionalAttributes.location"
-            icon="map"
-            emoji="🌍"
-            :title="$t('CONTACT_PANEL.LOCATION')"
-          />
-          <SocialIcons :social-profiles="socialProfiles" />
+          <template v-if="!isZaloGroupConversation">
+            <ContactInfoRow
+              :href="!maskContactInfo && contact.email ? `mailto:${contact.email}` : ''"
+              :value="contact.email ? getPlainText(contact.email) : ''"
+              icon="mail"
+              emoji="✉️"
+              :title="$t('CONTACT_PANEL.EMAIL_ADDRESS')"
+              :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_EMAIL')"
+              show-copy
+            />
+            <ContactInfoRow
+              :href="!maskContactInfo && contact.phone_number ? `tel:${contact.phone_number}` : ''"
+              :value="contact.phone_number ? getPlainText(contact.phone_number) : ''"
+              icon="call"
+              emoji="📞"
+              :title="$t('CONTACT_PANEL.PHONE_NUMBER')"
+              :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_PHONE')"
+              show-copy
+              value-class="!text-[13px]"
+            />
+            <ContactInfoRow
+              :value="formattedBirthday"
+              icon="calendar"
+              :title="$t('CONTACT_PANEL.BIRTHDAY')"
+              :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_BIRTHDAY')"
+            />
+            <ContactInfoRow
+              :value="
+                contact.gender_id
+                  ? $t(`CONTACT_PANEL.GENDERS.${contact.gender_id}`)
+                  : ''
+              "
+              icon="person"
+              :title="$t('CONTACT_PANEL.GENDER')"
+              :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_GENDER')"
+            />
+            <ContactInfoRow
+              v-if="contact.identifier"
+              :value="contact.identifier"
+              icon="contact-identify"
+              emoji="🪪"
+              :title="$t('CONTACT_PANEL.IDENTIFIER')"
+            />
+            <ContactInfoRow
+              :value="additionalAttributes.address"
+              icon="location"
+              emoji="📍"
+              :title="$t('CONTACT_PANEL.ADDRESS')"
+              :not-available-text="$t('CONTACT_PANEL.NOT_AVAILABLE_ADDRESS')"
+            />
+            <ContactInfoRow
+              v-if="location || additionalAttributes.location"
+              :value="location || additionalAttributes.location"
+              icon="map"
+              emoji="🌍"
+              :title="$t('CONTACT_PANEL.LOCATION')"
+            />
+            <SocialIcons :social-profiles="socialProfiles" />
+          </template>
+          <template v-else>
+            <ContactInfoRow
+              v-if="zaloGroupInfo && zaloGroupInfo.group_id"
+              :value="zaloGroupInfo.group_id"
+              icon="people"
+              title="ID Nhóm"
+              show-copy
+            />
+            <ContactInfoRow
+              v-if="zaloGroupInfo && (zaloGroupInfo.desc || zaloGroupInfo.description)"
+              :value="zaloGroupInfo.desc || zaloGroupInfo.description"
+              icon="document"
+              title="Mô tả"
+              multiline
+            />
+            <ContactInfoRow
+              v-if="zaloGroupInfo && (zaloGroupInfo.link || zaloGroupInfo.groupLink)"
+              :value="zaloGroupInfo.link || zaloGroupInfo.groupLink"
+              :href="zaloGroupInfo.link || zaloGroupInfo.groupLink"
+              icon="link"
+              title="Link nhóm"
+              show-copy
+            />
+          </template>
         </div>
       </div>
       <div class="flex items-center w-full mt-0.5 gap-2">
@@ -764,6 +799,7 @@ export default {
               :phone="contact.phone_number"
               :selected-inbox-id="selectedZaloInboxId"
               :zalo-profile="zaloProfileData"
+              :is-friend="zaloFriendshipStatus"
               :initial-friend-request-message="initialZaloFriendMessage"
               :initial-greeting-message="initialZaloGreetingMessage"
               @close="closeComposeConversationModal"
@@ -772,7 +808,7 @@ export default {
 
           <!-- Friendship Status (Zalo conversation) -->
           <div
-            v-else-if="zaloFriendshipStatus"
+            v-else-if="zaloFriendshipStatus && !isZaloGroupConversation"
             class="flex items-center gap-1 px-2 py-1 bg-slate-50 dark:bg-slate-800 rounded-md text-xs"
           >
             <span class="w-2 h-2 rounded-full bg-green-500" />

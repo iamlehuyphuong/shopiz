@@ -42,6 +42,10 @@ export default {
       type: String,
       default: '',
     },
+    multiline: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     async onCopy(e) {
@@ -54,11 +58,12 @@ export default {
 </script>
 
 <template>
-  <div class="w-full h-5 ltr:-ml-1 rtl:-mr-1">
+  <div class="w-full ltr:-ml-1 rtl:-mr-1" :class="{ 'h-5': !multiline }">
     <a
       v-if="href"
       :href="href"
       class="flex items-center gap-2 text-n-slate-11 hover:underline"
+      :class="{ 'items-start': multiline }"
     >
       <EmojiOrIcon
         :icon="icon"
@@ -68,9 +73,13 @@ export default {
       />
       <span
         v-if="value"
-        class="overflow-hidden text-sm whitespace-nowrap text-ellipsis"
-        :class="valueClass"
-        :title="value"
+        class="overflow-hidden text-sm"
+        :class="[
+          valueClass,
+          { 'whitespace-nowrap text-ellipsis': !multiline },
+          { 'break-words': multiline }
+        ]"
+        :title="!multiline ? value : ''"
       >
         {{ value }}
       </span>
@@ -91,18 +100,23 @@ export default {
       </div>
     </a>
 
-    <div v-else class="flex items-center gap-2 text-n-slate-11">
+    <div v-else class="flex items-center gap-2 text-n-slate-11" :class="{ 'items-start': multiline }">
       <EmojiOrIcon
         :icon="icon"
         :emoji="emoji"
         icon-size="14"
         class="flex-shrink-0 ltr:ml-1 rtl:mr-1"
+        :class="{ 'mt-0.5': multiline }"
       />
       <span
         v-if="value"
         v-dompurify-html="value"
-        class="overflow-hidden text-sm whitespace-nowrap text-ellipsis"
-        :class="valueClass"
+        class="overflow-hidden text-sm"
+        :class="[
+          valueClass,
+          { 'whitespace-nowrap text-ellipsis': !multiline },
+          { 'break-words': multiline }
+        ]"
       />
       <span v-else class="text-sm text-n-slate-11">
         {{ notAvailableText || $t('CONTACT_PANEL.NOT_AVAILABLE') }}
