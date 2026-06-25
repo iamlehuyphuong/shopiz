@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_24_153432) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_25_114115) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -1061,6 +1061,18 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_24_153432) do
     t.index ["inbox_id"], name: "index_inbox_capacity_limits_on_inbox_id"
   end
 
+  create_table "inbox_label_mappings", force: :cascade do |t|
+    t.bigint "inbox_id", null: false
+    t.bigint "label_id", null: false
+    t.string "native_label_id", null: false
+    t.string "native_label_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["inbox_id", "native_label_id"], name: "index_inbox_label_mappings_on_inbox_id_and_native_label_id", unique: true
+    t.index ["inbox_id"], name: "index_inbox_label_mappings_on_inbox_id"
+    t.index ["label_id"], name: "index_inbox_label_mappings_on_label_id"
+  end
+
   create_table "inbox_members", id: :serial, force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "inbox_id", null: false
@@ -1681,6 +1693,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_24_153432) do
   add_foreign_key "appointments", "products"
   add_foreign_key "contact_optins", "contacts"
   add_foreign_key "contact_optins", "inboxes"
+  add_foreign_key "inbox_label_mappings", "inboxes"
+  add_foreign_key "inbox_label_mappings", "labels"
   add_foreign_key "inboxes", "integrations_hooks", column: "ecommerce_integration_id"
   add_foreign_key "inboxes", "portals"
   add_foreign_key "product_variants", "accounts"

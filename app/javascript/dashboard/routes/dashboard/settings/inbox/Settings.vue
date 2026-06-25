@@ -17,6 +17,7 @@ import TiktokReauthorize from './channels/tiktok/Reauthorize.vue';
 import DuplicateInboxBanner from './channels/instagram/DuplicateInboxBanner.vue';
 import MicrosoftReauthorize from './channels/microsoft/Reauthorize.vue';
 import ZaloReauthorize from './channels/zalo/Reauthorize.vue';
+import ZaloPersonalLabelSync from './channels/zalo/LabelSync.vue';
 import TextArea from 'next/textarea/TextArea.vue';
 
 import GoogleReauthorize from './channels/google/Reauthorize.vue';
@@ -70,6 +71,7 @@ export default {
     LockToSingleConversationPreview,
     MicrosoftReauthorize,
     ZaloReauthorize,
+    ZaloPersonalLabelSync,
 
     GoogleReauthorize,
     NextButton,
@@ -229,6 +231,16 @@ export default {
         ];
       }
 
+      if (this.isAZaloPersonalChannel) {
+        visibleToAllChannelTabs = [
+          ...visibleToAllChannelTabs,
+          {
+            key: 'label-sync',
+            name: this.$t('INBOX_MGMT.LABEL_SYNC.TITLE'),
+          },
+        ];
+      }
+
       if (
         this.isAFacebookInbox ||
         this.isAnInstagramChannel ||
@@ -283,6 +295,7 @@ export default {
         'business-hours',
         'csat',
         'posts-and-comments',
+        'label-sync',
       ];
       const wideIfWebWidget = ['configuration', 'inbox-settings'];
       if (narrowTabs.includes(this.selectedTabKey)) return 'max-w-4xl';
@@ -1753,6 +1766,7 @@ export default {
                   />
                 </SettingsFieldSection>
               </SettingsAccordion>
+
             </div>
 
             <div class="w-full flex justify-end items-center py-4 mt-2">
@@ -1832,6 +1846,10 @@ export default {
         </div>
         <div v-if="selectedTabKey === 'posts-and-comments'">
           <FacebookPostsAndComments :inbox="inbox" />
+        </div>
+
+        <div v-if="selectedTabKey === 'label-sync'" class="mx-6 max-w-4xl">
+          <ZaloPersonalLabelSync :inbox="inbox" />
         </div>
 
         <div v-if="selectedTabKey === 'whatsapp-health'">

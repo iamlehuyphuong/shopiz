@@ -852,6 +852,29 @@
         "CLOSE": "Close"
       }
     },
+    "LABEL_SYNC": {
+      "TITLE": "Sync Labels",
+      "SEARCH_PLACEHOLDER": "Search labels...",
+      "LABELS_COUNT": "%{count} labels",
+      "FETCH_BUTTON": "Fetch list",
+      "SYNC_BUTTON": "Sync",
+      "COLUMNS": {
+        "CHANNEL_LABEL_ID": "Inbox Label ID",
+        "CHANNEL_LABEL_NAME": "Inbox Label Name",
+        "COLOR": "Color",
+        "SHOPIZ_LABEL": "Shopiz Label",
+        "STATUS": "Status"
+      },
+      "NO_RESULTS": "No matching results found.",
+      "NO_LABELS": "No labels found in the inbox.",
+      "NOT_FETCHED": "Click 'Fetch labels' to start syncing.",
+      "CREATE_NEW": "Create New",
+      "SYNCED": "Synced",
+      "NOT_SYNCED": "Not synced",
+      "FETCH_ERROR": "Failed to fetch inbox labels.",
+      "SYNC_SUCCESS": "Syncing in background...",
+      "SYNC_ERROR": "An error occurred while syncing labels."
+    },
     "CHANNEL_PREFERENCES": "Channel Preferences",
     "WIDGET_FEATURES": "Customize Chat Window",
     "ACCOUNT_HEALTH": {

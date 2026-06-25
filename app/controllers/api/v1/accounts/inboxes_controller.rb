@@ -149,6 +149,92 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
     render status: :ok, json: { message: I18n.t('messages.inbox_deletetion_response') }
   end
 
+  def native_labels
+    unless @inbox.channel.is_a?(Channel::ZaloPersonal)
+      render json: { error: 'Not supported for this channel type' }, status: :unprocessable_entity and return
+    end
+
+    if ActiveModel::Type::Boolean.new.cast(params[:fetch])
+      body = { ownId: @inbox.channel.oa_id }
+      res = HTTParty.post(
+        "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/getLabels",
+        headers: ZaloPersonal::ApiHelper.request_headers,
+        body: body.to_json
+      )
+
+      parsed_res = JSON.parse(res.body) rescue {}
+
+      Rails.logger.info "[ZaloPersonal] getLabels response for inbox #{@inbox.id}: #{res.body}"
+
+      if parsed_res['success']
+        label_data = parsed_res.dig('data', 'labelData') || []
+
+        mappings = @inbox.inbox_label_mappings.to_a
+        
+        label_data.each do |zalo_label|
+          mapping = mappings.find { |m| m.native_label_id == zalo_label['id'].to_s }
+          zalo_label['mapped_label_id'] = mapping&.label_id
+        end
+
+        render json: { data: label_data }, status: :ok
+      else
+        render json: { error: 'Failed to fetch labels from Zalo' }, status: :unprocessable_entity
+      end
+    else
+      mappings = @inbox.inbox_label_mappings.includes(:label)
+      label_data = mappings.map do |m|
+        {
+          id: m.native_label_id,
+          text: m.native_label_name,
+          color: m.label&.color || '#cccccc',
+          mapped_label_id: m.label_id
+        }
+      end
+      render json: { data: label_data }, status: :ok
+    end
+  rescue StandardError => e
+    render json: { error: e.message }, status: :internal_server_error
+  end
+
+  def label_mappings
+    mappings = params.permit(mappings: [:native_label_id, :native_label_name, :label_id, :color])[:mappings] || []
+
+    Rails.logger.info "[ZaloPersonal] label_mappings called for inbox #{@inbox.id} with #{mappings.size} mappings"
+
+    ActiveRecord::Base.transaction do
+      mappings.each do |mapping|
+        native_id = mapping[:native_label_id].to_s
+        native_name = mapping[:native_label_name]
+        label_id = mapping[:label_id]
+
+        Rails.logger.info "[ZaloPersonal] Processing mapping: native_id=#{native_id}, native_name=#{native_name}, label_id=#{label_id}"
+
+        if label_id.blank?
+          sanitized_title = native_name.to_s.downcase.gsub(/\s+/, '_').gsub(/[^\p{L}\p{N}_-]/, '')
+          Rails.logger.info "[ZaloPersonal] Creating/finding label with sanitized_title=#{sanitized_title}"
+          label = Current.account.labels.find_or_create_by!(title: sanitized_title) do |l|
+            l.color = mapping[:color].presence || '#E06720'
+            l.description = native_name
+          end
+          label_id = label.id
+        end
+
+        inbox_mapping = @inbox.inbox_label_mappings.find_or_initialize_by(native_label_id: native_id)
+        inbox_mapping.native_label_name = native_name
+        inbox_mapping.label_id = label_id
+        inbox_mapping.save!
+      end
+    end
+
+    ZaloPersonal::SyncLabelsJob.perform_later(@inbox)
+
+    render json: { message: I18n.t('messages.template_sync_initiated', default: 'Mappings updated and sync started') }, status: :ok
+  rescue StandardError => e
+    Rails.logger.error "[ZaloPersonal] label_mappings error for inbox #{@inbox.id}: #{e.class} - #{e.message}"
+    Rails.logger.error e.backtrace&.first(5)&.join("\n")
+    render json: { error: e.message }, status: :internal_server_error
+  end
+
   private
 
   def fetch_inbox
@@ -195,8 +281,8 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
     validate_and_update_email_channel(channel_attributes) if @inbox.inbox_type == 'Email'
 
     reauthorize_and_update_channel(channel_attributes)
-    update_channel_feature_flags
   end
+
 
   def channel_update_required?
     permitted_params(get_channel_attributes(@inbox.channel_type))[:channel].present?
