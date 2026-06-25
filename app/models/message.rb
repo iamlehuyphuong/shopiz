@@ -358,6 +358,18 @@ class Message < ApplicationRecord
     send_reply
     execute_message_template_hooks
     update_contact_activity
+    clear_follow_up_on_outgoing_response
+  end
+
+  def clear_follow_up_on_outgoing_response
+    return unless human_response?
+    return if conversation.follow_up_at.blank? && conversation.follow_up_remind_at.blank?
+
+    conversation.update(
+      follow_up_at: nil,
+      follow_up_remind_at: nil,
+      custom_attributes: conversation.custom_attributes.except('follow_up_reminders_count')
+    )
   end
 
   def update_contact_activity

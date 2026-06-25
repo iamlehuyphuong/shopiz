@@ -11,11 +11,27 @@ class Conversations::AgentFollowUpReminderJob < ApplicationJob
 
   def send_reminder(conversation)
     Conversation.transaction do
-      # 1. Clear follow_up_at to prevent repeated reminders.
-      # Use update_column to skip callbacks (no ActionCable broadcast / activity creation needed).
-      # rubocop:disable Rails/SkipsModelValidations
-      conversation.update_column(:follow_up_at, nil)
-      # rubocop:enable Rails/SkipsModelValidations
+      # 1. Track how many reminders have been sent
+      count = conversation.custom_attributes['follow_up_reminders_count'].to_i
+      
+      if count >= 2
+        # Max 3 reminders (0, 1, 2). Clear follow_up to stop reminding.
+        # Use update_columns to skip callbacks (no ActionCable broadcast / activity creation needed).
+        # rubocop:disable Rails/SkipsModelValidations
+        conversation.update_columns(
+          follow_up_at: nil,
+          follow_up_remind_at: nil,
+          custom_attributes: conversation.custom_attributes.except('follow_up_reminders_count')
+        )
+        # rubocop:enable Rails/SkipsModelValidations
+      else
+        # Increment counter, do NOT clear follow_up_remind_at so it gets picked up again
+        # rubocop:disable Rails/SkipsModelValidations
+        conversation.update_columns(
+          custom_attributes: conversation.custom_attributes.merge('follow_up_reminders_count' => count + 1)
+        )
+        # rubocop:enable Rails/SkipsModelValidations
+      end
 
       # 2. Create the internal (private) note in the account's locale
       I18n.with_locale(conversation.account.locale || I18n.default_locale) do

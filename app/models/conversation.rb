@@ -286,6 +286,7 @@ class Conversation < ApplicationRecord
 
   def compute_follow_up_remind_at
     self.follow_up_remind_at = follow_up_at.present? ? follow_up_at - follow_up_remind_before.to_i.days : nil
+    self.custom_attributes = custom_attributes.except('follow_up_reminders_count') if follow_up_at.present?
   end
 
   def validate_additional_attributes
