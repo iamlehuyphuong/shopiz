@@ -115,7 +115,7 @@ class ZaloPersonal::GetGroupMembersService
 
     ZaloGroupMember.upsert_all(
       upsert_data,
-      unique_by: [:conversation_id, :uid],
+      unique_by: :index_zalo_group_members_on_conversation_id_and_uid,
       update_only: [:name, :avatar, :cover, :bio, :gender, :dob, :is_creator, :is_admin]
     )
   end
