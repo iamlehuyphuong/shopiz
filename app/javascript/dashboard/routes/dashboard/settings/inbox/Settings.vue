@@ -1858,7 +1858,10 @@ export default {
           :header-content="$t('INBOX_MGMT.ADD.ZALO_OA.RELOGIN')"
         />
         <div class="px-8 pb-8 pt-2">
-          <ZaloReauthorize :inbox="inbox" @success="handleZaloReauthorizeSuccess" />
+          <ZaloReauthorize
+            :inbox="inbox"
+            @success="handleZaloReauthorizeSuccess"
+          />
         </div>
       </div>
     </woot-modal>
@@ -1866,14 +1869,23 @@ export default {
     <Dialog
       ref="zaloReauthorizeSuccessDialog"
       :title="$t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.RECONNECT_SUCCESS.TITLE')"
-      :description="$t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.RECONNECT_SUCCESS.DESCRIPTION')"
+      :description="
+        $t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.RECONNECT_SUCCESS.DESCRIPTION')
+      "
       width="sm"
       :show-cancel-button="false"
       :show-confirm-button="false"
     >
       <template #footer>
         <div class="w-full">
-          <NextButton class="w-full" color="blue" :label="$t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.RECONNECT_SUCCESS.CLOSE')" @click="closeZaloSuccessDialog" />
+          <NextButton
+            class="w-full"
+            color="blue"
+            :label="
+              $t('INBOX_MGMT.ZALO_PERSONAL_CONNECTION.RECONNECT_SUCCESS.CLOSE')
+            "
+            @click="closeZaloSuccessDialog"
+          />
         </div>
       </template>
     </Dialog>

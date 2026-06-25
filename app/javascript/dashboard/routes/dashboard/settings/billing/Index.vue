@@ -264,7 +264,8 @@ watch(
       if (tier.packages) {
         const match = tier.packages.find(p => p.id === cPlanId);
         if (match) {
-          globalDuration.value = match.duration_days === 730 ? 365 : match.duration_days;
+          globalDuration.value =
+            match.duration_days === 730 ? 365 : match.duration_days;
           globalAiIncluded.value = true;
           break;
         }
@@ -467,7 +468,6 @@ onMounted(fetchAccountDetails);
                 {{ tab.label }}
               </button>
             </div>
-
           </div>
 
           <div

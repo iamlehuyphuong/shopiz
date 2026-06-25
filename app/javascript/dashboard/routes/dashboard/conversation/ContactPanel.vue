@@ -295,10 +295,11 @@ onErrorCaptured(err => {
               :is-open="isContactSidebarItemOpen('is_zalo_group_members_open')"
               compact
               @toggle="
-                value => toggleSidebarUIState('is_zalo_group_members_open', value)
+                value =>
+                  toggleSidebarUIState('is_zalo_group_members_open', value)
               "
             >
-              <ZaloGroupMembers 
+              <ZaloGroupMembers
                 :conversation-id="conversationId"
                 :conversation-inbox-id="conversationInboxId"
               />

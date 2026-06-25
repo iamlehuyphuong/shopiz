@@ -18,7 +18,7 @@ const props = defineProps({
   zaloProfile: { type: Object, default: () => ({}) },
   isFriend: { type: Boolean, default: false },
   isYou: { type: Boolean, default: false },
-  show: { type: Boolean, default: false }
+  show: { type: Boolean, default: false },
 });
 
 const emit = defineEmits(['close', 'update:show']);
@@ -38,12 +38,16 @@ const isSubmitting = ref(false);
 
 watch(
   () => props.initialFriendRequestMessage,
-  (newVal) => { friendRequestMessage.value = newVal; }
+  newVal => {
+    friendRequestMessage.value = newVal;
+  }
 );
 
 watch(
   () => props.initialGreetingMessage,
-  (newVal) => { greetingMessage.value = newVal; }
+  newVal => {
+    greetingMessage.value = newVal;
+  }
 );
 
 const closeModal = () => {
@@ -116,9 +120,15 @@ const handleSubmit = async () => {
 <template>
   <teleport to="body">
     <woot-modal :show="show" :on-close="closeModal" :show-close-button="false">
-      <div class="flex flex-col h-auto w-full sm:w-[600px] max-w-full relative bg-white dark:bg-slate-800 rounded-xl overflow-hidden">
-        <div class="px-6 py-4 flex items-center justify-between border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 sticky top-0 z-20">
-          <div class="text-lg font-semibold text-slate-900 dark:text-slate-50">Thông tin tài khoản</div>
+      <div
+        class="flex flex-col h-auto w-full sm:w-[600px] max-w-full relative bg-white dark:bg-slate-800 rounded-xl overflow-hidden"
+      >
+        <div
+          class="px-6 py-4 flex items-center justify-between border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 sticky top-0 z-20"
+        >
+          <div class="text-lg font-semibold text-slate-900 dark:text-slate-50">
+            Thông tin tài khoản
+          </div>
           <NextButton
             ghost
             slate
@@ -128,45 +138,90 @@ const handleSubmit = async () => {
           />
         </div>
 
-        <div class="relative bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 pb-4">
+        <div
+          class="relative bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 pb-4"
+        >
           <div class="h-[140px] w-full">
-            <img :src="zaloProfile.cover || 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=600&h=200&fit=crop'" class="w-full h-full object-cover" />
+            <img
+              :src="
+                zaloProfile.cover ||
+                'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=600&h=200&fit=crop'
+              "
+              class="w-full h-full object-cover"
+            />
           </div>
           <div class="flex items-end px-6 -mt-12 relative z-10">
-            <div class="w-24 h-24 rounded-full border-4 border-white dark:border-slate-800 overflow-hidden bg-slate-200 dark:bg-slate-700 shrink-0">
-              <img :src="zaloProfile.avatar || 'https://i.pravatar.cc/150?img=5'" class="w-full h-full object-cover" />
+            <div
+              class="w-24 h-24 rounded-full border-4 border-white dark:border-slate-800 overflow-hidden bg-slate-200 dark:bg-slate-700 shrink-0"
+            >
+              <img
+                :src="zaloProfile.avatar || 'https://i.pravatar.cc/150?img=5'"
+                class="w-full h-full object-cover"
+              />
             </div>
             <div class="ml-4 pb-2">
-              <h3 class="text-xl font-semibold text-slate-900 dark:text-slate-50 m-0 flex items-center gap-2">
+              <h3
+                class="text-xl font-semibold text-slate-900 dark:text-slate-50 m-0 flex items-center gap-2"
+              >
                 {{ zaloProfile.name || 'Người dùng Zalo' }}
               </h3>
             </div>
           </div>
         </div>
 
-        <form class="!p-0 flex flex-col w-full mx-0" @submit.prevent="handleSubmit">
+        <form
+          class="!p-0 flex flex-col w-full mx-0"
+          @submit.prevent="handleSubmit"
+        >
           <div class="px-6 py-4 bg-white dark:bg-slate-800">
-            <h4 class="font-semibold text-base mb-4 text-slate-900 dark:text-slate-50">Thông tin cá nhân</h4>
+            <h4
+              class="font-semibold text-base mb-4 text-slate-900 dark:text-slate-50"
+            >
+              Thông tin cá nhân
+            </h4>
             <div class="grid grid-cols-[100px_1fr] gap-x-2 gap-y-3 text-sm">
               <div class="text-slate-500 dark:text-slate-400">Bio</div>
-              <div class="text-slate-900 dark:text-slate-100 whitespace-pre-line">{{ zaloProfile.bio || 'Chưa cập nhật' }}</div>
+              <div
+                class="text-slate-900 dark:text-slate-100 whitespace-pre-line"
+              >
+                {{ zaloProfile.bio || 'Chưa cập nhật' }}
+              </div>
 
               <div class="text-slate-500 dark:text-slate-400">Giới tính</div>
-              <div class="text-slate-900 dark:text-slate-100">{{ zaloProfile.gender || 'Chưa cập nhật' }}</div>
+              <div class="text-slate-900 dark:text-slate-100">
+                {{ zaloProfile.gender || 'Chưa cập nhật' }}
+              </div>
 
               <div class="text-slate-500 dark:text-slate-400">Ngày sinh</div>
-              <div class="text-slate-900 dark:text-slate-100">{{ zaloProfile.dob || 'Chưa cập nhật' }}</div>
+              <div class="text-slate-900 dark:text-slate-100">
+                {{ zaloProfile.dob || 'Chưa cập nhật' }}
+              </div>
             </div>
           </div>
 
-          <div v-if="isYou" class="px-6 py-4 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-center">
-            <div class="text-slate-500 font-medium">Đây là thông tin tài khoản của bạn</div>
+          <div
+            v-if="isYou"
+            class="px-6 py-4 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-center"
+          >
+            <div class="text-slate-500 font-medium">
+              Đây là thông tin tài khoản của bạn
+            </div>
           </div>
-          <div v-else class="px-6 py-4 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+          <div
+            v-else
+            class="px-6 py-4 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800"
+          >
             <template v-if="!isFriend">
               <div class="flex items-center w-full gap-2 mb-4">
-                <input id="sendFriendRequest" v-model="sendFriendRequest" type="checkbox" />
-                <label for="sendFriendRequest" class="mb-0 text-sm font-medium text-slate-900 dark:text-slate-100">
+                <input
+                  id="sendFriendRequest"
+                  v-model="sendFriendRequest"
+                  type="checkbox"
+                />
+                <label
+                  for="sendFriendRequest"
+                  class="mb-0 text-sm font-medium text-slate-900 dark:text-slate-100"
+                >
                   {{ $t('CONTACT_PANEL.ZALO_PERSONAL.SEND_FRIEND_REQUEST') }}
                 </label>
               </div>
@@ -174,12 +229,17 @@ const handleSubmit = async () => {
               <div v-if="sendFriendRequest" class="w-full mb-4">
                 <TextArea
                   v-model="friendRequestMessage"
-                  :label="$t('CONTACT_PANEL.ZALO_PERSONAL.FRIEND_REQUEST_MESSAGE')"
+                  :label="
+                    $t('CONTACT_PANEL.ZALO_PERSONAL.FRIEND_REQUEST_MESSAGE')
+                  "
                   auto-height
                 />
               </div>
             </template>
-            <div v-else class="flex items-center gap-1.5 text-green-600 font-medium mb-4 text-sm bg-green-50 px-3 py-2 rounded-lg">
+            <div
+              v-else
+              class="flex items-center gap-1.5 text-green-600 font-medium mb-4 text-sm bg-green-50 px-3 py-2 rounded-lg"
+            >
               <fluent-icon icon="checkmark-circle" size="16" /> Đã là bạn bè
             </div>
 
@@ -192,7 +252,9 @@ const handleSubmit = async () => {
             </div>
           </div>
 
-          <div class="flex items-center justify-end w-full gap-2 px-6 py-4 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700">
+          <div
+            class="flex items-center justify-end w-full gap-2 px-6 py-4 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700"
+          >
             <template v-if="isYou">
               <NextButton
                 faded
@@ -212,7 +274,10 @@ const handleSubmit = async () => {
               <NextButton
                 type="submit"
                 :is-loading="isSubmitting"
-                :disabled="!greetingMessage.trim() && !(sendFriendRequest && friendRequestMessage.trim())"
+                :disabled="
+                  !greetingMessage.trim() &&
+                  !(sendFriendRequest && friendRequestMessage.trim())
+                "
                 :label="$t('CONTACT_PANEL.ZALO_PERSONAL.SUBMIT')"
               />
             </template>

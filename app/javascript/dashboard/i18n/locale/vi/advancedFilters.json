@@ -62,7 +62,9 @@
       "CUSTOM_ATTRIBUTE_LINK": "Liên kết",
       "CUSTOM_ATTRIBUTE_CHECKBOX": "Hộp kiểm",
       "CREATED_AT": "Thời gian tạo",
-      "LAST_ACTIVITY": "Hoạt động cuối"
+      "LAST_ACTIVITY": "Hoạt động cuối",
+      "CONTACT_PHONE_NUMBER": "Số điện thoại liên hệ",
+      "CONTACT_EMAIL": "Email liên hệ"
     },
     "ERRORS": {
       "VALUE_REQUIRED": "Giá trị là bắt buộc",
@@ -73,7 +75,8 @@
     "GROUPS": {
       "STANDARD_FILTERS": "Bộ lọc tiêu chuẩn",
       "ADDITIONAL_FILTERS": "Bộ lọc bổ sung",
-      "CUSTOM_ATTRIBUTES": "Thuộc tính tùy chỉnh"
+      "CUSTOM_ATTRIBUTES": "Thuộc tính tùy chỉnh",
+      "CONTACT_FILTERS": "Bộ lọc liên hệ"
     },
     "CUSTOM_VIEWS": {
       "ADD": {

@@ -54,7 +54,9 @@ export default {
     const { currentFontSize } = useFontSize();
     const { uiSettings } = useUISettings();
     const { checkPermissions } = usePolicy();
-    const canManageContacts = computed(() => checkPermissions(['contact_manage']));
+    const canManageContacts = computed(() =>
+      checkPermissions(['contact_manage'])
+    );
 
     return {
       router,
