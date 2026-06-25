@@ -307,6 +307,12 @@ en:
       muted: '%{user_name} has muted the conversation'
       unmuted: '%{user_name} has unmuted the conversation'
       auto_resolution_message: 'Resolving the conversation as it has been inactive for a while. Please start a new conversation if you need further assistance.'
+      auto_follow_up:
+        scheduled: 'Auto follow-up scheduled at %{time}.'
+        completed: 'Auto follow-up message sent (attempt %{attempt}).'
+        cancelled_channel_policy: 'Auto follow-up cancelled due to platform messaging window expiration (Channel Policy).'
+        cancelled_customer_replied: 'Auto follow-up cancelled because the customer has already replied.'
+        cancelled_no_ai: 'Auto follow-up cancelled because no AI Assistant is configured.'
     templates:
       greeting_message_body: '%{account_name} typically replies in a few hours.'
       ways_to_reach_you_message_body: 'Give the team a way to reach you.'

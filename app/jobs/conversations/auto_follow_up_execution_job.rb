@@ -31,7 +31,7 @@ class Conversations::AutoFollowUpExecutionJob < ApplicationJob
       Rails.logger.info("[AutoFollowUpExecutionJob] Follow-up aborted due to strict channel policy limits on timestamp for #{conversation.id}.")
       log_activity(
         conversation,
-        "Đã huỷ lịch gửi tin nhắn follow-up do vượt quá thời gian cho phép của nền tảng (Channel Policy).",
+        I18n.t('conversations.activity.auto_follow_up.cancelled_channel_policy'),
         'CONVERSATION.ACTIVITY.auto_follow_up.cancelled_channel_policy'
       )
       return
@@ -42,7 +42,7 @@ class Conversations::AutoFollowUpExecutionJob < ApplicationJob
       Rails.logger.info("[AutoFollowUpExecutionJob] Customer has replied to #{conversation.id} after the scheduled followup. Aborting.")
       log_activity(
         conversation,
-        "Đã huỷ lịch gửi tin nhắn follow-up tự động do khách hàng đã phản hồi.",
+        I18n.t('conversations.activity.auto_follow_up.cancelled_customer_replied'),
         'CONVERSATION.ACTIVITY.auto_follow_up.cancelled_customer_replied'
       )
       return
@@ -72,7 +72,7 @@ class Conversations::AutoFollowUpExecutionJob < ApplicationJob
 
     log_activity(
       conversation,
-      "Đã hoàn thành gửi tin nhắn follow-up tự động (lần #{attempt_count + 1}).",
+      I18n.t('conversations.activity.auto_follow_up.completed', attempt: attempt_count + 1),
       'CONVERSATION.ACTIVITY.auto_follow_up.completed',
       { attempt: attempt_count + 1 }
     )
@@ -81,29 +81,7 @@ class Conversations::AutoFollowUpExecutionJob < ApplicationJob
   private
 
   def channel_policy_allows_followup?(conversation)
-    inbox = conversation.inbox
-
-    # Calculate time since the customer's last interaction
-    last_incoming = conversation.messages.where(message_type: 'incoming').last
-    last_interaction_at = last_incoming&.created_at || conversation.created_at
-    time_since_interaction = Time.current - last_interaction_at
-
-    case inbox.channel_type
-    when 'Channel::FacebookPage'
-      window = GlobalConfigService.load('ENABLE_MESSENGER_CHANNEL_HUMAN_AGENT', nil) ? 7.days : 24.hours
-      time_since_interaction <= window
-    when 'Channel::Instagram'
-      window = GlobalConfigService.load('ENABLE_INSTAGRAM_CHANNEL_HUMAN_AGENT', nil) ? 7.days : 24.hours
-      time_since_interaction <= window
-    when 'Channel::Whatsapp'
-      time_since_interaction <= 24.hours
-    when 'Channel::Zalo'
-      time_since_interaction <= 48.hours
-    when 'Channel::ZaloPersonal'
-      true # ZaloPersonal không giới hạn thời gian gửi tin
-    else
-      true # Other channels have no strict API timeout limits for freeform text
-    end
+    Conversations::MessageWindowService.new(conversation).can_reply?
   end
 
   def customer_replied_after?(conversation, timestamp)
@@ -117,19 +95,20 @@ class Conversations::AutoFollowUpExecutionJob < ApplicationJob
   def trigger_ai_assistant(conversation, attempt_count)
     inbox = conversation.inbox
     assistant = inbox.agent_bot || conversation.account.agent_bots.first
-    
+
     unless assistant
       Rails.logger.warn("[AutoFollowUpExecutionJob] No AI Assistant found for Inbox #{inbox.id}. Aborting follow-up.")
       log_activity(
         conversation,
-        "Đã huỷ lịch gửi tin nhắn follow-up tự động do chưa cấu hình AI Assistant.",
+        I18n.t('conversations.activity.auto_follow_up.cancelled_no_ai'),
         'CONVERSATION.ACTIVITY.auto_follow_up.cancelled_no_ai'
       )
       return
     end
 
-    # Increment count immediately so the next followup knows it's attempt_count + 1
+    # Re-read count inside lock to avoid stale reads from concurrent jobs
     conversation.with_lock do
+      attempt_count = conversation.custom_attributes['auto_follow_up_count'].to_i
       conversation.custom_attributes['auto_follow_up_count'] = attempt_count + 1
       conversation.save!
     end
@@ -141,7 +120,9 @@ class Conversations::AutoFollowUpExecutionJob < ApplicationJob
     macro = conversation.account.macros.find_by(id: macro_id)
     return unless macro
 
+    # Re-read count inside lock to avoid stale reads from concurrent jobs
     conversation.with_lock do
+      attempt_count = conversation.custom_attributes['auto_follow_up_count'].to_i
       conversation.custom_attributes['auto_follow_up_count'] = attempt_count + 1
       conversation.save!
     end
@@ -150,7 +131,9 @@ class Conversations::AutoFollowUpExecutionJob < ApplicationJob
   end
 
   def trigger_predefined_message(conversation, content, attempt_count)
+    # Re-read count inside lock to avoid stale reads from concurrent jobs
     conversation.with_lock do
+      attempt_count = conversation.custom_attributes['auto_follow_up_count'].to_i
       conversation.custom_attributes['auto_follow_up_count'] = attempt_count + 1
       conversation.save!
     end

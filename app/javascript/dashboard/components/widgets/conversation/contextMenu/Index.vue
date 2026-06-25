@@ -25,6 +25,8 @@ const MENU = {
   OPEN_NEW_TAB: 'open-new-tab',
   COPY_LINK: 'copy-link',
   CANCEL_REMINDER: 'cancel-reminder',
+  CANCEL_AUTO_FOLLOW_UP: 'cancel-auto-follow-up',
+  RESTORE_AUTO_FOLLOW_UP: 'restore-auto-follow-up',
 };
 
 export default {
@@ -70,6 +72,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    isFollowupActive: {
+      type: Boolean,
+      default: false,
+    },
+    isFollowupCancelled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: [
     'updateConversation',
@@ -82,6 +92,8 @@ export default {
     'removeLabel',
     'deleteConversation',
     'cancelReminder',
+    'cancelFollowup',
+    'restoreFollowup',
     'close',
   ],
   setup() {
@@ -185,6 +197,16 @@ export default {
         key: MENU.CANCEL_REMINDER,
         icon: 'dismiss-circle',
         label: this.$t('CONVERSATION.CARD_CONTEXT_MENU.CANCEL_REMINDER'),
+      },
+      cancelAutoFollowUpOption: {
+        key: MENU.CANCEL_AUTO_FOLLOW_UP,
+        icon: 'dismiss-circle',
+        label: this.$t('CONVERSATION.CARD_CONTEXT_MENU.CANCEL_AUTO_FOLLOW_UP'),
+      },
+      restoreAutoFollowUpOption: {
+        key: MENU.RESTORE_AUTO_FOLLOW_UP,
+        icon: 'arrow-counterclockwise',
+        label: this.$t('CONVERSATION.CARD_CONTEXT_MENU.RESTORE_AUTO_FOLLOW_UP'),
       },
     };
   },
@@ -416,6 +438,23 @@ export default {
         variant="icon"
         class="!text-n-ruby-11 hover:!bg-n-ruby-3 hover:!text-n-ruby-11"
         @click.stop="$emit('cancelReminder')"
+      />
+    </template>
+    <template v-if="isFollowupActive">
+      <hr class="m-1 rounded border-b border-n-weak dark:border-n-weak" />
+      <MenuItem
+        :option="cancelAutoFollowUpOption"
+        variant="icon"
+        class="!text-n-ruby-11 hover:!bg-n-ruby-3 hover:!text-n-ruby-11"
+        @click.stop="$emit('cancelFollowup')"
+      />
+    </template>
+    <template v-else-if="isFollowupCancelled">
+      <hr class="m-1 rounded border-b border-n-weak dark:border-n-weak" />
+      <MenuItem
+        :option="restoreAutoFollowUpOption"
+        variant="icon"
+        @click.stop="$emit('restoreFollowup')"
       />
     </template>
     <template v-if="isAdmin && isAllowed([MENU.DELETE])">

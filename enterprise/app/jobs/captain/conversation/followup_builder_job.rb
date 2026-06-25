@@ -117,6 +117,7 @@ class Captain::Conversation::FollowupBuilderJob < ApplicationJob
 
   def send_out_of_office_message_if_applicable
     return if @conversation.campaign.present?
+
     ::MessageTemplates::Template::OutOfOffice.perform_if_applicable(@conversation)
   end
 
@@ -144,15 +145,13 @@ class Captain::Conversation::FollowupBuilderJob < ApplicationJob
       private: false,
       sender_type: 'AgentBot',
       sender_id: @assistant.id,
-      content_attributes: { followup_automated: true }
+      content_attributes: { auto_follow_up_automated: true }
     }
 
     builder = Messages::MessageBuilder.new(nil, @conversation, message_params)
     message = builder.perform
 
-    if agent_name.present?
-      message.update!(additional_attributes: message.additional_attributes.merge('agent_name' => agent_name))
-    end
+    message.update!(additional_attributes: message.additional_attributes.merge('agent_name' => agent_name)) if agent_name.present?
 
     message
   end
@@ -171,20 +170,20 @@ class Captain::Conversation::FollowupBuilderJob < ApplicationJob
   end
 
   def followup_system_prompt
-    delay = @inbox.followup_config&.dig('delay_seconds').to_i
+    delay = @inbox.auto_follow_up_config&.dig('delay_seconds').to_i
     delay_hours = delay > 0 ? (delay / 3600.0).round(1) : nil
-    time_text = delay_hours ? " for #{delay_hours} hours" : ""
+    time_text = delay_hours ? " for #{delay_hours} hours" : ''
 
-    custom_prompts_list = @inbox.followup_config&.dig('custom_ai_prompts') || []
-    custom_prompt = custom_prompts_list[@attempt_count].presence || @inbox.followup_config&.dig('custom_ai_prompt').presence
+    custom_prompts_list = @inbox.auto_follow_up_config&.dig('custom_ai_prompts') || []
+    custom_prompt = custom_prompts_list[@attempt_count].presence || @inbox.auto_follow_up_config&.dig('custom_ai_prompt').presence
 
     if custom_prompt
       "System Instruction: The customer has not replied to our last message#{time_text}. #{custom_prompt}"
     else
       "System Instruction: The customer has not replied to our last message#{time_text}. " \
-      "Please read the conversation context and generate a polite, engaging, and highly personalized follow-up message " \
-      "to encourage them to respond. Tailor the message to specifically reference what they were interested in. " \
-      "Do not use generic statements. Do not offer a handoff."
+        'Please read the conversation context and generate a polite, engaging, and highly personalized follow-up message ' \
+        'to encourage them to respond. Tailor the message to specifically reference what they were interested in. ' \
+        'Do not use generic statements. Do not offer a handoff.'
     end
   end
 end

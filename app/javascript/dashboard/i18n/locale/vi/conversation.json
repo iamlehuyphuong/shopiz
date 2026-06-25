@@ -189,6 +189,8 @@
       "MARK_AS_UNREAD": "Đánh dấu chưa đọc",
       "MARK_AS_READ": "Đánh dấu đã đọc",
       "REOPEN": "Mở lại cuộc hội thoại",
+      "CANCEL_AUTO_FOLLOW_UP": "Huỷ Auto Follow-up",
+      "RESTORE_AUTO_FOLLOW_UP": "Bật lại Auto Follow-up",
       "SNOOZE": {
         "TITLE": "Tạm hoãn",
         "NEXT_REPLY": "Đến khi phản hồi",

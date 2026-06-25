@@ -132,7 +132,9 @@ const isAutoFollowUpActive = computed(() => {
   const autoFollowUpConfig = inbox.value?.auto_follow_up_config;
   if (!autoFollowUpConfig?.enabled) return false;
 
-  const isCancelled = props.chat.custom_attributes?.auto_follow_up_cancelled === true;
+  const isCancelled = [true, 'true'].includes(
+    props.chat.custom_attributes?.auto_follow_up_cancelled
+  );
   if (isCancelled) return false;
 
   const isBotPending =
@@ -149,6 +151,16 @@ const isAutoFollowUpActive = computed(() => {
   const currentCount = props.chat.custom_attributes?.auto_follow_up_count || 0;
 
   return currentCount < maxAttempts;
+});
+
+const canRestoreAutoFollowUp = computed(() => {
+  const autoFollowUpConfig = inbox.value?.auto_follow_up_config;
+  if (!autoFollowUpConfig?.enabled) return false;
+
+  const isCancelled = [true, 'true'].includes(
+    props.chat.custom_attributes?.auto_follow_up_cancelled
+  );
+  return isCancelled;
 });
 
 const autoFollowUpTextParams = computed(() => {
@@ -237,7 +249,25 @@ const cancelAutoFollowUp = async () => {
   try {
     await store.dispatch('conversations/updateCustomAttributes', {
       conversationId: props.chat.id,
-      customAttributes: { auto_follow_up_cancelled: true },
+      customAttributes: {
+        ...props.chat.custom_attributes,
+        auto_follow_up_cancelled: true,
+      },
+    });
+  } catch (error) {
+    // Ignore error
+  }
+};
+
+const restoreAutoFollowUp = async () => {
+  closeContextMenu();
+  try {
+    await store.dispatch('conversations/updateCustomAttributes', {
+      conversationId: props.chat.id,
+      customAttributes: {
+        ...props.chat.custom_attributes,
+        auto_follow_up_cancelled: false,
+      },
     });
   } catch (error) {
     // Ignore error
@@ -480,6 +510,7 @@ const deleteConversation = () => {
         :conversation-url="conversationPath"
         :allowed-options="allowedContextMenuOptions"
         :is-followup-active="isAutoFollowUpActive"
+        :is-followup-cancelled="canRestoreAutoFollowUp"
         @update-conversation="onUpdateConversation"
         @assign-agent="onAssignAgent"
         @assign-label="onAssignLabel"
@@ -490,6 +521,7 @@ const deleteConversation = () => {
         @assign-priority="assignPriority"
         @delete-conversation="deleteConversation"
         @cancel-followup="cancelAutoFollowUp"
+        @restore-followup="restoreAutoFollowUp"
         @close="closeContextMenu"
       />
     </ContextMenu>

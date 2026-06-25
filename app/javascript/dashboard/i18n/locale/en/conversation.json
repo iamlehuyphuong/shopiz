@@ -189,6 +189,8 @@
       "MARK_AS_UNREAD": "Mark as unread",
       "MARK_AS_READ": "Mark as read",
       "REOPEN": "Reopen conversation",
+      "CANCEL_AUTO_FOLLOW_UP": "Cancel Auto Follow-up",
+      "RESTORE_AUTO_FOLLOW_UP": "Restore Auto Follow-up",
       "SNOOZE": {
         "TITLE": "Snooze",
         "NEXT_REPLY": "Until next reply",
