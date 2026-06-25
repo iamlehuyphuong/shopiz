@@ -125,17 +125,17 @@ export default {
       widgetBubblePosition: 'right',
       widgetBubbleType: 'standard',
       widgetBubbleLauncherTitle: '',
-      followupEnabled: false,
-      followupMaxAttempts: 1,
-      followupIntervalHours: 24,
-      followupTimeMode: 'relative',
-      followupFixedTime: '09:00',
-      followupTimezone: 'Asia/Ho_Chi_Minh',
-      followupActionType: 'ai_assistant',
-      followupPredefinedMessage: '',
-      followupPredefinedMessages: Array.from({ length: 15 }, () => ''),
-      followupMacros: Array.from({ length: 15 }, () => ''),
-      followupCustomAIPrompts: Array.from({ length: 15 }, () => ''),
+      autoFollowUpEnabled: false,
+      autoFollowUpMaxAttempts: 1,
+      autoFollowUpIntervalHours: 24,
+      autoFollowUpTimeMode: 'relative',
+      autoFollowUpFixedTime: '09:00',
+      autoFollowUpTimezone: 'Asia/Ho_Chi_Minh',
+      autoFollowUpActionType: 'ai_assistant',
+      autoFollowUpPredefinedMessage: '',
+      autoFollowUpPredefinedMessages: Array.from({ length: 15 }, () => ''),
+      autoFollowUpMacros: Array.from({ length: 15 }, () => ''),
+      autoFollowUpCustomAIPrompts: Array.from({ length: 15 }, () => ''),
       autoLabelEnabled: false,
       zaloReauthorizeModalVisible: false,
       isCheckingConnection: false,
@@ -438,8 +438,8 @@ export default {
       }
 
       let maxNumber = 10;
-      if (upperLimit < 999 && this.followupIntervalHours > 0) {
-        maxNumber = Math.floor(upperLimit / this.followupIntervalHours);
+      if (upperLimit < 999 && this.autoFollowUpIntervalHours > 0) {
+        maxNumber = Math.floor(upperLimit / this.autoFollowUpIntervalHours);
       }
 
       if (maxNumber < 1) maxNumber = 1;
@@ -565,36 +565,36 @@ export default {
         this.widgetBubbleLauncherTitle = '';
       }
 
-      this.followupEnabled = this.inbox.followup_config?.enabled || false;
-      this.followupMaxAttempts = this.inbox.followup_config?.max_attempts || 1;
-      this.followupIntervalHours =
-        this.inbox.followup_config?.interval_hours || 24;
-      this.followupTimeMode =
-        this.inbox.followup_config?.time_mode || 'relative';
-      this.followupFixedTime =
-        this.inbox.followup_config?.fixed_time || '09:00';
-      this.followupTimezone =
-        this.inbox.followup_config?.timezone || 'Asia/Ho_Chi_Minh';
-      this.followupActionType =
-        this.inbox.followup_config?.action_type || 'ai_assistant';
+      this.autoFollowUpEnabled = this.inbox.auto_follow_up_config?.enabled || false;
+      this.autoFollowUpMaxAttempts = this.inbox.auto_follow_up_config?.max_attempts || 1;
+      this.autoFollowUpIntervalHours =
+        this.inbox.auto_follow_up_config?.interval_hours || 24;
+      this.autoFollowUpTimeMode =
+        this.inbox.auto_follow_up_config?.time_mode || 'relative';
+      this.autoFollowUpFixedTime =
+        this.inbox.auto_follow_up_config?.fixed_time || '09:00';
+      this.autoFollowUpTimezone =
+        this.inbox.auto_follow_up_config?.timezone || 'Asia/Ho_Chi_Minh';
+      this.autoFollowUpActionType =
+        this.inbox.auto_follow_up_config?.action_type || 'ai_assistant';
       this.autoLabelEnabled = this.inbox.auto_label_enabled || false;
-      this.followupPredefinedMessage =
-        this.inbox.followup_config?.predefined_message || '';
+      this.autoFollowUpPredefinedMessage =
+        this.inbox.auto_follow_up_config?.predefined_message || '';
 
       const defaultMessages = Array.from({ length: 15 }, () => '');
-      this.followupPredefinedMessages =
-        this.inbox.followup_config?.predefined_messages ||
+      this.autoFollowUpPredefinedMessages =
+        this.inbox.auto_follow_up_config?.predefined_messages ||
         [
-          this.inbox.followup_config?.predefined_message || '',
+          this.inbox.auto_follow_up_config?.predefined_message || '',
           ...defaultMessages,
         ].slice(0, 15);
 
-      this.followupMacros =
-        this.inbox.followup_config?.macros ||
+      this.autoFollowUpMacros =
+        this.inbox.auto_follow_up_config?.macros ||
         Array.from({ length: 15 }, () => '');
 
-      this.followupCustomAIPrompts =
-        this.inbox.followup_config?.custom_ai_prompts ||
+      this.autoFollowUpCustomAIPrompts =
+        this.inbox.auto_follow_up_config?.custom_ai_prompts ||
         Array.from({ length: 15 }, () => '');
 
       this.zaloPersonalDefaultFriendRequestMessage =
@@ -701,33 +701,33 @@ export default {
           sender_name_type: this.senderNameType,
           business_name: this.businessName || null,
           auto_label_enabled: this.autoLabelEnabled,
-          followup_config:
+          auto_follow_up_config:
             this.avatarFile || this.bubbleAvatarFile
               ? JSON.stringify({
-                  enabled: this.followupEnabled,
-                  max_attempts: this.followupMaxAttempts,
-                  interval_hours: this.followupIntervalHours,
-                  time_mode: this.followupTimeMode,
-                  fixed_time: this.followupFixedTime,
-                  timezone: this.followupTimezone,
-                  action_type: this.followupActionType,
-                  predefined_message: this.followupPredefinedMessage,
-                  predefined_messages: this.followupPredefinedMessages,
-                  macros: this.followupMacros,
-                  custom_ai_prompts: this.followupCustomAIPrompts,
+                  enabled: this.autoFollowUpEnabled,
+                  max_attempts: this.autoFollowUpMaxAttempts,
+                  interval_hours: this.autoFollowUpIntervalHours,
+                  time_mode: this.autoFollowUpTimeMode,
+                  fixed_time: this.autoFollowUpFixedTime,
+                  timezone: this.autoFollowUpTimezone,
+                  action_type: this.autoFollowUpActionType,
+                  predefined_message: this.autoFollowUpPredefinedMessage,
+                  predefined_messages: this.autoFollowUpPredefinedMessages,
+                  macros: this.autoFollowUpMacros,
+                  custom_ai_prompts: this.autoFollowUpCustomAIPrompts,
                 })
               : {
-                  enabled: this.followupEnabled,
-                  max_attempts: this.followupMaxAttempts,
-                  interval_hours: this.followupIntervalHours,
-                  time_mode: this.followupTimeMode,
-                  fixed_time: this.followupFixedTime,
-                  timezone: this.followupTimezone,
-                  action_type: this.followupActionType,
-                  predefined_message: this.followupPredefinedMessage,
-                  predefined_messages: this.followupPredefinedMessages,
-                  macros: this.followupMacros,
-                  custom_ai_prompts: this.followupCustomAIPrompts,
+                  enabled: this.autoFollowUpEnabled,
+                  max_attempts: this.autoFollowUpMaxAttempts,
+                  interval_hours: this.autoFollowUpIntervalHours,
+                  time_mode: this.autoFollowUpTimeMode,
+                  fixed_time: this.autoFollowUpFixedTime,
+                  timezone: this.autoFollowUpTimezone,
+                  action_type: this.autoFollowUpActionType,
+                  predefined_message: this.autoFollowUpPredefinedMessage,
+                  predefined_messages: this.autoFollowUpPredefinedMessages,
+                  macros: this.autoFollowUpMacros,
+                  custom_ai_prompts: this.autoFollowUpCustomAIPrompts,
                 },
           channel: {
             widget_color: this.inbox.widget_color,
@@ -1470,13 +1470,13 @@ export default {
                 class="mt-6"
               >
                 <SettingsToggleSection
-                  v-model="followupEnabled"
+                  v-model="autoFollowUpEnabled"
                   :header="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TOGGLE')"
                   :description="
                     $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_DESC')
                   "
                 >
-                  <template v-if="followupEnabled" #editor>
+                  <template v-if="autoFollowUpEnabled" #editor>
                     <div
                       class="flex flex-col gap-4 mt-2 mb-2 p-4 bg-n-surface-1 rounded-md border border-slate-100 dark:border-slate-800"
                     >
@@ -1490,7 +1490,7 @@ export default {
                         </label>
                         <div class="flex items-center gap-2">
                           <woot-input
-                            v-model="followupIntervalHours"
+                            v-model="autoFollowUpIntervalHours"
                             type="number"
                             min="1"
                             max="999"
@@ -1515,7 +1515,7 @@ export default {
                           }}
                         </label>
                         <SelectInput
-                          v-model="followupMaxAttempts"
+                          v-model="autoFollowUpMaxAttempts"
                           :options="dynamicMaxAttemptsOptions"
                           class="w-full"
                         />
@@ -1530,7 +1530,7 @@ export default {
                           }}
                         </label>
                         <SelectInput
-                          v-model="followupTimeMode"
+                          v-model="autoFollowUpTimeMode"
                           :options="[
                             {
                               value: 'relative',
@@ -1550,7 +1550,7 @@ export default {
                       </div>
 
                       <div
-                        v-if="followupTimeMode === 'fixed'"
+                        v-if="autoFollowUpTimeMode === 'fixed'"
                         class="flex gap-4 mt-2"
                       >
                         <div class="flex flex-col gap-1 w-1/2">
@@ -1562,7 +1562,7 @@ export default {
                             }}
                           </label>
                           <woot-input
-                            v-model="followupFixedTime"
+                            v-model="autoFollowUpFixedTime"
                             type="time"
                             class="[&_input]:!mb-0"
                           />
@@ -1576,7 +1576,7 @@ export default {
                             }}
                           </label>
                           <woot-input
-                            v-model="followupTimezone"
+                            v-model="autoFollowUpTimezone"
                             type="text"
                             class="[&_input]:!mb-0"
                           />
@@ -1592,7 +1592,7 @@ export default {
                           }}
                         </label>
                         <SelectInput
-                          v-model="followupActionType"
+                          v-model="autoFollowUpActionType"
                           :options="[
                             {
                               value: 'ai_assistant',
@@ -1617,7 +1617,7 @@ export default {
                         />
                       </div>
                       <div
-                        v-if="followupActionType === 'ai_assistant'"
+                        v-if="autoFollowUpActionType === 'ai_assistant'"
                         class="flex flex-col gap-3 mt-3"
                       >
                         <div
@@ -1633,7 +1633,7 @@ export default {
                         </div>
 
                         <div
-                          v-for="(n, index) in followupMaxAttempts"
+                          v-for="(n, index) in autoFollowUpMaxAttempts"
                           :key="'ai-' + index"
                           class="flex flex-col gap-1 w-full bg-n-alpha-1 p-3 rounded-md border border-n-weak"
                         >
@@ -1646,7 +1646,7 @@ export default {
                             {{ index + 1 }}
                           </label>
                           <textarea
-                            v-model="followupCustomAIPrompts[index]"
+                            v-model="autoFollowUpCustomAIPrompts[index]"
                             rows="3"
                             :placeholder="
                               $t(
@@ -1659,11 +1659,11 @@ export default {
                       </div>
 
                       <div
-                        v-if="followupActionType === 'macro'"
+                        v-if="autoFollowUpActionType === 'macro'"
                         class="flex flex-col gap-3 mt-3"
                       >
                         <div
-                          v-for="(n, index) in followupMaxAttempts"
+                          v-for="(n, index) in autoFollowUpMaxAttempts"
                           :key="'macro-' + index"
                           class="flex flex-col gap-1 w-full bg-n-alpha-1 p-3 rounded-md border border-n-weak"
                         >
@@ -1676,7 +1676,7 @@ export default {
                             {{ index + 1 }}
                           </label>
                           <SelectInput
-                            v-model="followupMacros[index]"
+                            v-model="autoFollowUpMacros[index]"
                             :options="[
                               {
                                 value: '',
@@ -1695,11 +1695,11 @@ export default {
                       </div>
 
                       <div
-                        v-if="followupActionType === 'predefined_message'"
+                        v-if="autoFollowUpActionType === 'predefined_message'"
                         class="flex flex-col gap-3 mt-3"
                       >
                         <div
-                          v-for="(n, index) in followupMaxAttempts"
+                          v-for="(n, index) in autoFollowUpMaxAttempts"
                           :key="'predefined-' + index"
                           class="flex flex-col gap-1 w-full bg-n-alpha-1 p-3 rounded-md border border-n-weak"
                         >
@@ -1712,7 +1712,7 @@ export default {
                             {{ index + 1 }}
                           </label>
                           <textarea
-                            v-model="followupPredefinedMessages[index]"
+                            v-model="autoFollowUpPredefinedMessages[index]"
                             rows="3"
                             placeholder="Hello, are you still there?"
                             class="w-full text-n-slate-12 bg-n-alpha-1 border-n-weak outline-none rounded-md px-3 py-2 border dark:bg-n-solid-1 text-sm focus:border-n-brand focus:ring-1 focus:ring-n-brand"

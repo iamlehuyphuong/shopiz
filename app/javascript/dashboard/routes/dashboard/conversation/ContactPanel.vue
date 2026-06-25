@@ -12,7 +12,7 @@ import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 import AccordionItem from 'dashboard/components/Accordion/AccordionItem.vue';
 import ContactConversations from './ContactConversations.vue';
 import ConversationAction from './ConversationAction.vue';
-import ConversationFollowUp from './ConversationFollowUp.vue';
+import ConversationReminder from './ConversationReminder.vue';
 import ConversationParticipant from './ConversationParticipant.vue';
 import ContactInfo from './contact/ContactInfo.vue';
 import ContactNotes from './contact/ContactNotes.vue';
@@ -182,17 +182,17 @@ onErrorCaptured(err => {
             </AccordionItem>
           </div>
           <div
-            v-else-if="element.name === 'conversation_follow_up'"
+            v-else-if="element.name === 'conversation_reminder'"
             class="conversation--actions"
           >
             <AccordionItem
-              :title="$t('CONVERSATION_SIDEBAR.FOLLOW_UP_TITLE')"
-              :is-open="isContactSidebarItemOpen('is_conv_follow_up_open')"
+              :title="$t('CONVERSATION_SIDEBAR.REMINDER_TITLE')"
+              :is-open="isContactSidebarItemOpen('is_conv_reminder_open')"
               @toggle="
-                value => toggleSidebarUIState('is_conv_follow_up_open', value)
+                value => toggleSidebarUIState('is_conv_reminder_open', value)
               "
             >
-              <ConversationFollowUp
+              <ConversationReminder
                 :conversation-id="conversationId"
                 :inbox-id="inboxId"
               />

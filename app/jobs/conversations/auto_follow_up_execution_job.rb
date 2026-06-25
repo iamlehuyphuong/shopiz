@@ -1,4 +1,4 @@
-class Conversations::FollowupExecutionJob < ApplicationJob
+class Conversations::AutoFollowUpExecutionJob < ApplicationJob
   queue_as :default
 
   def perform(conversation_id, trigger_message_id)
@@ -17,63 +17,63 @@ class Conversations::FollowupExecutionJob < ApplicationJob
     # WebWidget channels do not support follow ups
     return if inbox.channel_type == 'Channel::WebWidget'
 
-    followup_config = inbox.followup_config || {}
-    return unless followup_config['enabled']
+    auto_follow_up_config = inbox.auto_follow_up_config || {}
+    return unless auto_follow_up_config['enabled']
 
     # Guard: check if follow-up is manually cancelled
-    if conversation.custom_attributes['followup_cancelled'] == true
-      Rails.logger.info("[FollowupExecutionJob] Follow-up manually cancelled for #{conversation.id}. Aborting.")
+    if conversation.custom_attributes['auto_follow_up_cancelled'] == true
+      Rails.logger.info("[AutoFollowUpExecutionJob] Follow-up manually cancelled for #{conversation.id}. Aborting.")
       return
     end
 
     # Guard: check if channel policy allows freeform messaging at this time
     unless channel_policy_allows_followup?(conversation)
-      Rails.logger.info("[FollowupExecutionJob] Follow-up aborted due to strict channel policy limits on timestamp for #{conversation.id}.")
+      Rails.logger.info("[AutoFollowUpExecutionJob] Follow-up aborted due to strict channel policy limits on timestamp for #{conversation.id}.")
       log_activity(
         conversation,
         "Đã huỷ lịch gửi tin nhắn follow-up do vượt quá thời gian cho phép của nền tảng (Channel Policy).",
-        'CONVERSATION.ACTIVITY.followup.cancelled_channel_policy'
+        'CONVERSATION.ACTIVITY.auto_follow_up.cancelled_channel_policy'
       )
       return
     end
 
     # Guard: check if the customer has replied since the trigger message
     if customer_replied_after?(conversation, trigger_message.created_at)
-      Rails.logger.info("[FollowupExecutionJob] Customer has replied to #{conversation.id} after the scheduled followup. Aborting.")
+      Rails.logger.info("[AutoFollowUpExecutionJob] Customer has replied to #{conversation.id} after the scheduled followup. Aborting.")
       log_activity(
         conversation,
         "Đã huỷ lịch gửi tin nhắn follow-up tự động do khách hàng đã phản hồi.",
-        'CONVERSATION.ACTIVITY.followup.cancelled_customer_replied'
+        'CONVERSATION.ACTIVITY.auto_follow_up.cancelled_customer_replied'
       )
       return
     end
 
     # Guard: check if a newer outgoing message was sent by an agent after the trigger
     if agent_messaged_after?(conversation, trigger_message.created_at)
-      Rails.logger.info("[FollowupExecutionJob] Agent sent a newer message. The followup will be handled by the newer message's job. Aborting.")
+      Rails.logger.info("[AutoFollowUpExecutionJob] Agent sent a newer message. The followup will be handled by the newer message's job. Aborting.")
       # Không log "huỷ" ở đây vì sẽ bị spam (job mới đã được tạo và log kích hoạt mới rồi).
       return
     end
 
-    action_type = followup_config['action_type']
-    attempt_count = conversation.custom_attributes['followup_count'].to_i
+    action_type = auto_follow_up_config['action_type']
+    attempt_count = conversation.custom_attributes['auto_follow_up_count'].to_i
 
     if action_type == 'ai_assistant'
       trigger_ai_assistant(conversation, attempt_count)
     elsif action_type == 'macro'
-      macros_list = followup_config['macros'] || []
-      macro_id = macros_list[attempt_count].presence || followup_config['macro_id']
+      macros_list = auto_follow_up_config['macros'] || []
+      macro_id = macros_list[attempt_count].presence || auto_follow_up_config['macro_id']
       trigger_macro(conversation, macro_id, attempt_count) if macro_id.present?
     elsif action_type == 'predefined_message'
-      messages_list = followup_config['predefined_messages'] || []
-      content = messages_list[attempt_count].presence || followup_config['predefined_message']
+      messages_list = auto_follow_up_config['predefined_messages'] || []
+      content = messages_list[attempt_count].presence || auto_follow_up_config['predefined_message']
       trigger_predefined_message(conversation, content, attempt_count) if content.present?
     end
 
     log_activity(
       conversation,
       "Đã hoàn thành gửi tin nhắn follow-up tự động (lần #{attempt_count + 1}).",
-      'CONVERSATION.ACTIVITY.followup.completed',
+      'CONVERSATION.ACTIVITY.auto_follow_up.completed',
       { attempt: attempt_count + 1 }
     )
   end
@@ -119,18 +119,18 @@ class Conversations::FollowupExecutionJob < ApplicationJob
     assistant = inbox.agent_bot || conversation.account.agent_bots.first
     
     unless assistant
-      Rails.logger.warn("[FollowupExecutionJob] No AI Assistant found for Inbox #{inbox.id}. Aborting follow-up.")
+      Rails.logger.warn("[AutoFollowUpExecutionJob] No AI Assistant found for Inbox #{inbox.id}. Aborting follow-up.")
       log_activity(
         conversation,
         "Đã huỷ lịch gửi tin nhắn follow-up tự động do chưa cấu hình AI Assistant.",
-        'CONVERSATION.ACTIVITY.followup.cancelled_no_ai'
+        'CONVERSATION.ACTIVITY.auto_follow_up.cancelled_no_ai'
       )
       return
     end
 
     # Increment count immediately so the next followup knows it's attempt_count + 1
     conversation.with_lock do
-      conversation.custom_attributes['followup_count'] = attempt_count + 1
+      conversation.custom_attributes['auto_follow_up_count'] = attempt_count + 1
       conversation.save!
     end
 
@@ -142,7 +142,7 @@ class Conversations::FollowupExecutionJob < ApplicationJob
     return unless macro
 
     conversation.with_lock do
-      conversation.custom_attributes['followup_count'] = attempt_count + 1
+      conversation.custom_attributes['auto_follow_up_count'] = attempt_count + 1
       conversation.save!
     end
 
@@ -151,7 +151,7 @@ class Conversations::FollowupExecutionJob < ApplicationJob
 
   def trigger_predefined_message(conversation, content, attempt_count)
     conversation.with_lock do
-      conversation.custom_attributes['followup_count'] = attempt_count + 1
+      conversation.custom_attributes['auto_follow_up_count'] = attempt_count + 1
       conversation.save!
     end
 
@@ -162,7 +162,7 @@ class Conversations::FollowupExecutionJob < ApplicationJob
       message_type: 'outgoing',
       content: content,
       private: false,
-      content_attributes: { followup_automated: true }
+      content_attributes: { auto_follow_up_automated: true }
     }
 
     builder = Messages::MessageBuilder.new(nil, conversation, message_params)

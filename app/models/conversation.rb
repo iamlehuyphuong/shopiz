@@ -95,7 +95,7 @@ class Conversation < ApplicationRecord
     open.where('last_activity_at < ?', Time.now.utc - auto_resolve_after.minutes)
   }
 
-  scope :due_for_follow_up, -> { where('follow_up_remind_at <= ?', Time.current) }
+  scope :due_for_reminder, -> { where('remind_at <= ?', Time.current) }
 
   scope :last_user_message_at, lambda {
     joins(
@@ -124,7 +124,7 @@ class Conversation < ApplicationRecord
   has_many :conversation_orders, dependent: :destroy_async
 
   before_save :ensure_snooze_until_reset
-  before_save :compute_follow_up_remind_at, if: -> { follow_up_at_changed? || follow_up_remind_before_changed? }
+  before_save :compute_remind_at, if: -> { reminder_at_changed? || reminder_remind_before_changed? }
   before_create :determine_conversation_status
   before_create :ensure_waiting_since
 
@@ -284,9 +284,9 @@ class Conversation < ApplicationRecord
     self.waiting_since = created_at
   end
 
-  def compute_follow_up_remind_at
-    self.follow_up_remind_at = follow_up_at.present? ? follow_up_at - follow_up_remind_before.to_i.days : nil
-    self.custom_attributes = custom_attributes.except('follow_up_reminders_count') if follow_up_at.present?
+  def compute_remind_at
+    self.remind_at = reminder_at.present? ? reminder_at - reminder_remind_before.to_i.days : nil
+    self.custom_attributes = custom_attributes.except('reminders_count') if reminder_at.present?
   end
 
   def validate_additional_attributes
@@ -325,7 +325,7 @@ class Conversation < ApplicationRecord
 
   def list_of_keys
     %w[team_id assignee_id assignee_agent_bot_id status snoozed_until custom_attributes label_list waiting_since
-       first_reply_created_at priority follow_up_at follow_up_remind_before]
+       first_reply_created_at priority reminder_at reminder_remind_before]
   end
 
   def allowed_keys?

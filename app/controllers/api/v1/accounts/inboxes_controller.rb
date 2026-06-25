@@ -94,9 +94,9 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   end
 
   def update
-    if params[:followup_config].is_a?(String)
+    if params[:auto_follow_up_config].is_a?(String)
       begin
-        params[:followup_config] = JSON.parse(params[:followup_config])
+        params[:auto_follow_up_config] = JSON.parse(params[:auto_follow_up_config])
       rescue JSON::ParserError
       end
     end
@@ -330,7 +330,7 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
     [:name, :avatar, :greeting_enabled, :greeting_message, :enable_email_collect, :csat_survey_enabled,
      :enable_auto_assignment, :working_hours_enabled, :out_of_office_message, :timezone, :allow_messages_after_resolved,
      :lock_to_single_conversation, :portal_id, :sender_name_type, :business_name, :ecommerce_integration_id, :auto_label_enabled,
-     { followup_config: [:enabled, :delay_seconds, :action_type, :max_attempts, :interval_hours, :time_mode,
+     { auto_follow_up_config: [:enabled, :delay_seconds, :action_type, :max_attempts, :interval_hours, :time_mode,
                          :fixed_time, :timezone, :predefined_message, :custom_ai_prompt, :macro_id,
                          { predefined_messages: [] }, { macros: [] }, { custom_ai_prompts: [] }] },
      { csat_config: [:display_type, :message, :button_text, :language,

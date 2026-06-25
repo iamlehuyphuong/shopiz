@@ -179,9 +179,9 @@
       "DESCRIPTION": "Are you sure you want to delete this conversation?",
       "CONFIRM": "Delete"
     },
-    "FOLLOW_UP": {
-      "SUCCESS": "Follow-up reminder set successfully.",
-      "ERROR": "Couldn't set follow-up reminder. Please try again."
+    "REMINDER": {
+      "SUCCESS": "Reminder set successfully.",
+      "ERROR": "Couldn't set reminder. Please try again."
     },
     "CARD_CONTEXT_MENU": {
       "PENDING": "Mark as pending",
@@ -203,7 +203,7 @@
       "OPEN_IN_NEW_TAB": "Open in new tab",
       "COPY_LINK": "Copy conversation link",
       "COPY_LINK_SUCCESS": "Conversation link copied to clipboard",
-      "CANCEL_FOLLOWUP": "Cancel Follow-up",
+      "CANCEL_AUTO_FOLLOW_UP": "Cancel Auto Follow-up",
       "API": {
         "AGENT_ASSIGNMENT": {
           "SUCCESFUL": "Conversation id {conversationId} assigned to \"{agentName}\"",
@@ -407,7 +407,7 @@
       "muted": "{user_name} has muted the conversation",
       "unmuted": "{user_name} has unmuted the conversation",
       "auto_resolution_message": "Resolving the conversation as it has been inactive for a while. Please start a new conversation if you need further assistance.",
-      "followup": {
+      "auto_follow_up": {
         "scheduled": "Auto follow-up has been scheduled at {time}.",
         "cancelled_channel_policy": "Auto follow-up schedule cancelled due to channel policy timeout.",
         "cancelled_customer_replied": "Auto follow-up schedule cancelled as the customer has replied.",
@@ -544,12 +544,14 @@
     "ASSIGNEE_LABEL": "Assigned Agent",
     "SELF_ASSIGN": "Assign to me",
     "TEAM_LABEL": "Assigned Team",
-    "FOLLOW_UP_TITLE": "Follow-up Reminder",
-    "FOLLOW_UP_PLACEHOLDER": "Select date & time",
-    "FOLLOW_UP": {
-      "EMPTY_TEXT": "No follow-up set",
-      "ADD_BUTTON": "Add follow-up",
-      "TIME_LABEL": "Follow-up time",
+    "REMINDER_TITLE": "Reminder",
+    "REMINDER_PLACEHOLDER": "Select date & time",
+    "NOTE_LABEL": "Note (optional)",
+    "NOTE_PLACEHOLDER": "e.g., Call back to ask about product A...",
+    "REMINDER": {
+      "EMPTY_TEXT": "No reminder set",
+      "ADD_BUTTON": "Add reminder",
+      "TIME_LABEL": "Reminder time",
       "REMIND_LABEL": "Remind",
       "REMIND_VALUE": "1 day before",
       "EDIT_BUTTON": "Edit",

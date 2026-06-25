@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_25_114115) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_25_144401) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -893,9 +893,10 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_25_114115) do
     t.boolean "is_load_all_message"
     t.string "next_cursor"
     t.bigint "assignee_agent_bot_id"
-    t.datetime "follow_up_at"
-    t.integer "follow_up_remind_before", default: 0
-    t.datetime "follow_up_remind_at"
+    t.datetime "reminder_at"
+    t.integer "reminder_remind_before", default: 0
+    t.datetime "remind_at"
+    t.text "reminder_note"
     t.index ["account_id", "display_id"], name: "index_conversations_on_account_id_and_display_id", unique: true
     t.index ["account_id", "id"], name: "index_conversations_on_id_and_account_id"
     t.index ["account_id", "inbox_id", "status", "assignee_id"], name: "conv_acid_inbid_stat_asgnid_idx"
@@ -905,10 +906,10 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_25_114115) do
     t.index ["contact_id"], name: "index_conversations_on_contact_id"
     t.index ["contact_inbox_id"], name: "index_conversations_on_contact_inbox_id"
     t.index ["first_reply_created_at"], name: "index_conversations_on_first_reply_created_at"
-    t.index ["follow_up_at"], name: "index_conversations_on_follow_up_at"
     t.index ["identifier", "account_id"], name: "index_conversations_on_identifier_and_account_id"
     t.index ["inbox_id"], name: "index_conversations_on_inbox_id"
     t.index ["priority"], name: "index_conversations_on_priority"
+    t.index ["reminder_at"], name: "index_conversations_on_reminder_at"
     t.index ["status", "account_id"], name: "index_conversations_on_status_and_account_id"
     t.index ["status", "priority"], name: "index_conversations_on_status_and_priority"
     t.index ["team_id"], name: "index_conversations_on_team_id"
@@ -1107,7 +1108,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_25_114115) do
     t.jsonb "csat_config", default: {}, null: false
     t.boolean "is_load_all_conversation"
     t.string "next_cursor"
-    t.jsonb "followup_config", default: {}
+    t.jsonb "auto_follow_up_config", default: {}
     t.bigint "ecommerce_integration_id"
     t.boolean "auto_label_enabled", default: false, null: false
     t.jsonb "sales_config", default: {}

@@ -24,7 +24,7 @@ const MENU = {
   DELETE: 'delete',
   OPEN_NEW_TAB: 'open-new-tab',
   COPY_LINK: 'copy-link',
-  CANCEL_FOLLOWUP: 'cancel-followup',
+  CANCEL_REMINDER: 'cancel-reminder',
 };
 
 export default {
@@ -66,7 +66,7 @@ export default {
       type: Array,
       default: () => [],
     },
-    isFollowupActive: {
+    isReminderActive: {
       type: Boolean,
       default: false,
     },
@@ -81,7 +81,7 @@ export default {
     'assignLabel',
     'removeLabel',
     'deleteConversation',
-    'cancelFollowup',
+    'cancelReminder',
     'close',
   ],
   setup() {
@@ -181,10 +181,10 @@ export default {
         icon: 'copy',
         label: this.$t('CONVERSATION.CARD_CONTEXT_MENU.COPY_LINK'),
       },
-      cancelFollowupOption: {
-        key: MENU.CANCEL_FOLLOWUP,
+      cancelReminderOption: {
+        key: MENU.CANCEL_REMINDER,
         icon: 'dismiss-circle',
-        label: this.$t('CONVERSATION.CARD_CONTEXT_MENU.CANCEL_FOLLOWUP'),
+        label: this.$t('CONVERSATION.CARD_CONTEXT_MENU.CANCEL_REMINDER'),
       },
     };
   },
@@ -409,13 +409,13 @@ export default {
         @click.stop="copyConversationLink"
       />
     </template>
-    <template v-if="isFollowupActive">
+    <template v-if="isReminderActive">
       <hr class="m-1 rounded border-b border-n-weak dark:border-n-weak" />
       <MenuItem
-        :option="cancelFollowupOption"
+        :option="cancelReminderOption"
         variant="icon"
         class="!text-n-ruby-11 hover:!bg-n-ruby-3 hover:!text-n-ruby-11"
-        @click.stop="$emit('cancelFollowup')"
+        @click.stop="$emit('cancelReminder')"
       />
     </template>
     <template v-if="isAdmin && isAllowed([MENU.DELETE])">
