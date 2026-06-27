@@ -210,41 +210,7 @@
         "ERROR": "Vui lòng nhập email hợp lệ",
         "PLACEHOLDER": "Nhập email sẽ hiển thị trong cuộc hội thoại"
       },
-      "ADDRESS": {
-        "LABEL": "Địa chỉ của bạn",
-        "ERROR": "Vui lòng nhập địa chỉ hợp lệ",
-        "PLACEHOLDER": "Vui lòng nhập địa chỉ"
-      },
-      "ID_NUMBER": {
-        "LABEL": "Số CMND / Căn cước công dân",
-        "ERROR": "Vui lòng nhập số định danh hợp lệ",
-        "PLACEHOLDER": "Vui lòng nhập số CMND hoặc thẻ CCCD"
-      },
-      "IS_COMPANY": "Tài khoản công ty?",
-      "TYPE_IDS": {
-        "PERSONAL": "Cá nhân",
-        "COMPANY": "Công ty"
-      },
-      "COMPANY_EMAIL": {
-        "LABEL": "Địa chỉ email công ty",
-        "ERROR": "Vui lòng nhập địa chỉ email hợp lệ",
-        "PLACEHOLDER": "Vui lòng nhập email công ty của bạn"
-      },
-      "COMPANY_NAME": {
-        "LABEL": "Tên công ty",
-        "ERROR": "Vui lòng nhập tên công ty hợp lệ",
-        "PLACEHOLDER": "Vui lòng nhập tên công ty"
-      },
-      "COMPANY_ADDRESS": {
-        "LABEL": "Địa chỉ công ty",
-        "ERROR": "Vui lòng nhập địa chỉ công ty hợp lệ",
-        "PLACEHOLDER": "Vui lòng nhập địa chỉ công ty"
-      },
-      "COMPANY_TAX": {
-        "LABEL": "Mã số thuế công ty",
-        "ERROR": "Vui lòng nhập mã số thuế công ty hợp lệ",
-        "PLACEHOLDER": "Vui lòng nhập mã số thuế công ty"
-      },
+
       "CURRENT_PASSWORD": {
         "LABEL": "Mật khẩu hiện tại",
         "ERROR": "Vui lòng nhập mật khẩu hiện tại",

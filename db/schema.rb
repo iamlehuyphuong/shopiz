@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_25_144401) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_27_130545) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -116,6 +116,13 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_25_144401) do
     t.jsonb "settings", default: {}
     t.bigint "feature_flags_2", default: 0, null: false
     t.bigint "partner_sso_id"
+    t.integer "type_id", default: 0
+    t.string "address"
+    t.string "company_name"
+    t.string "company_address"
+    t.string "company_email"
+    t.string "company_tax_id"
+    t.string "id_number"
     t.index ["partner_sso_id"], name: "index_accounts_on_partner_sso_id"
     t.index ["status"], name: "index_accounts_on_status"
   end
@@ -1603,13 +1610,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_25_144401) do
     t.integer "consumed_timestep"
     t.boolean "otp_required_for_login", default: false, null: false
     t.text "otp_backup_codes"
-    t.integer "type_id", default: 0
-    t.string "address"
-    t.string "company_name"
-    t.string "company_address"
-    t.string "company_email"
-    t.string "company_tax_id"
-    t.string "id_number"
     t.index ["email"], name: "index_users_on_email"
     t.index ["otp_required_for_login"], name: "index_users_on_otp_required_for_login"
     t.index ["otp_secret"], name: "index_users_on_otp_secret", unique: true

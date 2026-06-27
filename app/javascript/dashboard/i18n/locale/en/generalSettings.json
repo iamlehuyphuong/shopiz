@@ -141,6 +141,41 @@
         "INBOUND_EMAIL_ENABLED": "Conversation continuity with emails is enabled for your account.",
         "CUSTOM_EMAIL_DOMAIN_ENABLED": "You can receive emails in your custom domain now."
       },
+      "INVOICE_SECTION": {
+        "TITLE": "Invoice Information",
+        "NOTE": "Provide information so we can issue electronic invoices to you.",
+        "ADDRESS": {
+          "LABEL": "Your address",
+          "ERROR": "Please enter a valid address",
+          "PLACEHOLDER": "Please enter your address"
+        },
+        "ID_NUMBER": {
+          "LABEL": "ID card number / CCCD",
+          "ERROR": "Please enter a valid ID number",
+          "PLACEHOLDER": "Please enter your ID card number or CCCD"
+        },
+        "IS_COMPANY": "Company account?",
+        "COMPANY_EMAIL": {
+          "LABEL": "Your company email address",
+          "ERROR": "Please enter a valid email address",
+          "PLACEHOLDER": "Please enter your company email address"
+        },
+        "COMPANY_NAME": {
+          "LABEL": "Your company name",
+          "ERROR": "Please enter a valid company name",
+          "PLACEHOLDER": "Please enter your company name"
+        },
+        "COMPANY_ADDRESS": {
+          "LABEL": "Your company address",
+          "ERROR": "Please enter a valid company address",
+          "PLACEHOLDER": "Please enter your company address"
+        },
+        "COMPANY_TAX": {
+          "LABEL": "Your company tax ID",
+          "ERROR": "Please enter a valid tax",
+          "PLACEHOLDER": "Please enter your company tax ID"
+        }
+      },
       "CUSTOM_EMAIL": {
         "TITLE": "Gmail Notification Settings",
         "NOTE": "Use your personal Gmail account to send system notification emails for this account. <a href='https://shopiz.pro/blog/huong-dan-thiet-lap-gui-thong-bao-he-thong-bang-tai-khoan-gmail-tren-nen-tang-shopiz' target='_blank' rel='noopener noreferrer' class='text-n-brand underline'>Learn more</a>.",

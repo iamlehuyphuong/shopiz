@@ -65,13 +65,6 @@ class Api::V1::ProfilesController < Api::BaseController
       :avatar,
       :message_signature,
       :account_id,
-      :address,
-      :type_id,
-      :company_name,
-      :company_address,
-      :company_email,
-      :company_tax_id,
-      :id_number,
       ui_settings: {}
     )
   end

@@ -50,6 +50,13 @@ json.id resource.id
 json.locale resource.locale
 json.name resource.name
 json.support_email resource.support_email
+json.type_id resource.type_id
+json.id_number resource.id_number
+json.address resource.address
+json.company_name resource.company_name
+json.company_address resource.company_address
+json.company_email resource.company_email
+json.company_tax_id resource.company_tax_id
 json.status resource.status
 json.cache_keys resource.cache_keys
 json.captain_api_source begin

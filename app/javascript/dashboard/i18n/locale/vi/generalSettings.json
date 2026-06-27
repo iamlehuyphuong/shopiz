@@ -141,6 +141,41 @@
         "INBOUND_EMAIL_ENABLED": "Tính năng đồng bộ hội thoại qua email đã được bật.",
         "CUSTOM_EMAIL_DOMAIN_ENABLED": "Bạn đã có thể nhận email từ tên miền tùy chỉnh."
       },
+      "INVOICE_SECTION": {
+        "TITLE": "Thông tin xuất hoá đơn",
+        "NOTE": "Thông tin để hệ thống xuất hoá đơn điện tử.",
+        "ADDRESS": {
+          "LABEL": "Địa chỉ của bạn",
+          "ERROR": "Vui lòng nhập địa chỉ hợp lệ",
+          "PLACEHOLDER": "Vui lòng nhập địa chỉ"
+        },
+        "ID_NUMBER": {
+          "LABEL": "Số CMND / Căn cước công dân",
+          "ERROR": "Vui lòng nhập số định danh hợp lệ",
+          "PLACEHOLDER": "Vui lòng nhập số CMND hoặc thẻ CCCD"
+        },
+        "IS_COMPANY": "Tài khoản công ty?",
+        "COMPANY_EMAIL": {
+          "LABEL": "Địa chỉ email công ty",
+          "ERROR": "Vui lòng nhập địa chỉ email hợp lệ",
+          "PLACEHOLDER": "Vui lòng nhập email công ty của bạn"
+        },
+        "COMPANY_NAME": {
+          "LABEL": "Tên công ty",
+          "ERROR": "Vui lòng nhập tên công ty hợp lệ",
+          "PLACEHOLDER": "Vui lòng nhập tên công ty"
+        },
+        "COMPANY_ADDRESS": {
+          "LABEL": "Địa chỉ công ty",
+          "ERROR": "Vui lòng nhập địa chỉ công ty hợp lệ",
+          "PLACEHOLDER": "Vui lòng nhập địa chỉ công ty"
+        },
+        "COMPANY_TAX": {
+          "LABEL": "Mã số thuế công ty",
+          "ERROR": "Vui lòng nhập mã số thuế công ty hợp lệ",
+          "PLACEHOLDER": "Vui lòng nhập mã số thuế công ty"
+        }
+      },
       "CUSTOM_EMAIL": {
         "TITLE": "Cài đặt thông báo qua Gmail",
         "NOTE": "Sử dụng tài khoản Gmail cá nhân để gửi email thông báo hệ thống. <a href='https://shopiz.pro/blog/huong-dan-thiet-lap-gui-thong-bao-he-thong-bang-tai-khoan-gmail-tren-nen-tang-shopiz' target='_blank' rel='noopener noreferrer' class='text-n-brand underline'>Xem hướng dẫn chi tiết</a>.",
