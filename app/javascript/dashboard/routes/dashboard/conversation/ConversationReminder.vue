@@ -29,6 +29,7 @@ export default {
       note: '',
       isUpdating: false,
       isEditing: false,
+      syncToZalo: true,
     };
   },
   computed: {
@@ -78,6 +79,9 @@ export default {
       const d = new Date();
       d.setHours(9, 0, 0, 0);
       return d;
+    },
+    isZaloPersonalChannel() {
+      return this.currentChat?.meta?.channel === 'Channel::ZaloPersonal';
     },
   },
   watch: {
@@ -138,6 +142,9 @@ export default {
           reminder_at: reminderAt,
           reminder_note: this.note,
           reminder_remind_before: remindBeforeVal,
+          sync_zalo_reminder: this.isZaloPersonalChannel
+            ? this.syncToZalo
+            : false,
         });
         this.$store.dispatch('updateConversation', response.data);
         useAlert(this.$t('CONVERSATION.REMINDER.SUCCESS'));
@@ -159,6 +166,7 @@ export default {
           reminder_at: null,
           reminder_note: null,
           reminder_remind_before: 0,
+          sync_zalo_reminder: true,
         });
         this.$store.dispatch('updateConversation', response.data);
         useAlert(this.$t('CONVERSATION.REMINDER.SUCCESS'));
@@ -317,6 +325,25 @@ export default {
           </span>
           <span class="text-xs text-slate-500 dark:text-slate-400">
             {{ $t('CONVERSATION_SIDEBAR.REMINDER.REMIND_BEFORE_DESC') }}
+          </span>
+        </div>
+      </div>
+
+      <div
+        v-if="isZaloPersonalChannel"
+        class="flex items-center gap-2 mt-1"
+      >
+        <input
+          v-model="syncToZalo"
+          type="checkbox"
+          class="w-4 h-4 mt-0.5 self-start text-woot-500 rounded border-slate-300 focus:ring-woot-500 dark:border-slate-600 dark:bg-slate-900"
+        />
+        <div class="flex flex-col gap-0.5">
+          <span class="text-sm font-medium text-slate-800 dark:text-slate-200">
+            {{ $t('CONVERSATION_SIDEBAR.REMINDER.SYNC_ZALO') }}
+          </span>
+          <span class="text-xs text-slate-500 dark:text-slate-400">
+            {{ $t('CONVERSATION_SIDEBAR.REMINDER.SYNC_ZALO_DESC') }}
           </span>
         </div>
       </div>

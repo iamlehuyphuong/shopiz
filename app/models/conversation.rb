@@ -76,6 +76,7 @@ class Conversation < ApplicationRecord
   validate :validate_referer_url
 
   attr_accessor :loaded_from_history
+  attr_accessor :sync_zalo_reminder
 
   enum status: { open: 0, resolved: 1, pending: 2, snoozed: 3 }
   enum priority: { low: 0, medium: 1, high: 2, urgent: 3 }
@@ -129,6 +130,7 @@ class Conversation < ApplicationRecord
   before_create :ensure_waiting_since
 
   after_update_commit :execute_after_update_commit_callbacks
+  after_update_commit :enqueue_zalo_reminder_sync, if: :should_sync_reminder_to_zalo?
   after_create_commit :notify_conversation_creation, unless: :loaded_from_history
   after_create_commit :load_attributes_created_by_db_triggers, unless: :loaded_from_history
 
@@ -265,6 +267,23 @@ class Conversation < ApplicationRecord
     notify_status_change
     create_activity
     notify_conversation_updation
+  end
+
+  def should_sync_reminder_to_zalo?
+    inbox&.channel_type == 'Channel::ZaloPersonal' &&
+      (saved_change_to_reminder_at? || saved_change_to_reminder_note? || saved_change_to_reminder_remind_before?)
+  end
+
+  def enqueue_zalo_reminder_sync
+    action = determine_zalo_reminder_action
+    ZaloPersonal::ReminderSyncJob.perform_later(id, action, sync_zalo_reminder != false)
+  end
+
+  def determine_zalo_reminder_action
+    return :remove if reminder_at.nil?
+    return :edit   if custom_attributes['zalo_reminder_id'].present?
+
+    :create
   end
 
   def handle_resolved_status_change

@@ -567,6 +567,8 @@
       "YEARS_COUNT": "Number of years",
       "REMIND_BEFORE": "Remind before",
       "REMIND_BEFORE_DESC": "Send notification 1 day before",
+      "SYNC_ZALO": "Create reminder on Zalo",
+      "SYNC_ZALO_DESC": "Automatically sync this reminder to the Zalo conversation",
       "SAVE": "Save",
       "CANCEL": "Cancel"
     },

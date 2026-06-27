@@ -46,6 +46,7 @@ class Api::V1::Accounts::ConversationsController < Api::V1::Accounts::BaseContro
   end
 
   def update
+    @conversation.sync_zalo_reminder = params[:sync_zalo_reminder] != false
     @conversation.update!(permitted_update_params)
   end
 

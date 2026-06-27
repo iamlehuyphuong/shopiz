@@ -20,7 +20,8 @@ class Conversations::AgentReminderJob < ApplicationJob
       conversation.update_columns(
         reminder_at: nil,
         remind_at: nil,
-        reminder_note: nil
+        reminder_note: nil,
+        custom_attributes: conversation.custom_attributes.except('zalo_reminder_id')
       )
       # rubocop:enable Rails/SkipsModelValidations
 
