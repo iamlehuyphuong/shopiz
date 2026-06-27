@@ -17,6 +17,7 @@ import AccountDelete from './components/AccountDelete.vue';
 import AudioTranscription from './components/AudioTranscription.vue';
 import SectionLayout from './components/SectionLayout.vue';
 import NextSwitch from 'dashboard/components-next/switch/Switch.vue';
+import SmtpSettings from './components/SmtpSettings.vue';
 
 export default {
   components: {
@@ -30,6 +31,7 @@ export default {
     WithLabel,
     NextInput,
     NextSwitch,
+    SmtpSettings,
   },
   setup() {
     const { updateUISettings, uiSettings } = useUISettings();
@@ -47,6 +49,7 @@ export default {
       domain: '',
       supportEmail: '',
       features: {},
+      customEmailConfig: {},
     };
   },
   validations: {
@@ -110,7 +113,7 @@ export default {
   methods: {
     async initializeAccount() {
       try {
-        const { name, locale, id, domain, support_email, features } =
+        const { name, locale, id, domain, support_email, features, settings } =
           this.getAccount(this.accountId);
 
         this.$root.$i18n.locale = this.uiSettings?.locale || locale;
@@ -120,6 +123,7 @@ export default {
         this.domain = domain;
         this.supportEmail = support_email;
         this.features = features;
+        this.customEmailConfig = settings?.custom_email_config || {};
       } catch (error) {
         // Ignore error
       }
@@ -146,6 +150,16 @@ export default {
           this.$root.$i18n.locale = this.locale;
         }
         this.getAccount(this.id).locale = this.locale;
+        useAlert(this.$t('GENERAL_SETTINGS.UPDATE.SUCCESS'));
+      } catch (error) {
+        useAlert(this.$t('GENERAL_SETTINGS.UPDATE.ERROR'));
+      }
+    },
+    async updateSmtpConfig(payload) {
+      try {
+        await this.$store.dispatch('accounts/update', {
+          custom_email_config: payload,
+        });
         useAlert(this.$t('GENERAL_SETTINGS.UPDATE.SUCCESS'));
       } catch (error) {
         useAlert(this.$t('GENERAL_SETTINGS.UPDATE.ERROR'));
@@ -255,6 +269,18 @@ export default {
 
       <woot-loading-state v-if="uiFlags.isFetchingItem" />
     </div>
+
+    <div
+      v-if="!uiFlags.isFetchingItem"
+      class="flex-grow flex-shrink min-w-0 mt-3"
+    >
+      <SmtpSettings
+        :config="customEmailConfig"
+        :is-updating="isUpdating"
+        @submit="updateSmtpConfig"
+      />
+    </div>
+
     <AudioTranscription v-if="showAudioTranscriptionConfig" />
     <AccountId />
     <div v-if="!uiFlags.isFetchingItem && isOnChatwootCloud">

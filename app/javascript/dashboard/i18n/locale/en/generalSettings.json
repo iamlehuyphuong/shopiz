@@ -140,6 +140,22 @@
       "FEATURES": {
         "INBOUND_EMAIL_ENABLED": "Conversation continuity with emails is enabled for your account.",
         "CUSTOM_EMAIL_DOMAIN_ENABLED": "You can receive emails in your custom domain now."
+      },
+      "CUSTOM_EMAIL": {
+        "TITLE": "Gmail Notification Settings",
+        "NOTE": "Use your personal Gmail account to send system notification emails for this account. <a href='https://shopiz.pro/blog/huong-dan-thiet-lap-gui-thong-bao-he-thong-bang-tai-khoan-gmail-tren-nen-tang-shopiz' target='_blank' rel='noopener noreferrer' class='text-n-brand underline'>Learn more</a>.",
+        "ENABLE_LABEL": "Enable Gmail Notifications",
+        "SENDER_EMAIL": {
+          "LABEL": "Gmail Address",
+          "PLACEHOLDER": "e.g. your.name@gmail.com",
+          "ERROR": "Must be a valid email"
+        },
+        "SMTP_PASSWORD": {
+          "LABEL": "App Password",
+          "PLACEHOLDER": "16-character app password",
+          "ERROR": "App Password is required"
+        },
+        "SUBMIT": "Save Settings"
       }
     },
     "UPDATE_CHATWOOT": "An update {latestShopizVersion} for Shopiz is available. Please update your instance.",

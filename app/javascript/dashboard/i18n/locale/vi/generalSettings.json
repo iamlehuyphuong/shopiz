@@ -140,6 +140,22 @@
       "FEATURES": {
         "INBOUND_EMAIL_ENABLED": "Tính năng đồng bộ hội thoại qua email đã được bật.",
         "CUSTOM_EMAIL_DOMAIN_ENABLED": "Bạn đã có thể nhận email từ tên miền tùy chỉnh."
+      },
+      "CUSTOM_EMAIL": {
+        "TITLE": "Cài đặt thông báo qua Gmail",
+        "NOTE": "Sử dụng tài khoản Gmail cá nhân để gửi email thông báo hệ thống. <a href='https://shopiz.pro/blog/huong-dan-thiet-lap-gui-thong-bao-he-thong-bang-tai-khoan-gmail-tren-nen-tang-shopiz' target='_blank' rel='noopener noreferrer' class='text-n-brand underline'>Xem hướng dẫn chi tiết</a>.",
+        "ENABLE_LABEL": "Bật thông báo qua Gmail",
+        "SENDER_EMAIL": {
+          "LABEL": "Địa chỉ Gmail",
+          "PLACEHOLDER": "VD: your.name@gmail.com",
+          "ERROR": "Phải là email hợp lệ"
+        },
+        "SMTP_PASSWORD": {
+          "LABEL": "Mật khẩu ứng dụng",
+          "PLACEHOLDER": "Mật khẩu ứng dụng gồm 16 ký tự",
+          "ERROR": "Mật khẩu ứng dụng là bắt buộc"
+        },
+        "SUBMIT": "Lưu cài đặt"
       }
     },
     "UPDATE_CHATWOOT": "Có bản cập nhật mới ({latestShopizVersion}) cho Shopiz. Vui lòng cập nhật ngay.",

@@ -215,16 +215,13 @@ export default {
           {{ formattedReminderTime }}
         </span>
       </div>
-      <div
-        v-if="currentChat.reminder_note"
-        class="flex flex-col gap-1"
-      >
+      <div v-if="currentChat.reminder_note" class="flex flex-col gap-1">
         <span class="text-xs font-medium text-slate-500 dark:text-slate-400">{{
           $t('CONVERSATION_SIDEBAR.NOTE_LABEL')
         }}</span>
-        <span class="text-sm font-medium text-slate-800 dark:text-slate-200 break-words whitespace-pre-wrap">{{
-          currentChat.reminder_note
-        }}</span>
+        <span
+          class="text-sm font-medium text-slate-800 dark:text-slate-200 break-words whitespace-pre-wrap"
+          >{{ currentChat.reminder_note }}</span>
       </div>
       <div
         v-if="currentChat.reminder_remind_before === 1"
@@ -299,8 +296,6 @@ export default {
         />
       </div>
 
-
-
       <div class="flex flex-col gap-1 mt-1">
         <label class="text-sm font-medium text-slate-800 dark:text-slate-200">
           {{ $t('CONVERSATION_SIDEBAR.NOTE_LABEL') }}
@@ -329,10 +324,7 @@ export default {
         </div>
       </div>
 
-      <div
-        v-if="isZaloPersonalChannel"
-        class="flex items-center gap-2 mt-1"
-      >
+      <div v-if="isZaloPersonalChannel" class="flex items-center gap-2 mt-1">
         <input
           v-model="syncToZalo"
           type="checkbox"

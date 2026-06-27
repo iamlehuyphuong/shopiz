@@ -84,6 +84,21 @@ class Account < ApplicationRecord
             'help_center_search': { 'type': %w[boolean null] }
           },
           'additionalProperties': false
+        },
+        'custom_email_config': {
+          'type': %w[object null],
+          'properties': {
+            'sender_email': { 'type': %w[string null] },
+            'smtp_address': { 'type': %w[string null] },
+            'smtp_port': { 'type': %w[integer string null] },
+            'smtp_username': { 'type': %w[string null] },
+            'smtp_password': { 'type': %w[string null] },
+            'smtp_domain': { 'type': %w[string null] },
+            'smtp_authentication': { 'type': %w[string null] },
+            'smtp_enable_starttls_auto': { 'type': %w[boolean null] },
+            'smtp_openssl_verify_mode': { 'type': %w[string null] }
+          },
+          'additionalProperties': false
         }
       },
     'required': [],
@@ -110,6 +125,7 @@ class Account < ApplicationRecord
   store_accessor :settings, :keep_pending_on_bot_failure
   store_accessor :settings, :captain_auto_resolve_mode
   store_accessor :settings, :active_ecommerce_platform, :ai_allow_create_order, :order_notification_templates
+  store_accessor :settings, :custom_email_config
   include AccountCaptainAutoResolve
 
   has_one :onboarding, class_name: 'AccountOnboarding', dependent: :destroy

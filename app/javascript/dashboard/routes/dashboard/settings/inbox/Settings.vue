@@ -565,8 +565,10 @@ export default {
         this.widgetBubbleLauncherTitle = '';
       }
 
-      this.autoFollowUpEnabled = this.inbox.auto_follow_up_config?.enabled || false;
-      this.autoFollowUpMaxAttempts = this.inbox.auto_follow_up_config?.max_attempts || 1;
+      this.autoFollowUpEnabled =
+        this.inbox.auto_follow_up_config?.enabled || false;
+      this.autoFollowUpMaxAttempts =
+        this.inbox.auto_follow_up_config?.max_attempts || 1;
       this.autoFollowUpIntervalHours =
         this.inbox.auto_follow_up_config?.interval_hours || 24;
       this.autoFollowUpTimeMode =
@@ -1766,7 +1768,6 @@ export default {
                   />
                 </SettingsFieldSection>
               </SettingsAccordion>
-
             </div>
 
             <div class="w-full flex justify-end items-center py-4 mt-2">
