@@ -15,15 +15,15 @@ class Conversations::AgentReminderJob < ApplicationJob
       note = conversation.reminder_note
 
       # 2. Clear reminder fields to stop reminding
-      # Use update_columns to skip callbacks (no ActionCable broadcast / activity creation needed).
-      # rubocop:disable Rails/SkipsModelValidations
-      conversation.update_columns(
+      # Use update! to trigger callbacks so ActionCable broadcasts CONVERSATION_UPDATED
+      # This ensures the frontend UI hides the reminder automatically.
+      # We intentionally keep zalo_reminder_id in custom_attributes so that 
+      # ReminderSyncJob can pick it up to remove the reminder on Zalo personal.
+      conversation.update!(
         reminder_at: nil,
         remind_at: nil,
-        reminder_note: nil,
-        custom_attributes: conversation.custom_attributes.except('zalo_reminder_id')
+        reminder_note: nil
       )
-      # rubocop:enable Rails/SkipsModelValidations
 
       # 3. Create the internal (private) note in the account's locale
       I18n.with_locale(conversation.account.locale || I18n.default_locale) do
