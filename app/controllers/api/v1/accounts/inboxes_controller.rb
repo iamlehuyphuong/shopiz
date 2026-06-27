@@ -96,7 +96,8 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   def update
     if params[:auto_follow_up_config].is_a?(String)
       begin
-        params[:auto_follow_up_config] = JSON.parse(params[:auto_follow_up_config])
+        parsed_config = JSON.parse(params[:auto_follow_up_config])
+        params[:auto_follow_up_config] = ActionController::Parameters.new(parsed_config)
       rescue JSON::ParserError
       end
     end

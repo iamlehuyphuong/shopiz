@@ -48,12 +48,12 @@ class MessageListener < BaseListener
       # Bail if we reached the maximum loop of sequence
       return if current_count >= max_attempts
     else
-      # Real agent message cancels the auto follow-up process
+      # Real agent message resets the auto follow-up process and starts a new sequence
       conversation.with_lock do
-        conversation.custom_attributes['auto_follow_up_cancelled'] = true
+        conversation.custom_attributes['auto_follow_up_count'] = 0
+        conversation.custom_attributes['auto_follow_up_cancelled'] = false
         conversation.save!
       end
-      return
     end
 
     # 2. Compute Timing
