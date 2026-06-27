@@ -8,6 +8,7 @@
 # allow_multiple_hooks: whether multiple hooks can be created for the integration
 # settings_json_schema: the json schema used to validate the settings hash (https://json-schema.org/)
 # settings_form_schema: the formulate schema used in frontend to render settings form (https://vueformulate.com/)
+# status: ( draft | coming_soon | beta | published | deprecated ). Default is published
 ########################################################
 webhooks:
   id: webhook

@@ -26,6 +26,10 @@ class Integrations::App
     params[:logo]
   end
 
+  def status
+    params[:status] || 'published'
+  end
+
   def fields
     params[:fields]
   end

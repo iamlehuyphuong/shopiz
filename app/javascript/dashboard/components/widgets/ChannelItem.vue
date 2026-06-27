@@ -139,8 +139,8 @@ const isActive = computed(() => {
   ].includes(key);
 });
 
-const isComingSoon = computed(() => {
-  const { key } = props.channel;
+const computedStatus = computed(() => {
+  const { key, status } = props.channel;
 
   const globalConfig = window.globalConfig || {};
   const isFalse = val => val === false || val === 'false';
@@ -160,9 +160,11 @@ const isComingSoon = computed(() => {
     (key === 'twitter' && isFalse(globalConfig.ENABLE_CHANNEL_TWITTER)) ||
     (key === 'website' && isFalse(globalConfig.ENABLE_CHANNEL_WEBSITE));
 
-  // Show "Coming Soon" only if the channel is marked as coming soon
-  // and the corresponding feature flag is not enabled yet.
-  return (['voice'].includes(key) && !isActive.value) || isGloballyDisabled;
+  if (status === 'coming_soon' || (['voice'].includes(key) && !isActive.value) || isGloballyDisabled) {
+    return 'coming_soon';
+  }
+
+  return status || 'published';
 });
 
 const onItemClick = () => {
@@ -177,8 +179,8 @@ const onItemClick = () => {
     :title="channel.title"
     :description="channel.description"
     :icon="channel.icon"
-    :is-coming-soon="isComingSoon"
-    :disabled="!isActive"
+    :status="computedStatus"
+    :disabled="!isActive || computedStatus === 'coming_soon'"
     @click="onItemClick"
   />
 </template>

@@ -4,6 +4,7 @@ json.description resource.description
 json.short_description resource.short_description.presence
 json.enabled resource.enabled?(@current_account)
 json.is_active resource.active?(@current_account)
+json.status resource.status
 
 if Current.account_user&.administrator?
   json.call(resource.params, *resource.params.keys)

@@ -26,6 +26,10 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  status: {
+    type: String,
+    default: 'published',
+  },
 });
 
 const getters = useStoreGetters();
@@ -73,16 +77,32 @@ const actionURL = computed(() =>
 
     <div class="flex flex-col flex-1">
       <div class="flex items-center justify-between gap-3 mb-2">
-        <h3 class="text-base font-medium text-n-slate-12 leading-tight">
-          {{ name }}
-        </h3>
-        <router-link v-if="isActive" :to="actionURL">
+        <div class="flex items-center gap-2">
+          <h3 class="text-base font-medium text-n-slate-12 leading-tight">
+            {{ name }}
+          </h3>
+          <div
+            v-if="status === 'beta'"
+            class="bg-n-blue-9 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-sm tracking-wide uppercase shadow-sm"
+          >
+            Beta
+          </div>
+        </div>
+        <router-link v-if="isActive && status !== 'coming_soon'" :to="actionURL">
           <span
             class="text-sm font-medium text-n-orange hover:text-n-orange-strong transition-colors cursor-pointer"
           >
             {{ $t('INTEGRATION_APPS.CONFIGURE') }}
           </span>
         </router-link>
+        <div v-else-if="status === 'coming_soon'">
+          <span
+            class="text-sm font-medium text-n-slate-7 flex items-center gap-1"
+          >
+            {{ $t('CHANNEL_SELECTOR.COMING_SOON') }}
+            <span class="i-lucide-clock size-3.5" />
+          </span>
+        </div>
         <div v-else>
           <span
             class="text-sm font-medium text-n-slate-7 flex items-center gap-1"
