@@ -27,7 +27,7 @@ class Integrations::App
   end
 
   def status
-    params[:status] || 'published'
+    GlobalConfigService.load("INTEGRATION_STATUS_#{params[:id].upcase}", params[:status] || 'published')
   end
 
   def fields

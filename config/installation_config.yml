@@ -704,59 +704,312 @@
 ## ---- End of LLM Observability ---- ##
 
 # ------- Messaging Channel Feature Flags ------- #
-- name: ENABLE_CHANNEL_FACEBOOK
-  display_title: 'Enable Facebook Channel'
-  value: true
-  type: boolean
+- name: CHANNEL_STATUS_FACEBOOK
+  display_title: Facebook Channel Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
   locked: false
-- name: ENABLE_CHANNEL_ZALO_OA
-  display_title: 'Enable Zalo OA Channel'
-  value: true
-  type: boolean
+- name: CHANNEL_STATUS_ZALO_OA
+  display_title: Zalo_oa Channel Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
   locked: false
-- name: ENABLE_CHANNEL_ZALO_PERSONAL
-  display_title: 'Enable Zalo Personal Channel'
-  value: true
-  type: boolean
+- name: CHANNEL_STATUS_ZALO_PERSONAL
+  display_title: Zalo_personal Channel Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
   locked: false
-- name: ENABLE_CHANNEL_TIKTOK
-  display_title: 'Enable TikTok Channel'
-  value: true
-  type: boolean
+- name: CHANNEL_STATUS_TIKTOK
+  display_title: Tiktok Channel Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
   locked: false
-- name: ENABLE_CHANNEL_TIKTOK_SHOP
-  display_title: 'Enable TikTok Shop Channel'
-  value: true
-  type: boolean
+- name: CHANNEL_STATUS_TIKTOK_SHOP
+  display_title: Tiktok_shop Channel Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
   locked: false
-- name: ENABLE_CHANNEL_WHATSAPP
-  display_title: 'Enable WhatsApp Channel'
-  value: true
-  type: boolean
+- name: CHANNEL_STATUS_WHATSAPP
+  display_title: Whatsapp Channel Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
   locked: false
-- name: ENABLE_CHANNEL_INSTAGRAM
-  display_title: 'Enable Instagram Channel'
-  value: true
-  type: boolean
+- name: CHANNEL_STATUS_INSTAGRAM
+  display_title: Instagram Channel Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
   locked: false
-- name: ENABLE_CHANNEL_TELEGRAM
-  display_title: 'Enable Telegram Channel'
-  value: true
-  type: boolean
+- name: CHANNEL_STATUS_TELEGRAM
+  display_title: Telegram Channel Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
   locked: false
-- name: ENABLE_CHANNEL_LINE
-  display_title: 'Enable LINE Channel'
-  value: true
-  type: boolean
+- name: CHANNEL_STATUS_LINE
+  display_title: Line Channel Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
   locked: false
-- name: ENABLE_CHANNEL_TWITTER
-  display_title: 'Enable Twitter Channel'
-  value: true
-  type: boolean
+- name: CHANNEL_STATUS_TWITTER
+  display_title: Twitter Channel Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
   locked: false
-- name: ENABLE_CHANNEL_WEBSITE
-  display_title: 'Enable Website Channel'
-  value: true
-  type: boolean
+- name: CHANNEL_STATUS_WEBSITE
+  display_title: Website Channel Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
+  locked: false
+- name: INTEGRATION_STATUS_WEBHOOK
+  display_title: Webhook Integration Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
+  locked: false
+- name: INTEGRATION_STATUS_DASHBOARD_APPS
+  display_title: Dashboard_apps Integration Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
+  locked: false
+- name: INTEGRATION_STATUS_OPENAI
+  display_title: Openai Integration Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
+  locked: false
+- name: INTEGRATION_STATUS_LINEAR
+  display_title: Linear Integration Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
+  locked: false
+- name: INTEGRATION_STATUS_NOTION
+  display_title: Notion Integration Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
+  locked: false
+- name: INTEGRATION_STATUS_SLACK
+  display_title: Slack Integration Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
+  locked: false
+- name: INTEGRATION_STATUS_DIALOGFLOW
+  display_title: Dialogflow Integration Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
+  locked: false
+- name: INTEGRATION_STATUS_GOOGLE_TRANSLATE
+  display_title: Google_translate Integration Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
+  locked: false
+- name: INTEGRATION_STATUS_DYTE
+  display_title: Dyte Integration Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
+  locked: false
+- name: INTEGRATION_STATUS_SHOPIFY
+  display_title: Shopify Integration Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
+  locked: false
+- name: INTEGRATION_STATUS_KIOTVIET
+  display_title: Kiotviet Integration Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
+  locked: false
+- name: INTEGRATION_STATUS_HARAVAN
+  display_title: Haravan Integration Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
+  locked: false
+- name: INTEGRATION_STATUS_WOOCOMMERCE
+  display_title: Woocommerce Integration Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
+  locked: false
+- name: INTEGRATION_STATUS_SAPO
+  display_title: Sapo Integration Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
+  locked: false
+- name: INTEGRATION_STATUS_NHANHVN
+  display_title: Nhanhvn Integration Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
+  locked: false
+- name: INTEGRATION_STATUS_CALENDLY
+  display_title: Calendly Integration Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
+  locked: false
+- name: INTEGRATION_STATUS_LEADSQUARED
+  display_title: Leadsquared Integration Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
   locked: false
 # ------- End of Messaging Channel Feature Flags ------- #

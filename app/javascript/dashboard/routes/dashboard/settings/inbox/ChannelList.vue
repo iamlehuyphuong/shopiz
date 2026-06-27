@@ -18,83 +18,85 @@ const enabledFeatures = ref({});
 // });
 
 const channelList = computed(() => {
+  const globalConfig = window.globalConfig || {};
+
   const channels = [
     {
       key: 'website',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.WEBSITE.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.WEBSITE.DESCRIPTION'),
       icon: 'i-woot-website',
-      status: 'published',
+      status: globalConfig.CHANNEL_STATUS_WEBSITE || 'published',
     },
     {
       key: 'zalo',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO_OA.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO_OA.DESCRIPTION'),
       icon: 'i-woot-zalo-oa',
-      status: 'published',
+      status: globalConfig.CHANNEL_STATUS_ZALO_OA || 'published',
     },
     {
       key: 'zalopersonal',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO_PERSONAL.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.ZALO_PERSONAL.DESCRIPTION'),
       icon: 'i-woot-zalo-personal',
-      status: 'published',
+      status: globalConfig.CHANNEL_STATUS_ZALO_PERSONAL || 'published',
     },
     {
       key: 'facebook',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.FACEBOOK.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.FACEBOOK.DESCRIPTION'),
       icon: 'i-woot-messenger',
-      status: 'published',
+      status: globalConfig.CHANNEL_STATUS_FACEBOOK || 'published',
     },
     {
       key: 'whatsapp',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.WHATSAPP.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.WHATSAPP.DESCRIPTION'),
       icon: 'i-woot-whatsapp',
-      status: 'published',
+      status: globalConfig.CHANNEL_STATUS_WHATSAPP || 'published',
     },
     {
       key: 'instagram',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.INSTAGRAM.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.INSTAGRAM.DESCRIPTION'),
       icon: 'i-woot-instagram',
-      status: 'published',
+      status: globalConfig.CHANNEL_STATUS_INSTAGRAM || 'published',
     },
     {
       key: 'tiktok',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK.DESCRIPTION'),
       icon: 'i-woot-tiktok',
-      status: 'published',
+      status: globalConfig.CHANNEL_STATUS_TIKTOK || 'published',
     },
     {
       key: 'tiktok_shop',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK_SHOP.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TIKTOK_SHOP.DESCRIPTION'),
       icon: 'i-woot-tiktok-shop',
-      status: 'published',
+      status: globalConfig.CHANNEL_STATUS_TIKTOK_SHOP || 'published',
     },
     {
       key: 'telegram',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TELEGRAM.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TELEGRAM.DESCRIPTION'),
       icon: 'i-woot-telegram',
-      status: 'published',
+      status: globalConfig.CHANNEL_STATUS_TELEGRAM || 'published',
     },
     {
       key: 'line',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.LINE.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.LINE.DESCRIPTION'),
       icon: 'i-woot-line',
-      status: 'published',
+      status: globalConfig.CHANNEL_STATUS_LINE || 'published',
     },
     {
       key: 'twitter',
       title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TWITTER.TITLE'),
       description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TWITTER.DESCRIPTION'),
       icon: 'i-ri-twitter-x-fill',
-      status: 'published',
+      status: globalConfig.CHANNEL_STATUS_TWITTER || 'published',
     },
   ];
 
@@ -102,32 +104,12 @@ const channelList = computed(() => {
     c => !['draft', 'deprecated'].includes(c.status)
   );
 
-  const globalConfig = window.globalConfig || {};
-  const isFalse = val => val === false || val === 'false';
-
-  const isGloballyDisabled = key =>
-    (key === 'facebook' && isFalse(globalConfig.ENABLE_CHANNEL_FACEBOOK)) ||
-    (key === 'zalo' && isFalse(globalConfig.ENABLE_CHANNEL_ZALO_OA)) ||
-    (key === 'zalopersonal' &&
-      isFalse(globalConfig.ENABLE_CHANNEL_ZALO_PERSONAL)) ||
-    (key === 'tiktok' && isFalse(globalConfig.ENABLE_CHANNEL_TIKTOK)) ||
-    (key === 'tiktok_shop' &&
-      isFalse(globalConfig.ENABLE_CHANNEL_TIKTOK_SHOP)) ||
-    (key === 'whatsapp' && isFalse(globalConfig.ENABLE_CHANNEL_WHATSAPP)) ||
-    (key === 'instagram' && isFalse(globalConfig.ENABLE_CHANNEL_INSTAGRAM)) ||
-    (key === 'telegram' && isFalse(globalConfig.ENABLE_CHANNEL_TELEGRAM)) ||
-    (key === 'line' && isFalse(globalConfig.ENABLE_CHANNEL_LINE)) ||
-    (key === 'twitter' && isFalse(globalConfig.ENABLE_CHANNEL_TWITTER)) ||
-    (key === 'website' && isFalse(globalConfig.ENABLE_CHANNEL_WEBSITE));
-
   return filteredChannels.sort((a, b) => {
     const aComingSoon =
       a.status === 'coming_soon' ||
-      isGloballyDisabled(a.key) ||
       ['voice'].includes(a.key);
     const bComingSoon =
       b.status === 'coming_soon' ||
-      isGloballyDisabled(b.key) ||
       ['voice'].includes(b.key);
 
     if (aComingSoon && !bComingSoon) return 1;
@@ -155,7 +137,7 @@ onMounted(() => {
 
 <template>
   <div
-    class="grid max-w-3xl grid-cols-1 xs:grid-cols-2 mx-0 gap-6 sm:grid-cols-3 p-8"
+    class="grid max-w-5xl grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-0 gap-6 p-8"
   >
     <ChannelItem
       v-for="channel in channelList"

@@ -25,7 +25,7 @@ const CATEGORIES = [
   },
   {
     key: 'WORKSPACE_SYNC',
-    ids: ['linear', 'notion', 'slack', 'leadsquared'],
+    ids: ['linear', 'notion', 'slack'],
   },
   {
     key: 'CUSTOM_EXTENSIONS',
@@ -42,6 +42,7 @@ const HIDDEN_IDS = [
   'sapo',
   'nhanhvn',
   'calendly',
+  'leadsquared',
 ];
 
 const filteredIntegrationList = computed(() => {

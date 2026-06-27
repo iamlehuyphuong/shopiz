@@ -43,33 +43,7 @@ const isActive = computed(() => {
   const { key } = props.channel;
 
   // Check globalConfig toggles first
-  const globalConfig = window.globalConfig || {};
-  const isFalse = val => val === false || val === 'false';
-
-  if (key === 'facebook' && isFalse(globalConfig.ENABLE_CHANNEL_FACEBOOK))
-    return false;
-  if (key === 'zalo' && isFalse(globalConfig.ENABLE_CHANNEL_ZALO_OA))
-    return false;
-  if (
-    key === 'zalopersonal' &&
-    isFalse(globalConfig.ENABLE_CHANNEL_ZALO_PERSONAL)
-  )
-    return false;
-  if (key === 'tiktok' && isFalse(globalConfig.ENABLE_CHANNEL_TIKTOK))
-    return false;
-  if (key === 'tiktok_shop' && isFalse(globalConfig.ENABLE_CHANNEL_TIKTOK_SHOP))
-    return false;
-  if (key === 'whatsapp' && isFalse(globalConfig.ENABLE_CHANNEL_WHATSAPP))
-    return false;
-  if (key === 'instagram' && isFalse(globalConfig.ENABLE_CHANNEL_INSTAGRAM))
-    return false;
-  if (key === 'telegram' && isFalse(globalConfig.ENABLE_CHANNEL_TELEGRAM))
-    return false;
-  if (key === 'line' && isFalse(globalConfig.ENABLE_CHANNEL_LINE)) return false;
-  if (key === 'twitter' && isFalse(globalConfig.ENABLE_CHANNEL_TWITTER))
-    return false;
-  if (key === 'website' && isFalse(globalConfig.ENABLE_CHANNEL_WEBSITE))
-    return false;
+  // Now managed via CHANNEL_STATUS so global boolean checks are removed.
 
   if (Object.keys(props.enabledFeatures).length === 0) {
     return false;
@@ -140,31 +114,9 @@ const isActive = computed(() => {
 });
 
 const computedStatus = computed(() => {
-  const { key, status } = props.channel;
-
-  const globalConfig = window.globalConfig || {};
-  const isFalse = val => val === false || val === 'false';
-
-  const isGloballyDisabled =
-    (key === 'facebook' && isFalse(globalConfig.ENABLE_CHANNEL_FACEBOOK)) ||
-    (key === 'zalo' && isFalse(globalConfig.ENABLE_CHANNEL_ZALO_OA)) ||
-    (key === 'zalopersonal' &&
-      isFalse(globalConfig.ENABLE_CHANNEL_ZALO_PERSONAL)) ||
-    (key === 'tiktok' && isFalse(globalConfig.ENABLE_CHANNEL_TIKTOK)) ||
-    (key === 'tiktok_shop' &&
-      isFalse(globalConfig.ENABLE_CHANNEL_TIKTOK_SHOP)) ||
-    (key === 'whatsapp' && isFalse(globalConfig.ENABLE_CHANNEL_WHATSAPP)) ||
-    (key === 'instagram' && isFalse(globalConfig.ENABLE_CHANNEL_INSTAGRAM)) ||
-    (key === 'telegram' && isFalse(globalConfig.ENABLE_CHANNEL_TELEGRAM)) ||
-    (key === 'line' && isFalse(globalConfig.ENABLE_CHANNEL_LINE)) ||
-    (key === 'twitter' && isFalse(globalConfig.ENABLE_CHANNEL_TWITTER)) ||
-    (key === 'website' && isFalse(globalConfig.ENABLE_CHANNEL_WEBSITE));
-
-  if (status === 'coming_soon' || (['voice'].includes(key) && !isActive.value) || isGloballyDisabled) {
-    return 'coming_soon';
-  }
-
-  return status || 'published';
+  if (props.channel.status === 'coming_soon') return 'coming_soon';
+  if (!isActive.value) return 'coming_soon';
+  return props.channel.status || 'published';
 });
 
 const onItemClick = () => {

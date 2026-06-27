@@ -91,17 +91,17 @@ class DashboardController < ActionController::Base
       ALLOWED_LOGIN_METHODS: allowed_login_methods,
       GOOGLE_OAUTH_CLIENT_ID: GlobalConfigService.load('GOOGLE_OAUTH_CLIENT_ID', nil),
       GOOGLE_OAUTH_REDIRECT_URI: GlobalConfigService.load('GOOGLE_OAUTH_REDIRECT_URI', nil),
-      ENABLE_CHANNEL_FACEBOOK: GlobalConfigService.load('ENABLE_CHANNEL_FACEBOOK', 'true'),
-      ENABLE_CHANNEL_ZALO_OA: GlobalConfigService.load('ENABLE_CHANNEL_ZALO_OA', 'true'),
-      ENABLE_CHANNEL_ZALO_PERSONAL: GlobalConfigService.load('ENABLE_CHANNEL_ZALO_PERSONAL', 'true'),
-      ENABLE_CHANNEL_TIKTOK: GlobalConfigService.load('ENABLE_CHANNEL_TIKTOK', 'true'),
-      ENABLE_CHANNEL_TIKTOK_SHOP: GlobalConfigService.load('ENABLE_CHANNEL_TIKTOK_SHOP', 'true'),
-      ENABLE_CHANNEL_WHATSAPP: GlobalConfigService.load('ENABLE_CHANNEL_WHATSAPP', 'true'),
-      ENABLE_CHANNEL_INSTAGRAM: GlobalConfigService.load('ENABLE_CHANNEL_INSTAGRAM', 'true'),
-      ENABLE_CHANNEL_TELEGRAM: GlobalConfigService.load('ENABLE_CHANNEL_TELEGRAM', 'true'),
-      ENABLE_CHANNEL_LINE: GlobalConfigService.load('ENABLE_CHANNEL_LINE', 'true'),
-      ENABLE_CHANNEL_TWITTER: GlobalConfigService.load('ENABLE_CHANNEL_TWITTER', 'true'),
-      ENABLE_CHANNEL_WEBSITE: GlobalConfigService.load('ENABLE_CHANNEL_WEBSITE', 'true')
+      CHANNEL_STATUS_FACEBOOK: GlobalConfigService.load('CHANNEL_STATUS_FACEBOOK', 'published'),
+      CHANNEL_STATUS_ZALO_OA: GlobalConfigService.load('CHANNEL_STATUS_ZALO_OA', 'published'),
+      CHANNEL_STATUS_ZALO_PERSONAL: GlobalConfigService.load('CHANNEL_STATUS_ZALO_PERSONAL', 'published'),
+      CHANNEL_STATUS_TIKTOK: GlobalConfigService.load('CHANNEL_STATUS_TIKTOK', 'published'),
+      CHANNEL_STATUS_TIKTOK_SHOP: GlobalConfigService.load('CHANNEL_STATUS_TIKTOK_SHOP', 'published'),
+      CHANNEL_STATUS_WHATSAPP: GlobalConfigService.load('CHANNEL_STATUS_WHATSAPP', 'published'),
+      CHANNEL_STATUS_INSTAGRAM: GlobalConfigService.load('CHANNEL_STATUS_INSTAGRAM', 'published'),
+      CHANNEL_STATUS_TELEGRAM: GlobalConfigService.load('CHANNEL_STATUS_TELEGRAM', 'published'),
+      CHANNEL_STATUS_LINE: GlobalConfigService.load('CHANNEL_STATUS_LINE', 'published'),
+      CHANNEL_STATUS_TWITTER: GlobalConfigService.load('CHANNEL_STATUS_TWITTER', 'published'),
+      CHANNEL_STATUS_WEBSITE: GlobalConfigService.load('CHANNEL_STATUS_WEBSITE', 'published')
     }
   end
 
