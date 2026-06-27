@@ -311,41 +311,41 @@ export default {
       <SectionLayout
         :title="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.TITLE')"
         :description="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.NOTE')"
+        with-border
       >
-        <form class="grid gap-4" @submit.prevent="updateAccount">
-          <WithLabel
-            name="id-number"
-            :label="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.ID_NUMBER.LABEL')"
-          >
-            <NextInput
-              v-model="idNumber"
-              type="text"
-              class="w-full"
-              :placeholder="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.ID_NUMBER.PLACEHOLDER')"
-            />
-          </WithLabel>
-          <WithLabel
-            name="address"
-            :label="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.ADDRESS.LABEL')"
-          >
-            <NextInput
-              v-model="address"
-              type="text"
-              class="w-full"
-              :placeholder="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.ADDRESS.PLACEHOLDER')"
-            />
-          </WithLabel>
+        <template #headerActions>
+          <div class="flex justify-end">
+            <NextSwitch v-model="isCompany" />
+          </div>
+        </template>
+        <form class="grid gap-4 mt-2" @submit.prevent="updateAccount">
 
-          <WithLabel
-            name="is-company"
-            :label="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.IS_COMPANY')"
-          >
-            <div class="h-10 flex items-center">
-              <NextSwitch v-model="isCompany" />
-            </div>
-          </WithLabel>
+          <template v-if="!isCompany">
+            <WithLabel
+              name="id-number"
+              :label="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.ID_NUMBER.LABEL')"
+            >
+              <NextInput
+                v-model="idNumber"
+                type="text"
+                class="w-full"
+                :placeholder="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.ID_NUMBER.PLACEHOLDER')"
+              />
+            </WithLabel>
+            <WithLabel
+              name="address"
+              :label="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.ADDRESS.LABEL')"
+            >
+              <NextInput
+                v-model="address"
+                type="text"
+                class="w-full"
+                :placeholder="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.ADDRESS.PLACEHOLDER')"
+              />
+            </WithLabel>
+          </template>
 
-          <template v-if="isCompany">
+          <template v-else>
             <WithLabel
               name="company-name"
               :label="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.COMPANY_NAME.LABEL')"

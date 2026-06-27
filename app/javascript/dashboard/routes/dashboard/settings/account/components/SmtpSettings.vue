@@ -110,18 +110,17 @@ export default {
 <template>
   <SectionLayout
     :title="$t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.TITLE')"
-    class="!pt-6"
+    with-border
   >
+    <template #headerActions>
+      <div class="flex justify-end">
+        <NextSwitch v-model="enabled" />
+      </div>
+    </template>
     <template #description>
       <span v-html="$t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.NOTE')" />
     </template>
-    <form class="grid gap-4" @submit.prevent="onSubmit">
-      <WithLabel
-        name="smtp-enabled"
-        :label="$t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.ENABLE_LABEL')"
-      >
-        <NextSwitch v-model="enabled" />
-      </WithLabel>
+    <form class="grid gap-4 mt-2" @submit.prevent="onSubmit">
 
       <div v-if="enabled" class="grid gap-4 bg-n-alpha-black2 p-4 rounded-lg">
         <WithLabel

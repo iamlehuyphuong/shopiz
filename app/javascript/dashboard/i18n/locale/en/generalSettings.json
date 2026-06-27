@@ -143,16 +143,16 @@
       },
       "INVOICE_SECTION": {
         "TITLE": "Invoice Information",
-        "NOTE": "Provide information so we can issue electronic invoices to you.",
+        "NOTE": "Export invoice to company?",
         "ADDRESS": {
           "LABEL": "Your address",
           "ERROR": "Please enter a valid address",
           "PLACEHOLDER": "Please enter your address"
         },
         "ID_NUMBER": {
-          "LABEL": "ID card number / CCCD",
+          "LABEL": "ID card number",
           "ERROR": "Please enter a valid ID number",
-          "PLACEHOLDER": "Please enter your ID card number or CCCD"
+          "PLACEHOLDER": "Please enter your ID card number"
         },
         "IS_COMPANY": "Company account?",
         "COMPANY_EMAIL": {

@@ -143,16 +143,16 @@
       },
       "INVOICE_SECTION": {
         "TITLE": "Thông tin xuất hoá đơn",
-        "NOTE": "Thông tin để hệ thống xuất hoá đơn điện tử.",
+        "NOTE": "Xuất hoá đơn về công ty?",
         "ADDRESS": {
           "LABEL": "Địa chỉ của bạn",
           "ERROR": "Vui lòng nhập địa chỉ hợp lệ",
           "PLACEHOLDER": "Vui lòng nhập địa chỉ"
         },
         "ID_NUMBER": {
-          "LABEL": "Số CMND / Căn cước công dân",
+          "LABEL": "Căn cước công dân",
           "ERROR": "Vui lòng nhập số định danh hợp lệ",
-          "PLACEHOLDER": "Vui lòng nhập số CMND hoặc thẻ CCCD"
+          "PLACEHOLDER": "Vui lòng nhập số căn cước công dân"
         },
         "IS_COMPANY": "Tài khoản công ty?",
         "COMPANY_EMAIL": {
