@@ -37,7 +37,12 @@ export default {
     };
   },
   validations: {
-    senderEmail: { email, required: requiredIf(function () { return this.enabled; }) },
+    senderEmail: {
+      email,
+      required: requiredIf(function () {
+        return this.enabled;
+      }),
+    },
     smtpPassword: {
       required: requiredIf(function () {
         return this.enabled;
@@ -108,10 +113,13 @@ export default {
     class="!pt-6"
   >
     <template #description>
-      <span v-html="$t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.NOTE')"></span>
+      <span v-html="$t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.NOTE')" />
     </template>
     <form class="grid gap-4" @submit.prevent="onSubmit">
-      <WithLabel name="smtp-enabled" :label="$t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.ENABLE_LABEL')">
+      <WithLabel
+        name="smtp-enabled"
+        :label="$t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.ENABLE_LABEL')"
+      >
         <NextSwitch v-model="enabled" />
       </WithLabel>
 
@@ -120,13 +128,17 @@ export default {
           name="sender-email"
           :has-error="v$.senderEmail.$error"
           :label="$t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.SENDER_EMAIL.LABEL')"
-          :error-message="$t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.SENDER_EMAIL.ERROR')"
+          :error-message="
+            $t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.SENDER_EMAIL.ERROR')
+          "
         >
           <NextInput
             v-model="senderEmail"
             type="text"
             class="w-full"
-            :placeholder="$t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.SENDER_EMAIL.PLACEHOLDER')"
+            :placeholder="
+              $t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.SENDER_EMAIL.PLACEHOLDER')
+            "
             @blur="v$.senderEmail.$touch"
           />
         </WithLabel>
@@ -135,14 +147,22 @@ export default {
           <WithLabel
             name="smtp-password"
             :has-error="v$.smtpPassword.$error"
-            :label="$t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.SMTP_PASSWORD.LABEL')"
-            :error-message="$t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.SMTP_PASSWORD.ERROR')"
+            :label="
+              $t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.SMTP_PASSWORD.LABEL')
+            "
+            :error-message="
+              $t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.SMTP_PASSWORD.ERROR')
+            "
           >
             <NextInput
               v-model="smtpPassword"
               type="password"
               class="w-full"
-              :placeholder="$t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.SMTP_PASSWORD.PLACEHOLDER')"
+              :placeholder="
+                $t(
+                  'GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.SMTP_PASSWORD.PLACEHOLDER'
+                )
+              "
               @blur="v$.smtpPassword.$touch"
             />
           </WithLabel>

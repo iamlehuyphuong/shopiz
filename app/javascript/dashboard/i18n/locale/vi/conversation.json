@@ -467,11 +467,13 @@
       "STATUS_LABEL": "Trạng thái",
       "STATUS": {
         "DRAFT": "Nháp",
+        "PENDING": "Chờ xử lý",
         "CONFIRMED": "Đã xác nhận",
         "PROCESSING": "Đang xử lý",
         "SHIPPED": "Đang giao",
         "DELIVERED": "Đã giao",
-        "CANCELLED": "Đã hủy"
+        "CANCELLED": "Đã hủy",
+        "RETURNED": "Hoàn trả"
       },
       "SAVE": "Lưu đơn hàng",
       "UPDATE": "Cập nhật",

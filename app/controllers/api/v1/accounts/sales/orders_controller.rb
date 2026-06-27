@@ -56,7 +56,7 @@ class Api::V1::Accounts::Sales::OrdersController < Api::V1::Accounts::BaseContro
       :contact_id, :status, :payment_method, :payment_status,
       :customer_name, :customer_phone, :customer_address, :customer_note,
       :shipping_fee, :tax, :discount_amount, :external_source,
-      items_attributes: [:id, :product_id, :product_name, :product_source, :quantity, :unit_price, :product_thumbnail, :_destroy]
+      items_attributes: [:id, :product_id, :product_name, :product_source, :quantity, :unit_price, :product_thumbnail, :_destroy, product_metadata: {}]
     )
   end
 

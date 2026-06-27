@@ -21,10 +21,7 @@ import CustomAttributes from './customAttributes/CustomAttributes.vue';
 import Draggable from 'vuedraggable';
 import MacrosList from './Macros/List.vue';
 import ZaloGroupMembers from './zalo/ZaloGroupMembers.vue';
-import ShopifyOrdersList from 'dashboard/components/widgets/conversation/ShopifyOrdersList.vue';
-
-import LinearIssuesList from 'dashboard/components/widgets/conversation/linear/IssuesList.vue';
-import LinearSetupCTA from 'dashboard/components/widgets/conversation/linear/LinearSetupCTA.vue';
+import OrderPanel from 'dashboard/components/widgets/conversation/orders/OrderPanel.vue';
 
 const props = defineProps({
   conversationId: {
@@ -35,7 +32,13 @@ const props = defineProps({
     type: Number,
     default: undefined,
   },
+  pendingProduct: {
+    type: Object,
+    default: null,
+  },
 });
+
+const emit = defineEmits(['product-consumed']);
 
 const {
   updateUISettings,
@@ -46,34 +49,6 @@ const {
 
 const dragging = ref(false);
 const conversationSidebarItems = ref([]);
-
-const shopifyIntegration = useFunctionGetter(
-  'integrations/getIntegration',
-  'shopify'
-);
-
-const isShopifyFeatureEnabled = computed(
-  () => shopifyIntegration.value.enabled
-);
-
-const { isCloudFeatureEnabled } = useAccount();
-
-const isLinearFeatureEnabled = computed(() =>
-  isCloudFeatureEnabled(FEATURE_FLAGS.LINEAR)
-);
-
-const linearIntegration = useFunctionGetter(
-  'integrations/getIntegration',
-  'linear'
-);
-
-const isLinearClientIdConfigured = computed(() => {
-  return !!linearIntegration.value?.id;
-});
-
-const isLinearConnected = computed(
-  () => linearIntegration.value?.enabled || false
-);
 
 const store = useStore();
 const currentChat = useMapGetter('getSelectedChat');
@@ -199,6 +174,16 @@ onErrorCaptured(err => {
             </AccordionItem>
           </div>
           <div
+            v-else-if="element.name === 'orders'"
+            class="conversation--actions"
+          >
+            <OrderPanel
+              :conversation-id="conversationId"
+              :pending-product="pendingProduct"
+              @product-consumed="emit('product-consumed')"
+            />
+          </div>
+          <div
             v-else-if="element.name === 'conversation_participants'"
             class="conversation--actions"
           >
@@ -303,41 +288,6 @@ onErrorCaptured(err => {
                 :conversation-id="conversationId"
                 :conversation-inbox-id="conversationInboxId"
               />
-            </AccordionItem>
-          </div>
-          <div
-            v-else-if="
-              element.name === 'linear_issues' &&
-              isLinearFeatureEnabled &&
-              isLinearClientIdConfigured
-            "
-          >
-            <AccordionItem
-              :title="$t('CONVERSATION_SIDEBAR.ACCORDION.LINEAR_ISSUES')"
-              :is-open="isContactSidebarItemOpen('is_linear_issues_open')"
-              compact
-              @toggle="
-                value => toggleSidebarUIState('is_linear_issues_open', value)
-              "
-            >
-              <LinearSetupCTA v-if="!isLinearConnected" />
-              <LinearIssuesList v-else :conversation-id="conversationId" />
-            </AccordionItem>
-          </div>
-          <div
-            v-else-if="
-              element.name === 'shopify_orders' && isShopifyFeatureEnabled
-            "
-          >
-            <AccordionItem
-              :title="$t('CONVERSATION_SIDEBAR.ACCORDION.SHOPIFY_ORDERS')"
-              :is-open="isContactSidebarItemOpen('is_shopify_orders_open')"
-              compact
-              @toggle="
-                value => toggleSidebarUIState('is_shopify_orders_open', value)
-              "
-            >
-              <ShopifyOrdersList :contact-id="contactId" />
             </AccordionItem>
           </div>
           <div v-else-if="element.name === 'contact_notes'">

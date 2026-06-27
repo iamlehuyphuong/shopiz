@@ -451,11 +451,13 @@
       "STATUS_LABEL": "Status",
       "STATUS": {
         "DRAFT": "Draft",
+        "PENDING": "Pending",
         "CONFIRMED": "Confirmed",
         "PROCESSING": "Processing",
         "SHIPPED": "Shipped",
         "DELIVERED": "Delivered",
-        "CANCELLED": "Cancelled"
+        "CANCELLED": "Cancelled",
+        "RETURNED": "Returned"
       },
       "SAVE": "Save Order",
       "UPDATE": "Update",

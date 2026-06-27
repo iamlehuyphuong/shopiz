@@ -8,6 +8,8 @@ import AccordionItem from 'dashboard/components/Accordion/AccordionItem.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 import OrderList from './OrderList.vue';
 import OrderForm from './OrderForm.vue';
+import ShopifyOrdersList from 'dashboard/components/widgets/conversation/ShopifyOrdersList.vue';
+import { useFunctionGetter } from 'dashboard/composables/store';
 
 const props = defineProps({
   conversationId: {
@@ -34,6 +36,17 @@ const isContactOrdersOpen = ref(false);
 const [showDeleteModal, toggleDeleteModal] = useToggle(false);
 const [showPushModal, togglePushModal] = useToggle(false);
 const selectedOrder = ref(null);
+
+const isShopifyOrdersOpen = ref(false);
+
+const shopifyIntegration = useFunctionGetter(
+  'integrations/getIntegration',
+  'shopify'
+);
+
+const isShopifyFeatureEnabled = computed(
+  () => shopifyIntegration.value.enabled
+);
 
 const currentConversation = useMapGetter('getSelectedChat');
 const isEcommerceChannel = computed(() => {
@@ -123,6 +136,32 @@ const handleEditOrder = order => {
   showForm.value = true;
 };
 
+const handleUpdateOrderStatus = async (order, newStatus) => {
+  if (order.status === newStatus) return;
+  try {
+    const orderData = { status: newStatus };
+    if (order.external_source) {
+      // Local update only for now if it's from external source
+      await store.dispatch('conversationOrders/update', {
+        conversationId: props.conversationId,
+        orderId: order.id,
+        orderData,
+      });
+    } else {
+      await store.dispatch('conversationOrders/update', {
+        conversationId: props.conversationId,
+        orderId: order.id,
+        orderData,
+      });
+      // Optionally sync to Sales API here if needed:
+      // import SalesOrdersAPI from 'dashboard/api/sales/orders';
+      // await SalesOrdersAPI.update(order.id, orderData);
+    }
+  } catch (error) {
+    useAlert(t('CONVERSATION.ORDER_PANEL.UPDATE_FAILED') || 'Update failed');
+  }
+};
+
 const handleFormSaved = () => {
   showForm.value = false;
   editingOrder.value = null;
@@ -189,37 +228,36 @@ const handleSyncOrder = async order => {
 </script>
 
 <template>
-  <div class="flex flex-col w-full h-full">
-    <!-- Form Mode -->
-    <OrderForm
-      v-if="showForm"
-      :conversation-id="conversationId"
-      :contact="contact"
-      :order="editingOrder"
-      :initial-product="initialProduct"
-      @close="handleFormClose"
-      @saved="handleFormSaved"
-    />
+  <div class="flex flex-col w-full relative">
+    <!-- Orders Accordion -->
+    <div>
+      <AccordionItem
+        :title="t('CONVERSATION.ORDER_PANEL.TITLE')"
+        :is-open="isOrderListOpen"
+        compact
+        @toggle="isOrderListOpen = !isOrderListOpen"
+      >
+        <template #button>
+          <span
+            v-if="orders.length"
+            class="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-n-alpha-2 text-xs font-medium text-n-slate-11 mr-2"
+          >
+            {{ orders.length }}
+          </span>
+        </template>
 
-    <!-- List Mode -->
-    <div v-else class="flex flex-col w-full h-full relative">
-      <!-- Orders Accordion -->
-      <div class="flex-1 overflow-y-auto px-2 pb-4 pt-3">
-        <AccordionItem
-          :title="t('CONVERSATION.ORDER_PANEL.TITLE')"
-          :is-open="isOrderListOpen"
-          compact
-          @toggle="isOrderListOpen = !isOrderListOpen"
-        >
-          <template #button>
-            <span
-              v-if="orders.length"
-              class="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-n-alpha-2 text-xs font-medium text-n-slate-11 mr-2"
-            >
-              {{ orders.length }}
-            </span>
-          </template>
+        <!-- Form Mode -->
+        <OrderForm
+          v-if="showForm"
+          :conversation-id="conversationId"
+          :contact="contact"
+          :order="editingOrder"
+          :initial-product="initialProduct"
+          @close="handleFormClose"
+          @saved="handleFormSaved"
+        />
 
+        <template v-else>
           <!-- Loading -->
           <div
             v-if="uiFlags.isFetching"
@@ -229,71 +267,95 @@ const handleSyncOrder = async order => {
           </div>
 
           <!-- Orders List -->
-          <OrderList
-            v-else-if="orders.length"
-            :orders="orders"
-            :allow-edit="!isEcommerceChannel"
-            @edit="handleEditOrder"
-            @delete="handleDeleteOrder"
-            @push="handlePushOrder"
-            @sync="handleSyncOrder"
-          />
-
-          <!-- Empty State -->
-          <div v-else class="flex flex-col items-center py-6 px-4">
+          <template v-else-if="orders.length">
+            <OrderList
+              :orders="orders"
+              :allow-edit="!isEcommerceChannel"
+              @edit="handleEditOrder"
+              @delete="handleDeleteOrder"
+              @push="handlePushOrder"
+              @sync="handleSyncOrder"
+              @update-status="handleUpdateOrderStatus"
+            />
             <div
-              class="w-10 h-10 rounded-xl bg-n-solid-3 flex items-center justify-center mb-2.5"
+              v-if="!isEcommerceChannel"
+              class="flex items-center justify-end px-1 pt-2 pb-3 pr-2"
             >
-              <i class="i-lucide-shopping-bag text-base text-n-slate-10" />
+              <Button
+                link
+                xs
+                icon="i-lucide-arrow-right"
+                class="!gap-1"
+                :label="t('CONVERSATION.ORDER_PANEL.NEW_ORDER')"
+                @click="handleNewOrder"
+              />
             </div>
-            <p class="text-xs text-n-slate-10 text-center leading-relaxed">
-              {{ t('CONVERSATION.ORDER_PANEL.NO_ORDERS') }}
-            </p>
-          </div>
-        </AccordionItem>
-
-        <!-- Contact's Previous Orders -->
-        <AccordionItem
-          v-if="contactOrders.length"
-          :title="t('CONVERSATION.ORDER_PANEL.CONTACT_ORDERS')"
-          :is-open="isContactOrdersOpen"
-          compact
-          class="mt-2"
-          @toggle="isContactOrdersOpen = !isContactOrdersOpen"
-        >
-          <template #button>
-            <span
-              class="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-n-alpha-2 text-xs font-medium text-n-slate-11 mr-2"
-            >
-              {{ contactOrders.length }}
-            </span>
           </template>
 
-          <OrderList
-            :orders="contactOrders"
-            readonly
-            @edit="handleEditOrder"
-            @delete="handleDeleteOrder"
-            @push="handlePushOrder"
-            @sync="handleSyncOrder"
-          />
-        </AccordionItem>
-      </div>
-
-      <!-- Quick Actions (Bottom Fixed) -->
-      <div
-        v-if="!isEcommerceChannel"
-        class="shrink-0 p-3 border-t border-n-weak bg-n-solid-1 z-10"
-      >
-        <Button
-          :label="t('CONVERSATION.ORDER_PANEL.NEW_ORDER')"
-          icon="i-lucide-plus"
-          sm
-          class="w-full"
-          @click="handleNewOrder"
-        />
-      </div>
+          <!-- Empty State -->
+          <div v-else class="relative px-1 pt-1 pb-2">
+            <div class="flex justify-between w-full mb-1">
+              <p class="m-0 text-sm text-n-slate-10">
+                {{ t('CONVERSATION.ORDER_PANEL.NO_ORDERS') }}
+              </p>
+            </div>
+            <div
+              v-if="!isEcommerceChannel"
+              class="flex items-center justify-end mt-1 pb-3 pr-2"
+            >
+              <Button
+                link
+                xs
+                icon="i-lucide-arrow-right"
+                class="!gap-1"
+                :label="t('CONVERSATION.ORDER_PANEL.NEW_ORDER')"
+                @click="handleNewOrder"
+              />
+            </div>
+          </div>
+        </template>
+      </AccordionItem>
     </div>
+
+    <template v-if="!showForm">
+      <AccordionItem
+        v-if="contactOrders.length"
+        :title="t('CONVERSATION.ORDER_PANEL.CONTACT_ORDERS')"
+        :is-open="isContactOrdersOpen"
+        compact
+        class="mt-2"
+        @toggle="isContactOrdersOpen = !isContactOrdersOpen"
+      >
+        <template #button>
+          <span
+            class="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-n-alpha-2 text-xs font-medium text-n-slate-11 mr-2"
+          >
+            {{ contactOrders.length }}
+          </span>
+        </template>
+
+        <OrderList
+          :orders="contactOrders"
+          readonly
+          @edit="handleEditOrder"
+          @delete="handleDeleteOrder"
+          @push="handlePushOrder"
+          @sync="handleSyncOrder"
+        />
+      </AccordionItem>
+
+      <!-- Shopify Orders -->
+      <AccordionItem
+        v-if="isShopifyFeatureEnabled"
+        :title="t('CONVERSATION_SIDEBAR.ACCORDION.SHOPIFY_ORDERS')"
+        :is-open="isShopifyOrdersOpen"
+        compact
+        class="mt-2"
+        @toggle="isShopifyOrdersOpen = !isShopifyOrdersOpen"
+      >
+        <ShopifyOrdersList :contact-id="contact.id" />
+      </AccordionItem>
+    </template>
 
     <!-- Modals -->
     <woot-confirm-delete-modal
