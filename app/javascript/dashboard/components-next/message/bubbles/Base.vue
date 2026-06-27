@@ -105,7 +105,7 @@ const replyToPreview = computed(() => {
   const { content, attachments } = inReplyTo.value;
 
   if (content)
-    return new MessageFormatter(content, false, false, true, maskContactInfo)
+    return new MessageFormatter(content, false, false, true, maskContactInfo.value)
       .formattedMessage;
   if (attachments?.length) {
     const firstAttachment = attachments[0];
