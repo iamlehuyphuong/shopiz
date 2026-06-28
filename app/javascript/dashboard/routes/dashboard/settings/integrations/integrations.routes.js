@@ -14,6 +14,7 @@ import Haravan from './Haravan.vue';
 import Woocommerce from './Woocommerce.vue';
 import Sapo from './Sapo.vue';
 import Nhanhvn from './Nhanhvn.vue';
+import Omicall from './Omicall.vue';
 
 export default {
   routes: [

@@ -12,6 +12,7 @@ export const DEFAULT_CONVERSATION_SIDEBAR_ITEMS_ORDER = Object.freeze([
   { name: 'conversation_participants' },
   { name: 'zalo_group_members' },
   { name: 'orders' },
+  { name: 'omicall' },
 ]);
 
 export const DEFAULT_CONTACT_SIDEBAR_ITEMS_ORDER = Object.freeze([

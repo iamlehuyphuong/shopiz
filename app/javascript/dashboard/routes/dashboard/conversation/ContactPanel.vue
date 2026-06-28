@@ -22,6 +22,7 @@ import Draggable from 'vuedraggable';
 import MacrosList from './Macros/List.vue';
 import ZaloGroupMembers from './zalo/ZaloGroupMembers.vue';
 import OrderPanel from 'dashboard/components/widgets/conversation/orders/OrderPanel.vue';
+import OmicallContactPanel from './omicall/OmicallContactPanel.vue';
 
 const props = defineProps({
   conversationId: {
@@ -182,6 +183,18 @@ onErrorCaptured(err => {
               :pending-product="pendingProduct"
               @product-consumed="emit('product-consumed')"
             />
+          </div>
+          <div
+            v-else-if="element.name === 'omicall'"
+            class="conversation--actions"
+          >
+            <AccordionItem
+              title="Tổng đài OmiCall"
+              :is-open="isContactSidebarItemOpen('is_omicall_open')"
+              @toggle="value => toggleSidebarUIState('is_omicall_open', value)"
+            >
+              <OmicallContactPanel :contact="contact" />
+            </AccordionItem>
           </div>
           <div
             v-else-if="element.name === 'conversation_participants'"

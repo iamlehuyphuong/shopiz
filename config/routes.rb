@@ -378,6 +378,12 @@ Rails.application.routes.draw do
                 get :list_all_channels
               end
             end
+            resource :omicall, only: [], controller: 'omicall' do
+              post :click_to_call
+              post :request_callbot
+              get :extensions
+              post :map_extension
+            end
             resource :dyte, controller: 'dyte', only: [] do
               collection do
                 post :create_a_meeting
@@ -713,6 +719,7 @@ Rails.application.routes.draw do
   post 'webhooks/woocommerce', to: 'webhooks/woocommerce#events'
   post 'webhooks/nhanhvn', to: 'webhooks/nhanhvn#events'
   post 'webhooks/calendly', to: 'webhooks/calendly#events'
+  post 'webhooks/omicall', to: 'webhooks/omicall#events'
 
   namespace :twitter do
     resource :callback, only: [:show]
