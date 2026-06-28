@@ -156,7 +156,7 @@ class Channel::ZaloPersonal < ApplicationRecord
     return unless reminder_id
 
     payload = build_reminder_payload(conversation)
-    payload[:reminderId] = reminder_id
+    payload[:payload][:reminderId] = reminder_id
     call_zalo_api('/api/editReminder', payload)
   rescue StandardError => e
     Rails.logger.error "ZaloPersonal sync_edit_reminder failed: #{e.message}"
@@ -192,10 +192,12 @@ class Channel::ZaloPersonal < ApplicationRecord
       ownId: oa_id,
       threadId: thread_id,
       type: conversation.additional_attributes['type'] || 0,
-      content: conversation.reminder_note.presence || 'Nhắc hẹn',
-      reminderTime: (conversation.reminder_at.to_i * 1000),
-      repeat: 0,
-      remindBefore: remind_before
+      payload: {
+        content: conversation.reminder_note.presence || 'Nhắc hẹn',
+        reminderTime: (conversation.reminder_at.to_i * 1000),
+        repeat: 0,
+        remindBefore: remind_before
+      }
     }
   end
 
