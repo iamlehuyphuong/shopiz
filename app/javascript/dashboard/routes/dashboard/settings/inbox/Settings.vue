@@ -1480,7 +1480,7 @@ export default {
                 >
                   <template v-if="autoFollowUpEnabled" #editor>
                     <div
-                      class="flex flex-col gap-4 mt-2 mb-2 p-4 bg-n-surface-1 rounded-md border border-slate-100 dark:border-slate-800"
+                      class="flex flex-col gap-4 mt-2"
                     >
                       <div class="flex flex-col gap-1">
                         <label class="text-n-slate-11 text-small font-medium">
@@ -1634,30 +1634,15 @@ export default {
                           </p>
                         </div>
 
-                        <div
+                        <TextArea
                           v-for="(n, index) in autoFollowUpMaxAttempts"
                           :key="'ai-' + index"
-                          class="flex flex-col gap-1 w-full bg-n-alpha-1 p-3 rounded-md border border-n-weak"
-                        >
-                          <label class="text-n-slate-11 text-small font-medium">
-                            {{
-                              $t(
-                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_LABEL'
-                              )
-                            }}
-                            {{ index + 1 }}
-                          </label>
-                          <textarea
-                            v-model="autoFollowUpCustomAIPrompts[index]"
-                            rows="3"
-                            :placeholder="
-                              $t(
-                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_PLACEHOLDER'
-                              )
-                            "
-                            class="w-full text-n-slate-12 bg-n-alpha-1 border-n-weak outline-none rounded-md px-3 py-2 border dark:bg-n-solid-1 text-sm focus:border-n-brand focus:ring-1 focus:ring-n-brand"
-                          />
-                        </div>
+                          v-model="autoFollowUpCustomAIPrompts[index]"
+                          :label="`${$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_LABEL')} ${index + 1}`"
+                          :placeholder="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_PLACEHOLDER')"
+                          auto-height
+                          class="w-full"
+                        />
                       </div>
 
                       <div
@@ -1667,7 +1652,7 @@ export default {
                         <div
                           v-for="(n, index) in autoFollowUpMaxAttempts"
                           :key="'macro-' + index"
-                          class="flex flex-col gap-1 w-full bg-n-alpha-1 p-3 rounded-md border border-n-weak"
+                          class="flex flex-col gap-1 w-full"
                         >
                           <label class="text-n-slate-11 text-small font-medium">
                             {{
@@ -1700,26 +1685,15 @@ export default {
                         v-if="autoFollowUpActionType === 'predefined_message'"
                         class="flex flex-col gap-3 mt-3"
                       >
-                        <div
+                        <TextArea
                           v-for="(n, index) in autoFollowUpMaxAttempts"
                           :key="'predefined-' + index"
-                          class="flex flex-col gap-1 w-full bg-n-alpha-1 p-3 rounded-md border border-n-weak"
-                        >
-                          <label class="text-n-slate-11 text-small font-medium">
-                            {{
-                              $t(
-                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_PREDEFINED_MESSAGE'
-                              )
-                            }}
-                            {{ index + 1 }}
-                          </label>
-                          <textarea
-                            v-model="autoFollowUpPredefinedMessages[index]"
-                            rows="3"
-                            placeholder="Hello, are you still there?"
-                            class="w-full text-n-slate-12 bg-n-alpha-1 border-n-weak outline-none rounded-md px-3 py-2 border dark:bg-n-solid-1 text-sm focus:border-n-brand focus:ring-1 focus:ring-n-brand"
-                          />
-                        </div>
+                          v-model="autoFollowUpPredefinedMessages[index]"
+                          :label="`${$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_PREDEFINED_MESSAGE')} ${index + 1}`"
+                          placeholder="Hello, are you still there?"
+                          auto-height
+                          class="w-full mt-2"
+                        />
                       </div>
                     </div>
                   </template>
@@ -1731,42 +1705,22 @@ export default {
               <SettingsAccordion
                 :title="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.CONFIGURATION_TITLE')"
               >
-                <SettingsFieldSection
-                  :label="
-                    $t(
-                      'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_TITLE'
-                    )
-                  "
-                  :help-text="
-                    $t(
-                      'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_SUBTITLE'
-                    )
-                  "
-                >
+                <div class="flex flex-col gap-4 mt-2 mb-2">
                   <TextArea
                     v-model="zaloPersonalDefaultFriendRequestMessage"
+                    :label="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_TITLE')"
+                    :message="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_SUBTITLE')"
                     auto-height
                     class="w-full"
                   />
-                </SettingsFieldSection>
-                <SettingsFieldSection
-                  :label="
-                    $t(
-                      'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_TITLE'
-                    )
-                  "
-                  :help-text="
-                    $t(
-                      'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_SUBTITLE'
-                    )
-                  "
-                >
                   <TextArea
                     v-model="zaloPersonalDefaultGreetingMessage"
+                    :label="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_TITLE')"
+                    :message="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_SUBTITLE')"
                     auto-height
                     class="w-full"
                   />
-                </SettingsFieldSection>
+                </div>
               </SettingsAccordion>
             </div>
 
