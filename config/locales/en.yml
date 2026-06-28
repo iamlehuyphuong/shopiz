@@ -313,6 +313,10 @@ en:
         cancelled_channel_policy: 'Auto follow-up cancelled due to platform messaging window expiration (Channel Policy).'
         cancelled_customer_replied: 'Auto follow-up cancelled because the customer has already replied.'
         cancelled_no_ai: 'Auto follow-up cancelled because no AI Assistant is configured.'
+        cancelled_by_user: 'Auto follow-up cancelled by %{user_name}.'
+        restored_by_user: 'Auto follow-up restored by %{user_name}.'
+        cancelled_by_system: 'Auto follow-up cancelled by system.'
+        restored_by_system: 'Auto follow-up restored by system.'
     templates:
       greeting_message_body: '%{account_name} typically replies in a few hours.'
       ways_to_reach_you_message_body: 'Give the team a way to reach you.'

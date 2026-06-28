@@ -37,49 +37,8 @@ class MessageListener < BaseListener
     auto_follow_up_config = message.inbox.auto_follow_up_config || {}
     return unless auto_follow_up_config['enabled']
 
-    conversation = message.conversation
-    max_attempts = [auto_follow_up_config['max_attempts'].to_i, 1].max
-
-    # 1. Sequence Limit Check
-    is_automated = detect_automated_message(message)
-
-    if is_automated
-      current_count = conversation.custom_attributes['auto_follow_up_count'].to_i
-      # Bail if we reached the maximum loop of sequence
-      return if current_count >= max_attempts
-    else
-      # Real agent message resets the auto follow-up process and starts a new sequence
-      conversation.with_lock do
-        conversation.custom_attributes['auto_follow_up_count'] = 0
-        conversation.custom_attributes['auto_follow_up_cancelled'] = false
-        conversation.save!
-      end
-    end
-
-    # 2. Compute Timing
-    time_mode = auto_follow_up_config['time_mode'] || 'relative'
-    interval_hours = auto_follow_up_config['interval_hours'].to_i
-    delay_seconds = auto_follow_up_config['delay_seconds'].to_i
-
-    return if interval_hours <= 0 && delay_seconds <= 0
-
-    wait_until_time = calculate_wait_until(time_mode, interval_hours, delay_seconds, auto_follow_up_config)
-
-    return if wait_until_time.nil? || wait_until_time <= Time.current
-
-    Conversations::AutoFollowUpExecutionJob.set(wait_until: wait_until_time).perform_later(conversation.id, message.id)
-
-    formatted_time = wait_until_time.in_time_zone('Asia/Ho_Chi_Minh').strftime('%H:%M %d/%m/%Y')
-    conversation.messages.create(
-      account_id: conversation.account_id,
-      inbox_id: conversation.inbox_id,
-      message_type: :activity,
-      content: I18n.t('conversations.activity.auto_follow_up.scheduled', time: formatted_time),
-      content_attributes: {
-        translation_key: 'CONVERSATION.ACTIVITY.auto_follow_up.scheduled',
-        translation_values: { time: formatted_time }
-      }
-    )
+    # Lên lịch kiểm tra và kích hoạt bám đuổi sau 15 phút
+    Conversations::TriggerAutoFollowUpJob.set(wait: 15.minutes).perform_later(message.conversation.id, message.id)
   end
 
   def detect_automated_message(message)

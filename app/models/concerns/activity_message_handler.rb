@@ -16,6 +16,7 @@ module ActivityMessageHandler
     handle_priority_change(user_name)
     handle_label_change(user_name)
     handle_sla_policy_change(user_name)
+    handle_auto_follow_up_change(user_name)
   end
 
   def determine_user_name
@@ -45,6 +46,28 @@ module ActivityMessageHandler
 
     sla_change_type = determine_sla_change_type
     create_sla_change_activity(sla_change_type, activity_message_owner(user_name))
+  end
+
+  def handle_auto_follow_up_change(user_name)
+    return unless saved_change_to_custom_attributes?
+
+    old_attrs, new_attrs = saved_changes['custom_attributes']
+    old_cancelled = old_attrs&.dig('auto_follow_up_cancelled')
+    new_cancelled = new_attrs&.dig('auto_follow_up_cancelled')
+
+    return if old_cancelled == new_cancelled
+    return if old_cancelled.nil? && new_cancelled == false # ignore initial save false
+
+    if new_cancelled
+      translation_key = user_name ? 'conversations.activity.auto_follow_up.cancelled_by_user' : 'conversations.activity.auto_follow_up.cancelled_by_system'
+      i18n_key = user_name ? 'CONVERSATION.ACTIVITY.auto_follow_up.cancelled_by_user' : 'CONVERSATION.ACTIVITY.auto_follow_up.cancelled_by_system'
+    else
+      translation_key = user_name ? 'conversations.activity.auto_follow_up.restored_by_user' : 'conversations.activity.auto_follow_up.restored_by_system'
+      i18n_key = user_name ? 'CONVERSATION.ACTIVITY.auto_follow_up.restored_by_user' : 'CONVERSATION.ACTIVITY.auto_follow_up.restored_by_system'
+    end
+
+    content = user_name ? I18n.t(translation_key, user_name: user_name) : I18n.t(translation_key)
+    ::Conversations::ActivityMessageJob.perform_later(self, activity_message_params(content, i18n_key, user_name ? { user_name: user_name } : {}))
   end
 
   def status_change_activity(user_name)

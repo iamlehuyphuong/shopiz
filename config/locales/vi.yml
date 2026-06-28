@@ -269,6 +269,16 @@ vi:
       muted: '%{user_name} đã tắt tiếng hội thoại'
       unmuted: '%{user_name} đã bật tiếng cuộc trò chuyện'
       auto_resolution_message: 'Đang giải quyết cuộc trò chuyện vì đã không hoạt động trong một thời gian. Vui lòng bắt đầu một cuộc trò chuyện mới nếu cần hỗ trợ thêm.'
+      auto_follow_up:
+        scheduled: 'Hệ thống đã kích hoạt tin nhắn bám đuổi vào lúc %{time}.'
+        completed: 'Hệ thống đã gửi tin nhắn bám đuổi (lần %{attempt}).'
+        cancelled_channel_policy: 'Đã hủy lên lịch bám đuổi tự động do quá thời gian cho phép gửi tin nhắn.'
+        cancelled_customer_replied: 'Đã hủy lên lịch bám đuổi tự động do khách hàng đã phản hồi.'
+        cancelled_no_ai: 'Đã hủy lên lịch bám đuổi tự động do không có AI Assistant được cấu hình.'
+        cancelled_by_user: 'Hệ thống đã huỷ lên lịch gửi tin nhắn bám đuổi (bởi %{user_name}).'
+        restored_by_user: 'Hệ thống đã khôi phục lên lịch gửi tin nhắn bám đuổi (bởi %{user_name}).'
+        cancelled_by_system: 'Hệ thống đã huỷ lên lịch gửi tin nhắn bám đuổi.'
+        restored_by_system: 'Hệ thống đã khôi phục lên lịch gửi tin nhắn bám đuổi.'
     templates:
       greeting_message_body: '%{account_name} thường trả lời trong vài giờ.'
       ways_to_reach_you_message_body: 'Trong lúc chờ đội ngũ hỗ trợ phản hồi, bạn hãy để lại email để nhận được thông báo nhanh nhất.'
