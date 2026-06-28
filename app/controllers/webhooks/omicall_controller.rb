@@ -1,6 +1,5 @@
-class Webhooks::OmicallController < ApplicationController
-  skip_before_action :verify_authenticity_token
-  
+class Webhooks::OmicallController < ActionController::API
+
   def events
     # We offload the processing to a background job or service so we don't block the webhook provider
     # However, since we need to locate the conversation and create a note, we can process it here

@@ -22,9 +22,9 @@ export const useOmicall = () => {
             toggleDial: 'hide', // Ẩn nút mặc định để dùng nút riêng của Shopiz trên Sidebar
             theme: {
               primary: '#1f93ff', // Màu xanh đặc trưng của Shopiz
-            }
+            },
           },
-          searchRemoteContact: async (callData) => {
+          searchRemoteContact: async callData => {
             if (!callData || !callData.remoteNumber) return null;
             try {
               // Extract phone number from sip uri like sip:100@domain if needed
@@ -53,22 +53,24 @@ export const useOmicall = () => {
                 action: 'open_profile',
                 label: 'Mở Hồ Sơ',
                 icon: 'ic_fluent_contact_card_24_filled',
-              }
+              },
             ],
-            onClick: (callData) => {
+            onClick: callData => {
               if (callData.remoteContact && callData.remoteContact.contactId) {
                 const accountId = window.location.pathname.split('/')[2];
-                router.push(`/app/accounts/${accountId}/contacts/${callData.remoteContact.contactId}`);
+                router.push(
+                  `/app/accounts/${accountId}/contacts/${callData.remoteContact.contactId}`
+                );
               }
-            }
-          }
+            },
+          },
         });
-        
+
         if (!initSuccess) {
           console.error('Lỗi khởi tạo OMICall SDK v3');
           return;
         }
-        
+
         isInitialized.value = true;
       } catch (error) {
         console.error('Error initializing OmiCall SDK:', error);
@@ -88,33 +90,32 @@ export const useOmicall = () => {
         return;
       }
 
-      window.OMICallSDK.on('register', (data) => {
+      window.OMICallSDK.on('register', data => {
         connectionStatus.value = data.status;
         isReady.value = data.status === 'connected';
       });
 
-      window.OMICallSDK.on('connecting', (call) => {
-        currentCall.value = call;
-      });
-      
-      window.OMICallSDK.on('ringing', (call) => {
+      window.OMICallSDK.on('connecting', call => {
         currentCall.value = call;
       });
 
-      window.OMICallSDK.on('accepted', (call) => {
+      window.OMICallSDK.on('ringing', call => {
+        currentCall.value = call;
+      });
+
+      window.OMICallSDK.on('accepted', call => {
         currentCall.value = call;
       });
 
       window.OMICallSDK.on('ended', () => {
         currentCall.value = null;
       });
-
     } catch (error) {
       console.error('Error registering OmiCall SIP:', error);
     }
   };
 
-  const makeCall = (phoneNumber) => {
+  const makeCall = phoneNumber => {
     if (!isReady.value || typeof window.OMICallSDK === 'undefined') {
       console.warn('OmiCall is not ready to make calls.');
       return;
