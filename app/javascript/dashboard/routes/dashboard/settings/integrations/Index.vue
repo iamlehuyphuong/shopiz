@@ -25,7 +25,7 @@ const CATEGORIES = [
   },
   {
     key: 'WORKSPACE_SYNC',
-    ids: ['linear', 'notion', 'slack'],
+    ids: ['linear', 'notion', 'slack', 'omicall'],
   },
   {
     key: 'CUSTOM_EXTENSIONS',

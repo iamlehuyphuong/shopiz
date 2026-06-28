@@ -1012,4 +1012,15 @@
     draft: Draft
     deprecated: Deprecated
   locked: false
+- name: INTEGRATION_STATUS_OMICALL
+  display_title: Omicall Integration Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
+  locked: false
 # ------- End of Messaging Channel Feature Flags ------- #
