@@ -1,5 +1,5 @@
 class Api::V1::Accounts::Integrations::OmicallController < Api::V1::Accounts::BaseController
-  before_action :check_authorization
+  before_action :check_admin_authorization?
 
   def click_to_call
     response = call_service.click2call(
@@ -31,11 +31,22 @@ class Api::V1::Accounts::Integrations::OmicallController < Api::V1::Accounts::Ba
     end
   end
 
-  def extensions
-    response = call_service.internal_phones(
+  def call_history
+    response = call_service.call_history(
+      phone_number: params[:phone_number],
       page: params[:page] || 1,
-      size: params[:size] || 100
+      size: params[:size] || 50
     )
+
+    if response[:error].present?
+      render json: { error: response[:error] }, status: :unprocessable_entity
+    else
+      render json: response, status: :ok
+    end
+  end
+
+  def extensions
+    response = call_service.internal_phones
 
     if response[:error].present?
       render json: { error: response[:error] }, status: :unprocessable_entity
@@ -51,15 +62,16 @@ class Api::V1::Accounts::Integrations::OmicallController < Api::V1::Accounts::Ba
       return
     end
 
-    custom_attributes = user.custom_attributes || {}
-    custom_attributes['sip_user'] = params[:sip_user]
-    custom_attributes['sip_password'] = params[:sip_password]
-    custom_attributes['sip_domain'] = params[:sip_domain]
+    sip_info = OmicallSipInfo.find_or_initialize_by(account: Current.account, user: user)
+    sip_info.sip_user = params[:sip_user]
+    sip_info.sip_password = params[:sip_password]
+    sip_info.sip_domain = params[:sip_domain]
+    sip_info.outbound_proxy = params[:outbound_proxy]
 
-    if user.update(custom_attributes: custom_attributes)
-      render json: { message: 'Mapped successfully', user: user.slice(:id, :name, :email, :custom_attributes) }, status: :ok
+    if sip_info.save
+      render json: { message: 'Mapped successfully', sip_info: sip_info }, status: :ok
     else
-      render json: { error: user.errors.full_messages }, status: :unprocessable_entity
+      render json: { error: sip_info.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -67,9 +79,5 @@ class Api::V1::Accounts::Integrations::OmicallController < Api::V1::Accounts::Ba
 
   def call_service
     @call_service ||= Omicall::CallService.new(Current.account)
-  end
-
-  def check_authorization
-    authorize! :manage, Integrations::Hook
   end
 end

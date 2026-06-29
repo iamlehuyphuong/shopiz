@@ -140,6 +140,15 @@ export default {
           },
         },
         {
+          path: 'omicall',
+          name: 'settings_integrations_omicall',
+          component: Omicall,
+          meta: {
+            featureFlag: FEATURE_FLAGS.INTEGRATIONS,
+            permissions: ['administrator'],
+          },
+        },
+        {
           path: ':integration_id',
           name: 'settings_applications_integration',
           component: IntegrationHooks,

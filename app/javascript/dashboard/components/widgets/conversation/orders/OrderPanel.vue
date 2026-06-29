@@ -293,11 +293,9 @@ const handleSyncOrder = async order => {
           </template>
 
           <!-- Empty State -->
-          <div v-else class="relative px-1 pt-1 pb-2">
-            <div class="flex justify-between w-full mb-1">
-              <p class="m-0 text-sm text-n-slate-10">
-                {{ t('CONVERSATION.ORDER_PANEL.NO_ORDERS') }}
-              </p>
+          <div v-else class="relative">
+            <div class="px-4 py-3 mb-4 text-n-slate-11">
+              {{ t('CONVERSATION.ORDER_PANEL.NO_ORDERS') }}
             </div>
             <div
               v-if="!isEcommerceChannel"

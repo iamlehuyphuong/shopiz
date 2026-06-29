@@ -81,12 +81,15 @@ const STATUS_OPTIONS = [
 const statusOptionsList = computed(() => {
   return STATUS_OPTIONS.map(s => ({
     id: s,
-    name: t(`CONVERSATION.ORDER_PANEL.STATUS.${s.toUpperCase()}`)
+    name: t(`CONVERSATION.ORDER_PANEL.STATUS.${s.toUpperCase()}`),
   }));
 });
 
 const selectedStatus = computed(() => {
-  return statusOptionsList.value.find(s => s.id === form.value.status) || statusOptionsList.value[0];
+  return (
+    statusOptionsList.value.find(s => s.id === form.value.status) ||
+    statusOptionsList.value[0]
+  );
 });
 
 const paymentMethodOptionsList = computed(() => [
@@ -96,17 +99,28 @@ const paymentMethodOptionsList = computed(() => [
 ]);
 
 const selectedPaymentMethod = computed(() => {
-  return paymentMethodOptionsList.value.find(s => s.id === form.value.payment_method) || paymentMethodOptionsList.value[0];
+  return (
+    paymentMethodOptionsList.value.find(
+      s => s.id === form.value.payment_method
+    ) || paymentMethodOptionsList.value[0]
+  );
 });
 
 const paymentStatusOptionsList = computed(() => [
   { id: 'unpaid', name: t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.UNPAID') },
   { id: 'paid', name: t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PAID') },
-  { id: 'partially_refunded', name: t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PARTIALLY_REFUNDED') },
+  {
+    id: 'partially_refunded',
+    name: t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PARTIALLY_REFUNDED'),
+  },
 ]);
 
 const selectedPaymentStatus = computed(() => {
-  return paymentStatusOptionsList.value.find(s => s.id === form.value.payment_status) || paymentStatusOptionsList.value[0];
+  return (
+    paymentStatusOptionsList.value.find(
+      s => s.id === form.value.payment_status
+    ) || paymentStatusOptionsList.value[0]
+  );
 });
 
 const PLATFORM_OPTIONS = [
@@ -196,9 +210,10 @@ watch(
         discount_amount: newOrder.discount_amount || 0,
         payment_method: newOrder.payment_method || 'cod',
         payment_status: newOrder.payment_status || 'unpaid',
-        items: (newOrder.items || []).map(item => ({ 
-          ...item, 
-          tax_rate: (item.product_metadata && item.product_metadata.tax_rate) || 0 
+        items: (newOrder.items || []).map(item => ({
+          ...item,
+          tax_rate:
+            (item.product_metadata && item.product_metadata.tax_rate) || 0,
         })),
       };
     }
@@ -210,7 +225,9 @@ watch(
   () => form.value.items,
   newItems => {
     form.value.tax = newItems.reduce((sum, item) => {
-      const itemTax = ((item.quantity || 0) * (item.unit_price || 0) * (item.tax_rate || 0)) / 100;
+      const itemTax =
+        ((item.quantity || 0) * (item.unit_price || 0) * (item.tax_rate || 0)) /
+        100;
       return sum + itemTax;
     }, 0);
   },
@@ -346,9 +363,11 @@ const handleSave = async () => {
               :selected-item="selectedStatus"
               :has-thumbnail="false"
               :multiselector-title="t('CONVERSATION.ORDER_PANEL.STATUS_LABEL')"
-              :multiselector-placeholder="t('CONVERSATION.ORDER_PANEL.STATUS_LABEL')"
+              :multiselector-placeholder="
+                t('CONVERSATION.ORDER_PANEL.STATUS_LABEL')
+              "
               :input-placeholder="t('CONVERSATION.ORDER_PANEL.STATUS_LABEL')"
-              @select="item => form.status = item.id"
+              @select="item => (form.status = item.id)"
             />
             <select
               v-if="!isSourceLocked"
@@ -389,7 +408,9 @@ const handleSave = async () => {
               class="flex gap-3 py-3 border-b border-n-weak last:border-b-0"
             >
               <!-- Left: Thumbnail -->
-              <div class="w-16 h-16 shrink-0 rounded-md bg-n-solid-2 border border-n-weak overflow-hidden flex items-center justify-center">
+              <div
+                class="w-16 h-16 shrink-0 rounded-md bg-n-solid-2 border border-n-weak overflow-hidden flex items-center justify-center"
+              >
                 <img
                   v-if="item.product_thumbnail"
                   :src="item.product_thumbnail"
@@ -427,18 +448,25 @@ const handleSave = async () => {
 
                 <!-- Row 2: Đơn giá -->
                 <div class="flex items-center gap-2 mt-0.5">
-                  <label class="text-xs font-medium text-n-slate-11 w-16 shrink-0">Đơn giá</label>
+                  <label
+                    class="text-xs font-medium text-n-slate-11 w-16 shrink-0"
+                    >Đơn giá</label>
                   <input
                     type="text"
                     :value="formatCurrencyValue(item.unit_price)"
-                    @input="e => item.unit_price = parseCurrencyValue(e.target.value)"
                     class="flex-1 w-full text-sm rounded-md border border-transparent bg-n-alpha-1 hover:bg-n-alpha-2 focus:bg-n-solid-1 transition-colors text-n-slate-12 py-1 px-2 outline-none focus:!border-n-brand !shadow-none m-0 transition-shadow"
+                    @input="
+                      e =>
+                        (item.unit_price = parseCurrencyValue(e.target.value))
+                    "
                   />
                 </div>
 
                 <!-- Row 3: Thuế -->
                 <div class="flex items-center gap-2 mt-0.5">
-                  <label class="text-xs font-medium text-n-slate-11 w-16 shrink-0">Thuế %</label>
+                  <label
+                    class="text-xs font-medium text-n-slate-11 w-16 shrink-0"
+                    >Thuế %</label>
                   <input
                     v-model.number="item.tax_rate"
                     type="number"
@@ -451,7 +479,9 @@ const handleSave = async () => {
                 <!-- Row 4: Số lượng (+/-) -->
                 <div class="flex items-center justify-between mt-0.5">
                   <div class="flex items-center gap-2">
-                    <label class="text-xs font-medium text-n-slate-11 w-16 shrink-0">Số lượng</label>
+                    <label
+                      class="text-xs font-medium text-n-slate-11 w-16 shrink-0"
+                      >Số lượng</label>
                     <div class="flex items-center gap-1">
                       <button
                         class="p-1.5 rounded-md hover:bg-n-alpha-2 text-n-slate-10 hover:text-n-slate-12 transition-colors cursor-pointer"
@@ -485,8 +515,6 @@ const handleSave = async () => {
             <i class="i-lucide-plus text-xs" />
             {{ t('CONVERSATION.ORDER_PANEL.ADD_MANUAL') }}
           </button>
-
-
         </div>
         <!-- Financial & Payment -->
         <div class="space-y-3">
@@ -502,8 +530,10 @@ const handleSave = async () => {
               <input
                 type="text"
                 :value="formatCurrencyValue(form.shipping_fee)"
-                @input="e => form.shipping_fee = parseCurrencyValue(e.target.value)"
                 class="w-full px-3 py-1 text-sm rounded-lg border border-transparent bg-n-alpha-1 hover:bg-n-alpha-2 focus:bg-n-solid-1 transition-colors text-n-slate-12 outline-none focus:!border-n-brand !shadow-none m-0"
+                @input="
+                  e => (form.shipping_fee = parseCurrencyValue(e.target.value))
+                "
               />
             </div>
             <div>
@@ -513,8 +543,11 @@ const handleSave = async () => {
               <input
                 type="text"
                 :value="formatCurrencyValue(form.discount_amount)"
-                @input="e => form.discount_amount = parseCurrencyValue(e.target.value)"
                 class="w-full px-3 py-1 text-sm rounded-lg border border-transparent bg-n-alpha-1 hover:bg-n-alpha-2 focus:bg-n-solid-1 transition-colors text-n-slate-12 outline-none focus:!border-n-brand !shadow-none m-0"
+                @input="
+                  e =>
+                    (form.discount_amount = parseCurrencyValue(e.target.value))
+                "
               />
             </div>
 
@@ -526,10 +559,16 @@ const handleSave = async () => {
                 :options="paymentMethodOptionsList"
                 :selected-item="selectedPaymentMethod"
                 :has-thumbnail="false"
-                :multiselector-title="t('CONVERSATION.ORDER_PANEL.PAYMENT_METHOD')"
-                :multiselector-placeholder="t('CONVERSATION.ORDER_PANEL.PAYMENT_METHOD')"
-                :input-placeholder="t('CONVERSATION.ORDER_PANEL.PAYMENT_METHOD')"
-                @select="item => form.payment_method = item.id"
+                :multiselector-title="
+                  t('CONVERSATION.ORDER_PANEL.PAYMENT_METHOD')
+                "
+                :multiselector-placeholder="
+                  t('CONVERSATION.ORDER_PANEL.PAYMENT_METHOD')
+                "
+                :input-placeholder="
+                  t('CONVERSATION.ORDER_PANEL.PAYMENT_METHOD')
+                "
+                @select="item => (form.payment_method = item.id)"
               />
             </div>
             <div>
@@ -540,10 +579,16 @@ const handleSave = async () => {
                 :options="paymentStatusOptionsList"
                 :selected-item="selectedPaymentStatus"
                 :has-thumbnail="false"
-                :multiselector-title="t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.LABEL')"
-                :multiselector-placeholder="t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.LABEL')"
-                :input-placeholder="t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.LABEL')"
-                @select="item => form.payment_status = item.id"
+                :multiselector-title="
+                  t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.LABEL')
+                "
+                :multiselector-placeholder="
+                  t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.LABEL')
+                "
+                :input-placeholder="
+                  t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.LABEL')
+                "
+                @select="item => (form.payment_status = item.id)"
               />
             </div>
           </div>

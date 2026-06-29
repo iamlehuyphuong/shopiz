@@ -14,6 +14,10 @@ json.name resource.name
 json.provider resource.provider
 json.pubsub_token resource.pubsub_token
 json.custom_attributes resource.custom_attributes if resource.custom_attributes.present?
+if Current.account
+  sip_info = resource.omicall_sip_infos.find_by(account_id: Current.account.id)
+  json.omicall_sip_info sip_info if sip_info
+end
 json.role resource.active_account_user&.role
 json.ui_settings resource.ui_settings
 json.uid resource.uid

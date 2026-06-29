@@ -20,6 +20,7 @@ import VoiceCallButton from 'dashboard/components-next/Contacts/VoiceCallButton.
 import DropdownMenu from 'dashboard/components-next/dropdown-menu/DropdownMenu.vue';
 import zalopersonalChannel from 'dashboard/api/channel/zalopersonalChannel';
 import inboxMixin, { INBOX_FEATURES } from 'shared/mixins/inboxMixin';
+import { useOmicall } from 'dashboard/composables/useOmicall';
 
 import {
   isAConversationRoute,
@@ -60,10 +61,13 @@ export default {
     const maskContactInfo = computed(
       () => !checkPermissions(['contact_manage'])
     );
+    const { makeCall: makeOmicallCall, isReady: isOmicallReady } = useOmicall();
 
     return {
       isAdmin,
       maskContactInfo,
+      makeOmicallCall,
+      isOmicallReady,
     };
   },
   data() {
@@ -183,6 +187,12 @@ export default {
         action: 'select_zalo_inbox',
       }));
     },
+    omicallLogoUrl() {
+      return '/dashboard/images/integrations/omicall.png';
+    },
+    omicallLogoDarkUrl() {
+      return '/dashboard/images/integrations/omicall-dark.png';
+    },
   },
   watch: {
     'contact.id': {
@@ -219,6 +229,18 @@ export default {
       // Flag to enable drag n drop,
       // When compose modal is closed
       emitter.emit(BUS_EVENTS.NEW_CONVERSATION_MODAL, false);
+    },
+    async handleOmicallButtonClick() {
+      if (!this.isOmicallReady) {
+        useAlert(
+          'Tổng đài chưa kết nối, vui lòng mở kết nối trong panel OMICall'
+        );
+        return;
+      }
+      const isConfirmed = await this.$refs.confirmCallDialog.showConfirmation();
+      if (isConfirmed) {
+        this.makeOmicallCall(this.contact.phone_number);
+      }
     },
     handleZaloButtonClick() {
       if (this.zaloPersonalInboxes.length === 1) {
@@ -849,6 +871,31 @@ export default {
             </span>
           </div>
         </template>
+        <NextButton
+          v-tooltip.top-end="
+            !contact.phone_number
+              ? $t('CONTACT_PANEL.OMICALL.TOOLTIP_NO_PHONE')
+              : $t('CONTACT_PANEL.OMICALL.TOOLTIP_CALL')
+          "
+          slate
+          faded
+          sm
+          :disabled="!contact.phone_number"
+          @click="handleOmicallButtonClick"
+        >
+          <template #icon>
+            <img
+              :src="omicallLogoUrl"
+              class="w-4 h-4 dark:hidden"
+              alt="OMICall"
+            />
+            <img
+              :src="omicallLogoDarkUrl"
+              class="w-4 h-4 hidden dark:block"
+              alt="OMICall"
+            />
+          </template>
+        </NextButton>
         <VoiceCallButton
           :phone="contact.phone_number"
           :contact-id="contact.id"
@@ -906,6 +953,17 @@ export default {
       :message-value="confirmDeleteMessage"
       :confirm-text="$t('DELETE_CONTACT.CONFIRM.YES')"
       :reject-text="$t('DELETE_CONTACT.CONFIRM.NO')"
+    />
+    <woot-confirm-modal
+      ref="confirmCallDialog"
+      :title="$t('CONTACT_PANEL.OMICALL.CONFIRM_CALL.TITLE')"
+      :description="
+        $t('CONTACT_PANEL.OMICALL.CONFIRM_CALL.DESCRIPTION', {
+          phoneNumber: contact.phone_number || '',
+        })
+      "
+      :confirm-label="$t('CONTACT_PANEL.OMICALL.CONFIRM_CALL.CONFIRM')"
+      :cancel-label="$t('CONTACT_PANEL.OMICALL.CONFIRM_CALL.CANCEL')"
     />
   </div>
 </template>

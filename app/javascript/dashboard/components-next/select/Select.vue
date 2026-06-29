@@ -54,7 +54,12 @@ const modelValue = defineModel({
         'outline-n-weak bg-n-slate-2 cursor-not-allowed opacity-60': disabled,
       }"
     >
-      <option v-if="placeholder" value="" disabled class="bg-n-surface-1 text-n-slate-11">
+      <option
+        v-if="placeholder"
+        value=""
+        disabled
+        class="bg-n-surface-1 text-n-slate-11"
+      >
         {{ placeholder }}
       </option>
       <template v-if="groups.length">

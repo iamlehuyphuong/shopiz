@@ -381,6 +381,7 @@ Rails.application.routes.draw do
             resource :omicall, only: [], controller: 'omicall' do
               post :click_to_call
               post :request_callbot
+              post :call_history
               get :extensions
               post :map_extension
             end

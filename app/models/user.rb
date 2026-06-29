@@ -83,6 +83,7 @@ class User < ApplicationRecord
   encrypts :otp_backup_codes
 
   has_many :account_users, dependent: :destroy_async
+  has_many :omicall_sip_infos, dependent: :destroy
   has_many :accounts, through: :account_users
   accepts_nested_attributes_for :account_users
 

@@ -9,8 +9,20 @@ const currentCall = ref(null);
 
 export const useOmicall = () => {
   const initOmicall = async (sipUsername, sipPassword, sipDomain) => {
-    if (typeof window.OMICallSDK === 'undefined') {
-      console.error('OmiCall SDK not loaded. Ensure core.min.js is injected.');
+    // Wait for the SDK to be injected (up to 5 seconds)
+    const waitForSDK = async (retries = 10, delay = 500) => {
+      for (let i = 0; i < retries; i++) {
+        if (typeof window.OMICallSDK !== 'undefined') return true;
+        await new Promise(resolve => setTimeout(resolve, delay));
+      }
+      return false;
+    };
+
+    const isLoaded = await waitForSDK();
+    if (!isLoaded) {
+      console.error(
+        'OmiCall SDK not loaded after retries. Ensure core.min.js is injected.'
+      );
       return;
     }
 
@@ -21,13 +33,13 @@ export const useOmicall = () => {
           ui: {
             toggleDial: 'hide', // Ẩn nút mặc định để dùng nút riêng của Shopiz trên Sidebar
             theme: {
-              primary: '#1f93ff', // Màu xanh đặc trưng của Shopiz
+              primary: '#E06720', // Màu cam đặc trưng của Shopiz
+              fontFamily: '"Nunito Sans", -apple-system, system-ui, sans-serif',
             },
           },
           searchRemoteContact: async callData => {
             if (!callData || !callData.remoteNumber) return null;
             try {
-              // Extract phone number from sip uri like sip:100@domain if needed
               let searchNumber = callData.remoteNumber;
               if (searchNumber.includes('sip:')) {
                 searchNumber = searchNumber.split(':')[1].split('@')[0];
@@ -35,11 +47,16 @@ export const useOmicall = () => {
               const response = await ContactAPI.search(searchNumber);
               if (response.data.payload && response.data.payload.length > 0) {
                 const contact = response.data.payload[0];
+                let avatarUrl = contact.thumbnail;
+                if (!avatarUrl) {
+                  const nameStr = encodeURIComponent(contact.name || 'User');
+                  avatarUrl = `https://ui-avatars.com/api/?name=${nameStr}&background=E06720&color=fff&rounded=true&bold=true`;
+                }
                 return {
                   name: contact.name,
-                  avatar: contact.thumbnail,
-                  gender: 'other', // Optional
-                  contactId: contact.id, // Store for CTA button
+                  avatar: avatarUrl,
+                  gender: 'other',
+                  contactId: contact.id,
                 };
               }
             } catch (error) {
@@ -52,7 +69,7 @@ export const useOmicall = () => {
               {
                 action: 'open_profile',
                 label: 'Mở Hồ Sơ',
-                icon: 'ic_fluent_contact_card_24_filled',
+                icon: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTIwIDIxdi0yYTQgNCAwIDAgMC00LTRIOGE0IDQgMCAwIDAtNCA0djIiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjciIHI9IjQiLz48L3N2Zz4=',
               },
             ],
             onClick: callData => {
@@ -71,11 +88,38 @@ export const useOmicall = () => {
           return;
         }
 
+        // Đăng ký sự kiện chỉ một lần duy nhất trong vòng đời của ứng dụng
+        window.OMICallSDK.on('register', data => {
+          connectionStatus.value = data.status;
+          isReady.value = data.status === 'connected';
+        });
+
+        window.OMICallSDK.on('connecting', call => {
+          currentCall.value = call;
+        });
+
+        window.OMICallSDK.on('ringing', call => {
+          currentCall.value = call;
+        });
+
+        window.OMICallSDK.on('accepted', call => {
+          currentCall.value = call;
+        });
+
+        window.OMICallSDK.on('ended', () => {
+          currentCall.value = null;
+        });
+
         isInitialized.value = true;
       } catch (error) {
         console.error('Error initializing OmiCall SDK:', error);
         return;
       }
+    }
+
+    // Đăng ký kết nối với tổng đài (Register)
+    if (connectionStatus.value === 'connected') {
+      return;
     }
 
     try {
@@ -86,30 +130,11 @@ export const useOmicall = () => {
       });
 
       if (!registerStatus.status) {
-        console.error('Lỗi kết nối tổng đài:', registerStatus.message);
-        return;
+        console.error(
+          'Lỗi kết nối tổng đài:',
+          registerStatus.message || 'Unknown error'
+        );
       }
-
-      window.OMICallSDK.on('register', data => {
-        connectionStatus.value = data.status;
-        isReady.value = data.status === 'connected';
-      });
-
-      window.OMICallSDK.on('connecting', call => {
-        currentCall.value = call;
-      });
-
-      window.OMICallSDK.on('ringing', call => {
-        currentCall.value = call;
-      });
-
-      window.OMICallSDK.on('accepted', call => {
-        currentCall.value = call;
-      });
-
-      window.OMICallSDK.on('ended', () => {
-        currentCall.value = null;
-      });
     } catch (error) {
       console.error('Error registering OmiCall SIP:', error);
     }

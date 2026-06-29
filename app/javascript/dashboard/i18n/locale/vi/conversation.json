@@ -354,6 +354,11 @@
       "agent_bot": {
         "error_moved_to_open": "Hội thoại được hệ thống đánh dấu là mở do lỗi trợ lý ảo."
       },
+      "omicall": {
+        "call_summary": "📞 <strong>Tóm tắt cuộc gọi {direction_text} (OmiCall)</strong><br>- Thời lượng đàm thoại: {duration} giây<br>- Gọi qua Callbot AI: {callbot}<br>- Ghi âm: <a href='{record_url}' target='_blank'>Nghe lại cuộc gọi</a>",
+        "call_summary_no_record": "📞 <strong>Tóm tắt cuộc gọi {direction_text} (OmiCall)</strong><br>- Thời lượng đàm thoại: {duration} giây<br>- Gọi qua Callbot AI: {callbot}",
+        "missed_call": "📞 <strong>Cuộc gọi nhỡ {direction_text} (OmiCall)</strong>"
+      },
       "status": {
         "resolved": "Cuộc trò chuyện được đánh dấu là đã giải quyết bởi {user_name}",
         "contact_resolved": "Hội thoại đã được giải quyết bởi {contact_name}",

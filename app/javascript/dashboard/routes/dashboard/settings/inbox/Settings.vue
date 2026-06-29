@@ -1479,9 +1479,7 @@ export default {
                   "
                 >
                   <template v-if="autoFollowUpEnabled" #editor>
-                    <div
-                      class="flex flex-col gap-4 mt-2"
-                    >
+                    <div class="flex flex-col gap-4 mt-2">
                       <div class="flex flex-col gap-1">
                         <label class="text-n-slate-11 text-small font-medium">
                           {{
@@ -1639,7 +1637,11 @@ export default {
                           :key="'ai-' + index"
                           v-model="autoFollowUpCustomAIPrompts[index]"
                           :label="`${$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_LABEL')} ${index + 1}`"
-                          :placeholder="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_PLACEHOLDER')"
+                          :placeholder="
+                            $t(
+                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_PLACEHOLDER'
+                            )
+                          "
                           auto-height
                           class="w-full"
                         />
@@ -1708,15 +1710,31 @@ export default {
                 <div class="flex flex-col gap-4 mt-2 mb-2">
                   <TextArea
                     v-model="zaloPersonalDefaultFriendRequestMessage"
-                    :label="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_TITLE')"
-                    :message="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_SUBTITLE')"
+                    :label="
+                      $t(
+                        'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_TITLE'
+                      )
+                    "
+                    :message="
+                      $t(
+                        'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_SUBTITLE'
+                      )
+                    "
                     auto-height
                     class="w-full"
                   />
                   <TextArea
                     v-model="zaloPersonalDefaultGreetingMessage"
-                    :label="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_TITLE')"
-                    :message="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_SUBTITLE')"
+                    :label="
+                      $t(
+                        'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_TITLE'
+                      )
+                    "
+                    :message="
+                      $t(
+                        'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_SUBTITLE'
+                      )
+                    "
                     auto-height
                     class="w-full"
                   />

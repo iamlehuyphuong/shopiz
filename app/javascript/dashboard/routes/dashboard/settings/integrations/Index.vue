@@ -47,7 +47,9 @@ const HIDDEN_IDS = [
 
 const filteredIntegrationList = computed(() => {
   const visible = integrationList.value.filter(
-    item => !HIDDEN_IDS.includes(item.id) && !['draft', 'deprecated'].includes(item.status)
+    item =>
+      !HIDDEN_IDS.includes(item.id) &&
+      !['draft', 'deprecated'].includes(item.status)
   );
   const query = searchQuery.value.trim();
   if (!query) return visible;

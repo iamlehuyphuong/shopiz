@@ -21,6 +21,8 @@ class Integrations::Hook < ApplicationRecord
   before_validation :ensure_hook_type
   after_create :trigger_setup_if_crm
   after_create :trigger_setup_if_calendly
+  after_create_commit :trigger_setup_if_omicall
+  before_destroy :trigger_teardown_if_omicall
 
   # TODO: Remove guard once encryption keys become mandatory (target 3-4 releases out).
   encrypts :access_token, deterministic: true if Chatwoot.encryption_configured?
@@ -113,5 +115,20 @@ class Integrations::Hook < ApplicationRecord
     return unless app_id == 'calendly'
 
     ::Calendly::SetupJob.perform_later(id)
+  end
+
+  def trigger_setup_if_omicall
+    return unless app_id == 'omicall'
+
+    ::Omicall::SetupWebhookJob.perform_later(id)
+  end
+
+  def trigger_teardown_if_omicall
+    return unless app_id == 'omicall'
+
+    api_key = settings.present? ? settings['api_key'] : nil
+    return unless api_key
+
+    ::Omicall::TeardownWebhookJob.perform_later(account_id, api_key)
   end
 end

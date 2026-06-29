@@ -41,7 +41,14 @@ export default {
     const { isAdmin } = useAdmin();
     const v$ = useVuelidate();
 
-    return { updateUISettings, uiSettings, v$, enabledLanguages, accountId, isAdmin };
+    return {
+      updateUISettings,
+      uiSettings,
+      v$,
+      enabledLanguages,
+      accountId,
+      isAdmin,
+    };
   },
   data() {
     return {
@@ -133,8 +140,22 @@ export default {
   methods: {
     async initializeAccount() {
       try {
-        const { name, locale, id, domain, support_email, features, settings, type_id, id_number, address, company_name, company_address, company_email, company_tax_id } =
-          this.getAccount(this.accountId);
+        const {
+          name,
+          locale,
+          id,
+          domain,
+          support_email,
+          features,
+          settings,
+          type_id,
+          id_number,
+          address,
+          company_name,
+          company_address,
+          company_email,
+          company_tax_id,
+        } = this.getAccount(this.accountId);
 
         this.$root.$i18n.locale = this.uiSettings?.locale || locale;
         this.name = name;
@@ -319,17 +340,22 @@ export default {
           </div>
         </template>
         <form class="grid gap-4 mt-2" @submit.prevent="updateAccount">
-
           <template v-if="!isCompany">
             <WithLabel
               name="id-number"
-              :label="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.ID_NUMBER.LABEL')"
+              :label="
+                $t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.ID_NUMBER.LABEL')
+              "
             >
               <NextInput
                 v-model="idNumber"
                 type="text"
                 class="w-full"
-                :placeholder="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.ID_NUMBER.PLACEHOLDER')"
+                :placeholder="
+                  $t(
+                    'GENERAL_SETTINGS.FORM.INVOICE_SECTION.ID_NUMBER.PLACEHOLDER'
+                  )
+                "
               />
             </WithLabel>
             <WithLabel
@@ -340,7 +366,11 @@ export default {
                 v-model="address"
                 type="text"
                 class="w-full"
-                :placeholder="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.ADDRESS.PLACEHOLDER')"
+                :placeholder="
+                  $t(
+                    'GENERAL_SETTINGS.FORM.INVOICE_SECTION.ADDRESS.PLACEHOLDER'
+                  )
+                "
               />
             </WithLabel>
           </template>
@@ -348,48 +378,76 @@ export default {
           <template v-else>
             <WithLabel
               name="company-name"
-              :label="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.COMPANY_NAME.LABEL')"
+              :label="
+                $t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.COMPANY_NAME.LABEL')
+              "
             >
               <NextInput
                 v-model="companyName"
                 type="text"
                 class="w-full"
-                :placeholder="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.COMPANY_NAME.PLACEHOLDER')"
+                :placeholder="
+                  $t(
+                    'GENERAL_SETTINGS.FORM.INVOICE_SECTION.COMPANY_NAME.PLACEHOLDER'
+                  )
+                "
               />
             </WithLabel>
             <WithLabel
               name="company-tax"
-              :label="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.COMPANY_TAX.LABEL')"
+              :label="
+                $t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.COMPANY_TAX.LABEL')
+              "
             >
               <NextInput
                 v-model="companyTaxId"
                 type="text"
                 class="w-full"
-                :placeholder="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.COMPANY_TAX.PLACEHOLDER')"
+                :placeholder="
+                  $t(
+                    'GENERAL_SETTINGS.FORM.INVOICE_SECTION.COMPANY_TAX.PLACEHOLDER'
+                  )
+                "
               />
             </WithLabel>
             <WithLabel
               name="company-address"
-              :label="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.COMPANY_ADDRESS.LABEL')"
+              :label="
+                $t(
+                  'GENERAL_SETTINGS.FORM.INVOICE_SECTION.COMPANY_ADDRESS.LABEL'
+                )
+              "
             >
               <NextInput
                 v-model="companyAddress"
                 type="text"
                 class="w-full"
-                :placeholder="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.COMPANY_ADDRESS.PLACEHOLDER')"
+                :placeholder="
+                  $t(
+                    'GENERAL_SETTINGS.FORM.INVOICE_SECTION.COMPANY_ADDRESS.PLACEHOLDER'
+                  )
+                "
               />
             </WithLabel>
             <WithLabel
               name="company-email"
-              :label="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.COMPANY_EMAIL.LABEL')"
+              :label="
+                $t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.COMPANY_EMAIL.LABEL')
+              "
               :has-error="v$.companyEmail.$error"
-              :error-message="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.COMPANY_EMAIL.ERROR')"
+              :error-message="
+                $t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.COMPANY_EMAIL.ERROR')
+              "
             >
               <NextInput
                 v-model="companyEmail"
                 type="text"
                 class="w-full"
-                :placeholder="$t('GENERAL_SETTINGS.FORM.INVOICE_SECTION.COMPANY_EMAIL.PLACEHOLDER')"
+                :placeholder="
+                  $t(
+                    'GENERAL_SETTINGS.FORM.INVOICE_SECTION.COMPANY_EMAIL.PLACEHOLDER'
+                  )
+                "
                 @blur="v$.companyEmail.$touch"
               />
             </WithLabel>

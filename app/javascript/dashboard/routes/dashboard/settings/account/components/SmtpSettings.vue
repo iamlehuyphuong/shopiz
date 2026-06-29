@@ -121,7 +121,6 @@ export default {
       <span v-html="$t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.NOTE')" />
     </template>
     <form class="grid gap-4 mt-2" @submit.prevent="onSubmit">
-
       <div v-if="enabled" class="grid gap-4 bg-n-alpha-black2 p-4 rounded-lg">
         <WithLabel
           name="sender-email"

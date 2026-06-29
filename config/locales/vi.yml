@@ -376,6 +376,12 @@ vi:
       name: 'OMICall'
       short_description: 'Tổng đài ảo đa kênh thông minh ứng dụng AI.'
       description: 'Tích hợp OMICall giúp giảm chi phí gọi thoại, hỗ trợ quản lý khách hàng, gọi nội bộ miễn phí và gia tăng doanh thu nhanh chóng.'
+      direction:
+        inbound: 'đến'
+        outbound: 'đi'
+      callbot:
+        yes: 'Có'
+        no: 'Không'
   captain:
     copilot_message_required: Thông điệp bắt buộc
     copilot_error: 'Đã xảy ra lỗi với Copilot. Vui lòng thử lại.'

@@ -29,6 +29,7 @@ import ContextMenu from 'dashboard/components/ui/ContextMenu.vue';
 import CreateNewContactDialog from 'dashboard/components-next/Contacts/ContactsForm/CreateNewContactDialog.vue';
 import LimitationModal from './components/widgets/modal/LimitationModal.vue';
 import { usePolicy } from 'dashboard/composables/usePolicy';
+import { useOmicall } from 'dashboard/composables/useOmicall';
 import { computed } from 'vue';
 
 export default {
@@ -57,6 +58,7 @@ export default {
     const canManageContacts = computed(() =>
       checkPermissions(['contact_manage'])
     );
+    const { initOmicall } = useOmicall();
 
     return {
       router,
@@ -65,6 +67,7 @@ export default {
       currentFontSize,
       uiSettings,
       canManageContacts,
+      initOmicall,
     };
   },
   data() {
@@ -183,6 +186,18 @@ export default {
           this.showCallWidget = true;
         } else {
           this.showCallWidget = false;
+        }
+      },
+    },
+    currentUser: {
+      immediate: true,
+      handler(user) {
+        if (user) {
+          const sipInfo = user.omicall_sip_info || user.custom_attributes || {};
+          const { sip_user, sip_password, sip_domain } = sipInfo;
+          if (sip_user && sip_password && sip_domain) {
+            this.initOmicall(sip_user, sip_password, sip_domain);
+          }
         }
       },
     },

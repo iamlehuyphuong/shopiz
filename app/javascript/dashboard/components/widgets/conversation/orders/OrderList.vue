@@ -117,10 +117,15 @@ const canDeleteOrder = order => {
           <MultiselectDropdown
             v-if="allowEdit"
             :options="statusOptionsList"
-            :selected-item="statusOptionsList.find(s => s.id === order.status) || statusOptionsList[0]"
+            :selected-item="
+              statusOptionsList.find(s => s.id === order.status) ||
+              statusOptionsList[0]
+            "
             :has-thumbnail="false"
             :multiselector-title="t('CONVERSATION.ORDER_PANEL.STATUS_LABEL')"
-            :multiselector-placeholder="t('CONVERSATION.ORDER_PANEL.STATUS_LABEL')"
+            :multiselector-placeholder="
+              t('CONVERSATION.ORDER_PANEL.STATUS_LABEL')
+            "
             :input-placeholder="t('CONVERSATION.ORDER_PANEL.STATUS_LABEL')"
             class="w-full !mb-0"
             @select="item => emit('update-status', order, item.id)"
@@ -138,19 +143,16 @@ const canDeleteOrder = order => {
         </div>
       </div>
 
-
-
       <!-- Products Box -->
-      <div
-        v-if="order.items?.length"
-        class="flex flex-col mt-1"
-      >
+      <div v-if="order.items?.length" class="flex flex-col mt-1">
         <div
           v-for="(item, idx) in order.items.slice(0, 3)"
           :key="item.id"
           class="flex items-center gap-2 py-1.5 border-b border-n-weak last:border-b-0"
         >
-          <div class="w-8 h-8 shrink-0 rounded bg-n-solid-2 border border-n-weak overflow-hidden flex items-center justify-center">
+          <div
+            class="w-8 h-8 shrink-0 rounded bg-n-solid-2 border border-n-weak overflow-hidden flex items-center justify-center"
+          >
             <img
               v-if="item.product_thumbnail"
               :src="item.product_thumbnail"
@@ -158,8 +160,12 @@ const canDeleteOrder = order => {
             />
             <i v-else class="i-lucide-image text-n-slate-9 text-sm" />
           </div>
-          <div class="flex-1 min-w-0 flex items-start justify-between gap-2 text-xs text-n-slate-11">
-            <span class="leading-snug line-clamp-2">{{ item.product_name }}</span>
+          <div
+            class="flex-1 min-w-0 flex items-start justify-between gap-2 text-xs text-n-slate-11"
+          >
+            <span class="leading-snug line-clamp-2">{{
+              item.product_name
+            }}</span>
             <span class="font-medium text-n-slate-12 shrink-0">x{{ item.quantity }}</span>
           </div>
         </div>
@@ -181,10 +187,7 @@ const canDeleteOrder = order => {
       </div>
 
       <!-- Footer Action buttons -->
-      <div
-        v-if="!props.readonly"
-        class="flex items-center gap-3 mt-2"
-      >
+      <div v-if="!props.readonly" class="flex items-center gap-3 mt-2">
         <button
           v-if="
             allowEdit &&

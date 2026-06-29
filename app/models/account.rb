@@ -130,6 +130,7 @@ class Account < ApplicationRecord
 
   has_one :onboarding, class_name: 'AccountOnboarding', dependent: :destroy
   has_many :account_users, dependent: :destroy_async
+  has_many :omicall_sip_infos, dependent: :destroy_async
   has_many :agent_bot_inboxes, dependent: :destroy_async
   has_many :agent_bots, dependent: :destroy_async
   has_many :api_channels, dependent: :destroy_async, class_name: '::Channel::Api'

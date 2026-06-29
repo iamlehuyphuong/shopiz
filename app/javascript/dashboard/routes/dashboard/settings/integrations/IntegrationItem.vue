@@ -87,7 +87,10 @@ const actionURL = computed(() =>
           >
             Beta
           </div>
-          <router-link v-if="isActive && status !== 'coming_soon'" :to="actionURL">
+          <router-link
+            v-if="isActive && status !== 'coming_soon'"
+            :to="actionURL"
+          >
             <span
               class="text-sm font-medium text-n-orange hover:text-n-orange-strong transition-colors cursor-pointer"
             >

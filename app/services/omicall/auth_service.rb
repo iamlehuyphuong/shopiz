@@ -1,8 +1,9 @@
 class Omicall::AuthService
-  API_URL = 'https://api.omicall.com/omicall-api/authentication'.freeze
+  API_URL = 'https://public-v1-stg.omicall.com/api/auth'.freeze
 
-  def initialize(account)
+  def initialize(account, api_key: nil)
     @account = account
+    @provided_api_key = api_key
   end
 
   def access_token
@@ -11,16 +12,23 @@ class Omicall::AuthService
     end
   end
 
+  def api_key
+    return @provided_api_key if @provided_api_key.present?
+
+    hook = @account.hooks.find_by(app_id: 'omicall')
+    hook&.settings&.dig('api_key')
+  end
+
   private
 
   def fetch_new_token
     return nil unless api_key
 
     response = HTTParty.get(API_URL, query: { apiKey: api_key })
-    
+
     if response.success? && response.parsed_response['status_code'] == 9999
-      token = response.parsed_response.dig('payload', 'access_token')
-      token
+      response.parsed_response.dig('payload', 'access_token')
+
     else
       Rails.logger.error "OmiCall Auth Error: #{response.body}"
       nil
@@ -28,11 +36,6 @@ class Omicall::AuthService
   rescue StandardError => e
     Rails.logger.error "OmiCall Auth Exception: #{e.message}"
     nil
-  end
-
-  def api_key
-    hook = @account.hooks.find_by(app_id: 'omicall')
-    hook&.settings&.dig('api_key')
   end
 
   def cache_key

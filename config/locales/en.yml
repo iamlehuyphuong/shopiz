@@ -415,6 +415,12 @@ en:
       name: 'OMICall'
       short_description: 'Smart multi-channel VoIP virtual switchboard with AI.'
       description: 'Integrate OMICall to reduce call costs, manage customers, make free internal calls, and increase revenue quickly.'
+      direction:
+        inbound: 'Incoming'
+        outbound: 'Outgoing'
+      callbot:
+        yes: 'Yes'
+        no: 'No'
   captain:
     copilot_message_required: Message is required
     copilot_error: 'Please connect an assistant to this inbox to use Copilot'

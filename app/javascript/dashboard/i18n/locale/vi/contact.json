@@ -24,6 +24,34 @@
       "CONNECT_ERROR": "Lỗi khi kết nối qua Zalo cá nhân.",
       "CONNECT_TOOLTIP": "Kết nối Zalo cá nhân"
     },
+    "OMICALL": {
+      "CONNECT": "Mở Kết nối Tổng đài",
+      "TITLE": "Tổng đài OMICall",
+      "CALL_STATUS": "Trạng thái gọi",
+      "GET_HISTORY": "Tải lịch sử cuộc gọi",
+      "NO_HISTORY": "Không có lịch sử cuộc gọi",
+      "LOAD_FAILED": "Không thể tải lịch sử cuộc gọi.",
+      "DIRECTION": {
+        "OUTGOING": "Cuộc gọi đi",
+        "INCOMING": "Cuộc gọi đến"
+      },
+      "DISPOSITION": {
+        "ANSWERED": "Đã nghe máy",
+        "MISSED": "Cuộc gọi nhỡ"
+      },
+      "MISSING_SIP_CONFIG": "Vui lòng cấu hình SIP user/password/domain trong Custom Attributes của tài khoản (Profile) trước khi gọi.",
+      "MISSING_PHONE": "Liên hệ này chưa có số điện thoại!",
+      "ALERT_TITLE": "Thông báo",
+      "ALERT_UNDERSTOOD": "Đã hiểu",
+      "CONFIRM_CALL": {
+        "TITLE": "Xác nhận cuộc gọi",
+        "DESCRIPTION": "Bạn có chắc chắn muốn gọi điện tới số {phoneNumber} qua hệ thống OMiCall không?",
+        "CONFIRM": "Gọi ngay",
+        "CANCEL": "Hủy bỏ"
+      },
+      "TOOLTIP_NO_PHONE": "Chưa có số điện thoại",
+      "TOOLTIP_CALL": "Tạo cuộc gọi qua OMICall"
+    },
     "COPY_SUCCESSFUL": "Sao chép thành công",
     "SAVE_CONTACT": "Lưu vào danh bạ",
     "SAVE_CONTACT_SUCCESS": "Cập nhật liên hệ thành công",

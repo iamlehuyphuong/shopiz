@@ -85,6 +85,21 @@ const isZaloGroupConversation = computed(() => {
   return type === 1 || !!conversationAdditionalAttributes.value?.group;
 });
 
+import { useI18n } from 'vue-i18n';
+
+const currentUser = useMapGetter('getCurrentUser');
+const sipUsername = computed(
+  () =>
+    currentUser.value?.omicall_sip_info?.sip_user ||
+    currentUser.value?.custom_attributes?.sip_user
+);
+const { t } = useI18n();
+const omicallTitle = computed(() => {
+  return sipUsername.value
+    ? `${t('CONTACT_PANEL.OMICALL.TITLE')} #${sipUsername.value}`
+    : t('CONTACT_PANEL.OMICALL.TITLE');
+});
+
 const getContactDetails = () => {
   if (contactId.value) {
     store.dispatch('contacts/show', { id: contactId.value });
@@ -189,11 +204,14 @@ onErrorCaptured(err => {
             class="conversation--actions"
           >
             <AccordionItem
-              title="Tổng đài OmiCall"
+              :title="omicallTitle"
               :is-open="isContactSidebarItemOpen('is_omicall_open')"
               @toggle="value => toggleSidebarUIState('is_omicall_open', value)"
             >
-              <OmicallContactPanel :contact="contact" />
+              <OmicallContactPanel
+                :contact="contact"
+                :is-expanded="isContactSidebarItemOpen('is_omicall_open')"
+              />
             </AccordionItem>
           </div>
           <div

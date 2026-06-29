@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_27_130545) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_29_132909) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -1317,6 +1317,20 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_27_130545) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
+  create_table "omicall_sip_infos", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "user_id", null: false
+    t.string "sip_user"
+    t.string "sip_password"
+    t.string "sip_domain"
+    t.string "outbound_proxy"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "user_id"], name: "index_omicall_sip_infos_on_account_id_and_user_id", unique: true
+    t.index ["account_id"], name: "index_omicall_sip_infos_on_account_id"
+    t.index ["user_id"], name: "index_omicall_sip_infos_on_user_id"
+  end
+
   create_table "partner_ssos", force: :cascade do |t|
     t.string "name"
     t.string "sso_url"
@@ -1698,6 +1712,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_27_130545) do
   add_foreign_key "inbox_label_mappings", "labels"
   add_foreign_key "inboxes", "integrations_hooks", column: "ecommerce_integration_id"
   add_foreign_key "inboxes", "portals"
+  add_foreign_key "omicall_sip_infos", "accounts"
+  add_foreign_key "omicall_sip_infos", "users"
   add_foreign_key "product_variants", "accounts"
   add_foreign_key "product_variants", "products"
   add_foreign_key "products", "accounts"

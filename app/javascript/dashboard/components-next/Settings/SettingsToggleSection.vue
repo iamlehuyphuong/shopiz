@@ -24,7 +24,9 @@ const modelValue = defineModel({ type: Boolean, default: false });
 </script>
 
 <template>
-  <div class="flex flex-col items-start w-full [interpolate-size:allow-keywords]">
+  <div
+    class="flex flex-col items-start w-full [interpolate-size:allow-keywords]"
+  >
     <div class="flex flex-col gap-1 items-start w-full py-3">
       <div class="flex items-center gap-3 w-full justify-between">
         <span class="text-heading-3 text-n-slate-12">

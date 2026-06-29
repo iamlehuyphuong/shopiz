@@ -105,12 +105,8 @@ const channelList = computed(() => {
   );
 
   return filteredChannels.sort((a, b) => {
-    const aComingSoon =
-      a.status === 'coming_soon' ||
-      ['voice'].includes(a.key);
-    const bComingSoon =
-      b.status === 'coming_soon' ||
-      ['voice'].includes(b.key);
+    const aComingSoon = a.status === 'coming_soon' || ['voice'].includes(a.key);
+    const bComingSoon = b.status === 'coming_soon' || ['voice'].includes(b.key);
 
     if (aComingSoon && !bComingSoon) return 1;
     if (!aComingSoon && bComingSoon) return -1;
