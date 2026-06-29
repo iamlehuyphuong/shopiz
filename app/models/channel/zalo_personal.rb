@@ -22,11 +22,12 @@ class Channel::ZaloPersonal < ApplicationRecord
 
   self.table_name = 'channel_zalo_personal'
   store_accessor :provider_config, :default_friend_request_message, :default_greeting_message
-  
+
   after_create :setup_webhooks
   after_destroy :teardown_webhooks
-  
-  EDITABLE_ATTRS = [:oa_access_token, :refresh_token, :expires_in, :default_friend_request_message, :default_greeting_message, { provider_config: {} }].freeze
+
+  EDITABLE_ATTRS = [:oa_access_token, :refresh_token, :expires_in, :default_friend_request_message, :default_greeting_message,
+                    { provider_config: {} }].freeze
 
   validates :oa_access_token, presence: true, length: { maximum: 2048 }
   validates :refresh_token, presence: true, length: { maximum: 2048 }
@@ -109,7 +110,7 @@ class Channel::ZaloPersonal < ApplicationRecord
 
   def setup_webhooks
     webhook_url = "#{ENV.fetch('FRONTEND_URL', '')}/webhooks/zalo_personal"
-    
+
     body = {
       ownId: oa_id,
       messageWebhookUrl: webhook_url,
@@ -155,8 +156,18 @@ class Channel::ZaloPersonal < ApplicationRecord
     reminder_id = conversation.custom_attributes['zalo_reminder_id']
     return unless reminder_id
 
-    payload = build_reminder_payload(conversation)
-    payload[:payload][:reminderId] = reminder_id
+    thread_id = conversation.contact_inbox&.source_id
+    payload = {
+      ownId: oa_id,
+      threadId: thread_id,
+      type: conversation.additional_attributes['type'] || 0,
+      payload: {
+        reminderId: reminder_id,
+        content: conversation.reminder_note.presence || 'Nhắc hẹn',
+        reminderTime: (conversation.reminder_at.to_i * 1000)
+      }
+    }
+
     call_zalo_api('/api/editReminder', payload)
   rescue StandardError => e
     Rails.logger.error "ZaloPersonal sync_edit_reminder failed: #{e.message}"
@@ -173,7 +184,9 @@ class Channel::ZaloPersonal < ApplicationRecord
       type: conversation.additional_attributes['type'] || 0,
       reminderId: reminder_id
     }
-    call_zalo_api('/api/removeReminder', payload)
+    res = call_zalo_api('/api/removeReminder', payload)
+
+    return unless res['success']
 
     attrs = conversation.custom_attributes.except('zalo_reminder_id')
     # rubocop:disable Rails/SkipsModelValidations
@@ -195,7 +208,7 @@ class Channel::ZaloPersonal < ApplicationRecord
       payload: {
         content: conversation.reminder_note.presence || 'Nhắc hẹn',
         reminderTime: (conversation.reminder_at.to_i * 1000),
-        repeat: 0,
+        repeat: Conversation.reminder_repeats[conversation.reminder_repeat] || 0,
         remindBefore: remind_before
       }
     }
@@ -268,7 +281,6 @@ class Channel::ZaloPersonal < ApplicationRecord
       body: body.to_json
     )
   end
-
 
   def message_body(user_id, message)
     payload = {

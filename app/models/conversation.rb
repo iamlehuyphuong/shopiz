@@ -75,11 +75,11 @@ class Conversation < ApplicationRecord
   validates :uuid, uniqueness: true
   validate :validate_referer_url
 
-  attr_accessor :loaded_from_history
-  attr_accessor :sync_zalo_reminder
+  attr_accessor :loaded_from_history, :sync_zalo_reminder
 
   enum status: { open: 0, resolved: 1, pending: 2, snoozed: 3 }
   enum priority: { low: 0, medium: 1, high: 2, urgent: 3 }
+  enum reminder_repeat: { none: 0, daily: 1, weekly: 2, monthly: 3 }, _prefix: :reminder_repeat
 
   scope :unassigned, -> { where(assignee_id: nil) }
   scope :assigned, -> { where.not(assignee_id: nil) }
@@ -271,7 +271,7 @@ class Conversation < ApplicationRecord
 
   def should_sync_reminder_to_zalo?
     inbox&.channel_type == 'Channel::ZaloPersonal' &&
-      (saved_change_to_reminder_at? || saved_change_to_reminder_note? || saved_change_to_reminder_remind_before?)
+      (saved_change_to_reminder_at? || saved_change_to_reminder_note? || saved_change_to_reminder_remind_before? || saved_change_to_reminder_repeat?)
   end
 
   def enqueue_zalo_reminder_sync
