@@ -145,6 +145,6 @@
     "SHOW_QUOTED_TEXT": "Hiện nội dung trích dẫn",
     "MESSAGE_READ": "Đã đọc",
     "SENDING": "Đang gửi",
-    "FOLLOW_UP_BADGE": "Bám đuổi {currentCount}/{maxAttempts}"
+    "AUTO_FOLLOW_UP_BADGE": "Bám đuổi {currentCount}/{maxAttempts}"
   }
 }

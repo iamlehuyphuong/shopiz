@@ -62,7 +62,9 @@
       "CUSTOM_ATTRIBUTE_LINK": "Link",
       "CUSTOM_ATTRIBUTE_CHECKBOX": "Checkbox",
       "CREATED_AT": "Created at",
-      "LAST_ACTIVITY": "Last activity"
+      "LAST_ACTIVITY": "Last activity",
+      "CONTACT_PHONE_NUMBER": "Contact Phone Number",
+      "CONTACT_EMAIL": "Contact Email"
     },
     "ERRORS": {
       "VALUE_REQUIRED": "Value is required",
@@ -73,7 +75,8 @@
     "GROUPS": {
       "STANDARD_FILTERS": "Standard filters",
       "ADDITIONAL_FILTERS": "Additional filters",
-      "CUSTOM_ATTRIBUTES": "Custom attributes"
+      "CUSTOM_ATTRIBUTES": "Custom attributes",
+      "CONTACT_FILTERS": "Contact Filters"
     },
     "CUSTOM_VIEWS": {
       "ADD": {

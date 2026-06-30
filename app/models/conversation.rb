@@ -75,10 +75,11 @@ class Conversation < ApplicationRecord
   validates :uuid, uniqueness: true
   validate :validate_referer_url
 
-  attr_accessor :loaded_from_history
+  attr_accessor :loaded_from_history, :sync_zalo_reminder
 
   enum status: { open: 0, resolved: 1, pending: 2, snoozed: 3 }
   enum priority: { low: 0, medium: 1, high: 2, urgent: 3 }
+  enum reminder_repeat: { none: 0, daily: 1, weekly: 2, monthly: 3 }, _prefix: :reminder_repeat
 
   scope :unassigned, -> { where(assignee_id: nil) }
   scope :assigned, -> { where.not(assignee_id: nil) }
@@ -95,7 +96,7 @@ class Conversation < ApplicationRecord
     open.where('last_activity_at < ?', Time.now.utc - auto_resolve_after.minutes)
   }
 
-  scope :due_for_follow_up, -> { where('follow_up_remind_at <= ?', Time.current) }
+  scope :due_for_reminder, -> { where('remind_at <= ?', Time.current) }
 
   scope :last_user_message_at, lambda {
     joins(
@@ -124,11 +125,12 @@ class Conversation < ApplicationRecord
   has_many :conversation_orders, dependent: :destroy_async
 
   before_save :ensure_snooze_until_reset
-  before_save :compute_follow_up_remind_at, if: -> { follow_up_at_changed? || follow_up_remind_before_changed? }
+  before_save :compute_remind_at, if: -> { reminder_at_changed? || reminder_remind_before_changed? }
   before_create :determine_conversation_status
   before_create :ensure_waiting_since
 
   after_update_commit :execute_after_update_commit_callbacks
+  after_update_commit :enqueue_zalo_reminder_sync, if: :should_sync_reminder_to_zalo?
   after_create_commit :notify_conversation_creation, unless: :loaded_from_history
   after_create_commit :load_attributes_created_by_db_triggers, unless: :loaded_from_history
 
@@ -267,6 +269,23 @@ class Conversation < ApplicationRecord
     notify_conversation_updation
   end
 
+  def should_sync_reminder_to_zalo?
+    inbox&.channel_type == 'Channel::ZaloPersonal' &&
+      (saved_change_to_reminder_at? || saved_change_to_reminder_note? || saved_change_to_reminder_remind_before? || saved_change_to_reminder_repeat?)
+  end
+
+  def enqueue_zalo_reminder_sync
+    action = determine_zalo_reminder_action
+    ZaloPersonal::ReminderSyncJob.perform_later(id, action, sync_zalo_reminder != false)
+  end
+
+  def determine_zalo_reminder_action
+    return :remove if reminder_at.nil?
+    return :edit   if custom_attributes['zalo_reminder_id'].present?
+
+    :create
+  end
+
   def handle_resolved_status_change
     # When conversation is resolved, clear waiting_since using update_column to avoid callbacks
     return unless saved_change_to_status? && status == 'resolved'
@@ -284,8 +303,9 @@ class Conversation < ApplicationRecord
     self.waiting_since = created_at
   end
 
-  def compute_follow_up_remind_at
-    self.follow_up_remind_at = follow_up_at.present? ? follow_up_at - follow_up_remind_before.to_i.days : nil
+  def compute_remind_at
+    self.remind_at = reminder_at.present? ? reminder_at - reminder_remind_before.to_i.days : nil
+    self.custom_attributes = custom_attributes.except('reminders_count') if reminder_at.present?
   end
 
   def validate_additional_attributes
@@ -324,7 +344,7 @@ class Conversation < ApplicationRecord
 
   def list_of_keys
     %w[team_id assignee_id assignee_agent_bot_id status snoozed_until custom_attributes label_list waiting_since
-       first_reply_created_at priority follow_up_at follow_up_remind_before]
+       first_reply_created_at priority reminder_at reminder_remind_before]
   end
 
   def allowed_keys?

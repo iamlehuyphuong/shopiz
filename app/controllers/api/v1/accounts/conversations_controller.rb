@@ -46,6 +46,7 @@ class Api::V1::Accounts::ConversationsController < Api::V1::Accounts::BaseContro
   end
 
   def update
+    @conversation.sync_zalo_reminder = params[:sync_zalo_reminder] != false
     @conversation.update!(permitted_update_params)
   end
 
@@ -155,7 +156,7 @@ class Api::V1::Accounts::ConversationsController < Api::V1::Accounts::BaseContro
 
   def permitted_update_params
     # TODO: Move the other conversation attributes to this method and remove specific endpoints for each attribute
-    params.permit(:priority, :follow_up_at, :follow_up_remind_before)
+    params.permit(:priority, :reminder_at, :reminder_note, :reminder_remind_before, :reminder_repeat)
   end
 
   def attachment_params

@@ -78,6 +78,14 @@ class InboxPolicy < ApplicationPolicy
     @account_user.administrator?
   end
 
+  def native_labels?
+    @account_user.administrator?
+  end
+
+  def label_mappings?
+    @account_user.administrator?
+  end
+
   def health?
     @account_user.administrator?
   end

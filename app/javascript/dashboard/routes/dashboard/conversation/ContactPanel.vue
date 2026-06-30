@@ -12,7 +12,7 @@ import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 import AccordionItem from 'dashboard/components/Accordion/AccordionItem.vue';
 import ContactConversations from './ContactConversations.vue';
 import ConversationAction from './ConversationAction.vue';
-import ConversationFollowUp from './ConversationFollowUp.vue';
+import ConversationReminder from './ConversationReminder.vue';
 import ConversationParticipant from './ConversationParticipant.vue';
 import ContactInfo from './contact/ContactInfo.vue';
 import ContactNotes from './contact/ContactNotes.vue';
@@ -21,10 +21,8 @@ import CustomAttributes from './customAttributes/CustomAttributes.vue';
 import Draggable from 'vuedraggable';
 import MacrosList from './Macros/List.vue';
 import ZaloGroupMembers from './zalo/ZaloGroupMembers.vue';
-import ShopifyOrdersList from 'dashboard/components/widgets/conversation/ShopifyOrdersList.vue';
-
-import LinearIssuesList from 'dashboard/components/widgets/conversation/linear/IssuesList.vue';
-import LinearSetupCTA from 'dashboard/components/widgets/conversation/linear/LinearSetupCTA.vue';
+import OrderPanel from 'dashboard/components/widgets/conversation/orders/OrderPanel.vue';
+import OmicallContactPanel from './omicall/OmicallContactPanel.vue';
 
 const props = defineProps({
   conversationId: {
@@ -35,7 +33,13 @@ const props = defineProps({
     type: Number,
     default: undefined,
   },
+  pendingProduct: {
+    type: Object,
+    default: null,
+  },
 });
+
+const emit = defineEmits(['product-consumed']);
 
 const {
   updateUISettings,
@@ -46,34 +50,6 @@ const {
 
 const dragging = ref(false);
 const conversationSidebarItems = ref([]);
-
-const shopifyIntegration = useFunctionGetter(
-  'integrations/getIntegration',
-  'shopify'
-);
-
-const isShopifyFeatureEnabled = computed(
-  () => shopifyIntegration.value.enabled
-);
-
-const { isCloudFeatureEnabled } = useAccount();
-
-const isLinearFeatureEnabled = computed(() =>
-  isCloudFeatureEnabled(FEATURE_FLAGS.LINEAR)
-);
-
-const linearIntegration = useFunctionGetter(
-  'integrations/getIntegration',
-  'linear'
-);
-
-const isLinearClientIdConfigured = computed(() => {
-  return !!linearIntegration.value?.id;
-});
-
-const isLinearConnected = computed(
-  () => linearIntegration.value?.enabled || false
-);
 
 const store = useStore();
 const currentChat = useMapGetter('getSelectedChat');
@@ -107,6 +83,21 @@ const isZaloGroupConversation = computed(() => {
   if (!isZalo) return false;
   const type = conversationAdditionalAttributes.value?.type;
   return type === 1 || !!conversationAdditionalAttributes.value?.group;
+});
+
+import { useI18n } from 'vue-i18n';
+
+const currentUser = useMapGetter('getCurrentUser');
+const sipUsername = computed(
+  () =>
+    currentUser.value?.omicall_sip_info?.sip_user ||
+    currentUser.value?.custom_attributes?.sip_user
+);
+const { t } = useI18n();
+const omicallTitle = computed(() => {
+  return sipUsername.value
+    ? `${t('CONTACT_PANEL.OMICALL.TITLE')} #${sipUsername.value}`
+    : t('CONTACT_PANEL.OMICALL.TITLE');
 });
 
 const getContactDetails = () => {
@@ -182,19 +173,44 @@ onErrorCaptured(err => {
             </AccordionItem>
           </div>
           <div
-            v-else-if="element.name === 'conversation_follow_up'"
+            v-else-if="element.name === 'conversation_reminder'"
             class="conversation--actions"
           >
             <AccordionItem
-              :title="$t('CONVERSATION_SIDEBAR.FOLLOW_UP_TITLE')"
-              :is-open="isContactSidebarItemOpen('is_conv_follow_up_open')"
+              :title="$t('CONVERSATION_SIDEBAR.REMINDER_TITLE')"
+              :is-open="isContactSidebarItemOpen('is_conv_reminder_open')"
               @toggle="
-                value => toggleSidebarUIState('is_conv_follow_up_open', value)
+                value => toggleSidebarUIState('is_conv_reminder_open', value)
               "
             >
-              <ConversationFollowUp
+              <ConversationReminder
                 :conversation-id="conversationId"
                 :inbox-id="inboxId"
+              />
+            </AccordionItem>
+          </div>
+          <div
+            v-else-if="element.name === 'orders'"
+            class="conversation--actions"
+          >
+            <OrderPanel
+              :conversation-id="conversationId"
+              :pending-product="pendingProduct"
+              @product-consumed="emit('product-consumed')"
+            />
+          </div>
+          <div
+            v-else-if="element.name === 'omicall'"
+            class="conversation--actions"
+          >
+            <AccordionItem
+              :title="omicallTitle"
+              :is-open="isContactSidebarItemOpen('is_omicall_open')"
+              @toggle="value => toggleSidebarUIState('is_omicall_open', value)"
+            >
+              <OmicallContactPanel
+                :contact="contact"
+                :is-expanded="isContactSidebarItemOpen('is_omicall_open')"
               />
             </AccordionItem>
           </div>
@@ -295,48 +311,14 @@ onErrorCaptured(err => {
               :is-open="isContactSidebarItemOpen('is_zalo_group_members_open')"
               compact
               @toggle="
-                value => toggleSidebarUIState('is_zalo_group_members_open', value)
+                value =>
+                  toggleSidebarUIState('is_zalo_group_members_open', value)
               "
             >
-              <ZaloGroupMembers 
+              <ZaloGroupMembers
                 :conversation-id="conversationId"
                 :conversation-inbox-id="conversationInboxId"
               />
-            </AccordionItem>
-          </div>
-          <div
-            v-else-if="
-              element.name === 'linear_issues' &&
-              isLinearFeatureEnabled &&
-              isLinearClientIdConfigured
-            "
-          >
-            <AccordionItem
-              :title="$t('CONVERSATION_SIDEBAR.ACCORDION.LINEAR_ISSUES')"
-              :is-open="isContactSidebarItemOpen('is_linear_issues_open')"
-              compact
-              @toggle="
-                value => toggleSidebarUIState('is_linear_issues_open', value)
-              "
-            >
-              <LinearSetupCTA v-if="!isLinearConnected" />
-              <LinearIssuesList v-else :conversation-id="conversationId" />
-            </AccordionItem>
-          </div>
-          <div
-            v-else-if="
-              element.name === 'shopify_orders' && isShopifyFeatureEnabled
-            "
-          >
-            <AccordionItem
-              :title="$t('CONVERSATION_SIDEBAR.ACCORDION.SHOPIFY_ORDERS')"
-              :is-open="isContactSidebarItemOpen('is_shopify_orders_open')"
-              compact
-              @toggle="
-                value => toggleSidebarUIState('is_shopify_orders_open', value)
-              "
-            >
-              <ShopifyOrdersList :contact-id="contactId" />
             </AccordionItem>
           </div>
           <div v-else-if="element.name === 'contact_notes'">

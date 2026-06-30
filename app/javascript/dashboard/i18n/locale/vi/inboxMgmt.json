@@ -821,6 +821,29 @@
         "CLOSE": "Đóng"
       }
     },
+    "LABEL_SYNC": {
+      "TITLE": "Đồng bộ nhãn",
+      "SEARCH_PLACEHOLDER": "Tìm nhãn...",
+      "LABELS_COUNT": "%{count} nhãn",
+      "FETCH_BUTTON": "Lấy danh sách",
+      "SYNC_BUTTON": "Đồng bộ",
+      "COLUMNS": {
+        "CHANNEL_LABEL_ID": "ID Nhãn Hộp thư",
+        "CHANNEL_LABEL_NAME": "Tên Nhãn Hộp thư",
+        "COLOR": "Màu sắc",
+        "SHOPIZ_LABEL": "Nhãn Shopiz",
+        "STATUS": "Trạng thái"
+      },
+      "NO_RESULTS": "Không tìm thấy kết quả phù hợp.",
+      "NO_LABELS": "Không tìm thấy nhãn nào trong Hộp thư.",
+      "NOT_FETCHED": "Nhấn 'Lấy danh sách nhãn' để bắt đầu đồng bộ.",
+      "CREATE_NEW": "Tạo mới",
+      "SYNCED": "Đã đồng bộ",
+      "NOT_SYNCED": "Chưa đồng bộ",
+      "FETCH_ERROR": "Không thể lấy dữ liệu nhãn Hộp thư.",
+      "SYNC_SUCCESS": "Đang đồng bộ ngầm...",
+      "SYNC_ERROR": "Đã xảy ra lỗi khi đồng bộ nhãn."
+    },
     "CHANNEL_PREFERENCES": "Cài đặt kênh",
     "WIDGET_FEATURES": "Tuỳ chỉnh khung trò chuyện",
     "ACCOUNT_HEALTH": {

@@ -263,6 +263,8 @@ Rails.application.routes.draw do
             delete :bubble_avatar, on: :member
             delete :close_bubble_avatar, on: :member
             post :sync_templates, on: :member
+            get :native_labels, on: :member
+            post :label_mappings, on: :member
             post :check_connection, on: :member
             post :sync_friends, on: :member
             get :health, on: :member
@@ -375,6 +377,13 @@ Rails.application.routes.draw do
               member do
                 get :list_all_channels
               end
+            end
+            resource :omicall, only: [], controller: 'omicall' do
+              post :click_to_call
+              post :request_callbot
+              post :call_history
+              get :extensions
+              post :map_extension
             end
             resource :dyte, controller: 'dyte', only: [] do
               collection do
@@ -711,6 +720,7 @@ Rails.application.routes.draw do
   post 'webhooks/woocommerce', to: 'webhooks/woocommerce#events'
   post 'webhooks/nhanhvn', to: 'webhooks/nhanhvn#events'
   post 'webhooks/calendly', to: 'webhooks/calendly#events'
+  post 'webhooks/omicall', to: 'webhooks/omicall#events'
 
   namespace :twitter do
     resource :callback, only: [:show]

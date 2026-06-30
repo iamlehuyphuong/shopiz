@@ -22,11 +22,12 @@ class Channel::ZaloPersonal < ApplicationRecord
 
   self.table_name = 'channel_zalo_personal'
   store_accessor :provider_config, :default_friend_request_message, :default_greeting_message
-  
+
   after_create :setup_webhooks
   after_destroy :teardown_webhooks
-  
-  EDITABLE_ATTRS = [:oa_access_token, :refresh_token, :expires_in, :default_friend_request_message, :default_greeting_message, { provider_config: {} }].freeze
+
+  EDITABLE_ATTRS = [:oa_access_token, :refresh_token, :expires_in, :default_friend_request_message, :default_greeting_message,
+                    { provider_config: {} }].freeze
 
   validates :oa_access_token, presence: true, length: { maximum: 2048 }
   validates :refresh_token, presence: true, length: { maximum: 2048 }
@@ -109,7 +110,7 @@ class Channel::ZaloPersonal < ApplicationRecord
 
   def setup_webhooks
     webhook_url = "#{ENV.fetch('FRONTEND_URL', '')}/webhooks/zalo_personal"
-    
+
     body = {
       ownId: oa_id,
       messageWebhookUrl: webhook_url,
@@ -135,7 +136,91 @@ class Channel::ZaloPersonal < ApplicationRecord
     Rails.logger.error "ZaloPersonal teardown_webhooks failed for channel #{id}: #{e.message}"
   end
 
+  # --- Zalo Reminder Sync ---
+
+  def sync_create_reminder(conversation)
+    payload = build_reminder_payload(conversation)
+    res = call_zalo_api('/api/createReminder', payload)
+    reminder_id = res.dig('data', 'reminderId') || res.dig('data', 'id')
+    return unless reminder_id
+
+    attrs = conversation.custom_attributes.merge('zalo_reminder_id' => reminder_id)
+    # rubocop:disable Rails/SkipsModelValidations
+    conversation.update_columns(custom_attributes: attrs)
+    # rubocop:enable Rails/SkipsModelValidations
+  rescue StandardError => e
+    Rails.logger.error "ZaloPersonal sync_create_reminder failed: #{e.message}"
+  end
+
+  def sync_edit_reminder(conversation)
+    reminder_id = conversation.custom_attributes['zalo_reminder_id']
+    return unless reminder_id
+
+    thread_id = conversation.contact_inbox&.source_id
+    payload = {
+      ownId: oa_id,
+      threadId: thread_id,
+      type: conversation.additional_attributes['type'] || 0,
+      payload: {
+        reminderId: reminder_id,
+        content: conversation.reminder_note.presence || 'Nhắc hẹn',
+        reminderTime: (conversation.reminder_at.to_i * 1000)
+      }
+    }
+
+    call_zalo_api('/api/editReminder', payload)
+  rescue StandardError => e
+    Rails.logger.error "ZaloPersonal sync_edit_reminder failed: #{e.message}"
+  end
+
+  def sync_remove_reminder(conversation)
+    reminder_id = conversation.custom_attributes['zalo_reminder_id']
+    return unless reminder_id
+
+    thread_id = conversation.contact_inbox&.source_id
+    payload = {
+      ownId: oa_id,
+      threadId: thread_id,
+      type: conversation.additional_attributes['type'] || 0,
+      reminderId: reminder_id
+    }
+    res = call_zalo_api('/api/removeReminder', payload)
+
+    return unless res['success']
+
+    attrs = conversation.custom_attributes.except('zalo_reminder_id')
+    # rubocop:disable Rails/SkipsModelValidations
+    conversation.update_columns(custom_attributes: attrs)
+    # rubocop:enable Rails/SkipsModelValidations
+  rescue StandardError => e
+    Rails.logger.error "ZaloPersonal sync_remove_reminder failed: #{e.message}"
+  end
+
   private
+
+  def build_reminder_payload(conversation)
+    thread_id = conversation.contact_inbox&.source_id
+    remind_before = conversation.reminder_remind_before == 1 ? 60 : 0
+    {
+      ownId: oa_id,
+      threadId: thread_id,
+      type: conversation.additional_attributes['type'] || 0,
+      payload: {
+        content: conversation.reminder_note.presence || 'Nhắc hẹn',
+        reminderTime: (conversation.reminder_at.to_i * 1000),
+        repeat: Conversation.reminder_repeats[conversation.reminder_repeat] || 0,
+        remindBefore: remind_before
+      }
+    }
+  end
+
+  def call_zalo_api(path, body)
+    HTTParty.post(
+      "#{GlobalConfigService.load('ZALO_API_URL', nil)}#{path}",
+      headers: ZaloPersonal::ApiHelper.request_headers,
+      body: body.to_json
+    )
+  end
 
   def url_message_cs
     "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendmessage"
@@ -196,7 +281,6 @@ class Channel::ZaloPersonal < ApplicationRecord
       body: body.to_json
     )
   end
-
 
   def message_body(user_id, message)
     payload = {

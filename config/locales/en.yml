@@ -241,8 +241,9 @@ en:
     attachment: 'Attachment'
     no_content: 'No content'
   conversations:
-    follow_up:
-      reminder: '⏰ Follow-up reminder for customer.'
+    reminder:
+      message: '⏰ Follow-up reminder for customer.'
+      note: 'Note: %{note}'
     captain:
       handoff: 'Transferring to another agent for further assistance.'
     messages:
@@ -306,6 +307,16 @@ en:
       muted: '%{user_name} has muted the conversation'
       unmuted: '%{user_name} has unmuted the conversation'
       auto_resolution_message: 'Resolving the conversation as it has been inactive for a while. Please start a new conversation if you need further assistance.'
+      auto_follow_up:
+        scheduled: 'Auto follow-up scheduled at %{time}.'
+        completed: 'Auto follow-up message sent (attempt %{attempt}).'
+        cancelled_channel_policy: 'Auto follow-up cancelled due to platform messaging window expiration (Channel Policy).'
+        cancelled_customer_replied: 'Auto follow-up cancelled because the customer has already replied.'
+        cancelled_no_ai: 'Auto follow-up cancelled because no AI Assistant is configured.'
+        cancelled_by_user: 'Auto follow-up cancelled by %{user_name}.'
+        restored_by_user: 'Auto follow-up restored by %{user_name}.'
+        cancelled_by_system: 'Auto follow-up cancelled by system.'
+        restored_by_system: 'Auto follow-up restored by system.'
     templates:
       greeting_message_body: '%{account_name} typically replies in a few hours.'
       ways_to_reach_you_message_body: 'Give the team a way to reach you.'
@@ -400,6 +411,16 @@ en:
       name: 'LeadSquared'
       short_description: 'Sync your contacts and conversations with LeadSquared CRM.'
       description: 'Sync your contacts and conversations with LeadSquared CRM. This integration automatically creates leads in LeadSquared when new contacts are added, and logs conversation activity to provide your sales team with complete context.'
+    omicall:
+      name: 'OMICall'
+      short_description: 'Smart multi-channel VoIP virtual switchboard with AI.'
+      description: 'Integrate OMICall to reduce call costs, manage customers, make free internal calls, and increase revenue quickly.'
+      direction:
+        inbound: 'Incoming'
+        outbound: 'Outgoing'
+      callbot:
+        yes: 'Yes'
+        no: 'No'
   captain:
     copilot_message_required: Message is required
     copilot_error: 'Please connect an assistant to this inbox to use Copilot'

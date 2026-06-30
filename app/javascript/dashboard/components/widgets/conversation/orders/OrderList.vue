@@ -1,7 +1,9 @@
 <script setup>
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { format } from 'date-fns';
 import OrderStatusBadge from './OrderStatusBadge.vue';
+import MultiselectDropdown from 'shared/components/ui/MultiselectDropdown.vue';
 
 const props = defineProps({
   orders: {
@@ -18,7 +20,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['edit', 'delete', 'push', 'sync']);
+const emit = defineEmits(['edit', 'delete', 'push', 'sync', 'update-status']);
 
 const { t } = useI18n();
 
@@ -26,6 +28,22 @@ const formatDate = dateString => {
   if (!dateString) return '';
   return format(new Date(dateString), 'dd/MM/yyyy');
 };
+
+const statusOptionsList = computed(() => {
+  return [
+    'draft',
+    'pending',
+    'confirmed',
+    'processing',
+    'shipped',
+    'delivered',
+    'cancelled',
+    'returned',
+  ].map(s => ({
+    id: s,
+    name: t(`CONVERSATION.ORDER_PANEL.STATUS.${s.toUpperCase()}`),
+  }));
+});
 
 const formatCurrency = amount =>
   new Intl.NumberFormat('vi-VN').format(amount || 0);
@@ -69,14 +87,18 @@ const canDeleteOrder = order => {
     <div
       v-for="order in orders"
       :key="order.id"
-      class="py-4 px-4 transition-colors flex flex-col gap-3"
-      :class="{ 'hover:bg-n-alpha-1 cursor-pointer group': allowEdit }"
-      @click="allowEdit && emit('edit', order)"
+      class="py-4 px-4 transition-colors flex flex-col gap-3 group"
     >
       <!-- Header: IDs and Date -->
       <div class="flex items-start justify-between gap-2">
         <div class="flex flex-wrap items-center gap-2">
           <span class="text-sm font-bold text-n-slate-12">#{{ order.id }}</span>
+          <span
+            v-if="order.external_source"
+            class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded border border-n-strong text-xs text-n-slate-11"
+          >
+            {{ platformLabel(order.external_source) }}
+          </span>
           <span
             v-if="order.external_order_id"
             class="text-xs text-n-slate-10 font-mono bg-n-solid-2 px-1.5 py-0.5 rounded"
@@ -90,15 +112,25 @@ const canDeleteOrder = order => {
       </div>
 
       <!-- Main Info: Badges & Price -->
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <OrderStatusBadge :status="order.status" />
-          <span
-            v-if="order.external_source"
-            class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded border border-n-strong text-xs text-n-slate-11"
-          >
-            {{ platformLabel(order.external_source) }}
-          </span>
+      <div class="flex items-center justify-between mt-1 gap-4">
+        <div class="flex items-center gap-2 flex-1 min-w-0 max-w-[70%]">
+          <MultiselectDropdown
+            v-if="allowEdit"
+            :options="statusOptionsList"
+            :selected-item="
+              statusOptionsList.find(s => s.id === order.status) ||
+              statusOptionsList[0]
+            "
+            :has-thumbnail="false"
+            :multiselector-title="t('CONVERSATION.ORDER_PANEL.STATUS_LABEL')"
+            :multiselector-placeholder="
+              t('CONVERSATION.ORDER_PANEL.STATUS_LABEL')
+            "
+            :input-placeholder="t('CONVERSATION.ORDER_PANEL.STATUS_LABEL')"
+            class="w-full !mb-0"
+            @select="item => emit('update-status', order, item.id)"
+          />
+          <OrderStatusBadge v-else :status="order.status" class="w-full" />
         </div>
         <div class="text-right shrink-0">
           <div class="text-sm font-bold text-n-slate-12">
@@ -111,42 +143,31 @@ const canDeleteOrder = order => {
         </div>
       </div>
 
-      <!-- Customer Info -->
-      <div
-        v-if="
-          order.customer_name || order.customer_phone || order.customer_address
-        "
-        class="flex flex-col gap-1 mt-1"
-      >
-        <div class="flex items-center gap-2 text-sm text-n-slate-12">
-          <i class="i-lucide-user text-xs text-n-slate-10" />
-          <span class="font-medium">{{ order.customer_name }}</span>
-          <span v-if="order.customer_phone"
-class="text-n-slate-10 text-xs"
-            >· {{ order.customer_phone }}</span>
-        </div>
-        <div
-          v-if="order.customer_address"
-          class="flex items-start gap-2 text-xs text-n-slate-10 pl-5"
-        >
-          <span class="leading-snug line-clamp-2">{{
-            order.customer_address
-          }}</span>
-        </div>
-      </div>
-
       <!-- Products Box -->
-      <div
-        v-if="order.items?.length"
-        class="bg-n-solid-2 border border-n-strong rounded-md p-2.5 flex flex-col gap-1.5 mt-1"
-      >
+      <div v-if="order.items?.length" class="flex flex-col mt-1">
         <div
-          v-for="item in order.items.slice(0, 3)"
+          v-for="(item, idx) in order.items.slice(0, 3)"
           :key="item.id"
-          class="flex items-start justify-between gap-2 text-xs text-n-slate-11"
+          class="flex items-center gap-2 py-1.5 border-b border-n-weak last:border-b-0"
         >
-          <span class="leading-snug line-clamp-2">{{ item.product_name }}</span>
-          <span class="font-medium text-n-slate-12 shrink-0">x{{ item.quantity }}</span>
+          <div
+            class="w-8 h-8 shrink-0 rounded bg-n-solid-2 border border-n-weak overflow-hidden flex items-center justify-center"
+          >
+            <img
+              v-if="item.product_thumbnail"
+              :src="item.product_thumbnail"
+              class="w-full h-full object-cover"
+            />
+            <i v-else class="i-lucide-image text-n-slate-9 text-sm" />
+          </div>
+          <div
+            class="flex-1 min-w-0 flex items-start justify-between gap-2 text-xs text-n-slate-11"
+          >
+            <span class="leading-snug line-clamp-2">{{
+              item.product_name
+            }}</span>
+            <span class="font-medium text-n-slate-12 shrink-0">x{{ item.quantity }}</span>
+          </div>
         </div>
         <div
           v-if="order.items.length > 3"
@@ -166,17 +187,14 @@ class="text-n-slate-10 text-xs"
       </div>
 
       <!-- Footer Action buttons -->
-      <div
-        v-if="!props.readonly"
-        class="flex items-center justify-end gap-3 mt-1"
-      >
+      <div v-if="!props.readonly" class="flex items-center gap-3 mt-2">
         <button
           v-if="
             allowEdit &&
             order.status === 'draft' &&
             order.external_source !== 'tiktok_shop'
           "
-          class="text-xs font-medium text-n-slate-11 hover:text-n-blue-9 flex items-center gap-1 transition-colors"
+          class="flex-1 justify-center text-xs font-medium text-n-slate-11 hover:text-n-blue-9 flex items-center gap-1 transition-colors border border-n-strong py-1.5 rounded-md"
           @click.stop="emit('push', order)"
         >
           <i class="i-lucide-upload-cloud text-[10px]" />
@@ -184,19 +202,26 @@ class="text-n-slate-10 text-xs"
         </button>
         <button
           v-if="order.external_order_id"
-          class="text-xs font-medium text-n-slate-11 hover:text-n-emerald-9 flex items-center gap-1 transition-colors"
+          class="flex-1 justify-center text-xs font-medium text-n-slate-11 hover:text-n-emerald-9 flex items-center gap-1 transition-colors border border-n-strong py-1.5 rounded-md"
           @click.stop="emit('sync', order)"
         >
           <i class="i-lucide-refresh-cw text-[10px]" />
           {{ t('CONVERSATION.ORDER_PANEL.SYNC') }}
         </button>
+
         <button
           v-if="allowEdit && canDeleteOrder(order)"
-          class="text-xs font-medium text-n-slate-11 hover:text-n-ruby-9 flex items-center gap-1 transition-colors"
+          class="flex-1 justify-center text-sm font-medium text-n-ruby-11 hover:text-n-ruby-9 hover:border-n-ruby-11 flex items-center gap-1 transition-colors border border-solid border-n-ruby-11 py-1.5 rounded-md bg-white dark:bg-transparent"
           @click.stop="emit('delete', order)"
         >
-          <i class="i-lucide-trash-2 text-[10px]" />
-          {{ t('CONVERSATION.ORDER_PANEL.DELETE') }}
+          {{ t('CONVERSATION.ORDER_PANEL.DELETE') || 'Xoá' }}
+        </button>
+        <button
+          v-if="allowEdit"
+          class="flex-1 justify-center text-sm font-medium text-white bg-n-brand hover:bg-n-brand/90 py-1.5 rounded-md flex items-center gap-1 transition-colors border border-n-brand"
+          @click.stop="emit('edit', order)"
+        >
+          Sửa
         </button>
       </div>
     </div>

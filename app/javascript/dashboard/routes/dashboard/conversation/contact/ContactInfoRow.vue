@@ -77,7 +77,7 @@ export default {
         :class="[
           valueClass,
           { 'whitespace-nowrap text-ellipsis': !multiline },
-          { 'break-words': multiline }
+          { 'break-words': multiline },
         ]"
         :title="!multiline ? value : ''"
       >
@@ -100,7 +100,11 @@ export default {
       </div>
     </a>
 
-    <div v-else class="flex items-center gap-2 text-n-slate-11" :class="{ 'items-start': multiline }">
+    <div
+      v-else
+      class="flex items-center gap-2 text-n-slate-11"
+      :class="{ 'items-start': multiline }"
+    >
       <EmojiOrIcon
         :icon="icon"
         :emoji="emoji"
@@ -115,7 +119,7 @@ export default {
         :class="[
           valueClass,
           { 'whitespace-nowrap text-ellipsis': !multiline },
-          { 'break-words': multiline }
+          { 'break-words': multiline },
         ]"
       />
       <span v-else class="text-sm text-n-slate-11">

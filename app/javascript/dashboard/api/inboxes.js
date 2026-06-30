@@ -64,6 +64,16 @@ class Inboxes extends CacheEnabledApiClient {
       template,
     });
   }
+
+  getNativeLabels(inboxId, fetch = false) {
+    return axios.get(`${this.url}/${inboxId}/native_labels`, {
+      params: { fetch },
+    });
+  }
+
+  updateLabelMappings(inboxId, data) {
+    return axios.post(`${this.url}/${inboxId}/label_mappings`, data);
+  }
 }
 
 export default new Inboxes();

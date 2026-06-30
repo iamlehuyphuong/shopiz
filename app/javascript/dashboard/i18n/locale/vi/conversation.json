@@ -179,7 +179,7 @@
       "DESCRIPTION": "Bạn có chắc muốn xóa cuộc hội thoại này?",
       "CONFIRM": "Xóa"
     },
-    "FOLLOW_UP": {
+    "REMINDER": {
       "SUCCESS": "Đã đặt lịch hẹn chăm sóc thành công.",
       "ERROR": "Không thể đặt lịch hẹn chăm sóc. Vui lòng thử lại."
     },
@@ -189,6 +189,8 @@
       "MARK_AS_UNREAD": "Đánh dấu chưa đọc",
       "MARK_AS_READ": "Đánh dấu đã đọc",
       "REOPEN": "Mở lại cuộc hội thoại",
+      "CANCEL_AUTO_FOLLOW_UP": "Huỷ Auto Follow-up",
+      "RESTORE_AUTO_FOLLOW_UP": "Bật lại Auto Follow-up",
       "SNOOZE": {
         "TITLE": "Tạm hoãn",
         "NEXT_REPLY": "Đến khi phản hồi",
@@ -203,7 +205,7 @@
       "OPEN_IN_NEW_TAB": "Mở trong tab mới",
       "COPY_LINK": "Sao chép link cuộc hội thoại",
       "COPY_LINK_SUCCESS": "Đã sao chép link vào clipboard",
-      "CANCEL_FOLLOWUP": "Hủy gửi tin nhắn đeo bám",
+      "CANCEL_AUTO_FOLLOW_UP": "Hủy gửi tin nhắn đeo bám",
       "API": {
         "AGENT_ASSIGNMENT": {
           "SUCCESFUL": "Đã gán cuộc hội thoại {conversationId} cho \"{agentName}\"",
@@ -352,6 +354,11 @@
       "agent_bot": {
         "error_moved_to_open": "Hội thoại được hệ thống đánh dấu là mở do lỗi trợ lý ảo."
       },
+      "omicall": {
+        "call_summary": "📞 <strong>Tóm tắt cuộc gọi {direction_text} (OmiCall)</strong><br>- Thời lượng đàm thoại: {duration} giây<br>- Gọi qua Callbot AI: {callbot}<br>- Ghi âm: <a href='{record_url}' target='_blank'>Nghe lại cuộc gọi</a>",
+        "call_summary_no_record": "📞 <strong>Tóm tắt cuộc gọi {direction_text} (OmiCall)</strong><br>- Thời lượng đàm thoại: {duration} giây<br>- Gọi qua Callbot AI: {callbot}",
+        "missed_call": "📞 <strong>Cuộc gọi nhỡ {direction_text} (OmiCall)</strong>"
+      },
       "status": {
         "resolved": "Cuộc trò chuyện được đánh dấu là đã giải quyết bởi {user_name}",
         "contact_resolved": "Hội thoại đã được giải quyết bởi {contact_name}",
@@ -407,7 +414,7 @@
       "muted": "{user_name} đã tắt tiếng hội thoại",
       "unmuted": "{user_name} đã bật tiếng cuộc trò chuyện",
       "auto_resolution_message": "Đang giải quyết cuộc trò chuyện vì đã không hoạt động trong một thời gian. Vui lòng bắt đầu một cuộc trò chuyện mới nếu cần hỗ trợ thêm.",
-      "followup": {
+      "auto_follow_up": {
         "scheduled": "Hệ thống đã kích hoạt lên lịch gửi tin nhắn bám đuổi (follow-up) tự động vào lúc {time}.",
         "cancelled_channel_policy": "Đã huỷ lịch gửi tin nhắn follow-up do vượt quá thời gian cho phép của nền tảng (Channel Policy).",
         "cancelled_customer_replied": "Đã huỷ lịch gửi tin nhắn follow-up tự động do khách hàng đã phản hồi.",
@@ -465,11 +472,13 @@
       "STATUS_LABEL": "Trạng thái",
       "STATUS": {
         "DRAFT": "Nháp",
+        "PENDING": "Chờ xử lý",
         "CONFIRMED": "Đã xác nhận",
         "PROCESSING": "Đang xử lý",
         "SHIPPED": "Đang giao",
         "DELIVERED": "Đã giao",
-        "CANCELLED": "Đã hủy"
+        "CANCELLED": "Đã hủy",
+        "RETURNED": "Hoàn trả"
       },
       "SAVE": "Lưu đơn hàng",
       "UPDATE": "Cập nhật",
@@ -543,9 +552,11 @@
     "ASSIGNEE_LABEL": "Nhân viên phụ trách",
     "SELF_ASSIGN": "Tự giao cho tôi",
     "TEAM_LABEL": "Nhóm phụ trách",
-    "FOLLOW_UP_TITLE": "Hẹn chăm sóc",
-    "FOLLOW_UP_PLACEHOLDER": "Chọn thời gian",
-    "FOLLOW_UP": {
+    "REMINDER_TITLE": "Hẹn chăm sóc",
+    "REMINDER_PLACEHOLDER": "Chọn thời gian",
+    "NOTE_LABEL": "Lời nhắn (tùy chọn)",
+    "NOTE_PLACEHOLDER": "VD: Gọi lại cho khách hỏi về sản phẩm A...",
+    "REMINDER": {
       "EMPTY_TEXT": "Chưa đặt lịch hẹn chăm sóc",
       "ADD_BUTTON": "Đặt lịch hẹn",
       "TIME_LABEL": "Thời điểm hẹn",
@@ -562,6 +573,8 @@
       "YEARS_COUNT": "Số năm",
       "REMIND_BEFORE": "Nhắc trước",
       "REMIND_BEFORE_DESC": "Gửi thông báo nhắc trước 1 ngày",
+      "SYNC_ZALO": "Tạo nhắc hẹn trên Zalo",
+      "SYNC_ZALO_DESC": "Tự động đồng bộ nhắc hẹn này lên cuộc hội thoại Zalo",
       "SAVE": "Xác nhận",
       "CANCEL": "Hủy hẹn"
     },

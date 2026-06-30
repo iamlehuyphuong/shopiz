@@ -14,6 +14,8 @@ export const CONVERSATION_ATTRIBUTES = {
   REFERER: 'referer',
   CREATED_AT: 'created_at',
   LAST_ACTIVITY_AT: 'last_activity_at',
+  CONTACT_PHONE_NUMBER: 'contact_phone_number',
+  CONTACT_EMAIL: 'contact_email',
 };
 
 export const CONTACT_ATTRIBUTES = {

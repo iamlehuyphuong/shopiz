@@ -145,6 +145,6 @@
     "SHOW_QUOTED_TEXT": "Show Quoted Text",
     "MESSAGE_READ": "Read",
     "SENDING": "Sending",
-    "FOLLOW_UP_BADGE": "Follow-up {currentCount}/{maxAttempts}"
+    "AUTO_FOLLOW_UP_BADGE": "Auto Follow-up {currentCount}/{maxAttempts}"
   }
 }

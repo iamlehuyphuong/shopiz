@@ -74,6 +74,7 @@ class Inbox < ApplicationRecord
   validates :out_of_office_message, length: { maximum: Limits::OUT_OF_OFFICE_MESSAGE_MAX_LENGTH }
   validates :greeting_message, length: { maximum: Limits::GREETING_MESSAGE_MAX_LENGTH }
   validate :ensure_valid_max_assignment_limit
+  validate :validate_auto_follow_up_config
 
   belongs_to :account
   belongs_to :portal, optional: true
@@ -95,6 +96,7 @@ class Inbox < ApplicationRecord
   has_one :assignment_policy, through: :inbox_assignment_policy
   has_one :agent_bot_inbox, dependent: :destroy_async
   has_one :agent_bot, through: :agent_bot_inbox
+  has_many :inbox_label_mappings, dependent: :destroy_async
   has_many :webhooks, dependent: :destroy_async
   has_many :hooks, dependent: :destroy_async, class_name: 'Integrations::Hook'
 
@@ -285,6 +287,13 @@ class Inbox < ApplicationRecord
 
   def ensure_valid_max_assignment_limit
     # overridden in enterprise/app/models/enterprise/inbox.rb
+  end
+
+  def validate_auto_follow_up_config
+    return if auto_follow_up_config.blank?
+
+    max = auto_follow_up_config['max_attempts'].to_i
+    errors.add(:auto_follow_up_config, 'max_attempts cannot exceed 15') if max > 15
   end
 
   def delete_round_robin_agents

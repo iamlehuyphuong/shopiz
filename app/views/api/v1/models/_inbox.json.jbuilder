@@ -20,7 +20,7 @@ json.lock_to_single_conversation resource.lock_to_single_conversation
 json.sender_name_type resource.sender_name_type
 json.business_name resource.business_name
 json.active_bot resource.active_bot?
-json.followup_config resource.try(:followup_config)
+json.auto_follow_up_config resource.try(:auto_follow_up_config)
 json.auto_label_enabled resource.try(:auto_label_enabled) || false
 json.sales_config resource.try(:sales_config)
 

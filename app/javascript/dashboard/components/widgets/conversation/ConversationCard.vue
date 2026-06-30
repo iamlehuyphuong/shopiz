@@ -128,11 +128,13 @@ const showLabelsSection = computed(() => {
   return props.chat.labels?.length > 0 || hasSlaPolicyId.value;
 });
 
-const isFollowupActive = computed(() => {
-  const followupConfig = inbox.value?.followup_config;
-  if (!followupConfig?.enabled) return false;
+const isAutoFollowUpActive = computed(() => {
+  const autoFollowUpConfig = inbox.value?.auto_follow_up_config;
+  if (!autoFollowUpConfig?.enabled) return false;
 
-  const isCancelled = props.chat.custom_attributes?.followup_cancelled === true;
+  const isCancelled = [true, 'true'].includes(
+    props.chat.custom_attributes?.auto_follow_up_cancelled
+  );
   if (isCancelled) return false;
 
   const isBotPending =
@@ -145,15 +147,25 @@ const isFollowupActive = computed(() => {
   // 1 is OUTGOING
   if (!lastMsg || lastMsg.message_type !== 1) return false;
 
-  const maxAttempts = followupConfig.max_attempts || 1;
-  const currentCount = props.chat.custom_attributes?.followup_count || 0;
+  const maxAttempts = autoFollowUpConfig.max_attempts || 1;
+  const currentCount = props.chat.custom_attributes?.auto_follow_up_count || 0;
 
   return currentCount < maxAttempts;
 });
 
-const followupTextParams = computed(() => {
-  const currentCount = props.chat.custom_attributes?.followup_count || 0;
-  const maxAttempts = inbox.value?.followup_config?.max_attempts || 1;
+const canRestoreAutoFollowUp = computed(() => {
+  const autoFollowUpConfig = inbox.value?.auto_follow_up_config;
+  if (!autoFollowUpConfig?.enabled) return false;
+
+  const isCancelled = [true, 'true'].includes(
+    props.chat.custom_attributes?.auto_follow_up_cancelled
+  );
+  return isCancelled;
+});
+
+const autoFollowUpTextParams = computed(() => {
+  const currentCount = props.chat.custom_attributes?.auto_follow_up_count || 0;
+  const maxAttempts = inbox.value?.auto_follow_up_config?.max_attempts || 1;
   return { currentCount, maxAttempts };
 });
 
@@ -232,12 +244,30 @@ const closeContextMenu = () => {
   contextMenu.value.y = null;
 };
 
-const cancelFollowup = async () => {
+const cancelAutoFollowUp = async () => {
   closeContextMenu();
   try {
     await store.dispatch('conversations/updateCustomAttributes', {
       conversationId: props.chat.id,
-      customAttributes: { followup_cancelled: true },
+      customAttributes: {
+        ...props.chat.custom_attributes,
+        auto_follow_up_cancelled: true,
+      },
+    });
+  } catch (error) {
+    // Ignore error
+  }
+};
+
+const restoreAutoFollowUp = async () => {
+  closeContextMenu();
+  try {
+    await store.dispatch('conversations/updateCustomAttributes', {
+      conversationId: props.chat.id,
+      customAttributes: {
+        ...props.chat.custom_attributes,
+        auto_follow_up_cancelled: false,
+      },
     });
   } catch (error) {
     // Ignore error
@@ -374,10 +404,10 @@ const deleteConversation = () => {
           }}
         </span>
         <span
-          v-if="isFollowupActive"
+          v-if="isAutoFollowUpActive"
           class="text-xxs font-medium leading-4 py-1 px-2 rounded-full border border-solid border-n-orange text-n-orange-11 bg-n-orange-2 text-ellipsis overflow-hidden whitespace-nowrap"
         >
-          {{ $t('CHAT_LIST.FOLLOW_UP_BADGE', followupTextParams) }}
+          {{ $t('CHAT_LIST.AUTO_FOLLOW_UP_BADGE', autoFollowUpTextParams) }}
         </span>
         <div
           v-if="currentContact.phone_number"
@@ -479,7 +509,8 @@ const deleteConversation = () => {
         :conversation-labels="chat.labels"
         :conversation-url="conversationPath"
         :allowed-options="allowedContextMenuOptions"
-        :is-followup-active="isFollowupActive"
+        :is-followup-active="isAutoFollowUpActive"
+        :is-followup-cancelled="canRestoreAutoFollowUp"
         @update-conversation="onUpdateConversation"
         @assign-agent="onAssignAgent"
         @assign-label="onAssignLabel"
@@ -489,7 +520,8 @@ const deleteConversation = () => {
         @mark-as-read="markAsRead"
         @assign-priority="assignPriority"
         @delete-conversation="deleteConversation"
-        @cancel-followup="cancelFollowup"
+        @cancel-followup="cancelAutoFollowUp"
+        @restore-followup="restoreAutoFollowUp"
         @close="closeContextMenu"
       />
     </ContextMenu>

@@ -10,22 +10,20 @@ json.hmac_identifier resource.hmac_identifier if GlobalConfig.get('CHATWOOT_INBO
 json.id resource.id
 json.inviter_id resource.active_account_user&.inviter_id
 json.name resource.name
-json.type_id resource.type_id
-json.address resource.address
-json.company_name resource.company_name
-json.company_address resource.company_address
-json.company_email resource.company_email
-json.company_tax_id resource.company_tax_id
-json.id_number resource.id_number
+
 json.provider resource.provider
 json.pubsub_token resource.pubsub_token
 json.custom_attributes resource.custom_attributes if resource.custom_attributes.present?
+if Current.account
+  sip_info = resource.omicall_sip_infos.find_by(account_id: Current.account.id)
+  json.omicall_sip_info sip_info if sip_info
+end
 json.role resource.active_account_user&.role
 json.ui_settings resource.ui_settings
 json.uid resource.uid
 json.type resource.type
 json.accounts do
-  json.array! resource.account_users.select { |au| au.account.present? } do |account_user|
+  json.array!(resource.account_users.select { |au| au.account.present? }) do |account_user|
     json.id account_user.account_id
     json.name account_user.account&.name
     json.status account_user.account&.status

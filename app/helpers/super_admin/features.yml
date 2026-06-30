@@ -207,3 +207,15 @@ channels:
   enabled: true
   icon: 'icon-chat-smile-3-line'
   config_key: 'channels'
+integrations:
+  name: 'Integrations Availability'
+  description: 'Configuration for enabling or disabling integrations.'
+  enabled: true
+  icon: 'icon-apps-2-line'
+  config_key: 'integrations'
+sales_softwares:
+  name: 'Sales Softwares Availability'
+  description: 'Configuration for enabling or disabling sales softwares.'
+  enabled: true
+  icon: 'icon-package'
+  config_key: 'sales_softwares'

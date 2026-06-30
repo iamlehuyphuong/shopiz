@@ -84,6 +84,21 @@ class Account < ApplicationRecord
             'help_center_search': { 'type': %w[boolean null] }
           },
           'additionalProperties': false
+        },
+        'custom_email_config': {
+          'type': %w[object null],
+          'properties': {
+            'sender_email': { 'type': %w[string null] },
+            'smtp_address': { 'type': %w[string null] },
+            'smtp_port': { 'type': %w[integer string null] },
+            'smtp_username': { 'type': %w[string null] },
+            'smtp_password': { 'type': %w[string null] },
+            'smtp_domain': { 'type': %w[string null] },
+            'smtp_authentication': { 'type': %w[string null] },
+            'smtp_enable_starttls_auto': { 'type': %w[boolean null] },
+            'smtp_openssl_verify_mode': { 'type': %w[string null] }
+          },
+          'additionalProperties': false
         }
       },
     'required': [],
@@ -110,10 +125,12 @@ class Account < ApplicationRecord
   store_accessor :settings, :keep_pending_on_bot_failure
   store_accessor :settings, :captain_auto_resolve_mode
   store_accessor :settings, :active_ecommerce_platform, :ai_allow_create_order, :order_notification_templates
+  store_accessor :settings, :custom_email_config
   include AccountCaptainAutoResolve
 
   has_one :onboarding, class_name: 'AccountOnboarding', dependent: :destroy
   has_many :account_users, dependent: :destroy_async
+  has_many :omicall_sip_infos, dependent: :destroy_async
   has_many :agent_bot_inboxes, dependent: :destroy_async
   has_many :agent_bots, dependent: :destroy_async
   has_many :api_channels, dependent: :destroy_async, class_name: '::Channel::Api'
@@ -172,6 +189,7 @@ class Account < ApplicationRecord
 
   enum :locale, LANGUAGES_CONFIG.map { |key, val| [val[:iso_639_1_code], key] }.to_h, prefix: true
   enum :status, { active: 0, suspended: 1 }
+  enum :type_id, { personal: 0, company: 1 }
 
   scope :with_auto_resolve, -> { where("(settings ->> 'auto_resolve_after')::int IS NOT NULL") }
 

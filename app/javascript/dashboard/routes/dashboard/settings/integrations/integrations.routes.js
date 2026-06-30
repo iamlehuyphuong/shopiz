@@ -14,6 +14,7 @@ import Haravan from './Haravan.vue';
 import Woocommerce from './Woocommerce.vue';
 import Sapo from './Sapo.vue';
 import Nhanhvn from './Nhanhvn.vue';
+import Omicall from './Omicall.vue';
 
 export default {
   routes: [
@@ -133,6 +134,15 @@ export default {
           path: 'nhanhvn',
           name: 'settings_integrations_nhanhvn',
           component: Nhanhvn,
+          meta: {
+            featureFlag: FEATURE_FLAGS.INTEGRATIONS,
+            permissions: ['administrator'],
+          },
+        },
+        {
+          path: 'omicall',
+          name: 'settings_integrations_omicall',
+          component: Omicall,
           meta: {
             featureFlag: FEATURE_FLAGS.INTEGRATIONS,
             permissions: ['administrator'],

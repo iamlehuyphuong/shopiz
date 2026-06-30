@@ -20,6 +20,7 @@ import VoiceCallButton from 'dashboard/components-next/Contacts/VoiceCallButton.
 import DropdownMenu from 'dashboard/components-next/dropdown-menu/DropdownMenu.vue';
 import zalopersonalChannel from 'dashboard/api/channel/zalopersonalChannel';
 import inboxMixin, { INBOX_FEATURES } from 'shared/mixins/inboxMixin';
+import { useOmicall } from 'dashboard/composables/useOmicall';
 
 import {
   isAConversationRoute,
@@ -57,11 +58,16 @@ export default {
   setup() {
     const { isAdmin } = useAdmin();
     const { checkPermissions } = usePolicy();
-    const maskContactInfo = computed(() => !checkPermissions(['contact_manage']));
+    const maskContactInfo = computed(
+      () => !checkPermissions(['contact_manage'])
+    );
+    const { makeCall: makeOmicallCall, isReady: isOmicallReady } = useOmicall();
 
     return {
       isAdmin,
       maskContactInfo,
+      makeOmicallCall,
+      isOmicallReady,
     };
   },
   data() {
@@ -149,7 +155,9 @@ export default {
     isZaloGroupConversation() {
       if (!this.isCurrentConversationZaloPersonal) return false;
       const type = this.currentConversation.additional_attributes?.type;
-      return type === 1 || !!this.currentConversation.additional_attributes?.group;
+      return (
+        type === 1 || !!this.currentConversation.additional_attributes?.group
+      );
     },
     zaloGroupInfo() {
       if (!this.isZaloGroupConversation) return null;
@@ -157,8 +165,9 @@ export default {
     },
     zaloFriendshipStatus() {
       if (!this.currentConversation) return false;
-      
-      const friendInboxIds = this.contact.additional_attributes?.zalo_friend_inbox_ids || [];
+
+      const friendInboxIds =
+        this.contact.additional_attributes?.zalo_friend_inbox_ids || [];
       return friendInboxIds.includes(this.currentConversation.inbox_id);
     },
     hasZaloPersonalInboxes() {
@@ -178,6 +187,12 @@ export default {
         action: 'select_zalo_inbox',
       }));
     },
+    omicallLogoUrl() {
+      return '/dashboard/images/integrations/omicall.png';
+    },
+    omicallLogoDarkUrl() {
+      return '/dashboard/images/integrations/omicall-dark.png';
+    },
   },
   watch: {
     'contact.id': {
@@ -190,7 +205,13 @@ export default {
   methods: {
     getPlainText(text) {
       if (!text) return '';
-      const formatter = new MessageFormatter(text, false, false, true, this.maskContactInfo);
+      const formatter = new MessageFormatter(
+        text,
+        false,
+        false,
+        true,
+        this.maskContactInfo
+      );
       return formatter.plainText;
     },
     dynamicTime,
@@ -209,11 +230,23 @@ export default {
       // When compose modal is closed
       emitter.emit(BUS_EVENTS.NEW_CONVERSATION_MODAL, false);
     },
+    async handleOmicallButtonClick() {
+      if (!this.isOmicallReady) {
+        useAlert(
+          'Tổng đài chưa kết nối, vui lòng mở kết nối trong panel OMICall'
+        );
+        return;
+      }
+      const isConfirmed = await this.$refs.confirmCallDialog.showConfirmation();
+      if (isConfirmed) {
+        this.makeOmicallCall(this.contact.phone_number);
+      }
+    },
     handleZaloButtonClick() {
       if (this.zaloPersonalInboxes.length === 1) {
         this.handleZaloDropdownAction({
           action: 'select_zalo_inbox',
-          value: this.zaloPersonalInboxes[0].id
+          value: this.zaloPersonalInboxes[0].id,
         });
       } else if (this.zaloPersonalInboxes.length > 1) {
         this.showZaloDropdown = !this.showZaloDropdown;
@@ -224,11 +257,13 @@ export default {
       if (item.action === 'select_zalo_inbox') {
         const inboxId = item.value;
         this.selectedZaloInboxId = inboxId;
-        
+
         const inbox = this.zaloPersonalInboxes.find(i => i.id === inboxId);
         if (inbox) {
-          this.initialZaloFriendMessage = inbox.provider_config?.default_friend_request_message || '';
-          this.initialZaloGreetingMessage = inbox.provider_config?.default_greeting_message || '';
+          this.initialZaloFriendMessage =
+            inbox.provider_config?.default_friend_request_message || '';
+          this.initialZaloGreetingMessage =
+            inbox.provider_config?.default_greeting_message || '';
         }
 
         try {
@@ -238,7 +273,7 @@ export default {
             inboxId: inboxId,
           });
           const data = response.data?.data || response.data;
-          
+
           if (data && data.name) {
             this.zaloProfileData = {
               name: data.name,
@@ -640,7 +675,11 @@ export default {
       <div class="flex flex-row justify-between">
         <Avatar
           v-if="showAvatar"
-          :src="contact.thumbnail || (zaloGroupInfo && (zaloGroupInfo.avatar || zaloGroupInfo.avt)) || ''"
+          :src="
+            contact.thumbnail ||
+            (zaloGroupInfo && (zaloGroupInfo.avatar || zaloGroupInfo.avt)) ||
+            ''
+          "
           :name="contact.name"
           :status="contact.availability_status"
           :size="48"
@@ -684,7 +723,11 @@ export default {
         <div class="flex flex-col items-start w-full gap-2">
           <template v-if="!isZaloGroupConversation">
             <ContactInfoRow
-              :href="!maskContactInfo && contact.email ? `mailto:${contact.email}` : ''"
+              :href="
+                !maskContactInfo && contact.email
+                  ? `mailto:${contact.email}`
+                  : ''
+              "
               :value="contact.email ? getPlainText(contact.email) : ''"
               icon="mail"
               emoji="✉️"
@@ -693,8 +736,14 @@ export default {
               show-copy
             />
             <ContactInfoRow
-              :href="!maskContactInfo && contact.phone_number ? `tel:${contact.phone_number}` : ''"
-              :value="contact.phone_number ? getPlainText(contact.phone_number) : ''"
+              :href="
+                !maskContactInfo && contact.phone_number
+                  ? `tel:${contact.phone_number}`
+                  : ''
+              "
+              :value="
+                contact.phone_number ? getPlainText(contact.phone_number) : ''
+              "
               icon="call"
               emoji="📞"
               :title="$t('CONTACT_PANEL.PHONE_NUMBER')"
@@ -750,14 +799,19 @@ export default {
               show-copy
             />
             <ContactInfoRow
-              v-if="zaloGroupInfo && (zaloGroupInfo.desc || zaloGroupInfo.description)"
+              v-if="
+                zaloGroupInfo &&
+                (zaloGroupInfo.desc || zaloGroupInfo.description)
+              "
               :value="zaloGroupInfo.desc || zaloGroupInfo.description"
               icon="document"
               title="Mô tả"
               multiline
             />
             <ContactInfoRow
-              v-if="zaloGroupInfo && (zaloGroupInfo.link || zaloGroupInfo.groupLink)"
+              v-if="
+                zaloGroupInfo && (zaloGroupInfo.link || zaloGroupInfo.groupLink)
+              "
               :value="zaloGroupInfo.link || zaloGroupInfo.groupLink"
               :href="zaloGroupInfo.link || zaloGroupInfo.groupLink"
               icon="link"
@@ -817,6 +871,31 @@ export default {
             </span>
           </div>
         </template>
+        <NextButton
+          v-tooltip.top-end="
+            !contact.phone_number
+              ? $t('CONTACT_PANEL.OMICALL.TOOLTIP_NO_PHONE')
+              : $t('CONTACT_PANEL.OMICALL.TOOLTIP_CALL')
+          "
+          slate
+          faded
+          sm
+          :disabled="!contact.phone_number"
+          @click="handleOmicallButtonClick"
+        >
+          <template #icon>
+            <img
+              :src="omicallLogoUrl"
+              class="w-4 h-4 dark:hidden"
+              alt="OMICall"
+            />
+            <img
+              :src="omicallLogoDarkUrl"
+              class="w-4 h-4 hidden dark:block"
+              alt="OMICall"
+            />
+          </template>
+        </NextButton>
         <VoiceCallButton
           :phone="contact.phone_number"
           :contact-id="contact.id"
@@ -874,6 +953,17 @@ export default {
       :message-value="confirmDeleteMessage"
       :confirm-text="$t('DELETE_CONTACT.CONFIRM.YES')"
       :reject-text="$t('DELETE_CONTACT.CONFIRM.NO')"
+    />
+    <woot-confirm-modal
+      ref="confirmCallDialog"
+      :title="$t('CONTACT_PANEL.OMICALL.CONFIRM_CALL.TITLE')"
+      :description="
+        $t('CONTACT_PANEL.OMICALL.CONFIRM_CALL.DESCRIPTION', {
+          phoneNumber: contact.phone_number || '',
+        })
+      "
+      :confirm-label="$t('CONTACT_PANEL.OMICALL.CONFIRM_CALL.CONFIRM')"
+      :cancel-label="$t('CONTACT_PANEL.OMICALL.CONFIRM_CALL.CANCEL')"
     />
   </div>
 </template>

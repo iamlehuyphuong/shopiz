@@ -54,7 +54,12 @@ const modelValue = defineModel({
         'outline-n-weak bg-n-slate-2 cursor-not-allowed opacity-60': disabled,
       }"
     >
-      <option v-if="placeholder" value="" disabled>
+      <option
+        v-if="placeholder"
+        value=""
+        disabled
+        class="bg-n-surface-1 text-n-slate-11"
+      >
         {{ placeholder }}
       </option>
       <template v-if="groups.length">
@@ -62,12 +67,14 @@ const modelValue = defineModel({
           v-for="group in groups"
           :key="group.label"
           :label="group.label"
+          class="bg-n-surface-1 text-n-slate-12 font-medium"
         >
           <option
             v-for="option in group.options"
             :key="option.value"
             :value="option.value"
             :disabled="option.disabled"
+            class="bg-n-surface-1 text-n-slate-12 font-normal"
           >
             {{ option.label }}
           </option>
@@ -79,6 +86,7 @@ const modelValue = defineModel({
           :key="option.value"
           :value="option.value"
           :disabled="option.disabled"
+          class="bg-n-surface-1 text-n-slate-12"
         >
           {{ option.label }}
         </option>

@@ -25,6 +25,7 @@ const ECOMMERCE_APP_IDS = [
   'shopify',
   'woocommerce',
   'calendly',
+  'leadsquared',
   'kiotviet',
   'nhanhvn',
   'haravan',
@@ -41,6 +42,7 @@ const PLATFORM_LABELS = {
   nhanhvn: 'Nhanh.vn',
   tiktok_shop: 'TikTok Shop',
   calendly: 'Calendly',
+  leadsquared: 'LeadSquared',
 };
 
 const PLATFORM_ICONS = {
@@ -52,6 +54,7 @@ const PLATFORM_ICONS = {
   nhanhvn: 'i-lucide-zap',
   tiktok_shop: 'i-lucide-music',
   calendly: 'i-lucide-calendar',
+  leadsquared: 'i-lucide-users',
 };
 
 const TEMPLATE_VARIABLES = [
@@ -92,6 +95,20 @@ const ecomIntegrations = computed(() => {
     ECOMMERCE_APP_IDS.includes(app.id)
   );
   return filtered.sort((a, b) => {
+    const getStatusWeight = status => {
+      if (status === 'published') return 1;
+      if (status === 'beta') return 2;
+      if (status === 'coming_soon') return 3;
+      return 4;
+    };
+
+    const weightA = getStatusWeight(a.status);
+    const weightB = getStatusWeight(b.status);
+
+    if (weightA !== weightB) {
+      return weightA - weightB;
+    }
+
     return ECOMMERCE_APP_IDS.indexOf(a.id) - ECOMMERCE_APP_IDS.indexOf(b.id);
   });
 });
@@ -589,6 +606,7 @@ const insertVariable = variableKey => {
               :description="item.description"
               :enabled="item.enabled"
               :is-active="item.is_active"
+              :status="item.status"
             />
           </div>
         </div>

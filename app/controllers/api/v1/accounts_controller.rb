@@ -44,11 +44,11 @@ class Api::V1::AccountsController < Api::BaseController
   end
 
   def update
-    @account.assign_attributes(account_params.slice(:name, :locale, :domain, :support_email))
+    @account.assign_attributes(account_params.slice(:name, :locale, :domain, :support_email, :type_id, :address, :company_name, :company_address, :company_email, :company_tax_id, :id_number))
     @account.custom_attributes.merge!(custom_attributes_params)
     @account.settings.merge!(settings_params)
     @account.custom_attributes['onboarding_step'] = 'invite_team' if @account.custom_attributes['onboarding_step'] == 'account_update'
-    
+
     if onboarding_params.to_h.any?
       @account.build_onboarding unless @account.onboarding
       @account.onboarding.assign_attributes(onboarding_params)
@@ -90,7 +90,7 @@ class Api::V1::AccountsController < Api::BaseController
   end
 
   def account_params
-    params.permit(:account_name, :email, :name, :password, :locale, :domain, :support_email, :user_full_name)
+    params.permit(:account_name, :email, :name, :password, :locale, :domain, :support_email, :user_full_name, :type_id, :address, :company_name, :company_address, :company_email, :company_tax_id, :id_number)
   end
 
   def custom_attributes_params
@@ -106,7 +106,15 @@ class Api::V1::AccountsController < Api::BaseController
   end
 
   def permitted_settings_attributes
-    [:auto_resolve_after, :auto_resolve_message, :auto_resolve_ignore_waiting, :audio_transcriptions, :auto_resolve_label, :active_ecommerce_platform, :ai_allow_create_order, { order_notification_templates: [:draft, :confirmed, :processing, :shipped, :delivered, :cancelled] }]
+    [
+      :auto_resolve_after, :auto_resolve_message, :auto_resolve_ignore_waiting, 
+      :audio_transcriptions, :auto_resolve_label, :active_ecommerce_platform, :ai_allow_create_order,
+      { order_notification_templates: [:draft, :confirmed, :processing, :shipped, :delivered, :cancelled] },
+      { custom_email_config: [
+        :sender_email, :smtp_address, :smtp_port, :smtp_username, :smtp_password, 
+        :smtp_domain, :smtp_authentication, :smtp_enable_starttls_auto, :smtp_openssl_verify_mode
+      ] }
+    ]
   end
 
   def check_signup_enabled

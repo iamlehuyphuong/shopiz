@@ -96,7 +96,8 @@ class Api::V1::Accounts::Conversations::OrdersController < Api::V1::Accounts::Co
       :tracking_code, :payment_method, :payment_status,
       items_attributes: [
         :id, :product_name, :product_id, :product_source, :quantity,
-        :unit_price, :product_thumbnail, :product_metadata, :variant_id, :_destroy
+        :unit_price, :product_thumbnail, :variant_id, :_destroy,
+        product_metadata: {}
       ]
     )
   end

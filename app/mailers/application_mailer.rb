@@ -19,7 +19,29 @@ class ApplicationMailer < ActionMailer::Base
   rescue_from(*ExceptionList::SMTP_EXCEPTIONS, with: :handle_smtp_exceptions)
 
   def smtp_config_set_or_development?
+    return true if Current.account&.custom_email_config&.[]('smtp_address').present?
+
     ENV.fetch('SMTP_ADDRESS', nil).present? || Rails.env.development?
+  end
+
+  def mail(headers = {}, &)
+    if Current.account&.custom_email_config&.[]('smtp_address').present?
+      config = Current.account.custom_email_config
+      headers[:delivery_method] = :smtp
+      headers[:delivery_method_options] = {
+        address: config['smtp_address'],
+        port: config['smtp_port'],
+        user_name: config['smtp_username'],
+        password: config['smtp_password'],
+        domain: config['smtp_domain'],
+        authentication: config['smtp_authentication'].presence || 'login',
+        enable_starttls_auto: config['smtp_enable_starttls_auto'].nil? || config['smtp_enable_starttls_auto'],
+        openssl_verify_mode: config['smtp_openssl_verify_mode'].presence || 'peer'
+      }
+      headers[:from] = config['sender_email'] if config['sender_email'].present?
+    end
+
+    super
   end
 
   private

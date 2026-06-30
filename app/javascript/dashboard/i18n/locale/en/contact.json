@@ -24,6 +24,36 @@
       "CONNECT_ERROR": "Failed to connect via Zalo Personal.",
       "CONNECT_TOOLTIP": "Connect Zalo Personal"
     },
+    "OMICALL": {
+      "CONNECT": "Open PBX Connection",
+      "NOT_CONNECTED": "Not connected to PBX",
+      "CONNECT_OMICALL": "Connect OMICall",
+      "TITLE": "OMICall PBX",
+      "CALL_STATUS": "Call status",
+      "GET_HISTORY": "Get Call History",
+      "NO_HISTORY": "No call history",
+      "LOAD_FAILED": "Failed to load call history.",
+      "DIRECTION": {
+        "OUTGOING": "Outgoing",
+        "INCOMING": "Incoming"
+      },
+      "DISPOSITION": {
+        "ANSWERED": "Answered",
+        "MISSED": "Missed call"
+      },
+      "MISSING_SIP_CONFIG": "Please configure SIP user/password/domain in the account Profile Custom Attributes before calling.",
+      "MISSING_PHONE": "This contact does not have a phone number!",
+      "ALERT_TITLE": "Alert",
+      "ALERT_UNDERSTOOD": "Got it",
+      "CONFIRM_CALL": {
+        "TITLE": "Call Confirmation",
+        "DESCRIPTION": "Are you sure you want to call {phoneNumber} via the OMiCall system?",
+        "CONFIRM": "Call Now",
+        "CANCEL": "Cancel"
+      },
+      "TOOLTIP_NO_PHONE": "No phone number available",
+      "TOOLTIP_CALL": "Make a call via OMICall"
+    },
     "COPY_SUCCESSFUL": "Copied to clipboard successfully",
     "SAVE_CONTACT": "Save to contact",
     "SAVE_CONTACT_SUCCESS": "Contact updated successfully",

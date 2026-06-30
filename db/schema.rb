@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_24_153432) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_29_171641) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -116,6 +116,13 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_24_153432) do
     t.jsonb "settings", default: {}
     t.bigint "feature_flags_2", default: 0, null: false
     t.bigint "partner_sso_id"
+    t.integer "type_id", default: 0
+    t.string "address"
+    t.string "company_name"
+    t.string "company_address"
+    t.string "company_email"
+    t.string "company_tax_id"
+    t.string "id_number"
     t.index ["partner_sso_id"], name: "index_accounts_on_partner_sso_id"
     t.index ["status"], name: "index_accounts_on_status"
   end
@@ -893,9 +900,11 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_24_153432) do
     t.boolean "is_load_all_message"
     t.string "next_cursor"
     t.bigint "assignee_agent_bot_id"
-    t.datetime "follow_up_at"
-    t.integer "follow_up_remind_before", default: 0
-    t.datetime "follow_up_remind_at"
+    t.datetime "reminder_at"
+    t.integer "reminder_remind_before", default: 0
+    t.datetime "remind_at"
+    t.text "reminder_note"
+    t.integer "reminder_repeat", default: 0
     t.index ["account_id", "display_id"], name: "index_conversations_on_account_id_and_display_id", unique: true
     t.index ["account_id", "id"], name: "index_conversations_on_id_and_account_id"
     t.index ["account_id", "inbox_id", "status", "assignee_id"], name: "conv_acid_inbid_stat_asgnid_idx"
@@ -905,10 +914,10 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_24_153432) do
     t.index ["contact_id"], name: "index_conversations_on_contact_id"
     t.index ["contact_inbox_id"], name: "index_conversations_on_contact_inbox_id"
     t.index ["first_reply_created_at"], name: "index_conversations_on_first_reply_created_at"
-    t.index ["follow_up_at"], name: "index_conversations_on_follow_up_at"
     t.index ["identifier", "account_id"], name: "index_conversations_on_identifier_and_account_id"
     t.index ["inbox_id"], name: "index_conversations_on_inbox_id"
     t.index ["priority"], name: "index_conversations_on_priority"
+    t.index ["reminder_at"], name: "index_conversations_on_reminder_at"
     t.index ["status", "account_id"], name: "index_conversations_on_status_and_account_id"
     t.index ["status", "priority"], name: "index_conversations_on_status_and_priority"
     t.index ["team_id"], name: "index_conversations_on_team_id"
@@ -1061,6 +1070,18 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_24_153432) do
     t.index ["inbox_id"], name: "index_inbox_capacity_limits_on_inbox_id"
   end
 
+  create_table "inbox_label_mappings", force: :cascade do |t|
+    t.bigint "inbox_id", null: false
+    t.bigint "label_id", null: false
+    t.string "native_label_id", null: false
+    t.string "native_label_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["inbox_id", "native_label_id"], name: "index_inbox_label_mappings_on_inbox_id_and_native_label_id", unique: true
+    t.index ["inbox_id"], name: "index_inbox_label_mappings_on_inbox_id"
+    t.index ["label_id"], name: "index_inbox_label_mappings_on_label_id"
+  end
+
   create_table "inbox_members", id: :serial, force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "inbox_id", null: false
@@ -1095,7 +1116,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_24_153432) do
     t.jsonb "csat_config", default: {}, null: false
     t.boolean "is_load_all_conversation"
     t.string "next_cursor"
-    t.jsonb "followup_config", default: {}
+    t.jsonb "auto_follow_up_config", default: {}
     t.bigint "ecommerce_integration_id"
     t.boolean "auto_label_enabled", default: false, null: false
     t.jsonb "sales_config", default: {}
@@ -1295,6 +1316,20 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_24_153432) do
     t.index ["secondary_actor_type", "secondary_actor_id"], name: "uniq_secondary_actor_per_account_notifications"
     t.index ["user_id", "account_id", "snoozed_until", "read_at"], name: "idx_notifications_performance"
     t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
+  create_table "omicall_sip_infos", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "user_id", null: false
+    t.string "sip_user"
+    t.string "sip_password"
+    t.string "sip_domain"
+    t.string "outbound_proxy"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "user_id"], name: "index_omicall_sip_infos_on_account_id_and_user_id", unique: true
+    t.index ["account_id"], name: "index_omicall_sip_infos_on_account_id"
+    t.index ["user_id"], name: "index_omicall_sip_infos_on_user_id"
   end
 
   create_table "partner_ssos", force: :cascade do |t|
@@ -1590,13 +1625,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_24_153432) do
     t.integer "consumed_timestep"
     t.boolean "otp_required_for_login", default: false, null: false
     t.text "otp_backup_codes"
-    t.integer "type_id", default: 0
-    t.string "address"
-    t.string "company_name"
-    t.string "company_address"
-    t.string "company_email"
-    t.string "company_tax_id"
-    t.string "id_number"
     t.index ["email"], name: "index_users_on_email"
     t.index ["otp_required_for_login"], name: "index_users_on_otp_required_for_login"
     t.index ["otp_secret"], name: "index_users_on_otp_secret", unique: true
@@ -1681,8 +1709,12 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_24_153432) do
   add_foreign_key "appointments", "products"
   add_foreign_key "contact_optins", "contacts"
   add_foreign_key "contact_optins", "inboxes"
+  add_foreign_key "inbox_label_mappings", "inboxes"
+  add_foreign_key "inbox_label_mappings", "labels"
   add_foreign_key "inboxes", "integrations_hooks", column: "ecommerce_integration_id"
   add_foreign_key "inboxes", "portals"
+  add_foreign_key "omicall_sip_infos", "accounts"
+  add_foreign_key "omicall_sip_infos", "users"
   add_foreign_key "product_variants", "accounts"
   add_foreign_key "product_variants", "products"
   add_foreign_key "products", "accounts"

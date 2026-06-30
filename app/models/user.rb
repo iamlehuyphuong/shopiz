@@ -3,11 +3,6 @@
 # Table name: users
 #
 #  id                     :integer          not null, primary key
-#  address                :string
-#  availability           :integer          default("online")
-#  company_address        :string
-#  company_email          :string
-#  company_name           :string
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :string
 #  confirmed_at           :datetime
@@ -18,7 +13,6 @@
 #  display_name           :string
 #  email                  :string
 #  encrypted_password     :string           default(""), not null
-#  id_number              :string
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :string
 #  message_signature      :text
@@ -39,8 +33,6 @@
 #  unconfirmed_email      :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
-#  company_tax_id         :string
-#  type_id                :integer          default("personal")
 #
 # Indexes
 #
@@ -77,7 +69,6 @@ class User < ApplicationRecord
   # TODO: remove in a future version once online status is moved to account users
   # remove the column availability from users
   enum availability: { online: 0, offline: 1, busy: 2 }
-  enum type_id: { personal: 0, company: 1 }
 
   # The validation below has been commented out as it does not
   # work because :validatable in devise overrides this.
@@ -92,6 +83,7 @@ class User < ApplicationRecord
   encrypts :otp_backup_codes
 
   has_many :account_users, dependent: :destroy_async
+  has_many :omicall_sip_infos, dependent: :destroy
   has_many :accounts, through: :account_users
   accepts_nested_attributes_for :account_users
 

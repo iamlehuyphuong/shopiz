@@ -1,11 +1,10 @@
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useStore, useMapGetter } from 'dashboard/composables/store';
-import AccordionItem from 'dashboard/components/Accordion/AccordionItem.vue';
 import ProductSearch from './ProductSearch.vue';
-import ContactSearch from './ContactSearch.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
+import MultiselectDropdown from 'shared/components/ui/MultiselectDropdown.vue';
 import SalesOrdersAPI from 'dashboard/api/sales/orders';
 
 const props = defineProps({
@@ -79,6 +78,51 @@ const STATUS_OPTIONS = [
   'cancelled',
 ];
 
+const statusOptionsList = computed(() => {
+  return STATUS_OPTIONS.map(s => ({
+    id: s,
+    name: t(`CONVERSATION.ORDER_PANEL.STATUS.${s.toUpperCase()}`),
+  }));
+});
+
+const selectedStatus = computed(() => {
+  return (
+    statusOptionsList.value.find(s => s.id === form.value.status) ||
+    statusOptionsList.value[0]
+  );
+});
+
+const paymentMethodOptionsList = computed(() => [
+  { id: 'cod', name: 'COD' },
+  { id: 'bank_transfer', name: 'Chuyển khoản' },
+  { id: 'card', name: 'Thẻ / Ví điện tử' },
+]);
+
+const selectedPaymentMethod = computed(() => {
+  return (
+    paymentMethodOptionsList.value.find(
+      s => s.id === form.value.payment_method
+    ) || paymentMethodOptionsList.value[0]
+  );
+});
+
+const paymentStatusOptionsList = computed(() => [
+  { id: 'unpaid', name: t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.UNPAID') },
+  { id: 'paid', name: t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PAID') },
+  {
+    id: 'partially_refunded',
+    name: t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PARTIALLY_REFUNDED'),
+  },
+]);
+
+const selectedPaymentStatus = computed(() => {
+  return (
+    paymentStatusOptionsList.value.find(
+      s => s.id === form.value.payment_status
+    ) || paymentStatusOptionsList.value[0]
+  );
+});
+
 const PLATFORM_OPTIONS = [
   { value: '', label: '—' },
   { value: 'kiotviet', label: 'KiotViet' },
@@ -134,8 +178,20 @@ const addProduct = product => {
     product_source: product.source,
     quantity: 1,
     unit_price: product.price || 0,
+    tax_rate: product.tax_rate || 0,
     product_thumbnail: product.thumbnail,
   });
+};
+
+const formatCurrencyValue = val => {
+  if (val === null || val === undefined || val === '') return '';
+  return new Intl.NumberFormat('vi-VN').format(val);
+};
+
+const parseCurrencyValue = val => {
+  if (!val) return 0;
+  const num = parseInt(val.toString().replace(/\D/g, ''), 10);
+  return isNaN(num) ? 0 : num;
 };
 
 watch(
@@ -154,11 +210,28 @@ watch(
         discount_amount: newOrder.discount_amount || 0,
         payment_method: newOrder.payment_method || 'cod',
         payment_status: newOrder.payment_status || 'unpaid',
-        items: (newOrder.items || []).map(item => ({ ...item })),
+        items: (newOrder.items || []).map(item => ({
+          ...item,
+          tax_rate:
+            (item.product_metadata && item.product_metadata.tax_rate) || 0,
+        })),
       };
     }
   },
   { immediate: true }
+);
+
+watch(
+  () => form.value.items,
+  newItems => {
+    form.value.tax = newItems.reduce((sum, item) => {
+      const itemTax =
+        ((item.quantity || 0) * (item.unit_price || 0) * (item.tax_rate || 0)) /
+        100;
+      return sum + itemTax;
+    }, 0);
+  },
+  { deep: true }
 );
 
 watch(
@@ -193,6 +266,7 @@ const addManualItem = () => {
     product_source: 'manual',
     quantity: 1,
     unit_price: 0,
+    tax_rate: 0,
     product_thumbnail: null,
   });
 };
@@ -238,6 +312,10 @@ const handleSave = async () => {
       variant_id: item.variant_id,
       quantity: item.quantity,
       unit_price: item.unit_price,
+      product_metadata: {
+        ...(item.product_metadata || {}),
+        tax_rate: item.tax_rate || 0,
+      },
       product_thumbnail: item.product_thumbnail,
       _destroy: item._destroy || false,
     })),
@@ -267,82 +345,34 @@ const handleSave = async () => {
     console.error('Save order failed', error);
   }
 };
-
-const isSectionOpen = ref({
-  status: true,
-  products: true,
-  financial: true,
-  customer: true,
-});
-
-const toggleSection = key => {
-  isSectionOpen.value[key] = !isSectionOpen.value[key];
-};
-
-const handleContactSelect = selectedContact => {
-  form.value.contact_id = selectedContact.id;
-  form.value.customer_name = selectedContact.name;
-  form.value.customer_phone = selectedContact.phone_number || '';
-
-  const attrs = selectedContact.additional_attributes || {};
-  form.value.customer_address =
-    attrs.address ||
-    [attrs.city, attrs.country].filter(Boolean).join(', ') ||
-    '';
-};
 </script>
 
 <template>
-  <div class="flex flex-col h-full w-full">
-    <!-- Header - matches contact panel style -->
-    <div
-      v-if="conversationId"
-      class="flex items-center gap-2 px-4 py-3 border-b border-n-weak shrink-0"
-    >
-      <button
-        class="p-1 rounded-md hover:bg-n-alpha-2 text-n-slate-10 hover:text-n-slate-12 transition-colors"
-        @click="emit('close')"
-      >
-        <i class="i-lucide-arrow-left text-sm" />
-      </button>
-      <h3 class="text-sm font-medium text-n-slate-12">
-        {{
-          isEditing
-            ? t('CONVERSATION.ORDER_PANEL.EDIT_ORDER')
-            : t('CONVERSATION.ORDER_PANEL.NEW_ORDER')
-        }}
-      </h3>
-    </div>
-
-    <!-- Form Body - matches contact panel's accordion layout -->
-    <div class="flex-1 overflow-y-auto px-2 pb-8 pt-3">
-      <div class="flex flex-col gap-3">
-        <!-- Status Accordion -->
-        <AccordionItem
-          :title="t('CONVERSATION.ORDER_PANEL.STATUS_LABEL')"
-          :is-open="isSectionOpen.status"
-          compact
-          @toggle="toggleSection('status')"
-        >
-          <div class="px-3 py-3 space-y-2.5">
-            <select
-              v-model="form.status"
-              class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-alpha-1 hover:bg-n-alpha-2 transition-colors text-n-slate-12 outline-none focus:border-n-brand focus:bg-n-solid-1 focus:ring-1 focus:ring-n-brand/30 cursor-pointer appearance-none"
-              style="
-                background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2394a3b8%22 stroke-width=%222%22%3e%3cpath d=%22m6 9 6 6 6-6%22/%3e%3c/svg%3e');
-                background-repeat: no-repeat;
-                background-position: right 0.5rem center;
-                background-size: 1.25rem;
+  <div class="flex flex-col w-full">
+    <!-- Form Body -->
+    <div class="flex-1 overflow-y-auto px-3 pb-8 pt-2">
+      <div class="flex flex-col gap-5">
+        <!-- Status & Source -->
+        <div class="space-y-2">
+          <h4 class="text-sm font-semibold text-n-slate-12 mb-1">
+            {{ t('CONVERSATION.ORDER_PANEL.STATUS_LABEL') }}
+          </h4>
+          <div class="flex flex-col gap-2">
+            <MultiselectDropdown
+              :options="statusOptionsList"
+              :selected-item="selectedStatus"
+              :has-thumbnail="false"
+              :multiselector-title="t('CONVERSATION.ORDER_PANEL.STATUS_LABEL')"
+              :multiselector-placeholder="
+                t('CONVERSATION.ORDER_PANEL.STATUS_LABEL')
               "
-            >
-              <option v-for="s in STATUS_OPTIONS" :key="s" :value="s">
-                {{ t(`CONVERSATION.ORDER_PANEL.STATUS.${s.toUpperCase()}`) }}
-              </option>
-            </select>
+              :input-placeholder="t('CONVERSATION.ORDER_PANEL.STATUS_LABEL')"
+              @select="item => (form.status = item.id)"
+            />
             <select
               v-if="!isSourceLocked"
               v-model="form.external_source"
-              class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-alpha-1 hover:bg-n-alpha-2 transition-colors text-n-slate-12 outline-none focus:border-n-brand focus:bg-n-solid-1 focus:ring-1 focus:ring-n-brand/30 appearance-none cursor-pointer"
+              class="w-full px-3 py-1 h-8 text-sm rounded-md border-0 outline outline-1 outline-n-strong bg-transparent hover:bg-n-slate-9/10 transition-colors text-n-slate-12 focus:!outline-n-brand !shadow-none m-0 appearance-none cursor-pointer"
               style="
                 background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2394a3b8%22 stroke-width=%222%22%3e%3cpath d=%22m6 9 6 6 6-6%22/%3e%3c/svg%3e');
                 background-repeat: no-repeat;
@@ -359,226 +389,223 @@ const handleContactSelect = selectedContact => {
               </option>
             </select>
           </div>
-        </AccordionItem>
+        </div>
+        <!-- Products -->
+        <div class="space-y-2">
+          <h4 class="text-sm font-semibold text-n-slate-12 mb-1">
+            {{ t('CONVERSATION.ORDER_PANEL.PRODUCTS') }}
+          </h4>
+          <ProductSearch
+            :conversation-id="conversationId"
+            @select-product="addProduct"
+          />
 
-        <!-- Products Accordion -->
-        <AccordionItem
-          :title="t('CONVERSATION.ORDER_PANEL.PRODUCTS')"
-          :is-open="isSectionOpen.products"
-          compact
-          @toggle="toggleSection('products')"
-        >
-          <div class="px-3 py-3">
-            <ProductSearch
-              :conversation-id="conversationId"
-              @select-product="addProduct"
-            />
-
-            <!-- Items List -->
-            <div v-if="form.items.length" class="mt-3 space-y-2">
+          <!-- Items List -->
+          <div v-if="form.items.length" class="mt-3">
+            <div
+              v-for="(item, index) in form.items"
+              :key="index"
+              class="flex gap-3 py-3 border-b border-n-weak last:border-b-0"
+            >
+              <!-- Left: Thumbnail -->
               <div
-                v-for="(item, index) in form.items"
-                :key="index"
-                class="flex flex-col gap-2 p-2.5 rounded-lg bg-n-solid-2 border border-n-weak"
+                class="w-16 h-16 shrink-0 rounded-md bg-n-solid-2 border border-n-weak overflow-hidden flex items-center justify-center"
               >
+                <img
+                  v-if="item.product_thumbnail"
+                  :src="item.product_thumbnail"
+                  class="w-full h-full object-cover"
+                />
+                <i v-else class="i-lucide-image text-n-slate-9 text-xl" />
+              </div>
+
+              <!-- Right: Info -->
+              <div class="flex-1 min-w-0 flex flex-col gap-2">
                 <!-- Row 1: Tên sản phẩm & Nút xoá -->
-                <div class="flex items-start gap-2">
-                  <input
-                    v-model="item.product_name"
-                    type="text"
-                    :placeholder="t('CONVERSATION.ORDER_PANEL.PRODUCT_NAME')"
-                    class="flex-1 w-full text-sm text-n-slate-12 bg-n-solid-1 border border-n-weak rounded-md px-2.5 py-1.5 outline-none font-medium placeholder:text-n-slate-9 focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 transition-shadow"
-                  />
+                <div class="flex items-start justify-between gap-2">
+                  <div class="flex-1 min-w-0 mt-0.5">
+                    <input
+                      v-if="item.product_source === 'manual'"
+                      v-model="item.product_name"
+                      type="text"
+                      :placeholder="t('CONVERSATION.ORDER_PANEL.PRODUCT_NAME')"
+                      class="w-full text-sm text-n-slate-12 border border-transparent bg-n-alpha-1 hover:bg-n-alpha-2 focus:bg-n-solid-1 rounded-md px-2 py-1 outline-none font-medium placeholder:text-n-slate-9 focus:!border-n-brand !shadow-none m-0 transition-all"
+                    />
+                    <div
+                      v-else
+                      class="text-sm font-medium text-n-slate-12 leading-relaxed break-words"
+                    >
+                      {{ item.product_name }}
+                    </div>
+                  </div>
                   <button
-                    class="shrink-0 p-1.5 rounded-md hover:bg-n-ruby-3 text-n-slate-10 hover:text-n-ruby-11 transition-colors"
+                    class="shrink-0 p-1 rounded-md hover:bg-n-ruby-3 text-n-slate-10 hover:text-n-ruby-11 transition-colors"
                     @click="removeItem(index)"
                   >
                     <i class="i-lucide-trash-2 text-sm" />
                   </button>
                 </div>
 
-                <!-- Row 2: Số lượng & Giá -->
-                <div class="flex items-center gap-3">
-                  <div class="flex items-center gap-2 w-1/3">
-                    <label class="text-xs text-n-slate-10 shrink-0">{{ t('CONVERSATION.ORDER_PANEL.QUANTITY') }}:</label>
-                    <input
-                      v-model.number="item.quantity"
-                      type="number"
-                      min="1"
-                      class="w-full text-xs text-center rounded-md border border-n-weak bg-n-solid-1 text-n-slate-12 py-1 px-2 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 transition-shadow"
-                    />
-                  </div>
-                  <div class="flex items-center gap-2 flex-1">
-                    <label class="text-xs text-n-slate-10 shrink-0">{{ t('CONVERSATION.ORDER_PANEL.PRICE') }}:</label>
-                    <input
-                      v-model.number="item.unit_price"
-                      type="number"
-                      min="0"
-                      class="w-full text-xs rounded-md border border-n-weak bg-n-solid-1 text-n-slate-12 py-1 px-2 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 transition-shadow"
-                    />
+                <!-- Row 2: Đơn giá -->
+                <div class="flex items-center gap-2 mt-0.5">
+                  <label
+                    class="text-xs font-medium text-n-slate-11 w-16 shrink-0"
+                    >Đơn giá</label>
+                  <input
+                    type="text"
+                    :value="formatCurrencyValue(item.unit_price)"
+                    class="flex-1 w-full text-sm rounded-md border border-transparent bg-n-alpha-1 hover:bg-n-alpha-2 focus:bg-n-solid-1 transition-colors text-n-slate-12 py-1 px-2 outline-none focus:!border-n-brand !shadow-none m-0 transition-shadow"
+                    @input="
+                      e =>
+                        (item.unit_price = parseCurrencyValue(e.target.value))
+                    "
+                  />
+                </div>
+
+                <!-- Row 3: Thuế -->
+                <div class="flex items-center gap-2 mt-0.5">
+                  <label
+                    class="text-xs font-medium text-n-slate-11 w-16 shrink-0"
+                    >Thuế %</label>
+                  <input
+                    v-model.number="item.tax_rate"
+                    type="number"
+                    min="0"
+                    max="100"
+                    class="flex-1 w-full text-sm rounded-md border border-transparent bg-n-alpha-1 hover:bg-n-alpha-2 focus:bg-n-solid-1 transition-colors text-n-slate-12 py-1 px-2 outline-none focus:!border-n-brand !shadow-none m-0 transition-shadow"
+                  />
+                </div>
+
+                <!-- Row 4: Số lượng (+/-) -->
+                <div class="flex items-center justify-between mt-0.5">
+                  <div class="flex items-center gap-2">
+                    <label
+                      class="text-xs font-medium text-n-slate-11 w-16 shrink-0"
+                      >Số lượng</label>
+                    <div class="flex items-center gap-1">
+                      <button
+                        class="p-1.5 rounded-md hover:bg-n-alpha-2 text-n-slate-10 hover:text-n-slate-12 transition-colors cursor-pointer"
+                        @click="item.quantity > 1 ? item.quantity-- : null"
+                      >
+                        <i class="i-lucide-minus text-sm" />
+                      </button>
+                      <input
+                        v-model.number="item.quantity"
+                        type="number"
+                        min="1"
+                        class="!w-12 text-sm text-center rounded-md border border-transparent bg-n-alpha-1 hover:bg-n-alpha-2 focus:bg-n-solid-1 transition-colors text-n-slate-12 py-1 px-1 outline-none focus:!border-n-brand !shadow-none m-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      />
+                      <button
+                        class="p-1.5 rounded-md hover:bg-n-alpha-2 text-n-slate-10 hover:text-n-slate-12 transition-colors cursor-pointer"
+                        @click="item.quantity++"
+                      >
+                        <i class="i-lucide-plus text-sm" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-
-            <button
-              class="mt-2.5 flex items-center gap-1.5 text-xs font-medium text-n-brand hover:text-n-brand/80 transition-colors py-1"
-              @click="addManualItem"
-            >
-              <i class="i-lucide-plus text-xs" />
-              {{ t('CONVERSATION.ORDER_PANEL.ADD_MANUAL') }}
-            </button>
-
-            <!-- Total -->
-            <div
-              v-if="form.items.length"
-              class="flex justify-between items-center py-2.5 px-3 mt-2 rounded-lg bg-n-solid-3 border border-n-weak"
-            >
-              <span class="text-sm font-medium text-n-slate-11">
-                {{ t('CONVERSATION.ORDER_PANEL.TOTAL') }}
-              </span>
-              <span class="text-sm font-bold text-n-slate-12">
-                {{ formatCurrency(totalAmount) }}đ
-              </span>
-            </div>
           </div>
-        </AccordionItem>
 
-        <!-- Financial & Payment Accordion -->
-        <AccordionItem
-          :title="t('CONVERSATION.ORDER_PANEL.FINANCIAL')"
-          :is-open="isSectionOpen.financial"
-          compact
-          @toggle="toggleSection('financial')"
-        >
-          <div class="px-3 py-3 space-y-2.5">
-            <div class="flex items-center gap-3">
-              <div class="flex-1">
-                <label class="block text-xs font-medium text-n-slate-11 mb-1">{{
-                  t('CONVERSATION.ORDER_PANEL.SHIPPING_FEE')
-                }}</label>
-                <input
-                  v-model.number="form.shipping_fee"
-                  type="number"
-                  min="0"
-                  class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30"
-                />
-              </div>
-              <div class="flex-1">
-                <label class="block text-xs font-medium text-n-slate-11 mb-1">{{
-                  t('CONVERSATION.ORDER_PANEL.DISCOUNT')
-                }}</label>
-                <input
-                  v-model.number="form.discount_amount"
-                  type="number"
-                  min="0"
-                  class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30"
-                />
-              </div>
-            </div>
+          <button
+            class="mt-2.5 flex items-center gap-1.5 text-xs font-medium text-n-brand hover:text-n-brand/80 transition-colors py-1"
+            @click="addManualItem"
+          >
+            <i class="i-lucide-plus text-xs" />
+            {{ t('CONVERSATION.ORDER_PANEL.ADD_MANUAL') }}
+          </button>
+        </div>
+        <!-- Financial & Payment -->
+        <div class="space-y-3">
+          <h4 class="text-sm font-semibold text-n-slate-12 mb-1">
+            {{ t('CONVERSATION.ORDER_PANEL.FINANCIAL') }}
+          </h4>
 
-            <div class="flex-1">
+          <div class="flex flex-col gap-2.5">
+            <div>
               <label class="block text-xs font-medium text-n-slate-11 mb-1">{{
-                t('CONVERSATION.ORDER_PANEL.TAX')
+                t('CONVERSATION.ORDER_PANEL.SHIPPING_FEE')
               }}</label>
               <input
-                v-model.number="form.tax"
-                type="number"
-                min="0"
-                class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30"
+                type="text"
+                :value="formatCurrencyValue(form.shipping_fee)"
+                class="w-full px-3 py-1 text-sm rounded-lg border border-transparent bg-n-alpha-1 hover:bg-n-alpha-2 focus:bg-n-solid-1 transition-colors text-n-slate-12 outline-none focus:!border-n-brand !shadow-none m-0"
+                @input="
+                  e => (form.shipping_fee = parseCurrencyValue(e.target.value))
+                "
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-n-slate-11 mb-1">{{
+                t('CONVERSATION.ORDER_PANEL.DISCOUNT')
+              }}</label>
+              <input
+                type="text"
+                :value="formatCurrencyValue(form.discount_amount)"
+                class="w-full px-3 py-1 text-sm rounded-lg border border-transparent bg-n-alpha-1 hover:bg-n-alpha-2 focus:bg-n-solid-1 transition-colors text-n-slate-12 outline-none focus:!border-n-brand !shadow-none m-0"
+                @input="
+                  e =>
+                    (form.discount_amount = parseCurrencyValue(e.target.value))
+                "
               />
             </div>
 
-            <div class="flex items-center gap-3">
-              <div class="flex-1">
-                <label class="block text-xs font-medium text-n-slate-11 mb-1">{{
+            <div>
+              <label class="block text-xs font-medium text-n-slate-11 mb-1">{{
+                t('CONVERSATION.ORDER_PANEL.PAYMENT_METHOD')
+              }}</label>
+              <MultiselectDropdown
+                :options="paymentMethodOptionsList"
+                :selected-item="selectedPaymentMethod"
+                :has-thumbnail="false"
+                :multiselector-title="
                   t('CONVERSATION.ORDER_PANEL.PAYMENT_METHOD')
-                }}</label>
-                <select
-                  v-model="form.payment_method"
-                  class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-alpha-1 hover:bg-n-alpha-2 transition-colors text-n-slate-12 outline-none focus:border-n-brand focus:bg-n-solid-1 focus:ring-1 focus:ring-n-brand/30 cursor-pointer appearance-none"
-                  style="
-                    background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2394a3b8%22 stroke-width=%222%22%3e%3cpath d=%22m6 9 6 6 6-6%22/%3e%3c/svg%3e');
-                    background-repeat: no-repeat;
-                    background-position: right 0.5rem center;
-                    background-size: 1.25rem;
-                  "
-                >
-                  <option value="cod">COD</option>
-                  <option value="bank_transfer">Chuyển khoản</option>
-                  <option value="card">Thẻ / Ví điện tử</option>
-                </select>
-              </div>
-              <div class="flex-1">
-                <label class="block text-xs font-medium text-n-slate-11 mb-1">{{
+                "
+                :multiselector-placeholder="
+                  t('CONVERSATION.ORDER_PANEL.PAYMENT_METHOD')
+                "
+                :input-placeholder="
+                  t('CONVERSATION.ORDER_PANEL.PAYMENT_METHOD')
+                "
+                @select="item => (form.payment_method = item.id)"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-n-slate-11 mb-1">{{
+                t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.LABEL')
+              }}</label>
+              <MultiselectDropdown
+                :options="paymentStatusOptionsList"
+                :selected-item="selectedPaymentStatus"
+                :has-thumbnail="false"
+                :multiselector-title="
                   t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.LABEL')
-                }}</label>
-                <select
-                  v-model="form.payment_status"
-                  class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-alpha-1 hover:bg-n-alpha-2 transition-colors text-n-slate-12 outline-none focus:border-n-brand focus:bg-n-solid-1 focus:ring-1 focus:ring-n-brand/30 cursor-pointer appearance-none"
-                  style="
-                    background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2394a3b8%22 stroke-width=%222%22%3e%3cpath d=%22m6 9 6 6 6-6%22/%3e%3c/svg%3e');
-                    background-repeat: no-repeat;
-                    background-position: right 0.5rem center;
-                    background-size: 1.25rem;
-                  "
-                >
-                  <option value="unpaid">
-                    {{ t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.UNPAID') }}
-                  </option>
-                  <option value="paid">
-                    {{ t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PAID') }}
-                  </option>
-                  <option value="partially_refunded">
-                    {{
-                      t(
-                        'CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PARTIALLY_REFUNDED'
-                      )
-                    }}
-                  </option>
-                </select>
-              </div>
+                "
+                :multiselector-placeholder="
+                  t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.LABEL')
+                "
+                :input-placeholder="
+                  t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.LABEL')
+                "
+                @select="item => (form.payment_status = item.id)"
+              />
             </div>
           </div>
-        </AccordionItem>
 
-        <!-- Customer Info Accordion -->
-        <AccordionItem
-          :title="t('CONVERSATION.ORDER_PANEL.CUSTOMER_INFO')"
-          :is-open="isSectionOpen.customer"
-          compact
-          @toggle="toggleSection('customer')"
-        >
-          <div class="px-3 py-3 space-y-2.5">
-            <div v-if="!conversationId && !isEditing" class="mb-4">
-              <ContactSearch @select-contact="handleContactSelect" />
-            </div>
-            <input
-              v-model="form.customer_name"
-              type="text"
-              :placeholder="t('CONVERSATION.ORDER_PANEL.CUSTOMER_NAME')"
-              class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 placeholder:text-n-slate-9 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30"
-            />
-            <input
-              v-model="form.customer_phone"
-              type="tel"
-              :placeholder="t('CONVERSATION.ORDER_PANEL.PHONE')"
-              class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 placeholder:text-n-slate-9 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30"
-            />
-            <textarea
-              v-model="form.customer_address"
-              :placeholder="t('CONVERSATION.ORDER_PANEL.ADDRESS')"
-              rows="2"
-              class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 placeholder:text-n-slate-9 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 resize-none leading-relaxed"
-            />
-            <textarea
-              v-model="form.customer_note"
-              :placeholder="t('CONVERSATION.ORDER_PANEL.NOTE')"
-              rows="2"
-              class="w-full px-3 py-1.5 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 placeholder:text-n-slate-9 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 resize-none leading-relaxed"
-            />
+          <!-- Total -->
+          <div
+            v-if="form.items.length"
+            class="flex justify-between items-center py-2.5 px-3 rounded-lg bg-n-solid-3 border border-n-weak"
+          >
+            <span class="text-sm font-medium text-n-slate-11">
+              {{ t('CONVERSATION.ORDER_PANEL.TOTAL') }}
+            </span>
+            <span class="text-sm font-bold text-n-slate-12">
+              {{ formatCurrency(totalAmount) }}đ
+            </span>
           </div>
-        </AccordionItem>
+        </div>
       </div>
     </div>
 

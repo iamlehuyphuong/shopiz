@@ -30,7 +30,7 @@ export const useIntegrationHook = integrationId => {
    * @type {import('vue').ComputedRef<boolean>}
    */
   const hasConnectedHooks = computed(() => {
-    return !!integration.value.hooks.length;
+    return !!integration.value.hooks?.length;
   });
 
   /**
