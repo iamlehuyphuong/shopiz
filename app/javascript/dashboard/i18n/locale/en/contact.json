@@ -26,6 +26,8 @@
     },
     "OMICALL": {
       "CONNECT": "Open PBX Connection",
+      "NOT_CONNECTED": "Not connected to PBX",
+      "CONNECT_OMICALL": "Connect OMICall",
       "TITLE": "OMICall PBX",
       "CALL_STATUS": "Call status",
       "GET_HISTORY": "Get Call History",

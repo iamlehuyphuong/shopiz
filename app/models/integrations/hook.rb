@@ -127,7 +127,6 @@ class Integrations::Hook < ApplicationRecord
     return unless app_id == 'omicall'
 
     api_key = settings.present? ? settings['api_key'] : nil
-    return unless api_key
 
     ::Omicall::TeardownWebhookJob.perform_later(account_id, api_key)
   end

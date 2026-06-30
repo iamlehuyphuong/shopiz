@@ -5,6 +5,11 @@ class Omicall::TeardownWebhookJob < ApplicationJob
     account = Account.find_by(id: account_id)
     return unless account
 
+    # Reset SIP configurations for all agents when disconnecting
+    account.omicall_sip_infos.delete_all
+
+    return if api_key.blank?
+
     service = Omicall::CallService.new(account, api_key: api_key)
     response = service.unregister_webhook
 

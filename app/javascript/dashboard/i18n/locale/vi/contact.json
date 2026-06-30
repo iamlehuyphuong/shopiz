@@ -26,6 +26,8 @@
     },
     "OMICALL": {
       "CONNECT": "Mở Kết nối Tổng đài",
+      "NOT_CONNECTED": "Chưa kết nối tổng đài",
+      "CONNECT_OMICALL": "Kết nối OMICall",
       "TITLE": "Tổng đài OMICall",
       "CALL_STATUS": "Trạng thái gọi",
       "GET_HISTORY": "Tải lịch sử cuộc gọi",

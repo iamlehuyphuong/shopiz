@@ -149,16 +149,17 @@ watch(
 
 <template>
   <div class="omicall-panel">
-    <div v-if="!isInitialized" class="flex flex-col gap-2">
-      <woot-button
-        size="small"
-        icon="call"
-        color="primary"
-        variant="hollow"
+    <div v-if="!isInitialized" class="px-4 py-3">
+      <div class="text-[12px] text-n-slate-11 mb-2">
+        {{ $t('CONTACT_PANEL.OMICALL.NOT_CONNECTED') }}
+      </div>
+      <button
+        class="flex items-center text-[12px] text-n-orange-11 hover:underline"
         @click="initializeOmiCall"
       >
-        {{ $t('CONTACT_PANEL.OMICALL.CONNECT') }}
-      </woot-button>
+        <fluent-icon icon="arrow-right" class="mr-1" size="12" />
+        {{ $t('CONTACT_PANEL.OMICALL.CONNECT_OMICALL') }}
+      </button>
     </div>
     <div v-else>
       <div v-if="isReady" class="flex flex-col gap-2">

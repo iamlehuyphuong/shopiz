@@ -20,12 +20,12 @@ const integrationList = computed(
 
 const CATEGORIES = [
   {
-    key: 'AI_AUTOMATION',
-    ids: ['openai', 'dialogflow', 'webhook', 'google_translate'],
-  },
-  {
     key: 'WORKSPACE_SYNC',
     ids: ['linear', 'notion', 'slack', 'omicall'],
+  },
+  {
+    key: 'AI_AUTOMATION',
+    ids: ['openai', 'dialogflow', 'webhook', 'google_translate'],
   },
   {
     key: 'CUSTOM_EXTENSIONS',
@@ -51,9 +51,23 @@ const filteredIntegrationList = computed(() => {
       !HIDDEN_IDS.includes(item.id) &&
       !['draft', 'deprecated'].includes(item.status)
   );
+
+  const STATUS_ORDER = { published: 1, beta: 2, coming_soon: 3 };
+
+  const sortedVisible = visible.sort((a, b) => {
+    // Ưu tiên OMICall lên đầu
+    if (a.id === 'omicall' && b.id !== 'omicall') return -1;
+    if (b.id === 'omicall' && a.id !== 'omicall') return 1;
+
+    // Sắp xếp theo status: Published > Beta > Coming Soon
+    const statusA = STATUS_ORDER[a.status] || 99;
+    const statusB = STATUS_ORDER[b.status] || 99;
+    return statusA - statusB;
+  });
+
   const query = searchQuery.value.trim();
-  if (!query) return visible;
-  return picoSearch(visible, query, ['name', 'description']);
+  if (!query) return sortedVisible;
+  return picoSearch(sortedVisible, query, ['name', 'description']);
 });
 
 const categorizedIntegrations = computed(() => {
