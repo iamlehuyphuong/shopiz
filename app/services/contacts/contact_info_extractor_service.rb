@@ -4,8 +4,10 @@ class Contacts::ContactInfoExtractorService
   # Detects Vietnamese phone numbers starting with 0 or +84
   # Examples: 0901234567, +84901234567, 0987 123 456, 0987.123.456
   VN_PHONE_REGEX = /(?:\+84|0)(?:[\s\-\.]?\d{2,4}){2,4}\b/
-  CCCD_REGEX = /\b\d{12}\b/
-  ADDRESS_KEYWORDS_REGEX = /(phường|xã|quận|huyện|đường|thành phố|tỉnh|cccd|cmnd|căn cước)/i
+
+  ADDRESS_KEYWORDS = 'xã|phường|tỉnh|thành phố|quận|huyện|toà nhà|khu phố|lô|' \
+                     'ngõ|ngách|hẻm|đường|tổ|ấp|thôn|bản|khóm|x\.|p\.|t\.|tp\.|q\.|h\.'.freeze
+  ADDRESS_KEYWORDS_REGEX = /(#{ADDRESS_KEYWORDS})/i
 
   def initialize(message)
     @message = message
@@ -37,24 +39,31 @@ class Contacts::ContactInfoExtractorService
       end
     end
 
-    # Keep the fast synchronous legacy contact update
-    update_contact_fast(email, phone)
+    address_data = extract_address(content)
 
-    trigger_ai_expansion(content, email, phone)
+    update_contact_info(email, phone, address_data)
   end
 
-  def trigger_ai_expansion(content, has_email, has_phone)
-    has_cccd = content.match?(CCCD_REGEX)
-    has_address = content.match?(ADDRESS_KEYWORDS_REGEX)
+  def extract_address(content)
+    # Split message into lines or sentences
+    lines = content.split(/[\n\.]/)
 
-    # Nếu phát hiện bất kỳ dấu hiệu thông tin nào chưa có, hoặc có CCCD/Địa chỉ, ta gọi AI đọc lại ngữ cảnh.
-    return unless has_email || has_phone || has_cccd || has_address
-    return unless @account.feature_enabled?('captain_copilot') || @account.feature_enabled?('captain_assistant')
+    lines.each do |line|
+      line = line.strip
+      # Check reasonable length to avoid picking up single words or massive paragraphs
+      next if line.length < 10 || line.length > 150
 
-    CaptainContactAttributesJob.perform_later(@message.conversation_id)
+      if line.match?(ADDRESS_KEYWORDS_REGEX)
+        parsed = VietnamAddressParser.parse(line)
+        return parsed if parsed
+      end
+    end
+
+    nil
   end
 
-  def update_contact_fast(email, phone)
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
+  def update_contact_info(email, phone, address_data)
     attributes_to_update = {}
 
     attributes_to_update[:email] = email.downcase if email.present? && @contact.email.blank?
@@ -64,6 +73,16 @@ class Contacts::ContactInfoExtractorService
       attributes_to_update[:phone_number] = "+84#{phone}"
     end
 
+    if address_data.present?
+      attributes_to_update[:location] = address_data[:location] if address_data[:location].present? && @contact.location.blank?
+      attributes_to_update[:country_code] = address_data[:country_code] if address_data[:country_code].present? && @contact.country_code.blank?
+
+      if address_data[:city].present? && @contact.additional_attributes['city'].blank?
+        attributes_to_update[:additional_attributes] = @contact.additional_attributes.merge('city' => address_data[:city])
+      end
+    end
+
     @contact.update(attributes_to_update) if attributes_to_update.any?
   end
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
 end
