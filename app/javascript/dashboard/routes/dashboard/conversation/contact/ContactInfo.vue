@@ -61,13 +61,14 @@ export default {
     const maskContactInfo = computed(
       () => !checkPermissions(['contact_manage'])
     );
-    const { makeCall: makeOmicallCall, isReady: isOmicallReady } = useOmicall();
+    const { makeCall: makeOmicallCall, isReady: isOmicallReady, isOmicallConfigured } = useOmicall();
 
     return {
       isAdmin,
       maskContactInfo,
       makeOmicallCall,
       isOmicallReady,
+      isOmicallConfigured,
     };
   },
   data() {
@@ -231,10 +232,15 @@ export default {
       emitter.emit(BUS_EVENTS.NEW_CONVERSATION_MODAL, false);
     },
     async handleOmicallButtonClick() {
-      if (!this.isOmicallReady) {
-        useAlert(
-          'Tổng đài chưa kết nối, vui lòng mở kết nối trong panel OMICall'
-        );
+      if (!this.isOmicallConfigured) {
+        const isConfirmed =
+          await this.$refs.confirmConnectPbxDialog.showConfirmation();
+        if (isConfirmed) {
+          window.open(
+            `/app/accounts/${this.$route.params.accountId}/settings/integrations/omicall`,
+            '_blank'
+          );
+        }
         return;
       }
       const isConfirmed = await this.$refs.confirmCallDialog.showConfirmation();
@@ -959,11 +965,20 @@ export default {
       :title="$t('CONTACT_PANEL.OMICALL.CONFIRM_CALL.TITLE')"
       :description="
         $t('CONTACT_PANEL.OMICALL.CONFIRM_CALL.DESCRIPTION', {
-          phoneNumber: contact.phone_number || '',
+          phoneNumber: contact.phone_number
+            ? getPlainText(contact.phone_number)
+            : '',
         })
       "
       :confirm-label="$t('CONTACT_PANEL.OMICALL.CONFIRM_CALL.CONFIRM')"
       :cancel-label="$t('CONTACT_PANEL.OMICALL.CONFIRM_CALL.CANCEL')"
+    />
+    <woot-confirm-modal
+      ref="confirmConnectPbxDialog"
+      :title="$t('CONTACT_PANEL.OMICALL.CONNECT_PBX_CONFIRM.TITLE')"
+      :description="$t('CONTACT_PANEL.OMICALL.CONNECT_PBX_CONFIRM.DESCRIPTION')"
+      :confirm-label="$t('CONTACT_PANEL.OMICALL.CONNECT_PBX_CONFIRM.CONFIRM')"
+      :cancel-label="$t('CONTACT_PANEL.OMICALL.CONNECT_PBX_CONFIRM.CANCEL')"
     />
   </div>
 </template>

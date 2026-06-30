@@ -51,8 +51,15 @@
         "CONFIRM": "Call Now",
         "CANCEL": "Cancel"
       },
+      "CONNECT_PBX_CONFIRM": {
+        "TITLE": "PBX Not Connected",
+        "DESCRIPTION": "PBX is not connected. Do you want to open the OMICall configuration settings page?",
+        "CONFIRM": "Connect Now",
+        "CANCEL": "Cancel"
+      },
       "TOOLTIP_NO_PHONE": "No phone number available",
-      "TOOLTIP_CALL": "Make a call via OMICall"
+      "TOOLTIP_CALL": "Make a call via OMICall",
+      "AUDIO_NOT_SUPPORTED": "Your browser does not support the audio element."
     },
     "COPY_SUCCESSFUL": "Copied to clipboard successfully",
     "SAVE_CONTACT": "Save to contact",

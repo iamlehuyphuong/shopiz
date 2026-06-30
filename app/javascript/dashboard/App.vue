@@ -58,7 +58,7 @@ export default {
     const canManageContacts = computed(() =>
       checkPermissions(['contact_manage'])
     );
-    const { initOmicall } = useOmicall();
+    const { initOmicall, resetOmicall } = useOmicall();
 
     return {
       router,
@@ -68,6 +68,7 @@ export default {
       uiSettings,
       canManageContacts,
       initOmicall,
+      resetOmicall,
     };
   },
   data() {
@@ -193,11 +194,15 @@ export default {
       immediate: true,
       handler(user) {
         if (user) {
-          const sipInfo = user.omicall_sip_info || user.custom_attributes || {};
+          const sipInfo = user.omicall_sip_info || {};
           const { sip_user, sip_password, sip_domain } = sipInfo;
           if (sip_user && sip_password && sip_domain) {
             this.initOmicall(sip_user, sip_password, sip_domain);
+          } else {
+            this.resetOmicall();
           }
+        } else {
+          this.resetOmicall();
         }
       },
     },
