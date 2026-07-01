@@ -44,6 +44,7 @@ Rails.application.routes.draw do
       resources :accounts, only: [:create, :show, :update] do
         member do
           post :update_active_at
+          post :test_email
           get :cache_keys
         end
 

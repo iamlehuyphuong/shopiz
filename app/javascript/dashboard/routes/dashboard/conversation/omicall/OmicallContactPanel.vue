@@ -221,9 +221,9 @@ watch(isInitialized, initialized => {
               {{ formatDuration(call.duration) }}
             </span>
           </div>
-          <div v-if="call.recording_file_url" class="mt-2">
+          <div v-if="call.recording_file || call.recording_file_url" class="mt-2">
             <audio controls class="w-full h-8">
-              <source :src="call.recording_file_url" type="audio/mpeg" />
+              <source :src="call.recording_file || call.recording_file_url" type="audio/mpeg" />
               {{ $t('CONTACT_PANEL.OMICALL.AUDIO_NOT_SUPPORTED') }}
             </audio>
           </div>

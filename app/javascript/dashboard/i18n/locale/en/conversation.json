@@ -355,9 +355,9 @@
         "error_moved_to_open": "Conversation was marked open by system due to an error with the agent bot."
       },
       "omicall": {
-        "call_summary": "📞 <strong>Call Summary {direction_text} (OmiCall)</strong><br>- Duration: {duration} seconds<br>- Callbot AI: {callbot}<br>- Recording: <a href='{record_url}' target='_blank'>Listen</a>",
-        "call_summary_no_record": "📞 <strong>Call Summary {direction_text} (OmiCall)</strong><br>- Duration: {duration} seconds<br>- Callbot AI: {callbot}",
-        "missed_call": "📞 <strong>Missed Call {direction_text} (OmiCall)</strong>"
+        "call_summary": "📞 Call {direction_text} customer: Duration {duration} seconds. <a href='{record_url}' target='_blank'>(Listen)</a>",
+        "call_summary_no_record": "📞 Call {direction_text} customer: Duration {duration} seconds.",
+        "missed_call": "📞 Call {direction_text} customer: Missed call."
       },
       "status": {
         "resolved": "Conversation was marked resolved by {user_name}",

@@ -22,6 +22,10 @@ class AccountAPI extends ApiClient {
       params,
     });
   }
+
+  testEmail(email) {
+    return axios.post(`/api/v1/accounts/${this.accountIdFromRoute}/test_email`, { email });
+  }
 }
 
 export default new AccountAPI();

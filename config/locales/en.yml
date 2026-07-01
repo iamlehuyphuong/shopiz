@@ -416,8 +416,8 @@ en:
       short_description: 'Smart multi-channel VoIP virtual switchboard with AI.'
       description: 'Integrate OMICall to reduce call costs, manage customers, make free internal calls, and increase revenue quickly.'
       direction:
-        inbound: 'Incoming'
-        outbound: 'Outgoing'
+        inbound: 'from'
+        outbound: 'to'
       callbot:
         yes: 'Yes'
         no: 'No'

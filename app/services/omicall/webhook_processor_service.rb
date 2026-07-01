@@ -29,8 +29,9 @@ class Omicall::WebhookProcessorService
     duration = @payload['bill_sec'].to_i
     answer_sec = @payload['answer_sec'].to_i
     callbot = @payload['is_callbot']
-    record_url = @payload['recording_file_url']
+    record_url = @payload['recording_file'].presence || @payload['recording_file_url']
     direction = @payload['direction']
+    transaction_id = @payload['transaction_id']
 
     direction_key = direction == 'outbound' ? 'outbound' : 'inbound'
     locale = conversation.account.locale || I18n.default_locale
@@ -47,22 +48,37 @@ class Omicall::WebhookProcessorService
                       end
 
     callbot_text = I18n.t("omicall.callbot.#{callbot ? 'yes' : 'no'}", locale: locale)
+    
+    content_attributes = {
+      translation_key: translation_key,
+      translation_values: {
+        direction_text: direction_text,
+        duration: duration,
+        callbot: callbot_text,
+        record_url: record_url
+      }
+    }
+
+    if transaction_id.present?
+      source_id = "omicall_#{transaction_id}"
+      existing_message = conversation.messages.find_by(source_id: source_id)
+      
+      if existing_message
+        existing_message.update!(content_attributes: existing_message.content_attributes.merge(content_attributes))
+        return
+      end
+    else
+      source_id = nil
+    end
 
     Message.create!(
       conversation: conversation,
       account_id: conversation.account_id,
       inbox_id: conversation.inbox_id,
       message_type: :activity,
+      source_id: source_id,
       content: '',
-      content_attributes: {
-        translation_key: translation_key,
-        translation_values: {
-          direction_text: direction_text,
-          duration: duration,
-          callbot: callbot_text,
-          record_url: record_url
-        }
-      }
+      content_attributes: content_attributes
     )
   end
 end
