@@ -51,8 +51,15 @@
         "CONFIRM": "Gọi ngay",
         "CANCEL": "Hủy bỏ"
       },
+      "CONNECT_PBX_CONFIRM": {
+        "TITLE": "Tổng đài chưa kết nối",
+        "DESCRIPTION": "Tổng đài chưa được kết nối. Bạn có muốn mở trang cấu hình kết nối OMICall không?",
+        "CONFIRM": "Kết nối ngay",
+        "CANCEL": "Hủy bỏ"
+      },
       "TOOLTIP_NO_PHONE": "Chưa có số điện thoại",
-      "TOOLTIP_CALL": "Tạo cuộc gọi qua OMICall"
+      "TOOLTIP_CALL": "Tạo cuộc gọi qua OMICall",
+      "AUDIO_NOT_SUPPORTED": "Trình duyệt của bạn không hỗ trợ định dạng âm thanh này."
     },
     "COPY_SUCCESSFUL": "Sao chép thành công",
     "SAVE_CONTACT": "Lưu vào danh bạ",

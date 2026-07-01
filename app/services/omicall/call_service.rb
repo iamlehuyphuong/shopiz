@@ -7,7 +7,7 @@ class Omicall::CallService
   end
 
   def click2call(extension:, hotline:, phone_number:)
-    endpoint = "#{API_BASE_URL}/omicall-api/click2call"
+    endpoint = "#{API_BASE_URL}/api/click2call"
     body = {
       extension: extension,
       hotline: hotline,

@@ -259,6 +259,7 @@ const animationClasses = computed(() => {
 <template>
   <button
     v-bind="filteredAttrs"
+    :disabled="isLoading || $attrs.disabled"
     :class="{
       [STYLE_CONFIG.base]: true,
       [isLink ? linkButtonClasses : buttonClasses]: true,

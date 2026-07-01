@@ -1,7 +1,8 @@
 <script setup>
 import { useOmicall } from 'dashboard/composables/useOmicall';
-import { computed, ref } from 'vue';
-import { useMapGetter } from 'dashboard/composables/store';
+import { ref } from 'vue';
+import { useAccount } from 'dashboard/composables/useAccount';
+import Button from 'dashboard/components-next/button/Button.vue';
 
 const props = defineProps({
   contact: {
@@ -14,32 +15,7 @@ const props = defineProps({
   },
 });
 
-const currentUser = useMapGetter('getCurrentUser');
-const sipUsername = computed(
-  () =>
-    currentUser.value?.omicall_sip_info?.sip_user ||
-    currentUser.value?.custom_attributes?.sip_user
-);
-const sipPassword = computed(
-  () =>
-    currentUser.value?.omicall_sip_info?.sip_password ||
-    currentUser.value?.custom_attributes?.sip_password
-);
-const sipDomain = computed(
-  () =>
-    currentUser.value?.omicall_sip_info?.sip_domain ||
-    currentUser.value?.custom_attributes?.sip_domain
-);
-
-const {
-  isInitialized,
-  isReady,
-  connectionStatus,
-  currentCall,
-  initOmicall,
-  makeCall,
-  toggleDial,
-} = useOmicall();
+const { isInitialized, isReady, currentCall } = useOmicall();
 
 const showAlertModal = ref(false);
 const alertMessage = ref('');
@@ -47,22 +23,13 @@ const alertMessage = ref('');
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
-const initializeOmiCall = () => {
-  if (sipUsername.value && sipPassword.value && sipDomain.value) {
-    initOmicall(sipUsername.value, sipPassword.value, sipDomain.value);
-  } else {
-    alertMessage.value = t('CONTACT_PANEL.OMICALL.MISSING_SIP_CONFIG');
-    showAlertModal.value = true;
-  }
-};
+const { accountId } = useAccount();
 
-const callContact = () => {
-  if (!props.contact.phone_number) {
-    alertMessage.value = t('CONTACT_PANEL.OMICALL.MISSING_PHONE');
-    showAlertModal.value = true;
-    return;
-  }
-  makeCall(props.contact.phone_number);
+const initializeOmiCall = () => {
+  window.open(
+    `/app/accounts/${accountId.value}/settings/integrations/omicall`,
+    '_blank'
+  );
 };
 
 const closeAlertModal = () => {
@@ -79,6 +46,8 @@ const historyError = ref('');
 const hasFetchedForCurrentPhone = ref(false);
 
 const fetchCallHistory = async () => {
+  if (!isInitialized.value) return;
+
   if (!props.contact.phone_number) {
     callHistory.value = [];
     hasFetchedForCurrentPhone.value = true;
@@ -121,7 +90,7 @@ const formatDuration = seconds => {
 };
 
 onMounted(() => {
-  if (props.isExpanded) {
+  if (props.isExpanded && isInitialized.value) {
     fetchCallHistory();
   }
 });
@@ -131,7 +100,7 @@ watch(
   () => {
     callHistory.value = [];
     hasFetchedForCurrentPhone.value = false;
-    if (props.isExpanded) {
+    if (props.isExpanded && isInitialized.value) {
       fetchCallHistory();
     }
   }
@@ -140,29 +109,38 @@ watch(
 watch(
   () => props.isExpanded,
   expanded => {
-    if (expanded && !hasFetchedForCurrentPhone.value) {
+    if (expanded && !hasFetchedForCurrentPhone.value && isInitialized.value) {
       fetchCallHistory();
     }
   }
 );
+
+watch(isInitialized, initialized => {
+  if (initialized && props.isExpanded && !hasFetchedForCurrentPhone.value) {
+    fetchCallHistory();
+  }
+});
 </script>
 
 <template>
   <div class="omicall-panel">
-    <div v-if="!isInitialized" class="px-4 py-3">
-      <div class="text-[12px] text-n-slate-11 mb-2">
+    <div v-if="!isInitialized" class="relative">
+      <div class="px-4 py-3 mb-4 text-n-slate-11">
         {{ $t('CONTACT_PANEL.OMICALL.NOT_CONNECTED') }}
       </div>
-      <button
-        class="flex items-center text-[12px] text-n-orange-11 hover:underline"
-        @click="initializeOmiCall"
-      >
-        <fluent-icon icon="arrow-right" class="mr-1" size="12" />
-        {{ $t('CONTACT_PANEL.OMICALL.CONNECT_OMICALL') }}
-      </button>
+      <div class="flex items-center justify-end mt-1 pb-3 pr-2">
+        <Button
+          link
+          xs
+          icon="i-lucide-arrow-right"
+          class="!gap-1"
+          :label="$t('CONTACT_PANEL.OMICALL.CONNECT_OMICALL')"
+          @click="initializeOmiCall"
+        />
+      </div>
     </div>
     <div v-else>
-      <div v-if="isReady" class="flex flex-col gap-2">
+      <div v-if="isReady" class="flex flex-col gap-2 px-4">
         <div
           v-if="currentCall"
           class="mt-2 text-xs text-slate-700 dark:text-slate-300"
@@ -173,16 +151,16 @@ watch(
       </div>
     </div>
 
-    <!-- Always show call history regardless of PBX connection status -->
-    <div>
+    <!-- Show call history only when PBX connection is initialized -->
+    <div v-if="isInitialized">
       <div
         v-if="isLoadingHistory && !callHistory.length"
-        class="text-center py-4"
+        class="text-center py-4 px-4"
       >
         <woot-spinner size="small" />
       </div>
 
-      <div v-else-if="historyError" class="text-xs text-red-500 py-2">
+      <div v-else-if="historyError" class="text-xs text-red-500 py-2 px-4">
         {{ historyError }}
       </div>
 
@@ -197,7 +175,7 @@ watch(
         <div
           v-for="call in callHistory"
           :key="call.transaction_id"
-          class="py-3 first:pt-0 border-b border-slate-100 dark:border-slate-800 last:border-b-0 text-xs"
+          class="px-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-b-0 text-xs"
         >
           <div class="flex justify-between items-start mb-1">
             <span class="font-semibold text-slate-700 dark:text-slate-200">
@@ -243,16 +221,16 @@ watch(
               {{ formatDuration(call.duration) }}
             </span>
           </div>
-          <div v-if="call.recording_file_url" class="mt-2">
+          <div v-if="call.recording_file || call.recording_file_url" class="mt-2">
             <audio controls class="w-full h-8">
-              <source :src="call.recording_file_url" type="audio/mpeg" />
-              Your browser does not support the audio element.
+              <source :src="call.recording_file || call.recording_file_url" type="audio/mpeg" />
+              {{ $t('CONTACT_PANEL.OMICALL.AUDIO_NOT_SUPPORTED') }}
             </audio>
           </div>
         </div>
       </div>
 
-      <div class="flex justify-end mt-2">
+      <div class="flex justify-end mt-2 px-4 pb-3">
         <button
           class="flex items-center text-[12px] text-n-orange-11 hover:underline disabled:opacity-50"
           :disabled="isLoadingHistory"

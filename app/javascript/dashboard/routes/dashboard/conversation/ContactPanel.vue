@@ -206,6 +206,7 @@ onErrorCaptured(err => {
             <AccordionItem
               :title="omicallTitle"
               :is-open="isContactSidebarItemOpen('is_omicall_open')"
+              compact
               @toggle="value => toggleSidebarUIState('is_omicall_open', value)"
             >
               <OmicallContactPanel

@@ -182,7 +182,7 @@
         "ENABLE_LABEL": "Bật thông báo qua Gmail",
         "SENDER_EMAIL": {
           "LABEL": "Địa chỉ Gmail",
-          "PLACEHOLDER": "VD: your.name@gmail.com",
+          "PLACEHOLDER": "VD: your.name{'@'}gmail.com",
           "ERROR": "Phải là email hợp lệ"
         },
         "SMTP_PASSWORD": {
@@ -190,7 +190,10 @@
           "PLACEHOLDER": "Mật khẩu ứng dụng gồm 16 ký tự",
           "ERROR": "Mật khẩu ứng dụng là bắt buộc"
         },
-        "SUBMIT": "Lưu cài đặt"
+        "SUBMIT": "Lưu cài đặt",
+        "TEST_EMAIL_SUBMIT": "Gửi thư mẫu",
+        "TEST_EMAIL_SUCCESS": "Đã gửi thư mẫu thành công",
+        "TEST_EMAIL_ERROR": "Lỗi khi gửi thư mẫu. Vui lòng kiểm tra lại cài đặt."
       }
     },
     "UPDATE_CHATWOOT": "Có bản cập nhật mới ({latestShopizVersion}) cho Shopiz. Vui lòng cập nhật ngay.",

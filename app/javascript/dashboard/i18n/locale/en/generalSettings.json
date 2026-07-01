@@ -182,7 +182,7 @@
         "ENABLE_LABEL": "Enable Gmail Notifications",
         "SENDER_EMAIL": {
           "LABEL": "Gmail Address",
-          "PLACEHOLDER": "e.g. your.name@gmail.com",
+          "PLACEHOLDER": "e.g. your.name{'@'}gmail.com",
           "ERROR": "Must be a valid email"
         },
         "SMTP_PASSWORD": {
@@ -190,7 +190,10 @@
           "PLACEHOLDER": "16-character app password",
           "ERROR": "App Password is required"
         },
-        "SUBMIT": "Save Settings"
+        "SUBMIT": "Save Settings",
+        "TEST_EMAIL_SUBMIT": "Send sample email",
+        "TEST_EMAIL_SUCCESS": "Sample email sent successfully",
+        "TEST_EMAIL_ERROR": "Error sending sample email. Please check your settings."
       }
     },
     "UPDATE_CHATWOOT": "An update {latestShopizVersion} for Shopiz is available. Please update your instance.",

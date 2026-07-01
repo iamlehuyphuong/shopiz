@@ -128,9 +128,7 @@ export default {
           this.extensions = response.data.payload.items;
 
           this.agents.forEach(agent => {
-            const sipUser =
-              agent.omicall_sip_info?.sip_user ||
-              agent.custom_attributes?.sip_user;
+            const sipUser = agent.omicall_sip_info?.sip_user;
             if (sipUser) {
               const ext = this.extensions.find(e => e.sip_user === sipUser);
               this.selectedExtensions[agent.id] = ext || null;
@@ -177,12 +175,6 @@ export default {
         this.$store.commit('agents/UPDATE_AGENT', {
           ...agent,
           omicall_sip_info: sipInfo,
-          custom_attributes: {
-            ...agent.custom_attributes,
-            sip_user: selectedExt.sip_user,
-            sip_password: selectedExt.password,
-            sip_domain: selectedExt.domain,
-          },
         });
 
         // If the mapped agent is the current user, update auth store as well
@@ -191,12 +183,6 @@ export default {
           this.$store.commit('SET_CURRENT_USER', {
             ...currentUser,
             omicall_sip_info: sipInfo,
-            custom_attributes: {
-              ...currentUser.custom_attributes,
-              sip_user: selectedExt.sip_user,
-              sip_password: selectedExt.password,
-              sip_domain: selectedExt.domain,
-            },
           });
         }
 

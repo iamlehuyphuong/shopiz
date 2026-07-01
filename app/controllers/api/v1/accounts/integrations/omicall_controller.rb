@@ -2,8 +2,15 @@ class Api::V1::Accounts::Integrations::OmicallController < Api::V1::Accounts::Ba
   before_action :check_admin_authorization?
 
   def click_to_call
+    sip_info = Current.account.omicall_sip_infos.find_by(user_id: Current.user.id)
+    extension = sip_info&.sip_user
+
+    if extension.blank?
+      return render json: { error: I18n.t('integrations.omicall.errors.sip_not_configured') || 'OmiCall SIP configuration not found for this user' }, status: :unprocessable_entity
+    end
+
     response = call_service.click2call(
-      extension: params[:extension],
+      extension: extension,
       hotline: params[:hotline],
       phone_number: params[:phone_number]
     )

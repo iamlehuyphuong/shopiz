@@ -6,6 +6,8 @@ import WithLabel from 'v3/components/Form/WithLabel.vue';
 import NextInput from 'next/input/Input.vue';
 import NextSwitch from 'dashboard/components-next/switch/Switch.vue';
 import NextButton from 'dashboard/components-next/button/Button.vue';
+import AccountAPI from 'dashboard/api/account';
+import { useAlert } from 'dashboard/composables';
 
 export default {
   components: {
@@ -25,6 +27,7 @@ export default {
       default: false,
     },
   },
+  emits: ['submit'],
   setup() {
     const v$ = useVuelidate();
     return { v$ };
@@ -34,6 +37,7 @@ export default {
       enabled: false,
       senderEmail: '',
       smtpPassword: '',
+      isTesting: false,
     };
   },
   validations: {
@@ -68,6 +72,21 @@ export default {
     },
   },
   methods: {
+    async testEmail() {
+      this.v$.$touch();
+      if (this.v$.$invalid) {
+        return;
+      }
+      this.isTesting = true;
+      try {
+        await AccountAPI.testEmail(this.senderEmail);
+        useAlert(this.$t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.TEST_EMAIL_SUCCESS'));
+      } catch (error) {
+        useAlert(this.$t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.TEST_EMAIL_ERROR'));
+      } finally {
+        this.isTesting = false;
+      }
+    },
     onSubmit() {
       this.v$.$touch();
       if (this.v$.$invalid) {
@@ -167,9 +186,16 @@ export default {
         </div>
       </div>
 
-      <div>
+      <div class="flex gap-2">
         <NextButton blue :is-loading="isUpdating" type="submit">
           {{ $t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.SUBMIT') }}
+        </NextButton>
+        <NextButton
+          v-if="enabled"
+          :is-loading="isTesting"
+          @click.prevent="testEmail"
+        >
+          {{ $t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.TEST_EMAIL_SUBMIT') }}
         </NextButton>
       </div>
     </form>
