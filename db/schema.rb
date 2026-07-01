@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_29_171641) do
+ActiveRecord::Schema[7.1].define(version: 2026_07_01_153526) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -1070,6 +1070,21 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_29_171641) do
     t.index ["inbox_id"], name: "index_inbox_capacity_limits_on_inbox_id"
   end
 
+  create_table "inbox_daily_summaries", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.integer "inbox_ids", default: [], array: true
+    t.boolean "enabled", default: false
+    t.text "summary_instruction"
+    t.jsonb "schedule_times", default: []
+    t.integer "user_ids", default: [], array: true
+    t.string "timezone", default: "UTC"
+    t.datetime "last_run_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "reporting_instruction"
+    t.index ["account_id"], name: "index_inbox_daily_summaries_unique_on_account_id", unique: true
+  end
+
   create_table "inbox_label_mappings", force: :cascade do |t|
     t.bigint "inbox_id", null: false
     t.bigint "label_id", null: false
@@ -1709,6 +1724,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_29_171641) do
   add_foreign_key "appointments", "products"
   add_foreign_key "contact_optins", "contacts"
   add_foreign_key "contact_optins", "inboxes"
+  add_foreign_key "inbox_daily_summaries", "accounts"
   add_foreign_key "inbox_label_mappings", "inboxes"
   add_foreign_key "inbox_label_mappings", "labels"
   add_foreign_key "inboxes", "integrations_hooks", column: "ecommerce_integration_id"

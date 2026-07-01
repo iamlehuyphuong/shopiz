@@ -95,13 +95,14 @@ const toggleOption = option => {
     <template #trigger="{ toggle }">
       <button
         v-if="hasItems"
+        type="button"
         class="bg-n-alpha-2 py-2 rounded-lg h-8 flex items-center px-0"
-        @click="toggle"
+        @click.prevent="toggle"
       >
         <div
           v-for="item in selectedVisibleItems"
           :key="item.name"
-          class="px-3 border-r rtl:border-l rtl:border-r-0 border-n-weak text-n-slate-12 text-sm flex gap-2 items-center max-w-[100px]"
+          class="px-3 border-r rtl:border-l rtl:border-r-0 border-n-weak text-n-slate-12 text-sm flex gap-2 items-center max-w-[200px]"
         >
           <Icon v-if="item.icon" :icon="item.icon" class="flex-shrink-0" />
           <span class="truncate">{{ item.name }}</span>
@@ -109,7 +110,7 @@ const toggleOption = option => {
         <div
           v-if="remainingItems.length > 0"
           v-tooltip.top="remainingTooltip"
-          class="px-3 border-r rtl:border-l rtl:border-r-0 border-n-weak text-n-slate-12 text-sm flex gap-2 items-center max-w-[100px]"
+          class="px-3 border-r rtl:border-l rtl:border-r-0 border-n-weak text-n-slate-12 text-sm flex gap-2 items-center max-w-[200px]"
         >
           <span class="truncate">{{
             t('COMBOBOX.MORE', { count: remainingItems.length })
@@ -119,14 +120,14 @@ const toggleOption = option => {
           <Icon icon="i-lucide-plus" />
         </div>
       </button>
-      <Button v-else sm slate faded @click="toggle">
+      <Button v-else type="button" sm slate faded @click.prevent="toggle">
         <template #icon>
           <Icon icon="i-lucide-plus" class="text-n-slate-11" />
         </template>
         <span class="text-n-slate-11">{{ t('COMBOBOX.PLACEHOLDER') }}</span>
       </Button>
     </template>
-    <DropdownBody class="top-0 min-w-48 z-50" strong>
+    <DropdownBody class="top-0 min-w-64 max-w-[400px] z-50" strong>
       <DropdownSection :height="dropdownMaxHeight">
         <DropdownItem
           v-for="option in options"

@@ -118,3 +118,10 @@ agent_reminder_job:
   class: 'Conversations::AgentReminderJob'
   queue: scheduled_jobs
 
+
+# executed every 15 minutes
+# sends daily summary for configured inboxes
+daily_summary_cron_job:
+  cron: '*/15 * * * *'
+  class: 'Scheduler::DailySummaryCronJob'
+  queue: scheduled_jobs

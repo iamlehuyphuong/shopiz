@@ -43,6 +43,8 @@ import mfa from './mfa.json';
 import sales from './sales.json';
 import yearInReview from './yearInReview.json';
 
+import utilities from './utilities.json';
+
 export default {
   ...advancedFilters,
   ...agentBots,
@@ -79,6 +81,7 @@ export default {
   ...search,
   ...setNewPassword,
   ...settings,
+  ...utilities,
   ...signup,
   ...sla,
   ...snooze,

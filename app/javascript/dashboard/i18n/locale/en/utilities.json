@@ -1,0 +1,42 @@
+{
+  "DAILY_SUMMARY": {
+    "TITLE": "Conversation Summary",
+    "DESCRIPTION": "The AI Conversation Summary feature will automatically review and collect all customer interactions in specified inboxes. It analyzes and extracts key information based on your settings, then automatically schedules and sends email reports to the support team.",
+    "CONFIG_SECTION": {
+      "TITLE": "Automatic Conversation Reporting",
+      "DESCRIPTION": "Enable this setting for the system to start scanning and sending automated reports based on configured criteria."
+    },
+    "FORM": {
+      "INBOXES": {
+        "LABEL": "Inboxes to summarize",
+        "HELP": "Select the inboxes where AI will collect conversation data."
+      },
+      "RECIPIENTS": {
+        "LABEL": "Report recipients",
+        "HELP": "These agents will receive automated email reports."
+      },
+      "SCHEDULE": {
+        "LABEL": "Select report sending times",
+        "HELP": "Select the time intervals the system will run reports."
+      },
+      "TIMEZONE": {
+        "PLACEHOLDER": "Select timezone"
+      },
+      "SAVE": "Save changes",
+      "SUMMARY_INSTRUCTION": {
+        "LABEL": "Summary instruction",
+        "HELP": "Clearly describe how the AI should extract key information from individual conversations. Focus on ignoring noise and capturing insights.",
+        "PLACEHOLDER": "E.g: Extract customer complaints, product issues, or specific requests. Ignore pleasantries."
+      },
+      "REPORTING_INSTRUCTION": {
+        "LABEL": "Reporting instruction",
+        "HELP": "Clearly describe how the AI should merge the extracted insights into a final Markdown report.",
+        "PLACEHOLDER": "E.g: Group complaints by category. Create a bulleted list of top issues. Summarize overall sentiment."
+      }
+    },
+    "ALERTS": {
+      "SUCCESS": "Configuration updated successfully",
+      "ERROR": "An error occurred while saving configuration"
+    }
+  }
+}

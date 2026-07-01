@@ -1,0 +1,42 @@
+{
+  "DAILY_SUMMARY": {
+    "TITLE": "Tóm tắt hội thoại",
+    "DESCRIPTION": "Tính năng AI Tóm tắt hội thoại sẽ tự động rà soát, thu thập toàn bộ nội dung trao đổi với khách hàng trên các hộp thư được chỉ định. Sau đó phân tích và trích xuất thông tin trọng tâm theo các tiêu chí đã cài đặt, rồi lập lịch gửi báo cáo báo cáo qua email cho đội ngũ hỗ trợ một cách hoàn toàn tự động.",
+    "CONFIG_SECTION": {
+      "TITLE": "Tự động báo cáo hội thoại",
+      "DESCRIPTION": "Bật cấu hình này để hệ thống bắt đầu quét và gửi báo cáo tự động theo các tiêu chí đã cài đặt."
+    },
+    "FORM": {
+      "INBOXES": {
+        "LABEL": "Hộp thư cần tóm tắt",
+        "HELP": "Chọn các hộp thư mà AI sẽ thu thập dữ liệu hội thoại."
+      },
+      "RECIPIENTS": {
+        "LABEL": "Người nhận báo cáo",
+        "HELP": "Các nhân viên này sẽ nhận được email báo cáo tự động."
+      },
+      "SCHEDULE": {
+        "LABEL": "Chọn giờ gửi báo cáo",
+        "HELP": "Chọn mốc thời gian hệ thống sẽ chạy báo cáo."
+      },
+      "TIMEZONE": {
+        "PLACEHOLDER": "Chọn múi giờ"
+      },
+      "SAVE": "Lưu thay đổi",
+      "SUMMARY_INSTRUCTION": {
+        "LABEL": "Hướng dẫn tóm tắt thông tin",
+        "HELP": "Mô tả rõ yêu cầu AI nên trích xuất thông tin gì từ các cuộc hội thoại riêng lẻ. Tập trung vào việc loại bỏ thông tin nhiễu.",
+        "PLACEHOLDER": "VD: Liệt kê các phàn nàn của khách hàng, lỗi sản phẩm... Bỏ qua các câu chào hỏi."
+      },
+      "REPORTING_INSTRUCTION": {
+        "LABEL": "Hướng dẫn tổng hợp báo cáo",
+        "HELP": "Mô tả cách AI gộp các thông tin đã trích xuất thành một báo cáo Markdown hoàn chỉnh.",
+        "PLACEHOLDER": "VD: Phân nhóm theo loại phàn nàn. Tổng hợp thành các gạch đầu dòng rõ ràng."
+      }
+    },
+    "ALERTS": {
+      "SUCCESS": "Cập nhật cấu hình thành công",
+      "ERROR": "Có lỗi xảy ra khi lưu cấu hình"
+    }
+  }
+}
