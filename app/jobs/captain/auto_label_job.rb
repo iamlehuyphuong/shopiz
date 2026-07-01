@@ -1,17 +1,14 @@
 class Captain::AutoLabelJob < ApplicationJob
   queue_as :low
 
-  def perform(conversation_id, trigger_type)
+  def perform(conversation_id, message_id)
     conversation = Conversation.find_by(id: conversation_id)
     return if conversation.blank?
     return unless conversation.account.feature_enabled?('captain_tasks')
 
-    # If triggered by 'delay', check if 15 minutes have passed since last incoming message
-    if trigger_type == 'delay'
-      last_incoming = conversation.messages.incoming.last
-      return if last_incoming.blank?
-      return if last_incoming.created_at > 15.minutes.ago
-    end
+    # Abort if this message is no longer the last incoming message
+    last_incoming = conversation.messages.incoming.last
+    return if last_incoming.blank? || last_incoming.id != message_id
 
     # Call LabelSuggestionService
     service = Captain::LabelSuggestionService.new(

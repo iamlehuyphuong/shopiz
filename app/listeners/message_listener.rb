@@ -84,16 +84,9 @@ class MessageListener < BaseListener
   def schedule_auto_label(message)
     return unless message.incoming?
     return unless message.account.feature_enabled?('captain_tasks')
+    return unless message.inbox.active_bot?
 
-    # Trigger 1: Every 5 incoming messages
-    incoming_count = message.conversation.messages.incoming.count
-    Captain::AutoLabelJob.perform_async(message.conversation_id, 'count') if incoming_count.positive? && (incoming_count % 5).zero?
-
-    # Trigger 2: 15 minutes after the last incoming message (if customer stops responding)
-    debounce_key = format(::Redis::Alfred::AUTO_LABEL_DEBOUNCE_KEY, conversation_id: message.conversation_id)
-    return if Redis::Alfred.get(debounce_key).present?
-
-    Redis::Alfred.setex(debounce_key, 15.minutes, '1')
-    Captain::AutoLabelJob.set(wait: 15.minutes).perform_later(message.conversation_id, 'delay')
+    # Trigger: 15 minutes after the last incoming message (if customer stops responding)
+    Captain::AutoLabelJob.set(wait: 15.minutes).perform_later(message.conversation_id, message.id)
   end
 end
