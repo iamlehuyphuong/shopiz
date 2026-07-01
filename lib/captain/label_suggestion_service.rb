@@ -1,10 +1,12 @@
 class Captain::LabelSuggestionService < Captain::BaseTaskService
-  pattr_initialize [:account!, :conversation_display_id!]
+  pattr_initialize [:account!, :conversation_display_id!, { skip_cache: false }]
 
   def perform
     # Check cache first
-    cached_response = read_from_cache
-    return cached_response if cached_response.present?
+    unless skip_cache
+      cached_response = read_from_cache
+      return cached_response if cached_response.present?
+    end
 
     # Build content
     content = labels_with_messages
@@ -12,7 +14,7 @@ class Captain::LabelSuggestionService < Captain::BaseTaskService
 
     # Make API call
     response = make_api_call(
-      model: GPT_MODEL, # TODO: Use separate model for label suggestion
+      model: openai_hook&.settings&.dig('model').presence || ENV.fetch('CAPTAIN_LABEL_SUGGESTION_MODEL', 'gpt-4o-mini'),
       messages: [
         { role: 'system', content: prompt_from_file('label_suggestion') },
         { role: 'user', content: content }

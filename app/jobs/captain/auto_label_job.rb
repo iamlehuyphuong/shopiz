@@ -16,9 +16,10 @@ class Captain::AutoLabelJob < ApplicationJob
     # Call LabelSuggestionService
     service = Captain::LabelSuggestionService.new(
       account: conversation.account,
-      conversation_display_id: conversation.display_id
+      conversation_display_id: conversation.display_id,
+      skip_cache: true
     )
-    
+
     # We don't want to use cache, we just want to execute.
     # The current service reads from cache. Let's bypass cache or just let it cache.
     result = service.perform

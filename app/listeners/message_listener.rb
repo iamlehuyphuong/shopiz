@@ -21,7 +21,7 @@ class MessageListener < BaseListener
     attrs = conversation.custom_attributes || {}
 
     # Only write if there's something to reset
-    return unless attrs['auto_follow_up_count'].to_i > 0 || attrs['auto_follow_up_cancelled'] == true
+    return unless attrs['auto_follow_up_count'].to_i.positive? || attrs['auto_follow_up_cancelled'] == true
 
     conversation.update!(
       custom_attributes: attrs.merge(
@@ -61,7 +61,7 @@ class MessageListener < BaseListener
     if time_mode == 'fixed' && auto_follow_up_config['fixed_time'].present?
       target_hours, target_minutes = auto_follow_up_config['fixed_time'].split(':').map(&:to_i)
 
-      min_wait_time = Time.current + (interval_hours > 0 ? interval_hours.hours : delay_seconds.seconds)
+      min_wait_time = Time.current + (interval_hours.positive? ? interval_hours.hours : delay_seconds.seconds)
 
       # Evaluate the target day in the target timezone
       target_time = min_wait_time.in_time_zone(time_zone).change(hour: target_hours, min: target_minutes, sec: 0)
@@ -71,7 +71,7 @@ class MessageListener < BaseListener
 
       target_time.utc
     else
-      Time.current + (interval_hours > 0 ? interval_hours.hours : delay_seconds.seconds)
+      Time.current + (interval_hours.positive? ? interval_hours.hours : delay_seconds.seconds)
     end
   end
 
@@ -87,9 +87,13 @@ class MessageListener < BaseListener
 
     # Trigger 1: Every 5 incoming messages
     incoming_count = message.conversation.messages.incoming.count
-    Captain::AutoLabelJob.perform_async(message.conversation_id, 'count') if incoming_count > 0 && incoming_count % 5 == 0
+    Captain::AutoLabelJob.perform_async(message.conversation_id, 'count') if incoming_count.positive? && (incoming_count % 5).zero?
 
     # Trigger 2: 15 minutes after the last incoming message (if customer stops responding)
+    debounce_key = format(::Redis::Alfred::AUTO_LABEL_DEBOUNCE_KEY, conversation_id: message.conversation_id)
+    return if Redis::Alfred.get(debounce_key).present?
+
+    Redis::Alfred.setex(debounce_key, 15.minutes, '1')
     Captain::AutoLabelJob.set(wait: 15.minutes).perform_later(message.conversation_id, 'delay')
   end
 end
