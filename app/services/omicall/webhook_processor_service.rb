@@ -10,9 +10,9 @@ class Omicall::WebhookProcessorService
     phone_number = @payload['phone_number']
     return if phone_number.blank?
 
-    # Try to find contact matching the phone number across all accounts
-    # This might match multiple contacts if the phone number exists in multiple accounts.
-    contacts = Contact.where('phone_number LIKE ?', "%#{phone_number}%")
+    # Normalize phone number to match contacts stored as +84... or 0...
+    core_phone_number = phone_number.sub(/^(?:\+84|84|0)/, '')
+    contacts = Contact.where('phone_number LIKE ?', "%#{core_phone_number}%")
     return if contacts.empty?
 
     contacts.each do |contact|

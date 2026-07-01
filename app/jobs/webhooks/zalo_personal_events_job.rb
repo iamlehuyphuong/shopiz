@@ -2,7 +2,7 @@ class Webhooks::ZaloPersonalEventsJob < ApplicationJob
   queue_as :default
 
   def perform(params = {}, signature: '', post_body: '')
-    params = params.with_indifferent_access
+    params = deep_scrub(params).with_indifferent_access
     oa_id = params[:_accountId]
     channel = Channel::ZaloPersonal.find_by(oa_id: oa_id)
     Rails.logger.info("Zalo Personal webhook received events for channel: #{channel&.id}, oa_id: #{oa_id}, params: #{params.to_json}")
@@ -12,6 +12,19 @@ class Webhooks::ZaloPersonalEventsJob < ApplicationJob
   end
 
   private
+
+  def deep_scrub(value)
+    case value
+    when ActionController::Parameters, Hash
+      value.to_h.transform_values { |v| deep_scrub(v) }
+    when Array
+      value.map { |v| deep_scrub(v) }
+    when String
+      value.scrub('')
+    else
+      value
+    end
+  end
 
   def validate_signature(params, post_body, signature)
     app_id = params[:app_id]
