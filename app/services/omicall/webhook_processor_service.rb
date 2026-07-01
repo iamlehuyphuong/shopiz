@@ -32,6 +32,8 @@ class Omicall::WebhookProcessorService
     record_url = @payload['recording_file'].presence || @payload['recording_file_url']
     direction = @payload['direction']
     transaction_id = @payload['transaction_id']
+    note = @payload['note']
+    tags = @payload['tag'] || []
 
     direction_key = direction == 'outbound' ? 'outbound' : 'inbound'
     locale = conversation.account.locale || I18n.default_locale
@@ -48,7 +50,7 @@ class Omicall::WebhookProcessorService
                       end
 
     callbot_text = I18n.t("omicall.callbot.#{callbot ? 'yes' : 'no'}", locale: locale)
-    
+
     content_attributes = {
       translation_key: translation_key,
       translation_values: {
@@ -65,20 +67,39 @@ class Omicall::WebhookProcessorService
       
       if existing_message
         existing_message.update!(content_attributes: existing_message.content_attributes.merge(content_attributes))
-        return
+      else
+        Message.create!(
+          conversation: conversation,
+          account_id: conversation.account_id,
+          inbox_id: conversation.inbox_id,
+          message_type: :activity,
+          source_id: source_id,
+          content: '',
+          content_attributes: content_attributes
+        )
       end
     else
-      source_id = nil
+      Message.create!(
+        conversation: conversation,
+        account_id: conversation.account_id,
+        inbox_id: conversation.inbox_id,
+        message_type: :activity,
+        content: '',
+        content_attributes: content_attributes
+      )
     end
 
-    Message.create!(
-      conversation: conversation,
-      account_id: conversation.account_id,
-      inbox_id: conversation.inbox_id,
-      message_type: :activity,
-      source_id: source_id,
-      content: '',
-      content_attributes: content_attributes
-    )
+    if note.present?
+      contact.notes.create!(
+        account_id: conversation.account_id,
+        content: "OMICall: #{note}"
+      )
+    end
+
+    if tags.present? && tags.any?
+      lowercase_tags = tags.map(&:downcase)
+      existing_labels = conversation.account.labels.where(title: lowercase_tags).pluck(:title)
+      conversation.add_labels(existing_labels) if existing_labels.any?
+    end
   end
 end
