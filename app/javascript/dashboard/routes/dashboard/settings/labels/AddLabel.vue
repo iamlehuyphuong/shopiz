@@ -4,6 +4,8 @@ import { useAlert } from 'dashboard/composables';
 import validations, { getLabelTitleErrorMessage } from './validations';
 import { getRandomColor } from 'dashboard/helper/labelColor';
 import { useVuelidate } from '@vuelidate/core';
+import { useCaptain } from 'dashboard/composables/useCaptain';
+import { ref } from 'vue';
 
 import NextButton from 'dashboard/components-next/button/Button.vue';
 
@@ -19,7 +21,14 @@ export default {
   },
   emits: ['close'],
   setup() {
-    return { v$: useVuelidate() };
+    const { processEvent } = useCaptain();
+    const isImproving = ref(false);
+
+    return {
+      v$: useVuelidate(),
+      processEvent,
+      isImproving,
+    };
   },
   data() {
     return {
@@ -46,6 +55,19 @@ export default {
   methods: {
     onClose() {
       this.$emit('close');
+    },
+    async improveDescription() {
+      if (!this.description) return;
+      this.isImproving = true;
+      try {
+        const { message } = await this.processEvent(
+          'improve_label_description',
+          this.description
+        );
+        if (message) this.description = message;
+      } finally {
+        this.isImproving = false;
+      }
     },
     async addLabel() {
       try {
@@ -86,16 +108,28 @@ export default {
         @blur="v$.title.$touch"
       />
 
-      <woot-input
-        v-model="description"
-        :class="{ error: v$.description.$error }"
-        class="w-full"
-        :label="$t('LABEL_MGMT.FORM.DESCRIPTION.LABEL')"
-        :placeholder="$t('LABEL_MGMT.FORM.DESCRIPTION.PLACEHOLDER')"
-        data-testid="label-description"
-        @input="v$.description.$touch"
-        @blur="v$.description.$touch"
-      />
+      <div class="flex flex-col w-full gap-2">
+        <woot-input
+          v-model="description"
+          :class="{ error: v$.description.$error }"
+          class="w-full !mb-0"
+          :label="$t('LABEL_MGMT.FORM.DESCRIPTION.LABEL')"
+          :placeholder="$t('LABEL_MGMT.FORM.DESCRIPTION.PLACEHOLDER')"
+          data-testid="label-description"
+          @input="v$.description.$touch"
+          @blur="v$.description.$touch"
+        />
+        <div class="flex justify-start mb-4">
+          <NextButton
+            icon="i-lucide-wand-2"
+            size="xs"
+            color="slate"
+            :label="$t('TEAMS_SETTINGS.FORM.IMPROVE_BY_AI', 'Improve by AI')"
+            :is-loading="isImproving"
+            @click.prevent="improveDescription"
+          />
+        </div>
+      </div>
 
       <div class="w-full">
         <label>

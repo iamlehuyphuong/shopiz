@@ -39,6 +39,8 @@ import whatsappTemplates from './whatsappTemplates.json';
 import sales from './sales.json';
 import fixtures from './fixtures.json';
 
+import utilities from './utilities.json';
+
 export default {
   ...advancedFilters,
   ...agentBots,
@@ -74,6 +76,7 @@ export default {
   ...search,
   ...setNewPassword,
   ...settings,
+  ...utilities,
   ...signup,
   ...sla,
   ...teamsSettings,

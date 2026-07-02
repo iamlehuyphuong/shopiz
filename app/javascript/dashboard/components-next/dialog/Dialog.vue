@@ -118,7 +118,7 @@ defineExpose({ open, close });
   <TeleportWithDirection to="body">
     <dialog
       ref="dialogRef"
-      class="w-full transition-all duration-300 ease-in-out shadow-xl rounded-xl"
+      class="m-auto w-full transition-all duration-300 ease-in-out shadow-xl rounded-xl"
       :class="[
         maxWidthClass,
         positionClass,
@@ -187,5 +187,6 @@ dialog::backdrop {
 .dialog-position-top {
   margin-top: clamp(2rem, 5vh, 5rem);
   margin-bottom: auto;
+  margin-inline: auto;
 }
 </style>

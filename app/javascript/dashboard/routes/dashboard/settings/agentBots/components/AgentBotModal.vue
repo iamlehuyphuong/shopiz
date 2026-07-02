@@ -7,6 +7,7 @@ import { required, helpers, url } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 import { copyTextToClipboard } from 'shared/helpers/clipboard';
 import { useToggle } from '@vueuse/core';
+import { useCaptain } from 'dashboard/composables/useCaptain';
 
 import Dialog from 'dashboard/components-next/dialog/Dialog.vue';
 import NextButton from 'dashboard/components-next/button/Button.vue';
@@ -44,6 +45,9 @@ const formState = reactive({
   botAvatar: null,
   botAvatarUrl: '',
 });
+
+const { processEvent } = useCaptain();
+const isImproving = ref(false);
 
 const [showAccessToken, toggleAccessToken] = useToggle();
 const accessToken = ref('');
@@ -123,6 +127,20 @@ const resetForm = () => {
     botAvatarUrl: '',
   });
   v$.value.$reset();
+};
+
+const improveDescription = async () => {
+  if (!formState.botDescription) return;
+  isImproving.value = true;
+  try {
+    const { message } = await processEvent(
+      'improve_agent_bot_description',
+      formState.botDescription
+    );
+    if (message) formState.botDescription = message;
+  } finally {
+    isImproving.value = false;
+  }
 };
 
 const handleImageUpload = ({ file, url: avatarUrl }) => {
@@ -301,12 +319,24 @@ defineExpose({ dialogRef });
           @blur="v$.botName.$touch()"
         />
 
-        <TextArea
-          id="bot-description"
-          v-model="formState.botDescription"
-          :label="$t('AGENT_BOTS.FORM.DESCRIPTION.LABEL')"
-          :placeholder="$t('AGENT_BOTS.FORM.DESCRIPTION.PLACEHOLDER')"
-        />
+        <div class="flex flex-col gap-2 w-full">
+          <TextArea
+            id="bot-description"
+            v-model="formState.botDescription"
+            :label="$t('AGENT_BOTS.FORM.DESCRIPTION.LABEL')"
+            :placeholder="$t('AGENT_BOTS.FORM.DESCRIPTION.PLACEHOLDER')"
+          />
+          <div class="flex justify-start mb-4">
+            <NextButton
+              icon="i-lucide-wand-2"
+              size="xs"
+              color="slate"
+              :label="$t('TEAMS_SETTINGS.FORM.IMPROVE_BY_AI', 'Improve by AI')"
+              :is-loading="isImproving"
+              @click.prevent="improveDescription"
+            />
+          </div>
+        </div>
 
         <Input
           id="bot-url"

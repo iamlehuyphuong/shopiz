@@ -1,0 +1,13 @@
+<p><%= I18n.t('daily_summary_mailer.report_email.greeting') %></p>
+<p><%= raw ChatwootMarkdownRenderer.new(I18n.t('daily_summary_mailer.report_email.description', inbox_names: @inbox_names, account_name: @account.name)).render_article %></p>
+<hr/>
+<div style="margin-top: 20px; line-height: 1.6;">
+  <%= ChatwootMarkdownRenderer.new(@content).render_article %>
+</div>
+<hr/>
+<p style="font-size: 12px; color: #666; margin-top: 20px;">
+  <% 
+    from_time = @inbox_daily_summary.last_run_at ? @inbox_daily_summary.last_run_at.in_time_zone.strftime("%H:%M %d/%m/%Y") : I18n.t('daily_summary_mailer.report_email.start_of_day') 
+  %>
+  <%= I18n.t('daily_summary_mailer.report_email.footer', from_time: from_time) %>
+</p>

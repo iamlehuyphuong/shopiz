@@ -11,6 +11,7 @@ import {
   CONVERSATION_UNASSIGNED_PERMISSIONS,
   CONVERSATION_PARTICIPATING_PERMISSIONS,
 } from 'dashboard/constants/permissions.js';
+import { useCaptain } from 'dashboard/composables/useCaptain';
 
 import Button from 'dashboard/components-next/button/Button.vue';
 
@@ -42,6 +43,9 @@ const addCustomRole = reactive({
   message: '',
 });
 
+const { processEvent } = useCaptain();
+const isImproving = ref(false);
+
 const rules = computed(() => ({
   name: { required, minLength: minLength(2) },
   description: { required },
@@ -61,6 +65,20 @@ const populateEditForm = () => {
   name.value = props.selectedRole.name || '';
   description.value = props.selectedRole.description || '';
   selectedPermissions.value = props.selectedRole.permissions || [];
+};
+
+const improveDescription = async () => {
+  if (!description.value) return;
+  isImproving.value = true;
+  try {
+    const { message } = await processEvent(
+      'improve_custom_role_description',
+      description.value
+    );
+    if (message) description.value = message;
+  } finally {
+    isImproving.value = false;
+  }
 };
 
 watch(
@@ -179,10 +197,21 @@ const isSubmitDisabled = computed(
           <textarea
             v-model="description"
             :rows="3"
+            class="mb-2"
             :placeholder="$t('CUSTOM_ROLE.FORM.DESCRIPTION.PLACEHOLDER')"
             @blur="v$.description.$touch"
           />
         </label>
+        <div class="flex justify-start mb-4">
+          <Button
+            icon="i-lucide-wand-2"
+            size="xs"
+            color="slate"
+            :label="$t('TEAMS_SETTINGS.FORM.IMPROVE_BY_AI', 'Improve by AI')"
+            :is-loading="isImproving"
+            @click.prevent="improveDescription"
+          />
+        </div>
       </div>
 
       <div class="w-full">

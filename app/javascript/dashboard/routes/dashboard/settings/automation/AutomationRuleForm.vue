@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, h, useTemplateRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useCaptain } from 'dashboard/composables/useCaptain';
 import { useAccount } from 'dashboard/composables/useAccount';
 import { useOperators } from 'dashboard/components-next/filter/operators';
 import ConditionRow from 'dashboard/components-next/filter/ConditionRow.vue';
@@ -74,10 +75,12 @@ const INPUT_TYPE_MAP = {
 const { t } = useI18n();
 const { isCloudFeatureEnabled } = useAccount();
 const { operators } = useOperators();
+const { processEvent } = useCaptain();
 
 const dialogRef = ref(null);
 const conditionsRef = useTemplateRef('conditionsRef');
 const errors = ref({});
+const isImproving = ref(false);
 
 const isEditMode = computed(() => props.mode === 'edit');
 
@@ -236,6 +239,20 @@ const emitSaveAutomation = () => {
   }
 };
 
+const improveDescription = async () => {
+  if (!automation.value?.description) return;
+  isImproving.value = true;
+  try {
+    const { message } = await processEvent(
+      'improve_automation_rule_description',
+      automation.value.description
+    );
+    if (message) automation.value.description = message;
+  } finally {
+    isImproving.value = false;
+  }
+};
+
 defineExpose({ open, close });
 </script>
 
@@ -258,14 +275,29 @@ defineExpose({ open, close });
         :error="errors.name ? $t('AUTOMATION.ADD.FORM.NAME.ERROR') : ''"
         :placeholder="$t('AUTOMATION.ADD.FORM.NAME.PLACEHOLDER')"
       />
-      <woot-input
-        v-model="automation.description"
-        :label="$t('AUTOMATION.ADD.FORM.DESC.LABEL')"
-        type="text"
-        :class="{ error: errors.description }"
-        :error="errors.description ? $t('AUTOMATION.ADD.FORM.DESC.ERROR') : ''"
-        :placeholder="$t('AUTOMATION.ADD.FORM.DESC.PLACEHOLDER')"
-      />
+      <div class="flex flex-col w-full mb-6">
+        <woot-input
+          v-model="automation.description"
+          :label="$t('AUTOMATION.ADD.FORM.DESC.LABEL')"
+          type="text"
+          class="!mb-2"
+          :class="{ error: errors.description }"
+          :error="
+            errors.description ? $t('AUTOMATION.ADD.FORM.DESC.ERROR') : ''
+          "
+          :placeholder="$t('AUTOMATION.ADD.FORM.DESC.PLACEHOLDER')"
+        />
+        <div class="flex justify-start">
+          <NextButton
+            icon="i-lucide-wand-2"
+            size="xs"
+            color="slate"
+            :label="$t('TEAMS_SETTINGS.FORM.IMPROVE_BY_AI', 'Improve by AI')"
+            :is-loading="isImproving"
+            @click.prevent="improveDescription"
+          />
+        </div>
+      </div>
       <div class="mb-6">
         <label :class="{ error: errors.event_name }">
           {{ $t('AUTOMATION.ADD.FORM.EVENT.LABEL') }}

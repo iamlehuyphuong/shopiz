@@ -5,6 +5,7 @@ import { required, minLength } from '@vuelidate/validators';
 import { useAlert } from 'dashboard/composables';
 import { useI18n } from 'vue-i18n';
 import { useStore } from 'dashboard/composables/store';
+import { useCaptain } from 'dashboard/composables/useCaptain';
 
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import Icon from 'dashboard/components-next/icon/Icon.vue';
@@ -36,6 +37,9 @@ const rules = {
   content: { required },
 };
 const v$ = useVuelidate(rules, { shortCode, content });
+
+const { processEvent } = useCaptain();
+const isImproving = ref(false);
 
 const pageTitle = computed(
   () => `${t('CANNED_MGMT.EDIT.TITLE')} - ${props.edshortCode}`
@@ -91,6 +95,20 @@ function resetForm() {
   v$.value.content.$reset();
 }
 
+async function improveMessage() {
+  if (!content.value) return;
+  isImproving.value = true;
+  try {
+    const { message } = await processEvent(
+      'improve_canned_response_message',
+      content.value
+    );
+    if (message) content.value = message;
+  } finally {
+    isImproving.value = false;
+  }
+}
+
 async function editCannedResponse() {
   showLoading.value = true;
   try {
@@ -140,17 +158,31 @@ async function editCannedResponse() {
           <label :class="{ error: v$.content.$error }">
             {{ $t('CANNED_MGMT.EDIT.FORM.CONTENT.LABEL') }}
           </label>
-          <div class="editor-wrap">
-            <WootMessageEditor
-              v-model="content"
-              class="message-editor [&>div]:px-1"
-              :class="{ editor_warning: v$.content.$error }"
-              channel-type="Context::Default"
-              enable-variables
-              :enable-canned-responses="false"
-              :placeholder="$t('CANNED_MGMT.EDIT.FORM.CONTENT.PLACEHOLDER')"
-              @blur="v$.content.$touch"
-            />
+          <div class="flex flex-col gap-2 w-full">
+            <div class="editor-wrap">
+              <WootMessageEditor
+                v-model="content"
+                class="message-editor [&>div]:px-1"
+                :class="{ editor_warning: v$.content.$error }"
+                channel-type="Context::Default"
+                enable-variables
+                :enable-canned-responses="false"
+                :placeholder="$t('CANNED_MGMT.EDIT.FORM.CONTENT.PLACEHOLDER')"
+                @blur="v$.content.$touch"
+              />
+            </div>
+            <div class="flex justify-start mb-2">
+              <NextButton
+                icon="i-lucide-wand-2"
+                size="xs"
+                color="slate"
+                :label="
+                  $t('TEAMS_SETTINGS.FORM.IMPROVE_BY_AI', 'Improve by AI')
+                "
+                :is-loading="isImproving"
+                @click.prevent="improveMessage"
+              />
+            </div>
           </div>
         </div>
 

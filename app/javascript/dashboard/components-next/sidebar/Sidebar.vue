@@ -552,6 +552,22 @@ const menuItems = computed(() => {
       ],
     },
     {
+      name: 'Utilities',
+      label: t('SIDEBAR.UTILITIES'),
+      icon: 'i-lucide-pencil-ruler',
+      activeOn: ['utilities_conversation_summary'],
+      to: accountScopedRoute('utilities_conversation_summary'),
+      children: [
+        {
+          name: 'AI Summary',
+          label: t('SIDEBAR.AI_SUMMARY'),
+          icon: 'i-woot-summary',
+          activeOn: ['utilities_conversation_summary'],
+          to: accountScopedRoute('utilities_conversation_summary'),
+        },
+      ],
+    },
+    {
       name: 'Help Center',
       label: t('SIDEBAR.HELP_CENTER.TITLE'),
       icon: 'i-lucide-book',

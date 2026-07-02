@@ -6,7 +6,7 @@ class Omicall::TeardownWebhookJob < ApplicationJob
     return unless account
 
     # Reset SIP configurations for all agents when disconnecting
-    account.omicall_sip_infos.delete_all
+    OmicallSipInfo.where(account_id: account.id).delete_all
 
     return if api_key.blank?
 

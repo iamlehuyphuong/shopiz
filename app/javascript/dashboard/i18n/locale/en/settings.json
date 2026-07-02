@@ -210,7 +210,6 @@
         "ERROR": "Please enter a valid email address",
         "PLACEHOLDER": "Please enter your email address, this would be displayed in conversations"
       },
-
       "CURRENT_PASSWORD": {
         "LABEL": "Current password",
         "ERROR": "Please enter the current password",
@@ -634,7 +633,9 @@
     "DOCS": "Read docs",
     "SECURITY": "Security",
     "CAPTAIN_AI": "ShopizAI",
-    "CONVERSATION_WORKFLOW": "Conversation Workflow"
+    "CONVERSATION_WORKFLOW": "Conversation Workflow",
+    "UTILITIES": "Utilities",
+    "AI_SUMMARY": "Conversation Summary"
   },
   "DATABASE": {
     "LOADING": "Loading database..."

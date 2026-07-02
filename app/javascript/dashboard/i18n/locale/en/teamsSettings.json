@@ -105,6 +105,7 @@
     },
     "SETTINGS": "Settings",
     "FORM": {
+      "IMPROVE_BY_AI": "Improve by AI",
       "UPDATE": "Update team",
       "CREATE": "Create team",
       "NAME": {

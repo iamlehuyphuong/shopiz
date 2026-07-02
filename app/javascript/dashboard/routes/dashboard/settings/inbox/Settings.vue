@@ -4,6 +4,8 @@ import { shouldBeUrl } from 'shared/helpers/Validators';
 import { useAlert } from 'dashboard/composables';
 import Banner from 'dashboard/components-next/banner/Banner.vue';
 import { useVuelidate } from '@vuelidate/core';
+import { useCaptain } from 'dashboard/composables/useCaptain';
+import { ref } from 'vue';
 import Avatar from 'next/avatar/Avatar.vue';
 import SettingIntroBanner from 'dashboard/components/widgets/SettingIntroBanner.vue';
 import SettingsToggleSection from 'dashboard/components-next/Settings/SettingsToggleSection.vue';
@@ -93,7 +95,20 @@ export default {
   },
   mixins: [inboxMixin],
   setup() {
-    return { v$: useVuelidate() };
+    const { processEvent } = useCaptain();
+    const isImprovingZaloFriend = ref(false);
+    const isImprovingZaloGreeting = ref(false);
+    const isImprovingAutoFollowUps = ref({});
+    const isImprovingAutoFollowUpCustomAIs = ref({});
+
+    return {
+      v$: useVuelidate(),
+      processEvent,
+      isImprovingZaloFriend,
+      isImprovingZaloGreeting,
+      isImprovingAutoFollowUps,
+      isImprovingAutoFollowUpCustomAIs,
+    };
   },
   data() {
     return {
@@ -480,6 +495,58 @@ export default {
     this.fetchSharedData();
   },
   methods: {
+    async improveZaloFriend() {
+      if (!this.zaloPersonalDefaultFriendRequestMessage) return;
+      this.isImprovingZaloFriend = true;
+      try {
+        const { message } = await this.processEvent(
+          'improve_zalo_friend_request',
+          this.zaloPersonalDefaultFriendRequestMessage
+        );
+        if (message) this.zaloPersonalDefaultFriendRequestMessage = message;
+      } finally {
+        this.isImprovingZaloFriend = false;
+      }
+    },
+    async improveZaloGreeting() {
+      if (!this.zaloPersonalDefaultGreetingMessage) return;
+      this.isImprovingZaloGreeting = true;
+      try {
+        const { message } = await this.processEvent(
+          'improve_zalo_greeting',
+          this.zaloPersonalDefaultGreetingMessage
+        );
+        if (message) this.zaloPersonalDefaultGreetingMessage = message;
+      } finally {
+        this.isImprovingZaloGreeting = false;
+      }
+    },
+    async improveAutoFollowUp(index) {
+      if (!this.autoFollowUpPredefinedMessages[index]) return;
+      this.isImprovingAutoFollowUps[index] = true;
+      try {
+        const { message } = await this.processEvent(
+          'improve_auto_followup_message',
+          this.autoFollowUpPredefinedMessages[index]
+        );
+        if (message) this.autoFollowUpPredefinedMessages[index] = message;
+      } finally {
+        this.isImprovingAutoFollowUps[index] = false;
+      }
+    },
+    async improveAutoFollowUpCustomAI(index) {
+      if (!this.autoFollowUpCustomAIPrompts[index]) return;
+      this.isImprovingAutoFollowUpCustomAIs[index] = true;
+      try {
+        const { message } = await this.processEvent(
+          'improve_auto_followup_instruction',
+          this.autoFollowUpCustomAIPrompts[index]
+        );
+        if (message) this.autoFollowUpCustomAIPrompts[index] = message;
+      } finally {
+        this.isImprovingAutoFollowUpCustomAIs[index] = false;
+      }
+    },
     async checkZaloPersonalConnection() {
       if (this.isCheckingConnection) return;
 
@@ -1632,19 +1699,42 @@ export default {
                           </p>
                         </div>
 
-                        <TextArea
+                        <div
                           v-for="(n, index) in autoFollowUpMaxAttempts"
                           :key="'ai-' + index"
-                          v-model="autoFollowUpCustomAIPrompts[index]"
-                          :label="`${$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_LABEL')} ${index + 1}`"
-                          :placeholder="
-                            $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_PLACEHOLDER'
-                            )
-                          "
-                          auto-height
-                          class="w-full"
-                        />
+                          class="w-full mt-2"
+                        >
+                          <TextArea
+                            v-model="autoFollowUpCustomAIPrompts[index]"
+                            :label="`${$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_LABEL')} ${index + 1}`"
+                            :placeholder="
+                              $t(
+                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_PLACEHOLDER'
+                              )
+                            "
+                            auto-height
+                            class="w-full"
+                          />
+                          <div class="flex justify-start mt-2">
+                            <NextButton
+                              icon="i-lucide-wand-2"
+                              size="xs"
+                              color="slate"
+                              :label="
+                                $t(
+                                  'TEAMS_SETTINGS.FORM.IMPROVE_BY_AI',
+                                  'Improve by AI'
+                                )
+                              "
+                              :is-loading="
+                                isImprovingAutoFollowUpCustomAIs[index]
+                              "
+                              @click.prevent="
+                                improveAutoFollowUpCustomAI(index)
+                              "
+                            />
+                          </div>
+                        </div>
                       </div>
 
                       <div
@@ -1687,15 +1777,34 @@ export default {
                         v-if="autoFollowUpActionType === 'predefined_message'"
                         class="flex flex-col gap-3 mt-3"
                       >
-                        <TextArea
+                        <div
                           v-for="(n, index) in autoFollowUpMaxAttempts"
                           :key="'predefined-' + index"
-                          v-model="autoFollowUpPredefinedMessages[index]"
-                          :label="`${$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_PREDEFINED_MESSAGE')} ${index + 1}`"
-                          placeholder="Hello, are you still there?"
-                          auto-height
                           class="w-full mt-2"
-                        />
+                        >
+                          <TextArea
+                            v-model="autoFollowUpPredefinedMessages[index]"
+                            :label="`${$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_PREDEFINED_MESSAGE')} ${index + 1}`"
+                            placeholder="Hello, are you still there?"
+                            auto-height
+                            class="w-full"
+                          />
+                          <div class="flex justify-start mt-2">
+                            <NextButton
+                              icon="i-lucide-wand-2"
+                              size="xs"
+                              color="slate"
+                              :label="
+                                $t(
+                                  'TEAMS_SETTINGS.FORM.IMPROVE_BY_AI',
+                                  'Improve by AI'
+                                )
+                              "
+                              :is-loading="isImprovingAutoFollowUps[index]"
+                              @click.prevent="improveAutoFollowUp(index)"
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </template>
@@ -1708,36 +1817,70 @@ export default {
                 :title="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.CONFIGURATION_TITLE')"
               >
                 <div class="flex flex-col gap-4 mt-2 mb-2">
-                  <TextArea
-                    v-model="zaloPersonalDefaultFriendRequestMessage"
-                    :label="
-                      $t(
-                        'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_TITLE'
-                      )
-                    "
-                    :message="
-                      $t(
-                        'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_SUBTITLE'
-                      )
-                    "
-                    auto-height
-                    class="w-full"
-                  />
-                  <TextArea
-                    v-model="zaloPersonalDefaultGreetingMessage"
-                    :label="
-                      $t(
-                        'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_TITLE'
-                      )
-                    "
-                    :message="
-                      $t(
-                        'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_SUBTITLE'
-                      )
-                    "
-                    auto-height
-                    class="w-full"
-                  />
+                  <div class="flex flex-col w-full">
+                    <TextArea
+                      v-model="zaloPersonalDefaultFriendRequestMessage"
+                      :label="
+                        $t(
+                          'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_TITLE'
+                        )
+                      "
+                      :message="
+                        $t(
+                          'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_SUBTITLE'
+                        )
+                      "
+                      auto-height
+                      class="w-full"
+                    />
+                    <div class="flex justify-start mt-2">
+                      <NextButton
+                        icon="i-lucide-wand-2"
+                        size="xs"
+                        color="slate"
+                        :label="
+                          $t(
+                            'TEAMS_SETTINGS.FORM.IMPROVE_BY_AI',
+                            'Improve by AI'
+                          )
+                        "
+                        :is-loading="isImprovingZaloFriend"
+                        @click.prevent="improveZaloFriend"
+                      />
+                    </div>
+                  </div>
+                  <div class="flex flex-col w-full">
+                    <TextArea
+                      v-model="zaloPersonalDefaultGreetingMessage"
+                      :label="
+                        $t(
+                          'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_TITLE'
+                        )
+                      "
+                      :message="
+                        $t(
+                          'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_SUBTITLE'
+                        )
+                      "
+                      auto-height
+                      class="w-full"
+                    />
+                    <div class="flex justify-start mt-2">
+                      <NextButton
+                        icon="i-lucide-wand-2"
+                        size="xs"
+                        color="slate"
+                        :label="
+                          $t(
+                            'TEAMS_SETTINGS.FORM.IMPROVE_BY_AI',
+                            'Improve by AI'
+                          )
+                        "
+                        :is-loading="isImprovingZaloGreeting"
+                        @click.prevent="improveZaloGreeting"
+                      />
+                    </div>
+                  </div>
                 </div>
               </SettingsAccordion>
             </div>

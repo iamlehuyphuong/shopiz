@@ -12,7 +12,7 @@ const sipCredentials = ref(null);
 const isOmicallConfigured = ref(false);
 const isRegistering = ref(false);
 
-const checkIsConnected = (status) => {
+const checkIsConnected = status => {
   if (!status) return false;
   const s = status.toLowerCase();
   return ['connected', 'registered', 'success'].includes(s);
@@ -98,7 +98,8 @@ export const useOmicall = () => {
 
         // Đăng ký sự kiện chỉ một lần duy nhất trong vòng đời của ứng dụng
         window.OMICallSDK.on('register', data => {
-          const statusStr = typeof data === 'string' ? data : (data?.status || 'unknown');
+          const statusStr =
+            typeof data === 'string' ? data : data?.status || 'unknown';
           connectionStatus.value = statusStr;
           isReady.value = checkIsConnected(statusStr);
           console.log('[OMICall] register event received:', statusStr);
@@ -146,11 +147,17 @@ export const useOmicall = () => {
 
         const applyCustomTextColors = () => {
           try {
-            const headings = document.evaluate("//text()[normalize-space()='Thông tin cuộc gọi']/parent::*", document, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+            const headings = document.evaluate(
+              "//text()[normalize-space()='Thông tin cuộc gọi']/parent::*",
+              document,
+              null,
+              XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+              null
+            );
             for (let i = 0; i < headings.snapshotLength; i++) {
               let headingEl = headings.snapshotItem(i);
               headingEl.style.setProperty('color', '#000000', 'important');
-              
+
               // Tìm popup wrapper để gán theme ghi đè scrollbar & placeholder
               let parent = headingEl.parentElement;
               while (parent && parent !== document.body) {
@@ -167,7 +174,7 @@ export const useOmicall = () => {
           }
         };
 
-        const observer = new MutationObserver((mutations) => {
+        const observer = new MutationObserver(mutations => {
           let hasNewNodes = false;
           for (let m of mutations) {
             if (m.addedNodes.length > 0) {
@@ -191,11 +198,17 @@ export const useOmicall = () => {
     isInitialized.value = true;
 
     // Đăng ký kết nối với tổng đài (Register)
-    if (connectionStatus.value === 'connected' && currentSipUser.value === sipUsername) {
+    if (
+      connectionStatus.value === 'connected' &&
+      currentSipUser.value === sipUsername
+    ) {
       return;
     }
 
-    if (connectionStatus.value === 'connected' && currentSipUser.value !== sipUsername) {
+    if (
+      connectionStatus.value === 'connected' &&
+      currentSipUser.value !== sipUsername
+    ) {
       try {
         await window.OMICallSDK.unregister();
       } catch (error) {
@@ -204,7 +217,7 @@ export const useOmicall = () => {
     }
 
     if (isRegistering.value) return;
-    
+
     try {
       isRegistering.value = true;
       const registerStatus = await window.OMICallSDK.register({
@@ -264,7 +277,7 @@ export const useOmicall = () => {
         useAlert('Đang kết nối tổng đài, vui lòng đợi trong giây lát...');
         return;
       }
-      
+
       useAlert('Đang kết nối lại với tổng đài OMiCall...');
       try {
         isRegistering.value = true;
@@ -275,7 +288,10 @@ export const useOmicall = () => {
         });
 
         if (!registerStatus.status) {
-          useAlert('Lỗi kết nối tổng đài: ' + (registerStatus.message || 'Unknown error'));
+          useAlert(
+            'Lỗi kết nối tổng đài: ' +
+              (registerStatus.message || 'Unknown error')
+          );
           return;
         }
 

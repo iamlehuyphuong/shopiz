@@ -80,9 +80,13 @@ export default {
       this.isTesting = true;
       try {
         await AccountAPI.testEmail(this.senderEmail);
-        useAlert(this.$t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.TEST_EMAIL_SUCCESS'));
+        useAlert(
+          this.$t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.TEST_EMAIL_SUCCESS')
+        );
       } catch (error) {
-        useAlert(this.$t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.TEST_EMAIL_ERROR'));
+        useAlert(
+          this.$t('GENERAL_SETTINGS.FORM.CUSTOM_EMAIL.TEST_EMAIL_ERROR')
+        );
       } finally {
         this.isTesting = false;
       }

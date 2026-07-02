@@ -2,7 +2,26 @@ class Captain::RewriteService < Captain::BaseTaskService
   pattr_initialize [:account!, :content!, :operation!, { conversation_display_id: nil }]
 
   TONE_OPERATIONS = %i[casual professional friendly confident straightforward].freeze
-  ALLOWED_OPERATIONS = (%i[fix_spelling_grammar improve] + TONE_OPERATIONS).freeze
+
+  IMPROVE_OPERATIONS = %i[
+    improve_summary_instruction
+    improve_reporting_instruction
+    improve_team_description
+    improve_zalo_friend_request
+    improve_zalo_greeting
+    improve_auto_followup_message
+    improve_auto_followup_instruction
+    improve_label_description
+    improve_custom_attribute_description
+    improve_automation_rule_description
+    improve_agent_bot_description
+    improve_canned_response_message
+    improve_sla_description
+    improve_custom_role_description
+    improve_campaign_message
+  ].freeze
+
+  ALLOWED_OPERATIONS = (%i[fix_spelling_grammar improve] + TONE_OPERATIONS + IMPROVE_OPERATIONS).freeze
 
   def perform
     operation_sym = operation.to_sym
@@ -14,6 +33,12 @@ class Captain::RewriteService < Captain::BaseTaskService
   TONE_OPERATIONS.each do |tone|
     define_method(tone) do
       call_llm_with_prompt(tone_rewrite_prompt(tone.to_s))
+    end
+  end
+
+  IMPROVE_OPERATIONS.each do |operation|
+    define_method(operation) do
+      call_llm_with_prompt(prompt_from_file(operation.to_s))
     end
   end
 
