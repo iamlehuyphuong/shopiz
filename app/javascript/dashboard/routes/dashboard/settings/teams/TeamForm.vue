@@ -3,6 +3,8 @@ import validations from './helpers/validations';
 import FormInput from 'v3/components/Form/Input.vue';
 import { reactive } from 'vue';
 import { useVuelidate } from '@vuelidate/core';
+import { useCaptain } from 'dashboard/composables/useCaptain';
+import { ref } from 'vue';
 
 import NextButton from 'dashboard/components-next/button/Button.vue';
 
@@ -45,7 +47,29 @@ export default {
 
     const rules = validations;
     const v$ = useVuelidate(rules, state);
-    return { state, v$ };
+
+    const { processEvent } = useCaptain();
+    const isImproving = ref(false);
+
+    const improveDescription = async () => {
+      if (!state.description) return;
+      isImproving.value = true;
+      try {
+        const { message } = await processEvent(
+          'improve_team_description',
+          state.description
+        );
+        if (message) {
+          state.description = message;
+        }
+      } catch (error) {
+        // Error is handled inside processEvent
+      } finally {
+        isImproving.value = false;
+      }
+    };
+
+    return { state, v$, isImproving, improveDescription };
   },
   methods: {
     handleSubmit() {
@@ -76,18 +100,31 @@ export default {
         :error-message="v$.title.$error ? v$.title.$errors[0].$message : ''"
         @blur="v$.title.$touch"
       />
-      <FormInput
-        v-model="state.description"
-        name="description"
-        spacing="compact"
-        :label="$t('TEAMS_SETTINGS.FORM.DESCRIPTION.LABEL')"
-        :placeholder="$t('TEAMS_SETTINGS.FORM.DESCRIPTION.PLACEHOLDER')"
-        :has-error="v$.description.$error"
-        :error-message="
-          v$.description.$error ? v$.description.$errors[0].$message : ''
-        "
-        @blur="v$.description.$touch"
-      />
+      <div class="flex flex-col w-full gap-2">
+        <FormInput
+          v-model="state.description"
+          name="description"
+          spacing="compact"
+          :label="$t('TEAMS_SETTINGS.FORM.DESCRIPTION.LABEL')"
+          :placeholder="$t('TEAMS_SETTINGS.FORM.DESCRIPTION.PLACEHOLDER')"
+          :has-error="v$.description.$error"
+          :error-message="
+            v$.description.$error ? v$.description.$errors[0].$message : ''
+          "
+          class="!mb-0"
+          @blur="v$.description.$touch"
+        />
+        <div class="flex justify-start">
+          <NextButton
+            icon="i-lucide-wand-2"
+            size="xs"
+            color="slate"
+            :label="$t('TEAMS_SETTINGS.FORM.IMPROVE_BY_AI', 'Improve by AI')"
+            :is-loading="isImproving"
+            @click.prevent="improveDescription"
+          />
+        </div>
+      </div>
       <div class="w-full flex items-center gap-2">
         <input v-model="state.allowAutoAssign" type="checkbox" :value="true" />
         <label for="conversation_creation">

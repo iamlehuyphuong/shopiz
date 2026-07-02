@@ -32,7 +32,8 @@
         "LABEL": "Reporting instruction",
         "HELP": "Clearly describe how the AI should merge the extracted insights into a final Markdown report.",
         "PLACEHOLDER": "E.g: Group complaints by category. Create a bulleted list of top issues. Summarize overall sentiment."
-      }
+      },
+      "IMPROVE_BY_AI": "Improve by AI"
     },
     "ALERTS": {
       "SUCCESS": "Configuration updated successfully",

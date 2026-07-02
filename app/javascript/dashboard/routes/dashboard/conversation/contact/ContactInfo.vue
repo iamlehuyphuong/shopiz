@@ -61,7 +61,11 @@ export default {
     const maskContactInfo = computed(
       () => !checkPermissions(['contact_manage'])
     );
-    const { makeCall: makeOmicallCall, isReady: isOmicallReady, isOmicallConfigured } = useOmicall();
+    const {
+      makeCall: makeOmicallCall,
+      isReady: isOmicallReady,
+      isOmicallConfigured,
+    } = useOmicall();
 
     return {
       isAdmin,

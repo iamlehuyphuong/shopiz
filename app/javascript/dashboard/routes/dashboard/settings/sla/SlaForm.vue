@@ -6,6 +6,7 @@ import SlaTimeInput from './SlaTimeInput.vue';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import { useVuelidate } from '@vuelidate/core';
 import ToggleSwitch from 'dashboard/components-next/switch/Switch.vue';
+import { useCaptain } from 'dashboard/composables/useCaptain';
 
 export default {
   components: {
@@ -25,12 +26,14 @@ export default {
   },
   emits: ['close', 'submitSla'],
   setup() {
-    return { v$: useVuelidate() };
+    const { processEvent } = useCaptain();
+    return { v$: useVuelidate(), processEvent };
   },
   data() {
     return {
       name: '',
       description: '',
+      isImproving: false,
       isSlaTimeInputsInvalid: false,
       slaTimeInputsValidation: {},
       slaTimeInputs: [
@@ -86,6 +89,19 @@ export default {
   methods: {
     onClose() {
       this.$emit('close');
+    },
+    async improveDescription() {
+      if (!this.description) return;
+      this.isImproving = true;
+      try {
+        const { message } = await this.processEvent(
+          'improve_sla_description',
+          this.description
+        );
+        if (message) this.description = message;
+      } finally {
+        this.isImproving = false;
+      }
     },
     setFormValues() {
       const {
@@ -175,17 +191,29 @@ export default {
         @input="v$.name.$touch"
         @blur="v$.name.$touch"
       />
-      <woot-input
-        v-model="description"
-        class="w-full"
-        :styles="{
-          borderRadius: '0.75rem',
-          padding: '0.375rem 0.75rem',
-          fontSize: '0.875rem',
-        }"
-        :label="$t('SLA.FORM.DESCRIPTION.LABEL')"
-        :placeholder="$t('SLA.FORM.DESCRIPTION.PLACEHOLDER')"
-      />
+      <div class="flex flex-col w-full mb-6">
+        <woot-input
+          v-model="description"
+          class="!mb-2"
+          :styles="{
+            borderRadius: '0.75rem',
+            padding: '0.375rem 0.75rem',
+            fontSize: '0.875rem',
+          }"
+          :label="$t('SLA.FORM.DESCRIPTION.LABEL')"
+          :placeholder="$t('SLA.FORM.DESCRIPTION.PLACEHOLDER')"
+        />
+        <div class="flex justify-start">
+          <NextButton
+            icon="i-lucide-wand-2"
+            size="xs"
+            color="slate"
+            :label="$t('TEAMS_SETTINGS.FORM.IMPROVE_BY_AI', 'Improve by AI')"
+            :is-loading="isImproving"
+            @click.prevent="improveDescription"
+          />
+        </div>
+      </div>
 
       <SlaTimeInput
         v-for="(input, index) in slaTimeInputs"

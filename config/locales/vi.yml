@@ -2,6 +2,11 @@
 vi:
   hello: Chào thế giới
   activerecord:
+    attributes:
+      inbox_daily_summary:
+        summary_instruction: Hướng dẫn tóm tắt thông tin
+        reporting_instruction: Hướng dẫn tổng hợp báo cáo
+        schedule_times: Lịch trình gửi báo cáo
     models:
       billing_histories:
         one: Lịch sử mua bán
@@ -28,6 +33,9 @@ vi:
     saml_not_available: Xác thực SAML không khả dụng trong cài đặt này.
     inbox_deletetion_response: Yêu cầu xoá hộp thư của bạn sẽ được xử lý.
   errors:
+    messages:
+      blank: không được để trống
+      required: bắt buộc phải có
     account:
       reporting_timezone:
         invalid: không phải là múi giờ hợp lệ

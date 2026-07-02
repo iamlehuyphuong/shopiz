@@ -4,6 +4,8 @@ import { useAlert } from 'dashboard/composables';
 import { required, minLength } from '@vuelidate/validators';
 import { getRegexp } from 'shared/helpers/Validators';
 import { ATTRIBUTE_TYPES } from './constants';
+import { useCaptain } from 'dashboard/composables/useCaptain';
+import { ref } from 'vue';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import TagInput from 'dashboard/components-next/taginput/TagInput.vue';
 
@@ -24,7 +26,14 @@ export default {
   },
   emits: ['onClose'],
   setup() {
-    return { v$: useVuelidate() };
+    const { processEvent } = useCaptain();
+    const isImproving = ref(false);
+
+    return {
+      v$: useVuelidate(),
+      processEvent,
+      isImproving,
+    };
   },
   data() {
     return {
@@ -162,6 +171,19 @@ export default {
     toggleRegexEnabled() {
       this.regexEnabled = !this.regexEnabled;
     },
+    async improveDescription() {
+      if (!this.description) return;
+      this.isImproving = true;
+      try {
+        const { message } = await this.processEvent(
+          'improve_custom_attribute_description',
+          this.description
+        );
+        if (message) this.description = message;
+      } finally {
+        this.isImproving = false;
+      }
+    },
   },
 };
 </script>
@@ -194,19 +216,31 @@ export default {
           readonly
           @blur="v$.attributeKey.$touch"
         />
-        <label :class="{ error: v$.description.$error }">
-          {{ $t('ATTRIBUTES_MGMT.ADD.FORM.DESC.LABEL') }}
-          <textarea
-            v-model="description"
-            rows="5"
-            type="text"
-            :placeholder="$t('ATTRIBUTES_MGMT.ADD.FORM.DESC.PLACEHOLDER')"
-            @blur="v$.description.$touch"
-          />
-          <span v-if="v$.description.$error" class="message">
-            {{ $t('ATTRIBUTES_MGMT.ADD.FORM.DESC.ERROR') }}
-          </span>
-        </label>
+        <div class="flex flex-col gap-2 w-full">
+          <label :class="{ error: v$.description.$error }" class="mb-0">
+            {{ $t('ATTRIBUTES_MGMT.ADD.FORM.DESC.LABEL') }}
+            <textarea
+              v-model="description"
+              rows="5"
+              type="text"
+              :placeholder="$t('ATTRIBUTES_MGMT.ADD.FORM.DESC.PLACEHOLDER')"
+              @blur="v$.description.$touch"
+            />
+            <span v-if="v$.description.$error" class="message">
+              {{ $t('ATTRIBUTES_MGMT.ADD.FORM.DESC.ERROR') }}
+            </span>
+          </label>
+          <div class="flex justify-start mb-4">
+            <NextButton
+              icon="i-lucide-wand-2"
+              size="xs"
+              color="slate"
+              :label="$t('TEAMS_SETTINGS.FORM.IMPROVE_BY_AI', 'Improve by AI')"
+              :is-loading="isImproving"
+              @click.prevent="improveDescription"
+            />
+          </div>
+        </div>
         <label :class="{ error: v$.attributeType.$error }">
           {{ $t('ATTRIBUTES_MGMT.ADD.FORM.TYPE.LABEL') }}
           <select v-model="attributeType" disabled>

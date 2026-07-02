@@ -5,6 +5,7 @@ import { useVuelidate } from '@vuelidate/core';
 import { required, minLength } from '@vuelidate/validators';
 import { useMapGetter, useStore } from 'dashboard/composables/store';
 import { useAlert } from 'dashboard/composables';
+import { useCaptain } from 'dashboard/composables/useCaptain';
 import { URLPattern } from 'urlpattern-polyfill';
 
 import Input from 'dashboard/components-next/input/Input.vue';
@@ -39,6 +40,8 @@ const formState = {
 };
 
 const senderList = ref([]);
+const isImproving = ref(false);
+const { processEvent } = useCaptain();
 
 const initialState = {
   title: '',
@@ -181,6 +184,20 @@ const updateStateFromCampaign = campaign => {
   });
 };
 
+const improveMessage = async () => {
+  if (!state.message) return;
+  isImproving.value = true;
+  try {
+    const { message } = await processEvent(
+      'improve_campaign_message',
+      state.message
+    );
+    if (message) state.message = message;
+  } finally {
+    isImproving.value = false;
+  }
+};
+
 watch(
   () => state.inboxId,
   newInboxId => {
@@ -214,13 +231,25 @@ defineExpose({ prepareCampaignDetails, isSubmitDisabled });
       :message-type="formErrors.title ? 'error' : 'info'"
     />
 
-    <Editor
-      v-model="state.message"
-      :label="t('CAMPAIGN.LIVE_CHAT.CREATE.FORM.MESSAGE.LABEL')"
-      :placeholder="t('CAMPAIGN.LIVE_CHAT.CREATE.FORM.MESSAGE.PLACEHOLDER')"
-      :message="formErrors.message"
-      :message-type="formErrors.message ? 'error' : 'info'"
-    />
+    <div class="flex flex-col gap-1 w-full">
+      <Editor
+        v-model="state.message"
+        :label="t('CAMPAIGN.LIVE_CHAT.CREATE.FORM.MESSAGE.LABEL')"
+        :placeholder="t('CAMPAIGN.LIVE_CHAT.CREATE.FORM.MESSAGE.PLACEHOLDER')"
+        :message="formErrors.message"
+        :message-type="formErrors.message ? 'error' : 'info'"
+      />
+      <div class="flex justify-start">
+        <Button
+          icon="i-lucide-wand-2"
+          size="xs"
+          color="slate"
+          :label="t('TEAMS_SETTINGS.FORM.IMPROVE_BY_AI', 'Improve by AI')"
+          :is-loading="isImproving"
+          @click.prevent="improveMessage"
+        />
+      </div>
+    </div>
 
     <div class="flex flex-col gap-1">
       <label for="inbox" class="mb-0.5 text-sm font-medium text-n-slate-12">

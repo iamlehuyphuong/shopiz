@@ -31,8 +31,9 @@
       "REPORTING_INSTRUCTION": {
         "LABEL": "Hướng dẫn tổng hợp báo cáo",
         "HELP": "Mô tả cách AI gộp các thông tin đã trích xuất thành một báo cáo Markdown hoàn chỉnh.",
-        "PLACEHOLDER": "VD: Phân nhóm theo loại phàn nàn. Tổng hợp thành các gạch đầu dòng rõ ràng."
-      }
+        "PLACEHOLDER": "VD: Nhóm các phàn nàn theo danh mục. Tạo danh sách các vấn đề nổi cộm. Đánh giá cảm xúc chung."
+      },
+      "IMPROVE_BY_AI": "Cải thiện bằng AI"
     },
     "ALERTS": {
       "SUCCESS": "Cập nhật cấu hình thành công",

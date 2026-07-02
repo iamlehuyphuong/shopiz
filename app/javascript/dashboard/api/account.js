@@ -24,7 +24,10 @@ class AccountAPI extends ApiClient {
   }
 
   testEmail(email) {
-    return axios.post(`/api/v1/accounts/${this.accountIdFromRoute}/test_email`, { email });
+    return axios.post(
+      `/api/v1/accounts/${this.accountIdFromRoute}/test_email`,
+      { email }
+    );
   }
 }
 
