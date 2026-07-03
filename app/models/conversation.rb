@@ -79,7 +79,7 @@ class Conversation < ApplicationRecord
 
   enum status: { open: 0, resolved: 1, pending: 2, snoozed: 3 }
   enum priority: { low: 0, medium: 1, high: 2, urgent: 3 }
-  enum reminder_repeat: { none: 0, daily: 1, weekly: 2, monthly: 3 }, _prefix: :reminder_repeat
+  enum :reminder_repeat, { none: 0, daily: 1, weekly: 2, monthly: 3 }, prefix: :reminder_repeat
 
   scope :unassigned, -> { where(assignee_id: nil) }
   scope :assigned, -> { where.not(assignee_id: nil) }

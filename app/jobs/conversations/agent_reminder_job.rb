@@ -9,20 +9,26 @@ class Conversations::AgentReminderJob < ApplicationJob
 
   private
 
+  def next_reminder_at(conversation)
+    current = conversation.reminder_at
+    case conversation.reminder_repeat
+    when 'daily'   then current + 1.day
+    when 'weekly'  then current + 1.week
+    when 'monthly' then current + 1.month
+    end
+  end
+
   def send_reminder(conversation)
     Conversation.transaction do
       # 1. Save note before clearing
       note = conversation.reminder_note
 
-      # 2. Clear reminder fields to stop reminding
-      # Use update! to trigger callbacks so ActionCable broadcasts CONVERSATION_UPDATED
-      # This ensures the frontend UI hides the reminder automatically.
-      # We intentionally keep zalo_reminder_id in custom_attributes so that 
-      # ReminderSyncJob can pick it up to remove the reminder on Zalo personal.
+      # 2. Advance or clear reminder_at depending on repeat setting
+      next_at = next_reminder_at(conversation)
+
       conversation.update!(
-        reminder_at: nil,
-        remind_at: nil,
-        reminder_note: nil
+        reminder_at: next_at,
+        reminder_note: next_at ? conversation.reminder_note : nil
       )
 
       # 3. Create the internal (private) note in the account's locale
