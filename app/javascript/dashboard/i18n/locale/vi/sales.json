@@ -265,7 +265,7 @@
       "HEADER": {
         "TITLE": "Quản lý Đơn hàng",
         "DESCRIPTION": "Theo dõi và xử lý đơn hàng từ tất cả các kênh bán hàng.",
-        "SEARCH": "Tìm kiếm mã đơn hàng, SĐT...",
+        "SEARCH": "Tìm kiếm đơn hàng...",
         "COUNT": "đơn hàng"
       },
       "ACTIONS": {
@@ -323,6 +323,7 @@
       }
     },
     "MODULE_TOOLS": {
+      "LOADING_MESSAGE": "Đang tải dữ liệu...",
       "HEADER": {
         "TITLE": "Công cụ hỗ trợ bán hàng",
         "DESCRIPTION": "Khám phá và kết nối các công cụ, dịch vụ nhằm nâng cao hiệu quả cho đội ngũ bán hàng của bạn."

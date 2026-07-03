@@ -253,10 +253,50 @@ const insertVariable = variableKey => {
   <!-- eslint-disable vue/no-bare-strings-in-template -->
   <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
   <div class="w-full h-full overflow-auto">
-    <woot-loading-state
-      v-if="isLoading"
-      :message="t('INBOX_MGMT.ECOMMERCE.LOADING_MESSAGE')"
-    />
+    <!-- Skeleton Loading -->
+    <div v-if="isLoading" class="max-w-5xl mx-auto px-6 py-6 animate-pulse">
+      <div class="flex flex-col gap-6">
+        <!-- Header -->
+        <div class="flex flex-col gap-2">
+          <div class="h-6 w-48 rounded bg-n-slate-3" />
+          <div class="h-4 w-96 rounded bg-n-slate-3" />
+        </div>
+
+        <!-- Integration selector -->
+        <div class="flex items-start justify-between gap-4 mt-4">
+          <div class="flex flex-col gap-2">
+            <div class="h-5 w-40 rounded bg-n-slate-3" />
+            <div class="h-4 w-[500px] max-w-full rounded bg-n-slate-3" />
+          </div>
+          <div class="h-10 w-60 rounded-xl bg-n-slate-3 shrink-0" />
+        </div>
+
+        <div class="flex flex-col gap-6 mt-4">
+          <!-- AI creation switch -->
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex flex-col gap-2">
+              <div class="h-5 w-40 rounded bg-n-slate-3" />
+              <div class="h-4 w-[500px] max-w-full rounded bg-n-slate-3" />
+            </div>
+            <div class="h-6 w-10 rounded-full bg-n-slate-3 mt-1 shrink-0" />
+          </div>
+
+          <!-- Notification templates switch -->
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex flex-col gap-2">
+              <div class="h-5 w-48 rounded bg-n-slate-3" />
+              <div class="h-4 w-[600px] max-w-full rounded bg-n-slate-3" />
+            </div>
+            <div class="h-6 w-10 rounded-full bg-n-slate-3 mt-1 shrink-0" />
+          </div>
+        </div>
+
+        <!-- Save button skeleton -->
+        <div class="flex justify-end pt-2 mt-4">
+          <div class="h-8 w-24 rounded-lg bg-n-slate-3" />
+        </div>
+      </div>
+    </div>
     <div v-else class="max-w-5xl mx-auto px-6 py-6">
       <div class="flex flex-col gap-6">
         <!-- Header -->
@@ -584,32 +624,6 @@ const insertVariable = variableKey => {
           />
         </div>
 
-        <!-- Ecom Integrations -->
-        <div class="flex flex-col gap-4">
-          <div class="flex flex-col gap-1">
-            <h3 class="text-lg font-semibold text-n-slate-12">
-              {{ t('INBOX_MGMT.ECOMMERCE.INTEGRATIONS_TITLE') }}
-            </h3>
-            <p class="text-sm text-n-slate-11">
-              {{ t('INBOX_MGMT.ECOMMERCE.INTEGRATIONS_DESCRIPTION') }}
-            </p>
-          </div>
-          <div
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6"
-          >
-            <IntegrationItem
-              v-for="item in ecomIntegrations"
-              :id="item.id"
-              :key="item.id"
-              :logo="item.logo"
-              :name="item.name"
-              :description="item.description"
-              :enabled="item.enabled"
-              :is-active="item.is_active"
-              :status="item.status"
-            />
-          </div>
-        </div>
       </div>
     </div>
   </div>

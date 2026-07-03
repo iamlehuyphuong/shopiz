@@ -508,6 +508,7 @@ const menuItems = computed(() => {
         'sales_products_new',
         'sales_products_show',
         'sales_products_edit',
+        'sales_tools_index',
         'sales_settings_index',
       ],
       children: [
@@ -541,6 +542,13 @@ const menuItems = computed(() => {
             'sales_orders_edit',
           ],
           to: accountScopedRoute('sales_orders_list'),
+        },
+        {
+          name: 'Sales Tools',
+          label: t('SIDEBAR.SALES_TOOLS'),
+          icon: 'i-lucide-wrench',
+          activeOn: ['sales_tools_index'],
+          to: accountScopedRoute('sales_tools_index'),
         },
         {
           name: 'Sales Settings',
