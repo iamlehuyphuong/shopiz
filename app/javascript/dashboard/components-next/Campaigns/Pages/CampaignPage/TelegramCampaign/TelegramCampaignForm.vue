@@ -1,9 +1,10 @@
 <script setup>
-import { reactive, computed } from 'vue';
+import { reactive, computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useVuelidate } from '@vuelidate/core';
 import { required, minLength } from '@vuelidate/validators';
 import { useMapGetter } from 'dashboard/composables/store';
+import { useCaptain } from 'dashboard/composables/useCaptain';
 
 import Input from 'dashboard/components-next/input/Input.vue';
 import TextArea from 'dashboard/components-next/textarea/TextArea.vue';
@@ -42,6 +43,8 @@ const rules = {
 const v$ = useVuelidate(rules, state);
 
 const isCreating = computed(() => formState.uiFlags.value.isCreating);
+const isImproving = ref(false);
+const { processEvent } = useCaptain();
 
 const currentDateTime = computed(() => {
   // Added to disable the scheduled at field from being set to the current time
@@ -88,6 +91,20 @@ const resetState = () => {
 
 const handleCancel = () => emit('cancel');
 
+const improveMessage = async () => {
+  if (!state.message) return;
+  isImproving.value = true;
+  try {
+    const { message } = await processEvent(
+      'improve_campaign_message',
+      state.message
+    );
+    if (message) state.message = message;
+  } finally {
+    isImproving.value = false;
+  }
+};
+
 const prepareCampaignDetails = () => ({
   title: state.title,
   message: state.message,
@@ -119,14 +136,27 @@ const handleSubmit = async () => {
       :message-type="formErrors.title ? 'error' : 'info'"
     />
 
-    <TextArea
-      v-model="state.message"
-      :label="t('CAMPAIGN.TELEGRAM.CREATE.FORM.MESSAGE.LABEL')"
-      :placeholder="t('CAMPAIGN.TELEGRAM.CREATE.FORM.MESSAGE.PLACEHOLDER')"
-      show-character-count
-      :message="formErrors.message"
-      :message-type="formErrors.message ? 'error' : 'info'"
-    />
+    <div class="flex flex-col gap-1 w-full">
+      <TextArea
+        v-model="state.message"
+        :label="t('CAMPAIGN.TELEGRAM.CREATE.FORM.MESSAGE.LABEL')"
+        :placeholder="t('CAMPAIGN.TELEGRAM.CREATE.FORM.MESSAGE.PLACEHOLDER')"
+        show-character-count
+        :message="formErrors.message"
+        :message-type="formErrors.message ? 'error' : 'info'"
+      />
+      <div class="flex justify-start">
+        <Button
+          icon="i-lucide-wand-2"
+          size="xs"
+          color="slate"
+          :label="t('TEAMS_SETTINGS.FORM.IMPROVE_BY_AI', 'Improve by AI')"
+          :is-loading="isImproving"
+          type="button"
+          @click="improveMessage"
+        />
+      </div>
+    </div>
 
     <div class="flex flex-col gap-1">
       <label for="inbox" class="mb-0.5 text-sm font-medium text-n-slate-12">
