@@ -43,7 +43,7 @@ class Captain::Tools::KiotvietGetProductTool < Captain::Tools::BasePublicTool
     [
       product['fullName'] || product['name'],
       "  Code: #{product['code']}",
-      "  Price: #{format_vnd(product['basePrice'])}",
+      "  Price: #{format_currency(product['basePrice'])}",
       "  Stock: #{stock[:total]} (#{stock[:status]})",
       product['categoryName'].present? ? "  Category: #{product['categoryName']}" : nil,
       product['unit'].present? ? "  Unit: #{product['unit']}" : nil

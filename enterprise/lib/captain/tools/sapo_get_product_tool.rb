@@ -26,7 +26,7 @@ class Captain::Tools::SapoGetProductTool < Captain::Tools::BasePublicTool
   def format_products(products)
     products.map do |p|
       variants = p['variants']&.map do |v|
-        "#{v['title']}: #{format_sapo_currency(v['price'])} (SKU: #{v['sku'] || 'N/A'})"
+        "#{v['title']}: #{format_currency(v['price'])} (SKU: #{v['sku'] || 'N/A'})"
       end
       "**#{p['name']}** (ID: #{p['id']})\n  Variants: #{variants&.join(', ') || 'N/A'}"
     end.join("\n\n")

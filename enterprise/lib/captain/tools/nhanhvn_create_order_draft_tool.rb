@@ -111,9 +111,9 @@ class Captain::Tools::NhanhvnCreateOrderDraftTool < Captain::Tools::BasePublicTo
   def format_draft_result(order, items_data)
     lines = ["✅ Draft order ##{order.id} created successfully!\n", 'Items:']
     items_data[:items].each do |item|
-      lines << "  • #{item[:product_name]} (#{item[:code]}) × #{item[:quantity]} — #{format_vnd(item[:unit_price])} each"
+      lines << "  • #{item[:product_name]} (#{item[:code]}) × #{item[:quantity]} — #{format_currency(item[:unit_price])} each"
     end
-    lines << "\nTotal: #{format_vnd(order.total_amount)}"
+    lines << "\nTotal: #{format_currency(order.total_amount)}"
     lines << "Customer: #{order.customer_name} | #{order.customer_phone}"
     append_warnings(lines, items_data[:warnings])
     lines << "\n📋 This is a DRAFT order. An agent will review and confirm it."

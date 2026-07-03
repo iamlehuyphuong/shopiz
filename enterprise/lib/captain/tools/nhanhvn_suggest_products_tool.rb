@@ -116,7 +116,7 @@ class Captain::Tools::NhanhvnSuggestProductsTool < Captain::Tools::BasePublicToo
 
   def format_product_entry(product, base_price)
     stock = compute_stock(product['inventory'])
-    reason = base_price ? "Premium option (+#{format_vnd((product['price'].to_f - base_price.to_f).round)})" : 'Same category'
+    reason = base_price ? "Premium option (+#{format_currency((product['price'].to_f - base_price.to_f).round)})" : 'Same category'
     { code: product['code'], name: product['name'], price: product['price'], stock: stock, reason: reason }
   end
 
@@ -131,7 +131,7 @@ class Captain::Tools::NhanhvnSuggestProductsTool < Captain::Tools::BasePublicToo
   end
 
   def format_suggestions(product, suggestions, context)
-    lines = ["Product: #{product['name']} (#{product['code']}) — #{format_vnd(product['price'])}\n"]
+    lines = ["Product: #{product['name']} (#{product['code']}) — #{format_currency(product['price'])}\n"]
     lines << "Customer context: #{context}\n" if context.present?
     append_companion_section(lines, suggestions[:companion])
     append_upsell_section(lines, suggestions[:upsell])
@@ -144,20 +144,20 @@ class Captain::Tools::NhanhvnSuggestProductsTool < Captain::Tools::BasePublicToo
     return if companions.blank?
 
     lines << '🔗 Frequently bought together:'
-    companions.each { |s| lines << "  • #{s[:name]} — #{format_vnd(s[:price])} (#{s[:reason]})" }
+    companions.each { |s| lines << "  • #{s[:name]} — #{format_currency(s[:price])} (#{s[:reason]})" }
   end
 
   def append_upsell_section(lines, upsells)
     return if upsells.blank?
 
     lines << "\n⬆️ Upsell options:"
-    upsells.each { |s| lines << "  • #{s[:name]} (#{s[:code]}) — #{format_vnd(s[:price])} | Stock: #{s[:stock][:total]} (#{s[:reason]})" }
+    upsells.each { |s| lines << "  • #{s[:name]} (#{s[:code]}) — #{format_currency(s[:price])} | Stock: #{s[:stock][:total]} (#{s[:reason]})" }
   end
 
   def append_category_section(lines, category_items)
     return if category_items.blank?
 
     lines << "\n📦 More from same category:"
-    category_items.each { |s| lines << "  • #{s[:name]} (#{s[:code]}) — #{format_vnd(s[:price])} | Stock: #{s[:stock][:total]}" }
+    category_items.each { |s| lines << "  • #{s[:name]} (#{s[:code]}) — #{format_currency(s[:price])} | Stock: #{s[:stock][:total]}" }
   end
 end

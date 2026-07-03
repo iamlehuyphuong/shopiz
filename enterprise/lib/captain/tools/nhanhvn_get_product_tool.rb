@@ -45,7 +45,7 @@ class Captain::Tools::NhanhvnGetProductTool < Captain::Tools::BasePublicTool
     [
       product['name'],
       "  Code: #{product['code']}",
-      "  Price: #{format_vnd(product['price'])}",
+      "  Price: #{format_currency(product['price'])}",
       "  Stock: #{stock[:total]} (#{stock[:status]})",
       product['brandName'].present? ? "  Brand: #{product['brandName']}" : nil,
       product['status'].present? ? "  Status: #{product['status']}" : nil

@@ -57,6 +57,6 @@ class Captain::Tools::TiktokShopGetProductTool < Captain::Tools::BasePublicTool
   def format_single_sku(sku)
     price = sku.dig('price', 'sale_price').to_f / 100.0
     stock = sku.dig('inventory', 0, 'quantity') || 'N/A'
-    "#{sku['seller_sku'] || 'N/A'}: #{format_tiktok_currency(price)} (Stock: #{stock})"
+    "#{sku['seller_sku'] || 'N/A'}: #{format_currency(price)} (Stock: #{stock})"
   end
 end

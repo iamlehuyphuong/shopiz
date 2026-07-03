@@ -98,8 +98,8 @@ class Captain::Tools::HaravanCreateOrderDraftTool < Captain::Tools::BasePublicTo
 
   def format_draft_result(order, items_data)
     lines = ["✅ Draft order ##{order.id} created successfully!\n", 'Items:']
-    items_data[:items].each { |item| lines << "  • #{item[:product_name]} × #{item[:quantity]} — #{format_haravan_currency(item[:unit_price])} each" }
-    lines << "\nTotal: #{format_haravan_currency(order.total_amount)}"
+    items_data[:items].each { |item| lines << "  • #{item[:product_name]} × #{item[:quantity]} — #{format_currency(item[:unit_price])} each" }
+    lines << "\nTotal: #{format_currency(order.total_amount)}"
     lines << "Customer: #{order.customer_name} | #{order.customer_phone}"
     append_warnings(lines, items_data[:warnings])
     lines << "\n📋 This is a DRAFT order. An agent will review and confirm it."

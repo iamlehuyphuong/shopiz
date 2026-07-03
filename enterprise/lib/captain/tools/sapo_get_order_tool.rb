@@ -37,7 +37,7 @@ class Captain::Tools::SapoGetOrderTool < Captain::Tools::BasePublicTool
     orders.map do |o|
       items = o['line_items']&.map { |li| "#{li['name']} x#{li['quantity']}" }
       "**Order ##{o['order_number']}** (#{o['financial_status']})\n  " \
-        "Total: #{format_sapo_currency(o['total_price'])}\n  " \
+        "Total: #{format_currency(o['total_price'])}\n  " \
         "Items: #{items&.join(', ') || 'N/A'}\n  " \
         "Date: #{o['created_on']}"
     end.join("\n\n")

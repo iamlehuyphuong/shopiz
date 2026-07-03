@@ -48,7 +48,7 @@ class Captain::Tools::NhanhvnSearchOrdersTool < Captain::Tools::BasePublicTool
   def build_order_lines(order)
     [
       "Order ##{order['id']}",
-      "  Total: #{format_vnd(order['calcTotalMoney'])}",
+      "  Total: #{format_currency(order['calcTotalMoney'])}",
       "  Status: #{order['statusName'] || order['statusCode']}",
       "  Customer: #{order['customerName']} | Phone: #{order['customerMobile']}",
       "  Date: #{order['createdDateTime'] || 'N/A'}",

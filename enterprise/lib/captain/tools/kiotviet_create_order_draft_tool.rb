@@ -124,10 +124,10 @@ class Captain::Tools::KiotvietCreateOrderDraftTool < Captain::Tools::BasePublicT
     lines << 'Items:'
 
     items_data[:items].each do |item|
-      lines << "  • #{item[:product_name]} (#{item[:code]}) × #{item[:quantity]} — #{format_vnd(item[:unit_price])} each"
+      lines << "  • #{item[:product_name]} (#{item[:code]}) × #{item[:quantity]} — #{format_currency(item[:unit_price])} each"
     end
 
-    lines << "\nTotal: #{format_vnd(order.total_amount)}"
+    lines << "\nTotal: #{format_currency(order.total_amount)}"
     lines << "Customer: #{order.customer_name} | #{order.customer_phone}"
 
     if items_data[:warnings].present?

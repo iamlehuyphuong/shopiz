@@ -47,7 +47,7 @@ module Captain::Tools::Concerns::NhanhvnClient
     end
   end
 
-  def format_vnd(amount)
+  def format_currency(amount)
     return '0 VND' if amount.blank?
 
     "#{amount} VND"

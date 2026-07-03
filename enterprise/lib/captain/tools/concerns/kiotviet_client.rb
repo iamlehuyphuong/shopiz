@@ -125,7 +125,7 @@ module Captain::Tools::Concerns::KiotvietClient
     @kiotviet_hook = nil # bust cache
   end
 
-  def format_vnd(amount)
+  def format_currency(amount)
     return '0 VND' if amount.blank?
 
     "#{amount} VND"
