@@ -27,7 +27,7 @@ class ConversationOrder < ApplicationRecord
 
   def enqueue_status_update_message
     return unless saved_change_to_status?
-    return unless %w[confirmed processing shipped delivered].include?(status)
+    return unless %w[confirmed processing shipped delivered cancelled].include?(status)
 
     ConversationOrders::SendStatusUpdateJob.perform_later(id)
   rescue StandardError => e

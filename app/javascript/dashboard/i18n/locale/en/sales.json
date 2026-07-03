@@ -328,8 +328,8 @@
     "MODULE_TOOLS": {
       "LOADING_MESSAGE": "Loading data...",
       "HEADER": {
-        "TITLE": "Sales Tools",
-        "DESCRIPTION": "Discover and connect tools and services to enhance the efficiency of your sales team."
+        "TITLE": "E-commerce Platform Integrations",
+        "DESCRIPTION": "Integrate third-party sales software and e-commerce platforms to streamline your workflow and enhance team efficiency."
       },
       "ACTIONS": {
         "CONFIGURE": "Configure",
