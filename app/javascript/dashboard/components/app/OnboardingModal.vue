@@ -4,7 +4,7 @@ import { useVuelidate } from '@vuelidate/core';
 import { required, minLength } from '@vuelidate/validators';
 import Modal from 'dashboard/components/Modal.vue';
 import FormInput from 'v3/components/Form/Input.vue';
-import FormSelect from 'v3/components/Form/Select.vue';
+import FormSelect from 'dashboard/components/app/OnboardingSelect.vue';
 import WithLabel from 'v3/components/Form/WithLabel.vue';
 import NextButton from 'next/button/Button.vue';
 import { useStore } from 'dashboard/composables/store';
@@ -290,6 +290,8 @@ const submit = async () => {
     };
 
     await store.dispatch('accounts/update', payload);
+    // Set flag so Dashboard shows the welcome trial modal (survives reactive timing)
+    localStorage.setItem('shopiz_show_welcome_trial', '1');
     useAlert(t('GENERAL_SETTINGS.UPDATE.SUCCESS'));
     emit('completed');
   } catch (error) {

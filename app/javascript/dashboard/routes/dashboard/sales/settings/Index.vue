@@ -5,7 +5,8 @@ import { useStore } from 'dashboard/composables/store';
 import { useAccount } from 'dashboard/composables/useAccount';
 import { useAlert } from 'dashboard/composables';
 import NextButton from 'dashboard/components-next/button/Button.vue';
-import WithLabel from 'v3/components/Form/WithLabel.vue';
+import TabBar from 'dashboard/components-next/tabbar/TabBar.vue';
+
 import Switch from 'dashboard/components-next/switch/Switch.vue';
 import IntegrationItem from 'dashboard/routes/dashboard/settings/integrations/IntegrationItem.vue';
 import { OnClickOutside } from '@vueuse/components';
@@ -76,7 +77,6 @@ const showPlatformDropdown = ref(false);
 
 const customizeTemplates = ref(false);
 const salesOrderNotificationTemplates = reactive({
-  draft: '',
   confirmed: '',
   processing: '',
   shipped: '',
@@ -84,6 +84,24 @@ const salesOrderNotificationTemplates = reactive({
   cancelled: '',
 });
 const allowAiCreateOrder = ref(false);
+
+const activeTabIndex = ref(0);
+const TEMPLATE_TABS = [
+  { key: 'confirmed', labelKey: 'SALES.MODULE_ORDERS.STATUS.CONFIRMED' },
+  { key: 'processing', labelKey: 'SALES.MODULE_ORDERS.STATUS.PROCESSING' },
+  { key: 'shipped', labelKey: 'SALES.MODULE_ORDERS.STATUS.SHIPPED' },
+  { key: 'delivered', labelKey: 'SALES.MODULE_ORDERS.STATUS.DELIVERED' },
+  { key: 'cancelled', labelKey: 'SALES.MODULE_ORDERS.STATUS.CANCELLED' },
+];
+const activeTab = computed(() => TEMPLATE_TABS[activeTabIndex.value].key);
+
+const tabsForTabBar = computed(() =>
+  TEMPLATE_TABS.map(tab => ({ label: t(tab.labelKey), key: tab.key }))
+);
+
+const onClickTabChange = tab => {
+  activeTabIndex.value = TEMPLATE_TABS.findIndex(t => t.key === tab.key);
+};
 
 // Track which textarea is currently focused
 const activeTextareaRef = ref(null);
@@ -196,24 +214,35 @@ const selectIntegration = async id => {
   await handleSave();
 };
 
+const templateVariables = {
+  customer_name: '%{customer_name}',
+  order_id: '%{order_id}',
+  total_amount: '%{total_amount}',
+  inbox_name: '%{inbox_name}',
+  status_label: '%{status_label}',
+  fanpage_name: '%{fanpage_name}',
+};
+
 const fillDefaultTemplates = () => {
-  salesOrderNotificationTemplates.draft = t(
-    'INBOX_MGMT.ECOMMERCE.TEMPLATES_DEFAULT_DRAFT'
-  );
   salesOrderNotificationTemplates.confirmed = t(
-    'INBOX_MGMT.ECOMMERCE.TEMPLATES_DEFAULT_CONFIRMED'
+    'INBOX_MGMT.ECOMMERCE.TEMPLATES_DEFAULT_CONFIRMED',
+    templateVariables
   );
   salesOrderNotificationTemplates.processing = t(
-    'INBOX_MGMT.ECOMMERCE.TEMPLATES_DEFAULT_PROCESSING'
+    'INBOX_MGMT.ECOMMERCE.TEMPLATES_DEFAULT_PROCESSING',
+    templateVariables
   );
   salesOrderNotificationTemplates.shipped = t(
-    'INBOX_MGMT.ECOMMERCE.TEMPLATES_DEFAULT_SHIPPED'
+    'INBOX_MGMT.ECOMMERCE.TEMPLATES_DEFAULT_SHIPPED',
+    templateVariables
   );
   salesOrderNotificationTemplates.delivered = t(
-    'INBOX_MGMT.ECOMMERCE.TEMPLATES_DEFAULT_DELIVERED'
+    'INBOX_MGMT.ECOMMERCE.TEMPLATES_DEFAULT_DELIVERED',
+    templateVariables
   );
   salesOrderNotificationTemplates.cancelled = t(
-    'INBOX_MGMT.ECOMMERCE.TEMPLATES_DEFAULT_CANCELLED'
+    'INBOX_MGMT.ECOMMERCE.TEMPLATES_DEFAULT_CANCELLED',
+    templateVariables
   );
 };
 
@@ -253,10 +282,50 @@ const insertVariable = variableKey => {
   <!-- eslint-disable vue/no-bare-strings-in-template -->
   <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
   <div class="w-full h-full overflow-auto">
-    <woot-loading-state
-      v-if="isLoading"
-      :message="t('INBOX_MGMT.ECOMMERCE.LOADING_MESSAGE')"
-    />
+    <!-- Skeleton Loading -->
+    <div v-if="isLoading" class="max-w-5xl mx-auto px-6 py-6 animate-pulse">
+      <div class="flex flex-col gap-6">
+        <!-- Header -->
+        <div class="flex flex-col gap-2">
+          <div class="h-6 w-48 rounded bg-n-slate-3" />
+          <div class="h-4 w-96 rounded bg-n-slate-3" />
+        </div>
+
+        <!-- Integration selector -->
+        <div class="flex items-start justify-between gap-4 mt-4">
+          <div class="flex flex-col gap-2">
+            <div class="h-5 w-40 rounded bg-n-slate-3" />
+            <div class="h-4 w-[500px] max-w-full rounded bg-n-slate-3" />
+          </div>
+          <div class="h-10 w-60 rounded-xl bg-n-slate-3 shrink-0" />
+        </div>
+
+        <div class="flex flex-col gap-6 mt-4">
+          <!-- AI creation switch -->
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex flex-col gap-2">
+              <div class="h-5 w-40 rounded bg-n-slate-3" />
+              <div class="h-4 w-[500px] max-w-full rounded bg-n-slate-3" />
+            </div>
+            <div class="h-6 w-10 rounded-full bg-n-slate-3 mt-1 shrink-0" />
+          </div>
+
+          <!-- Notification templates switch -->
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex flex-col gap-2">
+              <div class="h-5 w-48 rounded bg-n-slate-3" />
+              <div class="h-4 w-[600px] max-w-full rounded bg-n-slate-3" />
+            </div>
+            <div class="h-6 w-10 rounded-full bg-n-slate-3 mt-1 shrink-0" />
+          </div>
+        </div>
+
+        <!-- Save button skeleton -->
+        <div class="flex justify-end pt-2 mt-4">
+          <div class="h-8 w-24 rounded-lg bg-n-slate-3" />
+        </div>
+      </div>
+    </div>
     <div v-else class="max-w-5xl mx-auto px-6 py-6">
       <div class="flex flex-col gap-6">
         <!-- Header -->
@@ -396,8 +465,10 @@ const insertVariable = variableKey => {
           </OnClickOutside>
         </div>
 
+        <div class="h-px bg-n-weak w-full" />
+
         <!-- Sales settings: AI Order + Templates -->
-        <div class="flex flex-col gap-6">
+        <div class="flex flex-col gap-8">
           <!-- Trợ lý AI tạo đơn hàng -->
           <div class="flex items-start justify-between gap-4">
             <div class="flex flex-col gap-1">
@@ -414,6 +485,8 @@ const insertVariable = variableKey => {
               @update:model-value="handleSave"
             />
           </div>
+
+          <div class="h-px bg-n-weak w-full" />
 
           <!-- Mẫu thông báo đơn hàng -->
           <div class="flex flex-col gap-4">
@@ -457,118 +530,42 @@ const insertVariable = variableKey => {
                 </div>
               </div>
 
-              <div class="flex justify-end">
-                <NextButton
-                  sm
-                  outline
-                  slate
-                  icon="i-lucide-wand-2"
-                  class="flex-shrink-0"
-                  @click="fillDefaultTemplates"
-                >
-                  {{ t('INBOX_MGMT.ECOMMERCE.FILL_DEFAULT_TEMPLATES') }}
-                </NextButton>
-              </div>
+              <div class="flex flex-col gap-4">
+                <!-- Tab Headers and Actions -->
+                <div class="flex items-center justify-between gap-4 flex-wrap">
+                  <TabBar
+                    :tabs="tabsForTabBar"
+                    :initial-active-tab="activeTabIndex"
+                    @tab-changed="onClickTabChange"
+                  />
+                  <NextButton
+                    sm
+                    outline
+                    slate
+                    icon="i-lucide-wand-2"
+                    class="flex-shrink-0"
+                    @click="fillDefaultTemplates"
+                  >
+                    {{ t('INBOX_MGMT.ECOMMERCE.FILL_DEFAULT_TEMPLATES') }}
+                  </NextButton>
+                </div>
 
-              <div class="grid gap-4">
-                <WithLabel
-                  name="template-draft"
-                  :label="$t('SALES.MODULE_ORDERS.STATUS.DRAFT')"
-                >
-                  <div data-template-key="draft" class="w-full">
+                <!-- Tab Content -->
+                <div class="mt-2">
+                  <div :data-template-key="activeTab" class="w-full">
                     <textarea
-                      v-model="salesOrderNotificationTemplates.draft"
-                      class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
-                      :placeholder="
-                        t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_DRAFT')
-                      "
-                      @focus="onTextareaFocus"
-                    />
-                  </div>
-                </WithLabel>
-                <WithLabel
-                  name="template-confirmed"
-                  :label="$t('SALES.MODULE_ORDERS.STATUS.CONFIRMED')"
-                >
-                  <div data-template-key="confirmed" class="w-full">
-                    <textarea
-                      v-model="salesOrderNotificationTemplates.confirmed"
-                      class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
+                      v-model="salesOrderNotificationTemplates[activeTab]"
+                      class="w-full min-h-[120px] rounded-xl bg-n-alpha-black2 p-4 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none transition-all shadow-sm"
                       :placeholder="
                         t(
-                          'INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_CONFIRMED'
+                          `INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_${activeTab.toUpperCase()}`,
+                          templateVariables
                         )
                       "
                       @focus="onTextareaFocus"
                     />
                   </div>
-                </WithLabel>
-                <WithLabel
-                  name="template-processing"
-                  :label="$t('SALES.MODULE_ORDERS.STATUS.PROCESSING')"
-                >
-                  <div data-template-key="processing" class="w-full">
-                    <textarea
-                      v-model="salesOrderNotificationTemplates.processing"
-                      class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
-                      :placeholder="
-                        t(
-                          'INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_PROCESSING'
-                        )
-                      "
-                      @focus="onTextareaFocus"
-                    />
-                  </div>
-                </WithLabel>
-                <WithLabel
-                  name="template-shipped"
-                  :label="$t('SALES.MODULE_ORDERS.STATUS.SHIPPED')"
-                >
-                  <div data-template-key="shipped" class="w-full">
-                    <textarea
-                      v-model="salesOrderNotificationTemplates.shipped"
-                      class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
-                      :placeholder="
-                        t('INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_SHIPPED')
-                      "
-                      @focus="onTextareaFocus"
-                    />
-                  </div>
-                </WithLabel>
-                <WithLabel
-                  name="template-delivered"
-                  :label="$t('SALES.MODULE_ORDERS.STATUS.DELIVERED')"
-                >
-                  <div data-template-key="delivered" class="w-full">
-                    <textarea
-                      v-model="salesOrderNotificationTemplates.delivered"
-                      class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
-                      :placeholder="
-                        t(
-                          'INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_DELIVERED'
-                        )
-                      "
-                      @focus="onTextareaFocus"
-                    />
-                  </div>
-                </WithLabel>
-                <WithLabel
-                  name="template-cancelled"
-                  :label="$t('SALES.MODULE_ORDERS.STATUS.CANCELLED')"
-                >
-                  <div data-template-key="cancelled" class="w-full">
-                    <textarea
-                      v-model="salesOrderNotificationTemplates.cancelled"
-                      class="w-full min-h-[80px] rounded-lg bg-n-alpha-black2 p-3 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none"
-                      :placeholder="
-                        t(
-                          'INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_CANCELLED'
-                        )
-                      "
-                      @focus="onTextareaFocus"
-                    />
-                  </div>
-                </WithLabel>
+                </div>
               </div>
             </template>
           </div>
@@ -582,33 +579,6 @@ const insertVariable = variableKey => {
             :is-loading="isSaving"
             @click="handleSave"
           />
-        </div>
-
-        <!-- Ecom Integrations -->
-        <div class="flex flex-col gap-4">
-          <div class="flex flex-col gap-1">
-            <h3 class="text-lg font-semibold text-n-slate-12">
-              {{ t('INBOX_MGMT.ECOMMERCE.INTEGRATIONS_TITLE') }}
-            </h3>
-            <p class="text-sm text-n-slate-11">
-              {{ t('INBOX_MGMT.ECOMMERCE.INTEGRATIONS_DESCRIPTION') }}
-            </p>
-          </div>
-          <div
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6"
-          >
-            <IntegrationItem
-              v-for="item in ecomIntegrations"
-              :id="item.id"
-              :key="item.id"
-              :logo="item.logo"
-              :name="item.name"
-              :description="item.description"
-              :enabled="item.enabled"
-              :is-active="item.is_active"
-              :status="item.status"
-            />
-          </div>
         </div>
       </div>
     </div>

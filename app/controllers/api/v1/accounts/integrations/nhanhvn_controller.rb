@@ -19,7 +19,12 @@ class Api::V1::Accounts::Integrations::NhanhvnController < Api::V1::Accounts::Ba
 
   def orders
     data = { icpp: 20 }
-    data[:customerMobile] = find_customer_mobile if params[:contact_id].present?
+    if params[:contact_id].present?
+      filters = find_contact_filters
+      return render json: { orders: [] } if filters.blank?
+
+      data.merge!(filters)
+    end
 
     result = nhanhvn_post('/api/order/index', data)
     orders_hash = result&.dig('data', 'orders')
@@ -93,9 +98,14 @@ class Api::V1::Accounts::Integrations::NhanhvnController < Api::V1::Accounts::Ba
     @hook = Integrations::Hook.find_by!(account: Current.account, app_id: 'nhanhvn')
   end
 
-  def find_customer_mobile
+  def find_contact_filters
     contact = Current.account.contacts.find_by(id: params[:contact_id])
-    contact&.phone_number
+    return nil if contact.blank?
+
+    filters = {}
+    filters[:customerMobile] = contact.phone_number if contact.phone_number.present?
+    filters[:customerEmail] = contact.email if contact.email.present?
+    filters.presence
   end
 
   def nhanhvn_post(endpoint, data = {})

@@ -158,7 +158,7 @@ async function editCannedResponse() {
           <label :class="{ error: v$.content.$error }">
             {{ $t('CANNED_MGMT.EDIT.FORM.CONTENT.LABEL') }}
           </label>
-          <div class="flex flex-col gap-2 w-full">
+          <div class="flex flex-col gap-1 w-full">
             <div class="editor-wrap">
               <WootMessageEditor
                 v-model="content"
@@ -300,7 +300,7 @@ async function editCannedResponse() {
     @apply min-h-[12.5rem];
 
     p {
-      @apply text-base;
+      @apply text-sm;
     }
   }
 }

@@ -12,6 +12,25 @@ class ConversationOrders::NhanhvnProxy < ConversationOrders::PlatformProxy
     result&.dig('data')
   end
 
+  def fetch_products(page = 1)
+    limit = 50
+    result = nhanhvn_post('/api/product/search', { icpp: limit, page: page })
+
+    products_hash = result&.dig('data', 'products')
+    return [[], false] unless products_hash.is_a?(Hash)
+
+    products = products_hash.values
+    return [[], false] if products.blank?
+
+    products_data = products.map { |item| normalize_product(item) }
+    has_more = result.dig('data', 'page').to_i < result.dig('data', 'totalPages').to_i
+
+    [products_data, has_more]
+  rescue StandardError => e
+    Rails.logger.error("NhanhvnProxy fetch_products error: #{e.message}")
+    [[], false]
+  end
+
   def map_status(raw_status)
     # Nhanh.vn: New, Confirmed, Packing, Packed, Shipping, Success, Canceled, Returned
     case raw_status.to_s.downcase
@@ -29,5 +48,21 @@ class ConversationOrders::NhanhvnProxy < ConversationOrders::PlatformProxy
 
   def extract_error(result)
     result&.dig('messages')&.values&.first || super
+  end
+
+  private
+
+  def normalize_product(item)
+    {
+      external_id: item['idNhanh'].to_s,
+      name: item['name'],
+      description: item['description'],
+      price: item['price'].to_f,
+      currency: 'VND',
+      sku: item['code'],
+      barcode: item['barcode'],
+      status: item['status'] == 'Active' ? 'active' : 'draft',
+      variants: []
+    }
   end
 end

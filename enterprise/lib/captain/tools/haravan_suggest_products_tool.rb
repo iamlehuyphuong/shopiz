@@ -44,7 +44,7 @@ class Captain::Tools::HaravanSuggestProductsTool < Captain::Tools::BasePublicToo
       .reject { |p| p['id'].to_s == product['id'].to_s }
       .select { |p| p['variants']&.first&.dig('price').to_f > base_price }
       .first(3)
-      .map { |p| format_entry(p, "Premium (+#{format_haravan_currency((p['variants']&.first&.dig('price').to_f - base_price).round)})") }
+      .map { |p| format_entry(p, "Premium (+#{format_currency((p['variants']&.first&.dig('price').to_f - base_price).round)})") }
   end
 
   def find_same_type_products(product)
@@ -70,7 +70,7 @@ class Captain::Tools::HaravanSuggestProductsTool < Captain::Tools::BasePublicToo
 
   def format_suggestions(product, suggestions, context)
     price = product['variants']&.first&.dig('price').to_f
-    lines = ["Product: #{product['title']} (ID: #{product['id']}) — #{format_haravan_currency(price)}\n"]
+    lines = ["Product: #{product['title']} (ID: #{product['id']}) — #{format_currency(price)}\n"]
     lines << "Customer context: #{context}\n" if context.present?
     append_upsell_section(lines, suggestions[:upsell])
     append_type_section(lines, suggestions[:same_type])
@@ -82,13 +82,13 @@ class Captain::Tools::HaravanSuggestProductsTool < Captain::Tools::BasePublicToo
     return if upsells.blank?
 
     lines << '⬆️ Upsell options:'
-    upsells.each { |s| lines << "  • #{s[:name]} — #{format_haravan_currency(s[:price])} | Stock: #{s[:stock]} (#{s[:reason]})" }
+    upsells.each { |s| lines << "  • #{s[:name]} — #{format_currency(s[:price])} | Stock: #{s[:stock]} (#{s[:reason]})" }
   end
 
   def append_type_section(lines, items)
     return if items.blank?
 
     lines << "\n📦 More from same type:"
-    items.each { |s| lines << "  • #{s[:name]} — #{format_haravan_currency(s[:price])} | Stock: #{s[:stock]}" }
+    items.each { |s| lines << "  • #{s[:name]} — #{format_currency(s[:price])} | Stock: #{s[:stock]}" }
   end
 end

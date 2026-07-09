@@ -16,7 +16,10 @@ class Api::V1::Accounts::Integrations::WoocommerceController < Api::V1::Accounts
   end
 
   def orders
-    result = woo_get('orders', { per_page: 20, orderby: 'date', order: 'desc' })
+    customer_id = find_customer_id
+    return render json: { orders: [] } if customer_id.nil?
+
+    result = woo_get('orders', { customer: customer_id, per_page: 20, orderby: 'date', order: 'desc' })
     render json: { orders: result.is_a?(Array) ? result : [] }
   rescue StandardError => e
     render json: { error: e.message }, status: :unprocessable_entity
@@ -44,6 +47,17 @@ class Api::V1::Accounts::Integrations::WoocommerceController < Api::V1::Accounts
   end
 
   private
+
+  def find_customer_id
+    contact = Current.account.contacts.find_by(id: params[:contact_id])
+    return nil if contact.blank?
+
+    query = contact.email.presence || contact.phone_number
+    return nil if query.blank?
+
+    result = woo_get('customers', { search: query })
+    result.is_a?(Array) ? result.first&.dig('id') : nil
+  end
 
   def validate_auth_params!
     %i[store_url consumer_key consumer_secret].each do |key|

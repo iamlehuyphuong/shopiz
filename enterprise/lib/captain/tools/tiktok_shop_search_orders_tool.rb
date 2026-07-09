@@ -43,10 +43,10 @@ class Captain::Tools::TiktokShopSearchOrdersTool < Captain::Tools::BasePublicToo
     (order['line_items'] || []).each do |item|
       item_price = item['sale_price'].to_f
       lines << "- #{item['product_name']} x#{item['quantity']}"
-      lines << "  SKU: #{item['seller_sku'] || item['sku_id']} | Price: #{format_tiktok_currency(item_price, currency)}"
+      lines << "  SKU: #{item['seller_sku'] || item['sku_id']} | Price: #{format_currency(item_price, currency)}"
     end
 
-    lines << "\n💰 **Total Amount:** #{format_tiktok_currency(total, currency)}"
+    lines << "\n💰 **Total Amount:** #{format_currency(total, currency)}"
     lines.join("\n")
   end
 end

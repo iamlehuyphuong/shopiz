@@ -26,11 +26,11 @@ const count = computed(() =>
 
 <template>
   <component
-    :is="to ? 'router-link' : 'div'"
+    :is="to && !expandable ? 'router-link' : 'div'"
     class="flex items-center gap-2 px-1.5 py-1 rounded-lg h-8 min-w-0 transition-opacity duration-200"
     role="button"
     draggable="false"
-    :to="to ? to : undefined"
+    :to="to && !expandable ? to : undefined"
     :title="label"
     :class="{
       'text-n-slate-12 bg-n-alpha-2 font-medium': isActive && !hasActiveChild,

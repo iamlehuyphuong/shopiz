@@ -66,7 +66,7 @@ module Captain::Tools::Concerns::TiktokShopClient
     nil
   end
 
-  def format_tiktok_currency(amount, currency = 'VND')
+  def format_currency(amount, currency = 'VND')
     "#{amount} #{currency}"
   end
 end

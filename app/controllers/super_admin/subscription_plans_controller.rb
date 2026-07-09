@@ -13,7 +13,7 @@ class SuperAdmin::SubscriptionPlansController < SuperAdmin::ApplicationControlle
     respond_to do |format|
       format.csv do
         csv_data = CSV.generate(headers: true) do |csv|
-          csv << ["sku", "subscription_tier_id", "tier_name_en", "price_amount", "currency", "duration_days", "visible"]
+          csv << ["sku", "subscription_tier_id", "tier_name_en", "price_amount", "currency", "duration_days", "visible", "is_default_for_new_account"]
           SubscriptionPlan.includes(:subscription_tier).find_each do |record|
             csv << [
               record.sku,
@@ -22,7 +22,8 @@ class SuperAdmin::SubscriptionPlansController < SuperAdmin::ApplicationControlle
               record.price_amount,
               record.currency,
               record.duration_days,
-              record.visible
+              record.visible,
+              record.is_default_for_new_account
             ]
           end
         end
@@ -48,6 +49,9 @@ class SuperAdmin::SubscriptionPlansController < SuperAdmin::ApplicationControlle
           plan.currency = row["currency"] if row["currency"].present?
           plan.duration_days = row["duration_days"] if row["duration_days"].present?
           plan.visible = row["visible"] == "true" || row["visible"] == "1" if row["visible"].present?
+          if row["is_default_for_new_account"].present?
+            plan.is_default_for_new_account = row["is_default_for_new_account"] == "true" || row["is_default_for_new_account"] == "1"
+          end
           plan.save!
         end
         flash[:notice] = "Nhập dữ liệu Packages thành công."
@@ -65,7 +69,7 @@ class SuperAdmin::SubscriptionPlansController < SuperAdmin::ApplicationControlle
   def resource_params
     params.require(:subscription_plan).permit(
       :subscription_tier_id, :sku,
-      :price_amount, :currency, :duration_days, :visible, :ai_included
+      :price_amount, :currency, :duration_days, :visible, :ai_included, :is_default_for_new_account
     )
   end
 end

@@ -46,7 +46,7 @@ class Captain::Tools::HaravanSearchOrdersTool < Captain::Tools::BasePublicTool
   def format_order(order)
     lines = [
       "Order #{order['name'] || "##{order['id']}"}",
-      "  Total: #{format_haravan_currency(order['total_price'], order['currency'])}",
+      "  Total: #{format_currency(order['total_price'], order['currency'])}",
       "  Payment: #{order['financial_status']}",
       "  Fulfillment: #{order['fulfillment_status'] || 'unfulfilled'}",
       "  Date: #{parse_date(order['created_at'])}"

@@ -67,5 +67,13 @@ class SubscriptionPlan < ApplicationRecord
   scope :visible, -> { where(visible: true) }
   scope :free_plan, -> { joins(:subscription_tier).where(subscription_tiers: { is_free: true }) }
 
-  # Removed duplicate name logic since it's now delegated to subscription_tier
+  before_save :ensure_single_default_plan
+
+  private
+
+  def ensure_single_default_plan
+    if is_default_for_new_account? && is_default_for_new_account_changed?
+      SubscriptionPlan.where.not(id: id).update_all(is_default_for_new_account: false)
+    end
+  end
 end

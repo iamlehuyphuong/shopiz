@@ -604,6 +604,7 @@
       "DESC": ""
     },
     "ECOMMERCE": {
+      "LOADING_MESSAGE": "Đang tải dữ liệu...",
       "INTEGRATIONS_TITLE": "Tích hợp thương mại điện tử",
       "INTEGRATIONS_DESCRIPTION": "Liên kết tài khoản với nền tảng bán hàng. Mọi hội thoại sẽ sử dụng tính năng tìm kiếm sản phẩm và quản lý đơn hàng của nền tảng đó.",
       "TITLE": "Cài đặt bán hàng",

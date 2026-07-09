@@ -51,7 +51,7 @@ const greetingMessage = computed(() => {
       :link-text="$t('ONBOARDING.ALL_CONVERSATION.NEW_LINK')"
     />
     <OnboardingFeatureCard
-      image-src="/dashboard/images/onboarding/teams.png"
+      image-src="/dashboard/images/onboarding/team.png"
       image-alt="Teams"
       to="settings_teams_new"
       :title="$t('ONBOARDING.TEAM_MEMBERS.TITLE')"

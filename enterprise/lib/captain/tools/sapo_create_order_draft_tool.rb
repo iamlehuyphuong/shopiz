@@ -100,8 +100,8 @@ class Captain::Tools::SapoCreateOrderDraftTool < Captain::Tools::BasePublicTool
 
   def format_draft_result(order, items_data)
     lines = ["✅ Draft order ##{order.id} created successfully!\n", 'Items:']
-    items_data[:items].each { |item| lines << "  • #{item[:product_name]} × #{item[:quantity]} — #{format_sapo_currency(item[:unit_price])} each" }
-    lines << "\nTotal: #{format_sapo_currency(order.total_amount)}"
+    items_data[:items].each { |item| lines << "  • #{item[:product_name]} × #{item[:quantity]} — #{format_currency(item[:unit_price])} each" }
+    lines << "\nTotal: #{format_currency(order.total_amount)}"
     lines << "Customer: #{order.customer_name} | #{order.customer_phone}"
     append_warnings(lines, items_data[:warnings])
     lines << "\n📋 This is a DRAFT order. An agent will review and confirm it."

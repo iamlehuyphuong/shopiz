@@ -735,6 +735,7 @@
       "ECOMMERCE": "eCommerce"
     },
     "ECOMMERCE": {
+      "LOADING_MESSAGE": "Loading data...",
       "INTEGRATIONS_TITLE": "E-commerce Integration",
       "INTEGRATIONS_DESCRIPTION": "Link the account to a sales platform. All conversations will use this integration for product search and order management.",
       "TITLE": "Sales Settings",

@@ -69,7 +69,7 @@ class Captain::Tools::TiktokShopSuggestProductsTool < Captain::Tools::BasePublic
     if product.present?
       price = product['skus']&.first&.dig('price', 'sale_price').to_f
       currency = product['skus']&.first&.dig('price', 'currency') || 'VND'
-      lines << "Base Product: #{product['title']} (ID: #{product['id']}) — #{format_tiktok_currency(price, currency)}\n"
+      lines << "Base Product: #{product['title']} (ID: #{product['id']}) — #{format_currency(price, currency)}\n"
     end
 
     lines << "Customer context: #{context}\n" if context.present?
@@ -77,7 +77,7 @@ class Captain::Tools::TiktokShopSuggestProductsTool < Captain::Tools::BasePublic
     if suggestions[:related].present?
       lines << '🛍️ Suggested products:'
       suggestions[:related].each do |s|
-        lines << "  • #{s[:name]} — #{format_tiktok_currency(s[:price], s[:currency])} | Stock: #{s[:stock]}"
+        lines << "  • #{s[:name]} — #{format_currency(s[:price], s[:currency])} | Stock: #{s[:stock]}"
       end
     else
       lines << 'No product suggestions available at this time.'

@@ -7,11 +7,12 @@ class SubscriptionPlanDashboard < Administrate::BaseDashboard
     account_subscriptions: Field::HasMany,
     accounts: Field::HasMany,
     currency: Field::String,
-    duration_days: Field::Select.with_options(collection: [7, 30, 180, 365, 730]),
+    duration_days: Field::Select.with_options(collection: { '7 Ngày' => 7, '30 Ngày (1 tháng)' => 30, '6 Tháng' => 180, '1 Năm' => 365, '2 Năm' => 730 }),
     price_amount: Field::String.with_options(searchable: false),
     sku: Field::String,
     visible: Field::Boolean,
     ai_included: Field::Boolean,
+    is_default_for_new_account: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -23,6 +24,7 @@ class SubscriptionPlanDashboard < Administrate::BaseDashboard
     price_amount
     duration_days
     visible
+    is_default_for_new_account
     ai_included
   ].freeze
 
@@ -34,6 +36,7 @@ class SubscriptionPlanDashboard < Administrate::BaseDashboard
     currency
     duration_days
     visible
+    is_default_for_new_account
     ai_included
     created_at
     updated_at
@@ -46,6 +49,7 @@ class SubscriptionPlanDashboard < Administrate::BaseDashboard
     currency
     duration_days
     visible
+    is_default_for_new_account
     ai_included
   ].freeze
 

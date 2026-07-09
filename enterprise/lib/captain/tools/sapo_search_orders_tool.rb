@@ -46,7 +46,7 @@ class Captain::Tools::SapoSearchOrdersTool < Captain::Tools::BasePublicTool
   def format_order(order)
     lines = [
       "Order #{order['order_number'] || "##{order['id']}"}",
-      "  Total: #{format_sapo_currency(order['total_price'], order['currency'])}",
+      "  Total: #{format_currency(order['total_price'], order['currency'])}",
       "  Payment: #{order['financial_status']}",
       "  Fulfillment: #{order['fulfillment_status'] || 'unfulfilled'}",
       "  Date: #{parse_date(order['created_on'])}"

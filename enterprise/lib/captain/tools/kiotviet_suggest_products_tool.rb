@@ -97,7 +97,7 @@ class Captain::Tools::KiotvietSuggestProductsTool < Captain::Tools::BasePublicTo
 
   def format_product_suggestion(product, base_price)
     stock = compute_stock(product['inventories'])
-    reason = base_price ? "Premium option (+#{format_vnd((product['basePrice'].to_f - base_price.to_f).round)})" : 'Same category'
+    reason = base_price ? "Premium option (+#{format_currency((product['basePrice'].to_f - base_price.to_f).round)})" : 'Same category'
     { id: product['id'], code: product['code'], name: product['fullName'] || product['name'],
       price: product['basePrice'], stock: stock, reason: reason }
   end
@@ -113,7 +113,7 @@ class Captain::Tools::KiotvietSuggestProductsTool < Captain::Tools::BasePublicTo
   end
 
   def format_suggestions(product, suggestions, context)
-    lines = ["Product: #{product['fullName'] || product['name']} (#{product['code']}) — #{format_vnd(product['basePrice'])}\n"]
+    lines = ["Product: #{product['fullName'] || product['name']} (#{product['code']}) — #{format_currency(product['basePrice'])}\n"]
     lines << "Customer context: #{context}\n" if context.present?
     append_companion_section(lines, suggestions[:companion])
     append_upsell_section(lines, suggestions[:upsell])
@@ -126,20 +126,20 @@ class Captain::Tools::KiotvietSuggestProductsTool < Captain::Tools::BasePublicTo
     return if companions.blank?
 
     lines << '🔗 Frequently bought together:'
-    companions.each { |s| lines << "  • #{s[:name]} — #{format_vnd(s[:price])} (#{s[:reason]})" }
+    companions.each { |s| lines << "  • #{s[:name]} — #{format_currency(s[:price])} (#{s[:reason]})" }
   end
 
   def append_upsell_section(lines, upsells)
     return if upsells.blank?
 
     lines << "\n⬆️ Upsell options:"
-    upsells.each { |s| lines << "  • #{s[:name]} (#{s[:code]}) — #{format_vnd(s[:price])} | Stock: #{s[:stock][:total]} (#{s[:reason]})" }
+    upsells.each { |s| lines << "  • #{s[:name]} (#{s[:code]}) — #{format_currency(s[:price])} | Stock: #{s[:stock][:total]} (#{s[:reason]})" }
   end
 
   def append_category_section(lines, category_items)
     return if category_items.blank?
 
     lines << "\n📦 More from same category:"
-    category_items.each { |s| lines << "  • #{s[:name]} (#{s[:code]}) — #{format_vnd(s[:price])} | Stock: #{s[:stock][:total]}" }
+    category_items.each { |s| lines << "  • #{s[:name]} (#{s[:code]}) — #{format_currency(s[:price])} | Stock: #{s[:stock][:total]}" }
   end
 end

@@ -104,6 +104,15 @@ export const routes = [
     ],
   },
   {
+    path: frontendURL('accounts/:accountId/sales/tools'),
+    name: 'sales_tools_index',
+    meta: {
+      permissions: ['administrator', 'sales_manage'],
+      featureFlag: FEATURE_FLAGS.SALES,
+    },
+    component: () => import('./tools/Index.vue'),
+  },
+  {
     path: frontendURL('accounts/:accountId/sales/settings'),
     name: 'sales_settings_index',
     meta: {

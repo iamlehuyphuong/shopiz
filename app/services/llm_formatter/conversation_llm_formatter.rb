@@ -27,6 +27,7 @@ class LlmFormatter::ConversationLlmFormatter < LlmFormatter::DefaultLlmFormatter
     return "No messages in this conversation\n" if @record.messages.empty?
 
     messages = @record.messages.where.not(message_type: [:activity, :template])
+    messages = messages.where('created_at >= ?', config[:messages_since]) if config[:messages_since]
 
     if config[:token_limit]
       build_limited_messages(messages, config)

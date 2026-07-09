@@ -67,7 +67,7 @@ module Captain::Tools::Concerns::HaravanClient
     end
   end
 
-  def format_haravan_currency(amount, currency = 'VND')
+  def format_currency(amount, currency = 'VND')
     "#{amount} #{currency}"
   end
 end

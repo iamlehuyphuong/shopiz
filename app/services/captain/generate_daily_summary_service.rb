@@ -4,6 +4,7 @@ class Captain::GenerateDailySummaryService < Captain::BaseTaskService
   CHUNK_TOKEN_LIMIT = 100_000
 
   def perform
+    @since_time = inbox_daily_summary.last_run_at || Time.current.beginning_of_day
     conversations = fetch_conversations
     return if conversations.empty?
     
@@ -40,13 +41,10 @@ class Captain::GenerateDailySummaryService < Captain::BaseTaskService
   end
 
   def fetch_conversations
-    since_time = inbox_daily_summary.last_run_at || Time.current.beginning_of_day
-    
-    # If no inboxes are configured, return empty
     return Conversation.none if inbox_daily_summary.inbox_ids.blank?
-    
+
     Conversation.where(inbox_id: inbox_daily_summary.inbox_ids)
-                .where('updated_at >= ?', since_time)
+                .where('last_activity_at >= ?', @since_time)
   end
   
   def build_chunks(conversations)
@@ -54,7 +52,7 @@ class Captain::GenerateDailySummaryService < Captain::BaseTaskService
     current_chunk = ""
     
     conversations.each do |conv|
-      text = conv.to_llm_text(include_contact_details: false)
+      text = conv.to_llm_text(include_contact_details: false, messages_since: @since_time)
       next if text.blank?
       
       if current_chunk.length + text.length > CHUNK_TOKEN_LIMIT && current_chunk.present?
@@ -79,6 +77,7 @@ class Captain::GenerateDailySummaryService < Captain::BaseTaskService
       """
       
       Present your preliminary analysis concisely and with a clear structure.
+      IMPORTANT: You MUST write your entire response in #{account.locale_english_name}.
     PROMPT
     
     response = make_api_call(
@@ -113,6 +112,7 @@ class Captain::GenerateDailySummaryService < Captain::BaseTaskService
       """
       
       Note: Do not provide any additional explanations. Return ONLY the content of the final report, as it will be sent directly to management.
+      IMPORTANT: You MUST write your entire response in #{account.locale_english_name}.
     PROMPT
     
     response = make_api_call(

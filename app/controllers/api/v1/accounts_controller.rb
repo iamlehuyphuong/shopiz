@@ -122,7 +122,7 @@ class Api::V1::AccountsController < Api::BaseController
     [
       :auto_resolve_after, :auto_resolve_message, :auto_resolve_ignore_waiting,
       :audio_transcriptions, :auto_resolve_label, :active_ecommerce_platform, :ai_allow_create_order,
-      { order_notification_templates: [:draft, :confirmed, :processing, :shipped, :delivered, :cancelled] },
+      { order_notification_templates: [:confirmed, :processing, :shipped, :delivered, :cancelled] },
       { custom_email_config: [
         :sender_email, :smtp_address, :smtp_port, :smtp_username, :smtp_password,
         :smtp_domain, :smtp_authentication, :smtp_enable_starttls_auto, :smtp_openssl_verify_mode

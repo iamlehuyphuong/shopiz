@@ -69,7 +69,7 @@ module Captain::Tools::Concerns::SapoClient
     end
   end
 
-  def format_sapo_currency(amount, currency = 'VND')
+  def format_currency(amount, currency = 'VND')
     "#{amount} #{currency}"
   end
 end

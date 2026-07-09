@@ -508,6 +508,7 @@ const menuItems = computed(() => {
         'sales_products_new',
         'sales_products_show',
         'sales_products_edit',
+        'sales_tools_index',
         'sales_settings_index',
       ],
       children: [
@@ -541,6 +542,13 @@ const menuItems = computed(() => {
             'sales_orders_edit',
           ],
           to: accountScopedRoute('sales_orders_list'),
+        },
+        {
+          name: 'Sales Tools',
+          label: t('SIDEBAR.SALES_TOOLS'),
+          icon: 'i-lucide-briefcase',
+          activeOn: ['sales_tools_index'],
+          to: accountScopedRoute('sales_tools_index'),
         },
         {
           name: 'Sales Settings',
@@ -807,28 +815,39 @@ const menuItems = computed(() => {
 
 const syncActiveCategory = () => {
   const currentRouteName = route.name;
-  const activeItem = menuItems.value.find(item => {
-    if (item.activeOn?.includes(currentRouteName)) return true;
-    if (item.to?.name === currentRouteName) return true;
-    if (item.children) {
-      return item.children.some(child => {
-        if (child.activeOn?.includes(currentRouteName)) return true;
-        if (child.to?.name === currentRouteName) return true;
-        if (child.children) {
-          return child.children.some(grandChild => {
-            if (grandChild.activeOn?.includes(currentRouteName)) return true;
-            if (grandChild.to?.name === currentRouteName) return true;
-            return false;
-          });
-        }
-        return false;
-      });
-    }
-    return false;
-  });
+  let matchedCategory = null;
 
-  if (activeItem) {
-    activeCategory.value = activeItem.name;
+  for (const item of menuItems.value) {
+    if (item.activeOn?.includes(route.name)) {
+      matchedCategory = item.name;
+      break;
+    }
+    if (item.children) {
+      let childMatch = false;
+      for (const child of item.children) {
+        if (child.activeOn?.includes(route.name)) {
+          childMatch = true;
+          break;
+        }
+        if (child.children) {
+          for (const grandChild of child.children) {
+            if (grandChild.activeOn?.includes(route.name)) {
+              childMatch = true;
+              break;
+            }
+          }
+        }
+        if (childMatch) break;
+      }
+      if (childMatch) {
+        matchedCategory = item.name;
+        break;
+      }
+    }
+  }
+
+  if (matchedCategory) {
+    activeCategory.value = matchedCategory;
   }
 };
 
@@ -918,7 +937,7 @@ const handleMainMenuClick = item => {
   activeCategory.value = item.name;
 
   const navigableChild = getFirstNavigableChild(item);
-  if (navigableChild) {
+  if (navigableChild && route.name !== navigableChild.name) {
     router.push(navigableChild);
   }
 };

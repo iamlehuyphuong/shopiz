@@ -64,7 +64,7 @@ class Captain::Tools::KiotvietSearchOrdersTool < Captain::Tools::BasePublicTool
   def build_invoice_lines(inv)
     [
       "Invoice #{inv['code']} (ID: #{inv['id']})",
-      "  Total: #{format_vnd(inv['total'])}",
+      "  Total: #{format_currency(inv['total'])}",
       "  Status: #{resolve_status(inv['status'])}",
       "  Payment: #{inv['totalPayment']} / #{inv['total']}",
       "  Date: #{parse_date(inv['createdDate'])}"
