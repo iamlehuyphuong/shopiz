@@ -556,7 +556,12 @@ const insertVariable = variableKey => {
                     <textarea
                       v-model="salesOrderNotificationTemplates[activeTab]"
                       class="w-full min-h-[120px] rounded-xl bg-n-alpha-black2 p-4 text-sm text-n-slate-12 outline outline-1 outline-offset-[-1px] outline-n-weak hover:outline-n-slate-6 focus:outline-n-orange focus:ring-0 border-none transition-all shadow-sm"
-                      :placeholder="t(`INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_${activeTab.toUpperCase()}`, templateVariables)"
+                      :placeholder="
+                        t(
+                          `INBOX_MGMT.ECOMMERCE.TEMPLATES_PLACEHOLDER_${activeTab.toUpperCase()}`,
+                          templateVariables
+                        )
+                      "
                       @focus="onTextareaFocus"
                     />
                   </div>
@@ -575,7 +580,6 @@ const insertVariable = variableKey => {
             @click="handleSave"
           />
         </div>
-
       </div>
     </div>
   </div>

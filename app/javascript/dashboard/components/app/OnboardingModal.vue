@@ -4,7 +4,7 @@ import { useVuelidate } from '@vuelidate/core';
 import { required, minLength } from '@vuelidate/validators';
 import Modal from 'dashboard/components/Modal.vue';
 import FormInput from 'v3/components/Form/Input.vue';
-import FormSelect from 'v3/components/Form/Select.vue';
+import FormSelect from 'dashboard/components/app/OnboardingSelect.vue';
 import WithLabel from 'v3/components/Form/WithLabel.vue';
 import NextButton from 'next/button/Button.vue';
 import { useStore } from 'dashboard/composables/store';

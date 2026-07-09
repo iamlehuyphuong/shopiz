@@ -236,7 +236,9 @@ defineExpose({ prepareCampaignDetails, isSubmitDisabled });
       <TextArea
         v-model="state.message"
         :label="t('CAMPAIGN.ZALO_PERSONAL.CREATE.FORM.MESSAGE.LABEL')"
-        :placeholder="t('CAMPAIGN.ZALO_PERSONAL.CREATE.FORM.MESSAGE.PLACEHOLDER')"
+        :placeholder="
+          t('CAMPAIGN.ZALO_PERSONAL.CREATE.FORM.MESSAGE.PLACEHOLDER')
+        "
         show-character-count
         :message="formErrors.message"
         :message-type="formErrors.message ? 'error' : 'info'"

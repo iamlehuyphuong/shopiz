@@ -264,8 +264,12 @@ watch(
       if (tier.packages) {
         const match = tier.packages.find(p => p.id === cPlanId);
         if (match) {
-          globalDuration.value =
-            match.duration_days === 730 ? 365 : match.duration_days;
+          if (!isFreePlan(match)) {
+            globalDuration.value =
+              match.duration_days === 730 ? 365 : match.duration_days;
+          } else {
+            globalDuration.value = 365;
+          }
           globalAiIncluded.value = true;
           break;
         }
@@ -306,9 +310,7 @@ onMounted(fetchAccountDetails);
             />
             <DetailItem
               :label="$t('BILLING_SETTINGS.CURRENT_PLAN.RENEWS_ON')"
-              :value="
-                isFreePlan(currentSubscription) ? '---' : subscriptionRenewsOn
-              "
+              :value="subscriptionRenewsOn || '---'"
             />
             <DetailItem
               :label="$t('BILLING_SETTINGS.CURRENT_PLAN.AI_RESPONSE_CREDIT')"
