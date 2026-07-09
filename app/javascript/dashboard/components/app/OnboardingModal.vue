@@ -290,6 +290,8 @@ const submit = async () => {
     };
 
     await store.dispatch('accounts/update', payload);
+    // Set flag so Dashboard shows the welcome trial modal (survives reactive timing)
+    localStorage.setItem('shopiz_show_welcome_trial', '1');
     useAlert(t('GENERAL_SETTINGS.UPDATE.SUCCESS'));
     emit('completed');
   } catch (error) {

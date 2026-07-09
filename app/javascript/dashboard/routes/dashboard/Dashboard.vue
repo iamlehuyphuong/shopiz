@@ -1,5 +1,5 @@
 <script>
-import { defineAsyncComponent, ref, computed } from 'vue';
+import { defineAsyncComponent, ref, computed, watch } from 'vue';
 
 import NextSidebar from 'next/sidebar/Sidebar.vue';
 import TopHeader from 'next/TopHeader.vue';
@@ -45,6 +45,9 @@ export default {
     OnboardingModal: defineAsyncComponent(
       () => import('dashboard/components/app/OnboardingModal.vue')
     ),
+    WelcomeTrialModal: defineAsyncComponent(
+      () => import('dashboard/components/app/WelcomeTrialModal.vue')
+    ),
   },
   setup() {
     const upgradePageRef = ref(null);
@@ -73,6 +76,16 @@ export default {
       return onboarding.onboarding_completed !== true;
     });
 
+
+
+    const showWelcomeTrialModal = ref(false);
+
+    watch(shouldShowOnboardingModal, (newVal, oldVal) => {
+      if (oldVal === true && newVal === false) {
+        showWelcomeTrialModal.value = true;
+      }
+    });
+
     return {
       uiSettings,
       updateUISettings,
@@ -84,6 +97,7 @@ export default {
       route,
       isFeatureLocked,
       shouldShowOnboardingModal,
+      showWelcomeTrialModal,
     };
   },
   data() {
@@ -157,6 +171,12 @@ export default {
       this.showShortcutModal = false;
     },
   },
+  mounted() {
+    if (localStorage.getItem('shopiz_show_welcome_trial') === '1') {
+      localStorage.removeItem('shopiz_show_welcome_trial');
+      this.showWelcomeTrialModal = true;
+    }
+  },
 };
 </script>
 
@@ -218,7 +238,14 @@ export default {
           @close="closeKeyShortcutModal"
           @clickaway="closeKeyShortcutModal"
         />
-        <OnboardingModal v-if="shouldShowOnboardingModal" :show="true" />
+        <OnboardingModal
+          v-if="shouldShowOnboardingModal"
+          :show="true"
+        />
+        <WelcomeTrialModal
+          :show="showWelcomeTrialModal"
+          @close="showWelcomeTrialModal = false"
+        />
       </main>
     </div>
   </div>
