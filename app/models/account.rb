@@ -200,7 +200,7 @@ class Account < ApplicationRecord
   after_save :sync_sales_config_to_inboxes, if: :saved_change_to_settings?
 
   def assign_default_plan
-    default_plan = SubscriptionPlan.free_plan.first
+    default_plan = SubscriptionPlan.find_by(is_default_for_new_account: true) || SubscriptionPlan.free_plan.first
     return unless default_plan
 
     # Use SubscribeService to handle the full subscription logic (creating record and provisioning)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_07_01_153526) do
+ActiveRecord::Schema[7.1].define(version: 2026_07_07_044013) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -1544,6 +1544,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_07_01_153526) do
     t.string "sku"
     t.bigint "subscription_tier_id"
     t.boolean "ai_included", default: false
+    t.boolean "is_default_for_new_account", default: false
     t.index ["sku"], name: "index_subscription_plans_on_sku", unique: true
     t.index ["subscription_tier_id"], name: "index_subscription_plans_on_subscription_tier_id"
   end
