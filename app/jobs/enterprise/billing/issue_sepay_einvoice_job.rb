@@ -29,6 +29,9 @@ class Enterprise::Billing::IssueSepayEinvoiceJob < ApplicationJob
     billing_history.update!(metadata: metadata)
 
     Rails.logger.info("[SePay eInvoice] Successfully requested invoice with tracking_code #{tracking_code} for billing history #{billing_history.id}")
+    
+    # Poll for creation status
+    Enterprise::Billing::CheckSepayEinvoiceJob.set(wait: 5.seconds).perform_later(billing_history.id, tracking_code)
   rescue StandardError => e
     Rails.logger.error("[SePay eInvoice Job Error] #{e.class} - #{e.message}")
   end

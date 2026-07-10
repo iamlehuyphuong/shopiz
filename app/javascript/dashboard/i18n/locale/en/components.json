@@ -55,5 +55,13 @@
   },
   "CHANNEL_SELECTOR": {
     "COMING_SOON": "Coming Soon!"
+  },
+  "WELCOME_TRIAL_MODAL": {
+    "TITLE": "Welcome to Shopiz!",
+    "DESCRIPTION_PART_1": "Thanks for joining! We'd like to gift you",
+    "DESCRIPTION_PART_TRIAL": "1 month free trial",
+    "DESCRIPTION_PART_2": "of the",
+    "DESCRIPTION_PART_3": "plan to get started.",
+    "BUTTON_CONFIRM": "Confirm"
   }
 }

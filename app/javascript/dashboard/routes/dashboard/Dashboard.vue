@@ -76,8 +76,6 @@ export default {
       return onboarding.onboarding_completed !== true;
     });
 
-
-
     const showWelcomeTrialModal = ref(false);
 
     watch(shouldShowOnboardingModal, (newVal, oldVal) => {
@@ -147,6 +145,12 @@ export default {
       immediate: true,
     },
   },
+  mounted() {
+    if (localStorage.getItem('shopiz_show_welcome_trial') === '1') {
+      localStorage.removeItem('shopiz_show_welcome_trial');
+      this.showWelcomeTrialModal = true;
+    }
+  },
   methods: {
     toggleMobileSidebar() {
       this.isMobileSidebarOpen = !this.isMobileSidebarOpen;
@@ -170,12 +174,6 @@ export default {
     closeKeyShortcutModal() {
       this.showShortcutModal = false;
     },
-  },
-  mounted() {
-    if (localStorage.getItem('shopiz_show_welcome_trial') === '1') {
-      localStorage.removeItem('shopiz_show_welcome_trial');
-      this.showWelcomeTrialModal = true;
-    }
   },
 };
 </script>
@@ -238,10 +236,7 @@ export default {
           @close="closeKeyShortcutModal"
           @clickaway="closeKeyShortcutModal"
         />
-        <OnboardingModal
-          v-if="shouldShowOnboardingModal"
-          :show="true"
-        />
+        <OnboardingModal v-if="shouldShowOnboardingModal" :show="true" />
         <WelcomeTrialModal
           :show="showWelcomeTrialModal"
           @close="showWelcomeTrialModal = false"

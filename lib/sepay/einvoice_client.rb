@@ -25,10 +25,22 @@ class Sepay::EinvoiceClient
 
     product_name = billing_history.product_name || 'Dịch vụ phần mềm'
     amount = billing_history.price_amount
-    buyer_name = account.name.presence || account.email
+    
     buyer_email = account.email
-    buyer_tax_code = account.custom_attributes['tax_code'] || ''
-    buyer_address = account.custom_attributes['address'] || ''
+    buyer_tax_code = account.custom_attributes['tax_code'].to_s.strip
+    buyer_address = account.custom_attributes['address'].to_s.strip
+    buyer_name_raw = account.name.to_s.strip.presence || account.email
+    
+    if buyer_tax_code.present?
+      buyer_type = 'business'
+      buyer_name = buyer_name_raw
+    elsif buyer_address.present?
+      buyer_type = 'personal'
+      buyer_name = buyer_name_raw
+    else
+      buyer_type = 'personal'
+      buyer_name = 'Người mua không cung cấp thông tin'
+    end
 
     payload = {
       template_code: @template_code,
@@ -36,10 +48,11 @@ class Sepay::EinvoiceClient
       issued_date: Time.current.strftime('%Y-%m-%d %H:%M:%S'),
       currency: 'VND',
       provider_account_id: @provider_account_id,
+      reference_code: billing_history.order_id,
       payment_method: 'CK',
       is_draft: is_draft,
       buyer: {
-        type: buyer_tax_code.present? ? 'business' : 'personal',
+        type: buyer_type,
         name: buyer_name,
         legal_name: buyer_name,
         tax_code: buyer_tax_code,
@@ -70,9 +83,23 @@ class Sepay::EinvoiceClient
     response
   end
 
+  # Check creation status (especially for async issue)
+  def check_invoice_creation(tracking_code)
+    fetch_token!
+    request(:get, "/invoices/create/check/#{tracking_code}")
+  end
+
+  # Get detailed invoice info (including PDF url)
+  def get_invoice(reference_code)
+    fetch_token!
+    request(:get, "/invoices/#{reference_code}")
+  end
+
   private
 
   def fetch_token!
+    return if @api_token.present?
+
     uri = URI.parse("#{@api_url}/token")
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = uri.scheme == 'https'
@@ -103,7 +130,7 @@ class Sepay::EinvoiceClient
     http.use_ssl = uri.scheme == 'https'
 
     http_request = Net::HTTP.const_get(method.to_s.capitalize).new(uri.request_uri, headers)
-    http_request.body = body.to_json if body.present?
+    http_request.body = body.to_json if body.present? && method != :get
 
     response = http.request(http_request)
     JSON.parse(response.body, symbolize_names: true)
