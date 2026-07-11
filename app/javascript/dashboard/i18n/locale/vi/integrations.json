@@ -621,7 +621,7 @@
           "SYSTEM_MESSAGES": "Tin nhắn hệ thống",
           "INSTRUCTIONS": "Hướng dẫn",
           "FEATURES": "Tính năng",
-          "TOOLS": "Công cụ"
+          "TOOLS": "Công cụ tuỳ chỉnh"
         },
         "NAME": {
           "LABEL": "Tên",
@@ -954,46 +954,46 @@
       }
     },
     "CUSTOM_TOOLS": {
-      "HEADER": "Công cụ AI",
-      "ADD_NEW": "Tạo công cụ AI mới",
+      "HEADER": "Công cụ tuỳ chỉnh",
+      "ADD_NEW": "Tạo công cụ tuỳ chỉnh mới",
       "EMPTY_STATE": {
-        "TITLE": "Không có Công cụ AI",
-        "SUBTITLE": "Tạo Công cụ AI để trợ lý có thể kết nối API bên ngoài, lấy dữ liệu và thực thi hành động thay bạn.",
+        "TITLE": "Không có Công cụ tuỳ chỉnh",
+        "SUBTITLE": "Tạo Công cụ tuỳ chỉnh để trợ lý có thể kết nối API bên ngoài, lấy dữ liệu và thực thi hành động thay bạn.",
         "FEATURE_SPOTLIGHT": {
-          "TITLE": "Công cụ AI",
-          "NOTE": "Công cụ AI giúp trợ lý kết nối với API ngoài, lấy dữ liệu hoặc tương tác với hệ thống hiện tại của bạn để mở rộng khả năng."
+          "TITLE": "Công cụ tuỳ chỉnh",
+          "NOTE": "Công cụ tuỳ chỉnh giúp trợ lý kết nối với API ngoài, lấy dữ liệu hoặc tương tác với hệ thống hiện tại của bạn để mở rộng khả năng."
         }
       },
-      "FORM_DESCRIPTION": "Cấu hình Công cụ AI để kết nối API ngoài",
+      "FORM_DESCRIPTION": "Cấu hình Công cụ tuỳ chỉnh để kết nối API ngoài",
       "OPTIONS": {
-        "EDIT_TOOL": "Chỉnh sửa Công cụ AI",
+        "EDIT_TOOL": "Chỉnh sửa Công cụ tuỳ chỉnh",
         "CLONE_TOOL": "Nhân bản",
-        "DELETE_TOOL": "Xóa Công cụ AI",
-        "CLONE_SUCCESS": "Nhân bản Công cụ AI thành công",
-        "CLONE_ERROR": "Lỗi khi nhân bản Công cụ AI"
+        "DELETE_TOOL": "Xóa Công cụ tuỳ chỉnh",
+        "CLONE_SUCCESS": "Nhân bản Công cụ tuỳ chỉnh thành công",
+        "CLONE_ERROR": "Lỗi khi nhân bản Công cụ tuỳ chỉnh"
       },
       "CREATE": {
-        "TITLE": "Tạo Công cụ AI",
-        "SUCCESS_MESSAGE": "Tạo Công cụ AI thành công",
-        "ERROR_MESSAGE": "Không thể tạo Công cụ AI"
+        "TITLE": "Tạo Công cụ tuỳ chỉnh",
+        "SUCCESS_MESSAGE": "Tạo Công cụ tuỳ chỉnh thành công",
+        "ERROR_MESSAGE": "Không thể tạo Công cụ tuỳ chỉnh"
       },
       "EDIT": {
-        "TITLE": "Chỉnh sửa Công cụ AI",
-        "SUCCESS_MESSAGE": "Cập nhật Công cụ AI thành công",
-        "ERROR_MESSAGE": "Không thể cập nhật Công cụ AI"
+        "TITLE": "Chỉnh sửa Công cụ tuỳ chỉnh",
+        "SUCCESS_MESSAGE": "Cập nhật Công cụ tuỳ chỉnh thành công",
+        "ERROR_MESSAGE": "Không thể cập nhật Công cụ tuỳ chỉnh"
       },
       "DELETE": {
-        "TITLE": "Xóa Công cụ AI",
-        "DESCRIPTION": "Bạn có chắc muốn xóa Công cụ AI này? Hành động không thể hoàn tác.",
+        "TITLE": "Xóa Công cụ tuỳ chỉnh",
+        "DESCRIPTION": "Bạn có chắc muốn xóa Công cụ tuỳ chỉnh này? Hành động không thể hoàn tác.",
         "CONFIRM": "Đồng ý xóa",
-        "SUCCESS_MESSAGE": "Xóa Công cụ AI thành công",
-        "ERROR_MESSAGE": "Không thể xóa Công cụ AI"
+        "SUCCESS_MESSAGE": "Xóa Công cụ tuỳ chỉnh thành công",
+        "ERROR_MESSAGE": "Không thể xóa Công cụ tuỳ chỉnh"
       },
       "FORM": {
         "TITLE": {
-          "LABEL": "Tên Công cụ AI",
+          "LABEL": "Tên Công cụ tuỳ chỉnh",
           "PLACEHOLDER": "Tra cứu đơn hàng",
-          "ERROR": "Tên Công cụ AI là bắt buộc"
+          "ERROR": "Tên Công cụ tuỳ chỉnh là bắt buộc"
         },
         "DESCRIPTION": {
           "LABEL": "Mô tả",

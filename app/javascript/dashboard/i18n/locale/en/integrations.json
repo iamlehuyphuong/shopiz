@@ -621,7 +621,7 @@
           "SYSTEM_MESSAGES": "System Messages",
           "INSTRUCTIONS": "Instructions",
           "FEATURES": "Features",
-          "TOOLS": "Tools "
+          "TOOLS": "Custom tools"
         },
         "NAME": {
           "LABEL": "Name",
@@ -954,7 +954,7 @@
       }
     },
     "CUSTOM_TOOLS": {
-      "HEADER": "Tools",
+      "HEADER": "Custom tools",
       "ADD_NEW": "Create a new tool",
       "EMPTY_STATE": {
         "TITLE": "No custom tools available",
