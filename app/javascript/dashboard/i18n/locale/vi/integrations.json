@@ -844,10 +844,17 @@
                 "scenarios": [
                   {
                     "id": "general_zalo_consultation",
-                    "title": "Tư vấn Cơ bản & Xin SĐT (Zalo)",
+                    "title": "Tư vấn cơ bản xin số điện thoại",
                     "description": "Trả lời các câu hỏi cơ bản và xin số điện thoại khách hàng để hỗ trợ qua Zalo.",
-                    "instruction": "Sử dụng [search_documentation](tool://search_documentation) để trả lời các câu hỏi cơ bản. Sau đó, khéo léo xin số điện thoại của khách hàng để chuyên viên liên hệ qua Zalo. Khi khách cho SĐT, dùng [create_customer](tool://create_customer) để lưu thông tin.",
-                    "tools": ["search_documentation", "create_customer"]
+                    "instruction": "Bước 1: Tư vấn khách hàng, giải đáp thắc mắc bằng [search_documentation](tool://search_documentation) (FAQ), [search_canned_responses](tool://search_canned_responses) (tin nhắn mẫu) hoặc [execute_macro](tool://execute_macro). Bước 2: Xin thông tin số điện thoại. Khi có, dùng [update_customer](tool://update_customer) để lưu lại. Bước 3: Đề xuất kết bạn Zalo. Dùng [send_zalo_friend_request](tool://send_zalo_friend_request) để gửi lời mời kèm tin nhắn chào hỏi. Dùng [update_conversation_tags](tool://update_conversation_tags) để gắn tag phân loại.",
+                    "tools": [
+                      "search_documentation",
+                      "search_canned_responses",
+                      "execute_macro",
+                      "update_conversation_tags",
+                      "update_customer",
+                      "send_zalo_friend_request"
+                    ]
                   }
                 ]
               },

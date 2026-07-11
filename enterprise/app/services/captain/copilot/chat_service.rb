@@ -75,6 +75,7 @@ class Captain::Copilot::ChatService < Llm::BaseAiService
     Captain::Tools::Copilot::SearchCannedResponsesService,
     Captain::Tools::Copilot::GetConversationSummaryService,
     Captain::Tools::Copilot::ListMacrosService,
+    Captain::Tools::ExecuteMacroService,
     Captain::Tools::Copilot::GetContactNotesService,
     Captain::Tools::Copilot::ListAutomationRulesService,
     Captain::Tools::Copilot::SearchProductsService,
@@ -92,7 +93,12 @@ class Captain::Copilot::ChatService < Llm::BaseAiService
     Captain::Tools::Copilot::CalendlyGetAvailableTimesService,
     Captain::Tools::Copilot::CalendlyBookAppointmentService,
     Captain::Tools::Copilot::CalendlyGetScheduledEventsService,
-    Captain::Tools::Copilot::CalendlyManageBookingService
+    Captain::Tools::Copilot::CalendlyManageBookingService,
+    Captain::Tools::Copilot::BookAppointmentService,
+    Captain::Tools::Copilot::GetAvailableTimesService,
+    Captain::Tools::Copilot::ManageBookingService,
+    Captain::Tools::Copilot::SendZaloFriendRequestService,
+    Captain::Tools::Copilot::UpdateConversationTagsService
   ].freeze
 
   def build_tools

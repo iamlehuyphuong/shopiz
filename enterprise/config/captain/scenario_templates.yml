@@ -4,7 +4,11 @@ case_studies:
       - id: "general_zalo_consultation"
         tools:
           - "search_documentation"
-          - "create_customer"
+          - "search_canned_responses"
+          - "execute_macro"
+          - "update_conversation_tags"
+          - "update_customer"
+          - "send_zalo_friend_request"
 
   ecommerce_pack:
     scenarios:

@@ -673,7 +673,7 @@ en:
           general_zalo_consultation:
             title: "Basic Consultation & Lead Generation"
             description: "Answer basic questions and ask for customer phone number to consult via Zalo."
-            instruction: "Use [search_documentation](tool://search_documentation) to answer basic queries. Ask for their phone number to connect on Zalo. Once provided, use [create_customer](tool://create_customer) to save their details."
+            instruction: "Step 1: Consult and answer queries using [search_documentation](tool://search_documentation) (FAQ), [search_canned_responses](tool://search_canned_responses), or [execute_macro](tool://execute_macro). Step 2: Ask for their phone number. Once provided, use [update_customer](tool://update_customer) to save it. Step 3: Propose to connect on Zalo. Use [send_zalo_friend_request](tool://send_zalo_friend_request) to send a friend request with a greeting. Use [update_conversation_tags](tool://update_conversation_tags) to tag the conversation."
       ecommerce_pack:
         name: "E-commerce Support Complete Pack"
         description: "A complete set of scenarios for e-commerce platforms to handle FAQs, order tracking, returns, and complaints."
