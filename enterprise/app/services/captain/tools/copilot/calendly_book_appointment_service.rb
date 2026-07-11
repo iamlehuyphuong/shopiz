@@ -47,9 +47,9 @@ class Captain::Tools::Copilot::CalendlyBookAppointmentService < Captain::Tools::
     when 400
       "Không thể đặt lịch '#{event_type_name}'. Lỗi API (400): #{error.body.to_json}. (Lưu ý: start_time phải đúng định dạng UTC trả về từ calendly_get_available_times)"
     when 403
-      "Calendly account cần nâng cấp lên gói trả phí để sử dụng tính năng đặt lịch."
+      'Calendly account cần nâng cấp lên gói trả phí để sử dụng tính năng đặt lịch.'
     when 429
-      "Hệ thống đang bị giới hạn do gọi API quá nhiều lần (Rate Limit). Vui lòng thử lại sau 1-2 phút."
+      'Hệ thống đang bị giới hạn do gọi API quá nhiều lần (Rate Limit). Vui lòng thử lại sau 1-2 phút.'
     else
       "Lỗi khi đặt lịch: #{error.message} - #{error.body.to_json}"
     end

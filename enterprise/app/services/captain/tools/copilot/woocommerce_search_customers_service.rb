@@ -8,7 +8,6 @@ class Captain::Tools::Copilot::WoocommerceSearchCustomersService < Captain::Tool
   description 'Search WooCommerce customers by email, name, or phone number'
   param :query, type: :string, desc: 'Customer email, name, or phone to search'
 
-
   def active?
     woocommerce_active?
   end

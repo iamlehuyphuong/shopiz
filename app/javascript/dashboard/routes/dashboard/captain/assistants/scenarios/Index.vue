@@ -56,9 +56,9 @@ const renderInstruction = instruction => () =>
   });
 
 // Suggested example scenarios for quick add
-const scenariosExample = computed(() => {
-  const examples = tm('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.SUGGESTED.EXAMPLE_SCENARIOS');
-  return Array.isArray(examples) ? examples : [];
+const caseStudies = computed(() => {
+  const cases = tm('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.SUGGESTED.CASE_STUDIES');
+  return Array.isArray(cases) ? cases : [];
 });
 
 const filteredScenarios = computed(() => {
@@ -169,9 +169,9 @@ const addScenario = async scenario => {
   }
 };
 
-const addAllExampleScenarios = async () => {
+const addAllExampleScenarios = async scenarios => {
   try {
-    scenariosExample.forEach(async scenario => {
+    scenarios.forEach(async scenario => {
       await store.dispatch('captainScenarios/create', {
         assistantId: assistantId.value,
         ...scenario,
@@ -396,10 +396,12 @@ onMounted(() => {
       </div>
       <div v-else class="flex mt-7 flex-col gap-4 pb-16">
         <SuggestedScenarios
-          :title="$t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.SUGGESTED.TITLE')"
-          :items="scenariosExample"
+          v-for="pack in caseStudies"
+          :key="pack.id"
+          :title="pack.name"
+          :items="pack.scenarios"
           @close="closeSuggestedRules"
-          @add="addAllExampleScenarios"
+          @add="addAllExampleScenarios(pack.scenarios)"
         >
           <template #default="{ item }">
             <div class="flex items-center gap-3 justify-between">

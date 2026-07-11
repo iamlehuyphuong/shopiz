@@ -8,7 +8,6 @@ class Captain::Tools::Copilot::WoocommerceSearchOrdersService < Captain::Tools::
   description 'Search WooCommerce orders by customer email, phone, or order ID'
   param :query, type: :string, desc: 'Customer email, phone, or order ID to search'
 
-
   def active?
     woocommerce_active?
   end

@@ -88,7 +88,7 @@ module Captain::Tools::Copilot::Concerns::CalendlyHelper
     cancel_url = invitee['cancel_url']
 
     lines = [
-      "✅ Đặt lịch thành công!",
+      '✅ Đặt lịch thành công!',
       "📋 Dịch vụ: #{event_type['name']}",
       "📅 Thời gian: #{start}",
       "👤 Khách: #{invitee.dig('invitee', 'name') || invitee['name']}",
@@ -117,9 +117,9 @@ module Captain::Tools::Copilot::Concerns::CalendlyHelper
       name = event['name'] || event.dig('event_type', 'name') || 'N/A'
       start_time = event['start_time'] ? format_time_local(event['start_time'], timezone) : 'N/A'
       status = event['status']
-      
+
       uuid = event['uri']&.split('/')&.last
-      invitee_info = "N/A"
+      invitee_info = 'N/A'
       if uuid
         begin
           invitees_response = client.event_invitees(event_uuid: uuid)
@@ -132,7 +132,7 @@ module Captain::Tools::Copilot::Concerns::CalendlyHelper
           # Ignore if we can't fetch invitees
         end
       end
-      
+
       lines << "- Dịch vụ: #{name} | Khách: #{invitee_info} | Thời gian: #{start_time} | Trạng thái: #{status}"
     end
     lines << "... và #{events.size - 10} cuộc hẹn khác" if events.size > 10
@@ -143,7 +143,7 @@ module Captain::Tools::Copilot::Concerns::CalendlyHelper
     response = client.scheduled_events(
       user_uri: hook.settings['user_uri'],
       min_start_time: Time.current,
-      max_start_time: Time.current + 30.days
+      max_start_time: 30.days.from_now
     )
     events = response['collection'] || []
 
@@ -167,12 +167,12 @@ module Captain::Tools::Copilot::Concerns::CalendlyHelper
 
     if action == 'reschedule'
       url = invitee['reschedule_url']
-      return "Không có link dời lịch cho cuộc hẹn này." unless url
+      return 'Không có link dời lịch cho cuộc hẹn này.' unless url
 
       "🔄 Dời lịch cuộc hẹn:\n📋 Dịch vụ: #{event_name}\n📅 Lịch hiện tại: #{start_time}\n🔗 Link dời lịch: #{url}"
     else
       url = invitee['cancel_url']
-      return "Không có link hủy lịch cho cuộc hẹn này." unless url
+      return 'Không có link hủy lịch cho cuộc hẹn này.' unless url
 
       "❌ Hủy cuộc hẹn:\n📋 Dịch vụ: #{event_name}\n📅 Lịch hiện tại: #{start_time}\n🔗 Link hủy: #{url}"
     end

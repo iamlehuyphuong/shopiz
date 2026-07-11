@@ -5,14 +5,17 @@ RSpec.describe Captain::ScenarioTemplateLoader do
   let(:assistant) { create(:captain_assistant, account: account) }
 
   before do
-    allow_any_instance_of(Captain::Assistant).to receive(:available_tool_ids).and_return(%w[faq_lookup lookup_order initiate_return handoff])
+    allow_any_instance_of(Captain::Assistant).to receive(:available_tool_ids).and_return(
+      %w[faq_lookup lookup_order initiate_return handoff book_appointment manage_appointment]
+    )
   end
 
   describe '.load_templates' do
     it 'loads templates from the yaml file' do
       templates = described_class.load_templates
       expect(templates).to be_a(Hash)
-      expect(templates.keys).to include('ecommerce_support_pack')
+      expect(templates.keys).to include('case_studies')
+      expect(templates['case_studies'].keys).to include('ecommerce_pack', 'spa_pack')
     end
   end
 
@@ -20,7 +23,7 @@ RSpec.describe Captain::ScenarioTemplateLoader do
     context 'when pack exists' do
       it 'creates scenarios for the assistant' do
         expect {
-          described_class.apply_pack!('ecommerce_support_pack', assistant: assistant)
+          described_class.apply_pack!('ecommerce_pack', assistant: assistant)
         }.to change { assistant.scenarios.count }.by(4)
 
         # Audit some values of the created scenarios
@@ -31,10 +34,10 @@ RSpec.describe Captain::ScenarioTemplateLoader do
       end
 
       it 'does not duplicate scenarios if applied twice' do
-        described_class.apply_pack!('ecommerce_support_pack', assistant: assistant)
+        described_class.apply_pack!('ecommerce_pack', assistant: assistant)
         
         expect {
-          described_class.apply_pack!('ecommerce_support_pack', assistant: assistant)
+          described_class.apply_pack!('ecommerce_pack', assistant: assistant)
         }.not_to change { assistant.scenarios.count }
       end
     end

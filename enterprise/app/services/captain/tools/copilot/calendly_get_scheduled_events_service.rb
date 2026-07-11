@@ -41,7 +41,5 @@ class Captain::Tools::Copilot::CalendlyGetScheduledEventsService < Captain::Tool
     @user.present? && find_calendly_hook.present?
   end
 
-  private
-
   include Captain::Tools::Copilot::Concerns::CalendlyHelper
 end

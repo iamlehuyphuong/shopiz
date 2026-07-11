@@ -8,7 +8,6 @@ class Captain::Tools::Copilot::HaravanSearchOrdersService < Captain::Tools::Base
   description 'Search Haravan orders by customer phone, email, or order name/number'
   param :query, type: :string, desc: 'Customer phone, email, or order name to search'
 
-
   def active?
     haravan_active?
   end

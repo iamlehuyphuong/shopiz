@@ -687,24 +687,113 @@ vi:
       start_of_day: đầu ngày
   captain:
     scenario_templates:
-      ecommerce_support_pack:
-        name: "Bộ kịch bản hoàn chỉnh cho E-commerce"
-        description: "Bộ kịch bản hoàn chỉnh cho sàn thương mại điện tử giúp xử lý hỏi đáp, theo dõi đơn hàng, trả hàng và khiếu nại."
-        scenarios:
-          ecom_general_faq:
-            title: "Trợ lý Bán hàng & Hỏi đáp chung"
-            description: "Xử lý các câu hỏi về chính sách vận chuyển, giờ làm việc, và tư vấn sản phẩm cơ bản."
-            instruction: "Bạn là trợ lý ảo của Shopiz. Hãy nhiệt tình giải đáp thắc mắc. Sử dụng [faq_lookup](tool://faq_lookup) để tìm thông tin chính sách. Nếu không biết, hãy chuyển qua [handoff](tool://handoff)."
-          ecom_order_tracking:
-            title: "Kiểm tra Trạng thái Đơn hàng"
-            description: "Giúp khách hàng tự tra cứu đơn hàng bằng số điện thoại hoặc mã đơn."
-            instruction: "Khi khách hàng hỏi về đơn hàng, yêu cầu cung cấp Mã đơn hoặc Số điện thoại. Sử dụng [lookup_order](tool://lookup_order) để lấy trạng thái và báo lại cho khách."
-          ecom_return_refund:
-            title: "Xử lý Đổi trả"
-            description: "Hướng dẫn khách hàng quy trình đổi trả hàng."
-            instruction: "Xác định lý do đổi trả của khách hàng. Nếu hợp lệ theo chính sách, sử dụng [initiate_return](tool://initiate_return) để tạo ticket đổi trả."
-          ecom_escalation:
-            title: "Xử lý khiếu nại & Chuyển Handoff"
-            description: "Nhận diện cảm xúc tiêu cực hoặc các vấn đề phức tạp để chuyển cho tư vấn viên."
-            instruction: "Nếu khách hàng bực tức hoặc yêu cầu gặp người thật, lập tức gọi [handoff](tool://handoff) để chuyển cho nhân viên xử lý và xoa dịu khách hàng."
+      case_studies:
+        general_pack:
+          name: "Bộ Kịch bản Tư vấn Chung"
+          description: "Các kịch bản tư vấn cơ bản, xin thông tin và thu thập SĐT để hỗ trợ tiếp."
+          scenarios:
+            general_zalo_consultation:
+              title: "Tư vấn Cơ bản & Xin SĐT (Zalo)"
+              description: "Trả lời các câu hỏi cơ bản và xin số điện thoại khách hàng để hỗ trợ qua Zalo."
+              instruction: "Sử dụng [search_documentation](tool://search_documentation) để trả lời các câu hỏi cơ bản. Sau đó, khéo léo xin số điện thoại của khách hàng để chuyên viên liên hệ qua Zalo. Khi khách cho SĐT, dùng [create_customer](tool://create_customer) để lưu thông tin."
+        ecommerce_pack:
+          name: "Bộ Kịch bản E-commerce Hoàn chỉnh"
+          description: "Bộ kịch bản hoàn chỉnh cho E-commerce để xử lý Hỏi đáp, tra cứu đơn, trả hàng và khiếu nại."
+          scenarios:
+            ecom_general_faq:
+              title: "Trợ lý Bán hàng & Hỏi đáp chung"
+              description: "Xử lý các câu hỏi về chính sách vận chuyển, giờ làm việc, và tư vấn sản phẩm cơ bản."
+              instruction: "Bạn là trợ lý ảo của Shopiz. Hãy nhiệt tình giải đáp thắc mắc. Sử dụng [search_documentation](tool://search_documentation) và [search_articles](tool://search_articles) để tìm thông tin chính sách. Nếu không biết, hãy chuyển qua [execute_macro](tool://execute_macro) để gọi nhân viên."
+            ecom_order_tracking:
+              title: "Kiểm tra Trạng thái Đơn hàng"
+              description: "Giúp khách hàng tự tra cứu đơn hàng bằng số điện thoại hoặc mã đơn."
+              instruction: "Khi khách hàng hỏi về đơn hàng, yêu cầu cung cấp Mã đơn hoặc Số điện thoại. Sử dụng [search_orders](tool://search_orders) và [get_order_detail](tool://get_order_detail) để lấy trạng thái và báo lại cho khách."
+            ecom_return_refund:
+              title: "Xử lý Đổi trả"
+              description: "Hướng dẫn khách hàng quy trình đổi trả hàng."
+              instruction: "Xác định lý do đổi trả của khách hàng. Nếu hợp lệ theo chính sách, sử dụng [execute_macro](tool://execute_macro) để tạo ticket đổi trả."
+            ecom_escalation:
+              title: "Xử lý khiếu nại & Chuyển Handoff"
+              description: "Nhận diện cảm xúc tiêu cực hoặc các vấn đề phức tạp để chuyển cho tư vấn viên."
+              instruction: "Nếu khách hàng bực tức hoặc yêu cầu gặp người thật, lập tức gọi [execute_macro](tool://execute_macro) để chuyển cho nhân viên xử lý và xoa dịu khách hàng."
+        spa_pack:
+          name: "Bộ Kịch bản Spa & Clinic"
+          description: "Bộ kịch bản dành cho các cửa hàng Spa & Thẩm mỹ viện để đặt lịch hẹn và tư vấn dịch vụ."
+          scenarios:
+            spa_booking:
+              title: "Đặt lịch Spa"
+              description: "Giúp khách hàng đặt lịch hẹn Spa."
+              instruction: "Hỏi khách hàng về ngày, giờ và dịch vụ muốn đặt. Sử dụng [get_available_times](tool://get_available_times) để tìm giờ trống, sau đó dùng [book_appointment](tool://book_appointment) để xác nhận."
+            spa_services_faq:
+              title: "Tư vấn Dịch vụ & Bảng giá"
+              description: "Trả lời các câu hỏi về dịch vụ và bảng giá."
+              instruction: "Sử dụng [search_articles](tool://search_articles) để cung cấp thông tin chính xác về các liệu trình Spa, thời gian và giá cả."
+            spa_cancel_reschedule:
+              title: "Hủy hoặc Dời lịch hẹn"
+              description: "Hỗ trợ khách hàng quản lý lịch hẹn sắp tới."
+              instruction: "Yêu cầu mã lịch hẹn hoặc số điện thoại. Sử dụng [manage_booking](tool://manage_booking) để hủy hoặc dời lịch."
+        edtech_pack:
+          name: "Bộ Kịch bản Giáo dục & EdTech"
+          description: "Bộ kịch bản dành cho các trung tâm tiếng Anh, nền tảng học trực tuyến để hỗ trợ tuyển sinh và học viên."
+          scenarios:
+            edtech_course_advisor:
+              title: "Tư vấn Khóa học"
+              description: "Gợi ý khóa học phù hợp dựa trên trình độ và mục tiêu của học viên."
+              instruction: "Hỏi học viên về mục tiêu học tập và trình độ hiện tại. Sử dụng [search_articles](tool://search_articles) để đưa ra gợi ý phù hợp nhất."
+            edtech_schedule_lookup:
+              title: "Tra cứu Lịch học & Phòng học"
+              description: "Giúp học viên kiểm tra lịch học sắp tới của mình."
+              instruction: "Yêu cầu mã học viên hoặc số điện thoại. Sử dụng [search_canned_responses](tool://search_canned_responses) để cung cấp thông tin hoặc hướng dẫn họ tra cứu."
+            edtech_leave_request:
+              title: "Xin nghỉ phép & Bảo lưu"
+              description: "Hỗ trợ học viên làm thủ tục xin nghỉ phép hoặc bảo lưu khóa học."
+              instruction: "Hỏi lý do và thời gian xin nghỉ. Sử dụng [execute_macro](tool://execute_macro) để gửi yêu cầu nghỉ phép cho quản lý."
+        real_estate_pack:
+          name: "Bộ Kịch bản Bất động sản & Môi giới"
+          description: "Bộ kịch bản dành cho đại lý bất động sản, môi giới để xử lý tin nhắn hỏi mua/thuê nhà."
+          scenarios:
+            re_property_search:
+              title: "Tra cứu Quỹ căn & Phòng trống"
+              description: "Giúp khách hàng tìm kiếm bất động sản theo tiêu chí."
+              instruction: "Hỏi khách hàng về khu vực, ngân sách và số phòng ngủ. Sử dụng [search_articles](tool://search_articles) để gợi ý các lựa chọn."
+            re_book_viewing:
+              title: "Đặt lịch Xem nhà"
+              description: "Hẹn lịch với môi giới để đi xem nhà trực tiếp."
+              instruction: "Xác nhận mã bất động sản và thời gian dự kiến. Sử dụng [book_appointment](tool://book_appointment) để xếp lịch xem nhà."
+            re_neighborhood_faq:
+              title: "Hỏi đáp Tiện ích Xung quanh"
+              description: "Giải đáp thắc mắc về khu vực xung quanh dự án."
+              instruction: "Sử dụng [search_documentation](tool://search_documentation) để cung cấp thông tin về siêu thị, trường học, bãi đỗ xe và các tiện ích lân cận."
+        travel_pack:
+          name: "Bộ Kịch bản Du lịch & Đặt vé"
+          description: "Bộ kịch bản dành cho các đại lý du lịch, phòng vé máy bay để hỗ trợ đặt chỗ và giải đáp thông tin."
+          scenarios:
+            travel_booking:
+              title: "Đặt Tour & Vé"
+              description: "Hỗ trợ khách hàng đặt tour du lịch, vé máy bay hoặc phòng khách sạn."
+              instruction: "Hỏi khách hàng về ngày đi, điểm đến và số lượng người. Sử dụng [book_appointment](tool://book_appointment) để đặt lịch hỗ trợ."
+            travel_itinerary:
+              title: "Gợi ý Lịch trình"
+              description: "Tư vấn và gợi ý lịch trình du lịch dựa trên sở thích của khách hàng."
+              instruction: "Hỏi khách hàng về sở thích và thời gian chuyến đi. Sử dụng [search_articles](tool://search_articles) để lên lịch trình phù hợp."
+            travel_faq:
+              title: "Hỏi đáp Du lịch & Visa"
+              description: "Trả lời các câu hỏi về thủ tục visa, hành lý và quy định chuyến bay."
+              instruction: "Sử dụng [search_documentation](tool://search_documentation) để cung cấp thông tin chính xác về quy định hàng không và thủ tục du lịch."
+        tech_retail_pack:
+          name: "Bộ Kịch bản Cửa hàng Kỹ thuật số"
+          description: "Bộ kịch bản dành cho các cửa hàng bán lẻ đồ điện tử, máy tính, điện thoại di động."
+          scenarios:
+            tech_product_advisor:
+              title: "Tư vấn Cấu hình & Sản phẩm"
+              description: "Gợi ý máy tính hoặc điện thoại dựa trên nhu cầu sử dụng của khách hàng."
+              instruction: "Hỏi khách hàng về ngân sách và mục đích sử dụng. Sử dụng [suggest_products](tool://suggest_products) hoặc [search_products](tool://search_products) để gợi ý các mẫu máy phù hợp."
+            tech_warranty:
+              title: "Kiểm tra Bảo hành & Sửa chữa"
+              description: "Hỗ trợ khách hàng tra cứu trạng thái bảo hành và tiến độ sửa chữa."
+              instruction: "Yêu cầu số serial sản phẩm hoặc số điện thoại. Sử dụng [search_orders](tool://search_orders) và [get_order_detail](tool://get_order_detail) để tra cứu."
+            tech_troubleshooting:
+              title: "Hỗ trợ Kỹ thuật cơ bản"
+              description: "Hướng dẫn khách hàng xử lý các lỗi kỹ thuật phần mềm cơ bản tại nhà."
+              instruction: "Hỏi khách hàng mô tả lỗi. Sử dụng [search_documentation](tool://search_documentation) để hướng dẫn các bước khắc phục."
 

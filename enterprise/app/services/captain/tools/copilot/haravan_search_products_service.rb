@@ -8,7 +8,6 @@ class Captain::Tools::Copilot::HaravanSearchProductsService < Captain::Tools::Ba
   description 'Search Haravan products by name or keyword to check pricing, inventory, and details'
   param :query, type: :string, desc: 'Product name or keyword to search'
 
-
   def active?
     haravan_active?
   end

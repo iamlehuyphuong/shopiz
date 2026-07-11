@@ -666,24 +666,111 @@ en:
       start_of_day: the start of the day
   captain:
     scenario_templates:
-      ecommerce_support_pack:
+      general_pack:
+        name: "General Consultation Pack"
+        description: "Basic consultation scenarios, capturing leads and requesting phone numbers for further support."
+        scenarios:
+          general_zalo_consultation:
+            title: "Basic Consultation & Lead Generation"
+            description: "Answer basic questions and ask for customer phone number to consult via Zalo."
+            instruction: "Use [search_documentation](tool://search_documentation) to answer basic queries. Ask for their phone number to connect on Zalo. Once provided, use [create_customer](tool://create_customer) to save their details."
+      ecommerce_pack:
         name: "E-commerce Support Complete Pack"
-        description: "A complete set of scenarios for E-commerce to handle FAQ, order tracking, returns, and escalation."
+        description: "A complete set of scenarios for e-commerce platforms to handle FAQs, order tracking, returns, and complaints."
         scenarios:
           ecom_general_faq:
             title: "Sales Assistant & General FAQ"
             description: "Handle questions about shipping, working hours, and basic product queries."
-            instruction: "You are the virtual assistant for Shopiz. Answer queries enthusiastically. Use [faq_lookup](tool://faq_lookup) to find policy info. If unknown, handoff to human via [handoff](tool://handoff)."
+            instruction: "You are the virtual assistant for Shopiz. Answer queries enthusiastically. Use [search_documentation](tool://search_documentation) and [search_articles](tool://search_articles) to find policy info. If unknown, handoff to human via [execute_macro](tool://execute_macro)."
           ecom_order_tracking:
             title: "Order Tracking"
             description: "Help customers check their order status via phone or order ID."
-            instruction: "When asked about orders, request the Order ID or phone number. Use [lookup_order](tool://lookup_order) to get status and reply."
+            instruction: "When asked about orders, request the Order ID or phone number. Use [search_orders](tool://search_orders) and [get_order_detail](tool://get_order_detail) to get status and reply."
           ecom_return_refund:
             title: "Returns and Refunds"
             description: "Guide customers through the return process."
-            instruction: "Identify return reason. If valid, use [initiate_return](tool://initiate_return) to create a return ticket."
+            instruction: "Identify return reason. If valid, use [execute_macro](tool://execute_macro) to create a return ticket or label."
           ecom_escalation:
             title: "Escalation and Handoff"
             description: "Identify negative sentiment and escalate to human agent."
-            instruction: "If the customer is angry or asks for a human, immediately call [handoff](tool://handoff) to transfer to an agent and apologize."
-
+            instruction: "If the customer is angry or asks for a human, immediately call [execute_macro](tool://execute_macro) to transfer to an agent and apologize."
+      spa_pack:
+        name: "Spa & Beauty Support Pack"
+        description: "Scenarios tailored for spas and beauty salons to handle bookings, service queries, and scheduling."
+        scenarios:
+          spa_booking:
+            title: "Spa Appointment Booking"
+            description: "Help clients book their spa sessions."
+            instruction: "Ask for preferred date and service. Use [get_available_times](tool://get_available_times) to find slots, then [book_appointment](tool://book_appointment) to confirm."
+          spa_services_faq:
+            title: "Services & Pricing FAQ"
+            description: "Answer questions regarding available services and pricing."
+            instruction: "Use [search_articles](tool://search_articles) to provide accurate information about spa treatments, duration, and prices."
+          spa_cancel_reschedule:
+            title: "Cancel or Reschedule Appointment"
+            description: "Assist clients with managing their upcoming appointments."
+            instruction: "Ask for their email or phone number. Use [manage_booking](tool://manage_booking) to process cancellations or rescheduling requests."
+      edtech_pack:
+        name: "EdTech & Education Support Pack"
+        description: "Scenarios for online learning platforms and language centers to handle course enrollments and student support."
+        scenarios:
+          edtech_course_advisor:
+            title: "Course Advisor & Recommendation"
+            description: "Recommend courses based on student's current level and goals."
+            instruction: "Ask the student about their learning goals and current level. Use [search_articles](tool://search_articles) to suggest the best fit."
+          edtech_schedule_lookup:
+            title: "Class Schedule Lookup"
+            description: "Help students find their upcoming class schedules and rooms."
+            instruction: "Request the student's ID or phone number. Use [search_canned_responses](tool://search_canned_responses) to provide standard scheduling info or ask them to check the portal."
+          edtech_leave_request:
+            title: "Leave Request & Pause Course"
+            description: "Process student requests to take a leave or pause their subscription."
+            instruction: "Ask for the leave reason and duration. Use [execute_macro](tool://execute_macro) to submit their leave request to the admin team."
+      real_estate_pack:
+        name: "Real Estate & Agency Pack"
+        description: "Scenarios for real estate agents to handle property inquiries and viewings."
+        scenarios:
+          re_property_search:
+            title: "Property Search & Matching"
+            description: "Help clients find properties that match their criteria."
+            instruction: "Ask for budget, location, and property type. Use [search_articles](tool://search_articles) to retrieve matching property listings."
+          re_book_viewing:
+            title: "Book Property Viewing"
+            description: "Schedule a time for the client to visit the property."
+            instruction: "Propose a time to visit. Use [book_appointment](tool://book_appointment) to schedule the viewing with an agent."
+          re_neighborhood_faq:
+            title: "Neighborhood & Amenities FAQ"
+            description: "Answer questions about the surrounding area of a property."
+            instruction: "Use [search_documentation](tool://search_documentation) to provide details about nearby schools, supermarkets, parking, and other amenities."
+      travel_pack:
+        name: "Travel & Tourism Pack"
+        description: "Scenarios for travel agencies and tour operators to handle bookings and travel inquiries."
+        scenarios:
+          travel_booking:
+            title: "Tour & Ticket Booking"
+            description: "Help customers book tours, flights, or hotel rooms."
+            instruction: "Ask for travel dates, destination, and passenger count. Use [book_appointment](tool://book_appointment) to schedule a call with a booking agent."
+          travel_itinerary:
+            title: "Itinerary Suggestion"
+            description: "Suggest travel itineraries based on customer preferences."
+            instruction: "Ask about their interests and trip duration. Use [search_articles](tool://search_articles) to provide a personalized schedule."
+          travel_faq:
+            title: "Travel FAQ & Policies"
+            description: "Answer questions regarding visa requirements, luggage, and flight policies."
+            instruction: "Use [search_documentation](tool://search_documentation) to provide accurate information about travel regulations and policies."
+      tech_retail_pack:
+        name: "Digital Electronics & Tech Retail Pack"
+        description: "Scenarios for electronics retailers selling computers, smartphones, and gadgets."
+        scenarios:
+          tech_product_advisor:
+            title: "Tech Product Advisor"
+            description: "Recommend tech products like laptops or phones based on user needs."
+            instruction: "Ask the user about their budget and intended use. Use [suggest_products](tool://suggest_products) or [search_products](tool://search_products) to suggest suitable models."
+          tech_warranty:
+            title: "Warranty & Repair Check"
+            description: "Help customers check their warranty status and repair requests."
+            instruction: "Ask for the product serial number or phone number. Use [search_orders](tool://search_orders) and [get_order_detail](tool://get_order_detail) to fetch the status."
+          tech_troubleshooting:
+            title: "Basic Technical Support"
+            description: "Assist customers with basic troubleshooting for their devices."
+            instruction: "Ask the user to describe the issue. Use [search_documentation](tool://search_documentation) to guide them through standard fix procedures."

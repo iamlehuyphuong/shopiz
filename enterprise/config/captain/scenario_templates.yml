@@ -1,17 +1,88 @@
-ecommerce_support_pack:
-  scenarios:
-    - id: "ecom_general_faq"
-      tools:
-        - "faq_lookup"
+case_studies:
+  general_pack:
+    scenarios:
+      - id: "general_zalo_consultation"
+        tools:
+          - "search_documentation"
+          - "create_customer"
 
-    - id: "ecom_order_tracking"
-      tools:
-        - "lookup_order"
+  ecommerce_pack:
+    scenarios:
+      - id: "ecom_general_faq"
+        tools:
+          - "search_documentation"
+          - "search_articles"
+          - "execute_macro"
+      - id: "ecom_order_tracking"
+        tools:
+          - "search_orders"
+          - "get_order_detail"
+      - id: "ecom_return_refund"
+        tools:
+          - "execute_macro"
+      - id: "ecom_escalation"
+        tools:
+          - "execute_macro"
+          
+  spa_pack:
+    scenarios:
+      - id: "spa_booking"
+        tools:
+          - "get_available_times"
+          - "book_appointment"
+      - id: "spa_services_faq"
+        tools:
+          - "search_articles"
+      - id: "spa_cancel_reschedule"
+        tools:
+          - "manage_booking"
 
-    - id: "ecom_return_refund"
-      tools:
-        - "initiate_return"
+  edtech_pack:
+    scenarios:
+      - id: "edtech_course_advisor"
+        tools:
+          - "search_articles"
+      - id: "edtech_schedule_lookup"
+        tools:
+          - "search_canned_responses"
+      - id: "edtech_leave_request"
+        tools:
+          - "execute_macro"
 
-    - id: "ecom_escalation"
-      tools:
-        - "handoff"
+  real_estate_pack:
+    scenarios:
+      - id: "re_property_search"
+        tools:
+          - "search_articles"
+      - id: "re_book_viewing"
+        tools:
+          - "book_appointment"
+      - id: "re_neighborhood_faq"
+        tools:
+          - "search_documentation"
+
+  travel_pack:
+    scenarios:
+      - id: "travel_booking"
+        tools:
+          - "book_appointment"
+      - id: "travel_itinerary"
+        tools:
+          - "search_articles"
+      - id: "travel_faq"
+        tools:
+          - "search_documentation"
+
+  tech_retail_pack:
+    scenarios:
+      - id: "tech_product_advisor"
+        tools:
+          - "suggest_products"
+          - "search_products"
+      - id: "tech_warranty"
+        tools:
+          - "search_orders"
+          - "get_order_detail"
+      - id: "tech_troubleshooting"
+        tools:
+          - "search_documentation"
