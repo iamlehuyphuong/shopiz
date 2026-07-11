@@ -40,6 +40,9 @@ export const useOmicall = () => {
     }
 
     if (!window.OMICallSDK_Initialized) {
+      const hideStyle = document.getElementById('omicall-hide-ui');
+      if (hideStyle) hideStyle.remove();
+
       try {
         const initSuccess = await window.OMICallSDK.init({
           lng: 'vi',
@@ -47,6 +50,7 @@ export const useOmicall = () => {
             toggleDial: 'hide', // Ẩn nút mặc định để dùng nút riêng của Shopiz trên Sidebar
           },
           searchRemoteContact: async callData => {
+            if (!isOmicallConfigured.value) return null;
             if (!callData || !callData.remoteNumber) return null;
             try {
               let searchNumber = callData.remoteNumber;
@@ -81,6 +85,7 @@ export const useOmicall = () => {
               },
             ],
             onClick: callData => {
+              if (!isOmicallConfigured.value) return;
               if (callData.remoteContact && callData.remoteContact.contactId) {
                 const accountId = window.location.pathname.split('/')[2];
                 router.push(
@@ -98,6 +103,7 @@ export const useOmicall = () => {
 
         // Đăng ký sự kiện chỉ một lần duy nhất trong vòng đời của ứng dụng
         window.OMICallSDK.on('register', data => {
+          if (!isOmicallConfigured.value) return;
           const statusStr =
             typeof data === 'string' ? data : data?.status || 'unknown';
           connectionStatus.value = statusStr;
@@ -106,18 +112,22 @@ export const useOmicall = () => {
         });
 
         window.OMICallSDK.on('connecting', call => {
+          if (!isOmicallConfigured.value) return;
           currentCall.value = call;
         });
 
         window.OMICallSDK.on('ringing', call => {
+          if (!isOmicallConfigured.value) return;
           currentCall.value = call;
         });
 
         window.OMICallSDK.on('accepted', call => {
+          if (!isOmicallConfigured.value) return;
           currentCall.value = call;
         });
 
         window.OMICallSDK.on('ended', () => {
+          if (!isOmicallConfigured.value) return;
           currentCall.value = null;
         });
 
@@ -258,6 +268,16 @@ export const useOmicall = () => {
     currentSipUser.value = null;
     sipCredentials.value = null;
     isOmicallConfigured.value = false;
+
+    // Hide any OMICall SDK injected UI (toasts, widgets, etc.)
+    let hideStyle = document.getElementById('omicall-hide-ui');
+    if (!hideStyle) {
+      hideStyle = document.createElement('style');
+      hideStyle.id = 'omicall-hide-ui';
+      hideStyle.innerHTML =
+        '.toastify, #omicall-ui-container, .omi-custom-theme { display: none !important; }';
+      document.head.appendChild(hideStyle);
+    }
   };
 
   const makeCall = async phoneNumber => {

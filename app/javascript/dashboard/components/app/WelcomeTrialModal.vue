@@ -64,8 +64,6 @@ const activateTrial = () => {
 };
 
 const skipTrial = () => emit('close');
-
-
 </script>
 
 <template>
