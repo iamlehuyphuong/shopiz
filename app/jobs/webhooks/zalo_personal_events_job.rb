@@ -1,6 +1,8 @@
 class Webhooks::ZaloPersonalEventsJob < ApplicationJob
   queue_as :default
 
+  retry_on Down::ConnectionError, Down::TimeoutError, wait: 5.seconds, attempts: 3
+
   def perform(params = {}, signature: '', post_body: '')
     params = deep_scrub(params).with_indifferent_access
     oa_id = params[:_accountId]
