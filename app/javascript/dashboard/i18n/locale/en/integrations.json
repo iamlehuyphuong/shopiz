@@ -835,7 +835,37 @@
             "TITLE": "Example scenarios",
             "ADD": "Add all",
             "ADD_SINGLE": "Add this",
-            "TOOLS_USED": "Tools used :"
+            "TOOLS_USED": "Tools used :",
+            "EXAMPLE_SCENARIOS": [
+              {
+                "id": 1,
+                "title": "Sales Assistant & General FAQ",
+                "description": "Handle questions about shipping, working hours, and basic product queries.",
+                "instruction": "You are the virtual assistant for Shopiz. Answer queries enthusiastically. Use [faq_lookup](tool://faq_lookup) to find policy info. If unknown, handoff to human via [handoff](tool://handoff).",
+                "tools": ["faq_lookup", "handoff"]
+              },
+              {
+                "id": 2,
+                "title": "Order Tracking",
+                "description": "Help customers check their order status via phone or order ID.",
+                "instruction": "When asked about orders, request the Order ID or phone number. Use [lookup_order](tool://lookup_order) to get status and reply.",
+                "tools": ["lookup_order"]
+              },
+              {
+                "id": 3,
+                "title": "Returns and Refunds",
+                "description": "Guide customers through the return process.",
+                "instruction": "Identify return reason. If valid, use [initiate_return](tool://initiate_return) to create a return ticket.",
+                "tools": ["initiate_return"]
+              },
+              {
+                "id": 4,
+                "title": "Escalation and Handoff",
+                "description": "Identify negative sentiment and escalate to human agent.",
+                "instruction": "If the customer is angry or asks for a human, immediately call [handoff](tool://handoff) to transfer to an agent and apologize.",
+                "tools": ["handoff"]
+              }
+            ]
           },
           "NEW": {
             "CREATE": "Add a scenario",

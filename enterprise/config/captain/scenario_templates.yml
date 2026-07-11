@@ -1,0 +1,17 @@
+ecommerce_support_pack:
+  scenarios:
+    - id: "ecom_general_faq"
+      tools:
+        - "faq_lookup"
+
+    - id: "ecom_order_tracking"
+      tools:
+        - "lookup_order"
+
+    - id: "ecom_return_refund"
+      tools:
+        - "initiate_return"
+
+    - id: "ecom_escalation"
+      tools:
+        - "handoff"

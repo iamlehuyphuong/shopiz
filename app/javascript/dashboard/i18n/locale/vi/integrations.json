@@ -835,7 +835,37 @@
             "TITLE": "Kịch bản mẫu",
             "ADD": "Thêm tất cả",
             "ADD_SINGLE": "Thêm",
-            "TOOLS_USED": "Công cụ sử dụng:"
+            "TOOLS_USED": "Công cụ sử dụng:",
+            "EXAMPLE_SCENARIOS": [
+              {
+                "id": 1,
+                "title": "Trợ lý Bán hàng & Hỏi đáp chung",
+                "description": "Xử lý các câu hỏi về chính sách vận chuyển, giờ làm việc, và tư vấn sản phẩm cơ bản.",
+                "instruction": "Bạn là trợ lý ảo của Shopiz. Hãy nhiệt tình giải đáp thắc mắc. Sử dụng [faq_lookup](tool://faq_lookup) để tìm thông tin chính sách. Nếu không biết, hãy chuyển qua [handoff](tool://handoff).",
+                "tools": ["faq_lookup", "handoff"]
+              },
+              {
+                "id": 2,
+                "title": "Kiểm tra Trạng thái Đơn hàng",
+                "description": "Giúp khách hàng tự tra cứu đơn hàng bằng số điện thoại hoặc mã đơn.",
+                "instruction": "Khi khách hàng hỏi về đơn hàng, yêu cầu cung cấp Mã đơn hoặc Số điện thoại. Sử dụng [lookup_order](tool://lookup_order) để lấy trạng thái và báo lại cho khách.",
+                "tools": ["lookup_order"]
+              },
+              {
+                "id": 3,
+                "title": "Xử lý Đổi trả",
+                "description": "Hướng dẫn khách hàng quy trình đổi trả hàng.",
+                "instruction": "Xác định lý do đổi trả của khách hàng. Nếu hợp lệ theo chính sách, sử dụng [initiate_return](tool://initiate_return) để tạo ticket đổi trả.",
+                "tools": ["initiate_return"]
+              },
+              {
+                "id": 4,
+                "title": "Xử lý khiếu nại & Chuyển Handoff",
+                "description": "Nhận diện cảm xúc tiêu cực hoặc các vấn đề phức tạp để chuyển cho tư vấn viên.",
+                "instruction": "Nếu khách hàng bực tức hoặc yêu cầu gặp người thật, lập tức gọi [handoff](tool://handoff) để chuyển cho nhân viên xử lý và xoa dịu khách hàng.",
+                "tools": ["handoff"]
+              }
+            ]
           },
           "NEW": {
             "CREATE": "Thêm kịch bản",

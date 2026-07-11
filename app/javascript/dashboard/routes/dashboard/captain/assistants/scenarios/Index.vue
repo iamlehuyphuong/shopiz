@@ -16,7 +16,7 @@ import ScenariosCard from 'dashboard/components-next/captain/assistant/Scenarios
 import BulkSelectBar from 'dashboard/components-next/captain/assistant/BulkSelectBar.vue';
 import AddNewScenariosDialog from 'dashboard/components-next/captain/assistant/AddNewScenariosDialog.vue';
 
-const { t } = useI18n();
+const { t, tm } = useI18n();
 const route = useRoute();
 const store = useStore();
 const { formatMessage } = useMessageFormatter();
@@ -56,39 +56,10 @@ const renderInstruction = instruction => () =>
   });
 
 // Suggested example scenarios for quick add
-const scenariosExample = [
-  {
-    id: 1,
-    title: t('Prospective Buyer'),
-    description: t(
-      'Handle customers who are showing interest in purchasing a license'
-    ),
-    instruction: t(
-      'If someone is interested in purchasing a license, ask them for following:\n\n1. How many licenses are they willing to purchase?\n2. Are they migrating from another platform?\n. Once these details are collected, do the following steps\n1. add a private note to with the information you collected using [Add Private Note](tool://add_private_note)\n2. Add label "sales" to the contact using [Add Label to Conversation](tool://add_label_to_conversation)\n3. Reply saying "one of us will reach out soon" and provide an estimated timeline for the response and [Handoff to Human](tool://handoff)'
-    ),
-    tools: ['add_private_note', 'add_label_to_conversation', 'handoff'],
-  },
-  {
-    id: 2,
-    title: t('Technical Issue'),
-    description: t(
-      'Assist customers who report a technical problem or bug with the product'
-    ),
-    instruction: t(
-      'If a customer reports a technical issue, follow these steps:\n\n1. Ask for a detailed description of the problem and any error messages.\n2. Request screenshots or screen recordings if possible.\n3. Add a private note summarizing the issue using [Add Private Note](tool://add_private_note).\n4. Assign the conversation to the "technical support" team using [Add Label to Conversation](tool://add_label_to_conversation).\n5. Inform the customer that the issue has been escalated and provide an estimated response time.'
-    ),
-    tools: ['add_private_note', 'add_label_to_conversation'],
-  },
-  {
-    id: 3,
-    title: t('Feature Request'),
-    description: t('Handle customers who suggest new features or improvements'),
-    instruction: t(
-      'When a customer requests a new feature, do the following:\n\n1. Thank them for their suggestion.\n2. Add a private note with the feature details using [Add Private Note](tool://add_private_note).\n3. Tag the conversation with "feature-request" using [Add Label to Conversation](tool://add_label_to_conversation).\n4. Let the customer know their feedback has been shared with the product team.'
-    ),
-    tools: ['add_private_note', 'add_label_to_conversation'],
-  },
-];
+const scenariosExample = computed(() => {
+  const examples = tm('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.SUGGESTED.EXAMPLE_SCENARIOS');
+  return Array.isArray(examples) ? examples : [];
+});
 
 const filteredScenarios = computed(() => {
   const query = searchQuery.value.trim();
