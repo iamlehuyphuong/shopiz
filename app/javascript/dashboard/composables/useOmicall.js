@@ -3,6 +3,8 @@ import ContactAPI from 'dashboard/api/contacts';
 import router from 'dashboard/routes/index';
 import { useAlert } from 'dashboard/composables';
 
+const OMICALL_SDK_URL = 'https://cdn.omicrm.com/sdk/web/3.0.41/core.min.js';
+
 const isInitialized = ref(false);
 const isReady = ref(false);
 const connectionStatus = ref('disconnect');
@@ -11,6 +13,7 @@ const currentSipUser = ref(null);
 const sipCredentials = ref(null);
 const isOmicallConfigured = ref(false);
 const isRegistering = ref(false);
+const isSDKLoading = ref(false);
 
 const checkIsConnected = status => {
   if (!status) return false;
@@ -18,23 +21,69 @@ const checkIsConnected = status => {
   return ['connected', 'registered', 'success'].includes(s);
 };
 
-export const useOmicall = () => {
-  const initOmicall = async (sipUsername, sipPassword, sipDomain) => {
-    isOmicallConfigured.value = true;
-    sipCredentials.value = { sipUsername, sipPassword, sipDomain };
-    // Wait for the SDK to be injected (up to 5 seconds)
-    const waitForSDK = async (retries = 10, delay = 500) => {
+/**
+ * Dynamically injects the OMICall SDK script into the page.
+ * Returns a promise that resolves to true when the SDK global is available,
+ * or false if loading fails.
+ */
+const loadSDK = async () => {
+  // Already available
+  if (typeof window.OMICallSDK !== 'undefined') return true;
+
+  // Already loading — just wait for it
+  if (isSDKLoading.value) {
+    const waitForGlobal = async (retries = 20, delay = 500) => {
       for (let i = 0; i < retries; i++) {
         if (typeof window.OMICallSDK !== 'undefined') return true;
         await new Promise(resolve => setTimeout(resolve, delay));
       }
       return false;
     };
+    return waitForGlobal();
+  }
 
-    const isLoaded = await waitForSDK();
+  isSDKLoading.value = true;
+
+  return new Promise(resolve => {
+    const script = document.createElement('script');
+    script.setAttribute('omi-call-sdk', '');
+    script.src = OMICALL_SDK_URL;
+    script.async = true;
+
+    script.onload = async () => {
+      // SDK script loaded — wait for global to become available
+      const waitForGlobal = async (retries = 20, delay = 250) => {
+        for (let i = 0; i < retries; i++) {
+          if (typeof window.OMICallSDK !== 'undefined') return true;
+          await new Promise(r => setTimeout(r, delay));
+        }
+        return false;
+      };
+      const available = await waitForGlobal();
+      isSDKLoading.value = false;
+      resolve(available);
+    };
+
+    script.onerror = () => {
+      isSDKLoading.value = false;
+      console.error('Failed to load OmiCall SDK from CDN.');
+      resolve(false);
+    };
+
+    document.head.appendChild(script);
+  });
+};
+
+export const useOmicall = () => {
+  const initOmicall = async (sipUsername, sipPassword, sipDomain) => {
+    isOmicallConfigured.value = true;
+    sipCredentials.value = { sipUsername, sipPassword, sipDomain };
+
+    // Lazy-load the SDK only when we actually have credentials
+    const isLoaded = await loadSDK();
     if (!isLoaded) {
       console.error(
-        'OmiCall SDK not loaded after retries. Ensure core.min.js is injected.'
+        'OmiCall SDK not loaded after retries. Ensure CDN is reachable.'
       );
       return;
     }
@@ -208,15 +257,17 @@ export const useOmicall = () => {
     isInitialized.value = true;
 
     // Đăng ký kết nối với tổng đài (Register)
+    const isCurrentlyConnected = checkIsConnected(connectionStatus.value);
+
     if (
-      connectionStatus.value === 'connected' &&
+      isCurrentlyConnected &&
       currentSipUser.value === sipUsername
     ) {
       return;
     }
 
     if (
-      connectionStatus.value === 'connected' &&
+      isCurrentlyConnected &&
       currentSipUser.value !== sipUsername
     ) {
       try {
@@ -237,10 +288,16 @@ export const useOmicall = () => {
       });
 
       if (!registerStatus.status) {
+        const errorMsg = registerStatus.message || 'Unknown error';
         console.error(
-          'Lỗi kết nối tổng đài:',
-          registerStatus.message || 'Unknown error'
+          '[OMICall] Lỗi kết nối tổng đài (Register failed):',
+          errorMsg,
+          '| SIP User:', sipUsername,
+          '| SIP Domain:', sipDomain
         );
+        if (registerStatus.message) {
+          useAlert(`Lỗi kết nối OMICall: ${errorMsg}`);
+        }
       } else {
         currentSipUser.value = sipUsername;
         connectionStatus.value = 'registered';
@@ -269,13 +326,13 @@ export const useOmicall = () => {
     sipCredentials.value = null;
     isOmicallConfigured.value = false;
 
-    // Hide any OMICall SDK injected UI (toasts, widgets, etc.)
+    // Hide any OMICall SDK injected UI (widgets, etc.)
     let hideStyle = document.getElementById('omicall-hide-ui');
     if (!hideStyle) {
       hideStyle = document.createElement('style');
       hideStyle.id = 'omicall-hide-ui';
       hideStyle.innerHTML =
-        '.toastify, #omicall-ui-container, .omi-custom-theme { display: none !important; }';
+        '#omicall-ui-container, .omi-custom-theme { display: none !important; }';
       document.head.appendChild(hideStyle);
     }
   };

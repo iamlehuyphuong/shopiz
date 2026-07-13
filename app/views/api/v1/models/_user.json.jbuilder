@@ -15,9 +15,16 @@ json.provider resource.provider
 json.pubsub_token resource.pubsub_token
 json.custom_attributes resource.custom_attributes if resource.custom_attributes.present?
 account_id = Current.account&.id || resource.active_account_user&.account_id
-if account_id
+if account_id && Integrations::Hook.exists?(account_id: account_id, app_id: 'omicall')
   sip_info = resource.omicall_sip_infos.find_by(account_id: account_id)
-  json.omicall_sip_info sip_info if sip_info
+  if sip_info
+    json.omicall_sip_info do
+      json.sip_user sip_info.sip_user
+      json.sip_password sip_info.sip_password
+      json.sip_domain sip_info.sip_domain
+      json.outbound_proxy sip_info.outbound_proxy
+    end
+  end
 end
 json.role resource.active_account_user&.role
 json.ui_settings resource.ui_settings

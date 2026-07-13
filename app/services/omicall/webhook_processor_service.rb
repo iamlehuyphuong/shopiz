@@ -12,7 +12,8 @@ class Omicall::WebhookProcessorService
 
     # Normalize phone number to match contacts stored as +84... or 0...
     core_phone_number = phone_number.sub(/^(?:\+84|84|0)/, '')
-    contacts = Contact.where('phone_number LIKE ?', "%#{core_phone_number}%")
+    sanitized_phone = ActiveRecord::Base.sanitize_sql_like(core_phone_number)
+    contacts = Contact.where('phone_number LIKE ?', "%#{sanitized_phone}%")
     return if contacts.empty?
 
     contacts.each do |contact|
