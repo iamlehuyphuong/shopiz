@@ -259,17 +259,11 @@ export const useOmicall = () => {
     // Đăng ký kết nối với tổng đài (Register)
     const isCurrentlyConnected = checkIsConnected(connectionStatus.value);
 
-    if (
-      isCurrentlyConnected &&
-      currentSipUser.value === sipUsername
-    ) {
+    if (isCurrentlyConnected && currentSipUser.value === sipUsername) {
       return;
     }
 
-    if (
-      isCurrentlyConnected &&
-      currentSipUser.value !== sipUsername
-    ) {
+    if (isCurrentlyConnected && currentSipUser.value !== sipUsername) {
       try {
         await window.OMICallSDK.unregister();
       } catch (error) {
@@ -292,8 +286,10 @@ export const useOmicall = () => {
         console.error(
           '[OMICall] Lỗi kết nối tổng đài (Register failed):',
           errorMsg,
-          '| SIP User:', sipUsername,
-          '| SIP Domain:', sipDomain
+          '| SIP User:',
+          sipUsername,
+          '| SIP Domain:',
+          sipDomain
         );
         if (registerStatus.message) {
           useAlert(`Lỗi kết nối OMICall: ${errorMsg}`);

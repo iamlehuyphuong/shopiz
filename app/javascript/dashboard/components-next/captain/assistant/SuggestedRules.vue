@@ -37,11 +37,16 @@ const onClickClose = () => {
   <div
     class="flex flex-col items-start self-stretch rounded-xl w-full overflow-hidden border border-dashed border-n-strong"
   >
-    <div class="flex items-center justify-between w-full gap-3 px-4 pb-4 pt-4 cursor-pointer select-none hover:bg-n-alpha-1" @click="toggleExpand">
+    <div
+      class="flex items-center justify-between w-full gap-3 px-4 pb-4 pt-4 cursor-pointer select-none hover:bg-n-alpha-1"
+      @click="toggleExpand"
+    >
       <div class="flex items-center gap-3">
         <span
           class="text-n-slate-11 transition-transform duration-200"
-          :class="[isExpanded ? 'i-lucide-chevron-down' : 'i-lucide-chevron-right']"
+          :class="[
+            isExpanded ? 'i-lucide-chevron-down' : 'i-lucide-chevron-right',
+          ]"
         />
         <h5 class="text-sm font-medium text-n-slate-11">{{ title }}</h5>
         <span class="h-3 w-px bg-n-weak" />
