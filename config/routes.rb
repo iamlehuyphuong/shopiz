@@ -121,6 +121,8 @@ Rails.application.routes.draw do
           end
           resources :campaigns, only: [:index, :create, :show, :update, :destroy]
           resources :dashboard_apps, only: [:index, :show, :create, :update, :destroy]
+          resources :calendar_integrations, only: [:index, :create, :destroy]
+          resource :booking_configurations, only: [:show, :update]
           namespace :channels do
             resource :twilio_channel, only: [:create]
             namespace :voice do
@@ -459,6 +461,9 @@ Rails.application.routes.draw do
                 delete :destroy
               end
             end
+            namespace :google_calendar do
+              resource :authorization, only: [:create]
+            end
           end
           resources :working_hours, only: [:update]
 
@@ -675,6 +680,7 @@ Rails.application.routes.draw do
         end
 
         resources :csat_survey, only: [:show, :update]
+        resources :bookings, only: [:show, :create], param: :hash
       end
     end
   end
@@ -753,6 +759,7 @@ Rails.application.routes.draw do
   get 'instagram/callback', to: 'instagram/callbacks#show'
   get 'tiktok/callback', to: 'tiktok/callbacks#show'
   get 'notion/callback', to: 'notion/callbacks#show'
+  get 'google_calendar/callback', to: 'google_calendar/callbacks#show'
   # ----------------------------------------------------------------------
   # Routes for external service verifications
   get '.well-known/assetlinks.json' => 'android_app#assetlinks'

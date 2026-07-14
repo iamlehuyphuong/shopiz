@@ -458,7 +458,11 @@ en:
     calendly:
       name: Calendly
       short_description: Appointment scheduling via Calendly directly within conversations.
-      description: Connect your Calendly account to enable appointment booking directly
+      description: Connect your Calendly account to enable appointment booking directly from the chat interface.
+    google_calendar:
+      name: Google Calendar
+      short_description: Appointment scheduling via Google Calendar directly within conversations.
+      description: Connect your Google Calendar account to enable appointment booking and availability checks.
         within conversations. List available services, check time slots, and book
         appointments on behalf of customers.
     leadsquared:

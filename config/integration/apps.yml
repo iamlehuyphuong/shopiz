@@ -270,6 +270,13 @@ nhanhvn:
   hook_type: account
   allow_multiple_hooks: false
 
+google_calendar:
+  id: google_calendar
+  logo: google_calendar.png
+  i18n_key: google_calendar
+  hook_type: account
+  allow_multiple_hooks: false
+  
 calendly:
   id: calendly
   logo: calendly.png

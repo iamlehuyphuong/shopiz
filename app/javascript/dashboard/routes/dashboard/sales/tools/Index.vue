@@ -9,8 +9,9 @@ const store = useStore();
 
 const ECOMMERCE_APP_IDS = [
   'shopify',
-  'woocommerce',
+  'google_calendar',
   'calendly',
+  'woocommerce',
   'leadsquared',
   'kiotviet',
   'nhanhvn',
@@ -54,9 +55,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="w-full h-full overflow-auto">
+  <div class="w-full">
     <!-- Skeleton Loading -->
-    <div v-if="isLoading" class="max-w-5xl mx-auto px-6 py-6 animate-pulse">
+    <div v-if="isLoading" class="animate-pulse w-full">
       <div class="flex flex-col gap-6">
         <div class="flex flex-col gap-2">
           <div class="h-6 w-48 rounded bg-n-slate-3" />
@@ -89,7 +90,7 @@ onMounted(() => {
         </div>
       </div>
     </div>
-    <div v-else class="max-w-5xl mx-auto px-6 py-6">
+    <div v-else class="w-full">
       <div class="flex flex-col gap-6">
         <div class="flex flex-col gap-1">
           <h3 class="text-lg font-semibold text-n-slate-12">
@@ -112,6 +113,7 @@ onMounted(() => {
             :enabled="item.enabled"
             :is-active="item.is_active"
             :status="item.status"
+            :path-prefix="'sales/tools'"
           />
         </div>
       </div>

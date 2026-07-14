@@ -129,6 +129,9 @@ class Account < ApplicationRecord
   include AccountCaptainAutoResolve
 
   has_one :onboarding, class_name: 'AccountOnboarding', dependent: :destroy
+  has_many :calendar_integrations, dependent: :destroy_async
+  has_one :booking_configuration, dependent: :destroy
+  has_many :bookings, dependent: :destroy_async
   has_many :account_users, dependent: :destroy_async
   has_many :omicall_sip_infos, dependent: :destroy
   has_many :agent_bot_inboxes, dependent: :destroy_async

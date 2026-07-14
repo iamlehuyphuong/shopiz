@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_07_07_044013) do
+ActiveRecord::Schema[7.1].define(version: 2026_07_14_145458) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -365,6 +365,61 @@ ActiveRecord::Schema[7.1].define(version: 2026_07_07_044013) do
     t.datetime "paid_at"
     t.index ["account_id"], name: "index_billing_histories_on_account_id"
     t.index ["order_id"], name: "index_billing_histories_on_order_id"
+  end
+
+  create_table "booking_configurations", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.integer "meeting_duration"
+    t.integer "buffer_time"
+    t.string "booking_link_hash"
+    t.boolean "is_active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_booking_configurations_on_account_id"
+  end
+
+  create_table "booking_working_hours", force: :cascade do |t|
+    t.bigint "booking_configuration_id", null: false
+    t.integer "day_of_week"
+    t.integer "open_hour"
+    t.integer "open_minutes"
+    t.integer "close_hour"
+    t.integer "close_minutes"
+    t.boolean "closed_all_day"
+    t.boolean "open_all_day"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["booking_configuration_id"], name: "index_booking_working_hours_on_booking_configuration_id"
+  end
+
+  create_table "bookings", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "contact_id"
+    t.bigint "conversation_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string "guest_name"
+    t.string "guest_email"
+    t.string "google_event_id"
+    t.string "provider"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_bookings_on_account_id"
+    t.index ["contact_id"], name: "index_bookings_on_contact_id"
+    t.index ["conversation_id"], name: "index_bookings_on_conversation_id"
+  end
+
+  create_table "calendar_integrations", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.string "access_token"
+    t.string "refresh_token"
+    t.datetime "expires_at"
+    t.string "email"
+    t.string "provider"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_calendar_integrations_on_account_id"
   end
 
   create_table "campaigns", force: :cascade do |t|
@@ -1723,6 +1778,12 @@ ActiveRecord::Schema[7.1].define(version: 2026_07_07_044013) do
   add_foreign_key "appointments", "accounts"
   add_foreign_key "appointments", "contacts"
   add_foreign_key "appointments", "products"
+  add_foreign_key "booking_configurations", "accounts"
+  add_foreign_key "booking_working_hours", "booking_configurations"
+  add_foreign_key "bookings", "accounts"
+  add_foreign_key "bookings", "contacts"
+  add_foreign_key "bookings", "conversations"
+  add_foreign_key "calendar_integrations", "accounts"
   add_foreign_key "contact_optins", "contacts"
   add_foreign_key "contact_optins", "inboxes"
   add_foreign_key "inbox_daily_summaries", "accounts"

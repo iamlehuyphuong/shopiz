@@ -123,6 +123,7 @@ gem 'grpc'
 # 'google-cloud-translate' gem depends on faraday 2.0 version
 # this dependency breaks the slack-ruby-client gem
 gem 'google-cloud-translate-v3', '>= 0.7.0'
+gem 'google-apis-calendar_v3'
 
 ##-- apm and error monitoring ---#
 # loaded only when environment variables are set.

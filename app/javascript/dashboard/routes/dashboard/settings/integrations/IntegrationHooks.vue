@@ -122,7 +122,11 @@ export default {
         :title="integration.name || ''"
         description=""
         :feature-name="integrationId"
-        :back-button-label="$t('INTEGRATION_SETTINGS.HEADER')"
+        :back-button-label="
+          $route.path.includes('/sales/')
+            ? $t('SALES.MODULE_TOOLS.HEADER.TITLE')
+            : $t('INTEGRATION_SETTINGS.HEADER')
+        "
       />
     </template>
     <template #body>

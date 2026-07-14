@@ -99,7 +99,11 @@ onMounted(() => {
         :title="$t('INTEGRATION_SETTINGS.KIOTVIET.HEADER')"
         description=""
         feature-name="kiotviet_integration"
-        :back-button-label="$t('INTEGRATION_SETTINGS.HEADER')"
+        :back-button-label="
+          $route.path.includes('/sales/')
+            ? $t('SALES.MODULE_TOOLS.HEADER.TITLE')
+            : $t('INTEGRATION_SETTINGS.HEADER')
+        "
       />
     </template>
     <template #body>

@@ -30,6 +30,10 @@ const props = defineProps({
     type: String,
     default: 'published',
   },
+  pathPrefix: {
+    type: String,
+    default: 'settings/integrations',
+  },
 });
 
 const getters = useStoreGetters();
@@ -39,7 +43,7 @@ const { t } = useI18n();
 const { replaceInstallationName } = useBranding();
 
 const actionURL = computed(() =>
-  frontendURL(`accounts/${accountId.value}/settings/integrations/${props.id}`)
+  frontendURL(`accounts/${accountId.value}/${props.pathPrefix}/${props.id}`)
 );
 </script>
 

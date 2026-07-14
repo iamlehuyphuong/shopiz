@@ -480,9 +480,12 @@ vi:
         cho khách hàng.
     calendly:
       name: Calendly
-      short_description: Đặt lịch hẹn với khách hàng trực tiếp trong cuộc trò chuyện.
-      description: Kết nối tài khoản Calendly để tự động đặt lịch hẹn, kiểm tra khung
-        giờ trống và quản lý cuộc hẹn trực tiếp trong cuộc trò chuyện với khách hàng.
+      short_description: Đặt lịch hẹn qua Calendly trực tiếp trong hộp thoại.
+      description: Kết nối tài khoản Calendly để tự động đặt lịch hẹn trực tiếp từ hộp thoại.
+    google_calendar:
+      name: Google Calendar
+      short_description: Đặt lịch hẹn qua Google Calendar trực tiếp trong hộp thoại.
+      description: Kết nối tài khoản Google Calendar để tự động đặt lịch hẹn và kiểm tra giờ trống.
     leadsquared:
       name: LeadSquared
       short_description: Đồng bộ hóa danh bạ và cuộc trò chuyện của bạn với CRM LeadSquared.

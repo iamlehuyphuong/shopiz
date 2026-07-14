@@ -298,18 +298,22 @@
   title: Search Articles (Tìm bài viết)
   description: Search knowledge base articles.
   icon: book
-- id: book_appointment
+- id: book_meeting
   title: Book Appointment (Đặt lịch)
   description: Book an appointment for the customer.
   icon: calendar
-- id: get_available_times
-  title: Get Available Times (Lịch trống)
+- id: check_availability
+  title: Check Availability (Lịch trống)
   description: Get available times for appointments.
   icon: clock
-- id: manage_booking
-  title: Manage Booking (Quản lý lịch)
-  description: Manage an existing booking (reschedule, cancel).
+- id: cancel_meeting
+  title: Cancel Meeting (Hủy lịch)
+  description: Cancel an existing booked meeting.
   icon: calendar-edit
+- id: get_booking_link
+  title: Get Booking Link (Lấy link đặt lịch)
+  description: Retrieve the public booking link to send to the user.
+  icon: link
 - id: send_zalo_friend_request
   title: Send Zalo Friend Request (Kết bạn Zalo)
   description: Send a Zalo friend request to the customer.
