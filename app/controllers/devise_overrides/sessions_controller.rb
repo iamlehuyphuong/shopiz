@@ -5,7 +5,8 @@ class DeviseOverrides::SessionsController < DeviseTokenAuth::SessionsController
   before_action :process_sso_auth_token, only: [:create]
 
   def new
-    redirect_to login_page_url(error: 'access-denied')
+    error_msg = flash[:alert] || 'access-denied'
+    redirect_to login_page_url(error: error_msg), allow_other_host: true
   end
 
   def create

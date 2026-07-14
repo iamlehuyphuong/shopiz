@@ -112,18 +112,18 @@ const skipTrial = () => emit('close');
             <!-- Heading -->
             <div class="space-y-2">
               <h2 class="text-[22px] font-bold text-n-slate-12 leading-tight">
-                {{ t('COMPONENTS.WELCOME_TRIAL_MODAL.TITLE') }}
+                {{ t('WELCOME_TRIAL_MODAL.TITLE') }}
               </h2>
               <p class="text-sm text-n-slate-11 leading-relaxed">
-                {{ t('COMPONENTS.WELCOME_TRIAL_MODAL.DESCRIPTION_PART_1') }}
+                {{ t('WELCOME_TRIAL_MODAL.DESCRIPTION_PART_1') }}
                 <span class="font-semibold text-n-orange">
                   {{
-                    t('COMPONENTS.WELCOME_TRIAL_MODAL.DESCRIPTION_PART_TRIAL')
+                    t('WELCOME_TRIAL_MODAL.DESCRIPTION_PART_TRIAL')
                   }}
                 </span>
-                {{ t('COMPONENTS.WELCOME_TRIAL_MODAL.DESCRIPTION_PART_2') }}
+                {{ t('WELCOME_TRIAL_MODAL.DESCRIPTION_PART_2') }}
                 <span class="font-semibold text-n-slate-12">Basic</span>
-                {{ t('COMPONENTS.WELCOME_TRIAL_MODAL.DESCRIPTION_PART_3') }}
+                {{ t('WELCOME_TRIAL_MODAL.DESCRIPTION_PART_3') }}
               </p>
             </div>
 
@@ -134,7 +134,7 @@ const skipTrial = () => emit('close');
                 class="w-full justify-center"
                 size="md"
                 solid
-                :label="t('COMPONENTS.WELCOME_TRIAL_MODAL.BUTTON_CONFIRM')"
+                :label="t('WELCOME_TRIAL_MODAL.BUTTON_CONFIRM')"
                 @click="activateTrial"
               />
             </div>
