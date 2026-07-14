@@ -13,6 +13,29 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
     head :no_content
   end
 
+  def activate_trial
+    presenter = BillingPresenter.new(@account)
+    if presenter.disabled_register_trial
+      return render json: { error: I18n.t('errors.trial.ineligible', default: 'Not eligible for trial') }, status: :unprocessable_entity
+    end
+
+    trial_package = presenter.send(:plans_data)
+                     .flat_map { |tier| tier[:packages] }
+                     .find { |p| (p[:name_en] || '').downcase.include?('basic') && (p[:duration_days] == 30 || p[:duration_days] == 31) }
+    
+    trial_package ||= presenter.send(:plans_data)
+                        .flat_map { |tier| tier[:packages] }
+                        .find { |p| (p[:name_en] || '').downcase.include?('basic') }
+
+    if trial_package
+      plan = SubscriptionPlan.find(trial_package[:id])
+      Subscriptions::SubscribeService.new(@account, plan).execute
+      render json: { message: 'Trial activated' }, status: :ok
+    else
+      render json: { error: 'No trial plan found' }, status: :not_found
+    end
+  end
+
   def limits
     limits = {
       inboxes: {

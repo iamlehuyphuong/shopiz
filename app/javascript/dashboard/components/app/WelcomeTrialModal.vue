@@ -44,6 +44,9 @@ onMounted(async () => {
   isFetchingBilling.value = true;
   try {
     await store.dispatch('accounts/billings');
+    if (disabledRegisterTrial.value) {
+      emit('close');
+    }
   } finally {
     isFetchingBilling.value = false;
   }
@@ -59,8 +62,17 @@ watch(
   }
 );
 
-const activateTrial = () => {
-  emit('close');
+const activateTrial = async () => {
+  if (isLoading.value) return;
+  isLoading.value = true;
+  try {
+    await store.dispatch('accounts/activateTrial');
+    emit('close');
+  } catch (error) {
+    // Handle error if needed
+  } finally {
+    isLoading.value = false;
+  }
 };
 
 const skipTrial = () => emit('close');
@@ -134,6 +146,7 @@ const skipTrial = () => emit('close');
                 class="w-full justify-center"
                 size="md"
                 solid
+                :is-loading="isLoading"
                 :label="t('WELCOME_TRIAL_MODAL.BUTTON_CONFIRM')"
                 @click="activateTrial"
               />

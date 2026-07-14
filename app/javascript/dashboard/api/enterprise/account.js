@@ -14,6 +14,10 @@ class EnterpriseAccountAPI extends ApiClient {
     return axios.post(`${this.url}subscription`);
   }
 
+  activateTrial() {
+    return axios.post(`${this.url}activate_trial`);
+  }
+
   getLimits() {
     return axios.get(`${this.url}limits`);
   }

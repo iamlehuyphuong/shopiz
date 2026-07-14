@@ -78,11 +78,9 @@ export default {
 
     const showWelcomeTrialModal = ref(false);
 
-    watch(shouldShowOnboardingModal, (newVal, oldVal) => {
-      if (oldVal === true && newVal === false) {
-        showWelcomeTrialModal.value = true;
-      }
-    });
+    const onOnboardingCompleted = () => {
+      showWelcomeTrialModal.value = true;
+    };
 
     return {
       uiSettings,
@@ -96,6 +94,7 @@ export default {
       isFeatureLocked,
       shouldShowOnboardingModal,
       showWelcomeTrialModal,
+      onOnboardingCompleted,
     };
   },
   data() {
@@ -236,7 +235,11 @@ export default {
           @close="closeKeyShortcutModal"
           @clickaway="closeKeyShortcutModal"
         />
-        <OnboardingModal v-if="shouldShowOnboardingModal" :show="true" />
+        <OnboardingModal
+          v-if="shouldShowOnboardingModal"
+          :show="true"
+          @completed="onOnboardingCompleted"
+        />
         <WelcomeTrialModal
           :show="showWelcomeTrialModal"
           @close="showWelcomeTrialModal = false"

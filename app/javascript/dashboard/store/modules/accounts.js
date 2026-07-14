@@ -171,6 +171,19 @@ export const actions = {
     }
   },
 
+  activateTrial: async ({ commit, dispatch }) => {
+    commit(types.default.SET_ACCOUNT_UI_FLAG, { isUpdating: true });
+    try {
+      await EnterpriseAccountAPI.activateTrial();
+      await dispatch('get'); // Refresh account data
+      await dispatch('billings'); // Refresh billing data
+    } catch (error) {
+      throwErrorMessage(error);
+    } finally {
+      commit(types.default.SET_ACCOUNT_UI_FLAG, { isUpdating: false });
+    }
+  },
+
   limits: async ({ commit }) => {
     commit(types.default.SET_ACCOUNT_UI_FLAG, { isFetchingLimits: true });
     try {

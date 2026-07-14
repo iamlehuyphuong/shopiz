@@ -609,6 +609,7 @@ Rails.application.routes.draw do
             member do
               post :checkout
               post :subscription
+              post :activate_trial
               get :limits
               get :billings
               post :toggle_deletion

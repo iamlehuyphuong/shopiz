@@ -315,7 +315,10 @@ class BillingPresenter
   end
 
   def disabled_register_trial
-    @account.billing_histories.where("metadata->>'type' = 'package'").exists?
+    @account.account_subscriptions
+            .joins(subscription_plan: :subscription_tier)
+            .where(subscription_tiers: { is_free: false })
+            .exists?
   end
 
   def usage_agent
