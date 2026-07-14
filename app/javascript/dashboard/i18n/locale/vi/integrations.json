@@ -598,7 +598,13 @@
       "EDIT": "Cập nhật"
     },
     "ASSISTANTS": {
-      "HEADER": "Trợ lý",
+      "LIMIT_REACHED": {
+        "TITLE": "Tài khoản của bạn đã hết tín dụng AI",
+        "DESCRIPTION": "Bạn có muốn kết nối với OpenAI riêng để tiếp tục sử dụng không?",
+        "CONFIRM": "Kết nối ngay",
+        "CANCEL": "Để sau"
+      },
+      "HEADER": "Các trợ lý",
       "NO_ASSISTANTS_AVAILABLE": "Không có trợ lý nào trong tài khoản của bạn.",
       "ADD_NEW": "Tạo trợ lý mới",
       "DELETE": {

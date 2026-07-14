@@ -598,6 +598,12 @@
       "EDIT": "Update"
     },
     "ASSISTANTS": {
+      "LIMIT_REACHED": {
+        "TITLE": "AI credits depleted",
+        "DESCRIPTION": "Would you like to connect a custom OpenAI account to continue using AI features?",
+        "CONFIRM": "Connect now",
+        "CANCEL": "Maybe later"
+      },
       "HEADER": "Assistants",
       "NO_ASSISTANTS_AVAILABLE": "There are no assistants available in your account.",
       "ADD_NEW": "Create a new assistant",
