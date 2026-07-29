@@ -201,7 +201,8 @@
         "PROCESSING": "Processing",
         "SHIPPED": "Shipped",
         "DELIVERED": "Delivered",
-        "CANCELLED": "Cancelled"
+        "CANCELLED": "Cancelled",
+        "RETURNED": "Returned"
       },
       "HEATMAP": {
         "TITLE": "Order density by hour",
@@ -296,7 +297,8 @@
         "PROCESSING": "Processing",
         "SHIPPED": "Shipped",
         "DELIVERED": "Delivered",
-        "CANCELLED": "Cancelled"
+        "CANCELLED": "Cancelled",
+        "RETURNED": "Returned"
       },
       "ALERTS": {
         "SYNC_SUCCESS": "Order synced successfully.",

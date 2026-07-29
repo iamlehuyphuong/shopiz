@@ -68,7 +68,8 @@ class ConversationOrders::WoocommerceProxy < ConversationOrders::PlatformProxy
     when 'pending', 'on-hold' then :confirmed
     when 'processing' then :processing
     when 'completed' then :delivered
-    when 'cancelled', 'refunded', 'failed' then :cancelled
+    when 'refunded' then :returned
+    when 'cancelled', 'failed' then :cancelled
     end
   end
 

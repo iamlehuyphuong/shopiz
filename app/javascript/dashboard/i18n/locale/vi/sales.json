@@ -201,7 +201,8 @@
         "PROCESSING": "Đang xử lý",
         "SHIPPED": "Đang giao",
         "DELIVERED": "Đã giao",
-        "CANCELLED": "Đã huỷ"
+        "CANCELLED": "Đã huỷ",
+        "RETURNED": "Hoàn trả"
       },
       "HEATMAP": {
         "TITLE": "Mật độ đơn hàng theo giờ",
@@ -293,7 +294,8 @@
         "PROCESSING": "Đang xử lý",
         "SHIPPED": "Đang giao",
         "DELIVERED": "Đã giao",
-        "CANCELLED": "Đã huỷ"
+        "CANCELLED": "Đã huỷ",
+        "RETURNED": "Hoàn trả"
       },
       "ALERTS": {
         "SYNC_SUCCESS": "Đã đồng bộ đơn hàng thành công.",

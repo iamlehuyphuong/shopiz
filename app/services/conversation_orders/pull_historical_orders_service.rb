@@ -68,11 +68,12 @@ class ConversationOrders::PullHistoricalOrdersService
       return account.contacts.find_by(kiotviet_customer_id: customer_id) if customer_id.present?
 
       phone = raw_order.dig('orderDelivery', 'contactNumber')
-      return account.contacts.find_by(phone_number: phone) if phone.present?
+      normalized_phone = normalize_phone_number(phone)
+      return account.contacts.find_by(phone_number: normalized_phone) if normalized_phone.present?
 
       name = raw_order['customerName']
       if name.present?
-        contact = account.contacts.find_or_create_by!(name: name, phone_number: phone, account_id: account.id)
+        contact = account.contacts.find_or_create_by!(name: name, phone_number: normalized_phone, account_id: account.id)
         contact.update(location: raw_order.dig('orderDelivery', 'address')) if raw_order.dig('orderDelivery', 'address').present?
         return contact
       end
@@ -85,11 +86,12 @@ class ConversationOrders::PullHistoricalOrdersService
       return account.contacts.from_email(email) if email.present?
 
       phone = raw_order.dig('billing', 'phone')
-      return account.contacts.find_by(phone_number: phone) if phone.present?
+      normalized_phone = normalize_phone_number(phone)
+      return account.contacts.find_by(phone_number: normalized_phone) if normalized_phone.present?
 
       name = "#{raw_order.dig('billing', 'first_name')} #{raw_order.dig('billing', 'last_name')}".strip
       if name.present?
-        contact = account.contacts.find_or_create_by!(name: name, email: email, phone_number: phone, account_id: account.id)
+        contact = account.contacts.find_or_create_by!(name: name, email: email, phone_number: normalized_phone, account_id: account.id)
         address = [raw_order.dig('billing', 'address_1'), raw_order.dig('billing', 'city'), raw_order.dig('billing', 'country')].compact_blank.join(', ')
         contact.update(location: address) if address.present?
         return contact
@@ -97,6 +99,34 @@ class ConversationOrders::PullHistoricalOrdersService
     end
 
     nil
+  end
+
+  def upsert_items(order, proxy, platform, raw_order)
+    items_data = proxy.extract_line_items(raw_order)
+    return if items_data.blank?
+
+    items_data.each do |item_data|
+      item = order.items.find_or_initialize_by(external_id: item_data[:external_id])
+      item.assign_attributes(item_data.except(:external_id))
+      item.save!
+    end
+  end
+
+  def normalize_phone_number(phone)
+    return nil if phone.blank?
+
+    phone_str = phone.to_s.gsub(/[^\d\+]/, '')
+    return nil if phone_str.blank?
+
+    if phone_str.start_with?('0')
+      "+84#{phone_str[1..-1]}"
+    elsif phone_str.start_with?('84')
+      "+#{phone_str}"
+    elsif phone_str.start_with?('+')
+      phone_str
+    else
+      "+84#{phone_str}"
+    end
   end
 
   def map_and_save_order(account, proxy, platform, raw_order)
@@ -113,7 +143,7 @@ class ConversationOrders::PullHistoricalOrdersService
 
     if platform == 'kiotviet'
       order.customer_name = raw_order['customerName']
-      order.customer_phone = raw_order.dig('orderDelivery', 'contactNumber')
+      order.customer_phone = normalize_phone_number(raw_order.dig('orderDelivery', 'contactNumber'))
       order.customer_address = raw_order.dig('orderDelivery', 'address')
       order.status = proxy.map_status(raw_order['status']) || :draft
       order.total_amount = raw_order['total'] || 0
@@ -140,7 +170,8 @@ class ConversationOrders::PullHistoricalOrdersService
     elsif platform == 'woocommerce'
       billing = raw_order['billing'] || {}
       order.customer_name = "#{billing['first_name']} #{billing['last_name']}".strip
-      order.customer_phone = billing['phone']
+      order.customer_phone = normalize_phone_number(billing['phone'])
+      order.customer_email = billing['email']
       order.customer_address = [billing['address_1'], billing['city'], billing['country']].compact_blank.join(', ')
       order.status = proxy.map_status(raw_order['status']) || :draft
       order.total_amount = raw_order['total'] || 0

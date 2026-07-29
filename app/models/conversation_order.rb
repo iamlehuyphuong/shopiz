@@ -6,7 +6,7 @@ class ConversationOrder < ApplicationRecord
 
   accepts_nested_attributes_for :items, allow_destroy: true
 
-  enum status: { draft: 0, confirmed: 1, processing: 2, shipped: 3, delivered: 4, cancelled: 5 }
+  enum status: { draft: 0, confirmed: 1, processing: 2, shipped: 3, delivered: 4, cancelled: 5, returned: 6 }
   enum payment_status: { unpaid: 'unpaid', paid: 'paid', partially_refunded: 'partially_refunded' }
 
   validates :account_id, presence: true
@@ -27,7 +27,7 @@ class ConversationOrder < ApplicationRecord
 
   def enqueue_status_update_message
     return unless saved_change_to_status?
-    return unless %w[confirmed processing shipped delivered cancelled].include?(status)
+    return unless %w[confirmed processing shipped delivered cancelled returned].include?(status)
 
     ConversationOrders::SendStatusUpdateJob.perform_later(id)
   rescue StandardError => e
