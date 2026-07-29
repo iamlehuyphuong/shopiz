@@ -31,8 +31,8 @@ const handleButtonClick = () => {
           <div
             v-on-click-outside="[
               () => emit('close'),
-              // This will prevent closing the modal when the editor Create link popup is open
-              { ignore: ['dialog.ProseMirror-prompt-backdrop'] },
+              // This will prevent closing the modal when the editor Create link popup or datepicker popup is open
+              { ignore: ['dialog.ProseMirror-prompt-backdrop', '.mx-datepicker-popup'] },
             ]"
             class="relative group/campaign-button"
           >

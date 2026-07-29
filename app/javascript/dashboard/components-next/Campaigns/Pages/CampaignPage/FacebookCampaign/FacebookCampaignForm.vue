@@ -12,6 +12,7 @@ import TextArea from 'dashboard/components-next/textarea/TextArea.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 import ComboBox from 'dashboard/components-next/combobox/ComboBox.vue';
 import TagMultiSelectComboBox from 'dashboard/components-next/combobox/TagMultiSelectComboBox.vue';
+import DateTimePicker from 'dashboard/components/ui/DateTimePicker.vue';
 
 const props = defineProps({
   mode: {
@@ -68,12 +69,6 @@ const isCreating = computed(() => formState.uiFlags.value.isCreating);
 const isImproving = ref(false);
 const { processEvent } = useCaptain();
 
-const currentDateTime = computed(() => {
-  const now = new Date();
-  const localTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
-  return localTime.toISOString().slice(0, 16);
-});
-
 const mapToOptions = (items, valueKey, labelKey) =>
   items?.map(item => ({
     value: item[valueKey],
@@ -108,8 +103,8 @@ const formErrors = computed(() => ({
 
 const isSubmitDisabled = computed(() => v$.value.$invalid);
 
-const formatToUTCString = localDateTime =>
-  localDateTime ? new Date(localDateTime).toISOString() : null;
+const formatToUTCString = dateObj =>
+  dateObj ? dateObj.toISOString() : null;
 
 const handleInboxChange = async inboxId => {
   if (!inboxId) {
@@ -155,11 +150,7 @@ const updateStateFromCampaign = campaign => {
     audience,
   } = campaign;
   const selectedAudience = audience.map(item => item.id);
-  const scheduled = new Date(
-    scheduled_at * 1000 - new Date().getTimezoneOffset() * 60000
-  )
-    .toISOString()
-    .slice(0, 16);
+  const scheduled = scheduled_at ? new Date(scheduled_at * 1000) : null;
 
   Object.assign(state, {
     title,
@@ -295,19 +286,28 @@ defineExpose({ prepareCampaignDetails, isSubmitDisabled });
         :placeholder="t('CAMPAIGN.FACEBOOK.CREATE.FORM.AUDIENCE.PLACEHOLDER')"
         :has-error="!!formErrors.audience"
         :message="formErrors.audience"
+        :is-drop-up="true"
         class="[&>div>button]:bg-n-alpha-black2"
       />
     </div>
 
-    <Input
-      v-model="state.scheduledAt"
-      :label="t('CAMPAIGN.FACEBOOK.CREATE.FORM.SCHEDULED_AT.LABEL')"
-      type="datetime-local"
-      :min="currentDateTime"
-      :placeholder="t('CAMPAIGN.FACEBOOK.CREATE.FORM.SCHEDULED_AT.PLACEHOLDER')"
-      :message="formErrors.scheduledAt"
-      :message-type="formErrors.scheduledAt ? 'error' : 'info'"
-    />
+    <div class="flex flex-col gap-1">
+      <label class="mb-0.5 text-sm font-medium text-n-slate-12">
+        {{ t('CAMPAIGN.FACEBOOK.CREATE.FORM.SCHEDULED_AT.LABEL') }}
+      </label>
+      <DateTimePicker
+        :value="state.scheduledAt"
+        :placeholder="t('CAMPAIGN.FACEBOOK.CREATE.FORM.SCHEDULED_AT.PLACEHOLDER')"
+        confirm-text="Chọn"
+        @change="state.scheduledAt = $event"
+      />
+      <span
+        v-if="formErrors.scheduledAt"
+        class="text-xs text-n-red-11 mt-1"
+      >
+        {{ formErrors.scheduledAt }}
+      </span>
+    </div>
 
     <div
       v-if="showActionButtons"

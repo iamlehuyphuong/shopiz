@@ -27,6 +27,10 @@ const props = defineProps({
     type: [String, Number, Array],
     default: () => [],
   },
+  isDropUp: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['select', 'search']);
@@ -60,7 +64,8 @@ defineExpose({
 <template>
   <div
     v-show="open"
-    class="absolute z-50 w-full mt-1 transition-opacity duration-200 border rounded-md shadow-lg bg-n-solid-1 border-n-strong"
+    class="absolute z-50 w-full transition-opacity duration-200 border rounded-md shadow-lg bg-n-solid-1 border-n-strong"
+    :class="isDropUp ? 'bottom-full mb-1' : 'mt-1'"
   >
     <div class="relative border-b border-n-strong">
       <span class="absolute i-lucide-search top-2.5 size-4 left-3" />

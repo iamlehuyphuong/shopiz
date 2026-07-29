@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, watch, nextTick } from 'vue';
+import { useElementBounding, useWindowSize } from '@vueuse/core';
 import { OnClickOutside } from '@vueuse/components';
 import { useI18n } from 'vue-i18n';
 
@@ -21,6 +22,10 @@ const props = defineProps({
   message: { type: String, default: '' },
   hasError: { type: Boolean, default: false },
   useApiResults: { type: Boolean, default: false }, // useApiResults prop to determine if search is handled by API
+  isDropUp: {
+    type: Boolean,
+    default: undefined,
+  },
 });
 
 const emit = defineEmits(['update:modelValue', 'search']);
@@ -32,6 +37,15 @@ const open = ref(false);
 const search = ref('');
 const dropdownRef = ref(null);
 const comboboxRef = ref(null);
+
+const { top, bottom } = useElementBounding(comboboxRef);
+const { height } = useWindowSize();
+
+const computedIsDropUp = computed(() => {
+  if (props.isDropUp !== undefined) return props.isDropUp;
+  const spaceBelow = height.value - bottom.value;
+  return spaceBelow < 250 && top.value > 250;
+});
 
 const filteredOptions = computed(() => {
   // For API search, don't filter options locally
@@ -120,6 +134,7 @@ watch(
         :search-placeholder="searchPlaceholder"
         :empty-state="emptyState"
         :selected-values="selectedValue"
+        :is-drop-up="computedIsDropUp"
         @search="emit('search', $event)"
         @select="selectOption"
       />
