@@ -5,6 +5,7 @@ import SettingsFieldSection from 'dashboard/components-next/Settings/SettingsFie
 import LoadingState from 'dashboard/components/widgets/LoadingState.vue';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import SelectInput from 'dashboard/components-next/select/Select.vue';
+import FilterSelect from 'dashboard/components-next/filter/inputs/FilterSelect.vue';
 
 export default {
   components: {
@@ -12,6 +13,7 @@ export default {
     SettingsFieldSection,
     NextButton,
     SelectInput,
+    FilterSelect,
   },
   props: {
     inbox: {
@@ -21,7 +23,7 @@ export default {
   },
   data() {
     return {
-      selectedAgentBotId: null,
+      selectedAgentBotId: '',
     };
   },
   computed: {
@@ -39,8 +41,8 @@ export default {
     },
   },
   watch: {
-    activeAgentBot() {
-      this.selectedAgentBotId = this.activeAgentBot.id;
+    activeAgentBot(newBot) {
+      this.selectedAgentBotId = newBot?.id || '';
     },
   },
   mounted() {
@@ -92,10 +94,13 @@ export default {
         :help-text="$t('AGENT_BOTS.BOT_CONFIGURATION.DESC')"
         class="[&>div]:!items-start"
       >
-        <SelectInput
+        <FilterSelect
           v-model="selectedAgentBotId"
-          :placeholder="$t('AGENT_BOTS.BOT_CONFIGURATION.SELECT_PLACEHOLDER')"
-          :options="agentBots.map(bot => ({ value: bot.id, label: bot.name }))"
+          :options="[
+            { value: '', label: $t('AGENT_BOTS.BOT_CONFIGURATION.SELECT_PLACEHOLDER') },
+            ...agentBots.map(bot => ({ value: bot.id, label: bot.name }))
+          ]"
+          class="w-[300px] [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[38px] [&_button]:!border-n-weak [&_button]:!bg-n-alpha-1"
         />
         <template #extra>
           <div class="grid grid-cols-1 lg:grid-cols-8 mt-3">

@@ -46,6 +46,7 @@ import FeatureLockOverlay from 'dashboard/routes/dashboard/upgrade/FeatureLockOv
 import Editor from 'dashboard/components-next/Editor/Editor.vue';
 import ColorPicker from 'dashboard/components-next/colorpicker/ColorPicker.vue';
 import SelectInput from 'dashboard/components-next/select/Select.vue';
+import FilterSelect from 'dashboard/components-next/filter/inputs/FilterSelect.vue';
 import Widget from 'dashboard/modules/widget-preview/components/Widget.vue';
 import Dialog from 'dashboard/components-next/dialog/Dialog.vue';
 
@@ -86,6 +87,7 @@ export default {
     Avatar,
     ColorPicker,
     SelectInput,
+    FilterSelect,
     AccountHealth,
     Widget,
     Dialog,
@@ -1122,13 +1124,13 @@ export default {
               :label="$t('INBOX_MGMT.HELP_CENTER.LABEL')"
               :help-text="$t('INBOX_MGMT.HELP_CENTER.SUB_TEXT')"
             >
-              <SelectInput
+              <FilterSelect
                 v-model="selectedPortalSlug"
-                :placeholder="$t('INBOX_MGMT.HELP_CENTER.PLACEHOLDER')"
                 :options="[
                   { value: '', label: $t('INBOX_MGMT.HELP_CENTER.NONE') },
                   ...portals.map(p => ({ value: p.slug, label: p.name })),
                 ]"
+                class="w-full mt-1 !mb-0 [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[38px] [&_button]:!border-n-weak [&_button]:!bg-n-alpha-1"
               />
             </SettingsFieldSection>
 
@@ -1267,7 +1269,7 @@ export default {
                           )
                         }}
                       </label>
-                      <SelectInput
+                      <FilterSelect
                         v-model="widgetBubblePosition"
                         :options="[
                           {
@@ -1283,7 +1285,7 @@ export default {
                             value: 'right',
                           },
                         ]"
-                        class="[&>select]:!py-0 [&>select]:!pl-0 [&>select]:!pr-6 min-w-16 [&>select]:!outline-none"
+                        class="[&>button]:!py-0 [&>button]:!pl-0 [&>button]:!pr-1 [&>button]:!bg-transparent [&>button]:!border-0 min-w-16"
                       />
                     </div>
                     <div class="h-3 w-px bg-n-weak rounded-lg" />
@@ -1295,7 +1297,7 @@ export default {
                           )
                         }}
                       </label>
-                      <SelectInput
+                      <FilterSelect
                         v-model="widgetBubbleType"
                         :options="[
                           {
@@ -1311,7 +1313,7 @@ export default {
                             value: 'expanded_bubble',
                           },
                         ]"
-                        class="[&>select]:!py-0 [&>select]:!pl-0 [&>select]:!pr-6 min-w-16 [&>select]:!outline-none"
+                        class="[&>button]:!py-0 [&>button]:!pl-0 [&>button]:!pr-1 [&>button]:!bg-transparent [&>button]:!border-0 min-w-16"
                       />
                     </div>
                   </div>
@@ -1581,10 +1583,10 @@ export default {
                             )
                           }}
                         </label>
-                        <SelectInput
+                        <FilterSelect
                           v-model="autoFollowUpMaxAttempts"
                           :options="dynamicMaxAttemptsOptions"
-                          class="w-full"
+                          class="w-full mt-1 [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[38px] [&_button]:!border-n-weak [&_button]:!bg-n-alpha-1"
                         />
                       </div>
 
@@ -1596,7 +1598,7 @@ export default {
                             )
                           }}
                         </label>
-                        <SelectInput
+                        <FilterSelect
                           v-model="autoFollowUpTimeMode"
                           :options="[
                             {
@@ -1612,7 +1614,7 @@ export default {
                               ),
                             },
                           ]"
-                          class="w-full"
+                          class="w-full mt-1 [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[38px] [&_button]:!border-n-weak [&_button]:!bg-n-alpha-1"
                         />
                       </div>
 
@@ -1658,7 +1660,7 @@ export default {
                             )
                           }}
                         </label>
-                        <SelectInput
+                        <FilterSelect
                           v-model="autoFollowUpActionType"
                           :options="[
                             {
@@ -1680,7 +1682,7 @@ export default {
                               ),
                             },
                           ]"
-                          class="w-full"
+                          class="w-full mt-1 [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[38px] [&_button]:!border-n-weak [&_button]:!bg-n-alpha-1"
                         />
                       </div>
                       <div
@@ -1754,7 +1756,7 @@ export default {
                             }}
                             {{ index + 1 }}
                           </label>
-                          <SelectInput
+                          <FilterSelect
                             v-model="autoFollowUpMacros[index]"
                             :options="[
                               {
@@ -1768,7 +1770,7 @@ export default {
                                 label: m.name,
                               })),
                             ]"
-                            class="w-full"
+                            class="w-full mt-1 [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[38px] [&_button]:!border-n-weak [&_button]:!bg-n-alpha-1"
                           />
                         </div>
                       </div>
