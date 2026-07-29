@@ -272,9 +272,10 @@
         "COUNT": "orders"
       },
       "ACTIONS": {
-        "CREATE": "Create order",
+        "CREATE": "Create Order",
         "ADD": "Create order",
-        "REFRESH": "Refresh"
+        "REFRESH": "Refresh",
+        "SYNC": "Sync data"
       },
       "TABLE": {
         "EMPTY_SEARCH": "No matching orders found.",
@@ -550,6 +551,18 @@
       "ALERTS": {
         "SYNC_SUCCESS": "Products synced successfully.",
         "SYNC_ERROR": "Failed to sync products."
+      }
+    },
+    "DIALOG_PULL_ORDERS": {
+      "TITLE": "Sync orders from platform",
+      "DESC": "Select a sales platform to sync the order list to Shopiz.",
+      "FORM": {
+        "CANCEL": "Cancel",
+        "SUBMIT": "Sync orders"
+      },
+      "ALERTS": {
+        "SYNC_SUCCESS": "Orders synced successfully.",
+        "SYNC_ERROR": "Failed to sync orders."
       }
     },
     "DIALOG_ORDER_DETAIL": {

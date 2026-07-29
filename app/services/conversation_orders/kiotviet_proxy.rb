@@ -23,6 +23,22 @@ class ConversationOrders::KiotvietProxy < ConversationOrders::PlatformProxy
     kiotviet_delete("orders/#{order_id}?IsVoidPayment=#{void_payment}")
   end
 
+  def fetch_customers(params = {})
+    kiotviet_get('customers', params)
+  end
+
+  def fetch_customer(id)
+    kiotviet_get("customers/#{id}")
+  end
+
+  def create_customer(payload)
+    kiotviet_post('customers', payload)
+  end
+
+  def update_customer(id, payload)
+    kiotviet_put("customers/#{id}", payload)
+  end
+
   def fetch_products(page = 1)
     page_size = 50
     current_item = (page - 1) * page_size

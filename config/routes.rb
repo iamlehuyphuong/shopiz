@@ -493,7 +493,9 @@ Rails.application.routes.draw do
             resources :reports, only: [:index] do
               get :heatmap, on: :collection
             end
-            resources :orders, only: [:index, :show, :create]
+            resources :orders, only: [:index, :show, :create, :update] do
+              post :sync, on: :collection
+            end
           end
         end
       end

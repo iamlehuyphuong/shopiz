@@ -23,6 +23,22 @@ class ConversationOrders::WoocommerceProxy < ConversationOrders::PlatformProxy
     woocommerce_delete("orders/#{order_id}")
   end
 
+  def fetch_customers(params = {})
+    woocommerce_get('customers', params)
+  end
+
+  def fetch_customer(id)
+    woocommerce_get("customers/#{id}")
+  end
+
+  def create_customer(payload)
+    woocommerce_post('customers', payload)
+  end
+
+  def update_customer(id, payload)
+    woocommerce_put("customers/#{id}", payload)
+  end
+
   def fetch_products(page = 1)
     limit = 50
     Rails.logger.info("WoocommerceProxy: Making GET request to products with page=#{page}")

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_07_14_145458) do
+ActiveRecord::Schema[7.1].define(version: 2026_07_29_080334) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -849,6 +849,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_07_14_145458) do
     t.bigint "company_id"
     t.date "birthday"
     t.integer "gender_id"
+    t.string "kiotviet_customer_id"
+    t.string "woocommerce_customer_id"
     t.index "lower((email)::text), account_id", name: "index_contacts_on_lower_email_account_id"
     t.index ["account_id", "contact_type"], name: "index_contacts_on_account_id_and_contact_type"
     t.index ["account_id", "email", "phone_number", "identifier"], name: "index_contacts_on_nonempty_fields", where: "(((email)::text <> ''::text) OR ((phone_number)::text <> ''::text) OR ((identifier)::text <> ''::text))"
@@ -859,8 +861,10 @@ ActiveRecord::Schema[7.1].define(version: 2026_07_14_145458) do
     t.index ["company_id"], name: "index_contacts_on_company_id"
     t.index ["email", "account_id"], name: "uniq_email_per_account_contact", unique: true
     t.index ["identifier", "account_id"], name: "uniq_identifier_per_account_contact", unique: true
+    t.index ["kiotviet_customer_id"], name: "index_contacts_on_kiotviet_customer_id"
     t.index ["name", "email", "phone_number", "identifier"], name: "index_contacts_on_name_email_phone_number_identifier", opclass: :gin_trgm_ops, using: :gin
     t.index ["phone_number", "account_id"], name: "index_contacts_on_phone_number_and_account_id"
+    t.index ["woocommerce_customer_id"], name: "index_contacts_on_woocommerce_customer_id"
   end
 
   create_table "conversation_order_items", force: :cascade do |t|

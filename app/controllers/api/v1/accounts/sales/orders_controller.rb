@@ -42,6 +42,19 @@ class Api::V1::Accounts::Sales::OrdersController < Api::V1::Accounts::BaseContro
     end
   end
 
+  def sync
+    platform = params[:platform]
+    timeframe = params[:timeframe] || '1_month'
+
+    return render json: { error: 'Platform is required' }, status: :unprocessable_entity unless platform.present?
+
+    Sales::OrdersSyncJob.perform_later(current_account.id, platform, timeframe)
+
+    render json: { message: 'Sync started successfully' }, status: :accepted
+  rescue StandardError => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+
   private
 
   def auto_fill_customer_info
