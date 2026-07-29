@@ -18,10 +18,10 @@ class Api::V1::Accounts::Sales::ProductsController < Api::V1::Accounts::BaseCont
                   end
     end
 
-    @products = @products.page(params[:page]).per(params[:per_page] || 15)
+    @products = @products.page(params[:page]).per(params[:per_page] || 15).includes(:product_variants)
 
     render json: {
-      payload: @products,
+      payload: @products.as_json(include: :product_variants),
       meta: {
         current_page: @products.current_page,
         total_pages: @products.total_pages,
@@ -31,7 +31,7 @@ class Api::V1::Accounts::Sales::ProductsController < Api::V1::Accounts::BaseCont
   end
 
   def show
-    render json: @product
+    render json: @product.as_json(include: :product_variants)
   end
 
   def sync
@@ -42,7 +42,7 @@ class Api::V1::Accounts::Sales::ProductsController < Api::V1::Accounts::BaseCont
   def create
     @product = current_account.products.new(product_params)
     if @product.save
-      render json: @product
+      render json: @product.as_json(include: :product_variants)
     else
       render json: { error: @product.errors.full_messages.join(', ') }, status: :unprocessable_entity
     end
@@ -50,7 +50,7 @@ class Api::V1::Accounts::Sales::ProductsController < Api::V1::Accounts::BaseCont
 
   def update
     if @product.update(product_params)
-      render json: @product
+      render json: @product.as_json(include: :product_variants)
     else
       render json: { error: @product.errors.full_messages.join(', ') }, status: :unprocessable_entity
     end
@@ -77,8 +77,8 @@ class Api::V1::Accounts::Sales::ProductsController < Api::V1::Accounts::BaseCont
       :name, :description, :price, :currency, :sku, :barcode, :status, :external_id,
       images: [],
       product_variants_attributes: [
-        :id, :account_id, :name, :sku, :barcode, :price, :compare_at_price, 
-        :inventory_quantity, :weight, :_destroy, meta: {}
+        :id, :account_id, :name, :sku, :barcode, :price, :compare_at_price,
+        :inventory_quantity, :weight, :_destroy, { meta: {} }
       ]
     )
     if params.dig(:product, :meta).present?

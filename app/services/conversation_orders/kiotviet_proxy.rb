@@ -11,6 +11,18 @@ class ConversationOrders::KiotvietProxy < ConversationOrders::PlatformProxy
     kiotviet_get("orders/#{order_id}")
   end
 
+  def fetch_orders(params = {})
+    kiotviet_get('orders', params)
+  end
+
+  def update_order(order_id, payload)
+    kiotviet_put("orders/#{order_id}", payload)
+  end
+
+  def delete_order(order_id, void_payment: true)
+    kiotviet_delete("orders/#{order_id}?IsVoidPayment=#{void_payment}")
+  end
+
   def fetch_products(page = 1)
     page_size = 50
     current_item = (page - 1) * page_size
