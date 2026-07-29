@@ -3,6 +3,7 @@ import { computed, watch } from 'vue';
 import Input from './Input.vue';
 import { useI18n } from 'vue-i18n';
 import { DURATION_UNITS } from './constants';
+import FilterSelect from 'dashboard/components-next/filter/inputs/FilterSelect.vue';
 
 const props = defineProps({
   min: { type: Number, default: 0 },
@@ -19,6 +20,12 @@ const unit = defineModel('unit', {
     return Object.values(DURATION_UNITS).includes(value);
   },
 });
+
+const options = computed(() => [
+  { value: DURATION_UNITS.MINUTES, label: t('DURATION_INPUT.MINUTES') },
+  { value: DURATION_UNITS.HOURS, label: t('DURATION_INPUT.HOURS') },
+  { value: DURATION_UNITS.DAYS, label: t('DURATION_INPUT.DAYS') },
+]);
 
 const convertToMinutes = newValue => {
   if (unit.value === DURATION_UNITS.MINUTES) {
@@ -67,19 +74,10 @@ watch(unit, () => {
     :placeholder="t('DURATION_INPUT.PLACEHOLDER')"
     class="flex-grow w-full disabled:"
   />
-  <select
+  <FilterSelect
     v-model="unit"
+    :options="options"
     :disabled="disabled"
-    class="mb-0 text-sm disabled:outline-n-weak disabled:opacity-40"
-  >
-    <option :value="DURATION_UNITS.MINUTES">
-      {{ t('DURATION_INPUT.MINUTES') }}
-    </option>
-    <option :value="DURATION_UNITS.HOURS">
-      {{ t('DURATION_INPUT.HOURS') }}
-    </option>
-    <option :value="DURATION_UNITS.DAYS">
-      {{ t('DURATION_INPUT.DAYS') }}
-    </option>
-  </select>
+    class="min-w-[6.5rem] [&_button]:w-full [&_button]:justify-between [&_button]:!h-full h-10 mb-0 disabled:opacity-40 [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full"
+  />
 </template>

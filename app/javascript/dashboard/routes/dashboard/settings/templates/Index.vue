@@ -61,6 +61,12 @@ const tiktokShopInboxes = computed(() =>
   allInboxes.value.filter(inbox => inbox.channel_type === 'Channel::TiktokShop')
 );
 
+// Check channel active statuses from global config
+const globalConfig = window.globalConfig || {};
+const isWhatsappActive = computed(() => !['coming_soon', 'disabled', 'draft'].includes(globalConfig.CHANNEL_STATUS_WHATSAPP));
+const isZaloActive = computed(() => !['coming_soon', 'disabled', 'draft'].includes(globalConfig.CHANNEL_STATUS_ZALO_OA));
+const isTiktokShopActive = computed(() => !['coming_soon', 'disabled', 'draft'].includes(globalConfig.CHANNEL_STATUS_TIKTOK_SHOP));
+
 // Normalize WhatsApp templates
 const normalizedWATemplates = computed(() =>
   waTemplates.value
@@ -290,32 +296,45 @@ const statusMenuItems = computed(() => {
   return base;
 });
 
-const channelMenuItems = computed(() => [
-  {
-    action: 'channelSelect',
-    value: '',
-    label: t('SETTINGS.TEMPLATES.FILTERS.ALL_CHANNELS'),
-    isSelected: selectedChannelType.value === '',
-  },
-  {
-    action: 'channelSelect',
-    value: 'Channel::Whatsapp',
-    label: 'WhatsApp',
-    isSelected: selectedChannelType.value === 'Channel::Whatsapp',
-  },
-  {
-    action: 'channelSelect',
-    value: 'Channel::ZaloOa',
-    label: 'Zalo OA',
-    isSelected: selectedChannelType.value === 'Channel::ZaloOa',
-  },
-  {
-    action: 'channelSelect',
-    value: 'Channel::TiktokShop',
-    label: 'TikTok Shop',
-    isSelected: selectedChannelType.value === 'Channel::TiktokShop',
-  },
-]);
+const channelMenuItems = computed(() => {
+  const items = [
+    {
+      action: 'channelSelect',
+      value: '',
+      label: t('SETTINGS.TEMPLATES.FILTERS.ALL_CHANNELS'),
+      isSelected: selectedChannelType.value === '',
+    },
+  ];
+
+  if (isWhatsappActive.value) {
+    items.push({
+      action: 'channelSelect',
+      value: 'Channel::Whatsapp',
+      label: 'WhatsApp',
+      isSelected: selectedChannelType.value === 'Channel::Whatsapp',
+    });
+  }
+
+  if (isZaloActive.value) {
+    items.push({
+      action: 'channelSelect',
+      value: 'Channel::ZaloOa',
+      label: 'Zalo OA',
+      isSelected: selectedChannelType.value === 'Channel::ZaloOa',
+    });
+  }
+
+  if (isTiktokShopActive.value) {
+    items.push({
+      action: 'channelSelect',
+      value: 'Channel::TiktokShop',
+      label: 'TikTok Shop',
+      isSelected: selectedChannelType.value === 'Channel::TiktokShop',
+    });
+  }
+
+  return items;
+});
 
 const selectedStatusLabel = computed(() => {
   const selected = statusMenuItems.value.find(
@@ -598,6 +617,7 @@ onMounted(() => {
     <!-- Channel Overview Cards -->
     <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-4 mb-6">
       <ChannelOverviewCard
+        v-if="isWhatsappActive"
         channel-key="Channel::Whatsapp"
         channel-name="WhatsApp"
         channel-icon="i-ri-whatsapp-fill"
@@ -609,6 +629,7 @@ onMounted(() => {
         @select="handleChannelCardSelect"
       />
       <ChannelOverviewCard
+        v-if="isZaloActive"
         channel-key="Channel::ZaloOa"
         channel-name="Zalo OA"
         channel-icon="i-woot-zalo-oa"
@@ -620,6 +641,7 @@ onMounted(() => {
         @select="handleChannelCardSelect"
       />
       <ChannelOverviewCard
+        v-if="isTiktokShopActive"
         channel-key="Channel::TiktokShop"
         channel-name="TikTok Shop"
         channel-icon="i-woot-tiktok-shop"

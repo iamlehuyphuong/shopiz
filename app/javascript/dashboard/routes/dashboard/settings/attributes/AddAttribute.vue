@@ -10,11 +10,13 @@ import { ref } from 'vue';
 
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import TagInput from 'dashboard/components-next/taginput/TagInput.vue';
+import FilterSelect from 'dashboard/components-next/filter/inputs/FilterSelect.vue';
 
 export default {
   components: {
     NextButton,
     TagInput,
+    FilterSelect,
   },
   props: {
     onClose: {
@@ -64,13 +66,15 @@ export default {
     models() {
       return ATTRIBUTE_MODELS.map(item => ({
         ...item,
-        option: this.$t(`ATTRIBUTES_MGMT.ATTRIBUTE_MODELS.${item.key}`),
+        value: item.id,
+        label: this.$t(`ATTRIBUTES_MGMT.ATTRIBUTE_MODELS.${item.key}`),
       }));
     },
     types() {
       return ATTRIBUTE_TYPES.map(item => ({
         ...item,
-        option: this.$t(`ATTRIBUTES_MGMT.ATTRIBUTE_TYPES.${item.key}`),
+        value: item.id,
+        label: this.$t(`ATTRIBUTES_MGMT.ATTRIBUTE_TYPES.${item.key}`),
       }));
     },
     isTagInputEmpty() {
@@ -193,19 +197,19 @@ export default {
 </script>
 
 <template>
-  <woot-modal v-model:show="show" :on-close="onClose">
-    <div class="flex flex-col h-auto overflow-auto">
+  <woot-modal v-model:show="show" :on-close="onClose" class="attribute-settings-modal">
+    <div class="flex flex-col h-auto overflow-visible">
       <woot-modal-header :header-title="$t('ATTRIBUTES_MGMT.ADD.TITLE')" />
 
       <form class="flex w-full" @submit.prevent="addAttributes">
         <div class="w-full">
-          <label :class="{ error: v$.attributeModel.$error }">
+          <label :class="[{ error: v$.attributeModel.$error }, 'mb-6 block']">
             {{ $t('ATTRIBUTES_MGMT.ADD.FORM.MODEL.LABEL') }}
-            <select v-model="attributeModel">
-              <option v-for="model in models" :key="model.id" :value="model.id">
-                {{ model.option }}
-              </option>
-            </select>
+            <FilterSelect
+              v-model="attributeModel"
+              :options="models"
+              class="w-full mt-1 !mb-0 [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[38px] [&_button]:!border-n-weak [&_button]:!bg-n-alpha-1 [&_.n-dropdown-body]:!bottom-full [&_.n-dropdown-body]:!top-auto [&_.n-dropdown-body]:!mb-1"
+            />
             <span v-if="v$.attributeModel.$error" class="message">
               {{ $t('ATTRIBUTES_MGMT.ADD.FORM.MODEL.ERROR') }}
             </span>
@@ -260,13 +264,13 @@ export default {
               />
             </div>
           </div>
-          <label :class="{ error: v$.attributeType.$error }">
+          <label :class="[{ error: v$.attributeType.$error }, 'mb-6 block']">
             {{ $t('ATTRIBUTES_MGMT.ADD.FORM.TYPE.LABEL') }}
-            <select v-model="attributeType">
-              <option v-for="type in types" :key="type.id" :value="type.id">
-                {{ type.option }}
-              </option>
-            </select>
+            <FilterSelect
+              v-model="attributeType"
+              :options="types"
+              class="w-full mt-1 !mb-0 [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[38px] [&_button]:!border-n-weak [&_button]:!bg-n-alpha-1 [&_.n-dropdown-body]:!bottom-full [&_.n-dropdown-body]:!top-auto [&_.n-dropdown-body]:!mb-1"
+            />
             <span v-if="v$.attributeType.$error" class="message">
               {{ $t('ATTRIBUTES_MGMT.ADD.FORM.TYPE.ERROR') }}
             </span>

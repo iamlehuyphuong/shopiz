@@ -54,7 +54,7 @@ const automationActive = computed({
         </div>
       </BaseTableCell>
 
-      <BaseTableCell>
+      <BaseTableCell class="min-w-28">
         <ToggleSwitch v-model="automationActive" />
       </BaseTableCell>
 

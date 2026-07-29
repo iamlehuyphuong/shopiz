@@ -8,11 +8,13 @@ import { useCaptain } from 'dashboard/composables/useCaptain';
 import { ref } from 'vue';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import TagInput from 'dashboard/components-next/taginput/TagInput.vue';
+import FilterSelect from 'dashboard/components-next/filter/inputs/FilterSelect.vue';
 
 export default {
   components: {
     NextButton,
     TagInput,
+    FilterSelect,
   },
   props: {
     selectedAttribute: {
@@ -71,7 +73,8 @@ export default {
     types() {
       return ATTRIBUTE_TYPES.map(item => ({
         ...item,
-        option: this.$t(`ATTRIBUTES_MGMT.ATTRIBUTE_TYPES.${item.key}`),
+        value: item.id,
+        label: this.$t(`ATTRIBUTES_MGMT.ATTRIBUTE_TYPES.${item.key}`),
       }));
     },
     setAttributeListValue() {
@@ -189,7 +192,7 @@ export default {
 </script>
 
 <template>
-  <div class="flex flex-col h-auto overflow-auto">
+  <div class="flex flex-col h-auto overflow-visible">
     <woot-modal-header :header-title="pageTitle" />
     <form class="flex flex-col w-full" @submit.prevent="editAttributes">
       <div class="w-full">
@@ -241,13 +244,14 @@ export default {
             />
           </div>
         </div>
-        <label :class="{ error: v$.attributeType.$error }">
+        <label :class="[{ error: v$.attributeType.$error }, 'mb-6 block']">
           {{ $t('ATTRIBUTES_MGMT.ADD.FORM.TYPE.LABEL') }}
-          <select v-model="attributeType" disabled>
-            <option v-for="type in types" :key="type.id" :value="type.id">
-              {{ type.option }}
-            </option>
-          </select>
+          <FilterSelect
+            v-model="attributeType"
+            :options="types"
+            disabled
+            class="w-full mt-1 !mb-0 [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[38px] [&_button]:!border-n-weak [&_button]:!bg-n-alpha-1 [&_.n-dropdown-body]:!bottom-full [&_.n-dropdown-body]:!top-auto [&_.n-dropdown-body]:!mb-1"
+          />
           <span v-if="v$.attributeType.$error" class="message">
             {{ $t('ATTRIBUTES_MGMT.ADD.FORM.TYPE.ERROR') }}
           </span>

@@ -288,11 +288,11 @@ const confirmDeletion = () => {
       </div>
     </template>
 
-    <woot-modal v-model:show="showAddPopup" :on-close="hideAddPopup">
+    <woot-modal v-model:show="showAddPopup" :on-close="hideAddPopup" class="agent-settings-modal">
       <AddAgent @close="hideAddPopup" />
     </woot-modal>
 
-    <woot-modal v-model:show="showEditPopup" :on-close="hideEditPopup">
+    <woot-modal v-model:show="showEditPopup" :on-close="hideEditPopup" class="agent-settings-modal">
       <EditAgent
         v-if="showEditPopup"
         :id="currentAgent.id"
@@ -318,3 +318,9 @@ const confirmDeletion = () => {
     />
   </SettingsLayout>
 </template>
+
+<style lang="scss">
+.agent-settings-modal .modal-container {
+  overflow: visible !important;
+}
+</style>

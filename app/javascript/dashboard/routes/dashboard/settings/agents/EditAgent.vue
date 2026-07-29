@@ -5,9 +5,10 @@ import { required, minLength } from '@vuelidate/validators';
 import { useStore, useMapGetter } from 'dashboard/composables/store';
 import { useI18n } from 'vue-i18n';
 import { useAlert } from 'dashboard/composables';
-import Button from 'dashboard/components-next/button/Button.vue';
 import Auth from '../../../../api/auth';
 import wootConstants from 'dashboard/constants/globals';
+import FilterSelect from 'dashboard/components-next/filter/inputs/FilterSelect.vue';
+import Button from 'dashboard/components-next/button/Button.vue';
 
 const props = defineProps({
   id: {
@@ -75,11 +76,13 @@ const roles = computed(() => {
   const defaultRoles = [
     {
       id: 'administrator',
+      value: 'administrator',
       name: 'administrator',
       label: t('AGENT_MGMT.AGENT_TYPES.ADMINISTRATOR'),
     },
     {
       id: 'agent',
+      value: 'agent',
       name: 'agent',
       label: t('AGENT_MGMT.AGENT_TYPES.AGENT'),
     },
@@ -87,6 +90,7 @@ const roles = computed(() => {
 
   const customRoles = getCustomRoles.value.map(role => ({
     id: role.id,
+    value: role.id,
     name: `custom_${role.id}`,
     label: role.name,
   }));
@@ -113,7 +117,6 @@ const availabilityStatuses = computed(() =>
   statusList.value.map((statusLabel, index) => ({
     label: statusLabel,
     value: AVAILABILITY_STATUS_KEYS[index],
-    disabled: props.availability === AVAILABILITY_STATUS_KEYS[index],
   }))
 );
 
@@ -154,50 +157,46 @@ const resetPassword = async () => {
 </script>
 
 <template>
-  <div class="flex flex-col h-auto overflow-auto">
+  <div class="flex flex-col h-auto overflow-visible">
     <woot-modal-header :header-title="pageTitle" />
     <form class="w-full" @submit.prevent="editAgent">
-      <div class="w-full">
+      <div class="w-full mb-5">
         <label :class="{ error: v$.agentName.$error }">
           {{ $t('AGENT_MGMT.EDIT.FORM.NAME.LABEL') }}
           <input
             v-model="agentName"
             type="text"
+            class="!mb-0 mt-1"
             :placeholder="$t('AGENT_MGMT.EDIT.FORM.NAME.PLACEHOLDER')"
             @input="v$.agentName.$touch"
           />
         </label>
       </div>
 
-      <div class="w-full">
+      <div class="w-full mb-5">
         <label :class="{ error: v$.selectedRoleId.$error }">
           {{ $t('AGENT_MGMT.EDIT.FORM.AGENT_TYPE.LABEL') }}
-          <select v-model="selectedRoleId" @change="v$.selectedRoleId.$touch">
-            <option v-for="role in roles" :key="role.id" :value="role.id">
-              {{ role.label }}
-            </option>
-          </select>
+          <FilterSelect
+            v-model="selectedRoleId"
+            :options="roles"
+            class="w-full mt-1 !mb-0 [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[38px] [&_button]:!border-n-weak [&_button]:!bg-n-alpha-1"
+            @update:model-value="v$.selectedRoleId.$touch"
+          />
           <span v-if="v$.selectedRoleId.$error" class="message">
             {{ $t('AGENT_MGMT.EDIT.FORM.AGENT_TYPE.ERROR') }}
           </span>
         </label>
       </div>
 
-      <div class="w-full">
+      <div class="w-full mb-5">
         <label :class="{ error: v$.agentAvailability.$error }">
           {{ $t('PROFILE_SETTINGS.FORM.AVAILABILITY.LABEL') }}
-          <select
+          <FilterSelect
             v-model="agentAvailability"
-            @change="v$.agentAvailability.$touch"
-          >
-            <option
-              v-for="status in availabilityStatuses"
-              :key="status.value"
-              :value="status.value"
-            >
-              {{ status.label }}
-            </option>
-          </select>
+            :options="availabilityStatuses"
+            class="w-full mt-1 !mb-0 [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[38px] [&_button]:!border-n-weak [&_button]:!bg-n-alpha-1"
+            @update:model-value="v$.agentAvailability.$touch"
+          />
           <span v-if="v$.agentAvailability.$error" class="message">
             {{ $t('AGENT_MGMT.EDIT.FORM.AGENT_AVAILABILITY.ERROR') }}
           </span>

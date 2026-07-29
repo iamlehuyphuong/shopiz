@@ -44,7 +44,7 @@ export default {
 </script>
 
 <template>
-  <div class="macros__nodes">
+  <div class="macros__nodes p-4">
     <div class="macro__node">
       <div>
         <span
