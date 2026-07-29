@@ -21,7 +21,7 @@ class Llm::LegacyBaseOpenAiService
     )
     setup_model
   rescue StandardError => e
-    raise "Failed to initialize OpenAI client: #{e.message}"
+    raise CustomExceptions::LlmConfigurationError, "Failed to initialize OpenAI client: #{e.message}"
   end
 
   private

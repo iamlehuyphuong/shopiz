@@ -5,6 +5,7 @@ import { useStore, useMapGetter } from 'dashboard/composables/store';
 import { useAlert } from 'dashboard/composables';
 import { emitter } from 'shared/helpers/mitt';
 import { BUS_EVENTS } from 'shared/constants/busEvents';
+import { useRouter } from 'vue-router';
 import ProductCard from './ProductCard.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 
@@ -28,6 +29,7 @@ const PLATFORM_LABELS = {
 
 const { t } = useI18n();
 const store = useStore();
+const router = useRouter();
 
 const searchQuery = ref('');
 const currentPage = ref(0);
@@ -103,6 +105,10 @@ const handleSendToChat = product => {
   useAlert(t('CONVERSATION.PRODUCT_PANEL.PRODUCT_INSERTED'));
 };
 
+const goToProductList = () => {
+  router.push({ name: 'sales_products_list' });
+};
+
 const handleAddToOrder = product => {
   emitter.emit(BUS_EVENTS.ADD_PRODUCT_TO_ORDER, product);
   useAlert(t('CONVERSATION.PRODUCT_PANEL.ADDED_TO_ORDER'));
@@ -172,16 +178,38 @@ const handleAddToOrder = product => {
         </div>
       </div>
 
-      <!-- Empty -->
+      <!-- Empty (Unsynced or No products) -->
       <div v-else class="flex flex-col items-center py-8 px-4">
-        <div
-          class="w-10 h-10 rounded-xl bg-n-solid-3 flex items-center justify-center mb-2.5"
-        >
-          <i class="i-lucide-package-search text-base text-n-slate-10" />
-        </div>
-        <p class="text-xs text-n-slate-10 text-center">
-          {{ t('CONVERSATION.PRODUCT_PANEL.NO_PRODUCTS') }}
-        </p>
+        <template v-if="uiFlags.hasSyncedData === false">
+          <div
+            class="w-10 h-10 rounded-xl bg-n-brand/10 flex items-center justify-center mb-3"
+          >
+            <i class="i-lucide-refresh-cw text-base text-n-brand" />
+          </div>
+          <p class="text-sm font-medium text-n-slate-12 mb-1 text-center">
+            Chưa đồng bộ sản phẩm
+          </p>
+          <p class="text-xs text-n-slate-10 text-center mb-4 leading-relaxed">
+            Sản phẩm từ {{ activeSourceName }} chưa được đồng bộ vào hệ thống. Vui lòng đồng bộ để có thể gửi cho khách hàng.
+          </p>
+          <Button
+            label="Đồng bộ ngay"
+            icon="i-lucide-arrow-right"
+            icon-position="right"
+            size="sm"
+            @click="goToProductList"
+          />
+        </template>
+        <template v-else>
+          <div
+            class="w-10 h-10 rounded-xl bg-n-solid-3 flex items-center justify-center mb-2.5"
+          >
+            <i class="i-lucide-package-search text-base text-n-slate-10" />
+          </div>
+          <p class="text-xs text-n-slate-10 text-center">
+            {{ t('CONVERSATION.PRODUCT_PANEL.NO_PRODUCTS') }}
+          </p>
+        </template>
       </div>
     </div>
   </div>

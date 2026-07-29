@@ -91,7 +91,11 @@ onMounted(() => {
         :title="$t('INTEGRATION_SETTINGS.HARAVAN.HEADER')"
         description=""
         feature-name="haravan_integration"
-        :back-button-label="$t('INTEGRATION_SETTINGS.HEADER')"
+        :back-button-label="
+          $route.path.includes('/sales/')
+            ? $t('SALES.MODULE_TOOLS.HEADER.TITLE')
+            : $t('INTEGRATION_SETTINGS.HEADER')
+        "
       />
     </template>
     <template #body>

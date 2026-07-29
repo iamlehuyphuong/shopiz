@@ -274,3 +274,51 @@
   description: Get reschedule or cancel link for an existing Calendly booking (Lấy
     link dời lịch hoặc hủy cuộc hẹn đã đặt)
   icon: calendar-edit
+- id: search_documentation
+  title: Search Documentation (Tra cứu FAQ)
+  description: Search documentation and FAQ to answer customer queries.
+  icon: search
+- id: search_canned_responses
+  title: Search Canned Responses (Tin nhắn mẫu)
+  description: Search for canned responses to use in the conversation.
+  icon: chat-centered-text
+- id: update_conversation_tags
+  title: Update Conversation Tags (Gắn Tag)
+  description: Automatically append tags to the conversation.
+  icon: tag
+- id: update_customer
+  title: Update Customer (Lưu thông tin KH)
+  description: Update customer profile information.
+  icon: person-edit
+- id: create_customer
+  title: Create Customer (Tạo thông tin KH)
+  description: Create a new customer profile.
+  icon: person-add
+- id: search_articles
+  title: Search Articles (Tìm bài viết)
+  description: Search knowledge base articles.
+  icon: book
+- id: book_meeting
+  title: Book Appointment (Đặt lịch)
+  description: Book an appointment for the customer.
+  icon: calendar
+- id: check_availability
+  title: Check Availability (Lịch trống)
+  description: Get available times for appointments.
+  icon: clock
+- id: cancel_meeting
+  title: Cancel Meeting (Hủy lịch)
+  description: Cancel an existing booked meeting.
+  icon: calendar-edit
+- id: get_booking_link
+  title: Get Booking Link (Lấy link đặt lịch)
+  description: Retrieve the public booking link to send to the user.
+  icon: link
+- id: send_zalo_friend_request
+  title: Send Zalo Friend Request (Kết bạn Zalo)
+  description: Send a Zalo friend request to the customer.
+  icon: person-add
+- id: get_order_detail
+  title: Get Order Detail (Chi tiết đơn hàng)
+  description: Retrieve detailed information about an order.
+  icon: receipt

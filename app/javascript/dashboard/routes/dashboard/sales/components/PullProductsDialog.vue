@@ -21,7 +21,6 @@ const platforms = [
   { id: 'shopify', name: 'Shopify', logo: 'shopify' },
   { id: 'woocommerce', name: 'WooCommerce', logo: 'woocommerce' },
   { id: 'nhanhvn', name: 'Nhanh.vn', logo: 'nhanhvn' },
-  { id: 'tiktok_shop', name: 'TikTok Shop', logo: 'tiktok_shop' },
 ];
 
 const selectedPlatform = ref(null);
@@ -65,7 +64,7 @@ const onClose = () => {
       :header-title="$t('SALES.DIALOG_PULL_PRODUCTS.TITLE')"
       :header-content="$t('SALES.DIALOG_PULL_PRODUCTS.DESC')"
     />
-    <div class="flex flex-wrap mx-0">
+    <div class="flex flex-col w-full mt-4">
       <div class="w-full px-8 pb-4">
         <div class="grid grid-cols-2 gap-3">
           <button
@@ -76,9 +75,9 @@ const onClose = () => {
             :class="[
               selectedPlatform === platform.id
                 ? 'border-n-brand bg-n-brand/5 ring-1 ring-n-brand'
-                : 'border-n-weak bg-white dark:bg-n-solid-1 hover:border-n-strong',
+                : 'border-n-slate-6 bg-white dark:bg-n-solid-1 hover:border-n-slate-8',
               !isPlatformConnected(platform.id)
-                ? '!opacity-50 cursor-not-allowed hover:border-n-weak !bg-n-alpha-1'
+                ? '!opacity-50 cursor-not-allowed !border-n-weak hover:!border-n-weak !bg-n-alpha-1'
                 : '',
             ]"
             :disabled="!isPlatformConnected(platform.id)"

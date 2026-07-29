@@ -13,9 +13,7 @@ class Captain::Tools::Copilot::CalendlyManageBookingService < Captain::Tools::Ba
     hook = find_calendly_hook
     return calendly_not_connected_message unless hook
 
-    unless %w[reschedule cancel].include?(action)
-      return "Hành động không hợp lệ. Chọn 'reschedule' (dời lịch) hoặc 'cancel' (hủy)."
-    end
+    return "Hành động không hợp lệ. Chọn 'reschedule' (dời lịch) hoặc 'cancel' (hủy)." unless %w[reschedule cancel].include?(action)
 
     client = calendly_client(hook)
     timezone = hook.settings['default_timezone'] || 'Asia/Ho_Chi_Minh'
@@ -33,8 +31,6 @@ class Captain::Tools::Copilot::CalendlyManageBookingService < Captain::Tools::Ba
   def active?
     @user.present? && find_calendly_hook.present?
   end
-
-  private
 
   include Captain::Tools::Copilot::Concerns::CalendlyHelper
 end

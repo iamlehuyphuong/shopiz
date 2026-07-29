@@ -309,13 +309,16 @@ class BillingPresenter
     I18n.with_locale(@account.locale || :en) do
       @account.billing_histories.where('price_amount > 0').order(id: :asc).as_json(
         only: [:id, :status, :price_amount],
-        methods: [:status_text, :amount_formatted, :created_date_formatted, :content]
+        methods: [:status_text, :amount_formatted, :created_date_formatted, :content, :einvoice_url]
       )
     end
   end
 
   def disabled_register_trial
-    @account.billing_histories.where("metadata->>'type' = 'package'").exists?
+    @account.account_subscriptions
+            .joins(subscription_plan: :subscription_tier)
+            .where(subscription_tiers: { is_free: false })
+            .exists?
   end
 
   def usage_agent

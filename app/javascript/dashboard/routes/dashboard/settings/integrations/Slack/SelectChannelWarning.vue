@@ -6,6 +6,7 @@ import { useAlert } from 'dashboard/composables';
 import { useBranding } from 'shared/composables/useBranding';
 import { useMessageFormatter } from 'shared/composables/useMessageFormatter';
 import Button from 'dashboard/components-next/button/Button.vue';
+import FilterSelect from 'dashboard/components-next/filter/inputs/FilterSelect.vue';
 
 const props = defineProps({
   hasConnectedAChannel: {
@@ -89,21 +90,14 @@ const updateIntegration = async () => {
         {{ $t('INTEGRATION_SETTINGS.SLACK.SELECT_CHANNEL.BUTTON_TEXT') }}
       </Button>
       <div v-else class="inline-flex">
-        <select
+        <FilterSelect
           v-model="selectedChannelId"
-          class="h-8 py-1 mr-4 text-xs leading-4 border border-n-amber-10"
-        >
-          <option value="">
-            {{ $t('INTEGRATION_SETTINGS.SLACK.SELECT_CHANNEL.OPTION_LABEL') }}
-          </option>
-          <option
-            v-for="channel in availableChannels"
-            :key="channel.id"
-            :value="channel.id"
-          >
-            #{{ channel.name }}
-          </option>
-        </select>
+          :options="[
+            { value: '', label: $t('INTEGRATION_SETTINGS.SLACK.SELECT_CHANNEL.OPTION_LABEL') },
+            ...availableChannels.map(channel => ({ value: channel.id, label: `#${channel.name}` }))
+          ]"
+          class="w-[260px] mr-4 [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[32px] [&_button]:!border-n-amber-10"
+        />
         <Button
           teal
           sm

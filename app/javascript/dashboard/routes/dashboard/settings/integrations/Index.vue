@@ -27,6 +27,7 @@ const HIDDEN_IDS = [
   'sapo',
   'nhanhvn',
   'calendly',
+  'google_calendar',
   'leadsquared',
 ];
 

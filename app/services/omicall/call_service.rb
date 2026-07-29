@@ -1,5 +1,5 @@
 class Omicall::CallService
-  API_BASE_URL = 'https://public-v1-stg.omicall.com'.freeze
+  API_BASE_URL = ENV.fetch('OMICALL_API_URL', 'https://public-v1-stg.omicall.com').freeze
 
   def initialize(account, api_key: nil)
     @account = account

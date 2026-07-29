@@ -1,16 +1,22 @@
 class Webhooks::OmicallController < ActionController::API
 
   def events
-    # We offload the processing to a background job or service so we don't block the webhook provider
-    # However, since we need to locate the conversation and create a note, we can process it here
-    # or inside a job. Let's process it synchronously for now, or use a worker if it gets heavy.
-    
-    Omicall::WebhookProcessorService.new(params.to_unsafe_h).perform
-    
+    Omicall::WebhookProcessorService.new(webhook_params).perform
+
     # OmiCall expects 200 OK
     head :ok
   rescue StandardError => e
     Rails.logger.error "OmiCall Webhook Error: #{e.message}"
     head :internal_server_error
+  end
+
+  private
+
+  def webhook_params
+    params.permit(
+      :state, :phone_number, :bill_sec, :answer_sec,
+      :is_callbot, :recording_file, :recording_file_url,
+      :direction, :transaction_id, :note, tag: []
+    ).to_h
   end
 end

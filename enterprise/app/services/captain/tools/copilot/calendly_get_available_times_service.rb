@@ -25,7 +25,7 @@ class Captain::Tools::Copilot::CalendlyGetAvailableTimesService < Captain::Tools
       return "Lỗi: preferred_date '#{preferred_date}' không hợp lệ. Vui lòng truyền định dạng YYYY-MM-DD."
     end
 
-    start_time = [parsed_time, Time.current + 1.minute].max
+    start_time = [parsed_time, 1.minute.from_now].max
     capped_days = [[days_ahead.to_i, 7].min, 1].max
     end_time = start_time + capped_days.days - 1.minute
 
@@ -36,7 +36,9 @@ class Captain::Tools::Copilot::CalendlyGetAvailableTimesService < Captain::Tools
     )
     slots = response['collection'] || []
 
-    return "Không có khung giờ trống cho '#{event_type['name']}' từ #{start_time.strftime('%Y-%m-%d')} đến #{end_time.strftime('%Y-%m-%d')}." if slots.empty?
+    if slots.empty?
+      return "Không có khung giờ trống cho '#{event_type['name']}' từ #{start_time.strftime('%Y-%m-%d')} đến #{end_time.strftime('%Y-%m-%d')}."
+    end
 
     timezone = hook.settings['default_timezone'] || 'Asia/Ho_Chi_Minh'
     format_available_times(slots, event_type, timezone)
@@ -49,8 +51,6 @@ class Captain::Tools::Copilot::CalendlyGetAvailableTimesService < Captain::Tools
   def active?
     @user.present? && find_calendly_hook.present?
   end
-
-  private
 
   include Captain::Tools::Copilot::Concerns::CalendlyHelper
 end

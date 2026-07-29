@@ -21,8 +21,20 @@ defineProps({
       <span class="text-sm text-n-slate-11">{{ item.content }}</span>
     </div>
 
-    <button class="px-4 py-2 rounded-lg text-sm text-n-slate-11">
-      {{ item.status_text }}
-    </button>
+    <div class="flex items-center gap-2">
+      <a
+        v-if="item.einvoice_url"
+        :href="item.einvoice_url"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="px-4 py-2 rounded-lg text-sm font-medium text-n-blue-11 hover:bg-n-blue-3 transition-colors flex items-center gap-1"
+      >
+        <span class="i-woot-document-download text-lg" />
+        {{ $t('BILLING_SETTINGS.INVOICE') || 'Hóa đơn' }}
+      </a>
+      <button class="px-4 py-2 rounded-lg text-sm text-n-slate-11">
+        {{ item.status_text }}
+      </button>
+    </div>
   </div>
 </template>

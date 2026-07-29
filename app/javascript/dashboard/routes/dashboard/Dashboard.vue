@@ -76,15 +76,11 @@ export default {
       return onboarding.onboarding_completed !== true;
     });
 
-
-
     const showWelcomeTrialModal = ref(false);
 
-    watch(shouldShowOnboardingModal, (newVal, oldVal) => {
-      if (oldVal === true && newVal === false) {
-        showWelcomeTrialModal.value = true;
-      }
-    });
+    const onOnboardingCompleted = () => {
+      showWelcomeTrialModal.value = true;
+    };
 
     return {
       uiSettings,
@@ -98,6 +94,7 @@ export default {
       isFeatureLocked,
       shouldShowOnboardingModal,
       showWelcomeTrialModal,
+      onOnboardingCompleted,
     };
   },
   data() {
@@ -147,6 +144,12 @@ export default {
       immediate: true,
     },
   },
+  mounted() {
+    if (localStorage.getItem('shopiz_show_welcome_trial') === '1') {
+      localStorage.removeItem('shopiz_show_welcome_trial');
+      this.showWelcomeTrialModal = true;
+    }
+  },
   methods: {
     toggleMobileSidebar() {
       this.isMobileSidebarOpen = !this.isMobileSidebarOpen;
@@ -170,12 +173,6 @@ export default {
     closeKeyShortcutModal() {
       this.showShortcutModal = false;
     },
-  },
-  mounted() {
-    if (localStorage.getItem('shopiz_show_welcome_trial') === '1') {
-      localStorage.removeItem('shopiz_show_welcome_trial');
-      this.showWelcomeTrialModal = true;
-    }
   },
 };
 </script>
@@ -241,6 +238,7 @@ export default {
         <OnboardingModal
           v-if="shouldShowOnboardingModal"
           :show="true"
+          @completed="onOnboardingCompleted"
         />
         <WelcomeTrialModal
           :show="showWelcomeTrialModal"

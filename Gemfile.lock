@@ -358,6 +358,8 @@ GEM
       activesupport (>= 6.1)
     gmail_xoauth (0.4.3)
       oauth (>= 0.3.6)
+    google-apis-calendar_v3 (0.56.0)
+      google-apis-core (>= 0.15.0, < 2.a)
     google-apis-core (0.15.1)
       addressable (~> 2.5, >= 2.5.1)
       googleauth (~> 1.9)
@@ -568,7 +570,6 @@ GEM
     mime-types-data (3.2023.0218.1)
     mini_magick (4.12.0)
     mini_mime (1.1.5)
-    mini_portile2 (2.8.9)
     minitest (5.25.5)
     mock_redis (0.36.0)
       ruby2_keywords
@@ -600,9 +601,6 @@ GEM
     newrelic_rpm (9.6.0)
       base64
     nio4r (2.7.3)
-    nokogiri (1.19.1)
-      mini_portile2 (~> 2.8.2)
-      racc (~> 1.4)
     nokogiri (1.19.1-arm64-darwin)
       racc (~> 1.4)
     nokogiri (1.19.1-x86_64-darwin)
@@ -682,8 +680,6 @@ GEM
       activerecord (>= 5.2)
       activesupport (>= 5.2)
     pgvector (0.1.1)
-    polar_sh (0.1.1)
-      http (~> 5)
     prism (1.4.0)
     procore-sift (1.0.0)
       activerecord (>= 6.1)
@@ -1038,11 +1034,11 @@ PLATFORMS
   arm64-darwin-20
   arm64-darwin-21
   arm64-darwin-22
-  ruby
   x86_64-darwin-18
   x86_64-darwin-20
   x86_64-darwin-21
   x86_64-darwin-22
+  x86_64-darwin-24
   x86_64-linux
 
 DEPENDENCIES
@@ -1091,6 +1087,7 @@ DEPENDENCIES
   foreman
   geocoder
   gmail_xoauth
+  google-apis-calendar_v3
   google-cloud-dialogflow-v2 (>= 0.24.0)
   google-cloud-storage (>= 1.48.0)
   google-cloud-translate-v3 (>= 0.7.0)
@@ -1136,7 +1133,6 @@ DEPENDENCIES
   pg
   pg_search
   pgvector
-  polar_sh (~> 0.1.1)
   procore-sift
   pry-rails
   puma

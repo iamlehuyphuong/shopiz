@@ -6,6 +6,7 @@ import { useAlert } from 'dashboard/composables';
 import { useVuelidate } from '@vuelidate/core';
 import { required, email } from '@vuelidate/validators';
 import Button from 'dashboard/components-next/button/Button.vue';
+import FilterSelect from 'dashboard/components-next/filter/inputs/FilterSelect.vue';
 
 const emit = defineEmits(['close']);
 
@@ -35,11 +36,13 @@ const roles = computed(() => {
   const defaultRoles = [
     {
       id: 'administrator',
+      value: 'administrator',
       name: 'administrator',
       label: t('AGENT_MGMT.AGENT_TYPES.ADMINISTRATOR'),
     },
     {
       id: 'agent',
+      value: 'agent',
       name: 'agent',
       label: t('AGENT_MGMT.AGENT_TYPES.AGENT'),
     },
@@ -47,6 +50,7 @@ const roles = computed(() => {
 
   const customRoles = getCustomRoles.value.map(role => ({
     id: role.id,
+    value: role.id,
     name: `custom_${role.id}`,
     label: role.name,
   }));
@@ -103,44 +107,47 @@ const addAgent = async () => {
 </script>
 
 <template>
-  <div class="flex flex-col h-auto overflow-auto">
+  <div class="flex flex-col h-auto overflow-visible">
     <woot-modal-header
       :header-title="$t('AGENT_MGMT.ADD.TITLE')"
       :header-content="$t('AGENT_MGMT.ADD.DESC')"
     />
     <form class="flex flex-col items-start w-full" @submit.prevent="addAgent">
-      <div class="w-full">
+      <div class="w-full mb-5">
         <label :class="{ error: v$.agentName.$error }">
           {{ $t('AGENT_MGMT.ADD.FORM.NAME.LABEL') }}
           <input
             v-model="agentName"
             type="text"
+            class="!mb-0 mt-1"
             :placeholder="$t('AGENT_MGMT.ADD.FORM.NAME.PLACEHOLDER')"
             @input="v$.agentName.$touch"
           />
         </label>
       </div>
 
-      <div class="w-full">
+      <div class="w-full mb-5">
         <label :class="{ error: v$.selectedRoleId.$error }">
           {{ $t('AGENT_MGMT.ADD.FORM.AGENT_TYPE.LABEL') }}
-          <select v-model="selectedRoleId" @change="v$.selectedRoleId.$touch">
-            <option v-for="role in roles" :key="role.id" :value="role.id">
-              {{ role.label }}
-            </option>
-          </select>
+          <FilterSelect
+            v-model="selectedRoleId"
+            :options="roles"
+            class="w-full mt-1 !mb-0 [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[38px] [&_button]:!border-n-weak [&_button]:!bg-n-alpha-1"
+            @update:model-value="v$.selectedRoleId.$touch"
+          />
           <span v-if="v$.selectedRoleId.$error" class="message">
             {{ $t('AGENT_MGMT.ADD.FORM.AGENT_TYPE.ERROR') }}
           </span>
         </label>
       </div>
 
-      <div class="w-full">
+      <div class="w-full mb-5">
         <label :class="{ error: v$.agentEmail.$error }">
           {{ $t('AGENT_MGMT.ADD.FORM.EMAIL.LABEL') }}
           <input
             v-model="agentEmail"
             type="email"
+            class="!mb-0 mt-1"
             :placeholder="$t('AGENT_MGMT.ADD.FORM.EMAIL.PLACEHOLDER')"
             @input="v$.agentEmail.$touch"
           />

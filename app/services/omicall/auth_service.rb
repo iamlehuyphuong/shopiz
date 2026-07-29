@@ -1,5 +1,5 @@
 class Omicall::AuthService
-  API_URL = 'https://public-v1-stg.omicall.com/api/auth'.freeze
+  API_URL = "#{ENV.fetch('OMICALL_API_URL', 'https://public-v1-stg.omicall.com')}/api/auth".freeze
 
   def initialize(account, api_key: nil)
     @account = account

@@ -129,8 +129,11 @@ class Account < ApplicationRecord
   include AccountCaptainAutoResolve
 
   has_one :onboarding, class_name: 'AccountOnboarding', dependent: :destroy
+  has_many :calendar_integrations, dependent: :destroy_async
+  has_one :booking_configuration, dependent: :destroy
+  has_many :bookings, dependent: :destroy_async
   has_many :account_users, dependent: :destroy_async
-  has_many :omicall_sip_infos, dependent: :destroy_async
+  has_many :omicall_sip_infos, dependent: :destroy
   has_many :agent_bot_inboxes, dependent: :destroy_async
   has_many :agent_bots, dependent: :destroy_async
   has_many :api_channels, dependent: :destroy_async, class_name: '::Channel::Api'
@@ -159,7 +162,7 @@ class Account < ApplicationRecord
   has_many :tiktok_channels, dependent: :destroy_async, class_name: '::Channel::Tiktok'
   has_many :hooks, dependent: :destroy_async, class_name: 'Integrations::Hook'
   has_many :inboxes, dependent: :destroy_async
-  has_many :inbox_daily_summaries, dependent: :destroy_async
+  has_many :inbox_daily_summaries, dependent: :destroy
   has_many :labels, dependent: :destroy_async
   has_many :line_channels, dependent: :destroy_async, class_name: '::Channel::Line'
   has_many :mentions, dependent: :destroy_async
@@ -181,9 +184,9 @@ class Account < ApplicationRecord
   has_many :whatsapp_channels, dependent: :destroy_async, class_name: '::Channel::Whatsapp'
   has_many :working_hours, dependent: :destroy_async
   has_many :billing_histories, dependent: :destroy_async, class_name: '::BillingHistory'
-  has_many :account_subscriptions, dependent: :destroy_async
-  has_many :account_addons, dependent: :destroy_async
-  has_many :products, dependent: :destroy_async
+  has_many :account_subscriptions, dependent: :destroy
+  has_many :account_addons, dependent: :destroy
+  has_many :products, dependent: :destroy
   has_one :active_subscription, -> { active.order(ends_at: :desc) }, class_name: 'AccountSubscription'
 
   has_one_attached :contacts_export

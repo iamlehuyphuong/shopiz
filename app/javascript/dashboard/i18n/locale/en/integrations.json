@@ -598,6 +598,12 @@
       "EDIT": "Update"
     },
     "ASSISTANTS": {
+      "LIMIT_REACHED": {
+        "TITLE": "AI credits depleted",
+        "DESCRIPTION": "Would you like to connect a custom OpenAI account to continue using AI features?",
+        "CONFIRM": "Connect now",
+        "CANCEL": "Maybe later"
+      },
       "HEADER": "Assistants",
       "NO_ASSISTANTS_AVAILABLE": "There are no assistants available in your account.",
       "ADD_NEW": "Create a new assistant",
@@ -621,7 +627,7 @@
           "SYSTEM_MESSAGES": "System Messages",
           "INSTRUCTIONS": "Instructions",
           "FEATURES": "Features",
-          "TOOLS": "Tools "
+          "TOOLS": "Custom tools"
         },
         "NAME": {
           "LABEL": "Name",
@@ -835,7 +841,209 @@
             "TITLE": "Example scenarios",
             "ADD": "Add all",
             "ADD_SINGLE": "Add this",
-            "TOOLS_USED": "Tools used :"
+            "TOOLS_USED": "Tools used :",
+            "CASE_STUDIES": [
+              {
+                "id": "general_pack",
+                "name": "General Consultation Pack",
+                "description": "Basic consultation scenarios, capturing leads and requesting phone numbers for further support.",
+                "scenarios": [
+                  {
+                    "id": "general_zalo_consultation",
+                    "title": "Basic Consultation & Lead Generation",
+                    "description": "Classification: Consultation & Lead Capture. Use this scenario when a customer initiates contact with general questions and the goal is to provide basic answers and collect their phone number for Zalo support.",
+                    "instruction": "Step 1: Consult and answer queries using [search_documentation](tool://search_documentation) (FAQ), [search_canned_responses](tool://search_canned_responses), or [execute_macro](tool://execute_macro).\nStep 2: Politely ask for their phone number.\nStep 3: Once provided, use [update_customer](tool://update_customer) to save it.\nStep 4: Propose to connect on Zalo. Use [send_zalo_friend_request](tool://send_zalo_friend_request) to send a friend request with a greeting.\nStep 5: Use [update_conversation_tags](tool://update_conversation_tags) to tag the conversation.",
+                    "tools": [
+                      "search_documentation",
+                      "search_canned_responses",
+                      "execute_macro",
+                      "update_conversation_tags",
+                      "update_customer",
+                      "send_zalo_friend_request"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "ecommerce_pack",
+                "name": "E-commerce Support Complete Pack",
+                "description": "A complete set of scenarios for e-commerce platforms to handle FAQs, order tracking, returns, and complaints.",
+                "scenarios": [
+                  {
+                    "id": "ecom_general_faq",
+                    "title": "Sales Assistant & General FAQ",
+                    "description": "Classification: E-commerce General FAQ. Use this scenario when customers have general questions about products, store policies (shipping, payment, hours) that are NOT related to a specific order.",
+                    "instruction": "Step 1: Greet the customer and clarify their question.\nStep 2: Use [search_documentation](tool://search_documentation) and [search_articles](tool://search_articles) to find relevant policy or product information.\nStep 3: Answer the customer concisely and enthusiastically based on the findings.\nStep 4: If information is missing or the request is too complex, use [execute_macro](tool://execute_macro) to handoff to a human agent.",
+                    "tools": [
+                      "search_documentation",
+                      "search_articles",
+                      "execute_macro"
+                    ]
+                  },
+                  {
+                    "id": "ecom_order_tracking",
+                    "title": "Order Tracking",
+                    "description": "Classification: Order Tracking. Use this scenario when customers want to know the status, location, or delivery time of a specific order they placed.",
+                    "instruction": "Step 1: Greet the customer and request their Order ID or phone number if not already provided.\nStep 2: Use [search_orders](tool://search_orders) to look up the order based on provided info.\nStep 3: Use [get_order_detail](tool://get_order_detail) to fetch the detailed status and latest updates.\nStep 4: Reply with clear, updated information and ask if they need further assistance.",
+                    "tools": ["search_orders", "get_order_detail"]
+                  },
+                  {
+                    "id": "ecom_return_refund",
+                    "title": "Returns and Refunds",
+                    "description": "Classification: Returns & Refunds. Use this scenario when customers request a refund, return, or exchange for a purchased item due to defect or dissatisfaction.",
+                    "instruction": "Step 1: Listen and identify the reason for the return/refund request. Ask for photos/videos if necessary.\nStep 2: Evaluate if the request is valid according to the return policy.\nStep 3: If valid, guide them through the return process and use [execute_macro](tool://execute_macro) to create a return ticket.",
+                    "tools": ["execute_macro"]
+                  },
+                  {
+                    "id": "ecom_escalation",
+                    "title": "Escalation and Handoff",
+                    "description": "Classification: Complaint/Agent Handoff. Use this scenario when customers express anger, dissatisfaction, or explicitly ask to speak with a human agent or manager.",
+                    "instruction": "Step 1: Identify the customer's sentiment. If negative, immediately apologize and try to de-escalate.\nStep 2: Do not attempt to resolve complex disputes on your own.\nStep 3: Immediately use [execute_macro](tool://execute_macro) to transfer the conversation to a human customer care agent.",
+                    "tools": ["execute_macro"]
+                  }
+                ]
+              },
+              {
+                "id": "spa_pack",
+                "name": "Spa & Beauty Support Pack",
+                "description": "Scenarios tailored for spas and beauty salons to handle bookings, service queries, and scheduling.",
+                "scenarios": [
+                  {
+                    "id": "spa_booking",
+                    "title": "Spa Appointment Booking",
+                    "description": "Classification: Spa Booking. Use this scenario when clients want to book an appointment or check available time slots for spa/clinic services.",
+                    "instruction": "Step 1: Ask the client for details on the desired service, preferred date, and time.\nStep 2: Use [get_available_times](tool://get_available_times) to find available slots matching their request.\nStep 3: Propose the available times for them to choose.\nStep 4: Once chosen, use [book_appointment](tool://book_appointment) to confirm the booking.",
+                    "tools": ["get_available_times", "book_appointment"]
+                  },
+                  {
+                    "id": "spa_services_faq",
+                    "title": "Services & Pricing FAQ",
+                    "description": "Classification: Spa Services Consulting. Use this scenario when clients ask about available treatments, their benefits, duration, and pricing.",
+                    "instruction": "Step 1: Identify the specific service the client is interested in.\nStep 2: Use [search_articles](tool://search_articles) to look up accurate information on treatments, duration, and prices.\nStep 3: Provide clear, appealing advice and the exact price to the client.",
+                    "tools": ["search_articles"]
+                  },
+                  {
+                    "id": "spa_cancel_reschedule",
+                    "title": "Cancel or Reschedule Appointment",
+                    "description": "Classification: Appointment Management. Use this scenario when clients want to change (reschedule) or cancel an existing appointment.",
+                    "instruction": "Step 1: Ask for the appointment ID or the phone number used for the booking.\nStep 2: Confirm whether they want to cancel or reschedule to a new date/time.\nStep 3: Use [manage_booking](tool://manage_booking) to process the cancellation or rescheduling in the system.\nStep 4: Notify the client of the successful update.",
+                    "tools": ["manage_booking"]
+                  }
+                ]
+              },
+              {
+                "id": "edtech_pack",
+                "name": "EdTech & Education Support Pack",
+                "description": "Scenarios for online learning platforms and language centers to handle course enrollments and student support.",
+                "scenarios": [
+                  {
+                    "id": "edtech_course_advisor",
+                    "title": "Course Advisor & Recommendation",
+                    "description": "Classification: Course Advising. Use this scenario when students or parents seek advice on choosing a course that fits their current level and goals.",
+                    "instruction": "Step 1: Ask about their learning goals (e.g., IELTS, communication, kids) and current proficiency level.\nStep 2: Analyze their needs.\nStep 3: Use [search_articles](tool://search_articles) to find and suggest the most suitable courses.\nStep 4: Outline the basic learning path and benefits of the course.",
+                    "tools": ["search_articles"]
+                  },
+                  {
+                    "id": "edtech_schedule_lookup",
+                    "title": "Class Schedule Lookup",
+                    "description": "Classification: Schedule Lookup. Use this scenario when students want to check their upcoming timetable, class schedule, teachers, or room assignments.",
+                    "instruction": "Step 1: Request the student's ID or registered phone number.\nStep 2: Use [search_canned_responses](tool://search_canned_responses) to find standard replies or directly provide the schedule information.\nStep 3: Guide the student on how to check the portal themselves in the future (if applicable).",
+                    "tools": ["search_canned_responses"]
+                  },
+                  {
+                    "id": "edtech_leave_request",
+                    "title": "Leave Request & Pause Course",
+                    "description": "Classification: Student Admin Request. Use this scenario when a student needs to take a temporary leave of absence, pause their course, or report an absence.",
+                    "instruction": "Step 1: Ask for the reason and expected duration of the leave (from which date to which date).\nStep 2: Briefly explain the leave/pause policy if necessary.\nStep 3: Use [execute_macro](tool://execute_macro) to submit the leave request to the admin/management team for processing.",
+                    "tools": ["execute_macro"]
+                  }
+                ]
+              },
+              {
+                "id": "real_estate_pack",
+                "name": "Real Estate & Agency Pack",
+                "description": "Scenarios for real estate agents to handle property inquiries and viewings.",
+                "scenarios": [
+                  {
+                    "id": "re_property_search",
+                    "title": "Property Search & Matching",
+                    "description": "Classification: Property Search. Use this scenario when clients are looking to buy or rent a property and want to know what options are available.",
+                    "instruction": "Step 1: Gather client requirements: desired location, budget, number of bedrooms, etc.\nStep 2: Use [search_articles](tool://search_articles) to search the database for properties/projects matching the criteria.\nStep 3: Suggest a few top options with basic info and photos.",
+                    "tools": ["search_articles"]
+                  },
+                  {
+                    "id": "re_book_viewing",
+                    "title": "Book Property Viewing",
+                    "description": "Classification: Property Viewing Booking. Use this scenario when a client is interested in a specific property/project and wants to schedule an in-person viewing.",
+                    "instruction": "Step 1: Confirm the exact property ID or project the client wants to visit.\nStep 2: Ask for their preferred date and time for the viewing.\nStep 3: Use [book_appointment](tool://book_appointment) to schedule the viewing with an agent and send a confirmation to the client.",
+                    "tools": ["book_appointment"]
+                  },
+                  {
+                    "id": "re_neighborhood_faq",
+                    "title": "Neighborhood & Amenities FAQ",
+                    "description": "Classification: Neighborhood Info. Use this scenario when clients ask about the living environment, internal/external amenities (schools, supermarkets, parking) of a project.",
+                    "instruction": "Step 1: Identify the project the client is referring to.\nStep 2: Use [search_documentation](tool://search_documentation) to retrieve details about nearby amenities (supermarkets, schools, hospitals, parking...).\nStep 3: Reply in detail to highlight the value of the location.",
+                    "tools": ["search_documentation"]
+                  }
+                ]
+              },
+              {
+                "id": "travel_pack",
+                "name": "Travel & Tourism Pack",
+                "description": "Scenarios for travel agencies and tour operators to handle bookings and travel inquiries.",
+                "scenarios": [
+                  {
+                    "id": "travel_booking",
+                    "title": "Tour & Ticket Booking",
+                    "description": "Classification: Travel Booking. Use this scenario when customers want to finalize a booking for tours, flights, hotels, or attraction tickets.",
+                    "instruction": "Step 1: Collect full details: departure date, return date, destination, number of pax (adults/children).\nStep 2: Provide an initial quote (if available).\nStep 3: Use [book_appointment](tool://book_appointment) to log the booking request or schedule a callback for detailed support.",
+                    "tools": ["book_appointment"]
+                  },
+                  {
+                    "id": "travel_itinerary",
+                    "title": "Itinerary Suggestion",
+                    "description": "Classification: Itinerary Consulting. Use this scenario when customers plan to travel but are unsure where to go, or need a detailed itinerary suggestion.",
+                    "instruction": "Step 1: Ask about their preferences (relaxation vs. exploration), estimated budget, and trip duration.\nStep 2: Use [search_articles](tool://search_articles) to find matching articles or sample itineraries.\nStep 3: Propose an appealing basic itinerary highlighting key destinations.",
+                    "tools": ["search_articles"]
+                  },
+                  {
+                    "id": "travel_faq",
+                    "title": "Travel FAQ & Policies",
+                    "description": "Classification: Travel Regulations. Use this scenario when customers ask about paperwork, visas, airline luggage rules, or cancellation policies.",
+                    "instruction": "Step 1: Listen carefully to the customer's question regarding procedures/rules.\nStep 2: Use [search_documentation](tool://search_documentation) to look up accurate information from trusted sources (airlines, embassies).\nStep 3: Provide a clear answer, noting important details so the customer avoids documentation issues.",
+                    "tools": ["search_documentation"]
+                  }
+                ]
+              },
+              {
+                "id": "tech_retail_pack",
+                "name": "Digital Electronics & Tech Retail Pack",
+                "description": "Scenarios for electronics retailers selling computers, smartphones, and gadgets.",
+                "scenarios": [
+                  {
+                    "id": "tech_product_advisor",
+                    "title": "Tech Product Advisor",
+                    "description": "Classification: Tech Consulting. Use this scenario when customers need advice on buying a computer, phone, or gadget that fits their needs and budget.",
+                    "instruction": "Step 1: Ask the customer about their budget and primary use case (gaming, office, graphic design...).\nStep 2: Use [suggest_products](tool://suggest_products) or [search_products](tool://search_products) to find the most suitable models.\nStep 3: Recommend the top 2-3 options and gently compare pros and cons to help them decide.",
+                    "tools": ["suggest_products", "search_products"]
+                  },
+                  {
+                    "id": "tech_warranty",
+                    "title": "Warranty & Repair Check",
+                    "description": "Classification: Warranty & Repair. Use this scenario when customers need to check their device's warranty status or the repair progress of a device at the store.",
+                    "instruction": "Step 1: Request the product's serial number (IMEI) or the purchase phone number/repair ticket number.\nStep 2: Use [search_orders](tool://search_orders) or [get_order_detail](tool://get_order_detail) to look up the info in the system.\nStep 3: Inform the customer of the current warranty status or repair progress.",
+                    "tools": ["search_orders", "get_order_detail"]
+                  },
+                  {
+                    "id": "tech_troubleshooting",
+                    "title": "Basic Technical Support",
+                    "description": "Classification: Tech Troubleshooting. Use this scenario when customers encounter basic software glitches (freezes, wifi issues) and need remote troubleshooting.",
+                    "instruction": "Step 1: Ask the customer to describe the issue in detail or send a screenshot if possible.\nStep 2: Use [search_documentation](tool://search_documentation) to find corresponding troubleshooting guides.\nStep 3: Guide the customer step-by-step (1, 2, 3...) to fix the issue themselves.",
+                    "tools": ["search_documentation"]
+                  }
+                ]
+              }
+            ]
           },
           "NEW": {
             "CREATE": "Add a scenario",
@@ -954,7 +1162,7 @@
       }
     },
     "CUSTOM_TOOLS": {
-      "HEADER": "Tools",
+      "HEADER": "Custom tools",
       "ADD_NEW": "Create a new tool",
       "EMPTY_STATE": {
         "TITLE": "No custom tools available",

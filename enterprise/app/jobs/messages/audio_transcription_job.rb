@@ -10,6 +10,16 @@ class Messages::AudioTranscriptionJob < ApplicationJob
 
     Rails.logger.warn("Discarding audio transcription job due to bad request: #{log_context}")
   end
+
+  discard_on CustomExceptions::LlmConfigurationError do |job, error|
+    log_context = {
+      attachment_id: job.arguments.first,
+      job_id: job.job_id,
+      error_message: error.message
+    }
+
+    Rails.logger.warn("Discarding audio transcription job due to missing configuration: #{log_context}")
+  end
   retry_on ActiveStorage::FileNotFoundError, wait: 2.seconds, attempts: 3
 
   def perform(attachment_id)

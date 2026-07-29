@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { frontendURL } from '../../../../helper/URLHelper';
 import { useAlert } from 'dashboard/composables';
@@ -26,6 +26,7 @@ const props = defineProps({
 const { t } = useI18n();
 const store = useStore();
 const router = useRouter();
+const route = useRoute();
 const { replaceInstallationName } = useBranding();
 
 const dialogRef = ref(null);
@@ -56,7 +57,14 @@ const deleteIntegration = async () => {
 const confirmDeletion = () => {
   closeDeletePopup();
   deleteIntegration();
-  router.push({ name: 'settings_applications' });
+  if (
+    (route.name && route.name.startsWith('sales_tools_')) ||
+    (route.path && route.path.includes('/sales/'))
+  ) {
+    router.push({ name: 'sales_tools_index' });
+  } else {
+    router.push({ name: 'settings_applications' });
+  }
 };
 </script>
 

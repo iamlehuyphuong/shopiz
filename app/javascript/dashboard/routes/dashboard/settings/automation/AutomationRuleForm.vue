@@ -8,6 +8,7 @@ import ConditionRow from 'dashboard/components-next/filter/ConditionRow.vue';
 import AutomationActionInput from 'dashboard/components/widgets/AutomationActionInput.vue';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import Dialog from 'dashboard/components-next/dialog/Dialog.vue';
+import FilterSelect from 'dashboard/components-next/filter/inputs/FilterSelect.vue';
 import {
   generateAutomationPayload,
   getAttributes,
@@ -157,7 +158,8 @@ const filterTypes = computed(() => {
 const automationRuleEvents = computed(() =>
   AUTOMATION_RULE_EVENTS.map(event => ({
     ...event,
-    value: t(`AUTOMATION.EVENTS.${event.value}`),
+    label: t(`AUTOMATION.EVENTS.${event.value}`),
+    value: event.key,
   }))
 );
 
@@ -301,23 +303,16 @@ defineExpose({ open, close });
       <div class="mb-6">
         <label :class="{ error: errors.event_name }">
           {{ $t('AUTOMATION.ADD.FORM.EVENT.LABEL') }}
-          <select
-            v-model="automation.event_name"
-            class="m-0"
-            @change="onEventChange()"
-          >
-            <option
-              v-for="event in automationRuleEvents"
-              :key="event.key"
-              :value="event.key"
-            >
-              {{ event.value }}
-            </option>
-          </select>
-          <span v-if="errors.event_name" class="message">
-            {{ $t('AUTOMATION.ADD.FORM.EVENT.ERROR') }}
-          </span>
         </label>
+        <FilterSelect
+          v-model="automation.event_name"
+          :options="automationRuleEvents"
+          class="w-full [&_button]:w-full [&_button]:justify-between"
+          @update:model-value="onEventChange()"
+        />
+        <span v-if="errors.event_name" class="message">
+          {{ $t('AUTOMATION.ADD.FORM.EVENT.ERROR') }}
+        </span>
         <p
           v-if="!isEditMode && hasAutomationMutated"
           class="text-xs text-right text-n-teal-10 pt-1"

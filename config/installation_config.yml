@@ -1001,6 +1001,17 @@
     draft: Draft
     deprecated: Deprecated
   locked: false
+- name: INTEGRATION_STATUS_GOOGLE_CALENDAR
+  display_title: Google Calendar Integration Status
+  value: published
+  type: select
+  options:
+    published: Published
+    beta: Beta
+    coming_soon: Coming Soon
+    draft: Draft
+    deprecated: Deprecated
+  locked: false
 - name: INTEGRATION_STATUS_LEADSQUARED
   display_title: Leadsquared Integration Status
   value: published

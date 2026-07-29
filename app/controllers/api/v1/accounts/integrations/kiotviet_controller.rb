@@ -8,8 +8,15 @@ class Api::V1::Accounts::Integrations::KiotvietController < Api::V1::Accounts::B
   def auth
     validate_auth_params!
 
+    @client_id = params[:client_id].to_s.strip
+    @client_secret = params[:client_secret].to_s.strip
+    @retailer = params[:retailer].to_s.strip
+
     token_data = fetch_access_token
-    return render json: { error: 'Failed to authenticate with KiotViet' }, status: :unprocessable_entity if token_data.nil?
+    if token_data.nil? || token_data['access_token'].blank?
+      error_message = token_data.present? ? token_data['error'] : 'Failed to authenticate with KiotViet'
+      return render json: { error: error_message }, status: :unprocessable_entity
+    end
 
     hook = create_or_update_hook(token_data)
     render json: { status: 'connected', hook_id: hook.id }
@@ -60,8 +67,8 @@ class Api::V1::Accounts::Integrations::KiotvietController < Api::V1::Accounts::B
       req.body = URI.encode_www_form(
         scopes: 'PublicApi.Access',
         grant_type: 'client_credentials',
-        client_id: params[:client_id],
-        client_secret: params[:client_secret]
+        client_id: @client_id,
+        client_secret: @client_secret
       )
     end
     JSON.parse(response.body)
@@ -75,12 +82,12 @@ class Api::V1::Accounts::Integrations::KiotvietController < Api::V1::Accounts::B
 
     hook = Integrations::Hook.find_or_initialize_by(account: Current.account, app_id: 'kiotviet')
     hook.update!(
-      access_token: token_data['access_token'],
-      reference_id: params[:retailer],
+      reference_id: @retailer,
       settings: {
-        'retailer' => params[:retailer],
-        'client_id' => params[:client_id],
-        'client_secret' => params[:client_secret],
+        'retailer' => @retailer,
+        'client_id' => @client_id,
+        'client_secret' => @client_secret,
+        'access_token' => token_data['access_token'],
         'token_expires_at' => expires_at.iso8601
       }
     )
@@ -108,7 +115,7 @@ class Api::V1::Accounts::Integrations::KiotvietController < Api::V1::Accounts::B
 
     response = Faraday.get("https://public.kiotapi.com/#{endpoint}") do |req|
       req.headers['Retailer'] = @hook.settings['retailer']
-      req.headers['Authorization'] = "Bearer #{@hook.access_token}"
+      req.headers['Authorization'] = "Bearer #{@hook.settings['access_token']}"
       req.headers['Content-Type'] = 'application/json'
       req.params = params
     end
@@ -128,8 +135,10 @@ class Api::V1::Accounts::Integrations::KiotvietController < Api::V1::Accounts::B
 
     expires_at = Time.current + token_data['expires_in'].to_i.seconds
     @hook.update!(
-      access_token: token_data['access_token'],
-      settings: @hook.settings.merge('token_expires_at' => expires_at.iso8601)
+      settings: @hook.settings.merge(
+        'access_token' => token_data['access_token'],
+        'token_expires_at' => expires_at.iso8601
+      )
     )
   end
 

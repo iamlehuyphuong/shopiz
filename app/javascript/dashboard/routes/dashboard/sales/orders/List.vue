@@ -2,14 +2,12 @@
 import { computed, onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useAlert } from 'dashboard/composables';
-import { picoSearch } from '@scmmishra/pico-search';
-
 import SalesOrdersAPI from 'dashboard/api/sales/orders';
 import SalesLayout from '../components/SalesLayout.vue';
-import BaseSettingsHeader from 'dashboard/routes/dashboard/settings/components/BaseSettingsHeader.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 import Icon from 'dashboard/components-next/icon/Icon.vue';
 import Input from 'dashboard/components-next/input/Input.vue';
+import PullOrdersDialog from '../components/PullOrdersDialog.vue';
 import { OnClickOutside } from '@vueuse/components';
 import PaginationFooter from 'dashboard/components-next/pagination/PaginationFooter.vue';
 import { useStoreGetters, useStore } from 'dashboard/composables/store';
@@ -22,8 +20,11 @@ import {
 const { t } = useI18n();
 const store = useStore();
 const getters = useStoreGetters();
+const globalConfig = computed(() => getters['globalConfig/get'].value);
 
 const isLoading = ref(true);
+const isSyncing = ref(false);
+const showPullDialog = ref(false);
 const orders = ref([]);
 const searchQuery = ref('');
 const currentPage = ref(1);
@@ -39,7 +40,6 @@ const sources = [
   { label: 'Shopify', value: 'shopify' },
   { label: 'WooCommerce', value: 'woocommerce' },
   { label: 'Nhanh.vn', value: 'nhanhvn' },
-  { label: 'TikTok Shop', value: 'tiktok_shop' },
 ];
 
 const showSourceDropdown = ref(false);
@@ -179,7 +179,7 @@ const formatStatus = status => {
 
 const formatSource = source => {
   if (!source) return t('SALES.DIALOG_ORDER_DETAIL.FALLBACKS.SHOPIZ');
-  const sources = {
+  const sourceMap = {
     kiotviet: 'KiotViet',
     sapo: 'Sapo',
     haravan: 'Haravan',
@@ -188,7 +188,7 @@ const formatSource = source => {
     nhanhvn: 'Nhanh.vn',
     tiktok_shop: 'TikTok Shop',
   };
-  return sources[source] || source;
+  return sourceMap[source] || source;
 };
 
 const sourceLogo = source => {
@@ -213,6 +213,23 @@ const onSyncOrder = order => {
       id: order.external_order_id || order.id,
     })
   );
+};
+
+const onPullOrders = async platform => {
+  showPullDialog.value = false;
+  isSyncing.value = true;
+  try {
+    await SalesOrdersAPI.sync(platform);
+    useAlert(t('SALES.DIALOG_PULL_ORDERS.ALERTS.SYNC_SUCCESS'));
+    await fetchOrders();
+  } catch (error) {
+    useAlert(
+      error.response?.data?.error ||
+        t('SALES.DIALOG_PULL_ORDERS.ALERTS.SYNC_ERROR')
+    );
+  } finally {
+    isSyncing.value = false;
+  }
 };
 
 onBeforeMount(() => {
@@ -295,15 +312,10 @@ onBeforeMount(() => {
                           :src="sourceLogo(s.value)"
                           class="w-5 h-5 rounded-full object-cover flex-shrink-0"
                         />
-                        <Icon
-                          v-else-if="s.value === 'all'"
-                          icon="i-lucide-globe"
-                          class="w-5 h-5 text-n-slate-11"
-                        />
-                        <Icon
-                          v-else
-                          icon="i-lucide-store"
-                          class="w-5 h-5 text-n-brand-9"
+                        <img
+                          v-else-if="s.value === 'shopiz'"
+                          :src="globalConfig.logoThumbnail"
+                          class="w-5 h-5 object-contain flex-shrink-0"
                         />
                         <span
                           class="text-sm font-medium truncate text-n-slate-12"
@@ -355,12 +367,12 @@ onBeforeMount(() => {
           class="flex items-center gap-3 min-w-0 flex-row-reverse sm:flex-row"
         >
           <Button
-            :label="$t('SALES.MODULE_ORDERS.ACTIONS.REFRESH')"
+            :label="$t('SALES.MODULE_ORDERS.ACTIONS.SYNC')"
             slate
             sm
             ghost
-            icon="i-lucide-refresh-cw"
-            @click="fetchOrders"
+            :is-loading="isSyncing"
+            @click="showPullDialog = true"
           />
           <Button
             :label="$t('SALES.MODULE_ORDERS.ACTIONS.ADD')"
@@ -429,7 +441,7 @@ onBeforeMount(() => {
               </BaseTableCell>
 
               <!-- Column 2: Status -->
-              <BaseTableCell>
+              <BaseTableCell class="w-40 min-w-[140px]">
                 <span
                   class="px-2.5 py-1 text-xs font-medium rounded-full whitespace-nowrap"
                   :class="statusColor(order.status)"
@@ -472,5 +484,13 @@ onBeforeMount(() => {
         @update:current-page="onPageChange"
       />
     </template>
+
+    <!-- Dialogs -->
+    <woot-modal
+      v-model:show="showPullDialog"
+      :on-close="() => (showPullDialog = false)"
+    >
+      <PullOrdersDialog @close="showPullDialog = false" @sync="onPullOrders" />
+    </woot-modal>
   </SalesLayout>
 </template>

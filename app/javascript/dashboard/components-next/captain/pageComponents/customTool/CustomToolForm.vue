@@ -143,9 +143,8 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <form
+  <div
     class="flex flex-col px-4 -mx-4 gap-4 max-h-[calc(100vh-200px)] overflow-y-scroll"
-    @submit.prevent="handleSubmit"
   >
     <Input
       v-model="state.title"
@@ -258,14 +257,15 @@ const handleSubmit = async () => {
         @click="handleCancel"
       />
       <Button
-        type="submit"
+        type="button"
         :label="
           t(mode === 'edit' ? 'CAPTAIN.FORM.EDIT' : 'CAPTAIN.FORM.CREATE')
         "
         class="w-full"
         :is-loading="isLoading"
         :disabled="isLoading"
+        @click="handleSubmit"
       />
     </div>
-  </form>
+  </div>
 </template>

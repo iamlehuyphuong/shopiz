@@ -8,7 +8,6 @@ class Captain::Tools::Copilot::WoocommerceSearchProductsService < Captain::Tools
   description 'Search WooCommerce products by name or keyword to check pricing, inventory, and details'
   param :query, type: :string, desc: 'Product name or keyword to search'
 
-
   def active?
     woocommerce_active?
   end

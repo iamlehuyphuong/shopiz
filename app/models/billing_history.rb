@@ -51,4 +51,8 @@ class BillingHistory < ApplicationRecord
   def status_text
     I18n.t("billing_histories.statuses.#{status}")
   end
+
+  def einvoice_url
+    metadata.is_a?(Hash) ? metadata['einvoice_url'] : nil
+  end
 end

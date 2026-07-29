@@ -73,8 +73,8 @@ const handleConnect = async () => {
       dialogRef.value.close();
     }
     hideConnectModal();
-  } catch {
-    formError.value = t('INTEGRATION_SETTINGS.KIOTVIET.ERROR');
+  } catch (error) {
+    formError.value = error.response?.data?.error || t('INTEGRATION_SETTINGS.KIOTVIET.ERROR');
   } finally {
     isSubmitting.value = false;
   }
@@ -99,7 +99,11 @@ onMounted(() => {
         :title="$t('INTEGRATION_SETTINGS.KIOTVIET.HEADER')"
         description=""
         feature-name="kiotviet_integration"
-        :back-button-label="$t('INTEGRATION_SETTINGS.HEADER')"
+        :back-button-label="
+          $route.path.includes('/sales/')
+            ? $t('SALES.MODULE_TOOLS.HEADER.TITLE')
+            : $t('INTEGRATION_SETTINGS.HEADER')
+        "
       />
     </template>
     <template #body>

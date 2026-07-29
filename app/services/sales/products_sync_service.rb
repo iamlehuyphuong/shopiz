@@ -65,7 +65,7 @@ class Sales::ProductsSyncService
           sku: data[:sku],
           barcode: data[:barcode],
           status: data[:status] || 'active',
-          meta: (product.meta || {}).merge('source' => @platform)
+          meta: (product.meta || {}).merge('source' => @platform, 'images' => data[:images] || [])
         )
         
         # Handle variants if any

@@ -96,6 +96,14 @@ class IntegrationsAPI extends ApiClient {
   disconnectNhanhvn() {
     return axios.delete(`${this.baseUrl()}/integrations/nhanhvn`);
   }
+
+  connectGoogleCalendar() {
+    return axios.post(`${this.baseUrl()}/integrations/google_calendar/authorization`);
+  }
+
+  disconnectGoogleCalendar(integrationId) {
+    return axios.delete(`${this.baseUrl()}/calendar_integrations/${integrationId}`);
+  }
 }
 
 export default new IntegrationsAPI();

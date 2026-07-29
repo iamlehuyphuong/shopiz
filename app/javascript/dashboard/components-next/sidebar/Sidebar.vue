@@ -156,6 +156,9 @@ const newReportRoutes = () => [
   },
 ];
 
+const globalConfig = window.globalConfig || {};
+const isChannelActive = (statusKey) => !['coming_soon', 'disabled', 'draft'].includes(globalConfig[statusKey]);
+
 const reportRoutes = computed(() => newReportRoutes());
 
 const menuItems = computed(() => {
@@ -450,48 +453,48 @@ const menuItems = computed(() => {
       label: t('SIDEBAR.CAMPAIGNS'),
       icon: 'i-lucide-megaphone',
       children: [
-        {
+        ...(isChannelActive('CHANNEL_STATUS_WEBSITE') ? [{
           name: 'Live chat',
           label: t('SIDEBAR.LIVE_CHAT'),
           icon: 'i-woot-website',
           to: accountScopedRoute('campaigns_livechat_index'),
-        },
-        {
+        }] : []),
+        ...(isChannelActive('CHANNEL_STATUS_ZALO_PERSONAL') ? [{
           name: 'Zalo Personal',
           label: t('SIDEBAR.ZALO_PERSONAL'),
           icon: 'i-woot-zalo-personal',
           to: accountScopedRoute('campaigns_zalo_personal_index'),
-        },
-        {
+        }] : []),
+        ...(isChannelActive('CHANNEL_STATUS_ZALO_OA') ? [{
           name: 'Zalo OA',
           label: 'Zalo OA',
           icon: 'i-woot-zalo-oa',
           to: accountScopedRoute('campaigns_zalo_oa_index'),
-        },
-        {
+        }] : []),
+        ...(isChannelActive('CHANNEL_STATUS_WHATSAPP') ? [{
           name: 'WhatsApp',
           label: t('SIDEBAR.WHATSAPP'),
           icon: 'i-woot-whatsapp',
           to: accountScopedRoute('campaigns_whatsapp_index'),
-        },
-        {
+        }] : []),
+        ...(isChannelActive('CHANNEL_STATUS_FACEBOOK') ? [{
           name: 'Facebook',
           label: 'Facebook',
           icon: 'i-ri-messenger-fill',
           to: accountScopedRoute('campaigns_facebook_index'),
-        },
-        {
+        }] : []),
+        ...(isChannelActive('CHANNEL_STATUS_TELEGRAM') ? [{
           name: 'Telegram',
           label: 'Telegram',
           icon: 'i-woot-telegram',
           to: accountScopedRoute('campaigns_telegram_index'),
-        },
-        {
+        }] : []),
+        ...(isChannelActive('CHANNEL_STATUS_LINE') ? [{
           name: 'LINE',
           label: 'LINE',
           icon: 'i-woot-line',
           to: accountScopedRoute('campaigns_line_index'),
-        },
+        }] : []),
       ],
     },
     {
@@ -509,6 +512,12 @@ const menuItems = computed(() => {
         'sales_products_show',
         'sales_products_edit',
         'sales_tools_index',
+        'sales_tools_woocommerce',
+        'sales_tools_kiotviet',
+        'sales_tools_haravan',
+        'sales_tools_sapo',
+        'sales_tools_nhanhvn',
+        'sales_tools_integration',
         'sales_settings_index',
       ],
       children: [
@@ -547,7 +556,15 @@ const menuItems = computed(() => {
           name: 'Sales Tools',
           label: t('SIDEBAR.SALES_TOOLS'),
           icon: 'i-lucide-briefcase',
-          activeOn: ['sales_tools_index'],
+          activeOn: [
+            'sales_tools_index',
+            'sales_tools_woocommerce',
+            'sales_tools_kiotviet',
+            'sales_tools_haravan',
+            'sales_tools_sapo',
+            'sales_tools_nhanhvn',
+            'sales_tools_integration',
+          ],
           to: accountScopedRoute('sales_tools_index'),
         },
         {

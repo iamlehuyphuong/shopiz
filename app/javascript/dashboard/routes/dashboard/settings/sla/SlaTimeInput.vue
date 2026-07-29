@@ -1,8 +1,12 @@
 <script>
 import validations from './validations';
 import { useVuelidate } from '@vuelidate/core';
+import FilterSelect from 'dashboard/components-next/filter/inputs/FilterSelect.vue';
 
 export default {
+  components: {
+    FilterSelect,
+  },
   props: {
     threshold: {
       type: Number,
@@ -29,15 +33,17 @@ export default {
     return {
       thresholdTime: this.threshold || '',
       thresholdUnitValue: this.thresholdUnit,
-      options: [
-        { value: 'Minutes', label: 'minutes' },
-        { value: 'Hours', label: 'hours' },
-        { value: 'Days', label: 'days' },
-      ],
     };
   },
   validations,
   computed: {
+    options() {
+      return [
+        { value: 'Minutes', label: this.$t('DURATION_INPUT.MINUTES') },
+        { value: 'Hours', label: this.$t('DURATION_INPUT.HOURS') },
+        { value: 'Days', label: this.$t('DURATION_INPUT.DAYS') },
+      ];
+    },
     thresholdTimeErrorMessage() {
       let errorMessage = '';
       if (this.v$.thresholdTime.$error) {
@@ -84,7 +90,7 @@ export default {
 </script>
 
 <template>
-  <div class="flex items-center w-full gap-3">
+  <div class="flex items-start w-full gap-3">
     <woot-input
       v-model="thresholdTime"
       type="number"
@@ -102,19 +108,12 @@ export default {
     />
     <!-- the mt-7 handles the label offset -->
     <div class="mt-7">
-      <select
+      <FilterSelect
         v-model="thresholdUnitValue"
-        class="px-4 py-1.5 min-w-[6.5rem] h-10 text-sm font-medium border-0 rounded-xl hover:cursor-pointer pr-7"
-        @change="onThresholdUnitChange"
-      >
-        <option
-          v-for="(option, index) in options"
-          :key="index"
-          :value="option.value"
-        >
-          {{ option.label }}
-        </option>
-      </select>
+        :options="options"
+        class="min-w-[6.5rem] [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[38px]"
+        @update:model-value="onThresholdUnitChange"
+      />
     </div>
   </div>
 </template>

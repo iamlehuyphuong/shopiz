@@ -271,7 +271,8 @@
       "ACTIONS": {
         "CREATE": "Tạo đơn hàng",
         "ADD": "Tạo đơn hàng",
-        "REFRESH": "Làm mới"
+        "REFRESH": "Làm mới",
+        "SYNC": "Đồng bộ dữ liệu"
       },
       "TABLE": {
         "EMPTY_SEARCH": "Không tìm thấy đơn hàng nào phù hợp.",
@@ -547,6 +548,18 @@
       "ALERTS": {
         "SYNC_SUCCESS": "Đã đồng bộ sản phẩm thành công.",
         "SYNC_ERROR": "Đồng bộ sản phẩm thất bại."
+      }
+    },
+    "DIALOG_PULL_ORDERS": {
+      "TITLE": "Đồng bộ dữ liệu đơn hàng",
+      "DESC": "Chọn nền tảng bán hàng để đồng bộ danh sách đơn hàng về Shopiz.",
+      "FORM": {
+        "CANCEL": "Huỷ",
+        "SUBMIT": "Đồng bộ đơn hàng"
+      },
+      "ALERTS": {
+        "SYNC_SUCCESS": "Đã đồng bộ đơn hàng thành công.",
+        "SYNC_ERROR": "Đồng bộ đơn hàng thất bại."
       }
     },
     "DIALOG_ORDER_DETAIL": {
