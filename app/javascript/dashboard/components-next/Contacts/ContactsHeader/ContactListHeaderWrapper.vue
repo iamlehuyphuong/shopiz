@@ -24,7 +24,9 @@ import ContactExportDialog from 'dashboard/components-next/Contacts/ContactsForm
 import ContactImportDialog from 'dashboard/components-next/Contacts/ContactsForm/ContactImportDialog.vue';
 import CreateSegmentDialog from 'dashboard/components-next/Contacts/ContactsForm/CreateSegmentDialog.vue';
 import DeleteSegmentDialog from 'dashboard/components-next/Contacts/ContactsForm/DeleteSegmentDialog.vue';
+import PullContactsDialog from 'dashboard/components-next/Contacts/ContactsForm/PullContactsDialog.vue';
 import ContactsFilter from 'dashboard/components-next/filter/ContactsFilter.vue';
+import ContactsAPI from 'dashboard/api/contacts';
 
 const props = defineProps({
   showSearch: { type: Boolean, default: true },
@@ -56,6 +58,8 @@ const contactImportDialogRef = ref(null);
 const createSegmentDialogRef = ref(null);
 const deleteSegmentDialogRef = ref(null);
 
+const showPullContactsDialog = ref(false);
+
 const showFiltersModal = ref(false);
 const appliedFilter = ref([]);
 const segmentsQuery = ref({});
@@ -79,6 +83,9 @@ const openCreateSegmentDialog = () =>
   createSegmentDialogRef.value?.dialogRef.open();
 const openDeleteSegmentDialog = () =>
   deleteSegmentDialogRef.value?.dialogRef.open();
+const openPullContactsDialog = () => {
+  showPullContactsDialog.value = true;
+};
 
 const onCreate = async contact => {
   try {
@@ -130,6 +137,19 @@ const onExport = async query => {
     useAlert(
       error.message ||
         t('CONTACTS_LAYOUT.HEADER.ACTIONS.EXPORT_CONTACT.ERROR_MESSAGE')
+    );
+  }
+};
+
+const onSync = async platform => {
+  try {
+    showPullContactsDialog.value = false;
+    await ContactsAPI.syncContacts({ platform });
+    useAlert(t('CONTACTS_LAYOUT.HEADER.ACTIONS.SYNC_CONTACT.SUCCESS_MESSAGE'));
+  } catch (error) {
+    useAlert(
+      error.message ||
+        t('CONTACTS_LAYOUT.HEADER.ACTIONS.SYNC_CONTACT.ERROR_MESSAGE')
     );
   }
 };
@@ -287,6 +307,7 @@ defineExpose({
     @add="openCreateNewContactDialog"
     @import="openContactImportDialog"
     @export="openContactExportDialog"
+    @sync="openPullContactsDialog"
     @filter="onToggleFilters"
     @create-segment="openCreateSegmentDialog"
     @delete-segment="openDeleteSegmentDialog"
@@ -314,4 +335,14 @@ defineExpose({
   <ContactImportDialog ref="contactImportDialogRef" @import="onImport" />
   <CreateSegmentDialog ref="createSegmentDialogRef" @create="onCreateSegment" />
   <DeleteSegmentDialog ref="deleteSegmentDialogRef" @delete="onDeleteSegment" />
+  
+  <woot-modal
+    :show.sync="showPullContactsDialog"
+    :on-close="() => (showPullContactsDialog = false)"
+  >
+    <PullContactsDialog
+      @close="showPullContactsDialog = false"
+      @sync="onSync"
+    />
+  </woot-modal>
 </template>

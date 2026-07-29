@@ -26,6 +26,7 @@ const emit = defineEmits([
   'add',
   'import',
   'export',
+  'sync',
   'createSegment',
   'deleteSegment',
 ]);
@@ -110,6 +111,7 @@ const emit = defineEmits([
               @add="emit('add')"
               @import="emit('import')"
               @export="emit('export')"
+              @sync="emit('sync')"
             />
           </div>
           <div class="w-px h-4 bg-n-strong" />

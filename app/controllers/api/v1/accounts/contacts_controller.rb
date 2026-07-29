@@ -49,6 +49,19 @@ class Api::V1::Accounts::ContactsController < Api::V1::Accounts::BaseController
     head :ok, message: I18n.t('errors.contacts.export.success')
   end
 
+  def sync
+    platform = params[:platform]
+    timeframe = params[:timeframe] || '1_month'
+
+    return render json: { error: 'Platform is required' }, status: :unprocessable_entity unless platform.present?
+
+    Contacts::ContactsSyncJob.perform_later(Current.account.id, platform, timeframe)
+
+    render json: { message: 'Sync started successfully' }, status: :accepted
+  rescue StandardError => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+
   # returns online contacts
   def active
     contacts = Current.account.contacts.where(id: ::OnlineStatusTracker

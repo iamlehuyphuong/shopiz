@@ -12,6 +12,8 @@ class Contacts::PullHistoricalCustomersService
     customers.each do |raw_customer|
       map_and_save_customer(account, platform, raw_customer)
       success_count += 1
+    rescue ActiveRecord::RecordInvalid => e
+      Rails.logger.error("PullHistoricalCustomersService error saving customer: #{e.message} - #{e.record.errors.full_messages}")
     rescue StandardError => e
       Rails.logger.error("PullHistoricalCustomersService error saving customer: #{e.message}")
     end
@@ -67,13 +69,15 @@ class Contacts::PullHistoricalCustomersService
       external_id = raw_customer['id']&.to_s
       return if external_id.blank?
 
+      normalized_phone = normalize_phone_number(raw_customer['contactNumber'])
+
       contact = account.contacts.find_by(kiotviet_customer_id: external_id)
-      contact ||= account.contacts.find_by(phone_number: raw_customer['contactNumber']) if raw_customer['contactNumber'].present?
+      contact ||= account.contacts.find_by(phone_number: normalized_phone) if normalized_phone.present?
       contact ||= account.contacts.new(account_id: account.id)
 
       contact.kiotviet_customer_id = external_id
       contact.name = raw_customer['name'] if contact.name.blank?
-      contact.phone_number = raw_customer['contactNumber'] if contact.phone_number.blank?
+      contact.phone_number = normalized_phone if contact.phone_number.blank?
       contact.email = raw_customer['email'] if contact.email.blank?
       contact.location = raw_customer['address'] if contact.location.blank?
 
@@ -91,17 +95,35 @@ class Contacts::PullHistoricalCustomersService
       contact ||= account.contacts.from_email(raw_customer['email']) if raw_customer['email'].present?
 
       phone = raw_customer.dig('billing', 'phone')
-      contact ||= account.contacts.find_by(phone_number: phone) if phone.present?
+      normalized_phone = normalize_phone_number(phone)
+      contact ||= account.contacts.find_by(phone_number: normalized_phone) if normalized_phone.present?
       contact ||= account.contacts.new(account_id: account.id)
 
       contact.woocommerce_customer_id = external_id
       name = "#{raw_customer['first_name']} #{raw_customer['last_name']}".strip
       contact.name = name if contact.name.blank?
       contact.email = raw_customer['email'] if contact.email.blank?
-      contact.phone_number = phone if contact.phone_number.blank? && phone.present?
+      contact.phone_number = normalized_phone if contact.phone_number.blank? && phone.present?
       contact.location = raw_customer.dig('billing', 'address_1') if contact.location.blank?
 
       contact.save!
+    end
+  end
+
+  def normalize_phone_number(phone)
+    return nil if phone.blank?
+
+    phone_str = phone.to_s.gsub(/[^\d\+]/, '')
+    return nil if phone_str.blank?
+
+    if phone_str.start_with?('0')
+      "+84#{phone_str[1..-1]}"
+    elsif phone_str.start_with?('84')
+      "+#{phone_str}"
+    elsif phone_str.start_with?('+')
+      phone_str
+    else
+      "+84#{phone_str}"
     end
   end
 end

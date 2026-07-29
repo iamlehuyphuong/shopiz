@@ -100,6 +100,10 @@ class ContactAPI extends ApiClient {
     return axios.post(`${this.url}/export`, queryPayload);
   }
 
+  syncContacts(payload) {
+    return axios.post(`${this.url}/sync`, payload);
+  }
+
   requestFriend(payload) {
     return axios.post(`${this.url}/request_friend`, payload);
   }

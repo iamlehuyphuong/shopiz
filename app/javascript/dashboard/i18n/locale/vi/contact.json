@@ -384,6 +384,7 @@
           "ADD_CONTACT": "Thêm liên hệ",
           "EXPORT_CONTACT": "Xuất danh sách liên hệ",
           "IMPORT_CONTACT": "Nhập liên hệ",
+          "SYNC_CONTACT": "Đồng bộ liên hệ",
           "SAVE_CONTACT": "Lưu liên hệ",
           "EMAIL_ADDRESS_DUPLICATE": "Email này đã tồn tại ở liên hệ khác.",
           "PHONE_NUMBER_DUPLICATE": "Số điện thoại này đã tồn tại ở liên hệ khác.",
@@ -411,6 +412,10 @@
           "DESCRIPTION": "Xuất nhanh danh sách liên hệ dưới dạng CSV",
           "CONFIRM": "Xuất",
           "SUCCESS_MESSAGE": "Đang xử lý xuất dữ liệu. Bạn sẽ nhận email khi tệp sẵn sàng.",
+          "ERROR_MESSAGE": "Có lỗi xảy ra, vui lòng thử lại."
+        },
+        "SYNC_CONTACT": {
+          "SUCCESS_MESSAGE": "Yêu cầu đồng bộ liên hệ đã được đưa vào hàng đợi.",
           "ERROR_MESSAGE": "Có lỗi xảy ra, vui lòng thử lại."
         },
         "SORT_BY": {

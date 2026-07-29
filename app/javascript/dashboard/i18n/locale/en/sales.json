@@ -565,6 +565,14 @@
         "SYNC_ERROR": "Failed to sync orders."
       }
     },
+    "DIALOG_PULL_CONTACTS": {
+      "TITLE": "Sync contacts from platform",
+      "DESC": "Select a sales platform to sync the contact list to Shopiz.",
+      "FORM": {
+        "CANCEL": "Cancel",
+        "SUBMIT": "Sync contacts"
+      }
+    },
     "DIALOG_ORDER_DETAIL": {
       "TITLE": "Order Details",
       "DESC": "Order #{id} from {source}",

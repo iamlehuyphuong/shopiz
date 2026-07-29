@@ -384,6 +384,7 @@
           "ADD_CONTACT": "Add contact",
           "EXPORT_CONTACT": "Export contacts",
           "IMPORT_CONTACT": "Import contacts",
+          "SYNC_CONTACT": "Sync contacts",
           "SAVE_CONTACT": "Save contact",
           "EMAIL_ADDRESS_DUPLICATE": "This email address is in use for another contact.",
           "PHONE_NUMBER_DUPLICATE": "This phone number is in use for another contact.",
@@ -411,6 +412,10 @@
           "DESCRIPTION": "Quickly export a csv file with comprehensive details of your contacts",
           "CONFIRM": "Export",
           "SUCCESS_MESSAGE": "Export is in progress. You will be notified on email when the export file is ready to download.",
+          "ERROR_MESSAGE": "There was an error, please try again"
+        },
+        "SYNC_CONTACT": {
+          "SUCCESS_MESSAGE": "Contact sync request has been added to queue.",
           "ERROR_MESSAGE": "There was an error, please try again"
         },
         "SORT_BY": {

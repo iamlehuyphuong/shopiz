@@ -562,6 +562,14 @@
         "SYNC_ERROR": "Đồng bộ đơn hàng thất bại."
       }
     },
+    "DIALOG_PULL_CONTACTS": {
+      "TITLE": "Đồng bộ dữ liệu khách hàng",
+      "DESC": "Chọn nền tảng bán hàng để đồng bộ danh sách khách hàng về Shopiz.",
+      "FORM": {
+        "CANCEL": "Huỷ",
+        "SUBMIT": "Đồng bộ khách hàng"
+      }
+    },
     "DIALOG_ORDER_DETAIL": {
       "TITLE": "Chi tiết đơn hàng",
       "DESC": "Đơn hàng #{id} từ {source}",
