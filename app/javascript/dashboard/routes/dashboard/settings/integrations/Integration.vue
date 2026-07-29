@@ -57,7 +57,10 @@ const deleteIntegration = async () => {
 const confirmDeletion = () => {
   closeDeletePopup();
   deleteIntegration();
-  if (route.name && route.name.startsWith('sales_tools_')) {
+  if (
+    (route.name && route.name.startsWith('sales_tools_')) ||
+    (route.path && route.path.includes('/sales/'))
+  ) {
     router.push({ name: 'sales_tools_index' });
   } else {
     router.push({ name: 'settings_applications' });

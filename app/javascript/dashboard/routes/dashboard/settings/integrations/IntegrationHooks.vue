@@ -94,6 +94,7 @@ export default {
       this.showDeleteConfirmationPopup = false;
     },
     async confirmDeletion() {
+      let isSuccess = false;
       try {
         await this.$store.dispatch('integrations/deleteHook', {
           hookId: this.selectedHook.id,
@@ -103,12 +104,23 @@ export default {
           'INTEGRATION_APPS.DELETE.API.SUCCESS_MESSAGE'
         );
         this.closeDeletePopup();
+        isSuccess = true;
       } catch (error) {
         const errorMessage = error?.response?.data?.message;
         this.alertMessage =
           errorMessage || this.$t('INTEGRATION_APPS.DELETE.API.ERROR_MESSAGE');
       } finally {
         useAlert(this.alertMessage);
+        if (isSuccess && this.isIntegrationSingle) {
+          if (
+            (this.$route.name && this.$route.name.startsWith('sales_tools_')) ||
+            (this.$route.path && this.$route.path.includes('/sales/'))
+          ) {
+            this.$router.push({ name: 'sales_tools_index' });
+          } else {
+            this.$router.push({ name: 'settings_applications' });
+          }
+        }
       }
     },
   },

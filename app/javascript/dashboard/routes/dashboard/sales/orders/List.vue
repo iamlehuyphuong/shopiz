@@ -22,6 +22,7 @@ import {
 const { t } = useI18n();
 const store = useStore();
 const getters = useStoreGetters();
+const globalConfig = computed(() => getters['globalConfig/get'].value);
 
 const isLoading = ref(true);
 const orders = ref([]);
@@ -39,7 +40,6 @@ const sources = [
   { label: 'Shopify', value: 'shopify' },
   { label: 'WooCommerce', value: 'woocommerce' },
   { label: 'Nhanh.vn', value: 'nhanhvn' },
-  { label: 'TikTok Shop', value: 'tiktok_shop' },
 ];
 
 const showSourceDropdown = ref(false);
@@ -295,15 +295,10 @@ onBeforeMount(() => {
                           :src="sourceLogo(s.value)"
                           class="w-5 h-5 rounded-full object-cover flex-shrink-0"
                         />
-                        <Icon
-                          v-else-if="s.value === 'all'"
-                          icon="i-lucide-globe"
-                          class="w-5 h-5 text-n-slate-11"
-                        />
-                        <Icon
-                          v-else
-                          icon="i-lucide-store"
-                          class="w-5 h-5 text-n-brand-9"
+                        <img
+                          v-else-if="s.value === 'shopiz'"
+                          :src="globalConfig.logoThumbnail"
+                          class="w-5 h-5 object-contain flex-shrink-0"
                         />
                         <span
                           class="text-sm font-medium truncate text-n-slate-12"
