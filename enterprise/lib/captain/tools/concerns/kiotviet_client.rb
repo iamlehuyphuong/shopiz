@@ -14,14 +14,14 @@ module Captain::Tools::Concerns::KiotvietClient
   end
 
   def kiotviet_active?
-    kiotviet_hook.present? && kiotviet_hook.access_token.present?
+    kiotviet_hook.present? && kiotviet_hook.settings['access_token'].present?
   end
 
   def kiotviet_get(endpoint, params = {})
     ensure_valid_token
     response = kiotviet_connection.get(endpoint) do |req|
       req.headers.merge!(kiotviet_headers)
-      req.params = params
+      req.params.merge!(params) if params.present?
     end
     JSON.parse(response.body)
   rescue Faraday::Error => e
@@ -72,8 +72,9 @@ module Captain::Tools::Concerns::KiotvietClient
   def kiotviet_headers
     {
       'Retailer' => kiotviet_hook.settings['retailer'],
-      'Authorization' => "Bearer #{kiotviet_hook.access_token}",
-      'Content-Type' => 'application/json'
+      'Authorization' => "Bearer #{kiotviet_hook.settings['access_token']}",
+      'Content-Type' => 'application/json',
+      'Accept-Encoding' => 'identity'
     }
   end
 
@@ -119,8 +120,10 @@ module Captain::Tools::Concerns::KiotvietClient
   def update_hook_token(parsed)
     expires_at = Time.current + parsed['expires_in'].to_i.seconds
     kiotviet_hook.update!(
-      access_token: parsed['access_token'],
-      settings: kiotviet_hook.settings.merge('token_expires_at' => expires_at.iso8601)
+      settings: kiotviet_hook.settings.merge(
+        'access_token' => parsed['access_token'],
+        'token_expires_at' => expires_at.iso8601
+      )
     )
     @kiotviet_hook = nil # bust cache
   end
