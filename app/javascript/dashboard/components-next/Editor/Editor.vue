@@ -90,6 +90,7 @@ watch(
         v-tooltip.top-start="{
           content: tooltip,
           classes: 'max-w-[300px] whitespace-normal text-left leading-relaxed',
+          container: false,
         }"
         icon="i-lucide-info"
         class="w-3.5 h-3.5 text-n-slate-10 cursor-help"

@@ -50,26 +50,28 @@ const displayGuidelines = computed(() =>
   guidelinesContent.value.map((c, idx) => ({ id: idx, content: c }))
 );
 
-const guidelinesExample = [
+const guidelinesExample = computed(() => [
   {
     id: 1,
-    content: t(
-      'Block queries that share or request sensitive personal information (e.g. phone numbers, passwords).'
-    ),
+    content: t('CAPTAIN.ASSISTANTS.RESPONSE_GUIDELINES.ADD.SUGGESTED.EXAMPLE_1'),
   },
   {
     id: 2,
-    content: t(
-      'Reject queries that include offensive, discriminatory, or threatening language.'
-    ),
+    content: t('CAPTAIN.ASSISTANTS.RESPONSE_GUIDELINES.ADD.SUGGESTED.EXAMPLE_2'),
   },
   {
     id: 3,
-    content: t(
-      'Deflect when the assistant is asked for legal or medical diagnosis or treatment.'
-    ),
+    content: t('CAPTAIN.ASSISTANTS.RESPONSE_GUIDELINES.ADD.SUGGESTED.EXAMPLE_3'),
   },
-];
+  {
+    id: 4,
+    content: t('CAPTAIN.ASSISTANTS.RESPONSE_GUIDELINES.ADD.SUGGESTED.EXAMPLE_4'),
+  },
+  {
+    id: 5,
+    content: t('CAPTAIN.ASSISTANTS.RESPONSE_GUIDELINES.ADD.SUGGESTED.EXAMPLE_5'),
+  },
+]);
 
 const filteredGuidelines = computed(() => {
   const query = searchQuery.value.trim();
@@ -173,7 +175,9 @@ const bulkDeleteGuidelines = async () => {
 const addAllExample = async () => {
   updateUISettings({ show_response_guidelines_suggestions: false });
   try {
-    const exampleContents = guidelinesExample.map(example => example.content);
+    const exampleContents = guidelinesExample.value.map(
+      example => example.content
+    );
     const newGuidelines = [...guidelinesContent.value, ...exampleContents];
     await saveGuidelines(newGuidelines);
     useAlert(t('CAPTAIN.ASSISTANTS.RESPONSE_GUIDELINES.API.ADD.SUCCESS'));

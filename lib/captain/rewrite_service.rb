@@ -1,5 +1,5 @@
 class Captain::RewriteService < Captain::BaseTaskService
-  pattr_initialize [:account!, :content!, :operation!, { conversation_display_id: nil }]
+  pattr_initialize [:account!, :content!, :operation!, { conversation_display_id: nil, context: {} }]
 
   TONE_OPERATIONS = %i[casual professional friendly confident straightforward].freeze
 
@@ -21,7 +21,7 @@ class Captain::RewriteService < Captain::BaseTaskService
     improve_campaign_message
   ].freeze
 
-  ALLOWED_OPERATIONS = (%i[fix_spelling_grammar improve] + TONE_OPERATIONS + IMPROVE_OPERATIONS).freeze
+  ALLOWED_OPERATIONS = (%i[fix_spelling_grammar improve improve_assistant_description] + TONE_OPERATIONS + IMPROVE_OPERATIONS).freeze
 
   def perform
     operation_sym = operation.to_sym
@@ -43,6 +43,21 @@ class Captain::RewriteService < Captain::BaseTaskService
   end
 
   private
+
+  def improve_assistant_description
+    template = prompt_from_file('improve_assistant_description')
+
+    variables = {
+      'assistant_name' => context['assistant_name'] || context[:assistant_name],
+      'company_name' => context['company_name'] || context[:company_name],
+      'industry' => context['industry'] || context[:industry],
+      'core_products' => context['core_products'] || context[:core_products],
+      'current_description' => content
+    }
+
+    system_prompt = render_liquid_template(template, variables)
+    call_llm_with_prompt(system_prompt, content)
+  end
 
   def fix_spelling_grammar
     call_llm_with_prompt(prompt_from_file('fix_spelling_grammar'))

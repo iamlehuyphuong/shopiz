@@ -7,6 +7,10 @@ import { required, minLength } from '@vuelidate/validators';
 import Input from 'dashboard/components-next/input/Input.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 import Editor from 'dashboard/components-next/Editor/Editor.vue';
+import Icon from 'dashboard/components-next/icon/Icon.vue';
+import captainTasksAPI from 'dashboard/api/captain/tasks';
+import { useAlert } from 'dashboard/composables';
+import { ref } from 'vue';
 
 const props = defineProps({
   assistant: {
@@ -103,6 +107,12 @@ const handleBasicInfoUpdate = async () => {
   emit('submit', payload);
 };
 
+const applyTemplate = templateKey => {
+  state.description = t(
+    `CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.TEMPLATES.${templateKey}_TEXT`
+  );
+};
+
 watch(
   () => props.assistant,
   newAssistant => {
@@ -110,6 +120,32 @@ watch(
   },
   { immediate: true }
 );
+
+const isImproving = ref(false);
+
+const improveWithAI = async () => {
+  if (!state.description) return;
+  isImproving.value = true;
+  try {
+    const response = await captainTasksAPI.rewrite({
+      operation: 'improve_assistant_description',
+      content: state.description,
+      context: {
+        assistant_name: state.name,
+        company_name: state.companyName,
+        industry: state.industry,
+        core_products: state.coreProducts,
+      }
+    });
+    if (response.data && response.data.message) {
+      state.description = response.data.message;
+    }
+  } catch (error) {
+    useAlert(t('CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.IMPROVE_AI_ERROR') || 'Error');
+  } finally {
+    isImproving.value = false;
+  }
+};
 </script>
 
 <template>
@@ -146,16 +182,49 @@ watch(
       :message-type="formErrors.coreProducts ? 'error' : 'info'"
     />
 
-    <Editor
-      v-model="state.description"
-      :label="t('CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.LABEL')"
-      :tooltip="t('CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.TOOLTIP')"
-      :placeholder="t('CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.PLACEHOLDER')"
-      :message="formErrors.description"
-      :message-type="formErrors.description ? 'error' : 'info'"
-      :max-length="500"
-      class="z-0"
-    />
+    <div class="flex flex-col gap-1.5 z-0">
+      <Editor
+        v-model="state.description"
+        :label="t('CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.LABEL')"
+        :placeholder="t('CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.PLACEHOLDER')"
+        :message="formErrors.description"
+        :message-type="formErrors.description ? 'error' : 'info'"
+        :max-length="1000"
+      />
+
+      <div class="flex items-center mt-3 mb-4">
+        <button
+          type="button"
+          class="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium transition-colors border rounded-md text-n-slate-11 border-n-strong bg-white hover:bg-n-alpha-1 hover:text-n-slate-12 shadow-sm"
+          @click="improveWithAI"
+          :disabled="isImproving || !state.description"
+          :class="{ 'opacity-50 cursor-not-allowed': isImproving || !state.description }"
+        >
+          <Icon v-if="!isImproving" icon="i-lucide-wand-sparkles" class="w-4 h-4" />
+          <Icon v-else icon="i-lucide-loader-2" class="w-4 h-4 animate-spin" />
+          {{ t('CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.IMPROVE_AI') || 'Cải thiện bằng AI' }}
+        </button>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="text-xs text-n-slate-11">
+          {{ t('CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.TEMPLATES.TITLE') }}
+        </span>
+        <button
+          v-for="i in 5"
+          :key="i"
+          type="button"
+          class="px-2 py-1 text-xs font-medium transition-colors border rounded-md text-n-slate-11 border-n-weak bg-n-alpha-1 hover:bg-n-alpha-2 hover:text-n-slate-12"
+          @click="applyTemplate(`TEMPLATE_${i}`)"
+        >
+          {{
+            t(
+              `CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.TEMPLATES.TEMPLATE_${i}_LABEL`
+            )
+          }}
+        </button>
+      </div>
+    </div>
 
     <div class="flex flex-col gap-2">
       <label class="text-sm font-medium text-n-slate-12">
@@ -180,7 +249,7 @@ watch(
         </label>
         <label class="flex items-center gap-2">
           <input v-model="state.features.orderCreation" type="checkbox" />
-          Cho phép tạo đơn hàng
+          {{ t('CAPTAIN.ASSISTANTS.FORM.FEATURES.ALLOW_ORDER_CREATION') }}
         </label>
       </div>
     </div>

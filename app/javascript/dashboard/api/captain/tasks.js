@@ -22,14 +22,10 @@ class TasksAPI extends ApiClient {
    * @param {AbortSignal} [signal] - AbortSignal to cancel the request.
    * @returns {Promise} A promise that resolves with the rewritten content.
    */
-  rewrite({ content, operation, conversationId }, signal) {
+  rewrite({ content, operation, conversationId, context }, signal) {
     return axios.post(
       `${this.url}/rewrite`,
-      {
-        content,
-        operation,
-        conversation_display_id: conversationId,
-      },
+      { content, operation, conversation_display_id: conversationId, context },
       { signal }
     );
   }

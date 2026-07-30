@@ -642,7 +642,22 @@
           "LABEL": "Description",
           "PLACEHOLDER": "Enter assistant description",
           "ERROR": "The description is required",
-          "TOOLTIP": "The assistant description acts as a System Prompt. Define the persona, communication tone (e.g., formal, friendly), and task boundaries here. Avoid adding too many process details; save those for the Scenarios."
+          "TOOLTIP": "The assistant description acts as a System Prompt. Define the persona, communication tone (e.g., formal, friendly), and task boundaries here. Avoid adding too many process details; save those for the Scenarios.",
+          "IMPROVE_AI": "Improve with AI",
+          "IMPROVE_AI_ERROR": "An error occurred while improving the description. Please try again.",
+          "TEMPLATES": {
+            "TITLE": "Use template:",
+            "TEMPLATE_1_LABEL": "Retail (Fashion/Consumer)",
+            "TEMPLATE_1_TEXT": "You are an enthusiastic and observant retail sales consultant. Your specialized mission: Advise on sizes, colors, and product benefits based on customer preferences. Always proactively suggest complementary items (cross-sell) to increase order value. Highlight active promotions and persuade customers to close the deal quickly.",
+            "TEMPLATE_2_LABEL": "Service Consulting (B2B/Software)",
+            "TEMPLATE_2_TEXT": "You are a professional and reliable service advisor. Your specialized mission: Deeply explore the actual needs and pain points of the business/customer, then propose the most optimal service package or solution. Do not rush to hard sell; focus on building trust, providing transparent info on long-term ROI, and guiding the next steps.",
+            "TEMPLATE_3_LABEL": "Clinic / Spa / Aesthetics",
+            "TEMPLATE_3_TEXT": "You are a dedicated customer care assistant for a Clinic/Spa. Your specialized mission: Listen to the customer's health/skin conditions, provide preliminary advice on suitable treatments, and persuade them to book an in-person appointment. Always show empathy, care, and strict confidentiality. Note: Never provide medical treatment regimens.",
+            "TEMPLATE_4_LABEL": "Admissions (Education)",
+            "TEMPLATE_4_TEXT": "You are a friendly and experienced admissions counselor. Your specialized mission: Provide detailed advice on courses, learning paths, tuition fees, and scholarship policies. Inspire the student's motivation, address their concerns about outcomes, and encourage them to leave their information or register for a placement test/trial class.",
+            "TEMPLATE_5_LABEL": "Travel (Tours/Hospitality)",
+            "TEMPLATE_5_TEXT": "You are an energetic travel and accommodation consultant. Your specialized mission: Design an amazing travel experience for customers by advising on itineraries, hotel amenities, and budget-friendly combo packages. Highlight exciting destinations, create a sense of excitement, and urge customers to book early before promotions expire."
+          }
         },
         "COMPANY_NAME": {
           "LABEL": "Company / Store Name",
@@ -685,7 +700,8 @@
           "ALLOW_CONVERSATION_FAQS": "Generate FAQs from resolved conversations",
           "ALLOW_MEMORIES": "Capture key details as memories from customer interactions.",
           "ALLOW_CITATIONS": "Include source citations in responses",
-          "ALLOW_CONTACT_ATTRIBUTES": "Allow access to contact information"
+          "ALLOW_CONTACT_ATTRIBUTES": "Allow access to contact information",
+          "ALLOW_ORDER_CREATION": "Allow order creation"
         }
       },
       "EDIT": {
@@ -740,7 +756,7 @@
       "GUARDRAILS": {
         "TITLE": "Guardrails",
         "DESCRIPTION": "Keeps things on track—only the kinds of questions you want your assistant to answer, nothing off-limits or off-topic.",
-        "BULK_ACTION": {
+"BULK_ACTION": {
           "SELECTED": "{count} item selected | {count} items selected",
           "SELECT_ALL": "Select all ({count})",
           "UNSELECT_ALL": "Unselect all ({count})",
@@ -752,7 +768,12 @@
             "ADD": "Add all",
             "ADD_SINGLE": "Add this",
             "SAVE": "Add and save (↵)",
-            "PLACEHOLDER": "Type in another guardrail..."
+            "PLACEHOLDER": "Type in another guardrail...",
+            "EXAMPLE_1": "Absolutely do not provide professional advice related to Medical, Legal, or Financial Investment topics.",
+            "EXAMPLE_2": "Reject queries that include offensive, discriminatory, or threatening language.",
+            "EXAMPLE_3": "Politely deflect when asked about off-topic subjects unrelated to the business's products or services.",
+            "EXAMPLE_4": "Absolutely do not guess or fabricate information; only answer based on the provided documentation.",
+            "EXAMPLE_5": "Do not mention or comment negatively on other brands, organizations, or individuals."
           },
           "NEW": {
             "TITLE": "Add a guardrail",
@@ -796,8 +817,13 @@
             "TITLE": "Example response guidelines",
             "ADD": "Add all",
             "ADD_SINGLE": "Add this",
-            "SAVE": "Add and save (↵)",
-            "PLACEHOLDER": "Type in another response guideline..."
+            "SAVE": "Save and close (↵)",
+            "PLACEHOLDER": "Type in another response guideline...",
+            "EXAMPLE_1": "Always maintain a professional, friendly, and empathetic tone.",
+            "EXAMPLE_2": "Keep responses concise, ideally under 3 sentences unless detailed explanation is needed.",
+            "EXAMPLE_3": "Always ask a follow-up question or suggest a concrete action to guide the user to the next step.",
+            "EXAMPLE_4": "When guiding technical steps, always present them as a short, easy-to-understand bulleted list.",
+            "EXAMPLE_5": "Proactively suggest next steps instead of asking generic questions like 'Do you need anything else?'."
           },
           "NEW": {
             "TITLE": "Add a response guideline",

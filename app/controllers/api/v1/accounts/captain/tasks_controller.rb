@@ -6,6 +6,7 @@ class Api::V1::Accounts::Captain::TasksController < Api::V1::Accounts::BaseContr
       account: Current.account,
       content: params[:content],
       operation: params[:operation],
+      context: params[:context]&.to_unsafe_h,
       conversation_display_id: params[:conversation_display_id]
     ).perform
 

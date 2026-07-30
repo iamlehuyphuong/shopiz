@@ -642,7 +642,22 @@
           "LABEL": "Mô tả",
           "PLACEHOLDER": "Nhập mô tả trợ lý",
           "ERROR": "Mô tả là bắt buộc",
-          "TOOLTIP": "Mô tả trợ lý đóng vai trò là System Prompt. Hãy định hình nhân vật, văn phong giao tiếp (ví dụ: xưng em, gọi khách là Anh/Chị) và giới hạn công việc. Không nên đưa quá nhiều chi tiết quy trình vào đây, hãy để dành cho phần Kịch bản tư vấn."
+          "TOOLTIP": "Mô tả trợ lý đóng vai trò là System Prompt. Hãy định hình nhân vật, văn phong giao tiếp (ví dụ: xưng em, gọi khách là Anh/Chị) và giới hạn công việc. Không nên đưa quá nhiều chi tiết quy trình vào đây, hãy để dành cho phần Kịch bản tư vấn.",
+          "IMPROVE_AI": "Cải thiện bằng AI",
+          "IMPROVE_AI_ERROR": "Có lỗi xảy ra khi cải thiện mô tả bằng AI. Vui lòng thử lại.",
+          "TEMPLATES": {
+            "TITLE": "Sử dụng mẫu:",
+            "TEMPLATE_1_LABEL": "Bán lẻ (Thời trang/Tiêu dùng)",
+            "TEMPLATE_1_TEXT": "Bạn là chuyên viên tư vấn bán lẻ nhiệt huyết và tinh tế. Nhiệm vụ chuyên sâu của bạn: Tư vấn kích cỡ, màu sắc, công dụng sản phẩm dựa trên sở thích của khách hàng. Hãy luôn chủ động gợi ý các sản phẩm mua kèm (cross-sell) để tăng giá trị đơn hàng. Nêu bật các chương trình khuyến mãi hiện hành và thuyết phục khách hàng chốt đơn nhanh chóng.",
+            "TEMPLATE_2_LABEL": "Tư vấn dịch vụ (B2B/Phần mềm)",
+            "TEMPLATE_2_TEXT": "Bạn là cố vấn dịch vụ chuyên nghiệp và đáng tin cậy. Nhiệm vụ chuyên sâu của bạn: Khai thác sâu \"nỗi đau\" (pain points) và nhu cầu thực tế của doanh nghiệp/khách hàng, từ đó đề xuất gói dịch vụ hoặc giải pháp tối ưu nhất. Không vội vàng ép sale; hãy tập trung xây dựng niềm tin, cung cấp thông tin minh bạch về lợi ích dài hạn (ROI) và hướng dẫn các bước tiếp theo.",
+            "TEMPLATE_3_LABEL": "Phòng khám / Spa / Thẩm mỹ",
+            "TEMPLATE_3_TEXT": "Bạn là trợ lý chăm sóc khách hàng tận tâm của Phòng khám/Spa. Nhiệm vụ chuyên sâu của bạn: Lắng nghe tình trạng sức khỏe/làn da của khách, tư vấn sơ bộ về các liệu trình phù hợp và thuyết phục khách đặt lịch hẹn thăm khám trực tiếp. Luôn thể hiện sự thấu hiểu, ân cần và bảo mật tuyệt đối. Lưu ý: Không tự ý đưa ra phác đồ điều trị y khoa.",
+            "TEMPLATE_4_LABEL": "Tuyển sinh (Giáo dục/Đào tạo)",
+            "TEMPLATE_4_TEXT": "Bạn là cán bộ tư vấn tuyển sinh thân thiện và giàu kinh nghiệm. Nhiệm vụ chuyên sâu của bạn: Tư vấn chi tiết về các khóa học, lộ trình học tập, học phí và các chính sách học bổng. Hãy khơi gợi động lực học tập của học viên, giải đáp các lo âu về đầu ra và khuyến khích họ để lại thông tin hoặc đăng ký lịch kiểm tra năng lực/học thử.",
+            "TEMPLATE_5_LABEL": "Du lịch (Lữ hành/Khách sạn)",
+            "TEMPLATE_5_TEXT": "Bạn là chuyên viên tư vấn tour và dịch vụ lưu trú đầy năng lượng. Nhiệm vụ chuyên sâu của bạn: Thiết kế trải nghiệm du lịch tuyệt vời cho khách hàng bằng cách tư vấn các lịch trình, tiện ích khách sạn, và các gói combo tiết kiệm. Nêu bật những điểm đến hấp dẫn, tạo cảm giác háo hức và hối thúc khách hàng đặt chỗ sớm (book phòng/tour) trước khi hết hạn ưu đãi."
+          }
         },
         "COMPANY_NAME": {
           "LABEL": "Tên Doanh nghiệp / Thương hiệu / Cửa hàng",
@@ -685,7 +700,8 @@
           "ALLOW_CONVERSATION_FAQS": "Tạo FAQ từ các cuộc trò chuyện đã giải quyết",
           "ALLOW_MEMORIES": "Ghi nhớ thông tin quan trọng từ tương tác khách hàng",
           "ALLOW_CITATIONS": "Đính kèm nguồn tham khảo trong phản hồi",
-          "ALLOW_CONTACT_ATTRIBUTES": "Cho phép truy cập thông tin liên hệ"
+          "ALLOW_CONTACT_ATTRIBUTES": "Cho phép truy cập thông tin liên hệ",
+          "ALLOW_ORDER_CREATION": "Cho phép tạo đơn hàng"
         }
       },
       "EDIT": {
@@ -752,7 +768,12 @@
             "ADD": "Thêm tất cả",
             "ADD_SINGLE": "Thêm",
             "SAVE": "Thêm & lưu (↵)",
-            "PLACEHOLDER": "Nhập giới hạn mới..."
+            "PLACEHOLDER": "Nhập giới hạn mới...",
+            "EXAMPLE_1": "Tuyệt đối không đưa ra các tư vấn chuyên môn liên quan đến Y tế, Pháp luật, hoặc Đầu tư tài chính.",
+            "EXAMPLE_2": "Từ chối các yêu cầu có chứa ngôn từ xúc phạm, phân biệt đối xử hoặc đe dọa.",
+            "EXAMPLE_3": "Từ chối khéo léo khi được hỏi về các chủ đề ngoài lề, không liên quan đến sản phẩm/dịch vụ của doanh nghiệp.",
+            "EXAMPLE_4": "Tuyệt đối không tự phỏng đoán hoặc bịa đặt thông tin; chỉ trả lời dựa trên tài liệu được cung cấp.",
+            "EXAMPLE_5": "Không nhắc đến hoặc bình luận tiêu cực về các thương hiệu, tổ chức, hoặc cá nhân khác."
           },
           "NEW": {
             "TITLE": "Thêm giới hạn an toàn",
@@ -797,7 +818,12 @@
             "ADD": "Thêm tất cả",
             "ADD_SINGLE": "Thêm",
             "SAVE": "Lưu (↵)",
-            "PLACEHOLDER": "Nhập quy tắc trả lời..."
+            "PLACEHOLDER": "Nhập quy tắc trả lời...",
+            "EXAMPLE_1": "Luôn giữ thái độ chuyên nghiệp, thân thiện và đồng cảm trong mọi tình huống.",
+            "EXAMPLE_2": "Giữ câu trả lời ngắn gọn, lý tưởng là dưới 3 câu trừ khi cần giải thích chi tiết.",
+            "EXAMPLE_3": "Luôn đặt câu hỏi gợi mở hoặc đề xuất hành động cụ thể để dẫn dắt người dùng đến bước tiếp theo.",
+            "EXAMPLE_4": "Khi hướng dẫn các bước kỹ thuật, luôn trình bày dưới dạng danh sách gạch đầu dòng ngắn gọn, dễ hiểu.",
+            "EXAMPLE_5": "Chủ động đề xuất các bước tiếp theo thay vì hỏi chung chung 'Anh/chị cần gì nữa không?'."
           },
           "NEW": {
             "TITLE": "Thêm chỉ dẫn phản hồi",
