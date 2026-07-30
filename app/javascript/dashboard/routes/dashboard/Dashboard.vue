@@ -79,7 +79,9 @@ export default {
     const showWelcomeTrialModal = ref(false);
 
     const onOnboardingCompleted = () => {
-      showWelcomeTrialModal.value = true;
+      setTimeout(() => {
+        showWelcomeTrialModal.value = true;
+      }, 2500);
     };
 
     return {

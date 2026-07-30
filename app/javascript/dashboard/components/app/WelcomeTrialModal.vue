@@ -83,7 +83,7 @@ const skipTrial = () => emit('close');
     <Transition name="welcome-fade">
       <div
         v-if="show"
-        class="fixed inset-0 z-[9999] flex items-center justify-center bg-n-alpha-black2 backdrop-blur-[4px]"
+        class="fixed inset-0 z-[999999] flex items-center justify-center bg-n-alpha-black2 backdrop-blur-[4px]"
       >
         <div
           class="welcome-modal-box relative w-full max-w-md mx-4 rounded-2xl bg-n-solid-1 shadow-2xl outline outline-1 outline-n-container overflow-hidden"
