@@ -73,10 +73,41 @@ class Webhooks::FacebookFeedJob < ApplicationJob
 
   # rubocop:disable Metrics/MethodLength
   def process_auto_reply(channel, conversation, data)
-    return unless channel.auto_reply_to_comments?
+    process_public_reply(channel, conversation, data) if channel.auto_public_reply_to_comments?
+    process_private_reply(channel, conversation, data) if channel.auto_reply_to_comments?
+  end
+
+  def process_public_reply(channel, conversation, data)
     return if comment_too_old?(data)
 
-    # Idempotency guard — one private reply per comment per channel
+    lock_key = "public_reply:fb:#{channel.id}:#{data[:comment_id]}"
+    return unless Redis::Alfred.setnx(lock_key, Time.current.to_i)
+
+    Redis::Alfred.expire(lock_key, 7.days.to_i)
+
+    if channel.provider_config['auto_reply_use_ai']
+      Captain::Conversation::CommentReplyBuilderJob.perform_later(
+        conversation.id,
+        comment_id: data[:comment_id],
+        post_id: data[:post_id],
+        message: data[:message],
+        platform: 'facebook',
+        reply_type: 'public',
+        comment_created_at: data[:created_time].to_s
+      )
+    elsif channel.auto_reply_message.present?
+      processed_message = process_liquid_message(channel.auto_reply_message, conversation)
+      Facebook::CommentActionService.new(channel: channel).reply_comment_and_log(
+        data[:comment_id],
+        processed_message,
+        conversation
+      )
+    end
+  end
+
+  def process_private_reply(channel, conversation, data)
+    return if comment_too_old?(data)
+
     lock_key = "private_reply:fb:#{channel.id}:#{data[:comment_id]}"
     return unless Redis::Alfred.setnx(lock_key, Time.current.to_i)
 
@@ -89,6 +120,7 @@ class Webhooks::FacebookFeedJob < ApplicationJob
         post_id: data[:post_id],
         message: data[:message],
         platform: 'facebook',
+        reply_type: 'private',
         comment_created_at: data[:created_time].to_s
       )
     elsif channel.auto_reply_message.present?

@@ -1144,10 +1144,12 @@
         "HIDE_EMAIL_HELP": "Automatically hide comments that contain an email address to protect customer contact info."
       },
       "AUTO_REPLY": {
-        "TITLE": "Auto Reply (Private Message)",
-        "DESCRIPTION": "Automatically send a private message via Messenger to customers who comment on your posts.",
-        "ENABLE": "Enable auto reply to comments",
-        "ENABLE_HELP": "When enabled, a private message will be sent to the commenter's Messenger inbox.",
+        "TITLE": "Auto Reply",
+        "DESCRIPTION": "Automatically reply to customers who comment on your posts.",
+        "ENABLE_PRIVATE": "Enable auto reply (Private Message)",
+        "ENABLE_PRIVATE_HELP": "When enabled, a private message will be sent to the commenter's Messenger inbox.",
+        "ENABLE_PUBLIC": "Enable auto reply (Public Comment)",
+        "ENABLE_PUBLIC_HELP": "When enabled, a public comment will be posted in reply to the commenter.",
         "USE_AI": "Reply using AI Assistant",
         "USE_AI_HELP": "When enabled, an AI will generate the response based on the post and comment context instead of sending a static message.",
         "AI_PROMPT_LABEL": "AI Assistant Strategy",

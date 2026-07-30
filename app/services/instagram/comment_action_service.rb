@@ -14,7 +14,7 @@ class Instagram::CommentActionService
   # Hide a comment on a post
   # POST /{comment_id}?hide=true
   def hide_comment(comment_id)
-    url = "https://graph.instagram.com/#{API_VERSION}/#{comment_id}"
+    url = "https://graph.facebook.com/#{API_VERSION}/#{comment_id}"
     response = HTTParty.post(url, body: { hide: true, access_token: @access_token })
 
     if response.success?
@@ -89,6 +89,59 @@ class Instagram::CommentActionService
         status: :failed,
         source_id: "failed_ig_#{SecureRandom.hex(4)}",
         content_attributes: { is_private_reply: true }
+      )
+      Messages::StatusUpdateService.new(msg, 'failed', error_msg).perform
+    end
+  end
+
+  # Send a public reply to an Instagram comment
+  # POST /{ig_comment_id}/replies
+  def reply_comment(comment_id, message_text)
+    url = "https://graph.facebook.com/#{API_VERSION}/#{comment_id}/replies"
+    response = HTTParty.post(
+      url,
+      body: { message: message_text, access_token: @access_token }
+    )
+
+    if response.success?
+      Rails.logger.info "[InstagramFeed] Successfully replied publicly to comment #{comment_id}"
+    else
+      log_api_error('reply comment', comment_id, response)
+    end
+
+    response
+  rescue StandardError => e
+    Rails.logger.error "[InstagramFeed] Error replying to comment #{comment_id}: #{e.message}"
+    nil
+  end
+
+  def reply_comment_and_log(comment_id, message_text, conversation)
+    response = reply_comment(comment_id, message_text)
+    
+    if response&.success?
+      body = JSON.parse(response.body)
+      msg_id = body['id']
+
+      return unless msg_id.present?
+
+      conversation.messages.create!(
+        account_id: conversation.account_id,
+        inbox_id: conversation.inbox_id,
+        message_type: :outgoing,
+        content: message_text,
+        source_id: msg_id
+      )
+    else
+      body = JSON.parse(response.body) rescue {}
+      error_msg = body.dig('error', 'message') || 'Failed to send public reply'
+      
+      msg = conversation.messages.create!(
+        account_id: conversation.account_id,
+        inbox_id: conversation.inbox_id,
+        message_type: :outgoing,
+        content: message_text,
+        status: :failed,
+        source_id: "failed_ig_reply_#{SecureRandom.hex(4)}"
       )
       Messages::StatusUpdateService.new(msg, 'failed', error_msg).perform
     end

@@ -5,7 +5,7 @@ class Captain::Conversation::CommentReplyBuilderJob < ApplicationJob
 
   SUPPORTED_CHANNELS = [Channel::FacebookPage, Channel::Instagram, Channel::Tiktok].freeze
 
-  def perform(conversation_id, comment_id:, post_id:, message:, platform:, comment_created_at: nil)
+  def perform(conversation_id, comment_id:, post_id:, message:, platform:, reply_type: 'private', comment_created_at: nil)
     @conversation = Conversation.find_by(id: conversation_id)
     return unless @conversation
 
@@ -13,7 +13,7 @@ class Captain::Conversation::CommentReplyBuilderJob < ApplicationJob
     return unless supported_channel?
     return if comment_too_old?(comment_id, comment_created_at)
 
-    generated_text = generate_reply_text(message, post_id, platform)
+    generated_text = generate_reply_text(message, post_id, platform, reply_type)
     
     if generated_text.blank?
       msg = @conversation.messages.create!(
@@ -29,7 +29,7 @@ class Captain::Conversation::CommentReplyBuilderJob < ApplicationJob
       return
     end
 
-    send_reply(comment_id, generated_text)
+    send_reply(comment_id, generated_text, reply_type)
   end
 
   private
@@ -50,11 +50,15 @@ class Captain::Conversation::CommentReplyBuilderJob < ApplicationJob
     false
   end
 
-  def send_reply(comment_id, text)
+  def send_reply(comment_id, text, reply_type)
     if @channel.is_a?(Channel::Tiktok)
       send_tiktok_comment_reply(comment_id, text)
     else
-      action_service_for_channel.send_private_reply_and_log(comment_id, text, @conversation)
+      if reply_type == 'public'
+        action_service_for_channel.reply_comment_and_log(comment_id, text, @conversation)
+      else
+        action_service_for_channel.send_private_reply_and_log(comment_id, text, @conversation)
+      end
     end
   end
 
@@ -66,9 +70,13 @@ class Captain::Conversation::CommentReplyBuilderJob < ApplicationJob
     end
   end
 
-  def generate_reply_text(customer_message, post_id, platform)
+  def generate_reply_text(customer_message, post_id, platform, reply_type)
     prompt_config = @channel.provider_config['auto_reply_ai_prompt'] || 'Hãy viết một tin nhắn ngắn gọn, thân thiện, trả lời khách hàng.'
-    reply_method = platform == 'tiktok' ? 'bình luận công khai' : 'tin nhắn riêng tư (Direct Message)'
+    reply_method = if platform == 'tiktok' || reply_type == 'public'
+                     'bình luận công khai'
+                   else
+                     'tin nhắn riêng tư (Direct Message)'
+                   end
 
     system_prompt = <<~PROMPT
       Bạn là trợ lý chăm sóc khách hàng của trang #{platform.capitalize}.

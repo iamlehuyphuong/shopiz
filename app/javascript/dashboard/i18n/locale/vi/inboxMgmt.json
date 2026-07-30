@@ -1113,10 +1113,12 @@
         "HIDE_EMAIL_HELP": "Tự động ẩn bình luận có chứa địa chỉ email để bảo vệ thông tin liên hệ của khách hàng."
       },
       "AUTO_REPLY": {
-        "TITLE": "Trả lời tự động (Tin nhắn riêng)",
-        "DESCRIPTION": "Tự động gửi tin nhắn riêng qua Messenger cho khách hàng bình luận trên bài viết.",
-        "ENABLE": "Bật tính năng gửi tin nhắn tự động",
-        "ENABLE_HELP": "Khi được bật, một tin nhắn riêng tư sẽ được gửi đến hộp thư Messenger của người bình luận.",
+        "TITLE": "Trả lời tự động",
+        "DESCRIPTION": "Tự động phản hồi khách hàng bình luận trên bài viết.",
+        "ENABLE_PRIVATE": "Tự động gửi tin nhắn riêng (Private Message)",
+        "ENABLE_PRIVATE_HELP": "Khi được bật, một tin nhắn riêng tư sẽ được gửi đến hộp thư Messenger của người bình luận.",
+        "ENABLE_PUBLIC": "Tự động trả lời công khai (Public Comment)",
+        "ENABLE_PUBLIC_HELP": "Khi được bật, hệ thống sẽ tự động đăng bình luận trả lời khách hàng dưới bài viết.",
         "USE_AI": "Sinh tự động bằng Trợ lý AI",
         "USE_AI_HELP": "Hệ thống sẽ thông qua ngữ cảnh Bình luận Khách hàng và cấu hình dưới đây để gọi AI sinh ra câu trả lời.",
         "AI_PROMPT_LABEL": "Chiến lược cho Trợ lý AI",

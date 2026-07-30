@@ -38,6 +38,7 @@ class Channel::FacebookPage < ApplicationRecord
                  :auto_reply_to_comments,   # Boolean - send private reply to commenters
                  :auto_reply_use_ai,        # Boolean - use AI to generate reply
                  :auto_reply_message,       # String  - message content for private reply
+                 :auto_public_reply_to_comments, # Boolean - send public reply to commenters
                  :auto_reply_ai_prompt      # String  - AI prompt for generating reply
 
   validates :page_id, uniqueness: { scope: :account_id }
@@ -92,5 +93,9 @@ class Channel::FacebookPage < ApplicationRecord
 
   def auto_reply_to_comments?
     ActiveModel::Type::Boolean.new.cast(auto_reply_to_comments)
+  end
+
+  def auto_public_reply_to_comments?
+    ActiveModel::Type::Boolean.new.cast(auto_public_reply_to_comments)
   end
 end

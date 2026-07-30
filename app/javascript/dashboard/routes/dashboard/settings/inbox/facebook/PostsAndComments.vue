@@ -22,6 +22,7 @@ const hideComments = ref(false);
 const hidePhoneComments = ref(false);
 const hideEmailComments = ref(false);
 const autoReplyToComments = ref(false);
+const autoPublicReplyToComments = ref(false);
 const autoReplyUseAi = ref(false);
 const autoReplyMessage = ref('');
 const autoReplyAiPrompt = ref('');
@@ -51,6 +52,7 @@ function syncSettings() {
   hidePhoneComments.value = toBool(config.hide_phone_comments);
   hideEmailComments.value = toBool(config.hide_email_comments);
   autoReplyToComments.value = toBool(config.auto_reply_to_comments);
+  autoPublicReplyToComments.value = toBool(config.auto_public_reply_to_comments);
   autoReplyUseAi.value = toBool(config.auto_reply_use_ai);
   autoReplyMessage.value = config.auto_reply_message || '';
   autoReplyAiPrompt.value = config.auto_reply_ai_prompt || '';
@@ -78,6 +80,7 @@ async function updateSettings() {
               }
             : {}),
           auto_reply_to_comments: autoReplyToComments.value,
+          auto_public_reply_to_comments: autoPublicReplyToComments.value,
           auto_reply_use_ai: autoReplyUseAi.value,
           auto_reply_message: autoReplyMessage.value,
           auto_reply_ai_prompt: autoReplyAiPrompt.value,
@@ -164,13 +167,21 @@ async function updateSettings() {
 
       <SettingsToggleSection
         v-model="autoReplyToComments"
-        :header="$t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.ENABLE')"
+        :header="$t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.ENABLE_PRIVATE')"
         :description="
-          $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.ENABLE_HELP')
+          $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.ENABLE_PRIVATE_HELP')
         "
       />
 
-      <template v-if="autoReplyToComments">
+      <SettingsToggleSection
+        v-model="autoPublicReplyToComments"
+        :header="$t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.ENABLE_PUBLIC')"
+        :description="
+          $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.ENABLE_PUBLIC_HELP')
+        "
+      />
+
+      <template v-if="autoReplyToComments || autoPublicReplyToComments">
         <SettingsToggleSection
           v-model="autoReplyUseAi"
           :header="$t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.USE_AI')"

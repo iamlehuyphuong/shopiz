@@ -92,6 +92,59 @@ class Facebook::CommentActionService
     end
   end
 
+  # Send a public reply to a Facebook comment
+  # POST /{comment_id}/comments
+  def reply_comment(comment_id, message)
+    url = "https://graph.facebook.com/#{API_VERSION}/#{comment_id}/comments"
+    response = HTTParty.post(
+      url,
+      body: { message: message, access_token: @access_token }
+    )
+
+    if response.success?
+      Rails.logger.info "[FacebookFeed] Successfully replied publicly to comment #{comment_id}"
+    else
+      log_api_error('reply comment', comment_id, response)
+    end
+
+    response
+  rescue StandardError => e
+    Rails.logger.error "[FacebookFeed] Error replying to comment #{comment_id}: #{e.message}"
+    nil
+  end
+
+  def reply_comment_and_log(comment_id, message, conversation)
+    response = reply_comment(comment_id, message)
+    
+    if response&.success?
+      body = JSON.parse(response.body)
+      msg_id = body['id']
+
+      return unless msg_id.present?
+
+      conversation.messages.create!(
+        account_id: conversation.account_id,
+        inbox_id: conversation.inbox_id,
+        message_type: :outgoing,
+        content: message,
+        source_id: msg_id
+      )
+    else
+      body = JSON.parse(response.body) rescue {}
+      error_msg = body.dig('error', 'message') || 'Failed to send public reply'
+      
+      msg = conversation.messages.create!(
+        account_id: conversation.account_id,
+        inbox_id: conversation.inbox_id,
+        message_type: :outgoing,
+        content: message,
+        status: :failed,
+        source_id: "failed_fb_reply_#{SecureRandom.hex(4)}"
+      )
+      Messages::StatusUpdateService.new(msg, 'failed', error_msg).perform
+    end
+  end
+
   private
 
   def log_api_error(action, comment_id, response)
