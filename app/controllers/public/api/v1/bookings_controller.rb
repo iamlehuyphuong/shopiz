@@ -1,4 +1,4 @@
-class Public::Api::V1::BookingsController < Public::Api::V1::BaseController
+class Public::Api::V1::BookingsController < PublicController
   before_action :fetch_configuration
   
   # GET /public/api/v1/bookings/:hash

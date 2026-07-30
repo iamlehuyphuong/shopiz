@@ -1,4 +1,4 @@
-class Captain::Tools::SearchMeetingsTool < BasePublicTool
+class Captain::Tools::SearchMeetingsTool < Captain::Tools::BasePublicTool
   include Captain::Tools::Concerns::BookingRoutable
 
   description 'Search for upcoming booked meetings/appointments for a guest'
