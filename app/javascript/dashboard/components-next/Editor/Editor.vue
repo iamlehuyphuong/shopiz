@@ -2,11 +2,13 @@
 import { computed, ref, watch, useSlots } from 'vue';
 
 import WootEditor from 'dashboard/components/widgets/WootWriter/Editor.vue';
+import Icon from 'dashboard/components-next/icon/Icon.vue';
 
 const props = defineProps({
   modelValue: { type: String, default: '' },
   editorKey: { type: String, default: '' },
   label: { type: String, default: '' },
+  tooltip: { type: String, default: '' },
   placeholder: { type: String, default: '' },
   focusOnMount: { type: Boolean, default: false },
   maxLength: { type: Number, default: 200 },
@@ -79,9 +81,20 @@ watch(
 
 <template>
   <div class="flex flex-col min-w-0 gap-1">
-    <label v-if="label" class="mb-0.5 text-sm font-medium text-n-slate-12">
-      {{ label }}
-    </label>
+    <div v-if="label" class="flex items-center gap-1 mb-0.5">
+      <label class="text-sm font-medium text-n-slate-12 mb-0">
+        {{ label }}
+      </label>
+      <Icon
+        v-if="tooltip"
+        v-tooltip.top-start="{
+          content: tooltip,
+          classes: 'max-w-[300px] whitespace-normal text-left leading-relaxed',
+        }"
+        icon="i-lucide-info"
+        class="w-3.5 h-3.5 text-n-slate-10 cursor-help"
+      />
+    </div>
     <div
       class="flex flex-col w-full gap-2 px-3 py-3 transition-all duration-500 ease-in-out border rounded-lg editor-wrapper bg-n-alpha-black2"
       :class="[

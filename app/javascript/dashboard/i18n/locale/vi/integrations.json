@@ -641,7 +641,8 @@
         "DESCRIPTION": {
           "LABEL": "Mô tả",
           "PLACEHOLDER": "Nhập mô tả trợ lý",
-          "ERROR": "Mô tả là bắt buộc"
+          "ERROR": "Mô tả là bắt buộc",
+          "TOOLTIP": "Mô tả trợ lý đóng vai trò là System Prompt. Hãy định hình nhân vật, văn phong giao tiếp (ví dụ: xưng em, gọi khách là Anh/Chị) và giới hạn công việc. Không nên đưa quá nhiều chi tiết quy trình vào đây, hãy để dành cho phần Kịch bản tư vấn."
         },
         "COMPANY_NAME": {
           "LABEL": "Tên Doanh nghiệp / Thương hiệu / Cửa hàng",

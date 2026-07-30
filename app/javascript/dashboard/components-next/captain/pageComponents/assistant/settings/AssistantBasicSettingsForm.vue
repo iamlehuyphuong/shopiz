@@ -149,9 +149,11 @@ watch(
     <Editor
       v-model="state.description"
       :label="t('CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.LABEL')"
+      :tooltip="t('CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.TOOLTIP')"
       :placeholder="t('CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.PLACEHOLDER')"
       :message="formErrors.description"
       :message-type="formErrors.description ? 'error' : 'info'"
+      :max-length="500"
       class="z-0"
     />
 

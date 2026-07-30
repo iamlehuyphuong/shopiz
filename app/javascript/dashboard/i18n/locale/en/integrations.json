@@ -641,7 +641,8 @@
         "DESCRIPTION": {
           "LABEL": "Description",
           "PLACEHOLDER": "Enter assistant description",
-          "ERROR": "The description is required"
+          "ERROR": "The description is required",
+          "TOOLTIP": "The assistant description acts as a System Prompt. Define the persona, communication tone (e.g., formal, friendly), and task boundaries here. Avoid adding too many process details; save those for the Scenarios."
         },
         "COMPANY_NAME": {
           "LABEL": "Company / Store Name",
