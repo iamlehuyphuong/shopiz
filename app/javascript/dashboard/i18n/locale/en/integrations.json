@@ -879,14 +879,13 @@
                     "id": "general_zalo_consultation",
                     "title": "Basic Consultation & Lead Generation",
                     "description": "Classification: Consultation & Lead Capture. Use this scenario when a customer initiates contact with general questions and the goal is to provide basic answers and collect their phone number for Zalo support.",
-                    "instruction": "Step 1: Consult and answer queries using [search_documentation](tool://search_documentation) (FAQ), [search_canned_responses](tool://search_canned_responses), or [execute_macro](tool://execute_macro).\nStep 2: Politely ask for their phone number.\nStep 3: Once provided, use [update_customer](tool://update_customer) to save it.\nStep 4: Propose to connect on Zalo. Use [send_zalo_friend_request](tool://send_zalo_friend_request) to send a friend request with a greeting.\nStep 5: Use [update_conversation_tags](tool://update_conversation_tags) to tag the conversation.",
+                    "instruction": "Step 1: Consult and answer queries using [faq_lookup](tool://faq_lookup) (FAQ), [get_canned_response](tool://get_canned_response), or [execute_macro](tool://execute_macro).\nStep 2: Politely ask for their phone number.\nStep 3: Once provided, use [update_contact](tool://update_contact) to save it.\nStep 4: Use [add_label_to_conversation](tool://add_label_to_conversation) to tag the conversation.",
                     "tools": [
-                      "search_documentation",
-                      "search_canned_responses",
+                      "faq_lookup",
+                      "get_canned_response",
                       "execute_macro",
-                      "update_conversation_tags",
-                      "update_customer",
-                      "send_zalo_friend_request"
+                      "add_label_to_conversation",
+                      "update_contact"
                     ]
                   }
                 ]
@@ -900,10 +899,10 @@
                     "id": "ecom_general_faq",
                     "title": "Sales Assistant & General FAQ",
                     "description": "Classification: E-commerce General FAQ. Use this scenario when customers have general questions about products, store policies (shipping, payment, hours) that are NOT related to a specific order.",
-                    "instruction": "Step 1: Greet the customer and clarify their question.\nStep 2: Use [search_documentation](tool://search_documentation) and [search_articles](tool://search_articles) to find relevant policy or product information.\nStep 3: Answer the customer concisely and enthusiastically based on the findings.\nStep 4: If information is missing or the request is too complex, use [execute_macro](tool://execute_macro) to handoff to a human agent.",
+                    "instruction": "Step 1: Greet the customer and clarify their question.\nStep 2: Use [faq_lookup](tool://faq_lookup) and [faq_lookup](tool://faq_lookup) to find relevant policy or product information.\nStep 3: Answer the customer concisely and enthusiastically based on the findings.\nStep 4: If information is missing or the request is too complex, use [execute_macro](tool://execute_macro) to handoff to a human agent.",
                     "tools": [
-                      "search_documentation",
-                      "search_articles",
+                      "faq_lookup",
+                      "faq_lookup",
                       "execute_macro"
                     ]
                   },
@@ -939,22 +938,22 @@
                     "id": "spa_booking",
                     "title": "Spa Appointment Booking",
                     "description": "Classification: Spa Booking. Use this scenario when clients want to book an appointment or check available time slots for spa/clinic services.",
-                    "instruction": "Step 1: Ask the client for details on the desired service, preferred date, and time.\nStep 2: Use [get_available_times](tool://get_available_times) to find available slots matching their request.\nStep 3: Propose the available times for them to choose.\nStep 4: Once chosen, use [book_appointment](tool://book_appointment) to confirm the booking.",
-                    "tools": ["get_available_times", "book_appointment"]
+                    "instruction": "Step 1: Ask the client for details on the desired service, preferred date, and time.\nStep 2: Use [check_availability](tool://check_availability) to find available slots matching their request.\nStep 3: Propose the available times for them to choose.\nStep 4: Once chosen, use [book_meeting](tool://book_meeting) to confirm the booking.",
+                    "tools": ["check_availability", "book_meeting"]
                   },
                   {
                     "id": "spa_services_faq",
                     "title": "Services & Pricing FAQ",
                     "description": "Classification: Spa Services Consulting. Use this scenario when clients ask about available treatments, their benefits, duration, and pricing.",
-                    "instruction": "Step 1: Identify the specific service the client is interested in.\nStep 2: Use [search_articles](tool://search_articles) to look up accurate information on treatments, duration, and prices.\nStep 3: Provide clear, appealing advice and the exact price to the client.",
-                    "tools": ["search_articles"]
+                    "instruction": "Step 1: Identify the specific service the client is interested in.\nStep 2: Use [faq_lookup](tool://faq_lookup) to look up accurate information on treatments, duration, and prices.\nStep 3: Provide clear, appealing advice and the exact price to the client.",
+                    "tools": ["faq_lookup"]
                   },
                   {
                     "id": "spa_cancel_reschedule",
                     "title": "Cancel or Reschedule Appointment",
                     "description": "Classification: Appointment Management. Use this scenario when clients want to change (reschedule) or cancel an existing appointment.",
-                    "instruction": "Step 1: Ask for the appointment ID or the phone number used for the booking.\nStep 2: Confirm whether they want to cancel or reschedule to a new date/time.\nStep 3: Use [manage_booking](tool://manage_booking) to process the cancellation or rescheduling in the system.\nStep 4: Notify the client of the successful update.",
-                    "tools": ["manage_booking"]
+                    "instruction": "Step 1: Ask the client for their appointment ID or phone number used for booking.\nStep 2: Confirm whether they want to cancel or reschedule, and to which date/time.\nStep 3: Use [cancel_meeting](tool://cancel_meeting) to process the cancellation or rescheduling on the system.\nStep 4: Notify the client of the successful change.",
+                    "tools": ["cancel_meeting"]
                   }
                 ]
               },
@@ -967,15 +966,15 @@
                     "id": "edtech_course_advisor",
                     "title": "Course Advisor & Recommendation",
                     "description": "Classification: Course Advising. Use this scenario when students or parents seek advice on choosing a course that fits their current level and goals.",
-                    "instruction": "Step 1: Ask about their learning goals (e.g., IELTS, communication, kids) and current proficiency level.\nStep 2: Analyze their needs.\nStep 3: Use [search_articles](tool://search_articles) to find and suggest the most suitable courses.\nStep 4: Outline the basic learning path and benefits of the course.",
-                    "tools": ["search_articles"]
+                    "instruction": "Step 1: Ask about their learning goals (e.g., IELTS, communication, kids) and current proficiency level.\nStep 2: Analyze their needs.\nStep 3: Use [faq_lookup](tool://faq_lookup) to find and suggest the most suitable courses.\nStep 4: Outline the basic learning path and benefits of the course.",
+                    "tools": ["faq_lookup"]
                   },
                   {
                     "id": "edtech_schedule_lookup",
                     "title": "Class Schedule Lookup",
                     "description": "Classification: Schedule Lookup. Use this scenario when students want to check their upcoming timetable, class schedule, teachers, or room assignments.",
-                    "instruction": "Step 1: Request the student's ID or registered phone number.\nStep 2: Use [search_canned_responses](tool://search_canned_responses) to find standard replies or directly provide the schedule information.\nStep 3: Guide the student on how to check the portal themselves in the future (if applicable).",
-                    "tools": ["search_canned_responses"]
+                    "instruction": "Step 1: Request the student's ID or registered phone number.\nStep 2: Use [get_canned_response](tool://get_canned_response) to find standard replies or directly provide the schedule information.\nStep 3: Guide the student on how to check the portal themselves in the future (if applicable).",
+                    "tools": ["get_canned_response"]
                   },
                   {
                     "id": "edtech_leave_request",
@@ -995,22 +994,22 @@
                     "id": "re_property_search",
                     "title": "Property Search & Matching",
                     "description": "Classification: Property Search. Use this scenario when clients are looking to buy or rent a property and want to know what options are available.",
-                    "instruction": "Step 1: Gather client requirements: desired location, budget, number of bedrooms, etc.\nStep 2: Use [search_articles](tool://search_articles) to search the database for properties/projects matching the criteria.\nStep 3: Suggest a few top options with basic info and photos.",
-                    "tools": ["search_articles"]
+                    "instruction": "Step 1: Gather client requirements: desired location, budget, number of bedrooms, etc.\nStep 2: Use [faq_lookup](tool://faq_lookup) to search the database for properties/projects matching the criteria.\nStep 3: Suggest a few top options with basic info and photos.",
+                    "tools": ["faq_lookup"]
                   },
                   {
                     "id": "re_book_viewing",
                     "title": "Book Property Viewing",
                     "description": "Classification: Property Viewing Booking. Use this scenario when a client is interested in a specific property/project and wants to schedule an in-person viewing.",
-                    "instruction": "Step 1: Confirm the exact property ID or project the client wants to visit.\nStep 2: Ask for their preferred date and time for the viewing.\nStep 3: Use [book_appointment](tool://book_appointment) to schedule the viewing with an agent and send a confirmation to the client.",
-                    "tools": ["book_appointment"]
+                    "instruction": "Step 1: Confirm the exact property ID or project the client wants to visit.\nStep 2: Ask for their preferred date and time for the viewing.\nStep 3: Use [book_meeting](tool://book_meeting) to schedule the viewing with an agent and send a confirmation to the client.",
+                    "tools": ["book_meeting"]
                   },
                   {
                     "id": "re_neighborhood_faq",
                     "title": "Neighborhood & Amenities FAQ",
                     "description": "Classification: Neighborhood Info. Use this scenario when clients ask about the living environment, internal/external amenities (schools, supermarkets, parking) of a project.",
-                    "instruction": "Step 1: Identify the project the client is referring to.\nStep 2: Use [search_documentation](tool://search_documentation) to retrieve details about nearby amenities (supermarkets, schools, hospitals, parking...).\nStep 3: Reply in detail to highlight the value of the location.",
-                    "tools": ["search_documentation"]
+                    "instruction": "Step 1: Identify the project the client is referring to.\nStep 2: Use [faq_lookup](tool://faq_lookup) to retrieve details about nearby amenities (supermarkets, schools, hospitals, parking...).\nStep 3: Reply in detail to highlight the value of the location.",
+                    "tools": ["faq_lookup"]
                   }
                 ]
               },
@@ -1023,22 +1022,22 @@
                     "id": "travel_booking",
                     "title": "Tour & Ticket Booking",
                     "description": "Classification: Travel Booking. Use this scenario when customers want to finalize a booking for tours, flights, hotels, or attraction tickets.",
-                    "instruction": "Step 1: Collect full details: departure date, return date, destination, number of pax (adults/children).\nStep 2: Provide an initial quote (if available).\nStep 3: Use [book_appointment](tool://book_appointment) to log the booking request or schedule a callback for detailed support.",
-                    "tools": ["book_appointment"]
+                    "instruction": "Step 1: Collect full details: departure date, return date, destination, number of pax (adults/children).\nStep 2: Provide an initial quote (if available).\nStep 3: Use [book_meeting](tool://book_meeting) to log the booking request or schedule a callback for detailed support.",
+                    "tools": ["book_meeting"]
                   },
                   {
                     "id": "travel_itinerary",
                     "title": "Itinerary Suggestion",
                     "description": "Classification: Itinerary Consulting. Use this scenario when customers plan to travel but are unsure where to go, or need a detailed itinerary suggestion.",
-                    "instruction": "Step 1: Ask about their preferences (relaxation vs. exploration), estimated budget, and trip duration.\nStep 2: Use [search_articles](tool://search_articles) to find matching articles or sample itineraries.\nStep 3: Propose an appealing basic itinerary highlighting key destinations.",
-                    "tools": ["search_articles"]
+                    "instruction": "Step 1: Ask about their preferences (relaxation vs. exploration), estimated budget, and trip duration.\nStep 2: Use [faq_lookup](tool://faq_lookup) to find matching articles or sample itineraries.\nStep 3: Propose an appealing basic itinerary highlighting key destinations.",
+                    "tools": ["faq_lookup"]
                   },
                   {
                     "id": "travel_faq",
                     "title": "Travel FAQ & Policies",
                     "description": "Classification: Travel Regulations. Use this scenario when customers ask about paperwork, visas, airline luggage rules, or cancellation policies.",
-                    "instruction": "Step 1: Listen carefully to the customer's question regarding procedures/rules.\nStep 2: Use [search_documentation](tool://search_documentation) to look up accurate information from trusted sources (airlines, embassies).\nStep 3: Provide a clear answer, noting important details so the customer avoids documentation issues.",
-                    "tools": ["search_documentation"]
+                    "instruction": "Step 1: Listen carefully to the customer's question regarding procedures/rules.\nStep 2: Use [faq_lookup](tool://faq_lookup) to look up accurate information from trusted sources (airlines, embassies).\nStep 3: Provide a clear answer, noting important details so the customer avoids documentation issues.",
+                    "tools": ["faq_lookup"]
                   }
                 ]
               },
@@ -1065,8 +1064,8 @@
                     "id": "tech_troubleshooting",
                     "title": "Basic Technical Support",
                     "description": "Classification: Tech Troubleshooting. Use this scenario when customers encounter basic software glitches (freezes, wifi issues) and need remote troubleshooting.",
-                    "instruction": "Step 1: Ask the customer to describe the issue in detail or send a screenshot if possible.\nStep 2: Use [search_documentation](tool://search_documentation) to find corresponding troubleshooting guides.\nStep 3: Guide the customer step-by-step (1, 2, 3...) to fix the issue themselves.",
-                    "tools": ["search_documentation"]
+                    "instruction": "Step 1: Ask the customer to describe the issue in detail or send a screenshot if possible.\nStep 2: Use [faq_lookup](tool://faq_lookup) to find corresponding troubleshooting guides.\nStep 3: Guide the customer step-by-step (1, 2, 3...) to fix the issue themselves.",
+                    "tools": ["faq_lookup"]
                   }
                 ]
               }

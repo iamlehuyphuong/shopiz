@@ -1,8 +1,7 @@
 # Generic router tool: Create a draft order.
 # Auto-delegates to the platform-specific create order draft tool based on
 # the conversation inbox's e-commerce integration.
-# Falls back with an informational message when no ecom is linked
-# (there is no local DB create-order-draft logic).
+# Falls back to creating a local draft order using Shopiz built-in products.
 class Captain::Tools::CreateOrderDraftTool < Captain::Tools::BasePublicTool
   include Captain::Tools::Concerns::EcomRoutable
 
@@ -31,7 +30,9 @@ class Captain::Tools::CreateOrderDraftTool < Captain::Tools::BasePublicTool
       return result if result
     end
 
-    'Order creation requires an e-commerce integration. Please connect your store in Inbox settings.'
+    # Fallback to local DB
+    log_tool_usage('create_order_draft', { product_identifiers: product_identifiers, quantities: quantities })
+    create_local_draft_order(conversation, product_identifiers, quantities, customer_note)
   end
 
   private
@@ -59,5 +60,88 @@ class Captain::Tools::CreateOrderDraftTool < Captain::Tools::BasePublicTool
     else
       base.merge(product_ids: identifiers)
     end
+  end
+
+  def create_local_draft_order(conversation, product_identifiers, quantities, customer_note)
+    contact = conversation.contact
+    return 'Contact not found' unless contact
+
+    ids = product_identifiers.split(',').map(&:strip).reject(&:blank?)
+    qtys = parse_quantities(quantities, ids.size)
+    return 'Product identifiers and quantities must match' if ids.size != qtys.size
+
+    items_data = resolve_local_products(conversation.account, ids, qtys)
+    return items_data[:error] if items_data[:error]
+
+    order = build_and_save_local_order(conversation, contact, items_data[:items], customer_note)
+    format_draft_result(order, items_data)
+  end
+
+  def parse_quantities(str, expected_size)
+    parsed = str.split(',').map { |q| q.strip.to_i }
+    return Array.new(expected_size, parsed.first) if parsed.size == 1 && expected_size > 1
+
+    parsed
+  end
+
+  def resolve_local_products(account, ids, qtys)
+    items = []
+    warnings = []
+
+    ids.each_with_index do |id, idx|
+      product = account.products.find_by(id: id) || account.products.find_by(sku: id)
+      return { error: "Product '#{id}' not found in the store" } unless product
+
+      stock = product.inventory_quantity.to_i
+      qty = qtys[idx]
+      warnings << "#{product.name} (ID: #{product.id}): only #{stock} in stock" if stock < qty
+
+      items << {
+        product_name: product.name,
+        product_id: product.id.to_s,
+        product_source: 'shopiz',
+        quantity: qty,
+        unit_price: product.price.to_f,
+        product_thumbnail: product.images&.first
+      }
+    end
+    { items: items, warnings: warnings }
+  end
+
+  def build_and_save_local_order(conversation, contact, items, customer_note)
+    order = conversation.conversation_orders.new(
+      account: conversation.account,
+      contact: contact,
+      status: :draft,
+      customer_name: contact.name,
+      customer_phone: contact.phone_number,
+      customer_address: contact.additional_attributes&.dig('address'),
+      customer_note: customer_note,
+      external_source: 'shopiz'
+    )
+
+    items.each do |item|
+      order.items.build(item.slice(:product_name, :product_id, :product_source, :quantity, :unit_price, :product_thumbnail))
+    end
+
+    order.save!
+    order
+  end
+
+  def format_draft_result(order, items_data)
+    lines = ["✅ Draft order ##{order.id} created successfully!\n", 'Items:']
+    items_data[:items].each do |i|
+      lines << "  • #{i[:product_name]} × #{i[:quantity]} — #{i[:unit_price]} each"
+    end
+    lines << "\nTotal: #{order.total_amount}"
+    lines << "Customer: #{order.customer_name} | #{order.customer_phone}"
+
+    if items_data[:warnings].present?
+      lines << "\n⚠️ Stock warnings:"
+      items_data[:warnings].each { |w| lines << "  • #{w}" }
+    end
+
+    lines << "\n📋 This is a DRAFT order. An agent will review and confirm it."
+    lines.join("\n")
   end
 end
