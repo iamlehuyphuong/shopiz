@@ -871,201 +871,122 @@
             "TOOLS_USED": "Công cụ sử dụng:",
             "CASE_STUDIES": [
               {
-                "id": "general_pack",
-                "name": "Bộ Kịch bản Tư vấn Chung",
-                "description": "Các kịch bản tư vấn cơ bản, xin thông tin và thu thập SĐT để hỗ trợ tiếp.",
-                "scenarios": [
-                  {
-                    "id": "general_zalo_consultation",
-                    "title": "Tư vấn cơ bản xin số điện thoại",
-                    "description": "Phân loại: Tư vấn & Thu thập Lead. Sử dụng kịch bản này khi khách hàng mới nhắn tin, có thắc mắc chung và mục tiêu là giải đáp sau đó xin số điện thoại để hỗ trợ qua Zalo.",
-                    "instruction": "Bước 1: Tư vấn khách hàng, giải đáp thắc mắc bằng [faq_lookup](tool://faq_lookup) (FAQ), [get_canned_response](tool://get_canned_response) (tin nhắn mẫu) hoặc [execute_macro](tool://execute_macro).\nBước 2: Khéo léo xin thông tin số điện thoại của khách hàng.\nBước 3: Khi khách hàng cung cấp số điện thoại, dùng [update_contact](tool://update_contact) để lưu lại.\nBước 4: Dùng [add_label_to_conversation](tool://add_label_to_conversation) để gắn tag phân loại cuộc hội thoại.",
-                    "tools": [
-                      "faq_lookup",
-                      "get_canned_response",
-                      "execute_macro",
-                      "add_label_to_conversation",
-                      "update_contact"
-                    ]
-                  }
-                ]
-              },
-              {
                 "id": "ecommerce_pack",
-                "name": "Bộ Kịch bản E-commerce Hoàn chỉnh",
-                "description": "Bộ kịch bản hoàn chỉnh cho E-commerce để xử lý Hỏi đáp, tra cứu đơn, trả hàng và khiếu nại.",
+                "name": "Bộ Kịch bản Thương mại điện tử & Bán lẻ",
+                "description": "Bộ kịch bản này thiết kế cho các gian hàng online, chốt sale trực tiếp. Các kịch bản con tạo thành phễu bán hàng hoàn chỉnh từ lúc hỏi thăm sản phẩm đến chăm sóc sau mua.",
                 "scenarios": [
                   {
-                    "id": "ecom_general_faq",
-                    "title": "Trợ lý Bán hàng & Hỏi đáp chung",
-                    "description": "Phân loại: Hỏi đáp chung E-commerce. Sử dụng kịch bản này khi khách hàng có các câu hỏi chung về sản phẩm, chính sách cửa hàng (vận chuyển, thanh toán, giờ làm việc) mà KHÔNG liên quan đến một đơn hàng cụ thể.",
-                    "instruction": "Bước 1: Chào hỏi và xác định rõ câu hỏi của khách hàng.\nBước 2: Sử dụng công cụ [faq_lookup](tool://faq_lookup) và [faq_lookup](tool://faq_lookup) để tìm kiếm thông tin chính sách, sản phẩm phù hợp với câu hỏi.\nBước 3: Dựa trên thông tin tìm được, trả lời khách hàng một cách ngắn gọn, súc tích và nhiệt tình.\nBước 4: Nếu không tìm thấy thông tin hoặc khách hàng có yêu cầu phức tạp hơn, sử dụng công cụ [execute_macro](tool://execute_macro) để chuyển cuộc trò chuyện cho nhân viên hỗ trợ (handoff).",
+                    "id": "ecom_product_advisory",
+                    "title": "Tư vấn Sản phẩm",
+                    "description": "Mục đích: Xử lý khi khách hỏi 'Mình muốn mua áo/váy...', 'Có loại nào cho da mụn không?'",
+                    "instruction": "Bước 1: Hỏi nhu cầu cụ thể (loại sản phẩm, ngân sách, sở thích).\nBước 2: Dùng tool [suggest_products](tool://suggest_products) để gợi ý sản phẩm phù hợp, hoặc [get_product_details](tool://get_product_details) để lấy chi tiết 1 sản phẩm cụ thể.\nBước 3: Tư vấn ưu nhược điểm, so sánh và mời khách chốt.",
                     "tools": [
-                      "faq_lookup",
-                      "faq_lookup",
-                      "execute_macro"
+                      "suggest_products",
+                      "get_product_details"
+                    ]
+                  },
+                  {
+                    "id": "ecom_order_creation",
+                    "title": "Lên đơn nháp / Tạo đơn hàng",
+                    "description": "Mục đích: Khách đã ưng ý và muốn đặt hàng.",
+                    "instruction": "Bước 1: Thu thập thông tin giao hàng (Tên, SĐT, Địa chỉ).\nBước 2: Xác nhận lại giỏ hàng (Số lượng, biến thể sản phẩm).\nBước 3: Dùng tool [create_order_draft](tool://create_order_draft) để tạo đơn nháp trên hệ thống.\nBước 4: Gửi mã đơn hoặc link thanh toán cho khách.",
+                    "tools": [
+                      "create_order_draft"
                     ]
                   },
                   {
                     "id": "ecom_order_tracking",
-                    "title": "Kiểm tra Trạng thái Đơn hàng",
-                    "description": "Phân loại: Tra cứu đơn hàng. Sử dụng kịch bản này khi khách hàng muốn biết tình trạng, vị trí hoặc thời gian giao hàng của một đơn hàng cụ thể mà họ đã đặt.",
-                    "instruction": "Bước 1: Chào khách hàng và yêu cầu họ cung cấp mã đơn hàng hoặc số điện thoại đặt hàng nếu họ chưa cung cấp.\nBước 2: Sử dụng công cụ [search_orders](tool://search_orders) để tìm kiếm đơn hàng dựa trên thông tin khách hàng cung cấp.\nBước 3: Sử dụng công cụ [get_order_detail](tool://get_order_detail) để lấy thông tin chi tiết và trạng thái mới nhất của đơn hàng.\nBước 4: Trả lời khách hàng với thông tin cập nhật rõ ràng, thân thiện và hỏi xem họ có cần hỗ trợ thêm gì không.",
-                    "tools": ["search_orders", "get_order_detail"]
+                    "title": "Tra cứu & Kiểm tra đơn hàng",
+                    "description": "Mục đích: Khách hỏi 'Đơn hàng của mình bao giờ tới?', 'Check giúp mình đơn mã #1234'.",
+                    "instruction": "Bước 1: Hỏi khách mã đơn hàng hoặc SĐT đặt hàng.\nBước 2: Dùng tool [search_orders](tool://search_orders) để tìm kiếm đơn, sau đó dùng [get_order_detail](tool://get_order_detail) để lấy tình trạng đơn (Đang giao, đã lấy hàng...).\nBước 3: Phản hồi trạng thái thân thiện, cập nhật ngày giao dự kiến.",
+                    "tools": [
+                      "search_orders",
+                      "get_order_detail"
+                    ]
                   },
                   {
-                    "id": "ecom_return_refund",
-                    "title": "Xử lý Đổi trả",
-                    "description": "Phân loại: Xử lý đổi trả hàng. Sử dụng kịch bản này khi khách hàng yêu cầu hoàn tiền, trả hàng, hoặc đổi sản phẩm đã mua do lỗi hoặc không vừa ý.",
-                    "instruction": "Bước 1: Lắng nghe và xác định lý do muốn đổi trả của khách hàng. Yêu cầu cung cấp hình ảnh hoặc video nếu cần thiết.\nBước 2: Đánh giá xem yêu cầu có hợp lệ theo chính sách đổi trả hay không.\nBước 3: Nếu hợp lệ, hướng dẫn quy trình đổi trả và sử dụng công cụ [execute_macro](tool://execute_macro) để tạo ticket đổi trả cho bộ phận liên quan xử lý.",
-                    "tools": ["execute_macro"]
-                  },
-                  {
-                    "id": "ecom_escalation",
-                    "title": "Xử lý khiếu nại & Chuyển Handoff",
-                    "description": "Phân loại: Xử lý khiếu nại/Chuyển nhân viên. Sử dụng kịch bản này khi khách hàng thể hiện thái độ bực tức, không hài lòng, hoặc trực tiếp yêu cầu nói chuyện với người thật/quản lý.",
-                    "instruction": "Bước 1: Nhận diện cảm xúc của khách hàng. Nếu thấy tiêu cực, lập tức xin lỗi và xoa dịu.\nBước 2: Không cố gắng tự giải quyết vấn đề phức tạp.\nBước 3: Gọi ngay công cụ [execute_macro](tool://execute_macro) để chuyển cuộc hội thoại cho nhân viên chăm sóc khách hàng xử lý (handoff).",
-                    "tools": ["execute_macro"]
+                    "id": "ecom_returns_escalation",
+                    "title": "Đổi trả & Xử lý khiếu nại",
+                    "description": "Mục đích: Khách báo lỗi sản phẩm, muốn trả hàng hoặc không hài lòng.",
+                    "instruction": "Bước 1: Xin lỗi và đồng cảm với khách hàng. Xin hình ảnh/video tình trạng sản phẩm.\nBước 2: Nếu phức tạp, dùng tool [handoff](tool://handoff) để chuyển hội thoại trực tiếp cho nhân viên chăm sóc khách hàng (người thật) xử lý tiếp.",
+                    "tools": [
+                      "handoff"
+                    ]
                   }
                 ]
               },
               {
-                "id": "spa_pack",
-                "name": "Bộ Kịch bản Spa & Clinic",
-                "description": "Bộ kịch bản dành cho các cửa hàng Spa & Thẩm mỹ viện để đặt lịch hẹn và tư vấn dịch vụ.",
+                "id": "service_booking_pack",
+                "name": "Bộ Kịch bản Dịch vụ & Đặt lịch hẹn",
+                "description": "Bộ này thiết kế cho mô hình dịch vụ (Spa, Nha khoa, Thẩm mỹ viện, Cố vấn chuyên gia). Tập trung vào chuyển đổi ra cuộc hẹn.",
                 "scenarios": [
                   {
-                    "id": "spa_booking",
-                    "title": "Đặt lịch Spa",
-                    "description": "Phân loại: Đặt lịch hẹn Spa. Sử dụng kịch bản này khi khách hàng có nhu cầu đặt lịch, hỏi giờ trống để đến sử dụng dịch vụ Spa/Clinic.",
-                    "instruction": "Bước 1: Hỏi khách hàng chi tiết về dịch vụ muốn làm, ngày và giờ mong muốn đến.\nBước 2: Sử dụng công cụ [check_availability](tool://check_availability) để tìm các khung giờ trống phù hợp với yêu cầu.\nBước 3: Đề xuất các khung giờ cho khách hàng chọn.\nBước 4: Sau khi khách chọn, sử dụng công cụ [book_meeting](tool://book_meeting) để xác nhận đặt lịch.",
-                    "tools": ["check_availability", "book_meeting"]
+                    "id": "service_faq",
+                    "title": "Tư vấn Dịch vụ & Hỏi đáp chung",
+                    "description": "Mục đích: Khách hỏi về bảng giá, liệu trình, chính sách.",
+                    "instruction": "Bước 1: Tìm hiểu vấn đề của khách (VD: Da mụn, muốn tư vấn nâng mũi).\nBước 2: Dùng tool [faq_lookup](tool://faq_lookup) để tra cứu liệu trình chuẩn, mức giá từ thư viện Knowledge Base.\nBước 3: Trả lời súc tích và khéo léo dẫn dắt khách sang việc đặt lịch soi khám.",
+                    "tools": [
+                      "faq_lookup"
+                    ]
                   },
                   {
-                    "id": "spa_services_faq",
-                    "title": "Tư vấn Dịch vụ & Bảng giá",
-                    "description": "Phân loại: Tư vấn dịch vụ Spa. Sử dụng kịch bản này khi khách hàng hỏi về các liệu trình, tác dụng, thời gian làm dịch vụ và bảng giá.",
-                    "instruction": "Bước 1: Xác định rõ dịch vụ khách hàng đang quan tâm.\nBước 2: Sử dụng công cụ [faq_lookup](tool://faq_lookup) để tra cứu thông tin chính xác về liệu trình, thời gian và mức giá.\nBước 3: Tư vấn rõ ràng, hấp dẫn và cung cấp bảng giá chuẩn xác cho khách hàng.",
-                    "tools": ["faq_lookup"]
+                    "id": "service_booking",
+                    "title": "Kiểm tra lịch trống & Đặt lịch",
+                    "description": "Mục đích: Khách muốn hẹn tới làm dịch vụ.",
+                    "instruction": "Bước 1: Hỏi khách muốn tới cơ sở nào, ngày giờ nào.\nBước 2: Dùng tool [check_availability](tool://check_availability) để xem giờ đó còn trống bác sĩ/kỹ thuật viên không.\nBước 3: Nếu còn, xin SĐT và dùng tool [book_meeting](tool://book_meeting) để chốt lịch vào hệ thống.",
+                    "tools": [
+                      "check_availability",
+                      "book_meeting"
+                    ]
                   },
                   {
-                    "id": "spa_cancel_reschedule",
-                    "title": "Hủy hoặc Dời lịch hẹn",
-                    "description": "Phân loại: Quản lý lịch hẹn Spa. Sử dụng kịch bản này khi khách hàng muốn thay đổi thời gian (dời lịch) hoặc hủy lịch hẹn đã đặt trước đó.",
-                    "instruction": "Bước 1: Yêu cầu khách hàng cung cấp mã lịch hẹn hoặc số điện thoại dùng để đặt lịch.\nBước 2: Xác nhận lại mong muốn của khách là hủy hay dời sang ngày/giờ nào.\nBước 3: Sử dụng công cụ [cancel_meeting](tool://cancel_meeting) để thực hiện thao tác hủy hoặc dời lịch trên hệ thống.\nBước 4: Thông báo kết quả thành công cho khách hàng.",
-                    "tools": ["cancel_meeting"]
+                    "id": "service_reschedule_cancel",
+                    "title": "Tra cứu, Dời & Hủy lịch",
+                    "description": "Mục đích: Khách bận đột xuất muốn đổi giờ.",
+                    "instruction": "Bước 1: Xin SĐT để dùng tool [search_meetings](tool://search_meetings) tra cứu lịch hẹn hiện tại của khách.\nBước 2: Hỏi khách muốn dời sang khi nào, hoặc muốn hủy.\nBước 3: Dùng tool [cancel_meeting](tool://cancel_meeting) để hủy lịch cũ và (nếu dời) dùng lại [book_meeting](tool://book_meeting) để tạo lịch mới. Thông báo thành công cho khách.",
+                    "tools": [
+                      "search_meetings",
+                      "cancel_meeting",
+                      "book_meeting"
+                    ]
                   }
                 ]
               },
               {
                 "id": "edtech_pack",
-                "name": "Bộ Kịch bản Giáo dục & EdTech",
-                "description": "Bộ kịch bản dành cho các trung tâm tiếng Anh, nền tảng học trực tuyến để hỗ trợ tuyển sinh và học viên.",
+                "name": "Bộ Kịch bản Giáo dục & Tư vấn Khóa học",
+                "description": "Dành cho Trung tâm Tiếng Anh, nền tảng đào tạo online. Quá trình tư vấn cần thu thập dữ liệu (Lead) kỹ lưỡng hơn.",
                 "scenarios": [
                   {
-                    "id": "edtech_course_advisor",
-                    "title": "Tư vấn Khóa học",
-                    "description": "Phân loại: Tư vấn khóa học EdTech. Sử dụng kịch bản này khi học viên/phụ huynh cần tìm hiểu và nhận tư vấn chọn khóa học phù hợp với trình độ, mục tiêu.",
-                    "instruction": "Bước 1: Hỏi thăm mục tiêu học tập (ví dụ: thi IELTS, giao tiếp, cho trẻ em) và trình độ hiện tại của người học.\nBước 2: Phân tích nhu cầu.\nBước 3: Sử dụng công cụ [faq_lookup](tool://faq_lookup) để tìm kiếm và đưa ra gợi ý khóa học phù hợp nhất.\nBước 4: Tư vấn lộ trình cơ bản và lợi ích của khóa học.",
-                    "tools": ["faq_lookup"]
+                    "id": "edtech_lead_capture",
+                    "title": "Thu thập Lead & Tư vấn Lộ trình",
+                    "description": "Mục đích: Hỏi thăm trình độ, giới thiệu khóa học, lưu thông tin khách tiềm năng.",
+                    "instruction": "Bước 1: Khảo sát nhanh: Mục tiêu học (IELTS, Giao tiếp), độ tuổi, trình độ hiện tại.\nBước 2: Dùng [faq_lookup](tool://faq_lookup) tra cứu thông tin khóa học phù hợp.\nBước 3: Xin tên, SĐT để gửi thông tin học phí, dùng tool [update_contact](tool://update_contact) để cập nhật SĐT, và [add_label_to_conversation](tool://add_label_to_conversation) để gắn tag phân loại khách.",
+                    "tools": [
+                      "faq_lookup",
+                      "update_contact",
+                      "add_label_to_conversation"
+                    ]
                   },
                   {
                     "id": "edtech_schedule_lookup",
-                    "title": "Tra cứu Lịch học & Phòng học",
-                    "description": "Phân loại: Tra cứu lịch học EdTech. Sử dụng kịch bản này khi học viên muốn kiểm tra thời khóa biểu, lịch học sắp tới, giảng viên hoặc phòng học.",
-                    "instruction": "Bước 1: Yêu cầu học viên cung cấp mã học viên hoặc số điện thoại đã đăng ký.\nBước 2: Sử dụng công cụ [get_canned_response](tool://get_canned_response) để tìm các câu trả lời mẫu hướng dẫn tra cứu hoặc cung cấp trực tiếp thông tin lịch học.\nBước 3: Hướng dẫn học viên cách tự kiểm tra trên portal trong tương lai (nếu có).",
-                    "tools": ["get_canned_response"]
+                    "title": "Tra cứu thông tin học viên & Lịch học",
+                    "description": "Mục đích: Học viên cũ hỏi lịch học tuần này, xin đổi lớp.",
+                    "instruction": "Bước 1: Xin SĐT và dùng [get_contact_detail](tool://get_contact_detail) để định danh học viên.\nBước 2: Báo lịch học. Nếu cần hỗ trợ đổi lớp hoặc xin nghỉ, dùng [add_private_note](tool://add_private_note) để ghi chú lại yêu cầu cho Giáo vụ hoặc dùng [execute_macro](tool://execute_macro) (nếu có macro xử lý tự động).",
+                    "tools": [
+                      "get_contact_detail",
+                      "add_private_note",
+                      "execute_macro"
+                    ]
                   },
                   {
-                    "id": "edtech_leave_request",
-                    "title": "Xin nghỉ phép & Bảo lưu",
-                    "description": "Phân loại: Xử lý hành chính học viên. Sử dụng kịch bản này khi học viên có nhu cầu xin nghỉ học tạm thời, bảo lưu khóa học hoặc báo vắng mặt.",
-                    "instruction": "Bước 1: Hỏi rõ lý do xin nghỉ và thời gian dự kiến nghỉ phép (từ ngày nào đến ngày nào).\nBước 2: Giải thích sơ lược về chính sách bảo lưu/nghỉ phép nếu cần.\nBước 3: Sử dụng công cụ [execute_macro](tool://execute_macro) để gửi yêu cầu nghỉ phép vào hệ thống cho quản lý/giáo vụ xử lý.",
-                    "tools": ["execute_macro"]
-                  }
-                ]
-              },
-              {
-                "id": "real_estate_pack",
-                "name": "Bộ Kịch bản Bất động sản & Môi giới",
-                "description": "Bộ kịch bản dành cho đại lý bất động sản, môi giới để xử lý tin nhắn hỏi mua/thuê nhà.",
-                "scenarios": [
-                  {
-                    "id": "re_property_search",
-                    "title": "Tra cứu Quỹ căn & Phòng trống",
-                    "description": "Phân loại: Tìm kiếm Bất động sản. Sử dụng kịch bản này khi khách hàng đang tìm mua/thuê nhà, căn hộ và muốn hỏi về các lựa chọn đang có sẵn.",
-                    "instruction": "Bước 1: Khai thác nhu cầu khách hàng: khu vực mong muốn, ngân sách, số phòng ngủ, hướng nhà...\nBước 2: Sử dụng công cụ [faq_lookup](tool://faq_lookup) để tìm kiếm trong kho dữ liệu các dự án/căn hộ thỏa mãn tiêu chí.\nBước 3: Gợi ý cho khách hàng một vài lựa chọn nổi bật nhất kèm hình ảnh/thông tin cơ bản.",
-                    "tools": ["faq_lookup"]
-                  },
-                  {
-                    "id": "re_book_viewing",
-                    "title": "Đặt lịch Xem nhà",
-                    "description": "Phân loại: Đặt lịch xem Bất động sản. Sử dụng kịch bản này khi khách hàng đã ưng ý một căn/dự án và muốn đặt lịch hẹn gặp môi giới để đi xem trực tiếp.",
-                    "instruction": "Bước 1: Xác nhận lại chính xác mã bất động sản hoặc căn hộ khách hàng muốn xem.\nBước 2: Hỏi thời gian dự kiến khách có thể đi xem.\nBước 3: Sử dụng công cụ [book_meeting](tool://book_meeting) để xếp lịch hẹn với chuyên viên môi giới và gửi thông tin xác nhận cho khách.",
-                    "tools": ["book_meeting"]
-                  },
-                  {
-                    "id": "re_neighborhood_faq",
-                    "title": "Hỏi đáp Tiện ích Xung quanh",
-                    "description": "Phân loại: Tiện ích dự án. Sử dụng kịch bản này khi khách hỏi về môi trường sống, tiện ích nội ngoại khu (trường học, siêu thị, chỗ đậu xe) của một dự án.",
-                    "instruction": "Bước 1: Xác định rõ dự án khách hàng đang nhắc đến.\nBước 2: Sử dụng công cụ [faq_lookup](tool://faq_lookup) để truy xuất thông tin về các tiện ích lân cận (siêu thị, trường học, bệnh viện, bãi đỗ xe...).\nBước 3: Trả lời khách hàng chi tiết để làm nổi bật giá trị khu vực.",
-                    "tools": ["faq_lookup"]
-                  }
-                ]
-              },
-              {
-                "id": "travel_pack",
-                "name": "Bộ Kịch bản Du lịch & Đặt vé",
-                "description": "Bộ kịch bản dành cho các đại lý du lịch, phòng vé máy bay để hỗ trợ đặt chỗ và giải đáp thông tin.",
-                "scenarios": [
-                  {
-                    "id": "travel_booking",
-                    "title": "Đặt Tour & Vé",
-                    "description": "Phân loại: Đặt dịch vụ du lịch. Sử dụng kịch bản này khi khách hàng muốn chốt đặt tour, vé máy bay, phòng khách sạn, vé vui chơi.",
-                    "instruction": "Bước 1: Thu thập đầy đủ thông tin: ngày đi, ngày về, điểm đến, số lượng người (người lớn/trẻ em).\nBước 2: Báo giá sơ bộ (nếu có sẵn).\nBước 3: Sử dụng công cụ [book_meeting](tool://book_meeting) để lưu lại yêu cầu đặt chỗ hoặc lên lịch gọi lại hỗ trợ chi tiết.",
-                    "tools": ["book_meeting"]
-                  },
-                  {
-                    "id": "travel_itinerary",
-                    "title": "Gợi ý Lịch trình",
-                    "description": "Phân loại: Tư vấn lịch trình du lịch. Sử dụng kịch bản này khi khách hàng có ý định đi chơi nhưng chưa biết đi đâu, hoặc cần tư vấn lịch trình chi tiết.",
-                    "instruction": "Bước 1: Hỏi khách hàng về sở thích (nghỉ dưỡng hay khám phá), ngân sách dự kiến và thời gian chuyến đi (bao nhiêu ngày).\nBước 2: Sử dụng công cụ [faq_lookup](tool://faq_lookup) để tìm kiếm các bài viết, mẫu lịch trình phù hợp.\nBước 3: Đề xuất một lịch trình cơ bản hấp dẫn kèm các điểm đến nổi bật.",
-                    "tools": ["faq_lookup"]
-                  },
-                  {
-                    "id": "travel_faq",
-                    "title": "Hỏi đáp Du lịch & Visa",
-                    "description": "Phân loại: Quy định du lịch. Sử dụng kịch bản này khi khách hàng hỏi về thủ tục giấy tờ, Visa, quy định hành lý hàng không, chính sách hoãn hủy chuyến.",
-                    "instruction": "Bước 1: Lắng nghe câu hỏi của khách về thủ tục/quy định.\nBước 2: Sử dụng công cụ [faq_lookup](tool://faq_lookup) để tra cứu thông tin chính xác từ các nguồn uy tín (hãng hàng không, đại sứ quán).\nBước 3: Cung cấp câu trả lời rõ ràng, lưu ý khách hàng các điểm quan trọng để tránh sai sót giấy tờ.",
-                    "tools": ["faq_lookup"]
-                  }
-                ]
-              },
-              {
-                "id": "tech_retail_pack",
-                "name": "Bộ Kịch bản Cửa hàng Kỹ thuật số",
-                "description": "Bộ kịch bản dành cho các cửa hàng bán lẻ đồ điện tử, máy tính, điện thoại di động.",
-                "scenarios": [
-                  {
-                    "id": "tech_product_advisor",
-                    "title": "Tư vấn Cấu hình & Sản phẩm",
-                    "description": "Phân loại: Tư vấn đồ công nghệ. Sử dụng kịch bản này khi khách hàng cần tư vấn mua máy tính, điện thoại, thiết bị số phù hợp với nhu cầu sử dụng và ngân sách.",
-                    "instruction": "Bước 1: Hỏi khách hàng về ngân sách và mục đích sử dụng chính (chơi game, văn phòng, đồ họa...).\nBước 2: Sử dụng công cụ [suggest_products](tool://suggest_products) hoặc [search_products](tool://search_products) để tìm ra các mẫu máy tính/điện thoại phù hợp nhất.\nBước 3: Gợi ý 2-3 lựa chọn tốt nhất và so sánh nhẹ nhàng ưu nhược điểm để khách dễ quyết định.",
-                    "tools": ["suggest_products", "search_products"]
-                  },
-                  {
-                    "id": "tech_warranty",
-                    "title": "Kiểm tra Bảo hành & Sửa chữa",
-                    "description": "Phân loại: Bảo hành & Sửa chữa. Sử dụng kịch bản này khi khách hàng cần tra cứu thời hạn bảo hành của thiết bị hoặc tiến độ sửa chữa máy đang gửi tại cửa hàng.",
-                    "instruction": "Bước 1: Yêu cầu khách hàng cung cấp số serial (IMEI) của sản phẩm hoặc số điện thoại mua hàng/số phiếu nhận máy.\nBước 2: Sử dụng công cụ [search_orders](tool://search_orders) hoặc [get_order_detail](tool://get_order_detail) để tra cứu thông tin trên hệ thống.\nBước 3: Thông báo trạng thái bảo hành hoặc tiến độ sửa chữa hiện tại cho khách.",
-                    "tools": ["search_orders", "get_order_detail"]
-                  },
-                  {
-                    "id": "tech_troubleshooting",
-                    "title": "Hỗ trợ Kỹ thuật cơ bản",
-                    "description": "Phân loại: Hỗ trợ lỗi kỹ thuật. Sử dụng kịch bản này khi khách hàng gặp trục trặc phần mềm cơ bản (treo máy, không kết nối wifi...) và cần hướng dẫn khắc phục từ xa.",
-                    "instruction": "Bước 1: Hỏi khách hàng mô tả chi tiết biểu hiện lỗi hoặc chụp ảnh màn hình nếu có thể.\nBước 2: Sử dụng công cụ [faq_lookup](tool://faq_lookup) để tìm các bài viết hướng dẫn xử lý lỗi tương ứng.\nBước 3: Hướng dẫn khách hàng thực hiện từng bước (1, 2, 3...) để tự khắc phục lỗi tại nhà.",
-                    "tools": ["faq_lookup"]
+                    "id": "edtech_tech_support",
+                    "title": "Hỗ trợ kỹ thuật nền tảng học",
+                    "description": "Mục đích: Học viên không đăng nhập được app, video lỗi (đối với học online).",
+                    "instruction": "Bước 1: Hỏi biểu hiện lỗi, xin ảnh chụp màn hình.\nBước 2: Dùng tool [faq_lookup](tool://faq_lookup) tra cứu cách fix lỗi (VD: Quên mật khẩu, đổi thiết bị).\nBước 3: Hướng dẫn từng bước cho học viên tự thao tác.",
+                    "tools": [
+                      "faq_lookup"
+                    ]
                   }
                 ]
               }

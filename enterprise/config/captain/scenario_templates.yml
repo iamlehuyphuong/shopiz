@@ -1,92 +1,48 @@
 case_studies:
-  general_pack:
-    scenarios:
-      - id: "general_zalo_consultation"
-        tools:
-          - "search_documentation"
-          - "search_canned_responses"
-          - "execute_macro"
-          - "update_conversation_tags"
-          - "update_customer"
-          - "send_zalo_friend_request"
-
   ecommerce_pack:
     scenarios:
-      - id: "ecom_general_faq"
+      - id: "ecom_product_advisory"
         tools:
-          - "search_documentation"
-          - "search_articles"
-          - "execute_macro"
+          - "suggest_products"
+          - "get_product_details"
+      - id: "ecom_order_creation"
+        tools:
+          - "create_order_draft"
       - id: "ecom_order_tracking"
         tools:
           - "search_orders"
           - "get_order_detail"
-      - id: "ecom_return_refund"
+      - id: "ecom_returns_escalation"
         tools:
-          - "execute_macro"
-      - id: "ecom_escalation"
-        tools:
-          - "execute_macro"
+          - "handoff"
           
-  spa_pack:
+  service_booking_pack:
     scenarios:
-      - id: "spa_booking"
+      - id: "service_faq"
         tools:
-          - "get_available_times"
-          - "book_appointment"
-      - id: "spa_services_faq"
+          - "faq_lookup"
+      - id: "service_booking"
         tools:
-          - "search_articles"
-      - id: "spa_cancel_reschedule"
+          - "check_availability"
+          - "book_meeting"
+      - id: "service_reschedule_cancel"
         tools:
-          - "manage_booking"
+          - "search_meetings"
+          - "cancel_meeting"
+          - "book_meeting"
 
   edtech_pack:
     scenarios:
-      - id: "edtech_course_advisor"
+      - id: "edtech_lead_capture"
         tools:
-          - "search_articles"
+          - "faq_lookup"
+          - "update_contact"
+          - "add_label_to_conversation"
       - id: "edtech_schedule_lookup"
         tools:
-          - "search_canned_responses"
-      - id: "edtech_leave_request"
-        tools:
+          - "get_contact_detail"
+          - "add_private_note"
           - "execute_macro"
-
-  real_estate_pack:
-    scenarios:
-      - id: "re_property_search"
+      - id: "edtech_tech_support"
         tools:
-          - "search_articles"
-      - id: "re_book_viewing"
-        tools:
-          - "book_appointment"
-      - id: "re_neighborhood_faq"
-        tools:
-          - "search_documentation"
-
-  travel_pack:
-    scenarios:
-      - id: "travel_booking"
-        tools:
-          - "book_appointment"
-      - id: "travel_itinerary"
-        tools:
-          - "search_articles"
-      - id: "travel_faq"
-        tools:
-          - "search_documentation"
-
-  tech_retail_pack:
-    scenarios:
-      - id: "tech_product_advisor"
-        tools:
-          - "suggest_products"
-          - "search_products"
-      - id: "tech_warranty"
-        tools:
-          - "search_orders"
-          - "get_order_detail"
-      - id: "tech_troubleshooting"
-        tools:
-          - "search_documentation"
+          - "faq_lookup"
