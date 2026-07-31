@@ -50,6 +50,10 @@ const isUsingUserHookKey = computed(() => {
   return captainApiSource.value === 'user_hook';
 });
 
+const isAdmin = computed(() => {
+  return store.getters.getCurrentRole === 'administrator';
+});
+
 const showLanguageDropdownDesktop = ref(false);
 const showLanguageDropdownMobile = ref(false);
 
@@ -215,17 +219,26 @@ onUnmounted(() => {
         />
       </div>
 
-      <span
-        v-if="isUsingUserHookKey"
-        class="hidden lg:flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-n-amber-5 text-n-amber-11 whitespace-nowrap shadow-sm"
-      >
-        {{ $t('GENERAL_SETTINGS.CAPTAIN_API_SOURCE.BADGE_PERSONAL_KEY') }}
-      </span>
+      <template v-if="isUsingUserHookKey">
+        <span
+          class="hidden lg:flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-transparent border border-n-orange text-n-orange whitespace-nowrap"
+        >
+          {{ $t('GENERAL_SETTINGS.CAPTAIN_API_SOURCE.BADGE_PERSONAL_KEY') }}
+        </span>
+      </template>
+      <template v-else-if="isAdmin">
+        <RouterLink
+          :to="accountScopedRoute('captain_settings_index')"
+          class="hidden lg:flex items-center px-2.5 py-1 rounded-full bg-n-orange text-[10px] font-bold uppercase tracking-wider text-white hover:opacity-90 transition-opacity whitespace-nowrap shadow-sm"
+        >
+          {{ $t('GENERAL_SETTINGS.CAPTAIN_API_SOURCE.CONFIGURE_OPENAI') }}
+        </RouterLink>
+      </template>
 
       <RouterLink
         v-if="localizedPlanName"
         :to="accountScopedRoute('billing_settings_index')"
-        class="hidden lg:flex items-center px-2 py-0.5 rounded-full bg-n-orange text-[10px] font-bold uppercase tracking-wider text-white hover:opacity-90 transition-opacity whitespace-nowrap shadow-sm"
+        class="hidden lg:flex items-center px-2.5 py-1 rounded-full bg-n-orange text-[10px] font-bold uppercase tracking-wider text-white hover:opacity-90 transition-opacity whitespace-nowrap shadow-sm"
       >
         {{ localizedPlanName }}
       </RouterLink>
