@@ -54,4 +54,8 @@ class Channel::Tiktok < ApplicationRecord
   def auto_reply_to_comments?
     ActiveModel::Type::Boolean.new.cast(auto_reply_to_comments)
   end
+
+  def auto_reply_use_ai?
+    ActiveModel::Type::Boolean.new.cast(auto_reply_use_ai)
+  end
 end

@@ -2,7 +2,8 @@
 import { ref, computed, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useAlert } from 'dashboard/composables';
-import { useStore } from 'dashboard/composables/store';
+import { useStore, useMapGetter } from 'dashboard/composables/store';
+import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 import SettingsToggleSection from 'dashboard/components-next/Settings/SettingsToggleSection.vue';
 import SettingsFieldSection from 'dashboard/components-next/Settings/SettingsFieldSection.vue';
 import SettingsAccordion from 'dashboard/components-next/Settings/SettingsAccordion.vue';
@@ -25,6 +26,7 @@ const autoReplyToComments = ref(false);
 const autoPublicReplyToComments = ref(false);
 const autoReplyUseAi = ref(false);
 const autoReplyMessage = ref('');
+const autoPublicReplyMessage = ref('');
 const autoReplyAiPrompt = ref('');
 const isUpdating = ref(false);
 
@@ -34,11 +36,27 @@ const isTiktokChannel = computed(
 );
 const supportsCommentModeration = computed(() => !isTiktokChannel.value);
 
+const currentAccountId = useMapGetter('getCurrentAccountId');
+const isFeatureEnabledonAccount = useMapGetter('accounts/isFeatureEnabledonAccount');
+const isCaptainEnabled = computed(() =>
+  isFeatureEnabledonAccount.value(
+    currentAccountId.value,
+    FEATURE_FLAGS.CAPTAIN
+  )
+);
+
 // When "hide all" is toggled on, force-off the granular rules
 watch(hideComments, newVal => {
   if (newVal) {
     hidePhoneComments.value = false;
     hideEmailComments.value = false;
+  }
+});
+
+watch(autoReplyUseAi, (newVal) => {
+  if (newVal && !isCaptainEnabled.value) {
+    autoReplyUseAi.value = false;
+    useAlert(t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.AI_NOT_ENABLED'));
   }
 });
 
@@ -55,6 +73,7 @@ function syncSettings() {
   autoPublicReplyToComments.value = toBool(config.auto_public_reply_to_comments);
   autoReplyUseAi.value = toBool(config.auto_reply_use_ai);
   autoReplyMessage.value = config.auto_reply_message || '';
+  autoPublicReplyMessage.value = config.auto_public_reply_message || '';
   autoReplyAiPrompt.value = config.auto_reply_ai_prompt || '';
 }
 
@@ -83,6 +102,7 @@ async function updateSettings() {
           auto_public_reply_to_comments: autoPublicReplyToComments.value,
           auto_reply_use_ai: autoReplyUseAi.value,
           auto_reply_message: autoReplyMessage.value,
+          auto_public_reply_message: autoPublicReplyMessage.value,
           auto_reply_ai_prompt: autoReplyAiPrompt.value,
         },
       },
@@ -173,6 +193,23 @@ async function updateSettings() {
         "
       />
 
+      <SettingsFieldSection
+        v-if="autoReplyToComments"
+        :label="$t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.MESSAGE_LABEL')"
+      >
+        <textarea
+          v-model="autoReplyMessage"
+          class="w-full min-h-[100px] rounded-lg border border-n-weak p-3 text-sm text-n-slate-12 bg-n-alpha-white placeholder:text-n-slate-9 focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-n-orange-9 resize-y"
+          :placeholder="
+            $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.PRIVATE_MESSAGE_PLACEHOLDER')
+          "
+          rows="4"
+        />
+        <p class="text-xs text-n-slate-10 mt-2 italic">
+          {{ $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.NOTE') }}
+        </p>
+      </SettingsFieldSection>
+
       <SettingsToggleSection
         v-model="autoPublicReplyToComments"
         :header="$t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.ENABLE_PUBLIC')"
@@ -180,6 +217,20 @@ async function updateSettings() {
           $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.ENABLE_PUBLIC_HELP')
         "
       />
+
+      <SettingsFieldSection
+        v-if="autoPublicReplyToComments"
+        :label="$t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.MESSAGE_LABEL')"
+      >
+        <textarea
+          v-model="autoPublicReplyMessage"
+          class="w-full min-h-[100px] rounded-lg border border-n-weak p-3 text-sm text-n-slate-12 bg-n-alpha-white placeholder:text-n-slate-9 focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-n-orange-9 resize-y"
+          :placeholder="
+            $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.PUBLIC_MESSAGE_PLACEHOLDER')
+          "
+          rows="4"
+        />
+      </SettingsFieldSection>
 
       <template v-if="autoReplyToComments || autoPublicReplyToComments">
         <SettingsToggleSection
@@ -189,42 +240,6 @@ async function updateSettings() {
             $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.USE_AI_HELP')
           "
         />
-
-        <SettingsFieldSection
-          v-if="autoReplyUseAi"
-          :label="
-            $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.AI_PROMPT_LABEL')
-          "
-        >
-          <textarea
-            v-model="autoReplyAiPrompt"
-            class="w-full min-h-[100px] rounded-lg border border-n-weak p-3 text-sm text-n-slate-12 bg-n-alpha-white placeholder:text-n-slate-9 focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-n-orange-9 resize-y"
-            :placeholder="
-              $t(
-                'INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.AI_PROMPT_PLACEHOLDER'
-              )
-            "
-            rows="4"
-          />
-        </SettingsFieldSection>
-
-        <SettingsFieldSection
-          v-else
-          :label="$t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.MESSAGE_LABEL')"
-        >
-          <textarea
-            v-model="autoReplyMessage"
-            class="w-full min-h-[100px] rounded-lg border border-n-weak p-3 text-sm text-n-slate-12 bg-n-alpha-white placeholder:text-n-slate-9 focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-n-orange-9 resize-y"
-            :placeholder="
-              $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.MESSAGE_PLACEHOLDER')
-            "
-            rows="4"
-          />
-        </SettingsFieldSection>
-
-        <p class="text-xs text-n-slate-10 mt-2 italic">
-          {{ $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.NOTE') }}
-        </p>
       </template>
     </SettingsAccordion>
 

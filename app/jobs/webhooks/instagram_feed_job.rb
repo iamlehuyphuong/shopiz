@@ -88,7 +88,7 @@ class Webhooks::InstagramFeedJob < ApplicationJob
 
     Redis::Alfred.expire(lock_key, 7.days.to_i)
 
-    if channel.provider_config['auto_reply_use_ai']
+    if channel.auto_reply_use_ai
       Captain::Conversation::CommentReplyBuilderJob.perform_later(
         conversation.id,
         comment_id: data[:comment_id],
@@ -98,8 +98,8 @@ class Webhooks::InstagramFeedJob < ApplicationJob
         reply_type: 'public',
         comment_created_at: data[:created_time].to_s
       )
-    elsif channel.auto_reply_message.present?
-      processed_message = process_liquid_message(channel.auto_reply_message, conversation)
+    elsif channel.auto_public_reply_message.present?
+      processed_message = process_liquid_message(channel.auto_public_reply_message, conversation)
       Instagram::CommentActionService.new(channel: channel).reply_comment_and_log(
         data[:comment_id],
         processed_message,
@@ -116,7 +116,7 @@ class Webhooks::InstagramFeedJob < ApplicationJob
 
     Redis::Alfred.expire(lock_key, 7.days.to_i)
 
-    if channel.provider_config['auto_reply_use_ai']
+    if channel.auto_reply_use_ai
       Captain::Conversation::CommentReplyBuilderJob.perform_later(
         conversation.id,
         comment_id: data[:comment_id],

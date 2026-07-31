@@ -71,7 +71,14 @@ class Captain::Conversation::CommentReplyBuilderJob < ApplicationJob
   end
 
   def generate_reply_text(customer_message, post_id, platform, reply_type)
-    prompt_config = @channel.provider_config['auto_reply_ai_prompt'] || 'Hãy viết một tin nhắn ngắn gọn, thân thiện, trả lời khách hàng.'
+    base_message = if reply_type == 'public'
+                     @channel.auto_public_reply_message
+                   else
+                     @channel.auto_reply_message
+                   end
+    
+    base_message = 'Xin chào, chúng tôi có thể giúp gì cho bạn?' if base_message.blank?
+
     reply_method = if platform == 'tiktok' || reply_type == 'public'
                      'bình luận công khai'
                    else
@@ -82,8 +89,10 @@ class Captain::Conversation::CommentReplyBuilderJob < ApplicationJob
       Bạn là trợ lý chăm sóc khách hàng của trang #{platform.capitalize}.
       Nhiệm vụ: Phản hồi bình luận của khách hàng thông qua #{reply_method}.
 
-      Yêu cầu từ cửa hàng:
-      #{prompt_config}
+      Dưới đây là mẫu tin nhắn mặc định của cửa hàng:
+      "#{base_message}"
+
+      Hãy viết lại (rewrite) nội dung tin nhắn trên sao cho tự nhiên, thân thiện và phù hợp với ngữ cảnh bình luận của khách hàng. Vẫn giữ nguyên ý chính của mẫu tin nhắn.
 
       Thông tin khách hàng:
       Bài viết ID: #{post_id}

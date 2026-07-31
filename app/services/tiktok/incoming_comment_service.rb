@@ -122,7 +122,7 @@ class Tiktok::IncomingCommentService
   end
 
   def dispatch_auto_reply
-    if channel.provider_config&.dig('auto_reply_use_ai')
+    if channel.auto_reply_use_ai
       Captain::Conversation::CommentReplyBuilderJob.perform_later(
         conversation.id,
         comment_id: tt_comment_id,

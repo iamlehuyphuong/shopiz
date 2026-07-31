@@ -1115,16 +1115,18 @@
       "AUTO_REPLY": {
         "TITLE": "Trả lời tự động",
         "DESCRIPTION": "Tự động phản hồi khách hàng bình luận trên bài viết.",
-        "ENABLE_PRIVATE": "Tự động gửi tin nhắn riêng (Private Message)",
+        "ENABLE_PRIVATE": "Tự động gửi Phản hồi riêng tư",
         "ENABLE_PRIVATE_HELP": "Khi được bật, một tin nhắn riêng tư sẽ được gửi đến hộp thư Messenger của người bình luận.",
-        "ENABLE_PUBLIC": "Tự động trả lời công khai (Public Comment)",
+        "ENABLE_PUBLIC": "Tự động trả lời bình luận",
         "ENABLE_PUBLIC_HELP": "Khi được bật, hệ thống sẽ tự động đăng bình luận trả lời khách hàng dưới bài viết.",
         "USE_AI": "Sinh tự động bằng Trợ lý AI",
-        "USE_AI_HELP": "Hệ thống sẽ thông qua ngữ cảnh Bình luận Khách hàng và cấu hình dưới đây để gọi AI sinh ra câu trả lời.",
+        "USE_AI_HELP": "Khi được bật, Trợ lý AI sẽ viết lại nội dung tin nhắn tự động dựa trên ngữ cảnh của bình luận khách hàng để đảm bảo tính tự nhiên.",
         "AI_PROMPT_LABEL": "Chiến lược cho Trợ lý AI",
         "AI_PROMPT_PLACEHOLDER": "Ví dụ: Khen ngợi khách hàng, mời khách kích vào link của cửa hàng...",
-        "MESSAGE_LABEL": "Nội dung tin nhắn tự động",
-        "MESSAGE_PLACEHOLDER": "Chào bạn! Cảm ơn bạn đã bình luận. Chúng tôi đã gửi thêm thông tin chi tiết qua Messenger cho bạn nhé.",
+        "MESSAGE_LABEL": "Nội dung tin nhắn mẫu",
+        "PRIVATE_MESSAGE_PLACEHOLDER": "Chào bạn, chúng tôi nhận được bình luận của bạn. Chúng tôi sẽ tư vấn riêng tư cho bạn trên messenger nhé.",
+        "PUBLIC_MESSAGE_PLACEHOLDER": "Chào bạn! Cảm ơn bạn đã bình luận. Chúng tôi đã gửi thêm thông tin chi tiết qua Messenger cho bạn nhé.",
+        "AI_NOT_ENABLED": "Bạn cần kích hoạt Captain AI (kết nối OpenAI hoặc thêm tín dụng) để sử dụng tính năng này.",
         "NOTE": "Lưu ý: Facebook chỉ cho phép gửi một tin nhắn riêng tư cho mỗi bình luận trong vòng 7 ngày."
       },
       "API": {

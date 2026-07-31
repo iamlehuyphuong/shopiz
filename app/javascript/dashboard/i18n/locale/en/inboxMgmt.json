@@ -1146,16 +1146,18 @@
       "AUTO_REPLY": {
         "TITLE": "Auto Reply",
         "DESCRIPTION": "Automatically reply to customers who comment on your posts.",
-        "ENABLE_PRIVATE": "Enable auto reply (Private Message)",
+        "ENABLE_PRIVATE": "Auto send Private Replies",
         "ENABLE_PRIVATE_HELP": "When enabled, a private message will be sent to the commenter's Messenger inbox.",
-        "ENABLE_PUBLIC": "Enable auto reply (Public Comment)",
+        "ENABLE_PUBLIC": "Auto comment Replies",
         "ENABLE_PUBLIC_HELP": "When enabled, a public comment will be posted in reply to the commenter.",
         "USE_AI": "Reply using AI Assistant",
-        "USE_AI_HELP": "When enabled, an AI will generate the response based on the post and comment context instead of sending a static message.",
+        "USE_AI_HELP": "When enabled, the AI Assistant will rewrite your auto reply messages based on the customer's comment context to make them more natural.",
         "AI_PROMPT_LABEL": "AI Assistant Strategy",
         "AI_PROMPT_PLACEHOLDER": "E.g: Write a polite response, invite them to visit our store link, etc.",
         "MESSAGE_LABEL": "Auto reply message",
-        "MESSAGE_PLACEHOLDER": "Hi! Thank you for your comment. We have sent you more details via Messenger.",
+        "PRIVATE_MESSAGE_PLACEHOLDER": "Hi, we received your comment. We will provide private consultation for you on Messenger.",
+        "PUBLIC_MESSAGE_PLACEHOLDER": "Hi! Thank you for your comment. We have sent you more details via Messenger.",
+        "AI_NOT_ENABLED": "You need to enable Captain AI (connect OpenAI or add credits) to use this feature.",
         "NOTE": "Note: Facebook allows only one private reply per comment within 7 days."
       },
       "API": {
