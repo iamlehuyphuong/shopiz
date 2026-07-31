@@ -11,6 +11,17 @@ vi:
       billing_histories:
         one: Lịch sử mua bán
         other: Lịch sử mua bán
+  billing_histories:
+    statuses:
+      pending: Đang chờ
+      invoiced: Đã thanh toán
+      overdue: Quá hạn
+      cancelled: Đã hủy
+      expired: Hết hạn
+      completed: Hoàn thành
+    content:
+      package: "Gói %{product_name} - %{month} tháng"
+      credit: "Gói %{product_name}"
   inbox:
     reauthorization:
       success: Kênh đã được cấp lại quyền truy cập thành công

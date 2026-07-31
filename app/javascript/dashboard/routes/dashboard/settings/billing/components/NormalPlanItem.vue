@@ -178,6 +178,7 @@ const onCheckout = () => {
               :label="benefit['description']"
               :count="benefit['count']"
               :included="benefit['included'] !== false"
+              :status="benefit['status']"
             />
           </div>
         </div>

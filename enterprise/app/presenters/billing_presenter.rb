@@ -203,6 +203,27 @@ class BillingPresenter
     captain_faqs
   ].freeze
 
+  def channel_configured?(channel_key)
+    case channel_key
+    when 'channel_facebook'
+      GlobalConfig.get('FB_APP_ID')['FB_APP_ID'].present?
+    when 'channel_zalo'
+      GlobalConfig.get('ZALO_OA_APP_ID')['ZALO_OA_APP_ID'].present?
+    when 'channel_zalopersonal'
+      GlobalConfig.get('ZALO_API_URL')['ZALO_API_URL'].present?
+    when 'channel_tiktok_shop'
+      GlobalConfig.get('TIKTOK_SHOP_APP_ID')['TIKTOK_SHOP_APP_ID'].present?
+    when 'channel_instagram'
+      GlobalConfig.get('INSTAGRAM_APP_ID')['INSTAGRAM_APP_ID'].present?
+    when 'channel_tiktok'
+      GlobalConfig.get('TIKTOK_APP_ID')['TIKTOK_APP_ID'].present?
+    when 'channel_twitter'
+      GlobalConfig.get('TWITTER_CONSUMER_KEY')['TWITTER_CONSUMER_KEY'].present?
+    else
+      true
+    end
+  end
+
   def generate_benefits(plan)
     categories = []
 
@@ -231,8 +252,12 @@ class BillingPresenter
       { key: 'channel_twitter', label: 'TWITTER' }
     ].each do |ch|
       if plan.features.is_a?(Hash)
+        status = GlobalConfigService.load("CHANNEL_STATUS_#{ch[:label]}", 'published').to_s
+        status = 'coming_soon' unless channel_configured?(ch[:key])
+        next unless %w[beta published].include?(status)
+
         is_enabled = plan.features[ch[:key]] == "true" || plan.features[ch[:key]] == true
-        channel_items << { id: "feature_#{ch[:key]}", description: "BILLING_SETTINGS.PRICING_PACKAGES.BENEFITS.CHANNELS.#{ch[:label]}", included: is_enabled }
+        channel_items << { id: "feature_#{ch[:key]}", description: "BILLING_SETTINGS.PRICING_PACKAGES.BENEFITS.CHANNELS.#{ch[:label]}", included: is_enabled, status: status }
       end
     end
     categories << { name: 'BILLING_SETTINGS.PRICING_PACKAGES.BENEFITS.CATEGORIES.CHANNELS', items: channel_items } if channel_items.any?

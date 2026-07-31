@@ -12,6 +12,10 @@ defineProps({
     type: Boolean,
     default: true,
   },
+  status: {
+    type: String,
+    default: null,
+  },
 });
 </script>
 
@@ -47,7 +51,7 @@ defineProps({
       <path d="m9 9 6 6" />
     </svg>
     <span
-      class="text-[13px] font-medium"
+      class="text-[13px] font-medium flex items-center gap-1.5"
       :class="included ? 'text-n-slate-12' : 'text-n-slate-8'"
     >
       {{
@@ -55,6 +59,12 @@ defineProps({
           ? $t(label, { count: count })
           : $t(label)
       }}
+      <span
+        v-if="status === 'beta'"
+        class="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded-md bg-n-blue-3 text-n-blue-11 leading-none border border-n-blue-5"
+      >
+        BETA
+      </span>
     </span>
   </div>
 </template>
