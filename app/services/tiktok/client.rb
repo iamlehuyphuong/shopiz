@@ -60,6 +60,20 @@ class Tiktok::Client
     json.dig('data', 'reply_id')
   end
 
+  def hide_comment(video_id, comment_id)
+    endpoint = "#{api_base_url}/business/comment/hide/"
+    headers = { 'Access-Token': access_token, 'Content-Type': 'application/json' }
+    body = {
+      business_id: business_id,
+      video_id: video_id,
+      comment_id: comment_id,
+      action: 'HIDE'
+    }
+
+    response = HTTParty.post(endpoint, body: body.to_json, headers: headers)
+    process_json_response(response, 'Failed to hide TikTok comment')
+  end
+
   private
 
   def fetch_business_details(fields)

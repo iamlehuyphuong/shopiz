@@ -7,7 +7,8 @@ class Tiktok::IncomingCommentService
     message = find_message(tt_conversation_id, tt_comment_id)
     return if message.present?
 
-    create_message
+    new_message = create_message
+    hide_comment_if_needed(new_message)
     process_auto_reply
   end
 
@@ -62,6 +63,7 @@ class Tiktok::IncomingCommentService
 
     message.sender = contact
     message.save!
+    message
   end
 
   def message_content_attributes
@@ -111,6 +113,19 @@ class Tiktok::IncomingCommentService
     return unless acquire_auto_reply_lock
 
     dispatch_auto_reply
+  end
+
+  def hide_comment_if_needed(message)
+    should_hide = channel.hide_comments? ||
+                  (channel.hide_phone_comments? && message.content.match?(/\b\d{9,11}\b/)) ||
+                  (channel.hide_email_comments? && message.content.match?(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/))
+
+    return unless should_hide
+
+    client = Tiktok::Client.new(business_id: channel.business_id, access_token: channel.validated_access_token)
+    client.hide_comment(tt_video_id, tt_comment_id)
+  rescue StandardError => e
+    Rails.logger.error "[TikTok] Error hiding comment #{tt_comment_id}: #{e.message}"
   end
 
   def acquire_auto_reply_lock

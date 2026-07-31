@@ -34,7 +34,6 @@ const providerConfig = computed(() => props.inbox.provider_config || {});
 const isTiktokChannel = computed(
   () => props.inbox.channel_type === 'Channel::Tiktok'
 );
-const supportsCommentModeration = computed(() => !isTiktokChannel.value);
 
 const currentAccountId = useMapGetter('getCurrentAccountId');
 const isFeatureEnabledonAccount = useMapGetter('accounts/isFeatureEnabledonAccount');
@@ -91,13 +90,9 @@ async function updateSettings() {
       formData: false,
       channel: {
         provider_config: {
-          ...(supportsCommentModeration.value
-            ? {
-                hide_comments: hideComments.value,
-                hide_phone_comments: hidePhoneComments.value,
-                hide_email_comments: hideEmailComments.value,
-              }
-            : {}),
+          hide_comments: hideComments.value,
+          hide_phone_comments: hidePhoneComments.value,
+          hide_email_comments: hideEmailComments.value,
           auto_reply_to_comments: autoReplyToComments.value,
           auto_public_reply_to_comments: autoPublicReplyToComments.value,
           auto_reply_use_ai: autoReplyUseAi.value,
@@ -129,9 +124,8 @@ async function updateSettings() {
       </p>
     </div>
 
-    <!-- Comment Moderation Section (not available for TikTok) -->
+    <!-- Comment Moderation Section -->
     <SettingsAccordion
-      v-if="supportsCommentModeration"
       :title="$t('INBOX_MGMT.POSTS_AND_COMMENTS.COMMENT_MODERATION.TITLE')"
     >
       <p class="text-sm text-n-slate-11 mb-4">
@@ -186,6 +180,7 @@ async function updateSettings() {
       </p>
 
       <SettingsToggleSection
+        v-if="!isTiktokChannel"
         v-model="autoReplyToComments"
         :header="$t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.ENABLE_PRIVATE')"
         :description="
@@ -194,7 +189,7 @@ async function updateSettings() {
       />
 
       <SettingsFieldSection
-        v-if="autoReplyToComments"
+        v-if="autoReplyToComments && !isTiktokChannel"
         :label="$t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.MESSAGE_LABEL')"
       >
         <textarea
