@@ -211,7 +211,8 @@
       "NO_KEY_BANNER": "No AI API key configured. Please set up OpenAI integration or contact admin.",
       "BADGE_PERSONAL_KEY": "Using OpenAI",
       "BADGE_SYSTEM_KEY": "System AI",
-      "CONFIGURE_OPENAI": "Use OpenAI"
+      "CONFIGURE_OPENAI": "Use OpenAI",
+      "CONFIGURE_ASSISTANT": "Configure AI Assistant"
     }
   },
   "FORMS": {

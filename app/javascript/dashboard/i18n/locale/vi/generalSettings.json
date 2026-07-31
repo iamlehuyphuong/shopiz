@@ -211,7 +211,8 @@
       "NO_KEY_BANNER": "Chưa cấu hình API key AI. Vui lòng thiết lập tích hợp OpenAI hoặc liên hệ quản trị viên.",
       "BADGE_PERSONAL_KEY": "Đang sử dụng OpenAI",
       "BADGE_SYSTEM_KEY": "AI hệ thống",
-      "CONFIGURE_OPENAI": "Sử dụng OpenAI"
+      "CONFIGURE_OPENAI": "Sử dụng OpenAI",
+      "CONFIGURE_ASSISTANT": "Cấu hình trợ lý AI"
     }
   },
   "FORMS": {

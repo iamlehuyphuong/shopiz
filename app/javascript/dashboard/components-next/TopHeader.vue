@@ -26,7 +26,7 @@ const { t, te, locale } = useI18n();
 const searchShortcut = useKbd([`$mod`, '+', 'k']);
 const store = useStore();
 const router = useRouter();
-const { accountScopedRoute, currentAccount } = useAccount();
+const { accountScopedRoute, accountScopedUrl, currentAccount } = useAccount();
 const { updateUISettings, uiSettings } = useUISettings();
 
 const planName = computed(() => {
@@ -220,7 +220,15 @@ onUnmounted(() => {
       </div>
 
       <template v-if="isUsingUserHookKey">
+        <RouterLink
+          v-if="isAdmin"
+          :to="accountScopedUrl('captain')"
+          class="hidden lg:flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-transparent border border-n-orange text-n-orange hover:bg-n-orange hover:text-white transition-colors whitespace-nowrap"
+        >
+          {{ $t('GENERAL_SETTINGS.CAPTAIN_API_SOURCE.CONFIGURE_ASSISTANT') }}
+        </RouterLink>
         <span
+          v-else
           class="hidden lg:flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-transparent border border-n-orange text-n-orange whitespace-nowrap"
         >
           {{ $t('GENERAL_SETTINGS.CAPTAIN_API_SOURCE.BADGE_PERSONAL_KEY') }}
@@ -228,7 +236,7 @@ onUnmounted(() => {
       </template>
       <template v-else-if="isAdmin">
         <RouterLink
-          :to="accountScopedRoute('captain_settings_index')"
+          :to="accountScopedRoute('settings_applications_integration', { integration_id: 'openai' })"
           class="hidden lg:flex items-center px-2.5 py-1 rounded-full bg-n-orange text-[10px] font-bold uppercase tracking-wider text-white hover:opacity-90 transition-opacity whitespace-nowrap shadow-sm"
         >
           {{ $t('GENERAL_SETTINGS.CAPTAIN_API_SOURCE.CONFIGURE_OPENAI') }}
