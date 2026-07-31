@@ -53,6 +53,12 @@
         "ERROR_MESSAGE": "Không thể kết nối tới máy chủ, vui lòng thử lại sau"
       }
     },
+    "UPDATE": {
+      "BUTTON_TEXT": "Cập nhật",
+      "API": {
+        "SUCCESS_MESSAGE": "Cập nhật cấu hình thành công"
+      }
+    },
     "CONNECT": {
       "BUTTON_TEXT": "Kết nối"
     },
@@ -61,6 +67,30 @@
     },
     "SIDEBAR_DESCRIPTION": {
       "DIALOGFLOW": "Dialogflow là nền tảng xử lý ngôn ngữ tự nhiên dùng để xây dựng giao diện hội thoại. Khi tích hợp với {installationName}, trợ lý ảo sẽ xử lý câu hỏi trước và chuyển cho nhân viên khi cần. Điều này giúp đánh giá khách hàng tiềm năng và giảm tải cho nhân viên bằng cách trả lời các câu hỏi thường gặp. Để thêm Dialogflow, hãy tạo một Service Account trong Google Console và chia sẻ thông tin xác thực. Tham khảo tài liệu hướng dẫn để biết chi tiết."
+    },
+    "OPENAI": {
+      "SETTINGS_TITLE": "Cấu hình kết nối OpenAI",
+      "FORM": {
+        "API_BASE_URL": {
+          "LABEL": "API Base URL"
+        },
+        "MODEL": {
+          "LABEL": "Mô hình (Model)",
+          "PLACEHOLDER": "VD: gpt-4o-mini",
+          "HELP": "Mô hình mặc định nếu không cấu hình: gpt-4o-mini"
+        },
+        "EMBEDDING_MODEL": {
+          "LABEL": "Mô hình nhúng (Embedding)",
+          "PLACEHOLDER": "VD: text-embedding-3-small",
+          "HELP": "Mô hình mặc định nếu không cấu hình: text-embedding-3-small"
+        },
+        "API_KEY": {
+          "LABEL": "API Key"
+        },
+        "LABEL_SUGGESTION": {
+          "LABEL": "Hiển thị gợi ý nhãn"
+        }
+      }
     }
   }
 }

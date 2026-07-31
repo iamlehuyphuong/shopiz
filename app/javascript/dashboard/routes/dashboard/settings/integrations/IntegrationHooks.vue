@@ -7,6 +7,7 @@ import NewHook from './NewHook.vue';
 import SingleIntegrationHooks from './SingleIntegrationHooks.vue';
 import MultipleIntegrationHooks from './MultipleIntegrationHooks.vue';
 import SettingsLayout from '../SettingsLayout.vue';
+import SectionLayout from '../account/components/SectionLayout.vue';
 import BaseSettingsHeader from '../components/BaseSettingsHeader.vue';
 
 export default {
@@ -15,6 +16,7 @@ export default {
     SingleIntegrationHooks,
     MultipleIntegrationHooks,
     SettingsLayout,
+    SectionLayout,
     BaseSettingsHeader,
   },
   props: {
@@ -46,6 +48,7 @@ export default {
       showAddHookModal: false,
       showDeleteConfirmationPopup: false,
       selectedHook: {},
+      selectedHookToUpdate: null,
       alertMessage: '',
     };
   },
@@ -81,10 +84,16 @@ export default {
   },
   methods: {
     openAddHookModal() {
+      this.selectedHookToUpdate = null;
+      this.showAddHookModal = true;
+    },
+    openUpdateHookModal(hook) {
+      this.selectedHookToUpdate = hook;
       this.showAddHookModal = true;
     },
     hideAddHookModal() {
       this.showAddHookModal = false;
+      this.selectedHookToUpdate = null;
     },
     openDeletePopup(response) {
       this.showDeleteConfirmationPopup = true;
@@ -156,13 +165,30 @@ export default {
           <SingleIntegrationHooks
             :integration-id="integrationId"
             @add="openAddHookModal"
+            @update="openUpdateHookModal"
             @delete="openDeletePopup"
           />
+          <SectionLayout
+            v-if="integrationId === 'openai' && integration.hooks && integration.hooks.length > 0"
+            :title="$t('INTEGRATION_APPS.OPENAI.SETTINGS_TITLE')"
+            class="mt-8 px-2"
+          >
+            <NewHook
+              inline
+              :integration-id="integrationId"
+              :hook="integration.hooks[0]"
+            />
+          </SectionLayout>
         </div>
       </div>
     </template>
     <woot-modal v-model:show="showAddHookModal" :on-close="hideAddHookModal">
-      <NewHook :integration-id="integrationId" @close="hideAddHookModal" />
+      <NewHook
+        v-if="showAddHookModal"
+        :integration-id="integrationId"
+        :hook="selectedHookToUpdate"
+        @close="hideAddHookModal"
+      />
     </woot-modal>
 
     <woot-delete-modal

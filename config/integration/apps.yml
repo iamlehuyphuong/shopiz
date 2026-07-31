@@ -71,7 +71,7 @@ openai:
       },
       {
         'label': 'API Key',
-        'type': 'text',
+        'type': 'password',
         'name': 'api_key',
         'validation': 'required',
       },
