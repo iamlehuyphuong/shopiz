@@ -25,7 +25,7 @@ class Account::ContactsExportJob < ApplicationJob
   end
 
   def contacts
-    if @params.present? && @params[:payload].present? && @params[:payload].any?
+    scope = if @params.present? && @params[:payload].present? && @params[:payload].any?
       result = ::Contacts::FilterService.new(@account, @account_user, @params).perform
       result[:contacts]
     elsif @params[:label].present?
@@ -33,10 +33,12 @@ class Account::ContactsExportJob < ApplicationJob
     else
       @account.contacts.resolved_contacts(use_crm_v2: @account.feature_enabled?('crm_v2'))
     end
+    scope.includes(:inboxes)
   end
 
   def valid_headers(column_names)
-    (column_names.presence || default_columns) & Contact.column_names
+    allowed_columns = Contact.column_names + ['inbox_names']
+    (column_names.presence || default_columns) & allowed_columns
   end
 
   def attach_export_file(csv_data)
@@ -60,6 +62,6 @@ class Account::ContactsExportJob < ApplicationJob
   end
 
   def default_columns
-    %w[id name email phone_number]
+    %w[id name email phone_number created_at inbox_names]
   end
 end

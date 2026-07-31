@@ -93,6 +93,14 @@ const filterTypes = [
     filterOperators: OPERATOR_TYPES_2,
     attributeModel: 'standard',
   },
+  {
+    attributeKey: 'inbox_id',
+    attributeI18nKey: 'INBOX_NAME',
+    inputType: 'search_select',
+    dataType: 'text',
+    filterOperators: OPERATOR_TYPES_2,
+    attributeModel: 'standard',
+  },
 ];
 
 export const filterAttributeGroups = [
@@ -139,6 +147,10 @@ export const filterAttributeGroups = [
       {
         key: 'labels',
         i18nKey: 'LABELS',
+      },
+      {
+        key: 'inbox_id',
+        i18nKey: 'INBOX_NAME',
       },
     ],
   },

@@ -134,6 +134,14 @@ conversations:
 
 ### ----- Contact Filters ----- ###
 contacts:
+  inbox_id:
+    attribute_type: "joined_inbox"
+    data_type: "text"
+    filter_operators:
+      - "equal_to"
+      - "not_equal_to"
+      - "is_present"
+      - "is_not_present"
   name:
     attribute_type: "standard"
     data_type: "text_case_insensitive"

@@ -279,5 +279,9 @@ class Contact < ApplicationRecord
       contact_data: push_event_data.merge(account_id: account_id)
     )
   end
+
+  def inbox_names
+    inboxes.map(&:name).join(', ')
+  end
 end
 Contact.include_mod_with('Concerns::Contact')

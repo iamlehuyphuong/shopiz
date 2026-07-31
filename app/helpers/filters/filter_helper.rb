@@ -37,6 +37,8 @@ module Filters::FilterHelper
       handle_additional_attributes(query_hash, filter_operator_value, current_filter['data_type'])
     when 'joined_contact'
       handle_joined_contact(query_hash, filter_operator_value)
+    when 'joined_inbox'
+      handle_joined_inbox(query_hash, filter_operator_value)
     else
       handle_standard_attributes(current_filter, query_hash, current_index, filter_operator_value)
     end
@@ -50,6 +52,16 @@ module Filters::FilterHelper
       "EXISTS (SELECT 1 FROM contacts WHERE contacts.id = #{filter_config[:table_name]}.contact_id AND (contacts.#{column} IS NULL OR contacts.#{column} = '')) #{query_hash[:query_operator]}"
     else
       "EXISTS (SELECT 1 FROM contacts WHERE contacts.id = #{filter_config[:table_name]}.contact_id AND contacts.#{column} #{filter_operator_value}) #{query_hash[:query_operator]}"
+    end
+  end
+
+  def handle_joined_inbox(query_hash, filter_operator_value)
+    if query_hash[:filter_operator] == 'is_present'
+      "EXISTS (SELECT 1 FROM contact_inboxes WHERE contact_inboxes.contact_id = #{filter_config[:table_name]}.id) #{query_hash[:query_operator]}"
+    elsif query_hash[:filter_operator] == 'is_not_present'
+      "NOT EXISTS (SELECT 1 FROM contact_inboxes WHERE contact_inboxes.contact_id = #{filter_config[:table_name]}.id) #{query_hash[:query_operator]}"
+    else
+      "EXISTS (SELECT 1 FROM contact_inboxes WHERE contact_inboxes.contact_id = #{filter_config[:table_name]}.id AND contact_inboxes.inbox_id #{filter_operator_value}) #{query_hash[:query_operator]}"
     end
   end
 
