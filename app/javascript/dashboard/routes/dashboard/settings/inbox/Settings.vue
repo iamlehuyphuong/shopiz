@@ -101,15 +101,13 @@ export default {
     const isImprovingZaloFriend = ref(false);
     const isImprovingZaloGreeting = ref(false);
     const isImprovingAutoFollowUps = ref({});
-    const isImprovingAutoFollowUpCustomAIs = ref({});
-
+    
     return {
       v$: useVuelidate(),
       processEvent,
       isImprovingZaloFriend,
       isImprovingZaloGreeting,
       isImprovingAutoFollowUps,
-      isImprovingAutoFollowUpCustomAIs,
     };
   },
   data() {
@@ -148,11 +146,9 @@ export default {
       autoFollowUpTimeMode: 'relative',
       autoFollowUpFixedTime: '09:00',
       autoFollowUpTimezone: 'Asia/Ho_Chi_Minh',
-      autoFollowUpActionType: 'ai_assistant',
+      autoFollowUpAiRewrite: false,
       autoFollowUpPredefinedMessage: '',
       autoFollowUpPredefinedMessages: Array.from({ length: 15 }, () => ''),
-      autoFollowUpMacros: Array.from({ length: 15 }, () => ''),
-      autoFollowUpCustomAIPrompts: Array.from({ length: 15 }, () => ''),
       autoLabelEnabled: false,
       zaloReauthorizeModalVisible: false,
       isCheckingConnection: false,
@@ -536,19 +532,6 @@ export default {
         this.isImprovingAutoFollowUps[index] = false;
       }
     },
-    async improveAutoFollowUpCustomAI(index) {
-      if (!this.autoFollowUpCustomAIPrompts[index]) return;
-      this.isImprovingAutoFollowUpCustomAIs[index] = true;
-      try {
-        const { message } = await this.processEvent(
-          'improve_auto_followup_instruction',
-          this.autoFollowUpCustomAIPrompts[index]
-        );
-        if (message) this.autoFollowUpCustomAIPrompts[index] = message;
-      } finally {
-        this.isImprovingAutoFollowUpCustomAIs[index] = false;
-      }
-    },
     async checkZaloPersonalConnection() {
       if (this.isCheckingConnection) return;
 
@@ -646,8 +629,8 @@ export default {
         this.inbox.auto_follow_up_config?.fixed_time || '09:00';
       this.autoFollowUpTimezone =
         this.inbox.auto_follow_up_config?.timezone || 'Asia/Ho_Chi_Minh';
-      this.autoFollowUpActionType =
-        this.inbox.auto_follow_up_config?.action_type || 'ai_assistant';
+      this.autoFollowUpAiRewrite =
+        this.inbox.auto_follow_up_config?.ai_rewrite || false;
       this.autoLabelEnabled = this.inbox.auto_label_enabled || false;
       this.autoFollowUpPredefinedMessage =
         this.inbox.auto_follow_up_config?.predefined_message || '';
@@ -659,14 +642,6 @@ export default {
           this.inbox.auto_follow_up_config?.predefined_message || '',
           ...defaultMessages,
         ].slice(0, 15);
-
-      this.autoFollowUpMacros =
-        this.inbox.auto_follow_up_config?.macros ||
-        Array.from({ length: 15 }, () => '');
-
-      this.autoFollowUpCustomAIPrompts =
-        this.inbox.auto_follow_up_config?.custom_ai_prompts ||
-        Array.from({ length: 15 }, () => '');
 
       this.zaloPersonalDefaultFriendRequestMessage =
         this.inbox.provider_config?.default_friend_request_message || '';
@@ -781,11 +756,9 @@ export default {
                   time_mode: this.autoFollowUpTimeMode,
                   fixed_time: this.autoFollowUpFixedTime,
                   timezone: this.autoFollowUpTimezone,
-                  action_type: this.autoFollowUpActionType,
+                  ai_rewrite: this.autoFollowUpAiRewrite,
                   predefined_message: this.autoFollowUpPredefinedMessage,
                   predefined_messages: this.autoFollowUpPredefinedMessages,
-                  macros: this.autoFollowUpMacros,
-                  custom_ai_prompts: this.autoFollowUpCustomAIPrompts,
                 })
               : {
                   enabled: this.autoFollowUpEnabled,
@@ -794,11 +767,9 @@ export default {
                   time_mode: this.autoFollowUpTimeMode,
                   fixed_time: this.autoFollowUpFixedTime,
                   timezone: this.autoFollowUpTimezone,
-                  action_type: this.autoFollowUpActionType,
+                  ai_rewrite: this.autoFollowUpAiRewrite,
                   predefined_message: this.autoFollowUpPredefinedMessage,
                   predefined_messages: this.autoFollowUpPredefinedMessages,
-                  macros: this.autoFollowUpMacros,
-                  custom_ai_prompts: this.autoFollowUpCustomAIPrompts,
                 },
           channel: {
             widget_color: this.inbox.widget_color,
@@ -1652,133 +1623,14 @@ export default {
                         </div>
                       </div>
 
-                      <div class="flex flex-col gap-1 mt-2">
-                        <label class="text-n-slate-11 text-small font-medium">
-                          {{
-                            $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_LABEL'
-                            )
-                          }}
-                        </label>
-                        <FilterSelect
-                          v-model="autoFollowUpActionType"
-                          :options="[
-                            {
-                              value: 'ai_assistant',
-                              label: $t(
-                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_AI_ASSISTANT'
-                              ),
-                            },
-                            {
-                              value: 'macro',
-                              label: $t(
-                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_MACRO'
-                              ),
-                            },
-                            {
-                              value: 'predefined_message',
-                              label: $t(
-                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_ACTION_TYPE_PREDEFINED'
-                              ),
-                            },
-                          ]"
-                          class="w-full mt-1 [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[38px] [&_button]:!border-n-weak [&_button]:!bg-n-alpha-1"
-                        />
-                      </div>
-                      <div
-                        v-if="autoFollowUpActionType === 'ai_assistant'"
-                        class="flex flex-col gap-3 mt-3"
-                      >
-                        <div
-                          class="flex flex-col gap-1 p-3 bg-n-brand/10 text-n-brand rounded-md"
-                        >
-                          <p class="text-sm">
-                            {{
-                              $t(
-                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_AI_HINT'
-                              )
-                            }}
-                          </p>
-                        </div>
+                      <SettingsToggleSection
+                        v-model="autoFollowUpAiRewrite"
+                        :header="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_AI_REWRITE_TOGGLE', 'Sử dụng AI viết lại nội dung')"
+                        :description="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_AI_REWRITE_DESC', 'AI sẽ dựa vào ngữ cảnh cuộc trò chuyện để viết lại tin nhắn mẫu một cách tự nhiên.')"
+                        class="mt-4 bg-transparent p-0 border-0"
+                      />
 
-                        <div
-                          v-for="(n, index) in autoFollowUpMaxAttempts"
-                          :key="'ai-' + index"
-                          class="w-full mt-2"
-                        >
-                          <TextArea
-                            v-model="autoFollowUpCustomAIPrompts[index]"
-                            :label="`${$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_LABEL')} ${index + 1}`"
-                            :placeholder="
-                              $t(
-                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_CUSTOM_AI_PROMPT_PLACEHOLDER'
-                              )
-                            "
-                            auto-height
-                            class="w-full"
-                          />
-                          <div class="flex justify-start mt-2">
-                            <NextButton
-                              icon="i-lucide-wand-2"
-                              size="xs"
-                              color="slate"
-                              :label="
-                                $t(
-                                  'TEAMS_SETTINGS.FORM.IMPROVE_BY_AI',
-                                  'Improve by AI'
-                                )
-                              "
-                              :is-loading="
-                                isImprovingAutoFollowUpCustomAIs[index]
-                              "
-                              @click.prevent="
-                                improveAutoFollowUpCustomAI(index)
-                              "
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div
-                        v-if="autoFollowUpActionType === 'macro'"
-                        class="flex flex-col gap-3 mt-3"
-                      >
-                        <div
-                          v-for="(n, index) in autoFollowUpMaxAttempts"
-                          :key="'macro-' + index"
-                          class="flex flex-col gap-1 w-full"
-                        >
-                          <label class="text-n-slate-11 text-small font-medium">
-                            {{
-                              $t(
-                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_MACRO_SELECT'
-                              )
-                            }}
-                            {{ index + 1 }}
-                          </label>
-                          <FilterSelect
-                            v-model="autoFollowUpMacros[index]"
-                            :options="[
-                              {
-                                value: '',
-                                label: $t(
-                                  'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_MACRO_EMPTY'
-                                ),
-                              },
-                              ...macros.map(m => ({
-                                value: m.id,
-                                label: m.name,
-                              })),
-                            ]"
-                            class="w-full mt-1 [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[38px] [&_button]:!border-n-weak [&_button]:!bg-n-alpha-1"
-                          />
-                        </div>
-                      </div>
-
-                      <div
-                        v-if="autoFollowUpActionType === 'predefined_message'"
-                        class="flex flex-col gap-3 mt-3"
-                      >
+                      <div class="flex flex-col gap-3 mt-3">
                         <div
                           v-for="(n, index) in autoFollowUpMaxAttempts"
                           :key="'predefined-' + index"
