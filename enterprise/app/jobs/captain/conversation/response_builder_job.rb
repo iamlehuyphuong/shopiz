@@ -1,4 +1,6 @@
 class Captain::Conversation::ResponseBuilderJob < ApplicationJob
+  include Captain::CreditGuard
+
   MAX_MESSAGE_LENGTH = 10_000
   retry_on ActiveStorage::FileNotFoundError, attempts: 3, wait: 2.seconds
   retry_on Faraday::BadRequestError, attempts: 3, wait: 2.seconds
@@ -52,8 +54,7 @@ class Captain::Conversation::ResponseBuilderJob < ApplicationJob
     else
       ActiveRecord::Base.transaction do
         create_messages
-        Rails.logger.info("[CAPTAIN][ResponseBuilderJob] Incrementing response usage for #{account.id}")
-        account.increment_response_usage
+        increment_usage_if_system_key!
       end
     end
   end

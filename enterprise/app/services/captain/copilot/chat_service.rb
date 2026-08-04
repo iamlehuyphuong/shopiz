@@ -1,5 +1,6 @@
 class Captain::Copilot::ChatService < Llm::BaseAiService
   include Captain::ChatHelper
+  include Captain::CreditGuard
 
   attr_reader :assistant, :account, :user, :copilot_thread, :previous_history, :messages
 
@@ -21,16 +22,31 @@ class Captain::Copilot::ChatService < Llm::BaseAiService
   end
 
   def generate_response(input)
+    return { error: I18n.t('captain.copilot_limit'), error_code: 429 } unless responses_available?
+
+    if using_user_hook_key_for_credit?
+      Rails.logger.info(
+        "[CAPTAIN][#{self.class.name}] Using user hook API key for account #{@account.id} (system credits exhausted)"
+      )
+    end
+
     @messages << { role: 'user', content: input } if input.present?
     response = request_chat_completion
 
     Rails.logger.debug { "#{self.class.name} Assistant: #{@assistant.id}, Received response #{response}" }
-    Rails.logger.info(
-      "#{self.class.name} Assistant: #{@assistant.id}, Incrementing response usage for account #{@account.id}"
-    )
-    @account.increment_response_usage
+    increment_usage_if_system_key!
 
     response
+  end
+
+  def chat(model: @model, temperature: @temperature)
+    if using_user_hook_key_for_credit?
+      Llm::Config.with_api_key(user_hook_api_key, api_base: user_hook_api_base) do |context|
+        context.chat(model: model).with_temperature(temperature)
+      end
+    else
+      super
+    end
   end
 
   private

@@ -17,8 +17,8 @@ module Llm::Config
     # Reconfigure RubyLLM and Agents gem with account-level fallback key
     # when system key is not available. Should be called by services that
     # need account context (e.g., AgentRunnerService).
-    def configure_for_account!(account)
-      return if system_api_key.present? # Already configured with system key
+    def configure_for_account!(account, force_user_key: false)
+      return if system_api_key.present? && !force_user_key # Already configured with system key
       return unless account && user_hook_key_allowed?
 
       hook = account.hooks.find_by(app_id: 'openai', status: 'enabled')

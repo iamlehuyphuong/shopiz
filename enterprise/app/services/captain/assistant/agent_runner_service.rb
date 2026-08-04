@@ -5,6 +5,9 @@ class Captain::Assistant::AgentRunnerService
   include Integrations::LlmInstrumentationConstants
   include Captain::Assistant::RunnerCallbacksHelper
   include Captain::Assistant::TracePayloadHelper
+  include Captain::CreditGuard
+
+  attr_reader :account
 
   CONVERSATION_STATE_ATTRIBUTES = %i[
     id display_id inbox_id contact_id status priority
@@ -24,12 +27,15 @@ class Captain::Assistant::AgentRunnerService
     @conversation = conversation
     @callbacks = callbacks
     @source = source
+    @account = @assistant.account
 
     Llm::Config.initialize!
-    Llm::Config.configure_for_account!(@assistant.account)
+    Llm::Config.configure_for_account!(@account, force_user_key: using_user_hook_key_for_credit?)
   end
 
   def generate_response(message_history: [])
+    return error_response(I18n.t('captain.copilot_limit')) unless responses_available?
+
     message_to_process, context = run_payload(message_history)
     result = runner.run(message_to_process, context: context, max_turns: 100)
 
