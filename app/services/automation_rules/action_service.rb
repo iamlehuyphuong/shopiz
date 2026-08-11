@@ -48,26 +48,24 @@ class AutomationRules::ActionService < ActionService
   end
 
   def send_facebook_post_purchase_update(message)
-    send_facebook_utility_message(message[0], 'POST_PURCHASE_UPDATE')
+    send_facebook_utility_message(message[0])
   end
 
   def send_facebook_confirmed_event_update(message)
-    send_facebook_utility_message(message[0], 'CONFIRMED_EVENT_UPDATE')
+    send_facebook_utility_message(message[0])
   end
 
   def send_facebook_account_update(message)
-    send_facebook_utility_message(message[0], 'ACCOUNT_UPDATE')
+    send_facebook_utility_message(message[0])
   end
 
-  def send_facebook_utility_message(message_content, tag)
+  def send_facebook_utility_message(message_content)
     return if conversation_a_tweet?
 
     content_attributes = { automation_rule_id: @rule.id }
 
     if @conversation.additional_attributes && @conversation.additional_attributes['comment_id'].present?
       content_attributes[:target_comment_id] = @conversation.additional_attributes['comment_id']
-    else
-      content_attributes[:message_tag] = tag
     end
 
     params = {

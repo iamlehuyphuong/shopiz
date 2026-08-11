@@ -26,12 +26,12 @@ RSpec.describe ConversationOrders::SendUtilityMessageService do
     context 'when the channel is Facebook Page' do
       let(:channel_type) { 'Channel::FacebookPage' }
 
-      it 'creates an outgoing message with the POST_PURCHASE_UPDATE tag' do
+      it 'creates an outgoing message without a message tag' do
         expect { service.perform }.to change(Message, :count).by(1)
 
         message = conversation.messages.last
         expect(message.message_type).to eq('outgoing')
-        expect(message.content_attributes['message_tag']).to eq('POST_PURCHASE_UPDATE')
+        expect(message.content_attributes['message_tag']).to be_nil
         expect(message.content).to include("##{order.id}")
       end
     end

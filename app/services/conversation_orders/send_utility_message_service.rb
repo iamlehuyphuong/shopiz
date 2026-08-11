@@ -29,11 +29,9 @@ class ConversationOrders::SendUtilityMessageService
     }
 
     if conversation.inbox.channel_type == 'Channel::FacebookPage'
-      message_params[:content_attributes] = if conversation.additional_attributes && conversation.additional_attributes['comment_id'].present?
-                                              { target_comment_id: conversation.additional_attributes['comment_id'] }
-                                            else
-                                              { message_tag: 'POST_PURCHASE_UPDATE' }
-                                            end
+      if conversation.additional_attributes && conversation.additional_attributes['comment_id'].present?
+        message_params[:content_attributes] = { target_comment_id: conversation.additional_attributes['comment_id'] }
+      end
     end
 
     Messages::MessageBuilder.new(nil, conversation, message_params).perform

@@ -18,32 +18,36 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
       end
     end
   rescue Facebook::Messenger::FacebookError => e
-    # TODO : handle specific errors or else page will get disconnected
     handle_facebook_error(e)
-    Messages::StatusUpdateService.new(message, 'failed', e.message).perform
+    
+    error_hash = {
+      'error' => {
+        'message' => e.message,
+        'code' => e.code,
+        'error_subcode' => e.subcode
+      }
+    }
+    
+    translated_error = external_error(error_hash)
+    Messages::StatusUpdateService.new(message, 'failed', translated_error).perform
+    track_campaign_metric(:failed)
   end
 
   def send_message_to_facebook(delivery_params)
     parsed_result = deliver_message(delivery_params)
     return if parsed_result.nil?
 
-    if parsed_result['error'].present?
-      Messages::StatusUpdateService.new(message, 'failed', external_error(parsed_result)).perform
-      Rails.logger.info "Facebook::SendOnFacebookService: Error sending message to Facebook : Page - #{channel.page_id} : #{parsed_result}"
-      track_campaign_metric(:failed)
-    else
-      message.update!(source_id: parsed_result['message_id']) if parsed_result['message_id'].present?
-      
-      # Mark the message as a private reply so the frontend can style it appropriately.
-      # Clear conversation-level comment_id hint after successful delivery to prevent
-      # subsequent messages from also being sent as private replies.
-      if message.content_attributes['target_comment_id'].present?
-        message.update!(content_attributes: message.content_attributes.merge(is_private_reply: true).except('target_comment_id'))
-        conversation.update!(additional_attributes: conversation.additional_attributes.except('comment_id'))
-      end
-
-      track_campaign_metric(:delivered)
+    message.update!(source_id: parsed_result['message_id']) if parsed_result['message_id'].present?
+    
+    # Mark the message as a private reply so the frontend can style it appropriately.
+    # Clear conversation-level comment_id hint after successful delivery to prevent
+    # subsequent messages from also being sent as private replies.
+    if message.content_attributes['target_comment_id'].present?
+      message.update!(content_attributes: message.content_attributes.merge(is_private_reply: true).except('target_comment_id'))
+      conversation.update!(additional_attributes: conversation.additional_attributes.except('comment_id'))
     end
+
+    track_campaign_metric(:delivered)
   end
 
   def deliver_message(delivery_params)
