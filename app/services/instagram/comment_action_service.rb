@@ -127,8 +127,8 @@ class Instagram::CommentActionService
       conversation.messages.create!(
         account_id: conversation.account_id,
         inbox_id: conversation.inbox_id,
-        message_type: :outgoing,
-        content: message_text,
+        message_type: :activity,
+        content: "Public comment: #{message_text}",
         source_id: msg_id
       )
     else
@@ -138,8 +138,8 @@ class Instagram::CommentActionService
       msg = conversation.messages.create!(
         account_id: conversation.account_id,
         inbox_id: conversation.inbox_id,
-        message_type: :outgoing,
-        content: message_text,
+        message_type: :activity,
+        content: "Public comment: #{message_text}",
         status: :failed,
         source_id: "failed_ig_reply_#{SecureRandom.hex(4)}"
       )

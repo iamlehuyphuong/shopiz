@@ -125,8 +125,8 @@ class Facebook::CommentActionService
       conversation.messages.create!(
         account_id: conversation.account_id,
         inbox_id: conversation.inbox_id,
-        message_type: :outgoing,
-        content: message,
+        message_type: :activity,
+        content: "Public comment: #{message}",
         source_id: msg_id
       )
     else
@@ -136,8 +136,8 @@ class Facebook::CommentActionService
       msg = conversation.messages.create!(
         account_id: conversation.account_id,
         inbox_id: conversation.inbox_id,
-        message_type: :outgoing,
-        content: message,
+        message_type: :activity,
+        content: "Public comment: #{message}",
         status: :failed,
         source_id: "failed_fb_reply_#{SecureRandom.hex(4)}"
       )

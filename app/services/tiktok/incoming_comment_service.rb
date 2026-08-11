@@ -175,8 +175,8 @@ class Tiktok::IncomingCommentService
     conversation.messages.create!(
       account_id: channel.account_id,
       inbox_id: channel.inbox_id,
-      message_type: :outgoing,
-      content: reply_text,
+      message_type: :activity,
+      content: "Public comment: #{reply_text}",
       source_id: reply_id
     )
   rescue StandardError => e
