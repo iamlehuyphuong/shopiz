@@ -21,7 +21,7 @@ class Captain::Conversation::CommentReplyService < Captain::BaseTaskService
     
     return nil if response.is_a?(Hash) && response[:error].present?
     
-    response.content&.strip
+    response[:message]&.strip
   end
   
   private

@@ -51,6 +51,22 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
   end
 
   def deliver_message(delivery_params)
+    if delivery_params.dig(:recipient, :comment_id).present?
+      response = Facebook::CommentActionService.new(channel: channel)
+                   .send_private_reply(delivery_params[:recipient][:comment_id], delivery_params[:message])
+      
+      unless response&.success?
+        body = JSON.parse(response.body) rescue {}
+        error_msg = body.dig('error', 'message') || 'Facebook was unable to process this request'
+        Messages::StatusUpdateService.new(message, 'failed', error_msg).perform
+        Rails.logger.error "Facebook::SendOnFacebookService: Error sending private reply : Page - #{channel.page_id} : #{response.body}"
+        return nil
+      end
+      
+      body = JSON.parse(response.body) rescue {}
+      return { 'message_id' => body['message_id'] || body['id'] }
+    end
+
     result = Facebook::Messenger::Bot.deliver(delivery_params, page_id: channel.page_id)
     JSON.parse(result)
   rescue JSON::ParserError

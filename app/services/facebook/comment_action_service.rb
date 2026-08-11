@@ -35,7 +35,7 @@ class Facebook::CommentActionService
     url = "https://graph.facebook.com/#{API_VERSION}/#{@channel.page_id}/messages"
     payload = {
       recipient: { comment_id: comment_id },
-      message: { text: message }
+      message: message.is_a?(Hash) ? message : { text: message }
     }
 
     response = HTTParty.post(
