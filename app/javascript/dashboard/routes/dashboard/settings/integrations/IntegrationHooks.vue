@@ -169,7 +169,11 @@ export default {
             @delete="openDeletePopup"
           />
           <SectionLayout
-            v-if="integrationId === 'openai' && integration.hooks && integration.hooks.length > 0"
+            v-if="
+              integrationId === 'openai' &&
+              integration.hooks &&
+              integration.hooks.length > 0
+            "
             :title="$t('INTEGRATION_APPS.OPENAI.SETTINGS_TITLE')"
             class="mt-8 px-2"
           >

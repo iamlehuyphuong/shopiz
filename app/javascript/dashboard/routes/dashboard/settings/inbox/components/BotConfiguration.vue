@@ -97,8 +97,11 @@ export default {
         <FilterSelect
           v-model="selectedAgentBotId"
           :options="[
-            { value: '', label: $t('AGENT_BOTS.BOT_CONFIGURATION.SELECT_PLACEHOLDER') },
-            ...agentBots.map(bot => ({ value: bot.id, label: bot.name }))
+            {
+              value: '',
+              label: $t('AGENT_BOTS.BOT_CONFIGURATION.SELECT_PLACEHOLDER'),
+            },
+            ...agentBots.map(bot => ({ value: bot.id, label: bot.name })),
           ]"
           class="w-[300px] [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[38px] [&_button]:!border-n-weak [&_button]:!bg-n-alpha-1"
         />

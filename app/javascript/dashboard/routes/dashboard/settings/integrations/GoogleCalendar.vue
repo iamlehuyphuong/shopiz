@@ -19,7 +19,8 @@ const integration = computed(() => {
     id: 'google_calendar',
     logo: 'google_calendar.png',
     name: 'Google Calendar',
-    description: 'Kết nối tài khoản Google Calendar để tự động đặt lịch hẹn và kiểm tra giờ trống.',
+    description:
+      'Kết nối tài khoản Google Calendar để tự động đặt lịch hẹn và kiểm tra giờ trống.',
     enabled: !!connectedIntegration.value,
   };
 });
@@ -38,10 +39,16 @@ const handleConnect = async () => {
     if (response.data && response.data.url) {
       window.location.href = response.data.url;
     } else {
-      useAlert(t('INTEGRATION_SETTINGS.GOOGLE_CALENDAR.ERROR') || 'Cannot connect to Google Calendar');
+      useAlert(
+        t('INTEGRATION_SETTINGS.GOOGLE_CALENDAR.ERROR') ||
+          'Cannot connect to Google Calendar'
+      );
     }
   } catch (error) {
-    useAlert(t('INTEGRATION_SETTINGS.GOOGLE_CALENDAR.ERROR') || 'Cannot connect to Google Calendar');
+    useAlert(
+      t('INTEGRATION_SETTINGS.GOOGLE_CALENDAR.ERROR') ||
+        'Cannot connect to Google Calendar'
+    );
   } finally {
     isSubmitting.value = false;
   }
@@ -49,14 +56,19 @@ const handleConnect = async () => {
 
 const handleDisconnect = async () => {
   if (!connectedIntegration.value) return;
-  
+
   try {
     isSubmitting.value = true;
     await calendarIntegrationsAPI.delete(connectedIntegration.value.id);
-    useAlert(t('INTEGRATION_SETTINGS.GOOGLE_CALENDAR.DISCONNECT_SUCCESS') || 'Disconnected successfully');
+    useAlert(
+      t('INTEGRATION_SETTINGS.GOOGLE_CALENDAR.DISCONNECT_SUCCESS') ||
+        'Disconnected successfully'
+    );
     connectedIntegration.value = null;
   } catch (error) {
-    useAlert(t('INTEGRATION_SETTINGS.GOOGLE_CALENDAR.ERROR') || 'An error occurred');
+    useAlert(
+      t('INTEGRATION_SETTINGS.GOOGLE_CALENDAR.ERROR') || 'An error occurred'
+    );
   } finally {
     isSubmitting.value = false;
   }
@@ -66,7 +78,9 @@ const fetchIntegration = async () => {
   try {
     const response = await calendarIntegrationsAPI.get();
     const integrations = response.data || [];
-    connectedIntegration.value = integrations.find(i => i.provider === 'google');
+    connectedIntegration.value = integrations.find(
+      i => i.provider === 'google'
+    );
   } catch (error) {
     // Error silently
   } finally {
@@ -95,9 +109,15 @@ onMounted(() => {
     </template>
     <template #body>
       <div class="flex flex-col gap-6">
-        <div class="flex flex-col items-start justify-between lg:flex-row lg:items-center p-6 outline outline-n-container outline-1 bg-n-card rounded-xl gap-6">
-          <div class="flex items-start lg:items-center justify-start flex-1 m-0 gap-6 flex-col lg:flex-row">
-            <div class="flex h-16 w-16 items-center justify-center flex-shrink-0">
+        <div
+          class="flex flex-col items-start justify-between lg:flex-row lg:items-center p-6 outline outline-n-container outline-1 bg-n-card rounded-xl gap-6"
+        >
+          <div
+            class="flex items-start lg:items-center justify-start flex-1 m-0 gap-6 flex-col lg:flex-row"
+          >
+            <div
+              class="flex h-16 w-16 items-center justify-center flex-shrink-0"
+            >
               <img
                 :src="`/dashboard/images/integrations/${integration.id}.png`"
                 class="max-w-full rounded-md border border-n-weak shadow-sm block dark:hidden bg-n-alpha-3 dark:bg-n-alpha-2"
@@ -114,8 +134,12 @@ onMounted(() => {
               <p class="text-n-slate-11 text-body-main">
                 {{ integration.description }}
               </p>
-              <p v-if="integration.enabled" class="text-n-slate-11 text-sm mt-1">
-                Connected account: <strong>{{ connectedIntegration.email }}</strong>
+              <p
+                v-if="integration.enabled"
+                class="text-n-slate-11 text-sm mt-1"
+              >
+                Connected account:
+                <strong>{{ connectedIntegration.email }}</strong>
               </p>
             </div>
           </div>
@@ -124,14 +148,19 @@ onMounted(() => {
               v-if="integration.enabled"
               faded
               ruby
-              :label="t('INTEGRATION_SETTINGS.WEBHOOK.DELETE.BUTTON_TEXT') || 'Disconnect'"
+              :label="
+                t('INTEGRATION_SETTINGS.WEBHOOK.DELETE.BUTTON_TEXT') ||
+                'Disconnect'
+              "
               @click="handleDisconnect"
             />
             <Button
               v-else
               blue
               faded
-              :label="t('INTEGRATION_SETTINGS.CONNECT.BUTTON_TEXT') || 'Connect'"
+              :label="
+                t('INTEGRATION_SETTINGS.CONNECT.BUTTON_TEXT') || 'Connect'
+              "
               @click="handleConnect"
             />
           </div>

@@ -129,9 +129,7 @@ const skipTrial = () => emit('close');
               <p class="text-sm text-n-slate-11 leading-relaxed">
                 {{ t('WELCOME_TRIAL_MODAL.DESCRIPTION_PART_1') }}
                 <span class="font-semibold text-n-orange">
-                  {{
-                    t('WELCOME_TRIAL_MODAL.DESCRIPTION_PART_TRIAL')
-                  }}
+                  {{ t('WELCOME_TRIAL_MODAL.DESCRIPTION_PART_TRIAL') }}
                 </span>
                 {{ t('WELCOME_TRIAL_MODAL.DESCRIPTION_PART_2') }}
                 <span class="font-semibold text-n-slate-12">Basic</span>

@@ -74,7 +74,8 @@ const handleConnect = async () => {
     }
     hideConnectModal();
   } catch (error) {
-    formError.value = error.response?.data?.error || t('INTEGRATION_SETTINGS.KIOTVIET.ERROR');
+    formError.value =
+      error.response?.data?.error || t('INTEGRATION_SETTINGS.KIOTVIET.ERROR');
   } finally {
     isSubmitting.value = false;
   }

@@ -136,13 +136,15 @@ const improveWithAI = async () => {
       context: {
         assistant_name: state.name,
         core_products: state.productName,
-      }
+      },
     });
     if (response.data && response.data.message) {
       state.description = response.data.message;
     }
   } catch (error) {
-    useAlert(t('CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.IMPROVE_AI_ERROR') || 'Error');
+    useAlert(
+      t('CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.IMPROVE_AI_ERROR') || 'Error'
+    );
   } finally {
     isImproving.value = false;
   }
@@ -172,13 +174,22 @@ const improveWithAI = async () => {
         <button
           type="button"
           class="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium transition-colors border rounded-md text-n-slate-11 border-n-strong bg-white hover:bg-n-alpha-1 hover:text-n-slate-12 shadow-sm"
-          @click="improveWithAI"
           :disabled="isImproving || !state.description"
-          :class="{ 'opacity-50 cursor-not-allowed': isImproving || !state.description }"
+          :class="{
+            'opacity-50 cursor-not-allowed': isImproving || !state.description,
+          }"
+          @click="improveWithAI"
         >
-          <Icon v-if="!isImproving" icon="i-lucide-wand-sparkles" class="w-4 h-4" />
+          <Icon
+            v-if="!isImproving"
+            icon="i-lucide-wand-sparkles"
+            class="w-4 h-4"
+          />
           <Icon v-else icon="i-lucide-loader-2" class="w-4 h-4 animate-spin" />
-          {{ t('CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.IMPROVE_AI') || 'Cải thiện bằng AI' }}
+          {{
+            t('CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.IMPROVE_AI') ||
+            'Cải thiện bằng AI'
+          }}
         </button>
       </div>
       <div class="flex flex-wrap items-center gap-2">
@@ -192,7 +203,11 @@ const improveWithAI = async () => {
           class="px-2 py-1 text-xs font-medium transition-colors border rounded-md text-n-slate-11 border-n-weak bg-n-alpha-1 hover:bg-n-alpha-2 hover:text-n-slate-12"
           @click="applyTemplate(`TEMPLATE_${i}`)"
         >
-          {{ t(`CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.TEMPLATES.TEMPLATE_${i}_LABEL`) }}
+          {{
+            t(
+              `CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.TEMPLATES.TEMPLATE_${i}_LABEL`
+            )
+          }}
         </button>
       </div>
     </div>

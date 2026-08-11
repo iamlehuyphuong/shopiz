@@ -244,7 +244,7 @@ export default {
             />
           </div>
         </div>
-        <label :class="[{ error: v$.attributeType.$error }, 'mb-6 block']">
+        <label class="mb-6 block" :class="[{ error: v$.attributeType.$error }]">
           {{ $t('ATTRIBUTES_MGMT.ADD.FORM.TYPE.LABEL') }}
           <FilterSelect
             v-model="attributeType"

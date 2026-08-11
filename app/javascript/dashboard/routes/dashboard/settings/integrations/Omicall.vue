@@ -153,7 +153,9 @@ export default {
         return;
       }
 
-      const selectedExt = this.extensions.find(e => e.sip_user === selectedSipUser);
+      const selectedExt = this.extensions.find(
+        e => e.sip_user === selectedSipUser
+      );
       if (!selectedExt) {
         useAlert('Số nội bộ không hợp lệ!');
         return;

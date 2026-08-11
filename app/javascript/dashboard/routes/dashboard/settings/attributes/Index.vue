@@ -229,7 +229,11 @@ const filteredAttributes = computed(() => {
       :on-close="hideAddPopup"
       :selected-attribute-model-tab="selectedTabIndex"
     />
-    <woot-modal v-model:show="showEditPopup" :on-close="hideEditPopup" class="attribute-settings-modal">
+    <woot-modal
+      v-model:show="showEditPopup"
+      :on-close="hideEditPopup"
+      class="attribute-settings-modal"
+    >
       <EditAttribute
         :selected-attribute="selectedAttribute"
         :is-updating="uiFlags.isUpdating"

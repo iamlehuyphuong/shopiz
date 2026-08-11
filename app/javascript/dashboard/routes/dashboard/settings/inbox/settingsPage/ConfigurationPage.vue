@@ -102,13 +102,22 @@ export default {
         this.inbox.selected_feature_flags || []
       ).includes('allow_mobile_webview');
       this.allowedDomains = this.inbox.allowed_domains || '';
-      
+
       const zaloConfig = this.inbox.zalo_auto_message_config || {};
-      this.zaloAutoMessageEnabled = zaloConfig.zalo_auto_message_enabled || false;
+      this.zaloAutoMessageEnabled =
+        zaloConfig.zalo_auto_message_enabled || false;
       const zaloIds = zaloConfig.zalo_auto_message_inbox_ids || [];
-      const newZaloInboxes = this.zaloPersonalInboxes.filter(i => zaloIds.includes(i.id));
-      const currentIds = this.zaloAutoMessageInboxes.map(i => i.id).sort().join(',');
-      const nextIds = newZaloInboxes.map(i => i.id).sort().join(',');
+      const newZaloInboxes = this.zaloPersonalInboxes.filter(i =>
+        zaloIds.includes(i.id)
+      );
+      const currentIds = this.zaloAutoMessageInboxes
+        .map(i => i.id)
+        .sort()
+        .join(',');
+      const nextIds = newZaloInboxes
+        .map(i => i.id)
+        .sort()
+        .join(',');
       if (currentIds !== nextIds) {
         this.zaloAutoMessageInboxes = newZaloInboxes;
       }
@@ -208,7 +217,9 @@ export default {
           formData: false,
           zalo_auto_message_config: {
             zalo_auto_message_enabled: this.zaloAutoMessageEnabled,
-            zalo_auto_message_inbox_ids: this.zaloAutoMessageInboxes.map(i => i.id),
+            zalo_auto_message_inbox_ids: this.zaloAutoMessageInboxes.map(
+              i => i.id
+            ),
           },
         };
         await this.$store.dispatch('inboxes/updateInbox', payload);
@@ -498,19 +509,19 @@ export default {
           header="Kích hoạt tính năng"
           description="Tự động liên hệ qua Zalo Cá Nhân khi khách hàng để lại số điện thoại trong Inbox này."
         />
-        
+
         <SettingsToggleSection
           header="Chọn Zalo Cá Nhân"
           description="Chọn các kênh Zalo Cá Nhân sẽ được sử dụng để gửi kết bạn/tin nhắn (luân phiên - Round robin)."
           hide-toggle
         >
           <template #editor>
-             <MultiSelect
-               v-model="zaloAutoMessageInboxes"
-               :options="zaloPersonalInboxes"
-               :max-chips="10"
-               class="w-full mt-2"
-             />
+            <MultiSelect
+              v-model="zaloAutoMessageInboxes"
+              :options="zaloPersonalInboxes"
+              :max-chips="10"
+              class="w-full mt-2"
+            />
           </template>
         </SettingsToggleSection>
       </div>

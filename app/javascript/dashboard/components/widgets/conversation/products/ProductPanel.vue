@@ -190,7 +190,8 @@ const handleAddToOrder = product => {
             Chưa đồng bộ sản phẩm
           </p>
           <p class="text-xs text-n-slate-10 text-center mb-4 leading-relaxed">
-            Sản phẩm từ {{ activeSourceName }} chưa được đồng bộ vào hệ thống. Vui lòng đồng bộ để có thể gửi cho khách hàng.
+            Sản phẩm từ {{ activeSourceName }} chưa được đồng bộ vào hệ thống.
+            Vui lòng đồng bộ để có thể gửi cho khách hàng.
           </p>
           <Button
             label="Đồng bộ ngay"

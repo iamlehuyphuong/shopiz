@@ -236,7 +236,11 @@ onUnmounted(() => {
       </template>
       <template v-else-if="isAdmin">
         <RouterLink
-          :to="accountScopedRoute('settings_applications_integration', { integration_id: 'openai' })"
+          :to="
+            accountScopedRoute('settings_applications_integration', {
+              integration_id: 'openai',
+            })
+          "
           class="hidden lg:flex items-center px-2.5 py-1 rounded-full bg-n-orange text-[10px] font-bold uppercase tracking-wider text-white hover:opacity-90 transition-opacity whitespace-nowrap shadow-sm"
         >
           {{ $t('GENERAL_SETTINGS.CAPTAIN_API_SOURCE.CONFIGURE_OPENAI') }}

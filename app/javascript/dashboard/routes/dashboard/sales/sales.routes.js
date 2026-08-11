@@ -105,7 +105,8 @@ export const routes = [
   },
   {
     path: frontendURL('accounts/:accountId/sales/tools'),
-    component: () => import('dashboard/routes/dashboard/settings/SettingsWrapper.vue'),
+    component: () =>
+      import('dashboard/routes/dashboard/settings/SettingsWrapper.vue'),
     children: [
       {
         path: '',
@@ -123,7 +124,10 @@ export const routes = [
           permissions: ['administrator', 'sales_manage'],
           featureFlag: FEATURE_FLAGS.SALES,
         },
-        component: () => import('dashboard/routes/dashboard/settings/integrations/Woocommerce.vue'),
+        component: () =>
+          import(
+            'dashboard/routes/dashboard/settings/integrations/Woocommerce.vue'
+          ),
       },
       {
         path: 'kiotviet',
@@ -132,7 +136,10 @@ export const routes = [
           permissions: ['administrator', 'sales_manage'],
           featureFlag: FEATURE_FLAGS.SALES,
         },
-        component: () => import('dashboard/routes/dashboard/settings/integrations/Kiotviet.vue'),
+        component: () =>
+          import(
+            'dashboard/routes/dashboard/settings/integrations/Kiotviet.vue'
+          ),
       },
       {
         path: 'haravan',
@@ -141,7 +148,10 @@ export const routes = [
           permissions: ['administrator', 'sales_manage'],
           featureFlag: FEATURE_FLAGS.SALES,
         },
-        component: () => import('dashboard/routes/dashboard/settings/integrations/Haravan.vue'),
+        component: () =>
+          import(
+            'dashboard/routes/dashboard/settings/integrations/Haravan.vue'
+          ),
       },
       {
         path: 'sapo',
@@ -150,7 +160,8 @@ export const routes = [
           permissions: ['administrator', 'sales_manage'],
           featureFlag: FEATURE_FLAGS.SALES,
         },
-        component: () => import('dashboard/routes/dashboard/settings/integrations/Sapo.vue'),
+        component: () =>
+          import('dashboard/routes/dashboard/settings/integrations/Sapo.vue'),
       },
       {
         path: 'nhanhvn',
@@ -159,7 +170,10 @@ export const routes = [
           permissions: ['administrator', 'sales_manage'],
           featureFlag: FEATURE_FLAGS.SALES,
         },
-        component: () => import('dashboard/routes/dashboard/settings/integrations/Nhanhvn.vue'),
+        component: () =>
+          import(
+            'dashboard/routes/dashboard/settings/integrations/Nhanhvn.vue'
+          ),
       },
       {
         path: 'google_calendar',
@@ -168,7 +182,10 @@ export const routes = [
           permissions: ['administrator', 'sales_manage'],
           featureFlag: FEATURE_FLAGS.SALES,
         },
-        component: () => import('dashboard/routes/dashboard/settings/integrations/GoogleCalendar.vue'),
+        component: () =>
+          import(
+            'dashboard/routes/dashboard/settings/integrations/GoogleCalendar.vue'
+          ),
       },
       {
         path: ':integration_id',
@@ -180,7 +197,10 @@ export const routes = [
         props: route => ({
           integrationId: route.params.integration_id,
         }),
-        component: () => import('dashboard/routes/dashboard/settings/integrations/IntegrationHooks.vue'),
+        component: () =>
+          import(
+            'dashboard/routes/dashboard/settings/integrations/IntegrationHooks.vue'
+          ),
       },
     ],
   },

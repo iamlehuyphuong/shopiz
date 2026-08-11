@@ -76,8 +76,7 @@ const formErrors = computed(() => ({
 
 const isSubmitDisabled = computed(() => v$.value.$invalid);
 
-const formatToUTCString = dateObj =>
-  dateObj ? dateObj.toISOString() : null;
+const formatToUTCString = dateObj => (dateObj ? dateObj.toISOString() : null);
 
 const resetState = () => {
   Object.assign(state, initialState);
@@ -189,14 +188,13 @@ const handleSubmit = async () => {
       </label>
       <DateTimePicker
         :value="state.scheduledAt"
-        :placeholder="t('CAMPAIGN.TELEGRAM.CREATE.FORM.SCHEDULED_AT.PLACEHOLDER')"
+        :placeholder="
+          t('CAMPAIGN.TELEGRAM.CREATE.FORM.SCHEDULED_AT.PLACEHOLDER')
+        "
         confirm-text="Chọn"
         @change="state.scheduledAt = $event"
       />
-      <span
-        v-if="formErrors.scheduledAt"
-        class="text-xs text-n-red-11 mt-1"
-      >
+      <span v-if="formErrors.scheduledAt" class="text-xs text-n-red-11 mt-1">
         {{ formErrors.scheduledAt }}
       </span>
     </div>

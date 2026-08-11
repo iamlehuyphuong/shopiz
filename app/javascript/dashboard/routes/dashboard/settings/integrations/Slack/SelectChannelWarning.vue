@@ -93,8 +93,16 @@ const updateIntegration = async () => {
         <FilterSelect
           v-model="selectedChannelId"
           :options="[
-            { value: '', label: $t('INTEGRATION_SETTINGS.SLACK.SELECT_CHANNEL.OPTION_LABEL') },
-            ...availableChannels.map(channel => ({ value: channel.id, label: `#${channel.name}` }))
+            {
+              value: '',
+              label: $t(
+                'INTEGRATION_SETTINGS.SLACK.SELECT_CHANNEL.OPTION_LABEL'
+              ),
+            },
+            ...availableChannels.map(channel => ({
+              value: channel.id,
+              label: `#${channel.name}`,
+            })),
           ]"
           class="w-[260px] mr-4 [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[32px] [&_button]:!border-n-amber-10"
         />

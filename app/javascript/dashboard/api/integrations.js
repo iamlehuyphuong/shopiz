@@ -34,7 +34,10 @@ class IntegrationsAPI extends ApiClient {
   }
 
   updateHook(hookId, hookData) {
-    return axios.patch(`${this.baseUrl()}/integrations/hooks/${hookId}`, hookData);
+    return axios.patch(
+      `${this.baseUrl()}/integrations/hooks/${hookId}`,
+      hookData
+    );
   }
 
   connectShopify({ shopDomain }) {
@@ -102,11 +105,15 @@ class IntegrationsAPI extends ApiClient {
   }
 
   connectGoogleCalendar() {
-    return axios.post(`${this.baseUrl()}/integrations/google_calendar/authorization`);
+    return axios.post(
+      `${this.baseUrl()}/integrations/google_calendar/authorization`
+    );
   }
 
   disconnectGoogleCalendar(integrationId) {
-    return axios.delete(`${this.baseUrl()}/calendar_integrations/${integrationId}`);
+    return axios.delete(
+      `${this.baseUrl()}/calendar_integrations/${integrationId}`
+    );
   }
 }
 

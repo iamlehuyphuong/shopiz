@@ -41,10 +41,7 @@ const localizedTitle = computed(() => {
         </p>
       </div>
       <div class="benefit mt-6 mb-4 flex-1 w-full px-6">
-        <template
-          v-for="category in plan.benefits"
-          :key="category.name"
-        >
+        <template v-for="category in plan.benefits" :key="category.name">
           <div class="mt-6 mb-3">
             <h4
               class="text-xs font-semibold text-n-slate-12 uppercase tracking-wide border-b border-n-weak pb-1.5 mb-3"

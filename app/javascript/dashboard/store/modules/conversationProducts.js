@@ -21,9 +21,11 @@ export const actions = {
         conversationId,
         { query, page, source }
       );
-      
+
       if (data.has_synced_data !== undefined) {
-        commit(types.SET_CONVERSATION_PRODUCTS_UI_FLAG, { hasSyncedData: data.has_synced_data });
+        commit(types.SET_CONVERSATION_PRODUCTS_UI_FLAG, {
+          hasSyncedData: data.has_synced_data,
+        });
       }
 
       commit(types.SET_CONVERSATION_PRODUCTS, {

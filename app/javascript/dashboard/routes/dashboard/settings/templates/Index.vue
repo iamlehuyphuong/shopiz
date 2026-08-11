@@ -63,9 +63,24 @@ const tiktokShopInboxes = computed(() =>
 
 // Check channel active statuses from global config
 const globalConfig = window.globalConfig || {};
-const isWhatsappActive = computed(() => !['coming_soon', 'disabled', 'draft'].includes(globalConfig.CHANNEL_STATUS_WHATSAPP));
-const isZaloActive = computed(() => !['coming_soon', 'disabled', 'draft'].includes(globalConfig.CHANNEL_STATUS_ZALO_OA));
-const isTiktokShopActive = computed(() => !['coming_soon', 'disabled', 'draft'].includes(globalConfig.CHANNEL_STATUS_TIKTOK_SHOP));
+const isWhatsappActive = computed(
+  () =>
+    !['coming_soon', 'disabled', 'draft'].includes(
+      globalConfig.CHANNEL_STATUS_WHATSAPP
+    )
+);
+const isZaloActive = computed(
+  () =>
+    !['coming_soon', 'disabled', 'draft'].includes(
+      globalConfig.CHANNEL_STATUS_ZALO_OA
+    )
+);
+const isTiktokShopActive = computed(
+  () =>
+    !['coming_soon', 'disabled', 'draft'].includes(
+      globalConfig.CHANNEL_STATUS_TIKTOK_SHOP
+    )
+);
 
 // Normalize WhatsApp templates
 const normalizedWATemplates = computed(() =>

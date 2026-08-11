@@ -197,13 +197,20 @@ export default {
 </script>
 
 <template>
-  <woot-modal v-model:show="show" :on-close="onClose" class="attribute-settings-modal">
+  <woot-modal
+    v-model:show="show"
+    :on-close="onClose"
+    class="attribute-settings-modal"
+  >
     <div class="flex flex-col h-auto overflow-visible">
       <woot-modal-header :header-title="$t('ATTRIBUTES_MGMT.ADD.TITLE')" />
 
       <form class="flex w-full" @submit.prevent="addAttributes">
         <div class="w-full">
-          <label :class="[{ error: v$.attributeModel.$error }, 'mb-6 block']">
+          <label
+            class="mb-6 block"
+            :class="[{ error: v$.attributeModel.$error }]"
+          >
             {{ $t('ATTRIBUTES_MGMT.ADD.FORM.MODEL.LABEL') }}
             <FilterSelect
               v-model="attributeModel"
@@ -264,7 +271,10 @@ export default {
               />
             </div>
           </div>
-          <label :class="[{ error: v$.attributeType.$error }, 'mb-6 block']">
+          <label
+            class="mb-6 block"
+            :class="[{ error: v$.attributeType.$error }]"
+          >
             {{ $t('ATTRIBUTES_MGMT.ADD.FORM.TYPE.LABEL') }}
             <FilterSelect
               v-model="attributeType"

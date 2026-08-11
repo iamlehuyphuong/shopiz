@@ -335,9 +335,9 @@ defineExpose({
   <ContactImportDialog ref="contactImportDialogRef" @import="onImport" />
   <CreateSegmentDialog ref="createSegmentDialogRef" @create="onCreateSegment" />
   <DeleteSegmentDialog ref="deleteSegmentDialogRef" @delete="onDeleteSegment" />
-  
+
   <woot-modal
-    :show.sync="showPullContactsDialog"
+    v-model:show="showPullContactsDialog"
     :on-close="() => (showPullContactsDialog = false)"
   >
     <PullContactsDialog

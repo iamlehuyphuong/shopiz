@@ -140,27 +140,30 @@ class MessageFormatter {
     });
 
     // Highlight phone numbers (usually not linkified by markdown-it)
-    renderedMessage = renderedMessage.replace(VN_PHONE_REGEX, (match, offset, string) => {
-      const stringBefore = string.substring(0, offset);
+    renderedMessage = renderedMessage.replace(
+      VN_PHONE_REGEX,
+      (match, offset, string) => {
+        const stringBefore = string.substring(0, offset);
 
-      // Skip if match is inside an HTML tag attribute (e.g., href="...")
-      const lastOpenTag = stringBefore.lastIndexOf('<');
-      const lastCloseTag = stringBefore.lastIndexOf('>');
-      if (lastOpenTag > lastCloseTag) return match;
+        // Skip if match is inside an HTML tag attribute (e.g., href="...")
+        const lastOpenTag = stringBefore.lastIndexOf('<');
+        const lastCloseTag = stringBefore.lastIndexOf('>');
+        if (lastOpenTag > lastCloseTag) return match;
 
-      // Skip if match is inside an existing <a> tag text content
-      const openATags = (stringBefore.match(/<a\b/gi) || []).length;
-      const closeATags = (stringBefore.match(/<\/a>/gi) || []).length;
-      if (openATags > closeATags) return match;
+        // Skip if match is inside an existing <a> tag text content
+        const openATags = (stringBefore.match(/<a\b/gi) || []).length;
+        const closeATags = (stringBefore.match(/<\/a>/gi) || []).length;
+        if (openATags > closeATags) return match;
 
-      // Skip if match appears to be part of a plain URL
-      if (stringBefore.match(/https?:\/\/[^\s<"']*$/i)) return match;
+        // Skip if match appears to be part of a plain URL
+        if (stringBefore.match(/https?:\/\/[^\s<"']*$/i)) return match;
 
-      const displayValue = this.maskContactInfo
-        ? this.maskPhoneNumber(match)
-        : match;
-      return `<strong class="highlight-link underline cursor-pointer text-n-orange-10 hover:text-n-orange dark:text-n-orange-5 transition-colors" data-type="phone" data-value="${match}"><u>${displayValue}</u></strong>`;
-    });
+        const displayValue = this.maskContactInfo
+          ? this.maskPhoneNumber(match)
+          : match;
+        return `<strong class="highlight-link underline cursor-pointer text-n-orange-10 hover:text-n-orange dark:text-n-orange-5 transition-colors" data-type="phone" data-value="${match}"><u>${displayValue}</u></strong>`;
+      }
+    );
 
     if (this.isATweet && !this.isAPrivateNote) {
       renderedMessage = renderedMessage.replace(

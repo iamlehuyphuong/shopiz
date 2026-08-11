@@ -121,7 +121,10 @@ export default {
       }, {});
 
       this.formItems.forEach(item => {
-        if (item.validation?.includes('JSON') && typeof hookPayload.settings[item.name] === 'string') {
+        if (
+          item.validation?.includes('JSON') &&
+          typeof hookPayload.settings[item.name] === 'string'
+        ) {
           try {
             hookPayload.settings[item.name] = JSON.parse(
               hookPayload.settings[item.name]
@@ -145,13 +148,18 @@ export default {
             hookId: this.hook.id,
             hookData: this.buildHookPayload(),
           });
-          this.alertMessage = this.$t('INTEGRATION_APPS.UPDATE.API.SUCCESS_MESSAGE', 'Cập nhật cấu hình thành công!');
+          this.alertMessage = this.$t(
+            'INTEGRATION_APPS.UPDATE.API.SUCCESS_MESSAGE',
+            'Cập nhật cấu hình thành công!'
+          );
         } else {
           await this.$store.dispatch(
             'integrations/createHook',
             this.buildHookPayload()
           );
-          this.alertMessage = this.$t('INTEGRATION_APPS.ADD.API.SUCCESS_MESSAGE');
+          this.alertMessage = this.$t(
+            'INTEGRATION_APPS.ADD.API.SUCCESS_MESSAGE'
+          );
         }
         this.onClose();
       } catch (error) {
@@ -167,7 +175,10 @@ export default {
 </script>
 
 <template>
-  <div class="flex flex-col h-auto overflow-auto integration-hooks" :class="{ 'mt-4': inline }">
+  <div
+    class="flex flex-col h-auto overflow-auto integration-hooks"
+    :class="{ 'mt-4': inline }"
+  >
     <woot-modal-header
       v-if="!inline"
       :header-title="integration.name"
@@ -207,7 +218,11 @@ export default {
         />
         <NextButton
           type="submit"
-          :label="isUpdating ? $t('INTEGRATION_APPS.UPDATE.BUTTON_TEXT', 'Cập nhật') : $t('INTEGRATION_APPS.ADD.FORM.SUBMIT')"
+          :label="
+            isUpdating
+              ? $t('INTEGRATION_APPS.UPDATE.BUTTON_TEXT', 'Cập nhật')
+              : $t('INTEGRATION_APPS.ADD.FORM.SUBMIT')
+          "
           :is-loading="uiFlags.isCreatingHook || uiFlags.isUpdating"
         />
       </div>

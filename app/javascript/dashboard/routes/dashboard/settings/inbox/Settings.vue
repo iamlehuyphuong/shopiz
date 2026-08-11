@@ -101,7 +101,7 @@ export default {
     const isImprovingZaloFriend = ref(false);
     const isImprovingZaloGreeting = ref(false);
     const isImprovingAutoFollowUps = ref({});
-    
+
     return {
       v$: useVuelidate(),
       processEvent,
@@ -233,7 +233,10 @@ export default {
         this.isAVoiceChannel ||
         (this.isAnEmailChannel && !this.inbox.provider) ||
         this.shouldShowWhatsAppConfiguration ||
-        this.isAWebWidgetInbox
+        this.isAWebWidgetInbox ||
+        this.isAFacebookInbox ||
+        this.isAnInstagramChannel ||
+        this.isATelegramChannel
       ) {
         visibleToAllChannelTabs = [
           ...visibleToAllChannelTabs,
@@ -1491,16 +1494,12 @@ export default {
             </SettingsAccordion>
 
             <div class="relative mt-6">
-              <FeatureLockOverlay
-                v-if="!isCaptainEnabled"
-                feature-flag="captain_ai"
-                :feature-name="$t('SIDEBAR.CAPTAIN_AI')"
-              />
               <SettingsAccordion
                 :title="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_LABEL_TITLE')"
               >
                 <SettingsToggleSection
                   v-model="autoLabelEnabled"
+                  :disabled="!isCaptainEnabled"
                   :header="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_LABEL_TOGGLE')"
                   :description="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_LABEL_DESC')"
                 />
@@ -1625,8 +1624,18 @@ export default {
 
                       <SettingsToggleSection
                         v-model="autoFollowUpAiRewrite"
-                        :header="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_AI_REWRITE_TOGGLE', 'Sử dụng AI viết lại nội dung')"
-                        :description="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_AI_REWRITE_DESC', 'AI sẽ dựa vào ngữ cảnh cuộc trò chuyện để viết lại tin nhắn mẫu một cách tự nhiên.')"
+                        :header="
+                          $t(
+                            'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_AI_REWRITE_TOGGLE',
+                            'Sử dụng AI viết lại nội dung'
+                          )
+                        "
+                        :description="
+                          $t(
+                            'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_AI_REWRITE_DESC',
+                            'AI sẽ dựa vào ngữ cảnh cuộc trò chuyện để viết lại tin nhắn mẫu một cách tự nhiên.'
+                          )
+                        "
                         class="mt-4 bg-transparent p-0 border-0"
                       />
 

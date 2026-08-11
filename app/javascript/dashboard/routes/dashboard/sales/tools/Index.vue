@@ -113,7 +113,7 @@ onMounted(() => {
             :enabled="item.enabled"
             :is-active="item.is_active"
             :status="item.status"
-            :path-prefix="'sales/tools'"
+            path-prefix="sales/tools"
           />
         </div>
       </div>

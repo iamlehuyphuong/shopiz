@@ -36,12 +36,11 @@ const isTiktokChannel = computed(
 );
 
 const currentAccountId = useMapGetter('getCurrentAccountId');
-const isFeatureEnabledonAccount = useMapGetter('accounts/isFeatureEnabledonAccount');
+const isFeatureEnabledonAccount = useMapGetter(
+  'accounts/isFeatureEnabledonAccount'
+);
 const isCaptainEnabled = computed(() =>
-  isFeatureEnabledonAccount.value(
-    currentAccountId.value,
-    FEATURE_FLAGS.CAPTAIN
-  )
+  isFeatureEnabledonAccount.value(currentAccountId.value, FEATURE_FLAGS.CAPTAIN)
 );
 
 // When "hide all" is toggled on, force-off the granular rules
@@ -52,7 +51,7 @@ watch(hideComments, newVal => {
   }
 });
 
-watch(autoReplyUseAi, (newVal) => {
+watch(autoReplyUseAi, newVal => {
   if (newVal && !isCaptainEnabled.value) {
     autoReplyUseAi.value = false;
     useAlert(t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.AI_NOT_ENABLED'));
@@ -69,7 +68,9 @@ function syncSettings() {
   hidePhoneComments.value = toBool(config.hide_phone_comments);
   hideEmailComments.value = toBool(config.hide_email_comments);
   autoReplyToComments.value = toBool(config.auto_reply_to_comments);
-  autoPublicReplyToComments.value = toBool(config.auto_public_reply_to_comments);
+  autoPublicReplyToComments.value = toBool(
+    config.auto_public_reply_to_comments
+  );
   autoReplyUseAi.value = toBool(config.auto_reply_use_ai);
   autoReplyMessage.value = config.auto_reply_message || '';
   autoPublicReplyMessage.value = config.auto_public_reply_message || '';
@@ -196,7 +197,9 @@ async function updateSettings() {
           v-model="autoReplyMessage"
           class="w-full min-h-[100px] rounded-lg border border-n-weak p-3 text-sm text-n-slate-12 bg-n-alpha-white placeholder:text-n-slate-9 focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-n-orange-9 resize-y"
           :placeholder="
-            $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.PRIVATE_MESSAGE_PLACEHOLDER')
+            $t(
+              'INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.PRIVATE_MESSAGE_PLACEHOLDER'
+            )
           "
           rows="4"
         />
@@ -221,7 +224,9 @@ async function updateSettings() {
           v-model="autoPublicReplyMessage"
           class="w-full min-h-[100px] rounded-lg border border-n-weak p-3 text-sm text-n-slate-12 bg-n-alpha-white placeholder:text-n-slate-9 focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-n-orange-9 resize-y"
           :placeholder="
-            $t('INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.PUBLIC_MESSAGE_PLACEHOLDER')
+            $t(
+              'INBOX_MGMT.POSTS_AND_COMMENTS.AUTO_REPLY.PUBLIC_MESSAGE_PLACEHOLDER'
+            )
           "
           rows="4"
         />
