@@ -1,15 +1,22 @@
 # pre-build stage
+FROM node:24-alpine as node
 FROM chatwoot/chatwoot:v4.8.0
 
 ENV NODE_OPTIONS="--max-old-space-size=8192"
 ENV CW_EDITION=ee
-ENV POLAR_ACCESS_TOKEN=""
+
+COPY --from=node /usr/local/bin/node /usr/local/bin/
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+RUN ln -sf /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
+  && ln -sf /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
 RUN apk update && apk add --no-cache \
   poppler-utils \
-  tesseract-ocr
-RUN apk add --update npm
-RUN npm install -g pnpm
+  tesseract-ocr \
+  build-base \
+  python3
+
+RUN npm install -g pnpm@10.2.0
 
 COPY ./app /app/app
 COPY ./db /app/db
