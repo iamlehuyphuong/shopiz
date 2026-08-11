@@ -37,9 +37,14 @@ export function useLabelSuggestions() {
   );
 
   const isLabelSuggestionFeatureEnabled = computed(() => {
-    if (aiIntegration.value) {
-      const { settings = {} } = aiIntegration.value || {};
-      return !!settings.label_suggestion;
+    // We still check if Captain tasks are globally enabled or if AI integration exists
+    if (!aiIntegration.value) return false;
+
+    // Check if the current conversation's inbox has label suggestions enabled
+    const inboxId = currentChat.value?.inbox_id;
+    if (inboxId) {
+      const inbox = store.getters['inboxes/getInbox'](inboxId);
+      return !!inbox?.label_suggestion_enabled;
     }
     return false;
   });

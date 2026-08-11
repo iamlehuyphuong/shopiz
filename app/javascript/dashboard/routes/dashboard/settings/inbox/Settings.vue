@@ -150,6 +150,7 @@ export default {
       autoFollowUpPredefinedMessage: '',
       autoFollowUpPredefinedMessages: Array.from({ length: 15 }, () => ''),
       autoLabelEnabled: false,
+      labelSuggestionEnabled: false,
       zaloReauthorizeModalVisible: false,
       isCheckingConnection: false,
       isSyncingFriends: false,
@@ -635,6 +636,7 @@ export default {
       this.autoFollowUpAiRewrite =
         this.inbox.auto_follow_up_config?.ai_rewrite || false;
       this.autoLabelEnabled = this.inbox.auto_label_enabled || false;
+      this.labelSuggestionEnabled = this.inbox.label_suggestion_enabled || false;
       this.autoFollowUpPredefinedMessage =
         this.inbox.auto_follow_up_config?.predefined_message || '';
 
@@ -750,6 +752,7 @@ export default {
           sender_name_type: this.senderNameType,
           business_name: this.businessName || null,
           auto_label_enabled: this.autoLabelEnabled,
+          label_suggestion_enabled: this.labelSuggestionEnabled,
           auto_follow_up_config:
             this.avatarFile || this.bubbleAvatarFile
               ? JSON.stringify({
@@ -1498,10 +1501,18 @@ export default {
                 :title="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_LABEL_TITLE')"
               >
                 <SettingsToggleSection
+                  v-model="labelSuggestionEnabled"
+                  :disabled="!isCaptainEnabled"
+                  :header="$t('INBOX_MGMT.SETTINGS_POPUP.LABEL_SUGGESTION_TOGGLE', 'Suggest labels to agents')"
+                  :description="$t('INBOX_MGMT.SETTINGS_POPUP.LABEL_SUGGESTION_DESC', 'Shows AI-generated label suggestions in the conversation view.')"
+                />
+                
+                <SettingsToggleSection
                   v-model="autoLabelEnabled"
                   :disabled="!isCaptainEnabled"
                   :header="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_LABEL_TOGGLE')"
                   :description="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_LABEL_DESC')"
+                  class="mt-4"
                 />
               </SettingsAccordion>
 

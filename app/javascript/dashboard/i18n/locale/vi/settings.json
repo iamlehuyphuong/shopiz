@@ -676,10 +676,10 @@
         "DESCRIPTION": "Sử dụng AI để tìm kiếm theo ngữ cảnh bên trong các bài viết trong trung tâm trợ giúp của bạn."
       },
       "LABEL_SUGGESTION": {
-        "TITLE": "Gợi ý gắn Nhãn",
-        "DESCRIPTION": "Tự động đề xuất nhãn và thẻ phù hợp cho các cuộc hội thoại dựa trên phân tích nội dung và ngữ cảnh.",
-        "MODEL_TITLE": "Mô hình gợi ý Nhãn",
-        "MODEL_DESCRIPTION": "Chọn mô hình AI để sử dụng cho việc phân tích các cuộc hội thoại và đề xuất nhãn phù hợp"
+        "TITLE": "Gắn nhãn bằng AI",
+        "DESCRIPTION": "Tự động đề xuất hoặc áp dụng các nhãn phù hợp cho cuộc hội thoại dựa trên phân tích nội dung và ngữ cảnh. (Cấu hình tại Cài đặt Inbox)",
+        "MODEL_TITLE": "Mô hình Gắn nhãn bằng AI",
+        "MODEL_DESCRIPTION": "Chọn mô hình AI để phân tích cuộc hội thoại và gợi ý/áp dụng nhãn phù hợp"
       }
     },
     "API": {

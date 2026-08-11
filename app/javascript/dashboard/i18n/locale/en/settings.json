@@ -677,10 +677,10 @@
         "DESCRIPTION": "Use AI for context aware search inside your help center articles."
       },
       "LABEL_SUGGESTION": {
-        "TITLE": "Label Suggestion",
-        "DESCRIPTION": "Automatically suggest relevant labels and tags for conversations based on content analysis and context.",
-        "MODEL_TITLE": "Label Suggestion Model",
-        "MODEL_DESCRIPTION": "Select the AI model to use for analyzing conversations and suggesting appropriate labels"
+        "TITLE": "AI Labeling",
+        "DESCRIPTION": "Automatically apply or suggest relevant labels and tags for conversations based on content analysis and context. (Configure in Inbox Settings)",
+        "MODEL_TITLE": "AI Labeling Model",
+        "MODEL_DESCRIPTION": "Select the AI model to use for analyzing conversations and suggesting/applying appropriate labels"
       }
     },
     "API": {

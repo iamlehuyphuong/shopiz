@@ -22,6 +22,7 @@ json.business_name resource.business_name
 json.active_bot resource.active_bot?
 json.auto_follow_up_config resource.try(:auto_follow_up_config)
 json.auto_label_enabled resource.try(:auto_label_enabled) || false
+json.label_suggestion_enabled resource.try(:label_suggestion_enabled) || false
 json.sales_config resource.try(:sales_config)
 
 ## eCommerce integration

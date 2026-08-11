@@ -85,6 +85,7 @@ class MessageListener < BaseListener
     return unless message.incoming?
     return unless message.account.feature_enabled?('captain_tasks')
     return unless message.inbox.active_bot?
+    return unless message.inbox.auto_label_enabled?
 
     # Trigger: 15 minutes after the last incoming message (if customer stops responding)
     Captain::AutoLabelJob.set(wait: 15.minutes).perform_later(message.conversation_id, message.id)
