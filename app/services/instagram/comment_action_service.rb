@@ -126,7 +126,7 @@ class Instagram::CommentActionService
 
       conversation.messages.create!(
         account_id: conversation.account_id,
-        inbox_id: @channel.inbox_id,
+        inbox_id: conversation.inbox_id,
         message_type: :activity,
         content: I18n.t('errors.facebook.comment_handler.public_comment', text: message_text),
         source_id: msg_id
@@ -139,7 +139,7 @@ class Instagram::CommentActionService
         account_id: conversation.account_id,
         inbox_id: conversation.inbox_id,
         message_type: :activity,
-        content: "Public comment: #{message_text}",
+        content: I18n.t('errors.facebook.comment_handler.public_comment', text: message_text),
         status: :failed,
         source_id: "failed_ig_reply_#{SecureRandom.hex(4)}"
       )
