@@ -60,9 +60,10 @@ json.company_tax_id resource.company_tax_id
 json.status resource.status
 json.cache_keys resource.cache_keys
 json.captain_api_source begin
-  system_key = InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_API_KEY')&.value.present?
+  system_key = GlobalConfig.get_value('CAPTAIN_OPEN_AI_API_KEY').present?
   user_hook = resource.hooks.find_by(app_id: 'openai', status: 'enabled')&.settings&.dig('api_key').present?
-  allow_hook = (config = InstallationConfig.find_by(name: 'CAPTAIN_ALLOW_USER_HOOK_KEY')).nil? || config&.value == true
+  config_value = GlobalConfig.get_value('CAPTAIN_ALLOW_USER_HOOK_KEY')
+  allow_hook = config_value.nil? || config_value == true
 
   if system_key
     'system'

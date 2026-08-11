@@ -1,5 +1,6 @@
 module Captain::CreditGuard
   extend ActiveSupport::Concern
+  include Captain::UserHookKeyHelper
 
   private
 
@@ -11,7 +12,7 @@ module Captain::CreditGuard
   end
 
   def user_hook_key_available?
-    user_hook_key_allowed? && openai_hook&.settings&.dig('api_key').present?
+    user_hook_key_allowed? && user_hook_api_key.present?
   end
 
   def using_user_hook_key_for_credit?
@@ -20,31 +21,6 @@ module Captain::CreditGuard
 
   def responses_available?
     system_responses_available? || user_hook_key_available?
-  end
-
-  def user_hook_key_allowed?
-    return @user_hook_allowed if defined?(@user_hook_allowed)
-
-    config = InstallationConfig.find_by(name: 'CAPTAIN_ALLOW_USER_HOOK_KEY')
-    @user_hook_allowed = config.nil? || config.value == true
-  end
-
-  def openai_hook
-    @openai_hook ||= begin
-      target_account = respond_to?(:account, true) ? account : @account
-      target_account&.hooks&.find_by(app_id: 'openai', status: 'enabled')
-    end
-  end
-
-  def user_hook_api_key
-    openai_hook&.settings&.dig('api_key')
-  end
-
-  def user_hook_api_base
-    base = openai_hook&.settings&.dig('api_base_url')
-    return nil if base.blank?
-
-    base.chomp('/')
   end
 
   def increment_usage_if_system_key!

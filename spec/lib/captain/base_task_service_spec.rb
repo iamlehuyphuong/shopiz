@@ -265,6 +265,7 @@ RSpec.describe Captain::BaseTaskService do
       let(:hook) { create(:integrations_hook, account: account, app_id: 'openai', status: 'enabled', settings: { 'api_key' => 'hook-key', 'api_base_url' => 'https://api.openai.com/v1' }) }
 
       before do
+        stub_request(:post, "https://api.openai.com/v1/chat/completions").to_return(status: 200, body: { choices: [{ message: { content: "pong" } }] }.to_json, headers: { 'Content-Type' => 'application/json' })
         hook
         InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_API_KEY')&.destroy
         service.instance_variable_set(:@api_key, nil)

@@ -6,6 +6,7 @@ class Captain::Assistant::AgentRunnerService
   include Captain::Assistant::RunnerCallbacksHelper
   include Captain::Assistant::TracePayloadHelper
   include Captain::CreditGuard
+  include Captain::UserHookKeyHelper
 
   attr_reader :account
 
@@ -30,14 +31,19 @@ class Captain::Assistant::AgentRunnerService
     @account = @assistant.account
 
     Llm::Config.initialize!
-    Llm::Config.configure_for_account!(@account, force_user_key: using_user_hook_key_for_credit?)
   end
 
   def generate_response(message_history: [])
     return error_response(I18n.t('captain.copilot_limit')) unless responses_available?
 
     message_to_process, context = run_payload(message_history)
-    result = runner.run(message_to_process, context: context, max_turns: 100)
+    result = if using_user_hook_key_for_credit?
+               Llm::Config.with_api_key(user_hook_api_key, api_base: user_hook_api_base) do
+                 runner.run(message_to_process, context: context, max_turns: 100)
+               end
+             else
+               runner.run(message_to_process, context: context, max_turns: 100)
+             end
 
     process_agent_result(result)
   rescue StandardError => e

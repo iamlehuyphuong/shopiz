@@ -32,6 +32,7 @@ class Integrations::Hook < ApplicationRecord
   validates :inbox_id, presence: true, if: -> { hook_type == 'inbox' }
   validate :validate_settings_json_schema
   validate :ensure_feature_enabled
+  validate :validate_openai_api_key, if: -> { app_id == 'openai' && settings.present? }
   validates :app_id, uniqueness: { scope: [:account_id], unless: -> { app.present? && app.params[:allow_multiple_hooks].present? } }
 
   # TODO: This seems to be only used for slack at the moment
@@ -96,6 +97,26 @@ class Integrations::Hook < ApplicationRecord
     return if app.blank? || app.params[:settings_json_schema].blank?
 
     errors.add(:settings, ': Invalid settings data') unless JSONSchemer.schema(app.params[:settings_json_schema]).valid?(settings)
+  end
+
+  def validate_openai_api_key
+    # Ensure RubyLLM requires are loaded
+    require 'ruby_llm'
+    Llm::Config.initialize!
+
+    api_key = settings['api_key']
+    return if api_key.blank?
+
+    api_base = settings['api_base_url']
+    base_url = (api_base.chomp('/').sub(%r{/v1\z}, '') if api_base.present? && !api_base.chomp('/').match?(%r{\Ahttps://api\.openai\.com(/v1)?\z}))
+
+    Llm::Config.with_api_key(api_key, api_base: base_url) do |context|
+      # We send a tiny request to verify the key
+      context.chat(model: settings['model'].presence || 'gpt-4o-mini').ask('ping')
+    end
+  rescue StandardError => e
+    # Add error if authentication fails or endpoint is unreachable
+    errors.add(:settings, "API Key validation failed: #{e.message}")
   end
 
   def trigger_setup_if_crm

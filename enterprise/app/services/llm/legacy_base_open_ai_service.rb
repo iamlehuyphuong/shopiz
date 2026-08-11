@@ -7,6 +7,8 @@
 #
 # For all other LLM operations, use Llm::BaseAiService with RubyLLM instead.
 class Llm::LegacyBaseOpenAiService
+  include Captain::UserHookKeyHelper
+
   DEFAULT_MODEL = 'gpt-4.1-mini'
 
   attr_reader :client, :model
@@ -39,18 +41,14 @@ class Llm::LegacyBaseOpenAiService
   def fetch_user_credentials(account)
     return nil unless account && user_hook_key_allowed?
 
-    hook = account.hooks.find_by(app_id: 'openai', status: 'enabled')
-    hook_api_key = hook&.settings&.dig('api_key')
+    # We need to temporarily set @account so target_account in helper resolves
+    @account = account
+
+    hook_api_key = user_hook_api_key
     return nil if hook_api_key.blank?
 
-    hook_api_base = hook&.settings&.dig('api_base_url')
-    base_url = hook_api_base.present? ? hook_api_base.chomp('/').delete_suffix('/v1') : uri_base
+    base_url = (user_hook_api_base.presence || uri_base)
     [hook_api_key, base_url]
-  end
-
-  def user_hook_key_allowed?
-    config = InstallationConfig.find_by(name: 'CAPTAIN_ALLOW_USER_HOOK_KEY')
-    config.nil? || config.value == true
   end
 
   # Strips markdown code fences (```json ... ``` or ``` ... ```) that some

@@ -1,5 +1,6 @@
 module Concerns::Agentable
   extend ActiveSupport::Concern
+  include Captain::UserHookKeyHelper
 
   def agent
     Agents::Agent.new(
@@ -49,24 +50,6 @@ module Concerns::Agentable
     end
 
     InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_MODEL')&.value.presence || LlmConstants::DEFAULT_MODEL
-  end
-
-  def user_hook_key_allowed?
-    config = InstallationConfig.find_by(name: 'CAPTAIN_ALLOW_USER_HOOK_KEY')
-    config.nil? || config.value == true
-  end
-
-  def openai_hook
-    return nil unless respond_to?(:account)
-    @openai_hook ||= account&.hooks&.find_by(app_id: 'openai', status: 'enabled')
-  end
-
-  def user_hook_api_key
-    openai_hook&.settings&.dig('api_key')
-  end
-
-  def system_api_key_available?
-    InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_API_KEY')&.value.present?
   end
 
   def agent_response_schema

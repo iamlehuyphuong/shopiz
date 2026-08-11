@@ -1,6 +1,7 @@
 class Captain::BaseTaskService
   include Integrations::LlmInstrumentation
   include Captain::ToolInstrumentation
+  include Captain::UserHookKeyHelper
 
   # gpt-4o-mini supports 128,000 tokens
   # 1 token is approx 4 characters
@@ -31,9 +32,13 @@ class Captain::BaseTaskService
   end
 
   def api_base
-    endpoint = InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_ENDPOINT')&.value.presence || 'https://api.openai.com/'
-    endpoint = endpoint.chomp('/')
-    "#{endpoint}/v1"
+    if using_user_hook_key? && user_hook_api_base.present?
+      "#{user_hook_api_base}/v1"
+    else
+      endpoint = system_openai_endpoint.presence || 'https://api.openai.com/'
+      endpoint = endpoint.chomp('/')
+      "#{endpoint}/v1"
+    end
   end
 
   def make_api_call(model:, messages:, schema: nil, tools: [])
@@ -161,25 +166,6 @@ class Captain::BaseTaskService
 
   def using_user_hook_key?
     api_key.present? && api_key == user_hook_api_key
-  end
-
-  def user_hook_key_allowed?
-    config = InstallationConfig.find_by(name: 'CAPTAIN_ALLOW_USER_HOOK_KEY')
-    config.nil? || config.value == true
-  end
-
-  def openai_hook
-    @openai_hook ||= account.hooks.find_by(app_id: 'openai', status: 'enabled')
-  end
-
-  def user_hook_api_key
-    return nil unless user_hook_key_allowed?
-
-    @user_hook_api_key ||= openai_hook&.settings&.dig('api_key')
-  end
-
-  def system_api_key
-    @system_api_key ||= InstallationConfig.find_by(name: 'CAPTAIN_OPEN_AI_API_KEY')&.value
   end
 
   def prompt_from_file(file_name)
