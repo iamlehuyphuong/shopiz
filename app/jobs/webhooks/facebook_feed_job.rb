@@ -85,7 +85,7 @@ class Webhooks::FacebookFeedJob < ApplicationJob
 
     Redis::Alfred.expire(lock_key, 7.days.to_i)
 
-    if channel.auto_reply_use_ai
+    if channel.auto_reply_use_ai?
       Captain::Conversation::CommentReplyBuilderJob.perform_later(
         conversation.id,
         comment_id: data[:comment_id],
@@ -113,7 +113,7 @@ class Webhooks::FacebookFeedJob < ApplicationJob
 
     Redis::Alfred.expire(lock_key, 7.days.to_i)
 
-    if channel.auto_reply_use_ai
+    if channel.auto_reply_use_ai?
       Captain::Conversation::CommentReplyBuilderJob.perform_later(
         conversation.id,
         comment_id: data[:comment_id],

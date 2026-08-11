@@ -11,6 +11,11 @@ module Redis::Alfred
       $alfred.with { |conn| conn.set(key, value, nx: nx, ex: ex) }
     end
 
+    # set a value only if it does not exist
+    def setnx(key, value)
+      $alfred.with { |conn| conn.setnx(key, value) }
+    end
+
     # set a key with expiry period
     # TODO: Deprecate this method, use set with ex: 1.day instead
     def setex(key, value, expiry = 1.day)
