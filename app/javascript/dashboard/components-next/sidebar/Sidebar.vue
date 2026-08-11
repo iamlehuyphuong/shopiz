@@ -17,6 +17,10 @@ import ChannelLeaf from './ChannelLeaf.vue';
 import ChannelIcon from 'next/icon/ChannelIcon.vue';
 import { useSidebarKeyboardShortcuts } from './useSidebarKeyboardShortcuts';
 import FeatureLockedModal from './FeatureLockedModal.vue';
+import {
+  hasPermissions,
+  getUserPermissions,
+} from 'dashboard/helper/permissionsHelper';
 
 const props = defineProps({
   isMobileSidebarOpen: {
@@ -62,6 +66,37 @@ const setExpandedItem = name => {
 
 const activeCategory = ref(null);
 const route = useRoute();
+
+const userPermissions = computed(() => {
+  return getUserPermissions(
+    store.getters.getCurrentUser,
+    route.params.accountId
+  );
+});
+
+const canAccessRoute = routeName => {
+  if (!routeName) return true;
+  const routeRecord = router.getRoutes().find(r => r.name === routeName);
+  if (!routeRecord) return true;
+
+  const routePermissions = routeRecord.meta?.permissions || [];
+  if (routePermissions.length === 0) return true;
+
+  return hasPermissions(routePermissions, userPermissions.value);
+};
+
+const filterMenuByPermission = items => {
+  return items.filter(item => {
+    if (item.children) {
+      item.children = filterMenuByPermission(item.children);
+      return item.children.length > 0;
+    }
+    if (item.to && item.to.name) {
+      return canAccessRoute(item.to.name);
+    }
+    return true;
+  });
+};
 
 const isLockedModalOpen = ref(false);
 const lockedFeatureName = ref('');
@@ -157,12 +192,13 @@ const newReportRoutes = () => [
 ];
 
 const globalConfig = window.globalConfig || {};
-const isChannelActive = (statusKey) => !['coming_soon', 'disabled', 'draft'].includes(globalConfig[statusKey]);
+const isChannelActive = statusKey =>
+  !['coming_soon', 'disabled', 'draft'].includes(globalConfig[statusKey]);
 
 const reportRoutes = computed(() => newReportRoutes());
 
 const menuItems = computed(() => {
-  return [
+  const items = [
     {
       name: 'Inbox',
       label: t('SIDEBAR.INBOX'),
@@ -453,48 +489,76 @@ const menuItems = computed(() => {
       label: t('SIDEBAR.CAMPAIGNS'),
       icon: 'i-lucide-megaphone',
       children: [
-        ...(isChannelActive('CHANNEL_STATUS_WEBSITE') ? [{
-          name: 'Live chat',
-          label: t('SIDEBAR.LIVE_CHAT'),
-          icon: 'i-woot-website',
-          to: accountScopedRoute('campaigns_livechat_index'),
-        }] : []),
-        ...(isChannelActive('CHANNEL_STATUS_ZALO_PERSONAL') ? [{
-          name: 'Zalo Personal',
-          label: t('SIDEBAR.ZALO_PERSONAL'),
-          icon: 'i-woot-zalo-personal',
-          to: accountScopedRoute('campaigns_zalo_personal_index'),
-        }] : []),
-        ...(isChannelActive('CHANNEL_STATUS_ZALO_OA') ? [{
-          name: 'Zalo OA',
-          label: 'Zalo OA',
-          icon: 'i-woot-zalo-oa',
-          to: accountScopedRoute('campaigns_zalo_oa_index'),
-        }] : []),
-        ...(isChannelActive('CHANNEL_STATUS_WHATSAPP') ? [{
-          name: 'WhatsApp',
-          label: t('SIDEBAR.WHATSAPP'),
-          icon: 'i-woot-whatsapp',
-          to: accountScopedRoute('campaigns_whatsapp_index'),
-        }] : []),
-        ...(isChannelActive('CHANNEL_STATUS_FACEBOOK') ? [{
-          name: 'Facebook',
-          label: 'Facebook',
-          icon: 'i-ri-messenger-fill',
-          to: accountScopedRoute('campaigns_facebook_index'),
-        }] : []),
-        ...(isChannelActive('CHANNEL_STATUS_TELEGRAM') ? [{
-          name: 'Telegram',
-          label: 'Telegram',
-          icon: 'i-woot-telegram',
-          to: accountScopedRoute('campaigns_telegram_index'),
-        }] : []),
-        ...(isChannelActive('CHANNEL_STATUS_LINE') ? [{
-          name: 'LINE',
-          label: 'LINE',
-          icon: 'i-woot-line',
-          to: accountScopedRoute('campaigns_line_index'),
-        }] : []),
+        ...(isChannelActive('CHANNEL_STATUS_WEBSITE')
+          ? [
+              {
+                name: 'Live chat',
+                label: t('SIDEBAR.LIVE_CHAT'),
+                icon: 'i-woot-website',
+                to: accountScopedRoute('campaigns_livechat_index'),
+              },
+            ]
+          : []),
+        ...(isChannelActive('CHANNEL_STATUS_ZALO_PERSONAL')
+          ? [
+              {
+                name: 'Zalo Personal',
+                label: t('SIDEBAR.ZALO_PERSONAL'),
+                icon: 'i-woot-zalo-personal',
+                to: accountScopedRoute('campaigns_zalo_personal_index'),
+              },
+            ]
+          : []),
+        ...(isChannelActive('CHANNEL_STATUS_ZALO_OA')
+          ? [
+              {
+                name: 'Zalo OA',
+                label: 'Zalo OA',
+                icon: 'i-woot-zalo-oa',
+                to: accountScopedRoute('campaigns_zalo_oa_index'),
+              },
+            ]
+          : []),
+        ...(isChannelActive('CHANNEL_STATUS_WHATSAPP')
+          ? [
+              {
+                name: 'WhatsApp',
+                label: t('SIDEBAR.WHATSAPP'),
+                icon: 'i-woot-whatsapp',
+                to: accountScopedRoute('campaigns_whatsapp_index'),
+              },
+            ]
+          : []),
+        ...(isChannelActive('CHANNEL_STATUS_FACEBOOK')
+          ? [
+              {
+                name: 'Facebook',
+                label: 'Facebook',
+                icon: 'i-ri-messenger-fill',
+                to: accountScopedRoute('campaigns_facebook_index'),
+              },
+            ]
+          : []),
+        ...(isChannelActive('CHANNEL_STATUS_TELEGRAM')
+          ? [
+              {
+                name: 'Telegram',
+                label: 'Telegram',
+                icon: 'i-woot-telegram',
+                to: accountScopedRoute('campaigns_telegram_index'),
+              },
+            ]
+          : []),
+        ...(isChannelActive('CHANNEL_STATUS_LINE')
+          ? [
+              {
+                name: 'LINE',
+                label: 'LINE',
+                icon: 'i-woot-line',
+                to: accountScopedRoute('campaigns_line_index'),
+              },
+            ]
+          : []),
       ],
     },
     {
@@ -828,6 +892,8 @@ const menuItems = computed(() => {
       ],
     },
   ];
+
+  return filterMenuByPermission(items);
 });
 
 const syncActiveCategory = () => {
@@ -835,20 +901,26 @@ const syncActiveCategory = () => {
   let matchedCategory = null;
 
   for (const item of menuItems.value) {
-    if (item.activeOn?.includes(route.name)) {
+    if (item.activeOn?.includes(route.name) || item.to?.name === route.name) {
       matchedCategory = item.name;
       break;
     }
     if (item.children) {
       let childMatch = false;
       for (const child of item.children) {
-        if (child.activeOn?.includes(route.name)) {
+        if (
+          child.activeOn?.includes(route.name) ||
+          child.to?.name === route.name
+        ) {
           childMatch = true;
           break;
         }
         if (child.children) {
           for (const grandChild of child.children) {
-            if (grandChild.activeOn?.includes(route.name)) {
+            if (
+              grandChild.activeOn?.includes(route.name) ||
+              grandChild.to?.name === route.name
+            ) {
               childMatch = true;
               break;
             }
