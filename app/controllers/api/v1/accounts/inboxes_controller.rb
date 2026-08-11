@@ -338,7 +338,8 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
                       { survey_rules: [:operator, { values: [] }],
                         template: [:name, :template_id, :friendly_name, :content_sid, :approval_sid, :created_at, :language, :status] }] },
      { sales_config: [:ai_allow_create_order, :platform,
-                      { order_notification_templates: [:confirmed, :processing, :shipped, :delivered, :cancelled] }] }]
+                      { order_notification_templates: [:confirmed, :processing, :shipped, :delivered, :cancelled] }] },
+     { zalo_auto_message_config: [:zalo_auto_message_enabled, { zalo_auto_message_inbox_ids: [] }] }]
   end
 
   def permitted_params(channel_attributes = [])

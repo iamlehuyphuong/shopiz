@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_07_30_055349) do
+ActiveRecord::Schema[7.1].define(version: 2026_08_11_025003) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -1194,6 +1194,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_07_30_055349) do
     t.bigint "ecommerce_integration_id"
     t.boolean "auto_label_enabled", default: false, null: false
     t.jsonb "sales_config", default: {}
+    t.jsonb "zalo_auto_message_config", default: {}
     t.index ["account_id"], name: "index_inboxes_on_account_id"
     t.index ["channel_id", "channel_type"], name: "index_inboxes_on_channel_id_and_channel_type"
     t.index ["ecommerce_integration_id"], name: "index_inboxes_on_ecommerce_integration_id"

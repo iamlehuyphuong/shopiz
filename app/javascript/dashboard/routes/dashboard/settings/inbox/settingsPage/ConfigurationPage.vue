@@ -12,6 +12,7 @@ import NextButton from 'dashboard/components-next/button/Button.vue';
 import TextArea from 'next/textarea/TextArea.vue';
 import WhatsappReauthorize from '../channels/whatsapp/Reauthorize.vue';
 import { sanitizeAllowedDomains } from 'dashboard/helper/URLHelper';
+import MultiSelect from 'dashboard/components-next/filter/inputs/MultiSelect.vue';
 
 export default {
   components: {
@@ -23,6 +24,7 @@ export default {
     NextButton,
     TextArea,
     WhatsappReauthorize,
+    MultiSelect,
   },
   mixins: [inboxMixin],
   props: {
@@ -43,6 +45,8 @@ export default {
       allowedDomains: '',
       isUpdatingAllowedDomains: false,
       isSettingDefaults: false,
+      zaloAutoMessageEnabled: false,
+      zaloAutoMessageInboxes: [],
     };
   },
   validations: {
@@ -58,6 +62,14 @@ export default {
     isForwardingEnabled() {
       return !!this.inbox.forwarding_enabled;
     },
+    allInboxes() {
+      return this.$store.getters['inboxes/getInboxes'];
+    },
+    zaloPersonalInboxes() {
+      return this.allInboxes
+        .filter(i => i.channel_type === 'Channel::ZaloPersonal')
+        .map(i => ({ id: i.id, name: i.name }));
+    },
   },
   watch: {
     inbox() {
@@ -69,6 +81,14 @@ export default {
     hmacMandatory() {
       if (!this.isSettingDefaults && this.isAWebWidgetInbox)
         this.handleHmacFlag();
+    },
+    zaloAutoMessageEnabled() {
+      if (!this.isSettingDefaults && !this.isAZaloPersonalChannel)
+        this.handleZaloAutoMessageConfig();
+    },
+    zaloAutoMessageInboxes() {
+      if (!this.isSettingDefaults && !this.isAZaloPersonalChannel)
+        this.handleZaloAutoMessageConfig();
     },
   },
   mounted() {
@@ -82,6 +102,17 @@ export default {
         this.inbox.selected_feature_flags || []
       ).includes('allow_mobile_webview');
       this.allowedDomains = this.inbox.allowed_domains || '';
+      
+      const zaloConfig = this.inbox.zalo_auto_message_config || {};
+      this.zaloAutoMessageEnabled = zaloConfig.zalo_auto_message_enabled || false;
+      const zaloIds = zaloConfig.zalo_auto_message_inbox_ids || [];
+      const newZaloInboxes = this.zaloPersonalInboxes.filter(i => zaloIds.includes(i.id));
+      const currentIds = this.zaloAutoMessageInboxes.map(i => i.id).sort().join(',');
+      const nextIds = newZaloInboxes.map(i => i.id).sort().join(',');
+      if (currentIds !== nextIds) {
+        this.zaloAutoMessageInboxes = newZaloInboxes;
+      }
+
       this.$nextTick(() => {
         this.isSettingDefaults = false;
       });
@@ -168,6 +199,22 @@ export default {
     async handleReconfigure() {
       if (this.$refs.whatsappReauth) {
         await this.$refs.whatsappReauth.requestAuthorization();
+      }
+    },
+    async handleZaloAutoMessageConfig() {
+      try {
+        const payload = {
+          id: this.inbox.id,
+          formData: false,
+          zalo_auto_message_config: {
+            zalo_auto_message_enabled: this.zaloAutoMessageEnabled,
+            zalo_auto_message_inbox_ids: this.zaloAutoMessageInboxes.map(i => i.id),
+          },
+        };
+        await this.$store.dispatch('inboxes/updateInbox', payload);
+        useAlert(this.$t('INBOX_MGMT.EDIT.API.SUCCESS_MESSAGE'));
+      } catch (error) {
+        useAlert(this.$t('INBOX_MGMT.EDIT.API.ERROR_MESSAGE'));
       }
     },
   },
@@ -441,6 +488,33 @@ export default {
       :inbox="inbox"
       class="hidden"
     />
+  </div>
+
+  <div v-if="!isAZaloPersonalChannel" class="mt-4">
+    <SettingsAccordion title="Tự động gửi tin nhắn Zalo" class="mt-6">
+      <div class="space-y-4">
+        <SettingsToggleSection
+          v-model="zaloAutoMessageEnabled"
+          header="Kích hoạt tính năng"
+          description="Tự động liên hệ qua Zalo Cá Nhân khi khách hàng để lại số điện thoại trong Inbox này."
+        />
+        
+        <SettingsToggleSection
+          header="Chọn Zalo Cá Nhân"
+          description="Chọn các kênh Zalo Cá Nhân sẽ được sử dụng để gửi kết bạn/tin nhắn (luân phiên - Round robin)."
+          hide-toggle
+        >
+          <template #editor>
+             <MultiSelect
+               v-model="zaloAutoMessageInboxes"
+               :options="zaloPersonalInboxes"
+               :max-chips="10"
+               class="w-full mt-2"
+             />
+          </template>
+        </SettingsToggleSection>
+      </div>
+    </SettingsAccordion>
   </div>
 </template>
 

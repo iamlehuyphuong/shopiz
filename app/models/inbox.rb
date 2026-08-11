@@ -76,6 +76,8 @@ class Inbox < ApplicationRecord
   validate :ensure_valid_max_assignment_limit
   validate :validate_auto_follow_up_config
 
+  store_accessor :zalo_auto_message_config, :zalo_auto_message_enabled, :zalo_auto_message_inbox_ids
+
   belongs_to :account
   belongs_to :portal, optional: true
   belongs_to :ecommerce_integration, class_name: 'Integrations::Hook', optional: true
