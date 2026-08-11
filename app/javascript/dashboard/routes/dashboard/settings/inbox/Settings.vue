@@ -1496,6 +1496,134 @@ export default {
               />
             </SettingsAccordion>
 
+
+            <div v-if="isAZaloPersonalChannel" class="mt-6">
+              <SettingsAccordion
+                :title="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.CONFIGURATION_TITLE')"
+              >
+                <div class="flex flex-col gap-4 mt-2 mb-2">
+                  <div class="flex flex-col w-full">
+                    <TextArea
+                      v-model="zaloPersonalDefaultFriendRequestMessage"
+                      :label="
+                        $t(
+                          'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_TITLE'
+                        )
+                      "
+                      :message="
+                        $t(
+                          'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_SUBTITLE'
+                        )
+                      "
+                      auto-height
+                      class="w-full"
+                    />
+                    <div class="flex justify-start mt-2">
+                      <NextButton
+                        icon="i-lucide-wand-2"
+                        size="xs"
+                        color="slate"
+                        :label="
+                          $t(
+                            'TEAMS_SETTINGS.FORM.IMPROVE_BY_AI',
+                            'Improve by AI'
+                          )
+                        "
+                        :is-loading="isImprovingZaloFriend"
+                        @click.prevent="improveZaloFriend"
+                      />
+                    </div>
+                  </div>
+                  <div class="flex flex-col w-full">
+                    <TextArea
+                      v-model="zaloPersonalDefaultGreetingMessage"
+                      :label="
+                        $t(
+                          'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_TITLE'
+                        )
+                      "
+                      :message="
+                        $t(
+                          'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_SUBTITLE'
+                        )
+                      "
+                      auto-height
+                      class="w-full"
+                    />
+                    <div class="flex justify-start mt-2">
+                      <NextButton
+                        icon="i-lucide-wand-2"
+                        size="xs"
+                        color="slate"
+                        :label="
+                          $t(
+                            'TEAMS_SETTINGS.FORM.IMPROVE_BY_AI',
+                            'Improve by AI'
+                          )
+                        "
+                        :is-loading="isImprovingZaloGreeting"
+                        @click.prevent="improveZaloGreeting"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </SettingsAccordion>
+            </div>
+
+            <div class="w-full flex justify-end items-center py-4 mt-2">
+              <NextButton
+                v-if="isAPIInbox"
+                type="submit"
+                :disabled="v$.webhookUrl.$invalid"
+                :label="$t('INBOX_MGMT.SETTINGS_POPUP.UPDATE')"
+                :is-loading="uiFlags.isUpdating"
+                @click="updateInbox"
+              />
+              <NextButton
+                v-else
+                type="submit"
+                :disabled="v$.$invalid"
+                :label="$t('INBOX_MGMT.SETTINGS_POPUP.UPDATE')"
+                :is-loading="uiFlags.isUpdating"
+                @click="updateInbox"
+              />
+            </div>
+          </div>
+
+          <div
+            v-if="isAWebWidgetInbox"
+            class="flex-1 sticky top-4 self-start max-w-lg flex-shrink-0 w-full min-w-0"
+          >
+            <div
+              class="flex flex-col outline -outline-offset-1 outline-1 outline-n-weak w-full px-3 pt-3 pb-8 bg-n-surface-1 rounded-2xl min-h-[45rem] overflow-hidden"
+            >
+              <Widget
+                :welcome-heading="channelWelcomeTitle"
+                :welcome-tagline="channelWelcomeTagline"
+                :website-name="selectedInboxName"
+                :logo="avatarUrl"
+                is-online
+                :reply-time="inbox.active_bot ? 'in_a_few_minutes' : replyTime"
+                :color="inbox.widget_color"
+                :widget-bubble-position="widgetBubblePosition"
+                :widget-bubble-launcher-title="widgetBubbleLauncherTitle"
+                :widget-bubble-type="widgetBubbleType"
+                :bubble-logo="bubbleAvatarUrl"
+                :web-widget-script="inbox.web_widget_script"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div v-if="selectedTabKey === 'collaborators'" class="mx-6 max-w-4xl">
+          <CollaboratorsPage :inbox="inbox" />
+        </div>
+        <div
+          v-if="selectedTabKey === 'configuration'"
+          class="mx-6"
+          :class="isAWebWidgetInbox ? 'max-w-7xl' : 'max-w-4xl'"
+        >
+          <ConfigurationPage :inbox="inbox" />
             <div class="relative mt-6">
               <SettingsAccordion
                 :title="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_LABEL_TITLE')"
@@ -1686,133 +1814,14 @@ export default {
               </SettingsAccordion>
             </div>
 
-            <div v-if="isAZaloPersonalChannel" class="mt-6">
-              <SettingsAccordion
-                :title="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.CONFIGURATION_TITLE')"
-              >
-                <div class="flex flex-col gap-4 mt-2 mb-2">
-                  <div class="flex flex-col w-full">
-                    <TextArea
-                      v-model="zaloPersonalDefaultFriendRequestMessage"
-                      :label="
-                        $t(
-                          'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_TITLE'
-                        )
-                      "
-                      :message="
-                        $t(
-                          'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_FRIEND_REQUEST_MESSAGE_SUBTITLE'
-                        )
-                      "
-                      auto-height
-                      class="w-full"
-                    />
-                    <div class="flex justify-start mt-2">
-                      <NextButton
-                        icon="i-lucide-wand-2"
-                        size="xs"
-                        color="slate"
-                        :label="
-                          $t(
-                            'TEAMS_SETTINGS.FORM.IMPROVE_BY_AI',
-                            'Improve by AI'
-                          )
-                        "
-                        :is-loading="isImprovingZaloFriend"
-                        @click.prevent="improveZaloFriend"
-                      />
-                    </div>
-                  </div>
-                  <div class="flex flex-col w-full">
-                    <TextArea
-                      v-model="zaloPersonalDefaultGreetingMessage"
-                      :label="
-                        $t(
-                          'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_TITLE'
-                        )
-                      "
-                      :message="
-                        $t(
-                          'INBOX_MGMT.ADD.ZALO_PERSONAL.DEFAULT_GREETING_MESSAGE_SUBTITLE'
-                        )
-                      "
-                      auto-height
-                      class="w-full"
-                    />
-                    <div class="flex justify-start mt-2">
-                      <NextButton
-                        icon="i-lucide-wand-2"
-                        size="xs"
-                        color="slate"
-                        :label="
-                          $t(
-                            'TEAMS_SETTINGS.FORM.IMPROVE_BY_AI',
-                            'Improve by AI'
-                          )
-                        "
-                        :is-loading="isImprovingZaloGreeting"
-                        @click.prevent="improveZaloGreeting"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </SettingsAccordion>
-            </div>
-
-            <div class="w-full flex justify-end items-center py-4 mt-2">
-              <NextButton
-                v-if="isAPIInbox"
-                type="submit"
-                :disabled="v$.webhookUrl.$invalid"
-                :label="$t('INBOX_MGMT.SETTINGS_POPUP.UPDATE')"
-                :is-loading="uiFlags.isUpdating"
-                @click="updateInbox"
-              />
-              <NextButton
-                v-else
-                type="submit"
-                :disabled="v$.$invalid"
-                :label="$t('INBOX_MGMT.SETTINGS_POPUP.UPDATE')"
-                :is-loading="uiFlags.isUpdating"
-                @click="updateInbox"
-              />
-            </div>
+          <div class="w-full flex justify-end items-center py-4 mb-4">
+            <NextButton
+              type="submit"
+              :label="$t('INBOX_MGMT.SETTINGS_POPUP.UPDATE')"
+              :is-loading="uiFlags.isUpdating"
+              @click="updateInbox"
+            />
           </div>
-
-          <div
-            v-if="isAWebWidgetInbox"
-            class="flex-1 sticky top-4 self-start max-w-lg flex-shrink-0 w-full min-w-0"
-          >
-            <div
-              class="flex flex-col outline -outline-offset-1 outline-1 outline-n-weak w-full px-3 pt-3 pb-8 bg-n-surface-1 rounded-2xl min-h-[45rem] overflow-hidden"
-            >
-              <Widget
-                :welcome-heading="channelWelcomeTitle"
-                :welcome-tagline="channelWelcomeTagline"
-                :website-name="selectedInboxName"
-                :logo="avatarUrl"
-                is-online
-                :reply-time="inbox.active_bot ? 'in_a_few_minutes' : replyTime"
-                :color="inbox.widget_color"
-                :widget-bubble-position="widgetBubblePosition"
-                :widget-bubble-launcher-title="widgetBubbleLauncherTitle"
-                :widget-bubble-type="widgetBubbleType"
-                :bubble-logo="bubbleAvatarUrl"
-                :web-widget-script="inbox.web_widget_script"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div v-if="selectedTabKey === 'collaborators'" class="mx-6 max-w-4xl">
-          <CollaboratorsPage :inbox="inbox" />
-        </div>
-        <div
-          v-if="selectedTabKey === 'configuration'"
-          class="mx-6"
-          :class="isAWebWidgetInbox ? 'max-w-7xl' : 'max-w-4xl'"
-        >
-          <ConfigurationPage :inbox="inbox" />
         </div>
         <div v-if="selectedTabKey === 'csat'">
           <CustomerSatisfactionPage :inbox="inbox" />
