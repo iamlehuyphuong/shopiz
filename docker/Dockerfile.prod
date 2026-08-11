@@ -1,20 +1,16 @@
 # pre-build stage
-FROM node:24-alpine as node
 FROM chatwoot/chatwoot:v4.8.0
 
 ENV NODE_OPTIONS="--max-old-space-size=8192"
 ENV CW_EDITION=ee
 
-COPY --from=node /usr/local/bin/node /usr/local/bin/
-COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
-RUN ln -sf /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
-  && ln -sf /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
-
 RUN apk update && apk add --no-cache \
   poppler-utils \
   tesseract-ocr \
   build-base \
-  python3
+  python3 \
+  npm \
+  nodejs
 
 RUN npm install -g pnpm@10.2.0
 
@@ -33,7 +29,8 @@ COPY ./tailwind.config.js /app/tailwind.config.js
 COPY ./vite.config.mts /app/vite.config.mts
 COPY ./postcss.config.js /app/postcss.config.js
 
-RUN pnpm install
+RUN pnpm config set engine-strict false
+RUN pnpm install --ignore-scripts
 RUN bundle install
 RUN if [ "$RAILS_ENV" = "production" ]; then \
   SECRET_KEY_BASE=precompile_placeholder RAILS_LOG_TO_STDOUT=enabled bundle exec rake assets:precompile \
