@@ -176,7 +176,7 @@ class Tiktok::IncomingCommentService
       account_id: channel.account_id,
       inbox_id: channel.inbox_id,
       message_type: :activity,
-      content: "Public comment: #{reply_text}",
+      content: I18n.t('errors.facebook.comment_handler.public_comment', text: reply_text),
       source_id: reply_id
     )
   rescue StandardError => e

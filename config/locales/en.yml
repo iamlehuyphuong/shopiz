@@ -107,6 +107,7 @@ en:
         Private replies are only allowed for comments made within the last 7 days."
       comment_handler:
         comment_hidden: Comment has been automatically hidden
+        public_comment: "Reply comment: %{text}"
         private_reply_label: Private Reply
         private_reply_hint: The next message you send will be delivered as a private
           reply to this comment.

@@ -124,9 +124,9 @@ class Facebook::CommentActionService
 
       conversation.messages.create!(
         account_id: conversation.account_id,
-        inbox_id: conversation.inbox_id,
+        inbox_id: @channel.inbox_id,
         message_type: :activity,
-        content: "Public comment: #{message}",
+        content: I18n.t('errors.facebook.comment_handler.public_comment', text: message),
         source_id: msg_id
       )
     else
