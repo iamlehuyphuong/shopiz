@@ -140,7 +140,22 @@ class MessageFormatter {
     });
 
     // Highlight phone numbers (usually not linkified by markdown-it)
-    renderedMessage = renderedMessage.replace(VN_PHONE_REGEX, match => {
+    renderedMessage = renderedMessage.replace(VN_PHONE_REGEX, (match, offset, string) => {
+      const stringBefore = string.substring(0, offset);
+
+      // Skip if match is inside an HTML tag attribute (e.g., href="...")
+      const lastOpenTag = stringBefore.lastIndexOf('<');
+      const lastCloseTag = stringBefore.lastIndexOf('>');
+      if (lastOpenTag > lastCloseTag) return match;
+
+      // Skip if match is inside an existing <a> tag text content
+      const openATags = (stringBefore.match(/<a\b/gi) || []).length;
+      const closeATags = (stringBefore.match(/<\/a>/gi) || []).length;
+      if (openATags > closeATags) return match;
+
+      // Skip if match appears to be part of a plain URL
+      if (stringBefore.match(/https?:\/\/[^\s<"']*$/i)) return match;
+
       const displayValue = this.maskContactInfo
         ? this.maskPhoneNumber(match)
         : match;
