@@ -8,7 +8,7 @@ import DropdownSection from 'next/dropdown-menu/base/DropdownSection.vue';
 import DropdownBody from 'next/dropdown-menu/base/DropdownBody.vue';
 import DropdownItem from 'next/dropdown-menu/base/DropdownItem.vue';
 
-const { options, maxChips, dropdownMaxHeight } = defineProps({
+const { options, maxChips, dropdownMaxHeight, disabled } = defineProps({
   options: {
     type: Array,
     required: true,
@@ -20,6 +20,10 @@ const { options, maxChips, dropdownMaxHeight } = defineProps({
   dropdownMaxHeight: {
     type: String,
     default: 'max-h-80',
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -97,7 +101,9 @@ const toggleOption = option => {
         v-if="hasItems"
         type="button"
         class="bg-n-alpha-2 py-2 rounded-lg h-8 flex items-center px-0"
-        @click.prevent="toggle"
+        :class="{ 'opacity-50 cursor-not-allowed': disabled }"
+        :disabled="disabled"
+        @click.prevent="!disabled && toggle()"
       >
         <div
           v-for="item in selectedVisibleItems"
@@ -120,7 +126,15 @@ const toggleOption = option => {
           <Icon icon="i-lucide-plus" />
         </div>
       </button>
-      <Button v-else type="button" sm slate faded @click.prevent="toggle">
+      <Button
+        v-else
+        type="button"
+        sm
+        slate
+        faded
+        :disabled="disabled"
+        @click.prevent="!disabled && toggle()"
+      >
         <template #icon>
           <Icon icon="i-lucide-plus" class="text-n-slate-11" />
         </template>

@@ -952,7 +952,13 @@
       "USE_INBOX_AVATAR_FOR_BOT": "Use inbox name and avatar for the bot"
     },
     "SETTINGS_POPUP": {
-      "MESSENGER_HEADING": "Messenger Script",
+      "ZALO_AUTO_MESSAGE": {
+        "TITLE": "Zalo Auto Message",
+        "ENABLE": "Enable feature",
+        "ENABLE_DESC": "Automatically contact via Zalo Personal when customers leave their phone number in this Inbox.",
+        "SELECT_INBOX": "Select Zalo Personal",
+        "SELECT_INBOX_DESC": "Select the Zalo Personal channels that will be used to send friend requests/messages (Round robin)."
+      },      "MESSENGER_HEADING": "Messenger Script",
       "MESSENGER_SUB_HEAD": "Place this button inside your body tag",
       "ALLOWED_DOMAINS": {
         "TITLE": "Allowed Domains",

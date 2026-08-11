@@ -502,17 +502,27 @@ export default {
   </div>
 
   <div v-if="!isAZaloPersonalChannel" class="mt-4">
-    <SettingsAccordion title="Tự động gửi tin nhắn Zalo" class="mt-6">
+    <SettingsAccordion
+      :title="$t('INBOX_MGMT.SETTINGS_POPUP.ZALO_AUTO_MESSAGE.TITLE')"
+      class="mt-6"
+    >
       <div class="space-y-4">
         <SettingsToggleSection
           v-model="zaloAutoMessageEnabled"
-          header="Kích hoạt tính năng"
-          description="Tự động liên hệ qua Zalo Cá Nhân khi khách hàng để lại số điện thoại trong Inbox này."
+          :header="$t('INBOX_MGMT.SETTINGS_POPUP.ZALO_AUTO_MESSAGE.ENABLE')"
+          :description="
+            $t('INBOX_MGMT.SETTINGS_POPUP.ZALO_AUTO_MESSAGE.ENABLE_DESC')
+          "
+          :disabled="zaloPersonalInboxes.length === 0"
         />
 
         <SettingsToggleSection
-          header="Chọn Zalo Cá Nhân"
-          description="Chọn các kênh Zalo Cá Nhân sẽ được sử dụng để gửi kết bạn/tin nhắn (luân phiên - Round robin)."
+          :header="
+            $t('INBOX_MGMT.SETTINGS_POPUP.ZALO_AUTO_MESSAGE.SELECT_INBOX')
+          "
+          :description="
+            $t('INBOX_MGMT.SETTINGS_POPUP.ZALO_AUTO_MESSAGE.SELECT_INBOX_DESC')
+          "
           hide-toggle
         >
           <template #editor>
@@ -521,6 +531,7 @@ export default {
               :options="zaloPersonalInboxes"
               :max-chips="10"
               class="w-full mt-2"
+              :disabled="zaloPersonalInboxes.length === 0"
             />
           </template>
         </SettingsToggleSection>

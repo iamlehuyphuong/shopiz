@@ -921,7 +921,13 @@
       "USE_INBOX_AVATAR_FOR_BOT": "Dùng tên & avatar hộp thư cho trợ lý ảo"
     },
     "SETTINGS_POPUP": {
-      "MESSENGER_HEADING": "Mã nhúng",
+      "ZALO_AUTO_MESSAGE": {
+        "TITLE": "Tự động gửi tin nhắn Zalo",
+        "ENABLE": "Kích hoạt tính năng",
+        "ENABLE_DESC": "Tự động liên hệ qua Zalo Cá Nhân khi khách hàng để lại số điện thoại trong Inbox này.",
+        "SELECT_INBOX": "Chọn Zalo Cá Nhân",
+        "SELECT_INBOX_DESC": "Chọn các kênh Zalo Cá Nhân sẽ được sử dụng để gửi kết bạn/tin nhắn (luân phiên - Round robin)."
+      },      "MESSENGER_HEADING": "Mã nhúng",
       "MESSENGER_SUB_HEAD": "Đặt đoạn mã này trong thẻ <body>",
       "ALLOWED_DOMAINS": {
         "TITLE": "Domains được phép",
