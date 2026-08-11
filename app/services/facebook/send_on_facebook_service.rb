@@ -118,19 +118,24 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
     error_message = response['error']['message']
     error_code = response['error']['code']
 
+    is_private_reply = message.content_attributes['target_comment_id'].present?
+
     if error_code == 100 && error_message.include?('HUMAN_AGENT')
       return I18n.t('errors.facebook.human_agent_error', error_code: error_code, error_message: error_message)
     end
 
     if error_code == 100 && error_message.include?('Only one message can be sent per comment')
-      if message.content_attributes['target_comment_id'].present?
-        conversation.update!(additional_attributes: conversation.additional_attributes.except('comment_id'))
-      end
+      conversation.update!(additional_attributes: conversation.additional_attributes.except('comment_id')) if is_private_reply
       return I18n.t('errors.facebook.only_one_private_reply', error_code: error_code, error_message: error_message)
     end
 
     if error_code == 10 && error_message.include?('Private replies are only allowed')
+      conversation.update!(additional_attributes: conversation.additional_attributes.except('comment_id')) if is_private_reply
       return I18n.t('errors.facebook.private_reply_timeout', error_code: error_code, error_message: error_message)
+    end
+
+    if error_code == 10901
+      conversation.update!(additional_attributes: conversation.additional_attributes.except('comment_id')) if is_private_reply
     end
 
     "#{error_code} - #{error_message}"
