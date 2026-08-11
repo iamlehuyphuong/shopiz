@@ -1816,11 +1816,6 @@ export default {
           v-if="selectedTabKey === 'bot-configuration'"
           class="relative min-h-[400px]"
         >
-          <FeatureLockOverlay
-            v-if="!isCaptainEnabled"
-            feature-flag="captain_ai"
-            :feature-name="$t('SIDEBAR.CAPTAIN_AI')"
-          />
           <BotConfiguration :inbox="inbox" />
         </div>
         <div v-if="selectedTabKey === 'posts-and-comments'">
