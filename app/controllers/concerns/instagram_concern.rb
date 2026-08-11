@@ -34,13 +34,13 @@ module InstagramConcern
       client_id: client_id
     }
 
-    make_api_request(endpoint, params, 'Failed to exchange token', method: :post)
+    make_api_request(endpoint, params, 'Failed to exchange token', method: :get)
   end
 
   def fetch_instagram_user_details(access_token)
-    endpoint = 'https://graph.instagram.com/v22.0/me'
+    endpoint = "https://graph.instagram.com/#{instagram_api_version}/me"
     params = {
-      fields: 'id,username,user_id,name,profile_picture_url,account_type',
+      fields: 'id,username,name,profile_picture_url,account_type',
       access_token: access_token
     }
 
@@ -51,7 +51,7 @@ module InstagramConcern
   # Required for Private Replies API: POST /{PAGE_ID}/messages
   # Uses the Instagram API to get connected Facebook Page info.
   def fetch_linked_page_id(access_token, instagram_user_id)
-    endpoint = "https://graph.instagram.com/v22.0/#{instagram_user_id}"
+    endpoint = "https://graph.instagram.com/#{instagram_api_version}/#{instagram_user_id}"
     params = {
       fields: 'connected_facebook_page',
       access_token: access_token
@@ -91,5 +91,9 @@ module InstagramConcern
 
   def base_url
     ENV.fetch('FRONTEND_URL', 'http://localhost:3000')
+  end
+
+  def instagram_api_version
+    GlobalConfigService.load('INSTAGRAM_API_VERSION', 'v22.0')
   end
 end
