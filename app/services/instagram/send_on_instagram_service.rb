@@ -8,6 +8,10 @@ class Instagram::SendOnInstagramService < Instagram::BaseSendService
   # Deliver a message with the given payload.
   # https://developers.facebook.com/docs/instagram-platform/instagram-api-with-instagram-login/messaging-api
   def send_message(message_content)
+    if message_content.dig(:recipient, :comment_id).present?
+      return handle_comment_reply(message_content)
+    end
+
     access_token = channel.access_token
     query = { access_token: access_token }
     instagram_id = channel.instagram_id.presence || 'me'
@@ -19,6 +23,20 @@ class Instagram::SendOnInstagramService < Instagram::BaseSendService
     )
 
     process_response(response, message_content)
+  end
+
+  def handle_comment_reply(message_content)
+    response = Instagram::CommentActionService.new(channel: channel).send_private_reply(
+      message_content.dig(:recipient, :comment_id),
+      message_content.dig(:message, :text)
+    )
+
+    if response&.success?
+      message.update!(content_attributes: message.content_attributes.merge(is_private_reply: true).except('target_comment_id'))
+      conversation.update!(additional_attributes: conversation.additional_attributes.except('comment_id'))
+    end
+
+    process_response(response, message_content) if response
   end
 
   def merge_human_agent_tag(params)

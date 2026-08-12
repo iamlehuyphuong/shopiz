@@ -28,18 +28,23 @@ class Instagram::BaseSendService < Base::SendOnChannelService
 
   def message_params
     params = {
-      recipient: { id: contact.get_source_id(inbox.id) },
       message: {
         text: message.outgoing_content
       }
     }
 
-    merge_human_agent_tag(params)
+    if message.content_attributes['target_comment_id'].present?
+      params[:recipient] = { comment_id: message.content_attributes['target_comment_id'] }
+    else
+      params[:recipient] = { id: contact.get_source_id(inbox.id) }
+      merge_human_agent_tag(params)
+    end
+
+    params
   end
 
   def attachment_message_params(attachment)
     params = {
-      recipient: { id: contact.get_source_id(inbox.id) },
       message: {
         attachment: {
           type: attachment_type(attachment),
@@ -50,13 +55,21 @@ class Instagram::BaseSendService < Base::SendOnChannelService
       }
     }
 
-    merge_human_agent_tag(params)
+    if message.content_attributes['target_comment_id'].present?
+      params[:recipient] = { comment_id: message.content_attributes['target_comment_id'] }
+    else
+      params[:recipient] = { id: contact.get_source_id(inbox.id) }
+      merge_human_agent_tag(params)
+    end
+
+    params
   end
 
   def process_response(response, message_content)
     parsed_response = response.parsed_response
     if response.success? && parsed_response['error'].blank?
-      message.update!(source_id: parsed_response['message_id'])
+      msg_id = parsed_response['message_id'] || parsed_response['id']
+      message.update!(source_id: msg_id) if msg_id.present?
       parsed_response
     else
       external_error = external_error(parsed_response)
