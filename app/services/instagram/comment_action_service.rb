@@ -16,7 +16,7 @@ class Instagram::CommentActionService
   # Hide a comment on a post
   # POST /{comment_id}?hide=true
   def hide_comment(comment_id)
-    url = "https://graph.facebook.com/#{self.class.api_version}/#{comment_id}"
+    url = "https://graph.instagram.com/#{self.class.api_version}/#{comment_id}"
     response = HTTParty.post(url, body: { hide: true, access_token: @access_token })
 
     if response.success?
@@ -36,30 +36,12 @@ class Instagram::CommentActionService
   # Ref: https://developers.facebook.com/docs/messenger-platform/instagram/features/private-replies
   # Falls back to instagram_id if page_id is not resolved yet
   def send_private_reply(comment_id, message_text)
-    sender_id = @channel.page_id.presence || @instagram_id
-    url = "https://graph.facebook.com/#{self.class.api_version}/#{sender_id}/messages"
-    payload = {
-      recipient: { comment_id: comment_id },
-      message: { text: message_text },
-      access_token: @access_token
-    }
-
-    response = HTTParty.post(
-      url,
-      body: payload.to_json,
-      headers: { 'Content-Type' => 'application/json' }
+    Rails.logger.warn "[InstagramFeed] Private reply is not supported via Instagram Login API for comment #{comment_id}"
+    OpenStruct.new(
+      success?: false,
+      body: { error: { message: 'Meta API does not support Private Replies for Instagram Login' } }.to_json,
+      parsed_response: { 'error' => { 'message' => 'Meta API does not support Private Replies for Instagram Login' } }
     )
-
-    if response.success?
-      Rails.logger.info "[InstagramFeed] Successfully sent private reply for comment #{comment_id}"
-    else
-      log_api_error('send private reply', comment_id, response)
-    end
-
-    response
-  rescue StandardError => e
-    Rails.logger.error "[InstagramFeed] Error sending private reply for comment #{comment_id}: #{e.message}"
-    nil
   end
 
   def send_private_reply_and_log(comment_id, message_text, conversation)
@@ -99,7 +81,7 @@ class Instagram::CommentActionService
   # Send a public reply to an Instagram comment
   # POST /{ig_comment_id}/replies
   def reply_comment(comment_id, message_text)
-    url = "https://graph.facebook.com/#{self.class.api_version}/#{comment_id}/replies"
+    url = "https://graph.instagram.com/#{self.class.api_version}/#{comment_id}/replies"
     response = HTTParty.post(
       url,
       body: { message: message_text, access_token: @access_token }

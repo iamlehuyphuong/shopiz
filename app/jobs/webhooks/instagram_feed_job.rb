@@ -9,7 +9,9 @@ class Webhooks::InstagramFeedJob < ApplicationJob
     instagram_id = entry[:id]
 
     # A single instagram_id can be connected to multiple accounts — process each independently
-    channels = Channel::Instagram.where(instagram_id: instagram_id)
+    instagram_channels = Channel::Instagram.where(instagram_id: instagram_id).to_a
+    facebook_channels = Channel::FacebookPage.where(instagram_id: instagram_id).to_a
+    channels = instagram_channels + facebook_channels
     return if channels.empty?
 
     change = entry[:changes].first
@@ -30,6 +32,14 @@ class Webhooks::InstagramFeedJob < ApplicationJob
   end
 
   private
+
+  def action_service_for(channel)
+    if channel.is_a?(Channel::FacebookPage)
+      Facebook::CommentActionService.new(channel: channel)
+    else
+      Instagram::CommentActionService.new(channel: channel)
+    end
+  end
 
   def extract_comment_data(value)
     {
@@ -70,7 +80,7 @@ class Webhooks::InstagramFeedJob < ApplicationJob
 
     return false unless should_hide
 
-    Instagram::CommentActionService.new(channel: channel).hide_comment(comment_id)
+    action_service_for(channel).hide_comment(comment_id)
     true
   end
 
@@ -100,7 +110,7 @@ class Webhooks::InstagramFeedJob < ApplicationJob
       )
     elsif channel.auto_public_reply_message.present?
       processed_message = process_liquid_message(channel.auto_public_reply_message, conversation)
-      Instagram::CommentActionService.new(channel: channel).reply_comment_and_log(
+      action_service_for(channel).reply_comment_and_log(
         data[:comment_id],
         processed_message,
         conversation
@@ -128,7 +138,7 @@ class Webhooks::InstagramFeedJob < ApplicationJob
       )
     elsif channel.auto_reply_message.present?
       processed_message = process_liquid_message(channel.auto_reply_message, conversation)
-      Instagram::CommentActionService.new(channel: channel).send_private_reply_and_log(
+      action_service_for(channel).send_private_reply_and_log(
         data[:comment_id],
         processed_message,
         conversation
