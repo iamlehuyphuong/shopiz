@@ -26,14 +26,18 @@ module InstagramConcern
   end
 
   def exchange_for_long_lived_token(short_lived_token)
-    endpoint = "https://graph.instagram.com/#{instagram_api_version}/access_token"
+    # Official docs: https://developers.facebook.com/docs/instagram-platform/instagram-api-with-instagram-login/business-login
+    # Endpoint MUST be unversioned: https://graph.instagram.com/access_token
+    # Method MUST be GET with query params
+    endpoint = 'https://graph.instagram.com/access_token'
     params = {
       grant_type: 'ig_exchange_token',
       client_secret: client_secret,
       access_token: short_lived_token
     }
 
-    make_api_request(endpoint, params, 'Failed to exchange token', method: :post)
+    Rails.logger.info "[Instagram] Exchanging short-lived token for long-lived token (token prefix: #{short_lived_token&.first(10)}...)"
+    make_api_request(endpoint, params, 'Failed to exchange token', method: :get)
   end
 
   def fetch_instagram_user_details(access_token)
