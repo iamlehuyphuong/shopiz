@@ -10,7 +10,10 @@ class Instagram::RefreshOauthTokenService
 
   # Returns a valid access token, refreshing it if necessary and eligible
   def access_token
-    return unless token_valid?
+    unless token_valid?
+      Rails.logger.warn("[Instagram] Token has expired for channel #{channel.id} (instagram_id: #{channel.instagram_id})")
+      return
+    end
 
     # If token is valid and eligible for refresh, attempt to refresh it
     return channel[:access_token] unless token_eligible_for_refresh?

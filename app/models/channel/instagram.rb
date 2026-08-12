@@ -61,41 +61,15 @@ class Channel::Instagram < ApplicationRecord
   end
 
   def subscribe
-    # Instagram Business Login requires subscribing the app to the IG user's webhooks.
-    # App Dashboard configures WHAT events at WHICH URL (app-level).
-    # This API call tells Meta THIS specific IG account opts in to send events to our app (user-level).
-    # ref: https://developers.facebook.com/docs/instagram-platform/webhooks#enable-subscriptions
-    api_version = GlobalConfigService.load('INSTAGRAM_API_VERSION', 'v22.0')
-    response = HTTParty.post(
-      "https://graph.instagram.com/#{api_version}/#{instagram_id}/subscribed_apps",
-      query: {
-        subscribed_fields: 'messages,messaging_seen,message_reactions,comments',
-        access_token: access_token
-      }
-    )
-
-    if response.success?
-      Rails.logger.info "[Instagram] Successfully subscribed webhooks for IG user #{instagram_id}: #{response.body}"
-    else
-      Rails.logger.error "[Instagram] Failed to subscribe webhooks for IG user #{instagram_id}. " \
-                         "Status: #{response.code}, Body: #{response.body}"
-    end
-    true
-  rescue StandardError => e
-    Rails.logger.error "[Instagram] Exception subscribing webhooks for #{instagram_id}: #{e.message}"
+    # For Instagram Business Login, webhook subscriptions are managed entirely
+    # via the Meta App Dashboard (Instagram Webhooks product) and the OAuth permission grant.
+    # There is no API edge to "install" the app like Facebook Pages (/{page-id}/subscribed_apps).
+    # Therefore, this is a no-op.
     true
   end
 
   def unsubscribe
-    api_version = GlobalConfigService.load('INSTAGRAM_API_VERSION', 'v22.0')
-    HTTParty.delete(
-      "https://graph.instagram.com/#{api_version}/#{instagram_id}/subscribed_apps",
-      query: { access_token: access_token }
-    )
-    Rails.logger.info "[Instagram] Unsubscribed webhooks for IG user #{instagram_id}"
-    true
-  rescue StandardError => e
-    Rails.logger.error "[Instagram] Exception unsubscribing webhooks for #{instagram_id}: #{e.message}"
+    # No-op for the same reason as subscribe.
     true
   end
 

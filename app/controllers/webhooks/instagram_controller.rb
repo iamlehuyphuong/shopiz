@@ -2,9 +2,10 @@ class Webhooks::InstagramController < ActionController::API
   include MetaTokenVerifyConcern
 
   def events
-    Rails.logger.info('Instagram webhook received events')
+    Rails.logger.info("Instagram webhook received events. Object: #{params['object']}")
     if params['object'].casecmp('instagram').zero?
       entry_params = params.to_unsafe_hash[:entry]
+      Rails.logger.info("Instagram webhook entry count: #{entry_params&.size || 0}")
 
       if contains_echo_event?(entry_params)
         # Add delay to prevent race condition where echo arrives before send message API completes

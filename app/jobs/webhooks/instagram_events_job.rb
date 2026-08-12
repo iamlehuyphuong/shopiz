@@ -8,6 +8,8 @@ class Webhooks::InstagramEventsJob < MutexApplicationJob
   def perform(entries)
     @entries = entries
 
+    Rails.logger.info("[Instagram Events] Job started with #{entries.count} entries")
+
     key = format(::Redis::Alfred::IG_MESSAGE_MUTEX, sender_id: contact_instagram_id, ig_account_id: ig_account_id)
     with_lock(key) do
       process_entries(entries)
@@ -38,16 +40,24 @@ class Webhooks::InstagramEventsJob < MutexApplicationJob
   end
 
   def process_messages(entry)
-    messages(entry).each do |messaging|
+    messaging_events = messages(entry)
+    Rails.logger.info("[Instagram Events] Processing #{messaging_events.count} messaging events for entry")
+
+    messaging_events.each do |messaging|
       Rails.logger.info("Instagram Events Job Messaging: #{messaging}")
 
       instagram_id = instagram_id(messaging)
       channel = find_channel(instagram_id)
 
-      next if channel.blank?
+      if channel.blank?
+        Rails.logger.warn("[Instagram Events] Channel not found for instagram_id: #{instagram_id}")
+        next
+      end
 
       if (event_name = event_name(messaging))
         send(event_name, messaging, channel)
+      else
+        Rails.logger.info("[Instagram Events] No supported event found in messaging keys: #{messaging.keys}")
       end
     end
   end
@@ -119,7 +129,7 @@ class Webhooks::InstagramEventsJob < MutexApplicationJob
   end
 
   def event_name(messaging)
-    @event_name ||= SUPPORTED_EVENTS.find { |key| messaging.key?(key) }
+    SUPPORTED_EVENTS.find { |key| messaging.key?(key) }
   end
 
   def message(messaging, channel)

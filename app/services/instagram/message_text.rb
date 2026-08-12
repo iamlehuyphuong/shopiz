@@ -7,6 +7,11 @@ class Instagram::MessageText < Instagram::BaseMessageText
   end
 
   def fetch_instagram_user(ig_scope_id)
+    if @inbox.channel.access_token.blank?
+      Rails.logger.warn("[Instagram] Cannot fetch user #{ig_scope_id} because access_token is blank for inbox #{@inbox.id}")
+      return unknown_user(ig_scope_id)
+    end
+
     fields = 'name,username,profile_picture_url,follower_count,is_user_follow_business,is_business_follow_user,is_verified_user'
     url = "#{base_uri}/#{ig_scope_id}?fields=#{fields}&access_token=#{@inbox.channel.access_token}"
 
