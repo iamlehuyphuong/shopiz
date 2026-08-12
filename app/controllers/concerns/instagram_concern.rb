@@ -33,7 +33,7 @@ module InstagramConcern
       access_token: short_lived_token
     }
 
-    make_api_request(endpoint, params, 'Failed to exchange token', method: :get)
+    make_api_request(endpoint, params, 'Failed to exchange token', method: :post)
   end
 
   def fetch_instagram_user_details(access_token)
