@@ -3,7 +3,9 @@
 # Service to interact with Instagram Graph API for comment management on posts/reels.
 # Handles hiding comments and sending private replies.
 class Instagram::CommentActionService
-  API_VERSION = 'v22.0'
+  def self.api_version
+    GlobalConfigService.load('INSTAGRAM_API_VERSION', 'v22.0')
+  end
 
   def initialize(channel:)
     @channel = channel
@@ -14,7 +16,7 @@ class Instagram::CommentActionService
   # Hide a comment on a post
   # POST /{comment_id}?hide=true
   def hide_comment(comment_id)
-    url = "https://graph.facebook.com/#{API_VERSION}/#{comment_id}"
+    url = "https://graph.facebook.com/#{self.class.api_version}/#{comment_id}"
     response = HTTParty.post(url, body: { hide: true, access_token: @access_token })
 
     if response.success?
@@ -35,7 +37,7 @@ class Instagram::CommentActionService
   # Falls back to instagram_id if page_id is not resolved yet
   def send_private_reply(comment_id, message_text)
     sender_id = @channel.page_id.presence || @instagram_id
-    url = "https://graph.facebook.com/#{API_VERSION}/#{sender_id}/messages"
+    url = "https://graph.facebook.com/#{self.class.api_version}/#{sender_id}/messages"
     payload = {
       recipient: { comment_id: comment_id },
       message: { text: message_text },
@@ -97,7 +99,7 @@ class Instagram::CommentActionService
   # Send a public reply to an Instagram comment
   # POST /{ig_comment_id}/replies
   def reply_comment(comment_id, message_text)
-    url = "https://graph.facebook.com/#{API_VERSION}/#{comment_id}/replies"
+    url = "https://graph.facebook.com/#{self.class.api_version}/#{comment_id}/replies"
     response = HTTParty.post(
       url,
       body: { message: message_text, access_token: @access_token }
