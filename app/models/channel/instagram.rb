@@ -61,29 +61,15 @@ class Channel::Instagram < ApplicationRecord
   end
 
   def subscribe
-    # ref https://developers.facebook.com/docs/instagram-platform/webhooks#enable-subscriptions
-    HTTParty.post(
-      "https://graph.instagram.com/v22.0/#{instagram_id}/subscribed_apps",
-      query: {
-        subscribed_fields: %w[messages message_reactions messaging_seen comments],
-        access_token: access_token
-      }
-    )
-  rescue StandardError => e
-    Rails.logger.debug { "Rescued: #{e.inspect}" }
+    # For Instagram Business Login, webhook subscriptions are managed entirely
+    # via the Meta App Dashboard (Instagram Webhooks product) and the OAuth permission grant.
+    # There is no API edge to "install" the app like Facebook Pages (/{page-id}/subscribed_apps).
+    # Therefore, this is a no-op.
     true
   end
 
   def unsubscribe
-    HTTParty.delete(
-      "https://graph.instagram.com/v22.0/#{instagram_id}/subscribed_apps",
-      query: {
-        access_token: access_token
-      }
-    )
-    true
-  rescue StandardError => e
-    Rails.logger.debug { "Rescued: #{e.inspect}" }
+    # No-op for the same reason as subscribe.
     true
   end
 
