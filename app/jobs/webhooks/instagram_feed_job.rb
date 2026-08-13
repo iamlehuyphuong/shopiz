@@ -11,7 +11,11 @@ class Webhooks::InstagramFeedJob < ApplicationJob
     # A single instagram_id can be connected to multiple accounts — process each independently
     instagram_channels = Channel::Instagram.where(instagram_id: instagram_id).to_a
     facebook_channels = Channel::FacebookPage.where(instagram_id: instagram_id).to_a
-    channels = instagram_channels + facebook_channels
+
+    # If a dedicated Channel::Instagram exists, use it and skip FacebookPage channels
+    # to avoid creating duplicate conversations.
+    channels = instagram_channels.any? ? instagram_channels : facebook_channels
+
     return if channels.empty?
 
     change = entry[:changes].first

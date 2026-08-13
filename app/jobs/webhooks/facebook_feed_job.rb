@@ -9,7 +9,14 @@ class Webhooks::FacebookFeedJob < ApplicationJob
     change = JSON.parse(change_json)
 
     # A single page_id can be connected to multiple accounts — process each independently
-    channels = Channel::FacebookPage.where(page_id: page_id)
+    channels = Channel::FacebookPage.where(page_id: page_id).to_a
+    return if channels.empty?
+
+    # Filter out channels that have a dedicated Channel::Instagram handling Instagram comments
+    # This prevents the Facebook webhook from creating duplicate conversations for Instagram comments
+    channels = channels.reject do |ch|
+      ch.instagram_id.present? && Channel::Instagram.exists?(instagram_id: ch.instagram_id)
+    end
     return if channels.empty?
 
     comment_data = extract_comment_data(change)

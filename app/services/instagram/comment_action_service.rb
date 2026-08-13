@@ -34,14 +34,23 @@ class Instagram::CommentActionService
   # Send a private reply to a comment via Instagram Direct
   # POST /{PAGE_ID}/messages — using Facebook Send API
   # Ref: https://developers.facebook.com/docs/messenger-platform/instagram/features/private-replies
-  # Falls back to instagram_id if page_id is not resolved yet
+  # Private replies require a Page Access Token, which the Instagram channel doesn't have.
+  # Delegate to the linked Facebook Page if it exists.
   def send_private_reply(comment_id, message_text)
-    Rails.logger.warn "[InstagramFeed] Private reply is not supported via Instagram Login API for comment #{comment_id}"
-    OpenStruct.new(
-      success?: false,
-      body: { error: { message: 'Meta API does not support Private Replies for Instagram Login' } }.to_json,
-      parsed_response: { 'error' => { 'message' => 'Meta API does not support Private Replies for Instagram Login' } }
-    )
+    facebook_page = Channel::FacebookPage.find_by(instagram_id: @instagram_id)
+
+    unless facebook_page
+      Rails.logger.warn "[InstagramFeed] No linked Facebook Page found for private reply on comment #{comment_id}"
+      error_message = 'Meta API does not support Private Replies for Instagram Login without a linked Facebook Page'
+      return OpenStruct.new(
+        success?: false,
+        body: { error: { message: error_message } }.to_json,
+        parsed_response: { 'error' => { 'message' => error_message } }
+      )
+    end
+
+    # Delegate to Facebook's CommentActionService using Page Access Token
+    Facebook::CommentActionService.new(channel: facebook_page).send_private_reply(comment_id, message_text)
   end
 
   def send_private_reply_and_log(comment_id, message_text, conversation)
