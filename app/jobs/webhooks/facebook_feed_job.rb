@@ -12,6 +12,9 @@ class Webhooks::FacebookFeedJob < ApplicationJob
     channels = Channel::FacebookPage.where(page_id: page_id).to_a
     return if channels.empty?
 
+    # Backfill instagram_id if missing to prevent Facebook webhook from leaking Instagram comments
+    channels.each { |ch| backfill_instagram_id(ch) if ch.instagram_id.blank? }
+
     # Filter out channels that have a dedicated Channel::Instagram handling Instagram comments
     # This prevents the Facebook webhook from creating duplicate conversations for Instagram comments
     channels = channels.reject do |ch|
@@ -34,6 +37,16 @@ class Webhooks::FacebookFeedJob < ApplicationJob
   end
 
   private
+
+  def backfill_instagram_id(channel)
+    fb_object = Koala::Facebook::API.new(channel.page_access_token)
+    response = fb_object.get_connections('me', '', { fields: 'instagram_business_account' })
+    if response['instagram_business_account'].present?
+      channel.update!(instagram_id: response['instagram_business_account']['id'])
+    end
+  rescue StandardError => e
+    Rails.logger.warn("[FacebookFeed] Failed to backfill instagram_id for FacebookPage #{channel.id}: #{e.message}")
+  end
 
   def extract_comment_data(change)
     {

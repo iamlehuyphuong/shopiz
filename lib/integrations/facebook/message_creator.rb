@@ -29,7 +29,8 @@ class Integrations::Facebook::MessageCreator
   end
 
   def create_agent_message
-    Channel::FacebookPage.where(page_id: response.sender_id).each do |page|
+    get_facebook_pages(response.sender_id).each do |page|
+      backfill_instagram_id(page) if page.instagram_id.blank?
       next if instagram_message_handled_by_dedicated_channel?(page)
 
       mb = Messages::Facebook::MessageBuilder.new(response, page.inbox, outgoing_echo: true)
@@ -38,12 +39,31 @@ class Integrations::Facebook::MessageCreator
   end
 
   def create_contact_message
-    Channel::FacebookPage.where(page_id: response.recipient_id).each do |page|
+    get_facebook_pages(response.recipient_id).each do |page|
+      backfill_instagram_id(page) if page.instagram_id.blank?
       next if instagram_message_handled_by_dedicated_channel?(page)
 
       mb = Messages::Facebook::MessageBuilder.new(response, page.inbox)
       mb.perform
     end
+  end
+
+  def get_facebook_pages(id)
+    # Search by page_id first (Facebook messages)
+    pages = Channel::FacebookPage.where(page_id: id).to_a
+    # If not found, it might be an Instagram DM where id is the IG Account ID
+    pages = Channel::FacebookPage.where(instagram_id: id).to_a if pages.empty?
+    pages
+  end
+
+  def backfill_instagram_id(facebook_page)
+    fb_object = Koala::Facebook::API.new(facebook_page.page_access_token)
+    res = fb_object.get_connections('me', '', { fields: 'instagram_business_account' })
+    if res['instagram_business_account'].present?
+      facebook_page.update!(instagram_id: res['instagram_business_account']['id'])
+    end
+  rescue StandardError => e
+    Rails.logger.warn("[MessageCreator] Failed to backfill instagram_id for FacebookPage #{facebook_page.id}: #{e.message}")
   end
 
   # When a Facebook Page is linked to an Instagram Business Account AND a dedicated
