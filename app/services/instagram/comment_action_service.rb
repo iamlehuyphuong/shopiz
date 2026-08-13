@@ -32,25 +32,31 @@ class Instagram::CommentActionService
   end
 
   # Send a private reply to a comment via Instagram Direct
-  # POST /{PAGE_ID}/messages — using Facebook Send API
-  # Ref: https://developers.facebook.com/docs/messenger-platform/instagram/features/private-replies
-  # Private replies require a Page Access Token, which the Instagram channel doesn't have.
-  # Delegate to the linked Facebook Page if it exists.
+  # POST /{ig_user_id}/messages
   def send_private_reply(comment_id, message_text)
-    facebook_page = Channel::FacebookPage.find_by(instagram_id: @instagram_id, account_id: @channel.account_id)
+    url = "https://graph.instagram.com/#{self.class.api_version}/#{@instagram_id}/messages"
+    payload = {
+      recipient: { comment_id: comment_id },
+      message: message_text.is_a?(Hash) ? message_text : { text: message_text }
+    }
 
-    unless facebook_page
-      Rails.logger.warn "[InstagramFeed] No linked Facebook Page found for private reply on comment #{comment_id}"
-      error_message = 'Meta API does not support Private Replies for Instagram Login without a linked Facebook Page'
-      return OpenStruct.new(
-        success?: false,
-        body: { error: { message: error_message } }.to_json,
-        parsed_response: { 'error' => { 'message' => error_message } }
-      )
+    response = HTTParty.post(
+      url,
+      body: payload.to_json,
+      headers: { 'Content-Type' => 'application/json' },
+      query: { access_token: @access_token }
+    )
+
+    if response.success?
+      Rails.logger.info "[InstagramFeed] Successfully sent private reply for comment #{comment_id}"
+    else
+      log_api_error('send private reply', comment_id, response)
     end
 
-    # Delegate to Facebook's CommentActionService using Page Access Token
-    Facebook::CommentActionService.new(channel: facebook_page).send_private_reply(comment_id, message_text)
+    response
+  rescue StandardError => e
+    Rails.logger.error "[InstagramFeed] Error sending private reply for comment #{comment_id}: #{e.message}"
+    nil
   end
 
   def send_private_reply_and_log(comment_id, message_text, conversation)
