@@ -72,7 +72,7 @@ class Facebook::CommentHandlerService
 
   def log_internal_note
     note_content = if @channel.is_a?(Channel::Instagram)
-                     I18n.t('errors.facebook.comment_handler.instagram_comment_fallback')
+                     fetch_instagram_permalink || I18n.t('errors.facebook.comment_handler.instagram_comment_fallback')
                    else
                      "https://www.facebook.com/#{@post_id}\n"
                    end
@@ -89,5 +89,21 @@ class Facebook::CommentHandlerService
       private: true,
       content: note_content
     )
+  end
+
+  def fetch_instagram_permalink
+    return nil if @post_id == 'unknown'
+
+    api_version = GlobalConfigService.load('INSTAGRAM_API_VERSION', 'v22.0')
+    url = "https://graph.instagram.com/#{api_version}/#{@post_id}?fields=permalink&access_token=#{@channel.access_token}"
+    response = HTTParty.get(url, timeout: 5)
+    
+    return nil unless response.success?
+    
+    permalink = response.parsed_response['permalink']
+    permalink.present? ? "#{permalink}\n" : nil
+  rescue StandardError => e
+    Rails.logger.warn("[InstagramFeed] Could not fetch permalink for post #{@post_id}: #{e.message}")
+    nil
   end
 end
