@@ -47,17 +47,21 @@ class Webhooks::InstagramEventsJob < MutexApplicationJob
       Rails.logger.info("Instagram Events Job Messaging: #{messaging}")
 
       instagram_id = instagram_id(messaging)
-      channel = find_channel(instagram_id)
+      channels = find_channels(instagram_id)
 
-      if channel.blank?
+      if channels.empty?
         Rails.logger.warn("[Instagram Events] Channel not found for instagram_id: #{instagram_id}")
         next
       end
 
-      if (event_name = event_name(messaging))
-        send(event_name, messaging, channel)
-      else
-        Rails.logger.info("[Instagram Events] No supported event found in messaging keys: #{messaging.keys}")
+      channels.each do |channel|
+        if (event_name = event_name(messaging))
+          send(event_name, messaging, channel)
+        else
+          Rails.logger.info("[Instagram Events] No supported event found in messaging keys: #{messaging.keys}")
+        end
+      rescue StandardError => e
+        Rails.logger.error("[Instagram Events] Error processing event for channel #{channel.id}: #{e.message}")
       end
     end
   end
@@ -117,15 +121,14 @@ class Webhooks::InstagramEventsJob < MutexApplicationJob
     @entries&.dig(0, :messaging, 0, :sender, :id)
   end
 
-  def find_channel(instagram_id)
+  def find_channels(instagram_id)
     # There will be chances for the instagram account to be connected to a facebook page,
     # so we need to check for both instagram and facebook page channels
     # priority is for instagram channel which created via instagram login
-    channel = Channel::Instagram.find_by(instagram_id: instagram_id)
-    # If not found, fallback to the facebook page channel
-    channel ||= Channel::FacebookPage.find_by(instagram_id: instagram_id)
+    instagram_channels = Channel::Instagram.where(instagram_id: instagram_id).to_a
+    facebook_channels = Channel::FacebookPage.where(instagram_id: instagram_id).to_a
 
-    channel
+    instagram_channels + facebook_channels
   end
 
   def event_name(messaging)

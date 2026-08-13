@@ -37,7 +37,7 @@ class Instagram::CommentActionService
   # Private replies require a Page Access Token, which the Instagram channel doesn't have.
   # Delegate to the linked Facebook Page if it exists.
   def send_private_reply(comment_id, message_text)
-    facebook_page = Channel::FacebookPage.find_by(instagram_id: @instagram_id)
+    facebook_page = Channel::FacebookPage.find_by(instagram_id: @instagram_id, account_id: @channel.account_id)
 
     unless facebook_page
       Rails.logger.warn "[InstagramFeed] No linked Facebook Page found for private reply on comment #{comment_id}"
@@ -55,7 +55,7 @@ class Instagram::CommentActionService
 
   def send_private_reply_and_log(comment_id, message_text, conversation)
     response = send_private_reply(comment_id, message_text)
-    
+
     if response&.success?
       body = JSON.parse(response.body)
       msg_id = body['message_id'] || body['id']
@@ -71,9 +71,13 @@ class Instagram::CommentActionService
         content_attributes: { is_private_reply: true }
       )
     else
-      body = JSON.parse(response.body) rescue {}
+      body = begin
+        JSON.parse(response.body)
+      rescue StandardError
+        {}
+      end
       error_msg = body.dig('error', 'message') || 'Failed to send private reply'
-      
+
       msg = conversation.messages.create!(
         account_id: conversation.account_id,
         inbox_id: conversation.inbox_id,
@@ -110,7 +114,7 @@ class Instagram::CommentActionService
 
   def reply_comment_and_log(comment_id, message_text, conversation)
     response = reply_comment(comment_id, message_text)
-    
+
     if response&.success?
       body = JSON.parse(response.body)
       msg_id = body['id']
@@ -125,9 +129,13 @@ class Instagram::CommentActionService
         source_id: msg_id
       )
     else
-      body = JSON.parse(response.body) rescue {}
+      body = begin
+        JSON.parse(response.body)
+      rescue StandardError
+        {}
+      end
       error_msg = body.dig('error', 'message') || 'Failed to send public reply'
-      
+
       msg = conversation.messages.create!(
         account_id: conversation.account_id,
         inbox_id: conversation.inbox_id,
@@ -143,7 +151,11 @@ class Instagram::CommentActionService
   private
 
   def log_api_error(action, comment_id, response)
-    body = JSON.parse(response.body) rescue {}
+    body = begin
+      JSON.parse(response.body)
+    rescue StandardError
+      {}
+    end
     error_code = body.dig('error', 'code')
     error_msg = body.dig('error', 'message') || response.body
 

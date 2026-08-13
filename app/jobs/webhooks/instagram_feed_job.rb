@@ -12,10 +12,9 @@ class Webhooks::InstagramFeedJob < ApplicationJob
     instagram_channels = Channel::Instagram.where(instagram_id: instagram_id).to_a
     facebook_channels = Channel::FacebookPage.where(instagram_id: instagram_id).to_a
 
-    # If a dedicated Channel::Instagram exists, use it and skip FacebookPage channels
-    # to avoid creating duplicate conversations.
-    channels = instagram_channels.any? ? instagram_channels : facebook_channels
-
+    # We want to process the comment for both Instagram and FacebookPage channels
+    # that are connected to this instagram_id
+    channels = instagram_channels + facebook_channels
     return if channels.empty?
 
     change = entry[:changes].first
@@ -84,7 +83,11 @@ class Webhooks::InstagramFeedJob < ApplicationJob
 
     return false unless should_hide
 
-    action_service_for(channel).hide_comment(comment_id)
+    if channel.is_a?(Channel::FacebookPage)
+      action_service_for(channel).hide_ig_comment(comment_id)
+    else
+      action_service_for(channel).hide_comment(comment_id)
+    end
     true
   end
 
@@ -114,11 +117,20 @@ class Webhooks::InstagramFeedJob < ApplicationJob
       )
     elsif channel.auto_public_reply_message.present?
       processed_message = process_liquid_message(channel.auto_public_reply_message, conversation)
-      action_service_for(channel).reply_comment_and_log(
-        data[:comment_id],
-        processed_message,
-        conversation
-      )
+
+      if channel.is_a?(Channel::FacebookPage)
+        action_service_for(channel).reply_ig_comment_and_log(
+          data[:comment_id],
+          processed_message,
+          conversation
+        )
+      else
+        action_service_for(channel).reply_comment_and_log(
+          data[:comment_id],
+          processed_message,
+          conversation
+        )
+      end
     end
   end
 
@@ -156,11 +168,11 @@ class Webhooks::InstagramFeedJob < ApplicationJob
 
     template = Liquid::Template.parse(message)
     template.render({
-      'contact' => ContactDrop.new(conversation.contact),
-      'conversation' => ConversationDrop.new(conversation),
-      'inbox' => InboxDrop.new(conversation.inbox),
-      'account' => AccountDrop.new(conversation.account)
-    })
+                      'contact' => ContactDrop.new(conversation.contact),
+                      'conversation' => ConversationDrop.new(conversation),
+                      'inbox' => InboxDrop.new(conversation.inbox),
+                      'account' => AccountDrop.new(conversation.account)
+                    })
   rescue Liquid::Error
     message
   end

@@ -15,11 +15,6 @@ class Webhooks::FacebookFeedJob < ApplicationJob
     # Backfill instagram_id if missing to prevent Facebook webhook from leaking Instagram comments
     channels.each { |ch| backfill_instagram_id(ch) if ch.instagram_id.blank? }
 
-    # Filter out channels that have a dedicated Channel::Instagram handling Instagram comments
-    # This prevents the Facebook webhook from creating duplicate conversations for Instagram comments
-    channels = channels.reject do |ch|
-      ch.instagram_id.present? && Channel::Instagram.exists?(instagram_id: ch.instagram_id)
-    end
     return if channels.empty?
 
     comment_data = extract_comment_data(change)

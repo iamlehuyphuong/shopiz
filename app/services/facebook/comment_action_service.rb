@@ -28,6 +28,24 @@ class Facebook::CommentActionService
     nil
   end
 
+  # Hide an Instagram comment on a post (when connected via Facebook Page)
+  # POST /{ig_comment_id}?hide=true
+  def hide_ig_comment(comment_id)
+    url = "https://graph.facebook.com/#{API_VERSION}/#{comment_id}"
+    response = HTTParty.post(url, body: { hide: true, access_token: @access_token })
+
+    if response.success?
+      Rails.logger.info "[FacebookFeed] Successfully hid IG comment #{comment_id}"
+    else
+      Rails.logger.error "[FacebookFeed] Failed to hide IG comment #{comment_id}: #{response.body}"
+    end
+
+    response
+  rescue StandardError => e
+    Rails.logger.error "[FacebookFeed] Error hiding IG comment #{comment_id}: #{e.message}"
+    nil
+  end
+
   # Send a private reply to a comment via Messenger
   # POST /{PAGE_ID}/messages — using the official Send API endpoint
   # Ref: https://developers.facebook.com/docs/messenger-platform/discovery/private-replies
@@ -59,7 +77,7 @@ class Facebook::CommentActionService
 
   def send_private_reply_and_log(comment_id, message, conversation)
     response = send_private_reply(comment_id, message)
-    
+
     if response&.success?
       # Facebook returns `{"recipient_id":"...","message_id":"m_1234abc..."}` for the generated private reply
       body = JSON.parse(response.body)
@@ -76,9 +94,13 @@ class Facebook::CommentActionService
         content_attributes: { is_private_reply: true }
       )
     else
-      body = JSON.parse(response.body) rescue {}
+      body = begin
+        JSON.parse(response.body)
+      rescue StandardError
+        {}
+      end
       error_msg = body.dig('error', 'message') || 'Failed to send private reply'
-      
+
       msg = conversation.messages.create!(
         account_id: conversation.account_id,
         inbox_id: conversation.inbox_id,
@@ -115,7 +137,7 @@ class Facebook::CommentActionService
 
   def reply_comment_and_log(comment_id, message, conversation)
     response = reply_comment(comment_id, message)
-    
+
     if response&.success?
       body = JSON.parse(response.body)
       msg_id = body['id']
@@ -130,9 +152,13 @@ class Facebook::CommentActionService
         source_id: msg_id
       )
     else
-      body = JSON.parse(response.body) rescue {}
+      body = begin
+        JSON.parse(response.body)
+      rescue StandardError
+        {}
+      end
       error_msg = body.dig('error', 'message') || 'Failed to send public reply'
-      
+
       msg = conversation.messages.create!(
         account_id: conversation.account_id,
         inbox_id: conversation.inbox_id,
@@ -145,10 +171,71 @@ class Facebook::CommentActionService
     end
   end
 
+  # Send a public reply to an Instagram comment (when connected via Facebook Page)
+  # POST /{ig_comment_id}/replies
+  def reply_ig_comment(comment_id, message)
+    url = "https://graph.facebook.com/#{API_VERSION}/#{comment_id}/replies"
+    response = HTTParty.post(
+      url,
+      body: { message: message, access_token: @access_token }
+    )
+
+    if response.success?
+      Rails.logger.info "[FacebookFeed] Successfully replied publicly to IG comment #{comment_id}"
+    else
+      log_api_error('reply IG comment', comment_id, response)
+    end
+
+    response
+  rescue StandardError => e
+    Rails.logger.error "[FacebookFeed] Error replying to IG comment #{comment_id}: #{e.message}"
+    nil
+  end
+
+  def reply_ig_comment_and_log(comment_id, message, conversation)
+    response = reply_ig_comment(comment_id, message)
+
+    if response&.success?
+      body = JSON.parse(response.body)
+      msg_id = body['id']
+
+      return unless msg_id.present?
+
+      conversation.messages.create!(
+        account_id: conversation.account_id,
+        inbox_id: conversation.inbox_id,
+        message_type: :activity,
+        content: I18n.t('errors.facebook.comment_handler.public_comment', text: message),
+        source_id: msg_id
+      )
+    else
+      body = begin
+        JSON.parse(response.body)
+      rescue StandardError
+        {}
+      end
+      error_msg = body.dig('error', 'message') || 'Failed to send public reply to IG comment'
+
+      msg = conversation.messages.create!(
+        account_id: conversation.account_id,
+        inbox_id: conversation.inbox_id,
+        message_type: :activity,
+        content: I18n.t('errors.facebook.comment_handler.public_comment', text: message),
+        status: :failed,
+        source_id: "failed_fb_ig_reply_#{SecureRandom.hex(4)}"
+      )
+      Messages::StatusUpdateService.new(msg, 'failed', error_msg).perform
+    end
+  end
+
   private
 
   def log_api_error(action, comment_id, response)
-    body = JSON.parse(response.body) rescue {}
+    body = begin
+      JSON.parse(response.body)
+    rescue StandardError
+      {}
+    end
     error_code = body.dig('error', 'code')
     error_msg = body.dig('error', 'message') || response.body
 
