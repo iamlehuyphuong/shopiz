@@ -8,12 +8,13 @@ class Instagram::ReadStatusService
   end
 
   def instagram_id
-    params[:recipient][:id]
+    params.dig(:recipient, :id)
   end
 
   def message
-    return unless params[:read][:mid]
+    mid = params.dig(:read, :mid)
+    return unless mid
 
-    @message ||= @channel.inbox.messages.find_by(source_id: params[:read][:mid])
+    @message ||= @channel.inbox.messages.find_by(source_id: mid)
   end
 end
