@@ -13,13 +13,15 @@ class Instagram::WebhooksBaseService
 
   def find_or_create_contact(user)
     avatar_url = user['profile_picture_url'] || user['profile_pic']
+    valid_name = user['name'].presence || user['username'].presence || Channel::Instagram::DEFAULT_USER_NAME
+
     @contact_inbox = @inbox.contact_inboxes.where(source_id: user['id']).first
 
     if @contact_inbox
       @contact = @contact_inbox.contact
-      
-      if user['name'].present? && ['Instagram User', user['username'], nil].include?(@contact.name)
-        @contact.update!(name: user['name'])
+
+      if [Channel::Instagram::DEFAULT_USER_NAME, user['username'], nil].include?(@contact.name) && valid_name != @contact.name
+        @contact.update!(name: valid_name)
       end
 
       update_instagram_profile_link(user)
@@ -28,7 +30,7 @@ class Instagram::WebhooksBaseService
     end
 
     @contact_inbox = @inbox.channel.create_contact_inbox(
-      user['id'], user['name'], avatar_url: avatar_url
+      user['id'], valid_name, avatar_url: avatar_url
     )
 
     @contact = @contact_inbox.contact

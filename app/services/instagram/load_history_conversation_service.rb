@@ -116,7 +116,7 @@ class Instagram::LoadHistoryConversationService
     user_info = fetch_instagram_user_profile(sender['id'])
 
     {
-      name: user_info['name'] || user_info['username'] || 'Instagram User',
+      name: user_info['name'] || user_info['username'] || Channel::Instagram::DEFAULT_USER_NAME,
       account_id: @inbox.account_id,
       avatar_url: user_info['profile_picture_url'] || user_info['profile_pic']
     }

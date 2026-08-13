@@ -42,8 +42,11 @@ class Channel::Instagram < ApplicationRecord
   validates :access_token, presence: true
   validates :instagram_id, uniqueness: true, presence: true
 
+  before_validation :ensure_webhook_verify_token
   after_create_commit :subscribe
   before_destroy :unsubscribe
+
+  DEFAULT_USER_NAME = 'Instagram User'.freeze
 
   def name
     'Instagram'

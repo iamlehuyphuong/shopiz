@@ -41,7 +41,7 @@ class Webhooks::InstagramFeedJob < ApplicationJob
       post_id: value.dig(:media, :id) || 'unknown',
       message: value[:text] || '',
       created_time: value[:timestamp],
-      sender_name: value.dig(:from, :username) || 'Instagram User',
+      sender_name: value.dig(:from, :username) || Channel::Instagram::DEFAULT_USER_NAME,
       sender_id: value.dig(:from, :id) || "unknown_#{value[:id]}"
     }
   end

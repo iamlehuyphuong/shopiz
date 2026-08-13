@@ -39,8 +39,8 @@ class Instagram::BaseMessageText < Instagram::WebhooksBaseService
 
     url = referral[:source_url]
     ad_id = referral[:ad_id]
-    
-    note_content = "Tin nhắn bắt nguồn từ Ads Instagram"
+
+    note_content = 'Tin nhắn bắt nguồn từ Ads Instagram'
     note_content += ": #{ad_id}" if ad_id.present?
     note_content += " - #{url}" if url.present?
 
@@ -80,7 +80,8 @@ class Instagram::BaseMessageText < Instagram::WebhooksBaseService
     contact = @contact_inbox.contact
     return false if contact.blank?
 
-    !contact.avatar.attached? || ['Instagram User', contact.additional_attributes&.dig('social_instagram_user_name')].include?(contact.name)
+    !contact.avatar.attached? || [Channel::Instagram::DEFAULT_USER_NAME,
+                                  contact.additional_attributes&.dig('social_instagram_user_name')].include?(contact.name)
   end
 
   def unsend_message
