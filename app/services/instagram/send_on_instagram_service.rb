@@ -28,7 +28,7 @@ class Instagram::SendOnInstagramService < Instagram::BaseSendService
   def handle_comment_reply(message_content)
     response = Instagram::CommentActionService.new(channel: channel).send_private_reply(
       message_content.dig(:recipient, :comment_id),
-      message_content.dig(:message, :text)
+      message_content[:message]
     )
 
     if response&.success?
