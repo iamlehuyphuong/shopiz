@@ -43,7 +43,7 @@ module InstagramConcern
   def fetch_instagram_user_details(access_token)
     endpoint = "https://graph.instagram.com/#{instagram_api_version}/me"
     params = {
-      fields: 'id,username,name,profile_picture_url,account_type',
+      fields: 'id,user_id,username,name,profile_picture_url,account_type',
       access_token: access_token
     }
 

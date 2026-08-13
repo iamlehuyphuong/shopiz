@@ -89,7 +89,8 @@ class Instagram::CallbacksController < ApplicationController
 
   def find_or_create_inbox
     user_details = fetch_instagram_user_details(@long_lived_token_response['access_token'])
-    channel_instagram = find_channel_by_instagram_id(user_details['id'].to_s)
+    instagram_id = (user_details['user_id'] || user_details['id']).to_s
+    channel_instagram = find_channel_by_instagram_id(instagram_id)
     channel_exists = channel_instagram.present?
 
     if channel_instagram
@@ -119,7 +120,8 @@ class Instagram::CallbacksController < ApplicationController
     )
 
     # Resolve and store linked Facebook Page ID (required for Private Replies API)
-    resolve_and_store_page_id(channel_instagram, access_token, user_details['id'].to_s)
+    instagram_id = (user_details['user_id'] || user_details['id']).to_s
+    resolve_and_store_page_id(channel_instagram, access_token, instagram_id)
 
     # Update inbox name if username changed
     channel_instagram.inbox.update!(name: user_details['username'])
@@ -136,7 +138,7 @@ class Instagram::CallbacksController < ApplicationController
 
       channel_instagram = Channel::Instagram.create!(
         access_token: access_token,
-        instagram_id: user_details['id'].to_s,
+        instagram_id: (user_details['user_id'] || user_details['id']).to_s,
         account: account,
         expires_at: expires_at
       )
@@ -148,7 +150,8 @@ class Instagram::CallbacksController < ApplicationController
       )
 
       # Resolve and store linked Facebook Page ID (required for Private Replies API)
-      resolve_and_store_page_id(channel_instagram, access_token, user_details['id'].to_s)
+      instagram_id = (user_details['user_id'] || user_details['id']).to_s
+      resolve_and_store_page_id(channel_instagram, access_token, instagram_id)
 
       channel_instagram
     end
