@@ -123,6 +123,7 @@ vi:
       comment_handler:
         comment_hidden: Comment đã được tự động ẩn
         public_comment: "Trả lời bình luận: %{text}"
+        instagram_comment_fallback: "Bạn vừa nhận được bình luận trên bài viết\n"
         private_reply_label: Phản hồi riêng tư (Private Reply)
         private_reply_hint: Tin nhắn tiếp theo bạn gửi sẽ được gửi dưới dạng phản
           hồi riêng tư cho bình luận này.

@@ -71,7 +71,11 @@ class Facebook::CommentHandlerService
   end
 
   def log_internal_note
-    note_content = "https://www.facebook.com/#{@post_id}\n"
+    note_content = if @channel.is_a?(Channel::Instagram)
+                     I18n.t('errors.facebook.comment_handler.instagram_comment_fallback')
+                   else
+                     "https://www.facebook.com/#{@post_id}\n"
+                   end
     note_content += ">> #{@message}"
     note_content += "\n\n#{I18n.t('errors.facebook.comment_handler.comment_hidden')}!" if @comment_hidden
 

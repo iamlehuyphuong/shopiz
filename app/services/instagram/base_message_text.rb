@@ -22,7 +22,7 @@ class Instagram::BaseMessageText < Instagram::WebhooksBaseService
 
     return unsend_message if message_is_deleted?
 
-    ensure_contact(contact_id) if contacts_first_message?(contact_id)
+    ensure_contact(contact_id) if contact_needs_sync?(contact_id)
 
     @message = create_message
     process_referral if @message.present?
@@ -72,9 +72,15 @@ class Instagram::BaseMessageText < Instagram::WebhooksBaseService
   end
 
   # if contact was present before find out contact_inbox to create message
-  def contacts_first_message?(ig_scope_id)
+  # Sync if the contact has no avatar or still has a placeholder name
+  def contact_needs_sync?(ig_scope_id)
     @contact_inbox = @inbox.contact_inboxes.where(source_id: ig_scope_id).last
-    @contact_inbox.blank? && @inbox.channel.instagram_id.present?
+    return true if @contact_inbox.blank? && @inbox.channel.instagram_id.present?
+
+    contact = @contact_inbox.contact
+    return false if contact.blank?
+
+    !contact.avatar.attached? || ['Instagram User', contact.additional_attributes&.dig('social_instagram_user_name')].include?(contact.name)
   end
 
   def unsend_message

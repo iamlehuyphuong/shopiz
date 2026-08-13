@@ -108,6 +108,7 @@ en:
       comment_handler:
         comment_hidden: Comment has been automatically hidden
         public_comment: "Reply comment: %{text}"
+        instagram_comment_fallback: "You just received a comment on a post\n"
         private_reply_label: Private Reply
         private_reply_hint: The next message you send will be delivered as a private
           reply to this comment.

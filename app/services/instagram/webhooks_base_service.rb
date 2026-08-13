@@ -17,6 +17,11 @@ class Instagram::WebhooksBaseService
 
     if @contact_inbox
       @contact = @contact_inbox.contact
+      
+      if user['name'].present? && ['Instagram User', user['username'], nil].include?(@contact.name)
+        @contact.update!(name: user['name'])
+      end
+
       update_instagram_profile_link(user)
       Avatar::AvatarFromUrlJob.perform_later(@contact, avatar_url) if avatar_url.present? && !@contact.avatar.attached?
       return
