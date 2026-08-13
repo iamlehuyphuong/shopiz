@@ -47,7 +47,12 @@ module InstagramConcern
       access_token: access_token
     }
 
-    make_api_request(endpoint, params, 'Failed to fetch Instagram user details')
+    parsed = make_api_request(endpoint, params, 'Failed to fetch Instagram user details')
+
+    # Meta's /me endpoint sometimes returns the user object wrapped in a 'data' array
+    parsed = parsed['data'].first if parsed.is_a?(Hash) && parsed['data'].is_a?(Array) && parsed['data'].any?
+
+    parsed
   end
 
   # Fetches the Facebook Page ID linked to this Instagram professional account.
