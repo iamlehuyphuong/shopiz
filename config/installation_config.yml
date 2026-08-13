@@ -132,11 +132,6 @@
   display_title: 'Facebook App Secret'
   locked: false
   type: secret
-- name: IG_VERIFY_TOKEN
-  display_title: 'Instagram Verify Token'
-  description: 'The verify token used for Instagram Webhook'
-  locked: false
-  type: secret
 - name: FACEBOOK_API_VERSION
   display_title: 'Facebook API Version'
   description: 'Configure this if you want to use a different Facebook API version. Make sure its prefixed with `v`'
