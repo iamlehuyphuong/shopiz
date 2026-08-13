@@ -12,26 +12,26 @@ class Instagram::MessageText < Instagram::BaseMessageText
       return unknown_user(ig_scope_id)
     end
 
-    fields = 'name,username,profile_picture_url,follower_count,is_user_follow_business,is_business_follow_user,is_verified_user'
+    fields = 'id,name,username,profile_picture_url,follower_count,is_user_follow_business,is_business_follow_user,is_verified_user'
     url = "#{base_uri}/#{ig_scope_id}?fields=#{fields}&access_token=#{@inbox.channel.access_token}"
 
     response = HTTParty.get(url)
 
-    return process_successful_response(response) if response.success?
+    return process_successful_response(response, ig_scope_id) if response.success?
 
     result = handle_error_response(response, ig_scope_id)
-    result.present? ? result : unknown_user(ig_scope_id)
+    (result.presence || unknown_user(ig_scope_id))
   end
 
   private
 
-  def process_successful_response(response)
+  def process_successful_response(response, ig_scope_id)
     result = JSON.parse(response.body).with_indifferent_access
     {
       'name' => result['name'],
       'username' => result['username'],
       'profile_pic' => result['profile_picture_url'] || result['profile_pic'],
-      'id' => result['id'],
+      'id' => result['id'].presence || ig_scope_id,
       'follower_count' => result['follower_count'],
       'is_user_follow_business' => result['is_user_follow_business'],
       'is_business_follow_user' => result['is_business_follow_user'],
