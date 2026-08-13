@@ -168,7 +168,7 @@ export default {
         },
         {
           scope:
-            'pages_manage_metadata,business_management,pages_messaging,instagram_basic,pages_show_list,pages_read_engagement,instagram_manage_messages,pages_read_user_content,pages_manage_engagement,instagram_manage_comments,pages_utility_messaging',
+            'pages_manage_metadata,business_management,pages_messaging,pages_show_list,pages_read_engagement,pages_read_user_content,pages_manage_engagement,pages_utility_messaging',
         }
       );
     },

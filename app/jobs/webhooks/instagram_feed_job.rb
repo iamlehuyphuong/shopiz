@@ -9,12 +9,7 @@ class Webhooks::InstagramFeedJob < ApplicationJob
     instagram_id = entry[:id]
 
     # A single instagram_id can be connected to multiple accounts — process each independently
-    instagram_channels = Channel::Instagram.where(instagram_id: instagram_id).to_a
-    facebook_channels = Channel::FacebookPage.where(instagram_id: instagram_id).to_a
-
-    # We want to process the comment for both Instagram and FacebookPage channels
-    # that are connected to this instagram_id
-    channels = instagram_channels + facebook_channels
+    channels = Channel::Instagram.where(instagram_id: instagram_id).to_a
     return if channels.empty?
 
     change = entry[:changes].first
@@ -37,11 +32,7 @@ class Webhooks::InstagramFeedJob < ApplicationJob
   private
 
   def action_service_for(channel)
-    if channel.is_a?(Channel::FacebookPage)
-      Facebook::CommentActionService.new(channel: channel)
-    else
-      Instagram::CommentActionService.new(channel: channel)
-    end
+    Instagram::CommentActionService.new(channel: channel)
   end
 
   def extract_comment_data(value)
@@ -83,11 +74,7 @@ class Webhooks::InstagramFeedJob < ApplicationJob
 
     return false unless should_hide
 
-    if channel.is_a?(Channel::FacebookPage)
-      action_service_for(channel).hide_ig_comment(comment_id)
-    else
-      action_service_for(channel).hide_comment(comment_id)
-    end
+    action_service_for(channel).hide_comment(comment_id)
     true
   end
 
@@ -118,19 +105,11 @@ class Webhooks::InstagramFeedJob < ApplicationJob
     elsif channel.auto_public_reply_message.present?
       processed_message = process_liquid_message(channel.auto_public_reply_message, conversation)
 
-      if channel.is_a?(Channel::FacebookPage)
-        action_service_for(channel).reply_ig_comment_and_log(
-          data[:comment_id],
-          processed_message,
-          conversation
-        )
-      else
-        action_service_for(channel).reply_comment_and_log(
-          data[:comment_id],
-          processed_message,
-          conversation
-        )
-      end
+      action_service_for(channel).reply_comment_and_log(
+        data[:comment_id],
+        processed_message,
+        conversation
+      )
     end
   end
 

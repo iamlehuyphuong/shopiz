@@ -12,11 +12,6 @@ class Webhooks::FacebookFeedJob < ApplicationJob
     channels = Channel::FacebookPage.where(page_id: page_id).to_a
     return if channels.empty?
 
-    # Backfill instagram_id if missing to prevent Facebook webhook from leaking Instagram comments
-    channels.each { |ch| backfill_instagram_id(ch) if ch.instagram_id.blank? }
-
-    return if channels.empty?
-
     comment_data = extract_comment_data(change)
 
     # Skip comments from the Page itself — cannot send private reply to self
@@ -32,16 +27,6 @@ class Webhooks::FacebookFeedJob < ApplicationJob
   end
 
   private
-
-  def backfill_instagram_id(channel)
-    fb_object = Koala::Facebook::API.new(channel.page_access_token)
-    response = fb_object.get_connections('me', '', { fields: 'instagram_business_account' })
-    if response['instagram_business_account'].present?
-      channel.update!(instagram_id: response['instagram_business_account']['id'])
-    end
-  rescue StandardError => e
-    Rails.logger.warn("[FacebookFeed] Failed to backfill instagram_id for FacebookPage #{channel.id}: #{e.message}")
-  end
 
   def extract_comment_data(change)
     {
@@ -154,11 +139,11 @@ class Webhooks::FacebookFeedJob < ApplicationJob
 
     template = Liquid::Template.parse(message)
     template.render({
-      'contact' => ContactDrop.new(conversation.contact),
-      'conversation' => ConversationDrop.new(conversation),
-      'inbox' => InboxDrop.new(conversation.inbox),
-      'account' => AccountDrop.new(conversation.account)
-    })
+                      'contact' => ContactDrop.new(conversation.contact),
+                      'conversation' => ConversationDrop.new(conversation),
+                      'inbox' => InboxDrop.new(conversation.inbox),
+                      'account' => AccountDrop.new(conversation.account)
+                    })
   rescue Liquid::Error
     message
   end

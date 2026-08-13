@@ -122,13 +122,7 @@ class Webhooks::InstagramEventsJob < MutexApplicationJob
   end
 
   def find_channels(instagram_id)
-    # There will be chances for the instagram account to be connected to a facebook page,
-    # so we need to check for both instagram and facebook page channels
-    # priority is for instagram channel which created via instagram login
-    instagram_channels = Channel::Instagram.where(instagram_id: instagram_id).to_a
-    facebook_channels = Channel::FacebookPage.where(instagram_id: instagram_id).to_a
-
-    instagram_channels + facebook_channels
+    Channel::Instagram.where(instagram_id: instagram_id).to_a
   end
 
   def event_name(messaging)
@@ -136,11 +130,7 @@ class Webhooks::InstagramEventsJob < MutexApplicationJob
   end
 
   def message(messaging, channel)
-    if channel.is_a?(Channel::Instagram)
-      ::Instagram::MessageText.new(messaging, channel).perform
-    else
-      ::Instagram::Messenger::MessageText.new(messaging, channel).perform
-    end
+    ::Instagram::MessageText.new(messaging, channel).perform
   end
 
   def read(messaging, channel)
