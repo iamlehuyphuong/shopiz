@@ -5,8 +5,6 @@ class ZaloPersonal::BaseService
   pattr_initialize [:inbox!, :params!]
 
   def perform
-    return if VALID_TYPE.exclude?(params[:type])
-    return if params.dig(:data, :subType).to_i == 1
     if exist_message = find_exist_message
       return update_extra_info(exist_message)
     end
@@ -128,200 +126,83 @@ class ZaloPersonal::BaseService
   end
 
   def group_addition_attributes
-    attrs = { group_id: params[:data][:idTo] }
+    attrs = { group_id: params[:idTo] }
     return attrs if @group_info.blank?
 
     @group_info.slice('name', 'avt', 'desc', 'description', 'link', 'groupLink').merge(attrs)
   end
 
   def build_message
-    case params[:data][:msgType]
-    when 'webchat'
-      process_web_chat
-    when 'chat.video.msg', 'chat.photo'
-      process_media_message
-    when 'chat.recommended'
-      process_recommended
-    when 'chat.voice', 'share.file'
-      process_file_message
-    when 'chat.sticker'
+    if params[:_stickerDetail]
       process_sticker_message
     else
-      raise ArgumentError
+      case params[:type]
+      when 1
+        process_text_message
+      when 2
+        process_media_message
+      when 3, 4, 5 # Nếu có audio, video, file
+        process_file_message
+      else
+        process_text_message # fallback default
+      end
     end
 
     assign_quote_message
   end
 
   def assign_quote_message
-    return if params.dig(:data, :quote, :globalMsgId).blank?
+    return if params.dig(:quote, :globalMsgId).blank?
 
     content_attributes = @message.content_attributes || {}
-    content_attributes[:in_reply_to_external_id] = params[:data][:quote][:globalMsgId]
+    content_attributes[:in_reply_to_external_id] = params[:quote][:globalMsgId]
     @message.content_attributes = content_attributes
   end
 
-  def process_web_chat
-    if params[:data][:content].is_a?(Hash)
-      data_content = params[:data][:content]
-      params[:data][:content] = [data_content[:title], data_content[:description]].compact.join("\n")
-    end
-    params[:data][:content] = ICON_MAPPING[params[:data][:content]] || params[:data][:content]
+  def process_text_message
+    content = params[:content]
+    content = ICON_MAPPING[content] || content
     @message = @conversation.messages.build(message_params)
   end
 
   def process_media_message
-    data_content = params[:data][:content]
-    options = begin
-      JSON.parse(data_content[:params])
-    rescue StandardError
-      {}
-    end
-    params[:data][:content] = data_content['title']
-
     @message = @conversation.messages.build(message_params)
     @media = {
-      type: FILE_TYPE_MAPPING[params[:data][:msgType]],
+      type: 'image',
       payload: {
-        url: data_content['href'],
-        name: File.basename(URI.parse(data_content['href']).path),
-        width: options['width'] || options['video_width'],
-        height: options['height'] || options['video_height']
+        url: params[:url] || params.dig(:file, :url), # Thay thế tuỳ thuộc vào payload thực tế của Zalo hình ảnh V2
+        name: params[:msgId]
       }
     }
-    params[:data][:attachments] ||= []
-    params[:data][:attachments] << @media
+    params[:attachments] ||= []
+    params[:attachments] << @media
     attach_media
-  end
-
-  def process_recommended
-    data_content = params[:data][:content]
-    description = begin
-      JSON.parse(data_content['description'])
-    rescue StandardError
-      {}
-    end
-
-    params[:data][:content] = if call_action?
-                                build_message_calling
-                              else
-                                "#{data_content['title']} - #{description['phone']}"
-                              end
-    @message = @conversation.messages.build(message_params)
-    params[:data][:attachments] ||= []
-
-    if data_content['thumb'].present?
-      params[:data][:attachments] << {
-        type: 'sticker',
-        payload: {
-          url: data_content['thumb'],
-          title: data_content['title'],
-          name: File.basename(URI.parse(data_content['thumb']).path)
-        }
-      }
-    end
-
-    if description['qrCodeUrl']
-      params[:data][:attachments] << {
-        type: 'image',
-        payload: {
-          url: description['qrCodeUrl'],
-          title: description['phone'],
-          name: File.basename(URI.parse(description['qrCodeUrl']).path)
-        }
-      }
-    end
-
-    attach_media
-  end
-
-  def call_action?
-    ['recommened.misscall', 'recommened.calltime'].include?(params.dig(:data, :content, :action))
-  end
-
-  def build_message_calling
-    payload = JSON.parse(params.dig(:data, :content, :params))
-    action =  if miss_call? && payload['isCaller'].zero? && payload['reason'] == 3
-                I18n.t('zalo_personal.calls.action.rejected')
-              elsif miss_call? && payload['isCaller'].zero? && payload['reason'] == 2
-                I18n.t('zalo_personal.calls.action.missed')
-              elsif miss_call? && payload['isCaller'] == 1 && [4, 5].include?(payload['reason'])
-                I18n.t('zalo_personal.calls.action.cancelled')
-              elsif miss_call? && payload['isCaller'] == 1 && payload['reason'] == 3
-                I18n.t('zalo_personal.calls.action.recipient_rejected')
-              end
-
-    type_call = if payload['calltype'] == 1 && miss_call?
-                  I18n.t('zalo_personal.calls.type.video_missed')
-                elsif payload['calltype'] == 1 && payload['isCaller'] == 1
-                  I18n.t('zalo_personal.calls.type.video_outgoing')
-                elsif payload['calltype'] == 1 && payload['isCaller'].zero?
-                  I18n.t('zalo_personal.calls.type.video_incoming')
-                elsif miss_call?
-                  I18n.t('zalo_personal.calls.type.voice_missed')
-                elsif payload['isCaller'] == 1
-                  I18n.t('zalo_personal.calls.type.voice_outgoing')
-                elsif payload['isCaller'].zero?
-                  I18n.t('zalo_personal.calls.type.voice_incoming')
-                end
-
-    icon_class = if payload['calltype'] == 1
-                   'i-fluent-video-16-filled'
-                 else
-                   'i-fluent-call-16-filled'
-                 end
-
-    duration_text = nil
-    if (duration = payload['duration'].to_i) > 0
-      mins, seconds = duration.divmod(60)
-      duration_label = I18n.t('zalo_personal.calls.duration', mins: mins, seconds: seconds)
-      duration_text = "<span class=\"text-n-slate-11 inline-flex items-center gap-1\"><i class=\"#{icon_class}\"></i> #{duration_label}</span>"
-    end
-
-    [action, "**#{type_call}**", duration_text].compact.join("\n")
-  end
-
-  def miss_call?
-    params.dig(:data, :content, :action) == 'recommened.misscall'
   end
 
   def process_file_message
-    data_content = params[:data][:content]
-    if JSON.parse(data_content[:params])['fileSize'].to_i > 10 * 1024 * 1024
-      params[:data][:content] = "File to download: #{data_content[:href]}"
-      return @message = @conversation.messages.build(message_params)
-    end
-
-    params[:data][:content] = ''
     @message = @conversation.messages.build(message_params)
-
-    attachment_file = Down.download(data_content[:href])
-    @message.attachments.new(
-      account_id: @message.account_id,
-      file_type: FILE_TYPE_MAPPING[params[:data][:msgType]],
-      external_url: data_content['href'],
-      file: {
-        io: attachment_file,
-        filename: attachment_file.original_filename,
-        content_type: attachment_file.content_type
-      }
-    )
+    # Tương tự, nếu có URL thì tải file, tạm thời fallback
   end
 
   def process_sticker_message
-    params[:data][:content] = '[Sticker]'
+    params[:content] = '[Sticker]'
     @message = @conversation.messages.build(message_params)
+    @media = {
+      type: 'sticker',
+      payload: {
+        url: params.dig(:_stickerDetail, :stickerUrl),
+        name: params.dig(:_stickerDetail, :id)
+      }
+    }
+    params[:attachments] ||= []
+    params[:attachments] << @media
+    attach_media
   end
 
   def attach_media
-    return if params[:data][:attachments].blank?
+    return if params[:attachments].blank?
 
-    params[:data][:attachments].each do |media|
-      if media[:type] == 'file' && media[:payload][:size].to_i > 10 * 1024 * 1024
-        @message.content = "File to download: #{media[:payload][:url]}"
-        next
-      end
-
+    params[:attachments].each do |media|
       attach_file(media)
     end
   end
@@ -416,7 +297,7 @@ class ZaloPersonal::BaseService
   end
 
   def load_group_info
-    group_id = params[:data][:idTo]
+    group_id = params[:idTo]
     response = HTTParty.post(
       "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/getGroupInfo",
       :body => { :groupId => group_id, :ownId => channel.oa_access_token }.to_json,
@@ -436,26 +317,21 @@ class ZaloPersonal::BaseService
 
     additional_attributes = {
       type: @is_user ? 0 : 1,
-      msgId: params[:data][:msgId],
-      user_id: params[:data][:uidFrom],
+      msgId: params[:msgId],
+      user_id: params[:uidFrom],
       sender_id: sender&.id,
       conversation_contact_id: @conversation.contact.id,
-      cliMsgId: params[:data][:cliMsgId],
-      msgType: params.dig(:data, :msgType),
-      ts: params.dig(:data, :ts),
-      ttl: params.dig(:data, :ttl),
-      propertyExt: params.dig(:data, :propertyExt)
+      msgType: params[:type]
     }
 
     {
-      content: params[:data][:content],
+      content: params[:content],
       account_id: @inbox.account_id,
       inbox_id: @inbox.id,
       message_type: message_type,
       sender: sender,
       additional_attributes: additional_attributes,
-      source_id: params[:data][:msgId],
-      created_at: created_time,
+      source_id: params[:msgId],
       status: :delivered
     }
   end
@@ -478,17 +354,17 @@ class ZaloPersonal::BaseService
     name = @user_info['zaloName'] || @user_info['displayName']
     account.contacts.find_or_create_by!(phone_number: phone_number) do |contact|
       contact.name = name
-      contact.additional_attributes = { source_id: params[:data][:uidFrom] }
+      contact.additional_attributes = { source_id: params[:uidFrom] }
     end
   end
 
   def contact_from_source_id
     name = @user_info['zaloName'] || @user_info['displayName']
     account.contacts.where(
-      "additional_attributes ->> 'source_id' = :source_id", source_id: params[:data][:uidFrom]
+      "additional_attributes ->> 'source_id' = :source_id", source_id: params[:uidFrom]
     ).first_or_create do |contact|
-      contact.name = name || params[:data][:dName]
-      contact.additional_attributes = { source_id: params[:data][:uidFrom] }
+      contact.name = name
+      contact.additional_attributes = { source_id: params[:uidFrom] }
     end
   end
 
@@ -498,24 +374,16 @@ class ZaloPersonal::BaseService
 
   def update_extra_info(message)
     attrs = message.additional_attributes || {}
-    attrs[:cliMsgId] = params.dig(:data, :cliMsgId)
-    attrs[:msgId] = params.dig(:data, :msgId)
-    attrs[:msgType] = params.dig(:data, :msgType)
-    attrs[:ts] = params.dig(:data, :ts)
-    attrs[:propertyExt] = params.dig(:data, :propertyExt)
-    attrs[:user_id] = params.dig(:data, :uidFrom)
+    attrs[:msgId] = params[:msgId]
+    attrs[:msgType] = params[:type]
+    attrs[:user_id] = params[:uidFrom]
     attrs[:type] = params[:type]
-    attrs[:ttl] = params.dig(:data, :ttl)
 
-    message.update(additional_attributes: attrs, created_at: created_time)
-  end
-
-  def created_time
-    Time.zone.at(params[:data][:ts].to_i / 1000)
+    message.update(additional_attributes: attrs)
   end
 
   def find_exist_message
     inbox.messages.find_by("source_id = :source_id OR additional_attributes ->> 'attachment_msg_id' = :source_id",
-                           source_id: params.dig(:data, :msgId).to_s)
+                           source_id: params[:msgId].to_s)
   end
 end

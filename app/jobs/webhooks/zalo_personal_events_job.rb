@@ -52,29 +52,11 @@ class Webhooks::ZaloPersonalEventsJob < ApplicationJob
       else
         ZaloPersonal::IncomingMessageService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
       end
-    else
-      if undo_message?(params)
-        handle_undo_message(channel, params)
-      elsif delivery_event?(params)
-        ZaloPersonal::DeliveryStatusService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
-      elsif outgoing_event?(params)
-        ZaloPersonal::OutgoingMessageService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
-      else
-        ZaloPersonal::IncomingMessageService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
-      end
     end
   end
 
-  def delivery_event?(params)
-    params[:data][:msgType] == 'chat.reaction'
-  end
-
-  def undo_message?(params)
-    params[:data][:msgType] == 'chat.undo'
-  end
-
   def outgoing_event?(params)
-    params[:isSelf] == true
+    params[:uidFrom].to_s == params[:_accountId].to_s
   end
 
   def handle_undo_message(channel, params)
@@ -85,23 +67,9 @@ class Webhooks::ZaloPersonalEventsJob < ApplicationJob
   end
 
   def find_message(channel, params)
-    global_msg_id = params.dig(:data, :content, :globalMsgId).to_s
-    client_msg_id = params.dig(:data, :content, :cliMsgId).to_s
-    conditions = []
-    query_params = {}
+    msg_id = params[:msgId].to_s
+    return nil if msg_id.blank?
 
-    if global_msg_id != '0'
-      conditions << <<~SQL.squish
-        source_id = :global_msg_id OR additional_attributes ->> 'msgId' = :global_msg_id
-      SQL
-      query_params[:global_msg_id] = global_msg_id
-    end
-
-    if client_msg_id != '0'
-      conditions << "additional_attributes ->> 'cliMsgId' = :client_msg_id"
-      query_params[:client_msg_id] = client_msg_id
-    end
-
-    channel.inbox.messages.find_by(conditions.join(' OR '), query_params) if conditions.any?
+    channel.inbox.messages.find_by("source_id = ? OR additional_attributes ->> 'msgId' = ?", msg_id, msg_id)
   end
 end

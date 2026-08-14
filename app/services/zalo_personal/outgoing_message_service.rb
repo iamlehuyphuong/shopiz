@@ -8,10 +8,10 @@ class ZaloPersonal::OutgoingMessageService < ZaloPersonal::BaseService
   end
 
   def zalo_user?
-    params[:type].zero?
+    !params[:isGroup]
   end
 
   def target_user
-    params[:data][:idTo]
+    params[:idTo]
   end
 end

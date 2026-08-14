@@ -7,10 +7,10 @@ class ZaloPersonal::IncomingMessageService < ZaloPersonal::BaseService
   end
 
   def zalo_user?
-    params[:type].zero?
+    !params[:isGroup]
   end
 
   def target_user
-    params[:data][:uidFrom]
+    params[:uidFrom]
   end
 end

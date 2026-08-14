@@ -25,17 +25,15 @@ class ZaloPersonal::GroupEventService
   end
 
   def build_message_content
-    case params[:type]
+    case params[:event]
     when 'JOIN_GROUP'
-      ids = Array(params[:memberIds]).join(', ')
-      "Sự kiện nhóm: Thành viên đã tham gia nhóm (User IDs: #{ids})"
+      "Sự kiện nhóm: Thành viên đã tham gia nhóm (User ID: #{params[:targetId]})"
     when 'LEAVE_GROUP'
-      ids = Array(params[:memberIds]).join(', ')
-      "Sự kiện nhóm: Thành viên đã rời nhóm (User IDs: #{ids})"
-    when 'UPDATE_GROUP_NAME'
+      "Sự kiện nhóm: Thành viên đã rời nhóm (User ID: #{params[:targetId]})"
+    when 'UPDATE_GROUP_NAME', 'UPDATE_NAME'
       'Sự kiện nhóm: Nhóm đã được cập nhật thông tin'
     else
-      "Sự kiện nhóm: #{params[:type]}"
+      "Sự kiện nhóm: #{params[:event]}"
     end
   end
 end
