@@ -181,7 +181,22 @@ class ZaloPersonal::BaseService
 
   def process_file_message
     @message = @conversation.messages.build(message_params)
-    # Tương tự, nếu có URL thì tải file, tạm thời fallback
+    type = case params[:type]
+           when 3 then 'audio'
+           when 4 then 'video'
+           else 'file'
+           end
+
+    @media = {
+      type: type,
+      payload: {
+        url: params[:url] || params.dig(:file, :url),
+        name: params[:msgId] || 'file'
+      }
+    }
+    params[:attachments] ||= []
+    params[:attachments] << @media
+    attach_media
   end
 
   def process_sticker_message

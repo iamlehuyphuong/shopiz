@@ -341,7 +341,7 @@ const componentToRender = computed(() => {
   if (Array.isArray(props.attachments) && props.attachments.length === 1) {
     const fileType = props.attachments[0].fileType;
 
-    if (!props.content) {
+    if (!processedContent.value) {
       if (fileType === ATTACHMENT_TYPES.IMAGE) return ImageBubble;
       if (fileType === ATTACHMENT_TYPES.FILE) return FileBubble;
       if (fileType === ATTACHMENT_TYPES.AUDIO) return AudioBubble;
@@ -373,7 +373,7 @@ const payloadForContextMenu = computed(() => {
   return {
     id: props.id,
     content_attributes: props.contentAttributes,
-    content: props.content,
+    content: processedContent.value,
     conversation_id: props.conversationId,
   };
 });
@@ -391,7 +391,7 @@ const isCaptainEnabled = computed(() => {
 });
 
 const contextMenuEnabledOptions = computed(() => {
-  const hasText = !!props.content;
+  const hasText = !!processedContent.value;
   const hasAttachments = !!(props.attachments && props.attachments.length > 0);
 
   const isOutgoing = props.messageType === MESSAGE_TYPES.OUTGOING;
@@ -434,7 +434,7 @@ const shouldRenderMessage = computed(() => {
 
   return (
     hasAttachments ||
-    props.content ||
+    processedContent.value ||
     isEmailContentType ||
     isUnsupported ||
     isAnIntegrationMessage ||
@@ -548,8 +548,36 @@ const setupHighlightTimer = () => {
 
 onMounted(setupHighlightTimer);
 
+const processedContent = computed(() => {
+  const c = props.content;
+  if (!c) return '';
+  if (typeof c === 'string' && c.startsWith('{"') && c.includes('=>')) {
+    try {
+      const titleMatch = c.match(/"title"=>"([^"\\]*(?:\\.[^"\\]*)*)"/);
+      const descMatch = c.match(/"description"=>"([^"\\]*(?:\\.[^"\\]*)*)"/);
+      const title = titleMatch ? titleMatch[1] : '';
+      const desc = descMatch ? descMatch[1] : '';
+
+      let result = [];
+      if (title) result.push(title);
+      if (desc) result.push(desc);
+
+      if (result.length > 0) {
+        return JSON.parse('"' + result.join('\\n') + '"');
+      }
+      return '';
+    } catch (e) {
+      return '';
+    }
+  }
+  return c;
+});
+
+const providedRefs = toRefs(props);
+
 provideMessageContext({
-  ...toRefs(props),
+  ...providedRefs,
+  content: processedContent,
   isPrivate: computed(() => props.private),
   variant,
   orientation,
