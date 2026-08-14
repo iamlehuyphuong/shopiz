@@ -78,7 +78,7 @@ class Channel::ZaloPersonal < ApplicationRecord
       headers: ZaloPersonal::ApiHelper.request_headers,
       body: body.to_json
     )
-    if res['error'].present?
+    if res['error'].present? && res['error'].to_s != '0'
       Rails.logger.error "ZaloPersonal send_message_cs error: #{res['message']}"
       check_disconnection!
       { 'error' => 1, 'message' => res['error'] }
@@ -99,7 +99,7 @@ class Channel::ZaloPersonal < ApplicationRecord
       timeout: 10
     )
 
-    if response['error'].present?
+    if response['error'].present? && response['error'].to_s != '0'
       Rails.logger.warn "ZaloPersonal channel #{id} disconnected: #{response['error']}"
       prompt_reauthorization!
     end
@@ -242,7 +242,7 @@ class Channel::ZaloPersonal < ApplicationRecord
     method = attachment.file_type == 'image' ? :send_image : :send_file
     response = send(method, user_id, attachment, is_zalo_group)
 
-    if response['error'].present?
+    if response['error'].present? && response['error'].to_s != '0'
       Rails.logger.error "ZaloPersonal file error: #{response['message']}"
       check_disconnection!
       { 'error' => 1, 'message' => response['error'] }

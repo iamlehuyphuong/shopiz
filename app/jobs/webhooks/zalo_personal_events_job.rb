@@ -61,6 +61,7 @@ class Webhooks::ZaloPersonalEventsJob < ApplicationJob
     return params unless params[:data].is_a?(Hash)
 
     normalized = params.merge(params[:data])
+    normalized[:chat_type] = params[:type] if params.key?(:type)
     
     if normalized.dig(:propertyExt, :type).present?
       normalized[:type] = normalized.dig(:propertyExt, :type).to_i

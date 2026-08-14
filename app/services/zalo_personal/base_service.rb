@@ -65,13 +65,24 @@ class ZaloPersonal::BaseService
       attributes[:phone_number] = phone
     end
 
+    if @user_info['avatar'].present?
+      attributes[:avatar_url] = @user_info['avatar']
+      attributes[:additional_attributes] = { 'avatar_url' => @user_info['avatar'] }
+    end
+
     attributes
   end
 
   def group_contact_attributes
     return {} if @group_info.blank?
 
-    { name: @group_info['name'] }
+    attributes = { name: @group_info['name'] }
+    if @group_info['fullAvt'].present?
+      attributes[:avatar_url] = @group_info['fullAvt']
+      attributes[:additional_attributes] = { 'avatar_url' => @group_info['fullAvt'] }
+    end
+
+    attributes
   end
 
   def set_conversation
@@ -133,7 +144,18 @@ class ZaloPersonal::BaseService
   end
 
   def build_message
-    if params[:_stickerDetail]
+    if params[:msgType].to_s.start_with?('chat.')
+      case params[:msgType]
+      when 'chat.sticker'
+        process_sticker_message
+      when 'chat.photo', 'chat.image', 'chat.gif'
+        process_media_message
+      when 'chat.voice', 'chat.audio', 'chat.video', 'chat.file'
+        process_file_message
+      else
+        process_text_message
+      end
+    elsif params[:_stickerDetail]
       process_sticker_message
     else
       case params[:type]
@@ -181,10 +203,15 @@ class ZaloPersonal::BaseService
 
   def process_file_message
     @message = @conversation.messages.build(message_params)
-    type = case params[:type]
-           when 3 then 'audio'
-           when 4 then 'video'
-           else 'file'
+    type = case params[:msgType]
+           when 'chat.voice', 'chat.audio' then 'audio'
+           when 'chat.video' then 'video'
+           else
+             case params[:type]
+             when 3 then 'audio'
+             when 4 then 'video'
+             else 'file'
+             end
            end
 
     @media = {
@@ -257,6 +284,7 @@ class ZaloPersonal::BaseService
 
     attributes = @contact.additional_attributes || {}
     attributes[:description] = @user_info['status']
+    attributes['avatar_url'] = @user_info['avatar'] if @user_info['avatar'].present?
 
     unless @user_info['isFr'].nil?
       inbox_ids = Array(attributes['zalo_friend_inbox_ids'] || attributes[:zalo_friend_inbox_ids] || [])
@@ -293,7 +321,10 @@ class ZaloPersonal::BaseService
   def update_group_info
     return if @group_info.blank?
 
-    @contact.update!(name: @group_info['name'])
+    attributes = @contact.additional_attributes || {}
+    attributes['avatar_url'] = @group_info['fullAvt'] if @group_info['fullAvt'].present?
+
+    @contact.update!(name: @group_info['name'], additional_attributes: attributes)
     ::Avatar::AvatarFromUrlJob.perform_later(@contact, @group_info['fullAvt']) if @group_info['fullAvt'].present?
   end
 
@@ -304,7 +335,7 @@ class ZaloPersonal::BaseService
       :body => { :userId => [user_id.to_s], :ownId => channel.oa_id }.to_json,
       :headers => ZaloPersonal::ApiHelper.request_headers
     )
-    return {} if response['error']
+    return {} if response['error'].present? && response['error'].to_s != '0'
 
     response.dig('data', 'changed_profiles', user_id.to_s) || {}
   rescue StandardError
@@ -318,7 +349,7 @@ class ZaloPersonal::BaseService
       :body => { :groupId => group_id, :ownId => channel.oa_id }.to_json,
       :headers => ZaloPersonal::ApiHelper.request_headers
     )
-    return {} if response['error']
+    return {} if response['error'].present? && response['error'].to_s != '0'
 
     response.dig('data', 'gridInfoMap', group_id)
   rescue StandardError
@@ -359,7 +390,16 @@ class ZaloPersonal::BaseService
                 contact_from_source_id
               end
 
-    ::Avatar::AvatarFromUrlJob.perform_later(contact, @user_info['avatar']) if @user_info['avatar'].present?
+    if @user_info['avatar'].present?
+      ::Avatar::AvatarFromUrlJob.perform_later(contact, @user_info['avatar'])
+      
+      attrs = contact.additional_attributes || {}
+      if attrs['avatar_url'] != @user_info['avatar']
+        attrs['avatar_url'] = @user_info['avatar']
+        contact.update(additional_attributes: attrs)
+      end
+    end
+    
     contact
   end
 
@@ -370,7 +410,10 @@ class ZaloPersonal::BaseService
     name = @user_info['zaloName'] || @user_info['displayName']
     account.contacts.find_or_create_by!(phone_number: phone_number) do |contact|
       contact.name = name
-      contact.additional_attributes = { source_id: params[:uidFrom] }
+      
+      attrs = { source_id: params[:uidFrom] }
+      attrs['avatar_url'] = @user_info['avatar'] if @user_info['avatar'].present?
+      contact.additional_attributes = attrs
     end
   end
 
@@ -380,7 +423,10 @@ class ZaloPersonal::BaseService
       "additional_attributes ->> 'source_id' = :source_id", source_id: params[:uidFrom]
     ).first_or_create do |contact|
       contact.name = name
-      contact.additional_attributes = { source_id: params[:uidFrom] }
+      
+      attrs = { source_id: params[:uidFrom] }
+      attrs['avatar_url'] = @user_info['avatar'] if @user_info['avatar'].present?
+      contact.additional_attributes = attrs
     end
   end
 

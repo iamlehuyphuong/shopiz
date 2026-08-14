@@ -8,7 +8,11 @@ class ZaloPersonal::OutgoingMessageService < ZaloPersonal::BaseService
   end
 
   def zalo_user?
-    !params[:isGroup]
+    if params.key?(:chat_type)
+      params[:chat_type].to_i == 0
+    else
+      !params[:isGroup]
+    end
   end
 
   def target_user
