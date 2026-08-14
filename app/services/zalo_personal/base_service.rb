@@ -318,6 +318,7 @@ class ZaloPersonal::BaseService
     additional_attributes = {
       type: @is_user ? 0 : 1,
       msgId: params[:msgId],
+      cliMsgId: params[:cliMsgId],
       user_id: params[:uidFrom],
       sender_id: sender&.id,
       conversation_contact_id: @conversation.contact.id,
@@ -375,6 +376,7 @@ class ZaloPersonal::BaseService
   def update_extra_info(message)
     attrs = message.additional_attributes || {}
     attrs[:msgId] = params[:msgId]
+    attrs[:cliMsgId] = params[:cliMsgId] if params[:cliMsgId].present?
     attrs[:msgType] = params[:type]
     attrs[:user_id] = params[:uidFrom]
     attrs[:type] = params[:type]
@@ -383,7 +385,9 @@ class ZaloPersonal::BaseService
   end
 
   def find_exist_message
-    inbox.messages.find_by("source_id = :source_id OR additional_attributes ->> 'attachment_msg_id' = :source_id",
-                           source_id: params[:msgId].to_s)
+    inbox.messages.find_by(
+      "source_id = :source_id OR additional_attributes ->> 'msgId' = :source_id OR additional_attributes ->> 'cliMsgId' = :source_id OR additional_attributes ->> 'attachment_msg_id' = :source_id",
+      source_id: params[:msgId].to_s
+    )
   end
 end

@@ -46,9 +46,8 @@ class ZaloPersonal::DeliveryStatusService
     return if ids_to_check.empty?
 
     @message = inbox.messages.find_by(
-      "source_id IN (?) OR additional_attributes ->> 'msgId' IN (?)",
-      ids_to_check,
-      ids_to_check
+      "source_id IN (:ids) OR additional_attributes ->> 'msgId' IN (:ids) OR additional_attributes ->> 'cliMsgId' IN (:ids)",
+      ids: ids_to_check
     )
     return unless @message
 

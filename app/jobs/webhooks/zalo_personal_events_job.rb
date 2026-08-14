@@ -90,9 +90,8 @@ class Webhooks::ZaloPersonalEventsJob < ApplicationJob
     return nil if ids_to_check.empty?
 
     channel.inbox.messages.find_by(
-      "source_id IN (?) OR additional_attributes ->> 'msgId' IN (?)",
-      ids_to_check,
-      ids_to_check
+      "source_id IN (:ids) OR additional_attributes ->> 'msgId' IN (:ids) OR additional_attributes ->> 'cliMsgId' IN (:ids)",
+      ids: ids_to_check
     )
   end
 end
