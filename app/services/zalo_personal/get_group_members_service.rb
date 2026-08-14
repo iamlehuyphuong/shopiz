@@ -48,7 +48,7 @@ class ZaloPersonal::GetGroupMembersService
     # 1. Get Group Info to fetch uids and roles
     group_info_response = HTTParty.post(
       "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/getGroupInfo",
-      body: { groupId: group_id, ownId: @channel.oa_access_token }.to_json,
+      body: { groupId: group_id, ownId: @channel.oa_id }.to_json,
       headers: ZaloPersonal::ApiHelper.request_headers
     )
 

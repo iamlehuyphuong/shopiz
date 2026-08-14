@@ -161,7 +161,7 @@ class ZaloPersonal::BaseService
 
   def process_text_message
     content = params[:content]
-    content = ICON_MAPPING[content] || content
+    params[:content] = ICON_MAPPING[content] || content
     @message = @conversation.messages.build(message_params)
   end
 
@@ -242,7 +242,7 @@ class ZaloPersonal::BaseService
 
     attributes = @contact.additional_attributes || {}
     attributes[:description] = @user_info['status']
-    
+
     unless @user_info['isFr'].nil?
       inbox_ids = Array(attributes['zalo_friend_inbox_ids'] || attributes[:zalo_friend_inbox_ids] || [])
       if @user_info['isFr']
@@ -286,12 +286,12 @@ class ZaloPersonal::BaseService
     user_id = target_user
     response = HTTParty.post(
       "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/getUserInfo",
-      :body => { :userId => user_id, :ownId => channel.oa_access_token }.to_json,
+      :body => { :userId => [user_id.to_s], :ownId => channel.oa_id }.to_json,
       :headers => ZaloPersonal::ApiHelper.request_headers
     )
     return {} if response['error']
 
-    response.dig('data', 'changed_profiles', user_id)
+    response.dig('data', 'changed_profiles', user_id.to_s) || {}
   rescue StandardError
     {}
   end
@@ -300,7 +300,7 @@ class ZaloPersonal::BaseService
     group_id = params[:idTo]
     response = HTTParty.post(
       "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/getGroupInfo",
-      :body => { :groupId => group_id, :ownId => channel.oa_access_token }.to_json,
+      :body => { :groupId => group_id, :ownId => channel.oa_id }.to_json,
       :headers => ZaloPersonal::ApiHelper.request_headers
     )
     return {} if response['error']
