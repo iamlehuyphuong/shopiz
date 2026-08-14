@@ -188,6 +188,7 @@ class BillingPresenter
       description: plan.description(@account.locale),
       visible: plan.visible,
       is_free: plan.is_free,
+      is_default_for_new_account: plan.is_default_for_new_account,
       benefits: generate_benefits(plan)
     }
   end

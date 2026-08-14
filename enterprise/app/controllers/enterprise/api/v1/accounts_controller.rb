@@ -21,14 +21,15 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
 
     trial_package = presenter.send(:plans_data)
                      .flat_map { |tier| tier[:packages] }
-                     .find { |p| (p[:name_en] || '').downcase.include?('basic') && (p[:duration_days] == 30 || p[:duration_days] == 31) }
-    
-    trial_package ||= presenter.send(:plans_data)
-                        .flat_map { |tier| tier[:packages] }
-                        .find { |p| (p[:name_en] || '').downcase.include?('basic') }
+                     .find { |p| p[:is_default_for_new_account] }
 
-    if trial_package
-      plan = SubscriptionPlan.find(trial_package[:id])
+    plan = if trial_package
+             SubscriptionPlan.find(trial_package[:id])
+           else
+             SubscriptionPlan.find_by(is_default_for_new_account: true)
+           end
+
+    if plan
       Subscriptions::SubscribeService.new(@account, plan).execute
       render json: { message: 'Trial activated' }, status: :ok
     else

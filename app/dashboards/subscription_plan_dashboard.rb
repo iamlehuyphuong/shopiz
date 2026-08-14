@@ -7,7 +7,7 @@ class SubscriptionPlanDashboard < Administrate::BaseDashboard
     account_subscriptions: Field::HasMany,
     accounts: Field::HasMany,
     currency: Field::String,
-    duration_days: Field::Select.with_options(collection: { '7 Ngày' => 7, '30 Ngày (1 tháng)' => 30, '6 Tháng' => 180, '1 Năm' => 365, '2 Năm' => 730 }),
+    duration_days: Field::Select.with_options(collection: { '7 Ngày' => 7, '14 Ngày' => 14, '30 Ngày (1 tháng)' => 30, '6 Tháng' => 180, '1 Năm' => 365, '2 Năm' => 730 }),
     price_amount: Field::String.with_options(searchable: false),
     sku: Field::String,
     visible: Field::Boolean,

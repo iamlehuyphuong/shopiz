@@ -24,14 +24,11 @@ const trialPlan = computed(() => {
   const billing = currentAccount.value?.billing;
   if (!billing) return null;
 
-  // Find Basic plan in plans list
   const plans = billing.plans || [];
-  const basicTier = plans.find(t =>
-    (t.tier_name_en || '').toLowerCase().includes('basic')
-  );
-  if (basicTier && basicTier.packages && basicTier.packages.length > 0) {
-    return basicTier.packages[0]; // Use the first Basic package (e.g., 1 month or 6 months) to show limits
-  }
+  const allPackages = plans.flatMap(tier => tier.packages || []);
+  const defaultPackage = allPackages.find(p => p.is_default_for_new_account);
+  
+  if (defaultPackage) return defaultPackage;
 
   // Fallback
   return billing.trial_plan;
@@ -126,13 +123,13 @@ const skipTrial = () => emit('close');
               <h2 class="text-[22px] font-bold text-n-slate-12 leading-tight">
                 {{ t('WELCOME_TRIAL_MODAL.TITLE') }}
               </h2>
-              <p class="text-sm text-n-slate-11 leading-relaxed">
+              <p v-if="trialPlan" class="text-sm text-n-slate-11 leading-relaxed">
                 {{ t('WELCOME_TRIAL_MODAL.DESCRIPTION_PART_1') }}
                 <span class="font-semibold text-n-orange">
-                  {{ t('WELCOME_TRIAL_MODAL.DESCRIPTION_PART_TRIAL') }}
+                  {{ trialPlan.duration_days }} {{ t('WELCOME_TRIAL_MODAL.DAYS_FREE_TRIAL') }}
                 </span>
                 {{ t('WELCOME_TRIAL_MODAL.DESCRIPTION_PART_2') }}
-                <span class="font-semibold text-n-slate-12">Basic</span>
+                <span class="font-semibold text-n-slate-12">{{ trialPlan.name }}</span>
                 {{ t('WELCOME_TRIAL_MODAL.DESCRIPTION_PART_3') }}
               </p>
             </div>
