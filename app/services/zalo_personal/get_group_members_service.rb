@@ -85,6 +85,40 @@ class ZaloPersonal::GetGroupMembersService
       end
     end
 
+    # 2.5 Update friend contacts
+    local_contacts = @account.contacts.where("additional_attributes ->> 'source_id' IN (?)", uids).index_by { |c| c.additional_attributes['source_id'] }
+
+    profiles.each do |uid, profile|
+      is_fr = [1, true, '1'].include?(profile['isFr'])
+      contact = local_contacts[uid]
+
+      if is_fr && contact.nil?
+        contact = @account.contacts.create!(
+          name: profile['zaloName'].presence || profile['displayName'].presence || 'Zalo User',
+          additional_attributes: {
+            source_id: uid,
+            avatar_url: profile['avatar']
+          }
+        )
+        local_contacts[uid] = contact
+      end
+
+      if contact
+        attrs = contact.additional_attributes || {}
+        inbox_ids = Array(attrs['zalo_friend_inbox_ids'] || attrs[:zalo_friend_inbox_ids] || [])
+        if is_fr
+          inbox_ids |= [@inbox.id]
+        else
+          inbox_ids -= [@inbox.id]
+        end
+        attrs[:zalo_friend_inbox_ids] = inbox_ids.uniq.compact
+        attrs['avatar_url'] = profile['avatar'] if profile['avatar'].present?
+        attrs[:description] = profile['status'] if profile['status'].present?
+
+        contact.update(additional_attributes: attrs)
+      end
+    end
+
     # 3. Upsert into database
     upsert_data = uids.map do |uid|
       profile = profiles[uid] || {}
@@ -100,7 +134,7 @@ class ZaloPersonal::GetGroupMembersService
         account_id: @account.id,
         conversation_id: @conversation.id,
         uid: uid,
-        name: profile['zaloName'].presence,
+        name: profile['zaloName'].presence || profile['displayName'].presence,
         avatar: profile['avatar'],
         cover: profile['cover'],
         bio: profile['status'],

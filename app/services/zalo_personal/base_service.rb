@@ -57,7 +57,7 @@ class ZaloPersonal::BaseService
   def user_contact_attributes
     return {} if @user_info.blank?
 
-    name = @user_info['zaloName'] || @user_info['displayName']
+    name = @user_info['zaloName'].presence || @user_info['displayName'].presence
     attributes = { name: name }
     if @user_info['phoneNumber'].present?
       phone = @user_info['phoneNumber']
@@ -288,7 +288,7 @@ class ZaloPersonal::BaseService
 
     unless @user_info['isFr'].nil?
       inbox_ids = Array(attributes['zalo_friend_inbox_ids'] || attributes[:zalo_friend_inbox_ids] || [])
-      if @user_info['isFr']
+      if [1, true, '1'].include?(@user_info['isFr'])
         inbox_ids |= [@inbox.id]
       else
         inbox_ids -= [@inbox.id]
@@ -296,7 +296,7 @@ class ZaloPersonal::BaseService
       attributes[:zalo_friend_inbox_ids] = inbox_ids.uniq.compact
     end
 
-    name = @user_info['zaloName'] || @user_info['displayName']
+    name = @user_info['zaloName'].presence || @user_info['displayName'].presence
     update_params = {
       name: name,
       gender_id: @user_info['gender'],
@@ -323,6 +323,7 @@ class ZaloPersonal::BaseService
 
     attributes = @contact.additional_attributes || {}
     attributes['avatar_url'] = @group_info['fullAvt'] if @group_info['fullAvt'].present?
+    attributes[:description] = @group_info['desc'] if @group_info['desc'].present?
 
     @contact.update!(name: @group_info['name'], additional_attributes: attributes)
     ::Avatar::AvatarFromUrlJob.perform_later(@contact, @group_info['fullAvt']) if @group_info['fullAvt'].present?
@@ -407,7 +408,7 @@ class ZaloPersonal::BaseService
     phone_number = @user_info['phoneNumber']
     phone_number = "+#{phone_number}" unless phone_number.start_with?('+')
 
-    name = @user_info['zaloName'] || @user_info['displayName']
+    name = @user_info['zaloName'].presence || @user_info['displayName'].presence
     account.contacts.find_or_create_by!(phone_number: phone_number) do |contact|
       contact.name = name
       
@@ -418,7 +419,7 @@ class ZaloPersonal::BaseService
   end
 
   def contact_from_source_id
-    name = @user_info['zaloName'] || @user_info['displayName']
+    name = @user_info['zaloName'].presence || @user_info['displayName'].presence
     account.contacts.where(
       "additional_attributes ->> 'source_id' = :source_id", source_id: params[:uidFrom]
     ).first_or_create do |contact|
