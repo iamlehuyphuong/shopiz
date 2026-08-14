@@ -81,9 +81,18 @@ class Webhooks::ZaloPersonalEventsJob < ApplicationJob
   end
 
   def find_message(channel, params)
-    msg_id = params[:msgId].to_s
-    return nil if msg_id.blank?
+    content_hash = params[:content].is_a?(Hash) ? params[:content].with_indifferent_access : {}
+    msg_id = content_hash[:globalMsgId].to_s
+    msg_id = params[:msgId].to_s if msg_id.blank? || msg_id == '0'
+    cli_msg_id = content_hash[:cliMsgId].to_s
 
-    channel.inbox.messages.find_by("source_id = ? OR additional_attributes ->> 'msgId' = ?", msg_id, msg_id)
+    ids_to_check = [msg_id, cli_msg_id].reject(&:blank?)
+    return nil if ids_to_check.empty?
+
+    channel.inbox.messages.find_by(
+      "source_id IN (?) OR additional_attributes ->> 'msgId' IN (?)",
+      ids_to_check,
+      ids_to_check
+    )
   end
 end

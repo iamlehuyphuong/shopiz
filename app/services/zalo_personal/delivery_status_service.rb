@@ -11,25 +11,51 @@ class ZaloPersonal::DeliveryStatusService
 
   private
 
+  REACTION_MAPPING = {
+    '/-heart' => '❤️',
+    '/-strong' => '👍',
+    ':>' => '😂',
+    ':o' => '😲',
+    ':-((' => '😭',
+    ':-h' => '😡',
+    ':-*' => '😘',
+    ":')" => '😂',
+    '/-shit' => '💩',
+    '/-rose' => '🌹',
+    '/-break' => '💔',
+    '/-weak' => '👎',
+    ';xx' => '😍',
+    ';-/' => '😕',
+    ';-)' => '😉',
+    '/-ok' => '👌',
+    '/-v' => '✌️',
+    '/-thanks' => '🙏',
+    '/-punch' => '👊',
+    ':-bye' => '👋',
+    ':))' => '😆'
+  }.freeze
+
   def reaction_message
-    @message = inbox.messages.find_by("additional_attributes ->> 'msgId' = ?", params[:msgId].to_s)
+    content_hash = params[:content].is_a?(Hash) ? params[:content].with_indifferent_access : {}
+    message_id = content_hash.dig(:rMsg, 0, :gMsgID) || params[:msgId]
+    @message = inbox.messages.find_by("additional_attributes ->> 'msgId' = ?", message_id.to_s)
     return unless @message
 
-    # Map reactionType to emoji if possible (1: Like, 2: Haha, 3: Tim)
-    icon = case params[:reactionType].to_i
-           when 1 then '👍'
-           when 2 then '😂'
-           when 3 then '❤️'
-           else
-             params[:reactionType].to_s
-           end
+    # Zalo Reaction String (e.g. "/-heart", or "" if removed)
+    raw_icon = content_hash.key?(:rIcon) ? content_hash[:rIcon].to_s : params[:reactionType].to_s
+    icon = REACTION_MAPPING[raw_icon] || raw_icon
 
     content_attributes = @message.content_attributes || {}
-    if content_attributes['reactions'].is_a?(Array)
-      content_attributes['reactions'] += [icon]
+    reactions = Array(content_attributes['reactions'])
+    
+    if raw_icon.blank? || raw_icon == 'NONE'
+      # Zalo sends empty string when reaction is removed
+      reactions.clear
     else
-      content_attributes['reactions'] = [icon]
+      reactions << icon
     end
+
+    content_attributes['reactions'] = reactions.reject(&:blank?).uniq
     @message.update!(content_attributes: content_attributes)
   end
 
