@@ -39,24 +39,38 @@ class Webhooks::ZaloPersonalEventsJob < ApplicationJob
   end
 
   def process_event_params(channel, params) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
-    case params[:_eventType]
+    event_params = normalize_payload(params)
+
+    case event_params[:_eventType]
     when 'undo'
-      handle_undo_message(channel, params)
+      handle_undo_message(channel, event_params)
     when 'reaction'
-      ZaloPersonal::DeliveryStatusService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
+      ZaloPersonal::DeliveryStatusService.new(inbox: channel.inbox, params: event_params).perform
     when 'group_event'
-      ZaloPersonal::GroupEventService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
+      ZaloPersonal::GroupEventService.new(inbox: channel.inbox, params: event_params).perform
     when 'message'
-      if outgoing_event?(params)
-        ZaloPersonal::OutgoingMessageService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
+      if outgoing_event?(event_params)
+        ZaloPersonal::OutgoingMessageService.new(inbox: channel.inbox, params: event_params).perform
       else
-        ZaloPersonal::IncomingMessageService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
+        ZaloPersonal::IncomingMessageService.new(inbox: channel.inbox, params: event_params).perform
       end
     end
   end
 
+  def normalize_payload(params)
+    return params unless params[:data].is_a?(Hash)
+
+    normalized = params.merge(params[:data])
+    
+    if normalized.dig(:propertyExt, :type).present?
+      normalized[:type] = normalized.dig(:propertyExt, :type).to_i
+    end
+
+    normalized.with_indifferent_access
+  end
+
   def outgoing_event?(params)
-    params[:uidFrom].to_s == params[:_accountId].to_s
+    params[:uidFrom].to_s == params[:_accountId].to_s || params[:isSelf] == true
   end
 
   def handle_undo_message(channel, params)
