@@ -37,8 +37,19 @@ class ZaloPersonal::DeliveryStatusService
 
   def reaction_message
     content_hash = params[:content].is_a?(Hash) ? params[:content].with_indifferent_access : {}
-    message_id = content_hash.dig(:rMsg, 0, :gMsgID) || params[:msgId]
-    @message = inbox.messages.find_by("additional_attributes ->> 'msgId' = ?", message_id.to_s)
+    
+    g_msg_id = content_hash.dig(:rMsg, 0, :gMsgID).to_s
+    c_msg_id = content_hash.dig(:rMsg, 0, :cMsgID).to_s
+    msg_id = g_msg_id.presence || params[:msgId].to_s
+
+    ids_to_check = [msg_id, c_msg_id].reject(&:blank?)
+    return if ids_to_check.empty?
+
+    @message = inbox.messages.find_by(
+      "source_id IN (?) OR additional_attributes ->> 'msgId' IN (?)",
+      ids_to_check,
+      ids_to_check
+    )
     return unless @message
 
     # Zalo Reaction String (e.g. "/-heart", or "" if removed)
