@@ -1865,10 +1865,7 @@ export default {
       "
     >
       <div class="flex flex-col h-auto overflow-auto">
-        <woot-modal-header
-          :header-title="$t('INBOX_MGMT.ADD.ZALO_OA.RELOGIN')"
-          :header-content="$t('INBOX_MGMT.ADD.ZALO_OA.RELOGIN')"
-        />
+
         <div class="px-8 pb-8 pt-2">
           <ZaloReauthorize
             :inbox="inbox"

@@ -38,15 +38,30 @@ class Webhooks::ZaloPersonalEventsJob < ApplicationJob
     signature == "mac=#{hash}"
   end
 
-  def process_event_params(channel, params)
-    if undo_message?(params)
+  def process_event_params(channel, params) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
+    case params[:_eventType]
+    when 'undo'
       handle_undo_message(channel, params)
-    elsif delivery_event?(params)
+    when 'reaction'
       ZaloPersonal::DeliveryStatusService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
-    elsif outgoing_event?(params)
-      ZaloPersonal::OutgoingMessageService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
+    when 'group_event'
+      ZaloPersonal::GroupEventService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
+    when 'message'
+      if outgoing_event?(params)
+        ZaloPersonal::OutgoingMessageService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
+      else
+        ZaloPersonal::IncomingMessageService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
+      end
     else
-      ZaloPersonal::IncomingMessageService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
+      if undo_message?(params)
+        handle_undo_message(channel, params)
+      elsif delivery_event?(params)
+        ZaloPersonal::DeliveryStatusService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
+      elsif outgoing_event?(params)
+        ZaloPersonal::OutgoingMessageService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
+      else
+        ZaloPersonal::IncomingMessageService.new(inbox: channel.inbox, params: params.with_indifferent_access).perform
+      end
     end
   end
 
