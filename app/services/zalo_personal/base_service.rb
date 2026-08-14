@@ -182,9 +182,26 @@ class ZaloPersonal::BaseService
   end
 
   def process_text_message
-    content = params[:content].to_s
+    content = if params[:content].is_a?(Hash) || params[:content].is_a?(ActionController::Parameters)
+                extract_text_from_hash(params[:content])
+              else
+                params[:content].to_s
+              end
+
     params[:content] = content.gsub(ICON_REGEX, ICON_MAPPING) if content.present?
     @message = @conversation.messages.build(message_params)
+  end
+
+  def extract_text_from_hash(content_hash)
+    title = content_hash['title'] || content_hash[:title]
+    desc = content_hash['description'] || content_hash[:description]
+    href = content_hash['href'] || content_hash[:href]
+
+    if title.present? || desc.present? || href.present?
+      [title, desc, href].compact_blank.join("\n")
+    else
+      content_hash.to_json
+    end
   end
 
   def process_media_message
@@ -338,7 +355,9 @@ class ZaloPersonal::BaseService
     )
     return {} if response['error'].present? && response['error'].to_s != '0'
 
-    response.dig('data', 'changed_profiles', user_id.to_s) || {}
+    data = response['data'] || {}
+    profiles = (data['changed_profiles'] || {}).merge(data['unchanged_profiles'] || {})
+    profiles[user_id.to_s] || {}
   rescue StandardError
     {}
   end
@@ -393,14 +412,14 @@ class ZaloPersonal::BaseService
 
     if @user_info['avatar'].present?
       ::Avatar::AvatarFromUrlJob.perform_later(contact, @user_info['avatar'])
-      
+
       attrs = contact.additional_attributes || {}
       if attrs['avatar_url'] != @user_info['avatar']
         attrs['avatar_url'] = @user_info['avatar']
         contact.update(additional_attributes: attrs)
       end
     end
-    
+
     contact
   end
 
@@ -411,7 +430,7 @@ class ZaloPersonal::BaseService
     name = @user_info['zaloName'].presence || @user_info['displayName'].presence
     account.contacts.find_or_create_by!(phone_number: phone_number) do |contact|
       contact.name = name
-      
+
       attrs = { source_id: params[:uidFrom] }
       attrs['avatar_url'] = @user_info['avatar'] if @user_info['avatar'].present?
       contact.additional_attributes = attrs
@@ -424,7 +443,7 @@ class ZaloPersonal::BaseService
       "additional_attributes ->> 'source_id' = :source_id", source_id: params[:uidFrom]
     ).first_or_create do |contact|
       contact.name = name
-      
+
       attrs = { source_id: params[:uidFrom] }
       attrs['avatar_url'] = @user_info['avatar'] if @user_info['avatar'].present?
       contact.additional_attributes = attrs

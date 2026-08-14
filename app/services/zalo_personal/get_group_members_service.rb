@@ -79,14 +79,17 @@ class ZaloPersonal::GetGroupMembersService
         headers: ZaloPersonal::ApiHelper.request_headers
       )
 
-      if members_info_response['success']
-        batch_profiles = members_info_response.dig('data', 'changed_profiles') || {}
-        profiles.merge!(batch_profiles)
-      end
+      next unless members_info_response['success']
+
+      data = members_info_response['data'] || {}
+      batch_profiles = (data['changed_profiles'] || {}).merge(data['unchanged_profiles'] || {})
+      profiles.merge!(batch_profiles)
     end
 
     # 2.5 Update friend contacts
-    local_contacts = @account.contacts.where("additional_attributes ->> 'source_id' IN (?)", uids).index_by { |c| c.additional_attributes['source_id'] }
+    local_contacts = @account.contacts.where("additional_attributes ->> 'source_id' IN (?)", uids).index_by do |c|
+      c.additional_attributes['source_id']
+    end
 
     profiles.each do |uid, profile|
       is_fr = [1, true, '1'].include?(profile['isFr'])
@@ -103,20 +106,20 @@ class ZaloPersonal::GetGroupMembersService
         local_contacts[uid] = contact
       end
 
-      if contact
-        attrs = contact.additional_attributes || {}
-        inbox_ids = Array(attrs['zalo_friend_inbox_ids'] || attrs[:zalo_friend_inbox_ids] || [])
-        if is_fr
-          inbox_ids |= [@inbox.id]
-        else
-          inbox_ids -= [@inbox.id]
-        end
-        attrs[:zalo_friend_inbox_ids] = inbox_ids.uniq.compact
-        attrs['avatar_url'] = profile['avatar'] if profile['avatar'].present?
-        attrs[:description] = profile['status'] if profile['status'].present?
+      next unless contact
 
-        contact.update(additional_attributes: attrs)
+      attrs = contact.additional_attributes || {}
+      inbox_ids = Array(attrs['zalo_friend_inbox_ids'] || attrs[:zalo_friend_inbox_ids] || [])
+      if is_fr
+        inbox_ids |= [@inbox.id]
+      else
+        inbox_ids -= [@inbox.id]
       end
+      attrs[:zalo_friend_inbox_ids] = inbox_ids.uniq.compact
+      attrs['avatar_url'] = profile['avatar'] if profile['avatar'].present?
+      attrs[:description] = profile['status'] if profile['status'].present?
+
+      contact.update(additional_attributes: attrs)
     end
 
     # 3. Upsert into database
