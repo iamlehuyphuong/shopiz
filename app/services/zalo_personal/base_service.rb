@@ -160,8 +160,8 @@ class ZaloPersonal::BaseService
   end
 
   def process_text_message
-    content = params[:content]
-    params[:content] = ICON_MAPPING[content] || content
+    content = params[:content].to_s
+    params[:content] = content.gsub(ICON_REGEX, ICON_MAPPING) if content.present?
     @message = @conversation.messages.build(message_params)
   end
 
