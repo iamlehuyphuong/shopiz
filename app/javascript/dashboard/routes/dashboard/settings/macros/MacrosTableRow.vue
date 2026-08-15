@@ -49,7 +49,6 @@ const visibilityLabel = computed(() => {
             :name="createdByName"
             :size="24"
             branded
-            rounded-full
             class="flex-shrink-0"
           />
           <span class="text-body-main text-n-slate-12 truncate">
@@ -65,7 +64,6 @@ const visibilityLabel = computed(() => {
             :name="updatedByName"
             :size="24"
             branded
-            rounded-full
             class="flex-shrink-0"
           />
           <span class="text-body-main text-n-slate-12 truncate">

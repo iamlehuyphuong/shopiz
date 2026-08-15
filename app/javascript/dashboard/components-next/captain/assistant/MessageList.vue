@@ -77,7 +77,6 @@ watch(() => props.messages.length, scrollToBottom);
         <Avatar
           :name="getAvatarName(message.sender)"
           branded
-          rounded-full
           :size="24"
           class="shrink-0"
         />
@@ -145,7 +144,6 @@ watch(() => props.messages.length, scrollToBottom);
         <Avatar
           :name="getAvatarName('assistant')"
           branded
-          rounded-full
           :size="24"
         />
         <div

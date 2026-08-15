@@ -210,7 +210,6 @@ v-else
         :size="20"
         :status="assignee.status"
         branded
-        rounded-full
       />
       <div
         v-if="unreadMessagesCount > 0"

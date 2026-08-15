@@ -152,7 +152,6 @@ const onAgentSelect = index => {
               :src="item.thumbnail"
               :name="item.displayName"
               branded
-              rounded-full
             />
           </div>
           <div

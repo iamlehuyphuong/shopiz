@@ -157,7 +157,6 @@ const redirectToPortalHomePage = () => {
           :size="20"
           icon-name="i-lucide-building-2"
           branded
-          rounded-full
         />
       </Button>
     </div>

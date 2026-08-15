@@ -307,7 +307,6 @@ export default {
         :name="contact.name"
         allow-upload
         branded
-        rounded-full
         @upload="handleImageUpload"
         @delete="handleAvatarDelete"
       />

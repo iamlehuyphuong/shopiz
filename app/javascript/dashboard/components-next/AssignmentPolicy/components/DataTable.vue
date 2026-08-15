@@ -68,7 +68,6 @@ const handleNavigate = item => {
           :name="item.name"
           :size="20"
           branded
-          rounded-full
         />
         <span
           class="text-sm text-n-slate-12 truncate min-w-0 group-hover:text-n-orange-11 dark:group-hover:text-n-orange-10 transition-colors"

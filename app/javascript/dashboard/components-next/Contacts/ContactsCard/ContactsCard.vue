@@ -133,7 +133,6 @@ const handleAvatarHover = isHovered => {
             :status="availabilityStatus"
             hide-offline-status
             branded
-            rounded-full
           >
             <template v-if="selectable" #overlay="{ size }">
               <label

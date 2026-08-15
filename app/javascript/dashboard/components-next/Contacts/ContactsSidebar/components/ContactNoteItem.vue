@@ -63,7 +63,6 @@ onMounted(() => {
           "
           :size="16"
           branded
-          rounded-full
         />
         <div class="min-w-0 truncate">
           <span class="inline-flex items-center gap-1 text-sm text-n-slate-11">

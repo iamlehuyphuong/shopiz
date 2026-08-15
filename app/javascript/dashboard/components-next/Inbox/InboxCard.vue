@@ -164,7 +164,6 @@ onBeforeMount(contextMenuActions.close);
         :src="assigneeMeta.thumbnail"
         :size="20"
         branded
-        rounded-full
         class="mt-1"
       />
       <p v-dompurify-html="formattedMessage" class="mb-0 line-clamp-2" />

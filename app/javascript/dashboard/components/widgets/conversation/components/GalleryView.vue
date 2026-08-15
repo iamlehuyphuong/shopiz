@@ -194,7 +194,6 @@ onMounted(() => {
               :src="senderDetails.avatar"
               :size="40"
               branded
-              rounded-full
               class="flex-shrink-0"
             />
             <div class="flex flex-col ml-2 rtl:ml-0 rtl:mr-2 overflow-hidden">

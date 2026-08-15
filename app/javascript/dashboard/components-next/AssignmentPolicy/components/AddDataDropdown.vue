@@ -144,7 +144,6 @@ const handleClickOutside = () => {
             :name="item.name"
             :size="20"
             branded
-            rounded-full
           />
           <div class="flex flex-col items-start gap-2 min-w-0 flex-1">
             <div class="flex items-center gap-1 min-w-0 w-full">

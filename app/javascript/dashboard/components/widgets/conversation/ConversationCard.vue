@@ -346,7 +346,6 @@ const deleteConversation = () => {
         :class="!showInboxName ? 'mt-4' : 'mt-8'"
         hide-offline-status
         branded
-        rounded-full
       >
         <template #overlay="{ size }">
           <label

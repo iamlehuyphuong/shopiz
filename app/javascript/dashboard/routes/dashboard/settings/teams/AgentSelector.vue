@@ -114,7 +114,6 @@ const headers = computed(() => [
                 :size="24"
                 hide-offline-status
                 branded
-                rounded-full
                 class="flex-shrink-0"
               />
               <h4 class="text-heading-3 mb-0 text-n-slate-12 truncate">

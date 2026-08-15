@@ -166,7 +166,6 @@ const handleClick = id => {
             :src="authorThumbnailSrc"
             :size="16"
             branded
-            rounded-full
           />
           <span class="text-sm truncate text-n-slate-11">
             {{ authorName || '-' }}

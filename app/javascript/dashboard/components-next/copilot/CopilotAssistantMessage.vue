@@ -62,7 +62,6 @@ const useCopilotResponse = () => {
       <Avatar
         :name="$t('CAPTAIN.NAME')"
         :size="20"
-        rounded-full
         icon-name="i-lucide-sparkles"
         branded
       />

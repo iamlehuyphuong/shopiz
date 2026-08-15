@@ -102,7 +102,6 @@ watch(
           :src="getCallInfo(call).avatar"
           :name="getCallInfo(call).contactName"
           :size="40"
-          rounded-full
         />
       </div>
       <div class="flex-1 min-w-0">
@@ -142,7 +141,6 @@ watch(
           :src="getCallInfo(activeCall || incomingCalls[0]).avatar"
           :name="getCallInfo(activeCall || incomingCalls[0]).contactName"
           :size="40"
-          rounded-full
         />
       </div>
       <div class="flex-1 min-w-0">

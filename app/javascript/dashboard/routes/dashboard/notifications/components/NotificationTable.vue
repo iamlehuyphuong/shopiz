@@ -113,7 +113,6 @@ export default {
               :size="28"
               :name="notificationItem.primary_actor.meta.assignee.name"
               branded
-              rounded-full
             />
           </td>
           <td>

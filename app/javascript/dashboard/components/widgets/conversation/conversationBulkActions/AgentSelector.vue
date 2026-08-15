@@ -130,7 +130,6 @@ export default {
                 :size="22"
                 hide-offline-status
                 branded
-                rounded-full
               />
               <span class="my-0 text-n-slate-12">
                 {{ agent.name }}

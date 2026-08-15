@@ -253,7 +253,6 @@ defineExpose({
         :size="20"
         :status="assignee.status"
         branded
-        rounded-full
       />
     </div>
   </div>

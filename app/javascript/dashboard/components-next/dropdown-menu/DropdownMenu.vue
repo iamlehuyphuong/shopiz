@@ -191,7 +191,6 @@ onMounted(() => {
               :src="item.thumbnail.src"
               :size="thumbnailSize"
               branded
-              rounded-full
             />
           </slot>
           <Icon
@@ -235,7 +234,6 @@ onMounted(() => {
             :src="item.thumbnail.src"
             :size="thumbnailSize"
             branded
-            rounded-full
           />
         </slot>
         <Icon

@@ -228,7 +228,6 @@ const onCardClick = e => {
       :size="24"
       :status="currentContactStatus"
       branded
-      rounded-full
     />
     <div class="flex flex-col w-full gap-1 min-w-0">
       <div class="flex items-center justify-between h-6 gap-2">

@@ -97,7 +97,6 @@ const formattedLocation = computed(() => {
         :src="thumbnail"
         :size="24"
         branded
-        rounded-full
         class="mt-1 flex-shrink-0"
       />
       <div class="min-w-0 flex flex-col items-start gap-1.5 w-full">

@@ -160,7 +160,6 @@ const dropdownBodyClass = computed(() => {
           :status="currentUserAvailability"
           class="flex-shrink-0"
           branded
-          rounded-full
         />
         <div v-if="!isCollapsed" class="min-w-0 hidden md:block">
           <div class="text-sm font-medium leading-4 truncate text-n-slate-12">

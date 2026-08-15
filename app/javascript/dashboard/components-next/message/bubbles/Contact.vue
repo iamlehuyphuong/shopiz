@@ -144,11 +144,11 @@ async function sendMessage() {
           v-if="avatarUrl"
           :src="avatarUrl"
           alt="Avatar"
-          class="size-10 rounded-full object-cover shrink-0"
+          class="size-10 rounded-xl object-cover shrink-0"
         />
         <div
           v-else
-          class="size-10 rounded-full flex items-center justify-center bg-[#D6409F] shrink-0"
+          class="size-10 rounded-xl flex items-center justify-center bg-[#D6409F] shrink-0"
         >
           <div class="text-white size-5 i-teenyicons-user-circle-solid" />
         </div>

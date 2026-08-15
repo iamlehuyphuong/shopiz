@@ -23,7 +23,6 @@ const currentUserAvatar = computed(() => currentUser.value?.avatar_url);
         :name="currentUserName || $t('CAPTAIN.COPILOT.YOU')"
         :src="currentUserAvatar"
         :size="20"
-        rounded-full
         icon-name="i-lucide-user"
       />
       <span class="font-semibold">{{ $t('CAPTAIN.COPILOT.YOU') }}</span>

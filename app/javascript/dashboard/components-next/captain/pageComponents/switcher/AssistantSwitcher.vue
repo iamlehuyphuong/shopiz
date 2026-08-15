@@ -131,7 +131,6 @@ const openCreateAssistantDialog = () => {
             :size="20"
             icon-name="i-lucide-bot"
             branded
-            rounded-full
             class="flex-shrink-0"
           />
           <span class="text-sm font-medium truncate text-n-slate-12">
