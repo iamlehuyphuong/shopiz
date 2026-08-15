@@ -51,7 +51,7 @@ const allAttachments = computed(() => {
 });
 
 const mediaAttachments = computed(() => {
-  const allowedTypes = [ATTACHMENT_TYPES.IMAGE, ATTACHMENT_TYPES.VIDEO];
+  const allowedTypes = [ATTACHMENT_TYPES.IMAGE, ATTACHMENT_TYPES.VIDEO, ATTACHMENT_TYPES.STICKER];
   const mediaTypes = allAttachments.value.filter(attachment =>
     allowedTypes.includes(attachment.fileType || attachment.file_type)
   );
@@ -104,8 +104,9 @@ const mediaContainerClass = computed(() => {
     >
       <ImageChip
         v-if="
-          (attachment.fileType || attachment.file_type) ===
-          ATTACHMENT_TYPES.IMAGE
+          [ATTACHMENT_TYPES.IMAGE, ATTACHMENT_TYPES.STICKER].includes(
+            attachment.fileType || attachment.file_type
+          )
         "
         :attachment="attachment"
         :total-count="mediaAttachments.length"

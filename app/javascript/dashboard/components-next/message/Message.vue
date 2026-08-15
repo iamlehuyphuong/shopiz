@@ -28,6 +28,8 @@ import Avatar from 'next/avatar/Avatar.vue';
 import TextBubble from './bubbles/Text/Index.vue';
 import ActivityBubble from './bubbles/Activity.vue';
 import ImageBubble from './bubbles/Image.vue';
+import StickerBubble from './bubbles/StickerBubble.vue';
+
 import FileBubble from './bubbles/File.vue';
 import AudioBubble from './bubbles/Audio.vue';
 import VideoBubble from './bubbles/Video.vue';
@@ -136,7 +138,6 @@ const props = defineProps({
   senderType: { type: String, default: null },
   sourceId: { type: String, default: '' }, // eslint-disable-line vue/no-unused-properties
   canUndo: { type: Boolean, default: false },
-  additionalAttributes: { type: Object, default: () => ({}) },
 });
 
 const emit = defineEmits(['retry']);
@@ -282,10 +283,11 @@ const shouldGroupWithNext = computed(() => {
 
 const shouldShowAvatar = computed(() => {
   if (props.messageType === MESSAGE_TYPES.ACTIVITY) return false;
-  // if (orientation.value === ORIENTATION.LEFT) return false;
 
   return true;
 });
+
+const processedContent = computed(() => props.content || '');
 
 const componentToRender = computed(() => {
   if (props.isEmailInbox && !props.private) {
@@ -341,8 +343,9 @@ const componentToRender = computed(() => {
   if (Array.isArray(props.attachments) && props.attachments.length === 1) {
     const fileType = props.attachments[0].fileType;
 
-    if (!processedContent.value) {
+    if (!processedContent.value || props.contentType === CONTENT_TYPES.STICKER) {
       if (fileType === ATTACHMENT_TYPES.IMAGE) return ImageBubble;
+      if (fileType === ATTACHMENT_TYPES.STICKER) return StickerBubble;
       if (fileType === ATTACHMENT_TYPES.FILE) return FileBubble;
       if (fileType === ATTACHMENT_TYPES.AUDIO) return AudioBubble;
       if (fileType === ATTACHMENT_TYPES.VIDEO) return VideoBubble;
@@ -547,31 +550,6 @@ const setupHighlightTimer = () => {
 };
 
 onMounted(setupHighlightTimer);
-
-const processedContent = computed(() => {
-  const c = props.content;
-  if (!c) return '';
-  if (typeof c === 'string' && c.startsWith('{"') && c.includes('=>')) {
-    try {
-      const titleMatch = c.match(/"title"=>"([^"\\]*(?:\\.[^"\\]*)*)"/);
-      const descMatch = c.match(/"description"=>"([^"\\]*(?:\\.[^"\\]*)*)"/);
-      const title = titleMatch ? titleMatch[1] : '';
-      const desc = descMatch ? descMatch[1] : '';
-
-      let result = [];
-      if (title) result.push(title);
-      if (desc) result.push(desc);
-
-      if (result.length > 0) {
-        return JSON.parse('"' + result.join('\\n') + '"');
-      }
-      return '';
-    } catch (e) {
-      return '';
-    }
-  }
-  return c;
-});
 
 const providedRefs = toRefs(props);
 

@@ -643,3 +643,16 @@ vi:
             Bước 1: Hỏi biểu hiện lỗi, xin ảnh chụp màn hình.
             Bước 2: Dùng tool [faq_lookup](tool://faq_lookup) tra cứu cách fix lỗi (VD: Quên mật khẩu, đổi thiết bị).
             Bước 3: Hướng dẫn từng bước cho học viên tự thao tác.
+  zalo_personal:
+    group_events:
+      user_info: " (User ID: %{members})"
+      member_joined: "Sự kiện nhóm: Thành viên đã tham gia nhóm%{user_info}"
+      member_left: "Sự kiện nhóm: Thành viên đã rời nhóm%{user_info}"
+      member_removed: "Sự kiện nhóm: Thành viên bị xóa/chặn khỏi nhóm%{user_info}"
+      admin_added: "Sự kiện nhóm: Thêm quản trị viên mới%{user_info}"
+      admin_removed: "Sự kiện nhóm: Xóa quyền quản trị viên%{user_info}"
+      group_updated: "Sự kiện nhóm: Nhóm đã được cập nhật thông tin/cài đặt"
+      pin_updated: "Sự kiện nhóm: Cập nhật ghim tin nhắn"
+      board_updated: "Sự kiện nhóm: Cập nhật thông báo/bình chọn nhóm"
+      remind_updated: "Sự kiện nhóm: Cập nhật nhắc hẹn"
+      default: "Sự kiện nhóm: %{event}"

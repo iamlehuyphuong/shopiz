@@ -660,6 +660,18 @@ en:
         voice_outgoing: Outgoing voice call
         voice_incoming: Incoming voice call
       duration: "%{mins} minutes %{seconds} seconds"
+    group_events:
+      user_info: " (User ID: %{members})"
+      member_joined: "Group event: Member joined the group%{user_info}"
+      member_left: "Group event: Member left the group%{user_info}"
+      member_removed: "Group event: Member removed/blocked from the group%{user_info}"
+      admin_added: "Group event: New admin added%{user_info}"
+      admin_removed: "Group event: Admin rights removed%{user_info}"
+      group_updated: "Group event: Group info/settings updated"
+      pin_updated: "Group event: Pinned message updated"
+      board_updated: "Group event: Group notice/poll updated"
+      remind_updated: "Group event: Reminder updated"
+      default: "Group event: %{event}"
   daily_summary_mailer:
     report_email:
       subject: 'Automated AI Report: %{inbox_names}'

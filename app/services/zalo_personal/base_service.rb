@@ -5,7 +5,7 @@ class ZaloPersonal::BaseService
   pattr_initialize [:inbox!, :params!]
 
   def perform
-    if exist_message = find_exist_message
+    if (exist_message = find_exist_message)
       return update_extra_info(exist_message)
     end
 
@@ -18,8 +18,16 @@ class ZaloPersonal::BaseService
     set_conversation
     build_message
     @message.save!
+
+    enqueue_attachment_downloads
   rescue ArgumentError => e
     Rails.logger.error "Zalo Personal Unhandled MsgType: #{params.dig(:data, :msgType)} - Payload: #{params[:data].to_json} - Error: #{e.message}"
+  end
+
+  def enqueue_attachment_downloads
+    @message.attachments.each do |attachment|
+      Attachment::DownloadFromUrlJob.perform_later(attachment.id) if attachment.external_url.present? && !attachment.file.attached?
+    end
   end
 
   private
@@ -160,7 +168,13 @@ class ZaloPersonal::BaseService
     else
       case params[:type]
       when 1
-        process_text_message
+        # If content has msgType == 'chat.video', it's a video wrapped in type 1
+        inner_msg_type = (params.dig(:content, 'msgType') || params.dig(:content, :msgType)).to_s
+        if inner_msg_type == 'chat.video' || video_url?(params.dig(:content, :href) || params.dig(:content, 'href'))
+          process_file_message
+        else
+          process_text_message
+        end
       when 2
         process_media_message
       when 3, 4, 5 # Nếu có audio, video, file
@@ -183,34 +197,77 @@ class ZaloPersonal::BaseService
 
   def process_text_message
     content = if params[:content].is_a?(Hash) || params[:content].is_a?(ActionController::Parameters)
-                extract_text_from_hash(params[:content])
+                hash_content = params[:content]
+
+                # Check if it's a Zalo call bubble
+                if hash_content['action'] == 'recommened.calltime' || hash_content[:action] == 'recommened.calltime' || hash_content['title'] == 'sendBubbleMessage' || hash_content[:title] == 'sendBubbleMessage'
+                  return process_zalo_call_message(hash_content)
+                end
+
+                image_url = hash_content['thumb'] || hash_content[:thumb] || hash_content['image'] || hash_content[:image]
+                if image_url.present?
+                  params[:attachments] ||= []
+                  params[:attachments] << {
+                    type: 'image',
+                    payload: { url: image_url, name: 'thumb' }
+                  }
+                end
+                extract_text_from_hash(hash_content)
               else
                 params[:content].to_s
               end
 
     params[:content] = content.gsub(ICON_REGEX, ICON_MAPPING) if content.present?
     @message = @conversation.messages.build(message_params)
+    attach_media
   end
 
-  def extract_text_from_hash(content_hash)
+  def process_zalo_call_message(hash_content)
+    call_params_str = hash_content['params'] || hash_content[:params]
+    call_params = call_params_str.present? ? JSON.parse(call_params_str) : {}
+    duration = call_params['duration'].to_i
+
+    @message = @conversation.messages.build(message_params.merge(
+                                              content_type: 'voice_call',
+                                              content: hash_content['description'] || hash_content[:description] || 'Cuộc gọi',
+                                              content_attributes: {
+                                                data: {
+                                                  status: duration.positive? ? 'completed' : 'no-answer',
+                                                  callType: call_params['calltype'] == 1 ? 'video' : 'audio',
+                                                  duration: duration
+                                                }
+                                              }
+                                            ))
+    attach_media
+  end
+
+  def extract_text_from_hash(content_hash, is_media: false)
     title = content_hash['title'] || content_hash[:title]
     desc = content_hash['description'] || content_hash[:description]
-    href = content_hash['href'] || content_hash[:href]
+    href = is_media ? nil : (content_hash['href'] || content_hash[:href])
 
-    if title.present? || desc.present? || href.present?
-      [title, desc, href].compact_blank.join("\n")
-    else
-      content_hash.to_json
-    end
+    [title, desc, href].compact_blank.join("\n")
   end
 
   def process_media_message
+    url = params[:url] || params.dig(:file,
+                                     :url) || params.dig(:content,
+                                                         :href) || params.dig(:content,
+                                                                              'href') || params.dig(:content, :thumb) || params.dig(:content, 'thumb')
+
+    if params[:content].is_a?(Hash) || params[:content].is_a?(ActionController::Parameters)
+      params[:content] = extract_text_from_hash(params[:content], is_media: true)
+    end
+
+    params[:content] = nil if params[:content] == url
+
     @message = @conversation.messages.build(message_params)
+    media_type = video_url?(url) ? 'video' : 'image'
     @media = {
-      type: 'image',
+      type: media_type,
       payload: {
-        url: params[:url] || params.dig(:file, :url), # Thay thế tuỳ thuộc vào payload thực tế của Zalo hình ảnh V2
-        name: params[:msgId]
+        url: url,
+        name: params[:msgId] || media_type
       }
     }
     params[:attachments] ||= []
@@ -219,6 +276,20 @@ class ZaloPersonal::BaseService
   end
 
   def process_file_message
+    extracted_url = nil
+    if params[:content].is_a?(Hash) || params[:content].is_a?(ActionController::Parameters)
+      extracted_url = params.dig(:content, :href) || params.dig(:content, 'href')
+      params[:content] = extract_text_from_hash(params[:content], is_media: true)
+    end
+
+    url = extracted_url || params[:url] || params.dig(:file, :url)
+    url ||= params[:content] if params[:content].is_a?(String) && params[:content].match?(%r{^https?://})
+
+    # Clear text content if it's just the video URL
+    if params[:content] == url || (params[:content].to_s.strip.match?(%r{^https?://}) && url.to_s.include?(params[:content].to_s.strip))
+      params[:content] = nil
+    end
+
     @message = @conversation.messages.build(message_params)
     type = case params[:msgType]
            when 'chat.voice', 'chat.audio' then 'audio'
@@ -227,14 +298,15 @@ class ZaloPersonal::BaseService
              case params[:type]
              when 3 then 'audio'
              when 4 then 'video'
-             else 'file'
+             else
+               video_url?(url) ? 'video' : 'file'
              end
            end
 
     @media = {
       type: type,
       payload: {
-        url: params[:url] || params.dig(:file, :url),
+        url: url,
         name: params[:msgId] || 'file'
       }
     }
@@ -270,22 +342,26 @@ class ZaloPersonal::BaseService
     external_url = media&.dig(:payload, :url)
     return unless external_url
 
-    attachment_file = Down.download(external_url)
     @message.attachments.new(
       account_id: @message.account_id,
       file_type: file_content_type(media),
-      external_url: external_url,
-      file: {
-        io: attachment_file,
-        filename: media.dig(:payload, :name),
-        content_type: attachment_file.content_type
-      }
+      external_url: external_url
     )
+
+    # Enqueue the background job to download and attach the file later
+    # if the message is saved successfully.
+    # We need to perform this job after the message and attachment are saved,
+    # which happens when the message is eventually saved by the service.
+    # But wait, @message.attachments.new doesn't save the attachment yet.
+    # We will trigger the download job from a callback in the Attachment model or just handle it here?
+    # For simplicity, we can do it after the message is saved in `perform` method.
+
     @message.content_type = 'sticker' if media[:type] == 'sticker'
   end
 
   def file_content_type(media)
-    return :image if %w[image gif sticker].include?(media[:type])
+    return :sticker if media[:type] == 'sticker'
+    return :image if %w[image gif].include?(media[:type])
     return :audio if media[:type] == 'audio'
     return :video if media[:type] == 'video'
 
@@ -391,12 +467,16 @@ class ZaloPersonal::BaseService
       msgType: params[:type]
     }
 
+    content_attributes = {}
+    content_attributes[:external_echo] = true unless incoming_message?
+
     {
       content: params[:content],
       account_id: @inbox.account_id,
       inbox_id: @inbox.id,
       message_type: message_type,
       sender: sender,
+      content_attributes: content_attributes,
       additional_attributes: additional_attributes,
       source_id: params[:msgId],
       status: :delivered
@@ -470,5 +550,13 @@ class ZaloPersonal::BaseService
       "source_id = :source_id OR additional_attributes ->> 'msgId' = :source_id OR additional_attributes ->> 'cliMsgId' = :source_id OR additional_attributes ->> 'attachment_msg_id' = :source_id",
       source_id: params[:msgId].to_s
     )
+  end
+
+  def video_url?(url)
+    return true if params[:msgType] == 'chat.video' || params.dig(:content,
+                                                                  'msgType') == 'chat.video' || params.dig(:content, :msgType) == 'chat.video'
+    return false if url.blank?
+
+    url.match?(/\.(mp4|mov|avi|mkv|webm)$/i) || url.include?('video-stal') || url.include?('video')
   end
 end
