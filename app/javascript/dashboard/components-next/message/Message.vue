@@ -252,7 +252,7 @@ const flexOrientationClass = computed(() => {
 
 const gridClass = computed(() => {
   const map = {
-    [ORIENTATION.LEFT]: 'grid grid-cols-1fr',
+    [ORIENTATION.LEFT]: 'grid grid-cols-[24px_1fr]',
     [ORIENTATION.RIGHT]: 'grid grid-cols-[1fr_24px]',
   };
 

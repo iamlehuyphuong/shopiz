@@ -126,7 +126,6 @@ const showSenderInGroup = computed(() => {
   return (
     messageType.value !== 1 &&
     sender.value &&
-    !shouldGroupWithNext.value &&
     additionalAttributes.value.type === 1
   );
 });
