@@ -9,6 +9,24 @@ class Api::V1::Accounts::Channels::ZaloPersonalChannelsController < Api::V1::Acc
     proxy_used = params[:proxy_used]
     zalo_inbox = nil
 
+    if avatar_url.blank?
+      begin
+        response = HTTParty.post(
+          "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/getUserInfo",
+          body: { userId: [oa_id], ownId: oa_id }.to_json,
+          headers: ZaloPersonal::ApiHelper.request_headers
+        )
+        if response.success? && response['data'].present?
+          data = response['data']
+          profiles = (data['changed_profiles'] || {}).merge(data['unchanged_profiles'] || {})
+          user_profile = profiles[oa_id.to_s]
+          avatar_url = user_profile['avatar'] if user_profile && user_profile['avatar'].present?
+        end
+      rescue StandardError => e
+        Rails.logger.error("Failed to fetch Zalo Personal profile for avatar: #{e.message}")
+      end
+    end
+
     ActiveRecord::Base.transaction do
       channel = Current.account.zalo_personals.create!(
         oa_id: oa_id,
@@ -18,7 +36,7 @@ class Api::V1::Accounts::Channels::ZaloPersonalChannelsController < Api::V1::Acc
         provider_config: { proxy_used: proxy_used }.compact
       )
       zalo_inbox = Current.account.inboxes.create!(name: inbox_name, channel: channel)
-      Avatar::AvatarFromUrlJob.perform_later(zalo_inbox, avatar_url)
+      Avatar::AvatarFromUrlJob.perform_later(zalo_inbox, avatar_url) if avatar_url.present?
     end
 
     # Automatically sync friends after successful connection
