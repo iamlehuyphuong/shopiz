@@ -28,7 +28,7 @@ import Avatar from 'next/avatar/Avatar.vue';
 import TextBubble from './bubbles/Text/Index.vue';
 import ActivityBubble from './bubbles/Activity.vue';
 import ImageBubble from './bubbles/Image.vue';
-import StickerBubble from './bubbles/StickerBubble.vue';
+import StickerBubble from './bubbles/Sticker.vue';
 
 import FileBubble from './bubbles/File.vue';
 import AudioBubble from './bubbles/Audio.vue';
@@ -43,6 +43,7 @@ import LocationBubble from './bubbles/Location.vue';
 import CSATBubble from './bubbles/CSAT.vue';
 import FormBubble from './bubbles/Form.vue';
 import VoiceCallBubble from './bubbles/VoiceCall.vue';
+import BankCardBubble from './bubbles/BankCard.vue';
 
 import MessageError from './MessageError.vue';
 import ContextMenu from 'dashboard/modules/conversations/components/MessageContextMenu.vue';
@@ -340,10 +341,18 @@ const componentToRender = computed(() => {
     return VoiceCallBubble;
   }
 
+  if (props.contentAttributes?.customBubble === 'bank_card') {
+    return BankCardBubble;
+  }
+
+  if (props.contentType === CONTENT_TYPES.STICKER) {
+    return StickerBubble;
+  }
+
   if (Array.isArray(props.attachments) && props.attachments.length === 1) {
     const fileType = props.attachments[0].fileType;
 
-    if (!processedContent.value || props.contentType === CONTENT_TYPES.STICKER) {
+    if (!processedContent.value) {
       if (fileType === ATTACHMENT_TYPES.IMAGE) return ImageBubble;
       if (fileType === ATTACHMENT_TYPES.STICKER) return StickerBubble;
       if (fileType === ATTACHMENT_TYPES.FILE) return FileBubble;

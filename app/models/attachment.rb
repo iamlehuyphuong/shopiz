@@ -114,12 +114,12 @@ class Attachment < ApplicationRecord
       data_url: file_url,
       thumb_url: thumb_url,
       file_size: file.byte_size,
-      width: file&.metadata&.dig(:width) || meta.dig('width'),
-      height: file&.metadata&.dig(:height) || meta.dig('height')
+      width: file&.metadata&.dig(:width) || meta['width'],
+      height: file&.metadata&.dig(:height) || meta['height']
     }
 
     if (message.inbox.instagram? && message.incoming?) ||
-      (metadata[:data_url].blank? && message.inbox.zalo_personal? && external_url.present?)
+       (metadata[:data_url].blank? && message.inbox.zalo_personal? && external_url.present?)
       metadata[:data_url] = metadata[:thumb_url] = external_url
     end
 
@@ -147,7 +147,9 @@ class Attachment < ApplicationRecord
       id: id,
       message_id: message_id,
       file_type: file_type,
-      account_id: account_id
+      account_id: account_id,
+      fallback_title: fallback_title,
+      file_size: file.attached? ? file.byte_size : meta&.dig('size')
     }
   end
 

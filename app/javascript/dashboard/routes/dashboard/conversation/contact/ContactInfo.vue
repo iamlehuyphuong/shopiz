@@ -89,6 +89,7 @@ export default {
       selectedZaloInboxId: null,
       initialZaloFriendMessage: '',
       initialZaloGreetingMessage: '',
+      isDescriptionExpanded: false,
     };
   },
   computed: {
@@ -727,9 +728,21 @@ export default {
           </div>
         </div>
 
-        <p v-if="additionalAttributes.description" class="break-words mb-0.5">
-          {{ additionalAttributes.description }}
-        </p>
+        <div v-if="additionalAttributes.description" class="w-full">
+          <p
+            class="break-words mb-0.5"
+            :class="{ 'line-clamp-2': !isDescriptionExpanded }"
+          >
+            {{ additionalAttributes.description }}
+          </p>
+          <button
+            v-if="additionalAttributes.description.length > 100"
+            class="text-xs font-medium text-brand-500 hover:underline mt-0.5"
+            @click="isDescriptionExpanded = !isDescriptionExpanded"
+          >
+            {{ isDescriptionExpanded ? 'Thu gọn' : 'Xem thêm' }}
+          </button>
+        </div>
         <div class="flex flex-col items-start w-full gap-2">
           <template v-if="!isZaloGroupConversation">
             <ContactInfoRow
@@ -807,16 +820,6 @@ export default {
               icon="people"
               title="ID Nhóm"
               show-copy
-            />
-            <ContactInfoRow
-              v-if="
-                zaloGroupInfo &&
-                (zaloGroupInfo.desc || zaloGroupInfo.description)
-              "
-              :value="zaloGroupInfo.desc || zaloGroupInfo.description"
-              icon="document"
-              title="Mô tả"
-              multiline
             />
             <ContactInfoRow
               v-if="

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useAlert } from 'dashboard/composables';
 import { useLoadWithRetry } from 'dashboard/composables/loadWithRetry';
@@ -9,6 +9,7 @@ import Icon from 'next/icon/Icon.vue';
 import { useSnakeCase } from 'dashboard/composables/useTransformKeys';
 import { useMessageContext } from '../provider.js';
 import { downloadFile } from '@chatwoot/utils';
+import Spinner from 'shared/components/Spinner.vue';
 
 import GalleryView from 'dashboard/components/widgets/conversation/components/GalleryView.vue';
 
@@ -25,17 +26,34 @@ const { isLoaded, hasError, loadWithRetry } = useLoadWithRetry();
 const showGallery = ref(false);
 const isDownloading = ref(false);
 
-onMounted(() => {
-  if (attachment.value?.dataUrl) {
-    loadWithRetry(attachment.value.dataUrl);
+const attemptLoad = () => {
+  const url = attachment.value?.dataUrl || attachment.value?.data_url;
+  if (url) {
+    loadWithRetry(url);
+  } else {
+    hasError.value = true;
   }
+};
+
+onMounted(() => {
+  attemptLoad();
 });
 
+watch(
+  () => attachment.value?.dataUrl || attachment.value?.data_url,
+  (newUrl, oldUrl) => {
+    if (newUrl && newUrl !== oldUrl && (!isLoaded.value || hasError.value)) {
+      attemptLoad();
+    }
+  }
+);
+
 const downloadAttachment = async () => {
-  const { fileType, dataUrl, extension } = attachment.value;
+  const { fileType, extension } = attachment.value;
+  const url = attachment.value?.dataUrl || attachment.value?.data_url;
   try {
     isDownloading.value = true;
-    await downloadFile({ url: dataUrl, type: fileType, extension });
+    await downloadFile({ url: url, type: fileType, extension });
   } catch (error) {
     useAlert(t('GALLERY_VIEW.ERROR_DOWNLOADING'));
   } finally {
@@ -63,7 +81,7 @@ const handleImageError = () => {
     <div v-else-if="isLoaded" class="relative group rounded-lg overflow-hidden">
       <img
         class="skip-context-menu max-w-[350px] max-h-[350px] object-contain"
-        :src="attachment.dataUrl"
+        :src="attachment.dataUrl || attachment.data_url"
         :width="attachment.width"
         :height="attachment.height"
       />
@@ -83,6 +101,9 @@ const handleImageError = () => {
           @click.stop="downloadAttachment"
         />
       </div>
+    </div>
+    <div v-else class="flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 min-w-[200px] min-h-[200px]">
+      <Spinner />
     </div>
   </BaseBubble>
   <GalleryView

@@ -152,35 +152,38 @@ class ZaloPersonal::BaseService
   end
 
   def build_message
-    if params[:msgType].to_s.start_with?('chat.')
-      case params[:msgType]
-      when 'chat.sticker'
-        process_sticker_message
-      when 'chat.photo', 'chat.image', 'chat.gif'
-        process_media_message
-      when 'chat.voice', 'chat.audio', 'chat.video', 'chat.file'
-        process_file_message
-      else
-        process_text_message
-      end
-    elsif params[:_stickerDetail]
+    msg_type = params[:msgType].to_s
+    content_hash = params[:content].is_a?(Hash) || params[:content].is_a?(ActionController::Parameters) ? params[:content] : {}
+    content_type = content_hash[:type] || content_hash['type']
+    action = content_hash[:action] || content_hash['action']
+
+    if msg_type.include?('sticker') || params[:_stickerDetail] || content_type.to_i == 7
       process_sticker_message
+    elsif msg_type.include?('chat.location')
+      process_location_message
+    elsif msg_type == 'chat.recommended' && action == 'recommened.user'
+      process_contact_message
+    elsif msg_type == 'chat.webcontent' && action == 'zinstant.bankcard'
+      process_bankcard_message
+    elsif msg_type.match?(/photo|image|gif/)
+      process_media_message
+    elsif msg_type.match?(/voice|audio|video|file/)
+      process_file_message
+    elsif msg_type.match?(/webchat|chat\.text/)
+      process_text_message
     else
-      case params[:type]
-      when 1
-        # If content has msgType == 'chat.video', it's a video wrapped in type 1
-        inner_msg_type = (params.dig(:content, 'msgType') || params.dig(:content, :msgType)).to_s
-        if inner_msg_type == 'chat.video' || video_url?(params.dig(:content, :href) || params.dig(:content, 'href'))
+      content_url = params[:url] || params.dig(:file, :url) ||
+                    content_hash[:href] || content_hash['href'] ||
+                    content_hash[:thumb] || content_hash['thumb']
+
+      if content_url.present?
+        if content_url.match?(/\.(mp3|mp4|m4a|wav|pdf|doc|xls|zip|rar)$/i) || (respond_to?(:video_url?) && video_url?(content_url))
           process_file_message
         else
-          process_text_message
+          process_media_message
         end
-      when 2
-        process_media_message
-      when 3, 4, 5 # Nếu có audio, video, file
-        process_file_message
       else
-        process_text_message # fallback default
+        process_text_message
       end
     end
 
@@ -250,10 +253,18 @@ class ZaloPersonal::BaseService
   end
 
   def process_media_message
-    url = params[:url] || params.dig(:file,
-                                     :url) || params.dig(:content,
-                                                         :href) || params.dig(:content,
-                                                                              'href') || params.dig(:content, :thumb) || params.dig(:content, 'thumb')
+    if params[:content].is_a?(String)
+      begin
+        params[:content] = JSON.parse(params[:content]).with_indifferent_access
+      rescue JSON::ParserError
+        # ignore
+      end
+    end
+
+    content_hash = params[:content].is_a?(Hash) || params[:content].is_a?(ActionController::Parameters) ? params[:content] : {}
+    url = params[:url] || params.dig(:file, :url) ||
+          content_hash[:href] || content_hash['href'] ||
+          content_hash[:thumb] || content_hash['thumb']
 
     if params[:content].is_a?(Hash) || params[:content].is_a?(ActionController::Parameters)
       params[:content] = extract_text_from_hash(params[:content], is_media: true)
@@ -277,23 +288,46 @@ class ZaloPersonal::BaseService
 
   def process_file_message
     extracted_url = nil
+    title = nil
+    size = nil
+    file_ext = nil
     if params[:content].is_a?(Hash) || params[:content].is_a?(ActionController::Parameters)
       extracted_url = params.dig(:content, :href) || params.dig(:content, 'href')
+      title = params.dig(:content, :title) || params.dig(:content, 'title')
+      size = params.dig(:content, :size) || params.dig(:content, 'size')
+
+      content_params_str = params.dig(:content, :params) || params.dig(:content, 'params')
+      if content_params_str.present?
+        begin
+          content_params = JSON.parse(content_params_str)
+          size ||= content_params['fileSize']
+          file_ext = content_params['fileExt']
+        rescue JSON::ParserError
+          # ignore
+        end
+      end
+
       params[:content] = extract_text_from_hash(params[:content], is_media: true)
     end
 
     url = extracted_url || params[:url] || params.dig(:file, :url)
     url ||= params[:content] if params[:content].is_a?(String) && params[:content].match?(%r{^https?://})
 
-    # Clear text content if it's just the video URL
-    if params[:content] == url || (params[:content].to_s.strip.match?(%r{^https?://}) && url.to_s.include?(params[:content].to_s.strip))
+    # Clear text content if it's just the file URL or the file title
+    content_str = params[:content].to_s.strip
+    if content_str == title.to_s.strip || content_str == url || (content_str.match?(%r{^https?://}) && url.to_s.include?(content_str))
       params[:content] = nil
     end
 
     @message = @conversation.messages.build(message_params)
-    type = case params[:msgType]
-           when 'chat.voice', 'chat.audio' then 'audio'
-           when 'chat.video' then 'video'
+
+    msg_type = params[:msgType].to_s
+    type = if msg_type.match?(/voice|audio/) || audio_url?(url) || audio_url?(title) || (file_ext && audio_url?(".#{file_ext}"))
+             'audio'
+           elsif msg_type.include?('video') || video_url?(url) || video_url?(title) || (file_ext && video_url?(".#{file_ext}"))
+             'video'
+           elsif msg_type.include?('file')
+             'file'
            else
              case params[:type]
              when 3 then 'audio'
@@ -307,7 +341,9 @@ class ZaloPersonal::BaseService
       type: type,
       payload: {
         url: url,
-        name: params[:msgId] || 'file'
+        name: params[:msgId] || 'file',
+        fallback_title: title,
+        file_size: size
       }
     }
     params[:attachments] ||= []
@@ -316,18 +352,170 @@ class ZaloPersonal::BaseService
   end
 
   def process_sticker_message
+    url = params.dig(:_stickerDetail,
+                     :stickerUrl) || params.dig(:_stickerDetail,
+                                                :sticker_url) || params.dig(:_stickerDetail,
+                                                                            'stickerUrl') || params.dig(:_stickerDetail,
+                                                                                                        'sticker_url') || params.dig(:_stickerDetail,
+                                                                                                                                     :url)
+
+    if url.blank?
+      content_hash = params[:content].is_a?(Hash) || params[:content].is_a?(ActionController::Parameters) ? params[:content] : {}
+      sticker_id = content_hash[:id] || content_hash['id'] || params.dig(:_stickerDetail, :id) || params.dig(:_stickerDetail, 'id')
+      url = "https://zalo-api.zadn.vn/api/emoticon/sticker/webpc?eid=#{sticker_id}&size=130" if sticker_id.present?
+    end
+
+    if url.blank? && (params[:content].is_a?(Hash) || params[:content].is_a?(ActionController::Parameters))
+      url = params.dig(:content, :href) || params.dig(:content, 'href') || params.dig(:content, :url) || params.dig(:content, 'url')
+    end
+    url ||= params[:url]
+
     params[:content] = '[Sticker]'
     @message = @conversation.messages.build(message_params)
+
     @media = {
       type: 'sticker',
       payload: {
-        url: params.dig(:_stickerDetail, :stickerUrl),
-        name: params.dig(:_stickerDetail, :id)
+        url: url,
+        name: params.dig(:_stickerDetail, :id) || 'sticker'
       }
     }
     params[:attachments] ||= []
     params[:attachments] << @media
     attach_media
+  end
+
+  def process_location_message
+    content_hash = params[:content] || {}
+    description = content_hash['description'] || content_hash[:description]
+
+    begin
+      location_params = JSON.parse(content_hash['params'] || content_hash[:params] || '{}')
+      lat = location_params['latitude'] || location_params[:latitude]
+      long = location_params['longitude'] || location_params[:longitude]
+    rescue JSON::ParserError
+      lat = 0.0
+      long = 0.0
+    end
+
+    @message = @conversation.messages.build(message_params.merge(content: nil))
+    @message.attachments.new(
+      account_id: @message.account_id,
+      file_type: 'location',
+      fallback_title: description,
+      coordinates_lat: lat,
+      coordinates_long: long
+    )
+  end
+
+  def process_contact_message
+    content_hash = params[:content] || {}
+    title = content_hash['title'] || content_hash[:title]
+    thumb = content_hash['thumb'] || content_hash[:thumb]
+    description_str = content_hash['description'] || content_hash[:description]
+
+    phone = nil
+    qr_code_url = nil
+    guid = nil
+
+    if description_str.present?
+      begin
+        description_data = JSON.parse(description_str)
+        phone = description_data['phone']
+        qr_code_url = description_data['qrCodeUrl']
+        guid = description_data['gUid']
+      rescue JSON::ParserError
+        # ignore
+      end
+    end
+
+    @message = @conversation.messages.build(message_params.merge(content: nil))
+    @message.attachments.new(
+      account_id: @message.account_id,
+      file_type: 'contact',
+      fallback_title: phone || '',
+      meta: {
+        name: title,
+        avatar_url: thumb,
+        qr_code_url: qr_code_url,
+        guid: guid
+      }.compact
+    )
+  end
+
+  def process_bankcard_message
+    content_hash = params[:content] || {}
+    bank_info = '[Tài khoản ngân hàng]'
+    parsed_data = {}
+
+    begin
+      custom_params = JSON.parse(content_hash['params'] || content_hash[:params] || '{}')
+      custom_msg = custom_params['customMsg'] || custom_params[:customMsg] || {}
+      msg = custom_msg['msg'] || custom_msg[:msg] || {}
+      bank_info = msg['vi'] || msg[:vi] || bank_info
+
+      # Extract data_url
+      data_url = custom_params.dig('pcItem', 'data_url') || custom_params.dig(:pcItem, :data_url)
+
+      if data_url.present?
+        data_url += '?data=html' unless data_url.include?('?data=html')
+        response = Faraday.get(data_url) do |req|
+          req.options.timeout = 5
+          req.options.open_timeout = 5
+        end
+
+        if response.success?
+          html_content = response.body.force_encoding('UTF-8')
+          doc = Nokogiri::HTML(html_content)
+
+          # Find VietQR string
+          if match = html_content.match(/action=transfer(?:&amp;|&)content=([A-Z0-9]+)/)
+            parsed_data[:viet_qr] = match[1]
+          end
+
+          # Extract bank name and account number
+          bank_name_node = doc.at_css('.normal_text')
+          parsed_data[:bank_name] = bank_name_node.text.strip if bank_name_node
+
+          number_node = doc.at_css('.number_text')
+          parsed_data[:account_number] = number_node.text.strip if number_node
+
+          # The account holder name is usually the other text node, or we can leave it empty and let frontend just display VietQR if needed.
+          # We can also parse from VietQR, but VietQR might not contain the account name directly, it depends on the bank.
+          texts = doc.xpath('//text()').map { |t| t.text.strip }.reject(&:empty?)
+
+          # Exclude known generic texts to find the holder name
+          excluded_texts = ['Ngân hàng VPBank', parsed_data[:bank_name], parsed_data[:account_number],
+                            'Mở Zalo quét mã QR để chuyển khoản', 'Open Zalo scan QR to transfer money'].compact
+
+          # Find the first text that is uppercase and > 3 chars, likely the account holder
+          holder_name = texts.find do |t|
+            !excluded_texts.include?(t) &&
+              t == t.upcase &&
+              t.length > 3 &&
+              t.match?(/^[A-Z\s]+$/)
+          end
+
+          parsed_data[:account_holder] = holder_name if holder_name
+        end
+      end
+    rescue StandardError => e
+      Rails.logger.error("Error processing bankcard message: #{e.message}")
+    end
+
+    content_attributes = {
+      custom_bubble: 'bank_card',
+      data: {
+        title: bank_info
+      }.merge(parsed_data)
+    }
+
+    base_params = message_params
+    base_params[:content_attributes] = (base_params[:content_attributes] || {}).merge(content_attributes)
+
+    @message = @conversation.messages.build(
+      base_params.merge(content: bank_info)
+    )
   end
 
   def attach_media
@@ -340,12 +528,16 @@ class ZaloPersonal::BaseService
 
   def attach_file(media)
     external_url = media&.dig(:payload, :url)
-    return unless external_url
+
+    # Allow sticker attachments even without URL so frontend can render placeholder
+    return if external_url.blank? && media[:type] != 'sticker'
 
     @message.attachments.new(
       account_id: @message.account_id,
       file_type: file_content_type(media),
-      external_url: external_url
+      external_url: external_url || '',
+      fallback_title: media&.dig(:payload, :fallback_title),
+      meta: { size: media&.dig(:payload, :file_size) }.compact
     )
 
     # Enqueue the background job to download and attach the file later
@@ -464,7 +656,7 @@ class ZaloPersonal::BaseService
       user_id: params[:uidFrom],
       sender_id: sender&.id,
       conversation_contact_id: @conversation.contact.id,
-      msgType: params[:type]
+      msgType: params[:msgType]
     }
 
     content_attributes = {}
@@ -538,7 +730,7 @@ class ZaloPersonal::BaseService
     attrs = message.additional_attributes || {}
     attrs[:msgId] = params[:msgId]
     attrs[:cliMsgId] = params[:cliMsgId] if params[:cliMsgId].present?
-    attrs[:msgType] = params[:type]
+    attrs[:msgType] = params[:msgType]
     attrs[:user_id] = params[:uidFrom]
     attrs[:type] = params[:type]
 
@@ -553,10 +745,18 @@ class ZaloPersonal::BaseService
   end
 
   def video_url?(url)
-    return true if params[:msgType] == 'chat.video' || params.dig(:content,
-                                                                  'msgType') == 'chat.video' || params.dig(:content, :msgType) == 'chat.video'
+    return true if params[:msgType] == 'chat.video' || (params[:content].is_a?(Hash) && (params.dig(:content,
+                                                                                                    'msgType') == 'chat.video' || params.dig(
+                                                                                                      :content, :msgType
+                                                                                                    ) == 'chat.video'))
     return false if url.blank?
 
-    url.match?(/\.(mp4|mov|avi|mkv|webm)$/i) || url.include?('video-stal') || url.include?('video')
+    url.to_s.match?(/\.(mp4|mov|avi|mkv|webm)$/i) || url.to_s.include?('video-stal') || url.to_s.include?('video')
+  end
+
+  def audio_url?(url)
+    return false if url.blank?
+
+    url.to_s.match?(/\.(mp3|wav|ogg|m4a)(\?|$)/i)
   end
 end

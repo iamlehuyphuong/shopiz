@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { getFileInfo } from '@chatwoot/utils';
+import { formatBytes } from 'shared/helpers/FileHelper';
 
 import FileIcon from 'next/icon/FileIcon.vue';
 import Icon from 'next/icon/Icon.vue';
@@ -16,6 +17,10 @@ const { attachment } = defineProps({
 const { t } = useI18n();
 
 const fileDetails = computed(() => {
+  const fallback = attachment?.fallback_title || attachment?.fallbackTitle;
+  if (fallback) {
+    return getFileInfo(fallback);
+  }
   return getFileInfo(attachment?.dataUrl || attachment?.data_url || '');
 });
 
@@ -53,20 +58,30 @@ const textColorClass = computed(() => {
 
   return colorMap[fileDetails.value.type] || 'text-n-slate-12';
 });
+
+const fileSize = computed(() => {
+  const size = attachment?.file_size || attachment?.fileSize;
+  return size ? formatBytes(size, 1) : '';
+});
 </script>
 
 <template>
   <div
-    class="h-9 bg-n-alpha-white gap-2 overflow-hidden items-center flex px-2 rounded-lg border border-n-container"
+    class="min-h-[36px] py-1.5 bg-n-alpha-white gap-2 overflow-hidden items-center flex px-2 rounded-lg border border-n-container"
   >
     <FileIcon class="flex-shrink-0" :file-type="fileDetails.type" />
-    <span
-      class="flex-1 min-w-0 text-sm max-w-36"
-      :title="fileDetails.name"
-      :class="textColorClass"
-    >
-      {{ displayFileName }}
-    </span>
+    <div class="flex-1 min-w-0 flex flex-col justify-center">
+      <span
+        class="truncate text-sm max-w-36"
+        :title="fileDetails.name"
+        :class="textColorClass"
+      >
+        {{ displayFileName }}
+      </span>
+      <span v-if="fileSize" class="text-[11px] font-medium text-n-slate-11">
+        {{ fileSize }}
+      </span>
+    </div>
     <a
       v-tooltip="t('CONVERSATION.DOWNLOAD')"
       class="flex-shrink-0 size-9 grid place-content-center cursor-pointer text-n-slate-11 hover:text-n-slate-12 transition-colors"

@@ -154,6 +154,10 @@
     }
   },
   "CONTACT_FORM": {
+    "ZALO_ADD_FRIEND": "Add Zalo Friend",
+    "ZALO_ADD_FRIEND_TOOLTIP": "Send a Zalo friend request",
+    "ZALO_SEND_MESSAGE": "Message on Zalo",
+    "ZALO_SEND_MESSAGE_TOOLTIP": "Send a Zalo message to this person",
     "FORM": {
       "SUBMIT": "Submit",
       "CANCEL": "Cancel",

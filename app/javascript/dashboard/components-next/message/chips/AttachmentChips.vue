@@ -51,7 +51,11 @@ const allAttachments = computed(() => {
 });
 
 const mediaAttachments = computed(() => {
-  const allowedTypes = [ATTACHMENT_TYPES.IMAGE, ATTACHMENT_TYPES.VIDEO, ATTACHMENT_TYPES.STICKER];
+  const allowedTypes = [
+    ATTACHMENT_TYPES.IMAGE,
+    ATTACHMENT_TYPES.VIDEO,
+    ATTACHMENT_TYPES.STICKER,
+  ];
   const mediaTypes = allAttachments.value.filter(attachment =>
     allowedTypes.includes(attachment.fileType || attachment.file_type)
   );

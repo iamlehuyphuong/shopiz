@@ -636,7 +636,8 @@ export default {
       this.autoFollowUpAiRewrite =
         this.inbox.auto_follow_up_config?.ai_rewrite || false;
       this.autoLabelEnabled = this.inbox.auto_label_enabled || false;
-      this.labelSuggestionEnabled = this.inbox.label_suggestion_enabled || false;
+      this.labelSuggestionEnabled =
+        this.inbox.label_suggestion_enabled || false;
       this.autoFollowUpPredefinedMessage =
         this.inbox.auto_follow_up_config?.predefined_message || '';
 
@@ -1496,7 +1497,6 @@ export default {
               />
             </SettingsAccordion>
 
-
             <div v-if="isAZaloPersonalChannel" class="mt-6">
               <SettingsAccordion
                 :title="$t('INBOX_MGMT.ADD.ZALO_PERSONAL.CONFIGURATION_TITLE')"
@@ -1624,195 +1624,205 @@ export default {
           :class="isAWebWidgetInbox ? 'max-w-7xl' : 'max-w-4xl'"
         >
           <ConfigurationPage :inbox="inbox" />
-            <div class="relative mt-6">
-              <SettingsAccordion
-                :title="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_LABEL_TITLE')"
-              >
-                <SettingsToggleSection
-                  v-model="labelSuggestionEnabled"
-                  :disabled="!isCaptainEnabled"
-                  :header="$t('INBOX_MGMT.SETTINGS_POPUP.LABEL_SUGGESTION_TOGGLE', 'Suggest labels to agents')"
-                  :description="$t('INBOX_MGMT.SETTINGS_POPUP.LABEL_SUGGESTION_DESC', 'Shows AI-generated label suggestions in the conversation view.')"
-                />
-                
-                <SettingsToggleSection
-                  v-model="autoLabelEnabled"
-                  :disabled="!isCaptainEnabled"
-                  :header="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_LABEL_TOGGLE')"
-                  :description="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_LABEL_DESC')"
-                  class="mt-4"
-                />
-              </SettingsAccordion>
+          <div class="relative mt-6">
+            <SettingsAccordion
+              :title="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_LABEL_TITLE')"
+            >
+              <SettingsToggleSection
+                v-model="labelSuggestionEnabled"
+                :disabled="!isCaptainEnabled"
+                :header="
+                  $t(
+                    'INBOX_MGMT.SETTINGS_POPUP.LABEL_SUGGESTION_TOGGLE',
+                    'Suggest labels to agents'
+                  )
+                "
+                :description="
+                  $t(
+                    'INBOX_MGMT.SETTINGS_POPUP.LABEL_SUGGESTION_DESC',
+                    'Shows AI-generated label suggestions in the conversation view.'
+                  )
+                "
+              />
 
-              <SettingsAccordion
-                v-if="!isAWebWidgetInbox"
-                :title="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TITLE')"
-                class="mt-6"
-              >
-                <SettingsToggleSection
-                  v-model="autoFollowUpEnabled"
-                  :header="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TOGGLE')"
-                  :description="
-                    $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_DESC')
-                  "
-                >
-                  <template v-if="autoFollowUpEnabled" #editor>
-                    <div class="flex flex-col gap-4 mt-2">
-                      <div class="flex flex-col gap-1">
-                        <label class="text-n-slate-11 text-small font-medium">
-                          {{
-                            $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_DELAY_LABEL'
-                            )
-                          }}
-                        </label>
-                        <div class="flex items-center gap-2">
-                          <woot-input
-                            v-model="autoFollowUpIntervalHours"
-                            type="number"
-                            min="1"
-                            max="999"
-                            class="[&_input]:!mb-0 w-[150px]"
-                          />
-                        </div>
-                        <p class="text-[12px] text-n-slate-11">
-                          {{
-                            $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_LIMIT_WARNING'
-                            )
-                          }}
-                        </p>
-                      </div>
+              <SettingsToggleSection
+                v-model="autoLabelEnabled"
+                :disabled="!isCaptainEnabled"
+                :header="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_LABEL_TOGGLE')"
+                :description="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_LABEL_DESC')"
+                class="mt-4"
+              />
+            </SettingsAccordion>
 
-                      <div class="flex flex-col gap-1 mt-2">
-                        <label class="text-n-slate-11 text-small font-medium">
-                          {{
-                            $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_MAX_ATTEMPTS'
-                            )
-                          }}
-                        </label>
-                        <FilterSelect
-                          v-model="autoFollowUpMaxAttempts"
-                          :options="dynamicMaxAttemptsOptions"
-                          class="w-full mt-1 [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[38px] [&_button]:!border-n-weak [&_button]:!bg-n-alpha-1"
+            <SettingsAccordion
+              v-if="!isAWebWidgetInbox"
+              :title="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TITLE')"
+              class="mt-6"
+            >
+              <SettingsToggleSection
+                v-model="autoFollowUpEnabled"
+                :header="$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TOGGLE')"
+                :description="
+                  $t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_DESC')
+                "
+              >
+                <template v-if="autoFollowUpEnabled" #editor>
+                  <div class="flex flex-col gap-4 mt-2">
+                    <div class="flex flex-col gap-1">
+                      <label class="text-n-slate-11 text-small font-medium">
+                        {{
+                          $t(
+                            'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_DELAY_LABEL'
+                          )
+                        }}
+                      </label>
+                      <div class="flex items-center gap-2">
+                        <woot-input
+                          v-model="autoFollowUpIntervalHours"
+                          type="number"
+                          min="1"
+                          max="999"
+                          class="[&_input]:!mb-0 w-[150px]"
                         />
                       </div>
-
-                      <div class="flex flex-col gap-1 mt-2">
-                        <label class="text-n-slate-11 text-small font-medium">
-                          {{
-                            $t(
-                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIME_MODE'
-                            )
-                          }}
-                        </label>
-                        <FilterSelect
-                          v-model="autoFollowUpTimeMode"
-                          :options="[
-                            {
-                              value: 'relative',
-                              label: $t(
-                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIME_MODE_RELATIVE'
-                              ),
-                            },
-                            {
-                              value: 'fixed',
-                              label: $t(
-                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIME_MODE_FIXED'
-                              ),
-                            },
-                          ]"
-                          class="w-full mt-1 [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[38px] [&_button]:!border-n-weak [&_button]:!bg-n-alpha-1"
-                        />
-                      </div>
-
-                      <div
-                        v-if="autoFollowUpTimeMode === 'fixed'"
-                        class="flex gap-4 mt-2"
-                      >
-                        <div class="flex flex-col gap-1 w-1/2">
-                          <label class="text-n-slate-11 text-small font-medium">
-                            {{
-                              $t(
-                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_FIXED_TIME_LABEL'
-                              )
-                            }}
-                          </label>
-                          <woot-input
-                            v-model="autoFollowUpFixedTime"
-                            type="time"
-                            class="[&_input]:!mb-0"
-                          />
-                        </div>
-                        <div class="flex flex-col gap-1 w-1/2">
-                          <label class="text-n-slate-11 text-small font-medium">
-                            {{
-                              $t(
-                                'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIMEZONE_LABEL'
-                              )
-                            }}
-                          </label>
-                          <woot-input
-                            v-model="autoFollowUpTimezone"
-                            type="text"
-                            class="[&_input]:!mb-0"
-                          />
-                        </div>
-                      </div>
-
-                      <SettingsToggleSection
-                        v-model="autoFollowUpAiRewrite"
-                        :header="
+                      <p class="text-[12px] text-n-slate-11">
+                        {{
                           $t(
-                            'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_AI_REWRITE_TOGGLE',
-                            'Sử dụng AI viết lại nội dung'
+                            'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_LIMIT_WARNING'
                           )
-                        "
-                        :description="
+                        }}
+                      </p>
+                    </div>
+
+                    <div class="flex flex-col gap-1 mt-2">
+                      <label class="text-n-slate-11 text-small font-medium">
+                        {{
                           $t(
-                            'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_AI_REWRITE_DESC',
-                            'AI sẽ dựa vào ngữ cảnh cuộc trò chuyện để viết lại tin nhắn mẫu một cách tự nhiên.'
+                            'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_MAX_ATTEMPTS'
                           )
-                        "
-                        class="mt-4 bg-transparent p-0 border-0"
+                        }}
+                      </label>
+                      <FilterSelect
+                        v-model="autoFollowUpMaxAttempts"
+                        :options="dynamicMaxAttemptsOptions"
+                        class="w-full mt-1 [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[38px] [&_button]:!border-n-weak [&_button]:!bg-n-alpha-1"
                       />
+                    </div>
 
-                      <div class="flex flex-col gap-3 mt-3">
-                        <div
-                          v-for="(n, index) in autoFollowUpMaxAttempts"
-                          :key="'predefined-' + index"
-                          class="w-full mt-2"
-                        >
-                          <TextArea
-                            v-model="autoFollowUpPredefinedMessages[index]"
-                            :label="`${$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_PREDEFINED_MESSAGE')} ${index + 1}`"
-                            placeholder="Hello, are you still there?"
-                            auto-height
-                            class="w-full"
+                    <div class="flex flex-col gap-1 mt-2">
+                      <label class="text-n-slate-11 text-small font-medium">
+                        {{
+                          $t(
+                            'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIME_MODE'
+                          )
+                        }}
+                      </label>
+                      <FilterSelect
+                        v-model="autoFollowUpTimeMode"
+                        :options="[
+                          {
+                            value: 'relative',
+                            label: $t(
+                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIME_MODE_RELATIVE'
+                            ),
+                          },
+                          {
+                            value: 'fixed',
+                            label: $t(
+                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIME_MODE_FIXED'
+                            ),
+                          },
+                        ]"
+                        class="w-full mt-1 [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[38px] [&_button]:!border-n-weak [&_button]:!bg-n-alpha-1"
+                      />
+                    </div>
+
+                    <div
+                      v-if="autoFollowUpTimeMode === 'fixed'"
+                      class="flex gap-4 mt-2"
+                    >
+                      <div class="flex flex-col gap-1 w-1/2">
+                        <label class="text-n-slate-11 text-small font-medium">
+                          {{
+                            $t(
+                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_FIXED_TIME_LABEL'
+                            )
+                          }}
+                        </label>
+                        <woot-input
+                          v-model="autoFollowUpFixedTime"
+                          type="time"
+                          class="[&_input]:!mb-0"
+                        />
+                      </div>
+                      <div class="flex flex-col gap-1 w-1/2">
+                        <label class="text-n-slate-11 text-small font-medium">
+                          {{
+                            $t(
+                              'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_TIMEZONE_LABEL'
+                            )
+                          }}
+                        </label>
+                        <woot-input
+                          v-model="autoFollowUpTimezone"
+                          type="text"
+                          class="[&_input]:!mb-0"
+                        />
+                      </div>
+                    </div>
+
+                    <SettingsToggleSection
+                      v-model="autoFollowUpAiRewrite"
+                      :header="
+                        $t(
+                          'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_AI_REWRITE_TOGGLE',
+                          'Sử dụng AI viết lại nội dung'
+                        )
+                      "
+                      :description="
+                        $t(
+                          'INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_AI_REWRITE_DESC',
+                          'AI sẽ dựa vào ngữ cảnh cuộc trò chuyện để viết lại tin nhắn mẫu một cách tự nhiên.'
+                        )
+                      "
+                      class="mt-4 bg-transparent p-0 border-0"
+                    />
+
+                    <div class="flex flex-col gap-3 mt-3">
+                      <div
+                        v-for="(n, index) in autoFollowUpMaxAttempts"
+                        :key="'predefined-' + index"
+                        class="w-full mt-2"
+                      >
+                        <TextArea
+                          v-model="autoFollowUpPredefinedMessages[index]"
+                          :label="`${$t('INBOX_MGMT.SETTINGS_POPUP.AUTO_FOLLOWUP_PREDEFINED_MESSAGE')} ${index + 1}`"
+                          placeholder="Hello, are you still there?"
+                          auto-height
+                          class="w-full"
+                        />
+                        <div class="flex justify-start mt-2">
+                          <NextButton
+                            icon="i-lucide-wand-2"
+                            size="xs"
+                            color="slate"
+                            :label="
+                              $t(
+                                'TEAMS_SETTINGS.FORM.IMPROVE_BY_AI',
+                                'Improve by AI'
+                              )
+                            "
+                            :is-loading="isImprovingAutoFollowUps[index]"
+                            @click.prevent="improveAutoFollowUp(index)"
                           />
-                          <div class="flex justify-start mt-2">
-                            <NextButton
-                              icon="i-lucide-wand-2"
-                              size="xs"
-                              color="slate"
-                              :label="
-                                $t(
-                                  'TEAMS_SETTINGS.FORM.IMPROVE_BY_AI',
-                                  'Improve by AI'
-                                )
-                              "
-                              :is-loading="isImprovingAutoFollowUps[index]"
-                              @click.prevent="improveAutoFollowUp(index)"
-                            />
-                          </div>
                         </div>
                       </div>
                     </div>
-                  </template>
-                </SettingsToggleSection>
-              </SettingsAccordion>
-            </div>
+                  </div>
+                </template>
+              </SettingsToggleSection>
+            </SettingsAccordion>
+          </div>
 
           <div class="w-full flex justify-end items-center py-4 mb-4">
             <NextButton
@@ -1865,7 +1875,6 @@ export default {
       "
     >
       <div class="flex flex-col h-auto overflow-auto">
-
         <div class="px-8 pb-8 pt-2">
           <ZaloReauthorize
             :inbox="inbox"

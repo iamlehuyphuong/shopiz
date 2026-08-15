@@ -282,6 +282,11 @@
     "FORM_BUBBLE": {
       "SUBMIT": "Gửi"
     },
+    "BANK_CARD_BUBBLE": {
+      "ACCOUNT_NUMBER": "Số tài khoản",
+      "ACCOUNT_HOLDER": "Chủ tài khoản",
+      "FALLBACK_TEXT": "Thẻ ngân hàng (chỉ hiển thị chi tiết trên Zalo nếu không lấy được thông tin)"
+    },
     "MEDIA": {
       "IMAGE_UNAVAILABLE": "Hình ảnh này không còn khả dụng.",
       "LOADING_FAILED": "Tải thất bại"

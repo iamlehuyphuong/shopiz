@@ -41,11 +41,70 @@ const props = defineProps({
 
 const emit = defineEmits(['retry']);
 
+const groupMediaMessages = messages => {
+  if (!messages || !messages.length) return [];
+
+  const grouped = [];
+  let currentGroup = null;
+
+  for (const msg of messages) {
+    const hasSingleMediaAttachment =
+      msg.attachments?.length === 1 &&
+      ['image', 'video'].includes(msg.attachments[0].fileType);
+
+    const isGroupableMedia =
+      !msg.content &&
+      hasSingleMediaAttachment &&
+      !msg.contentAttributes?.inReplyTo &&
+      !msg.contentAttributes?.isUnsupported &&
+      msg.status !== 'failed';
+
+    if (isGroupableMedia) {
+      if (!currentGroup) {
+        currentGroup = {
+          ...msg,
+          attachments: [...msg.attachments],
+          groupedIds: [msg.id],
+        };
+      } else {
+        const timeDiff = Math.abs(msg.createdAt - currentGroup.createdAt);
+        const sameSender = msg.senderId === currentGroup.senderId;
+        const sameType = msg.messageType === currentGroup.messageType;
+
+        if (sameSender && sameType && timeDiff <= 60) {
+          currentGroup.attachments.push(msg.attachments[0]);
+          currentGroup.groupedIds.push(msg.id);
+        } else {
+          grouped.push(currentGroup);
+          currentGroup = {
+            ...msg,
+            attachments: [...msg.attachments],
+            groupedIds: [msg.id],
+          };
+        }
+      }
+    } else {
+      if (currentGroup) {
+        grouped.push(currentGroup);
+        currentGroup = null;
+      }
+      grouped.push(msg);
+    }
+  }
+
+  if (currentGroup) {
+    grouped.push(currentGroup);
+  }
+
+  return grouped;
+};
+
 const allMessages = computed(() => {
-  return useCamelCase(props.messages, {
+  const camelcased = useCamelCase(props.messages, {
     deep: true,
     stopPaths: ['content_attributes.translations'],
   });
+  return groupMediaMessages(camelcased);
 });
 
 const currentChat = useMapGetter('getSelectedChat');
@@ -168,7 +227,11 @@ const getInReplyToMessage = parentMessage => {
     <slot name="endList" />
     <template v-for="(message, index) in allMessages" :key="message.id">
       <slot
-        v-if="firstUnreadId && message.id === firstUnreadId"
+        v-if="
+          firstUnreadId &&
+          (message.id === firstUnreadId ||
+            message.groupedIds?.includes(firstUnreadId))
+        "
         name="unreadBadge"
       />
       <Message

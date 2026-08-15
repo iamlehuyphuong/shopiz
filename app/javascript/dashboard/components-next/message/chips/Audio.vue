@@ -8,9 +8,10 @@ import {
 } from 'vue';
 import Icon from 'next/icon/Icon.vue';
 import { timeStampAppendedURL } from 'dashboard/helper/URLHelper';
-import { downloadFile } from '@chatwoot/utils';
+import { downloadFile, getFileInfo } from '@chatwoot/utils';
 import { useEmitter } from 'dashboard/composables/emitter';
 import { emitter } from 'shared/helpers/mitt';
+import { formatBytes } from 'shared/helpers/FileHelper';
 
 const { attachment } = defineProps({
   attachment: {
@@ -31,6 +32,33 @@ const timeStampURL = computed(() => {
   // Safely access the URL, providing a fallback if not available
   const url = attachment?.dataUrl || attachment?.data_url || '';
   return timeStampAppendedURL(url);
+});
+
+const fileDetails = computed(() => {
+  const fallback = attachment?.fallback_title || attachment?.fallbackTitle;
+  if (fallback) {
+    return getFileInfo(fallback);
+  }
+  return getFileInfo(attachment?.dataUrl || attachment?.data_url || '');
+});
+
+const displayFileName = computed(() => {
+  const { base, type } = fileDetails.value;
+  const truncatedName = (str, maxLength, hasExt) =>
+    str.length > maxLength
+      ? `${str.substring(0, maxLength).trimEnd()}${hasExt ? '..' : '...'}`
+      : str;
+
+  const fileName = type
+    ? `${truncatedName(base, 20, true)}.${type}`
+    : truncatedName(base, 22, false);
+
+  return fileName || 'Audio file';
+});
+
+const fileSize = computed(() => {
+  const size = attachment?.file_size || attachment?.fileSize;
+  return size ? formatBytes(size, 1) : '';
 });
 
 const audioPlayer = useTemplateRef('audioPlayer');
@@ -151,6 +179,17 @@ const downloadAudio = async () => {
     v-bind="$attrs"
     class="rounded-xl w-full gap-2 p-1.5 bg-n-alpha-white flex flex-col items-center border border-n-container shadow-[0px_2px_8px_0px_rgba(94,94,94,0.06)]"
   >
+    <div class="flex items-center w-full px-2 pt-1 gap-2">
+      <div class="flex-1 flex items-center justify-between min-w-0">
+        <span class="truncate text-sm text-n-slate-12">{{
+          displayFileName
+        }}</span>
+        <span
+          v-if="fileSize"
+          class="text-xs text-n-slate-11 ml-2 flex-shrink-0"
+          >{{ fileSize }}</span>
+      </div>
+    </div>
     <div class="flex gap-1 w-full flex-1 items-center justify-start">
       <button class="p-0 border-0 size-8" @click="playOrPause">
         <Icon

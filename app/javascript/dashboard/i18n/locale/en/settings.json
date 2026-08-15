@@ -282,6 +282,11 @@
     "FORM_BUBBLE": {
       "SUBMIT": "Submit"
     },
+    "BANK_CARD_BUBBLE": {
+      "ACCOUNT_NUMBER": "Account number",
+      "ACCOUNT_HOLDER": "Account holder",
+      "FALLBACK_TEXT": "Bank card (details only visible on Zalo if data is unavailable)"
+    },
     "MEDIA": {
       "IMAGE_UNAVAILABLE": "This image is no longer available.",
       "LOADING_FAILED": "Loading failed"

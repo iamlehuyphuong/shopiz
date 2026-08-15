@@ -1,8 +1,9 @@
 <script setup>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, watch } from 'vue';
 import { useLoadWithRetry } from 'dashboard/composables/loadWithRetry';
 import BaseBubble from './Base.vue';
 import Icon from 'next/icon/Icon.vue';
+import Spinner from 'shared/components/Spinner.vue';
 import { useMessageContext } from '../provider.js';
 
 const { attachments } = useMessageContext();
@@ -13,12 +14,26 @@ const attachment = computed(() => {
 
 const { isLoaded, hasError, loadWithRetry } = useLoadWithRetry();
 
-onMounted(() => {
+const attemptLoad = () => {
   if (attachment.value?.dataUrl) {
     loadWithRetry(attachment.value.dataUrl);
+  } else {
+    hasError.value = true;
   }
+};
+
+onMounted(() => {
+  attemptLoad();
 });
 
+watch(
+  () => attachment.value?.dataUrl,
+  (newUrl, oldUrl) => {
+    if (newUrl && newUrl !== oldUrl && (!isLoaded.value || hasError.value)) {
+      attemptLoad();
+    }
+  }
+);
 </script>
 
 <template>
@@ -27,10 +42,10 @@ onMounted(() => {
     data-bubble-name="sticker"
     :show-background="false"
   >
-    <div v-if="hasError" class="flex items-center gap-1 text-center rounded-lg">
-      <Icon icon="i-lucide-circle-off" class="text-n-slate-11" />
-      <p class="mb-0 text-n-slate-11">
-        {{ $t('COMPONENTS.MEDIA.IMAGE_UNAVAILABLE') }}
+    <div v-if="hasError" class="flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+      <Icon icon="i-lucide-sticker" class="text-n-slate-11 w-8 h-8 mb-2" />
+      <p class="mb-0 text-n-slate-11 text-sm font-medium">
+        [Sticker]
       </p>
     </div>
     <div v-else-if="isLoaded" class="relative group rounded-lg overflow-hidden">
@@ -40,6 +55,9 @@ onMounted(() => {
         :width="attachment.width"
         :height="attachment.height"
       />
+    </div>
+    <div v-else class="flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 min-w-[130px] min-h-[130px]">
+      <Spinner />
     </div>
   </BaseBubble>
 </template>

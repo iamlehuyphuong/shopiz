@@ -154,6 +154,10 @@
     }
   },
   "CONTACT_FORM": {
+    "ZALO_ADD_FRIEND": "Kết bạn",
+    "ZALO_ADD_FRIEND_TOOLTIP": "Gửi lời mời kết bạn zalo",
+    "ZALO_SEND_MESSAGE": "Nhắn tin",
+    "ZALO_SEND_MESSAGE_TOOLTIP": "Gửi tin nhắn zalo đến người này",
     "FORM": {
       "SUBMIT": "Lưu",
       "CANCEL": "Hủy",
