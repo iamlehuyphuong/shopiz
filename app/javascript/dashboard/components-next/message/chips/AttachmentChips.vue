@@ -56,9 +56,13 @@ const mediaAttachments = computed(() => {
     ATTACHMENT_TYPES.VIDEO,
     ATTACHMENT_TYPES.STICKER,
   ];
-  const mediaTypes = allAttachments.value.filter(attachment =>
-    allowedTypes.includes(attachment.fileType || attachment.file_type)
-  );
+  const mediaTypes = allAttachments.value.filter(attachment => {
+    const hasValidType = allowedTypes.includes(
+      attachment.fileType || attachment.file_type
+    );
+    const hasValidUrl = !!(attachment.dataUrl || attachment.data_url);
+    return hasValidType && hasValidUrl;
+  });
 
   return mediaTypes.sort(
     (a, b) =>

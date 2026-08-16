@@ -20,7 +20,9 @@ const props = defineProps({
     default: 0,
   },
 });
-const hasError = ref(false);
+const hasError = ref(
+  !(props.attachment?.dataUrl || props.attachment?.data_url)
+);
 const showGallery = ref(false);
 
 const { filteredCurrentChatAttachments } = useMessageContext();
