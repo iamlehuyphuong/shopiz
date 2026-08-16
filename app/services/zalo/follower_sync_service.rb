@@ -16,7 +16,7 @@ class Zalo::FollowerSyncService
       response = client.get_followers(offset: offset, count: BATCH_SIZE)
       break unless response['error']&.zero?
 
-      followers = response.dig('data', 'followers') || []
+      followers = response.dig('data', 'users') || []
       break if followers.empty?
 
       process_followers(followers)

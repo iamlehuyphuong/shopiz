@@ -128,6 +128,11 @@ vi:
         private_reply_hint: Tin nhắn tiếp theo bạn gửi sẽ được gửi dưới dạng phản
           hồi riêng tư cho bình luận này.
     inboxes:
+      zalo:
+        unsupported_message: Định dạng tin nhắn không được hỗ trợ
+        interaction:
+          chatnow_clicked: 'Người dùng đã nhấn nút "Nhắn tin" trên OA.'
+          other_interaction: 'Người dùng tương tác: %{event_name}'
       imap:
         socket_error: Vui lòng kiểm tra kết nối mạng, địa chỉ IMAP và thử lại.
         no_response_error: Vui lòng kiểm tra thông tin đăng nhập IMAP và thử lại.

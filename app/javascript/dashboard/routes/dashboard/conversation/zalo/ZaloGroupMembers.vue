@@ -21,6 +21,10 @@ export default {
       type: [Number, String],
       required: true,
     },
+    channelType: {
+      type: String,
+      default: 'Channel::ZaloPersonal',
+    },
   },
   setup() {
     const { checkPermissions } = usePolicy();
@@ -96,6 +100,7 @@ export default {
       return `${start}****${end}`;
     },
     openConnectModal(member) {
+      if (this.channelType === 'Channel::ZaloOa') return;
       this.selectedMember = member;
       this.showConnectModal = true;
     },
@@ -120,7 +125,7 @@ export default {
       class="sticky top-0 bg-white dark:bg-slate-900 z-10 px-3 py-2 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center"
     >
       <div class="text-sm font-medium text-slate-800 dark:text-slate-100">
-        Danh sách thành viên ({{ members.length }})
+        {{ $t('CONVERSATION_SIDEBAR.ZALO_GROUP.MEMBERS_COUNT', { count: members.length }) }}
       </div>
       <button
         class="flex items-center gap-1 text-xs px-2 py-1 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded transition-colors"
@@ -129,7 +134,7 @@ export default {
       >
         <Spinner v-if="isSyncing" size="small" />
         <fluent-icon v-else icon="arrow-clockwise" size="14" />
-        Đồng bộ
+        {{ $t('CONVERSATION_SIDEBAR.ZALO_GROUP.SYNC') }}
       </button>
     </div>
     <div v-if="isLoading" class="p-3 text-center">
@@ -139,13 +144,14 @@ export default {
       v-else-if="members.length === 0"
       class="p-3 text-center text-slate-500"
     >
-      Không có thành viên nào
+      {{ $t('CONVERSATION_SIDEBAR.ZALO_GROUP.NO_MEMBERS') }}
     </div>
     <div v-else class="members-list">
       <div
         v-for="member in members"
         :key="member.uid"
-        class="member-item flex items-center p-3 border-b border-slate-50 dark:border-slate-800 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800"
+        class="member-item flex items-center p-3 border-b border-slate-50 dark:border-slate-800"
+        :class="{ 'cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800': channelType !== 'Channel::ZaloOa' }"
         @click="openConnectModal(member)"
       >
         <Avatar
@@ -163,32 +169,45 @@ export default {
             <span
               v-if="member.is_you"
               class="px-1.5 py-0.5 text-[10px] font-semibold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 rounded whitespace-nowrap"
-              >Bạn</span
+              >{{ $t('CONVERSATION_SIDEBAR.ZALO_GROUP.YOU') }}</span
             >
             <span
               v-if="member.is_creator"
               class="px-1.5 py-0.5 text-[10px] font-semibold bg-n-orange-3 text-n-orange-11 rounded whitespace-nowrap"
-              >Trưởng nhóm</span
+              >{{ $t('CONVERSATION_SIDEBAR.ZALO_GROUP.CREATOR') }}</span
             >
             <span
               v-else-if="member.is_admin"
               class="px-1.5 py-0.5 text-[10px] font-semibold bg-n-slate-3 text-n-slate-11 rounded whitespace-nowrap"
-              >Phó nhóm</span
+              >{{ $t('CONVERSATION_SIDEBAR.ZALO_GROUP.ADMIN') }}</span
             >
           </div>
           <div class="text-xs text-slate-500 flex gap-2 mt-0.5">
             <span v-if="member.phone_number">{{
               maskPhone(member.phone_number)
             }}</span>
-            <span
-              v-if="member.is_friend"
-              class="text-green-600 flex items-center gap-0.5"
-            >
-              <fluent-icon icon="checkmark-circle" size="12" /> Đã kết bạn
-            </span>
-            <span v-else-if="!member.is_you" class="flex items-center gap-0.5">
-              Chưa kết bạn
-            </span>
+            <template v-if="channelType === 'Channel::ZaloOa'">
+              <span
+                v-if="member.is_follower"
+                class="text-green-600 flex items-center gap-0.5"
+              >
+                <fluent-icon icon="checkmark-circle" size="12" /> {{ $t('CONVERSATION_SIDEBAR.ZALO_GROUP.FRIEND_STATUS.FOLLOWED') }}
+              </span>
+              <span v-else-if="!member.is_you" class="flex items-center gap-0.5">
+                {{ $t('CONVERSATION_SIDEBAR.ZALO_GROUP.FRIEND_STATUS.NOT_FOLLOWED') }}
+              </span>
+            </template>
+            <template v-else>
+              <span
+                v-if="member.is_friend"
+                class="text-green-600 flex items-center gap-0.5"
+              >
+                <fluent-icon icon="checkmark-circle" size="12" /> {{ $t('CONVERSATION_SIDEBAR.ZALO_GROUP.FRIEND_STATUS.FRIEND') }}
+              </span>
+              <span v-else-if="!member.is_you" class="flex items-center gap-0.5">
+                {{ $t('CONVERSATION_SIDEBAR.ZALO_GROUP.FRIEND_STATUS.NOT_FRIEND') }}
+              </span>
+            </template>
           </div>
         </div>
       </div>

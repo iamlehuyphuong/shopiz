@@ -46,16 +46,30 @@ class Channel::ZaloOa < ApplicationRecord
     @client ||= Zalo::Client.new(channel: self)
   end
 
-  def send_message(user_id, message, _access_token = nil)
+  def send_message(target_id, message, _access_token = nil)
+    last_response = nil
+
+    return send_template_message(target_id, message) if message.template?
+
+    is_group = message.conversation.contact.custom_attributes['is_zalo_group']
+    target_id_key = is_group ? :group_id : :user_id
+
     # Send attachments first
     message.attachments.each do |attachment|
-      response = send_attachment(user_id, attachment)
-      return response unless response['error']&.zero? && message.content
+      response = send_attachment(target_id, attachment, target_id_key, is_group)
+      return response unless response['error']&.zero?
+
+      last_response = response
     end
 
-    body = message_body(user_id, message.content)
-    body[:message][:quote_message_id] = message.content_attributes[:in_reply_to_external_id] if message.content_attributes[:in_reply_to_external_id]
-    client.send_cs_message(body)
+    if message.content.present?
+      body = message_body(target_id, message.content, target_id_key)
+      body[:message][:quote_message_id] = message.content_attributes[:in_reply_to_external_id] if message.content_attributes[:in_reply_to_external_id]
+      
+      return is_group ? client.send_group_message(body) : client.send_cs_message(body)
+    end
+
+    last_response
   end
 
   def refresh_access_token(channel)
@@ -65,12 +79,31 @@ class Channel::ZaloOa < ApplicationRecord
 
   private
 
-  def send_attachment(user_id, attachment)
+  def send_template_message(user_id, message)
+    template_name = message.content_attributes['template_name']
+    template_params = message.content_attributes['template_params'] || {}
+
+    zalo_template = zalo_message_templates.find_by(template_name: template_name)
+    return { 'error' => 1, 'message' => 'Template not found' } unless zalo_template
+
+    payload = zalo_template.build_payload(user_id, template_params)
+
+    if zalo_template.promotion?
+      client.send_promotion_message(payload)
+    else
+      client.send_transaction_message(payload)
+    end
+  end
+
+  def send_attachment(target_id, attachment, target_id_key = :user_id, is_group = false) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     is_image = attachment.file_type == 'image'
+    is_gif = is_image && attachment.file.content_type == 'image/gif'
     file_data = attachment.file.download
     filename = attachment.file.filename.to_s
 
-    data = if is_image
+    data = if is_gif
+             client.upload_gif(file_data, filename)
+           elsif is_image
              client.upload_image(file_data, filename)
            else
              client.upload_file(file_data, filename)
@@ -79,16 +112,17 @@ class Channel::ZaloOa < ApplicationRecord
     return data unless data['error']&.zero?
 
     body = if is_image
-             image_body(user_id, data['data']['attachment_id'])
+             media_body(target_id, data['data']['attachment_id'], is_gif ? 'gif' : 'image', target_id_key)
            else
-             attachment_body(user_id, data['data']['token'])
+             attachment_body(target_id, data['data']['token'], target_id_key)
            end
-    client.send_cs_message(body)
+           
+    is_group ? client.send_group_message(body) : client.send_cs_message(body)
   end
 
-  def attachment_body(user_id, file_token)
+  def attachment_body(target_id, file_token, target_id_key = :user_id)
     {
-      recipient: { user_id: user_id },
+      recipient: { target_id_key => target_id },
       message: {
         attachment: {
           type: 'file',
@@ -100,16 +134,16 @@ class Channel::ZaloOa < ApplicationRecord
     }
   end
 
-  def image_body(user_id, attachment_id)
+  def media_body(target_id, attachment_id, media_type = 'image', target_id_key = :user_id)
     {
-      recipient: { user_id: user_id },
+      recipient: { target_id_key => target_id },
       message: {
         attachment: {
           type: 'template',
           payload: {
             template_type: 'media',
             elements: [{
-              media_type: 'image',
+              media_type: media_type,
               attachment_id: attachment_id
             }]
           }
@@ -118,9 +152,9 @@ class Channel::ZaloOa < ApplicationRecord
     }
   end
 
-  def message_body(user_id, message_content)
+  def message_body(target_id, message_content, target_id_key = :user_id)
     {
-      recipient: { user_id: user_id },
+      recipient: { target_id_key => target_id },
       message: { text: message_content }
     }
   end

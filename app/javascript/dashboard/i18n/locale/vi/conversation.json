@@ -618,6 +618,7 @@
       "PLACEHOLDER": "Không có"
     },
     "ACCORDION": {
+      "ZALO_GROUP_MEMBERS": "Thành viên nhóm",
       "CONTACT_DETAILS": "Thông tin liên hệ",
       "CONVERSATION_ACTIONS": "Hành động",
       "CONVERSATION_LABELS": "Nhãn hội thoại",
@@ -628,6 +629,20 @@
       "MACROS": "Lệnh (Macros)",
       "LINEAR_ISSUES": "Vấn đề Linear liên kết",
       "SHOPIFY_ORDERS": "Đơn hàng Shopify"
+    },
+    "ZALO_GROUP": {
+      "MEMBERS_COUNT": "Danh sách thành viên ({count})",
+      "SYNC": "Đồng bộ",
+      "NO_MEMBERS": "Không có thành viên nào",
+      "YOU": "Bạn",
+      "CREATOR": "Trưởng nhóm",
+      "ADMIN": "Phó nhóm",
+      "FRIEND_STATUS": {
+        "FOLLOWED": "Đã quan tâm",
+        "NOT_FOLLOWED": "Chưa quan tâm",
+        "FRIEND": "Đã kết bạn",
+        "NOT_FRIEND": "Chưa kết bạn"
+      }
     },
     "SHOPIFY": {
       "ORDER_ID": "Đơn hàng #{id}",

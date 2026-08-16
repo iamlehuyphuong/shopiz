@@ -1,12 +1,22 @@
 class Api::V1::Accounts::Conversations::ZaloGroupMembersController < Api::V1::Accounts::Conversations::BaseController
   def index
-    members = ZaloPersonal::GetGroupMembersService.new(@conversation).perform
+    members = group_members_service.perform
     render json: members
   end
 
   def sync
-    ZaloPersonal::GetGroupMembersService.new(@conversation).sync!
-    members = ZaloPersonal::GetGroupMembersService.new(@conversation).perform
+    group_members_service.sync!
+    members = group_members_service.perform
     render json: members
+  end
+
+  private
+
+  def group_members_service
+    @group_members_service ||= if @conversation.inbox.channel_type == 'Channel::ZaloOa'
+                                 Zalo::GetGroupMembersService.new(@conversation)
+                               else
+                                 ZaloPersonal::GetGroupMembersService.new(@conversation)
+                               end
   end
 end

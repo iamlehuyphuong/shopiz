@@ -79,10 +79,14 @@ const contactAdditionalAttributes = computed(
 const conversationInboxId = computed(() => currentChat.value?.inbox_id);
 
 const isZaloGroupConversation = computed(() => {
-  const isZalo = channelType.value === 'Channel::ZaloPersonal';
-  if (!isZalo) return false;
-  const type = conversationAdditionalAttributes.value?.type;
-  return type === 1 || !!conversationAdditionalAttributes.value?.group;
+  if (channelType.value === 'Channel::ZaloPersonal') {
+    const type = conversationAdditionalAttributes.value?.type;
+    return type === 1 || !!conversationAdditionalAttributes.value?.group;
+  }
+  if (channelType.value === 'Channel::ZaloOa') {
+    return contactAdditionalAttributes.value?.is_zalo_group === true;
+  }
+  return false;
 });
 
 import { useI18n } from 'vue-i18n';
@@ -308,7 +312,7 @@ onErrorCaptured(err => {
             "
           >
             <AccordionItem
-              title="Thành viên nhóm"
+              :title="$t('CONVERSATION_SIDEBAR.ACCORDION.ZALO_GROUP_MEMBERS')"
               :is-open="isContactSidebarItemOpen('is_zalo_group_members_open')"
               compact
               @toggle="
@@ -319,6 +323,7 @@ onErrorCaptured(err => {
               <ZaloGroupMembers
                 :conversation-id="conversationId"
                 :conversation-inbox-id="conversationInboxId"
+                :channel-type="channelType"
               />
             </AccordionItem>
           </div>

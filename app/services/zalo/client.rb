@@ -15,11 +15,28 @@ class Zalo::Client
   end
 
   def get_followers(offset: 0, count: 50)
-    get('/v2.0/oa/getfollowers', query: { data: { offset: offset, count: count }.to_json })
+    get('/v3.0/oa/user/getlist', query: { data: { offset: offset, count: count }.to_json })
+  end
+
+  def get_tags
+    get('/v2.0/oa/tag/gettagsofoa')
+  end
+
+  def remove_tag(tag_name)
+    post('/v2.0/oa/tag/rmtag', body: { tag_name: tag_name })
   end
 
   def tag_follower(user_id, tag_name)
     post('/v3.0/oa/tag/tagfollower', body: { user_id: user_id, tag_name: tag_name })
+  end
+
+  def untag_follower(user_id, tag_name)
+    post('/v2.0/oa/tag/untagfollower', body: { user_id: user_id, tag_name: tag_name })
+  end
+
+  def update_user_custom_info(user_id, body)
+    payload = body.merge(user_id: user_id)
+    post('/v3.0/oa/user/update/custominfo', body: payload)
   end
 
   # --- Messaging APIs ---
@@ -42,6 +59,10 @@ class Zalo::Client
     upload('/v2.0/oa/upload/image', file, filename)
   end
 
+  def upload_gif(file, filename)
+    upload('/v2.0/oa/upload/gif', file, filename)
+  end
+
   def upload_file(file, filename)
     upload('/v2.0/oa/upload/file', file, filename)
   end
@@ -52,8 +73,12 @@ class Zalo::Client
     get('/v2.0/oa/listrecentchat', query: { data: { offset: offset, count: count }.to_json })
   end
 
-  def get_conversation(user_id, offset: 0, count: 20)
-    get('/v2.0/oa/conversation', query: { data: { user_id: user_id, offset: offset, count: count }.to_json })
+  def get_conversation(user_id = nil, offset: 0, count: 20, group_id: nil)
+    data = { offset: offset, count: count }
+    data[:user_id] = user_id if user_id
+    data[:group_id] = group_id if group_id
+
+    get('/v2.0/oa/conversation', query: { data: data.to_json })
   end
 
   # --- Request User Info ---
@@ -76,6 +101,64 @@ class Zalo::Client
       }
     }
     send_cs_message(body)
+  end
+
+  # --- GMF (Group Management Function) APIs ---
+
+  def send_group_message(body)
+    post('/v3.0/oa/group/message', body: body)
+  end
+
+  def create_group(body)
+    post('/v3.0/oa/group/creategroupwithoa', body: body)
+  end
+
+  def get_group_info(group_id)
+    get('/v3.0/oa/group/detail', query: { data: { group_id: group_id }.to_json })
+  end
+
+  def update_group_info(body)
+    post('/v3.0/oa/group/update', body: body)
+  end
+
+  def delete_group(group_id)
+    post('/v3.0/oa/group/deletegroup', body: { group_id: group_id })
+  end
+
+  def get_groups_of_oa(offset: 0, count: 50)
+    get('/v3.0/oa/group/getgroupsofoa', query: { data: { offset: offset, count: count }.to_json })
+  end
+
+  def invite_member(body)
+    post('/v3.0/oa/group/invite', body: body)
+  end
+
+  def get_pending_members(group_id, offset: 0, count: 50)
+    get('/v3.0/oa/group/getlistpendingmember', query: { data: { group_id: group_id, offset: offset, count: count }.to_json })
+  end
+
+  def accept_member(body)
+    post('/v3.0/oa/group/acceptpendingmember', body: body)
+  end
+
+  def reject_member(body)
+    post('/v3.0/oa/group/rejectpendingmember', body: body)
+  end
+
+  def get_group_members(group_id, offset: 0, count: 50)
+    get('/v3.0/oa/group/getlistmember', query: { data: { group_id: group_id, offset: offset, count: count }.to_json })
+  end
+
+  def remove_members(body)
+    post('/v3.0/oa/group/removemember', body: body)
+  end
+
+  def add_group_admins(body)
+    post('/v3.0/oa/group/addadmin', body: body)
+  end
+
+  def remove_group_admins(body)
+    post('/v3.0/oa/group/removeadmin', body: body)
   end
 
   # --- ZNS / Template APIs ---

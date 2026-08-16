@@ -8,7 +8,7 @@ module Labelable
   def update_labels(labels = nil)
     old_labels = label_list.dup
     update!(label_list: labels)
-    dispatch_label_update_event(old_labels, label_list) if is_a?(Conversation)
+    dispatch_label_update_event(old_labels, label_list)
   end
 
   def add_labels(new_labels = nil)
@@ -18,7 +18,7 @@ module Labelable
     old_labels = label_list.dup
     combined_labels = labels + new_labels
     update!(label_list: combined_labels)
-    dispatch_label_update_event(old_labels, label_list) if is_a?(Conversation)
+    dispatch_label_update_event(old_labels, label_list)
   end
 
   private
@@ -26,11 +26,13 @@ module Labelable
   def dispatch_label_update_event(old_labels, new_labels)
     return if old_labels == new_labels
 
-    # Only for Conversation model
-    return unless respond_to?(:dispatcher_dispatch)
-
-    # Force include label_list in previous_changes to ensure the event is processed correctly
     previous_changes_with_labels = { label_list: [old_labels, new_labels] }
-    dispatcher_dispatch(Conversation::CONVERSATION_UPDATED, previous_changes_with_labels)
+
+    if is_a?(Conversation) && respond_to?(:dispatcher_dispatch)
+      dispatcher_dispatch(Conversation::CONVERSATION_UPDATED, previous_changes_with_labels)
+    elsif is_a?(Contact)
+      Rails.configuration.dispatcher.dispatch(Contact::CONTACT_UPDATED, Time.zone.now, contact: self,
+                                                                                       changed_attributes: previous_changes_with_labels)
+    end
   end
 end

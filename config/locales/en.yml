@@ -9,6 +9,9 @@ en:
   inboxes:
     zalo:
       unsupported_message: Unsupported message type
+      interaction:
+        chatnow_clicked: 'User clicked "Chat Now" button on OA profile.'
+        other_interaction: 'User interaction: %{event_name}'
   inbox:
     reauthorization:
       success: Channel reauthorized successfully

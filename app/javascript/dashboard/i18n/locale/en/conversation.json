@@ -619,6 +619,7 @@
       "PLACEHOLDER": "None"
     },
     "ACCORDION": {
+      "ZALO_GROUP_MEMBERS": "Group Members",
       "CONTACT_DETAILS": "Contact Details",
       "CONVERSATION_ACTIONS": "Conversation Actions",
       "CONVERSATION_LABELS": "Conversation Labels",
@@ -629,6 +630,20 @@
       "MACROS": "Macros",
       "LINEAR_ISSUES": "Linked Linear Issues",
       "SHOPIFY_ORDERS": "Shopify Orders"
+    },
+    "ZALO_GROUP": {
+      "MEMBERS_COUNT": "Members ({count})",
+      "SYNC": "Sync",
+      "NO_MEMBERS": "No members",
+      "YOU": "You",
+      "CREATOR": "Creator",
+      "ADMIN": "Admin",
+      "FRIEND_STATUS": {
+        "FOLLOWED": "Followed",
+        "NOT_FOLLOWED": "Not followed",
+        "FRIEND": "Friend",
+        "NOT_FRIEND": "Not friend"
+      }
     },
     "SHOPIFY": {
       "ORDER_ID": "Order #{id}",
