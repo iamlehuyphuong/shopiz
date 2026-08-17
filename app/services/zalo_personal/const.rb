@@ -3,7 +3,7 @@ module ZaloPersonal::Const
   ICON_MAPPING = {
     ':)' => '😊',
     ':~' => '😖',
-    ':B' => '😍',
+    ':b' => '😍',
     ":')" => '😂',
     '8-)' => '😎',
     ':-((' => '😭',
@@ -89,7 +89,7 @@ module ZaloPersonal::Const
     '/-loveu' => '🤟'
   }.freeze
 
-  ICON_REGEX = Regexp.union(ICON_MAPPING.keys.sort_by { |k| -k.length }).freeze
+  ICON_REGEX = Regexp.new(Regexp.union(ICON_MAPPING.keys.sort_by { |k| -k.length }).source, Regexp::IGNORECASE).freeze
   FILE_TYPE_MAPPING = {
     'chat.photo' => 'image',
     'chat.video.msg' => 'video',

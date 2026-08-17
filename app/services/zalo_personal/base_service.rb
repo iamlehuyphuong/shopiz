@@ -220,7 +220,7 @@ class ZaloPersonal::BaseService
                 params[:content].to_s
               end
 
-    params[:content] = content.gsub(ICON_REGEX, ICON_MAPPING) if content.present?
+    params[:content] = content.gsub(ICON_REGEX) { |match| ICON_MAPPING[match.downcase] } if content.present?
     @message = @conversation.messages.build(message_params)
     attach_media
   end
