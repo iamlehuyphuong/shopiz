@@ -79,7 +79,7 @@ const handleSubmit = async () => {
       );
 
       if (friendResponse && friendResponse.already_friend) {
-        useAlert('Khách hàng này đã là bạn bè trên Zalo');
+        useAlert(t('CONTACT_PANEL.ZALO_PERSONAL.ALREADY_FRIEND_ALERT'));
       }
     }
 
@@ -109,7 +109,7 @@ const handleSubmit = async () => {
     const errorMessage =
       error?.response?.data?.message ||
       error?.response?.data?.error ||
-      'Số điện thoại đã thuộc liên hệ khác';
+      t('CONTACT_PANEL.ZALO_PERSONAL.PHONE_DUPLICATED_ALERT');
     useAlert(errorMessage);
   } finally {
     isSubmitting.value = false;
@@ -127,7 +127,7 @@ const handleSubmit = async () => {
           class="px-6 py-4 flex items-center justify-between border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 sticky top-0 z-20"
         >
           <div class="text-lg font-semibold text-slate-900 dark:text-slate-50">
-            Thông tin tài khoản
+            {{ $t('CONTACT_PANEL.ZALO_PERSONAL.ZALO_ACCOUNT_INFO') }}
           </div>
           <NextButton
             ghost
@@ -163,7 +163,10 @@ const handleSubmit = async () => {
               <h3
                 class="text-xl font-semibold text-slate-900 dark:text-slate-50 m-0 flex items-center gap-2"
               >
-                {{ zaloProfile.name || 'Người dùng Zalo' }}
+                {{
+                  zaloProfile.name ||
+                  $t('CONTACT_PANEL.ZALO_PERSONAL.ZALO_USER')
+                }}
               </h3>
             </div>
           </div>
@@ -177,24 +180,39 @@ const handleSubmit = async () => {
             <h4
               class="font-semibold text-base mb-4 text-slate-900 dark:text-slate-50"
             >
-              Thông tin cá nhân
+              {{ $t('CONTACT_PANEL.ZALO_PERSONAL.PERSONAL_INFO') }}
             </h4>
             <div class="grid grid-cols-[100px_1fr] gap-x-2 gap-y-3 text-sm">
-              <div class="text-slate-500 dark:text-slate-400">Bio</div>
+              <div class="text-slate-500 dark:text-slate-400">
+                {{ $t('CONTACT_PANEL.ZALO_PERSONAL.BIO') }}
+              </div>
               <div
                 class="text-slate-900 dark:text-slate-100 whitespace-pre-line"
               >
-                {{ zaloProfile.bio || 'Chưa cập nhật' }}
+                {{
+                  zaloProfile.bio ||
+                  $t('CONTACT_PANEL.ZALO_PERSONAL.NOT_UPDATED')
+                }}
               </div>
 
-              <div class="text-slate-500 dark:text-slate-400">Giới tính</div>
+              <div class="text-slate-500 dark:text-slate-400">
+                {{ $t('CONTACT_PANEL.ZALO_PERSONAL.GENDER') }}
+              </div>
               <div class="text-slate-900 dark:text-slate-100">
-                {{ zaloProfile.gender || 'Chưa cập nhật' }}
+                {{
+                  zaloProfile.gender ||
+                  $t('CONTACT_PANEL.ZALO_PERSONAL.NOT_UPDATED')
+                }}
               </div>
 
-              <div class="text-slate-500 dark:text-slate-400">Ngày sinh</div>
+              <div class="text-slate-500 dark:text-slate-400">
+                {{ $t('CONTACT_PANEL.ZALO_PERSONAL.DOB') }}
+              </div>
               <div class="text-slate-900 dark:text-slate-100">
-                {{ zaloProfile.dob || 'Chưa cập nhật' }}
+                {{
+                  zaloProfile.dob ||
+                  $t('CONTACT_PANEL.ZALO_PERSONAL.NOT_UPDATED')
+                }}
               </div>
             </div>
           </div>
@@ -204,7 +222,7 @@ const handleSubmit = async () => {
             class="px-6 py-4 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-center"
           >
             <div class="text-slate-500 font-medium">
-              Đây là thông tin tài khoản của bạn
+              {{ $t('CONTACT_PANEL.ZALO_PERSONAL.IS_YOU_INFO') }}
             </div>
           </div>
           <div
@@ -240,7 +258,8 @@ const handleSubmit = async () => {
               v-else
               class="flex items-center gap-1.5 text-green-600 font-medium mb-4 text-sm bg-green-50 px-3 py-2 rounded-lg"
             >
-              <fluent-icon icon="checkmark-circle" size="16" /> Đã là bạn bè
+              <fluent-icon icon="checkmark-circle" size="16" />
+              {{ $t('CONTACT_PANEL.ZALO_PERSONAL.ALREADY_FRIEND') }}
             </div>
 
             <div class="w-full mb-4">
@@ -259,7 +278,7 @@ const handleSubmit = async () => {
               <NextButton
                 faded
                 slate
-                label="Đóng"
+                :label="$t('CONTACT_PANEL.ZALO_PERSONAL.CLOSE')"
                 @click.prevent="closeModal"
               />
             </template>

@@ -28,6 +28,7 @@ import { useUISettings } from 'dashboard/composables/useUISettings';
 import ContextMenu from 'dashboard/components/ui/ContextMenu.vue';
 import CreateNewContactDialog from 'dashboard/components-next/Contacts/ContactsForm/CreateNewContactDialog.vue';
 import LimitationModal from './components/widgets/modal/LimitationModal.vue';
+import MentionUserInfoModal from 'dashboard/components-next/message/MentionUserInfoModal.vue';
 import { usePolicy } from 'dashboard/composables/usePolicy';
 import { useOmicall } from 'dashboard/composables/useOmicall';
 import { computed } from 'vue';
@@ -46,6 +47,7 @@ export default {
     ContextMenu,
     CreateNewContactDialog,
     LimitationModal,
+    MentionUserInfoModal,
   },
   setup() {
     const router = useRouter();
@@ -82,6 +84,11 @@ export default {
         y: 0,
         type: '',
         value: '',
+      },
+      mentionModalConfig: {
+        show: false,
+        uid: null,
+        inboxId: null,
       },
     };
   },
@@ -338,6 +345,15 @@ export default {
         const type = target.getAttribute('data-type');
         const value = target.getAttribute('data-value');
 
+        if (type === 'mention') {
+          this.mentionModalConfig = {
+            show: true,
+            uid: value,
+            inboxId: this.selectedChat?.inbox_id,
+          };
+          return;
+        }
+
         this.contactMenuConfig = {
           show: true,
           x: event.clientX,
@@ -548,6 +564,12 @@ export default {
       @create="onCreateContact"
     />
     <LimitationModal />
+    <MentionUserInfoModal
+      v-model:show="mentionModalConfig.show"
+      :uid="mentionModalConfig.uid"
+      :inbox-id="mentionModalConfig.inboxId"
+      @close="mentionModalConfig.show = false"
+    />
   </div>
   <LoadingState v-else />
 </template>

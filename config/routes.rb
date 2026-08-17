@@ -147,6 +147,7 @@ Rails.application.routes.draw do
                 get :create
                 post :generate_qr
                 get :find_user
+                get :get_user_info
               end
             end
             resource :tiktok_shop_channel, only: [:show, :create]

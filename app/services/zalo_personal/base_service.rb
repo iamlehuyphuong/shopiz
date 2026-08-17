@@ -661,6 +661,7 @@ class ZaloPersonal::BaseService
 
     content_attributes = {}
     content_attributes[:external_echo] = true unless incoming_message?
+    content_attributes[:mentions] = params[:mentions] if params[:mentions].present?
 
     {
       content: params[:content],

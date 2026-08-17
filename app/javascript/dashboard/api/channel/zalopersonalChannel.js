@@ -33,6 +33,13 @@ class ZaloPersonalChannel extends ApiClient {
       { params: { phone, inbox_id: inboxId } }
     );
   }
+
+  getUserInfo({ uid, inboxId }) {
+    return axios.get(
+      `${this.url.replace(this.resource, '')}channels/zalo_personal_channel/get_user_info`,
+      { params: { uid, inbox_id: inboxId } }
+    );
+  }
 }
 
 export default new ZaloPersonalChannel();

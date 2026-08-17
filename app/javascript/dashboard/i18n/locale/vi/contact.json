@@ -22,7 +22,20 @@
       "SUBMIT": "Gửi",
       "CONNECT_SUCCESS": "Kết nối thành công qua Zalo cá nhân.",
       "CONNECT_ERROR": "Lỗi khi kết nối qua Zalo cá nhân.",
-      "CONNECT_TOOLTIP": "Kết nối Zalo cá nhân"
+      "CONNECT_TOOLTIP": "Kết nối Zalo cá nhân",
+      "FETCH_USER_INFO_FAILED": "Không thể lấy thông tin người dùng",
+      "ZALO_ACCOUNT_INFO": "Thông tin tài khoản Zalo",
+      "ZALO_USER": "Người dùng Zalo",
+      "PERSONAL_INFO": "Thông tin cá nhân",
+      "ALREADY_FRIEND": "Đã là bạn bè",
+      "ALREADY_FRIEND_ALERT": "Khách hàng này đã là bạn bè trên Zalo",
+      "PHONE_DUPLICATED_ALERT": "Số điện thoại đã thuộc liên hệ khác",
+      "IS_YOU_INFO": "Đây là thông tin tài khoản của bạn",
+      "BIO": "Bio",
+      "NOT_UPDATED": "Chưa cập nhật",
+      "GENDER": "Giới tính",
+      "DOB": "Ngày sinh",
+      "CLOSE": "Đóng"
     },
     "OMICALL": {
       "CONNECT": "Mở Kết nối Tổng đài",

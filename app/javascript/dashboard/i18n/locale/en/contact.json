@@ -22,7 +22,20 @@
       "SUBMIT": "Connect",
       "CONNECT_SUCCESS": "Successfully connected via Zalo Personal.",
       "CONNECT_ERROR": "Failed to connect via Zalo Personal.",
-      "CONNECT_TOOLTIP": "Connect Zalo Personal"
+      "CONNECT_TOOLTIP": "Connect Zalo Personal",
+      "FETCH_USER_INFO_FAILED": "Failed to fetch user information",
+      "ZALO_ACCOUNT_INFO": "Zalo Account Information",
+      "ZALO_USER": "Zalo User",
+      "PERSONAL_INFO": "Personal Information",
+      "ALREADY_FRIEND": "Already Friends",
+      "ALREADY_FRIEND_ALERT": "This contact is already a friend on Zalo",
+      "PHONE_DUPLICATED_ALERT": "Phone number already belongs to another contact",
+      "IS_YOU_INFO": "This is your account information",
+      "BIO": "Bio",
+      "NOT_UPDATED": "Not updated",
+      "GENDER": "Gender",
+      "DOB": "Date of Birth",
+      "CLOSE": "Close"
     },
     "OMICALL": {
       "CONNECT": "Open PBX Connection",

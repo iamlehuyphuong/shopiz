@@ -128,6 +128,54 @@ class Api::V1::Accounts::Channels::ZaloPersonalChannelsController < Api::V1::Acc
     render json: { error: e.message }, status: :unprocessable_entity
   end
 
+  def get_user_info
+    inbox = Current.account.inboxes.find_by(id: params[:inbox_id])
+    return render json: { error: 'Inbox not found' }, status: :not_found unless inbox&.channel&.is_a?(Channel::ZaloPersonal)
+
+    url = "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/getUserInfo"
+    uid = params[:uid]
+    body = { userId: [uid], ownId: inbox.channel.oa_id }
+
+    response = HTTParty.post(
+      url,
+      headers: ZaloPersonal::ApiHelper.request_headers,
+      body: body.to_json
+    )
+
+    if response.success? && response['data'].present?
+      data = response['data']
+      profiles = (data['changed_profiles'] || {}).merge(data['unchanged_profiles'] || {})
+      user_info = profiles[uid.to_s] || {}
+
+      if user_info.present?
+        gender_str = case user_info['gender']
+                     when 0 then 'Nam'
+                     when 1 then 'Nữ'
+                     else 'Chưa cập nhật'
+                     end
+
+        render json: {
+          data: {
+            name: user_info['zaloName'] || user_info['displayName'] || user_info['zalo_name'] || user_info['display_name'],
+            avatar: user_info['avatar'],
+            cover: user_info['cover'],
+            bio: user_info['status'],
+            gender: gender_str,
+            dob: user_info['sdob'],
+            is_friend: user_info['isFr'] == 1 || user_info['isFr'] == true || user_info['isFr'] == '1'
+          }
+        }
+      else
+        render json: { error: 'User not found' }, status: :not_found
+      end
+    else
+      render json: { error: response['message'] || 'User not found' }, status: :not_found
+    end
+  rescue StandardError => e
+    handle_exception(e)
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+
   private
 
   def handle_exception(exception)
