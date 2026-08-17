@@ -56,7 +56,7 @@ jobs:
           context: .
           file: docker/Dockerfile.prod
           platforms: ${{ matrix.platform }}
-          outputs: type=image,name=ghcr.io/effiai-one/shopiz,push-by-digest=true,name-canonical=true,push=true
+          outputs: type=image,name=ghcr.io/iamlehuyphuong/shopiz,push-by-digest=true,name-canonical=true,push=true
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -108,7 +108,7 @@ jobs:
           # Normalize branch name (replace / with -)
           SAFE_BRANCH=$(echo "$BRANCH" | tr '/' '-')
           
-          IMAGE="ghcr.io/effiai-one/shopiz"
+          IMAGE="ghcr.io/iamlehuyphuong/shopiz"
           
           TAG_1="${IMAGE}:${SAFE_BRANCH}-${SHA}"
           TAG_2="${IMAGE}:${SAFE_BRANCH}"
