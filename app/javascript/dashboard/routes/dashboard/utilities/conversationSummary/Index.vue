@@ -14,6 +14,7 @@ import { useAlert } from 'dashboard/composables';
 import ComboBox from 'dashboard/components-next/combobox/ComboBox.vue';
 import { timeZoneOptions } from '../../settings/inbox/helpers/businessHour';
 import { useCaptain } from 'dashboard/composables/useCaptain';
+import { getInboxIconByType } from 'dashboard/helper/inbox';
 
 const { t } = useI18n();
 const getters = useStoreGetters();
@@ -82,7 +83,7 @@ const inboxOptions = computed(() => {
   return inboxes.value.map(inbox => ({
     id: inbox.id,
     name: inbox.name,
-    icon: 'i-lucide-inbox',
+    icon: getInboxIconByType(inbox.channel_type, inbox.phone_number),
   }));
 });
 
@@ -90,7 +91,10 @@ const agentOptions = computed(() => {
   return agents.value.map(agent => ({
     id: agent.id,
     name: agent.name,
-    icon: 'i-lucide-user',
+    thumbnail: {
+      name: agent.name,
+      src: agent.thumbnail,
+    },
   }));
 });
 

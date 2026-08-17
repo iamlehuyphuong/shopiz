@@ -7,6 +7,7 @@ import DropdownContainer from 'next/dropdown-menu/base/DropdownContainer.vue';
 import DropdownSection from 'next/dropdown-menu/base/DropdownSection.vue';
 import DropdownBody from 'next/dropdown-menu/base/DropdownBody.vue';
 import DropdownItem from 'next/dropdown-menu/base/DropdownItem.vue';
+import Avatar from 'dashboard/components-next/avatar/Avatar.vue';
 
 const { options, maxChips, dropdownMaxHeight, disabled } = defineProps({
   options: {
@@ -110,7 +111,14 @@ const toggleOption = option => {
           :key="item.name"
           class="px-3 border-r rtl:border-l rtl:border-r-0 border-n-weak text-n-slate-12 text-sm flex gap-2 items-center max-w-[200px]"
         >
-          <Icon v-if="item.icon" :icon="item.icon" class="flex-shrink-0" />
+          <Avatar
+            v-if="item.thumbnail"
+            :name="item.thumbnail.name"
+            :src="item.thumbnail.src"
+            :size="16"
+            class="flex-shrink-0"
+          />
+          <Icon v-else-if="item.icon" :icon="item.icon" class="flex-shrink-0" />
           <span class="truncate">{{ item.name }}</span>
         </div>
         <div
@@ -150,6 +158,13 @@ const toggleOption = option => {
           preserve-open
           @click="toggleOption(option)"
         >
+          <template v-if="option.thumbnail" #icon>
+            <Avatar
+              :name="option.thumbnail.name"
+              :src="option.thumbnail.src"
+              :size="16"
+            />
+          </template>
           <template #label>
             {{ option.name }}
             <Icon
