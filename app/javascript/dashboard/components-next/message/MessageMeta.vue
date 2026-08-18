@@ -72,7 +72,8 @@ const isSent = computed(() => {
     isASmsInbox.value ||
     isATelegramChannel.value ||
     isAnInstagramChannel.value ||
-    isATiktokChannel.value
+    isATiktokChannel.value ||
+    isAZaloPersonal.value
   ) {
     return sourceId.value && status.value === MESSAGE_STATUS.SENT;
   }

@@ -81,9 +81,10 @@ class Channel::ZaloPersonal < ApplicationRecord
     if res['error'].present? && res['error'].to_s != '0'
       Rails.logger.error "ZaloPersonal send_message_cs error: #{res['message']}"
       check_disconnection!
-      { 'error' => 1, 'message' => res['error'] }
+      { 'error' => 1, 'message' => res['message'] || res['error'] }
     else
-      { 'error' => 0, 'data' => { 'message_id' => res['data']['message']['msgId'] } }
+      msg_id = res.dig('data', 'message', 'msgId') || res.dig('data', 'message_id')
+      { 'error' => 0, 'data' => { 'message_id' => msg_id } }
     end
   end
 
@@ -245,9 +246,12 @@ class Channel::ZaloPersonal < ApplicationRecord
     if response['error'].present? && response['error'].to_s != '0'
       Rails.logger.error "ZaloPersonal file error: #{response['message']}"
       check_disconnection!
-      { 'error' => 1, 'message' => response['error'] }
+      { 'error' => 1, 'message' => response['message'] || response['error'] }
     else
-      { 'error' => 0, 'data' => { 'message_id' => response['data']['attachment'][0]['msgId'] } }
+      msg_id = response.dig('data', 'attachment', 0, 'msgId') ||
+               response.dig('data', 'message_id') ||
+               response.dig('data', 'message', 'msgId')
+      { 'error' => 0, 'data' => { 'message_id' => msg_id } }
     end
   end
 
