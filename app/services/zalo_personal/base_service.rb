@@ -262,9 +262,24 @@ class ZaloPersonal::BaseService
     end
 
     content_hash = params[:content].is_a?(Hash) || params[:content].is_a?(ActionController::Parameters) ? params[:content] : {}
+    media_params = {}
+    content_params_str = content_hash[:params] || content_hash['params']
+    if content_params_str.present?
+      begin
+        media_params = JSON.parse(content_params_str)
+      rescue JSON::ParserError
+        # ignore
+      end
+    end
+
     url = params[:url] || params.dig(:file, :url) ||
+          media_params['hdUrl'] || media_params['normalUrl'] ||
+          content_hash[:hdUrl] || content_hash['hdUrl'] ||
+          content_hash[:normalUrl] || content_hash['normalUrl'] ||
           content_hash[:href] || content_hash['href'] ||
           content_hash[:thumb] || content_hash['thumb']
+
+    url ||= params[:content] if params[:content].is_a?(String) && params[:content].match?(%r{^https?://})
 
     if params[:content].is_a?(Hash) || params[:content].is_a?(ActionController::Parameters)
       params[:content] = extract_text_from_hash(params[:content], is_media: true)

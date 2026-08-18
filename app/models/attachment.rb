@@ -59,6 +59,11 @@ class Attachment < ApplicationRecord
     file.attached? ? file.blob.url : ''
   end
 
+  def proxy_url
+    ActiveStorage::Current.url_options = Rails.application.routes.default_url_options if ActiveStorage::Current.url_options.blank?
+    file.attached? ? rails_storage_proxy_url(file) : ''
+  end
+
   def thumb_url
     return '' unless file.attached? && image?
 

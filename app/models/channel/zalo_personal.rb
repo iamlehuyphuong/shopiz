@@ -41,15 +41,30 @@ class Channel::ZaloPersonal < ApplicationRecord
   end
 
   def send_message(user_id, message)
-    if attachment = message.attachments&.first
-      response = send_attachment(user_id, attachment, message.conversation.zalo_group?)
-      if (response['error']).zero?
-        additional_attributes = message.additional_attributes
-        additional_attributes['attachment_msg_id'] = response['data']['message_id']
+    images = message.attachments.to_a.select { |a| a.file_type == 'image' }
+    other_attachments = message.attachments.to_a.reject { |a| a.file_type == 'image' }
+    
+    last_response = nil
+
+    if images.any?
+      last_response = send_images(user_id, images, message.conversation.zalo_group?)
+      if last_response && last_response['error'].to_i.zero?
+        additional_attributes = message.additional_attributes || {}
+        additional_attributes['attachment_msg_id'] = last_response.dig('data', 'message_id')
         message.update_columns(additional_attributes: additional_attributes)
       end
     end
-    return response unless message.content
+
+    other_attachments.each do |attachment|
+      last_response = send_attachment(user_id, attachment, message.conversation.zalo_group?)
+      if last_response && last_response['error'].to_i.zero?
+        additional_attributes = message.additional_attributes || {}
+        additional_attributes['attachment_msg_id'] = last_response.dig('data', 'message_id')
+        message.update_columns(additional_attributes: additional_attributes)
+      end
+    end
+
+    return last_response if message.content.blank? && last_response
 
     body = message_body(user_id, message)
     send_message_cs(body)
@@ -227,20 +242,60 @@ class Channel::ZaloPersonal < ApplicationRecord
     "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendmessage"
   end
 
-  def send_image_to_user_url
-    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendImageToUser"
+  def send_image_url
+    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendImage"
   end
 
-  def send_image_to_group_url
-    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendImageToGroup"
+  def send_images_url
+    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendImages"
   end
 
   def send_file_url
     "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendFile"
   end
 
+  def send_video_url
+    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendVideo"
+  end
+
+  def send_voice_url
+    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendVoice"
+  end
+
+  def send_sticker_url
+    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendSticker"
+  end
+
+  def send_link_url
+    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendLink"
+  end
+
+  def send_card_url
+    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/sendCard"
+  end
+
+  def add_reaction_url
+    "#{GlobalConfigService.load('ZALO_API_URL', nil)}/api/addReaction"
+  end
+
   def send_attachment(user_id, attachment, is_zalo_group)
-    method = attachment.file_type == 'image' ? :send_image : :send_file
+    method = case attachment.file_type.to_s
+             when 'image'
+               :send_image
+             when 'video'
+               :send_video
+             when 'audio'
+               :send_voice
+             when 'sticker'
+               :send_sticker
+             when 'share'
+               :send_link
+             when 'contact'
+               :send_card
+             else
+               :send_file
+             end
+
     response = send(method, user_id, attachment, is_zalo_group)
 
     if response['error'].present? && response['error'].to_s != '0'
@@ -257,10 +312,12 @@ class Channel::ZaloPersonal < ApplicationRecord
 
   def send_file(user_id, attachment, is_zalo_group)
     body = {
-      filePath: attachment.file_url,
+      ownId: oa_id,
       threadId: user_id,
       type: is_zalo_group ? 1 : 0,
-      ownId: oa_id
+      filePath: attachment.proxy_url.presence || attachment.download_url || '',
+      fileName: attachment.file.filename.to_s,
+      filename: attachment.file.filename.to_s
     }
 
     HTTParty.post(
@@ -271,16 +328,156 @@ class Channel::ZaloPersonal < ApplicationRecord
   end
 
   def send_image(user_id, attachment, is_zalo_group)
-    url_upload = is_zalo_group ? send_image_to_group_url : send_image_to_user_url
+    image_path = attachment.proxy_url.presence || attachment.download_url || ''
 
     body = {
-      imagePath: attachment.file_url,
+      ownId: oa_id,
       threadId: user_id,
-      ownId: oa_id
+      type: is_zalo_group ? 1 : 0,
+      imagePath: image_path
+    }
+
+    response = HTTParty.post(
+      send_image_url,
+      headers: ZaloPersonal::ApiHelper.request_headers,
+      body: body.to_json
+    )
+
+    if response['error'].present? && response['error'].to_s != '0'
+      Rails.logger.error "ZaloPersonal send_image error: #{response['message']}"
+      check_disconnection!
+      { 'error' => 1, 'message' => response['message'] || response['error'] }
+    else
+      msg_id = response.dig('data', 'attachment', 0, 'msgId') ||
+               response.dig('data', 'message_id') ||
+               response.dig('data', 'message', 'msgId')
+      { 'error' => 0, 'data' => { 'message_id' => msg_id } }
+    end
+  end
+
+  def send_images(user_id, attachments, is_zalo_group)
+    image_paths = attachments.map { |att| att.proxy_url.presence || att.download_url || '' }
+
+    body = {
+      ownId: oa_id,
+      threadId: user_id,
+      type: is_zalo_group ? 1 : 0,
+      imagePaths: image_paths
+    }
+
+    response = HTTParty.post(
+      send_images_url,
+      headers: ZaloPersonal::ApiHelper.request_headers,
+      body: body.to_json
+    )
+    
+    if response['error'].present? && response['error'].to_s != '0'
+      Rails.logger.error "ZaloPersonal send_images error: #{response['message']}"
+      check_disconnection!
+      { 'error' => 1, 'message' => response['message'] || response['error'] }
+    else
+      msg_id = response.dig('data', 'attachment', 0, 'msgId') ||
+               response.dig('data', 'message_id') ||
+               response.dig('data', 'message', 'msgId')
+      { 'error' => 0, 'data' => { 'message_id' => msg_id } }
+    end
+  end
+
+  def send_video(user_id, attachment, is_zalo_group)
+    body = {
+      ownId: oa_id,
+      threadId: user_id,
+      type: is_zalo_group ? 1 : 0,
+      videoUrl: attachment.proxy_url.presence || attachment.download_url || '',
+      fileName: attachment.file.filename.to_s,
+      filename: attachment.file.filename.to_s,
+      thumbnailUrl: attachment.thumb_url || '',
+      msg: attachment.message&.content || ''
     }
 
     HTTParty.post(
-      url_upload,
+      send_video_url,
+      headers: ZaloPersonal::ApiHelper.request_headers,
+      body: body.to_json
+    )
+  end
+
+  def send_voice(user_id, attachment, is_zalo_group)
+    # FIXME: API zca-js (v2.1.2) có bug khi xử lý URL trong sendVoice ("Unable to get voice content: Invalid URL").
+    # Tạm thời fallback gửi file audio dưới dạng file đính kèm thông thường.
+    send_file(user_id, attachment, is_zalo_group)
+  end
+
+  def send_sticker(user_id, attachment, is_zalo_group)
+    sticker_id = attachment.meta&.dig('sticker_id') || attachment.meta&.dig('id') || attachment.external_url.to_i
+    cate_id = attachment.meta&.dig('cate_id') || attachment.meta&.dig('cateId') || 0
+    sticker_type = attachment.meta&.dig('sticker_type') || attachment.meta&.dig('type') || 1
+
+    body = {
+      ownId: oa_id,
+      threadId: user_id,
+      type: is_zalo_group ? 1 : 0,
+      sticker: {
+        id: sticker_id.to_i,
+        cateId: cate_id.to_i,
+        type: sticker_type.to_i
+      }
+    }
+
+    HTTParty.post(
+      send_sticker_url,
+      headers: ZaloPersonal::ApiHelper.request_headers,
+      body: body.to_json
+    )
+  end
+
+  def send_link(user_id, attachment, is_zalo_group)
+    body = {
+      ownId: oa_id,
+      threadId: user_id || '',
+      type: is_zalo_group ? 1 : 0,
+      linkUrl: attachment.external_url.presence || attachment.proxy_url.presence || attachment.download_url || '',
+      msg: attachment.message&.content || ''
+    }
+
+    HTTParty.post(
+      send_link_url,
+      headers: ZaloPersonal::ApiHelper.request_headers,
+      body: body.to_json
+    )
+  end
+
+  def send_card(user_id, attachment, is_zalo_group)
+    phone = attachment.meta&.dig('phone_number') || attachment.fallback_title || ''
+    contact_id = attachment.meta&.dig('user_id') || ''
+
+    body = {
+      ownId: oa_id,
+      threadId: user_id,
+      type: is_zalo_group ? 1 : 0,
+      userId: contact_id,
+      phoneNumber: phone
+    }
+
+    HTTParty.post(
+      send_card_url,
+      headers: ZaloPersonal::ApiHelper.request_headers,
+      body: body.to_json
+    )
+  end
+
+  def add_reaction(user_id, message_id, cli_msg_id, reaction_icon = '👍', is_zalo_group = false)
+    body = {
+      ownId: oa_id,
+      threadId: user_id || '',
+      type: is_zalo_group ? 1 : 0,
+      msgId: message_id || '',
+      cliMsgId: cli_msg_id || '',
+      icon: reaction_icon || ''
+    }
+
+    HTTParty.post(
+      add_reaction_url,
       headers: ZaloPersonal::ApiHelper.request_headers,
       body: body.to_json
     )
