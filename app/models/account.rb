@@ -193,6 +193,7 @@ class Account < ApplicationRecord
 
   enum :locale, LANGUAGES_CONFIG.map { |key, val| [val[:iso_639_1_code], key] }.to_h, prefix: true
   enum :status, { active: 0, suspended: 1 }
+  attribute :type_id, :integer, default: 0
   enum :type_id, { personal: 0, company: 1 }
 
   scope :with_auto_resolve, -> { where("(settings ->> 'auto_resolve_after')::int IS NOT NULL") }
