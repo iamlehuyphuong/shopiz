@@ -21,7 +21,7 @@ class ZaloPersonal::BaseService
 
     enqueue_attachment_downloads
   rescue ArgumentError => e
-    Rails.logger.error "Zalo Personal Unhandled MsgType: #{params.dig(:data, :msgType)} - Payload: #{params[:data].to_json} - Error: #{e.message}"
+    Rails.logger.error "Zalo Personal Error: #{e.class} - #{e.message} - MsgType: #{params[:msgType]} - Payload: #{params.to_json}"
   end
 
   def enqueue_attachment_downloads
@@ -172,7 +172,7 @@ class ZaloPersonal::BaseService
     elsif msg_type.match?(/webchat|chat\.text/)
       process_text_message
     else
-      content_url = params[:url] || params.dig(:file, :url) ||
+      content_url = params[:url] || (params[:file].is_a?(Hash) ? params[:file][:url] : nil) ||
                     content_hash[:href] || content_hash['href'] ||
                     content_hash[:thumb] || content_hash['thumb']
 
@@ -272,7 +272,7 @@ class ZaloPersonal::BaseService
       end
     end
 
-    url = params[:url] || params.dig(:file, :url) ||
+    url = params[:url] || (params[:file].is_a?(Hash) ? params[:file][:url] : nil) ||
           media_params['hdUrl'] || media_params['normalUrl'] ||
           content_hash[:hdUrl] || content_hash['hdUrl'] ||
           content_hash[:normalUrl] || content_hash['normalUrl'] ||
@@ -325,7 +325,7 @@ class ZaloPersonal::BaseService
       params[:content] = extract_text_from_hash(params[:content], is_media: true)
     end
 
-    url = extracted_url || params[:url] || params.dig(:file, :url)
+    url = extracted_url || params[:url] || (params[:file].is_a?(Hash) ? params[:file][:url] : nil)
     url ||= params[:content] if params[:content].is_a?(String) && params[:content].match?(%r{^https?://})
 
     # Clear text content if it's just the file URL or the file title
@@ -599,7 +599,7 @@ class ZaloPersonal::BaseService
     name = @user_info['zaloName'].presence || @user_info['displayName'].presence
     update_params = {
       name: name,
-      gender_id: @user_info['gender'],
+      gender_id: (Contact.gender_ids.value?(@user_info['gender'].to_i) ? @user_info['gender'] : nil),
       additional_attributes: attributes,
       birthday: begin
         Date.parse(@user_info['sdob'])

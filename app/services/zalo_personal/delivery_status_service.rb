@@ -37,7 +37,7 @@ class ZaloPersonal::DeliveryStatusService
 
   def reaction_message
     content_hash = params[:content].is_a?(Hash) ? params[:content].with_indifferent_access : {}
-    
+
     g_msg_id = content_hash.dig(:rMsg, 0, :gMsgID).to_s
     c_msg_id = content_hash.dig(:rMsg, 0, :cMsgID).to_s
     msg_id = g_msg_id.presence || params[:msgId].to_s
@@ -55,9 +55,9 @@ class ZaloPersonal::DeliveryStatusService
     raw_icon = content_hash.key?(:rIcon) ? content_hash[:rIcon].to_s : params[:reactionType].to_s
     icon = REACTION_MAPPING[raw_icon] || raw_icon
 
-    content_attributes = @message.content_attributes || {}
+    content_attributes = (@message.content_attributes || {}).deep_dup
     reactions = Array(content_attributes['reactions'])
-    
+
     if raw_icon.blank? || raw_icon == 'NONE'
       # Zalo sends empty string when reaction is removed
       reactions.clear

@@ -36,7 +36,7 @@ class ZaloPersonal::SyncFriendsService
   def create_or_update_contact(friend_data)
     phone_number = friend_data['phoneNumber'].presence
     phone_number = "+#{phone_number}" if phone_number.present? && !phone_number.start_with?('+')
-    
+
     additional_attributes = {
       zalo_friend_inbox_ids: friend_data['isFr'] ? [@inbox.id] : [],
       source_id: friend_data['userId']
@@ -59,11 +59,12 @@ class ZaloPersonal::SyncFriendsService
     return unless contact_inbox
 
     contact = contact_inbox.contact
-    
+
     # Update other attributes like gender and birthday, similar to base_service.rb
     update_params = {}
-    update_params[:gender_id] = friend_data['gender'] if friend_data['gender'].present?
-    
+    gender_value = friend_data['gender']
+    update_params[:gender_id] = gender_value if gender_value.present? && Contact.gender_ids.value?(gender_value.to_i)
+
     if friend_data['sdob'].present?
       begin
         # Assuming Zalo sdob is DD/MM/YYYY or similar
@@ -72,10 +73,10 @@ class ZaloPersonal::SyncFriendsService
         # ignore parse error
       end
     end
-    
+
     # BaseService also updates attributes directly in case ContactInboxBuilder reused an existing contact
     attrs = contact.additional_attributes || {}
-    
+
     unless friend_data['isFr'].nil?
       inbox_ids = Array(attrs['zalo_friend_inbox_ids'] || attrs[:zalo_friend_inbox_ids] || [])
       if friend_data['isFr']
@@ -85,11 +86,11 @@ class ZaloPersonal::SyncFriendsService
       end
       attrs[:zalo_friend_inbox_ids] = inbox_ids.uniq.compact
     end
-    
+
     attrs[:description] = friend_data['status'] if friend_data['status'].present?
-    
+
     update_params[:additional_attributes] = attrs
-    
+
     contact.update!(update_params) if update_params.present?
   end
 

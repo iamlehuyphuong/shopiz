@@ -19,7 +19,8 @@ class Zalo::ReactionService
     message = inbox.messages.find_by(source_id: msg_id)
     return unless message
 
-    reactions = message.content_attributes['reactions'] || []
+    content_attributes = message.content_attributes ? message.content_attributes.deep_dup : {}
+    reactions = content_attributes['reactions'] || []
 
     # Remove existing reaction from same user if any
     reactions.reject! { |r| r['user_id'] == sender_id }
@@ -34,8 +35,8 @@ class Zalo::ReactionService
       }
     end
 
-    message.content_attributes['reactions'] = reactions
-    message.save!
+    content_attributes['reactions'] = reactions
+    message.update!(content_attributes: content_attributes)
   end
 
   private

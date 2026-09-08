@@ -75,7 +75,7 @@ class Contact < ApplicationRecord
   after_destroy_commit :dispatch_destroy_event
 
   enum contact_type: { visitor: 0, lead: 1, customer: 2 }
-  enum gender_id: { male: 0, female: 1 }
+  enum gender_id: { male: 0, female: 1, other: 2 }
 
   scope :order_on_last_activity_at, lambda { |direction|
     order(
