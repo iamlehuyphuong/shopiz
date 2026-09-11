@@ -1305,5 +1305,30 @@
       "UPGRADE_NOW": "Nâng cấp ngay",
       "CANCEL": "Huỷ bỏ"
     }
+  },
+  "PAYMENT_SETTINGS": {
+    "TITLE": "Cài đặt thanh toán",
+    "DESCRIPTION": "Cấu hình các cổng thanh toán cho bán hàng.",
+    "SEPAY": {
+      "TITLE": "Cấu hình SePay",
+      "COMPANY_NAME": "Tên đơn vị",
+      "COMPANY_CODE": "Mã đơn vị",
+      "SECRET_KEY": "Secret Key"
+    },
+    "PAYOS": {
+      "TITLE": "Cấu hình PayOS",
+      "CLIENT_ID": "Client ID",
+      "API_KEY": "API Key",
+      "CHECKSUM_KEY": "Checksum Key"
+    },
+    "DEFAULT_PROVIDER": "Kênh thanh toán mặc định",
+    "WEBHOOK_URL": "Webhook URL (Chỉ đọc)",
+    "TEST_PAYMENT": "Test thanh toán",
+    "TINGEE": {
+      "TAB_TITLE": "Tingee (sắp tích hợp)",
+      "TITLE": "Cấu hình Tingee",
+      "EMPTY_STATE_TITLE": "Tính năng đang được phát triển",
+      "EMPTY_STATE_DESC": "Cổng thanh toán Tingee sẽ sớm được tích hợp để bạn có thêm lựa chọn thu tiền từ khách hàng."
+    }
   }
 }

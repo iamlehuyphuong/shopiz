@@ -1312,6 +1312,7 @@
     "DESCRIPTION": "Configure payment gateways for your sales.",
     "SEPAY": {
       "TITLE": "SePay Configuration",
+      "COMPANY_NAME": "Company Name",
       "COMPANY_CODE": "Company Code",
       "SECRET_KEY": "Secret Key"
     },
@@ -1320,6 +1321,15 @@
       "CLIENT_ID": "Client ID",
       "API_KEY": "API Key",
       "CHECKSUM_KEY": "Checksum Key"
+    },
+    "DEFAULT_PROVIDER": "Default Payment Gateway",
+    "WEBHOOK_URL": "Webhook URL (Read-only)",
+    "TEST_PAYMENT": "Test Payment",
+    "TINGEE": {
+      "TAB_TITLE": "Tingee (Coming soon)",
+      "TITLE": "Tingee Configuration",
+      "EMPTY_STATE_TITLE": "Feature in development",
+      "EMPTY_STATE_DESC": "Tingee payment gateway will be integrated soon to give you more options for collecting payments."
     }
   }
 }

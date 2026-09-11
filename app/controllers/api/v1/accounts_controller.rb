@@ -129,7 +129,7 @@ class Api::V1::AccountsController < Api::BaseController
       ] },
       { sales_payment_config: [
         :default_provider,
-        { sepay: [:active, :company_code, :secret_key] },
+        { sepay: [:active, :company_name, :company_code, :secret_key] },
         { payos: [:active, :client_id, :api_key, :checksum_key] }
       ] }
     ]

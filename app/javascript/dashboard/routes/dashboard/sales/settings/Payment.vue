@@ -12,6 +12,7 @@ import NextInput from 'next/input/Input.vue';
 import TabBar from 'dashboard/components-next/tabbar/TabBar.vue';
 import { useVuelidate } from '@vuelidate/core';
 import { requiredIf } from '@vuelidate/validators';
+import { copyTextToClipboard } from 'shared/helpers/clipboard';
 
 const { t } = useI18n();
 const store = useStore();
@@ -27,7 +28,7 @@ const isTesting = ref(false);
 const tabs = computed(() => [
   { label: 'SePay', key: 'sepay' },
   { label: 'PayOS', key: 'payos' },
-  { label: 'Tingee (sắp tích hợp)', key: 'tingee' },
+  { label: t('PAYMENT_SETTINGS.TINGEE.TAB_TITLE') || 'Tingee', key: 'tingee' },
 ]);
 
 const activeTabIndex = ref(0);
@@ -41,6 +42,7 @@ const defaultProvider = ref('');
 
 const sepayConfig = reactive({
   active: false,
+  company_name: '',
   company_code: '',
   secret_key: '',
 });
@@ -58,6 +60,7 @@ const loadConfig = () => {
 
   const sepay = config.sepay || {};
   sepayConfig.active = !!sepay.active;
+  sepayConfig.company_name = sepay.company_name || '';
   sepayConfig.company_code = sepay.company_code || '';
   sepayConfig.secret_key = sepay.secret_key || '';
 
@@ -89,13 +92,14 @@ const handleDefaultProviderChange = (provider, value) => {
 const rules = computed(() => {
   return {
     sepayConfig: {
-      company_code: { required: requiredIf(() => sepayConfig.active) },
-      secret_key: { required: requiredIf(() => sepayConfig.active) },
+      company_name: { required: requiredIf(() => defaultProvider.value === 'sepay' || !!sepayConfig.company_code || !!sepayConfig.secret_key) },
+      company_code: { required: requiredIf(() => defaultProvider.value === 'sepay' || !!sepayConfig.company_name || !!sepayConfig.secret_key) },
+      secret_key: { required: requiredIf(() => defaultProvider.value === 'sepay' || !!sepayConfig.company_name || !!sepayConfig.company_code) },
     },
     payosConfig: {
-      client_id: { required: requiredIf(() => payosConfig.active) },
-      api_key: { required: requiredIf(() => payosConfig.active) },
-      checksum_key: { required: requiredIf(() => payosConfig.active) },
+      client_id: { required: requiredIf(() => defaultProvider.value === 'payos' || !!payosConfig.api_key || !!payosConfig.checksum_key) },
+      api_key: { required: requiredIf(() => defaultProvider.value === 'payos' || !!payosConfig.client_id || !!payosConfig.checksum_key) },
+      checksum_key: { required: requiredIf(() => defaultProvider.value === 'payos' || !!payosConfig.client_id || !!payosConfig.api_key) },
     },
   };
 });
@@ -115,12 +119,13 @@ const handleSave = async () => {
       sales_payment_config: {
         default_provider: defaultProvider.value,
         sepay: {
-          active: sepayConfig.active,
+          active: !!(sepayConfig.company_code && sepayConfig.secret_key && sepayConfig.company_name),
+          company_name: sepayConfig.company_name,
           company_code: sepayConfig.company_code,
           secret_key: sepayConfig.secret_key,
         },
         payos: {
-          active: payosConfig.active,
+          active: !!(payosConfig.client_id && payosConfig.api_key && payosConfig.checksum_key),
           client_id: payosConfig.client_id,
           api_key: payosConfig.api_key,
           checksum_key: payosConfig.checksum_key,
@@ -162,6 +167,11 @@ const payosWebhookUrl = computed(() =>
     ? `${host}/api/v1/webhooks/sales_payments/payos/${currentAccount.value.id}`
     : ''
 );
+
+const handleCopy = async (text) => {
+  await copyTextToClipboard(text);
+  useAlert(t('COMPONENTS.CODE.COPIED') || 'Copied successfully');
+};
 </script>
 
 <template>
@@ -186,7 +196,7 @@ const payosWebhookUrl = computed(() =>
         </p>
       </div>
 
-      <div class="flex items-center gap-4 border-b border-n-weak pb-4">
+      <div class="flex items-center gap-4">
         <TabBar
           :tabs="tabs"
           :initial-active-tab="activeTabIndex"
@@ -199,27 +209,30 @@ const payosWebhookUrl = computed(() =>
         <SectionLayout
           v-if="activeTabKey === 'sepay'"
           :title="$t('PAYMENT_SETTINGS.SEPAY.TITLE') || 'SePay Configuration'"
-          with-border
         >
-          <template #headerActions>
-            <div class="flex items-center gap-4">
-              <div class="flex items-center gap-2">
-                <span class="text-sm font-medium text-n-slate-11">Kênh thanh toán mặc định</span>
+          <form class="grid gap-4 mt-2" @submit.prevent="handleSave">
+            <div class="grid gap-4">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-medium text-n-slate-12">{{ $t('PAYMENT_SETTINGS.DEFAULT_PROVIDER') || 'Default Payment Gateway' }}</span>
                 <Switch
                   :model-value="defaultProvider === 'sepay'"
                   @update:model-value="val => handleDefaultProviderChange('sepay', val)"
                 />
               </div>
-              <div class="w-px h-4 bg-n-strong" />
-              <Switch v-model="sepayConfig.active" />
-            </div>
-          </template>
 
-          <form class="grid gap-4 mt-2" @submit.prevent="handleSave">
-            <div
-              v-if="sepayConfig.active"
-              class="grid gap-4 bg-n-alpha-black2 p-4 rounded-lg"
-            >
+              <WithLabel
+                name="sepay-company-name"
+                :has-error="v$.sepayConfig.company_name.$error"
+                :label="$t('PAYMENT_SETTINGS.SEPAY.COMPANY_NAME') || 'Company Name'"
+              >
+                <NextInput
+                  v-model="sepayConfig.company_name"
+                  type="text"
+                  class="w-full"
+                  @blur="v$.sepayConfig.company_name.$touch"
+                />
+              </WithLabel>
+
               <WithLabel
                 name="sepay-company-code"
                 :has-error="v$.sepayConfig.company_code.$error"
@@ -248,13 +261,23 @@ const payosWebhookUrl = computed(() =>
                 />
               </WithLabel>
 
-              <WithLabel name="sepay-webhook-url" label="Webhook URL (Read-only)">
-                <NextInput
-                  v-model="sepayWebhookUrl"
-                  type="text"
-                  class="w-full bg-n-slate-2 opacity-70"
-                  readonly
-                />
+              <WithLabel name="sepay-webhook-url" :label="$t('PAYMENT_SETTINGS.WEBHOOK_URL') || 'Webhook URL (Read-only)'">
+                <div class="flex items-center gap-2 w-full">
+                  <NextInput
+                    v-model="sepayWebhookUrl"
+                    type="text"
+                    class="w-full text-n-slate-9"
+                    readonly
+                  />
+                  <NextButton
+                    type="button"
+                    icon="i-lucide-copy"
+                    color="slate"
+                    variant="faded"
+                    class="shrink-0"
+                    @click.prevent="handleCopy(sepayWebhookUrl)"
+                  />
+                </div>
               </WithLabel>
             </div>
           </form>
@@ -264,27 +287,17 @@ const payosWebhookUrl = computed(() =>
         <SectionLayout
           v-if="activeTabKey === 'payos'"
           :title="$t('PAYMENT_SETTINGS.PAYOS.TITLE') || 'PayOS Configuration'"
-          with-border
         >
-          <template #headerActions>
-            <div class="flex items-center gap-4">
-              <div class="flex items-center gap-2">
-                <span class="text-sm font-medium text-n-slate-11">Kênh thanh toán mặc định</span>
+          <form class="grid gap-4 mt-2" @submit.prevent="handleSave">
+            <div class="grid gap-4">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-medium text-n-slate-12">{{ $t('PAYMENT_SETTINGS.DEFAULT_PROVIDER') || 'Default Payment Gateway' }}</span>
                 <Switch
                   :model-value="defaultProvider === 'payos'"
                   @update:model-value="val => handleDefaultProviderChange('payos', val)"
                 />
               </div>
-              <div class="w-px h-4 bg-n-strong" />
-              <Switch v-model="payosConfig.active" />
-            </div>
-          </template>
 
-          <form class="grid gap-4 mt-2" @submit.prevent="handleSave">
-            <div
-              v-if="payosConfig.active"
-              class="grid gap-4 bg-n-alpha-black2 p-4 rounded-lg"
-            >
               <WithLabel
                 name="payos-client-id"
                 :has-error="v$.payosConfig.client_id.$error"
@@ -326,13 +339,23 @@ const payosWebhookUrl = computed(() =>
                 />
               </WithLabel>
 
-              <WithLabel name="payos-webhook-url" label="Webhook URL (Read-only)">
-                <NextInput
-                  v-model="payosWebhookUrl"
-                  type="text"
-                  class="w-full bg-n-slate-2 opacity-70"
-                  readonly
-                />
+              <WithLabel name="payos-webhook-url" :label="$t('PAYMENT_SETTINGS.WEBHOOK_URL') || 'Webhook URL (Read-only)'">
+                <div class="flex items-center gap-2 w-full">
+                  <NextInput
+                    v-model="payosWebhookUrl"
+                    type="text"
+                    class="w-full text-n-slate-9"
+                    readonly
+                  />
+                  <NextButton
+                    type="button"
+                    icon="i-lucide-copy"
+                    color="slate"
+                    variant="faded"
+                    class="shrink-0"
+                    @click.prevent="handleCopy(payosWebhookUrl)"
+                  />
+                </div>
               </WithLabel>
             </div>
           </form>
@@ -341,21 +364,20 @@ const payosWebhookUrl = computed(() =>
         <!-- Tingee -->
         <SectionLayout
           v-if="activeTabKey === 'tingee'"
-          title="Tingee Configuration"
-          with-border
+          :title="$t('PAYMENT_SETTINGS.TINGEE.TITLE') || 'Tingee Configuration'"
         >
           <div class="py-12 flex flex-col items-center justify-center bg-n-alpha-black2 rounded-lg border border-dashed border-n-weak">
             <div class="w-12 h-12 rounded-full bg-n-alpha-2 flex items-center justify-center mb-4">
               <fluent-icon icon="rocket" class="w-6 h-6 text-n-slate-11" />
             </div>
-            <h4 class="text-n-slate-12 font-medium mb-2">Tính năng đang được phát triển</h4>
+            <h4 class="text-n-slate-12 font-medium mb-2">{{ $t('PAYMENT_SETTINGS.TINGEE.EMPTY_STATE_TITLE') || 'Feature in development' }}</h4>
             <p class="text-sm text-n-slate-11 text-center max-w-md">
-              Cổng thanh toán Tingee sẽ sớm được tích hợp để bạn có thêm lựa chọn thu tiền từ khách hàng.
+              {{ $t('PAYMENT_SETTINGS.TINGEE.EMPTY_STATE_DESC') }}
             </p>
           </div>
         </SectionLayout>
 
-        <div class="flex items-center justify-between mt-4">
+        <div class="flex items-center justify-end gap-3 mt-4">
           <NextButton
             variant="faded"
             color="slate"
@@ -363,7 +385,7 @@ const payosWebhookUrl = computed(() =>
             :is-loading="isTesting"
             @click="handleTestPayment"
           >
-            Test thanh toán
+            {{ $t('PAYMENT_SETTINGS.TEST_PAYMENT') || 'Test Payment' }}
           </NextButton>
           <NextButton blue :is-loading="isSaving" @click="handleSave">
             {{ $t('GENERAL_SETTINGS.SUBMIT') }}
