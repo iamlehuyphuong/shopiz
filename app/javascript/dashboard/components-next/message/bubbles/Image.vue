@@ -102,7 +102,10 @@ const handleImageError = () => {
         />
       </div>
     </div>
-    <div v-else class="flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 min-w-[200px] min-h-[200px]">
+    <div
+      v-else
+      class="flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 min-w-[200px] min-h-[200px]"
+    >
       <Spinner />
     </div>
   </BaseBubble>

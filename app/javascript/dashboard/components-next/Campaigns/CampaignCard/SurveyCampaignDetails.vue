@@ -40,12 +40,7 @@ const senderThumbnail = computed(() => props.sender?.thumbnail || '');
       {{ t('CAMPAIGN.SURVEY.CARD.CAMPAIGN_DETAILS.SENT_BY') }}
     </span>
     <div class="flex items-center gap-1.5 flex-shrink-0">
-      <Avatar
-        :name="senderName"
-        :src="senderThumbnail"
-        :size="16"
-        branded
-      />
+      <Avatar :name="senderName" :src="senderThumbnail" :size="16" branded />
       <span class="text-sm font-medium text-n-slate-12">
         {{ senderName }}
       </span>

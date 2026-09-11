@@ -597,6 +597,7 @@
     "LANDING_PAGE": "Landing Page",
     "CAMPAIGNS": "Campaigns",
     "SALES": "Sale | Bán hàng",
+    "SALES_PAYMENT": "Payment",
     "SALES_PIPELINE": "Pipeline",
     "SALES_CATALOG": "Catalog",
     "SALES_ORDERS": "Orders",
@@ -753,6 +754,17 @@
     "ZALO_SUPPORT": "Message on Zalo",
     "NO_BILLING_USER": "Your billing account is being configured. Please refresh the page and try again.",
     "PAYMENT_LINK_ERROR": "Could not create payment link. Please check your configuration.",
+    "PAYMENT_FAILED_MODAL": {
+      "TITLE": "Payment Incomplete",
+      "DESCRIPTION": "The payment process was cancelled or encountered an error. Would you like to try paying again?",
+      "CHOOSE_OTHER": "Choose another package",
+      "RETRY": "Try again"
+    },
+    "PAYMENT_SUCCESS_MODAL": {
+      "TITLE": "Payment Successful!",
+      "DESCRIPTION": "Thank you. Your payment transaction has been completed and your plan has been updated.",
+      "CLOSE": "Close"
+    },
     "TOPUP": {
       "BUY_CREDITS": "Buy more credits",
       "MODAL_TITLE": "Buy AI Credits",
@@ -1293,6 +1305,21 @@
       },
       "UPGRADE_NOW": "Upgrade Now",
       "CANCEL": "Cancel"
+    }
+  },
+  "PAYMENT_SETTINGS": {
+    "TITLE": "Payment Settings",
+    "DESCRIPTION": "Configure payment gateways for your sales.",
+    "SEPAY": {
+      "TITLE": "SePay Configuration",
+      "COMPANY_CODE": "Company Code",
+      "SECRET_KEY": "Secret Key"
+    },
+    "PAYOS": {
+      "TITLE": "PayOS Configuration",
+      "CLIENT_ID": "Client ID",
+      "API_KEY": "API Key",
+      "CHECKSUM_KEY": "Checksum Key"
     }
   }
 }

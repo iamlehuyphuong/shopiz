@@ -583,6 +583,7 @@ const menuItems = computed(() => {
         'sales_tools_nhanhvn',
         'sales_tools_integration',
         'sales_settings_index',
+        'sales_payment_settings',
       ],
       children: [
         {
@@ -630,6 +631,13 @@ const menuItems = computed(() => {
             'sales_tools_integration',
           ],
           to: accountScopedRoute('sales_tools_index'),
+        },
+        {
+          name: 'Sales Payment',
+          label: t('SIDEBAR.SALES_PAYMENT'),
+          icon: 'i-lucide-credit-card',
+          activeOn: ['sales_payment_settings'],
+          to: accountScopedRoute('sales_payment_settings'),
         },
         {
           name: 'Sales Settings',

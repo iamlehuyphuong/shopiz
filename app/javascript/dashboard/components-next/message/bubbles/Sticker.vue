@@ -42,11 +42,12 @@ watch(
     data-bubble-name="sticker"
     :show-background="false"
   >
-    <div v-if="hasError" class="flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+    <div
+      v-if="hasError"
+      class="flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700"
+    >
       <Icon icon="i-lucide-sticker" class="text-n-slate-11 w-8 h-8 mb-2" />
-      <p class="mb-0 text-n-slate-11 text-sm font-medium">
-        [Sticker]
-      </p>
+      <p class="mb-0 text-n-slate-11 text-sm font-medium">[Sticker]</p>
     </div>
     <div v-else-if="isLoaded" class="relative group rounded-lg overflow-hidden">
       <img
@@ -56,7 +57,10 @@ watch(
         :height="attachment.height"
       />
     </div>
-    <div v-else class="flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 min-w-[130px] min-h-[130px]">
+    <div
+      v-else
+      class="flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 min-w-[130px] min-h-[130px]"
+    >
       <Spinner />
     </div>
   </BaseBubble>

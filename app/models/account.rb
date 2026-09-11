@@ -125,6 +125,7 @@ class Account < ApplicationRecord
   store_accessor :settings, :keep_pending_on_bot_failure
   store_accessor :settings, :captain_auto_resolve_mode
   store_accessor :settings, :active_ecommerce_platform, :ai_allow_create_order, :order_notification_templates
+  store_accessor :settings, :sales_payment_config
   store_accessor :settings, :custom_email_config
   include AccountCaptainAutoResolve
 

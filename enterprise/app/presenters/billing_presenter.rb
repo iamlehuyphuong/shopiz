@@ -333,8 +333,8 @@ class BillingPresenter
 
   def billing_histories_data
     I18n.with_locale(@account.locale || :en) do
-      @account.billing_histories.where('price_amount > 0').order(id: :asc).as_json(
-        only: [:id, :status, :price_amount],
+      @account.billing_histories.where('price_amount > 0').order(id: :desc).as_json(
+        only: [:id, :status, :price_amount, :order_id, :product_id, :metadata],
         methods: [:status_text, :amount_formatted, :created_date_formatted, :content, :einvoice_url]
       )
     end

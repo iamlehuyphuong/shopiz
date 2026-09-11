@@ -205,6 +205,15 @@ export const routes = [
     ],
   },
   {
+    path: frontendURL('accounts/:accountId/sales/payment'),
+    name: 'sales_payment_settings',
+    meta: {
+      permissions: ['administrator', 'sales_manage'],
+      featureFlag: FEATURE_FLAGS.SALES,
+    },
+    component: () => import('./settings/Payment.vue'),
+  },
+  {
     path: frontendURL('accounts/:accountId/sales/settings'),
     name: 'sales_settings_index',
     meta: {

@@ -152,16 +152,23 @@ async function sendMessage() {
         >
           <div class="text-white size-5 i-teenyicons-user-circle-solid" />
         </div>
-        
+
         <div class="space-y-0.5 overflow-hidden flex-1">
           <div class="truncate text-sm font-medium text-n-slate-12">
             {{ contactName }}
           </div>
           <div v-if="phoneNumber" class="truncate text-xs text-n-slate-11">
-            <span v-dompurify-html="formattedPhoneNumber" class="prose prose-bubble [&>p]:m-0 [&>p]:inline" />
+            <span
+              v-dompurify-html="formattedPhoneNumber"
+              class="prose prose-bubble [&>p]:m-0 [&>p]:inline"
+            />
           </div>
           <div v-if="qrCodeUrl" class="mt-2">
-            <img :src="qrCodeUrl" alt="QR Code" class="w-32 h-32 rounded-lg object-contain bg-white border border-n-container" />
+            <img
+              :src="qrCodeUrl"
+              alt="QR Code"
+              class="w-32 h-32 rounded-lg object-contain bg-white border border-n-container"
+            />
           </div>
         </div>
       </div>
@@ -169,15 +176,15 @@ async function sendMessage() {
       <div class="grid grid-cols-2 gap-2">
         <button
           class="w-full bg-n-solid-3 px-3 py-2 rounded-lg text-sm font-medium text-center border border-n-container transition-colors hover:bg-n-alpha-1"
-          @click="addContact"
           :title="$t('CONTACT_FORM.ZALO_ADD_FRIEND_TOOLTIP')"
+          @click="addContact"
         >
           {{ $t('CONTACT_FORM.ZALO_ADD_FRIEND') }}
         </button>
         <button
           class="w-full bg-n-solid-3 px-3 py-2 rounded-lg text-sm font-medium text-center border border-n-container transition-colors hover:bg-n-alpha-1"
-          @click="sendMessage"
           :title="$t('CONTACT_FORM.ZALO_SEND_MESSAGE_TOOLTIP')"
+          @click="sendMessage"
         >
           {{ $t('CONTACT_FORM.ZALO_SEND_MESSAGE') }}
         </button>

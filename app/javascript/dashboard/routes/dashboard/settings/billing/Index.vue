@@ -1,5 +1,6 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { useMapGetter, useStore } from 'dashboard/composables/store.js';
 import { useCaptain } from 'dashboard/composables/useCaptain';
 import { useAccount } from 'dashboard/composables/useAccount';
@@ -17,6 +18,7 @@ import BillingHistoryItem from './components/BillingHistoryItem.vue';
 import BaseSettingsHeader from '../components/BaseSettingsHeader.vue';
 import SettingsLayout from '../SettingsLayout.vue';
 import ButtonV4 from 'next/button/Button.vue';
+import Dialog from 'next/dialog/Dialog.vue';
 import BillingMeter from './components/BillingMeter.vue';
 
 const { currentAccount } = useAccount();
@@ -205,14 +207,67 @@ const isFreePlan = p => {
   return Number(pAmount) === 0 || p.is_free === true;
 };
 
+const route = useRoute();
+const router = useRouter();
+const paymentFailedModalRef = ref(null);
+const paymentSuccessModalRef = ref(null);
+const cancelledOrderId = ref(null);
+
+const checkPaymentStatus = () => {
+  if (route.query.status === 'CANCELLED' || route.query.cancel === 'true') {
+    cancelledOrderId.value = route.query.orderCode || route.query.id; // PayOS uses orderCode
+    paymentFailedModalRef.value?.open();
+  } else if (route.query.status === 'PAID' || route.query.success === 'true') {
+    paymentSuccessModalRef.value?.open();
+  }
+};
+
+const cleanupUrl = () => {
+  const query = { ...route.query };
+  delete query.status;
+  delete query.success;
+  delete query.cancel;
+  delete query.orderCode;
+  delete query.id;
+  delete query.code;
+  router.replace({ query });
+};
+
+const closeSuccessModal = () => {
+  cleanupUrl();
+};
+
+const cancelledOrder = computed(() => {
+  if (!cancelledOrderId.value) return null;
+  const allHistories = currentAccount.value?.billing?.billing_histories || [];
+  return allHistories.find(h => h.order_id === String(cancelledOrderId.value));
+});
+
+const retryPayment = () => {
+  paymentFailedModalRef.value?.close();
+  if (cancelledOrder.value) {
+    const pType = cancelledOrder.value.metadata?.type || 'plan';
+    onClickBillingPortal({
+      product_id: cancelledOrder.value.product_id,
+      product_type: pType,
+      payment_method: 'auto',
+    });
+  }
+};
+
+const chooseOtherPackage = () => {
+  cleanupUrl();
+};
+
 const fetchAccountDetails = async () => {
   if (!hasABillingPlan.value) {
     await store.dispatch('accounts/subscription');
   }
   // Fetch available plans and other billing details
-  store.dispatch('accounts/billings');
+  await store.dispatch('accounts/billings');
   // Always fetch limits for billing page to show credit usage
   fetchLimits();
+  checkPaymentStatus();
 };
 
 const enterpisePlan = computed(() => {
@@ -561,6 +616,47 @@ onMounted(fetchAccountDetails);
         ref="purchaseCreditsModalRef"
         @success="handleTopupSuccess"
       />
+      <Dialog
+        ref="paymentFailedModalRef"
+        :title="$t('BILLING_SETTINGS.PAYMENT_FAILED_MODAL.TITLE')"
+        :description="$t('BILLING_SETTINGS.PAYMENT_FAILED_MODAL.DESCRIPTION')"
+        width="md"
+        type="alert"
+        :show-confirm-button="true"
+        :show-cancel-button="true"
+        :confirm-button-label="$t('BILLING_SETTINGS.PAYMENT_FAILED_MODAL.RETRY')"
+        :cancel-button-label="$t('BILLING_SETTINGS.PAYMENT_FAILED_MODAL.CHOOSE_OTHER')"
+        @close="chooseOtherPackage"
+        @confirm="retryPayment"
+      />
+      
+      <Dialog
+        ref="paymentSuccessModalRef"
+        width="md"
+        :show-confirm-button="false"
+        :show-cancel-button="false"
+        @close="closeSuccessModal"
+      >
+        <div class="text-center flex flex-col items-center">
+          <div class="w-16 h-16 rounded-full bg-n-green-3 flex items-center justify-center mx-auto mb-4 border border-n-green-6">
+            <fluent-icon icon="checkmark" type="outline" class="w-8 h-8 text-n-green-11" />
+          </div>
+          <h3 class="text-lg font-medium text-n-slate-12 mb-2">
+            {{ $t('BILLING_SETTINGS.PAYMENT_SUCCESS_MODAL.TITLE') }}
+          </h3>
+          <p class="text-sm text-n-slate-11 mb-6">
+            {{ $t('BILLING_SETTINGS.PAYMENT_SUCCESS_MODAL.DESCRIPTION') }}
+          </p>
+          <ButtonV4
+            size="md"
+            color="slate"
+            class="w-full justify-center"
+            :label="$t('BILLING_SETTINGS.PAYMENT_SUCCESS_MODAL.CLOSE')"
+            type="button"
+            @click="closeSuccessModal"
+          />
+        </div>
+      </Dialog>
     </template>
   </SettingsLayout>
 </template>

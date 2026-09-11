@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Đang chuyển hướng thanh toán...</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f8fafc;
+      color: #334155;
+    }
+    .loader {
+      border: 4px solid #e2e8f0;
+      border-top: 4px solid #3b82f6;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .message {
+      font-size: 16px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="loader"></div>
+  <div class="message">Đang chuyển hướng đến cổng thanh toán SePay...</div>
+
+  <form id="sepay-form" action="<%= @checkout_url %>" method="POST" style="display: none;">
+    <% @form_params.each do |key, value| %>
+      <input type="hidden" name="<%= key %>" value="<%= value %>">
+    <% end %>
+  </form>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      document.getElementById("sepay-form").submit();
+    });
+  </script>
+</body>
+</html>

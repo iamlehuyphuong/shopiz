@@ -27,7 +27,7 @@ const trialPlan = computed(() => {
   const plans = billing.plans || [];
   const allPackages = plans.flatMap(tier => tier.packages || []);
   const defaultPackage = allPackages.find(p => p.is_default_for_new_account);
-  
+
   if (defaultPackage) return defaultPackage;
 
   // Fallback
@@ -123,13 +123,19 @@ const skipTrial = () => emit('close');
               <h2 class="text-[22px] font-bold text-n-slate-12 leading-tight">
                 {{ t('WELCOME_TRIAL_MODAL.TITLE') }}
               </h2>
-              <p v-if="trialPlan" class="text-sm text-n-slate-11 leading-relaxed">
+              <p
+                v-if="trialPlan"
+                class="text-sm text-n-slate-11 leading-relaxed"
+              >
                 {{ t('WELCOME_TRIAL_MODAL.DESCRIPTION_PART_1') }}
                 <span class="font-semibold text-n-orange">
-                  {{ trialPlan.duration_days }} {{ t('WELCOME_TRIAL_MODAL.DAYS_FREE_TRIAL') }}
+                  {{ trialPlan.duration_days }}
+                  {{ t('WELCOME_TRIAL_MODAL.DAYS_FREE_TRIAL') }}
                 </span>
                 {{ t('WELCOME_TRIAL_MODAL.DESCRIPTION_PART_2') }}
-                <span class="font-semibold text-n-slate-12">{{ trialPlan.name }}</span>
+                <span class="font-semibold text-n-slate-12">{{
+                  trialPlan.name
+                }}</span>
                 {{ t('WELCOME_TRIAL_MODAL.DESCRIPTION_PART_3') }}
               </p>
             </div>

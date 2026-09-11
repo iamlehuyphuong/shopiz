@@ -148,11 +148,7 @@ const onAgentSelect = index => {
           @mouseover="onHover(getSelectableIndex(item))"
         >
           <div class="ltr:mr-2 rtl:ml-2">
-            <Avatar
-              :src="item.thumbnail"
-              :name="item.displayName"
-              branded
-            />
+            <Avatar :src="item.thumbnail" :name="item.displayName" branded />
           </div>
           <div
             class="overflow-hidden flex-1 max-w-full whitespace-nowrap text-ellipsis"

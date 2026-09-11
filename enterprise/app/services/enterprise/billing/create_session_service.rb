@@ -23,19 +23,26 @@ class Enterprise::Billing::CreateSessionService
     sku = item.sku
     # Format order_code as 15 digits: 5-digit account_id + 10-digit timestamp
     # E.g. account 12 at 1713422345 => 000121713422345 => 121713422345
-    order_code = format("%05d%10d", customer_id, Time.now.to_i).to_i
+    order_code = format('%05d%10d', customer_id, Time.now.to_i).to_i
     description = "TT SHOPIZ #{sku}".upcase[0..24]
     return_url = "#{ENV.fetch('FRONTEND_URL')}/app/accounts/#{customer_id}/settings/billing"
 
-    res = Payos::PaymentService.new.create_order(
+    config = {
+      'client_id' => GlobalConfig.get_value('PAYOS_CLIENT_ID').presence || ENV.fetch('PAYOS_CLIENT_ID', nil),
+      'api_key' => GlobalConfig.get_value('PAYOS_API_KEY').presence || ENV.fetch('PAYOS_API_KEY', nil),
+      'checksum_key' => GlobalConfig.get_value('PAYOS_CHECKSUM_KEY').presence || ENV.fetch('PAYOS_CHECKSUM_KEY', nil),
+      'partner_id' => GlobalConfig.get_value('PAYOS_PARTNER_ID').presence || ENV.fetch('PAYOS_PARTNER_ID', nil)
+    }
+    provider = Payments::Providers::PayosProvider.new(config)
+
+    res = provider.create_checkout(
       amount: amount_to_pay,
-      order_code: order_code,
+      order_id: order_code,
       return_url: return_url,
-      cancel_url: return_url,
       description: description
     )
 
-    checkout_url = res.dig(:data, :checkoutUrl)
+    checkout_url = res[:checkout_url]
 
     account.billing_histories.create!(
       order_id: order_code.to_s,
@@ -71,8 +78,13 @@ class Enterprise::Billing::CreateSessionService
     description = "TT SHOPIZ #{sku}".upcase[0..24]
     return_url = "#{ENV.fetch('FRONTEND_URL')}/app/accounts/#{account_id}/settings/billing"
 
-    client = Sepay::Client.new
-    result = client.create_checkout(
+    config = {
+      'company_code' => GlobalConfig.get_value('SEPAY_COMPANY_CODE').presence || ENV.fetch('SEPAY_COMPANY_CODE', nil),
+      'secret_key' => GlobalConfig.get_value('SEPAY_SECRET_KEY').presence || ENV.fetch('SEPAY_SECRET_KEY', nil)
+    }
+    provider = Payments::Providers::SepayProvider.new(config)
+
+    result = provider.create_checkout(
       amount: amount_to_pay,
       order_id: order_id,
       description: description,
@@ -90,7 +102,7 @@ class Enterprise::Billing::CreateSessionService
       payment_method: 'sepay',
       metadata: { type: item.is_a?(SubscriptionPlan) ? 'package' : 'addon' },
       description: description,
-      checkout_url: result&.dig(:checkout_url)
+      checkout_url: result[:checkout_url]
     )
 
     result
@@ -138,7 +150,7 @@ class Enterprise::Billing::CreateSessionService
       price_amount: amount_to_pay_vnd, # Internal amount stays in base currency (VND)
       price_currency: 'VND',
       payment_method: 'polar',
-      metadata: { 
+      metadata: {
         type: item.is_a?(SubscriptionPlan) ? 'package' : 'addon',
         usd_cents: usd_cents,
         exchange_rate: exchange_rate
@@ -198,5 +210,3 @@ class Enterprise::Billing::CreateSessionService
     base_amount
   end
 end
-
-

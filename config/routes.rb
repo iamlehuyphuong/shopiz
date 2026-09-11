@@ -498,6 +498,9 @@ Rails.application.routes.draw do
             resources :orders, only: [:index, :show, :create, :update] do
               post :sync, on: :collection
             end
+            resource :payment_settings, only: [] do
+              post :test_payment
+            end
           end
         end
       end
@@ -505,6 +508,10 @@ Rails.application.routes.draw do
       # ----------------------------------
 
       resources :pricing, only: [:index]
+
+      namespace :payments do
+        get 'sepay_checkout/:id', to: 'sepay_checkout#show', as: :sepay_checkout
+      end
 
       namespace :integrations do
         resources :webhooks, only: [:create]
@@ -633,6 +640,7 @@ Rails.application.routes.draw do
       post 'webhooks/payos', to: 'webhooks/payos#process_payload'
       post 'webhooks/sepay', to: 'webhooks/sepay#process_payload'
       post 'webhooks/polar', to: 'webhooks/polar#process_payload'
+      post 'webhooks/sales_payments/:provider/:account_id', to: 'webhooks/payments#create'
     end
   end
 

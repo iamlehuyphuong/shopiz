@@ -126,6 +126,11 @@ class Api::V1::AccountsController < Api::BaseController
       { custom_email_config: [
         :sender_email, :smtp_address, :smtp_port, :smtp_username, :smtp_password,
         :smtp_domain, :smtp_authentication, :smtp_enable_starttls_auto, :smtp_openssl_verify_mode
+      ] },
+      { sales_payment_config: [
+        :default_provider,
+        { sepay: [:active, :company_code, :secret_key] },
+        { payos: [:active, :client_id, :api_key, :checksum_key] }
       ] }
     ]
   end

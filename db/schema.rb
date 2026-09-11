@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_08_11_074213) do
+ActiveRecord::Schema[7.1].define(version: 2026_09_11_150348) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -906,6 +906,9 @@ ActiveRecord::Schema[7.1].define(version: 2026_08_11_074213) do
     t.string "tracking_code"
     t.string "payment_method"
     t.string "payment_status", default: "unpaid"
+    t.string "payment_provider"
+    t.string "payment_transaction_id"
+    t.string "payment_qr_url"
     t.index ["account_id", "contact_id"], name: "index_conversation_orders_on_account_id_and_contact_id"
     t.index ["account_id", "conversation_id"], name: "index_conversation_orders_on_account_id_and_conversation_id"
     t.index ["account_id", "created_at"], name: "index_conversation_orders_on_account_id_and_created_at"
@@ -1435,15 +1438,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_08_11_074213) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
-  create_table "portal_members", force: :cascade do |t|
-    t.bigint "portal_id"
-    t.bigint "user_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["portal_id", "user_id"], name: "index_portal_members_on_portal_id_and_user_id", unique: true
-    t.index ["user_id", "portal_id"], name: "index_portal_members_on_user_id_and_portal_id", unique: true
-  end
-
   create_table "portals", force: :cascade do |t|
     t.integer "account_id", null: false
     t.string "name", null: false
@@ -1677,14 +1671,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_08_11_074213) do
     t.datetime "updated_at", precision: nil, null: false
     t.index ["account_id"], name: "index_teams_on_account_id"
     t.index ["name", "account_id"], name: "index_teams_on_name_and_account_id", unique: true
-  end
-
-  create_table "telegram_bots", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.string "auth_key"
-    t.integer "account_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "users", id: :serial, force: :cascade do |t|

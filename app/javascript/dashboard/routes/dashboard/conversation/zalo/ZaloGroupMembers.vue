@@ -125,7 +125,11 @@ export default {
       class="sticky top-0 bg-white dark:bg-slate-900 z-10 px-3 py-2 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center"
     >
       <div class="text-sm font-medium text-slate-800 dark:text-slate-100">
-        {{ $t('CONVERSATION_SIDEBAR.ZALO_GROUP.MEMBERS_COUNT', { count: members.length }) }}
+        {{
+          $t('CONVERSATION_SIDEBAR.ZALO_GROUP.MEMBERS_COUNT', {
+            count: members.length,
+          })
+        }}
       </div>
       <button
         class="flex items-center gap-1 text-xs px-2 py-1 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded transition-colors"
@@ -151,7 +155,10 @@ export default {
         v-for="member in members"
         :key="member.uid"
         class="member-item flex items-center p-3 border-b border-slate-50 dark:border-slate-800"
-        :class="{ 'cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800': channelType !== 'Channel::ZaloOa' }"
+        :class="{
+          'cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800':
+            channelType !== 'Channel::ZaloOa',
+        }"
         @click="openConnectModal(member)"
       >
         <Avatar
@@ -191,10 +198,20 @@ export default {
                 v-if="member.is_follower"
                 class="text-green-600 flex items-center gap-0.5"
               >
-                <fluent-icon icon="checkmark-circle" size="12" /> {{ $t('CONVERSATION_SIDEBAR.ZALO_GROUP.FRIEND_STATUS.FOLLOWED') }}
+                <fluent-icon icon="checkmark-circle" size="12" />
+                {{
+                  $t('CONVERSATION_SIDEBAR.ZALO_GROUP.FRIEND_STATUS.FOLLOWED')
+                }}
               </span>
-              <span v-else-if="!member.is_you" class="flex items-center gap-0.5">
-                {{ $t('CONVERSATION_SIDEBAR.ZALO_GROUP.FRIEND_STATUS.NOT_FOLLOWED') }}
+              <span
+                v-else-if="!member.is_you"
+                class="flex items-center gap-0.5"
+              >
+                {{
+                  $t(
+                    'CONVERSATION_SIDEBAR.ZALO_GROUP.FRIEND_STATUS.NOT_FOLLOWED'
+                  )
+                }}
               </span>
             </template>
             <template v-else>
@@ -202,10 +219,16 @@ export default {
                 v-if="member.is_friend"
                 class="text-green-600 flex items-center gap-0.5"
               >
-                <fluent-icon icon="checkmark-circle" size="12" /> {{ $t('CONVERSATION_SIDEBAR.ZALO_GROUP.FRIEND_STATUS.FRIEND') }}
+                <fluent-icon icon="checkmark-circle" size="12" />
+                {{ $t('CONVERSATION_SIDEBAR.ZALO_GROUP.FRIEND_STATUS.FRIEND') }}
               </span>
-              <span v-else-if="!member.is_you" class="flex items-center gap-0.5">
-                {{ $t('CONVERSATION_SIDEBAR.ZALO_GROUP.FRIEND_STATUS.NOT_FRIEND') }}
+              <span
+                v-else-if="!member.is_you"
+                class="flex items-center gap-0.5"
+              >
+                {{
+                  $t('CONVERSATION_SIDEBAR.ZALO_GROUP.FRIEND_STATUS.NOT_FRIEND')
+                }}
               </span>
             </template>
           </div>

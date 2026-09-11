@@ -603,6 +603,7 @@
     "SALES_DASHBOARD": "Tổng quan",
     "SALES_PRODUCTS": "Sản phẩm",
     "SALES_TOOLS": "Phần mềm bán hàng",
+    "SALES_PAYMENT": "Quản lý thanh toán",
     "ONGOING": "Đang diễn ra",
     "ONE_OFF": "Một lần",
     "REPORTS_SLA": "Cam kết chất lượng dịch vụ",
@@ -752,6 +753,17 @@
     "ZALO_SUPPORT": "Nhắn tin qua Zalo",
     "NO_BILLING_USER": "Tài khoản thanh toán của bạn đang được định cấu hình. Hãy làm mới trang và thử lại.",
     "PAYMENT_LINK_ERROR": "Không thể tạo liên kết thanh toán. Vui lòng kiểm tra lại cấu hình.",
+    "PAYMENT_FAILED_MODAL": {
+      "TITLE": "Thanh toán chưa hoàn tất",
+      "DESCRIPTION": "Quá trình thanh toán đã bị hủy hoặc gặp sự cố. Bạn có muốn thực hiện thanh toán lại không?",
+      "CHOOSE_OTHER": "Chọn gói khác",
+      "RETRY": "Thanh toán lại"
+    },
+    "PAYMENT_SUCCESS_MODAL": {
+      "TITLE": "Thanh toán thành công!",
+      "DESCRIPTION": "Cảm ơn bạn. Giao dịch thanh toán đã hoàn tất và gói của bạn đã được cập nhật.",
+      "CLOSE": "Đóng"
+    },
     "TOPUP": {
       "BUY_CREDITS": "Mua thêm tín dụng",
       "MODAL_TITLE": "Mua tín dụng AI",

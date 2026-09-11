@@ -7,35 +7,43 @@ class Enterprise::Webhooks::SepayController < ActionController::API
   def process_payload
     payload = JSON.parse(request.raw_post)
 
-    unless verify_secret_key
+    config = {
+      'company_code' => GlobalConfig.get_value('SEPAY_COMPANY_CODE').presence || ENV.fetch('SEPAY_COMPANY_CODE', nil),
+      'secret_key' => GlobalConfig.get_value('SEPAY_SECRET_KEY').presence || ENV.fetch('SEPAY_SECRET_KEY', nil)
+    }
+    provider = Payments::Providers::SepayProvider.new(config)
+
+    unless provider.verify_webhook(payload, request.headers)
       Rails.logger.error('[SePay Webhook] Invalid secret key')
       head :unauthorized
       return
     end
 
+    parsed_data = provider.extract_webhook_data(payload)
+
     # Check payment status - only process successful payments
     notification_type = payload['notification_type'].to_s.upcase
     order_status = payload.dig('order', 'order_status').to_s.upcase
-    
+
     # Support both SePay Checkout (ORDER_PAID/CAPTURED/PAID) and Standard Transaction Webhook (transferAmount > 0)
     is_checkout_success = notification_type == 'ORDER_PAID' || order_status == 'CAPTURED' || order_status == 'PAID'
     is_standard_success = payload['transferAmount'].to_i > 0 && payload['id'].present?
-    
+
     unless is_checkout_success || is_standard_success
-      Rails.logger.info("[SePay Webhook] Non-success status: #{notification_type}/#{order_status} for order #{payload.dig('order', 'order_invoice_number') || payload['content']}")
+      Rails.logger.info("[SePay Webhook] Non-success status: #{notification_type}/#{order_status} for order #{parsed_data[:transaction_id]}")
       render json: { success: true }, status: :ok
       return
     end
 
     # Idempotency: check transaction reference
-    transaction_ref = payload.dig('transaction', 'transaction_id').to_s.presence || payload.dig('transaction', 'id').to_s.presence || payload['id'].to_s
+    transaction_ref = parsed_data[:gateway_transaction_id]
     if transaction_ref.present? && BillingHistory.exists?(transaction_id: transaction_ref)
       Rails.logger.info("[SePay Webhook] Skipping duplicate transaction: #{transaction_ref}")
       render json: { success: true }, status: :ok
       return
     end
 
-    ::Enterprise::Billing::HandleSepayEventService.new.perform(payload)
+    ::Enterprise::Billing::HandleSepayEventService.new.perform(payload, parsed_data)
     render json: { success: true }, status: :ok
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
     Rails.logger.error("[SePay Webhook] Processing error: #{e.class} - #{e.message}")
@@ -43,18 +51,5 @@ class Enterprise::Webhooks::SepayController < ActionController::API
   rescue StandardError => e
     Rails.logger.error("[SePay Webhook] Unexpected error: #{e.class} - #{e.message}")
     head :internal_server_error
-  end
-
-  private
-
-  def verify_secret_key
-    expected = GlobalConfig.get_value('SEPAY_SECRET_KEY').presence || ENV.fetch('SEPAY_SECRET_KEY', nil)
-    return false if expected.blank?
-
-    provided_key = request.headers['Authorization'].to_s.gsub(/Bearer\s+|Apikey\s+/i, '').strip
-    provided_key = request.headers['X-Secret-Key'].to_s.strip if provided_key.blank?
-    return false if provided_key.blank?
-
-    ActiveSupport::SecurityUtils.secure_compare(provided_key, expected)
   end
 end
