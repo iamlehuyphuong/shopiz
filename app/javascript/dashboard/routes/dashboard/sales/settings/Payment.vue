@@ -83,8 +83,8 @@ const paymentIntegrations = computed(() => {
       id: 'tingee',
       name: 'Tingee',
       description: t('SALES.SETTINGS.PAYMENT.TINGEE_DESC'),
-      status: 'coming_soon',
-      enabled: false,
+      status: 'published',
+      enabled: !!config.tingee?.active,
     },
   ];
 });

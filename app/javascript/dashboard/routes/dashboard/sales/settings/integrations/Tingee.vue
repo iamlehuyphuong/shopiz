@@ -25,14 +25,22 @@ const apiKey = ref('');
 const checksumKey = ref('');
 
 // Dummy integration object to match the props expected by Integration.vue
+const webhookUrl = computed(() => {
+  return `${window.shopizConfig.hostURL}/api/v1/webhooks/sales_payments/tingee/${currentAccount.value.id}`;
+});
+
+const copyWebhook = () => {
+  navigator.clipboard.writeText(webhookUrl.value);
+  useAlert(t('SALES.SETTINGS.PAYMENT.WEBHOOK_COPIED') || 'Đã sao chép Webhook URL');
+};
+
 const integration = computed(() => {
   const active = !!(apiKey.value && checksumKey.value && clientId.value);
   return {
     id: 'tingee',
     logo: '/dashboard/images/integrations/tingee.png', // Assuming we have this logo or similar
     name: 'Tingee',
-    description:
-      'Kết nối Tingee để nhận thông báo thanh toán tự động qua chuyển khoản ngân hàng.',
+    description: t('SALES.SETTINGS.PAYMENT.TINGEE_DESC'),
     enabled: active,
   };
 });
@@ -175,7 +183,7 @@ onMounted(() => {
                   blue
                   faded
                   :label="t('SALES.SETTINGS.PAYMENT.CONNECT')"
-                  disabled
+                  @click="openConnectDialog"
                 />
               </div>
             </div>
@@ -202,6 +210,15 @@ onMounted(() => {
           @close="hideConnectModal"
         >
           <div class="flex flex-col gap-4">
+            <div class="flex flex-col min-w-0 gap-1">
+              <label class="mb-0.5 text-heading-3 text-n-slate-12">{{ t('SALES.SETTINGS.PAYMENT.WEBHOOK_URL') }}</label>
+              <div class="flex items-center gap-2 px-3 py-2 rounded-lg bg-n-alpha-black2 border border-n-weak">
+                <span class="flex-1 text-sm text-n-slate-11 truncate select-all">{{ webhookUrl }}</span>
+                <button type="button" @click="copyWebhook" class="p-1 rounded flex items-center justify-center hover:bg-n-alpha-2 transition-colors">
+                  <i class="i-lucide-copy text-sm text-n-slate-11"></i>
+                </button>
+              </div>
+            </div>
             <Input
               v-model="clientId"
               :label="t('SALES.SETTINGS.PAYMENT.FORM.CLIENT_ID')"

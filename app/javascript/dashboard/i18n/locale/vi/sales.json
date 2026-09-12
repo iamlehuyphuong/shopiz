@@ -654,7 +654,7 @@
         },
         "SEPAY_DESC": "Khách hàng quét QR Code và chuyển khoản thanh toán. SePay phát hiện biến động số dư, đơn hàng được ghi nhận đã thanh toán. Mọi thứ diễn ra trong 10 giây.",
         "PAYOS_DESC": "Miễn phí khởi tạo, miễn phí duy trì, miễn phí giao dịch không giới hạn. Hỗ trợ cá nhân và doanh nghiệp, tích hợp đơn giản trong 05 phút, tiền về trực tiếp tài khoản ngân hàng.",
-        "TINGEE_DESC": "Kết nối Tingee (sắp tích hợp).",
+        "TINGEE_DESC": "Tạo link thanh toán qua Tingee để khách hàng dễ dàng thanh toán. Hệ thống tự động phát hiện biến động số dư và ghi nhận đơn hàng.",
         "WEBHOOK_URL": "Webhook URL",
         "WEBHOOK_COPIED": "Đã sao chép Webhook URL"
       },

@@ -614,7 +614,7 @@
         "TOOL": "Sales software",
         "ASSISTANT": "AI Assistant",
         "PAYMENT": "Payment gateways",
-        "INVOICE": "E-invoices"
+        "INVOICE": "E-invoice"
       },
       "HEADER": {
         "TITLE": "Sales settings"
@@ -627,7 +627,7 @@
         "COMING_SOON": "Coming Soon!",
         "SEPAY_DESC": "Customers scan QR codes to transfer payments. SePay detects balance fluctuations, and the order is marked as paid. Everything happens within 10 seconds.",
         "PAYOS_DESC": "Free setup, maintenance, and unlimited transactions. Supports individuals and businesses, 5-minute integration, money straight to your bank account.",
-        "TINGEE_DESC": "Connect Tingee (coming soon).",
+        "TINGEE_DESC": "Create Tingee payment links for easy customer payments. The system automatically detects balance fluctuations and marks orders as paid.",
         "SELECT_PLATFORM": "Select payment gateway",
         "DEFAULT_PLATFORM": "Default payment gateway:",
         "DISCONNECT_SEPAY_TITLE": "Disconnect SePay?",

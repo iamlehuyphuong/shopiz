@@ -66,6 +66,13 @@ const paymentIntegrations = computed(() => {
 
   return [
     {
+      id: 'tingee',
+      name: 'Tingee',
+      description: t('SALES.SETTINGS.PAYMENT.TINGEE_DESC'),
+      status: 'published',
+      enabled: !!config.tingee?.active,
+    },
+    {
       id: 'sepay',
       name: 'SePay',
       description: t('SALES.SETTINGS.PAYMENT.SEPAY_DESC'),
@@ -78,13 +85,6 @@ const paymentIntegrations = computed(() => {
       description: t('SALES.SETTINGS.PAYMENT.PAYOS_DESC'),
       status: 'published',
       enabled: !!config.payos?.active,
-    },
-    {
-      id: 'tingee',
-      name: 'Tingee',
-      description: t('SALES.SETTINGS.PAYMENT.TINGEE_DESC'),
-      status: 'coming_soon',
-      enabled: false,
     },
   ];
 });

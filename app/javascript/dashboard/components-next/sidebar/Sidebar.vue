@@ -624,7 +624,7 @@ const menuItems = computed(() => {
         },
         {
           name: 'Sales Settings',
-          label: 'Cài đặt bán hàng',
+          label: t('SIDEBAR.SALES_SETTINGS'),
           icon: 'i-lucide-settings-2',
           activeOn: [
             'sales_settings_tool',

@@ -8,7 +8,7 @@ module Payments
 
       # We only generate payment if method is supported and it's unpaid
       provider_name = order.payment_method
-      return unless %w[sepay payos].include?(provider_name)
+      return unless %w[sepay payos tingee].include?(provider_name)
       return unless order.unpaid?
 
       provider_class = Payments::ProviderRegistry.provider_for(provider_name)
