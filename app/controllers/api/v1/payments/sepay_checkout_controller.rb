@@ -1,6 +1,5 @@
 class Api::V1::Payments::SepayCheckoutController < ApplicationController
-  skip_before_action :set_current_user
-  skip_before_action :check_current_user_is_active
+  skip_before_action :set_current_user, raise: false
 
   def show
     @order = ConversationOrder.find_by!(payment_transaction_id: params[:id])
