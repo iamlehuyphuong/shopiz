@@ -3,6 +3,8 @@ import { computed, onBeforeMount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useAlert } from 'dashboard/composables';
 import { useStoreGetters, useStore } from 'dashboard/composables/store';
+import { useAccount } from 'dashboard/composables/useAccount';
+import { watch } from 'vue';
 import { useDebounceFn } from '@vueuse/core';
 import { useToggle } from '@vueuse/core';
 
@@ -23,12 +25,26 @@ import {
 const { t } = useI18n();
 const getters = useStoreGetters();
 const store = useStore();
+const { currentAccount } = useAccount();
 const globalConfig = computed(() => getters['globalConfig/get'].value);
 
 const searchQuery = ref('');
 const currentPage = ref(1);
 const itemsPerPage = 15;
 const sourceFilter = ref('all');
+let hasInitializedFilter = false;
+
+watch(
+  currentAccount,
+  () => {
+    if (!hasInitializedFilter && currentAccount.value?.settings) {
+      sourceFilter.value = currentAccount.value.settings.active_ecommerce_platform || 'all';
+      hasInitializedFilter = true;
+    }
+  },
+  { deep: true, immediate: true }
+);
+
 
 const sources = [
   { label: 'Tất cả nền tảng', value: 'all' },
@@ -98,7 +114,6 @@ const debouncedSearch = useDebounceFn(() => {
   fetchProducts();
 }, 500);
 
-import { watch } from 'vue';
 watch([searchQuery, sourceFilter], () => {
   debouncedSearch();
 });

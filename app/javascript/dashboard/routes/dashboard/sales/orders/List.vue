@@ -1,5 +1,6 @@
 <script setup>
-import { computed, onBeforeMount, ref } from 'vue';
+import { computed, onBeforeMount, ref, watch } from 'vue';
+import { useAccount } from 'dashboard/composables/useAccount';
 import { useI18n } from 'vue-i18n';
 import { useAlert } from 'dashboard/composables';
 import SalesOrdersAPI from 'dashboard/api/sales/orders';
@@ -22,6 +23,8 @@ const store = useStore();
 const getters = useStoreGetters();
 const globalConfig = computed(() => getters['globalConfig/get'].value);
 
+const { currentAccount } = useAccount();
+
 const isLoading = ref(true);
 const isSyncing = ref(false);
 const showPullDialog = ref(false);
@@ -30,6 +33,18 @@ const searchQuery = ref('');
 const currentPage = ref(1);
 const itemsPerPage = 15;
 const sourceFilter = ref('all');
+let hasInitializedFilter = false;
+
+watch(
+  currentAccount,
+  () => {
+    if (!hasInitializedFilter && currentAccount.value?.settings) {
+      sourceFilter.value = currentAccount.value.settings.active_ecommerce_platform || 'all';
+      hasInitializedFilter = true;
+    }
+  },
+  { deep: true, immediate: true }
+);
 
 const sources = [
   { label: 'Tất cả nền tảng', value: 'all' },

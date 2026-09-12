@@ -29,7 +29,7 @@ class ConversationOrder < ApplicationRecord
   def enqueue_payment_generation
     return unless saved_change_to_status?
     return unless status == 'confirmed'
-    return unless %w[sepay payos].include?(payment_method)
+    return unless %w[sepay payos tingee].include?(payment_method)
     return unless unpaid?
 
     Payments::GeneratePaymentJob.perform_later(id)

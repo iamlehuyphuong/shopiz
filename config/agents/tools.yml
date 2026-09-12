@@ -322,3 +322,11 @@
   title: Get Order Detail (Chi tiết đơn hàng)
   description: Retrieve detailed information about an order.
   icon: receipt
+- id: create_payment_link
+  title: Create Payment Link (Tạo link thanh toán)
+  description: Create a payment link for the customer to pay for their order.
+  icon: link
+- id: check_payment_status
+  title: Check Payment Status (Kiểm tra thanh toán)
+  description: Check the current payment status of the active order for the conversation.
+  icon: checkmark
