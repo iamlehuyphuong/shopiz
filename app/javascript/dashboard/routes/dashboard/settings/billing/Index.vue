@@ -624,12 +624,16 @@ onMounted(fetchAccountDetails);
         type="alert"
         :show-confirm-button="true"
         :show-cancel-button="true"
-        :confirm-button-label="$t('BILLING_SETTINGS.PAYMENT_FAILED_MODAL.RETRY')"
-        :cancel-button-label="$t('BILLING_SETTINGS.PAYMENT_FAILED_MODAL.CHOOSE_OTHER')"
+        :confirm-button-label="
+          $t('BILLING_SETTINGS.PAYMENT_FAILED_MODAL.RETRY')
+        "
+        :cancel-button-label="
+          $t('BILLING_SETTINGS.PAYMENT_FAILED_MODAL.CHOOSE_OTHER')
+        "
         @close="chooseOtherPackage"
         @confirm="retryPayment"
       />
-      
+
       <Dialog
         ref="paymentSuccessModalRef"
         width="md"
@@ -638,8 +642,14 @@ onMounted(fetchAccountDetails);
         @close="closeSuccessModal"
       >
         <div class="text-center flex flex-col items-center">
-          <div class="w-16 h-16 rounded-full bg-n-green-3 flex items-center justify-center mx-auto mb-4 border border-n-green-6">
-            <fluent-icon icon="checkmark" type="outline" class="w-8 h-8 text-n-green-11" />
+          <div
+            class="w-16 h-16 rounded-full bg-n-green-3 flex items-center justify-center mx-auto mb-4 border border-n-green-6"
+          >
+            <fluent-icon
+              icon="checkmark"
+              type="outline"
+              class="w-8 h-8 text-n-green-11"
+            />
           </div>
           <h3 class="text-lg font-medium text-n-slate-12 mb-2">
             {{ $t('BILLING_SETTINGS.PAYMENT_SUCCESS_MODAL.TITLE') }}

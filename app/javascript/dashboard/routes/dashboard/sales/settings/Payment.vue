@@ -1,18 +1,11 @@
 <script setup>
-import { ref, computed, reactive, watch } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useStore } from 'dashboard/composables/store';
 import { useAccount } from 'dashboard/composables/useAccount';
 import { useAlert } from 'dashboard/composables';
-import NextButton from 'dashboard/components-next/button/Button.vue';
-import Switch from 'dashboard/components-next/switch/Switch.vue';
-import SectionLayout from 'dashboard/routes/dashboard/settings/account/components/SectionLayout.vue';
-import WithLabel from 'v3/components/Form/WithLabel.vue';
-import NextInput from 'next/input/Input.vue';
-import TabBar from 'dashboard/components-next/tabbar/TabBar.vue';
-import { useVuelidate } from '@vuelidate/core';
-import { requiredIf } from '@vuelidate/validators';
-import { copyTextToClipboard } from 'shared/helpers/clipboard';
+import { OnClickOutside } from '@vueuse/components';
+import IntegrationItem from 'dashboard/routes/dashboard/settings/integrations/IntegrationItem.vue';
 
 const { t } = useI18n();
 const store = useStore();
@@ -22,53 +15,12 @@ const isLoading = computed(() => {
   return store.getters['accounts/getUIFlags'].isFetchingItem;
 });
 
-const isSaving = ref(false);
-const isTesting = ref(false);
-
-const tabs = computed(() => [
-  { label: 'SePay', key: 'sepay' },
-  { label: 'PayOS', key: 'payos' },
-  { label: t('PAYMENT_SETTINGS.TINGEE.TAB_TITLE') || 'Tingee', key: 'tingee' },
-]);
-
-const activeTabIndex = ref(0);
-const activeTabKey = computed(() => tabs.value[activeTabIndex.value].key);
-
-const handleTabChange = tab => {
-  activeTabIndex.value = tabs.value.findIndex(t => t.key === tab.key);
-};
-
 const defaultProvider = ref('');
-
-const sepayConfig = reactive({
-  active: false,
-  company_name: '',
-  company_code: '',
-  secret_key: '',
-});
-
-const payosConfig = reactive({
-  active: false,
-  client_id: '',
-  api_key: '',
-  checksum_key: '',
-});
+const showPlatformDropdown = ref(false);
 
 const loadConfig = () => {
   const config = currentAccount.value?.settings?.sales_payment_config || {};
   defaultProvider.value = config.default_provider || '';
-
-  const sepay = config.sepay || {};
-  sepayConfig.active = !!sepay.active;
-  sepayConfig.company_name = sepay.company_name || '';
-  sepayConfig.company_code = sepay.company_code || '';
-  sepayConfig.secret_key = sepay.secret_key || '';
-
-  const payos = config.payos || {};
-  payosConfig.active = !!payos.active;
-  payosConfig.client_id = payos.client_id || '';
-  payosConfig.api_key = payos.api_key || '';
-  payosConfig.checksum_key = payos.checksum_key || '';
 };
 
 watch(
@@ -81,315 +33,225 @@ watch(
   { deep: true, immediate: true }
 );
 
-const handleDefaultProviderChange = (provider, value) => {
-  if (value) {
-    defaultProvider.value = provider;
-  } else if (defaultProvider.value === provider) {
-    defaultProvider.value = '';
-  }
-};
+const handleDefaultProviderChange = async provider => {
+  if (defaultProvider.value === provider) return;
 
-const rules = computed(() => {
-  return {
-    sepayConfig: {
-      company_name: { required: requiredIf(() => defaultProvider.value === 'sepay' || !!sepayConfig.company_code || !!sepayConfig.secret_key) },
-      company_code: { required: requiredIf(() => defaultProvider.value === 'sepay' || !!sepayConfig.company_name || !!sepayConfig.secret_key) },
-      secret_key: { required: requiredIf(() => defaultProvider.value === 'sepay' || !!sepayConfig.company_name || !!sepayConfig.company_code) },
-    },
-    payosConfig: {
-      client_id: { required: requiredIf(() => defaultProvider.value === 'payos' || !!payosConfig.api_key || !!payosConfig.checksum_key) },
-      api_key: { required: requiredIf(() => defaultProvider.value === 'payos' || !!payosConfig.client_id || !!payosConfig.checksum_key) },
-      checksum_key: { required: requiredIf(() => defaultProvider.value === 'payos' || !!payosConfig.client_id || !!payosConfig.api_key) },
-    },
-  };
-});
-
-const v$ = useVuelidate(rules, { sepayConfig, payosConfig });
-
-const handleSave = async () => {
-  v$.value.$touch();
-  if (v$.value.$invalid) {
-    useAlert(t('GENERAL_SETTINGS.FORM.ERROR'));
-    return;
-  }
-
-  isSaving.value = true;
+  defaultProvider.value = provider;
   try {
+    const existingConfig =
+      currentAccount.value?.settings?.sales_payment_config || {};
     const payload = {
       sales_payment_config: {
-        default_provider: defaultProvider.value,
-        sepay: {
-          active: !!(sepayConfig.company_code && sepayConfig.secret_key && sepayConfig.company_name),
-          company_name: sepayConfig.company_name,
-          company_code: sepayConfig.company_code,
-          secret_key: sepayConfig.secret_key,
-        },
-        payos: {
-          active: !!(payosConfig.client_id && payosConfig.api_key && payosConfig.checksum_key),
-          client_id: payosConfig.client_id,
-          api_key: payosConfig.api_key,
-          checksum_key: payosConfig.checksum_key,
-        },
+        ...existingConfig,
+        default_provider: provider,
       },
     };
-
     await store.dispatch('accounts/update', payload);
-    useAlert(t('GENERAL_SETTINGS.UPDATE.SUCCESS'));
+    useAlert(
+      t('GENERAL_SETTINGS.UPDATE.SUCCESS') || 'Updated default provider'
+    );
   } catch (error) {
-    useAlert(error.message || t('GENERAL_SETTINGS.UPDATE.ERROR'));
-  } finally {
-    isSaving.value = false;
+    useAlert(
+      error.message ||
+        t('GENERAL_SETTINGS.UPDATE.ERROR') ||
+        'Error updating settings'
+    );
   }
+  showPlatformDropdown.value = false;
 };
 
-const handleTestPayment = async () => {
-  isTesting.value = true;
-  try {
-    const response = await window.axios.post(`/api/v1/accounts/${currentAccount.value.id}/sales/payment_settings/test_payment`);
-    if (response.data.checkout_url) {
-      window.location.href = response.data.checkout_url;
-    }
-  } catch (error) {
-    useAlert(error.response?.data?.error || error.message || t('GENERAL_SETTINGS.UPDATE.ERROR'));
-  } finally {
-    isTesting.value = false;
-  }
-};
+// Define integration items for payments
+const paymentIntegrations = computed(() => {
+  const config = currentAccount.value?.settings?.sales_payment_config || {};
 
-const host = window.location.origin;
-const sepayWebhookUrl = computed(() =>
-  currentAccount.value
-    ? `${host}/api/v1/webhooks/sales_payments/sepay/${currentAccount.value.id}`
-    : ''
-);
-const payosWebhookUrl = computed(() =>
-  currentAccount.value
-    ? `${host}/api/v1/webhooks/sales_payments/payos/${currentAccount.value.id}`
-    : ''
-);
+  return [
+    {
+      id: 'sepay',
+      name: 'SePay',
+      description: t('SALES.SETTINGS.PAYMENT.SEPAY_DESC'),
+      status: 'published',
+      enabled: !!config.sepay?.active,
+    },
+    {
+      id: 'payos',
+      name: 'PayOS',
+      description: t('SALES.SETTINGS.PAYMENT.PAYOS_DESC'),
+      status: 'published',
+      enabled: !!config.payos?.active,
+    },
+    {
+      id: 'tingee',
+      name: 'Tingee',
+      description: t('SALES.SETTINGS.PAYMENT.TINGEE_DESC'),
+      status: 'coming_soon',
+      enabled: false,
+    },
+  ];
+});
 
-const handleCopy = async (text) => {
-  await copyTextToClipboard(text);
-  useAlert(t('COMPONENTS.CODE.COPIED') || 'Copied successfully');
-};
+const activePlatformLabel = computed(() => {
+  const active = paymentIntegrations.value.find(
+    p => p.id === defaultProvider.value
+  );
+  return active
+    ? active.name
+    : t('INBOX_MGMT.ECOMMERCE.SELECT_PLATFORM') ||
+        t('SALES.SETTINGS.PAYMENT.SELECT_PLATFORM');
+});
+
+const activePlatformLogo = computed(() => {
+  return `/dashboard/images/integrations/${defaultProvider.value || 'default'}.png`;
+});
 </script>
 
 <template>
-  <div class="w-full h-full overflow-auto">
+  <div :class="{ 'w-full h-full overflow-auto': !embedded }">
     <!-- Skeleton Loading -->
-    <div v-if="isLoading" class="max-w-5xl mx-auto px-6 py-6 animate-pulse">
+    <div
+      v-if="isLoading"
+      :class="
+        embedded ? 'animate-pulse' : 'max-w-5xl mx-auto px-6 py-6 animate-pulse'
+      "
+    >
       <div class="h-6 w-48 rounded bg-n-slate-3 mb-6" />
+      <div class="h-40 w-full rounded-xl bg-n-slate-3 mb-6" />
       <div class="h-40 w-full rounded-xl bg-n-slate-3 mb-6" />
       <div class="h-40 w-full rounded-xl bg-n-slate-3" />
     </div>
 
-    <div v-else class="max-w-5xl mx-auto px-6 py-6 flex flex-col gap-6">
+    <div
+      v-else
+      :class="
+        embedded
+          ? 'flex flex-col gap-6'
+          : 'max-w-5xl mx-auto px-6 py-6 flex flex-col gap-6'
+      "
+    >
       <div class="flex flex-col gap-1">
-        <h3 class="text-lg font-semibold text-n-slate-12">
-          {{ $t('PAYMENT_SETTINGS.TITLE') || 'Payment Settings' }}
+        <h3 class="text-base font-semibold text-n-slate-12">
+          {{ t('SALES.SETTINGS.PAYMENT.HEADER_TITLE') }}
         </h3>
-        <p class="text-sm text-n-slate-11">
-          {{
-            $t('PAYMENT_SETTINGS.DESCRIPTION') ||
-            'Configure payment gateways for your sales.'
-          }}
+        <p class="text-sm text-n-slate-11 leading-relaxed">
+          {{ t('SALES.SETTINGS.PAYMENT.HEADER_DESC') }}
         </p>
       </div>
 
-      <div class="flex items-center gap-4">
-        <TabBar
-          :tabs="tabs"
-          :initial-active-tab="activeTabIndex"
-          @tab-changed="handleTabChange"
-        />
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-3">
+          <span class="text-sm font-medium text-n-slate-12">{{
+            t('SALES.SETTINGS.PAYMENT.DEFAULT_PLATFORM')
+          }}</span>
+          <OnClickOutside @trigger="showPlatformDropdown = false">
+            <div class="relative">
+              <button
+                type="button"
+                class="flex items-center gap-2 px-3 py-1.5 rounded-lg border-0 outline outline-1 -outline-offset-1 outline-n-weak hover:outline-n-slate-6 bg-n-surface-1 transition-all duration-200 min-w-[240px] justify-between cursor-pointer select-none text-left"
+                @click="showPlatformDropdown = !showPlatformDropdown"
+              >
+                <div class="flex items-center gap-2.5 min-w-0">
+                  <div
+                    v-if="defaultProvider"
+                    class="w-6 h-6 rounded flex items-center justify-center flex-shrink-0 bg-white dark:bg-n-solid-2 border border-n-weak"
+                  >
+                    <img
+                      :src="activePlatformLogo"
+                      class="w-4 h-4 object-contain"
+                      alt="logo"
+                    />
+                  </div>
+                  <span class="text-sm font-medium text-n-slate-12 truncate">
+                    {{ activePlatformLabel }}
+                  </span>
+                </div>
+                <i
+                  class="i-lucide-chevron-down text-n-slate-10 text-sm flex-shrink-0"
+                />
+              </button>
+
+              <div
+                v-if="showPlatformDropdown"
+                class="py-2 bg-n-alpha-3 backdrop-blur-[100px] outline outline-n-container outline-1 z-50 absolute ltr:right-0 rtl:left-0 top-12 min-w-[240px] rounded-xl shadow-lg flex flex-col gap-1 mt-1"
+              >
+                <!-- Clear Option -->
+                <button
+                  type="button"
+                  class="flex items-center justify-between px-3 py-2 mx-1 rounded-lg transition-all hover:bg-n-alpha-2 cursor-pointer text-left w-[calc(100%-8px)]"
+                  :class="
+                    !defaultProvider ? 'bg-n-brand/10 hover:bg-n-brand/15' : ''
+                  "
+                  @click="handleDefaultProviderChange('')"
+                >
+                  <div class="flex items-center gap-3 min-w-0">
+                    <span class="text-sm font-medium text-n-slate-12 truncate">
+                      {{
+                        t('INBOX_MGMT.ECOMMERCE.SELECT_PLATFORM') || 'Không có'
+                      }}
+                    </span>
+                  </div>
+                  <i
+                    v-if="!defaultProvider"
+                    class="i-lucide-check text-n-brand text-sm flex-shrink-0"
+                  />
+                </button>
+                <div class="h-px bg-n-weak w-full my-1" />
+                <!-- Options -->
+                <button
+                  v-for="platform in paymentIntegrations.filter(
+                    p => p.status !== 'coming_soon'
+                  )"
+                  :key="platform.id"
+                  type="button"
+                  class="flex items-center justify-between px-3 py-2 mx-1 rounded-lg transition-all hover:bg-n-alpha-2 cursor-pointer text-left w-[calc(100%-8px)]"
+                  :class="
+                    defaultProvider === platform.id
+                      ? 'bg-n-brand/10 hover:bg-n-brand/15'
+                      : ''
+                  "
+                  @click="handleDefaultProviderChange(platform.id)"
+                >
+                  <div class="flex items-center gap-3 min-w-0">
+                    <div
+                      class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 bg-n-alpha-2 border border-n-weak"
+                    >
+                      <img
+                        :src="`/dashboard/images/integrations/${platform.id}.png`"
+                        class="w-5 h-5 object-contain"
+                        alt="logo"
+                      />
+                    </div>
+                    <span class="text-sm font-medium text-n-slate-12 truncate">
+                      {{ platform.name }}
+                    </span>
+                  </div>
+                  <i
+                    v-if="defaultProvider === platform.id"
+                    class="i-lucide-check text-n-brand text-sm flex-shrink-0"
+                  />
+                </button>
+              </div>
+            </div>
+          </OnClickOutside>
+        </div>
       </div>
 
-      <div class="flex flex-col gap-6">
-        <!-- SePay -->
-        <SectionLayout
-          v-if="activeTabKey === 'sepay'"
-          :title="$t('PAYMENT_SETTINGS.SEPAY.TITLE') || 'SePay Configuration'"
-        >
-          <form class="grid gap-4 mt-2" @submit.prevent="handleSave">
-            <div class="grid gap-4">
-              <div class="flex items-center justify-between">
-                <span class="text-sm font-medium text-n-slate-12">{{ $t('PAYMENT_SETTINGS.DEFAULT_PROVIDER') || 'Default Payment Gateway' }}</span>
-                <Switch
-                  :model-value="defaultProvider === 'sepay'"
-                  @update:model-value="val => handleDefaultProviderChange('sepay', val)"
-                />
-              </div>
+      <div class="h-px bg-n-weak w-full" />
 
-              <WithLabel
-                name="sepay-company-name"
-                :has-error="v$.sepayConfig.company_name.$error"
-                :label="$t('PAYMENT_SETTINGS.SEPAY.COMPANY_NAME') || 'Company Name'"
-              >
-                <NextInput
-                  v-model="sepayConfig.company_name"
-                  type="text"
-                  class="w-full"
-                  @blur="v$.sepayConfig.company_name.$touch"
-                />
-              </WithLabel>
-
-              <WithLabel
-                name="sepay-company-code"
-                :has-error="v$.sepayConfig.company_code.$error"
-                :label="
-                  $t('PAYMENT_SETTINGS.SEPAY.COMPANY_CODE') || 'Company Code'
-                "
-              >
-                <NextInput
-                  v-model="sepayConfig.company_code"
-                  type="text"
-                  class="w-full"
-                  @blur="v$.sepayConfig.company_code.$touch"
-                />
-              </WithLabel>
-
-              <WithLabel
-                name="sepay-secret-key"
-                :has-error="v$.sepayConfig.secret_key.$error"
-                :label="$t('PAYMENT_SETTINGS.SEPAY.SECRET_KEY') || 'Secret Key'"
-              >
-                <NextInput
-                  v-model="sepayConfig.secret_key"
-                  type="password"
-                  class="w-full"
-                  @blur="v$.sepayConfig.secret_key.$touch"
-                />
-              </WithLabel>
-
-              <WithLabel name="sepay-webhook-url" :label="$t('PAYMENT_SETTINGS.WEBHOOK_URL') || 'Webhook URL (Read-only)'">
-                <div class="flex items-center gap-2 w-full">
-                  <NextInput
-                    v-model="sepayWebhookUrl"
-                    type="text"
-                    class="w-full text-n-slate-9"
-                    readonly
-                  />
-                  <NextButton
-                    type="button"
-                    icon="i-lucide-copy"
-                    color="slate"
-                    variant="faded"
-                    class="shrink-0"
-                    @click.prevent="handleCopy(sepayWebhookUrl)"
-                  />
-                </div>
-              </WithLabel>
-            </div>
-          </form>
-        </SectionLayout>
-
-        <!-- PayOS -->
-        <SectionLayout
-          v-if="activeTabKey === 'payos'"
-          :title="$t('PAYMENT_SETTINGS.PAYOS.TITLE') || 'PayOS Configuration'"
-        >
-          <form class="grid gap-4 mt-2" @submit.prevent="handleSave">
-            <div class="grid gap-4">
-              <div class="flex items-center justify-between">
-                <span class="text-sm font-medium text-n-slate-12">{{ $t('PAYMENT_SETTINGS.DEFAULT_PROVIDER') || 'Default Payment Gateway' }}</span>
-                <Switch
-                  :model-value="defaultProvider === 'payos'"
-                  @update:model-value="val => handleDefaultProviderChange('payos', val)"
-                />
-              </div>
-
-              <WithLabel
-                name="payos-client-id"
-                :has-error="v$.payosConfig.client_id.$error"
-                :label="$t('PAYMENT_SETTINGS.PAYOS.CLIENT_ID') || 'Client ID'"
-              >
-                <NextInput
-                  v-model="payosConfig.client_id"
-                  type="text"
-                  class="w-full"
-                  @blur="v$.payosConfig.client_id.$touch"
-                />
-              </WithLabel>
-
-              <WithLabel
-                name="payos-api-key"
-                :has-error="v$.payosConfig.api_key.$error"
-                :label="$t('PAYMENT_SETTINGS.PAYOS.API_KEY') || 'API Key'"
-              >
-                <NextInput
-                  v-model="payosConfig.api_key"
-                  type="password"
-                  class="w-full"
-                  @blur="v$.payosConfig.api_key.$touch"
-                />
-              </WithLabel>
-
-              <WithLabel
-                name="payos-checksum-key"
-                :has-error="v$.payosConfig.checksum_key.$error"
-                :label="
-                  $t('PAYMENT_SETTINGS.PAYOS.CHECKSUM_KEY') || 'Checksum Key'
-                "
-              >
-                <NextInput
-                  v-model="payosConfig.checksum_key"
-                  type="password"
-                  class="w-full"
-                  @blur="v$.payosConfig.checksum_key.$touch"
-                />
-              </WithLabel>
-
-              <WithLabel name="payos-webhook-url" :label="$t('PAYMENT_SETTINGS.WEBHOOK_URL') || 'Webhook URL (Read-only)'">
-                <div class="flex items-center gap-2 w-full">
-                  <NextInput
-                    v-model="payosWebhookUrl"
-                    type="text"
-                    class="w-full text-n-slate-9"
-                    readonly
-                  />
-                  <NextButton
-                    type="button"
-                    icon="i-lucide-copy"
-                    color="slate"
-                    variant="faded"
-                    class="shrink-0"
-                    @click.prevent="handleCopy(payosWebhookUrl)"
-                  />
-                </div>
-              </WithLabel>
-            </div>
-          </form>
-        </SectionLayout>
-        
-        <!-- Tingee -->
-        <SectionLayout
-          v-if="activeTabKey === 'tingee'"
-          :title="$t('PAYMENT_SETTINGS.TINGEE.TITLE') || 'Tingee Configuration'"
-        >
-          <div class="py-12 flex flex-col items-center justify-center bg-n-alpha-black2 rounded-lg border border-dashed border-n-weak">
-            <div class="w-12 h-12 rounded-full bg-n-alpha-2 flex items-center justify-center mb-4">
-              <fluent-icon icon="rocket" class="w-6 h-6 text-n-slate-11" />
-            </div>
-            <h4 class="text-n-slate-12 font-medium mb-2">{{ $t('PAYMENT_SETTINGS.TINGEE.EMPTY_STATE_TITLE') || 'Feature in development' }}</h4>
-            <p class="text-sm text-n-slate-11 text-center max-w-md">
-              {{ $t('PAYMENT_SETTINGS.TINGEE.EMPTY_STATE_DESC') }}
-            </p>
-          </div>
-        </SectionLayout>
-
-        <div class="flex items-center justify-end gap-3 mt-4">
-          <NextButton
-            variant="faded"
-            color="slate"
-            :disabled="activeTabKey === 'tingee'"
-            :is-loading="isTesting"
-            @click="handleTestPayment"
-          >
-            {{ $t('PAYMENT_SETTINGS.TEST_PAYMENT') || 'Test Payment' }}
-          </NextButton>
-          <NextButton blue :is-loading="isSaving" @click="handleSave">
-            {{ $t('GENERAL_SETTINGS.SUBMIT') }}
-          </NextButton>
+      <!-- Danh sách kênh thanh toán -->
+      <div class="flex flex-col gap-4">
+        <h3 class="text-base font-semibold text-n-slate-12">
+          {{ t('SALES.SETTINGS.PAYMENT.LIST_TITLE') }}
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          <IntegrationItem
+            v-for="app in paymentIntegrations"
+            :id="app.id"
+            :key="app.id"
+            :name="app.name"
+            :description="app.description"
+            :status="app.status"
+            :enabled="app.enabled"
+            path-prefix="sales/settings"
+          />
         </div>
       </div>
     </div>

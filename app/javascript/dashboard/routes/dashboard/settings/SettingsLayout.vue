@@ -20,7 +20,10 @@ defineProps({
 </script>
 
 <template>
-  <div class="flex flex-col w-full h-full gap-4 font-inter">
+  <div
+    class="flex flex-col w-full h-full gap-4 font-inter"
+    :class="{ 'max-w-5xl mx-auto px-6 pt-6': $route.path.includes('/sales/') }"
+  >
     <slot name="header" />
     <!-- Added to render any templates that should be rendered before body -->
     <main>

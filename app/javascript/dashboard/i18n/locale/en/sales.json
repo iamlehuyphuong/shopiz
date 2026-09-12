@@ -608,6 +608,77 @@
         "SHOPIZ": "Shopiz",
         "NO_DATA": "--"
       }
+    },
+    "SETTINGS": {
+      "TABS": {
+        "TOOL": "Sales software",
+        "ASSISTANT": "AI Assistant",
+        "PAYMENT": "Payment gateways",
+        "INVOICE": "E-invoices"
+      },
+      "HEADER": {
+        "TITLE": "Sales settings"
+      },
+      "PAYMENT": {
+        "LIST_TITLE": "Payment gateways list",
+        "DISCONNECT": "Disconnect",
+        "CONNECT": "Connect",
+        "CONFIGURE": "Configure",
+        "COMING_SOON": "Coming Soon!",
+        "SEPAY_DESC": "Customers scan QR codes to transfer payments. SePay detects balance fluctuations, and the order is marked as paid. Everything happens within 10 seconds.",
+        "PAYOS_DESC": "Free setup, maintenance, and unlimited transactions. Supports individuals and businesses, 5-minute integration, money straight to your bank account.",
+        "TINGEE_DESC": "Connect Tingee (coming soon).",
+        "SELECT_PLATFORM": "Select payment gateway",
+        "DEFAULT_PLATFORM": "Default payment gateway:",
+        "DISCONNECT_SEPAY_TITLE": "Disconnect SePay?",
+        "DISCONNECT_SEPAY_MSG": "Are you sure you want to disconnect from SePay?",
+        "DISCONNECT_PAYOS_TITLE": "Disconnect PayOS?",
+        "DISCONNECT_PAYOS_MSG": "Are you sure you want to disconnect from PayOS?",
+        "DISCONNECT_TINGEE_TITLE": "Disconnect Tingee?",
+        "DISCONNECT_TINGEE_MSG": "Are you sure you want to disconnect from Tingee?",
+        "SEPAY_SUCCESS": "SePay configuration updated",
+        "PAYOS_SUCCESS": "PayOS configuration updated",
+        "TINGEE_SUCCESS": "Tingee configuration updated",
+        "DISCONNECT_SUCCESS": "Disconnected successfully",
+        "DISCONNECT_ERROR": "Error disconnecting",
+        "BACK_BUTTON": "Payment gateways",
+        "TITLE_SEPAY": "Configure SePay",
+        "TITLE_PAYOS": "Configure PayOS",
+        "TITLE_TINGEE": "Configure Tingee",
+        "CONFIRM": "Confirm",
+        "CANCEL": "Cancel",
+        "FORM": {
+          "COMPANY_NAME": "Company Name",
+          "COMPANY_CODE": "Company Code",
+          "SECRET_KEY": "Secret Key",
+          "CLIENT_ID": "Client ID",
+          "API_KEY": "API Key",
+          "CHECKSUM_KEY": "Checksum Key",
+          "PLACEHOLDER_COMPANY_NAME": "Enter company name",
+          "PLACEHOLDER_COMPANY_CODE": "Enter company code",
+          "PLACEHOLDER_SECRET_KEY": "Enter secret key",
+          "PLACEHOLDER_CLIENT_ID": "Enter client ID",
+          "PLACEHOLDER_API_KEY": "Enter API key",
+          "PLACEHOLDER_CHECKSUM_KEY": "Enter checksum key"
+        },
+        "HEADER_TITLE": "Payment gateways integration",
+        "HEADER_DESC": "Connect your bank account or online payment gateways to automatically confirm payments for orders.",
+        "WEBHOOK_URL": "Webhook URL",
+        "WEBHOOK_COPIED": "Webhook URL copied"
+      },
+      "TOOL": {
+        "HEADER_TITLE": "Sales software integration",
+        "HEADER_DESC": "Connect your account with sales software. All conversations will use the product search and order management features of that platform.",
+        "DEFAULT_PLATFORM": "Default sales software:",
+        "LIST_TITLE": "Apps list",
+        "SHOPIZ": "Shopiz"
+      },
+      "INVOICE": {
+        "HEADER_TITLE": "E-invoice integration",
+        "HEADER_DESC": "Connect with e-invoice software to automatically issue and send invoices to customers.",
+        "DEFAULT_PLATFORM": "Default e-invoice software:",
+        "LIST_TITLE": "E-invoice software list"
+      }
     }
   }
 }

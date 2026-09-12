@@ -605,6 +605,72 @@
         "SHOPIZ": "Shopiz",
         "NO_DATA": "--"
       }
+    },
+    "SETTINGS": {
+      "TABS": {
+        "TOOL": "Phần mềm bán hàng",
+        "ASSISTANT": "Trợ lý AI",
+        "PAYMENT": "Cổng thanh toán",
+        "INVOICE": "Hoá đơn điện tử"
+      },
+      "HEADER": {
+        "TITLE": "Cài đặt bán hàng",
+        "DESC": "Kết nối với các phần mềm thứ ba để đồng bộ dữ liệu tự động"
+      },
+      "PAYMENT": {
+        "HEADER_TITLE": "Tích hợp kênh thanh toán",
+        "HEADER_DESC": "Kết nối tài khoản ngân hàng hoặc cổng thanh toán trực tuyến để tự động xác nhận thanh toán cho đơn hàng.",
+        "CONNECT": "Kết nối",
+        "CONFIGURE": "Cấu hình",
+        "DISCONNECT": "Ngắt kết nối",
+        "CANCEL": "Hủy",
+        "CONFIRM": "Xác nhận",
+        "CONNECT_SUCCESS": "Kết nối cổng thanh toán thành công",
+        "CONNECT_ERROR": "Có lỗi xảy ra khi kết nối. Vui lòng kiểm tra lại thông tin.",
+        "DISCONNECT_SUCCESS": "Đã ngắt kết nối cổng thanh toán thành công",
+        "DISCONNECT_ERROR": "Có lỗi xảy ra khi ngắt kết nối",
+        "TITLE_PAYOS": "Cấu hình PayOS",
+        "TITLE_SEPAY": "Cấu hình SePay",
+        "TITLE_TINGEE": "Cấu hình Tingee",
+        "DISCONNECT_PAYOS_TITLE": "Ngắt kết nối PayOS",
+        "DISCONNECT_PAYOS_MSG": "Bạn có chắc chắn muốn ngắt kết nối PayOS? Hệ thống sẽ không thể tự động xác nhận các thanh toán chuyển khoản qua ngân hàng.",
+        "DISCONNECT_SEPAY_TITLE": "Ngắt kết nối SePay",
+        "DISCONNECT_SEPAY_MSG": "Bạn có chắc chắn muốn ngắt kết nối SePay? Hệ thống sẽ không thể tự động xác nhận các thanh toán chuyển khoản qua ngân hàng.",
+        "DISCONNECT_TINGEE_TITLE": "Ngắt kết nối Tingee",
+        "DISCONNECT_TINGEE_MSG": "Bạn có chắc chắn muốn ngắt kết nối Tingee? Hệ thống sẽ không thể tự động xác nhận các thanh toán chuyển khoản qua ngân hàng.",
+        "FORM": {
+          "CLIENT_ID": "Mã đối tác (Client ID)",
+          "PLACEHOLDER_CLIENT_ID": "Nhập mã đối tác",
+          "API_KEY": "API Key",
+          "PLACEHOLDER_API_KEY": "Nhập API Key",
+          "CHECKSUM_KEY": "Checksum Key",
+          "PLACEHOLDER_CHECKSUM_KEY": "Nhập Checksum Key",
+          "COMPANY_NAME": "Tên công ty",
+          "PLACEHOLDER_COMPANY_NAME": "Nhập tên công ty",
+          "COMPANY_CODE": "Mã công ty",
+          "PLACEHOLDER_COMPANY_CODE": "Nhập mã công ty",
+          "SECRET_KEY": "Mã bí mật (Secret Key)",
+          "PLACEHOLDER_SECRET_KEY": "Nhập mã bí mật"
+        },
+        "SEPAY_DESC": "Khách hàng quét QR Code và chuyển khoản thanh toán. SePay phát hiện biến động số dư, đơn hàng được ghi nhận đã thanh toán. Mọi thứ diễn ra trong 10 giây.",
+        "PAYOS_DESC": "Miễn phí khởi tạo, miễn phí duy trì, miễn phí giao dịch không giới hạn. Hỗ trợ cá nhân và doanh nghiệp, tích hợp đơn giản trong 05 phút, tiền về trực tiếp tài khoản ngân hàng.",
+        "TINGEE_DESC": "Kết nối Tingee (sắp tích hợp).",
+        "WEBHOOK_URL": "Webhook URL",
+        "WEBHOOK_COPIED": "Đã sao chép Webhook URL"
+      },
+      "TOOL": {
+        "HEADER_TITLE": "Tích hợp phần mềm bán hàng",
+        "HEADER_DESC": "Liên kết tài khoản với phần mềm bán hàng. Mọi hội thoại sẽ sử dụng tính năng tìm kiếm sản phẩm và quản lý đơn hàng của nền tảng đó.",
+        "DEFAULT_PLATFORM": "Phần mềm bán hàng mặc định:",
+        "LIST_TITLE": "Danh sách ứng dụng",
+        "SHOPIZ": "Shopiz"
+      },
+      "INVOICE": {
+        "HEADER_TITLE": "Tích hợp hoá đơn điện tử",
+        "HEADER_DESC": "Kết nối với các phần mềm hoá đơn điện tử để tự động xuất và gửi hoá đơn cho khách hàng.",
+        "DEFAULT_PLATFORM": "Phần mềm hoá đơn mặc định:",
+        "LIST_TITLE": "Danh sách phần mềm hoá đơn"
+      }
     }
   }
 }

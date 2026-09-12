@@ -92,7 +92,7 @@ const open = () => {
 
 const close = () => {
   emit('close');
-  dialogRef.value?.close();
+  if (dialogRef.value?.open) dialogRef.value.close();
   isOpen.value = false;
 };
 
