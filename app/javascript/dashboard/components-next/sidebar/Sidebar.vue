@@ -662,6 +662,7 @@ const menuItems = computed(() => {
         },
       ],
     },
+    /*
     {
       name: 'Help Center',
       label: t('SIDEBAR.HELP_CENTER.TITLE'),
@@ -729,6 +730,7 @@ const menuItems = computed(() => {
         },
       ],
     },
+    */
     {
       name: 'Settings',
       label: t('SIDEBAR.SETTINGS'),
