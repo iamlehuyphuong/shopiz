@@ -143,15 +143,7 @@ const selectIntegration = async id => {
         </p>
       </div>
 
-      <div
-        v-if="integrations.length === 0"
-        class="flex items-center gap-2 text-xs text-n-slate-10 py-2.5"
-      >
-        <i class="i-lucide-unplug text-sm" />
-        <span>{{ t('INBOX_MGMT.ECOMMERCE.NO_INTEGRATIONS') }}</span>
-      </div>
-
-      <div v-else class="flex items-center gap-3">
+      <div class="flex items-center gap-3">
         <span class="text-sm font-medium text-n-slate-12">{{
           t('SALES.SETTINGS.TOOL.DEFAULT_PLATFORM')
         }}</span>
