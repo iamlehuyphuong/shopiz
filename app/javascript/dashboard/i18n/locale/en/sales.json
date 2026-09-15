@@ -228,7 +228,21 @@
       "ACTIONS": {
         "PULL": "Sync from platform",
         "PUSH": "Push to platform",
-        "ADD": "Add product"
+        "ADD": "Add product",
+        "IMPORT_PRODUCT": {
+          "IMPORT": "Import",
+          "TITLE": "Import Products",
+          "DESCRIPTION": "Import products using a CSV file. ",
+          "DOWNLOAD_LABEL": "Download sample CSV",
+          "LABEL": "Choose CSV file",
+          "CHOOSE_FILE": "Choose file",
+          "CHANGE": "Change file"
+        },
+        "EXPORT_PRODUCT": {
+          "EXPORT": "Export",
+          "TITLE": "Export Products",
+          "DESCRIPTION": "Export your products as a CSV file. We will send the file to your email when it is ready."
+        }
       },
       "TABLE": {
         "EMPTY_SEARCH": "No matching products found.",
@@ -262,7 +276,11 @@
         "DELETE_CONFIRM_YES": "Yes, delete product",
         "CANCEL": "No, keep it",
         "DELETE_SUCCESS": "Product deleted.",
-        "SELECT_TO_PUSH": "Select a product to push to platform."
+        "SELECT_TO_PUSH": "Select a product to push to platform.",
+        "IMPORT_SUCCESS": "Product import started. You will receive an email once it is complete.",
+        "IMPORT_ERROR": "Error starting product import.",
+        "EXPORT_SUCCESS": "Product export started. The CSV file will be sent to your email.",
+        "EXPORT_ERROR": "Error starting product export."
       }
     },
     "MODULE_ORDERS": {
@@ -439,11 +457,13 @@
         },
         "STYLE": {
           "LABEL": "Style",
-          "PLACEHOLDER": "e.g., Sport, Vintage..."
+          "HINT": "Type text and press Enter to add to the list.",
+          "PLACEHOLDER": "E.g. Sport, Vintage..."
         },
         "ATTRIBUTES": {
-          "LABEL": "Extended Attributes (Comma separated tags)",
-          "PLACEHOLDER": "Waterproof, Long battery, Lightweight..."
+          "LABEL": "Other Attributes",
+          "HINT": "Type text and press Enter to add to the list.",
+          "PLACEHOLDER": "Add other attributes for the product"
         },
         "STATUS": {
           "LABEL": "Product Status",
@@ -492,6 +512,20 @@
           },
           "HEIGHT": {
             "LABEL": "Height (cm)"
+          }
+        },
+        "CUSTOM_ATTR": {
+          "ADD_BUTTON": "Add Attribute",
+          "NAME": "Attribute Name",
+          "KEYWORDS": "Keywords",
+          "TYPE": "Content Type",
+          "DETAILS": "Detailed Content",
+          "REMOVE": "Remove",
+          "TYPES": {
+            "TEXT": "Text",
+            "NUMBER": "Number",
+            "LIST": "List",
+            "DATE": "Date"
           }
         }
       },

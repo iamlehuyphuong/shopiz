@@ -215,12 +215,14 @@ const STYLE_CONFIG = {
 };
 
 const variantClasses = computed(() => {
+  const colorConfig = STYLE_CONFIG.colors[computedColor.value] || STYLE_CONFIG.colors.blue;
+
   const variantMap = {
-    ghost: `${STYLE_CONFIG.colors[computedColor.value].ghost}`,
-    link: `${STYLE_CONFIG.colors[computedColor.value].link} p-0 font-medium underline-offset-2`,
-    outline: STYLE_CONFIG.colors[computedColor.value].outline,
-    faded: STYLE_CONFIG.colors[computedColor.value].faded,
-    solid: STYLE_CONFIG.colors[computedColor.value].solid,
+    ghost: `${colorConfig.ghost}`,
+    link: `${colorConfig.link} p-0 font-medium underline-offset-2`,
+    outline: colorConfig.outline,
+    faded: colorConfig.faded,
+    solid: colorConfig.solid,
   };
 
   return variantMap[computedVariant.value];

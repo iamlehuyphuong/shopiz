@@ -82,6 +82,16 @@ export const actions = {
       commit('SET_PRODUCT_UI_FLAG', { isSyncing: false });
     }
   },
+  importProducts: async (_, file) => {
+    await SalesProductsAPI.importProducts(file);
+  },
+  exportProducts: async (_, payload) => {
+    const response = await SalesProductsAPI.exportProducts(payload);
+    if (response.data && response.data.download_url) {
+      window.open(response.data.download_url, '_blank');
+    }
+    return response.data;
+  },
 };
 
 // Import removed from here

@@ -43,71 +43,83 @@ const selectContact = contact => {
 
 <template>
   <div class="flex flex-col gap-2">
-    <div class="relative">
+    <div class="flex items-center w-full h-[38px] px-3 rounded-lg border border-n-weak bg-white dark:bg-n-solid-1 focus-within:border-n-brand focus-within:ring-1 focus-within:ring-n-brand/30 transition-all">
+      <i class="i-lucide-search text-n-slate-10 text-base shrink-0" />
       <input
         v-model="searchQuery"
         type="text"
         :placeholder="
           $t('SALES.ORDER_FORM.PLACEHOLDERS.SEARCH_CONTACT') ||
-          'Tìm kiếm khách hàng theo tên, SĐT...'
+          'Tìm kiếm khách hàng bằng tên, email hoặc số điện thoại'
         "
-        class="w-full px-3 pr-8 py-1.5 text-sm rounded-lg border border-n-weak bg-n-solid-1 text-n-slate-12 placeholder:text-n-slate-9 outline-none focus:border-n-brand focus:ring-1 focus:ring-n-brand/30 transition-all"
+        class="reset-base flex-1 w-full h-full !px-3 !py-0 text-sm !bg-transparent !border-none !outline-none !shadow-none !ring-0 text-n-slate-12 placeholder:text-n-slate-9 !m-0 !leading-normal !mb-0"
       />
-      <fluent-icon
-        v-if="isSearching"
-        icon="spinner"
-        size="16"
-        class="absolute right-3 top-1/2 -translate-y-1/2 text-n-slate-10 animate-spin"
-      />
-      <button
-        v-else-if="searchQuery.length > 0"
-        class="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 rounded hover:bg-n-alpha-2 text-n-slate-10 hover:text-n-slate-12 transition-colors"
-        @click="
-          searchQuery = '';
-          results = [];
-        "
-      >
-        <fluent-icon icon="dismiss" size="12" />
-      </button>
+      <div class="flex items-center shrink-0">
+        <i
+          v-if="isSearching"
+          class="i-lucide-loader-2 text-n-slate-10 animate-spin text-base"
+        />
+        <button
+          v-else-if="searchQuery.length > 0"
+          class="p-1 rounded hover:bg-n-alpha-2 text-n-slate-10 hover:text-n-slate-12 transition-colors flex items-center justify-center"
+          @click="
+            searchQuery = '';
+            results = [];
+          "
+        >
+          <i class="i-lucide-x text-sm" />
+        </button>
+      </div>
     </div>
 
     <!-- Results -->
     <div
       v-if="results.length > 0"
-      class="max-h-48 overflow-y-auto rounded-lg border border-n-weak bg-n-solid-1 divide-y divide-n-weak"
+      class="max-h-64 overflow-y-auto rounded-lg border border-n-weak bg-white dark:bg-slate-900 shadow-md"
     >
-      <button
-        v-for="contact in results"
-        :key="contact.id"
-        class="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-n-alpha-1 transition-colors text-left"
-        @click="selectContact(contact)"
-      >
-        <img
-          v-if="contact.thumbnail"
-          :src="contact.thumbnail"
-          :alt="contact.name"
-          class="w-8 h-8 rounded-full object-cover shrink-0 bg-n-solid-3"
-        />
-        <div
-          v-else
-          class="w-8 h-8 rounded-full bg-n-brand text-white flex items-center justify-center shrink-0 font-medium text-xs uppercase"
+      <div class="p-1.5 space-y-0.5">
+        <button
+          v-for="contact in results"
+          :key="contact.id"
+          class="w-full flex items-center gap-3 px-2.5 py-2 rounded-md hover:bg-n-alpha-1 transition-colors text-left"
+          @click="selectContact(contact)"
         >
-          {{ contact.name.charAt(0) }}
-        </div>
-        <div class="flex-1 min-w-0">
-          <div class="text-sm font-medium text-n-slate-12 truncate">
-            {{ contact.name }}
-          </div>
+          <img
+            v-if="contact.thumbnail"
+            :src="contact.thumbnail"
+            :alt="contact.name"
+            class="w-8 h-8 rounded-full object-cover shrink-0 bg-n-solid-3"
+          />
           <div
-            v-if="contact.phone_number || contact.email"
-            class="text-xs text-n-slate-10 truncate"
+            v-else
+            class="w-8 h-8 rounded-full bg-n-brand text-white flex items-center justify-center shrink-0 font-medium text-xs uppercase"
           >
-            {{ contact.phone_number }}
-            {{ contact.phone_number && contact.email ? '•' : '' }}
-            {{ contact.email }}
+            {{ contact.name ? contact.name.charAt(0) : '?' }}
           </div>
-        </div>
-      </button>
+          <div class="flex-1 min-w-0">
+            <div class="text-sm font-medium text-n-slate-12 truncate">
+              {{ contact.name }}
+            </div>
+            <div
+              v-if="contact.phone_number || contact.email"
+              class="text-xs text-n-slate-10 truncate mt-0.5"
+            >
+              {{ contact.phone_number }}
+              {{ contact.phone_number && contact.email ? '•' : '' }}
+              {{ contact.email }}
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <div
+      v-else-if="
+        searchQuery.length >= 2 && !isSearching && results.length === 0
+      "
+      class="text-center py-3 text-sm text-n-slate-10"
+    >
+      Không tìm thấy khách hàng
     </div>
   </div>
 </template>

@@ -490,7 +490,11 @@ Rails.application.routes.draw do
 
           namespace :sales do
             resources :products, only: [:index, :show, :create, :update, :destroy] do
-              post :sync, on: :collection
+              collection do
+                post :sync
+                post :import
+                post :export
+              end
             end
             resources :reports, only: [:index] do
               get :heatmap, on: :collection

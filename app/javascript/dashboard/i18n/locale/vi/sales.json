@@ -227,7 +227,21 @@
       },
       "ACTIONS": {
         "PULL": "Đồng bộ dữ liệu",
-        "ADD": "Thêm sản phẩm"
+        "ADD": "Thêm sản phẩm",
+        "IMPORT_PRODUCT": {
+          "IMPORT": "Nhập dữ liệu",
+          "TITLE": "Nhập sản phẩm từ file",
+          "DESCRIPTION": "Nhập danh sách sản phẩm hàng loạt bằng file CSV. ",
+          "DOWNLOAD_LABEL": "Tải file CSV mẫu",
+          "LABEL": "Chọn file CSV",
+          "CHOOSE_FILE": "Chọn file",
+          "CHANGE": "Đổi file khác"
+        },
+        "EXPORT_PRODUCT": {
+          "EXPORT": "Xuất dữ liệu",
+          "TITLE": "Xuất danh sách sản phẩm",
+          "DESCRIPTION": "Xuất danh sách sản phẩm hiện tại thành file CSV. Hệ thống sẽ gửi file qua email của bạn khi hoàn tất."
+        }
       },
       "TABLE": {
         "EMPTY_SEARCH": "Không tìm thấy sản phẩm nào phù hợp.",
@@ -259,7 +273,11 @@
         "DELETE_CONFIRM_PLACEHOLDER": "Nhập {name} để xác nhận",
         "DELETE_CONFIRM_YES": "Có, xóa sản phẩm",
         "CANCEL": "Không, giữ lại",
-        "DELETE_SUCCESS": "Đã xoá sản phẩm."
+        "DELETE_SUCCESS": "Đã xoá sản phẩm.",
+        "IMPORT_SUCCESS": "Quá trình nhập dữ liệu đang diễn ra. Bạn sẽ nhận được email thông báo khi hoàn tất.",
+        "IMPORT_ERROR": "Lỗi khi khởi tạo quá trình nhập dữ liệu.",
+        "EXPORT_SUCCESS": "Quá trình xuất dữ liệu đang diễn ra. File CSV sẽ được gửi qua email.",
+        "EXPORT_ERROR": "Lỗi khi khởi tạo quá trình xuất dữ liệu."
       }
     },
     "MODULE_ORDERS": {
@@ -380,8 +398,8 @@
         "SUBHEADING_EDIT": "Cập nhật thương hiệu, phong cách và các thuộc tính khác."
       },
       "STEP_2": {
-        "HEADING_NEW": "Biến thể & Giao hàng",
-        "HEADING_EDIT": "Biến thể & Giao hàng",
+        "HEADING_NEW": "Biến thể",
+        "HEADING_EDIT": "Biến thể",
         "SUBHEADING_NEW": "Tạo các tuỳ chọn kích thước, màu sắc và thông tin cân nặng, kích thước hộp.",
         "SUBHEADING_EDIT": "Cập nhật các tuỳ chọn kích thước, màu sắc và thông tin giao hàng."
       },
@@ -403,19 +421,19 @@
           "ERROR": "Vui lòng nhập tên sản phẩm"
         },
         "IMAGE": {
-          "LABEL": "Đường dẫn hình ảnh (URL)",
+          "LABEL": "Đường dẫn hình ảnh",
           "PLACEHOLDER": "https://example.com/image.jpg"
         },
         "TYPE": {
           "LABEL": "Loại hàng hoá",
           "OPTIONS": {
             "PHYSICAL": "Sản phẩm vật lý",
-            "DIGITAL": "Sản phẩm số (Digital)",
+            "DIGITAL": "Sản phẩm số",
             "SERVICE": "Dịch vụ"
           }
         },
         "CATEGORY": {
-          "LABEL": "Danh mục (Category)",
+          "LABEL": "Danh mục",
           "PLACEHOLDER": "Thời trang, Đồ điện tử..."
         },
         "DESCRIPTION": {
@@ -431,16 +449,18 @@
           "PLACEHOLDER": "VND"
         },
         "BRAND": {
-          "LABEL": "Thương hiệu (Brand)",
+          "LABEL": "Thương hiệu",
           "PLACEHOLDER": "Ví dụ: Nike, Apple..."
         },
         "STYLE": {
-          "LABEL": "Phong cách (Style)",
+          "LABEL": "Phong cách",
+          "HINT": "Nhập văn bản và nhấn Enter để thêm vào danh sách.",
           "PLACEHOLDER": "Ví dụ: Thể thao, Vintage..."
         },
         "ATTRIBUTES": {
-          "LABEL": "Thuộc tính mở rộng (Các tags ngăn cách bằng dấu phẩy)",
-          "PLACEHOLDER": "Chống nước, Pin trâu, Thiết kế gọn nhẹ..."
+          "LABEL": "Thuộc tính khác",
+          "HINT": "Nhập văn bản và nhấn Enter để thêm vào danh sách.",
+          "PLACEHOLDER": "Thêm các thuộc tính khác cho sản phẩm"
         },
         "STATUS": {
           "LABEL": "Trạng thái sản phẩm",
@@ -466,7 +486,7 @@
             "PLACEHOLDER": "VD: SKU-RED-S"
           },
           "BARCODE": {
-            "LABEL": "Mã vạch (Barcode)",
+            "LABEL": "Mã vạch",
             "PLACEHOLDER": "Barcode"
           },
           "COLOR": {
@@ -474,7 +494,7 @@
             "PLACEHOLDER": "VD: Đỏ, Xanh..."
           },
           "SIZE": {
-            "LABEL": "Kích thước (Size)",
+            "LABEL": "Kích thước",
             "PLACEHOLDER": "VD: S, M, XL..."
           },
           "WEIGHT": {
@@ -489,6 +509,20 @@
           },
           "HEIGHT": {
             "LABEL": "Cao (cm)"
+          }
+        },
+        "CUSTOM_ATTR": {
+          "ADD_BUTTON": "Thêm thuộc tính",
+          "NAME": "Tên thuộc tính",
+          "KEYWORDS": "Từ khoá",
+          "TYPE": "Kiểu nội dung",
+          "DETAILS": "Nội dung chi tiết",
+          "REMOVE": "Xoá",
+          "TYPES": {
+            "TEXT": "Văn bản",
+            "NUMBER": "Số",
+            "LIST": "Danh sách",
+            "DATE": "Ngày tháng"
           }
         }
       },

@@ -11,6 +11,10 @@ import Input from 'dashboard/components-next/input/Input.vue';
 import PullOrdersDialog from '../components/PullOrdersDialog.vue';
 import { OnClickOutside } from '@vueuse/components';
 import PaginationFooter from 'dashboard/components-next/pagination/PaginationFooter.vue';
+import WootDatePicker from 'dashboard/components/ui/DatePicker/DatePicker.vue';
+import { DATE_RANGE_TYPES } from 'dashboard/components/ui/DatePicker/helpers/DatePickerHelper';
+import { getUnixStartOfDay, getUnixEndOfDay } from 'helpers/DateHelper';
+import subDays from 'date-fns/subDays';
 import { useStoreGetters, useStore } from 'dashboard/composables/store';
 import {
   BaseTable,
@@ -62,6 +66,19 @@ const activeSourceName = computed(
   () => sources.find(s => s.value === sourceFilter.value)?.label
 );
 
+const customDateRange = ref([subDays(new Date(), 29), new Date()]);
+const selectedDateRange = ref(DATE_RANGE_TYPES.LAST_30_DAYS);
+
+const fromTimestamp = computed(() => getUnixStartOfDay(customDateRange.value[0]));
+const toTimestamp = computed(() => getUnixEndOfDay(customDateRange.value[1]));
+
+const onDateRangeChange = value => {
+  const [startDate, endDate, rangeType] = value;
+  customDateRange.value = [startDate, endDate];
+  selectedDateRange.value = rangeType || DATE_RANGE_TYPES.CUSTOM_RANGE;
+  currentPage.value = 1;
+};
+
 const appIntegrations = computed(
   () => getters['integrations/getAppIntegrations'].value
 );
@@ -92,6 +109,14 @@ const filteredOrders = computed(() => {
       return source === sourceFilter.value;
     });
   }
+
+  const fromTime = fromTimestamp.value * 1000;
+  const toTime = toTimestamp.value * 1000;
+  filtered = filtered.filter(order => {
+    if (!order.created_at) return true;
+    const orderTime = new Date(order.created_at).getTime();
+    return orderTime >= fromTime && orderTime <= toTime;
+  });
 
   const query = searchQuery.value.trim();
   if (!query) return filtered;
@@ -209,6 +234,62 @@ const formatSource = source => {
 const sourceLogo = source => {
   if (!source) return null;
   return `/dashboard/images/integrations/${source}.png`;
+};
+
+const onDeleteOrder = order => {
+  deleteOrder.value = order;
+  toggleDeleteModal();
+};
+
+const onExportOrders = () => {
+  if (!filteredOrders.value.length) {
+    useAlert(t('SALES.MODULE_ORDERS.ALERTS.NO_ORDERS_TO_EXPORT') || 'Không có đơn hàng nào để xuất.');
+    return;
+  }
+
+  const csvRows = [];
+  const headers = [
+    'Mã đơn hàng', 'Mã nội bộ', 'Nền tảng', 'Trạng thái đơn',
+    'Khách hàng', 'Số điện thoại', 'Địa chỉ', 'Ghi chú',
+    'Phương thức TT', 'Trạng thái TT', 'Tổng tiền', 'Phí vận chuyển',
+    'Mã vận đơn', 'ĐV vận chuyển', 'Sản phẩm', 'Ngày tạo', 'Cập nhật cuối'
+  ];
+  csvRows.push(headers.join(','));
+
+  filteredOrders.value.forEach(order => {
+    // Format products list
+    const productsString = (order.items || []).map(item => `${item.product_name || 'SP'} (x${item.quantity})`).join('; ');
+    
+    const row = [
+      order.external_order_id || order.id,
+      order.id,
+      formatSource(order.external_source),
+      formatStatus(order.status),
+      `"${(order.customer_name || order.contact?.name || '').replace(/"/g, '""')}"`,
+      `"${(order.customer_phone || order.contact?.phone_number || '').replace(/"/g, '""')}"`,
+      `"${(order.customer_address || '').replace(/"/g, '""')}"`,
+      `"${(order.customer_note || '').replace(/"/g, '""')}"`,
+      order.payment_method || '',
+      order.payment_status || '',
+      order.total_amount || 0,
+      order.shipping_fee || 0,
+      `"${(order.tracking_code || '').replace(/"/g, '""')}"`,
+      `"${(order.shipping_carrier || '').replace(/"/g, '""')}"`,
+      `"${productsString.replace(/"/g, '""')}"`,
+      formatDate(order.created_at),
+      formatDate(order.updated_at)
+    ];
+    csvRows.push(row.join(','));
+  });
+
+  const csvContent = "data:text/csv;charset=utf-8,\uFEFF" + csvRows.join('\n');
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", `orders_${new Date().getTime()}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 };
 
 const onPageChange = page => {
@@ -363,6 +444,11 @@ onBeforeMount(() => {
 
       <div class="gap-3 flex justify-between sm:mt-4 min-w-0 mb-4">
         <div class="flex items-center gap-3">
+          <WootDatePicker
+            v-model:date-range="customDateRange"
+            v-model:range-type="selectedDateRange"
+            @date-range-changed="onDateRangeChange"
+          />
           <Input
             v-model="searchQuery"
             :placeholder="$t('SALES.MODULE_ORDERS.HEADER.SEARCH')"
@@ -379,15 +465,25 @@ onBeforeMount(() => {
           </Input>
         </div>
         <div
-          class="flex items-center gap-3 min-w-0 flex-row-reverse sm:flex-row"
+          class="flex items-center gap-2 min-w-0 flex-row-reverse sm:flex-row"
         >
           <Button
-            :label="$t('SALES.MODULE_ORDERS.ACTIONS.SYNC')"
+            v-if="sourceFilter !== 'shopiz'"
+            v-tooltip.top="$t('SALES.MODULE_ORDERS.ACTIONS.SYNC')"
+            icon="i-lucide-refresh-cw"
             slate
             sm
-            ghost
+            variant="outline"
             :is-loading="isSyncing"
             @click="showPullDialog = true"
+          />
+          <Button
+            v-tooltip.top="$te('SALES.MODULE_ORDERS.ACTIONS.EXPORT') ? $t('SALES.MODULE_ORDERS.ACTIONS.EXPORT') : 'Xuất dữ liệu'"
+            icon="i-lucide-download"
+            slate
+            sm
+            variant="outline"
+            @click="onExportOrders"
           />
           <Button
             :label="$t('SALES.MODULE_ORDERS.ACTIONS.ADD')"

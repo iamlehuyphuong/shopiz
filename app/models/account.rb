@@ -191,6 +191,7 @@ class Account < ApplicationRecord
   has_one :active_subscription, -> { active.order(ends_at: :desc) }, class_name: 'AccountSubscription'
 
   has_one_attached :contacts_export
+  has_one_attached :products_export
 
   enum :locale, LANGUAGES_CONFIG.map { |key, val| [val[:iso_639_1_code], key] }.to_h, prefix: true
   enum :status, { active: 0, suspended: 1 }

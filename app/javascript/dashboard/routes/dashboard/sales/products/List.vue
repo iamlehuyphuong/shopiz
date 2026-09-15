@@ -11,7 +11,10 @@ import { useToggle } from '@vueuse/core';
 import SalesLayout from '../components/SalesLayout.vue';
 import BaseSettingsHeader from 'dashboard/routes/dashboard/settings/components/BaseSettingsHeader.vue';
 import PullProductsDialog from '../components/PullProductsDialog.vue';
+import ProductImportDialog from '../components/ProductImportDialog.vue';
+import ProductExportDialog from '../components/ProductExportDialog.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
+import DropdownMenu from 'dashboard/components-next/dropdown-menu/DropdownMenu.vue';
 import Icon from 'dashboard/components-next/icon/Icon.vue';
 import Input from 'dashboard/components-next/input/Input.vue';
 import { OnClickOutside } from '@vueuse/components';
@@ -58,7 +61,13 @@ const sources = [
 ];
 
 const showPullDialog = ref(false);
+const showImportDialog = ref(false);
+const showExportDialog = ref(false);
+
 const showSourceDropdown = ref(false);
+
+
+
 const activeSourceName = computed(
   () => sources.find(s => s.value === sourceFilter.value)?.label
 );
@@ -185,6 +194,26 @@ const onPullProducts = async platform => {
     useAlert(t('SALES.DIALOG_PULL_PRODUCTS.ALERTS.SYNC_SUCCESS'));
   } catch (error) {
     useAlert(t('SALES.DIALOG_PULL_PRODUCTS.ALERTS.SYNC_ERROR'));
+  }
+};
+
+const onImportProduct = async file => {
+  showImportDialog.value = false;
+  try {
+    await store.dispatch('salesProducts/importProducts', file);
+    useAlert(t('SALES.MODULE_PRODUCTS.ALERTS.IMPORT_SUCCESS') || 'Import started. You will receive an email once completed.');
+  } catch (error) {
+    useAlert(t('SALES.MODULE_PRODUCTS.ALERTS.IMPORT_ERROR') || 'Error importing products.');
+  }
+};
+
+const onExportProduct = async () => {
+  showExportDialog.value = false;
+  try {
+    const res = await store.dispatch('salesProducts/exportProducts', { filter: { source: sourceFilter.value } });
+    useAlert(res?.message || t('SALES.MODULE_PRODUCTS.ALERTS.EXPORT_SUCCESS'));
+  } catch (error) {
+    useAlert(t('SALES.MODULE_PRODUCTS.ALERTS.EXPORT_ERROR') || 'Error exporting products.');
   }
 };
 
@@ -352,11 +381,30 @@ onBeforeMount(() => {
           class="flex items-center gap-3 min-w-0 flex-row-reverse sm:flex-row"
         >
           <Button
-            :label="$t('SALES.MODULE_PRODUCTS.ACTIONS.PULL')"
+            v-if="sourceFilter !== 'shopiz'"
+            v-tooltip.top="$t('SALES.MODULE_PRODUCTS.ACTIONS.PULL')"
+            icon="i-lucide-refresh-cw"
             slate
             sm
-            ghost
+            variant="outline"
             @click="showPullDialog = true"
+          />
+          <Button
+            v-if="['all', 'shopiz'].includes(sourceFilter)"
+            v-tooltip.top="$t('SALES.MODULE_PRODUCTS.ACTIONS.IMPORT_PRODUCT.IMPORT') || 'Import'"
+            icon="i-lucide-upload"
+            slate
+            sm
+            variant="outline"
+            @click="showImportDialog = true"
+          />
+          <Button
+            v-tooltip.top="$t('SALES.MODULE_PRODUCTS.ACTIONS.EXPORT_PRODUCT.EXPORT') || 'Export'"
+            icon="i-lucide-download"
+            slate
+            sm
+            variant="outline"
+            @click="showExportDialog = true"
           />
           <Button
             :label="$t('SALES.MODULE_PRODUCTS.ACTIONS.ADD')"
@@ -514,6 +562,18 @@ onBeforeMount(() => {
         @sync="onPullProducts"
       />
     </woot-modal>
+
+    <ProductImportDialog
+      :show="showImportDialog"
+      @close="showImportDialog = false"
+      @import="onImportProduct"
+    />
+
+    <ProductExportDialog
+      :show="showExportDialog"
+      @close="showExportDialog = false"
+      @export="onExportProduct"
+    />
 
     <woot-confirm-delete-modal
       v-if="showDeleteModal"

@@ -4,13 +4,15 @@ class Api::V1::Accounts::ProductsSearchController < Api::V1::Accounts::BaseContr
     conversation_id = params[:conversation_id]
     sources = []
 
+    active_platform = Current.account.active_ecommerce_platform || 'shopiz'
+
+    # Search native Shopiz products
+    sources.concat(search_shopiz_products(query))
+
     # Use account-level active ecommerce platform
-    if conversation_id.present?
-      active_platform = Current.account.active_ecommerce_platform
-      if active_platform.present? && active_platform != 'shopiz'
-        hook = Current.account.hooks.find_by(app_id: active_platform)
-        sources.concat(fetch_products_from_integration(hook, query)) if hook
-      end
+    if conversation_id.present? && active_platform != 'shopiz'
+      hook = Current.account.hooks.find_by(app_id: active_platform)
+      sources.concat(fetch_products_from_integration(hook, query)) if hook
     else
       # Aggregate products from all connected integrations (Fallback)
       integration_hooks.each do |hook|
@@ -21,6 +23,9 @@ class Api::V1::Accounts::ProductsSearchController < Api::V1::Accounts::BaseContr
 
     # Search Help Center articles as products
     sources.concat(search_help_center_products(query)) if query.present?
+
+    # Prioritize active platform
+    sources.sort_by! { |p| p[:source] == active_platform ? 0 : 1 }
 
     render json: { products: sources }
   end
@@ -45,6 +50,40 @@ class Api::V1::Accounts::ProductsSearchController < Api::V1::Accounts::BaseContr
   rescue StandardError => e
     Rails.logger.error("Product search error for #{hook.app_id}: #{e.message}")
     []
+  end
+
+  def search_shopiz_products(query)
+    escaped_query = ActiveRecord::Base.sanitize_sql_like(query)
+    products = Current.account.products.where("meta->>'source' IS NULL OR meta->>'source' = 'shopiz'").includes(:product_variants)
+    products = products.where('name ILIKE ? OR description ILIKE ?', "%#{escaped_query}%", "%#{escaped_query}%") if query.present?
+    
+    results = []
+    products.limit(20).each do |product|
+      thumbnail = product.meta&.dig('image') || product.meta&.dig('images')&.first
+      if product.product_variants.any?
+        product.product_variants.each do |variant|
+          results << {
+            id: product.id.to_s,
+            variant_id: variant.id.to_s,
+            name: "#{product.name} - #{variant.name}",
+            price: variant.price.to_f,
+            thumbnail: thumbnail,
+            source: 'shopiz',
+            metadata: { has_variants: true, sku: variant.sku }
+          }
+        end
+      else
+        results << {
+          id: product.id.to_s,
+          name: product.name,
+          price: product.price.to_f,
+          thumbnail: thumbnail,
+          source: 'shopiz',
+          metadata: { has_variants: false, sku: product.sku }
+        }
+      end
+    end
+    results
   end
 
   # --- Shopify ---
@@ -262,7 +301,7 @@ class Api::V1::Accounts::ProductsSearchController < Api::V1::Accounts::BaseContr
 
   # --- Help Center ---
   def search_help_center_products(query)
-    escaped_query = sanitize_sql_like(query)
+    escaped_query = ActiveRecord::Base.sanitize_sql_like(query)
     articles = Current.account.articles
                       .where('title ILIKE ? OR description ILIKE ?', "%#{escaped_query}%", "%#{escaped_query}%")
                       .limit(10)

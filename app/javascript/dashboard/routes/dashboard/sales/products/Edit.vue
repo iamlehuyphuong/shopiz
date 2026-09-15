@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from 'vue-router';
 import { useStore } from 'dashboard/composables/store';
@@ -7,6 +7,12 @@ import { useAlert } from 'dashboard/composables';
 import useVuelidate from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import Button from 'dashboard/components-next/button/Button.vue';
+import TagInput from 'dashboard/components-next/taginput/TagInput.vue';
+import ComboBox from 'dashboard/components-next/combobox/ComboBox.vue';
+import Input from 'dashboard/components-next/input/Input.vue';
+import MultiImageUpload from 'dashboard/components-next/file-upload/MultiImageUpload.vue';
+import Switch from 'dashboard/components-next/switch/Switch.vue';
+
 import SalesProductsAPI from 'dashboard/api/sales/products';
 
 const { t } = useI18n();
@@ -18,8 +24,6 @@ const currentStep = ref(0);
 const product = ref(null);
 const isLoading = ref(true);
 const isSubmitting = ref(false);
-
-import { computed } from 'vue';
 
 const wizardItems = computed(() => [
   {
@@ -45,14 +49,33 @@ const form = ref({
   description: '',
   price: '',
   currency: 'VND',
-  imageUrl: '',
+  images: [],
   productType: 'physical',
   category: '',
   brand: '',
-  style: '',
-  attributes: '',
+  style: [],
+  attributes: [],
   status: 'active',
+  hasVariants: false,
   variants: [],
+});
+
+const displayPrice = computed(() => {
+  if (!form.value.hasVariants || form.value.variants.length === 0) {
+    return `${form.value.price || 0} ${form.value.currency}`;
+  }
+  const validPrices = form.value.variants
+    .map(v => Number(v.price))
+    .filter(p => !isNaN(p) && p > 0);
+  if (validPrices.length === 0) {
+    return `${form.value.price || 0} ${form.value.currency}`;
+  }
+  const minPrice = Math.min(...validPrices);
+  const maxPrice = Math.max(...validPrices);
+  if (minPrice === maxPrice) {
+    return `${minPrice} ${form.value.currency}`;
+  }
+  return `${minPrice} - ${maxPrice} ${form.value.currency}`;
 });
 
 const rules = {
@@ -60,6 +83,19 @@ const rules = {
     name: { required },
   },
 };
+
+watch(() => form.value.hasVariants, (newVal) => {
+  if (newVal && form.value.variants.length === 0) {
+    form.value.variants.push({
+      name: '',
+      sku: '',
+      barcode: '',
+      price: '',
+      weight: 0,
+      meta: { color: '', size: '', length: 0, width: 0, height: 0 },
+    });
+  }
+});
 
 const v$ = useVuelidate(rules, { form });
 
@@ -77,13 +113,12 @@ const fetchProductDetails = async () => {
     form.value.description = data.description || '';
     form.value.price = data.price || '';
     form.value.currency = data.currency || 'VND';
-    form.value.imageUrl =
-      data.images && data.images.length > 0 ? data.images[0] : '';
+    form.value.images = Array.isArray(data.images) ? data.images : (data.images ? [data.images] : []);
     form.value.productType = meta.product_type || 'physical';
     form.value.category = meta.category || '';
     form.value.brand = meta.brand || '';
-    form.value.style = meta.style || '';
-    form.value.attributes = meta.attributes || '';
+    form.value.style = Array.isArray(meta.style) ? meta.style : (meta.style ? [meta.style] : []);
+    form.value.attributes = Array.isArray(meta.attributes) ? meta.attributes : [];
     form.value.status = data.status || 'draft';
 
     if (data.variants && data.variants.length > 0) {
@@ -105,6 +140,9 @@ const fetchProductDetails = async () => {
           },
         };
       });
+      form.value.hasVariants = true;
+    } else {
+      form.value.hasVariants = false;
     }
   } catch (error) {
     useAlert(
@@ -142,13 +180,21 @@ const prevStep = () => {
 };
 
 const addVariant = () => {
+  const baseVariant = form.value.variants[0] || {};
+  const baseMeta = baseVariant.meta || {};
+  
   form.value.variants.push({
     name: '',
     sku: '',
     barcode: '',
-    price: '',
-    weight: 0,
-    meta: { color: '', size: '', length: 0, width: 0, height: 0 },
+    price: form.value.price || '',
+    weight: baseVariant.weight || 0,
+    meta: { 
+      color: '', 
+      length: baseMeta.length || 0, 
+      width: baseMeta.width || 0, 
+      height: baseMeta.height || 0 
+    },
   });
 };
 
@@ -184,9 +230,9 @@ const onSubmit = async () => {
       };
     });
 
-    const finalVariants = cleanedVariants.filter(
-      v => v.name || v.meta.color || v.meta.size
-    );
+    const finalVariants = form.value.hasVariants
+      ? cleanedVariants.filter(v => v.name || v.meta.color || v.meta.size)
+      : [];
 
     const payload = {
       id: route.params.id,
@@ -195,7 +241,7 @@ const onSubmit = async () => {
       price: Number(form.value.price) || 0,
       currency: form.value.currency,
       status: form.value.status,
-      images: form.value.imageUrl ? [form.value.imageUrl] : [],
+      images: form.value.images || [],
       meta: {
         product_type: form.value.productType,
         category: form.value.category,
@@ -310,7 +356,7 @@ const onSubmit = async () => {
           <div v-else class="w-full">
             <!-- STEP 0: Thông tin cơ bản -->
             <div v-show="currentStep === 0" class="flex flex-col gap-6 w-full">
-              <div class="flex flex-col gap-1 mb-2">
+              <div class="flex flex-col gap-1">
                 <h2 class="text-lg text-n-slate-12 font-medium m-0">
                   {{ $t('SALES.PRODUCT_FORM.STEP_0.HEADING_EDIT') }}
                 </h2>
@@ -320,60 +366,45 @@ const onSubmit = async () => {
               </div>
 
               <div class="w-full">
-                <woot-input
+                <Input
                   v-model="form.name"
-                  class="w-full mb-0"
-                  :class="{ error: v$.form.name.$error }"
+                  class="w-full"
+                  custom-input-class="!bg-n-surface-1"
                   :label="$t('SALES.PRODUCT_FORM.FIELDS.NAME.LABEL')"
-                  :placeholder="
-                    $t('SALES.PRODUCT_FORM.FIELDS.NAME.PLACEHOLDER')
-                  "
+                  :placeholder="$t('SALES.PRODUCT_FORM.FIELDS.NAME.PLACEHOLDER')"
+                  :message="v$.form.name.$error ? $t('SALES.PRODUCT_FORM.FIELDS.NAME.ERROR') : ''"
+                  :message-type="v$.form.name.$error ? 'error' : 'info'"
                   @blur="v$.form.name.$touch"
                 />
-                <span
-                  v-if="v$.form.name.$error"
-                  class="message text-n-red-11 text-xs mt-1 block"
-                >
-                  {{ $t('SALES.PRODUCT_FORM.FIELDS.NAME.ERROR') }}
-                </span>
               </div>
 
               <div class="w-full">
-                <woot-input
-                  v-model="form.imageUrl"
-                  class="w-full mb-0"
-                  :label="$t('SALES.PRODUCT_FORM.FIELDS.IMAGE.LABEL')"
-                  :placeholder="
-                    $t('SALES.PRODUCT_FORM.FIELDS.IMAGE.PLACEHOLDER')
-                  "
+                <label class="block text-sm font-medium text-n-slate-12 mb-2">
+                  Hình ảnh
+                </label>
+                <MultiImageUpload
+                  v-model="form.images"
+                  :max-images="4"
                 />
               </div>
 
               <div class="w-full grid grid-cols-2 gap-4">
-                <div>
+                <div class="w-full">
                   <label class="block text-sm font-medium text-n-slate-12 mb-1">
                     {{ $t('SALES.PRODUCT_FORM.FIELDS.TYPE.LABEL') }}
                   </label>
-                  <select
+                  <ComboBox
                     v-model="form.productType"
-                    class="w-full p-2.5 rounded-lg border border-n-weak bg-white dark:bg-slate-900 focus:outline-none focus:ring-1 focus:ring-n-brand text-sm text-n-slate-12"
-                  >
-                    <option value="physical">
-                      {{
-                        $t('SALES.PRODUCT_FORM.FIELDS.TYPE.OPTIONS.PHYSICAL')
-                      }}
-                    </option>
-                    <option value="digital">
-                      {{ $t('SALES.PRODUCT_FORM.FIELDS.TYPE.OPTIONS.DIGITAL') }}
-                    </option>
-                    <option value="service">
-                      {{ $t('SALES.PRODUCT_FORM.FIELDS.TYPE.OPTIONS.SERVICE') }}
-                    </option>
-                  </select>
+                    :options="[
+                      { label: $t('SALES.PRODUCT_FORM.FIELDS.TYPE.OPTIONS.PHYSICAL'), value: 'physical' },
+                      { label: $t('SALES.PRODUCT_FORM.FIELDS.TYPE.OPTIONS.DIGITAL'), value: 'digital' },
+                      { label: $t('SALES.PRODUCT_FORM.FIELDS.TYPE.OPTIONS.SERVICE'), value: 'service' }
+                    ]"
+                  />
                 </div>
-                <woot-input
+                <Input custom-input-class="!bg-n-surface-1"
                   v-model="form.category"
-                  class="w-full mb-0"
+                  class="w-full"
                   :label="$t('SALES.PRODUCT_FORM.FIELDS.CATEGORY.LABEL')"
                   :placeholder="
                     $t('SALES.PRODUCT_FORM.FIELDS.CATEGORY.PLACEHOLDER')
@@ -387,7 +418,7 @@ const onSubmit = async () => {
                 </label>
                 <textarea
                   v-model="form.description"
-                  class="w-full p-3 rounded-lg border border-n-weak bg-white dark:bg-slate-900 focus:outline-none focus:ring-1 focus:ring-n-brand focus:border-n-brand text-sm transition-shadow min-h-[120px]"
+                  class="w-full p-3 rounded-lg border-0 outline outline-1 outline-n-weak outline-offset-[-1px] bg-n-surface-1 placeholder:text-n-slate-10 focus:outline-n-orange-9 transition-all duration-200 text-sm min-h-[120px]"
                   :placeholder="
                     $t('SALES.PRODUCT_FORM.FIELDS.DESCRIPTION.PLACEHOLDER')
                   "
@@ -395,18 +426,18 @@ const onSubmit = async () => {
               </div>
 
               <div class="w-full grid grid-cols-2 gap-4">
-                <woot-input
+                <Input custom-input-class="!bg-n-surface-1"
                   v-model="form.price"
-                  class="w-full mb-0"
+                  class="w-full"
                   type="number"
                   :label="$t('SALES.PRODUCT_FORM.FIELDS.PRICE.LABEL')"
                   :placeholder="
                     $t('SALES.PRODUCT_FORM.FIELDS.PRICE.PLACEHOLDER')
                   "
                 />
-                <woot-input
+                <Input custom-input-class="!bg-n-surface-1"
                   v-model="form.currency"
-                  class="w-full mb-0"
+                  class="w-full"
                   :label="$t('SALES.PRODUCT_FORM.FIELDS.CURRENCY.LABEL')"
                   :placeholder="
                     $t('SALES.PRODUCT_FORM.FIELDS.CURRENCY.PLACEHOLDER')
@@ -414,7 +445,7 @@ const onSubmit = async () => {
                 />
               </div>
 
-              <div class="mt-4 flex justify-end">
+              <div class="flex justify-end">
                 <Button
                   :label="$t('SALES.PRODUCT_FORM.BUTTONS.NEXT')"
                   icon="i-lucide-arrow-right"
@@ -426,7 +457,7 @@ const onSubmit = async () => {
 
             <!-- STEP 1: Thuộc tính -->
             <div v-show="currentStep === 1" class="flex flex-col gap-6 w-full">
-              <div class="flex flex-col gap-1 mb-2">
+              <div class="flex flex-col gap-1">
                 <h2 class="text-lg text-n-slate-12 font-medium m-0">
                   {{ $t('SALES.PRODUCT_FORM.STEP_1.HEADING_EDIT') }}
                 </h2>
@@ -436,9 +467,9 @@ const onSubmit = async () => {
               </div>
 
               <div class="w-full">
-                <woot-input
+                <Input custom-input-class="!bg-n-surface-1"
                   v-model="form.brand"
-                  class="w-full mb-0"
+                  class="w-full"
                   :label="$t('SALES.PRODUCT_FORM.FIELDS.BRAND.LABEL')"
                   :placeholder="
                     $t('SALES.PRODUCT_FORM.FIELDS.BRAND.PLACEHOLDER')
@@ -447,30 +478,81 @@ const onSubmit = async () => {
               </div>
 
               <div class="w-full">
-                <woot-input
-                  v-model="form.style"
-                  class="w-full mb-0"
-                  :label="$t('SALES.PRODUCT_FORM.FIELDS.STYLE.LABEL')"
-                  :placeholder="
-                    $t('SALES.PRODUCT_FORM.FIELDS.STYLE.PLACEHOLDER')
-                  "
-                />
+                <label class="block text-sm font-medium text-n-slate-12 mb-1">
+                  {{ $t('SALES.PRODUCT_FORM.FIELDS.STYLE.LABEL') }}
+                </label>
+                <p class="text-xs text-n-slate-11 mt-0 mb-2">
+                  {{ $t('SALES.PRODUCT_FORM.FIELDS.STYLE.HINT') }}
+                </p>
+                <div class="w-full p-2 rounded-lg border-0 outline outline-1 outline-n-weak outline-offset-[-1px] bg-n-surface-1 focus-within:outline-n-orange-9 transition-all duration-200 min-h-[42px] flex items-center">
+                  <TagInput
+                    v-model="form.style"
+                    :placeholder="$t('SALES.PRODUCT_FORM.FIELDS.STYLE.PLACEHOLDER')"
+                    allow-create
+                    class="w-full border-none outline-none focus:outline-none focus:ring-0 !border-transparent p-0 bg-transparent"
+                  />
+                </div>
               </div>
-
               <div class="w-full">
                 <label class="block text-sm font-medium text-n-slate-12 mb-1">
                   {{ $t('SALES.PRODUCT_FORM.FIELDS.ATTRIBUTES.LABEL') }}
                 </label>
-                <textarea
-                  v-model="form.attributes"
-                  class="w-full p-3 rounded-lg border border-n-weak bg-white dark:bg-slate-900 focus:outline-none focus:ring-1 focus:ring-n-brand focus:border-n-brand text-sm transition-shadow min-h-[80px]"
-                  :placeholder="
-                    $t('SALES.PRODUCT_FORM.FIELDS.ATTRIBUTES.PLACEHOLDER')
-                  "
-                />
+                <p class="text-xs text-n-slate-11 mt-0 mb-2">
+                  {{ $t('SALES.PRODUCT_FORM.FIELDS.ATTRIBUTES.HINT') }}
+                </p>
+                <div class="w-full p-2 rounded-lg border-0 outline outline-1 outline-n-weak outline-offset-[-1px] bg-n-surface-1 focus-within:outline-n-orange-9 transition-all duration-200 min-h-[42px] flex items-center">
+                  <TagInput
+                    v-model="form.attributes"
+                    :placeholder="$t('SALES.PRODUCT_FORM.FIELDS.ATTRIBUTES.PLACEHOLDER')"
+                    allow-create
+                    class="w-full border-none outline-none focus:outline-none focus:ring-0 !border-transparent p-0 bg-transparent"
+                  />
+                </div>
               </div>
 
-              <div class="mt-4 flex justify-between">
+              <!-- Bổ sung thông tin cho sản phẩm vật lý -->
+              <div v-if="form.productType === 'physical'" class="flex flex-col gap-4">
+                <div class="grid grid-cols-2 gap-4">
+                  <Input custom-input-class="!bg-n-surface-1"
+                    v-model="form.variants[0].meta.color"
+                    class="w-full"
+                    :label="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.COLOR.LABEL')"
+                    :placeholder="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.COLOR.PLACEHOLDER')"
+                  />
+                  <Input custom-input-class="!bg-n-surface-1"
+                    v-model="form.variants[0].weight"
+                    type="number"
+                    class="w-full"
+                    :label="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.LABEL')"
+                    :placeholder="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.PLACEHOLDER')"
+                  />
+                </div>
+                <div class="grid grid-cols-3 gap-4">
+                  <Input custom-input-class="!bg-n-surface-1"
+                    v-model="form.variants[0].meta.length"
+                    type="number"
+                    class="w-full"
+                    :label="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.LENGTH.LABEL')"
+                    :placeholder="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.PLACEHOLDER')"
+                  />
+                  <Input custom-input-class="!bg-n-surface-1"
+                    v-model="form.variants[0].meta.width"
+                    type="number"
+                    class="w-full"
+                    :label="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.WIDTH.LABEL')"
+                    :placeholder="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.PLACEHOLDER')"
+                  />
+                  <Input custom-input-class="!bg-n-surface-1"
+                    v-model="form.variants[0].meta.height"
+                    type="number"
+                    class="w-full"
+                    :label="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.HEIGHT.LABEL')"
+                    :placeholder="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.PLACEHOLDER')"
+                  />
+                </div>
+              </div>
+
+              <div class="flex justify-between">
                 <Button
                   slate
                   ghost
@@ -489,7 +571,7 @@ const onSubmit = async () => {
 
             <!-- STEP 2: Biến thể -->
             <div v-show="currentStep === 2" class="flex flex-col gap-6 w-full">
-              <div class="flex flex-col gap-1 mb-2">
+              <div class="flex flex-col gap-1">
                 <h2 class="text-lg text-n-slate-12 font-medium m-0">
                   {{ $t('SALES.PRODUCT_FORM.STEP_2.HEADING_EDIT') }}
                 </h2>
@@ -498,171 +580,151 @@ const onSubmit = async () => {
                 </p>
               </div>
 
-              <!-- List of variants -->
-              <div
-                v-for="(variant, index) in form.variants"
-                :key="index"
-                class="bg-n-alpha-1 border border-n-weak rounded-xl p-6 relative flex flex-col gap-4"
-              >
-                <div class="absolute top-4 right-4 flex items-center gap-2">
-                  <button
-                    class="text-n-slate-11 hover:text-n-brand transition-colors"
-                    :title="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.DUPLICATE')"
-                    @click.prevent="duplicateVariant(index)"
-                  >
-                    <span class="i-lucide-copy text-base" />
-                  </button>
-                  <button
-                    class="text-n-slate-11 hover:text-n-red-11 transition-colors"
-                    :title="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.REMOVE')"
-                    @click.prevent="removeVariant(index)"
-                  >
-                    <span class="i-lucide-trash-2 text-base" />
-                  </button>
+              <!-- HAS VARIANTS SWITCH -->
+              <div class="flex items-center justify-between bg-n-surface-1 border border-n-weak p-4 rounded-xl cursor-pointer" @click="form.hasVariants = !form.hasVariants">
+                <div class="flex flex-col">
+                  <h3 class="text-sm font-medium text-n-slate-12 m-0 mb-1">Sản phẩm có nhiều biến thể</h3>
+                  <p class="text-xs text-n-slate-11 m-0">Bật nếu sản phẩm có nhiều tuỳ chọn như kích thước, màu sắc</p>
                 </div>
-
-                <h3 class="font-medium text-n-slate-12 m-0 text-base">
-                  {{
-                    $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.TITLE', {
-                      index: index + 1,
-                    })
-                  }}
-                </h3>
-
-                <div class="grid grid-cols-2 gap-4">
-                  <woot-input
-                    v-model="variant.name"
-                    class="w-full mb-0"
-                    :label="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.NAME.LABEL')"
-                    :placeholder="
-                      $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.NAME.PLACEHOLDER')
-                    "
-                  />
-                  <woot-input
-                    v-model="variant.price"
-                    type="number"
-                    class="w-full mb-0"
-                    :label="
-                      $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.PRICE.LABEL')
-                    "
-                    :placeholder="
-                      $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.PRICE.PLACEHOLDER')
-                    "
-                  />
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                  <woot-input
-                    v-model="variant.sku"
-                    class="w-full mb-0"
-                    :label="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.SKU.LABEL')"
-                    :placeholder="
-                      $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.SKU.PLACEHOLDER')
-                    "
-                  />
-                  <woot-input
-                    v-model="variant.barcode"
-                    class="w-full mb-0"
-                    :label="
-                      $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.BARCODE.LABEL')
-                    "
-                    :placeholder="
-                      $t(
-                        'SALES.PRODUCT_FORM.FIELDS.VARIANTS.BARCODE.PLACEHOLDER'
-                      )
-                    "
-                  />
-                </div>
-
-                <!-- Meta info: Color, Size -->
-                <div class="grid grid-cols-2 gap-4">
-                  <woot-input
-                    v-model="variant.meta.color"
-                    class="w-full mb-0"
-                    :label="
-                      $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.COLOR.LABEL')
-                    "
-                    :placeholder="
-                      $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.COLOR.PLACEHOLDER')
-                    "
-                  />
-                  <woot-input
-                    v-model="variant.meta.size"
-                    class="w-full mb-0"
-                    :label="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.SIZE.LABEL')"
-                    :placeholder="
-                      $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.SIZE.PLACEHOLDER')
-                    "
-                  />
-                </div>
-
-                <!-- Shipping info: Weight, Dimensions -->
-                <div class="grid grid-cols-4 gap-4 mt-2">
-                  <woot-input
-                    v-model="variant.weight"
-                    type="number"
-                    class="w-full mb-0"
-                    :label="
-                      $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.LABEL')
-                    "
-                    :placeholder="
-                      $t(
-                        'SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.PLACEHOLDER'
-                      )
-                    "
-                  />
-                  <woot-input
-                    v-model="variant.meta.length"
-                    type="number"
-                    class="w-full mb-0"
-                    :label="
-                      $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.LENGTH.LABEL')
-                    "
-                    :placeholder="
-                      $t(
-                        'SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.PLACEHOLDER'
-                      )
-                    "
-                  />
-                  <woot-input
-                    v-model="variant.meta.width"
-                    type="number"
-                    class="w-full mb-0"
-                    :label="
-                      $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.WIDTH.LABEL')
-                    "
-                    :placeholder="
-                      $t(
-                        'SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.PLACEHOLDER'
-                      )
-                    "
-                  />
-                  <woot-input
-                    v-model="variant.meta.height"
-                    type="number"
-                    class="w-full mb-0"
-                    :label="
-                      $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.HEIGHT.LABEL')
-                    "
-                    :placeholder="
-                      $t(
-                        'SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.PLACEHOLDER'
-                      )
-                    "
-                  />
-                </div>
+                <Switch v-model="form.hasVariants" @click.stop />
               </div>
 
-              <Button
-                slate
-                ghost
-                icon="i-lucide-plus"
-                :label="$t('SALES.PRODUCT_FORM.BUTTONS.ADD_VARIANT')"
-                class="w-fit"
-                @click="addVariant"
-              />
+              <div v-if="form.hasVariants" class="flex flex-col gap-6">
+                <!-- List of variants -->
+                <div
+                  v-for="(variant, index) in form.variants"
+                  :key="index"
+                  class="bg-n-alpha-1 border border-n-weak rounded-xl p-6 relative flex flex-col gap-4"
+                >
+                  <div class="absolute top-4 right-4 flex items-center gap-2">
+                    <button
+                      class="text-n-slate-11 hover:text-n-brand transition-colors"
+                      :title="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.DUPLICATE')"
+                      @click.prevent="duplicateVariant(index)"
+                    >
+                      <span class="i-lucide-copy text-base" />
+                    </button>
+                    <button
+                      class="text-n-slate-11 hover:text-n-red-11 transition-colors"
+                      :title="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.REMOVE')"
+                      @click.prevent="removeVariant(index)"
+                    >
+                      <span class="i-lucide-trash-2 text-base" />
+                    </button>
+                  </div>
 
-              <div class="mt-4 flex justify-between">
+                  <h3 class="font-medium text-n-slate-12 m-0 text-base">
+                    {{
+                      $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.TITLE', {
+                        index: index + 1,
+                      })
+                    }}
+                  </h3>
+
+                  <div class="grid grid-cols-2 gap-4">
+                    <Input custom-input-class="!bg-n-surface-1"
+                      v-model="variant.name"
+                      class="w-full"
+                      :label="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.NAME.LABEL')"
+                      :placeholder="
+                        $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.NAME.PLACEHOLDER')
+                      "
+                    />
+                    <Input custom-input-class="!bg-n-surface-1"
+                      v-model="variant.price"
+                      type="number"
+                      class="w-full"
+                      :label="
+                        $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.PRICE.LABEL')
+                      "
+                      :placeholder="
+                        $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.PRICE.PLACEHOLDER')
+                      "
+                    />
+                  </div>
+
+                  <!-- Meta info: Color, Weight -->
+                  <div v-if="form.productType === 'physical'" class="grid grid-cols-2 gap-4">
+                    <Input custom-input-class="!bg-n-surface-1"
+                      v-model="variant.meta.color"
+                      class="w-full"
+                      :label="
+                        $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.COLOR.LABEL')
+                      "
+                      :placeholder="
+                        $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.COLOR.PLACEHOLDER')
+                      "
+                    />
+                    <Input custom-input-class="!bg-n-surface-1"
+                      v-model="variant.weight"
+                      type="number"
+                      class="w-full"
+                      :label="
+                        $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.LABEL')
+                      "
+                      :placeholder="
+                        $t(
+                          'SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.PLACEHOLDER'
+                        )
+                      "
+                    />
+                  </div>
+
+                  <!-- Shipping info: Dimensions -->
+                  <div v-if="form.productType === 'physical'" class="grid grid-cols-3 gap-4 mt-2">
+                    <Input custom-input-class="!bg-n-surface-1"
+                      v-model="variant.meta.length"
+                      type="number"
+                      class="w-full"
+                      :label="
+                        $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.LENGTH.LABEL')
+                      "
+                      :placeholder="
+                        $t(
+                          'SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.PLACEHOLDER'
+                        )
+                      "
+                    />
+                    <Input custom-input-class="!bg-n-surface-1"
+                      v-model="variant.meta.width"
+                      type="number"
+                      class="w-full"
+                      :label="
+                        $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.WIDTH.LABEL')
+                      "
+                      :placeholder="
+                        $t(
+                          'SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.PLACEHOLDER'
+                        )
+                      "
+                    />
+                    <Input custom-input-class="!bg-n-surface-1"
+                      v-model="variant.meta.height"
+                      type="number"
+                      class="w-full"
+                      :label="
+                        $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.HEIGHT.LABEL')
+                      "
+                      :placeholder="
+                        $t(
+                          'SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.PLACEHOLDER'
+                        )
+                      "
+                    />
+                  </div>
+                </div>
+
+                <Button
+                  slate
+                  ghost
+                  icon="i-lucide-plus"
+                  :label="$t('SALES.PRODUCT_FORM.BUTTONS.ADD_VARIANT')"
+                  class="w-fit"
+                  @click="addVariant"
+                />
+              </div>
+
+              <div class="flex justify-between">
                 <Button
                   slate
                   ghost
@@ -681,7 +743,7 @@ const onSubmit = async () => {
 
             <!-- STEP 3: Hoàn tất -->
             <div v-show="currentStep === 3" class="flex flex-col gap-6 w-full">
-              <div class="flex flex-col gap-1 mb-2">
+              <div class="flex flex-col gap-1">
                 <h2 class="text-lg text-n-slate-12 font-medium m-0">
                   {{ $t('SALES.PRODUCT_FORM.STEP_3.HEADING_EDIT') }}
                 </h2>
@@ -707,14 +769,26 @@ const onSubmit = async () => {
                     }}</span>
                   </div>
                   <div class="flex gap-2">
+                    <span class="text-n-slate-11 w-32">Mô tả</span>
+                    <span class="text-n-slate-12 font-medium break-all line-clamp-2">{{
+                      form.description || $t('SALES.PRODUCT_FORM.STEP_3.NOT_ENTERED')
+                    }}</span>
+                  </div>
+                  <div class="flex gap-2">
                     <span class="text-n-slate-11 w-32">{{
                       $t('SALES.PRODUCT_FORM.STEP_3.BASE_PRICE')
                     }}</span>
                     <span class="text-n-slate-12 font-medium"
-                      >{{ form.price || 0 }} {{ form.currency }}</span
+                      >{{ displayPrice }}</span
                     >
                   </div>
-                  <div class="flex gap-2">
+                  <div v-if="form.attributes && form.attributes.length" class="flex gap-2">
+                    <span class="text-n-slate-11 w-32">Thuộc tính</span>
+                    <span class="text-n-slate-12 font-medium">{{
+                      form.attributes.join(', ')
+                    }}</span>
+                  </div>
+                  <div v-if="form.hasVariants" class="flex gap-2">
                     <span class="text-n-slate-11 w-32">{{
                       $t('SALES.PRODUCT_FORM.STEP_3.VARIANT_COUNT')
                     }}</span>
@@ -725,25 +799,20 @@ const onSubmit = async () => {
                 </div>
               </div>
 
-              <div class="w-full">
-                <label class="block text-sm font-medium text-n-slate-12 mb-2">
+              <div class="w-full mt-6">
+                <label class="block text-sm font-medium text-n-slate-12 mb-1">
                   {{ $t('SALES.PRODUCT_FORM.FIELDS.STATUS.LABEL') }}
                 </label>
-                <select
+                <ComboBox
                   v-model="form.status"
-                  class="w-full p-2.5 rounded-lg border border-n-weak bg-white dark:bg-slate-900 focus:outline-none focus:ring-1 focus:ring-n-brand text-sm text-n-slate-12"
-                >
-                  <option value="active">
-                    {{ $t('SALES.PRODUCT_FORM.FIELDS.STATUS.OPTIONS.ACTIVE') }}
-                  </option>
-                  <option value="draft">
-                    {{ $t('SALES.PRODUCT_FORM.FIELDS.STATUS.OPTIONS.DRAFT') }}
-                  </option>
-                  <option value="archived">Lưu trữ</option>
-                </select>
+                  :options="[
+                    { label: $t('SALES.PRODUCT_FORM.FIELDS.STATUS.OPTIONS.ACTIVE'), value: 'active' },
+                    { label: $t('SALES.PRODUCT_FORM.FIELDS.STATUS.OPTIONS.DRAFT'), value: 'draft' }
+                  ]"
+                />
               </div>
 
-              <div class="mt-6 flex justify-between">
+              <div class="flex justify-between">
                 <Button
                   slate
                   ghost

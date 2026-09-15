@@ -39,6 +39,32 @@ class Api::V1::Accounts::Sales::ProductsController < Api::V1::Accounts::BaseCont
     head :accepted
   end
 
+  def import
+    render json: { error: I18n.t('errors.contacts.import.failed') }, status: :unprocessable_entity and return if params[:import_file].blank?
+
+    begin
+      import = current_account.data_imports.create!(data_type: 'products')
+      import.import_file.attach(params[:import_file])
+      head :ok, message: I18n.t('errors.contacts.import.success')
+    rescue StandardError => e
+      render json: { error: e.message }, status: :unprocessable_entity
+    end
+  end
+
+  def export
+    column_names = params['column_names']
+    filter_params = params.permit!['filter']
+    
+    if current_account.custom_email_config.present? && current_account.custom_email_config['smtp_address'].present?
+      Account::ProductsExportJob.perform_later(current_account.id, current_user.id, column_names, filter_params)
+      render json: { message: I18n.t('errors.contacts.export.success') }
+    else
+      Account::ProductsExportJob.perform_now(current_account.id, current_user.id, column_names, filter_params)
+      file_url = Rails.application.routes.url_helpers.rails_blob_url(current_account.products_export)
+      render json: { download_url: file_url, message: I18n.t('errors.contacts.export.success') }
+    end
+  end
+
   def create
     @product = current_account.products.new(product_params)
     if @product.save
