@@ -333,7 +333,7 @@
           "BODY": "Add products to the order."
         },
         "STEP_1": {
-          "TITLE": "Financials",
+          "TITLE": "Payment",
           "BODY": "Set taxes, shipping fees, and discounts."
         },
         "STEP_2": {
@@ -344,7 +344,44 @@
           "TITLE": "Completion",
           "BODY": "Review and create the order."
         }
-      }
+      },
+      "LABELS": {
+        "PRODUCTS": "Products",
+        "PRODUCT_LIST": "Product List",
+        "SUBTOTAL": "Subtotal",
+        "SUBTOTAL_EST": "Estimated Subtotal",
+        "TOTAL_EST": "Estimated Total",
+        "PAYMENT_INFO": "Payment Information",
+        "PAYMENT_METHOD": "Payment Method",
+        "PAYMENT_STATUS": {
+          "LABEL": "Payment Status",
+          "UNPAID": "Unpaid",
+          "PAID": "Paid",
+          "PARTIALLY_REFUNDED": "Partially Refunded",
+          "REFUNDED": "Refunded"
+        },
+        "PAYMENT_METHODS": {
+          "COD": "COD",
+          "BANK_TRANSFER": "Bank Transfer",
+          "CARD": "Card / Wallet"
+        },
+        "TAX": "Tax",
+        "TAX_PERCENTAGE": "Tax (%)",
+        "DISCOUNT": "Discount",
+        "SHIPPING_FEE": "Shipping Fee",
+        "TOTAL": "Total",
+        "TOTAL_PAYMENT": "Total Payment",
+        "CUSTOMER": "Customer",
+        "CUSTOMER_INFO": "Customer Information",
+        "NO_CUSTOMER_INFO": "No customer information",
+        "CUSTOMER_NAME": "Customer Name",
+        "INPUT_CUSTOMER_NAME": "Enter customer name",
+        "CREATE_ORDER": "Create Order",
+        "STATUS": "Status",
+        "COMPLETE": "Complete"
+      },
+      "TITLE_EDIT": "Edit Order",
+      "UNDER_CONSTRUCTION": "Order edit screen is under construction..."
     },
     "MODULE_TOOLS": {
       "LOADING_MESSAGE": "Loading data...",
@@ -415,7 +452,9 @@
         "NAME": "Product Name:",
         "NOT_ENTERED": "Not entered",
         "BASE_PRICE": "Base Price:",
-        "VARIANT_COUNT": "Variant Count:"
+        "VARIANT_COUNT": "Variant Count:",
+        "DESCRIPTION": "Description",
+        "ATTRIBUTES": "Attributes"
       },
       "FIELDS": {
         "NAME": {
@@ -527,6 +566,10 @@
             "LIST": "List",
             "DATE": "Date"
           }
+        },
+        "HAS_VARIANTS": {
+          "TITLE": "Product has multiple variants",
+          "DESC": "Enable if the product has options like size, color"
         }
       },
       "BUTTONS": {

@@ -320,7 +320,7 @@ const onSubmit = async () => {
 
             <div class="w-full">
               <label class="block text-sm font-medium text-n-slate-12 mb-2">
-                Hình ảnh
+                {{ $t('SALES.PRODUCT_FORM.FIELDS.IMAGE.LABEL') }}
               </label>
               <MultiImageUpload
                 v-model="form.images"
@@ -520,8 +520,8 @@ const onSubmit = async () => {
             <!-- HAS VARIANTS SWITCH -->
             <div class="flex items-center justify-between bg-n-surface-1 border border-n-weak p-4 rounded-xl cursor-pointer" @click="form.hasVariants = !form.hasVariants">
               <div class="flex flex-col">
-                <h3 class="text-sm font-medium text-n-slate-12 m-0 mb-1">Sản phẩm có nhiều biến thể</h3>
-                <p class="text-xs text-n-slate-11 m-0">Bật nếu sản phẩm có nhiều tuỳ chọn như kích thước, màu sắc</p>
+                <h3 class="text-sm font-medium text-n-slate-12 m-0 mb-1">{{ $t('SALES.PRODUCT_FORM.FIELDS.HAS_VARIANTS.TITLE') }}</h3>
+                <p class="text-xs text-n-slate-11 m-0">{{ $t('SALES.PRODUCT_FORM.FIELDS.HAS_VARIANTS.DESC') }}</p>
               </div>
               <Switch v-model="form.hasVariants" @click.stop />
             </div>
@@ -686,7 +686,7 @@ const onSubmit = async () => {
                   }}</span>
                 </div>
                 <div class="flex gap-2">
-                  <span class="text-n-slate-11 w-32">Mô tả</span>
+                  <span class="text-n-slate-11 w-32">{{ $t('SALES.PRODUCT_FORM.STEP_3.DESCRIPTION') }}</span>
                   <span class="text-n-slate-12 font-medium break-all line-clamp-2">{{
                     form.description || $t('SALES.PRODUCT_FORM.STEP_3.NOT_ENTERED')
                   }}</span>
@@ -700,7 +700,7 @@ const onSubmit = async () => {
                   >
                 </div>
                 <div v-if="form.attributes && form.attributes.length" class="flex gap-2">
-                  <span class="text-n-slate-11 w-32">Thuộc tính</span>
+                  <span class="text-n-slate-11 w-32">{{ $t('SALES.PRODUCT_FORM.STEP_3.ATTRIBUTES') }}</span>
                   <span class="text-n-slate-12 font-medium">{{
                     form.attributes.join(', ')
                   }}</span>

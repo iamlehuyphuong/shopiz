@@ -12,12 +12,12 @@
         <span class="icon-arrow-left text-xl" />
       </router-link>
       <h2 class="text-xl font-semibold text-n-slate-12 mb-0">
-        Chỉnh sửa đơn hàng
+        {{ $t('SALES.ORDER_FORM.TITLE_EDIT') }}
       </h2>
     </div>
     <div class="p-8 max-w-3xl mx-auto">
       <p class="text-n-slate-11">
-        Màn hình chỉnh sửa đơn hàng đang được xây dựng...
+        {{ $t('SALES.ORDER_FORM.UNDER_CONSTRUCTION') }}
       </p>
     </div>
   </div>

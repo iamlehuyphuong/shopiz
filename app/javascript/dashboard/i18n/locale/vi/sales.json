@@ -330,8 +330,8 @@
           "BODY": "Thêm các sản phẩm vào đơn hàng."
         },
         "STEP_1": {
-          "TITLE": "Tài chính",
-          "BODY": "Thiết lập thuế, phí vận chuyển và giảm giá."
+          "TITLE": "Thanh toán",
+          "BODY": "Thiết lập thuế, phí giao hàng và giảm giá."
         },
         "STEP_2": {
           "TITLE": "Khách hàng",
@@ -341,7 +341,44 @@
           "TITLE": "Hoàn thành",
           "BODY": "Kiểm tra và tạo đơn hàng."
         }
-      }
+      },
+      "LABELS": {
+        "PRODUCTS": "Sản phẩm",
+        "PRODUCT_LIST": "Danh sách sản phẩm",
+        "SUBTOTAL": "Tạm tính",
+        "SUBTOTAL_EST": "Tổng tạm tính",
+        "TOTAL_EST": "Tổng tiền (Tạm tính)",
+        "PAYMENT_INFO": "Thông tin thanh toán",
+        "PAYMENT_METHOD": "Phương thức thanh toán",
+        "PAYMENT_STATUS": {
+          "LABEL": "Trạng thái thanh toán",
+          "UNPAID": "Chưa thanh toán",
+          "PAID": "Đã thanh toán",
+          "PARTIALLY_REFUNDED": "Hoàn tiền một phần",
+          "REFUNDED": "Hoàn tiền"
+        },
+        "PAYMENT_METHODS": {
+          "COD": "COD",
+          "BANK_TRANSFER": "Chuyển khoản",
+          "CARD": "Thẻ / Ví điện tử"
+        },
+        "TAX": "Thuế",
+        "TAX_PERCENTAGE": "Thuế (%)",
+        "DISCOUNT": "Giảm giá",
+        "SHIPPING_FEE": "Phí giao hàng",
+        "TOTAL": "Tổng cộng",
+        "TOTAL_PAYMENT": "Tổng thanh toán",
+        "CUSTOMER": "Khách hàng",
+        "CUSTOMER_INFO": "Thông tin khách hàng",
+        "NO_CUSTOMER_INFO": "Chưa có thông tin khách hàng",
+        "CUSTOMER_NAME": "Tên khách hàng",
+        "INPUT_CUSTOMER_NAME": "Nhập tên khách hàng",
+        "CREATE_ORDER": "Tạo đơn hàng",
+        "STATUS": "Trạng thái",
+        "COMPLETE": "Hoàn thành"
+      },
+      "TITLE_EDIT": "Chỉnh sửa đơn hàng",
+      "UNDER_CONSTRUCTION": "Màn hình chỉnh sửa đơn hàng đang được xây dựng..."
     },
     "MODULE_TOOLS": {
       "LOADING_MESSAGE": "Đang tải dữ liệu...",
@@ -412,7 +449,9 @@
         "NAME": "Tên sản phẩm:",
         "NOT_ENTERED": "Chưa nhập",
         "BASE_PRICE": "Giá gốc:",
-        "VARIANT_COUNT": "Số biến thể:"
+        "VARIANT_COUNT": "Số biến thể:",
+        "DESCRIPTION": "Mô tả",
+        "ATTRIBUTES": "Thuộc tính"
       },
       "FIELDS": {
         "NAME": {
@@ -524,6 +563,10 @@
             "LIST": "Danh sách",
             "DATE": "Ngày tháng"
           }
+        },
+        "HAS_VARIANTS": {
+          "TITLE": "Sản phẩm có nhiều biến thể",
+          "DESC": "Bật nếu sản phẩm có nhiều tuỳ chọn như kích thước, màu sắc"
         }
       },
       "BUTTONS": {

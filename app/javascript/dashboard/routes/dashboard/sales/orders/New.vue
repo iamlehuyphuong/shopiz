@@ -21,7 +21,7 @@ const wizardItems = computed(() => [
     body: t('SALES.ORDER_FORM.WIZARD.STEP_0.BODY'),
   },
   {
-    title: 'Thanh toán',
+    title: t('SALES.ORDER_FORM.WIZARD.STEP_1.TITLE'),
     body: t('SALES.ORDER_FORM.WIZARD.STEP_1.BODY'),
   },
   {
@@ -308,7 +308,7 @@ const handleSave = async () => {
 
               <div v-if="form.items.length > 0" class="mt-8 flex flex-col gap-4">
                 <h3 class="text-sm font-semibold text-n-slate-12">
-                  Danh sách sản phẩm
+                  {{ $t('SALES.ORDER_FORM.LABELS.PRODUCT_LIST') }}
                 </h3>
                 <div class="space-y-3">
                   <div
@@ -374,7 +374,7 @@ const handleSave = async () => {
                 </div>
 
                 <div class="flex justify-between items-center py-4 border-t border-n-weak mt-2">
-                  <span class="text-sm font-medium text-n-slate-11">Tổng tạm tính</span>
+                  <span class="text-sm font-medium text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.SUBTOTAL_EST') }}</span>
                   <span class="text-base font-semibold text-n-slate-12">
                     {{
                       new Intl.NumberFormat('vi-VN', {
@@ -390,7 +390,7 @@ const handleSave = async () => {
             <!-- Step 1: Financials -->
             <div v-show="currentStep === 1" class="flex flex-col gap-6">
               <h2 class="text-lg font-medium text-n-slate-12 mb-2">
-                Thông tin thanh toán
+                {{ $t('SALES.ORDER_FORM.LABELS.PAYMENT_INFO') }}
               </h2>
 
               <!-- Payment options grid moved to top -->
@@ -400,9 +400,9 @@ const handleSave = async () => {
                   <ComboBox
                     v-model="form.payment_method"
                     :options="[
-                      { label: 'COD', value: 'cod' },
-                      { label: 'Chuyển khoản', value: 'bank_transfer' },
-                      { label: 'Thẻ / Ví điện tử', value: 'card' }
+                      { label: $t('SALES.ORDER_FORM.LABELS.PAYMENT_METHODS.COD'), value: 'cod' },
+                      { label: $t('SALES.ORDER_FORM.LABELS.PAYMENT_METHODS.BANK_TRANSFER'), value: 'bank_transfer' },
+                      { label: $t('SALES.ORDER_FORM.LABELS.PAYMENT_METHODS.CARD'), value: 'card' }
                     ]"
                   />
                 </div>
@@ -414,7 +414,7 @@ const handleSave = async () => {
                       { label: t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.UNPAID'), value: 'unpaid' },
                       { label: t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PAID'), value: 'paid' },
                       { label: t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PARTIALLY_REFUNDED'), value: 'partially_refunded' },
-                      { label: 'Hoàn tiền', value: 'refunded' }
+                      { label: t('SALES.ORDER_FORM.LABELS.PAYMENT_STATUS.REFUNDED'), value: 'refunded' }
                     ]"
                   />
                 </div>
@@ -424,7 +424,7 @@ const handleSave = async () => {
               <div class="flex flex-col gap-4 mt-6">
                 <!-- Tổng tiền -->
                 <div class="flex flex-col gap-1.5">
-                  <span class="text-sm font-medium text-n-slate-11">Tổng tiền (Tạm tính)</span>
+                  <span class="text-sm font-medium text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.TOTAL_EST') }}</span>
                   <span class="text-base font-semibold text-n-slate-12 mt-1">
                     {{ formatCurrency(itemsTotal) }}
                   </span>
@@ -432,7 +432,7 @@ const handleSave = async () => {
                 
                 <!-- Thuế -->
                 <div class="flex flex-col gap-1.5">
-                  <span class="text-sm font-medium text-n-slate-11">Thuế (%)</span>
+                  <span class="text-sm font-medium text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.TAX_PERCENTAGE') }}</span>
                   <div class="grid grid-cols-2 gap-4 items-center">
                     <div class="flex items-center w-full h-[38px] rounded-lg border border-n-weak bg-white dark:bg-n-solid-1 focus-within:border-n-brand transition-all overflow-hidden">
                       <input
@@ -453,7 +453,7 @@ const handleSave = async () => {
 
                 <!-- Giảm giá -->
                 <div class="flex flex-col gap-1.5">
-                  <span class="text-sm font-medium text-n-slate-11">Giảm giá</span>
+                  <span class="text-sm font-medium text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.DISCOUNT') }}</span>
                   <div class="flex items-center w-full h-[38px] rounded-lg border border-n-weak bg-white dark:bg-n-solid-1 focus-within:border-n-brand transition-all overflow-hidden">
                     <input
                       v-model="formattedDiscount"
@@ -465,7 +465,7 @@ const handleSave = async () => {
 
                 <!-- Phí vận chuyển -->
                 <div class="flex flex-col gap-1.5">
-                  <span class="text-sm font-medium text-n-slate-11">Phí vận chuyển</span>
+                  <span class="text-sm font-medium text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.SHIPPING_FEE') }}</span>
                   <div class="flex items-center w-full h-[38px] rounded-lg border border-n-weak bg-white dark:bg-n-solid-1 focus-within:border-n-brand transition-all overflow-hidden">
                     <input
                       v-model="formattedShippingFee"
@@ -477,7 +477,7 @@ const handleSave = async () => {
 
                 <!-- Tổng cộng -->
                 <div class="flex flex-col gap-1.5 col-span-2 pt-4 border-t border-n-weak">
-                  <span class="text-sm font-medium text-n-slate-11">Tổng cộng</span>
+                  <span class="text-sm font-medium text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.TOTAL') }}</span>
                   <span class="text-2xl font-bold text-n-orange-11">
                     {{ formatCurrency(orderTotal) }}
                   </span>
@@ -495,7 +495,7 @@ const handleSave = async () => {
 
               <div class="flex flex-col gap-4 mt-2">
                 <div class="flex flex-col gap-1.5">
-                  <span class="text-sm font-medium text-n-slate-11">Khách hàng</span>
+                  <span class="text-sm font-medium text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.CUSTOMER') }}</span>
                   <div v-if="selectedContact" class="flex items-center gap-3 w-full h-[42px] px-3 rounded-lg border border-n-weak bg-white dark:bg-n-solid-1">
                     <img
                       v-if="selectedContact.thumbnail"
@@ -521,7 +521,7 @@ const handleSave = async () => {
                     <input
                       v-model="form.customer_name"
                       type="text"
-                      placeholder="Nhập tên khách hàng"
+                      :placeholder="$t('SALES.ORDER_FORM.LABELS.INPUT_CUSTOMER_NAME')"
                       class="reset-base flex-1 w-full px-3 h-full text-sm text-n-slate-12 placeholder:text-n-slate-9 bg-transparent border-none outline-none m-0 p-0 !mb-0"
                     />
                   </div>
@@ -562,12 +562,12 @@ const handleSave = async () => {
             <!-- Step 3: Completion -->
             <div v-show="currentStep === 3" class="flex flex-col gap-6">
               <h2 class="text-lg font-medium text-n-slate-12 mb-2">
-                Tạo đơn hàng
+                {{ $t('SALES.ORDER_FORM.LABELS.CREATE_ORDER') }}
               </h2>
 
               <!-- Trạng thái đơn hàng -->
               <div class="flex flex-col gap-1.5">
-                <label class="text-sm font-medium text-n-slate-11">Trạng thái</label>
+                <label class="text-sm font-medium text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.STATUS') }}</label>
                 <ComboBox
                   v-model="form.status"
                   :options="[
@@ -583,7 +583,7 @@ const handleSave = async () => {
 
               <!-- Thông tin khách hàng -->
               <div class="flex flex-col gap-3">
-                <span class="text-sm font-medium text-n-slate-11">Khách hàng</span>
+                <span class="text-sm font-medium text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.CUSTOMER') }}</span>
                 <div class="rounded-xl border border-n-weak bg-n-solid-1 p-4 flex flex-col gap-2">
                   <div v-if="form.customer_name" class="flex items-center gap-3">
                     <div v-if="selectedContact && selectedContact.thumbnail">
@@ -612,7 +612,7 @@ const handleSave = async () => {
                     </div>
                   </div>
                   <div v-else class="text-sm text-n-slate-10 italic">
-                    Chưa có thông tin khách hàng
+                    {{ $t('SALES.ORDER_FORM.LABELS.NO_CUSTOMER_INFO') }}
                   </div>
                   <div
                     v-if="form.customer_address"
@@ -626,7 +626,7 @@ const handleSave = async () => {
               <!-- Danh sách sản phẩm -->
               <div class="flex flex-col gap-3">
                 <span class="text-sm font-medium text-n-slate-11">
-                  Sản phẩm ({{ form.items.filter(i => !i._destroy).length }})
+                  {{ $t('SALES.ORDER_FORM.LABELS.PRODUCTS') }} ({{ form.items.filter(i => !i._destroy).length }})
                 </span>
                 <div class="rounded-xl border border-n-weak bg-n-solid-1 overflow-hidden">
                   <div class="max-h-[160px] overflow-y-auto divide-y divide-n-weak">
@@ -668,24 +668,24 @@ const handleSave = async () => {
                 class="p-5 rounded-xl border border-n-weak bg-n-solid-1 flex flex-col gap-3"
               >
                 <div class="flex justify-between items-center text-sm">
-                  <span class="text-n-slate-11">Tạm tính</span>
+                  <span class="text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.SUBTOTAL') }}</span>
                   <span class="text-n-slate-12 font-medium">{{ formatCurrency(itemsTotal) }}</span>
                 </div>
                 <div class="flex justify-between items-center text-sm">
-                  <span class="text-n-slate-11">Phí vận chuyển</span>
+                  <span class="text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.SHIPPING_FEE') }}</span>
                   <span class="text-n-slate-12">{{ formatCurrency(form.shipping_fee) }}</span>
                 </div>
                 <div class="flex justify-between items-center text-sm">
-                  <span class="text-n-slate-11">Giảm giá</span>
+                  <span class="text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.DISCOUNT') }}</span>
                   <span class="text-n-red-11">-{{ formatCurrency(form.discount_amount) }}</span>
                 </div>
                 <div class="flex justify-between items-center text-sm">
-                  <span class="text-n-slate-11">Thuế</span>
+                  <span class="text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.TAX') }}</span>
                   <span class="text-n-slate-12">{{ formatCurrency(calculatedTax) }}</span>
                 </div>
                 <div class="h-px bg-n-weak w-full my-1" />
                 <div class="flex justify-between items-center">
-                  <span class="text-base font-medium text-n-slate-12">Tổng thanh toán</span>
+                  <span class="text-base font-medium text-n-slate-12">{{ $t('SALES.ORDER_FORM.LABELS.TOTAL_PAYMENT') }}</span>
                   <span class="text-lg font-bold text-n-brand">{{ formatCurrency(orderTotal) }}</span>
                 </div>
               </div>
@@ -716,7 +716,7 @@ const handleSave = async () => {
             />
             <Button
               v-else
-              label="Hoàn thành"
+              :label="$t('SALES.ORDER_FORM.LABELS.COMPLETE')"
               icon="i-lucide-check"
               color="brand"
               :is-loading="isSubmitting"
