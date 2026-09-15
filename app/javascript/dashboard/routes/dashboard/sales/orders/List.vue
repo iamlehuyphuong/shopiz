@@ -50,8 +50,8 @@ watch(
   { deep: true, immediate: true }
 );
 
-const sources = [
-  { label: 'Tất cả nền tảng', value: 'all' },
+const sources = computed(() => [
+  { label: t('SALES.PLATFORM_FILTER.LABEL_ALL'), value: 'all' },
   { label: 'Shopiz', value: 'shopiz' },
   { label: 'KiotViet', value: 'kiotviet' },
   { label: 'Sapo', value: 'sapo' },
@@ -59,11 +59,11 @@ const sources = [
   { label: 'Shopify', value: 'shopify' },
   { label: 'WooCommerce', value: 'woocommerce' },
   { label: 'Nhanh.vn', value: 'nhanhvn' },
-];
+]);
 
 const showSourceDropdown = ref(false);
 const activeSourceName = computed(
-  () => sources.find(s => s.value === sourceFilter.value)?.label
+  () => sources.value.find(s => s.value === sourceFilter.value)?.label
 );
 
 const customDateRange = ref([subDays(new Date(), 29), new Date()]);
@@ -90,7 +90,7 @@ const isSourceConnected = sourceValue => {
 };
 
 const sortedSources = computed(() => {
-  return [...sources].sort((a, b) => {
+  return [...sources.value].sort((a, b) => {
     const getWeight = s => {
       if (s.value === 'all') return 0;
       if (s.value === 'shopiz') return 1;
@@ -311,6 +311,14 @@ const onSyncOrder = order => {
   );
 };
 
+const handleSyncClick = () => {
+  if (sourceFilter.value === 'all') {
+    showPullDialog.value = true;
+  } else {
+    onPullOrders(sourceFilter.value);
+  }
+};
+
 const onPullOrders = async platform => {
   showPullDialog.value = false;
   isSyncing.value = true;
@@ -378,10 +386,10 @@ onBeforeMount(() => {
                   >
                     <div class="flex flex-col gap-0.5">
                       <h2 class="text-sm font-semibold text-n-slate-12">
-                        Nền tảng
+                        {{ $t('SALES.PLATFORM_FILTER.DROPDOWN_TITLE') }}
                       </h2>
                       <p class="text-xs text-n-slate-11">
-                        Chuyển đổi giữa các nền tảng bán hàng
+                        {{ $t('SALES.PLATFORM_FILTER.DROPDOWN_DESC') }}
                       </p>
                     </div>
                   </div>
@@ -475,7 +483,7 @@ onBeforeMount(() => {
             sm
             variant="outline"
             :is-loading="isSyncing"
-            @click="showPullDialog = true"
+            @click="handleSyncClick"
           />
           <Button
             v-tooltip.top="$te('SALES.MODULE_ORDERS.ACTIONS.EXPORT') ? $t('SALES.MODULE_ORDERS.ACTIONS.EXPORT') : 'Xuất dữ liệu'"
@@ -503,6 +511,11 @@ onBeforeMount(() => {
             : $t('SALES.MODULE_ORDERS.TABLE.EMPTY_STATE')
         "
       >
+        <template #header-2="{ header }">
+          <div class="w-full text-end">
+            {{ header }}
+          </div>
+        </template>
         <template #row="{ items }">
           <BaseTableRow
             v-for="(order, index) in items"

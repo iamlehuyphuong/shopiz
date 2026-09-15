@@ -71,14 +71,14 @@ const onClose = () => {
             v-for="platform in platforms"
             :key="platform.id"
             type="button"
-            class="flex items-center gap-3 p-4 rounded-xl border transition-all duration-200 text-left relative"
+            class="flex items-center gap-3 p-3 rounded-xl border border-solid transition-all duration-200 text-left relative"
             :class="[
               selectedPlatform === platform.id
-                ? 'border-n-brand bg-n-brand/5 ring-1 ring-n-brand'
-                : 'border-n-slate-6 bg-white dark:bg-n-solid-1 hover:border-n-slate-8',
+                ? 'border-n-orange bg-n-orange/5'
+                : 'border-n-slate-7 bg-white dark:border-n-strong dark:bg-n-solid-1 hover:bg-n-slate-2 dark:hover:bg-n-solid-2',
               !isPlatformConnected(platform.id)
-                ? '!opacity-50 cursor-not-allowed !border-n-weak hover:!border-n-weak !bg-n-alpha-1'
-                : '',
+                ? '!opacity-60 cursor-not-allowed !border-n-slate-6 !bg-n-slate-1 dark:!border-n-weak dark:!bg-n-alpha-1'
+                : 'cursor-pointer',
             ]"
             :disabled="!isPlatformConnected(platform.id)"
             @click="selectPlatform(platform)"

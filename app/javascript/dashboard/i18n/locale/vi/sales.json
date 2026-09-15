@@ -4,6 +4,11 @@
       "ACTIVE": "Đang hoạt động",
       "COMPLETED": "Hoàn thành"
     },
+    "PLATFORM_FILTER": {
+      "LABEL_ALL": "Tất cả nền tảng",
+      "DROPDOWN_TITLE": "Nền tảng",
+      "DROPDOWN_DESC": "Chuyển đổi giữa các nền tảng bán hàng"
+    },
     "CATALOG": {
       "HEADER_TITLE": "Cửa hàng",
       "NEW_PRODUCT": "Tạo sản phẩm",

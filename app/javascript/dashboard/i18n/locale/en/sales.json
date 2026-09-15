@@ -4,6 +4,11 @@
       "ACTIVE": "Active",
       "COMPLETED": "Completed"
     },
+    "PLATFORM_FILTER": {
+      "LABEL_ALL": "All platforms",
+      "DROPDOWN_TITLE": "Platform",
+      "DROPDOWN_DESC": "Switch between sales platforms"
+    },
     "CATALOG": {
       "HEADER_TITLE": "Catalog",
       "NEW_PRODUCT": "Create product",

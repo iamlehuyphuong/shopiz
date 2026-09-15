@@ -49,8 +49,8 @@ watch(
 );
 
 
-const sources = [
-  { label: 'Tất cả nền tảng', value: 'all' },
+const sources = computed(() => [
+  { label: t('SALES.PLATFORM_FILTER.LABEL_ALL'), value: 'all' },
   { label: 'Shopiz', value: 'shopiz' },
   { label: 'KiotViet', value: 'kiotviet' },
   { label: 'Sapo', value: 'sapo' },
@@ -58,7 +58,7 @@ const sources = [
   { label: 'Shopify', value: 'shopify' },
   { label: 'WooCommerce', value: 'woocommerce' },
   { label: 'Nhanh.vn', value: 'nhanhvn' },
-];
+]);
 
 const showPullDialog = ref(false);
 const showImportDialog = ref(false);
@@ -69,7 +69,7 @@ const showSourceDropdown = ref(false);
 
 
 const activeSourceName = computed(
-  () => sources.find(s => s.value === sourceFilter.value)?.label
+  () => sources.value.find(s => s.value === sourceFilter.value)?.label
 );
 
 const [showDeleteModal, toggleDeleteModal] = useToggle(false);
@@ -98,7 +98,7 @@ const isSourceConnected = sourceValue => {
 };
 
 const sortedSources = computed(() => {
-  return [...sources].sort((a, b) => {
+  return [...sources.value].sort((a, b) => {
     const getWeight = s => {
       if (s.value === 'all') return 0;
       if (s.value === 'shopiz') return 1;
@@ -184,6 +184,14 @@ const formatSource = source => {
 const sourceLogo = source => {
   if (!source) return null;
   return `/dashboard/images/integrations/${source}.png`;
+};
+
+const handleSyncClick = () => {
+  if (sourceFilter.value === 'all') {
+    showPullDialog.value = true;
+  } else {
+    onPullProducts(sourceFilter.value);
+  }
 };
 
 const onPullProducts = async platform => {
@@ -296,10 +304,10 @@ onBeforeMount(() => {
                   >
                     <div class="flex flex-col gap-0.5">
                       <h2 class="text-sm font-semibold text-n-slate-12">
-                        Nền tảng
+                        {{ $t('SALES.PLATFORM_FILTER.DROPDOWN_TITLE') }}
                       </h2>
                       <p class="text-xs text-n-slate-11">
-                        Chuyển đổi giữa các nền tảng bán hàng
+                        {{ $t('SALES.PLATFORM_FILTER.DROPDOWN_DESC') }}
                       </p>
                     </div>
                   </div>
@@ -387,7 +395,7 @@ onBeforeMount(() => {
             slate
             sm
             variant="outline"
-            @click="showPullDialog = true"
+            @click="handleSyncClick"
           />
           <Button
             v-if="['all', 'shopiz'].includes(sourceFilter)"
