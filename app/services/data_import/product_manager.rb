@@ -1,4 +1,4 @@
-module DataImport
+class DataImport
   class ProductManager
     def initialize(account)
       @account = account
