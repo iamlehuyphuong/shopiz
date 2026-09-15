@@ -6,7 +6,10 @@ class Api::V1::Accounts::Sales::OrdersController < Api::V1::Accounts::BaseContro
     @orders = current_account.conversation_orders.includes(:contact, :items).order(created_at: :desc)
     render json: @orders.as_json(
       include: {
-        contact: { only: [:id, :name, :email, :phone_number] },
+        contact: {
+          only: [:id, :name, :email, :phone_number],
+          methods: [:avatar_url]
+        },
         items: { only: [:id, :product_name, :quantity, :unit_price] }
       }
     )
@@ -15,7 +18,10 @@ class Api::V1::Accounts::Sales::OrdersController < Api::V1::Accounts::BaseContro
   def show
     render json: @order.as_json(
       include: {
-        contact: { only: [:id, :name, :email, :phone_number] },
+        contact: {
+          only: [:id, :name, :email, :phone_number],
+          methods: [:avatar_url]
+        },
         items: {}
       }
     )
@@ -67,7 +73,10 @@ class Api::V1::Accounts::Sales::OrdersController < Api::V1::Accounts::BaseContro
   def order_json(order)
     order.as_json(
       include: {
-        contact: { only: [:id, :name, :email, :phone_number] },
+        contact: {
+          only: [:id, :name, :email, :phone_number],
+          methods: [:avatar_url]
+        },
         items: {}
       }
     )

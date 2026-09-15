@@ -15,6 +15,10 @@ class ConversationOrders::PlatformProxy
     raise NotImplementedError, "#{self.class}#create_order not implemented"
   end
 
+  def update_order(_order_id, _payload)
+    raise NotImplementedError, "#{self.class}#update_order not implemented"
+  end
+
   def fetch_order(_order_id)
     raise NotImplementedError, "#{self.class}#fetch_order not implemented"
   end

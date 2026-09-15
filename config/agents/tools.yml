@@ -330,3 +330,16 @@
   title: Check Payment Status (Kiểm tra thanh toán)
   description: Check the current payment status of the active order for the conversation.
   icon: checkmark
+- id: confirm_order
+  title: Confirm Order (Chốt đơn)
+  description: Confirm a draft order and submit it to the integrated external platform (Xác nhận và đẩy đơn hàng)
+  icon: checkmark
+- id: update_order
+  title: Update Order (Cập nhật đơn hàng)
+  description: Update customer information of an existing order and sync to external platform (Cập nhật thông tin đơn hàng)
+  icon: arrow-sync
+- id: shopiz_create_order_draft
+  title: 'Shopiz: Create Order Draft'
+  description: Create a draft order natively within Shopiz (Tạo đơn hàng nội bộ Shopiz)
+  icon: cart-plus
+  hidden: true

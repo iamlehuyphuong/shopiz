@@ -7,6 +7,10 @@ class ConversationOrders::NhanhvnProxy < ConversationOrders::PlatformProxy
     nhanhvn_post('/api/order/add', payload)
   end
 
+  def update_order(order_id, payload)
+    nhanhvn_post('/api/order/update', payload.merge(id: order_id))
+  end
+
   def fetch_order(order_id)
     result = nhanhvn_post('/api/order/detail', { id: order_id })
     result&.dig('data')

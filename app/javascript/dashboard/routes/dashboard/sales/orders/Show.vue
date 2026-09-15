@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import SalesOrdersAPI from 'dashboard/api/sales/orders';
 import Button from 'dashboard/components-next/button/Button.vue';
+import ComboBox from 'dashboard/components-next/combobox/ComboBox.vue';
 import { useAlert } from 'dashboard/composables';
 
 const route = useRoute();
@@ -18,12 +19,25 @@ const fetchOrderDetails = async () => {
     const response = await SalesOrdersAPI.show(route.params.id);
     order.value = response.data;
   } catch (error) {
-    useAlert(
-      t('SALES.MODULE_ORDERS.ALERTS.FETCH_ERROR') ||
-        'Lỗi khi tải dữ liệu đơn hàng'
-    );
+    useAlert('Lỗi khi tải dữ liệu đơn hàng');
   } finally {
     isLoading.value = false;
+  }
+};
+
+const isUpdating = ref(false);
+
+const updateOrder = async (payload) => {
+  if (!order.value) return;
+  isUpdating.value = true;
+  try {
+    const response = await SalesOrdersAPI.update(order.value.id, payload);
+    order.value = response.data;
+    useAlert('Cập nhật đơn hàng thành công');
+  } catch (error) {
+    useAlert('Lỗi khi cập nhật');
+  } finally {
+    isUpdating.value = false;
   }
 };
 
@@ -131,15 +145,8 @@ const orderItems = computed(() => order.value?.items || []);
         </span>
       </h1>
 
-      <div v-if="order" class="flex items-center gap-3">
-        <span
-          class="px-2.5 py-1 text-xs font-medium rounded-full whitespace-nowrap"
-          :class="statusColor"
-        >
-          {{ statusLabel }}
-        </span>
+      <div v-if="order && order.external_source" class="flex items-center gap-3">
         <Button
-          v-if="order.external_source"
           faded
           slate
           :label="$t('SALES.DIALOG_ORDER_DETAIL.ACTIONS.SYNC')"
@@ -157,230 +164,220 @@ const orderItems = computed(() => order.value?.items || []);
       <p>Không tìm thấy đơn hàng</p>
     </div>
 
-    <div v-else class="p-8 max-w-5xl mx-auto w-full flex flex-col gap-6">
+    <div v-else class="py-6 max-w-4xl mx-auto w-full flex flex-col gap-8">
+      
+      <!-- Top Grid: General & Customer -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Customer info -->
-        <div
-          class="bg-n-alpha-1 rounded-xl p-5 border border-n-weak flex flex-col gap-4"
-        >
-          <h3 class="text-base font-semibold text-n-slate-12 m-0">
-            {{ $t('SALES.DIALOG_ORDER_DETAIL.FIELDS.CUSTOMER') }}
-          </h3>
-          <div class="flex flex-col gap-2">
-            <p class="text-sm text-n-slate-12 font-medium mb-0">
-              {{
-                order.customer_name ||
-                order.contact?.name ||
-                $t('SALES.DIALOG_ORDER_DETAIL.FALLBACKS.GUEST')
-              }}
-            </p>
-            <p class="text-sm text-n-slate-11 mb-0 flex items-center gap-2">
-              <span class="icon-call text-n-slate-9" />
-              {{
-                order.customer_phone ||
-                $t('SALES.DIALOG_ORDER_DETAIL.FALLBACKS.NO_DATA')
-              }}
-            </p>
-            <p class="text-sm text-n-slate-11 mb-0 flex items-start gap-2">
-              <span class="icon-location text-n-slate-9 mt-0.5" />
-              {{
-                order.shipping_address ||
-                order.customer_address ||
-                $t('SALES.DIALOG_ORDER_DETAIL.FALLBACKS.NO_DATA')
-              }}
-            </p>
+        
+        <!-- Khách hàng -->
+        <div class="flex flex-col gap-3">
+          <span class="text-sm font-medium text-n-slate-11">Khách hàng</span>
+          <div class="rounded-xl border border-n-weak bg-n-solid-1 p-4 flex flex-col gap-2 h-full">
+            <div class="flex items-center gap-3">
+              <div v-if="order.contact?.thumbnail || order.contact?.avatar_url">
+                <img
+                  :src="order.contact?.thumbnail || order.contact?.avatar_url"
+                  :alt="order.customer_name || order.contact?.name"
+                  class="w-9 h-9 rounded-md object-cover shrink-0 bg-n-solid-3"
+                />
+              </div>
+              <div
+                v-else
+                class="w-9 h-9 rounded-md bg-n-brand text-white flex items-center justify-center shrink-0 font-medium text-sm uppercase"
+              >
+                {{ (order.customer_name || order.contact?.name || '?').charAt(0) }}
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="text-sm font-medium text-n-slate-12 truncate">
+                  {{ order.customer_name || order.contact?.name || $t('SALES.DIALOG_ORDER_DETAIL.FALLBACKS.GUEST') }}
+                </div>
+                <div
+                  v-if="order.customer_phone || order.contact?.phone_number"
+                  class="text-xs text-n-slate-10 truncate mt-0.5"
+                >
+                  {{ order.customer_phone || order.contact?.phone_number }}
+                </div>
+              </div>
+            </div>
+            <div
+              v-if="order.shipping_address || order.customer_address || order.customer_note || order.note"
+              class="flex flex-col gap-1.5 pt-2 mt-1 border-t border-n-weak text-xs text-n-slate-10"
+            >
+              <div v-if="order.shipping_address || order.customer_address" class="flex items-start gap-1">
+                <i class="i-lucide-map-pin text-xs shrink-0 mt-0.5" />
+                <span>{{ order.shipping_address || order.customer_address }}</span>
+              </div>
+              <div v-if="order.customer_note || order.note" class="flex items-start gap-1">
+                <i class="i-lucide-file-text text-xs shrink-0 mt-0.5" />
+                <span>{{ order.customer_note || order.note }}</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Order details -->
-        <div
-          class="bg-n-alpha-1 rounded-xl p-5 border border-n-weak flex flex-col gap-4"
-        >
-          <h3 class="text-base font-semibold text-n-slate-12 m-0">
-            {{ $t('SALES.DIALOG_ORDER_DETAIL.FIELDS.GENERAL_INFO') }}
-          </h3>
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs text-n-slate-11 mb-1">{{
-                $t('SALES.DIALOG_ORDER_DETAIL.FIELDS.CREATED_AT')
-              }}</label>
-              <p class="text-sm font-medium text-n-slate-12 mb-0">
-                {{ formatDate(order.created_at) }}
-              </p>
+        <!-- Thông tin chung -->
+        <div class="flex flex-col gap-3">
+          <span class="text-sm font-medium text-n-slate-11">Thông tin chung</span>
+          <div class="rounded-xl border border-n-weak bg-n-solid-1 p-4 flex flex-col gap-3 h-full">
+            <div class="flex flex-col gap-1.5 mb-2 pb-3 border-b border-n-weak">
+              <label class="text-sm font-medium text-n-slate-11">Trạng thái đơn hàng</label>
+              <ComboBox
+                :model-value="order.status"
+                :options="[
+                  { label: $t('CONVERSATION.ORDER_PANEL.STATUS.DRAFT'), value: 'draft' },
+                  { label: $t('CONVERSATION.ORDER_PANEL.STATUS.CONFIRMED'), value: 'confirmed' },
+                  { label: $t('CONVERSATION.ORDER_PANEL.STATUS.PROCESSING'), value: 'processing' },
+                  { label: $t('CONVERSATION.ORDER_PANEL.STATUS.SHIPPED'), value: 'shipped' },
+                  { label: $t('CONVERSATION.ORDER_PANEL.STATUS.DELIVERED'), value: 'delivered' },
+                  { label: $t('CONVERSATION.ORDER_PANEL.STATUS.CANCELLED'), value: 'cancelled' }
+                ]"
+                @update:model-value="val => updateOrder({ status: val })"
+              />
             </div>
-            <div>
-              <label class="block text-xs text-n-slate-11 mb-1">{{
-                $t('SALES.DIALOG_ORDER_DETAIL.FIELDS.SOURCE')
-              }}</label>
-              <p class="text-sm font-medium text-n-slate-12 mb-0 capitalize">
-                {{
-                  order.external_source ||
-                  $t('SALES.DIALOG_ORDER_DETAIL.FALLBACKS.SHOPIZ')
-                }}
-              </p>
-            </div>
-            <div v-if="order.external_source" class="col-span-2">
-              <label class="block text-xs text-n-slate-11 mb-1">{{
-                $t('SALES.DIALOG_ORDER_DETAIL.FIELDS.LAST_SYNC')
-              }}</label>
-              <p class="text-sm font-medium text-n-slate-12 mb-0">
-                {{ formatDate(order.updated_at) }}
-              </p>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs text-n-slate-11 mb-1">Ngày tạo</label>
+                <p class="text-sm font-medium text-n-slate-12 mb-0">
+                  {{ formatDate(order.created_at) }}
+                </p>
+              </div>
+              <div>
+                <label class="block text-xs text-n-slate-11 mb-1">Nguồn</label>
+                <p class="text-sm font-medium text-n-slate-12 mb-0 capitalize">
+                  {{ order.external_source || 'Shopiz' }}
+                </p>
+              </div>
+              <div v-if="order.external_source">
+                <label class="block text-xs text-n-slate-11 mb-1">Đồng bộ lần cuối</label>
+                <p class="text-sm font-medium text-n-slate-12 mb-0">
+                  {{ formatDate(order.updated_at) }}
+                </p>
+              </div>
             </div>
           </div>
         </div>
+        
       </div>
 
+      <!-- Middle Grid: Payment & Shipping -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Payment -->
-        <div
-          class="bg-n-alpha-1 rounded-xl p-5 border border-n-weak flex flex-col gap-4"
-        >
-          <h3 class="text-base font-semibold text-n-slate-12 m-0">
-            {{ $t('SALES.DIALOG_ORDER_DETAIL.FIELDS.PAYMENT_METHOD') }}
-          </h3>
-          <div class="flex items-center gap-3">
-            <p class="text-sm font-medium text-n-slate-12 uppercase mb-0">
-              {{ order.payment_method || '--' }}
-            </p>
-            <span
-              class="inline-block px-2 py-0.5 text-xs font-medium rounded capitalize"
-              :class="
-                order.payment_status === 'paid'
-                  ? 'bg-green-100 text-green-700'
-                  : 'bg-yellow-100 text-yellow-700'
-              "
-            >
-              {{ order.payment_status || 'unpaid' }}
-            </span>
+        <!-- Thanh toán -->
+        <div class="flex flex-col gap-3">
+          <span class="text-sm font-medium text-n-slate-11">Thanh toán</span>
+          <div class="rounded-xl border border-n-weak bg-n-solid-1 p-4 flex flex-col gap-3 h-full">
+            <div class="flex flex-col gap-1.5">
+              <label class="text-sm font-medium text-n-slate-11">Phương thức</label>
+              <ComboBox
+                :model-value="order.payment_method || 'cod'"
+                :options="[
+                  { label: 'COD', value: 'cod' },
+                  { label: 'Chuyển khoản', value: 'bank_transfer' },
+                  { label: 'Thẻ / Ví điện tử', value: 'card' }
+                ]"
+                @update:model-value="val => updateOrder({ payment_method: val })"
+              />
+            </div>
+            <div class="flex flex-col gap-1.5 mt-1">
+              <label class="text-sm font-medium text-n-slate-11">Trạng thái</label>
+              <ComboBox
+                :model-value="order.payment_status || 'unpaid'"
+                :options="[
+                  { label: $t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.UNPAID'), value: 'unpaid' },
+                  { label: $t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PAID'), value: 'paid' },
+                  { label: $t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PARTIALLY_REFUNDED'), value: 'partially_refunded' },
+                  { label: 'Hoàn tiền', value: 'refunded' }
+                ]"
+                @update:model-value="val => updateOrder({ payment_status: val })"
+              />
+            </div>
           </div>
         </div>
 
-        <!-- Shipping -->
-        <div
-          class="bg-n-alpha-1 rounded-xl p-5 border border-n-weak flex flex-col gap-4"
-        >
-          <h3 class="text-base font-semibold text-n-slate-12 m-0">
-            {{ $t('SALES.DIALOG_ORDER_DETAIL.FIELDS.SHIPPING') }}
-          </h3>
-          <div class="flex flex-col gap-1">
-            <p class="text-sm font-medium text-n-slate-12 mb-0">
-              {{ order.shipping_carrier || '--' }}
-            </p>
-            <p v-if="order.tracking_code" class="text-sm text-n-brand mb-0">
-              {{ order.tracking_code }}
-            </p>
+        <!-- Vận chuyển -->
+        <div class="flex flex-col gap-3">
+          <span class="text-sm font-medium text-n-slate-11">Vận chuyển</span>
+          <div class="rounded-xl border border-n-weak bg-n-solid-1 p-4 flex flex-col gap-3 h-full">
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-n-slate-11">Đơn vị</span>
+              <span class="text-sm font-medium text-n-slate-12">{{ order.shipping_carrier || '--' }}</span>
+            </div>
+            <div v-if="order.tracking_code" class="flex items-center justify-between">
+              <span class="text-sm text-n-slate-11">Mã vận đơn</span>
+              <span class="text-sm font-medium text-n-brand">{{ order.tracking_code }}</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Note -->
-      <div
-        v-if="order.note"
-        class="bg-n-alpha-1 rounded-xl p-5 border border-n-weak flex flex-col gap-3"
-      >
-        <h3 class="text-base font-semibold text-n-slate-12 m-0">
-          {{ $t('SALES.DIALOG_ORDER_DETAIL.FIELDS.NOTE') }}
-        </h3>
-        <p class="text-sm text-n-slate-11 mb-0">{{ order.note }}</p>
+
+
+      <!-- Danh sách sản phẩm -->
+      <div class="flex flex-col gap-3">
+        <span class="text-sm font-medium text-n-slate-11">
+          Sản phẩm ({{ orderItems.length }})
+        </span>
+        <div class="rounded-xl border border-n-weak bg-n-solid-1 overflow-hidden">
+          <div class="overflow-y-auto divide-y divide-n-weak">
+            <div
+              v-for="(item, index) in orderItems"
+              :key="index"
+              class="flex items-center gap-3 px-4 py-3"
+            >
+              <img
+                v-if="item.thumbnail || item.product_thumbnail"
+                :src="item.thumbnail || item.product_thumbnail"
+                :alt="item.product_name || item.name"
+                class="w-8 h-8 rounded object-cover shrink-0 bg-n-solid-3"
+              />
+              <div
+                v-else
+                class="w-8 h-8 rounded bg-n-solid-3 flex items-center justify-center shrink-0"
+              >
+                <i class="i-lucide-package text-n-slate-10 text-xs" />
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="text-sm text-n-slate-12 truncate">
+                  {{ item.product_name || item.name || `Sản phẩm ${index + 1}` }}
+                </div>
+                <div class="text-xs text-n-slate-10 mt-0.5">
+                  {{ item.quantity || 1 }} x {{ formatCurrency(item.unit_price || item.price) }}
+                </div>
+              </div>
+              <span class="text-sm font-medium text-n-slate-12 shrink-0">
+                {{ formatCurrency((item.quantity || 1) * (item.unit_price || item.price)) }}
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Order Items -->
-      <div
-        v-if="orderItems.length"
-        class="bg-white dark:bg-slate-900 rounded-xl border border-n-weak overflow-hidden"
-      >
-        <div class="px-5 py-4 border-b border-n-weak bg-n-alpha-1">
-          <h3 class="text-base font-semibold text-n-slate-12 m-0">
-            {{ $t('SALES.DIALOG_ORDER_DETAIL.FIELDS.ITEMS') }} ({{
-              orderItems.length
-            }})
-          </h3>
+      <!-- Summary card -->
+      <div class="p-5 rounded-xl border border-n-weak bg-n-solid-1 flex flex-col gap-3 w-full">
+        <div class="flex justify-between items-center text-sm">
+          <span class="text-n-slate-11">Tạm tính</span>
+          <span class="text-n-slate-12 font-medium">{{ formatCurrency(
+          Number(order.total_amount || 0) -
+            Number(order.shipping_fee || 0) -
+            Number(order.tax || 0) +
+            Number(order.discount_amount || 0)
+        ) }}</span>
         </div>
-        <div class="flex flex-col px-5">
-          <div
-            v-for="(item, index) in orderItems"
-            :key="index"
-            class="flex items-center justify-between py-4 border-b border-n-weak last:border-0"
-          >
-            <div class="flex flex-col gap-1">
-              <span class="text-sm font-medium text-n-slate-12">
-                {{
-                  item.product_name ||
-                  item.name ||
-                  $t('SALES.DIALOG_ORDER_DETAIL.FIELDS.PRODUCT', {
-                    index: index + 1,
-                  })
-                }}
-              </span>
-              <span class="text-xs text-n-slate-11">
-                {{ formatCurrency(item.unit_price || item.price) }} x
-                {{ item.quantity || 1 }}
-              </span>
-            </div>
-            <span class="text-sm font-medium text-n-slate-12">
-              {{
-                formatCurrency(
-                  (item.unit_price || item.price) * (item.quantity || 1)
-                )
-              }}
-            </span>
-          </div>
+        <div class="flex justify-between items-center text-sm">
+          <span class="text-n-slate-11">Phí vận chuyển</span>
+          <span class="text-n-slate-12">{{ formatCurrency(order.shipping_fee) }}</span>
         </div>
-
-        <!-- Financial Breakdown -->
-        <div
-          class="px-5 py-4 bg-n-alpha-1 border-t border-n-weak flex flex-col items-end"
-        >
-          <div class="w-full sm:w-1/2 flex flex-col gap-2">
-            <div class="flex justify-between text-sm text-n-slate-11">
-              <span>{{
-                  $t('SALES.DIALOG_ORDER_DETAIL.FIELDS.SUBTOTAL') || 'Tạm tính'
-                }}:</span>
-              <span>{{
-                formatCurrency(
-                  Number(order.total_amount || 0) -
-                    Number(order.shipping_fee || 0) -
-                    Number(order.tax || 0) +
-                    Number(order.discount_amount || 0)
-                )
-              }}</span>
-            </div>
-            <div
-              v-if="order.shipping_fee > 0"
-              class="flex justify-between text-sm text-n-slate-11"
-            >
-              <span>{{
-                  $t('SALES.DIALOG_ORDER_DETAIL.FIELDS.SHIPPING_FEE') ||
-                  'Phí vận chuyển'
-                }}:</span>
-              <span>{{ formatCurrency(order.shipping_fee) }}</span>
-            </div>
-            <div
-              v-if="order.tax > 0"
-              class="flex justify-between text-sm text-n-slate-11"
-            >
-              <span>{{
-                  $t('SALES.DIALOG_ORDER_DETAIL.FIELDS.TAX') || 'Thuế'
-                }}:</span>
-              <span>{{ formatCurrency(order.tax) }}</span>
-            </div>
-            <div
-              v-if="order.discount_amount > 0"
-              class="flex justify-between text-sm text-green-600"
-            >
-              <span>{{
-                  $t('SALES.DIALOG_ORDER_DETAIL.FIELDS.DISCOUNT') || 'Giảm giá'
-                }}:</span>
-              <span>-{{ formatCurrency(order.discount_amount) }}</span>
-            </div>
-            <div
-              class="flex justify-between text-base font-bold text-n-slate-12 pt-3 mt-1 border-t border-n-strong"
-            >
-              <span>{{ $t('SALES.DIALOG_ORDER_DETAIL.FIELDS.TOTAL') }}:</span>
-              <span>{{ formatCurrency(order.total_amount) }}</span>
-            </div>
-          </div>
+        <div class="flex justify-between items-center text-sm">
+          <span class="text-n-slate-11">Giảm giá</span>
+          <span class="text-n-red-11">-{{ formatCurrency(order.discount_amount) }}</span>
+        </div>
+        <div class="flex justify-between items-center text-sm">
+          <span class="text-n-slate-11">Thuế</span>
+          <span class="text-n-slate-12">{{ formatCurrency(order.tax) }}</span>
+        </div>
+        <div class="h-px bg-n-weak w-full my-1" />
+        <div class="flex justify-between items-center">
+          <span class="text-base font-medium text-n-slate-12">Tổng tiền</span>
+          <span class="text-lg font-bold text-n-brand">{{ formatCurrency(order.total_amount) }}</span>
         </div>
       </div>
     </div>

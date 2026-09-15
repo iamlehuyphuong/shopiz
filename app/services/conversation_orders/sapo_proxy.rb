@@ -7,6 +7,10 @@ class ConversationOrders::SapoProxy < ConversationOrders::PlatformProxy
     sapo_post('orders.json', { order: payload })
   end
 
+  def update_order(order_id, payload)
+    sapo_put("orders/#{order_id}.json", { order: payload })
+  end
+
   def fetch_order(order_id)
     result = sapo_get("orders/#{order_id}.json")
     result&.dig('order')

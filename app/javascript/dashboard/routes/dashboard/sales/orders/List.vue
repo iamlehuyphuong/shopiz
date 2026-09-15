@@ -565,6 +565,7 @@ onBeforeMount(() => {
               <BaseTableCell align="end">
                 <div class="flex gap-3 justify-end flex-shrink-0">
                   <Button
+                    v-if="order.external_source"
                     v-tooltip.top="$t('SALES.MODULE_ORDERS.TABLE.ACTIONS.SYNC')"
                     icon="i-woot-settings"
                     slate

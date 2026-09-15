@@ -7,6 +7,10 @@ class ConversationOrders::HaravanProxy < ConversationOrders::PlatformProxy
     haravan_post('orders.json', { order: payload })
   end
 
+  def update_order(order_id, payload)
+    haravan_put("orders/#{order_id}.json", { order: payload })
+  end
+
   def fetch_order(order_id)
     result = haravan_get("orders/#{order_id}.json")
     result&.dig('order')

@@ -501,11 +501,11 @@ const handleSave = async () => {
                       v-if="selectedContact.thumbnail"
                       :src="selectedContact.thumbnail"
                       :alt="selectedContact.name"
-                      class="w-7 h-7 rounded-full object-cover shrink-0 bg-n-solid-3"
+                      class="w-7 h-7 rounded-md object-cover shrink-0 bg-n-solid-3"
                     />
                     <div
                       v-else
-                      class="w-7 h-7 rounded-full bg-n-brand text-white flex items-center justify-center shrink-0 font-medium text-xs uppercase"
+                      class="w-7 h-7 rounded-md bg-n-brand text-white flex items-center justify-center shrink-0 font-medium text-xs uppercase"
                     >
                       {{ selectedContact.name ? selectedContact.name.charAt(0) : '?' }}
                     </div>
@@ -590,12 +590,12 @@ const handleSave = async () => {
                       <img
                         :src="selectedContact.thumbnail"
                         :alt="form.customer_name"
-                        class="w-9 h-9 rounded-full object-cover shrink-0 bg-n-solid-3"
+                        class="w-9 h-9 rounded-md object-cover shrink-0 bg-n-solid-3"
                       />
                     </div>
                     <div
                       v-else
-                      class="w-9 h-9 rounded-full bg-n-brand text-white flex items-center justify-center shrink-0 font-medium text-sm uppercase"
+                      class="w-9 h-9 rounded-md bg-n-brand text-white flex items-center justify-center shrink-0 font-medium text-sm uppercase"
                     >
                       {{ form.customer_name.charAt(0) }}
                     </div>
