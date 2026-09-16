@@ -68,10 +68,12 @@ const sendMessage = async () => {
     });
 
     messages.value.push({
-      content: data.response,
+      content: data.response || data.content || 'Không có phản hồi từ AI',
       sender: 'assistant',
       agentName: data.agent_name,
       toolCalls: data.tool_execution_trace || [],
+      reasoning: data.reasoning,
+      isReasoningExpanded: false,
       timestamp: new Date().toISOString(),
     });
   } catch (error) {

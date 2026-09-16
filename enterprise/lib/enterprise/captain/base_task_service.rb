@@ -27,7 +27,7 @@ module Enterprise::Captain::BaseTaskService
   private
 
   def system_responses_available?
-    return true unless ChatwootApp.chatwoot_cloud?
+    return system_api_key_available? unless ChatwootApp.chatwoot_cloud?
 
     account.usage_limits[:captain][:responses][:current_available].positive?
   end
@@ -37,9 +37,7 @@ module Enterprise::Captain::BaseTaskService
   end
 
   def responses_available?
-    return true unless ChatwootApp.chatwoot_cloud?
-
-    account.usage_limits[:captain][:responses][:current_available].positive?
+    system_responses_available? || user_hook_key_available?
   end
 
   def successful_result?(result)

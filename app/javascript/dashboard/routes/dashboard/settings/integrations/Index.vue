@@ -89,7 +89,7 @@ onMounted(() => {
           </div>
           <div
             v-else
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-700"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-700 px-2"
           >
             <IntegrationItem
               v-for="item in filteredIntegrationList"

@@ -151,7 +151,7 @@ export default {
       />
     </template>
     <template #body>
-      <div v-if="showIntegrationHooks" class="w-full">
+      <div v-if="showIntegrationHooks" class="w-full px-2">
         <div v-if="isIntegrationMultiple">
           <MultipleIntegrationHooks
             :integration-id="integrationId"

@@ -110,6 +110,8 @@ class Captain::Assistant::AgentRunnerService
 
   def process_agent_result(result)
     Rails.logger.info "[Captain V2] Agent result: #{result.inspect}"
+    return error_response(result.error.message) if result.error.present?
+
     output = result.output
     response = output.is_a?(Hash) ? output.with_indifferent_access : { 'response' => output.to_s, 'reasoning' => 'Processed by agent' }
     response['agent_name'] = result.context&.dig(:current_agent)

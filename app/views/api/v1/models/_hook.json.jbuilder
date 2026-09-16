@@ -5,5 +5,14 @@ json.inbox resource.inbox&.slice(:id, :name)
 json.account_id resource.account_id
 json.hook_type resource.hook_type
 
-json.settings resource.settings.to_h.merge(resource.encrypted_settings.to_h).compact if Current.account_user&.administrator?
+if Current.account_user&.administrator?
+  json.settings do
+    settings_hash = resource.merged_settings.except('p', 'h')
+    resource.class::SECRET_KEYS.each do |key|
+      settings_hash[key] = '[FILTERED]' if settings_hash[key].present?
+    end
+    json.merge! settings_hash.compact
+  end
+end
+
 json.reference_id resource.reference_id if Current.account_user&.administrator?

@@ -19,6 +19,7 @@ class Integrations::Hook < ApplicationRecord
 
   attr_readonly :app_id, :account_id, :inbox_id, :hook_type
   before_validation :ensure_hook_type
+  before_validation :move_secrets_to_encrypted_settings
   after_create :trigger_setup_if_crm
   after_create :trigger_setup_if_calendly
   after_create_commit :trigger_setup_if_omicall
@@ -39,8 +40,6 @@ class Integrations::Hook < ApplicationRecord
 
   serialize :encrypted_settings, coder: JSON
   encrypts :encrypted_settings if Chatwoot.encryption_configured?
-
-  before_validation :move_secrets_to_encrypted_settings
 
   validates :account_id, presence: true
   validates :app_id, presence: true
@@ -94,7 +93,11 @@ class Integrations::Hook < ApplicationRecord
   end
 
   def merged_settings
-    enc_settings = encrypted_settings
+    enc_settings = begin
+      encrypted_settings.dup
+    rescue StandardError
+      encrypted_settings
+    end
     if enc_settings.is_a?(String)
       begin
         enc_settings = JSON.parse(enc_settings)
@@ -102,6 +105,22 @@ class Integrations::Hook < ApplicationRecord
         enc_settings = {}
       end
     end
+
+    if enc_settings.is_a?(Hash)
+      # If p and h are present (due to previous nested encryption bug), remove them
+      has_p_and_h = enc_settings.key?('p') && enc_settings.key?('h')
+      enc_settings.delete('p')
+      enc_settings.delete('h')
+
+      # If we had p and h (meaning it was a raw payload or nested), and secret keys are missing, provide [FILTERED]
+      if has_p_and_h
+        schema_keys = app&.params&.dig(:settings_json_schema, :properties)&.keys || []
+        (SECRET_KEYS & schema_keys.map(&:to_s)).each do |k|
+          enc_settings[k] = '[FILTERED]' unless enc_settings.key?(k)
+        end
+      end
+    end
+
     (settings || {}).merge(enc_settings || {})
   end
 
@@ -119,10 +138,19 @@ class Integrations::Hook < ApplicationRecord
   def move_secrets_to_encrypted_settings
     return unless settings.is_a?(Hash)
 
+    if encrypted_settings.is_a?(String)
+      begin
+        self.encrypted_settings = JSON.parse(encrypted_settings)
+      rescue JSON::ParserError
+        self.encrypted_settings = {}
+      end
+    end
+
     self.encrypted_settings ||= {}
     SECRET_KEYS.each do |key|
       if settings.key?(key)
-        self.encrypted_settings[key] = settings.delete(key)
+        val = settings.delete(key)
+        self.encrypted_settings[key] = val unless val == '[FILTERED]'
       end
     end
   end
@@ -138,7 +166,10 @@ class Integrations::Hook < ApplicationRecord
   def validate_settings_json_schema
     return if app.blank? || app.params[:settings_json_schema].blank?
 
-    errors.add(:settings, ': Invalid settings data') unless JSONSchemer.schema(app.params[:settings_json_schema]).valid?(settings)
+    return if JSONSchemer.schema(app.params[:settings_json_schema]).valid?(merged_settings.with_indifferent_access)
+
+    errors.add(:settings,
+               ': Invalid settings data')
   end
 
   def validate_openai_api_key
@@ -147,7 +178,7 @@ class Integrations::Hook < ApplicationRecord
     Llm::Config.initialize!
 
     api_key = hook_api_key
-    return if api_key.blank?
+    return if api_key.blank? || api_key == '[FILTERED]'
 
     api_base = settings['api_base_url']
     base_url = (api_base.chomp('/').sub(%r{/v1\z}, '') if api_base.present? && !api_base.chomp('/').match?(%r{\Ahttps://api\.openai\.com(/v1)?\z}))
