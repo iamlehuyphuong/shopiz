@@ -1,7 +1,7 @@
 class Crm::Leadsquared::SetupService
   def initialize(hook)
     @hook = hook
-    credentials = @hook.settings
+    credentials = @hook.merged_settings
 
     @access_key = credentials['access_key']
     @secret_key = credentials['secret_key']

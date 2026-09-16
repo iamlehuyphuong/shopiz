@@ -12,7 +12,7 @@ class Integrations::GoogleTranslate::ProcessorService
     response = client.translate_text(
       contents: [content],
       target_language_code: bcp47_language_code,
-      parent: "projects/#{hook.settings['project_id']}",
+      parent: "projects/#{hook.merged_settings['project_id']}",
       mime_type: mime_type
     )
 
@@ -70,7 +70,7 @@ class Integrations::GoogleTranslate::ProcessorService
 
   def client
     @client ||= ::Google::Cloud::Translate::V3::TranslationService::Client.new do |config|
-      config.credentials = hook.settings['credentials']
+      config.credentials = hook.merged_settings['credentials']
     end
   end
 end

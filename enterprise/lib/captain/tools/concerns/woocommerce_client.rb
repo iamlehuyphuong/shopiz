@@ -11,7 +11,7 @@ module Captain::Tools::Concerns::WoocommerceClient
   end
 
   def woocommerce_active?
-    woocommerce_hook.present? && woocommerce_hook.settings&.dig('consumer_key').present?
+    woocommerce_hook.present? && woocommerce_hook.merged_settings['consumer_key'].present?
   end
 
   def woocommerce_get(endpoint, params = {})
@@ -56,11 +56,11 @@ module Captain::Tools::Concerns::WoocommerceClient
     nil
   end
 
-  def woocommerce_connection
-    @woocommerce_connection ||= begin
+  def woocommerce_client
+    @woocommerce_client ||= begin
       store_url = woocommerce_hook.reference_id
-      consumer_key = woocommerce_hook.settings['consumer_key']
-      consumer_secret = woocommerce_hook.settings['consumer_secret']
+      consumer_key = woocommerce_hook.merged_settings['consumer_key']
+      consumer_secret = woocommerce_hook.merged_settings['consumer_secret']
 
       Faraday.new(url: "https://#{store_url}/wp-json/wc/v3") do |f|
         f.request :authorization, :basic, consumer_key, consumer_secret

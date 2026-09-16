@@ -15,7 +15,7 @@ module Captain::Tools::Concerns::CalendlyClient
   end
 
   def calendly_client(hook)
-    token = hook.settings['access_token']
+    token = hook.merged_settings['access_token']
     Calendly::ApiClient.new(token)
   end
 

@@ -5,8 +5,8 @@ class Crm::Leadsquared::ProcessorService < Crm::BaseProcessorService
 
   def initialize(hook)
     super(hook)
-    @access_key = hook.settings['access_key']
-    @secret_key = hook.settings['secret_key']
+    @access_key = hook.merged_settings['access_key']
+    @secret_key = hook.merged_settings['secret_key']
     @endpoint_url = hook.settings['endpoint_url']
 
     @allow_transcript = hook.settings['enable_transcript_activity']

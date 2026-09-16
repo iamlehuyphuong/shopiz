@@ -24,8 +24,23 @@ class Integrations::Hook < ApplicationRecord
   after_create_commit :trigger_setup_if_omicall
   before_destroy :trigger_teardown_if_omicall
 
+  SECRET_KEYS = %w[
+    api_key
+    credentials
+    access_token
+    consumer_key
+    consumer_secret
+    access_key
+    secret_key
+  ].freeze
+
   # TODO: Remove guard once encryption keys become mandatory (target 3-4 releases out).
   encrypts :access_token, deterministic: true if Chatwoot.encryption_configured?
+
+  serialize :encrypted_settings, coder: JSON
+  encrypts :encrypted_settings if Chatwoot.encryption_configured?
+
+  before_validation :move_secrets_to_encrypted_settings
 
   validates :account_id, presence: true
   validates :app_id, presence: true
@@ -74,6 +89,14 @@ class Integrations::Hook < ApplicationRecord
     { error: 'No processor found' }
   end
 
+  def hook_api_key
+    merged_settings['api_key']
+  end
+
+  def merged_settings
+    (settings || {}).merge(encrypted_settings || {})
+  end
+
   def feature_allowed?
     return true if app.blank?
 
@@ -84,6 +107,17 @@ class Integrations::Hook < ApplicationRecord
   end
 
   private
+
+  def move_secrets_to_encrypted_settings
+    return unless settings.is_a?(Hash)
+
+    self.encrypted_settings ||= {}
+    SECRET_KEYS.each do |key|
+      if settings.key?(key)
+        self.encrypted_settings[key] = settings.delete(key)
+      end
+    end
+  end
 
   def ensure_feature_enabled
     errors.add(:feature_flag, 'Feature not enabled') unless feature_allowed?
@@ -104,7 +138,7 @@ class Integrations::Hook < ApplicationRecord
     require 'ruby_llm'
     Llm::Config.initialize!
 
-    api_key = settings['api_key']
+    api_key = hook_api_key
     return if api_key.blank?
 
     api_base = settings['api_base_url']
@@ -147,7 +181,7 @@ class Integrations::Hook < ApplicationRecord
   def trigger_teardown_if_omicall
     return unless app_id == 'omicall'
 
-    api_key = settings.present? ? settings['api_key'] : nil
+    api_key = hook_api_key
 
     ::Omicall::TeardownWebhookJob.perform_later(account_id, api_key)
   end

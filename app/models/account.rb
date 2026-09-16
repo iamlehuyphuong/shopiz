@@ -117,6 +117,9 @@ class Account < ApplicationRecord
                  attribute_resolver: ->(record) { record.settings }
   validate :validate_reporting_timezone
 
+  serialize :encrypted_settings, coder: JSON
+  encrypts :encrypted_settings if Chatwoot.encryption_configured?
+
   store_accessor :settings, :auto_resolve_after, :auto_resolve_message, :auto_resolve_ignore_waiting
 
   store_accessor :settings, :audio_transcriptions, :auto_resolve_label
@@ -125,8 +128,9 @@ class Account < ApplicationRecord
   store_accessor :settings, :keep_pending_on_bot_failure
   store_accessor :settings, :captain_auto_resolve_mode
   store_accessor :settings, :active_ecommerce_platform, :ai_allow_create_order, :order_notification_templates
-  store_accessor :settings, :sales_payment_config
-  store_accessor :settings, :custom_email_config
+  
+  store_accessor :encrypted_settings, :sales_payment_config
+  store_accessor :encrypted_settings, :custom_email_config
   include AccountCaptainAutoResolve
 
   has_one :onboarding, class_name: 'AccountOnboarding', dependent: :destroy
@@ -201,6 +205,7 @@ class Account < ApplicationRecord
   scope :with_auto_resolve, -> { where("(settings ->> 'auto_resolve_after')::int IS NOT NULL") }
 
   before_validation :validate_limit_keys
+  before_validation :move_secrets_to_encrypted_settings
   after_create_commit :notify_creation, :assign_default_plan
   after_destroy :remove_account_sequences
   after_save :sync_sales_config_to_inboxes, if: :saved_change_to_settings?
@@ -278,6 +283,18 @@ class Account < ApplicationRecord
 
   def validate_limit_keys
     # method overridden in enterprise module
+  end
+
+  def move_secrets_to_encrypted_settings
+    return unless settings.is_a?(Hash)
+
+    self.encrypted_settings ||= {}
+    if settings.key?('sales_payment_config')
+      self.encrypted_settings['sales_payment_config'] = settings.delete('sales_payment_config')
+    end
+    if settings.key?('custom_email_config')
+      self.encrypted_settings['custom_email_config'] = settings.delete('custom_email_config')
+    end
   end
 
   def validate_reporting_timezone

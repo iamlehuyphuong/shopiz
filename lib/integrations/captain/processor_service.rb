@@ -32,11 +32,11 @@ class Integrations::Captain::ProcessorService < Integrations::BotProcessorServic
 
   def call_captain(message_content)
     url = "#{GlobalConfigService.load('CAPTAIN_API_URL',
-                                      '')}/accounts/#{hook.settings['account_id']}/assistants/#{hook.settings['assistant_id']}/chat"
+                                      '')}/accounts/#{hook.merged_settings['account_id']}/assistants/#{hook.merged_settings['assistant_id']}/chat"
 
     headers = {
-      'X-USER-EMAIL' => hook.settings['account_email'],
-      'X-USER-TOKEN' => hook.settings['access_token'],
+      'X-USER-EMAIL' => hook.merged_settings['account_email'],
+      'X-USER-TOKEN' => hook.merged_settings['access_token'],
       'Content-Type' => 'application/json'
     }
 

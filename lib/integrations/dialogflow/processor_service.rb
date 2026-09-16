@@ -15,7 +15,7 @@ class Integrations::Dialogflow::ProcessorService < Integrations::BotProcessorSer
   end
 
   def get_response(session_id, message_content)
-    if hook.settings['credentials'].blank?
+    if hook.merged_settings['credentials'].blank?
       Rails.logger.warn "Account: #{hook.try(:account_id)} Hook: #{hook.id} credentials are not present." && return
     end
 
@@ -64,7 +64,7 @@ class Integrations::Dialogflow::ProcessorService < Integrations::BotProcessorSer
   def configure_dialogflow_client_defaults
     ::Google::Cloud::Dialogflow::V2::Sessions::Client.configure do |config|
       config.timeout = 10.0
-      config.credentials = hook.settings['credentials']
+      config.credentials = hook.merged_settings['credentials']
       config.endpoint = dialogflow_endpoint
     end
   end
@@ -89,7 +89,7 @@ class Integrations::Dialogflow::ProcessorService < Integrations::BotProcessorSer
   end
 
   def build_session_path(session_id)
-    project_id = hook.settings['project_id']
+    project_id = hook.merged_settings['project_id']
     region = normalized_region
 
     if region == 'global'

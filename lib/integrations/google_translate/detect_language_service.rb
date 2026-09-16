@@ -9,7 +9,7 @@ class Integrations::GoogleTranslate::DetectLanguageService
     text = message.content[0...1500]
     response = client.detect_language(
       content: text,
-      parent: "projects/#{hook.settings['project_id']}"
+      parent: "projects/#{hook.merged_settings['project_id']}"
     )
 
     update_conversation(response)
@@ -35,7 +35,7 @@ class Integrations::GoogleTranslate::DetectLanguageService
 
   def client
     @client ||= ::Google::Cloud::Translate::V3::TranslationService::Client.new do |config|
-      config.credentials = hook.settings['credentials']
+      config.credentials = hook.merged_settings['credentials']
     end
   end
 end

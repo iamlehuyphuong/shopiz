@@ -1,4 +1,4 @@
-json.settings resource.settings
+json.settings resource.settings.to_h.merge({ 'sales_payment_config' => resource.sales_payment_config, 'custom_email_config' => resource.custom_email_config }.compact)
 json.created_at resource.created_at
 json.custom_attributes do
   if resource.active_subscription.present?
@@ -61,7 +61,7 @@ json.status resource.status
 json.cache_keys resource.cache_keys
 json.captain_api_source begin
   system_key = GlobalConfig.get_value('CAPTAIN_OPEN_AI_API_KEY').present?
-  user_hook = resource.hooks.find_by(app_id: 'openai', status: 'enabled')&.settings&.dig('api_key').present?
+  user_hook = resource.hooks.find_by(app_id: 'openai', status: 'enabled')&.hook_api_key.present?
   config_value = GlobalConfig.get_value('CAPTAIN_ALLOW_USER_HOOK_KEY')
   allow_hook = config_value.nil? || config_value == true
 

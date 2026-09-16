@@ -14,7 +14,7 @@ module Captain::Tools::Concerns::KiotvietClient
   end
 
   def kiotviet_active?
-    kiotviet_hook.present? && kiotviet_hook.settings['access_token'].present?
+    kiotviet_hook.present? && kiotviet_hook.merged_settings['access_token'].present?
   end
 
   def kiotviet_get(endpoint, params = {})
@@ -71,8 +71,8 @@ module Captain::Tools::Concerns::KiotvietClient
 
   def kiotviet_headers
     {
-      'Retailer' => kiotviet_hook.settings['retailer'],
-      'Authorization' => "Bearer #{kiotviet_hook.settings['access_token']}",
+      'Retailer' => kiotviet_hook.merged_settings['retailer'],
+      'Authorization' => "Bearer #{kiotviet_hook.merged_settings['access_token']}",
       'Content-Type' => 'application/json',
       'Accept-Encoding' => 'identity'
     }
@@ -85,14 +85,14 @@ module Captain::Tools::Concerns::KiotvietClient
   end
 
   def token_valid?
-    expires_at = kiotviet_hook.settings&.dig('token_expires_at')
+    expires_at = kiotviet_hook.merged_settings&.dig('token_expires_at')
     return false if expires_at.blank?
 
     Time.zone.parse(expires_at.to_s) > Time.current
   end
 
   def refresh_token
-    settings = kiotviet_hook.settings || {}
+    settings = kiotviet_hook.merged_settings || {}
     response = request_new_token(settings['client_id'], settings['client_secret'])
     return if response.nil?
 

@@ -103,8 +103,8 @@ class Api::V1::Accounts::Integrations::WoocommerceController < Api::V1::Accounts
   def woo_connection
     @woo_connection ||= build_connection(
       @hook.reference_id,
-      @hook.settings['consumer_key'],
-      @hook.settings['consumer_secret']
+      @hook.merged_settings['consumer_key'],
+      @hook.merged_settings['consumer_secret']
     )
   end
 

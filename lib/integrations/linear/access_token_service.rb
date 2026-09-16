@@ -92,7 +92,7 @@ class Integrations::Linear::AccessTokenService
   end
 
   def hook_settings
-    hook.settings.to_h.with_indifferent_access
+    hook.merged_settings.to_h.with_indifferent_access
   end
 
   def expires_on(expires_in)

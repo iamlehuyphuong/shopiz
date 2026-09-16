@@ -14,7 +14,7 @@ module Payments
       provider_class = Payments::ProviderRegistry.provider_for(provider_name)
       return unless provider_class
 
-      config = order.account.settings['sales_payment_config']&.dig(provider_name) || {}
+      config = order.account.sales_payment_config&.dig(provider_name) || {}
       provider = provider_class.new(config)
 
       transaction_id = "ORDER#{order.id}T#{Time.current.to_i}"

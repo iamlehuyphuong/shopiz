@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_09_11_150348) do
+ActiveRecord::Schema[7.1].define(version: 2026_09_16_031643) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -123,6 +123,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_11_150348) do
     t.string "company_email"
     t.string "company_tax_id"
     t.string "id_number"
+    t.text "encrypted_settings"
     t.index ["partner_sso_id"], name: "index_accounts_on_partner_sso_id"
     t.index ["status"], name: "index_accounts_on_status"
   end
@@ -496,11 +497,11 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_11_150348) do
     t.text "request_template"
     t.text "response_template"
     t.string "auth_type", default: "none"
-    t.jsonb "auth_config", default: {}
     t.jsonb "param_schema", default: []
     t.boolean "enabled", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "encrypted_auth_config"
     t.index ["account_id", "slug"], name: "index_captain_custom_tools_on_account_id_and_slug", unique: true
     t.index ["account_id"], name: "index_captain_custom_tools_on_account_id"
   end
@@ -1226,6 +1227,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_11_150348) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.jsonb "settings", default: {}
+    t.text "encrypted_settings"
   end
 
   create_table "labels", force: :cascade do |t|

@@ -21,7 +21,7 @@ module Captain::UserHookKeyHelper
   end
 
   def user_hook_api_key
-    openai_hook&.settings&.dig('api_key')
+    openai_hook&.hook_api_key
   end
 
   def user_hook_api_base

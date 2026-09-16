@@ -12,7 +12,7 @@ module Captain::Tools::Copilot::Concerns::CalendlyHelper
   end
 
   def calendly_client(hook)
-    Calendly::ApiClient.new(hook.settings['access_token'])
+    Calendly::ApiClient.new(hook.merged_settings['access_token'])
   end
 
   def find_event_type_by_name(client, hook, name)

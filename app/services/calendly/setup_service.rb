@@ -7,7 +7,7 @@ class Calendly::SetupService
   end
 
   def setup
-    token = @hook.settings['access_token']
+    token = @hook.merged_settings['access_token']
     return unless token.present?
 
     client = Calendly::ApiClient.new(token)

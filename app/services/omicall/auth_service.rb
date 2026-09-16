@@ -16,7 +16,7 @@ class Omicall::AuthService
     return @provided_api_key if @provided_api_key.present?
 
     hook = @account.hooks.find_by(app_id: 'omicall')
-    hook&.settings&.dig('api_key')
+    hook&.hook_api_key
   end
 
   private

@@ -1,12 +1,12 @@
 class Api::V1::Accounts::Sales::PaymentSettingsController < Api::V1::Accounts::BaseController
   def test_payment
-    provider_name = Current.account.settings.dig('sales_payment_config', 'default_provider')
+    provider_name = Current.account.sales_payment_config&.dig('default_provider')
     
     if provider_name.blank?
       return render json: { error: 'Bạn cần cấu hình kênh thanh toán mặc định trước khi test' }, status: :unprocessable_entity
     end
 
-    config = Current.account.settings.dig('sales_payment_config', provider_name)
+    config = Current.account.sales_payment_config&.dig(provider_name)
     unless config && (config['active'] == true || config['active'] == 'true')
       return render json: { error: 'Kênh thanh toán mặc định chưa được bật' }, status: :unprocessable_entity
     end

@@ -48,7 +48,7 @@ class Integrations::Dyte::ProcessorService
   end
 
   def dyte_client
-    credentials = dyte_hook.settings
+    credentials = dyte_hook.merged_settings
     @dyte_client ||= Dyte.new(credentials['organization_id'], credentials['api_key'])
   end
 end

@@ -4,7 +4,7 @@ class Api::V1::Payments::SepayCheckoutController < ApplicationController
   def show
     @order = ConversationOrder.find_by!(payment_transaction_id: params[:id])
     account = @order.account
-    config = account.settings['sales_payment_config']&.dig('sepay') || {}
+    config = account.sales_payment_config&.dig('sepay') || {}
     company_code = config['company_code']
     secret_key = config['secret_key']
 

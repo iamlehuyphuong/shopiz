@@ -101,7 +101,7 @@ class Integrations::LlmBaseService
     messages = parsed_body['messages']
     model = parsed_body['model']
 
-    Llm::Config.with_api_key(hook.settings['api_key'], api_base: api_base) do |context|
+    Llm::Config.with_api_key(hook.hook_api_key, api_base: api_base) do |context|
       chat = context.chat(model: model)
       setup_chat_with_messages(chat, messages)
     end

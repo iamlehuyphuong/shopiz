@@ -12,7 +12,7 @@ module Api
           provider_class = Payments::ProviderRegistry.provider_for(provider_name)
           return head :not_found unless provider_class
 
-          config = account.settings['sales_payment_config']&.dig(provider_name) || {}
+          config = account.sales_payment_config&.dig(provider_name) || {}
           provider = provider_class.new(config)
 
           begin

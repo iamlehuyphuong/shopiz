@@ -61,7 +61,7 @@ class Captain::ConversationCompletionService < Captain::BaseTaskService
   # so it should not consume the customer's OpenAI credits on hosted platforms.
   # Falls back to the account hook for self-hosted deployments without a system key.
   def api_key
-    @api_key ||= system_api_key.presence || openai_hook&.settings&.dig('api_key')
+    @api_key ||= system_api_key.presence || openai_hook&.hook_api_key
   end
 
   def event_name

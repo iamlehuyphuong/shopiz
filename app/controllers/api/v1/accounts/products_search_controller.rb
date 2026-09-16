@@ -190,8 +190,8 @@ class Api::V1::Accounts::ProductsSearchController < Api::V1::Accounts::BaseContr
   # --- WooCommerce ---
   def fetch_woocommerce_products(hook, query)
     store_url = hook.reference_id
-    consumer_key = hook.settings['consumer_key']
-    consumer_secret = hook.settings['consumer_secret']
+    consumer_key = hook.merged_settings['consumer_key']
+    consumer_secret = hook.merged_settings['consumer_secret']
     conn = Faraday.new(url: "https://#{store_url}/wp-json/wc/v3") do |f|
       f.request :authorization, :basic, consumer_key, consumer_secret
       f.adapter Faraday.default_adapter

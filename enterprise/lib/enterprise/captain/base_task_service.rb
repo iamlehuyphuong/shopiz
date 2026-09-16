@@ -33,7 +33,7 @@ module Enterprise::Captain::BaseTaskService
   end
 
   def user_hook_key_available?
-    user_hook_key_allowed? && openai_hook&.settings&.dig('api_key').present?
+    user_hook_key_allowed? && openai_hook&.hook_api_key.present?
   end
 
   def responses_available?

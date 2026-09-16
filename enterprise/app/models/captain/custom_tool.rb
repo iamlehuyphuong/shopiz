@@ -51,6 +51,9 @@ class Captain::CustomTool < ApplicationRecord
   enum :http_method, %w[GET POST].index_by(&:itself), validate: true
   enum :auth_type, %w[none bearer basic api_key].index_by(&:itself), default: :none, validate: true, prefix: :auth
 
+  serialize :encrypted_auth_config, coder: JSON
+  encrypts :encrypted_auth_config if Chatwoot.encryption_configured?
+
   before_validation :generate_slug
 
   validates :slug, presence: true, uniqueness: { scope: :account_id }
@@ -61,6 +64,14 @@ class Captain::CustomTool < ApplicationRecord
                  attribute_resolver: ->(record) { record.param_schema }
 
   scope :enabled, -> { where(enabled: true) }
+
+  def auth_config=(val)
+    self.encrypted_auth_config = val
+  end
+
+  def auth_config
+    self.encrypted_auth_config || {}
+  end
 
   def to_tool_metadata
     {

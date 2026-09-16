@@ -115,7 +115,7 @@ class Api::V1::Accounts::Integrations::KiotvietController < Api::V1::Accounts::B
 
     response = Faraday.get("https://public.kiotapi.com/#{endpoint}") do |req|
       req.headers['Retailer'] = @hook.settings['retailer']
-      req.headers['Authorization'] = "Bearer #{@hook.settings['access_token']}"
+      req.headers['Authorization'] = "Bearer #{@hook.merged_settings['access_token']}"
       req.headers['Content-Type'] = 'application/json'
       req.params = params
     end

@@ -29,7 +29,7 @@ class Captain::Llm::TranslateQueryService < Captain::BaseTaskService
   # Translation is an internal operation, not customer-initiated.
   # Prefer the system key; fall back to the account's hook key for self-hosted setups without one.
   def api_key
-    @api_key ||= system_api_key.presence || openai_hook&.settings&.dig('api_key')
+    @api_key ||= system_api_key.presence || openai_hook&.hook_api_key
   end
 
   def query_in_target_language?(query)
