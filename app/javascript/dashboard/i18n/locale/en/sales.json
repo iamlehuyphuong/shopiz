@@ -487,6 +487,10 @@
           "LABEL": "Product Description",
           "PLACEHOLDER": "Detailed product description"
         },
+        "KEYWORDS": {
+          "LABEL": "Search Keywords",
+          "PLACEHOLDER": "Enter keyword and press Enter (e.g., sp1, automation)"
+        },
         "PRICE": {
           "LABEL": "Price",
           "PLACEHOLDER": "e.g., 100000"

@@ -484,6 +484,10 @@
           "LABEL": "Mô tả sản phẩm",
           "PLACEHOLDER": "Mô tả chi tiết về sản phẩm"
         },
+        "KEYWORDS": {
+          "LABEL": "Từ khoá tìm kiếm",
+          "PLACEHOLDER": "Nhập từ khoá và nhấn Enter (ví dụ: sp1, automation)"
+        },
         "PRICE": {
           "LABEL": "Giá bán",
           "PLACEHOLDER": "Ví dụ: 100000"

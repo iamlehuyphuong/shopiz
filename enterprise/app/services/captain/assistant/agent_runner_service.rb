@@ -8,6 +8,8 @@ class Captain::Assistant::AgentRunnerService
   include Captain::CreditGuard
   include Captain::UserHookKeyHelper
 
+  MESSAGE_HISTORY_LIMIT = 10
+
   attr_reader :account
 
   CONVERSATION_STATE_ATTRIBUTES = %i[
@@ -57,6 +59,39 @@ class Captain::Assistant::AgentRunnerService
   end
 
   private
+
+  def build_context_with_summary(message_history)
+    summary = format_history_summary(message_history)
+
+    {
+      session_id: "#{@assistant.account_id}_#{@conversation&.display_id}",
+      conversation_history: [],
+      history_summary: summary,
+      state: build_state
+    }
+  end
+
+  def format_history_summary(messages)
+    return nil if messages.blank?
+
+    lines = [
+      "## Conversation History",
+      "Below is the recent conversation between the customer and the assistant.",
+      "IMPORTANT: If the customer refers to a product, service, or information already mentioned below, use that information directly. Do NOT call search tools again for information already available here.",
+      ""
+    ]
+
+    messages.each do |msg|
+      content = msg[:content]
+      content = extract_text_from_content(content) unless content.is_a?(String)
+      next if content.blank?
+
+      label = msg[:role] == 'user' ? '[Customer]' : '[Assistant]'
+      lines << "#{label}: #{content}"
+    end
+
+    lines.join("\n")
+  end
 
   def build_context(message_history)
     conversation_history = message_history.map do |msg|
@@ -214,12 +249,22 @@ class Captain::Assistant::AgentRunnerService
   def add_usage_metadata_callback(runner)
     handoff_tool_name = Captain::Tools::HandoffTool.new(@assistant).name
 
+    runner.on_tool_start do |tool_name, args, context_wrapper|
+      if @source == 'playground'
+        context_wrapper.context[:tool_execution_trace_args] ||= {}
+        # We might have multiple calls to the same tool, but a simple hash is fine for playground debugging
+        context_wrapper.context[:tool_execution_trace_args][tool_name] = args
+      end
+    end
+
     runner.on_tool_complete do |tool_name, tool_result, context_wrapper|
       if @source == 'playground'
         context_wrapper.context[:tool_execution_trace] ||= []
+        args = context_wrapper.context.dig(:tool_execution_trace_args, tool_name)
+        
         # Chuyển đổi tool_result sang dạng chuỗi/hash an toàn để tránh vòng lặp đệ quy khi json encode
         safe_result = tool_result.is_a?(String) ? tool_result : tool_result.to_s
-        context_wrapper.context[:tool_execution_trace] << { name: tool_name, result: safe_result }
+        context_wrapper.context[:tool_execution_trace] << { name: tool_name, args: args, result: safe_result }
       end
 
       track_handoff_usage(tool_name, handoff_tool_name, context_wrapper) if ChatwootApp.otel_enabled?
@@ -257,9 +302,11 @@ class Captain::Assistant::AgentRunnerService
   end
 
   def run_payload(message_history)
-    message_to_process = extract_last_user_message(message_history)
-    context = build_context(message_history_without_last_user_message(message_history))
-    enrich_context_with_trace_payload!(context, message_history, message_to_process)
+    recent_messages = message_history.last(MESSAGE_HISTORY_LIMIT)
+    message_to_process = extract_last_user_message(recent_messages)
+    history_without_last = message_history_without_last_user_message(recent_messages)
+    context = build_context_with_summary(history_without_last)
+    enrich_context_with_trace_payload!(context, recent_messages, message_to_process)
     [message_to_process, context]
   end
 end

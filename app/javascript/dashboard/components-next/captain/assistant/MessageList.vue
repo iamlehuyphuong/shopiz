@@ -147,6 +147,10 @@ watch(() => props.messages.length, scrollToBottom);
                 <div
                   class="pl-5 opacity-90 leading-relaxed whitespace-pre-wrap max-h-48 overflow-y-auto"
                 >
+                  <template v-if="tool.args">
+                    <span class="font-semibold text-n-slate-11 block mb-1">Tham số (Từ khoá):</span>
+                    <div class="mt-0.5 mb-2 text-n-slate-12 font-mono">{{ JSON.stringify(tool.args) }}</div>
+                  </template>
                   <span class="font-semibold text-n-slate-11 block mb-1">Kết quả:</span>
                   <div class="mt-0.5 text-n-slate-12">{{ tool.result }}</div>
                 </div>

@@ -53,11 +53,27 @@ const form = ref({
   productType: 'physical',
   category: '',
   brand: '',
+  keywords: [],
   style: [],
   attributes: [],
   status: 'active',
   hasVariants: false,
-  variants: [],
+  variants: [
+    {
+      name: '',
+      sku: '',
+      barcode: '',
+      price: '',
+      weight: 0,
+      meta: {
+        color: '',
+        size: '',
+        length: 0,
+        width: 0,
+        height: 0,
+      },
+    },
+  ],
 });
 
 const displayPrice = computed(() => {
@@ -117,6 +133,7 @@ const fetchProductDetails = async () => {
     form.value.productType = meta.product_type || 'physical';
     form.value.category = meta.category || '';
     form.value.brand = meta.brand || '';
+    form.value.keywords = Array.isArray(meta.keywords) ? meta.keywords : (meta.keywords ? [meta.keywords] : []);
     form.value.style = Array.isArray(meta.style) ? meta.style : (meta.style ? [meta.style] : []);
     form.value.attributes = Array.isArray(meta.attributes) ? meta.attributes : [];
     form.value.status = data.status || 'draft';
@@ -142,6 +159,23 @@ const fetchProductDetails = async () => {
       });
       form.value.hasVariants = true;
     } else {
+      form.value.variants = [
+        {
+          id: null,
+          name: '',
+          sku: '',
+          barcode: '',
+          price: '',
+          weight: 0,
+          meta: {
+            color: '',
+            size: '',
+            length: 0,
+            width: 0,
+            height: 0,
+          },
+        },
+      ];
       form.value.hasVariants = false;
     }
   } catch (error) {
@@ -246,6 +280,7 @@ const onSubmit = async () => {
         product_type: form.value.productType,
         category: form.value.category,
         brand: form.value.brand,
+        keywords: form.value.keywords,
         style: form.value.style,
         attributes: form.value.attributes,
       },
@@ -261,7 +296,7 @@ const onSubmit = async () => {
     });
 
     useAlert(t('SALES.PRODUCT_FORM.ALERTS.UPDATE_SUCCESS'));
-    router.push({ name: 'sales_products_list' });
+    router.push({ name: 'sales_products_list', params: { accountId: route.params.accountId } });
   } catch (error) {
     useAlert(error.message || t('SALES.PRODUCT_FORM.ALERTS.SAVE_ERROR'));
   } finally {
@@ -277,7 +312,7 @@ const onSubmit = async () => {
     >
       <h1 class="flex items-center mb-0 text-n-slate-12">
         <router-link
-          :to="{ name: 'sales_products_list' }"
+          :to="{ name: 'sales_products_list', params: { accountId: route.params.accountId } }"
           class="flex items-center font-normal cursor-pointer text-n-slate-11 text-base ltr:mr-4 rtl:ml-4 hover:text-n-slate-12 transition-colors"
         >
           <i class="i-lucide-chevron-left -ml-1 text-lg mr-1" />
@@ -423,6 +458,20 @@ const onSubmit = async () => {
                     $t('SALES.PRODUCT_FORM.FIELDS.DESCRIPTION.PLACEHOLDER')
                   "
                 />
+              </div>
+
+              <div class="w-full">
+                <label class="block text-sm font-medium text-n-slate-12 mb-1">
+                  {{ $t('SALES.PRODUCT_FORM.FIELDS.KEYWORDS.LABEL') }}
+                </label>
+                <div class="w-full p-2 rounded-lg border-0 outline outline-1 outline-n-weak outline-offset-[-1px] bg-n-surface-1 focus-within:outline-n-orange-9 transition-all duration-200 min-h-[42px] flex items-center">
+                  <TagInput
+                    v-model="form.keywords"
+                    :placeholder="$t('SALES.PRODUCT_FORM.FIELDS.KEYWORDS.PLACEHOLDER')"
+                    allow-create
+                    class="w-full border-none outline-none focus:outline-none focus:ring-0 !border-transparent p-0 bg-transparent"
+                  />
+                </div>
               </div>
 
               <div class="w-full grid grid-cols-2 gap-4">
