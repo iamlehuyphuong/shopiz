@@ -38,7 +38,8 @@ class Captain::Assistant::AgentRunnerService
 
     message_to_process, context = run_payload(message_history)
     result = if using_user_hook_key_for_credit?
-               Llm::Config.with_api_key(user_hook_api_key, api_base: user_hook_api_base) do
+               resolved_api_base = user_hook_api_base.present? ? "#{user_hook_api_base}/v1" : nil
+               Llm::Config.with_api_key(user_hook_api_key, api_base: resolved_api_base) do
                  runner.run(message_to_process, context: context, max_turns: 100)
                end
              else

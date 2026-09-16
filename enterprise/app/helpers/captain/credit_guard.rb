@@ -5,7 +5,8 @@ module Captain::CreditGuard
   private
 
   def system_responses_available?
-    return system_api_key_available? unless ChatwootApp.chatwoot_cloud?
+    return false unless system_api_key_available?
+    return true unless ChatwootApp.chatwoot_cloud?
 
     target_account = respond_to?(:account, true) ? account : @account
     target_account&.usage_limits&.dig(:captain, :responses, :current_available)&.positive? || false
