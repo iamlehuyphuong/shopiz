@@ -4,9 +4,11 @@
 # Falls back to creating a local draft order using Shopiz built-in products.
 class Captain::Tools::CreateOrderDraftTool < Captain::Tools::BasePublicTool
   include Captain::Tools::Concerns::EcomRoutable
+  include Captain::Tools::Concerns::OrderMessageSendable
 
   description 'Create a draft order with products for the current contact. ' \
-              'The order is saved as a draft for agent review.'
+              'The order is saved as a draft and order details are automatically sent to the customer. ' \
+              'Do not send a separate message with order details.'
 
   param :product_identifiers, type: 'string', desc: 'Comma-separated product IDs or codes (e.g. "123,456")', required: true
   param :quantities, type: 'string', desc: 'Comma-separated quantities matching each product (e.g. "2,1")', required: true
@@ -74,6 +76,7 @@ class Captain::Tools::CreateOrderDraftTool < Captain::Tools::BasePublicTool
     return items_data[:error] if items_data[:error]
 
     order = build_and_save_local_order(conversation, contact, items_data[:items], customer_note)
+    send_order_summary_message(conversation, order)
     format_draft_result(order, items_data)
   end
 
@@ -129,7 +132,7 @@ class Captain::Tools::CreateOrderDraftTool < Captain::Tools::BasePublicTool
   end
 
   def format_draft_result(order, items_data)
-    lines = ["✅ Draft order ##{order.id} created successfully!\n", 'Items:']
+    lines = ["Draft order ##{order.id} created. Order details sent to customer.\n", 'Items:']
     items_data[:items].each do |i|
       lines << "  • #{i[:product_name]} × #{i[:quantity]} — #{i[:unit_price]} each"
     end
@@ -141,7 +144,7 @@ class Captain::Tools::CreateOrderDraftTool < Captain::Tools::BasePublicTool
       items_data[:warnings].each { |w| lines << "  • #{w}" }
     end
 
-    lines << "\n📋 This is a DRAFT order. An agent will review and confirm it."
+    lines << "\nThis is a DRAFT order. Order summary has been sent to the customer."
     lines.join("\n")
   end
 end

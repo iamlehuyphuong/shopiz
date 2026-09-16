@@ -523,6 +523,24 @@ vi:
         true: Có
         false: Không
   captain:
+    tools:
+      send_product_info:
+        header: "Thông tin sản phẩm:\n"
+        price: 'Giá'
+        stock: 'Tồn kho'
+        contact_for_price: 'Liên hệ'
+      order_summary:
+        header: "Thông tin đơn hàng #%{order_id}\n"
+        product_list: 'Danh sách sản phẩm:'
+        subtotal: 'Tạm tính'
+        shipping_fee: 'Phí vận chuyển'
+        tax: 'Thuế'
+        discount: 'Giảm giá'
+        total: 'Tổng cộng'
+        customer: 'Khách hàng'
+        phone: 'SĐT'
+        address: 'Địa chỉ'
+        note: 'Ghi chú'
     copilot_message_required: Thông điệp bắt buộc
     copilot_error: Đã xảy ra lỗi với Copilot. Vui lòng thử lại.
     copilot_limit: Bạn đã hết tín dụng Copilot. Bạn có thể mua thêm tín dụng từ phần

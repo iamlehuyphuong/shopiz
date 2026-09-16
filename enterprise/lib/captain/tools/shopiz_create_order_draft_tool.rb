@@ -1,7 +1,10 @@
 # Public tool: Create a draft ConversationOrder natively within Shopiz.
 class Captain::Tools::ShopizCreateOrderDraftTool < Captain::Tools::BasePublicTool
+  include Captain::Tools::Concerns::OrderMessageSendable
+
   description 'Create a draft order internally within Shopiz for the current contact. ' \
-              'Items must be provided as a JSON array of objects.'
+              'Items must be provided as a JSON array of objects. ' \
+              'Order details are automatically sent to the customer.'
   param :product_items, type: 'string', desc: 'JSON array: [{"name":"Item 1","price":100000,"quantity":1,"id":"1"}]', required: true
   param :customer_note, type: 'string', desc: 'Optional note from the customer', required: false
 
@@ -18,6 +21,7 @@ class Captain::Tools::ShopizCreateOrderDraftTool < Captain::Tools::BasePublicToo
     log_tool_usage('shopiz_create_order_draft', { items_count: items.size })
 
     order = create_draft_order(conversation, contact, items, customer_note)
+    send_order_summary_message(conversation, order)
     format_draft_result(order)
   end
 
@@ -54,11 +58,11 @@ class Captain::Tools::ShopizCreateOrderDraftTool < Captain::Tools::BasePublicToo
   end
 
   def format_draft_result(order)
-    lines = ["✅ Local draft order ##{order.id} created successfully!\n", 'Items:']
+    lines = ["Local draft order ##{order.id} created. Order details sent to customer.\n", 'Items:']
     order.items.each { |item| lines << "  • #{item.product_name} × #{item.quantity} — #{format_currency(item.unit_price)} each" }
     lines << "\nTotal: #{format_currency(order.total_amount)}"
     lines << "Customer: #{order.customer_name} | #{order.customer_phone}"
-    lines << "\n📋 This is a DRAFT order. Use confirm_order to finalize."
+    lines << "\nThis is a DRAFT order. Order summary has been sent to the customer."
     lines.join("\n")
   end
 

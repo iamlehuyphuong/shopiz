@@ -1,7 +1,7 @@
 class Captain::Tools::SearchProductsTool < Captain::Tools::BasePublicTool
-  include Captain::Tools::Concerns::EcomRoutable
-
-  description 'Search for products in the store by keyword, name, or SKU to help customers find what they want'
+  description 'Search for products in the store by keyword, name, or SKU. ' \
+              'Returns product data for internal use. ' \
+              'After finding relevant products, use send_product_info tool to send details to the customer.'
 
   param :query, type: 'string', desc: 'The search keyword, product name, or SKU'
   param :limit, type: 'integer', desc: 'Number of results to return (default: 5)', required: false
@@ -12,20 +12,10 @@ class Captain::Tools::SearchProductsTool < Captain::Tools::BasePublicTool
 
     return 'Search query is required' if query.blank?
 
-    # Route to ecom platform if inbox is linked
-    platform = resolve_ecom_platform(tool_context)
-    if platform
-      result = delegate_to_ecom_tool(platform, tool_context, query: query)
-      return result if result
-    end
-
-    # Fallback: search local DB
     limit = [limit.to_i, 10].min # Cap limit to 10
     limit = 5 if limit <= 0
 
     log_tool_usage('search_products', { conversation_id: conversation.id, query: query })
-
-    conversation.account
     products = account_scoped(Product).where(status: :active)
                                       .where('name ILIKE :query OR sku ILIKE :query OR description ILIKE :query', query: "%#{query}%")
                                       .limit(limit)
@@ -44,18 +34,6 @@ class Captain::Tools::SearchProductsTool < Captain::Tools::BasePublicTool
     %w[conversation_manage]
   end
 
-  def ecom_platform_tools
-    {
-      'kiotviet' => 'Captain::Tools::KiotvietGetProductTool',
-      'sapo' => 'Captain::Tools::SapoGetProductTool',
-      'haravan' => 'Captain::Tools::HaravanGetProductTool',
-      'shopify' => 'Captain::Tools::ShopifyGetProductTool',
-      'woocommerce' => 'Captain::Tools::WoocommerceGetProductTool',
-      'nhanhvn' => 'Captain::Tools::NhanhvnGetProductTool',
-      'tiktok_shop' => 'Captain::Tools::TiktokShopGetProductTool'
-    }.freeze
-  end
-
   def format_products(products)
     results = products.map do |product|
       {
@@ -64,12 +42,14 @@ class Captain::Tools::SearchProductsTool < Captain::Tools::BasePublicTool
         sku: product.sku,
         price: format_price(product.price),
         status: product.status,
+        inventory_quantity: product.inventory_quantity.to_i,
+        has_images: product.images.present?,
         has_variants: product.product_variants.exists?,
         description: format_description(product.description)
       }.compact
     end
 
-    "Found #{results.size} products:\n#{results.to_json}"
+    "Found #{results.size} products. Use send_product_info with product IDs to share with customer.\n#{results.to_json}"
   end
 
   def format_price(price)

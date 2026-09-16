@@ -343,3 +343,7 @@
   description: Create a draft order natively within Shopiz (Tạo đơn hàng nội bộ Shopiz)
   icon: cart-plus
   hidden: true
+- id: send_product_info
+  title: Send Product Info (Gửi thông tin sản phẩm)
+  description: Send product details to the customer as a text message in the conversation (Gửi thông tin sản phẩm cho khách hàng)
+  icon: paper-plane
