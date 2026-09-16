@@ -94,7 +94,15 @@ class Integrations::Hook < ApplicationRecord
   end
 
   def merged_settings
-    (settings || {}).merge(encrypted_settings || {})
+    enc_settings = encrypted_settings
+    if enc_settings.is_a?(String)
+      begin
+        enc_settings = JSON.parse(enc_settings)
+      rescue JSON::ParserError
+        enc_settings = {}
+      end
+    end
+    (settings || {}).merge(enc_settings || {})
   end
 
   def feature_allowed?

@@ -70,7 +70,15 @@ class Captain::CustomTool < ApplicationRecord
   end
 
   def auth_config
-    self.encrypted_auth_config || {}
+    val = self.encrypted_auth_config || {}
+    if val.is_a?(String)
+      begin
+        val = JSON.parse(val)
+      rescue JSON::ParserError
+        val = {}
+      end
+    end
+    val
   end
 
   def to_tool_metadata

@@ -129,8 +129,21 @@ class Account < ApplicationRecord
   store_accessor :settings, :captain_auto_resolve_mode
   store_accessor :settings, :active_ecommerce_platform, :ai_allow_create_order, :order_notification_templates
   
-  store_accessor :encrypted_settings, :sales_payment_config
-  store_accessor :encrypted_settings, :custom_email_config
+  def sales_payment_config
+    (encrypted_settings || {})['sales_payment_config'] || (encrypted_settings || {})[:sales_payment_config]
+  end
+
+  def sales_payment_config=(val)
+    self.encrypted_settings = (encrypted_settings || {}).merge('sales_payment_config' => val)
+  end
+
+  def custom_email_config
+    (encrypted_settings || {})['custom_email_config'] || (encrypted_settings || {})[:custom_email_config]
+  end
+
+  def custom_email_config=(val)
+    self.encrypted_settings = (encrypted_settings || {}).merge('custom_email_config' => val)
+  end
   include AccountCaptainAutoResolve
 
   has_one :onboarding, class_name: 'AccountOnboarding', dependent: :destroy

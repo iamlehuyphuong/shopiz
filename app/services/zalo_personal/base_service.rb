@@ -207,6 +207,17 @@ class ZaloPersonal::BaseService
                   return process_zalo_call_message(hash_content)
                 end
 
+                action_type = hash_content['action'] || hash_content[:action]
+                poll_params_str = hash_content['params'] || hash_content[:params]
+                if action_type.to_s.in?(%w[vote update create]) && poll_params_str.present?
+                  begin
+                    parsed_params = JSON.parse(poll_params_str)
+                    return process_zalo_poll_message(parsed_params) if parsed_params['pollId'].present? || parsed_params['msg'].is_a?(Hash)
+                  rescue JSON::ParserError
+                    # ignore
+                  end
+                end
+
                 image_url = hash_content['thumb'] || hash_content[:thumb] || hash_content['image'] || hash_content[:image]
                 if image_url.present?
                   params[:attachments] ||= []
@@ -240,6 +251,24 @@ class ZaloPersonal::BaseService
                                                   duration: duration
                                                 }
                                               }
+                                            ))
+    attach_media
+  end
+
+  def process_zalo_poll_message(parsed_params)
+    poll_text = '[Bình chọn]'
+    msg = parsed_params['msg'] || {}
+    template = msg['vi'] || msg['en'] || poll_text
+
+    if template.include?('%1$s')
+      poll_text = template.gsub('%1$s', parsed_params['dName'].to_s).gsub('%2$s', parsed_params['question'].to_s)
+    else
+      poll_text = template
+    end
+
+    @message = @conversation.messages.build(message_params.merge(
+                                              content: poll_text,
+                                              content_type: 'text'
                                             ))
     attach_media
   end
