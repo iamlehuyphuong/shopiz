@@ -19,6 +19,7 @@ class Captain::RewriteService < Captain::BaseTaskService
     improve_sla_description
     improve_custom_role_description
     improve_campaign_message
+    translate_labels
   ].freeze
 
   ALLOWED_OPERATIONS = (%i[fix_spelling_grammar improve improve_assistant_description] + TONE_OPERATIONS + IMPROVE_OPERATIONS).freeze

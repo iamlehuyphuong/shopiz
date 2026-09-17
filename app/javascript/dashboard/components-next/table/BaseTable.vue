@@ -18,11 +18,15 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  alwaysShowHeaders: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const hasHeaderSlot = computed(() => !!props.headers.length);
 const showHeaders = computed(
-  () => hasHeaderSlot.value && props.items.length > 0
+  () => hasHeaderSlot.value && (props.items.length > 0 || props.alwaysShowHeaders)
 );
 </script>
 

@@ -6,6 +6,7 @@ import { useStoreGetters, useStore } from 'dashboard/composables/store';
 import { picoSearch } from '@scmmishra/pico-search';
 
 import AddLabel from './AddLabel.vue';
+import AddLabelsFromList from './AddLabelsFromList.vue';
 import EditLabel from './EditLabel.vue';
 import BaseSettingsHeader from '../components/BaseSettingsHeader.vue';
 import SettingsLayout from '../SettingsLayout.vue';
@@ -22,6 +23,7 @@ const { t } = useI18n();
 
 const loading = ref({});
 const showAddPopup = ref(false);
+const showAddFromListPopup = ref(false);
 const showEditPopup = ref(false);
 const showDeleteConfirmationPopup = ref(false);
 const selectedLabel = ref({});
@@ -46,6 +48,13 @@ const openAddPopup = () => {
 };
 const hideAddPopup = () => {
   showAddPopup.value = false;
+};
+
+const openAddFromListPopup = () => {
+  showAddFromListPopup.value = true;
+};
+const hideAddFromListPopup = () => {
+  showAddFromListPopup.value = false;
 };
 
 const openEditPopup = response => {
@@ -101,8 +110,6 @@ onBeforeMount(() => {
   <SettingsLayout
     :is-loading="uiFlags.isFetching"
     :loading-message="$t('LABEL_MGMT.LOADING')"
-    :no-records-found="!records.length"
-    :no-records-message="$t('LABEL_MGMT.LIST.404')"
   >
     <template #header>
       <BaseSettingsHeader
@@ -119,11 +126,21 @@ onBeforeMount(() => {
           </span>
         </template>
         <template #actions>
-          <Button
-            :label="$t('LABEL_MGMT.HEADER_BTN_TXT')"
-            size="sm"
-            @click="openAddPopup"
-          />
+          <div class="flex gap-2">
+            <Button
+              :label="$t('LABEL_MGMT.HEADER_ADD_FROM_LIST_BTN_TXT', 'Thêm từ danh sách')"
+              icon="i-lucide-list"
+              size="sm"
+              color="slate"
+              faded
+              @click="openAddFromListPopup"
+            />
+            <Button
+              :label="$t('LABEL_MGMT.HEADER_BTN_TXT')"
+              size="sm"
+              @click="openAddPopup"
+            />
+          </div>
         </template>
       </BaseSettingsHeader>
     </template>
@@ -131,6 +148,7 @@ onBeforeMount(() => {
       <BaseTable
         :headers="tableHeaders"
         :items="filteredRecords"
+        always-show-headers
         :no-data-message="
           searchQuery ? $t('LABEL_MGMT.NO_RESULTS') : $t('LABEL_MGMT.LIST.404')
         "
@@ -191,6 +209,10 @@ onBeforeMount(() => {
 
     <woot-modal v-model:show="showAddPopup" :on-close="hideAddPopup">
       <AddLabel @close="hideAddPopup" />
+    </woot-modal>
+
+    <woot-modal v-model:show="showAddFromListPopup" :on-close="hideAddFromListPopup" size="lg">
+      <AddLabelsFromList @close="hideAddFromListPopup" />
     </woot-modal>
 
     <woot-modal v-model:show="showEditPopup" :on-close="hideEditPopup">
