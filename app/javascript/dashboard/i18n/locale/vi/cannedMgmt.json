@@ -5,6 +5,20 @@
     "DESCRIPTION": "Tin nhắn mẫu là các mẫu phản hồi được soạn trước giúp bạn trả lời hội thoại nhanh hơn. Nhân viên có thể gõ '/' kèm theo phím tắt để chèn nhanh tin nhắn mẫu vào cuộc trò chuyện.",
     "COUNT": "{n} mẫu | {n} mẫu",
     "HEADER_BTN_TXT": "Thêm tin nhắn mẫu",
+    "EXPORT": {
+      "BUTTON": "Xuất danh sách"
+    },
+    "IMPORT": {
+      "BUTTON": "Thêm từ danh sách",
+      "TITLE": "Nhập tin nhắn mẫu",
+      "CONFIRM": "Nhập dữ liệu",
+      "DESCRIPTION": "Tải lên file Excel (.xlsx) để nhập danh sách tin nhắn mẫu. File phải có các cột tiêu đề (short_code, content). Nếu short code đã tồn tại, nội dung sẽ được cập nhật.",
+      "LABEL": "Chọn file",
+      "CHOOSE_FILE": "Chọn file",
+      "CHANGE": "Đổi file",
+      "SUCCESS_MESSAGE": "Đã nhập thành công (Thêm mới: %{created}, Cập nhật: %{updated}).",
+      "ERROR_MESSAGE": "Nhập dữ liệu thất bại. Vui lòng kiểm tra lại định dạng file."
+    },
     "LOADING": "Đang tải danh sách tin nhắn mẫu...",
     "SEARCH_PLACEHOLDER": "Tìm kiếm phản hồi mẫu...",
     "NO_RESULTS": "Không tìm thấy phản hồi mẫu nào khớp với tìm kiếm của bạn",

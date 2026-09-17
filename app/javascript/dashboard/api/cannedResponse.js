@@ -44,6 +44,16 @@ class CannedResponse extends ApiClient {
     }
     return axios.patch(`${this.url}/${id}`, { canned_response: data });
   }
+
+  import(file) {
+    const formData = new FormData();
+    formData.append('import_file', file);
+    return axios.post(`${this.url}/import`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  }
 }
 
 export default new CannedResponse();

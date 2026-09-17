@@ -22,6 +22,28 @@ class Api::V1::Accounts::CannedResponsesController < Api::V1::Accounts::BaseCont
     head :ok
   end
 
+  def export
+    canned_responses_list = Current.account.canned_responses.order(:id)
+    package = Axlsx::Package.new
+    workbook = package.workbook
+    workbook.add_worksheet(name: 'Canned Responses') do |sheet|
+      sheet.add_row ['ID', 'Short Code', 'Content', 'Account ID', 'Created At', 'Updated At']
+      canned_responses_list.each do |cr|
+        sheet.add_row [cr.id, cr.short_code, cr.content, cr.account_id, cr.created_at, cr.updated_at]
+      end
+    end
+    send_data package.to_stream.read, filename: "canned_responses_#{Time.now.to_i}.xlsx", type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  end
+
+  def import
+    render json: { error: 'No file provided' }, status: :unprocessable_entity and return if params[:import_file].blank?
+
+    result = CannedResponses::ImportService.new(Current.account, params[:import_file]).perform
+    render json: result, status: :ok
+  rescue StandardError => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+
   private
 
   def fetch_canned_response

@@ -2,6 +2,7 @@
   "LABEL_MGMT": {
     "HEADER": "Nhãn",
     "HEADER_BTN_TXT": "Thêm nhãn",
+    "HEADER_ADD_FROM_LIST_BTN_TXT": "Thêm từ danh sách",
     "LOADING": "Đang tải nhãn",
     "DESCRIPTION": "Nhãn giúp bạn phân loại và ưu tiên các cuộc hội thoại và khách hàng tiềm năng. Bạn có thể gán nhãn cho cuộc hội thoại hoặc liên hệ thông qua bảng bên.",
     "LEARN_MORE": "Tìm hiểu thêm về nhãn",

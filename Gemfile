@@ -55,6 +55,10 @@ gem 'net-smtp',  '~> 0.3.4'
 # Prevent CSV injection
 gem 'csv-safe'
 
+# Excel Export/Import
+gem 'caxlsx'
+gem 'roo'
+
 ##-- for active storage --##
 gem 'aws-sdk-s3', require: false
 # original gem isn't maintained actively

@@ -2,6 +2,7 @@
   "LABEL_MGMT": {
     "HEADER": "Labels",
     "HEADER_BTN_TXT": "Add label",
+    "HEADER_ADD_FROM_LIST_BTN_TXT": "Add from list",
     "LOADING": "Fetching labels",
     "DESCRIPTION": "Labels help you categorize and prioritize conversations and leads. You can assign a label to a conversation or contact using the side panel.",
     "LEARN_MORE": "Learn more about labels",

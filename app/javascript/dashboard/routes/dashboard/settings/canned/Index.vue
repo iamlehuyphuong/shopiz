@@ -2,6 +2,7 @@
 import { useAlert } from 'dashboard/composables';
 import AddCanned from './AddCanned.vue';
 import EditCanned from './EditCanned.vue';
+import CannedImportDialog from './CannedImportDialog.vue';
 import SettingsLayout from '../SettingsLayout.vue';
 import BaseSettingsHeader from '../components/BaseSettingsHeader.vue';
 import { computed, onMounted, ref, defineOptions } from 'vue';
@@ -9,6 +10,7 @@ import { useI18n } from 'vue-i18n';
 import { useStoreGetters, useStore } from 'dashboard/composables/store';
 import { picoSearch } from '@scmmishra/pico-search';
 import { useMessageFormatter } from 'shared/composables/useMessageFormatter';
+import CannedResponseAPI from 'dashboard/api/cannedResponse';
 
 import Button from 'dashboard/components-next/button/Button.vue';
 import Icon from 'dashboard/components-next/icon/Icon.vue';
@@ -31,6 +33,8 @@ const { getPlainText } = useMessageFormatter();
 const showAddPopup = ref(false);
 const loading = ref({});
 const showEditPopup = ref(false);
+const showImportPopup = ref(false);
+const isImporting = ref(false);
 const showDeleteConfirmationPopup = ref(false);
 const activeResponse = ref({});
 const cannedResponseAPI = ref({ message: '' });
@@ -104,6 +108,41 @@ const hideEditPopup = () => {
   showEditPopup.value = false;
 };
 
+const openImportPopup = () => {
+  showImportPopup.value = true;
+};
+const hideImportPopup = () => {
+  showImportPopup.value = false;
+};
+
+const onImport = async file => {
+  try {
+    isImporting.value = true;
+    const response = await CannedResponseAPI.import(file);
+    const { created_count, updated_count, errors } = response.data;
+    if (errors && errors.length && created_count === 0 && updated_count === 0) {
+      useAlert(errors[0] || t('CANNED_MGMT.IMPORT.ERROR_MESSAGE'));
+    } else {
+      useAlert(
+        t('CANNED_MGMT.IMPORT.SUCCESS_MESSAGE', {
+          created: created_count,
+          updated: updated_count,
+        })
+      );
+    }
+    fetchCannedResponses();
+    hideImportPopup();
+  } catch (error) {
+    useAlert(error.response?.data?.error || t('CANNED_MGMT.IMPORT.ERROR_MESSAGE'));
+  } finally {
+    isImporting.value = false;
+  }
+};
+
+const downloadExport = () => {
+  window.location = `/api/v1/accounts/${getters.getCurrentAccountId.value}/canned_responses/export`;
+};
+
 const openDeletePopup = response => {
   showDeleteConfirmationPopup.value = true;
   activeResponse.value = response;
@@ -161,7 +200,24 @@ const tableHeaders = computed(() => {
         </template>
         <template #actions>
           <Button
+            v-tooltip.top="$t('CANNED_MGMT.IMPORT.BUTTON')"
+            icon="i-lucide-upload"
+            size="sm"
+            color="slate"
+            variant="faded"
+            @click="openImportPopup"
+          />
+          <Button
+            v-tooltip.top="$t('CANNED_MGMT.EXPORT.BUTTON')"
+            icon="i-lucide-download"
+            size="sm"
+            color="slate"
+            variant="faded"
+            @click="downloadExport"
+          />
+          <Button
             :label="$t('CANNED_MGMT.HEADER_BTN_TXT')"
+            icon="i-lucide-plus"
             size="sm"
             @click="openAddPopup"
           />
@@ -258,6 +314,12 @@ const tableHeaders = computed(() => {
     <woot-modal v-model:show="showAddPopup" :on-close="hideAddPopup">
       <AddCanned :on-close="hideAddPopup" />
     </woot-modal>
+
+    <CannedImportDialog
+      v-if="showImportPopup"
+      :is-importing="isImporting"
+      @import="onImport"
+    />
 
     <woot-modal v-model:show="showEditPopup" :on-close="hideEditPopup">
       <EditCanned
