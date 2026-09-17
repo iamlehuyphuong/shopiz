@@ -129,20 +129,32 @@ class Account < ApplicationRecord
   store_accessor :settings, :captain_auto_resolve_mode
   store_accessor :settings, :active_ecommerce_platform, :ai_allow_create_order, :order_notification_templates
   
+  def parsed_encrypted_settings
+    val = self.encrypted_settings.dup rescue self.encrypted_settings
+    if val.is_a?(String)
+      begin
+        val = JSON.parse(val)
+      rescue JSON::ParserError
+        val = {}
+      end
+    end
+    val || {}
+  end
+
   def sales_payment_config
-    (encrypted_settings || {})['sales_payment_config'] || (encrypted_settings || {})[:sales_payment_config]
+    parsed_encrypted_settings['sales_payment_config'] || parsed_encrypted_settings[:sales_payment_config]
   end
 
   def sales_payment_config=(val)
-    self.encrypted_settings = (encrypted_settings || {}).merge('sales_payment_config' => val)
+    self.encrypted_settings = parsed_encrypted_settings.merge('sales_payment_config' => val)
   end
 
   def custom_email_config
-    (encrypted_settings || {})['custom_email_config'] || (encrypted_settings || {})[:custom_email_config]
+    parsed_encrypted_settings['custom_email_config'] || parsed_encrypted_settings[:custom_email_config]
   end
 
   def custom_email_config=(val)
-    self.encrypted_settings = (encrypted_settings || {}).merge('custom_email_config' => val)
+    self.encrypted_settings = parsed_encrypted_settings.merge('custom_email_config' => val)
   end
   include AccountCaptainAutoResolve
 
@@ -300,6 +312,14 @@ class Account < ApplicationRecord
 
   def move_secrets_to_encrypted_settings
     return unless settings.is_a?(Hash)
+
+    if self.encrypted_settings.is_a?(String)
+      begin
+        self.encrypted_settings = JSON.parse(self.encrypted_settings)
+      rescue JSON::ParserError
+        self.encrypted_settings = {}
+      end
+    end
 
     self.encrypted_settings ||= {}
     if settings.key?('sales_payment_config')
