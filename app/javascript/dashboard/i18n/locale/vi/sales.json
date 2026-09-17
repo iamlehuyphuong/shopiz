@@ -236,16 +236,16 @@
         "IMPORT_PRODUCT": {
           "IMPORT": "Nhập dữ liệu",
           "TITLE": "Nhập sản phẩm từ file",
-          "DESCRIPTION": "Nhập danh sách sản phẩm hàng loạt bằng file CSV. ",
-          "DOWNLOAD_LABEL": "Tải file CSV mẫu",
-          "LABEL": "Chọn file CSV",
+          "DESCRIPTION": "Nhập danh sách sản phẩm hàng loạt bằng file Excel (.xlsx). ",
+          "DOWNLOAD_LABEL": "Tải file Excel mẫu",
+          "LABEL": "Chọn file Excel",
           "CHOOSE_FILE": "Chọn file",
           "CHANGE": "Đổi file khác"
         },
         "EXPORT_PRODUCT": {
           "EXPORT": "Xuất dữ liệu",
           "TITLE": "Xuất danh sách sản phẩm",
-          "DESCRIPTION": "Xuất danh sách sản phẩm hiện tại thành file CSV. Hệ thống sẽ gửi file qua email của bạn khi hoàn tất."
+          "DESCRIPTION": "Xuất danh sách sản phẩm hiện tại thành file Excel (.xlsx). Hệ thống sẽ gửi file qua email của bạn khi hoàn tất."
         }
       },
       "TABLE": {
@@ -281,7 +281,7 @@
         "DELETE_SUCCESS": "Đã xoá sản phẩm.",
         "IMPORT_SUCCESS": "Quá trình nhập dữ liệu đang diễn ra. Bạn sẽ nhận được email thông báo khi hoàn tất.",
         "IMPORT_ERROR": "Lỗi khi khởi tạo quá trình nhập dữ liệu.",
-        "EXPORT_SUCCESS": "Quá trình xuất dữ liệu đang diễn ra. File CSV sẽ được gửi qua email.",
+        "EXPORT_SUCCESS": "Quá trình xuất dữ liệu đang diễn ra. File Excel sẽ được gửi qua email.",
         "EXPORT_ERROR": "Lỗi khi khởi tạo quá trình xuất dữ liệu."
       }
     },

@@ -2,7 +2,7 @@
 import * as types from '../mutation-types';
 import { STATUS } from '../constants';
 import Report from '../../api/reports';
-import { downloadCsvFile, generateFileName } from '../../helper/downloadHelper';
+import { downloadExcelFile, generateFileName } from '../../helper/downloadHelper';
 import AnalyticsHelper from '../../helper/AnalyticsHelper';
 import { REPORTS_EVENTS } from '../../helper/AnalyticsHelper/events';
 import { clampDataBetweenTimeline } from 'shared/helpers/ReportsDataHelper';
@@ -224,7 +224,7 @@ export const actions = {
   downloadAgentReports(_, reportObj) {
     return Report.getAgentReports(reportObj)
       .then(response => {
-        downloadCsvFile(reportObj.fileName, response.data);
+        downloadExcelFile(reportObj.fileName, response.data);
         AnalyticsHelper.track(REPORTS_EVENTS.DOWNLOAD_REPORT, {
           reportType: 'agent',
           businessHours: reportObj?.businessHours,
@@ -237,7 +237,7 @@ export const actions = {
   downloadConversationsSummaryReports(_, reportObj) {
     return Report.getConversationsSummaryReports(reportObj)
       .then(response => {
-        downloadCsvFile(reportObj.fileName, response.data);
+        downloadExcelFile(reportObj.fileName, response.data);
         AnalyticsHelper.track(REPORTS_EVENTS.DOWNLOAD_REPORT, {
           reportType: 'conversations_summary',
           businessHours: reportObj?.businessHours,
@@ -250,7 +250,7 @@ export const actions = {
   downloadLabelReports(_, reportObj) {
     return Report.getLabelReports(reportObj)
       .then(response => {
-        downloadCsvFile(reportObj.fileName, response.data);
+        downloadExcelFile(reportObj.fileName, response.data);
         AnalyticsHelper.track(REPORTS_EVENTS.DOWNLOAD_REPORT, {
           reportType: 'label',
           businessHours: reportObj?.businessHours,
@@ -263,7 +263,7 @@ export const actions = {
   downloadInboxReports(_, reportObj) {
     return Report.getInboxReports(reportObj)
       .then(response => {
-        downloadCsvFile(reportObj.fileName, response.data);
+        downloadExcelFile(reportObj.fileName, response.data);
         AnalyticsHelper.track(REPORTS_EVENTS.DOWNLOAD_REPORT, {
           reportType: 'inbox',
           businessHours: reportObj?.businessHours,
@@ -276,7 +276,7 @@ export const actions = {
   downloadTeamReports(_, reportObj) {
     return Report.getTeamReports(reportObj)
       .then(response => {
-        downloadCsvFile(reportObj.fileName, response.data);
+        downloadExcelFile(reportObj.fileName, response.data);
         AnalyticsHelper.track(REPORTS_EVENTS.DOWNLOAD_REPORT, {
           reportType: 'team',
           businessHours: reportObj?.businessHours,
@@ -289,7 +289,7 @@ export const actions = {
   downloadAccountConversationHeatmap(_, reportObj) {
     Report.getConversationTrafficCSV({ daysBefore: reportObj.daysBefore })
       .then(response => {
-        downloadCsvFile(
+        downloadExcelFile(
           generateFileName({
             type: 'Conversation traffic',
             to: reportObj.to,

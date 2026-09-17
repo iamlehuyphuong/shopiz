@@ -14,13 +14,15 @@ class SuperAdmin::AddonPackagesController < SuperAdmin::ApplicationController
     render :new, locals: { page: Administrate::Page::Form.new(dashboard, @resource) }
   end
 
-  def export_csv
+  def export_xlsx
     respond_to do |format|
-      format.csv do
-        csv_data = CSV.generate(headers: true) do |csv|
-          csv << ["sku", "name", "addon_type", "quantity", "price_amount", "currency", "duration_days", "visible"]
+      format.xlsx do
+        package = ::Axlsx::Package.new
+        workbook = package.workbook
+        workbook.add_worksheet(name: 'Addon Packages') do |sheet|
+          sheet.add_row ["sku", "name", "addon_type", "quantity", "price_amount", "currency", "duration_days", "visible"]
           AddonPackage.find_each do |record|
-            csv << [
+            sheet.add_row [
               record.sku,
               record.name,
               record.addon_type,
@@ -32,15 +34,21 @@ class SuperAdmin::AddonPackagesController < SuperAdmin::ApplicationController
             ]
           end
         end
-        send_data csv_data, filename: "addon_packages_#{Date.today}.csv"
+        send_data package.to_stream.read, filename: "addon_packages_#{Date.today}.xlsx", type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       end
     end
   end
 
-  def import_csv
+  def import_xlsx
     if params[:file].present?
       begin
-        CSV.foreach(params[:file].path, headers: true) do |row|
+        xlsx = Roo::Excelx.new(params[:file].path)
+        headers = xlsx.row(1).map { |h| h.to_s.strip }
+        
+        return redirect_to super_admin_addon_packages_path, flash: { error: "File trống" } if xlsx.last_row.nil? || xlsx.last_row < 2
+        
+        (2..xlsx.last_row).each do |i|
+          row = Hash[[headers, xlsx.row(i)].transpose]
           addon = AddonPackage.find_or_initialize_by(sku: row["sku"])
           addon.name = row["name"] if row["name"].present?
           addon.addon_type = row["addon_type"] if row["addon_type"].present?
@@ -53,10 +61,10 @@ class SuperAdmin::AddonPackagesController < SuperAdmin::ApplicationController
         end
         flash[:notice] = "Nhập dữ liệu Addon thành công."
       rescue => e
-        flash[:error] = "Lỗi khi nhập CSV: #{e.message}"
+        flash[:error] = "Lỗi khi nhập XLSX: #{e.message}"
       end
     else
-      flash[:error] = "Vui lòng chọn tệp CSV để tải lên."
+      flash[:error] = "Vui lòng chọn tệp XLSX để tải lên."
     end
     redirect_to super_admin_addon_packages_path
   end

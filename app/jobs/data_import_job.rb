@@ -12,8 +12,8 @@ class DataImportJob < ApplicationJob
     begin
       process_import_file
       send_import_notification_to_admin
-    rescue CSV::MalformedCSVError => e
-      handle_csv_error(e)
+    rescue StandardError => e
+      handle_import_error(e)
     end
   end
 
@@ -29,13 +29,13 @@ class DataImportJob < ApplicationJob
       # New way: manager handles all rows together (good for products with variants)
       rows = []
       with_import_file do |file|
-        csv_reader(file).each { |row| rows << row.to_h.with_indifferent_access }
+        xlsx_rows(file).each { |row| rows << row.to_h.with_indifferent_access }
       end
       records, rejected_records = @manager.process_rows(rows)
     else
       # Old way: process line by line (contacts)
       with_import_file do |file|
-        csv_reader(file).each do |row|
+        xlsx_rows(file).each do |row|
           current_record = @manager.build_contact(row.to_h.with_indifferent_access)
           if current_record.valid?
             records << current_record
@@ -51,7 +51,7 @@ class DataImportJob < ApplicationJob
     end
 
     update_data_import_status(records.length, rejected_records.length)
-    save_failed_records_csv(rejected_records)
+    save_failed_records_xlsx(rejected_records)
   end
 
   def append_rejected_record(row, record, rejected_records)
@@ -63,31 +63,35 @@ class DataImportJob < ApplicationJob
     @data_import.update!(status: :completed, processed_records: processed_records, total_records: processed_records + rejected_records)
   end
 
-  def save_failed_records_csv(rejected_records)
-    csv_data = generate_csv_data(rejected_records)
-    return if csv_data.blank?
+  def save_failed_records_xlsx(rejected_records)
+    xlsx_data = generate_xlsx_data(rejected_records)
+    return if xlsx_data.blank?
 
     @data_import.failed_records.attach(
-      io: StringIO.new(csv_data), 
-      filename: "#{Time.zone.today.strftime('%Y%m%d')}_#{@data_import.data_type}.csv",
-      content_type: 'text/csv'
+      io: StringIO.new(xlsx_data), 
+      filename: "#{Time.zone.today.strftime('%Y%m%d')}_#{@data_import.data_type}.xlsx",
+      content_type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
   end
 
-  def generate_csv_data(rejected_records)
-    headers = csv_headers
+  def generate_xlsx_data(rejected_records)
+    headers = xlsx_headers
     headers << 'errors'
     return if rejected_records.blank?
 
-    CSV.generate do |csv|
-      csv << headers
+    package = ::Axlsx::Package.new
+    workbook = package.workbook
+    workbook.add_worksheet(name: 'Errors') do |sheet|
+      sheet.add_row headers
       rejected_records.each do |record|
-        csv << record
+        sheet.add_row headers.map { |h| record[h] }
       end
     end
+    
+    package.to_stream.read
   end
 
-  def handle_csv_error(error) # rubocop:disable Lint/UnusedMethodArgument
+  def handle_import_error(error) # rubocop:disable Lint/UnusedMethodArgument
     @data_import.update!(status: :failed)
     send_import_failed_notification_to_admin
   end
@@ -108,21 +112,26 @@ class DataImportJob < ApplicationJob
     end
   end
 
-  def csv_headers
-    header_row = nil
+  def xlsx_headers
+    headers = []
     with_import_file do |file|
-      header_row = csv_reader(file).first
+      xlsx = Roo::Excelx.new(file.path)
+      headers = xlsx.row(1).map { |h| h.to_s.strip }
     end
-    header_row&.headers || []
+    headers
   end
 
-  def csv_reader(file)
-    file.rewind
-    raw_data = file.read
-    utf8_data = raw_data.force_encoding('UTF-8')
-    clean_data = utf8_data.valid_encoding? ? utf8_data : utf8_data.encode('UTF-16le', invalid: :replace, replace: '').encode('UTF-8')
+  def xlsx_rows(file)
+    xlsx = Roo::Excelx.new(file.path)
+    headers = xlsx.row(1).map { |h| h.to_s.strip }
+    rows = []
+    return rows if xlsx.last_row.nil? || xlsx.last_row < 2
 
-    CSV.new(StringIO.new(clean_data), headers: true)
+    (2..xlsx.last_row).each do |i|
+      row = Hash[[headers, xlsx.row(i)].transpose]
+      rows << row
+    end
+    rows
   end
 
   def with_import_file

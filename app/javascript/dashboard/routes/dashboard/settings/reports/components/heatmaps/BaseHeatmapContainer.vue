@@ -16,7 +16,7 @@ import subDays from 'date-fns/subDays';
 import DropdownMenu from 'dashboard/components-next/dropdown-menu/DropdownMenu.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 import { useI18n } from 'vue-i18n';
-import { downloadCsvFile } from 'dashboard/helper/downloadHelper';
+import { downloadExcelFile } from 'dashboard/helper/downloadHelper';
 
 const props = defineProps({
   metric: {
@@ -185,7 +185,7 @@ const downloadHeatmapData = () => {
   )}.csv`;
 
   // Download the file
-  downloadCsvFile(fileName, csvContent);
+  downloadExcelFile(fileName, csvContent);
 };
 
 const [showInboxDropdown, toggleInboxDropdown] = useToggle();

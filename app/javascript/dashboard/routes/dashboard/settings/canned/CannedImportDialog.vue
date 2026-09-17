@@ -18,6 +18,8 @@ const fileInput = ref(null);
 const hasSelectedFile = ref(null);
 const selectedFileName = ref('');
 
+const xlsxUrl = '/downloads/import-canned-responses-sample.xlsx';
+
 onMounted(() => {
   if (dialogRef.value) {
     dialogRef.value.open();
@@ -71,6 +73,15 @@ defineExpose({ dialogRef, handleRemoveFile });
     <template #description>
       <p class="mb-0 text-sm text-n-slate-11">
         {{ t('CANNED_MGMT.IMPORT.DESCRIPTION') }}
+        <a
+          :href="xlsxUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          download="import-canned-responses-sample.xlsx"
+          class="text-n-orange-11"
+        >
+          {{ t('CANNED_MGMT.IMPORT.DOWNLOAD_LABEL') }}
+        </a>
       </p>
     </template>
 

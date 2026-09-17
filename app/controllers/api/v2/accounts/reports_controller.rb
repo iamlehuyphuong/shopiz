@@ -20,27 +20,67 @@ class Api::V2::Accounts::ReportsController < Api::V1::Accounts::BaseController
 
   def agents
     @report_data = generate_agents_report
-    generate_csv('agents_report', 'api/v2/accounts/reports/agents')
+    headers = [
+      I18n.t('reports.agent_csv.agent_name'),
+      I18n.t('reports.agent_csv.conversations_count'),
+      I18n.t('reports.agent_csv.avg_first_response_time'),
+      I18n.t('reports.agent_csv.avg_resolution_time'),
+      I18n.t('reports.agent_csv.avg_customer_waiting_time'),
+      I18n.t('reports.agent_csv.resolution_count')
+    ]
+    generate_xlsx('agents_report', headers, @report_data)
   end
 
   def inboxes
     @report_data = generate_inboxes_report
-    generate_csv('inboxes_report', 'api/v2/accounts/reports/inboxes')
+    headers = [
+      I18n.t('reports.inbox_csv.inbox_name'),
+      I18n.t('reports.inbox_csv.inbox_type'),
+      I18n.t('reports.inbox_csv.conversations_count'),
+      I18n.t('reports.inbox_csv.avg_first_response_time'),
+      I18n.t('reports.inbox_csv.avg_resolution_time')
+    ]
+    generate_xlsx('inboxes_report', headers, @report_data)
   end
 
   def labels
     @report_data = generate_labels_report
-    generate_csv('labels_report', 'api/v2/accounts/reports/labels')
+    headers = [
+      I18n.t('reports.label_csv.label_title'),
+      I18n.t('reports.label_csv.conversations_count'),
+      I18n.t('reports.label_csv.avg_first_response_time'),
+      I18n.t('reports.label_csv.avg_resolution_time'),
+      I18n.t('reports.label_csv.avg_reply_time'),
+      I18n.t('reports.label_csv.resolution_count')
+    ]
+    generate_xlsx('labels_report', headers, @report_data)
   end
 
   def teams
     @report_data = generate_teams_report
-    generate_csv('teams_report', 'api/v2/accounts/reports/teams')
+    headers = [
+      I18n.t('reports.team_csv.team_name'),
+      I18n.t('reports.team_csv.conversations_count'),
+      I18n.t('reports.team_csv.avg_first_response_time'),
+      I18n.t('reports.team_csv.avg_resolution_time'),
+      I18n.t('reports.team_csv.avg_customer_waiting_time'),
+      I18n.t('reports.team_csv.resolution_count')
+    ]
+    generate_xlsx('teams_report', headers, @report_data)
   end
 
   def conversations_summary
     @report_data = generate_conversations_report
-    generate_csv('conversations_summary_report', 'api/v2/accounts/reports/conversations_summary')
+    headers = [
+      I18n.t('reports.conversation_csv.conversations_count'),
+      I18n.t('reports.conversation_csv.incoming_messages_count'),
+      I18n.t('reports.conversation_csv.outgoing_messages_count'),
+      I18n.t('reports.conversation_csv.avg_first_response_time'),
+      I18n.t('reports.conversation_csv.avg_resolution_time'),
+      I18n.t('reports.conversation_csv.resolution_count'),
+      I18n.t('reports.conversation_csv.avg_customer_waiting_time')
+    ]
+    generate_xlsx('conversations_summary_report', headers, @report_data)
   end
 
   def conversation_traffic
@@ -48,7 +88,7 @@ class Api::V2::Accounts::ReportsController < Api::V1::Accounts::BaseController
     timezone_offset = (params[:timezone_offset] || 0).to_f
     @timezone = ActiveSupport::TimeZone[timezone_offset]
 
-    generate_csv('conversation_traffic_reports', 'api/v2/accounts/reports/conversation_traffic')
+    generate_xlsx('conversation_traffic_reports', nil, @report_data, is_traffic: true)
   end
 
   def conversations
@@ -89,10 +129,25 @@ class Api::V2::Accounts::ReportsController < Api::V1::Accounts::BaseController
 
   private
 
-  def generate_csv(filename, template)
-    response.headers['Content-Type'] = 'text/csv'
-    response.headers['Content-Disposition'] = "attachment; filename=#{filename}.csv"
-    render layout: false, template: template, formats: [:csv]
+  def generate_xlsx(filename, headers, report_data, is_traffic: false)
+    package = ::Axlsx::Package.new
+    workbook = package.workbook
+    workbook.add_worksheet(name: 'Report') do |sheet|
+      if is_traffic
+        sheet.add_row [I18n.t('reports.conversation_traffic_csv.timezone'), @timezone]
+      else
+        sheet.add_row [I18n.t('reports.period', since: Date.strptime(params[:since], '%s'), until: Date.strptime(params[:until], '%s'))]
+        sheet.add_row headers if headers.present?
+      end
+      
+      report_data.each do |row|
+        sheet.add_row row
+      end
+    end
+
+    response.headers['Content-Type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    response.headers['Content-Disposition'] = "attachment; filename=#{filename}.xlsx"
+    render plain: package.to_stream.read
   end
 
   def check_authorization

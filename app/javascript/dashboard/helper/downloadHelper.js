@@ -1,8 +1,8 @@
 import fromUnixTime from 'date-fns/fromUnixTime';
 import format from 'date-fns/format';
 
-export const downloadCsvFile = (fileName, content) => {
-  const contentType = 'data:text/csv;charset=utf-8;';
+export const downloadExcelFile = (fileName, content) => {
+  const contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
   const blob = new Blob([content], { type: contentType });
   const url = URL.createObjectURL(blob);
 
@@ -18,5 +18,5 @@ export const generateFileName = ({ type, to, businessHours = false }) => {
   if (businessHours) {
     name = `${name}-business-hours`;
   }
-  return `${name}.csv`;
+  return `${name}.xlsx`;
 };

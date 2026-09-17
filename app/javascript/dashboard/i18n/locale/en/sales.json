@@ -237,16 +237,16 @@
         "IMPORT_PRODUCT": {
           "IMPORT": "Import",
           "TITLE": "Import Products",
-          "DESCRIPTION": "Import products using a CSV file. ",
-          "DOWNLOAD_LABEL": "Download sample CSV",
-          "LABEL": "Choose CSV file",
+          "DESCRIPTION": "Import products in bulk using an Excel file (.xlsx). ",
+          "DOWNLOAD_LABEL": "Download sample Excel file",
+          "LABEL": "Choose Excel file",
           "CHOOSE_FILE": "Choose file",
           "CHANGE": "Change file"
         },
         "EXPORT_PRODUCT": {
           "EXPORT": "Export",
           "TITLE": "Export Products",
-          "DESCRIPTION": "Export your products as a CSV file. We will send the file to your email when it is ready."
+          "DESCRIPTION": "Export the current product list to an Excel file (.xlsx). We will email you the file when it's ready."
         }
       },
       "TABLE": {
@@ -284,7 +284,7 @@
         "SELECT_TO_PUSH": "Select a product to push to platform.",
         "IMPORT_SUCCESS": "Product import started. You will receive an email once it is complete.",
         "IMPORT_ERROR": "Error starting product import.",
-        "EXPORT_SUCCESS": "Product export started. The CSV file will be sent to your email.",
+        "EXPORT_SUCCESS": "Export process initiated. The Excel file will be sent to your email.",
         "EXPORT_ERROR": "Error starting product export."
       }
     },

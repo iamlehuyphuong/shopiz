@@ -414,9 +414,9 @@
         "UNBLOCK_ERROR_MESSAGE": "Không thể bỏ chặn liên hệ. Vui lòng thử lại.",
         "IMPORT_CONTACT": {
           "TITLE": "Nhập liên hệ",
-          "DESCRIPTION": "Nhập danh sách liên hệ bằng tập tin CSV.",
-          "DOWNLOAD_LABEL": "Tải mẫu CSV.",
-          "LABEL": "Tệp CSV:",
+          "DESCRIPTION": "Nhập danh sách liên hệ bằng tập tin Excel (.xlsx).",
+          "DOWNLOAD_LABEL": "Tải mẫu file Excel (.xlsx).",
+          "LABEL": "Tệp Excel:",
           "CHOOSE_FILE": "Chọn tệp",
           "CHANGE": "Đổi tệp",
           "CANCEL": "Hủy",
@@ -426,7 +426,7 @@
         },
         "EXPORT_CONTACT": {
           "TITLE": "Xuất liên hệ",
-          "DESCRIPTION": "Xuất nhanh danh sách liên hệ dưới dạng CSV",
+          "DESCRIPTION": "Xuất nhanh danh sách liên hệ dưới dạng Excel (.xlsx)",
           "CONFIRM": "Xuất",
           "SUCCESS_MESSAGE": "Đang xử lý xuất dữ liệu. Bạn sẽ nhận email khi tệp sẵn sàng.",
           "ERROR_MESSAGE": "Có lỗi xảy ra, vui lòng thử lại."

@@ -19,6 +19,7 @@ import {
   BaseTableRow,
   BaseTableCell,
 } from 'dashboard/components-next/table';
+import Dialog from 'dashboard/components-next/dialog/Dialog.vue';
 
 defineOptions({
   name: 'CannedResponseSettings',
@@ -140,6 +141,11 @@ const onImport = async file => {
 };
 
 const isExporting = ref(false);
+const exportDialogRef = ref(null);
+
+const openExportPopup = () => {
+  exportDialogRef.value?.open();
+};
 
 const downloadExport = async () => {
   try {
@@ -157,6 +163,7 @@ const downloadExport = async () => {
     link.click();
     document.body.removeChild(link);
     window.URL.revokeObjectURL(url);
+    exportDialogRef.value?.close();
   } catch (error) {
     useAlert(error.message || t('CANNED_MGMT.EXPORT.ERROR_MESSAGE'));
   } finally {
@@ -236,7 +243,7 @@ const tableHeaders = computed(() => {
             variant="faded"
             :is-loading="isExporting"
             :disabled="isExporting"
-            @click="downloadExport"
+            @click="openExportPopup"
           />
           <Button
             :label="$t('CANNED_MGMT.HEADER_BTN_TXT')"
@@ -365,6 +372,16 @@ const tableHeaders = computed(() => {
       :message-value="deleteMessage"
       :confirm-text="deleteConfirmText"
       :reject-text="deleteRejectText"
+    />
+
+    <Dialog
+      ref="exportDialogRef"
+      :title="$t('CANNED_MGMT.EXPORT.TITLE')"
+      :description="$t('CANNED_MGMT.EXPORT.DESCRIPTION')"
+      :confirm-button-label="$t('CANNED_MGMT.EXPORT.CONFIRM')"
+      :is-loading="isExporting"
+      :disable-confirm-button="isExporting"
+      @confirm="downloadExport"
     />
   </SettingsLayout>
 </template>

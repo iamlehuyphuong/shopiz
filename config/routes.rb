@@ -811,22 +811,22 @@ Rails.application.routes.draw do
       resources :subscription_tiers do
         get :duplicate, on: :member
         collection do
-          get :export_csv
-          post :import_csv
+          get :export_xlsx
+          post :import_xlsx
         end
       end
       resources :subscription_plans do
         get :duplicate, on: :member
         collection do
-          get :export_csv
-          post :import_csv
+          get :export_xlsx
+          post :import_xlsx
         end
       end
       resources :addon_packages do
         get :duplicate, on: :member
         collection do
-          get :export_csv
-          post :import_csv
+          get :export_xlsx
+          post :import_xlsx
         end
       end
       resources :billing_histories, only: [:index, :show]

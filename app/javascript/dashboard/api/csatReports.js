@@ -32,6 +32,7 @@ class CSATReportsAPI extends ApiClient {
         team_id,
         rating,
       },
+      responseType: 'blob',
     });
   }
 

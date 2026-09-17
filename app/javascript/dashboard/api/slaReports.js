@@ -49,6 +49,7 @@ class SLAReportsAPI extends ApiClient {
         label_list,
         sla_policy_id,
       },
+      responseType: 'blob',
     });
   }
 

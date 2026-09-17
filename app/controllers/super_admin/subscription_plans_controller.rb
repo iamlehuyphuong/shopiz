@@ -9,13 +9,15 @@ class SuperAdmin::SubscriptionPlansController < SuperAdmin::ApplicationControlle
     render :new, locals: { page: Administrate::Page::Form.new(dashboard, @resource) }
   end
 
-  def export_csv
+  def export_xlsx
     respond_to do |format|
-      format.csv do
-        csv_data = CSV.generate(headers: true) do |csv|
-          csv << ["sku", "subscription_tier_id", "tier_name_en", "price_amount", "currency", "duration_days", "visible", "is_default_for_new_account"]
+      format.xlsx do
+        package = ::Axlsx::Package.new
+        workbook = package.workbook
+        workbook.add_worksheet(name: 'Subscription Plans') do |sheet|
+          sheet.add_row ["sku", "subscription_tier_id", "tier_name_en", "price_amount", "currency", "duration_days", "visible", "is_default_for_new_account"]
           SubscriptionPlan.includes(:subscription_tier).find_each do |record|
-            csv << [
+            sheet.add_row [
               record.sku,
               record.subscription_tier_id,
               record.subscription_tier&.name_en,
@@ -27,15 +29,21 @@ class SuperAdmin::SubscriptionPlansController < SuperAdmin::ApplicationControlle
             ]
           end
         end
-        send_data csv_data, filename: "subscription_packages_#{Date.today}.csv"
+        send_data package.to_stream.read, filename: "subscription_packages_#{Date.today}.xlsx", type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       end
     end
   end
 
-  def import_csv
+  def import_xlsx
     if params[:file].present?
       begin
-        CSV.foreach(params[:file].path, headers: true) do |row|
+        xlsx = Roo::Excelx.new(params[:file].path)
+        headers = xlsx.row(1).map { |h| h.to_s.strip }
+        
+        return redirect_to super_admin_subscription_plans_path, flash: { error: "File trống" } if xlsx.last_row.nil? || xlsx.last_row < 2
+        
+        (2..xlsx.last_row).each do |i|
+          row = Hash[[headers, xlsx.row(i)].transpose]
           plan = SubscriptionPlan.find_or_initialize_by(sku: row["sku"])
           
           if row["subscription_tier_id"].present?
@@ -56,10 +64,10 @@ class SuperAdmin::SubscriptionPlansController < SuperAdmin::ApplicationControlle
         end
         flash[:notice] = "Nhập dữ liệu Packages thành công."
       rescue => e
-        flash[:error] = "Lỗi khi nhập CSV: #{e.message}"
+        flash[:error] = "Lỗi khi nhập XLSX: #{e.message}"
       end
     else
-      flash[:error] = "Vui lòng chọn tệp CSV để tải lên."
+      flash[:error] = "Vui lòng chọn tệp XLSX để tải lên."
     end
     redirect_to super_admin_subscription_plans_path
   end

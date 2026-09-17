@@ -58,36 +58,42 @@ class ReportsAPI extends ApiClient {
   getAgentReports({ from: since, to: until, businessHours }) {
     return axios.get(`${this.url}/agents`, {
       params: { since, until, business_hours: businessHours },
+      responseType: 'blob',
     });
   }
 
   getConversationsSummaryReports({ from: since, to: until, businessHours }) {
     return axios.get(`${this.url}/conversations_summary`, {
       params: { since, until, business_hours: businessHours },
+      responseType: 'blob',
     });
   }
 
   getConversationTrafficCSV({ daysBefore = 6 } = {}) {
     return axios.get(`${this.url}/conversation_traffic`, {
       params: { timezone_offset: getTimeOffset(), days_before: daysBefore },
+      responseType: 'blob',
     });
   }
 
   getLabelReports({ from: since, to: until, businessHours }) {
     return axios.get(`${this.url}/labels`, {
       params: { since, until, business_hours: businessHours },
+      responseType: 'blob',
     });
   }
 
   getInboxReports({ from: since, to: until, businessHours }) {
     return axios.get(`${this.url}/inboxes`, {
       params: { since, until, business_hours: businessHours },
+      responseType: 'blob',
     });
   }
 
   getTeamReports({ from: since, to: until, businessHours }) {
     return axios.get(`${this.url}/teams`, {
       params: { since, until, business_hours: businessHours },
+      responseType: 'blob',
     });
   }
 

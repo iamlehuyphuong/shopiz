@@ -7,21 +7,23 @@ class Account::ContactsExportJob < ApplicationJob
     @account_user = @account.users.find(user_id)
 
     headers = valid_headers(column_names)
-    generate_csv(headers)
+    generate_xlsx(headers)
     send_mail
   end
 
   private
 
-  def generate_csv(headers)
-    csv_data = CSV.generate do |csv|
-      csv << headers
+  def generate_xlsx(headers)
+    package = ::Axlsx::Package.new
+    workbook = package.workbook
+    workbook.add_worksheet(name: 'Contacts') do |sheet|
+      sheet.add_row headers
       contacts.each do |contact|
-        csv << headers.map { |header| contact.send(header) }
+        sheet.add_row headers.map { |header| contact.send(header) }
       end
     end
 
-    attach_export_file(csv_data)
+    attach_export_file(package.to_stream.read)
   end
 
   def contacts
@@ -41,13 +43,13 @@ class Account::ContactsExportJob < ApplicationJob
     (column_names.presence || default_columns) & allowed_columns
   end
 
-  def attach_export_file(csv_data)
-    return if csv_data.blank?
+  def attach_export_file(xlsx_data)
+    return if xlsx_data.blank?
 
     @account.contacts_export.attach(
-      io: StringIO.new(csv_data),
-      filename: "#{@account.name}_#{@account.id}_contacts.csv",
-      content_type: 'text/csv'
+      io: StringIO.new(xlsx_data),
+      filename: "#{@account.name}_#{@account.id}_contacts.xlsx",
+      content_type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
   end
 

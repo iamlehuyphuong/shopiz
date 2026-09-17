@@ -20,9 +20,47 @@ class Api::V1::Accounts::CsatSurveyResponsesController < Api::V1::Accounts::Base
   end
 
   def download
-    response.headers['Content-Type'] = 'text/csv'
-    response.headers['Content-Disposition'] = 'attachment; filename=csat_report.csv'
-    render layout: false, template: 'api/v1/accounts/csat_survey_responses/download', formats: [:csv]
+    package = ::Axlsx::Package.new
+    workbook = package.workbook
+    workbook.add_worksheet(name: 'CSAT Report') do |sheet|
+      headers = [
+        I18n.t('reports.csat.headers.agent_name'),
+        I18n.t('reports.csat.headers.rating'),
+        I18n.t('reports.csat.headers.feedback'),
+        I18n.t('reports.csat.headers.contact_name'),
+        I18n.t('reports.csat.headers.contact_email_address'),
+        I18n.t('reports.csat.headers.contact_phone_number'),
+        I18n.t('reports.csat.headers.link_to_the_conversation'),
+        I18n.t('reports.csat.headers.recorded_at')
+      ]
+      headers << I18n.t('reports.csat.headers.review_notes') if ChatwootApp.enterprise?
+      sheet.add_row headers
+      
+      @csat_survey_responses.each do |csat_response|
+        assigned_agent = csat_response.assigned_agent
+        contact = csat_response.contact
+        conversation = csat_response.conversation
+        row = [
+          assigned_agent ? "#{assigned_agent.name} (#{assigned_agent.email})" : nil,
+          csat_response.rating,
+          csat_response.feedback_message.presence,
+          contact&.name.presence,
+          contact&.email.presence,
+          contact&.phone_number.presence,
+          conversation ? app_account_conversation_url(account_id: Current.account.id, id: conversation.display_id) : nil,
+          csat_response.created_at
+        ]
+        row << csat_response.csat_review_notes if ChatwootApp.enterprise?
+        sheet.add_row row
+      end
+
+      sheet.add_row []
+      sheet.add_row [I18n.t('reports.period', since: Date.strptime(params[:since], '%s'), until: Date.strptime(params[:until], '%s'))]
+    end
+
+    response.headers['Content-Type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    response.headers['Content-Disposition'] = 'attachment; filename=csat_report.xlsx'
+    render plain: package.to_stream.read
   end
 
   private

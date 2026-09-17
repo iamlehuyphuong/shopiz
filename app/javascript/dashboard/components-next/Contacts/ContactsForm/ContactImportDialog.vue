@@ -18,7 +18,7 @@ const fileInput = ref(null);
 const hasSelectedFile = ref(null);
 const selectedFileName = ref('');
 
-const csvUrl = '/downloads/import-contacts-sample.csv';
+const xlsxUrl = '/downloads/import-contacts-sample.xlsx';
 
 const handleFileClick = () => fileInput.value?.click();
 
@@ -69,10 +69,10 @@ defineExpose({ dialogRef });
       <p class="mb-0 text-sm text-n-slate-11">
         {{ t('CONTACTS_LAYOUT.HEADER.ACTIONS.IMPORT_CONTACT.DESCRIPTION') }}
         <a
-          :href="csvUrl"
+          :href="xlsxUrl"
           target="_blank"
           rel="noopener noreferrer"
-          download="import-contacts-sample.csv"
+          download="import-contacts-sample.xlsx"
           class="text-n-orange-11"
         >
           {{
@@ -126,7 +126,7 @@ defineExpose({ dialogRef });
     <input
       ref="fileInput"
       type="file"
-      accept="text/csv"
+      accept=".xlsx"
       class="hidden"
       @change="handleFileChange"
     />

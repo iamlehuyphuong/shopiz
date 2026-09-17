@@ -1,7 +1,7 @@
 import * as MutationHelpers from 'shared/helpers/vuex/mutationHelpers';
 import types from '../mutation-types';
 import SLAReportsAPI from '../../api/slaReports';
-import { downloadCsvFile } from 'dashboard/helper/downloadHelper';
+import { downloadExcelFile } from 'dashboard/helper/downloadHelper';
 export const state = {
   records: [],
   metrics: {
@@ -62,7 +62,7 @@ export const actions = {
   },
   download(_, params) {
     return SLAReportsAPI.download(params).then(response => {
-      downloadCsvFile(params.fileName, response.data);
+      downloadExcelFile(params.fileName, response.data);
     });
   },
 };

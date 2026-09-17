@@ -6,13 +6,18 @@
     "COUNT": "{n} canned response | {n} canned responses",
     "HEADER_BTN_TXT": "Add canned response",
     "EXPORT": {
-      "BUTTON": "Export list"
+      "BUTTON": "Export list",
+      "TITLE": "Export Canned Responses",
+      "DESCRIPTION": "Are you sure you want to export all canned responses to an Excel (.xlsx) file?",
+      "CONFIRM": "Confirm Export",
+      "CANCEL": "Cancel"
     },
     "IMPORT": {
       "BUTTON": "Add from list",
       "TITLE": "Import Canned Responses",
-      "CONFIRM": "Import",
-      "DESCRIPTION": "Upload an Excel (.xlsx) file to import canned responses. The file must contain headers (short_code, content). If a short code already exists, the content will be updated.",
+      "CONFIRM": "Import data",
+      "DESCRIPTION": "Upload an Excel (.xlsx) file to import canned responses. If the shortcode already exists, the content will be updated.",
+      "DOWNLOAD_LABEL": "Download sample file.",
       "LABEL": "Select file",
       "CHOOSE_FILE": "Choose File",
       "CHANGE": "Change file",
