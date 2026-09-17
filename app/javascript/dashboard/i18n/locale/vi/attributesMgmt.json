@@ -2,6 +2,7 @@
   "ATTRIBUTES_MGMT": {
     "HEADER": "Thuộc tính tùy chỉnh",
     "HEADER_BTN_TXT": "Thêm thuộc tính tùy chỉnh",
+    "HEADER_ADD_FROM_LIST_BTN_TXT": "Thêm từ danh sách",
     "LOADING": "Đang tải danh sách thuộc tính tùy chỉnh",
     "DESCRIPTION": "Thuộc tính tùy chỉnh giúp bạn theo dõi thêm các thông tin bổ sung về liên hệ hoặc cuộc hội thoại - ví dụ như gói đăng ký hoặc ngày mua hàng đầu tiên. Bạn có thể thêm nhiều loại thuộc tính khác nhau như văn bản, danh sách hoặc số để thu thập thông tin phù hợp với nhu cầu.",
     "LEARN_MORE": "Tìm hiểu thêm về thuộc tính tùy chỉnh",
@@ -76,6 +77,15 @@
         "SUCCESS_MESSAGE": "Thêm thuộc tính tùy chỉnh thành công!",
         "ERROR_MESSAGE": "Không thể tạo thuộc tính tùy chỉnh. Vui lòng thử lại sau."
       }
+    },
+    "ADD_FROM_LIST": {
+      "TITLE": "Thêm thuộc tính từ danh sách",
+      "DESC": "Chọn các thuộc tính tùy chỉnh có sẵn để thêm vào hệ thống của bạn.",
+      "TRANSLATE_LABEL": "Dịch sang ngôn ngữ khác",
+      "TRANSLATE_PLACEHOLDER": "Nhập ngôn ngữ, vd: Tiếng Anh, Nhật, Thái Lan...",
+      "NO_ATTRIBUTES_SELECTED": "Vui lòng chọn ít nhất một thuộc tính.",
+      "SUBMIT": "Xác nhận",
+      "CANCEL": "Hủy"
     },
     "DELETE": {
       "BUTTON_TEXT": "Xóa",

@@ -73,6 +73,18 @@
         "ERROR_MESSAGE": "There was an error, please try again"
       }
     },
+    "ADD_FROM_LIST": {
+      "TITLE": "Add labels from list",
+      "DESC": "Choose predefined labels to add to your system.",
+      "TRANSLATE_LABEL": "Translate to another language",
+      "TRANSLATE_PLACEHOLDER": "Enter language, e.g. Japanese, Thai...",
+      "NO_LABELS_SELECTED": "Please select at least one label.",
+      "SUBMIT": "Submit",
+      "CANCEL": "Cancel",
+      "ALREADY_ADDED": "Added",
+      "AI_KEY_REQUIRED": "(AI Key required)",
+      "AI_ERROR": "Error translating labels. Using default labels instead."
+    },
     "DELETE": {
       "BUTTON_TEXT": "Delete",
       "API": {

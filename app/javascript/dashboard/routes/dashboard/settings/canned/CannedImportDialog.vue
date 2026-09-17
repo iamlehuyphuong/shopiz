@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import Dialog from 'dashboard/components-next/dialog/Dialog.vue';
@@ -9,7 +9,7 @@ const props = defineProps({
   isImporting: { type: Boolean, default: false },
 });
 
-const emit = defineEmits(['import']);
+const emit = defineEmits(['import', 'close']);
 const { t } = useI18n();
 
 const dialogRef = ref(null);
@@ -17,6 +17,12 @@ const fileInput = ref(null);
 
 const hasSelectedFile = ref(null);
 const selectedFileName = ref('');
+
+onMounted(() => {
+  if (dialogRef.value) {
+    dialogRef.value.open();
+  }
+});
 
 const handleFileClick = () => fileInput.value?.click();
 
@@ -60,6 +66,7 @@ defineExpose({ dialogRef, handleRemoveFile });
     :is-loading="isImporting"
     :disable-confirm-button="isImporting"
     @confirm="uploadFile"
+    @close="$emit('close')"
   >
     <template #description>
       <p class="mb-0 text-sm text-n-slate-11">

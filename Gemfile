@@ -56,7 +56,7 @@ gem 'net-smtp',  '~> 0.3.4'
 gem 'csv-safe'
 
 # Excel Export/Import
-gem 'caxlsx'
+gem 'caxlsx', require: 'axlsx'
 gem 'roo'
 
 ##-- for active storage --##

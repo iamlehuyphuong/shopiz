@@ -24,7 +24,7 @@ class Api::V1::Accounts::CannedResponsesController < Api::V1::Accounts::BaseCont
 
   def export
     canned_responses_list = Current.account.canned_responses.order(:id)
-    package = Axlsx::Package.new
+    package = ::Axlsx::Package.new
     workbook = package.workbook
     workbook.add_worksheet(name: 'Canned Responses') do |sheet|
       sheet.add_row ['ID', 'Short Code', 'Content', 'Account ID', 'Created At', 'Updated At']

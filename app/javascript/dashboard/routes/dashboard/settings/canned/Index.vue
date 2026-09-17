@@ -139,8 +139,29 @@ const onImport = async file => {
   }
 };
 
-const downloadExport = () => {
-  window.location = `/api/v1/accounts/${getters.getCurrentAccountId.value}/canned_responses/export`;
+const isExporting = ref(false);
+
+const downloadExport = async () => {
+  try {
+    isExporting.value = true;
+    const response = await CannedResponseAPI.export();
+    
+    const blob = new Blob([response.data], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `canned_responses_${new Date().toISOString()}.xlsx`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    useAlert(error.message || t('CANNED_MGMT.EXPORT.ERROR_MESSAGE'));
+  } finally {
+    isExporting.value = false;
+  }
 };
 
 const openDeletePopup = response => {
@@ -213,6 +234,8 @@ const tableHeaders = computed(() => {
             size="sm"
             color="slate"
             variant="faded"
+            :is-loading="isExporting"
+            :disabled="isExporting"
             @click="downloadExport"
           />
           <Button
@@ -319,6 +342,7 @@ const tableHeaders = computed(() => {
       v-if="showImportPopup"
       :is-importing="isImporting"
       @import="onImport"
+      @close="hideImportPopup"
     />
 
     <woot-modal v-model:show="showEditPopup" :on-close="hideEditPopup">

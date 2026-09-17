@@ -48,10 +48,12 @@ class CannedResponse extends ApiClient {
   import(file) {
     const formData = new FormData();
     formData.append('import_file', file);
-    return axios.post(`${this.url}/import`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
+    return axios.post(`${this.url}/import`, formData);
+  }
+
+  export() {
+    return axios.get(`${this.url}/export`, {
+      responseType: 'blob',
     });
   }
 }

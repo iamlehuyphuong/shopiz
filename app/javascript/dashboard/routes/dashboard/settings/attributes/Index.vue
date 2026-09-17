@@ -5,6 +5,7 @@ import { useAlert } from 'dashboard/composables';
 import { picoSearch } from '@scmmishra/pico-search';
 import BaseSettingsHeader from '../components/BaseSettingsHeader.vue';
 import AddAttribute from './AddAttribute.vue';
+import AddAttributesFromList from './AddAttributesFromList.vue';
 import EditAttribute from './EditAttribute.vue';
 import SettingsLayout from '../SettingsLayout.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
@@ -26,6 +27,7 @@ const { currentAccount } = useAccount();
 const inboxes = useMapGetter('inboxes/getInboxes');
 
 const [showAddPopup, toggleAddPopup] = useToggle(false);
+const [showAddFromListPopup, toggleAddFromListPopup] = useToggle(false);
 const selectedTabIndex = ref(0);
 const searchQuery = ref('');
 const uiFlags = computed(() => getters['attributes/getUIFlags'].value);
@@ -38,6 +40,12 @@ const openAddPopup = () => {
 };
 const hideAddPopup = () => {
   toggleAddPopup(false);
+};
+const openAddFromListPopup = () => {
+  toggleAddFromListPopup(true);
+};
+const hideAddFromListPopup = () => {
+  toggleAddFromListPopup(false);
 };
 const hideEditPopup = () => {
   toggleEditPopup(false);
@@ -186,11 +194,21 @@ const filteredAttributes = computed(() => {
           />
         </template>
         <template #actions>
-          <Button
-            :label="$t('ATTRIBUTES_MGMT.HEADER_BTN_TXT')"
-            size="sm"
-            @click="openAddPopup"
-          />
+          <div class="flex gap-2">
+            <Button
+              :label="$t('ATTRIBUTES_MGMT.HEADER_ADD_FROM_LIST_BTN_TXT', 'Thêm từ danh sách')"
+              icon="i-lucide-list"
+              size="sm"
+              color="slate"
+              faded
+              @click="openAddFromListPopup"
+            />
+            <Button
+              :label="$t('ATTRIBUTES_MGMT.HEADER_BTN_TXT')"
+              size="sm"
+              @click="openAddPopup"
+            />
+          </div>
         </template>
       </BaseSettingsHeader>
     </template>
@@ -229,6 +247,12 @@ const filteredAttributes = computed(() => {
       :on-close="hideAddPopup"
       :selected-attribute-model-tab="selectedTabIndex"
     />
+    <woot-modal v-model:show="showAddFromListPopup" :on-close="hideAddFromListPopup" size="lg">
+      <AddAttributesFromList
+        :selected-attribute-model-tab="selectedTabIndex"
+        @close="hideAddFromListPopup"
+      />
+    </woot-modal>
     <woot-modal
       v-model:show="showEditPopup"
       :on-close="hideEditPopup"

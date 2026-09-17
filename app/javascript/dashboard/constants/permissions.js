@@ -4,7 +4,6 @@ export const AVAILABLE_CUSTOM_ROLE_PERMISSIONS = [
   'conversation_participating_manage',
   'contact_manage',
   'report_manage',
-  'knowledge_base_manage',
   'sales_manage',
   'campaign_manage',
   'captain_manage',

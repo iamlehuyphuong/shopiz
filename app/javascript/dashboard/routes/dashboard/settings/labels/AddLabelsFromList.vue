@@ -51,7 +51,7 @@ const onClose = () => {
 
 const handleConfirm = async () => {
   if (selectedLabels.value.length === 0) {
-    useAlert(t('LABEL_MGMT.ADD.NO_LABELS_SELECTED', 'Vui lòng chọn ít nhất một nhãn.'));
+    useAlert(t('LABEL_MGMT.ADD_FROM_LIST.NO_LABELS_SELECTED', 'Vui lòng chọn ít nhất một nhãn.'));
     return;
   }
 
@@ -74,7 +74,7 @@ const handleConfirm = async () => {
           }
         } catch (e) {
           console.error('Failed to parse AI translated labels', e);
-          useAlert('Lỗi khi dịch nhãn. Sẽ sử dụng nhãn mặc định.');
+          useAlert(t('LABEL_MGMT.ADD_FROM_LIST.AI_ERROR', 'Lỗi khi dịch nhãn. Sẽ sử dụng nhãn mặc định.'));
         }
       }
     }
@@ -133,7 +133,7 @@ const handleConfirm = async () => {
               <span class="text-body-main text-n-slate-12 font-medium whitespace-nowrap">{{ label.title }}</span>
               <span class="text-body-main text-n-slate-11 truncate">- {{ label.description }}</span>
               <span v-if="isLabelExisting(label)" class="ml-auto px-2 py-0.5 text-xs bg-n-slate-3 text-n-slate-11 rounded font-medium flex-shrink-0">
-                Đã thêm
+                {{ $t('LABEL_MGMT.ADD_FROM_LIST.ALREADY_ADDED', 'Đã thêm') }}
               </span>
             </label>
           </div>
@@ -147,7 +147,7 @@ const handleConfirm = async () => {
             <Switch v-model="isTranslationEnabled" :disabled="!captainEnabled" />
             <label class="text-body-main font-medium text-n-slate-12 m-0">
               {{ $t('LABEL_MGMT.ADD_FROM_LIST.TRANSLATE_LABEL', 'Dịch sang ngôn ngữ khác') }}
-              <span v-if="!captainEnabled" class="text-n-slate-11 font-normal text-body-small ml-1">(Cần cài đặt AI Key)</span>
+              <span v-if="!captainEnabled" class="text-n-slate-11 font-normal text-body-small ml-1">{{ $t('LABEL_MGMT.ADD_FROM_LIST.AI_KEY_REQUIRED', '(Cần cài đặt AI Key)') }}</span>
             </label>
           </div>
           <woot-input
@@ -163,12 +163,12 @@ const handleConfirm = async () => {
           <NextButton
             faded
             slate
-            :label="$t('LABEL_MGMT.FORM.CANCEL')"
+            :label="$t('LABEL_MGMT.ADD_FROM_LIST.CANCEL', 'Hủy')"
             @click.prevent="onClose"
           />
           <NextButton
             data-testid="label-list-submit"
-            :label="$t('LABEL_MGMT.FORM.CREATE', 'Xác nhận')"
+            :label="$t('LABEL_MGMT.ADD_FROM_LIST.SUBMIT', 'Thêm mới')"
             :disabled="selectedLabels.length === 0 || isLoading"
             :is-loading="isLoading"
             @click.prevent="handleConfirm"

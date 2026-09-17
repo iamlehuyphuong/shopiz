@@ -2,6 +2,7 @@
   "ATTRIBUTES_MGMT": {
     "HEADER": "Custom Attributes",
     "HEADER_BTN_TXT": "Add Custom Attribute",
+    "HEADER_ADD_FROM_LIST_BTN_TXT": "Add from list",
     "LOADING": "Fetching custom attributes",
     "DESCRIPTION": "A custom attribute tracks additional details about your contacts or conversations—such as the subscription plan or the date of their first purchase. You can add different types of custom attributes, such as text, lists, or numbers, to capture the specific information you need.",
     "LEARN_MORE": "Learn more about custom attributes",
@@ -76,6 +77,15 @@
         "SUCCESS_MESSAGE": "Custom Attribute added successfully!",
         "ERROR_MESSAGE": "Could not create a Custom Attribute. Please try again later."
       }
+    },
+    "ADD_FROM_LIST": {
+      "TITLE": "Add attributes from list",
+      "DESC": "Choose predefined custom attributes to add to your system.",
+      "TRANSLATE_LABEL": "Translate to another language",
+      "TRANSLATE_PLACEHOLDER": "Enter language, e.g. Japanese, Thai...",
+      "NO_ATTRIBUTES_SELECTED": "Please select at least one attribute.",
+      "SUBMIT": "Submit",
+      "CANCEL": "Cancel"
     },
     "DELETE": {
       "BUTTON_TEXT": "Delete",

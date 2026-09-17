@@ -73,6 +73,18 @@
         "ERROR_MESSAGE": "Có lỗi xảy ra, vui lòng thử lại"
       }
     },
+    "ADD_FROM_LIST": {
+      "TITLE": "Thêm nhãn từ danh sách",
+      "DESC": "Chọn các nhãn có sẵn để thêm vào hệ thống của bạn.",
+      "TRANSLATE_LABEL": "Dịch sang ngôn ngữ khác",
+      "TRANSLATE_PLACEHOLDER": "Nhập ngôn ngữ, vd: Tiếng Anh, Nhật, Thái Lan...",
+      "NO_LABELS_SELECTED": "Vui lòng chọn ít nhất một nhãn.",
+      "SUBMIT": "Xác nhận",
+      "CANCEL": "Hủy",
+      "ALREADY_ADDED": "Đã thêm",
+      "AI_KEY_REQUIRED": "(Cần cài đặt AI Key)",
+      "AI_ERROR": "Lỗi khi dịch nhãn. Sẽ sử dụng nhãn mặc định."
+    },
     "DELETE": {
       "BUTTON_TEXT": "Xóa",
       "API": {
