@@ -3,28 +3,13 @@ class Captain::Tools::Copilot::UpdateConversationTagsService < Captain::Tools::B
     'update_conversation_tags'
   end
 
-  def self.description
-    'Updates or adds tags (labels) to the current conversation to categorize it.'
-  end
+  description 'Updates or adds tags (labels) to the current conversation to categorize it.'
 
-  def self.parameters
-    {
-      type: 'object',
-      properties: {
-        tags: {
-          type: 'array',
-          items: { type: 'string' },
-          description: 'A list of tags/labels to add to the conversation.'
-        }
-      },
-      required: ['tags']
-    }
-  end
+  param :tags, type: :array, desc: 'A list of tags/labels to add to the conversation.', required: true
 
-  def execute(arguments)
+  def execute(tags:)
     return { status: false, error: 'Conversation context is required.' } unless @conversation
 
-    tags = arguments['tags']
     return { status: false, error: 'Tags array is required.' } unless tags.is_a?(Array)
 
     new_labels = (@conversation.label_list + tags).uniq

@@ -30,7 +30,7 @@ class Api::V1::Accounts::Captain::CopilotThreadsController < Api::V1::Accounts::
   private
 
   def build_copilot_response(copilot_message)
-    if Current.account.usage_limits[:captain][:responses][:current_available].positive?
+    if responses_available_for_copilot?
       copilot_message.enqueue_response_job(copilot_thread_params[:conversation_id], Current.user.id)
     else
       copilot_message.copilot_thread.copilot_messages.create!(
@@ -38,6 +38,14 @@ class Api::V1::Accounts::Captain::CopilotThreadsController < Api::V1::Accounts::
         message: { content: I18n.t('captain.copilot_limit') }
       )
     end
+  end
+
+  def responses_available_for_copilot?
+    return true if Current.account.usage_limits[:captain][:responses][:current_available].positive?
+
+    # Fallback: allow if account has its own OpenAI key configured via Integration
+    hook = Current.account.hooks.find_by(app_id: 'openai', status: 'enabled')
+    hook&.hook_api_key.present?
   end
 
   def ensure_message

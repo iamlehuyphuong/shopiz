@@ -24,11 +24,12 @@ module Llm::Config
         config.openai_api_base = api_base
       end
 
+      previous_config = Thread.current[:ruby_llm_config]
       Thread.current[:ruby_llm_config] = context.instance_variable_get(:@config)
       begin
         yield context
       ensure
-        Thread.current[:ruby_llm_config] = nil
+        Thread.current[:ruby_llm_config] = previous_config
       end
     end
 

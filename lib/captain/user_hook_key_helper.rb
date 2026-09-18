@@ -28,7 +28,10 @@ module Captain::UserHookKeyHelper
     base = openai_hook&.settings&.dig('api_base_url')
     return nil if base.blank?
 
-    base.chomp('/').sub(%r{/v1\z}, '')
+    normalized = base.chomp('/')
+    return nil if normalized.match?(%r{\Ahttps://api\.openai\.com(/v1)?\z})
+
+    normalized.sub(%r{/v1\z}, '')
   end
 
   def system_api_key_available?
