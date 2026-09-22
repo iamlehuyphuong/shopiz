@@ -58,8 +58,8 @@ const updateStateFromAssistant = assistant => {
   state.handoffMessage = config.handoff_message;
   state.resolutionMessage = config.resolution_message;
   state.instructions = config.instructions;
-  state.temperature = config.temperature || 1;
-  state.messageHistoryLimit = config.message_history_limit || 5;
+  state.temperature = config.temperature !== undefined ? Number(config.temperature) : 1;
+  state.messageHistoryLimit = config.message_history_limit !== undefined ? Number(config.message_history_limit) : 5;
 };
 
 const handleSystemMessagesUpdate = async () => {
@@ -82,8 +82,8 @@ const handleSystemMessagesUpdate = async () => {
       ...props.assistant.config,
       handoff_message: state.handoffMessage,
       resolution_message: state.resolutionMessage,
-      temperature: state.temperature || 1,
-      message_history_limit: state.messageHistoryLimit || 5,
+      temperature: Number(state.temperature),
+      message_history_limit: Number(state.messageHistoryLimit),
     },
   };
 
@@ -140,7 +140,7 @@ watch(
       </label>
       <div class="flex items-center gap-4">
         <input
-          v-model="state.temperature"
+          v-model.number="state.temperature"
           type="range"
           min="0"
           max="1"
@@ -160,7 +160,7 @@ watch(
       </label>
       <div class="flex items-center gap-4">
         <input
-          v-model="state.messageHistoryLimit"
+          v-model.number="state.messageHistoryLimit"
           type="range"
           min="1"
           max="20"
