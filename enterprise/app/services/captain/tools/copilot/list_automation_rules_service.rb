@@ -25,8 +25,8 @@ class Captain::Tools::Copilot::ListAutomationRulesService < Captain::Tools::Base
   private
 
   def format_rule(rule)
-    actions_summary = rule.actions.map { |a| a['action_name'] }.join(', ')
-    conditions_summary = rule.conditions.map { |c| c['attribute_key'] }.join(', ')
+    actions_summary = rule.actions.pluck('action_name').join(', ')
+    conditions_summary = rule.conditions.pluck('attribute_key').join(', ')
     <<~RULE.strip
       Rule: #{rule.name} (ID: #{rule.id})
       Status: #{rule.active ? 'Active' : 'Inactive'}

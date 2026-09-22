@@ -43,13 +43,13 @@ class Captain::Tools::SearchOrdersTool < Captain::Tools::BasePublicTool
 
   def ecom_platform_tools
     {
-      'kiotviet' => 'Captain::Tools::KiotvietSearchOrdersTool',
-      'sapo' => 'Captain::Tools::SapoSearchOrdersTool',
-      'haravan' => 'Captain::Tools::HaravanSearchOrdersTool',
-      'shopify' => 'Captain::Tools::ShopifySearchOrdersTool',
-      'woocommerce' => 'Captain::Tools::WoocommerceSearchOrdersTool',
-      'nhanhvn' => 'Captain::Tools::NhanhvnSearchOrdersTool',
-      'tiktok_shop' => 'Captain::Tools::TiktokShopSearchOrdersTool'
+      'kiotviet' => 'Captain::Tools::Kiotviet::SearchOrdersTool',
+      'sapo' => 'Captain::Tools::Sapo::SearchOrdersTool',
+      'haravan' => 'Captain::Tools::Haravan::SearchOrdersTool',
+      'shopify' => 'Captain::Tools::Shopify::SearchOrdersTool',
+      'woocommerce' => 'Captain::Tools::Woocommerce::SearchOrdersTool',
+      'nhanhvn' => 'Captain::Tools::Nhanhvn::SearchOrdersTool',
+      'tiktok_shop' => 'Captain::Tools::TiktokShop::SearchOrdersTool'
     }.freeze
   end
 

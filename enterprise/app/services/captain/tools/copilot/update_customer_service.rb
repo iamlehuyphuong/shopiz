@@ -24,13 +24,13 @@ class Captain::Tools::Copilot::UpdateCustomerService < Captain::Tools::BaseTool
 
   def ecom_platform_tools
     {
-      'kiotviet' => 'Captain::Tools::Copilot::KiotvietUpdateCustomerService',
-      'sapo' => 'Captain::Tools::Copilot::SapoUpdateCustomerService',
-      'haravan' => 'Captain::Tools::Copilot::HaravanUpdateCustomerService',
-      'shopify' => 'Captain::Tools::Copilot::ShopifyUpdateCustomerService',
-      'woocommerce' => 'Captain::Tools::Copilot::WoocommerceUpdateCustomerService',
-      'nhanhvn' => 'Captain::Tools::Copilot::NhanhvnUpdateCustomerService',
-      'tiktok_shop' => 'Captain::Tools::Copilot::TiktokShopUpdateCustomerService'
+      'kiotviet' => 'Captain::Tools::Copilot::Kiotviet::UpdateCustomerService',
+      'sapo' => 'Captain::Tools::Copilot::Sapo::UpdateCustomerService',
+      'haravan' => 'Captain::Tools::Copilot::Haravan::UpdateCustomerService',
+      'shopify' => 'Captain::Tools::Copilot::Shopify::UpdateCustomerService',
+      'woocommerce' => 'Captain::Tools::Copilot::Woocommerce::UpdateCustomerService',
+      'nhanhvn' => 'Captain::Tools::Copilot::Nhanhvn::UpdateCustomerService',
+      'tiktok_shop' => 'Captain::Tools::Copilot::TiktokShop::UpdateCustomerService'
     }.freeze
   end
 end

@@ -7,6 +7,10 @@ class Captain::Tools::UpdateOrderTool < Captain::Tools::BasePublicTool
   param :customer_address, type: 'string', desc: 'New customer address', required: false
   param :customer_note, type: 'string', desc: 'New order note', required: false
 
+  def active?
+    @assistant&.account&.active_ecommerce_platform.present? && @assistant&.account&.ai_allow_create_order
+  end
+
   def perform(tool_context, order_id:, customer_name: nil, customer_phone: nil, customer_address: nil, customer_note: nil)
     conversation = find_conversation(tool_context.state)
     return 'Conversation not found' unless conversation

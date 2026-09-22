@@ -1,6 +1,10 @@
 class Captain::Tools::CheckPaymentStatusTool < Captain::Tools::BasePublicTool
   description 'Check the current payment status of the active order for the conversation.'
 
+  def active?
+    @assistant&.account&.active_ecommerce_platform.present?
+  end
+
   def perform(tool_context)
     conversation = find_conversation(tool_context.state)
     return 'Conversation not found' unless conversation

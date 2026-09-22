@@ -6,6 +6,10 @@ class Captain::Tools::SearchProductsTool < Captain::Tools::BasePublicTool
   param :query, type: 'string', desc: 'The search keyword, product name, or SKU'
   param :limit, type: 'integer', desc: 'Number of results to return (default: 5)', required: false
 
+  def active?
+    @assistant&.account&.active_ecommerce_platform.present?
+  end
+
   def perform(tool_context, query:, limit: 5)
     conversation = find_conversation(tool_context.state)
     return 'Conversation not found' unless conversation

@@ -30,7 +30,7 @@ class Captain::Tools::Copilot::ListMacrosService < Captain::Tools::BaseTool
   end
 
   def format_macro(macro)
-    actions_summary = macro.actions.map { |a| a['action_name'] }.join(', ')
+    actions_summary = macro.actions.pluck('action_name').join(', ')
     <<~MACRO.strip
       Macro: #{macro.name} (ID: #{macro.id})
       Visibility: #{macro.visibility}

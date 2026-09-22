@@ -1,7 +1,7 @@
 class Captain::Tools::AssignConversationTool < Captain::Tools::BasePublicTool
-  description "Assign a conversation to the most suitable team based on the issue description. " \
-              "The system will automatically find the best matching team by comparing the issue with team descriptions, " \
-              "then auto-assign an available agent from that team using round-robin policy."
+  description 'Assign a conversation to the most suitable team based on the issue description. ' \
+              'The system will automatically find the best matching team by comparing the issue with team descriptions, ' \
+              'then auto-assign an available agent from that team using round-robin policy.'
   param :issue_description, type: 'string', desc: 'Brief description of the customer issue to match with the right team'
   param :team_name, type: 'string', desc: 'Exact team name to assign to (optional - if provided, skips smart matching)', required: false
 

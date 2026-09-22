@@ -23,13 +23,13 @@ class Captain::Tools::Copilot::CreateCustomerService < Captain::Tools::BaseTool
 
   def ecom_platform_tools
     {
-      'kiotviet' => 'Captain::Tools::Copilot::KiotvietCreateCustomerService',
-      'sapo' => 'Captain::Tools::Copilot::SapoCreateCustomerService',
-      'haravan' => 'Captain::Tools::Copilot::HaravanCreateCustomerService',
-      'shopify' => 'Captain::Tools::Copilot::ShopifyCreateCustomerService',
-      'woocommerce' => 'Captain::Tools::Copilot::WoocommerceCreateCustomerService',
-      'nhanhvn' => 'Captain::Tools::Copilot::NhanhvnCreateCustomerService',
-      'tiktok_shop' => 'Captain::Tools::Copilot::TiktokShopCreateCustomerService'
+      'kiotviet' => 'Captain::Tools::Copilot::Kiotviet::CreateCustomerService',
+      'sapo' => 'Captain::Tools::Copilot::Sapo::CreateCustomerService',
+      'haravan' => 'Captain::Tools::Copilot::Haravan::CreateCustomerService',
+      'shopify' => 'Captain::Tools::Copilot::Shopify::CreateCustomerService',
+      'woocommerce' => 'Captain::Tools::Copilot::Woocommerce::CreateCustomerService',
+      'nhanhvn' => 'Captain::Tools::Copilot::Nhanhvn::CreateCustomerService',
+      'tiktok_shop' => 'Captain::Tools::Copilot::TiktokShop::CreateCustomerService'
     }.freeze
   end
 end

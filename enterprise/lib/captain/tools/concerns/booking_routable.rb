@@ -7,7 +7,7 @@
 #
 #   # Define the mapping in the subclass:
 #   def calendly_tool_class
-#     'Captain::Tools::CalendlyGetAvailableTimesTool'
+#     'Captain::Tools::Calendly::GetAvailableTimesTool'
 #   end
 #
 #   # In perform:
@@ -19,6 +19,13 @@
 #   # ... fallback to Google Calendar ...
 module Captain::Tools::Concerns::BookingRoutable
   extend ActiveSupport::Concern
+
+  def active?
+    return false unless @assistant&.account
+
+    @assistant.account.hooks.exists?(app_id: 'calendly') ||
+      @assistant.account.booking_configurations.exists?(is_active: true)
+  end
 
   private
 

@@ -5,6 +5,10 @@ class Captain::Tools::ConfirmOrderTool < Captain::Tools::BasePublicTool
               'Do not send a separate confirmation message.'
   param :order_id, type: 'string', desc: 'The ID of the draft order to confirm', required: true
 
+  def active?
+    @assistant&.account&.active_ecommerce_platform.present? && @assistant&.account&.ai_allow_create_order
+  end
+
   def perform(tool_context, order_id:)
     conversation = find_conversation(tool_context.state)
     return 'Conversation not found' unless conversation

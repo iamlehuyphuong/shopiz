@@ -35,7 +35,7 @@ class Captain::Tools::Copilot::CreateScenarioService < Captain::Tools::BaseTool
       end
     end
 
-    "Successfully created the following scenarios:\n" + results.join("\n")
+    "Successfully created the following scenarios:\n#{results.join("\n")}"
   rescue JSON::ParserError
     'Failed to create scenarios: scenarios_json must be a valid JSON array.'
   rescue ActiveRecord::RecordInvalid => e

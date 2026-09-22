@@ -1,5 +1,7 @@
 # Copilot tool: General Book Appointment router
 class Captain::Tools::Copilot::BookAppointmentService < Captain::Tools::BaseTool
+  include Captain::Tools::Copilot::Concerns::BookingRoutable
+
   def self.name
     'book_appointment'
   end
@@ -13,12 +15,12 @@ class Captain::Tools::Copilot::BookAppointmentService < Captain::Tools::BaseTool
   param :timezone, type: :string, desc: 'IANA timezone (e.g. Asia/Ho_Chi_Minh)', required: false
 
   def execute(**args)
-    # Temporary router logic: default to Calendly for now.
-    Captain::Tools::Copilot::CalendlyBookAppointmentService.new(@assistant, user: @user).execute(**args)
+    delegate_to_booking_tool(**args)
   end
 
-  def active?
-    # True if ANY booking provider is connected.
-    Captain::Tools::Copilot::CalendlyBookAppointmentService.new(@assistant, user: @user).active?
+  private
+
+  def booking_platform_tools
+    { 'calendly' => 'Captain::Tools::Copilot::Calendly::BookAppointmentService' }.freeze
   end
 end

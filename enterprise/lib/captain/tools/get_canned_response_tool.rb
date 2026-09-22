@@ -2,7 +2,7 @@ class Captain::Tools::GetCannedResponseTool < Captain::Tools::BasePublicTool
   description 'Search and retrieve a canned response (saved template) by its short code or keywords. Use this to quickly reply with standard, approved answers.'
   param :query, type: 'string', desc: 'The short code or keyword of the canned response (e.g., "hello", "pricing")', required: true
 
-  def perform(tool_context, query:)
+  def perform(_tool_context, query:)
     log_tool_usage('get_canned_response', { query: query })
 
     canned_responses = account_scoped(CannedResponse)

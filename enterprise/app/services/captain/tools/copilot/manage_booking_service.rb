@@ -1,5 +1,7 @@
 # Copilot tool: General Manage Booking router
 class Captain::Tools::Copilot::ManageBookingService < Captain::Tools::BaseTool
+  include Captain::Tools::Copilot::Concerns::BookingRoutable
+
   def self.name
     'manage_booking'
   end
@@ -10,12 +12,12 @@ class Captain::Tools::Copilot::ManageBookingService < Captain::Tools::BaseTool
   param :action, type: :string, desc: 'Action: "reschedule" or "cancel"', required: true
 
   def execute(**args)
-    # Temporary router logic: default to Calendly for now.
-    Captain::Tools::Copilot::CalendlyManageBookingService.new(@assistant, user: @user).execute(**args)
+    delegate_to_booking_tool(**args)
   end
 
-  def active?
-    # True if ANY booking provider is connected.
-    Captain::Tools::Copilot::CalendlyManageBookingService.new(@assistant, user: @user).active?
+  private
+
+  def booking_platform_tools
+    { 'calendly' => 'Captain::Tools::Copilot::Calendly::ManageBookingService' }.freeze
   end
 end

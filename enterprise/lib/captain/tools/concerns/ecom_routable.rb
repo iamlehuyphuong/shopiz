@@ -7,7 +7,7 @@
 #
 #   # Define the mapping in the subclass:
 #   def ecom_platform_tools
-#     { 'kiotviet' => 'Captain::Tools::KiotvietGetProductTool', ... }.freeze
+#     { 'kiotviet' => 'Captain::Tools::Kiotviet::GetProductTool', ... }.freeze
 #   end
 #
 #   # In perform:
@@ -19,6 +19,10 @@
 #   # ... fallback to local DB ...
 module Captain::Tools::Concerns::EcomRoutable
   extend ActiveSupport::Concern
+
+  def active?
+    @assistant&.account&.active_ecommerce_platform.present?
+  end
 
   private
 

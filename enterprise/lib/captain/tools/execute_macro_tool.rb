@@ -12,6 +12,7 @@ class Captain::Tools::ExecuteMacroTool < Captain::Tools::BasePublicTool
       if tool_context.state[:source] == 'playground'
         return "Playground Mode: Macro '#{macro.name}' would be executed on a real conversation. (Simulation successful)"
       end
+
       return 'Conversation not found'
     end
 

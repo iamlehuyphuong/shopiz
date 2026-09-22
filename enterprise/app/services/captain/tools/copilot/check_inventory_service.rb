@@ -20,13 +20,13 @@ class Captain::Tools::Copilot::CheckInventoryService < Captain::Tools::BaseTool
 
   def ecom_platform_tools
     {
-      'kiotviet' => 'Captain::Tools::Copilot::KiotvietCheckInventoryService',
-      'sapo' => 'Captain::Tools::Copilot::SapoCheckInventoryService',
-      'haravan' => 'Captain::Tools::Copilot::HaravanCheckInventoryService',
-      'shopify' => 'Captain::Tools::Copilot::ShopifyCheckInventoryService',
-      'woocommerce' => 'Captain::Tools::Copilot::WoocommerceCheckInventoryService',
-      'nhanhvn' => 'Captain::Tools::Copilot::NhanhvnCheckInventoryService',
-      'tiktok_shop' => 'Captain::Tools::Copilot::TiktokShopCheckInventoryService'
+      'kiotviet' => 'Captain::Tools::Copilot::Kiotviet::CheckInventoryService',
+      'sapo' => 'Captain::Tools::Copilot::Sapo::CheckInventoryService',
+      'haravan' => 'Captain::Tools::Copilot::Haravan::CheckInventoryService',
+      'shopify' => 'Captain::Tools::Copilot::Shopify::CheckInventoryService',
+      'woocommerce' => 'Captain::Tools::Copilot::Woocommerce::CheckInventoryService',
+      'nhanhvn' => 'Captain::Tools::Copilot::Nhanhvn::CheckInventoryService',
+      'tiktok_shop' => 'Captain::Tools::Copilot::TiktokShop::CheckInventoryService'
     }.freeze
   end
 end

@@ -1,6 +1,4 @@
 class Captain::Tools::GetProductDetailsTool < Captain::Tools::BasePublicTool
-  include Captain::Tools::Concerns::EcomRoutable
-
   description 'Retrieve detailed information and variants of a specific product using its ID or SKU'
 
   param :product_id, type: 'string', desc: 'The internal ID of the product', required: false
@@ -12,15 +10,7 @@ class Captain::Tools::GetProductDetailsTool < Captain::Tools::BasePublicTool
 
     return 'Either product_id or sku must be provided' if product_id.blank? && sku.blank?
 
-    # Route to ecom platform if inbox is linked
-    platform = resolve_ecom_platform(tool_context)
-    if platform
-      # Ecom tools accept a query param — use sku or product_id as the search keyword
-      result = delegate_to_ecom_tool(platform, tool_context, query: sku.presence || product_id)
-      return result if result
-    end
-
-    # Fallback: search local DB
+    # Retrieve from local DB directly as products are synced to Shopiz
     log_tool_usage('get_product_details', { conversation_id: conversation.id, product_id: product_id, sku: sku })
 
     product = find_product(product_id, sku)
@@ -36,18 +26,6 @@ class Captain::Tools::GetProductDetailsTool < Captain::Tools::BasePublicTool
 
   def permissions
     %w[conversation_manage]
-  end
-
-  def ecom_platform_tools
-    {
-      'kiotviet' => 'Captain::Tools::KiotvietGetProductTool',
-      'sapo' => 'Captain::Tools::SapoGetProductTool',
-      'haravan' => 'Captain::Tools::HaravanGetProductTool',
-      'shopify' => 'Captain::Tools::ShopifyGetProductTool',
-      'woocommerce' => 'Captain::Tools::WoocommerceGetProductTool',
-      'nhanhvn' => 'Captain::Tools::NhanhvnGetProductTool',
-      'tiktok_shop' => 'Captain::Tools::TiktokShopGetProductTool'
-    }.freeze
   end
 
   def find_product(product_id, sku)

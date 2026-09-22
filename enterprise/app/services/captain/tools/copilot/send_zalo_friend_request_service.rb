@@ -31,6 +31,6 @@ class Captain::Tools::Copilot::SendZaloFriendRequestService < Captain::Tools::Ba
   end
 
   def active?
-    @assistant&.account&.inboxes&.where(channel_type: 'Channel::ZaloPersonal')&.exists? || false
+    @assistant&.account&.inboxes&.exists?(channel_type: 'Channel::ZaloPersonal') || false
   end
 end

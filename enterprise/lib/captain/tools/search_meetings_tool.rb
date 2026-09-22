@@ -37,7 +37,7 @@ class Captain::Tools::SearchMeetingsTool < Captain::Tools::BasePublicTool
   private
 
   def calendly_tool_class
-    'Captain::Tools::CalendlyGetScheduledEventsTool'
+    'Captain::Tools::Calendly::GetScheduledEventsTool'
   end
 
   def find_local_bookings(conversation, email, days_ahead)

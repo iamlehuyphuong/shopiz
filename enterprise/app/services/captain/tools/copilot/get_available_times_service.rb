@@ -1,5 +1,7 @@
 # Copilot tool: General Get Available Times router
 class Captain::Tools::Copilot::GetAvailableTimesService < Captain::Tools::BaseTool
+  include Captain::Tools::Copilot::Concerns::BookingRoutable
+
   def self.name
     'get_available_times'
   end
@@ -11,12 +13,12 @@ class Captain::Tools::Copilot::GetAvailableTimesService < Captain::Tools::BaseTo
   param :days_ahead, type: :integer, desc: 'Number of days to look ahead from preferred_date (max 7)', required: false
 
   def execute(**args)
-    # Temporary router logic: default to Calendly for now.
-    Captain::Tools::Copilot::CalendlyGetAvailableTimesService.new(@assistant, user: @user).execute(**args)
+    delegate_to_booking_tool(**args)
   end
 
-  def active?
-    # True if ANY booking provider is connected.
-    Captain::Tools::Copilot::CalendlyGetAvailableTimesService.new(@assistant, user: @user).active?
+  private
+
+  def booking_platform_tools
+    { 'calendly' => 'Captain::Tools::Copilot::Calendly::GetAvailableTimesService' }.freeze
   end
 end

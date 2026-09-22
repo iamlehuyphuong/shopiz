@@ -1,7 +1,7 @@
 class Captain::Tools::SnoozeConversationTool < Captain::Tools::BasePublicTool
   description 'Snooze a conversation to follow up later. The conversation will reappear after the specified duration.'
   param :duration, type: 'string',
-        desc: 'How long to snooze: "1_hour", "2_hours", "4_hours", "6_hours", "1_day", "2_days", or "1_week"'
+                   desc: 'How long to snooze: "1_hour", "2_hours", "4_hours", "6_hours", "1_day", "2_days", or "1_week"'
 
   SNOOZE_DURATIONS = {
     '1_hour' => 1.hour,

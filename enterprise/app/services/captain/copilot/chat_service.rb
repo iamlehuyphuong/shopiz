@@ -95,69 +95,39 @@ class Captain::Copilot::ChatService < Llm::BaseAiService
     Captain::Tools::Copilot::GetContactNotesService,
     Captain::Tools::Copilot::ListAutomationRulesService,
     Captain::Tools::Copilot::CreateScenarioService,
-    Captain::Tools::Copilot::CalendlyListEventTypesService,
-    Captain::Tools::Copilot::CalendlyGetAvailableTimesService,
-    Captain::Tools::Copilot::CalendlyBookAppointmentService,
-    Captain::Tools::Copilot::CalendlyGetScheduledEventsService,
-    Captain::Tools::Copilot::CalendlyManageBookingService,
-    Captain::Tools::Copilot::BookAppointmentService,
-    Captain::Tools::Copilot::GetAvailableTimesService,
-    Captain::Tools::Copilot::ManageBookingService,
     Captain::Tools::Copilot::SendZaloFriendRequestService,
     Captain::Tools::Copilot::UpdateConversationTagsService
   ].freeze
 
-  PLATFORM_TOOL_MAP = {
-    'shopify' => [
-      Captain::Tools::Copilot::ShopifySearchOrdersService,
-      Captain::Tools::Copilot::ShopifyGetOrderDetailService,
-      Captain::Tools::Copilot::ShopifyCreateOrderService,
-      Captain::Tools::Copilot::ShopifySearchCustomersService,
-      Captain::Tools::Copilot::ShopifyCreateCustomerService,
-      Captain::Tools::Copilot::ShopifyUpdateCustomerService,
-      Captain::Tools::Copilot::ShopifyPushOrderService,
-      Captain::Tools::Copilot::ShopifySuggestProductsService,
-      Captain::Tools::Copilot::ShopifyCheckInventoryService
-    ],
-    'kiotviet' => [
-      Captain::Tools::Copilot::KiotvietSearchOrdersService,
-      Captain::Tools::Copilot::KiotvietGetOrderDetailService,
-      Captain::Tools::Copilot::KiotvietCreateOrderService,
-      Captain::Tools::Copilot::KiotvietSearchCustomersService,
-      Captain::Tools::Copilot::KiotvietCreateCustomerService,
-      Captain::Tools::Copilot::KiotvietUpdateCustomerService,
-      Captain::Tools::Copilot::KiotvietPushOrderService,
-      Captain::Tools::Copilot::KiotvietSuggestProductsService,
-      Captain::Tools::Copilot::KiotvietCheckInventoryService
-    ],
-    'woocommerce' => [
-      Captain::Tools::Copilot::WoocommerceSearchOrdersService,
-      Captain::Tools::Copilot::WoocommerceGetOrderDetailService,
-      Captain::Tools::Copilot::WoocommerceCreateOrderService,
-      Captain::Tools::Copilot::WoocommerceSearchCustomersService,
-      Captain::Tools::Copilot::WoocommerceCreateCustomerService,
-      Captain::Tools::Copilot::WoocommerceUpdateCustomerService,
-      Captain::Tools::Copilot::WoocommercePushOrderService,
-      Captain::Tools::Copilot::WoocommerceSuggestProductsService,
-      Captain::Tools::Copilot::WoocommerceCheckInventoryService
-    ],
-    'shopiz' => [
-      Captain::Tools::Copilot::SearchOrdersService,
-      Captain::Tools::Copilot::GetOrderDetailService,
-      Captain::Tools::Copilot::CreateOrderService,
-      Captain::Tools::Copilot::PushOrderService,
-      Captain::Tools::Copilot::SearchCustomersService,
-      Captain::Tools::Copilot::CreateCustomerService,
-      Captain::Tools::Copilot::UpdateCustomerService,
-      Captain::Tools::Copilot::SearchProductsService,
-      Captain::Tools::Copilot::SuggestProductsService,
-      Captain::Tools::Copilot::CheckInventoryService
-    ]
-  }.freeze
+  ECOM_TOOL_CLASSES = [
+    Captain::Tools::Copilot::SearchOrdersService,
+    Captain::Tools::Copilot::GetOrderDetailService,
+    Captain::Tools::Copilot::CreateOrderService,
+    Captain::Tools::Copilot::PushOrderService,
+    Captain::Tools::Copilot::SearchCustomersService,
+    Captain::Tools::Copilot::CreateCustomerService,
+    Captain::Tools::Copilot::UpdateCustomerService,
+    Captain::Tools::Copilot::SuggestProductsService,
+    Captain::Tools::Copilot::CheckInventoryService,
+    Captain::Tools::Copilot::SearchProductsService,
+    Captain::Tools::Copilot::ConfirmOrderService,
+    Captain::Tools::Copilot::UpdateOrderService
+  ].freeze
+
+  BOOKING_TOOL_CLASSES = [
+    Captain::Tools::Copilot::ListEventTypesService,
+    Captain::Tools::Copilot::GetAvailableTimesService,
+    Captain::Tools::Copilot::BookAppointmentService,
+    Captain::Tools::Copilot::GetScheduledEventsService,
+    Captain::Tools::Copilot::ManageBookingService,
+    Captain::Tools::Copilot::SearchMeetingsService,
+    Captain::Tools::Copilot::GetBookingLinkService
+  ].freeze
 
   def build_tools
     tools = base_copilot_tools
-    tools += platform_specific_tools
+    tools += ecom_copilot_tools
+    tools += booking_copilot_tools
     tools.select(&:active?)
   end
 
@@ -165,24 +135,12 @@ class Captain::Copilot::ChatService < Llm::BaseAiService
     BASE_TOOL_CLASSES.map { |klass| klass.new(@assistant, user: @user, conversation: @conversation) }
   end
 
-  def platform_specific_tools
-    connected_platforms = detect_connected_platforms
-    PLATFORM_TOOL_MAP.flat_map do |platform, tool_classes|
-      next [] unless connected_platforms.include?(platform)
-
-      tool_classes.map { |klass| klass.new(@assistant, user: @user, conversation: @conversation) }
-    end
+  def ecom_copilot_tools
+    ECOM_TOOL_CLASSES.map { |klass| klass.new(@assistant, user: @user, conversation: @conversation) }
   end
 
-  def detect_connected_platforms
-    platforms = ['shopiz'] # Shopiz is the default platform
-
-    # Check for ecommerce hooks
-    %w[shopify kiotviet woocommerce].each do |platform|
-      platforms << platform if @account.hooks.exists?(app_id: platform, status: :enabled)
-    end
-
-    platforms
+  def booking_copilot_tools
+    BOOKING_TOOL_CLASSES.map { |klass| klass.new(@assistant, user: @user, conversation: @conversation) }
   end
 
   def system_message

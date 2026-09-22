@@ -20,13 +20,13 @@ class Captain::Tools::Copilot::PushOrderService < Captain::Tools::BaseTool
 
   def ecom_platform_tools
     {
-      'kiotviet' => 'Captain::Tools::Copilot::KiotvietPushOrderService',
-      'sapo' => 'Captain::Tools::Copilot::SapoPushOrderService',
-      'haravan' => 'Captain::Tools::Copilot::HaravanPushOrderService',
-      'shopify' => 'Captain::Tools::Copilot::ShopifyPushOrderService',
-      'woocommerce' => 'Captain::Tools::Copilot::WoocommercePushOrderService',
-      'nhanhvn' => 'Captain::Tools::Copilot::NhanhvnPushOrderService',
-      'tiktok_shop' => 'Captain::Tools::Copilot::TiktokShopPushOrderService'
+      'kiotviet' => 'Captain::Tools::Copilot::Kiotviet::PushOrderService',
+      'sapo' => 'Captain::Tools::Copilot::Sapo::PushOrderService',
+      'haravan' => 'Captain::Tools::Copilot::Haravan::PushOrderService',
+      'shopify' => 'Captain::Tools::Copilot::Shopify::PushOrderService',
+      'woocommerce' => 'Captain::Tools::Copilot::Woocommerce::PushOrderService',
+      'nhanhvn' => 'Captain::Tools::Copilot::Nhanhvn::PushOrderService',
+      'tiktok_shop' => 'Captain::Tools::Copilot::TiktokShop::PushOrderService'
     }.freeze
   end
 end

@@ -24,9 +24,7 @@ class Captain::Tools::BasePublicTool < Agents::Tool
   end
 
   def find_conversation(state)
-    if state[:source] == 'playground'
-      return ::Conversation.new(account_id: state[:account_id], id: 0, display_id: 0)
-    end
+    return ::Conversation.new(account_id: state[:account_id], id: 0, display_id: 0) if state[:source] == 'playground'
 
     conv_data = state[:conversation]
     return nil unless conv_data

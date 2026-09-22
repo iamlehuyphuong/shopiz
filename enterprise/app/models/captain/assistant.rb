@@ -101,41 +101,40 @@ class Captain::Assistant < ApplicationRecord
 
   def agent_tools
     tools = [
+      # Core tools
       self.class.resolve_tool_class('faq_lookup').new(self),
-      self.class.resolve_tool_class('handoff').new(self)
+      self.class.resolve_tool_class('handoff').new(self),
+      self.class.resolve_tool_class('update_contact').new(self),
+      self.class.resolve_tool_class('get_contact_detail').new(self),
+      self.class.resolve_tool_class('search_previous_conversation').new(self),
+      self.class.resolve_tool_class('send_product_info').new(self),
+
+      # E-commerce tools
+      self.class.resolve_tool_class('search_orders').new(self),
+      self.class.resolve_tool_class('get_order_detail').new(self),
+      self.class.resolve_tool_class('search_products').new(self),
+      self.class.resolve_tool_class('get_product_details').new(self),
+      self.class.resolve_tool_class('suggest_products').new(self),
+      self.class.resolve_tool_class('create_order_draft').new(self),
+      self.class.resolve_tool_class('confirm_order').new(self),
+      self.class.resolve_tool_class('update_order').new(self),
+
+      # Payment tools
+      self.class.resolve_tool_class('create_payment_link').new(self),
+      self.class.resolve_tool_class('check_payment_status').new(self),
+
+      # Booking tools
+      self.class.resolve_tool_class('book_meeting').new(self),
+      self.class.resolve_tool_class('check_availability').new(self),
+      self.class.resolve_tool_class('cancel_meeting').new(self),
+      self.class.resolve_tool_class('get_booking_link').new(self),
+      self.class.resolve_tool_class('search_meetings').new(self)
     ]
 
-    tools.concat(calendly_agent_tools) if calendly_hook_active?
-    tools.concat(ecommerce_agent_tools) if feature_order_creation.present?
+    custom_tools = account.captain_custom_tools.enabled.map { |ct| ct.tool(self) }
+    tools.concat(custom_tools)
 
-    tools
-  end
-
-  def ecommerce_agent_tools
-    ecommerce_tool_ids = %w[search_products suggest_products create_order_draft]
-    ecommerce_tool_ids.filter_map do |tool_id|
-      tool_class = self.class.resolve_tool_class(tool_id)
-      tool_class&.new(self)
-    end
-  end
-
-  CALENDLY_TOOL_IDS = %w[
-    calendly_list_event_types
-    calendly_get_available_times
-    calendly_book_appointment
-    calendly_get_scheduled_events
-    calendly_manage_booking
-  ].freeze
-
-  def calendly_hook_active?
-    account.hooks.exists?(app_id: 'calendly', status: :enabled)
-  end
-
-  def calendly_agent_tools
-    CALENDLY_TOOL_IDS.filter_map do |tool_id|
-      tool_class = self.class.resolve_tool_class(tool_id)
-      tool_class&.new(self)
-    end
+    tools.compact.select(&:active?)
   end
 
   def prompt_context

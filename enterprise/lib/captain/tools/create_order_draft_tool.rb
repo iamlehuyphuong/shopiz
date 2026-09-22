@@ -14,6 +14,10 @@ class Captain::Tools::CreateOrderDraftTool < Captain::Tools::BasePublicTool
   param :quantities, type: 'string', desc: 'Comma-separated quantities matching each product (e.g. "2,1")', required: true
   param :customer_note, type: 'string', desc: 'Optional note from the customer', required: false
 
+  def active?
+    @assistant&.account&.active_ecommerce_platform.present? && @assistant&.account&.ai_allow_create_order
+  end
+
   # KiotViet & Nhanh.vn use product_codes; all others use product_ids
   CODE_BASED_PLATFORMS = %w[kiotviet nhanhvn].freeze
 
@@ -45,12 +49,12 @@ class Captain::Tools::CreateOrderDraftTool < Captain::Tools::BasePublicTool
 
   def ecom_platform_tools
     {
-      'kiotviet' => 'Captain::Tools::KiotvietCreateOrderDraftTool',
-      'sapo' => 'Captain::Tools::SapoCreateOrderDraftTool',
-      'haravan' => 'Captain::Tools::HaravanCreateOrderDraftTool',
-      'shopify' => 'Captain::Tools::ShopifyCreateOrderDraftTool',
-      'woocommerce' => 'Captain::Tools::WoocommerceCreateOrderDraftTool',
-      'nhanhvn' => 'Captain::Tools::NhanhvnCreateOrderDraftTool'
+      'kiotviet' => 'Captain::Tools::Kiotviet::CreateOrderDraftTool',
+      'sapo' => 'Captain::Tools::Sapo::CreateOrderDraftTool',
+      'haravan' => 'Captain::Tools::Haravan::CreateOrderDraftTool',
+      'shopify' => 'Captain::Tools::Shopify::CreateOrderDraftTool',
+      'woocommerce' => 'Captain::Tools::Woocommerce::CreateOrderDraftTool',
+      'nhanhvn' => 'Captain::Tools::Nhanhvn::CreateOrderDraftTool'
       # TikTok Shop does not support create_order_draft
     }.freeze
   end

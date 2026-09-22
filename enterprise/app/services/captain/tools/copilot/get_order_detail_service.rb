@@ -20,13 +20,13 @@ class Captain::Tools::Copilot::GetOrderDetailService < Captain::Tools::BaseTool
 
   def ecom_platform_tools
     {
-      'kiotviet' => 'Captain::Tools::Copilot::KiotvietGetOrderDetailService',
-      'sapo' => 'Captain::Tools::Copilot::SapoGetOrderDetailService',
-      'haravan' => 'Captain::Tools::Copilot::HaravanGetOrderDetailService',
-      'shopify' => 'Captain::Tools::Copilot::ShopifyGetOrderDetailService',
-      'woocommerce' => 'Captain::Tools::Copilot::WoocommerceGetOrderDetailService',
-      'nhanhvn' => 'Captain::Tools::Copilot::NhanhvnGetOrderDetailService',
-      'tiktok_shop' => 'Captain::Tools::Copilot::TiktokShopGetOrderDetailService'
+      'kiotviet' => 'Captain::Tools::Copilot::Kiotviet::GetOrderDetailService',
+      'sapo' => 'Captain::Tools::Copilot::Sapo::GetOrderDetailService',
+      'haravan' => 'Captain::Tools::Copilot::Haravan::GetOrderDetailService',
+      'shopify' => 'Captain::Tools::Copilot::Shopify::GetOrderDetailService',
+      'woocommerce' => 'Captain::Tools::Copilot::Woocommerce::GetOrderDetailService',
+      'nhanhvn' => 'Captain::Tools::Copilot::Nhanhvn::GetOrderDetailService',
+      'tiktok_shop' => 'Captain::Tools::Copilot::TiktokShop::GetOrderDetailService'
     }.freeze
   end
 end
