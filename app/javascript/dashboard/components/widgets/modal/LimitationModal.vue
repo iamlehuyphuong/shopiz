@@ -18,7 +18,7 @@ const resourceKey = computed(
 
 const translationKey = computed(() => {
   if (!resourceKey.value) return '';
-  return resourceKey.value.toUpperCase();
+  return resourceKey.value.toLowerCase();
 });
 
 const onClose = () => {
@@ -65,7 +65,7 @@ const onClickUpgrade = () => {
           class="flex-1"
           @click="onClickUpgrade"
         >
-          {{ $t('LIMITATION.MODAL.UPGRADE_BUTTON') }}
+          {{ $t('LIMITATION.MODAL.UPGRADE_NOW') }}
         </ButtonV4>
       </div>
     </div>
