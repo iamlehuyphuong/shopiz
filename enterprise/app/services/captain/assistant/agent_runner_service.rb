@@ -8,8 +8,6 @@ class Captain::Assistant::AgentRunnerService
   include Captain::CreditGuard
   include Captain::UserHookKeyHelper
 
-  MESSAGE_HISTORY_LIMIT = 10
-
   attr_reader :account
 
   CONVERSATION_STATE_ATTRIBUTES = %i[
@@ -42,9 +40,11 @@ class Captain::Assistant::AgentRunnerService
     result = if using_user_hook_key_for_credit?
                resolved_api_base = user_hook_api_base.present? ? "#{user_hook_api_base}/v1" : nil
                Llm::Config.with_api_key(user_hook_api_key, api_base: resolved_api_base) do
+                 summarize_history_if_needed(context)
                  runner.run(message_to_process, context: context, max_turns: 100)
                end
              else
+               summarize_history_if_needed(context)
                runner.run(message_to_process, context: context, max_turns: 100)
              end
 
@@ -71,14 +71,57 @@ class Captain::Assistant::AgentRunnerService
     }
   end
 
+  def summarize_history_if_needed(context)
+    text_to_summarize = context[:history_summary]
+    return if text_to_summarize.blank?
+
+    prompt = <<~PROMPT
+      You are an AI assistant. Below is the older portion of a conversation between a customer and an assistant.
+      Summarize the key information, issues, and decisions from this conversation in a concise manner.
+      Ensure you retain any important context, product names, order IDs, or specific requirements mentioned by the customer.
+
+      Conversation:
+      #{text_to_summarize}
+    PROMPT
+
+    chat = RubyLLM::Chat.new(context: Llm::Config.current_context)
+    chat.ask(prompt)
+    context[:history_summary] = chat.messages.last.content
+  rescue StandardError => e
+    Rails.logger.error "[Captain V2] Auto-summarization failed: #{e.message}"
+    # Keep the un-summarized text if LLM call fails
+  end
+
+  def build_context_with_structured_history(recent_history, older_messages)
+    summary = format_history_summary(older_messages) if older_messages.any?
+
+    conversation_history = recent_history.map do |msg|
+      content = msg[:content]
+      content = extract_text_from_content(content) unless content.is_a?(Array)
+
+      {
+        role: msg[:role].to_sym,
+        content: content,
+        agent_name: msg[:agent_name]
+      }.compact
+    end
+
+    {
+      session_id: "#{@assistant.account_id}_#{@conversation&.display_id}",
+      conversation_history: conversation_history,
+      history_summary: summary,
+      state: build_state
+    }
+  end
+
   def format_history_summary(messages)
     return nil if messages.blank?
 
     lines = [
-      "## Conversation History",
-      "Below is the recent conversation between the customer and the assistant.",
-      "IMPORTANT: If the customer refers to a product, service, or information already mentioned below, use that information directly. Do NOT call search tools again for information already available here.",
-      ""
+      '## Conversation History',
+      'Below is the recent conversation between the customer and the assistant.',
+      'IMPORTANT: If the customer refers to a product, service, or information already mentioned below, use that information directly. Do NOT call search tools again for information already available here.',
+      ''
     ]
 
     messages.each do |msg|
@@ -151,11 +194,9 @@ class Captain::Assistant::AgentRunnerService
     output = result.output
     response = output.is_a?(Hash) ? output.with_indifferent_access : { 'response' => output.to_s, 'reasoning' => 'Processed by agent' }
     response['agent_name'] = result.context&.dig(:current_agent)
-    
-    if @source == 'playground' && result.context&.key?(:tool_execution_trace)
-      response['tool_execution_trace'] = result.context[:tool_execution_trace]
-    end
-    
+
+    response['tool_execution_trace'] = result.context[:tool_execution_trace] if @source == 'playground' && result.context&.key?(:tool_execution_trace)
+
     response
   end
 
@@ -261,7 +302,7 @@ class Captain::Assistant::AgentRunnerService
       if @source == 'playground'
         context_wrapper.context[:tool_execution_trace] ||= []
         args = context_wrapper.context.dig(:tool_execution_trace_args, tool_name)
-        
+
         # Chuyển đổi tool_result sang dạng chuỗi/hash an toàn để tránh vòng lặp đệ quy khi json encode
         safe_result = tool_result.is_a?(String) ? tool_result : tool_result.to_s
         context_wrapper.context[:tool_execution_trace] << { name: tool_name, args: args, result: safe_result }
@@ -302,10 +343,13 @@ class Captain::Assistant::AgentRunnerService
   end
 
   def run_payload(message_history)
-    recent_messages = message_history.last(MESSAGE_HISTORY_LIMIT)
+    limit = @assistant.history_limit_in_messages
+    recent_messages = message_history.last(limit)
+    older_messages = message_history.length > limit ? message_history[0...-limit] : []
+
     message_to_process = extract_last_user_message(recent_messages)
     history_without_last = message_history_without_last_user_message(recent_messages)
-    context = build_context_with_summary(history_without_last)
+    context = build_context_with_structured_history(history_without_last, older_messages)
     enrich_context_with_trace_payload!(context, recent_messages, message_to_process)
     [message_to_process, context]
   end

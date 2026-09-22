@@ -76,7 +76,7 @@ class Captain::Copilot::ChatService < Llm::BaseAiService
                         end
   end
 
-  COPILOT_TOOL_CLASSES = [
+  BASE_TOOL_CLASSES = [
     Captain::Tools::SearchDocumentationService,
     Captain::Tools::Copilot::GetConversationService,
     Captain::Tools::Copilot::SearchConversationsService,
@@ -94,16 +94,6 @@ class Captain::Copilot::ChatService < Llm::BaseAiService
     Captain::Tools::ExecuteMacroService,
     Captain::Tools::Copilot::GetContactNotesService,
     Captain::Tools::Copilot::ListAutomationRulesService,
-    Captain::Tools::Copilot::SearchProductsService,
-    Captain::Tools::Copilot::SuggestProductsService,
-    Captain::Tools::Copilot::CheckInventoryService,
-    Captain::Tools::Copilot::SearchOrdersService,
-    Captain::Tools::Copilot::GetOrderDetailService,
-    Captain::Tools::Copilot::CreateOrderService,
-    Captain::Tools::Copilot::SearchCustomersService,
-    Captain::Tools::Copilot::CreateCustomerService,
-    Captain::Tools::Copilot::UpdateCustomerService,
-    Captain::Tools::Copilot::PushOrderService,
     Captain::Tools::Copilot::CreateScenarioService,
     Captain::Tools::Copilot::CalendlyListEventTypesService,
     Captain::Tools::Copilot::CalendlyGetAvailableTimesService,
@@ -117,8 +107,82 @@ class Captain::Copilot::ChatService < Llm::BaseAiService
     Captain::Tools::Copilot::UpdateConversationTagsService
   ].freeze
 
+  PLATFORM_TOOL_MAP = {
+    'shopify' => [
+      Captain::Tools::Copilot::ShopifySearchOrdersService,
+      Captain::Tools::Copilot::ShopifyGetOrderDetailService,
+      Captain::Tools::Copilot::ShopifyCreateOrderService,
+      Captain::Tools::Copilot::ShopifySearchCustomersService,
+      Captain::Tools::Copilot::ShopifyCreateCustomerService,
+      Captain::Tools::Copilot::ShopifyUpdateCustomerService,
+      Captain::Tools::Copilot::ShopifyPushOrderService,
+      Captain::Tools::Copilot::ShopifySuggestProductsService,
+      Captain::Tools::Copilot::ShopifyCheckInventoryService
+    ],
+    'kiotviet' => [
+      Captain::Tools::Copilot::KiotvietSearchOrdersService,
+      Captain::Tools::Copilot::KiotvietGetOrderDetailService,
+      Captain::Tools::Copilot::KiotvietCreateOrderService,
+      Captain::Tools::Copilot::KiotvietSearchCustomersService,
+      Captain::Tools::Copilot::KiotvietCreateCustomerService,
+      Captain::Tools::Copilot::KiotvietUpdateCustomerService,
+      Captain::Tools::Copilot::KiotvietPushOrderService,
+      Captain::Tools::Copilot::KiotvietSuggestProductsService,
+      Captain::Tools::Copilot::KiotvietCheckInventoryService
+    ],
+    'woocommerce' => [
+      Captain::Tools::Copilot::WoocommerceSearchOrdersService,
+      Captain::Tools::Copilot::WoocommerceGetOrderDetailService,
+      Captain::Tools::Copilot::WoocommerceCreateOrderService,
+      Captain::Tools::Copilot::WoocommerceSearchCustomersService,
+      Captain::Tools::Copilot::WoocommerceCreateCustomerService,
+      Captain::Tools::Copilot::WoocommerceUpdateCustomerService,
+      Captain::Tools::Copilot::WoocommercePushOrderService,
+      Captain::Tools::Copilot::WoocommerceSuggestProductsService,
+      Captain::Tools::Copilot::WoocommerceCheckInventoryService
+    ],
+    'shopiz' => [
+      Captain::Tools::Copilot::SearchOrdersService,
+      Captain::Tools::Copilot::GetOrderDetailService,
+      Captain::Tools::Copilot::CreateOrderService,
+      Captain::Tools::Copilot::PushOrderService,
+      Captain::Tools::Copilot::SearchCustomersService,
+      Captain::Tools::Copilot::CreateCustomerService,
+      Captain::Tools::Copilot::UpdateCustomerService,
+      Captain::Tools::Copilot::SearchProductsService,
+      Captain::Tools::Copilot::SuggestProductsService,
+      Captain::Tools::Copilot::CheckInventoryService
+    ]
+  }.freeze
+
   def build_tools
-    COPILOT_TOOL_CLASSES.map { |klass| klass.new(@assistant, user: @user, conversation: @conversation) }.select(&:active?)
+    tools = base_copilot_tools
+    tools += platform_specific_tools
+    tools.select(&:active?)
+  end
+
+  def base_copilot_tools
+    BASE_TOOL_CLASSES.map { |klass| klass.new(@assistant, user: @user, conversation: @conversation) }
+  end
+
+  def platform_specific_tools
+    connected_platforms = detect_connected_platforms
+    PLATFORM_TOOL_MAP.flat_map do |platform, tool_classes|
+      next [] unless connected_platforms.include?(platform)
+
+      tool_classes.map { |klass| klass.new(@assistant, user: @user, conversation: @conversation) }
+    end
+  end
+
+  def detect_connected_platforms
+    platforms = ['shopiz'] # Shopiz is the default platform
+
+    # Check for ecommerce hooks
+    %w[shopify kiotviet woocommerce].each do |platform|
+      platforms << platform if @account.hooks.exists?(app_id: platform, status: :enabled)
+    end
+
+    platforms
   end
 
   def system_message

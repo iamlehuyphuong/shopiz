@@ -638,6 +638,10 @@
           "LABEL": "Độ sáng tạo của phản hồi",
           "DESCRIPTION": "Điều chỉnh mức độ sáng tạo. Giá trị thấp → phản hồi chính xác, nhất quán. Giá trị cao → phản hồi đa dạng và sáng tạo hơn."
         },
+        "MESSAGE_HISTORY_LIMIT": {
+          "LABEL": "Giới hạn lịch sử tin nhắn",
+          "DESCRIPTION": "Điều chỉnh số lượng tin nhắn cũ (tính theo cặp) mà trợ lý AI sẽ ghi nhớ. Mức thấp giúp tiết kiệm chi phí (token), trong khi mức cao cung cấp nhiều ngữ cảnh hơn cho AI."
+        },
         "DESCRIPTION": {
           "LABEL": "Mô tả",
           "PLACEHOLDER": "Nhập mô tả trợ lý",

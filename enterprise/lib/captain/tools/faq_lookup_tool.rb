@@ -5,8 +5,12 @@ class Captain::Tools::FaqLookupTool < Captain::Tools::BasePublicTool
   def perform(_tool_context, query:)
     log_tool_usage('searching', { query: query })
 
+    translated_query = Captain::Llm::TranslateQueryService
+                       .new(account: @assistant.account)
+                       .translate(query, target_language: @assistant.account.locale_english_name)
+
     # Use existing vector search on approved responses
-    responses = @assistant.responses.approved.search(query, account_id: @assistant.account_id).to_a
+    responses = @assistant.responses.approved.search(translated_query, account_id: @assistant.account_id).to_a
 
     if responses.empty?
       log_tool_usage('no_results', { query: query })
@@ -17,7 +21,7 @@ class Captain::Tools::FaqLookupTool < Captain::Tools::BasePublicTool
     end
   rescue Captain::Llm::EmbeddingService::EmbeddingsError => e
     log_tool_usage('error', { query: query, error: e.message })
-    "FAQ search is temporarily unavailable. Please answer based on your existing knowledge."
+    'FAQ search is temporarily unavailable. Please answer based on your existing knowledge.'
   end
 
   private

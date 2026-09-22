@@ -36,13 +36,11 @@ class CopilotThread < ApplicationRecord
 
   def previous_history
     copilot_messages
-      .where(message_type: %w[user assistant])
+      .where(message_type: %w[user assistant assistant_thinking])
       .order(created_at: :asc)
       .map do |copilot_message|
-        {
-          content: copilot_message.message['content'],
-          role: copilot_message.message_type
-        }
+        role = copilot_message.message_type == 'assistant_thinking' ? 'assistant' : copilot_message.message_type
+        { content: copilot_message.message['content'], role: role }
       end
   end
 end

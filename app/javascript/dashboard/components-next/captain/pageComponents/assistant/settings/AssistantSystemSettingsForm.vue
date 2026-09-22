@@ -30,6 +30,7 @@ const initialState = {
   resolutionMessage: '',
   instructions: '',
   temperature: 1,
+  messageHistoryLimit: 5,
 };
 
 const state = reactive({ ...initialState });
@@ -58,6 +59,7 @@ const updateStateFromAssistant = assistant => {
   state.resolutionMessage = config.resolution_message;
   state.instructions = config.instructions;
   state.temperature = config.temperature || 1;
+  state.messageHistoryLimit = config.message_history_limit || 5;
 };
 
 const handleSystemMessagesUpdate = async () => {
@@ -81,6 +83,7 @@ const handleSystemMessagesUpdate = async () => {
       handoff_message: state.handoffMessage,
       resolution_message: state.resolutionMessage,
       temperature: state.temperature || 1,
+      message_history_limit: state.messageHistoryLimit || 5,
     },
   };
 
@@ -148,6 +151,26 @@ watch(
       </div>
       <p class="text-sm text-n-slate-11 italic">
         {{ t('CAPTAIN.ASSISTANTS.FORM.TEMPERATURE.DESCRIPTION') }}
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label class="text-sm font-medium text-n-slate-12">
+        {{ t('CAPTAIN.ASSISTANTS.FORM.MESSAGE_HISTORY_LIMIT.LABEL') }}
+      </label>
+      <div class="flex items-center gap-4">
+        <input
+          v-model="state.messageHistoryLimit"
+          type="range"
+          min="1"
+          max="20"
+          step="1"
+          class="w-full"
+        />
+        <span class="text-sm text-n-slate-12">{{ state.messageHistoryLimit }}</span>
+      </div>
+      <p class="text-sm text-n-slate-11 italic">
+        {{ t('CAPTAIN.ASSISTANTS.FORM.MESSAGE_HISTORY_LIMIT.DESCRIPTION') }}
       </p>
     </div>
 

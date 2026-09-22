@@ -638,6 +638,10 @@
           "LABEL": "Response Temperature",
           "DESCRIPTION": "Adjust how creative or restrictive the assistant's responses should be. Lower values produce more focused and deterministic responses, while higher values allow for more creative and varied outputs."
         },
+        "MESSAGE_HISTORY_LIMIT": {
+          "LABEL": "Message History Limit",
+          "DESCRIPTION": "Adjust how many previous messages (in pairs) the assistant remembers during a conversation. Lower values save tokens, while higher values provide more context."
+        },
         "DESCRIPTION": {
           "LABEL": "Description",
           "PLACEHOLDER": "Enter assistant description",

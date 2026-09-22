@@ -36,7 +36,8 @@ class Captain::Assistant < ApplicationRecord
   has_many :copilot_threads, dependent: :destroy_async
   has_many :scenarios, class_name: 'Captain::Scenario', dependent: :destroy_async
 
-  store_accessor :config, :temperature, :feature_faq, :feature_memory, :feature_contact_attributes, :feature_order_creation, :product_name
+  store_accessor :config, :temperature, :feature_faq, :feature_memory, :feature_contact_attributes, :feature_order_creation, :product_name,
+                 :message_history_limit
 
   validates :name, presence: true
   validates :description, presence: true
@@ -61,6 +62,13 @@ class Captain::Assistant < ApplicationRecord
 
   def available_tool_ids(include_hidden: true)
     available_agent_tools(include_hidden: include_hidden).pluck(:id)
+  end
+
+  def history_limit_in_messages
+    # Limit is stored as number of pairs (user + assistant).
+    # Default is 5 pairs (10 messages). Max is 20 pairs (40 messages).
+    pairs = message_history_limit.presence || 5
+    pairs.to_i.clamp(1, 20) * 2
   end
 
   def push_event_data
