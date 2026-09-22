@@ -19,6 +19,10 @@ class Captain::Tools::Copilot::Woocommerce::PushOrderService < Captain::Tools::B
     return 'Failed to push order to WooCommerce.' if result.nil?
     return "WooCommerce error: #{result['message']}" if result['id'].nil?
 
+    if result['customer_id'].to_i > 0 && order.contact
+      save_external_customer_id(order.contact, 'woocommerce', result['customer_id'])
+    end
+
     sync_external_id(order, result['id'])
     format_success(order, result)
   end
@@ -43,13 +47,18 @@ class Captain::Tools::Copilot::Woocommerce::PushOrderService < Captain::Tools::B
   end
 
   def build_payload(order)
-    {
+    payload = {
       line_items: order.items.map { |i| { product_id: i.product_id.to_i, quantity: i.quantity } },
       billing: { first_name: order.customer_name, phone: order.customer_phone, address_1: order.customer_address },
       shipping: { first_name: order.customer_name, address_1: order.customer_address },
       customer_note: order.customer_note,
       status: 'processing'
     }
+
+    cached_id = get_external_customer_id(order.contact, 'woocommerce')
+    payload[:customer_id] = cached_id.to_i if cached_id.present?
+
+    payload
   end
 
   def sync_external_id(order, woo_order_id)

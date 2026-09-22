@@ -51,10 +51,15 @@ class Captain::Tools::Copilot::Kiotviet::PushOrderService < Captain::Tools::Base
   end
 
   def resolve_kiotviet_customer(order)
-    existing = find_existing_customer(order.customer_phone)
-    return existing['id'] if existing.present?
+    contact = order.contact
+    cached_id = get_external_customer_id(contact, 'kiotviet')
+    return cached_id if cached_id.present?
 
-    create_kiotviet_customer(order)
+    existing = find_existing_customer(order.customer_phone)
+    resolved_id = existing.present? ? existing['id'] : create_kiotviet_customer(order)
+
+    save_external_customer_id(contact, 'kiotviet', resolved_id) if contact.present? && resolved_id.present?
+    resolved_id
   end
 
   def find_existing_customer(phone)

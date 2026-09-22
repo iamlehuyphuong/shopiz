@@ -22,6 +22,10 @@ class Captain::Tools::Copilot::Woocommerce::CreateCustomerService < Captain::Too
     return 'Failed to create customer on WooCommerce.' if result.nil?
     return "WooCommerce error: #{result['message']}" if result['id'].nil?
 
+    if @conversation&.contact
+      save_external_customer_id(@conversation.contact, 'woocommerce', result['id'])
+    end
+
     format_success(result)
   end
 

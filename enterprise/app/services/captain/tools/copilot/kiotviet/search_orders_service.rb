@@ -39,9 +39,20 @@ class Captain::Tools::Copilot::Kiotviet::SearchOrdersService < Captain::Tools::B
   end
 
   def find_customer_id(phone, code)
+    contact = @conversation&.contact
+    if contact && (phone.blank? || contact.phone_number == phone)
+      cached = get_external_customer_id(contact, 'kiotviet')
+      return cached if cached.present?
+    end
+
     return nil if phone.blank? && code.blank?
 
-    find_customer_by_code(code) || find_customer_by_phone(phone)
+    found = find_customer_by_code(code) || find_customer_by_phone(phone)
+    if found && contact && (phone.blank? || contact.phone_number == phone)
+      save_external_customer_id(contact, 'kiotviet', found)
+    end
+
+    found
   end
 
   def find_customer_by_code(code)

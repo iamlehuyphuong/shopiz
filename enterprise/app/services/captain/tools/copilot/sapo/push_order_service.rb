@@ -21,6 +21,10 @@ class Captain::Tools::Copilot::Sapo::PushOrderService < Captain::Tools::BaseTool
     sapo_order = result['order']
     return 'Sapo returned an error.' if sapo_order.nil?
 
+    if sapo_order['customer'] && order.contact
+      save_external_customer_id(order.contact, 'sapo', sapo_order['customer']['id'])
+    end
+
     sync_external_id(order, sapo_order['id'])
     format_success(order, sapo_order)
   end
@@ -45,12 +49,19 @@ class Captain::Tools::Copilot::Sapo::PushOrderService < Captain::Tools::BaseTool
   end
 
   def build_payload(order)
-    {
+    payload = {
       line_items: order.items.map { |item| { variant_id: item.product_id, quantity: item.quantity, price: item.unit_price } },
-      customer: { first_name: order.customer_name, phone: order.customer_phone },
       shipping_address: { address1: order.customer_address },
       note: order.customer_note
     }
+
+    cached_id = get_external_customer_id(order.contact, 'sapo')
+    if cached_id.present?
+      payload[:customer] = { id: cached_id }
+    else
+      payload[:customer] = { first_name: order.customer_name, phone: order.customer_phone }
+    end
+    payload
   end
 
   def sync_external_id(order, sapo_order_id)

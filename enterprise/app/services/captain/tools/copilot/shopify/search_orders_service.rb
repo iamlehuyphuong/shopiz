@@ -30,11 +30,22 @@ class Captain::Tools::Copilot::Shopify::SearchOrdersService < Captain::Tools::Ba
   private
 
   def resolve_orders(email, phone, status)
+    contact = @conversation&.contact
+    if contact && (email.blank? || contact.email == email) && (phone.blank? || contact.phone_number == phone)
+      cached_id = get_external_customer_id(contact, 'shopify')
+      return fetch_orders(customer_id: cached_id, status: status || 'any') if cached_id.present?
+    end
+
     if email.present? || phone.present?
       customers = search_customers(email, phone)
       return [] if customers.blank?
 
-      fetch_orders(customer_id: customers.first['id'], status: status || 'any')
+      found_id = customers.first['id']
+      if contact && (email.blank? || contact.email == email) && (phone.blank? || contact.phone_number == phone)
+        save_external_customer_id(contact, 'shopify', found_id)
+      end
+
+      fetch_orders(customer_id: found_id, status: status || 'any')
     else
       fetch_orders(status: status || 'any')
     end

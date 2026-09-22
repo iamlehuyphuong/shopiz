@@ -23,6 +23,10 @@ class Captain::Tools::Copilot::Haravan::CreateCustomerService < Captain::Tools::
     customer = result['customer']
     return 'Haravan returned an error.' if customer.nil?
 
+    if @conversation&.contact
+      save_external_customer_id(@conversation.contact, 'haravan', customer['id'])
+    end
+
     format_success(customer)
   end
 

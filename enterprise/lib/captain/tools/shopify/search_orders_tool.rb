@@ -14,10 +14,16 @@ class Captain::Tools::Shopify::SearchOrdersTool < Captain::Tools::BasePublicTool
 
     log_tool_usage('shopify_search_orders', { contact_id: contact.id })
 
-    customers = search_customers(contact)
-    return 'No matching Shopify customer found' if customers.blank?
+    customer_id = get_external_customer_id(contact, 'shopify')
+    if customer_id.blank?
+      customers = search_customers(contact)
+      return 'No matching Shopify customer found' if customers.blank?
+      
+      customer_id = customers.first['id']
+      save_external_customer_id(contact, 'shopify', customer_id)
+    end
 
-    orders = fetch_orders(customers.first['id'])
+    orders = fetch_orders(customer_id)
     return 'No orders found for this customer' if orders.blank?
 
     format_orders(orders)

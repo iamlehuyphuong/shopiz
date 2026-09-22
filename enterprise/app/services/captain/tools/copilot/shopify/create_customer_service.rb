@@ -23,6 +23,10 @@ class Captain::Tools::Copilot::Shopify::CreateCustomerService < Captain::Tools::
     customer = result['customer']
     return "Shopify error: #{result['errors']}" if customer.nil?
 
+    if @conversation&.contact
+      save_external_customer_id(@conversation.contact, 'shopify', customer['id'])
+    end
+
     format_success(customer)
   end
 

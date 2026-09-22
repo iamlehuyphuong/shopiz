@@ -29,8 +29,16 @@ class Captain::Tools::Kiotviet::SearchOrdersTool < Captain::Tools::BasePublicToo
   private
 
   def find_kiotviet_customer(contact)
+    cached_id = get_external_customer_id(contact, 'kiotviet')
+    return { 'id' => cached_id } if cached_id.present?
+
     customer = search_by_phone(contact.phone_number) if contact.phone_number.present?
     customer ||= search_by_name(contact.name) if contact.name.present?
+
+    if customer.present?
+      save_external_customer_id(contact, 'kiotviet', customer['id'])
+    end
+    
     customer
   end
 

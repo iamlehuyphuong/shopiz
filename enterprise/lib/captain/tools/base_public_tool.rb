@@ -1,6 +1,8 @@
 require 'agents'
 
 class Captain::Tools::BasePublicTool < Agents::Tool
+  include Captain::Tools::Concerns::EcommerceIdentityMap
+
   def initialize(assistant)
     @assistant = assistant
     super()

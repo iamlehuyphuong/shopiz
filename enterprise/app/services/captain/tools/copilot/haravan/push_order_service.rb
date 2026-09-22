@@ -21,6 +21,10 @@ class Captain::Tools::Copilot::Haravan::PushOrderService < Captain::Tools::BaseT
     haravan_order = result['order']
     return 'Haravan returned an error.' if haravan_order.nil?
 
+    if haravan_order['customer'] && order.contact
+      save_external_customer_id(order.contact, 'haravan', haravan_order['customer']['id'])
+    end
+
     sync_external_id(order, haravan_order['id'])
     format_success(order, haravan_order)
   end
@@ -45,12 +49,19 @@ class Captain::Tools::Copilot::Haravan::PushOrderService < Captain::Tools::BaseT
   end
 
   def build_payload(order)
-    {
+    payload = {
       line_items: order.items.map { |item| { variant_id: item.product_id, quantity: item.quantity, price: item.unit_price } },
-      customer: { first_name: order.customer_name, phone: order.customer_phone },
       shipping_address: { address1: order.customer_address },
       note: order.customer_note
     }
+
+    cached_id = get_external_customer_id(order.contact, 'haravan')
+    if cached_id.present?
+      payload[:customer] = { id: cached_id }
+    else
+      payload[:customer] = { first_name: order.customer_name, phone: order.customer_phone }
+    end
+    payload
   end
 
   def sync_external_id(order, haravan_order_id)

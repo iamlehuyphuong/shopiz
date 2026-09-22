@@ -21,6 +21,10 @@ class Captain::Tools::Copilot::Shopify::PushOrderService < Captain::Tools::BaseT
     shopify_order = result['order']
     return "Shopify error: #{result['errors']}" if shopify_order.nil?
 
+    if shopify_order['customer'] && order.contact
+      save_external_customer_id(order.contact, 'shopify', shopify_order['customer']['id'])
+    end
+
     sync_external_id(order, shopify_order['id'])
     format_success(order, shopify_order)
   end
@@ -45,13 +49,20 @@ class Captain::Tools::Copilot::Shopify::PushOrderService < Captain::Tools::BaseT
   end
 
   def build_payload(order)
-    {
+    payload = {
       line_items: order.items.map { |i| { variant_id: i.product_id, quantity: i.quantity, price: i.unit_price } },
-      customer: { first_name: order.customer_name, phone: order.customer_phone },
       shipping_address: { address1: order.customer_address },
       note: order.customer_note,
       financial_status: 'pending'
     }
+
+    cached_id = get_external_customer_id(order.contact, 'shopify')
+    if cached_id.present?
+      payload[:customer] = { id: cached_id }
+    else
+      payload[:customer] = { first_name: order.customer_name, phone: order.customer_phone }
+    end
+    payload
   end
 
   def sync_external_id(order, shopify_order_id)

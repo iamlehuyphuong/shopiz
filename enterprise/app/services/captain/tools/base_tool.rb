@@ -1,5 +1,6 @@
 class Captain::Tools::BaseTool < RubyLLM::Tool
   prepend Captain::Tools::Instrumentation
+  include Captain::Tools::Concerns::EcommerceIdentityMap
 
   attr_accessor :assistant, :user, :conversation
 
