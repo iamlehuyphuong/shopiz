@@ -106,8 +106,17 @@ class Captain::Assistant < ApplicationRecord
     ]
 
     tools.concat(calendly_agent_tools) if calendly_hook_active?
+    tools.concat(ecommerce_agent_tools) if feature_order_creation.present?
 
     tools
+  end
+
+  def ecommerce_agent_tools
+    ecommerce_tool_ids = %w[search_products suggest_products create_order_draft]
+    ecommerce_tool_ids.filter_map do |tool_id|
+      tool_class = self.class.resolve_tool_class(tool_id)
+      tool_class&.new(self)
+    end
   end
 
   CALENDLY_TOOL_IDS = %w[
