@@ -55,9 +55,10 @@ const showPlatformDropdown = ref(false);
 const ecomIntegrations = computed(() => {
   const allIntegrations =
     store.getters['integrations/getAppIntegrations'] || [];
-  const filtered = allIntegrations.filter(app =>
-    ECOMMERCE_APP_IDS.includes(app.id) &&
-    ['published', 'beta', 'coming_soon'].includes(app.status)
+  const filtered = allIntegrations.filter(
+    app =>
+      ECOMMERCE_APP_IDS.includes(app.id) &&
+      ['published', 'beta', 'coming_soon'].includes(app.status)
   );
   return filtered.sort((a, b) => {
     const getStatusWeight = status => {

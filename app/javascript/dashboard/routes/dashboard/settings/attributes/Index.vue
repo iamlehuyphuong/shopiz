@@ -196,7 +196,12 @@ const filteredAttributes = computed(() => {
         <template #actions>
           <div class="flex gap-2">
             <Button
-              :label="$t('ATTRIBUTES_MGMT.HEADER_ADD_FROM_LIST_BTN_TXT', 'Thêm từ danh sách')"
+              :label="
+                $t(
+                  'ATTRIBUTES_MGMT.HEADER_ADD_FROM_LIST_BTN_TXT',
+                  'Thêm từ danh sách'
+                )
+              "
               icon="i-lucide-list"
               size="sm"
               color="slate"
@@ -247,7 +252,11 @@ const filteredAttributes = computed(() => {
       :on-close="hideAddPopup"
       :selected-attribute-model-tab="selectedTabIndex"
     />
-    <woot-modal v-model:show="showAddFromListPopup" :on-close="hideAddFromListPopup" size="lg">
+    <woot-modal
+      v-model:show="showAddFromListPopup"
+      :on-close="hideAddFromListPopup"
+      size="lg"
+    >
       <AddAttributesFromList
         :selected-attribute-model-tab="selectedTabIndex"
         @close="hideAddFromListPopup"

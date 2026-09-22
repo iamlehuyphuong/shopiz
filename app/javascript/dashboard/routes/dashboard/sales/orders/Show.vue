@@ -27,7 +27,7 @@ const fetchOrderDetails = async () => {
 
 const isUpdating = ref(false);
 
-const updateOrder = async (payload) => {
+const updateOrder = async payload => {
   if (!order.value) return;
   isUpdating.value = true;
   try {
@@ -145,7 +145,10 @@ const orderItems = computed(() => order.value?.items || []);
         </span>
       </h1>
 
-      <div v-if="order && order.external_source" class="flex items-center gap-3">
+      <div
+        v-if="order && order.external_source"
+        class="flex items-center gap-3"
+      >
         <Button
           faded
           slate
@@ -165,14 +168,14 @@ const orderItems = computed(() => order.value?.items || []);
     </div>
 
     <div v-else class="py-6 max-w-4xl mx-auto w-full flex flex-col gap-8">
-      
       <!-- Top Grid: General & Customer -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
         <!-- Khách hàng -->
         <div class="flex flex-col gap-3">
           <span class="text-sm font-medium text-n-slate-11">Khách hàng</span>
-          <div class="rounded-xl border border-n-weak bg-n-solid-1 p-4 flex flex-col gap-2 h-full">
+          <div
+            class="rounded-xl border border-n-weak bg-n-solid-1 p-4 flex flex-col gap-2 h-full"
+          >
             <div class="flex items-center gap-3">
               <div v-if="order.contact?.thumbnail || order.contact?.avatar_url">
                 <img
@@ -185,11 +188,17 @@ const orderItems = computed(() => order.value?.items || []);
                 v-else
                 class="w-9 h-9 rounded-md bg-n-brand text-white flex items-center justify-center shrink-0 font-medium text-sm uppercase"
               >
-                {{ (order.customer_name || order.contact?.name || '?').charAt(0) }}
+                {{
+                  (order.customer_name || order.contact?.name || '?').charAt(0)
+                }}
               </div>
               <div class="flex-1 min-w-0">
                 <div class="text-sm font-medium text-n-slate-12 truncate">
-                  {{ order.customer_name || order.contact?.name || $t('SALES.DIALOG_ORDER_DETAIL.FALLBACKS.GUEST') }}
+                  {{
+                    order.customer_name ||
+                    order.contact?.name ||
+                    $t('SALES.DIALOG_ORDER_DETAIL.FALLBACKS.GUEST')
+                  }}
                 </div>
                 <div
                   v-if="order.customer_phone || order.contact?.phone_number"
@@ -200,14 +209,27 @@ const orderItems = computed(() => order.value?.items || []);
               </div>
             </div>
             <div
-              v-if="order.shipping_address || order.customer_address || order.customer_note || order.note"
+              v-if="
+                order.shipping_address ||
+                order.customer_address ||
+                order.customer_note ||
+                order.note
+              "
               class="flex flex-col gap-1.5 pt-2 mt-1 border-t border-n-weak text-xs text-n-slate-10"
             >
-              <div v-if="order.shipping_address || order.customer_address" class="flex items-start gap-1">
+              <div
+                v-if="order.shipping_address || order.customer_address"
+                class="flex items-start gap-1"
+              >
                 <i class="i-lucide-map-pin text-xs shrink-0 mt-0.5" />
-                <span>{{ order.shipping_address || order.customer_address }}</span>
+                <span>{{
+                  order.shipping_address || order.customer_address
+                }}</span>
               </div>
-              <div v-if="order.customer_note || order.note" class="flex items-start gap-1">
+              <div
+                v-if="order.customer_note || order.note"
+                class="flex items-start gap-1"
+              >
                 <i class="i-lucide-file-text text-xs shrink-0 mt-0.5" />
                 <span>{{ order.customer_note || order.note }}</span>
               </div>
@@ -218,18 +240,38 @@ const orderItems = computed(() => order.value?.items || []);
         <!-- Thông tin chung -->
         <div class="flex flex-col gap-3">
           <span class="text-sm font-medium text-n-slate-11">Thông tin chung</span>
-          <div class="rounded-xl border border-n-weak bg-n-solid-1 p-4 flex flex-col gap-3 h-full">
+          <div
+            class="rounded-xl border border-n-weak bg-n-solid-1 p-4 flex flex-col gap-3 h-full"
+          >
             <div class="flex flex-col gap-1.5 mb-2 pb-3 border-b border-n-weak">
               <label class="text-sm font-medium text-n-slate-11">Trạng thái đơn hàng</label>
               <ComboBox
                 :model-value="order.status"
                 :options="[
-                  { label: $t('CONVERSATION.ORDER_PANEL.STATUS.DRAFT'), value: 'draft' },
-                  { label: $t('CONVERSATION.ORDER_PANEL.STATUS.CONFIRMED'), value: 'confirmed' },
-                  { label: $t('CONVERSATION.ORDER_PANEL.STATUS.PROCESSING'), value: 'processing' },
-                  { label: $t('CONVERSATION.ORDER_PANEL.STATUS.SHIPPED'), value: 'shipped' },
-                  { label: $t('CONVERSATION.ORDER_PANEL.STATUS.DELIVERED'), value: 'delivered' },
-                  { label: $t('CONVERSATION.ORDER_PANEL.STATUS.CANCELLED'), value: 'cancelled' }
+                  {
+                    label: $t('CONVERSATION.ORDER_PANEL.STATUS.DRAFT'),
+                    value: 'draft',
+                  },
+                  {
+                    label: $t('CONVERSATION.ORDER_PANEL.STATUS.CONFIRMED'),
+                    value: 'confirmed',
+                  },
+                  {
+                    label: $t('CONVERSATION.ORDER_PANEL.STATUS.PROCESSING'),
+                    value: 'processing',
+                  },
+                  {
+                    label: $t('CONVERSATION.ORDER_PANEL.STATUS.SHIPPED'),
+                    value: 'shipped',
+                  },
+                  {
+                    label: $t('CONVERSATION.ORDER_PANEL.STATUS.DELIVERED'),
+                    value: 'delivered',
+                  },
+                  {
+                    label: $t('CONVERSATION.ORDER_PANEL.STATUS.CANCELLED'),
+                    value: 'cancelled',
+                  },
                 ]"
                 @update:model-value="val => updateOrder({ status: val })"
               />
@@ -256,7 +298,6 @@ const orderItems = computed(() => order.value?.items || []);
             </div>
           </div>
         </div>
-        
       </div>
 
       <!-- Middle Grid: Payment & Shipping -->
@@ -264,7 +305,9 @@ const orderItems = computed(() => order.value?.items || []);
         <!-- Thanh toán -->
         <div class="flex flex-col gap-3">
           <span class="text-sm font-medium text-n-slate-11">Thanh toán</span>
-          <div class="rounded-xl border border-n-weak bg-n-solid-1 p-4 flex flex-col gap-3 h-full">
+          <div
+            class="rounded-xl border border-n-weak bg-n-solid-1 p-4 flex flex-col gap-3 h-full"
+          >
             <div class="flex flex-col gap-1.5">
               <label class="text-sm font-medium text-n-slate-11">Phương thức</label>
               <ComboBox
@@ -272,9 +315,11 @@ const orderItems = computed(() => order.value?.items || []);
                 :options="[
                   { label: 'COD', value: 'cod' },
                   { label: 'Chuyển khoản', value: 'bank_transfer' },
-                  { label: 'Thẻ / Ví điện tử', value: 'card' }
+                  { label: 'Thẻ / Ví điện tử', value: 'card' },
                 ]"
-                @update:model-value="val => updateOrder({ payment_method: val })"
+                @update:model-value="
+                  val => updateOrder({ payment_method: val })
+                "
               />
             </div>
             <div class="flex flex-col gap-1.5 mt-1">
@@ -282,12 +327,25 @@ const orderItems = computed(() => order.value?.items || []);
               <ComboBox
                 :model-value="order.payment_status || 'unpaid'"
                 :options="[
-                  { label: $t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.UNPAID'), value: 'unpaid' },
-                  { label: $t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PAID'), value: 'paid' },
-                  { label: $t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PARTIALLY_REFUNDED'), value: 'partially_refunded' },
-                  { label: 'Hoàn tiền', value: 'refunded' }
+                  {
+                    label: $t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.UNPAID'),
+                    value: 'unpaid',
+                  },
+                  {
+                    label: $t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PAID'),
+                    value: 'paid',
+                  },
+                  {
+                    label: $t(
+                      'CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PARTIALLY_REFUNDED'
+                    ),
+                    value: 'partially_refunded',
+                  },
+                  { label: 'Hoàn tiền', value: 'refunded' },
                 ]"
-                @update:model-value="val => updateOrder({ payment_status: val })"
+                @update:model-value="
+                  val => updateOrder({ payment_status: val })
+                "
               />
             </div>
           </div>
@@ -296,27 +354,36 @@ const orderItems = computed(() => order.value?.items || []);
         <!-- Vận chuyển -->
         <div class="flex flex-col gap-3">
           <span class="text-sm font-medium text-n-slate-11">Vận chuyển</span>
-          <div class="rounded-xl border border-n-weak bg-n-solid-1 p-4 flex flex-col gap-3 h-full">
+          <div
+            class="rounded-xl border border-n-weak bg-n-solid-1 p-4 flex flex-col gap-3 h-full"
+          >
             <div class="flex items-center justify-between">
               <span class="text-sm text-n-slate-11">Đơn vị</span>
-              <span class="text-sm font-medium text-n-slate-12">{{ order.shipping_carrier || '--' }}</span>
+              <span class="text-sm font-medium text-n-slate-12">{{
+                order.shipping_carrier || '--'
+              }}</span>
             </div>
-            <div v-if="order.tracking_code" class="flex items-center justify-between">
+            <div
+              v-if="order.tracking_code"
+              class="flex items-center justify-between"
+            >
               <span class="text-sm text-n-slate-11">Mã vận đơn</span>
-              <span class="text-sm font-medium text-n-brand">{{ order.tracking_code }}</span>
+              <span class="text-sm font-medium text-n-brand">{{
+                order.tracking_code
+              }}</span>
             </div>
           </div>
         </div>
       </div>
-
-
 
       <!-- Danh sách sản phẩm -->
       <div class="flex flex-col gap-3">
         <span class="text-sm font-medium text-n-slate-11">
           Sản phẩm ({{ orderItems.length }})
         </span>
-        <div class="rounded-xl border border-n-weak bg-n-solid-1 overflow-hidden">
+        <div
+          class="rounded-xl border border-n-weak bg-n-solid-1 overflow-hidden"
+        >
           <div class="overflow-y-auto divide-y divide-n-weak">
             <div
               v-for="(item, index) in orderItems"
@@ -337,14 +404,21 @@ const orderItems = computed(() => order.value?.items || []);
               </div>
               <div class="flex-1 min-w-0">
                 <div class="text-sm text-n-slate-12 truncate">
-                  {{ item.product_name || item.name || `Sản phẩm ${index + 1}` }}
+                  {{
+                    item.product_name || item.name || `Sản phẩm ${index + 1}`
+                  }}
                 </div>
                 <div class="text-xs text-n-slate-10 mt-0.5">
-                  {{ item.quantity || 1 }} x {{ formatCurrency(item.unit_price || item.price) }}
+                  {{ item.quantity || 1 }} x
+                  {{ formatCurrency(item.unit_price || item.price) }}
                 </div>
               </div>
               <span class="text-sm font-medium text-n-slate-12 shrink-0">
-                {{ formatCurrency((item.quantity || 1) * (item.unit_price || item.price)) }}
+                {{
+                  formatCurrency(
+                    (item.quantity || 1) * (item.unit_price || item.price)
+                  )
+                }}
               </span>
             </div>
           </div>
@@ -352,19 +426,25 @@ const orderItems = computed(() => order.value?.items || []);
       </div>
 
       <!-- Summary card -->
-      <div class="p-5 rounded-xl border border-n-weak bg-n-solid-1 flex flex-col gap-3 w-full">
+      <div
+        class="p-5 rounded-xl border border-n-weak bg-n-solid-1 flex flex-col gap-3 w-full"
+      >
         <div class="flex justify-between items-center text-sm">
           <span class="text-n-slate-11">Tạm tính</span>
-          <span class="text-n-slate-12 font-medium">{{ formatCurrency(
-          Number(order.total_amount || 0) -
-            Number(order.shipping_fee || 0) -
-            Number(order.tax || 0) +
-            Number(order.discount_amount || 0)
-        ) }}</span>
+          <span class="text-n-slate-12 font-medium">{{
+            formatCurrency(
+              Number(order.total_amount || 0) -
+                Number(order.shipping_fee || 0) -
+                Number(order.tax || 0) +
+                Number(order.discount_amount || 0)
+            )
+          }}</span>
         </div>
         <div class="flex justify-between items-center text-sm">
           <span class="text-n-slate-11">Phí vận chuyển</span>
-          <span class="text-n-slate-12">{{ formatCurrency(order.shipping_fee) }}</span>
+          <span class="text-n-slate-12">{{
+            formatCurrency(order.shipping_fee)
+          }}</span>
         </div>
         <div class="flex justify-between items-center text-sm">
           <span class="text-n-slate-11">Giảm giá</span>
@@ -377,7 +457,9 @@ const orderItems = computed(() => order.value?.items || []);
         <div class="h-px bg-n-weak w-full my-1" />
         <div class="flex justify-between items-center">
           <span class="text-base font-medium text-n-slate-12">Tổng tiền</span>
-          <span class="text-lg font-bold text-n-brand">{{ formatCurrency(order.total_amount) }}</span>
+          <span class="text-lg font-bold text-n-brand">{{
+            formatCurrency(order.total_amount)
+          }}</span>
         </div>
       </div>
     </div>

@@ -215,7 +215,8 @@ const STYLE_CONFIG = {
 };
 
 const variantClasses = computed(() => {
-  const colorConfig = STYLE_CONFIG.colors[computedColor.value] || STYLE_CONFIG.colors.blue;
+  const colorConfig =
+    STYLE_CONFIG.colors[computedColor.value] || STYLE_CONFIG.colors.blue;
 
   const variantMap = {
     ghost: `${colorConfig.ghost}`,

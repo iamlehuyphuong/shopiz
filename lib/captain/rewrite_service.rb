@@ -50,9 +50,6 @@ class Captain::RewriteService < Captain::BaseTaskService
 
     variables = {
       'assistant_name' => context['assistant_name'] || context[:assistant_name],
-      'company_name' => context['company_name'] || context[:company_name],
-      'industry' => context['industry'] || context[:industry],
-      'core_products' => context['core_products'] || context[:core_products],
       'current_description' => content
     }
 

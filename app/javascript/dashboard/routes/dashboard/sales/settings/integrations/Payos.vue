@@ -30,7 +30,9 @@ const webhookUrl = computed(() => {
 
 const copyWebhook = () => {
   navigator.clipboard.writeText(webhookUrl.value);
-  useAlert(t('SALES.SETTINGS.PAYMENT.WEBHOOK_COPIED') || 'Đã sao chép Webhook URL');
+  useAlert(
+    t('SALES.SETTINGS.PAYMENT.WEBHOOK_COPIED') || 'Đã sao chép Webhook URL'
+  );
 };
 
 // Dummy integration object to match the props expected by Integration.vue
@@ -213,11 +215,21 @@ onMounted(() => {
         >
           <div class="flex flex-col gap-4">
             <div class="flex flex-col min-w-0 gap-1">
-              <label class="mb-0.5 text-heading-3 text-n-slate-12">{{ t('SALES.SETTINGS.PAYMENT.WEBHOOK_URL') }}</label>
-              <div class="flex items-center gap-2 px-3 py-2 rounded-lg bg-n-alpha-black2 border border-n-weak">
-                <span class="flex-1 text-sm text-n-slate-11 truncate select-all">{{ webhookUrl }}</span>
-                <button type="button" @click="copyWebhook" class="p-1 rounded flex items-center justify-center hover:bg-n-alpha-2 transition-colors">
-                  <i class="i-lucide-copy text-sm text-n-slate-11"></i>
+              <label class="mb-0.5 text-heading-3 text-n-slate-12">{{
+                t('SALES.SETTINGS.PAYMENT.WEBHOOK_URL')
+              }}</label>
+              <div
+                class="flex items-center gap-2 px-3 py-2 rounded-lg bg-n-alpha-black2 border border-n-weak"
+              >
+                <span
+                  class="flex-1 text-sm text-n-slate-11 truncate select-all"
+                  >{{ webhookUrl }}</span>
+                <button
+                  type="button"
+                  class="p-1 rounded flex items-center justify-center hover:bg-n-alpha-2 transition-colors"
+                  @click="copyWebhook"
+                >
+                  <i class="i-lucide-copy text-sm text-n-slate-11" />
                 </button>
               </div>
             </div>

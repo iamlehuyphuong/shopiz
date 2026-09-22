@@ -43,7 +43,8 @@ watch(
   currentAccount,
   () => {
     if (!hasInitializedFilter && currentAccount.value?.settings) {
-      sourceFilter.value = currentAccount.value.settings.active_ecommerce_platform || 'all';
+      sourceFilter.value =
+        currentAccount.value.settings.active_ecommerce_platform || 'all';
       hasInitializedFilter = true;
     }
   },
@@ -69,7 +70,9 @@ const activeSourceName = computed(
 const customDateRange = ref([subDays(new Date(), 29), new Date()]);
 const selectedDateRange = ref(DATE_RANGE_TYPES.LAST_30_DAYS);
 
-const fromTimestamp = computed(() => getUnixStartOfDay(customDateRange.value[0]));
+const fromTimestamp = computed(() =>
+  getUnixStartOfDay(customDateRange.value[0])
+);
 const toTimestamp = computed(() => getUnixEndOfDay(customDateRange.value[1]));
 
 const onDateRangeChange = value => {
@@ -243,23 +246,41 @@ const onDeleteOrder = order => {
 
 const onExportOrders = () => {
   if (!filteredOrders.value.length) {
-    useAlert(t('SALES.MODULE_ORDERS.ALERTS.NO_ORDERS_TO_EXPORT') || 'Không có đơn hàng nào để xuất.');
+    useAlert(
+      t('SALES.MODULE_ORDERS.ALERTS.NO_ORDERS_TO_EXPORT') ||
+        'Không có đơn hàng nào để xuất.'
+    );
     return;
   }
 
   const csvRows = [];
   const headers = [
-    'Mã đơn hàng', 'Mã nội bộ', 'Nền tảng', 'Trạng thái đơn',
-    'Khách hàng', 'Số điện thoại', 'Địa chỉ', 'Ghi chú',
-    'Phương thức TT', 'Trạng thái TT', 'Tổng tiền', 'Phí vận chuyển',
-    'Mã vận đơn', 'ĐV vận chuyển', 'Sản phẩm', 'Ngày tạo', 'Cập nhật cuối'
+    'Mã đơn hàng',
+    'Mã nội bộ',
+    'Nền tảng',
+    'Trạng thái đơn',
+    'Khách hàng',
+    'Số điện thoại',
+    'Địa chỉ',
+    'Ghi chú',
+    'Phương thức TT',
+    'Trạng thái TT',
+    'Tổng tiền',
+    'Phí vận chuyển',
+    'Mã vận đơn',
+    'ĐV vận chuyển',
+    'Sản phẩm',
+    'Ngày tạo',
+    'Cập nhật cuối',
   ];
   csvRows.push(headers.join(','));
 
   filteredOrders.value.forEach(order => {
     // Format products list
-    const productsString = (order.items || []).map(item => `${item.product_name || 'SP'} (x${item.quantity})`).join('; ');
-    
+    const productsString = (order.items || [])
+      .map(item => `${item.product_name || 'SP'} (x${item.quantity})`)
+      .join('; ');
+
     const row = [
       order.external_order_id || order.id,
       order.id,
@@ -277,16 +298,16 @@ const onExportOrders = () => {
       `"${(order.shipping_carrier || '').replace(/"/g, '""')}"`,
       `"${productsString.replace(/"/g, '""')}"`,
       formatDate(order.created_at),
-      formatDate(order.updated_at)
+      formatDate(order.updated_at),
     ];
     csvRows.push(row.join(','));
   });
 
-  const csvContent = "data:text/csv;charset=utf-8,\uFEFF" + csvRows.join('\n');
+  const csvContent = 'data:text/csv;charset=utf-8,\uFEFF' + csvRows.join('\n');
   const encodedUri = encodeURI(csvContent);
-  const link = document.createElement("a");
-  link.setAttribute("href", encodedUri);
-  link.setAttribute("download", `orders_${new Date().getTime()}.csv`);
+  const link = document.createElement('a');
+  link.setAttribute('href', encodedUri);
+  link.setAttribute('download', `orders_${new Date().getTime()}.csv`);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -486,7 +507,11 @@ onBeforeMount(() => {
             @click="handleSyncClick"
           />
           <Button
-            v-tooltip.top="$te('SALES.MODULE_ORDERS.ACTIONS.EXPORT') ? $t('SALES.MODULE_ORDERS.ACTIONS.EXPORT') : 'Xuất dữ liệu'"
+            v-tooltip.top="
+              $te('SALES.MODULE_ORDERS.ACTIONS.EXPORT')
+                ? $t('SALES.MODULE_ORDERS.ACTIONS.EXPORT')
+                : 'Xuất dữ liệu'
+            "
             icon="i-lucide-download"
             slate
             sm

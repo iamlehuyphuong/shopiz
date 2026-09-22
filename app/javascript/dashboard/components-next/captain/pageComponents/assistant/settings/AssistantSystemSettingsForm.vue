@@ -58,8 +58,12 @@ const updateStateFromAssistant = assistant => {
   state.handoffMessage = config.handoff_message;
   state.resolutionMessage = config.resolution_message;
   state.instructions = config.instructions;
-  state.temperature = config.temperature !== undefined ? Number(config.temperature) : 1;
-  state.messageHistoryLimit = config.message_history_limit !== undefined ? Number(config.message_history_limit) : 5;
+  state.temperature =
+    config.temperature !== undefined ? Number(config.temperature) : 1;
+  state.messageHistoryLimit =
+    config.message_history_limit !== undefined
+      ? Number(config.message_history_limit)
+      : 5;
 };
 
 const handleSystemMessagesUpdate = async () => {
@@ -167,7 +171,9 @@ watch(
           step="1"
           class="w-full"
         />
-        <span class="text-sm text-n-slate-12">{{ state.messageHistoryLimit }}</span>
+        <span class="text-sm text-n-slate-12">{{
+          state.messageHistoryLimit
+        }}</span>
       </div>
       <p class="text-sm text-n-slate-11 italic">
         {{ t('CAPTAIN.ASSISTANTS.FORM.MESSAGE_HISTORY_LIMIT.DESCRIPTION') }}

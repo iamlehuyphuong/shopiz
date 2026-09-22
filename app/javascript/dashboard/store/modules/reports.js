@@ -2,7 +2,10 @@
 import * as types from '../mutation-types';
 import { STATUS } from '../constants';
 import Report from '../../api/reports';
-import { downloadExcelFile, generateFileName } from '../../helper/downloadHelper';
+import {
+  downloadExcelFile,
+  generateFileName,
+} from '../../helper/downloadHelper';
 import AnalyticsHelper from '../../helper/AnalyticsHelper';
 import { REPORTS_EVENTS } from '../../helper/AnalyticsHelper/events';
 import { clampDataBetweenTimeline } from 'shared/helpers/ReportsDataHelper';

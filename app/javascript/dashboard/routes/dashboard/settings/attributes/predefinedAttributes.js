@@ -5,7 +5,8 @@ export const predefinedAttributes = {
       {
         attribute_display_name: 'Điểm hài lòng',
         attribute_key: 'csat_score',
-        attribute_description: 'Điểm CSAT đánh giá mức độ hài lòng của khách hàng',
+        attribute_description:
+          'Điểm CSAT đánh giá mức độ hài lòng của khách hàng',
         attribute_display_type: 1, // NUMBER
         attribute_values: [],
       },
@@ -19,7 +20,8 @@ export const predefinedAttributes = {
       {
         attribute_display_name: 'Mức độ rủi ro rời bỏ',
         attribute_key: 'churn_risk',
-        attribute_description: 'Đánh giá nguy cơ khách hàng ngừng sử dụng dịch vụ',
+        attribute_description:
+          'Đánh giá nguy cơ khách hàng ngừng sử dụng dịch vụ',
         attribute_display_type: 6,
         attribute_values: ['Thấp', 'Trung bình', 'Cao'],
       },
@@ -28,7 +30,13 @@ export const predefinedAttributes = {
         attribute_key: 'resolution_path',
         attribute_description: 'Cách giải quyết khiếu nại của khách hàng',
         attribute_display_type: 6,
-        attribute_values: ['Hoàn tiền', 'Đổi mới', 'Sửa chữa', 'Xin lỗi/Tặng voucher', 'Chuyển cấp trên'],
+        attribute_values: [
+          'Hoàn tiền',
+          'Đổi mới',
+          'Sửa chữa',
+          'Xin lỗi/Tặng voucher',
+          'Chuyển cấp trên',
+        ],
       },
       {
         attribute_display_name: 'Khung giờ thuận tiện liên hệ',
@@ -45,14 +53,27 @@ export const predefinedAttributes = {
         attribute_key: 'vip_level',
         attribute_description: 'Mức độ VIP của khách hàng',
         attribute_display_type: 6, // LIST
-        attribute_values: ['Thành viên', 'Bạc', 'Vàng', 'Bạch kim', 'Kim cương'],
+        attribute_values: [
+          'Thành viên',
+          'Bạc',
+          'Vàng',
+          'Bạch kim',
+          'Kim cương',
+        ],
       },
       {
         attribute_display_name: 'Nguồn khách hàng',
         attribute_key: 'customer_source',
         attribute_description: 'Kênh giới thiệu hoặc nguồn gốc khách hàng',
         attribute_display_type: 6,
-        attribute_values: ['Facebook', 'Zalo', 'Website', 'TikTok', 'Giới thiệu', 'Sự kiện'],
+        attribute_values: [
+          'Facebook',
+          'Zalo',
+          'Website',
+          'TikTok',
+          'Giới thiệu',
+          'Sự kiện',
+        ],
       },
       {
         attribute_display_name: 'Sở thích',
@@ -64,7 +85,8 @@ export const predefinedAttributes = {
       {
         attribute_display_name: 'Đặc điểm tính cách',
         attribute_key: 'personality',
-        attribute_description: 'Quan sát về tính cách khách hàng để giao tiếp phù hợp',
+        attribute_description:
+          'Quan sát về tính cách khách hàng để giao tiếp phù hợp',
         attribute_display_type: 0,
         attribute_values: [],
       },
@@ -73,7 +95,12 @@ export const predefinedAttributes = {
         attribute_key: 'disc_profile',
         attribute_description: 'Phân loại nhóm tính cách theo biểu đồ DISC',
         attribute_display_type: 6,
-        attribute_values: ['D (Thống trị)', 'I (Ảnh hưởng)', 'S (Kiên định)', 'C (Tuân thủ)'],
+        attribute_values: [
+          'D (Thống trị)',
+          'I (Ảnh hưởng)',
+          'S (Kiên định)',
+          'C (Tuân thủ)',
+        ],
       },
       {
         attribute_display_name: 'Nghề nghiệp',
@@ -97,14 +124,16 @@ export const predefinedAttributes = {
       {
         attribute_display_name: 'CSAT Score',
         attribute_key: 'csat_score',
-        attribute_description: 'Customer satisfaction score for this conversation',
+        attribute_description:
+          'Customer satisfaction score for this conversation',
         attribute_display_type: 1, // NUMBER
         attribute_values: [],
       },
       {
         attribute_display_name: 'Campaign Channel',
         attribute_key: 'campaign_channel',
-        attribute_description: 'Channel through which the customer was acquired',
+        attribute_description:
+          'Channel through which the customer was acquired',
         attribute_display_type: 6, // LIST
         attribute_values: ['Organic', 'Ads', 'Referral', 'KOL/KOC'],
       },
@@ -120,14 +149,24 @@ export const predefinedAttributes = {
         attribute_key: 'resolution_path',
         attribute_description: 'How the customer complaint was resolved',
         attribute_display_type: 6,
-        attribute_values: ['Refund', 'Replace', 'Repair', 'Apologize/Voucher', 'Escalate'],
+        attribute_values: [
+          'Refund',
+          'Replace',
+          'Repair',
+          'Apologize/Voucher',
+          'Escalate',
+        ],
       },
       {
         attribute_display_name: 'Preferred Contact Time',
         attribute_key: 'preferred_contact_time',
         attribute_description: 'Best time frame to contact the customer',
         attribute_display_type: 6,
-        attribute_values: ['Morning (8AM-12PM)', 'Afternoon (1PM-5PM)', 'Evening (6PM-9PM)'],
+        attribute_values: [
+          'Morning (8AM-12PM)',
+          'Afternoon (1PM-5PM)',
+          'Evening (6PM-9PM)',
+        ],
       },
     ],
     // 1 = Contact Attribute
@@ -144,7 +183,14 @@ export const predefinedAttributes = {
         attribute_key: 'customer_source',
         attribute_description: 'Where the customer originated from',
         attribute_display_type: 6,
-        attribute_values: ['Facebook', 'WhatsApp', 'Website', 'TikTok', 'Referral', 'Event'],
+        attribute_values: [
+          'Facebook',
+          'WhatsApp',
+          'Website',
+          'TikTok',
+          'Referral',
+          'Event',
+        ],
       },
       {
         attribute_display_name: 'Hobbies/Interests',
@@ -156,7 +202,8 @@ export const predefinedAttributes = {
       {
         attribute_display_name: 'Personality',
         attribute_key: 'personality',
-        attribute_description: 'Observations on customer personality for communication',
+        attribute_description:
+          'Observations on customer personality for communication',
         attribute_display_type: 0,
         attribute_values: [],
       },
@@ -165,7 +212,12 @@ export const predefinedAttributes = {
         attribute_key: 'disc_profile',
         attribute_description: 'DISC personality assessment',
         attribute_display_type: 6,
-        attribute_values: ['D (Dominance)', 'I (Influence)', 'S (Steadiness)', 'C (Compliance)'],
+        attribute_values: [
+          'D (Dominance)',
+          'I (Influence)',
+          'S (Steadiness)',
+          'C (Compliance)',
+        ],
       },
       {
         attribute_display_name: 'Occupation',

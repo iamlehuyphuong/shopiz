@@ -150,17 +150,19 @@ const itemsTotal = computed(() => {
 });
 
 const formattedDiscount = computed({
-  get: () => new Intl.NumberFormat('vi-VN').format(form.value.discount_amount || 0),
-  set: (val) => {
+  get: () =>
+    new Intl.NumberFormat('vi-VN').format(form.value.discount_amount || 0),
+  set: val => {
     form.value.discount_amount = Number(String(val).replace(/\D/g, '')) || 0;
-  }
+  },
 });
 
 const formattedShippingFee = computed({
-  get: () => new Intl.NumberFormat('vi-VN').format(form.value.shipping_fee || 0),
-  set: (val) => {
+  get: () =>
+    new Intl.NumberFormat('vi-VN').format(form.value.shipping_fee || 0),
+  set: val => {
     form.value.shipping_fee = Number(String(val).replace(/\D/g, '')) || 0;
-  }
+  },
 });
 
 const calculatedTax = computed(() => {
@@ -179,8 +181,11 @@ const orderTotal = computed(() => {
   );
 });
 
-const formatCurrency = (value) => {
-  return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value || 0);
+const formatCurrency = value => {
+  return new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+  }).format(value || 0);
 };
 
 const handleSave = async () => {
@@ -306,7 +311,10 @@ const handleSave = async () => {
               </h2>
               <ProductSearch @select-product="addProduct" />
 
-              <div v-if="form.items.length > 0" class="mt-8 flex flex-col gap-4">
+              <div
+                v-if="form.items.length > 0"
+                class="mt-8 flex flex-col gap-4"
+              >
                 <h3 class="text-sm font-semibold text-n-slate-12">
                   {{ $t('SALES.ORDER_FORM.LABELS.PRODUCT_LIST') }}
                 </h3>
@@ -373,14 +381,23 @@ const handleSave = async () => {
                   </div>
                 </div>
 
-                <div class="flex justify-between items-center py-4 border-t border-n-weak mt-2">
-                  <span class="text-sm font-medium text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.SUBTOTAL_EST') }}</span>
+                <div
+                  class="flex justify-between items-center py-4 border-t border-n-weak mt-2"
+                >
+                  <span class="text-sm font-medium text-n-slate-11">{{
+                    $t('SALES.ORDER_FORM.LABELS.SUBTOTAL_EST')
+                  }}</span>
                   <span class="text-base font-semibold text-n-slate-12">
                     {{
                       new Intl.NumberFormat('vi-VN', {
                         style: 'currency',
                         currency: 'VND',
-                      }).format(form.items.reduce((sum, item) => sum + (item.quantity * item.unit_price), 0))
+                      }).format(
+                        form.items.reduce(
+                          (sum, item) => sum + item.quantity * item.unit_price,
+                          0
+                        )
+                      )
                     }}
                   </span>
                 </div>
@@ -396,25 +413,64 @@ const handleSave = async () => {
               <!-- Payment options grid moved to top -->
               <div class="grid grid-cols-2 gap-4">
                 <div class="flex flex-col gap-1.5">
-                  <label class="text-sm font-medium text-n-slate-11">{{ t('CONVERSATION.ORDER_PANEL.PAYMENT_METHOD') }}</label>
+                  <label class="text-sm font-medium text-n-slate-11">{{
+                    t('CONVERSATION.ORDER_PANEL.PAYMENT_METHOD')
+                  }}</label>
                   <ComboBox
                     v-model="form.payment_method"
                     :options="[
-                      { label: $t('SALES.ORDER_FORM.LABELS.PAYMENT_METHODS.COD'), value: 'cod' },
-                      { label: $t('SALES.ORDER_FORM.LABELS.PAYMENT_METHODS.BANK_TRANSFER'), value: 'bank_transfer' },
-                      { label: $t('SALES.ORDER_FORM.LABELS.PAYMENT_METHODS.CARD'), value: 'card' }
+                      {
+                        label: $t(
+                          'SALES.ORDER_FORM.LABELS.PAYMENT_METHODS.COD'
+                        ),
+                        value: 'cod',
+                      },
+                      {
+                        label: $t(
+                          'SALES.ORDER_FORM.LABELS.PAYMENT_METHODS.BANK_TRANSFER'
+                        ),
+                        value: 'bank_transfer',
+                      },
+                      {
+                        label: $t(
+                          'SALES.ORDER_FORM.LABELS.PAYMENT_METHODS.CARD'
+                        ),
+                        value: 'card',
+                      },
                     ]"
                   />
                 </div>
                 <div class="flex flex-col gap-1.5">
-                  <label class="text-sm font-medium text-n-slate-11">{{ t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.LABEL') }}</label>
+                  <label class="text-sm font-medium text-n-slate-11">{{
+                    t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.LABEL')
+                  }}</label>
                   <ComboBox
                     v-model="form.payment_status"
                     :options="[
-                      { label: t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.UNPAID'), value: 'unpaid' },
-                      { label: t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PAID'), value: 'paid' },
-                      { label: t('CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PARTIALLY_REFUNDED'), value: 'partially_refunded' },
-                      { label: t('SALES.ORDER_FORM.LABELS.PAYMENT_STATUS.REFUNDED'), value: 'refunded' }
+                      {
+                        label: t(
+                          'CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.UNPAID'
+                        ),
+                        value: 'unpaid',
+                      },
+                      {
+                        label: t(
+                          'CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PAID'
+                        ),
+                        value: 'paid',
+                      },
+                      {
+                        label: t(
+                          'CONVERSATION.ORDER_PANEL.PAYMENT_STATUS.PARTIALLY_REFUNDED'
+                        ),
+                        value: 'partially_refunded',
+                      },
+                      {
+                        label: t(
+                          'SALES.ORDER_FORM.LABELS.PAYMENT_STATUS.REFUNDED'
+                        ),
+                        value: 'refunded',
+                      },
                     ]"
                   />
                 </div>
@@ -424,17 +480,23 @@ const handleSave = async () => {
               <div class="flex flex-col gap-4 mt-6">
                 <!-- Tổng tiền -->
                 <div class="flex flex-col gap-1.5">
-                  <span class="text-sm font-medium text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.TOTAL_EST') }}</span>
+                  <span class="text-sm font-medium text-n-slate-11">{{
+                    $t('SALES.ORDER_FORM.LABELS.TOTAL_EST')
+                  }}</span>
                   <span class="text-base font-semibold text-n-slate-12 mt-1">
                     {{ formatCurrency(itemsTotal) }}
                   </span>
                 </div>
-                
+
                 <!-- Thuế -->
                 <div class="flex flex-col gap-1.5">
-                  <span class="text-sm font-medium text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.TAX_PERCENTAGE') }}</span>
+                  <span class="text-sm font-medium text-n-slate-11">{{
+                    $t('SALES.ORDER_FORM.LABELS.TAX_PERCENTAGE')
+                  }}</span>
                   <div class="grid grid-cols-2 gap-4 items-center">
-                    <div class="flex items-center w-full h-[38px] rounded-lg border border-n-weak bg-white dark:bg-n-solid-1 focus-within:border-n-brand transition-all overflow-hidden">
+                    <div
+                      class="flex items-center w-full h-[38px] rounded-lg border border-n-weak bg-white dark:bg-n-solid-1 focus-within:border-n-brand transition-all overflow-hidden"
+                    >
                       <input
                         v-model.number="form.tax_rate"
                         type="number"
@@ -453,8 +515,12 @@ const handleSave = async () => {
 
                 <!-- Giảm giá -->
                 <div class="flex flex-col gap-1.5">
-                  <span class="text-sm font-medium text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.DISCOUNT') }}</span>
-                  <div class="flex items-center w-full h-[38px] rounded-lg border border-n-weak bg-white dark:bg-n-solid-1 focus-within:border-n-brand transition-all overflow-hidden">
+                  <span class="text-sm font-medium text-n-slate-11">{{
+                    $t('SALES.ORDER_FORM.LABELS.DISCOUNT')
+                  }}</span>
+                  <div
+                    class="flex items-center w-full h-[38px] rounded-lg border border-n-weak bg-white dark:bg-n-solid-1 focus-within:border-n-brand transition-all overflow-hidden"
+                  >
                     <input
                       v-model="formattedDiscount"
                       type="text"
@@ -465,8 +531,12 @@ const handleSave = async () => {
 
                 <!-- Phí vận chuyển -->
                 <div class="flex flex-col gap-1.5">
-                  <span class="text-sm font-medium text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.SHIPPING_FEE') }}</span>
-                  <div class="flex items-center w-full h-[38px] rounded-lg border border-n-weak bg-white dark:bg-n-solid-1 focus-within:border-n-brand transition-all overflow-hidden">
+                  <span class="text-sm font-medium text-n-slate-11">{{
+                    $t('SALES.ORDER_FORM.LABELS.SHIPPING_FEE')
+                  }}</span>
+                  <div
+                    class="flex items-center w-full h-[38px] rounded-lg border border-n-weak bg-white dark:bg-n-solid-1 focus-within:border-n-brand transition-all overflow-hidden"
+                  >
                     <input
                       v-model="formattedShippingFee"
                       type="text"
@@ -476,8 +546,12 @@ const handleSave = async () => {
                 </div>
 
                 <!-- Tổng cộng -->
-                <div class="flex flex-col gap-1.5 col-span-2 pt-4 border-t border-n-weak">
-                  <span class="text-sm font-medium text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.TOTAL') }}</span>
+                <div
+                  class="flex flex-col gap-1.5 col-span-2 pt-4 border-t border-n-weak"
+                >
+                  <span class="text-sm font-medium text-n-slate-11">{{
+                    $t('SALES.ORDER_FORM.LABELS.TOTAL')
+                  }}</span>
                   <span class="text-2xl font-bold text-n-orange-11">
                     {{ formatCurrency(orderTotal) }}
                   </span>
@@ -495,8 +569,13 @@ const handleSave = async () => {
 
               <div class="flex flex-col gap-4 mt-2">
                 <div class="flex flex-col gap-1.5">
-                  <span class="text-sm font-medium text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.CUSTOMER') }}</span>
-                  <div v-if="selectedContact" class="flex items-center gap-3 w-full h-[42px] px-3 rounded-lg border border-n-weak bg-white dark:bg-n-solid-1">
+                  <span class="text-sm font-medium text-n-slate-11">{{
+                    $t('SALES.ORDER_FORM.LABELS.CUSTOMER')
+                  }}</span>
+                  <div
+                    v-if="selectedContact"
+                    class="flex items-center gap-3 w-full h-[42px] px-3 rounded-lg border border-n-weak bg-white dark:bg-n-solid-1"
+                  >
                     <img
                       v-if="selectedContact.thumbnail"
                       :src="selectedContact.thumbnail"
@@ -507,9 +586,15 @@ const handleSave = async () => {
                       v-else
                       class="w-7 h-7 rounded-md bg-n-brand text-white flex items-center justify-center shrink-0 font-medium text-xs uppercase"
                     >
-                      {{ selectedContact.name ? selectedContact.name.charAt(0) : '?' }}
+                      {{
+                        selectedContact.name
+                          ? selectedContact.name.charAt(0)
+                          : '?'
+                      }}
                     </div>
-                    <span class="flex-1 text-sm font-medium text-n-slate-12 truncate">{{ selectedContact.name }}</span>
+                    <span
+                      class="flex-1 text-sm font-medium text-n-slate-12 truncate"
+                      >{{ selectedContact.name }}</span>
                     <button
                       class="p-1 rounded hover:bg-n-alpha-2 text-n-slate-10 hover:text-n-slate-12 transition-colors flex items-center justify-center"
                       @click="clearContact"
@@ -517,18 +602,27 @@ const handleSave = async () => {
                       <i class="i-lucide-x text-sm" />
                     </button>
                   </div>
-                  <div v-else class="flex items-center w-full h-[38px] rounded-lg border border-n-weak bg-white dark:bg-n-solid-1 focus-within:border-n-brand transition-all overflow-hidden">
+                  <div
+                    v-else
+                    class="flex items-center w-full h-[38px] rounded-lg border border-n-weak bg-white dark:bg-n-solid-1 focus-within:border-n-brand transition-all overflow-hidden"
+                  >
                     <input
                       v-model="form.customer_name"
                       type="text"
-                      :placeholder="$t('SALES.ORDER_FORM.LABELS.INPUT_CUSTOMER_NAME')"
+                      :placeholder="
+                        $t('SALES.ORDER_FORM.LABELS.INPUT_CUSTOMER_NAME')
+                      "
                       class="reset-base flex-1 w-full px-3 h-full text-sm text-n-slate-12 placeholder:text-n-slate-9 bg-transparent border-none outline-none m-0 p-0 !mb-0"
                     />
                   </div>
                 </div>
                 <div class="flex flex-col gap-1.5">
-                  <span class="text-sm font-medium text-n-slate-11">{{ t('CONVERSATION.ORDER_PANEL.PHONE') }}</span>
-                  <div class="flex items-center w-full h-[38px] rounded-lg border border-n-weak bg-white dark:bg-n-solid-1 focus-within:border-n-brand transition-all overflow-hidden">
+                  <span class="text-sm font-medium text-n-slate-11">{{
+                    t('CONVERSATION.ORDER_PANEL.PHONE')
+                  }}</span>
+                  <div
+                    class="flex items-center w-full h-[38px] rounded-lg border border-n-weak bg-white dark:bg-n-solid-1 focus-within:border-n-brand transition-all overflow-hidden"
+                  >
                     <input
                       v-model="form.customer_phone"
                       type="tel"
@@ -537,8 +631,12 @@ const handleSave = async () => {
                   </div>
                 </div>
                 <div class="flex flex-col gap-1.5">
-                  <span class="text-sm font-medium text-n-slate-11">{{ t('CONVERSATION.ORDER_PANEL.ADDRESS') }}</span>
-                  <div class="w-full rounded-lg border border-n-weak bg-white dark:bg-n-solid-1 focus-within:border-n-brand transition-all overflow-hidden">
+                  <span class="text-sm font-medium text-n-slate-11">{{
+                    t('CONVERSATION.ORDER_PANEL.ADDRESS')
+                  }}</span>
+                  <div
+                    class="w-full rounded-lg border border-n-weak bg-white dark:bg-n-solid-1 focus-within:border-n-brand transition-all overflow-hidden"
+                  >
                     <textarea
                       v-model="form.customer_address"
                       rows="3"
@@ -547,8 +645,12 @@ const handleSave = async () => {
                   </div>
                 </div>
                 <div class="flex flex-col gap-1.5">
-                  <span class="text-sm font-medium text-n-slate-11">{{ t('CONVERSATION.ORDER_PANEL.NOTE') }}</span>
-                  <div class="w-full rounded-lg border border-n-weak bg-white dark:bg-n-solid-1 focus-within:border-n-brand transition-all overflow-hidden">
+                  <span class="text-sm font-medium text-n-slate-11">{{
+                    t('CONVERSATION.ORDER_PANEL.NOTE')
+                  }}</span>
+                  <div
+                    class="w-full rounded-lg border border-n-weak bg-white dark:bg-n-solid-1 focus-within:border-n-brand transition-all overflow-hidden"
+                  >
                     <textarea
                       v-model="form.customer_note"
                       rows="2"
@@ -567,25 +669,52 @@ const handleSave = async () => {
 
               <!-- Trạng thái đơn hàng -->
               <div class="flex flex-col gap-1.5">
-                <label class="text-sm font-medium text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.STATUS') }}</label>
+                <label class="text-sm font-medium text-n-slate-11">{{
+                  $t('SALES.ORDER_FORM.LABELS.STATUS')
+                }}</label>
                 <ComboBox
                   v-model="form.status"
                   :options="[
-                    { label: t('CONVERSATION.ORDER_PANEL.STATUS.DRAFT'), value: 'draft' },
-                    { label: t('CONVERSATION.ORDER_PANEL.STATUS.CONFIRMED'), value: 'confirmed' },
-                    { label: t('CONVERSATION.ORDER_PANEL.STATUS.PROCESSING'), value: 'processing' },
-                    { label: t('CONVERSATION.ORDER_PANEL.STATUS.SHIPPED'), value: 'shipped' },
-                    { label: t('CONVERSATION.ORDER_PANEL.STATUS.DELIVERED'), value: 'delivered' },
-                    { label: t('CONVERSATION.ORDER_PANEL.STATUS.CANCELLED'), value: 'cancelled' }
+                    {
+                      label: t('CONVERSATION.ORDER_PANEL.STATUS.DRAFT'),
+                      value: 'draft',
+                    },
+                    {
+                      label: t('CONVERSATION.ORDER_PANEL.STATUS.CONFIRMED'),
+                      value: 'confirmed',
+                    },
+                    {
+                      label: t('CONVERSATION.ORDER_PANEL.STATUS.PROCESSING'),
+                      value: 'processing',
+                    },
+                    {
+                      label: t('CONVERSATION.ORDER_PANEL.STATUS.SHIPPED'),
+                      value: 'shipped',
+                    },
+                    {
+                      label: t('CONVERSATION.ORDER_PANEL.STATUS.DELIVERED'),
+                      value: 'delivered',
+                    },
+                    {
+                      label: t('CONVERSATION.ORDER_PANEL.STATUS.CANCELLED'),
+                      value: 'cancelled',
+                    },
                   ]"
                 />
               </div>
 
               <!-- Thông tin khách hàng -->
               <div class="flex flex-col gap-3">
-                <span class="text-sm font-medium text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.CUSTOMER') }}</span>
-                <div class="rounded-xl border border-n-weak bg-n-solid-1 p-4 flex flex-col gap-2">
-                  <div v-if="form.customer_name" class="flex items-center gap-3">
+                <span class="text-sm font-medium text-n-slate-11">{{
+                  $t('SALES.ORDER_FORM.LABELS.CUSTOMER')
+                }}</span>
+                <div
+                  class="rounded-xl border border-n-weak bg-n-solid-1 p-4 flex flex-col gap-2"
+                >
+                  <div
+                    v-if="form.customer_name"
+                    class="flex items-center gap-3"
+                  >
                     <div v-if="selectedContact && selectedContact.thumbnail">
                       <img
                         :src="selectedContact.thumbnail"
@@ -618,7 +747,9 @@ const handleSave = async () => {
                     v-if="form.customer_address"
                     class="text-xs text-n-slate-10 pt-2 border-t border-n-weak"
                   >
-                    <i class="i-lucide-map-pin text-xs mr-1" />{{ form.customer_address }}
+                    <i class="i-lucide-map-pin text-xs mr-1" />{{
+                      form.customer_address
+                    }}
                   </div>
                 </div>
               </div>
@@ -626,10 +757,16 @@ const handleSave = async () => {
               <!-- Danh sách sản phẩm -->
               <div class="flex flex-col gap-3">
                 <span class="text-sm font-medium text-n-slate-11">
-                  {{ $t('SALES.ORDER_FORM.LABELS.PRODUCTS') }} ({{ form.items.filter(i => !i._destroy).length }})
+                  {{ $t('SALES.ORDER_FORM.LABELS.PRODUCTS') }} ({{
+                    form.items.filter(i => !i._destroy).length
+                  }})
                 </span>
-                <div class="rounded-xl border border-n-weak bg-n-solid-1 overflow-hidden">
-                  <div class="max-h-[160px] overflow-y-auto divide-y divide-n-weak">
+                <div
+                  class="rounded-xl border border-n-weak bg-n-solid-1 overflow-hidden"
+                >
+                  <div
+                    class="max-h-[160px] overflow-y-auto divide-y divide-n-weak"
+                  >
                     <div
                       v-for="item in form.items.filter(i => !i._destroy)"
                       :key="item.product_id"
@@ -652,10 +789,13 @@ const handleSave = async () => {
                           {{ item.product_name }}
                         </div>
                         <div class="text-xs text-n-slate-10 mt-0.5">
-                          {{ item.quantity }} x {{ formatCurrency(item.unit_price) }}
+                          {{ item.quantity }} x
+                          {{ formatCurrency(item.unit_price) }}
                         </div>
                       </div>
-                      <span class="text-sm font-medium text-n-slate-12 shrink-0">
+                      <span
+                        class="text-sm font-medium text-n-slate-12 shrink-0"
+                      >
                         {{ formatCurrency(item.quantity * item.unit_price) }}
                       </span>
                     </div>
@@ -668,28 +808,45 @@ const handleSave = async () => {
                 class="p-5 rounded-xl border border-n-weak bg-n-solid-1 flex flex-col gap-3"
               >
                 <div class="flex justify-between items-center text-sm">
-                  <span class="text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.SUBTOTAL') }}</span>
-                  <span class="text-n-slate-12 font-medium">{{ formatCurrency(itemsTotal) }}</span>
+                  <span class="text-n-slate-11">{{
+                    $t('SALES.ORDER_FORM.LABELS.SUBTOTAL')
+                  }}</span>
+                  <span class="text-n-slate-12 font-medium">{{
+                    formatCurrency(itemsTotal)
+                  }}</span>
                 </div>
                 <div class="flex justify-between items-center text-sm">
-                  <span class="text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.SHIPPING_FEE') }}</span>
-                  <span class="text-n-slate-12">{{ formatCurrency(form.shipping_fee) }}</span>
+                  <span class="text-n-slate-11">{{
+                    $t('SALES.ORDER_FORM.LABELS.SHIPPING_FEE')
+                  }}</span>
+                  <span class="text-n-slate-12">{{
+                    formatCurrency(form.shipping_fee)
+                  }}</span>
                 </div>
                 <div class="flex justify-between items-center text-sm">
-                  <span class="text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.DISCOUNT') }}</span>
+                  <span class="text-n-slate-11">{{
+                    $t('SALES.ORDER_FORM.LABELS.DISCOUNT')
+                  }}</span>
                   <span class="text-n-red-11">-{{ formatCurrency(form.discount_amount) }}</span>
                 </div>
                 <div class="flex justify-between items-center text-sm">
-                  <span class="text-n-slate-11">{{ $t('SALES.ORDER_FORM.LABELS.TAX') }}</span>
-                  <span class="text-n-slate-12">{{ formatCurrency(calculatedTax) }}</span>
+                  <span class="text-n-slate-11">{{
+                    $t('SALES.ORDER_FORM.LABELS.TAX')
+                  }}</span>
+                  <span class="text-n-slate-12">{{
+                    formatCurrency(calculatedTax)
+                  }}</span>
                 </div>
                 <div class="h-px bg-n-weak w-full my-1" />
                 <div class="flex justify-between items-center">
-                  <span class="text-base font-medium text-n-slate-12">{{ $t('SALES.ORDER_FORM.LABELS.TOTAL_PAYMENT') }}</span>
-                  <span class="text-lg font-bold text-n-brand">{{ formatCurrency(orderTotal) }}</span>
+                  <span class="text-base font-medium text-n-slate-12">{{
+                    $t('SALES.ORDER_FORM.LABELS.TOTAL_PAYMENT')
+                  }}</span>
+                  <span class="text-lg font-bold text-n-brand">{{
+                    formatCurrency(orderTotal)
+                  }}</span>
                 </div>
               </div>
-
             </div>
           </div>
 

@@ -134,7 +134,9 @@ const onImport = async file => {
     fetchCannedResponses();
     hideImportPopup();
   } catch (error) {
-    useAlert(error.response?.data?.error || t('CANNED_MGMT.IMPORT.ERROR_MESSAGE'));
+    useAlert(
+      error.response?.data?.error || t('CANNED_MGMT.IMPORT.ERROR_MESSAGE')
+    );
   } finally {
     isImporting.value = false;
   }
@@ -151,7 +153,7 @@ const downloadExport = async () => {
   try {
     isExporting.value = true;
     const response = await CannedResponseAPI.export();
-    
+
     const blob = new Blob([response.data], {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });

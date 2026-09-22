@@ -36,7 +36,7 @@ class Captain::Assistant < ApplicationRecord
   has_many :copilot_threads, dependent: :destroy_async
   has_many :scenarios, class_name: 'Captain::Scenario', dependent: :destroy_async
 
-  store_accessor :config, :temperature, :feature_faq, :feature_memory, :feature_contact_attributes, :feature_order_creation, :product_name,
+  store_accessor :config, :temperature, :feature_faq, :feature_memory, :feature_contact_attributes, :feature_order_creation,
                  :message_history_limit
 
   validates :name, presence: true

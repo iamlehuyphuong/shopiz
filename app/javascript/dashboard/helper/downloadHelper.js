@@ -2,7 +2,8 @@ import fromUnixTime from 'date-fns/fromUnixTime';
 import format from 'date-fns/format';
 
 export const downloadExcelFile = (fileName, content) => {
-  const contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+  const contentType =
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
   const blob = new Blob([content], { type: contentType });
   const url = URL.createObjectURL(blob);
 

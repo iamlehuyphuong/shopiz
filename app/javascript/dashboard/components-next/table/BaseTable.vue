@@ -26,7 +26,8 @@ const props = defineProps({
 
 const hasHeaderSlot = computed(() => !!props.headers.length);
 const showHeaders = computed(
-  () => hasHeaderSlot.value && (props.items.length > 0 || props.alwaysShowHeaders)
+  () =>
+    hasHeaderSlot.value && (props.items.length > 0 || props.alwaysShowHeaders)
 );
 </script>
 

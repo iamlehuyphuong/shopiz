@@ -41,13 +41,13 @@ watch(
   currentAccount,
   () => {
     if (!hasInitializedFilter && currentAccount.value?.settings) {
-      sourceFilter.value = currentAccount.value.settings.active_ecommerce_platform || 'all';
+      sourceFilter.value =
+        currentAccount.value.settings.active_ecommerce_platform || 'all';
       hasInitializedFilter = true;
     }
   },
   { deep: true, immediate: true }
 );
-
 
 const sources = computed(() => [
   { label: t('SALES.PLATFORM_FILTER.LABEL_ALL'), value: 'all' },
@@ -65,8 +65,6 @@ const showImportDialog = ref(false);
 const showExportDialog = ref(false);
 
 const showSourceDropdown = ref(false);
-
-
 
 const activeSourceName = computed(
   () => sources.value.find(s => s.value === sourceFilter.value)?.label
@@ -209,19 +207,30 @@ const onImportProduct = async file => {
   showImportDialog.value = false;
   try {
     await store.dispatch('salesProducts/importProducts', file);
-    useAlert(t('SALES.MODULE_PRODUCTS.ALERTS.IMPORT_SUCCESS') || 'Import started. You will receive an email once completed.');
+    useAlert(
+      t('SALES.MODULE_PRODUCTS.ALERTS.IMPORT_SUCCESS') ||
+        'Import started. You will receive an email once completed.'
+    );
   } catch (error) {
-    useAlert(t('SALES.MODULE_PRODUCTS.ALERTS.IMPORT_ERROR') || 'Error importing products.');
+    useAlert(
+      t('SALES.MODULE_PRODUCTS.ALERTS.IMPORT_ERROR') ||
+        'Error importing products.'
+    );
   }
 };
 
 const onExportProduct = async () => {
   showExportDialog.value = false;
   try {
-    const res = await store.dispatch('salesProducts/exportProducts', { filter: { source: sourceFilter.value } });
+    const res = await store.dispatch('salesProducts/exportProducts', {
+      filter: { source: sourceFilter.value },
+    });
     useAlert(res?.message || t('SALES.MODULE_PRODUCTS.ALERTS.EXPORT_SUCCESS'));
   } catch (error) {
-    useAlert(t('SALES.MODULE_PRODUCTS.ALERTS.EXPORT_ERROR') || 'Error exporting products.');
+    useAlert(
+      t('SALES.MODULE_PRODUCTS.ALERTS.EXPORT_ERROR') ||
+        'Error exporting products.'
+    );
   }
 };
 
@@ -399,7 +408,10 @@ onBeforeMount(() => {
           />
           <Button
             v-if="['all', 'shopiz'].includes(sourceFilter)"
-            v-tooltip.top="$t('SALES.MODULE_PRODUCTS.ACTIONS.IMPORT_PRODUCT.IMPORT') || 'Import'"
+            v-tooltip.top="
+              $t('SALES.MODULE_PRODUCTS.ACTIONS.IMPORT_PRODUCT.IMPORT') ||
+              'Import'
+            "
             icon="i-lucide-upload"
             slate
             sm
@@ -407,7 +419,10 @@ onBeforeMount(() => {
             @click="showImportDialog = true"
           />
           <Button
-            v-tooltip.top="$t('SALES.MODULE_PRODUCTS.ACTIONS.EXPORT_PRODUCT.EXPORT') || 'Export'"
+            v-tooltip.top="
+              $t('SALES.MODULE_PRODUCTS.ACTIONS.EXPORT_PRODUCT.EXPORT') ||
+              'Export'
+            "
             icon="i-lucide-download"
             slate
             sm

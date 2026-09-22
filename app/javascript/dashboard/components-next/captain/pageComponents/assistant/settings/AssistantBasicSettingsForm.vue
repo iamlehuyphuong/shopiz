@@ -26,13 +26,9 @@ const { t } = useI18n();
 const initialState = {
   name: '',
   description: '',
-  companyName: '',
-  industry: '',
-  coreProducts: '',
   features: {
     conversationFaqs: false,
     memories: false,
-    citations: false,
     contactAttributes: false,
     orderCreation: false,
   },
@@ -43,9 +39,6 @@ const state = reactive({ ...initialState });
 const validationRules = {
   name: { required, minLength: minLength(1) },
   description: { required, minLength: minLength(1) },
-  companyName: { required, minLength: minLength(1) },
-  industry: { required, minLength: minLength(1) },
-  coreProducts: { required, minLength: minLength(1) },
 };
 
 const v$ = useVuelidate(validationRules, state);
@@ -57,22 +50,15 @@ const getErrorMessage = field => {
 const formErrors = computed(() => ({
   name: getErrorMessage('name'),
   description: getErrorMessage('description'),
-  companyName: getErrorMessage('companyName'),
-  industry: getErrorMessage('industry'),
-  coreProducts: getErrorMessage('coreProducts'),
 }));
 
 const updateStateFromAssistant = assistant => {
   const { config = {} } = assistant;
   state.name = assistant.name;
   state.description = assistant.description;
-  state.companyName = config.company_name || '';
-  state.industry = config.industry || '';
-  state.coreProducts = config.core_products || config.product_name || '';
   state.features = {
     conversationFaqs: config.feature_faq || false,
     memories: config.feature_memory || false,
-    citations: config.feature_citation || false,
     contactAttributes: config.feature_contact_attributes || false,
     orderCreation: config.feature_order_creation || false,
   };
@@ -82,9 +68,6 @@ const handleBasicInfoUpdate = async () => {
   const result = await Promise.all([
     v$.value.name.$validate(),
     v$.value.description.$validate(),
-    v$.value.companyName.$validate(),
-    v$.value.industry.$validate(),
-    v$.value.coreProducts.$validate(),
   ]).then(results => results.every(Boolean));
   if (!result) return;
 
@@ -93,12 +76,8 @@ const handleBasicInfoUpdate = async () => {
     description: state.description,
     config: {
       ...props.assistant.config,
-      company_name: state.companyName,
-      industry: state.industry,
-      core_products: state.coreProducts,
       feature_faq: state.features.conversationFaqs,
       feature_memory: state.features.memories,
-      feature_citation: state.features.citations,
       feature_contact_attributes: state.features.contactAttributes,
       feature_order_creation: state.features.orderCreation,
     },
@@ -132,9 +111,6 @@ const improveWithAI = async () => {
       content: state.description,
       context: {
         assistant_name: state.name,
-        company_name: state.companyName,
-        industry: state.industry,
-        core_products: state.coreProducts,
       },
     });
     if (response.data && response.data.message) {
@@ -158,30 +134,6 @@ const improveWithAI = async () => {
       :placeholder="t('CAPTAIN.ASSISTANTS.FORM.NAME.PLACEHOLDER')"
       :message="formErrors.name"
       :message-type="formErrors.name ? 'error' : 'info'"
-    />
-
-    <Input
-      v-model="state.companyName"
-      :label="t('CAPTAIN.ASSISTANTS.FORM.COMPANY_NAME.LABEL')"
-      :placeholder="t('CAPTAIN.ASSISTANTS.FORM.COMPANY_NAME.PLACEHOLDER')"
-      :message="formErrors.companyName"
-      :message-type="formErrors.companyName ? 'error' : 'info'"
-    />
-
-    <Input
-      v-model="state.industry"
-      :label="t('CAPTAIN.ASSISTANTS.FORM.INDUSTRY.LABEL')"
-      :placeholder="t('CAPTAIN.ASSISTANTS.FORM.INDUSTRY.PLACEHOLDER')"
-      :message="formErrors.industry"
-      :message-type="formErrors.industry ? 'error' : 'info'"
-    />
-
-    <Input
-      v-model="state.coreProducts"
-      :label="t('CAPTAIN.ASSISTANTS.FORM.CORE_PRODUCTS.LABEL')"
-      :placeholder="t('CAPTAIN.ASSISTANTS.FORM.CORE_PRODUCTS.PLACEHOLDER')"
-      :message="formErrors.coreProducts"
-      :message-type="formErrors.coreProducts ? 'error' : 'info'"
     />
 
     <div class="flex flex-col gap-1.5 z-0">
@@ -222,7 +174,7 @@ const improveWithAI = async () => {
           {{ t('CAPTAIN.ASSISTANTS.FORM.DESCRIPTION.TEMPLATES.TITLE') }}
         </span>
         <button
-          v-for="i in 5"
+          v-for="i in 6"
           :key="i"
           type="button"
           class="px-2 py-1 text-xs font-medium transition-colors border rounded-md text-n-slate-11 border-n-weak bg-n-alpha-1 hover:bg-n-alpha-2 hover:text-n-slate-12"
@@ -249,10 +201,6 @@ const improveWithAI = async () => {
         <label class="flex items-center gap-2">
           <input v-model="state.features.memories" type="checkbox" />
           {{ t('CAPTAIN.ASSISTANTS.FORM.FEATURES.ALLOW_MEMORIES') }}
-        </label>
-        <label class="flex items-center gap-2">
-          <input v-model="state.features.citations" type="checkbox" />
-          {{ t('CAPTAIN.ASSISTANTS.FORM.FEATURES.ALLOW_CITATIONS') }}
         </label>
         <label class="flex items-center gap-2">
           <input v-model="state.features.contactAttributes" type="checkbox" />

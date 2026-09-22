@@ -36,10 +36,8 @@ const formState = {
 const initialState = {
   name: '',
   description: '',
-  productName: '',
   featureFaq: false,
   featureMemory: false,
-  featureCitation: false,
 };
 
 const state = reactive({ ...initialState });
@@ -47,7 +45,6 @@ const state = reactive({ ...initialState });
 const validationRules = {
   name: { required, minLength: minLength(1) },
   description: { required, minLength: minLength(1) },
-  productName: { required, minLength: minLength(1) },
 };
 
 const v$ = useVuelidate(validationRules, state);
@@ -63,7 +60,6 @@ const getErrorMessage = (field, errorKey) => {
 const formErrors = computed(() => ({
   name: getErrorMessage('name', 'NAME'),
   description: getErrorMessage('description', 'DESCRIPTION'),
-  productName: getErrorMessage('productName', 'PRODUCT_NAME'),
 }));
 
 const handleCancel = () => emit('cancel');
@@ -72,10 +68,8 @@ const prepareAssistantDetails = () => ({
   name: state.name,
   description: state.description,
   config: {
-    product_name: state.productName,
     feature_faq: state.featureFaq,
     feature_memory: state.featureMemory,
-    feature_citation: state.featureCitation,
   },
 });
 
@@ -96,10 +90,8 @@ const updateStateFromAssistant = assistant => {
   Object.assign(state, {
     name,
     description,
-    productName: config.product_name,
     featureFaq: config.feature_faq || false,
     featureMemory: config.feature_memory || false,
-    featureCitation: config.feature_citation || false,
   });
 };
 
@@ -135,7 +127,6 @@ const improveWithAI = async () => {
       content: state.description,
       context: {
         assistant_name: state.name,
-        core_products: state.productName,
       },
     });
     if (response.data && response.data.message) {
@@ -212,14 +203,6 @@ const improveWithAI = async () => {
       </div>
     </div>
 
-    <Input
-      v-model="state.productName"
-      :label="t('CAPTAIN.ASSISTANTS.FORM.PRODUCT_NAME.LABEL')"
-      :placeholder="t('CAPTAIN.ASSISTANTS.FORM.PRODUCT_NAME.PLACEHOLDER')"
-      :message="formErrors.productName"
-      :message-type="formErrors.productName ? 'error' : 'info'"
-    />
-
     <fieldset class="flex flex-col gap-2.5">
       <legend class="mb-3 text-sm font-medium text-n-slate-12">
         {{ t('CAPTAIN.ASSISTANTS.FORM.FEATURES.TITLE') }}
@@ -236,13 +219,6 @@ const improveWithAI = async () => {
         <input v-model="state.featureMemory" type="checkbox" />
         <span class="text-sm font-medium text-n-slate-12">
           {{ t('CAPTAIN.ASSISTANTS.FORM.FEATURES.ALLOW_MEMORIES') }}
-        </span>
-      </label>
-
-      <label class="flex items-center gap-2">
-        <input v-model="state.featureCitation" type="checkbox" />
-        <span class="text-sm font-medium text-n-slate-12">
-          {{ t('CAPTAIN.ASSISTANTS.FORM.FEATURES.ALLOW_CITATIONS') }}
         </span>
       </label>
     </fieldset>

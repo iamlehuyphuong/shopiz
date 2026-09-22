@@ -3,7 +3,7 @@ import { INBOX_TYPES } from 'dashboard/helper/inbox';
 export const assistantsList = [
   {
     account_id: 2,
-    config: { product_name: 'HelpDesk Pro' },
+
     created_at: 1736033561,
     description:
       'An advanced AI assistant designed to enhance customer support solutions by automating workflows and providing instant responses.',
@@ -12,7 +12,7 @@ export const assistantsList = [
   },
   {
     account_id: 3,
-    config: { product_name: 'CRM Tools' },
+
     created_at: 1736033562,
     description:
       'Helps streamline customer relationship management by organizing contacts, automating follow-ups, and providing insights.',
@@ -21,7 +21,7 @@ export const assistantsList = [
   },
   {
     account_id: 4,
-    config: { product_name: 'SalesFlow' },
+
     created_at: 1736033563,
     description:
       'Optimizes your sales pipeline by tracking prospects, forecasting sales, and automating administrative tasks.',
@@ -30,7 +30,7 @@ export const assistantsList = [
   },
   {
     account_id: 5,
-    config: { product_name: 'TicketMaster AI' },
+
     created_at: 1736033564,
     description:
       'Automates ticket assignment, categorization, and customer query responses to enhance support efficiency.',
@@ -39,7 +39,7 @@ export const assistantsList = [
   },
   {
     account_id: 6,
-    config: { product_name: 'FinanceAssist' },
+
     created_at: 1736033565,
     description:
       'Provides financial analytics, reporting, and insights, helping teams make data-driven financial decisions.',
@@ -48,7 +48,7 @@ export const assistantsList = [
   },
   {
     account_id: 8,
-    config: { product_name: 'HR Assistant' },
+
     created_at: 1736033567,
     description:
       'Streamlines HR operations including employee management, payroll, and recruitment processes.',
@@ -143,7 +143,7 @@ export const responsesList = [
     status: 'pending',
     assistant: {
       account_id: 1,
-      config: { product_name: 'Shopiz' },
+
       created_at: 1736033280,
       description: 'Assists with general queries and system-wide issues.',
       id: 1,
@@ -159,7 +159,7 @@ export const responsesList = [
     question: 'How do I integrate WhatsApp with Shopiz?',
     assistant: {
       account_id: 2,
-      config: { product_name: 'Shopiz' },
+
       created_at: 1736033281,
       description: 'Helps with integration and setup-related inquiries.',
       id: 2,
@@ -175,7 +175,7 @@ export const responsesList = [
     question: 'How can I reset my password in Shopiz?',
     assistant: {
       account_id: 3,
-      config: { product_name: 'Shopiz' },
+
       created_at: 1736033282,
       description: 'Handles account management and recovery support.',
       id: 3,
@@ -191,7 +191,7 @@ export const responsesList = [
     question: 'How do I enable dark mode in Shopiz?',
     assistant: {
       account_id: 4,
-      config: { product_name: 'Shopiz' },
+
       created_at: 1736033283,
       description: 'Helps with UI and theme-related inquiries.',
       id: 4,
@@ -207,7 +207,7 @@ export const responsesList = [
     question: 'How do I add a new team member in Shopiz?',
     assistant: {
       account_id: 5,
-      config: { product_name: 'Shopiz' },
+
       created_at: 1736033284,
       description: 'Supports team management and user access-related queries.',
       id: 5,
@@ -223,7 +223,7 @@ export const responsesList = [
     question: 'What are campaigns in Shopiz?',
     assistant: {
       account_id: 6,
-      config: { product_name: 'Shopiz' },
+
       created_at: 1736033285,
       description:
         'Specialized in marketing, campaign management, and messaging strategies.',

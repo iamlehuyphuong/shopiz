@@ -100,18 +100,21 @@ const rules = {
   },
 };
 
-watch(() => form.value.hasVariants, (newVal) => {
-  if (newVal && form.value.variants.length === 0) {
-    form.value.variants.push({
-      name: '',
-      sku: '',
-      barcode: '',
-      price: '',
-      weight: 0,
-      meta: { color: '', size: '', length: 0, width: 0, height: 0 },
-    });
+watch(
+  () => form.value.hasVariants,
+  newVal => {
+    if (newVal && form.value.variants.length === 0) {
+      form.value.variants.push({
+        name: '',
+        sku: '',
+        barcode: '',
+        price: '',
+        weight: 0,
+        meta: { color: '', size: '', length: 0, width: 0, height: 0 },
+      });
+    }
   }
-});
+);
 
 const v$ = useVuelidate(rules, { form });
 
@@ -129,13 +132,27 @@ const fetchProductDetails = async () => {
     form.value.description = data.description || '';
     form.value.price = data.price || '';
     form.value.currency = data.currency || 'VND';
-    form.value.images = Array.isArray(data.images) ? data.images : (data.images ? [data.images] : []);
+    form.value.images = Array.isArray(data.images)
+      ? data.images
+      : data.images
+        ? [data.images]
+        : [];
     form.value.productType = meta.product_type || 'physical';
     form.value.category = meta.category || '';
     form.value.brand = meta.brand || '';
-    form.value.keywords = Array.isArray(meta.keywords) ? meta.keywords : (meta.keywords ? [meta.keywords] : []);
-    form.value.style = Array.isArray(meta.style) ? meta.style : (meta.style ? [meta.style] : []);
-    form.value.attributes = Array.isArray(meta.attributes) ? meta.attributes : [];
+    form.value.keywords = Array.isArray(meta.keywords)
+      ? meta.keywords
+      : meta.keywords
+        ? [meta.keywords]
+        : [];
+    form.value.style = Array.isArray(meta.style)
+      ? meta.style
+      : meta.style
+        ? [meta.style]
+        : [];
+    form.value.attributes = Array.isArray(meta.attributes)
+      ? meta.attributes
+      : [];
     form.value.status = data.status || 'draft';
 
     if (data.variants && data.variants.length > 0) {
@@ -216,18 +233,18 @@ const prevStep = () => {
 const addVariant = () => {
   const baseVariant = form.value.variants[0] || {};
   const baseMeta = baseVariant.meta || {};
-  
+
   form.value.variants.push({
     name: '',
     sku: '',
     barcode: '',
     price: form.value.price || '',
     weight: baseVariant.weight || 0,
-    meta: { 
-      color: '', 
-      length: baseMeta.length || 0, 
-      width: baseMeta.width || 0, 
-      height: baseMeta.height || 0 
+    meta: {
+      color: '',
+      length: baseMeta.length || 0,
+      width: baseMeta.width || 0,
+      height: baseMeta.height || 0,
     },
   });
 };
@@ -296,7 +313,10 @@ const onSubmit = async () => {
     });
 
     useAlert(t('SALES.PRODUCT_FORM.ALERTS.UPDATE_SUCCESS'));
-    router.push({ name: 'sales_products_list', params: { accountId: route.params.accountId } });
+    router.push({
+      name: 'sales_products_list',
+      params: { accountId: route.params.accountId },
+    });
   } catch (error) {
     useAlert(error.message || t('SALES.PRODUCT_FORM.ALERTS.SAVE_ERROR'));
   } finally {
@@ -312,7 +332,10 @@ const onSubmit = async () => {
     >
       <h1 class="flex items-center mb-0 text-n-slate-12">
         <router-link
-          :to="{ name: 'sales_products_list', params: { accountId: route.params.accountId } }"
+          :to="{
+            name: 'sales_products_list',
+            params: { accountId: route.params.accountId },
+          }"
           class="flex items-center font-normal cursor-pointer text-n-slate-11 text-base ltr:mr-4 rtl:ml-4 hover:text-n-slate-12 transition-colors"
         >
           <i class="i-lucide-chevron-left -ml-1 text-lg mr-1" />
@@ -406,8 +429,14 @@ const onSubmit = async () => {
                   class="w-full"
                   custom-input-class="!bg-n-surface-1"
                   :label="$t('SALES.PRODUCT_FORM.FIELDS.NAME.LABEL')"
-                  :placeholder="$t('SALES.PRODUCT_FORM.FIELDS.NAME.PLACEHOLDER')"
-                  :message="v$.form.name.$error ? $t('SALES.PRODUCT_FORM.FIELDS.NAME.ERROR') : ''"
+                  :placeholder="
+                    $t('SALES.PRODUCT_FORM.FIELDS.NAME.PLACEHOLDER')
+                  "
+                  :message="
+                    v$.form.name.$error
+                      ? $t('SALES.PRODUCT_FORM.FIELDS.NAME.ERROR')
+                      : ''
+                  "
                   :message-type="v$.form.name.$error ? 'error' : 'info'"
                   @blur="v$.form.name.$touch"
                 />
@@ -417,10 +446,7 @@ const onSubmit = async () => {
                 <label class="block text-sm font-medium text-n-slate-12 mb-2">
                   {{ $t('SALES.PRODUCT_FORM.FIELDS.IMAGE.LABEL') }}
                 </label>
-                <MultiImageUpload
-                  v-model="form.images"
-                  :max-images="4"
-                />
+                <MultiImageUpload v-model="form.images" :max-images="4" />
               </div>
 
               <div class="w-full grid grid-cols-2 gap-4">
@@ -431,14 +457,30 @@ const onSubmit = async () => {
                   <ComboBox
                     v-model="form.productType"
                     :options="[
-                      { label: $t('SALES.PRODUCT_FORM.FIELDS.TYPE.OPTIONS.PHYSICAL'), value: 'physical' },
-                      { label: $t('SALES.PRODUCT_FORM.FIELDS.TYPE.OPTIONS.DIGITAL'), value: 'digital' },
-                      { label: $t('SALES.PRODUCT_FORM.FIELDS.TYPE.OPTIONS.SERVICE'), value: 'service' }
+                      {
+                        label: $t(
+                          'SALES.PRODUCT_FORM.FIELDS.TYPE.OPTIONS.PHYSICAL'
+                        ),
+                        value: 'physical',
+                      },
+                      {
+                        label: $t(
+                          'SALES.PRODUCT_FORM.FIELDS.TYPE.OPTIONS.DIGITAL'
+                        ),
+                        value: 'digital',
+                      },
+                      {
+                        label: $t(
+                          'SALES.PRODUCT_FORM.FIELDS.TYPE.OPTIONS.SERVICE'
+                        ),
+                        value: 'service',
+                      },
                     ]"
                   />
                 </div>
-                <Input custom-input-class="!bg-n-surface-1"
+                <Input
                   v-model="form.category"
+                  custom-input-class="!bg-n-surface-1"
                   class="w-full"
                   :label="$t('SALES.PRODUCT_FORM.FIELDS.CATEGORY.LABEL')"
                   :placeholder="
@@ -464,10 +506,14 @@ const onSubmit = async () => {
                 <label class="block text-sm font-medium text-n-slate-12 mb-1">
                   {{ $t('SALES.PRODUCT_FORM.FIELDS.KEYWORDS.LABEL') }}
                 </label>
-                <div class="w-full p-2 rounded-lg border-0 outline outline-1 outline-n-weak outline-offset-[-1px] bg-n-surface-1 focus-within:outline-n-orange-9 transition-all duration-200 min-h-[42px] flex items-center">
+                <div
+                  class="w-full p-2 rounded-lg border-0 outline outline-1 outline-n-weak outline-offset-[-1px] bg-n-surface-1 focus-within:outline-n-orange-9 transition-all duration-200 min-h-[42px] flex items-center"
+                >
                   <TagInput
                     v-model="form.keywords"
-                    :placeholder="$t('SALES.PRODUCT_FORM.FIELDS.KEYWORDS.PLACEHOLDER')"
+                    :placeholder="
+                      $t('SALES.PRODUCT_FORM.FIELDS.KEYWORDS.PLACEHOLDER')
+                    "
                     allow-create
                     class="w-full border-none outline-none focus:outline-none focus:ring-0 !border-transparent p-0 bg-transparent"
                   />
@@ -475,8 +521,9 @@ const onSubmit = async () => {
               </div>
 
               <div class="w-full grid grid-cols-2 gap-4">
-                <Input custom-input-class="!bg-n-surface-1"
+                <Input
                   v-model="form.price"
+                  custom-input-class="!bg-n-surface-1"
                   class="w-full"
                   type="number"
                   :label="$t('SALES.PRODUCT_FORM.FIELDS.PRICE.LABEL')"
@@ -484,8 +531,9 @@ const onSubmit = async () => {
                     $t('SALES.PRODUCT_FORM.FIELDS.PRICE.PLACEHOLDER')
                   "
                 />
-                <Input custom-input-class="!bg-n-surface-1"
+                <Input
                   v-model="form.currency"
+                  custom-input-class="!bg-n-surface-1"
                   class="w-full"
                   :label="$t('SALES.PRODUCT_FORM.FIELDS.CURRENCY.LABEL')"
                   :placeholder="
@@ -516,8 +564,9 @@ const onSubmit = async () => {
               </div>
 
               <div class="w-full">
-                <Input custom-input-class="!bg-n-surface-1"
+                <Input
                   v-model="form.brand"
+                  custom-input-class="!bg-n-surface-1"
                   class="w-full"
                   :label="$t('SALES.PRODUCT_FORM.FIELDS.BRAND.LABEL')"
                   :placeholder="
@@ -533,10 +582,14 @@ const onSubmit = async () => {
                 <p class="text-xs text-n-slate-11 mt-0 mb-2">
                   {{ $t('SALES.PRODUCT_FORM.FIELDS.STYLE.HINT') }}
                 </p>
-                <div class="w-full p-2 rounded-lg border-0 outline outline-1 outline-n-weak outline-offset-[-1px] bg-n-surface-1 focus-within:outline-n-orange-9 transition-all duration-200 min-h-[42px] flex items-center">
+                <div
+                  class="w-full p-2 rounded-lg border-0 outline outline-1 outline-n-weak outline-offset-[-1px] bg-n-surface-1 focus-within:outline-n-orange-9 transition-all duration-200 min-h-[42px] flex items-center"
+                >
                   <TagInput
                     v-model="form.style"
-                    :placeholder="$t('SALES.PRODUCT_FORM.FIELDS.STYLE.PLACEHOLDER')"
+                    :placeholder="
+                      $t('SALES.PRODUCT_FORM.FIELDS.STYLE.PLACEHOLDER')
+                    "
                     allow-create
                     class="w-full border-none outline-none focus:outline-none focus:ring-0 !border-transparent p-0 bg-transparent"
                   />
@@ -549,10 +602,14 @@ const onSubmit = async () => {
                 <p class="text-xs text-n-slate-11 mt-0 mb-2">
                   {{ $t('SALES.PRODUCT_FORM.FIELDS.ATTRIBUTES.HINT') }}
                 </p>
-                <div class="w-full p-2 rounded-lg border-0 outline outline-1 outline-n-weak outline-offset-[-1px] bg-n-surface-1 focus-within:outline-n-orange-9 transition-all duration-200 min-h-[42px] flex items-center">
+                <div
+                  class="w-full p-2 rounded-lg border-0 outline outline-1 outline-n-weak outline-offset-[-1px] bg-n-surface-1 focus-within:outline-n-orange-9 transition-all duration-200 min-h-[42px] flex items-center"
+                >
                   <TagInput
                     v-model="form.attributes"
-                    :placeholder="$t('SALES.PRODUCT_FORM.FIELDS.ATTRIBUTES.PLACEHOLDER')"
+                    :placeholder="
+                      $t('SALES.PRODUCT_FORM.FIELDS.ATTRIBUTES.PLACEHOLDER')
+                    "
                     allow-create
                     class="w-full border-none outline-none focus:outline-none focus:ring-0 !border-transparent p-0 bg-transparent"
                   />
@@ -560,43 +617,79 @@ const onSubmit = async () => {
               </div>
 
               <!-- Bổ sung thông tin cho sản phẩm vật lý -->
-              <div v-if="form.productType === 'physical'" class="flex flex-col gap-4">
+              <div
+                v-if="form.productType === 'physical'"
+                class="flex flex-col gap-4"
+              >
                 <div class="grid grid-cols-2 gap-4">
-                  <Input custom-input-class="!bg-n-surface-1"
+                  <Input
                     v-model="form.variants[0].meta.color"
+                    custom-input-class="!bg-n-surface-1"
                     class="w-full"
-                    :label="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.COLOR.LABEL')"
-                    :placeholder="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.COLOR.PLACEHOLDER')"
+                    :label="
+                      $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.COLOR.LABEL')
+                    "
+                    :placeholder="
+                      $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.COLOR.PLACEHOLDER')
+                    "
                   />
-                  <Input custom-input-class="!bg-n-surface-1"
+                  <Input
                     v-model="form.variants[0].weight"
+                    custom-input-class="!bg-n-surface-1"
                     type="number"
                     class="w-full"
-                    :label="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.LABEL')"
-                    :placeholder="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.PLACEHOLDER')"
+                    :label="
+                      $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.LABEL')
+                    "
+                    :placeholder="
+                      $t(
+                        'SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.PLACEHOLDER'
+                      )
+                    "
                   />
                 </div>
                 <div class="grid grid-cols-3 gap-4">
-                  <Input custom-input-class="!bg-n-surface-1"
+                  <Input
                     v-model="form.variants[0].meta.length"
+                    custom-input-class="!bg-n-surface-1"
                     type="number"
                     class="w-full"
-                    :label="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.LENGTH.LABEL')"
-                    :placeholder="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.PLACEHOLDER')"
+                    :label="
+                      $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.LENGTH.LABEL')
+                    "
+                    :placeholder="
+                      $t(
+                        'SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.PLACEHOLDER'
+                      )
+                    "
                   />
-                  <Input custom-input-class="!bg-n-surface-1"
+                  <Input
                     v-model="form.variants[0].meta.width"
+                    custom-input-class="!bg-n-surface-1"
                     type="number"
                     class="w-full"
-                    :label="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.WIDTH.LABEL')"
-                    :placeholder="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.PLACEHOLDER')"
+                    :label="
+                      $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.WIDTH.LABEL')
+                    "
+                    :placeholder="
+                      $t(
+                        'SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.PLACEHOLDER'
+                      )
+                    "
                   />
-                  <Input custom-input-class="!bg-n-surface-1"
+                  <Input
                     v-model="form.variants[0].meta.height"
+                    custom-input-class="!bg-n-surface-1"
                     type="number"
                     class="w-full"
-                    :label="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.HEIGHT.LABEL')"
-                    :placeholder="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.PLACEHOLDER')"
+                    :label="
+                      $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.HEIGHT.LABEL')
+                    "
+                    :placeholder="
+                      $t(
+                        'SALES.PRODUCT_FORM.FIELDS.VARIANTS.WEIGHT.PLACEHOLDER'
+                      )
+                    "
                   />
                 </div>
               </div>
@@ -630,10 +723,17 @@ const onSubmit = async () => {
               </div>
 
               <!-- HAS VARIANTS SWITCH -->
-              <div class="flex items-center justify-between bg-n-surface-1 border border-n-weak p-4 rounded-xl cursor-pointer" @click="form.hasVariants = !form.hasVariants">
+              <div
+                class="flex items-center justify-between bg-n-surface-1 border border-n-weak p-4 rounded-xl cursor-pointer"
+                @click="form.hasVariants = !form.hasVariants"
+              >
                 <div class="flex flex-col">
-                  <h3 class="text-sm font-medium text-n-slate-12 m-0 mb-1">{{ $t('SALES.PRODUCT_FORM.FIELDS.HAS_VARIANTS.TITLE') }}</h3>
-                  <p class="text-xs text-n-slate-11 m-0">{{ $t('SALES.PRODUCT_FORM.FIELDS.HAS_VARIANTS.DESC') }}</p>
+                  <h3 class="text-sm font-medium text-n-slate-12 m-0 mb-1">
+                    {{ $t('SALES.PRODUCT_FORM.FIELDS.HAS_VARIANTS.TITLE') }}
+                  </h3>
+                  <p class="text-xs text-n-slate-11 m-0">
+                    {{ $t('SALES.PRODUCT_FORM.FIELDS.HAS_VARIANTS.DESC') }}
+                  </p>
                 </div>
                 <Switch v-model="form.hasVariants" @click.stop />
               </div>
@@ -648,7 +748,9 @@ const onSubmit = async () => {
                   <div class="absolute top-4 right-4 flex items-center gap-2">
                     <button
                       class="text-n-slate-11 hover:text-n-brand transition-colors"
-                      :title="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.DUPLICATE')"
+                      :title="
+                        $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.DUPLICATE')
+                      "
                       @click.prevent="duplicateVariant(index)"
                     >
                       <span class="i-lucide-copy text-base" />
@@ -671,41 +773,56 @@ const onSubmit = async () => {
                   </h3>
 
                   <div class="grid grid-cols-2 gap-4">
-                    <Input custom-input-class="!bg-n-surface-1"
+                    <Input
                       v-model="variant.name"
+                      custom-input-class="!bg-n-surface-1"
                       class="w-full"
-                      :label="$t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.NAME.LABEL')"
+                      :label="
+                        $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.NAME.LABEL')
+                      "
                       :placeholder="
-                        $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.NAME.PLACEHOLDER')
+                        $t(
+                          'SALES.PRODUCT_FORM.FIELDS.VARIANTS.NAME.PLACEHOLDER'
+                        )
                       "
                     />
-                    <Input custom-input-class="!bg-n-surface-1"
+                    <Input
                       v-model="variant.price"
+                      custom-input-class="!bg-n-surface-1"
                       type="number"
                       class="w-full"
                       :label="
                         $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.PRICE.LABEL')
                       "
                       :placeholder="
-                        $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.PRICE.PLACEHOLDER')
+                        $t(
+                          'SALES.PRODUCT_FORM.FIELDS.VARIANTS.PRICE.PLACEHOLDER'
+                        )
                       "
                     />
                   </div>
 
                   <!-- Meta info: Color, Weight -->
-                  <div v-if="form.productType === 'physical'" class="grid grid-cols-2 gap-4">
-                    <Input custom-input-class="!bg-n-surface-1"
+                  <div
+                    v-if="form.productType === 'physical'"
+                    class="grid grid-cols-2 gap-4"
+                  >
+                    <Input
                       v-model="variant.meta.color"
+                      custom-input-class="!bg-n-surface-1"
                       class="w-full"
                       :label="
                         $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.COLOR.LABEL')
                       "
                       :placeholder="
-                        $t('SALES.PRODUCT_FORM.FIELDS.VARIANTS.COLOR.PLACEHOLDER')
+                        $t(
+                          'SALES.PRODUCT_FORM.FIELDS.VARIANTS.COLOR.PLACEHOLDER'
+                        )
                       "
                     />
-                    <Input custom-input-class="!bg-n-surface-1"
+                    <Input
                       v-model="variant.weight"
+                      custom-input-class="!bg-n-surface-1"
                       type="number"
                       class="w-full"
                       :label="
@@ -720,9 +837,13 @@ const onSubmit = async () => {
                   </div>
 
                   <!-- Shipping info: Dimensions -->
-                  <div v-if="form.productType === 'physical'" class="grid grid-cols-3 gap-4 mt-2">
-                    <Input custom-input-class="!bg-n-surface-1"
+                  <div
+                    v-if="form.productType === 'physical'"
+                    class="grid grid-cols-3 gap-4 mt-2"
+                  >
+                    <Input
                       v-model="variant.meta.length"
+                      custom-input-class="!bg-n-surface-1"
                       type="number"
                       class="w-full"
                       :label="
@@ -734,8 +855,9 @@ const onSubmit = async () => {
                         )
                       "
                     />
-                    <Input custom-input-class="!bg-n-surface-1"
+                    <Input
                       v-model="variant.meta.width"
+                      custom-input-class="!bg-n-surface-1"
                       type="number"
                       class="w-full"
                       :label="
@@ -747,8 +869,9 @@ const onSubmit = async () => {
                         )
                       "
                     />
-                    <Input custom-input-class="!bg-n-surface-1"
+                    <Input
                       v-model="variant.meta.height"
+                      custom-input-class="!bg-n-surface-1"
                       type="number"
                       class="w-full"
                       :label="
@@ -818,21 +941,31 @@ const onSubmit = async () => {
                     }}</span>
                   </div>
                   <div class="flex gap-2">
-                    <span class="text-n-slate-11 w-32">{{ $t('SALES.PRODUCT_FORM.STEP_3.DESCRIPTION') }}</span>
-                    <span class="text-n-slate-12 font-medium break-all line-clamp-2">{{
-                      form.description || $t('SALES.PRODUCT_FORM.STEP_3.NOT_ENTERED')
+                    <span class="text-n-slate-11 w-32">{{
+                      $t('SALES.PRODUCT_FORM.STEP_3.DESCRIPTION')
                     }}</span>
+                    <span
+                      class="text-n-slate-12 font-medium break-all line-clamp-2"
+                      >{{
+                        form.description ||
+                        $t('SALES.PRODUCT_FORM.STEP_3.NOT_ENTERED')
+                      }}</span>
                   </div>
                   <div class="flex gap-2">
                     <span class="text-n-slate-11 w-32">{{
                       $t('SALES.PRODUCT_FORM.STEP_3.BASE_PRICE')
                     }}</span>
-                    <span class="text-n-slate-12 font-medium"
-                      >{{ displayPrice }}</span
-                    >
+                    <span class="text-n-slate-12 font-medium">{{
+                      displayPrice
+                    }}</span>
                   </div>
-                  <div v-if="form.attributes && form.attributes.length" class="flex gap-2">
-                    <span class="text-n-slate-11 w-32">{{ $t('SALES.PRODUCT_FORM.STEP_3.ATTRIBUTES') }}</span>
+                  <div
+                    v-if="form.attributes && form.attributes.length"
+                    class="flex gap-2"
+                  >
+                    <span class="text-n-slate-11 w-32">{{
+                      $t('SALES.PRODUCT_FORM.STEP_3.ATTRIBUTES')
+                    }}</span>
                     <span class="text-n-slate-12 font-medium">{{
                       form.attributes.join(', ')
                     }}</span>
@@ -855,8 +988,18 @@ const onSubmit = async () => {
                 <ComboBox
                   v-model="form.status"
                   :options="[
-                    { label: $t('SALES.PRODUCT_FORM.FIELDS.STATUS.OPTIONS.ACTIVE'), value: 'active' },
-                    { label: $t('SALES.PRODUCT_FORM.FIELDS.STATUS.OPTIONS.DRAFT'), value: 'draft' }
+                    {
+                      label: $t(
+                        'SALES.PRODUCT_FORM.FIELDS.STATUS.OPTIONS.ACTIVE'
+                      ),
+                      value: 'active',
+                    },
+                    {
+                      label: $t(
+                        'SALES.PRODUCT_FORM.FIELDS.STATUS.OPTIONS.DRAFT'
+                      ),
+                      value: 'draft',
+                    },
                   ]"
                 />
               </div>

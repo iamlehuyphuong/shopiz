@@ -85,7 +85,9 @@ const formatPrice = price => {
 
 <template>
   <div class="flex flex-col gap-2">
-    <div class="flex items-center w-full h-[38px] px-3 rounded-lg border border-n-weak bg-white dark:bg-n-solid-1 focus-within:border-n-brand focus-within:ring-1 focus-within:ring-n-brand/30 transition-all">
+    <div
+      class="flex items-center w-full h-[38px] px-3 rounded-lg border border-n-weak bg-white dark:bg-n-solid-1 focus-within:border-n-brand focus-within:ring-1 focus-within:ring-n-brand/30 transition-all"
+    >
       <i class="i-lucide-search text-n-slate-10 text-base shrink-0" />
       <input
         v-model="searchQuery"
