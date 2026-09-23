@@ -13,7 +13,7 @@ class Api::V1::Accounts::Captain::CopilotThreadsController < Api::V1::Accounts::
   def create
     ActiveRecord::Base.transaction do
       @copilot_thread = Current.account.copilot_threads.create!(
-        title: copilot_thread_params[:message],
+        title: copilot_thread_params[:message].sub(/\n\n\[IMPORTANT\].*\z/m, '').truncate(250),
         user: Current.user,
         assistant: assistant
       )

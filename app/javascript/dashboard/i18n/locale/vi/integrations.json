@@ -567,6 +567,12 @@
         }
       }
     },
+    "SCENARIO_COPILOT": {
+      "TITLE": "Trợ lý ShopizAI",
+      "DESCRIPTION": "Mô tả kịch bản bạn muốn tạo hoặc tối ưu, AI sẽ giúp bạn.",
+      "INPUT_PLACEHOLDER": "Nhập yêu cầu của bạn...",
+      "PROPOSED_SCENARIO_TITLE": "**Kịch bản đề xuất:**\n- Tiêu đề: {title}\n- Mô tả: {description}"
+    },
     "PLAYGROUND": {
       "USER": "Bạn",
       "ASSISTANT": "Trợ lý",
@@ -1001,6 +1007,9 @@
           "NEW": {
             "CREATE": "Thêm kịch bản",
             "TITLE": "Tạo kịch bản",
+            "AI_PROMPT_LABEL": "Mô tả kịch bản để AI tạo tự động",
+            "AI_PROMPT_PLACEHOLDER": "Ví dụ: Tạo kịch bản tra cứu đơn hàng...",
+            "GENERATE_BUTTON": "Tạo bằng AI",
             "FORM": {
               "TITLE": {
                 "LABEL": "Tiêu đề",
@@ -1018,8 +1027,11 @@
                 "ERROR": "Nội dung xử lý là bắt buộc"
               },
               "CREATE": "Tạo",
+              "APPLY": "Sử dụng",
               "CANCEL": "Huỷ",
-              "OPTIMIZE_BUTTON": "✨ Tối ưu bằng AI"
+              "OPTIMIZE_BUTTON": "✨ Tối ưu bằng AI",
+              "SUCCESS": "Tạo kịch bản tự động thành công",
+              "ERROR": "Có lỗi xảy ra, vui lòng thử lại"
             },
             "TABS": {
               "MANUAL": "Thủ công",
@@ -1031,6 +1043,15 @@
         "UPDATE": {
           "CANCEL": "Huỷ",
           "UPDATE": "Cập nhật thay đổi"
+        },
+        "DELETE": {
+          "CONFIRM": {
+            "TITLE": "Xác nhận xoá kịch bản",
+            "MESSAGE": "Bạn có chắc chắn muốn xoá kịch bản này? Kịch bản đã xoá không thể khôi phục.",
+            "YES": "Có, xoá",
+            "NO": "Không, giữ lại",
+            "PLACE_HOLDER": "Vui lòng nhập {scenarioTitle} để xác nhận"
+          }
         },
         "LIST": {
           "SEARCH_PLACEHOLDER": "Tìm kiếm...",

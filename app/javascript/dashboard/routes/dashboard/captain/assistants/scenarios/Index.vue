@@ -123,13 +123,31 @@ const updateScenario = async scenario => {
   }
 };
 
-const deleteScenario = async id => {
+const showDeleteConfirm = ref(false);
+const scenarioToDelete = ref(null);
+
+const confirmDeleteScenario = id => {
+  const scenario = records.value.find(s => s.id === id);
+  if (scenario) {
+    scenarioToDelete.value = scenario;
+    showDeleteConfirm.value = true;
+  }
+};
+
+const closeDeleteConfirm = () => {
+  showDeleteConfirm.value = false;
+  scenarioToDelete.value = null;
+};
+
+const deleteScenario = async () => {
+  if (!scenarioToDelete.value) return;
   try {
     await store.dispatch('captainScenarios/delete', {
-      id,
+      id: scenarioToDelete.value.id,
       assistantId: assistantId.value,
     });
     useAlert(t('CAPTAIN.ASSISTANTS.SCENARIOS.API.DELETE.SUCCESS'));
+    closeDeleteConfirm();
   } catch (error) {
     const errorMessage =
       error?.response?.message ||
@@ -387,7 +405,7 @@ onMounted(() => {
               hoveredCard === scenario.id || bulkSelectedIds.size > 0
             "
             @select="handleRuleSelect"
-            @delete="deleteScenario(scenario.id)"
+            @delete="confirmDeleteScenario(scenario.id)"
             @update="updateScenario"
             @export="exportScenarios(scenario)"
             @hover="isHovered => handleRuleHover(isHovered, scenario.id)"
@@ -435,5 +453,18 @@ onMounted(() => {
         </SuggestedScenarios>
       </div>
     </template>
+    
+    <woot-confirm-delete-modal
+      v-if="showDeleteConfirm"
+      v-model:show="showDeleteConfirm"
+      :title="t('CAPTAIN.ASSISTANTS.SCENARIOS.DELETE.CONFIRM.TITLE')"
+      :message="t('CAPTAIN.ASSISTANTS.SCENARIOS.DELETE.CONFIRM.MESSAGE')"
+      :confirm-text="t('CAPTAIN.ASSISTANTS.SCENARIOS.DELETE.CONFIRM.YES')"
+      :reject-text="t('CAPTAIN.ASSISTANTS.SCENARIOS.DELETE.CONFIRM.NO')"
+      :confirm-value="scenarioToDelete?.title"
+      :confirm-place-holder-text="t('CAPTAIN.ASSISTANTS.SCENARIOS.DELETE.CONFIRM.PLACE_HOLDER', { scenarioTitle: scenarioToDelete?.title })"
+      @on-confirm="deleteScenario"
+      @on-close="closeDeleteConfirm"
+    />
   </PageLayout>
 </template>

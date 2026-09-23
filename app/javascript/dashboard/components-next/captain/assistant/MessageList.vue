@@ -13,6 +13,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  hideToolCalls: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 defineEmits(['use-scenario']);
@@ -86,7 +90,7 @@ watch(() => props.messages.length, scrollToBottom);
           class="flex flex-col gap-2 min-w-0"
           :class="[isUserMessage(message.sender) ? 'items-end' : 'items-start']"
         >
-          <div v-if="message.reasoning" class="flex flex-col gap-2 w-full mb-1">
+          <div v-if="false" class="flex flex-col gap-2 w-full mb-1">
             <div
               class="bg-n-background outline outline-1 outline-n-weak text-n-slate-11 text-xs rounded-xl font-mono break-words shadow-sm overflow-hidden"
             >
@@ -125,7 +129,11 @@ watch(() => props.messages.length, scrollToBottom);
           </div>
 
           <div
-            v-if="message.toolCalls && message.toolCalls.length > 0"
+            v-if="
+              !hideToolCalls &&
+              message.toolCalls &&
+              message.toolCalls.length > 0
+            "
             class="flex flex-col gap-2 w-full mb-1"
           >
             <div
@@ -180,18 +188,29 @@ watch(() => props.messages.length, scrollToBottom);
             class="px-4 py-3 text-sm [overflow-wrap:break-word] w-fit"
             :class="getMessageStyle(message.sender)"
           >
-            <div v-html="formatMessage(message.content)" />
+            <div
+              v-if="message.content"
+              v-html="formatMessage(message.content)"
+            />
             <div
               v-if="message.parsedScenario"
-              class="mt-2 pt-2 border-t border-white/20"
+              class="mt-3 bg-n-background text-n-slate-12 outline outline-1 outline-n-weak rounded-xl shadow-sm overflow-hidden"
             >
-              <button
-                class="flex items-center gap-1.5 text-sm font-medium hover:opacity-80 transition-opacity"
-                @click="$emit('use-scenario', message.parsedScenario)"
-              >
-                <span class="i-lucide-check-circle w-4 h-4" />
-                Sử dụng kịch bản này
-              </button>
+              <div class="p-4 border-b border-n-weak">
+                <h4 class="font-semibold text-sm mb-1 text-n-slate-12">
+                  {{ message.parsedScenario.title || 'Kịch bản đề xuất' }}
+                </h4>
+                <p class="text-xs text-n-slate-11 mb-0">
+                  {{ message.parsedScenario.description }}
+                </p>
+              </div>
+              <div class="p-4 bg-n-alpha-1">
+                <div
+                  class="text-xs text-n-slate-12 whitespace-pre-wrap max-h-48 overflow-y-auto prose prose-sm max-w-none"
+                >
+                  {{ message.parsedScenario.instruction }}
+                </div>
+              </div>
             </div>
           </div>
         </div>

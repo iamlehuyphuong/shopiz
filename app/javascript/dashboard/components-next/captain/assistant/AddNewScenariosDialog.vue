@@ -1,5 +1,5 @@
 <script setup>
-import { computed, reactive, ref, onMounted, onUnmounted } from 'vue';
+import { computed, reactive, ref, onMounted, onUnmounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useVuelidate } from '@vuelidate/core';
 import { required, minLength } from '@vuelidate/validators';
@@ -13,8 +13,6 @@ import Button from 'dashboard/components-next/button/Button.vue';
 import TextArea from 'dashboard/components-next/textarea/TextArea.vue';
 import Editor from 'dashboard/components-next/Editor/Editor.vue';
 import Dialog from 'dashboard/components-next/dialog/Dialog.vue';
-import TabBar from 'dashboard/components-next/tabbar/TabBar.vue';
-import ScenarioCopilotChat from './ScenarioCopilotChat.vue';
 
 defineProps({
   color: { type: String, default: 'blue' },
@@ -35,13 +33,7 @@ const state = reactive({
   title: '',
   description: '',
   instruction: '',
-  activeTabIndex: 0,
 });
-
-const tabs = computed(() => [
-  { label: t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.TABS.MANUAL') },
-  { label: t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.TABS.AI_ASSISTANT') },
-]);
 
 const rules = {
   title: { required, minLength: minLength(1) },
@@ -75,12 +67,8 @@ const resetState = () => {
     title: '',
     description: '',
     instruction: '',
-    activeTabIndex: 0,
   });
-};
-
-const handleTabChange = tab => {
-  state.activeTabIndex = tabs.value.findIndex(t => t.label === tab.label);
+  aiPrompt.value = '';
 };
 
 const onClickAdd = async () => {
@@ -99,45 +87,97 @@ const openDialog = () => {
   addScenarioDialog.value.open();
 };
 
-const copilotPrefill = ref('');
+// --- AI Generation Logic ---
+const aiPrompt = ref('');
+const isGenerating = ref(false);
+const activeThreadId = ref(null);
+const storeMessages = useMapGetter('copilotMessages/getRecords');
 
-const handleOptimize = () => {
-  if (!state.instruction) return;
+const generateScenario = async promptText => {
+  if (!promptText.trim() || !activeAssistant.value) return;
 
-  state.activeTabIndex = 1;
-  const message = t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.OPTIMIZE_PROMPT', {
-    instruction: state.instruction,
-  });
+  isGenerating.value = true;
+  let content = promptText;
 
-  // Pass to prefill which ScenarioCopilotChat watches
-  setTimeout(() => {
-    copilotPrefill.value = message;
-    setTimeout(() => {
-      copilotPrefill.value = '';
-    }, 500);
-  }, 300);
-};
+  content += `\n\n[IMPORTANT] Bạn đang ở chế độ Tạo Kịch Bản. Hãy hiểu yêu cầu trên là yêu cầu thiết kế kịch bản tư vấn cho chatbot AI.\nTrả về JSON với format: {"reasoning":"...","scenario":{"title":"...","description":"...","instruction":"..."}}\nTrong instruction, khi tham chiếu tool hãy dùng cú pháp: [tool_name](tool://tool_name).\nKHÔNG gọi tool suggest_scenario hay create_scenarios. KHÔNG thực hiện nghiệp vụ thông thường.`;
 
-// Handle tool call result from Copilot
-const handleSuggestScenario = payload => {
-  if (payload.success && payload.scenario) {
-    state.title = payload.scenario.title || '';
-    state.description = payload.scenario.description || '';
-    state.instruction = payload.scenario.instruction || '';
-    state.activeTabIndex = 0; // Switch back to manual tab
+  try {
+    const response = await store.dispatch('copilotThreads/create', {
+      assistant_id: activeAssistant.value.id,
+      message: content,
+    });
+    activeThreadId.value = response.id;
+  } catch (error) {
+    useAlert(error.message);
+    isGenerating.value = false;
   }
 };
 
-onMounted(() => {
-  emitter.on('CAPTAIN_SUGGEST_SCENARIO_USE', handleSuggestScenario);
-});
+const handleOptimize = () => {
+  if (!state.instruction) return;
+  const message = t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.OPTIMIZE_PROMPT', {
+    instruction: state.instruction,
+  });
+  generateScenario(message);
+};
 
-onUnmounted(() => {
-  emitter.off('CAPTAIN_SUGGEST_SCENARIO_USE', handleSuggestScenario);
-});
+// Watch for incoming messages from the backend to extract the generated scenario
+watch(
+  storeMessages,
+  newMessages => {
+    if (!isGenerating.value || !activeThreadId.value) return;
 
-const systemPrompt =
-  "MỤC TIÊU: Thiết kế kịch bản tư vấn. Bạn MẶC ĐỊNH SỬ DỤNG DUY NHẤT tool 'suggest_scenario'. KHÔNG dùng tool 'create_scenarios'.";
+    // Filter messages for current thread
+    const threadMessages = newMessages.filter(
+      m =>
+        m.copilot_thread_id === activeThreadId.value ||
+        m.copilot_thread?.id === activeThreadId.value
+    );
+
+    const lastAssistantMsg = threadMessages
+      .slice()
+      .reverse()
+      .find(m => m.message_type === 'assistant');
+
+    if (!lastAssistantMsg) return;
+
+    const msgContent = lastAssistantMsg.message?.content || '';
+    if (
+      msgContent.includes('error generating the response') ||
+      msgContent.includes('There was an error')
+    ) {
+      useAlert(
+        t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.ERROR') ||
+          'Lỗi tạo kịch bản, vui lòng thử lại.'
+      );
+      isGenerating.value = false;
+      return;
+    }
+
+    try {
+      const sanitizedContent = msgContent
+        .replace(/[“”]/g, '"')
+        .replace(/[‘’]/g, "'");
+      const json = JSON.parse(sanitizedContent);
+      const data = Array.isArray(json) ? json[0] : json;
+      const parsedScenario = data.scenario || data;
+
+      if (parsedScenario && parsedScenario.instruction) {
+        state.title = parsedScenario.title || '';
+        state.description = parsedScenario.description || '';
+        state.instruction = parsedScenario.instruction || '';
+        useAlert(
+          t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.SUCCESS') ||
+            'Kịch bản đã được điền tự động.'
+        );
+        isGenerating.value = false;
+      }
+    } catch (e) {
+      // It might be streaming or not fully valid JSON yet, so we just wait for the next update.
+    }
+  },
+  { deep: true }
+);
 </script>
 
 <template>
@@ -153,97 +193,110 @@ const systemPrompt =
     <Dialog
       ref="addScenarioDialog"
       :title="t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.TITLE')"
+      :show-footer="true"
       :confirm-button-label="
         t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.CREATE')
       "
       :cancel-button-label="
         t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.CANCEL')
       "
-      :show-footer="state.activeTabIndex === 0"
       width="3xl"
       @confirm="onClickAdd"
     >
-      <div class="flex flex-col gap-2 min-h-[400px]">
-        <div class="flex justify-start mb-2">
-          <TabBar
-            :tabs="tabs"
-            :initial-active-tab="state.activeTabIndex"
-            @tab-changed="handleTabChange"
+      <div class="flex flex-col gap-4 min-h-[400px]">
+        <!-- AI Prompt Section -->
+        <div class="w-full flex flex-col gap-2">
+          <TextArea
+            v-model="aiPrompt"
+            :label="
+              t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.AI_PROMPT_LABEL') ||
+              'Mô tả kịch bản để AI tạo tự động'
+            "
+            :placeholder="
+              t(
+                'CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.AI_PROMPT_PLACEHOLDER'
+              ) || 'Ví dụ: Tạo kịch bản tra cứu đơn hàng...'
+            "
+            :rows="3"
+            class="w-full"
           />
-        </div>
-
-        <div v-show="state.activeTabIndex === 0">
-          <div class="w-full flex flex-col gap-4">
-            <Input
-              v-model="state.title"
+          <div class="flex justify-end -mt-1">
+            <Button
               :label="
-                t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.TITLE.LABEL')
+                t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.GENERATE_BUTTON') ||
+                'Tạo bằng AI'
               "
-              :placeholder="
-                t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.TITLE.PLACEHOLDER')
-              "
-              :message="titleError"
-              :message-type="titleError ? 'error' : 'info'"
+              size="xs"
+              faded
+              slate
+              icon="i-lucide-sparkles"
+              :is-loading="isGenerating"
+              @click="generateScenario(aiPrompt)"
             />
-          </div>
-
-          <div class="w-full flex flex-col gap-4 mt-4">
-            <TextArea
-              v-model="state.description"
-              :label="
-                t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.DESCRIPTION.LABEL')
-              "
-              :placeholder="
-                t(
-                  'CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.DESCRIPTION.PLACEHOLDER'
-                )
-              "
-              :message="descriptionError"
-              :message-type="descriptionError ? 'error' : 'info'"
-            />
-          </div>
-
-          <div class="w-full flex flex-col gap-4 mt-4">
-            <Editor
-              v-model="state.instruction"
-              :label="
-                t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.INSTRUCTION.LABEL')
-              "
-              :placeholder="
-                t(
-                  'CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.INSTRUCTION.PLACEHOLDER'
-                )
-              "
-              :message="instructionError"
-              :message-type="instructionError ? 'error' : 'info'"
-              :show-character-count="false"
-              enable-captain-tools
-            >
-              <template #actions>
-                <Button
-                  :label="
-                    t(
-                      'CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.OPTIMIZE_BUTTON'
-                    )
-                  "
-                  size="xs"
-                  faded
-                  slate
-                  class="mt-2"
-                  @click="handleOptimize"
-                />
-              </template>
-            </Editor>
           </div>
         </div>
 
-        <div v-show="state.activeTabIndex === 1" class="h-[500px]">
-          <ScenarioCopilotChat
-            v-if="activeAssistant"
-            :assistant-id="activeAssistant.id"
-            :prefill="copilotPrefill"
-            @use-scenario="handleSuggestScenario"
+        <div class="w-full border-t border-n-weak my-2" />
+
+        <!-- Manual Form Section -->
+        <div class="w-full flex flex-col gap-4">
+          <Input
+            v-model="state.title"
+            :label="t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.TITLE.LABEL')"
+            :placeholder="
+              t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.TITLE.PLACEHOLDER')
+            "
+            :message="titleError"
+            :message-type="titleError ? 'error' : 'info'"
           />
+        </div>
+
+        <div class="w-full flex flex-col gap-4">
+          <TextArea
+            v-model="state.description"
+            :label="
+              t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.DESCRIPTION.LABEL')
+            "
+            :placeholder="
+              t(
+                'CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.DESCRIPTION.PLACEHOLDER'
+              )
+            "
+            :message="descriptionError"
+            :message-type="descriptionError ? 'error' : 'info'"
+          />
+        </div>
+
+        <div class="w-full flex flex-col gap-4">
+          <Editor
+            v-model="state.instruction"
+            :label="
+              t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.INSTRUCTION.LABEL')
+            "
+            :placeholder="
+              t(
+                'CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.INSTRUCTION.PLACEHOLDER'
+              )
+            "
+            :message="instructionError"
+            :message-type="instructionError ? 'error' : 'info'"
+            :show-character-count="false"
+            enable-captain-tools
+          >
+            <template #actions>
+              <Button
+                :label="
+                  t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.OPTIMIZE_BUTTON')
+                "
+                size="xs"
+                faded
+                slate
+                class="mt-2"
+                :is-loading="isGenerating"
+                @click="handleOptimize"
+              />
+            </template>
+          </Editor>
         </div>
       </div>
     </Dialog>

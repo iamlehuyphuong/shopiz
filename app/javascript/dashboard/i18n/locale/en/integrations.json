@@ -1007,6 +1007,9 @@
           "NEW": {
             "CREATE": "Add a scenario",
             "TITLE": "Create a scenario",
+            "AI_PROMPT_LABEL": "Describe the scenario for AI generation",
+            "AI_PROMPT_PLACEHOLDER": "e.g., Create a scenario for tracking an order...",
+            "GENERATE_BUTTON": "Generate with AI",
             "FORM": {
               "TITLE": {
                 "LABEL": "Title",
@@ -1024,8 +1027,11 @@
                 "ERROR": "Scenario content is required"
               },
               "CREATE": "Create",
+              "APPLY": "Apply",
               "CANCEL": "Cancel",
-              "OPTIMIZE_BUTTON": "✨ Optimize with AI"
+              "OPTIMIZE_BUTTON": "✨ Optimize with AI",
+              "SUCCESS": "Scenario automatically generated",
+              "ERROR": "There was an error generating the scenario, please try again"
             },
             "TABS": {
               "MANUAL": "Manual",
@@ -1037,6 +1043,15 @@
         "UPDATE": {
           "CANCEL": "Cancel",
           "UPDATE": "Update changes"
+        },
+        "DELETE": {
+          "CONFIRM": {
+            "TITLE": "Confirm deletion",
+            "MESSAGE": "Are you sure you want to delete this scenario? This action cannot be undone.",
+            "YES": "Yes, delete",
+            "NO": "No, keep it",
+            "PLACE_HOLDER": "Please type {scenarioTitle} to confirm"
+          }
         },
         "LIST": {
           "SEARCH_PLACEHOLDER": "Search...",

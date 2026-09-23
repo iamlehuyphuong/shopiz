@@ -254,6 +254,89 @@ en:
       message: "⏰ Follow-up reminder for customer."
       note: 'Note: %{note}'
     captain:
+    scenario_templates:
+      case_studies:
+        ecommerce_pack:
+          name: "E-commerce & Retail Pack"
+          description: "This pack is designed for online stores and direct sales. The sub-scenarios form a complete sales funnel from product inquiry to post-purchase care."
+          scenarios:
+            ecom_product_advisory:
+              title: "Product Advisory"
+              description: "Purpose: Handle inquiries like 'I want to buy a shirt/dress...' or 'Is there any product for acne-prone skin?'"
+              instruction: |-
+                Step 1: Ask for specific needs (product type, budget, preferences).
+                Step 2: Use the [suggest_products](tool://suggest_products) tool to suggest suitable products, or [get_product_details](tool://get_product_details) to fetch details of a specific product.
+                Step 3: Advise on pros/cons, compare, and invite the customer to place an order.
+            ecom_order_creation:
+              title: "Order Creation / Draft Order"
+              description: "Purpose: The customer is satisfied and wants to place an order."
+              instruction: |-
+                Step 1: Collect shipping information (Name, Phone number, Address).
+                Step 2: Re-confirm the cart (Quantity, product variants).
+                Step 3: Use the [create_order_draft](tool://create_order_draft) tool to create a draft order in the system.
+                Step 4: Send the order code or payment link to the customer.
+            ecom_order_tracking:
+              title: "Order Tracking"
+              description: "Purpose: The customer asks 'When will my order arrive?' or 'Please check order #1234'."
+              instruction: |-
+                Step 1: Ask the customer for the order code or the phone number used for the order.
+                Step 2: Use the [search_orders](tool://search_orders) tool to search for the order, then use [get_order_detail](tool://get_order_detail) to get the order status (Shipping, Delivered...).
+                Step 3: Reply with a friendly status update and the estimated delivery date.
+            ecom_returns_escalation:
+              title: "Returns & Escalation"
+              description: "Purpose: The customer reports a product defect, wants a return, or is dissatisfied."
+              instruction: |-
+                Step 1: Apologize and empathize with the customer. Ask for photos/videos of the product's condition.
+                Step 2: If the issue is complex, use the [handoff](tool://handoff) tool to transfer the conversation directly to a human customer care agent for further handling.
+        service_booking_pack:
+          name: "Service & Booking Pack"
+          description: "This pack is designed for service models (Spa, Dental, Beauty Clinic, Expert Consultation). Focuses on converting inquiries into appointments."
+          scenarios:
+            service_faq:
+              title: "Service FAQ & Consultation"
+              description: "Purpose: The customer asks about pricing, treatments, and policies."
+              instruction: |-
+                Step 1: Understand the customer's problem (e.g., acne-prone skin, rhinoplasty consultation).
+                Step 2: Use the [faq_lookup](tool://faq_lookup) tool to look up standard treatments and pricing from the Knowledge Base.
+                Step 3: Answer concisely and tactfully guide the customer to book an examination/consultation appointment.
+            service_booking:
+              title: "Check Availability & Book Appointment"
+              description: "Purpose: The customer wants to schedule a service appointment."
+              instruction: |-
+                Step 1: Ask the customer for their preferred location, date, and time.
+                Step 2: Use the [check_availability](tool://check_availability) tool to see if doctors/technicians are available at that time.
+                Step 3: If available, ask for their phone number and use the [book_meeting](tool://book_meeting) tool to log the appointment into the system.
+            service_reschedule_cancel:
+              title: "Lookup, Reschedule & Cancel Booking"
+              description: "Purpose: The customer has a sudden conflict and wants to change their appointment time."
+              instruction: |-
+                Step 1: Ask for their phone number and use the [search_meetings](tool://search_meetings) tool to look up their current appointments.
+                Step 2: Ask if they want to reschedule to a new time or cancel.
+                Step 3: Use the [cancel_meeting](tool://cancel_meeting) tool to cancel the old appointment, and (if rescheduling) use [book_meeting](tool://book_meeting) again to create a new one. Notify the customer of the successful update.
+        edtech_pack:
+          name: "EdTech & Course Consultation Pack"
+          description: "Designed for English Centers and online training platforms. The consultation process requires more thorough data (Lead) collection."
+          scenarios:
+            edtech_lead_capture:
+              title: "Lead Capture & Course Advisory"
+              description: "Purpose: Inquire about proficiency, introduce courses, and save potential customer information."
+              instruction: |-
+                Step 1: Quick survey: Learning goal (IELTS, Communication), age, current proficiency level.
+                Step 2: Use [faq_lookup](tool://faq_lookup) to look up suitable course information.
+                Step 3: Ask for their name and phone number to send tuition info. Use [update_contact](tool://update_contact) to update the phone number and [add_label_to_conversation](tool://add_label_to_conversation) to categorize the lead.
+            edtech_schedule_lookup:
+              title: "Student Info & Schedule Lookup"
+              description: "Purpose: An existing student asks for this week's schedule or requests a class transfer."
+              instruction: |-
+                Step 1: Ask for their phone number and use [get_contact_detail](tool://get_contact_detail) to identify the student.
+                Step 2: Provide the class schedule. If they need to transfer classes or request a leave, use [add_private_note](tool://add_private_note) to log the request for Academic Affairs or use [execute_macro](tool://execute_macro) (if an automated macro exists).
+            edtech_tech_support:
+              title: "Platform Tech Support"
+              description: "Purpose: The student cannot log into the app, or a video is broken (for online learning)."
+              instruction: |-
+                Step 1: Ask for symptoms and request a screenshot.
+                Step 2: Use [faq_lookup](tool://faq_lookup) to look up troubleshooting steps (e.g., forgot password, change device).
+                Step 3: Provide step-by-step guidance for the student to fix the issue themselves.
       handoff: Transferring to another agent for further assistance.
     messages:
       instagram_story_content: "%{story_sender} mentioned you in the story: "
@@ -489,6 +572,9 @@ en:
         true: 'Yes'
         false: 'No'
   captain:
+    copilot:
+      using_tool: 'Using tool: %{function_name}...'
+      completed_tool_call: 'Completed using tool: %{function_name}'
     tools:
       send_product_info:
         header: "Product information:\n"
@@ -704,87 +790,3 @@ en:
       footer: This report was automatically generated by Captain AI based on conversation
         content from %{from_time} to the present.
       start_of_day: the start of the day
-  captain:
-    scenario_templates:
-      case_studies:
-        ecommerce_pack:
-          name: "E-commerce & Retail Pack"
-          description: "This pack is designed for online stores and direct sales. The sub-scenarios form a complete sales funnel from product inquiry to post-purchase care."
-          scenarios:
-            ecom_product_advisory:
-              title: "Product Advisory"
-              description: "Purpose: Handle inquiries like 'I want to buy a shirt/dress...' or 'Is there any product for acne-prone skin?'"
-              instruction: |-
-                Step 1: Ask for specific needs (product type, budget, preferences).
-                Step 2: Use the [suggest_products](tool://suggest_products) tool to suggest suitable products, or [get_product_details](tool://get_product_details) to fetch details of a specific product.
-                Step 3: Advise on pros/cons, compare, and invite the customer to place an order.
-            ecom_order_creation:
-              title: "Order Creation / Draft Order"
-              description: "Purpose: The customer is satisfied and wants to place an order."
-              instruction: |-
-                Step 1: Collect shipping information (Name, Phone number, Address).
-                Step 2: Re-confirm the cart (Quantity, product variants).
-                Step 3: Use the [create_order_draft](tool://create_order_draft) tool to create a draft order in the system.
-                Step 4: Send the order code or payment link to the customer.
-            ecom_order_tracking:
-              title: "Order Tracking"
-              description: "Purpose: The customer asks 'When will my order arrive?' or 'Please check order #1234'."
-              instruction: |-
-                Step 1: Ask the customer for the order code or the phone number used for the order.
-                Step 2: Use the [search_orders](tool://search_orders) tool to search for the order, then use [get_order_detail](tool://get_order_detail) to get the order status (Shipping, Delivered...).
-                Step 3: Reply with a friendly status update and the estimated delivery date.
-            ecom_returns_escalation:
-              title: "Returns & Escalation"
-              description: "Purpose: The customer reports a product defect, wants a return, or is dissatisfied."
-              instruction: |-
-                Step 1: Apologize and empathize with the customer. Ask for photos/videos of the product's condition.
-                Step 2: If the issue is complex, use the [handoff](tool://handoff) tool to transfer the conversation directly to a human customer care agent for further handling.
-        service_booking_pack:
-          name: "Service & Booking Pack"
-          description: "This pack is designed for service models (Spa, Dental, Beauty Clinic, Expert Consultation). Focuses on converting inquiries into appointments."
-          scenarios:
-            service_faq:
-              title: "Service FAQ & Consultation"
-              description: "Purpose: The customer asks about pricing, treatments, and policies."
-              instruction: |-
-                Step 1: Understand the customer's problem (e.g., acne-prone skin, rhinoplasty consultation).
-                Step 2: Use the [faq_lookup](tool://faq_lookup) tool to look up standard treatments and pricing from the Knowledge Base.
-                Step 3: Answer concisely and tactfully guide the customer to book an examination/consultation appointment.
-            service_booking:
-              title: "Check Availability & Book Appointment"
-              description: "Purpose: The customer wants to schedule a service appointment."
-              instruction: |-
-                Step 1: Ask the customer for their preferred location, date, and time.
-                Step 2: Use the [check_availability](tool://check_availability) tool to see if doctors/technicians are available at that time.
-                Step 3: If available, ask for their phone number and use the [book_meeting](tool://book_meeting) tool to log the appointment into the system.
-            service_reschedule_cancel:
-              title: "Lookup, Reschedule & Cancel Booking"
-              description: "Purpose: The customer has a sudden conflict and wants to change their appointment time."
-              instruction: |-
-                Step 1: Ask for their phone number and use the [search_meetings](tool://search_meetings) tool to look up their current appointments.
-                Step 2: Ask if they want to reschedule to a new time or cancel.
-                Step 3: Use the [cancel_meeting](tool://cancel_meeting) tool to cancel the old appointment, and (if rescheduling) use [book_meeting](tool://book_meeting) again to create a new one. Notify the customer of the successful update.
-        edtech_pack:
-          name: "EdTech & Course Consultation Pack"
-          description: "Designed for English Centers and online training platforms. The consultation process requires more thorough data (Lead) collection."
-          scenarios:
-            edtech_lead_capture:
-              title: "Lead Capture & Course Advisory"
-              description: "Purpose: Inquire about proficiency, introduce courses, and save potential customer information."
-              instruction: |-
-                Step 1: Quick survey: Learning goal (IELTS, Communication), age, current proficiency level.
-                Step 2: Use [faq_lookup](tool://faq_lookup) to look up suitable course information.
-                Step 3: Ask for their name and phone number to send tuition info. Use [update_contact](tool://update_contact) to update the phone number and [add_label_to_conversation](tool://add_label_to_conversation) to categorize the lead.
-            edtech_schedule_lookup:
-              title: "Student Info & Schedule Lookup"
-              description: "Purpose: An existing student asks for this week's schedule or requests a class transfer."
-              instruction: |-
-                Step 1: Ask for their phone number and use [get_contact_detail](tool://get_contact_detail) to identify the student.
-                Step 2: Provide the class schedule. If they need to transfer classes or request a leave, use [add_private_note](tool://add_private_note) to log the request for Academic Affairs or use [execute_macro](tool://execute_macro) (if an automated macro exists).
-            edtech_tech_support:
-              title: "Platform Tech Support"
-              description: "Purpose: The student cannot log into the app, or a video is broken (for online learning)."
-              instruction: |-
-                Step 1: Ask for symptoms and request a screenshot.
-                Step 2: Use [faq_lookup](tool://faq_lookup) to look up troubleshooting steps (e.g., forgot password, change device).
-                Step 3: Provide step-by-step guidance for the student to fix the issue themselves.

@@ -16,7 +16,14 @@ module Captain::ChatResponseHelper
   def parse_json_response(content)
     content = content.gsub('```json', '').gsub('```', '')
     content = content.strip
-    JSON.parse(content)
+    parsed = JSON.parse(content)
+    
+    if parsed['scenario']
+      parsed['content'] = parsed['scenario'].to_json
+      parsed.delete('scenario')
+    end
+    
+    parsed
   rescue JSON::ParserError => e
     Rails.logger.error "#{self.class.name} Assistant: #{@assistant.id}, Error parsing JSON response: #{e.message}"
     { 'content' => content }
