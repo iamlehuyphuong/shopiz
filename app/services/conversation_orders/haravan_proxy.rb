@@ -1,7 +1,7 @@
 # Proxy for Haravan Order API.
 # Haravan REST API: POST /com/orders.json, GET /com/orders/{id}.json
 class ConversationOrders::HaravanProxy < ConversationOrders::PlatformProxy
-  include Captain::Tools::Concerns::HaravanClient
+  include Captain::Tools::Haravan::Client
 
   def create_order(payload)
     haravan_post('orders.json', { order: payload })
