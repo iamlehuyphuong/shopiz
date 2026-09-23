@@ -49,7 +49,7 @@ module Captain::ChatResponseHelper
 
     persist_message(
       {
-        'content' => "Using #{tool_name}",
+        'content' => I18n.t('captain.copilot.using_tool', function_name: tool_name),
         'function_name' => tool_name
       },
       'assistant_thinking'
@@ -66,7 +66,7 @@ module Captain::ChatResponseHelper
 
     persist_message(
       {
-        'content' => "Completed #{tool_name}",
+        'content' => I18n.t('captain.copilot.completed_tool_call', function_name: tool_name),
         'function_name' => tool_name
       },
       'assistant_thinking'

@@ -117,9 +117,9 @@ class Captain::Copilot::ChatService < Llm::BaseAiService
   BOOKING_TOOL_CLASSES = [
     Captain::Tools::Copilot::ListEventTypesService,
     Captain::Tools::Copilot::GetAvailableTimesService,
-    Captain::Tools::Copilot::BookAppointmentService,
+    Captain::Tools::Copilot::BookMeetingService,
     Captain::Tools::Copilot::GetScheduledEventsService,
-    Captain::Tools::Copilot::ManageBookingService,
+    Captain::Tools::Copilot::ManageMeetingService,
     Captain::Tools::Copilot::SearchMeetingsService,
     Captain::Tools::Copilot::GetBookingLinkService
   ].freeze

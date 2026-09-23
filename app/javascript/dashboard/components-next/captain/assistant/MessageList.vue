@@ -181,7 +181,10 @@ watch(() => props.messages.length, scrollToBottom);
             :class="getMessageStyle(message.sender)"
           >
             <div v-html="formatMessage(message.content)" />
-            <div v-if="message.parsedScenario" class="mt-2 pt-2 border-t border-white/20">
+            <div
+              v-if="message.parsedScenario"
+              class="mt-2 pt-2 border-t border-white/20"
+            >
               <button
                 class="flex items-center gap-1.5 text-sm font-medium hover:opacity-80 transition-opacity"
                 @click="$emit('use-scenario', message.parsedScenario)"

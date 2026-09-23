@@ -567,6 +567,12 @@
         }
       }
     },
+    "SCENARIO_COPILOT": {
+      "TITLE": "ShopizAI Assistant",
+      "DESCRIPTION": "Describe the scenario you want to create or optimize, AI will help you.",
+      "INPUT_PLACEHOLDER": "Enter your request...",
+      "PROPOSED_SCENARIO_TITLE": "**Proposed Scenario:**\n- Title: {title}\n- Description: {description}"
+    },
     "PLAYGROUND": {
       "USER": "You",
       "ASSISTANT": "Assistant",

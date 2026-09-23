@@ -67,10 +67,13 @@ const insertIntoRichEditor = computed(() => {
 
 const useCopilotResponse = () => {
   if (parsedScenario.value) {
-    emitter.emit('CAPTAIN_SUGGEST_SCENARIO_USE', { success: true, scenario: parsedScenario.value });
+    emitter.emit('CAPTAIN_SUGGEST_SCENARIO_USE', {
+      success: true,
+      scenario: parsedScenario.value,
+    });
     return;
   }
-  
+
   if (insertIntoRichEditor.value) {
     emitter.emit(BUS_EVENTS.INSERT_INTO_RICH_EDITOR, props.message?.content);
   } else {

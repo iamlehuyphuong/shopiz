@@ -519,6 +519,7 @@ en:
       completed_tool_call: Completed %{function_name} tool call
       invalid_tool_call: Invalid tool call
       tool_not_available: Tool not available
+      empty_message: "There was an error generating the response. Please try again."
     documents:
       limit_exceeded: Document limit exceeded
       pdf_format_error: must be a PDF file

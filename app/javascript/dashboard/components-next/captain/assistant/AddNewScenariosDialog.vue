@@ -31,7 +31,6 @@ const assistants = useMapGetter('captainAssistants/getRecords');
 const activeAssistant = computed(() => assistants.value?.[0]);
 
 const state = reactive({
-
   id: '',
   title: '',
   description: '',
@@ -104,12 +103,12 @@ const copilotPrefill = ref('');
 
 const handleOptimize = () => {
   if (!state.instruction) return;
-  
+
   state.activeTabIndex = 1;
   const message = t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.OPTIMIZE_PROMPT', {
     instruction: state.instruction,
   });
-  
+
   // Pass to prefill which ScenarioCopilotChat watches
   setTimeout(() => {
     copilotPrefill.value = message;
@@ -137,7 +136,8 @@ onUnmounted(() => {
   emitter.off('CAPTAIN_SUGGEST_SCENARIO_USE', handleSuggestScenario);
 });
 
-const systemPrompt = "MỤC TIÊU: Thiết kế kịch bản tư vấn. Bạn MẶC ĐỊNH SỬ DỤNG DUY NHẤT tool 'suggest_scenario'. KHÔNG dùng tool 'create_scenarios'.";
+const systemPrompt =
+  "MỤC TIÊU: Thiết kế kịch bản tư vấn. Bạn MẶC ĐỊNH SỬ DỤNG DUY NHẤT tool 'suggest_scenario'. KHÔNG dùng tool 'create_scenarios'.";
 </script>
 
 <template>
@@ -221,12 +221,16 @@ const systemPrompt = "MỤC TIÊU: Thiết kế kịch bản tư vấn. Bạn M�
             >
               <template #actions>
                 <Button
-                  :label="t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.OPTIMIZE_BUTTON')"
+                  :label="
+                    t(
+                      'CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.FORM.OPTIMIZE_BUTTON'
+                    )
+                  "
                   size="xs"
                   faded
                   slate
-                  @click="handleOptimize"
                   class="mt-2"
+                  @click="handleOptimize"
                 />
               </template>
             </Editor>

@@ -116,7 +116,7 @@ class Captain::Assistant < ApplicationRecord
       self.class.resolve_tool_class('get_product_details').new(self),
       self.class.resolve_tool_class('suggest_products').new(self),
       self.class.resolve_tool_class('create_order_draft').new(self),
-      self.class.resolve_tool_class('confirm_order').new(self),
+      self.class.resolve_tool_class('push_order').new(self),
       self.class.resolve_tool_class('update_order').new(self),
 
       # Payment tools
@@ -126,7 +126,7 @@ class Captain::Assistant < ApplicationRecord
       # Booking tools
       self.class.resolve_tool_class('book_meeting').new(self),
       self.class.resolve_tool_class('check_availability').new(self),
-      self.class.resolve_tool_class('cancel_meeting').new(self),
+      self.class.resolve_tool_class('manage_meeting').new(self),
       self.class.resolve_tool_class('get_booking_link').new(self),
       self.class.resolve_tool_class('search_meetings').new(self)
     ]

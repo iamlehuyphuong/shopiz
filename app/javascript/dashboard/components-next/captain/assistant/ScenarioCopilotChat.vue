@@ -35,7 +35,10 @@ const isLoading = computed(() => {
   if (isSending.value) return true;
   if (storeMessages.value && storeMessages.value.length > 0) {
     const lastMsg = storeMessages.value[storeMessages.value.length - 1];
-    return lastMsg.message_type === 'user' || lastMsg.message_type === 'assistant_thinking';
+    return (
+      lastMsg.message_type === 'user' ||
+      lastMsg.message_type === 'assistant_thinking'
+    );
   }
   return false;
 });
@@ -44,7 +47,7 @@ const formattedMessages = computed(() => {
   return storeMessages.value.map(msg => {
     let content = msg.message?.content || '';
     let parsedScenario = null;
-    
+
     // Parse JSON block for scenario proposal
     if (content.includes('"scenario":')) {
       try {
@@ -53,19 +56,27 @@ const formattedMessages = computed(() => {
           const json = JSON.parse(match[0]);
           if (json.success && json.scenario) {
             parsedScenario = json.scenario;
-            content = `**Kịch bản đề xuất:**\n- Tiêu đề: ${parsedScenario.title}\n- Mô tả: ${parsedScenario.description}`;
+            content = t(
+              'CAPTAIN.SCENARIO_COPILOT.PROPOSED_SCENARIO_TITLE',
+              {
+                title: parsedScenario.title,
+                description: parsedScenario.description,
+              }
+            );
           }
         }
       } catch (e) {
         // Ignore parse error
       }
     }
-    
+
     return {
       sender: msg.message_type === 'user' ? 'user' : 'assistant',
       content,
       reasoning: msg.message?.reasoning,
-      toolCalls: msg.message?.function_name ? [{ name: msg.message.function_name }] : [],
+      toolCalls: msg.message?.function_name
+        ? [{ name: msg.message.function_name }]
+        : [],
       isReasoningExpanded: false,
       parsedScenario,
     };
@@ -122,27 +133,51 @@ watch(
 </script>
 
 <template>
-  <div class="flex flex-col h-full rounded-xl border py-6 border-n-weak text-n-slate-11">
+  <div
+    class="flex flex-col h-full rounded-xl border py-6 border-n-weak text-n-slate-11"
+  >
     <div class="mb-8 px-6">
       <div class="flex justify-between items-center mb-1">
-        <h3 class="text-lg font-medium">ShopizAI Assistant</h3>
-        <NextButton ghost sm slate icon="i-lucide-rotate-ccw" @click="resetConversation" />
+        <h3 class="text-lg font-medium">
+          {{ $t('CAPTAIN.SCENARIO_COPILOT.TITLE') }}
+        </h3>
+        <NextButton
+          ghost
+          sm
+          slate
+          icon="i-lucide-rotate-ccw"
+          @click="resetConversation"
+        />
       </div>
       <p class="text-sm text-n-slate-11">
-        Mô tả kịch bản bạn muốn tạo hoặc tối ưu, AI sẽ hỗ trợ bạn.
+        {{ $t('CAPTAIN.SCENARIO_COPILOT.DESCRIPTION') }}
       </p>
     </div>
 
-    <MessageList :messages="formattedMessages" :is-loading="isLoading" @use-scenario="$emit('use-scenario', $event)" />
+    <MessageList
+      :messages="formattedMessages"
+      :is-loading="isLoading"
+      @use-scenario="$emit('use-scenario', $event)"
+    />
 
-    <div class="flex items-center mx-6 bg-n-background outline outline-1 outline-n-weak rounded-xl p-3">
+    <div
+      class="flex items-center mx-6 bg-n-background outline outline-1 outline-n-weak rounded-xl p-3"
+    >
       <input
         v-model="newMessage"
         class="flex-1 bg-transparent border-none focus:outline-none text-sm mb-0 text-n-slate-12 placeholder:text-n-slate-10"
-        placeholder="Nhập yêu cầu của bạn..."
+        :placeholder="
+          $t('CAPTAIN.SCENARIO_COPILOT.INPUT_PLACEHOLDER')
+        "
         @keydown.enter.exact="handleEnterKey"
       />
-      <NextButton ghost sm :disabled="!newMessage.trim()" icon="i-lucide-send" @click="sendMessage" />
+      <NextButton
+        ghost
+        sm
+        :disabled="!newMessage.trim()"
+        icon="i-lucide-send"
+        @click="sendMessage"
+      />
     </div>
   </div>
 </template>
