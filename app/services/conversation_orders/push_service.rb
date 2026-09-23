@@ -32,6 +32,10 @@ class ConversationOrders::PushService
 
     if external_id.present?
       @order.update!(external_order_id: external_id, status: :confirmed)
+      
+      # Try to cache the customer ID mapping for future fast lookups
+      cache_customer_id(proxy_class, result)
+      
       send_success_message
       log_activity(:pushed)
       { success: true, order: @order }
@@ -164,5 +168,35 @@ class ConversationOrders::PushService
       action_type: action_type,
       user: @user
     ).perform
+  end
+
+  def cache_customer_id(proxy_class, result)
+    platform = @order.external_source
+    customer_id = nil
+
+    if platform == 'kiotviet'
+      customer_id = result.dig('customer', 'id') || result.dig('customerId')
+    elsif %w[sapo haravan shopify].include?(platform)
+      customer_id = result.dig('customer', 'id')
+    elsif platform == 'woocommerce'
+      customer_id = result.dig('customer_id')
+    elsif platform == 'nhanhvn'
+      customer_id = result.dig('customerMobile') || result.dig('customer', 'mobile')
+    end
+
+    return if customer_id.blank?
+
+    contact = @order.contact
+    return unless contact
+
+    contact.additional_attributes ||= {}
+    contact.additional_attributes['ecommerce_ids'] ||= {}
+
+    if contact.additional_attributes['ecommerce_ids'][platform].to_s != customer_id.to_s
+      contact.additional_attributes['ecommerce_ids'][platform] = customer_id.to_s
+      contact.save(validate: false) # Save without full validation to prevent blocking push
+    end
+  rescue StandardError => e
+    Rails.logger.error("Failed to cache customer ID for order #{@order.id}: #{e.message}")
   end
 end

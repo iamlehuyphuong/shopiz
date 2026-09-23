@@ -1,8 +1,6 @@
 # Public tool: Confirm a draft order and push it to the external platform.
-class Captain::Tools::ConfirmOrderTool < Captain::Tools::BasePublicTool
-  description 'Confirm a draft order and submit it. ' \
-              'The system automatically sends a confirmation notification to the customer. ' \
-              'Do not send a separate confirmation message.'
+class Captain::Tools::PushOrderTool < Captain::Tools::BasePublicTool
+  description 'Confirm a draft order and submit it to the integrated external e-commerce platform.'
   param :order_id, type: 'string', desc: 'The ID of the draft order to confirm', required: true
 
   def active?

@@ -1,6 +1,4 @@
 class Captain::Tools::Copilot::CreateOrderService < Captain::Tools::BaseTool
-  include Captain::Tools::Copilot::Concerns::EcomRoutable
-
   def self.name
     'create_order'
   end
@@ -17,22 +15,6 @@ class Captain::Tools::Copilot::CreateOrderService < Captain::Tools::BaseTool
   def execute(conversation_id:, product_items:, customer_name: nil, customer_phone: nil, delivery_address: nil, note: nil)
     return 'AI order creation is disabled for this account. Enable it in Sales Settings.' unless @conversation&.account&.ai_allow_create_order
 
-    platform = resolve_ecom_platform
-    if platform
-      args = {
-        conversation_id: conversation_id,
-        product_items: product_items,
-        customer_name: customer_name,
-        customer_phone: customer_phone,
-        delivery_address: delivery_address,
-        note: note
-      }.compact
-
-      result = delegate_to_ecom_tool(**args)
-      return result if result
-    end
-
-    # Fallback to Shopiz local creation
     conversation = find_conversation(conversation_id)
     return 'Conversation not found' unless conversation
 
@@ -51,18 +33,6 @@ class Captain::Tools::Copilot::CreateOrderService < Captain::Tools::BaseTool
   end
 
   private
-
-  def ecom_platform_tools
-    {
-      'kiotviet' => 'Captain::Tools::Copilot::Kiotviet::CreateOrderService',
-      'sapo' => 'Captain::Tools::Copilot::Sapo::CreateOrderService',
-      'haravan' => 'Captain::Tools::Copilot::Haravan::CreateOrderService',
-      'shopify' => 'Captain::Tools::Copilot::Shopify::CreateOrderService',
-      'woocommerce' => 'Captain::Tools::Copilot::Woocommerce::CreateOrderService',
-      'nhanhvn' => 'Captain::Tools::Copilot::Nhanhvn::CreateOrderService',
-      'tiktok_shop' => 'Captain::Tools::Copilot::TiktokShop::CreateOrderService'
-    }.freeze
-  end
 
   def find_conversation(display_id)
     Conversation.find_by(account_id: @assistant.account_id, display_id: display_id)
@@ -87,13 +57,16 @@ class Captain::Tools::Copilot::CreateOrderService < Captain::Tools::BaseTool
 
   def build_draft_order(conversation, items, customer_name:, customer_phone:, delivery_address:, note:)
     contact = conversation.contact
+    active_platform = @assistant.account.active_ecommerce_platform
+    source = active_platform.presence || 'shopiz'
+
     order = conversation.conversation_orders.new(
       account_id: @assistant.account_id, contact: contact, status: :draft,
       customer_name: customer_name.presence || contact&.name,
       customer_phone: customer_phone.presence || contact&.phone_number,
       customer_address: delivery_address.presence || contact&.additional_attributes&.dig('address'),
       customer_note: note,
-      external_source: 'shopiz'
+      external_source: source
     )
     items.each { |item| order.items.build(item) }
     order.save!

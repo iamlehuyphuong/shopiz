@@ -3,7 +3,6 @@
 # the conversation inbox's e-commerce integration.
 # Falls back to creating a local draft order using Shopiz built-in products.
 class Captain::Tools::CreateOrderDraftTool < Captain::Tools::BasePublicTool
-  include Captain::Tools::Concerns::EcomRoutable
   include Captain::Tools::Concerns::OrderMessageSendable
 
   description 'Create a draft order with products for the current contact. ' \
@@ -18,9 +17,6 @@ class Captain::Tools::CreateOrderDraftTool < Captain::Tools::BasePublicTool
     @assistant&.account&.active_ecommerce_platform.present? && @assistant&.account&.ai_allow_create_order
   end
 
-  # KiotViet & Nhanh.vn use product_codes; all others use product_ids
-  CODE_BASED_PLATFORMS = %w[kiotviet nhanhvn].freeze
-
   def perform(tool_context, product_identifiers:, quantities:, customer_note: nil)
     conversation = find_conversation(tool_context.state)
     return 'Conversation not found' unless conversation
@@ -29,14 +25,6 @@ class Captain::Tools::CreateOrderDraftTool < Captain::Tools::BasePublicTool
       return 'AI order creation is disabled for this account. Please ask an agent to create the order manually.'
     end
 
-    platform = resolve_ecom_platform(tool_context)
-    if platform
-      args = build_platform_args(platform, product_identifiers, quantities, customer_note)
-      result = delegate_to_ecom_tool(platform, tool_context, **args)
-      return result if result
-    end
-
-    # Fallback to local DB
     log_tool_usage('create_order_draft', { product_identifiers: product_identifiers, quantities: quantities })
     create_local_draft_order(conversation, product_identifiers, quantities, customer_note)
   end
@@ -45,27 +33,6 @@ class Captain::Tools::CreateOrderDraftTool < Captain::Tools::BasePublicTool
 
   def permissions
     %w[conversation_manage]
-  end
-
-  def ecom_platform_tools
-    {
-      'kiotviet' => 'Captain::Tools::Kiotviet::CreateOrderDraftTool',
-      'sapo' => 'Captain::Tools::Sapo::CreateOrderDraftTool',
-      'haravan' => 'Captain::Tools::Haravan::CreateOrderDraftTool',
-      'shopify' => 'Captain::Tools::Shopify::CreateOrderDraftTool',
-      'woocommerce' => 'Captain::Tools::Woocommerce::CreateOrderDraftTool',
-      'nhanhvn' => 'Captain::Tools::Nhanhvn::CreateOrderDraftTool'
-      # TikTok Shop does not support create_order_draft
-    }.freeze
-  end
-
-  def build_platform_args(platform, identifiers, quantities, note)
-    base = { quantities: quantities, customer_note: note }.compact
-    if CODE_BASED_PLATFORMS.include?(platform)
-      base.merge(product_codes: identifiers)
-    else
-      base.merge(product_ids: identifiers)
-    end
   end
 
   def create_local_draft_order(conversation, product_identifiers, quantities, customer_note)
@@ -116,6 +83,9 @@ class Captain::Tools::CreateOrderDraftTool < Captain::Tools::BasePublicTool
   end
 
   def build_and_save_local_order(conversation, contact, items, customer_note)
+    active_platform = conversation.account.active_ecommerce_platform
+    source = active_platform.presence || 'shopiz'
+
     order = conversation.conversation_orders.new(
       account: conversation.account,
       contact: contact,
@@ -124,7 +94,7 @@ class Captain::Tools::CreateOrderDraftTool < Captain::Tools::BasePublicTool
       customer_phone: contact.phone_number,
       customer_address: contact.additional_attributes&.dig('address'),
       customer_note: customer_note,
-      external_source: 'shopiz'
+      external_source: source
     )
 
     items.each do |item|
