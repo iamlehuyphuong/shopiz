@@ -1018,8 +1018,14 @@
                 "ERROR": "Scenario content is required"
               },
               "CREATE": "Create",
-              "CANCEL": "Cancel"
-            }
+              "CANCEL": "Cancel",
+              "OPTIMIZE_BUTTON": "✨ Optimize with AI"
+            },
+            "TABS": {
+              "MANUAL": "Manual",
+              "AI_ASSISTANT": "AI Assistant"
+            },
+            "OPTIMIZE_PROMPT": "Please optimize and rewrite the following scenario more professionally, clearly outlining the steps and specifying suitable tools:\n\n%{instruction}"
           }
         },
         "UPDATE": {

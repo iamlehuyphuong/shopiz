@@ -95,6 +95,7 @@ class Captain::Copilot::ChatService < Llm::BaseAiService
     Captain::Tools::Copilot::GetContactNotesService,
     Captain::Tools::Copilot::ListAutomationRulesService,
     Captain::Tools::Copilot::CreateScenarioService,
+    Captain::Tools::Copilot::SuggestScenarioService,
     Captain::Tools::Copilot::SendZaloFriendRequestService,
     Captain::Tools::Copilot::UpdateConversationTagsService
   ].freeze
@@ -110,7 +111,6 @@ class Captain::Copilot::ChatService < Llm::BaseAiService
     Captain::Tools::Copilot::SuggestProductsService,
     Captain::Tools::Copilot::CheckInventoryService,
     Captain::Tools::Copilot::SearchProductsService,
-    Captain::Tools::Copilot::ConfirmOrderService,
     Captain::Tools::Copilot::UpdateOrderService
   ].freeze
 

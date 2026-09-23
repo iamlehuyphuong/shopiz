@@ -27,15 +27,34 @@ const props = defineProps({
 });
 const hasEmptyMessageContent = computed(() => !props.message?.content);
 
+const parsedScenario = computed(() => {
+  try {
+    const content = props.message?.content || '';
+    if (content.includes('"scenario":')) {
+      const match = content.match(/\{[\s\S]*"scenario"[\s\S]*\}/);
+      if (match) {
+        const json = JSON.parse(match[0]);
+        if (json.success && json.scenario) return json.scenario;
+      }
+    }
+  } catch (e) {
+    // Ignore JSON parse errors
+  }
+  return null;
+});
+
 const showUseButton = computed(() => {
   return (
     !hasEmptyMessageContent.value &&
-    props.message.reply_suggestion &&
+    (props.message.reply_suggestion || parsedScenario.value) &&
     props.isLastMessage
   );
 });
 
 const messageContent = computed(() => {
+  if (parsedScenario.value) {
+    return `**Kịch bản đề xuất:**\n- Tiêu đề: ${parsedScenario.value.title}\n- Mô tả: ${parsedScenario.value.description}\n\nNhấn "Sử dụng" để đưa nội dung này vào Editor.`;
+  }
   const formatter = new MessageFormatter(props.message.content);
   return formatter.formattedMessage;
 });
@@ -47,6 +66,11 @@ const insertIntoRichEditor = computed(() => {
 });
 
 const useCopilotResponse = () => {
+  if (parsedScenario.value) {
+    emitter.emit('CAPTAIN_SUGGEST_SCENARIO_USE', { success: true, scenario: parsedScenario.value });
+    return;
+  }
+  
   if (insertIntoRichEditor.value) {
     emitter.emit(BUS_EVENTS.INSERT_INTO_RICH_EDITOR, props.message?.content);
   } else {

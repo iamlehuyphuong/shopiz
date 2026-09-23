@@ -1018,8 +1018,14 @@
                 "ERROR": "Nội dung xử lý là bắt buộc"
               },
               "CREATE": "Tạo",
-              "CANCEL": "Huỷ"
-            }
+              "CANCEL": "Huỷ",
+              "OPTIMIZE_BUTTON": "✨ Tối ưu bằng AI"
+            },
+            "TABS": {
+              "MANUAL": "Thủ công",
+              "AI_ASSISTANT": "Trợ lý AI"
+            },
+            "OPTIMIZE_PROMPT": "Hãy tối ưu hóa và viết lại kịch bản sau chuyên nghiệp hơn, rõ ràng các bước và chỉ định các công cụ (tools) phù hợp:\n\n%{instruction}"
           }
         },
         "UPDATE": {

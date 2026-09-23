@@ -1,4 +1,6 @@
 class Captain::Tools::Copilot::CreateScenarioService < Captain::Tools::BaseTool
+  include Captain::Tools::Copilot::Concerns::ScenarioContext
+
   def self.name
     'create_scenarios'
   end
@@ -13,10 +15,13 @@ class Captain::Tools::Copilot::CreateScenarioService < Captain::Tools::BaseTool
     4. ONLY call this tool AFTER the user explicitly agrees to add them to the database.
 
     Pass the scenarios as a JSON-encoded string.
+
+    #{AGENT_TOOLS_DESCRIPTION}
   DESC
 
   param :scenarios_json, type: :string,
-                         desc: 'A JSON string representing an array of objects. Example: "[{\"title\": \"A\", \"description\": \"B\", \"instruction\": \"C\"}]"'
+                         desc: 'A JSON string representing an array of objects. ' \
+                               'Example: "[{\"title\": \"A\", \"description\": \"B\", \"instruction\": \"C\"}]"'
 
   def execute(scenarios_json:)
     parsed_scenarios = parse_scenarios(scenarios_json)
