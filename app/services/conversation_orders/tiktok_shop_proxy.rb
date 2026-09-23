@@ -2,7 +2,7 @@
 # TikTok Shop does NOT support creating orders via API — orders come from the marketplace.
 # This proxy only supports fetching/syncing existing orders.
 class ConversationOrders::TiktokShopProxy < ConversationOrders::PlatformProxy
-  include Captain::Tools::Concerns::TiktokShopClient
+  include Captain::Tools::TiktokShop::Client
 
   def create_order(_payload)
     # TikTok Shop orders are created by buyers on the marketplace.

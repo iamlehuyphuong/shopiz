@@ -1,7 +1,7 @@
 # Proxy for Shopify Order API.
 # Uses the ShopifyAPI gem (REST Admin client).
 class ConversationOrders::ShopifyProxy < ConversationOrders::PlatformProxy
-  include Captain::Tools::Concerns::ShopifyClient
+  include Captain::Tools::Shopify::Client
 
   def create_order(payload)
     shopify_post('orders.json', { order: payload })

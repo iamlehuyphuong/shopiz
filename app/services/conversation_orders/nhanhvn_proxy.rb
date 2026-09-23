@@ -1,7 +1,7 @@
 # Proxy for Nhanh.vn Order API.
 # Nhanh.vn uses POST-only endpoints with form-encoded data.
 class ConversationOrders::NhanhvnProxy < ConversationOrders::PlatformProxy
-  include Captain::Tools::Concerns::NhanhvnClient
+  include Captain::Tools::Nhanhvn::Client
 
   def create_order(payload)
     nhanhvn_post('/api/order/add', payload)

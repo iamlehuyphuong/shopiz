@@ -1,7 +1,7 @@
 # Proxy for Sapo Order API.
 # Sapo REST Admin API: POST /admin/orders.json, GET /admin/orders/{id}.json
 class ConversationOrders::SapoProxy < ConversationOrders::PlatformProxy
-  include Captain::Tools::Concerns::SapoClient
+  include Captain::Tools::Sapo::Client
 
   def create_order(payload)
     sapo_post('orders.json', { order: payload })

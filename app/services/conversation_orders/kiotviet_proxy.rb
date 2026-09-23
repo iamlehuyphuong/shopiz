@@ -1,7 +1,7 @@
 # Proxy for KiotViet Order API.
 # Uses the shared KiotvietClient concern for auth and HTTP calls.
 class ConversationOrders::KiotvietProxy < ConversationOrders::PlatformProxy
-  include Captain::Tools::Concerns::KiotvietClient
+  include Captain::Tools::Kiotviet::Client
 
   def create_order(payload)
     kiotviet_post('orders', payload)

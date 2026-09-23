@@ -1,7 +1,7 @@
 # Proxy for WooCommerce Order API.
 # WooCommerce REST API v3: POST /orders, GET /orders/{id}
 class ConversationOrders::WoocommerceProxy < ConversationOrders::PlatformProxy
-  include Captain::Tools::Concerns::WoocommerceClient
+  include Captain::Tools::Woocommerce::Client
 
   def create_order(payload)
     woocommerce_post('orders', payload)
