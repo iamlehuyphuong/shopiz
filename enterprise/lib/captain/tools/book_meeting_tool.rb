@@ -1,4 +1,4 @@
-class Captain::Tools::BookMeetingTool < BasePublicTool
+class Captain::Tools::BookMeetingTool < Captain::Tools::BasePublicTool
   include Captain::Tools::Concerns::BookingRoutable
 
   description 'Book a meeting on the calendar'

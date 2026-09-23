@@ -22,7 +22,7 @@ class Captain::Tools::PushOrderTool < Captain::Tools::BasePublicTool
       return "✅ Local order ##{order.id} has been confirmed successfully."
     end
 
-    user = find_user(tool_context.state)
+    user = find_user(conversation)
     result = ConversationOrders::PushService.new(order: order, user: user).perform
     if result[:success]
       log_tool_usage('confirm_order', { order_id: order.id, external_source: order.external_source, success: true })
@@ -35,8 +35,8 @@ class Captain::Tools::PushOrderTool < Captain::Tools::BasePublicTool
 
   private
 
-  def find_user(state)
+  def find_user(conversation)
     # The current user might be the agent assigned or the assistant itself
-    state.conversation.assignee || state.conversation.account.users.first
+    conversation.assignee || conversation.account.users.first
   end
 end

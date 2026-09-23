@@ -8,6 +8,30 @@ class Captain::Tools::BasePublicTool < Agents::Tool
     super()
   end
 
+  module PermissionsEnforcer
+    def perform(tool_context, **args)
+      required_permissions = permissions
+      if required_permissions.any?
+        conversation = find_conversation(tool_context.state)
+        user = tool_context.state[:user] || (conversation && conversation.assignee)
+        
+        # We enforce permissions if a user is acting, e.g. copilot or human agent context.
+        # AI assistants typically bypass these if configured, but let's log and enforce if user exists.
+        if user&.respond_to?(:permissions)
+          missing_perms = required_permissions - user.permissions
+          if missing_perms.any?
+            Rails.logger.warn "Captain Tools: User #{user.id} missing permissions #{missing_perms.join(', ')} for #{self.class.name}"
+            return "Missing required permissions: #{missing_perms.join(', ')}"
+          end
+        end
+      end
+      
+      super
+    end
+  end
+
+  prepend PermissionsEnforcer
+
   def active?
     # Public tools are always active
     true

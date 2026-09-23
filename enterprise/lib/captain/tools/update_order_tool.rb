@@ -33,7 +33,7 @@ class Captain::Tools::UpdateOrderTool < Captain::Tools::BasePublicTool
 
     return "✅ Draft order ##{order.id} updated locally." if order.draft?
 
-    user = find_user(tool_context.state)
+    user = find_user(conversation)
     result = ConversationOrders::UpdateService.new(order: order, user: user).perform
     if result[:success]
       "✅ Order ##{order.id} updated and successfully synced to #{order.external_source.capitalize}."
@@ -44,7 +44,7 @@ class Captain::Tools::UpdateOrderTool < Captain::Tools::BasePublicTool
 
   private
 
-  def find_user(state)
-    state.conversation.assignee || state.conversation.account.users.first
+  def find_user(conversation)
+    conversation.assignee || conversation.account.users.first
   end
 end

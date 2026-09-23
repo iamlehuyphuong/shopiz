@@ -1,4 +1,4 @@
-class Captain::Tools::CheckAvailabilityTool < BasePublicTool
+class Captain::Tools::CheckAvailabilityTool < Captain::Tools::BasePublicTool
   include Captain::Tools::Concerns::BookingRoutable
 
   description 'Check availability for booking a meeting. Returns a list of available time slots.'

@@ -10,6 +10,8 @@ class Captain::Tools::TiktokShop::SearchOrdersTool < Captain::Tools::BasePublicT
   end
 
   def perform(_tool_context, order_id:)
+    return 'Please provide an Order ID to check the status on TikTok Shop.' if order_id.blank?
+
     log_tool_usage('tiktok_shop_search_orders', { order_id: order_id })
 
     order = fetch_order(order_id)

@@ -33,6 +33,7 @@ class Captain::Tools::Kiotviet::SearchOrdersTool < Captain::Tools::BasePublicToo
     return { 'id' => cached_id } if cached_id.present?
 
     customer = search_by_phone(contact.phone_number) if contact.phone_number.present?
+    customer ||= search_by_email(contact.email) if contact.email.present?
     customer ||= search_by_name(contact.name) if contact.name.present?
 
     if customer.present?
@@ -49,6 +50,11 @@ class Captain::Tools::Kiotviet::SearchOrdersTool < Captain::Tools::BasePublicToo
 
   def search_by_name(name)
     result = kiotviet_get('customers', { name: name, pageSize: 1 })
+    result&.dig('data')&.first
+  end
+
+  def search_by_email(email)
+    result = kiotviet_get('customers', { email: email, pageSize: 1 })
     result&.dig('data')&.first
   end
 

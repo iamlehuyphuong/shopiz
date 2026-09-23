@@ -53,7 +53,7 @@ class Captain::Tools::Copilot::SearchProductsService < Captain::Tools::BaseTool
       User text: #{raw_query}
     PROMPT
 
-    res = RubyLLM.chat(provider: :openai, model: 'gpt-4o-mini', assume_model_exists: true).ask(prompt)
+    res = Llm::BaseAiService.new(account: @assistant.account).chat.ask(prompt)
     res.text.strip
   rescue StandardError => e
     Rails.logger.error "[SearchProductsService] LLM extraction failed: #{e.message}"

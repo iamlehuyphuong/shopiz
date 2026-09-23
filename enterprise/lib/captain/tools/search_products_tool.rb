@@ -20,9 +20,16 @@ class Captain::Tools::SearchProductsTool < Captain::Tools::BasePublicTool
     limit = 5 if limit <= 0
 
     log_tool_usage('search_products', { conversation_id: conversation.id, query: query })
+    active_platform = conversation.account.active_ecommerce_platform.presence || 'shopiz'
     products = account_scoped(Product).where(status: :active)
-                                      .where('name ILIKE :query OR sku ILIKE :query OR description ILIKE :query', query: "%#{query}%")
-                                      .limit(limit)
+    products = if active_platform == 'shopiz'
+                 products.where("meta->>'source' IS NULL OR meta->>'source' = 'shopiz'")
+               else
+                 products.where("meta->>'source' = ?", active_platform)
+               end
+
+    products = products.where('name ILIKE :query OR sku ILIKE :query OR description ILIKE :query', query: "%#{query}%")
+                       .limit(limit)
 
     return "No products found matching '#{query}'" if products.empty?
 

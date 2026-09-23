@@ -58,7 +58,7 @@ class Captain::Tools::SearchOrdersTool < Captain::Tools::BasePublicTool
   KWARG_PLATFORMS = %w[tiktok_shop].freeze
 
   def build_search_orders_args(platform, order_id, _phone_number)
-    return { order_id: order_id } if KWARG_PLATFORMS.include?(platform) && order_id.present?
+    return { order_id: order_id } if KWARG_PLATFORMS.include?(platform)
 
     {}
   end

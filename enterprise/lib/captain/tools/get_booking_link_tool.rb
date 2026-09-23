@@ -1,4 +1,4 @@
-class Captain::Tools::GetBookingLinkTool < BasePublicTool
+class Captain::Tools::GetBookingLinkTool < Captain::Tools::BasePublicTool
   description 'Retrieve the public booking link to send to the user'
 
   def active?

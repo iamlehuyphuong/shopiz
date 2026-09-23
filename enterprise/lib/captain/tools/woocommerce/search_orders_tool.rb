@@ -25,7 +25,7 @@ class Captain::Tools::Woocommerce::SearchOrdersTool < Captain::Tools::BasePublic
 
   def fetch_orders_for_contact(contact)
     params = { per_page: 20, orderby: 'date', order: 'desc' }
-    params[:search] = contact.email if contact.email.present?
+    params[:search] = contact.email.presence || contact.phone_number
     result = woocommerce_get('orders', params)
     result.is_a?(Array) ? result : []
   end

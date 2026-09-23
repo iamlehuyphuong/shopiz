@@ -1,4 +1,4 @@
-class Captain::Tools::SendMarketingOptinTool < BasePublicTool
+class Captain::Tools::SendMarketingOptinTool < Captain::Tools::BasePublicTool
   description 'Send a Meta Marketing Messages Opt-in request to the customer on Facebook Messenger. This asks the customer for permission to receive promotional messages outside the standard 24-hour messaging window. Send this when they agree or show interest in receiving future updates or promotions.'
 
   param :title, type: 'string',
