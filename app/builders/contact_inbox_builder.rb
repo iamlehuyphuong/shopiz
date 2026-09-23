@@ -17,8 +17,6 @@ class ContactInboxBuilder
       twilio_source_id
     when 'Channel::Whatsapp'
       wa_source_id
-    when 'Channel::Email'
-      email_source_id
     when 'Channel::Sms'
       phone_source_id
     when 'Channel::Voice'
@@ -28,12 +26,6 @@ class ContactInboxBuilder
     else
       raise "Unsupported operation for this channel: #{@inbox.channel_type}"
     end
-  end
-
-  def email_source_id
-    raise ActionController::ParameterMissing, 'contact email' unless @contact.email
-
-    @contact.email
   end
 
   def phone_source_id
@@ -107,7 +99,7 @@ class ContactInboxBuilder
   end
 
   def allowed_channels?
-    @inbox.email? || @inbox.sms? || @inbox.twilio? || @inbox.whatsapp? || @inbox.channel_type == 'Channel::Voice'
+    @inbox.sms? || @inbox.twilio? || @inbox.whatsapp? || @inbox.channel_type == 'Channel::Voice'
   end
 end
 

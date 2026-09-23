@@ -5,19 +5,16 @@ import { useAlert } from 'dashboard/composables';
 import { useUISettings } from 'dashboard/composables/useUISettings';
 import { useTrack } from 'dashboard/composables';
 import keyboardEventListenerMixins from 'shared/mixins/keyboardEventListenerMixins';
-import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 
 import ReplyToMessage from './ReplyToMessage.vue';
 import AttachmentPreview from 'dashboard/components/widgets/AttachmentsPreview.vue';
 import ReplyTopPanel from 'dashboard/components/widgets/WootWriter/ReplyTopPanel.vue';
-import ReplyEmailHead from './ReplyEmailHead.vue';
 import ReplyBottomPanel from 'dashboard/components/widgets/WootWriter/ReplyBottomPanel.vue';
 import CopilotReplyBottomPanel from 'dashboard/components/widgets/WootWriter/CopilotReplyBottomPanel.vue';
 import ArticleSearchPopover from 'dashboard/routes/dashboard/helpcenter/components/ArticleSearch/SearchPopover.vue';
 import CopilotEditorSection from './CopilotEditorSection.vue';
 import MessageSignatureMissingAlert from './MessageSignatureMissingAlert.vue';
 import ReplyBoxBanner from './ReplyBoxBanner.vue';
-import QuotedEmailPreview from './QuotedEmailPreview.vue';
 import { REPLY_EDITOR_MODES } from 'dashboard/components/widgets/WootWriter/constants';
 import WootMessageEditor from 'dashboard/components/widgets/WootWriter/Editor.vue';
 import AudioRecorder from 'dashboard/components/widgets/WootWriter/AudioRecorder.vue';
@@ -33,14 +30,8 @@ import WhatsappTemplates from './WhatsappTemplates/Modal.vue';
 import ContentTemplates from './ContentTemplates/ContentTemplatesModal.vue';
 import { MESSAGE_MAX_LENGTH } from 'shared/helpers/MessageTypeHelper';
 import inboxMixin, { INBOX_FEATURES } from 'shared/mixins/inboxMixin';
-import { trimContent, debounce, getRecipients } from '@chatwoot/utils';
+import { trimContent, debounce } from '@chatwoot/utils';
 import wootConstants from 'dashboard/constants/globals';
-import {
-  extractQuotedEmailText,
-  buildQuotedEmailHeader,
-  truncatePreviewText,
-  appendQuotedTextToMessage,
-} from 'dashboard/helper/quotedEmailHelper';
 import {
   CONVERSATION_EVENTS,
   CAPTAIN_EVENTS,
@@ -71,13 +62,11 @@ export default {
     EmojiInput,
     MessageSignatureMissingAlert,
     ReplyBottomPanel,
-    ReplyEmailHead,
     ReplyToMessage,
     ReplyTopPanel,
     ContentTemplates,
     WhatsappTemplates,
     WootMessageEditor,
-    QuotedEmailPreview,
     CopilotEditorSection,
     CopilotReplyBottomPanel,
   },
@@ -94,8 +83,6 @@ export default {
       uiSettings,
       isEditorHotKeyEnabled,
       fetchSignatureFlagFromUISettings,
-      setQuotedReplyFlagForInbox,
-      fetchQuotedReplyFlagFromUISettings,
     } = useUISettings();
 
     const replyEditor = useTemplateRef('replyEditor');
@@ -107,8 +94,6 @@ export default {
       uiSettings,
       isEditorHotKeyEnabled,
       fetchSignatureFlagFromUISettings,
-      setQuotedReplyFlagForInbox,
-      fetchQuotedReplyFlagFromUISettings,
       replyEditor,
       messageEditor,
       copilot,
@@ -129,9 +114,6 @@ export default {
       replyType: REPLY_EDITOR_MODES.REPLY,
       mentionSearchKey: '',
       hasSlashCommand: false,
-      bccEmails: '',
-      ccEmails: '',
-      toEmails: '',
       doAutoSaveDraft: () => {},
       showWhatsAppTemplatesModal: false,
       showContentTemplatesModal: false,
@@ -152,10 +134,7 @@ export default {
       currentChat: 'getSelectedChat',
       messageSignature: 'getMessageSignature',
       currentUser: 'getCurrentUser',
-      lastEmail: 'getLastEmailInSelectedChat',
       globalConfig: 'globalConfig/get',
-      accountId: 'getCurrentAccountId',
-      isFeatureEnabledonAccount: 'accounts/isFeatureEnabledonAccount',
     }),
     currentContact() {
       const senderId = this.currentChat?.meta?.sender?.id;
@@ -284,9 +263,6 @@ export default {
       if (this.isASmsInbox) {
         return MESSAGE_MAX_LENGTH.TWILIO_SMS;
       }
-      if (this.isAnEmailChannel) {
-        return MESSAGE_MAX_LENGTH.EMAIL;
-      }
       if (this.isATwilioSMSChannel) {
         return MESSAGE_MAX_LENGTH.TWILIO_SMS;
       }
@@ -301,7 +277,6 @@ export default {
         this.isAFacebookInbox ||
         this.isAWhatsAppChannel ||
         this.isAPIInbox ||
-        this.isAnEmailChannel ||
         this.isASmsInbox ||
         this.isATelegramChannel ||
         this.isALineChannel ||
@@ -354,12 +329,8 @@ export default {
       }
       return !this.message.trim().replace(/\n/g, '').length;
     },
-    showReplyHead() {
-      return !this.isOnPrivateNote && this.isAnEmailChannel;
-    },
     enableMultipleFileUpload() {
       return (
-        this.isAnEmailChannel ||
         this.isAWebWidgetInbox ||
         this.isAPIInbox ||
         this.isAWhatsAppChannel ||
@@ -406,51 +377,6 @@ export default {
       const { slug = '' } = portal;
       return slug;
     },
-    isQuotedEmailReplyEnabled() {
-      return this.isFeatureEnabledonAccount(
-        this.accountId,
-        FEATURE_FLAGS.QUOTED_EMAIL_REPLY
-      );
-    },
-    quotedReplyPreference() {
-      if (!this.isAnEmailChannel || !this.isQuotedEmailReplyEnabled) {
-        return false;
-      }
-
-      return !!this.fetchQuotedReplyFlagFromUISettings(this.channelType);
-    },
-    lastEmailWithQuotedContent() {
-      if (!this.isAnEmailChannel) {
-        return null;
-      }
-
-      const lastEmail = this.lastEmail;
-      if (!lastEmail || lastEmail.private) {
-        return null;
-      }
-
-      return lastEmail;
-    },
-    quotedEmailText() {
-      return extractQuotedEmailText(this.lastEmailWithQuotedContent);
-    },
-    quotedEmailPreviewText() {
-      return truncatePreviewText(this.quotedEmailText, 80);
-    },
-    shouldShowQuotedReplyToggle() {
-      return (
-        this.isAnEmailChannel &&
-        !this.isOnPrivateNote &&
-        this.isQuotedEmailReplyEnabled
-      );
-    },
-    shouldShowQuotedPreview() {
-      return (
-        this.shouldShowQuotedReplyToggle &&
-        this.quotedReplyPreference &&
-        !!this.quotedEmailText
-      );
-    },
     isDefaultEditorMode() {
       return !this.showAudioRecorderEditor && !this.copilot.isActive.value;
     },
@@ -466,10 +392,6 @@ export default {
     currentChat(conversation, oldConversation) {
       const { can_reply: canReply } = conversation;
       if (oldConversation && oldConversation.id !== conversation.id) {
-        // Only update email fields when switching to a completely different conversation (by ID)
-        // This prevents overwriting user input (e.g., CC/BCC fields) when performing actions
-        // like self-assign or other updates that do not actually change the conversation context
-        this.setCCAndToEmailsFromLastChat();
         // Reset Copilot editor state (includes cancelling ongoing generation)
         this.copilot.reset();
       }
@@ -485,18 +407,6 @@ export default {
       }
 
       this.fetchAndSetReplyTo();
-    },
-    // When moving from one conversation to another, the store may not have the
-    // list of all the messages. A fetch is subsequently made to get the messages.
-    // This watcher handles two main cases:
-    // 1. When switching conversations and messages are fetched/updated, ensures CC/BCC fields are set from the latest OUTGOING/INCOMING email (not activity/private messages).
-    // 2. Fixes and issue where CC/BCC fields could be reset/lost after assignment/activity actions or message mutations that did not represent a true email context change.
-    lastEmail: {
-      handler(lastEmail) {
-        if (!lastEmail) return;
-        this.setCCAndToEmailsFromLastChat();
-      },
-      deep: true,
     },
     conversationIdByRoute(conversationId, oldConversationId) {
       if (conversationId !== oldConversationId) {
@@ -521,7 +431,6 @@ export default {
     // working even if the editor is focussed.
     document.addEventListener('paste', this.onPaste);
     document.addEventListener('keydown', this.handleKeyEvents);
-    this.setCCAndToEmailsFromLastChat();
     this.doAutoSaveDraft = debounce(
       () => {
         this.saveDraft(this.conversationIdByRoute, this.replyType);
@@ -585,40 +494,6 @@ export default {
       );
 
       useTrack(CONVERSATION_EVENTS.INSERT_ARTICLE_LINK);
-    },
-    toggleQuotedReply() {
-      if (!this.isAnEmailChannel) {
-        return;
-      }
-
-      const nextValue = !this.quotedReplyPreference;
-      this.setQuotedReplyFlagForInbox(this.channelType, nextValue);
-    },
-    shouldIncludeQuotedEmail() {
-      return (
-        this.isQuotedEmailReplyEnabled &&
-        this.quotedReplyPreference &&
-        this.shouldShowQuotedReplyToggle &&
-        !!this.quotedEmailText
-      );
-    },
-    getMessageWithQuotedEmailText(message) {
-      if (!this.shouldIncludeQuotedEmail()) {
-        return message;
-      }
-
-      const quotedText = this.quotedEmailText || '';
-      const header = buildQuotedEmailHeader(
-        this.lastEmailWithQuotedContent,
-        this.currentContact,
-        this.inbox,
-        {
-          dateFormat: this.$t('GENERAL.DATE_FORMAT_WITH_SHORT_DAY'),
-          headerTemplate: this.$t('GENERAL.QUOTED_EMAIL_HEADER'),
-        }
-      );
-
-      return appendQuotedTextToMessage(message, quotedText, header);
     },
     resetRecorderAndClearAttachments() {
       // Reset audio recorder UI state
@@ -803,10 +678,6 @@ export default {
             this.message,
             copilotAcceptedMessage
           );
-        }
-
-        if (!this.isPrivate) {
-          this.clearEmailField();
         }
 
         this.clearMessage();
@@ -1002,12 +873,6 @@ export default {
       this.resetReplyToMessage();
       this.resetAudioRecorderInput();
     },
-    clearEmailField() {
-      this.ccEmails = '';
-      this.bccEmails = '';
-      this.toEmails = '';
-    },
-
     toggleEmojiPicker() {
       this.showEmojiPicker = !this.showEmojiPicker;
     },
@@ -1167,11 +1032,9 @@ export default {
       return multipleMessagePayload;
     },
     getMessagePayload(message) {
-      const messageWithQuote = this.getMessageWithQuotedEmailText(message);
-
       let messagePayload = {
         conversationId: this.currentChat.id,
-        message: messageWithQuote,
+        message,
         private: this.isPrivate,
         sender: this.sender,
       };
@@ -1191,38 +1054,7 @@ export default {
         });
       }
 
-      if (this.ccEmails && !this.isOnPrivateNote) {
-        messagePayload.ccEmails = this.ccEmails;
-      }
-
-      if (this.bccEmails && !this.isOnPrivateNote) {
-        messagePayload.bccEmails = this.bccEmails;
-      }
-
-      if (this.toEmails && !this.isOnPrivateNote) {
-        messagePayload.toEmails = this.toEmails;
-      }
       return messagePayload;
-    },
-    setCcEmails(value) {
-      this.bccEmails = value.bccEmails;
-      this.ccEmails = value.ccEmails;
-    },
-    setCCAndToEmailsFromLastChat() {
-      const conversationContact = this.currentChat?.meta?.sender?.email || '';
-      const { email: inboxEmail, forward_to_email: forwardToEmail } =
-        this.inbox;
-
-      const { cc, bcc, to } = getRecipients(
-        this.lastEmail,
-        conversationContact,
-        inboxEmail,
-        forwardToEmail
-      );
-
-      this.toEmails = to.join(', ');
-      this.ccEmails = cc.join(', ');
-      this.bccEmails = bcc.join(', ');
     },
     fetchAndSetReplyTo() {
       const replyStorageKey = LOCAL_STORAGE_KEYS.MESSAGE_REPLY_TO;
@@ -1338,12 +1170,6 @@ export default {
           }"
           :on-click="addIntoEditor"
         />
-        <ReplyEmailHead
-          v-if="showReplyHead && isDefaultEditorMode"
-          v-model:cc-emails="ccEmails"
-          v-model:bcc-emails="bccEmails"
-          v-model:to-emails="toEmails"
-        />
         <AudioRecorder
           v-if="showAudioRecorderEditor"
           ref="audioRecorderInput"
@@ -1395,14 +1221,6 @@ export default {
           @clear-selection="clearEditorSelection"
           @execute-copilot-action="executeCopilotAction"
           @canned-files-selected="onCannedFilesSelected"
-        />
-
-        <QuotedEmailPreview
-          v-if="shouldShowQuotedPreview && isDefaultEditorMode"
-          :quoted-email-text="quotedEmailText"
-          :preview-text="quotedEmailPreviewText"
-          class="mb-2"
-          @toggle="toggleQuotedReply"
         />
 
         <div
@@ -1465,8 +1283,6 @@ export default {
         :show-audio-recorder="showAudioRecorder"
         :show-emoji-picker="showEmojiPicker"
         :show-file-upload="showFileUpload"
-        :show-quoted-reply-toggle="shouldShowQuotedReplyToggle"
-        :quoted-reply-enabled="quotedReplyPreference"
         :toggle-audio-recorder-play-pause="toggleAudioRecorderPlayPause"
         :toggle-audio-recorder="toggleAudioRecorder"
         :toggle-emoji-picker="toggleEmojiPicker"
@@ -1477,7 +1293,6 @@ export default {
         @select-content-template="openContentTemplateModal"
         @replace-text="replaceText"
         @toggle-insert-article="toggleInsertArticle"
-        @toggle-quoted-reply="toggleQuotedReply"
       />
     </Transition>
 

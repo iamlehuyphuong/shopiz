@@ -491,24 +491,6 @@ RSpec.describe Conversations::MessageWindowService do
     end
   end
 
-  describe 'on Email channels' do
-    let!(:email_channel) { create(:channel_email) }
-    let!(:email_inbox) { create(:inbox, channel: email_channel, account: email_channel.account) }
-    let!(:conversation) { create(:conversation, inbox: email_inbox, account: email_channel.account) }
-
-    it 'return true irrespective of the last message time' do
-      create(
-        :message,
-        account: conversation.account,
-        inbox: email_inbox,
-        conversation: conversation,
-        created_at: 13.hours.ago
-      )
-      service = described_class.new(conversation)
-      expect(service.can_reply?).to be true
-    end
-  end
-
   describe 'on Line channels' do
     let!(:line_channel) { create(:channel_line) }
     let!(:line_inbox) { create(:inbox, channel: line_channel, account: line_channel.account) }

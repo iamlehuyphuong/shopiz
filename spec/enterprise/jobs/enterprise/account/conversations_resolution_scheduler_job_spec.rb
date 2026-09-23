@@ -7,7 +7,7 @@ RSpec.describe Account::ConversationsResolutionSchedulerJob, type: :job do
   describe '#perform - captain resolutions' do
     context 'when handling different inbox types' do
       let!(:regular_inbox) { create(:inbox, account: account) }
-      let!(:email_inbox) { create(:inbox, :with_email, account: account) }
+      let!(:email_inbox) { create(:inbox, account: account) }
 
       before do
         create(:captain_inbox, captain_assistant: assistant, inbox: regular_inbox)

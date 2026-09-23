@@ -89,26 +89,23 @@ class Message < ApplicationRecord
     text: 0,
     input_text: 1,
     input_textarea: 2,
-    input_email: 3,
     input_select: 4,
     cards: 5,
     form: 6,
     article: 7,
-    incoming_email: 8,
     input_csat: 9,
     integrations: 10,
     sticker: 11,
     voice_call: 12
   }
   enum status: { sent: 0, delivered: 1, read: 2, failed: 3 }
-  # [:submitted_email, :items, :submitted_values] : Used for bot message types
-  # [:email] : Used by conversation_continuity incoming email messages
+  # [:items, :submitted_values] : Used for bot message types
   # [:in_reply_to] : Used to reply to a particular tweet in threads
   # [:deleted] : Used to denote whether the message was deleted by the agent
   # [:external_created_at] : Can specify if the message was created at a different timestamp externally
   # [:external_error : Can specify if the message creation failed due to an error at external API
   # [:data] : Used for structured content types such as voice_call
-  store :content_attributes, accessors: [:submitted_email, :items, :submitted_values, :email, :in_reply_to, :deleted,
+  store :content_attributes, accessors: [:items, :submitted_values, :in_reply_to, :deleted,
                                          :external_created_at, :story_sender, :story_id, :external_error, :undo,
                                          :translations, :in_reply_to_external_id, :is_unsupported, :data], coder: JSON
 
@@ -212,20 +209,6 @@ class Message < ApplicationRecord
     MessageContentPresenter.new(self).webhook_content
   end
 
-  def email_notifiable_message?
-    return false if private?
-    return false if %w[outgoing template].exclude?(message_type)
-    return false if template? && %w[input_csat text].exclude?(content_type)
-
-    true
-  end
-
-  def auto_reply_email?
-    return false unless incoming_email? || inbox.email?
-
-    content_attributes.dig(:email, :auto_reply) == true
-  end
-
   def valid_first_reply?
     return false unless human_response? && !private?
     return false if conversation.first_reply_created_at.present?
@@ -326,11 +309,7 @@ class Message < ApplicationRecord
   end
 
   def ensure_processed_message_content
-    text_content_quoted = content_attributes.dig(:email, :text_content, :quoted)
-    html_content_quoted = content_attributes.dig(:email, :html_content, :quoted)
-
-    message_content = text_content_quoted || html_content_quoted || content
-    self.processed_message_content = message_content&.truncate(150_000)
+    self.processed_message_content = content&.truncate(150_000)
   end
 
   # fetch the in_reply_to message and set the external id

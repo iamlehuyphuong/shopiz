@@ -83,20 +83,6 @@ RSpec.describe 'Contacts API', type: :request do
         expect(first_inbox).to be_a(Hash)
         expect(first_inbox).to include('id', 'channel_id', 'channel_type', 'name', 'avatar_url', 'provider')
 
-        expect(first_inbox).not_to include('imap_login',
-                                           'imap_password',
-                                           'imap_address',
-                                           'imap_port',
-                                           'imap_enabled',
-                                           'imap_enable_ssl')
-
-        expect(first_inbox).not_to include('smtp_login',
-                                           'smtp_password',
-                                           'smtp_address',
-                                           'smtp_port',
-                                           'smtp_enabled',
-                                           'smtp_domain')
-
         expect(first_inbox).not_to include('hmac_token', 'provider_config')
       end
 

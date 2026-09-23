@@ -78,7 +78,6 @@ class DashboardController < ActionController::Base
       WHATSAPP_APP_ID: GlobalConfigService.load('WHATSAPP_APP_ID', ''),
       WHATSAPP_CONFIGURATION_ID: GlobalConfigService.load('WHATSAPP_CONFIGURATION_ID', ''),
       IS_ENTERPRISE: ChatwootApp.enterprise?,
-      AZURE_APP_ID: GlobalConfigService.load('AZURE_APP_ID', ''),
       ZALO_OA_APP_ID: GlobalConfigService.load('ZALO_OA_APP_ID', ''),
       ZALO_OA_APP_SECRET: GlobalConfigService.load('ZALO_OA_APP_SECRET', ''),
       ZALO_API_URL: GlobalConfigService.load('ZALO_API_URL', ''),

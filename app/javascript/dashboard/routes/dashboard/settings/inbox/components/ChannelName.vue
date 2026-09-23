@@ -25,7 +25,6 @@ const i18nMap = {
   'Channel::Voice': 'VOICE',
   'Channel::Whatsapp': 'WHATSAPP',
   'Channel::Sms': 'SMS',
-  'Channel::Email': 'EMAIL',
   'Channel::Telegram': 'TELEGRAM',
   'Channel::Line': 'LINE',
   'Channel::Api': 'API',

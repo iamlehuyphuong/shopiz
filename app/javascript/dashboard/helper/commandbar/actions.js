@@ -5,7 +5,6 @@ import {
   CMD_MUTE_CONVERSATION,
   CMD_REOPEN_CONVERSATION,
   CMD_RESOLVE_CONVERSATION,
-  CMD_SEND_TRANSCRIPT,
   CMD_SNOOZE_CONVERSATION,
   CMD_UNMUTE_CONVERSATION,
 } from 'dashboard/helper/commandbar/events';
@@ -14,7 +13,6 @@ import {
   ICON_MUTE_CONVERSATION,
   ICON_REOPEN_CONVERSATION,
   ICON_RESOLVE_CONVERSATION,
-  ICON_SEND_TRANSCRIPT,
   ICON_SNOOZE_CONVERSATION,
   ICON_UNMUTE_CONVERSATION,
 } from 'dashboard/helper/commandbar/icons';
@@ -66,14 +64,6 @@ export const RESOLVED_CONVERSATION_ACTIONS = [
     handler: () => emitter.emit(CMD_REOPEN_CONVERSATION),
   },
 ];
-
-export const SEND_TRANSCRIPT_ACTION = {
-  id: 'send_transcript',
-  title: 'COMMAND_BAR.COMMANDS.SEND_TRANSCRIPT',
-  section: 'COMMAND_BAR.SECTIONS.CONVERSATION',
-  icon: ICON_SEND_TRANSCRIPT,
-  handler: () => emitter.emit(CMD_SEND_TRANSCRIPT),
-};
 
 export const UNMUTE_ACTION = {
   id: 'unmute_conversation',

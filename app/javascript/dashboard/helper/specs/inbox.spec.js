@@ -35,9 +35,6 @@ describe('#Inbox Helpers', () => {
     it('should return correct class for Api', () => {
       expect(getInboxClassByType('Channel::Api')).toEqual('cloud');
     });
-    it('should return correct class for Email', () => {
-      expect(getInboxClassByType('Channel::Email')).toEqual('mail');
-    });
     it('should return correct class for TikTok', () => {
       expect(getInboxClassByType(INBOX_TYPES.TIKTOK)).toEqual('brand-tiktok');
     });
@@ -65,10 +62,6 @@ describe('#Inbox Helpers', () => {
 
       it('returns correct icon for API', () => {
         expect(getInboxIconByType(INBOX_TYPES.API)).toBe('i-ri-cloudy-fill');
-      });
-
-      it('returns correct icon for Email', () => {
-        expect(getInboxIconByType(INBOX_TYPES.EMAIL)).toBe('i-ri-mail-fill');
       });
 
       it('returns correct icon for Telegram', () => {

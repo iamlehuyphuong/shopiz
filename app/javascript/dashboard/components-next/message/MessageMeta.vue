@@ -22,7 +22,6 @@ const {
   isATwilioChannel,
   isAWebWidgetInbox,
   isAWhatsAppChannel,
-  isAnEmailChannel,
   isAnInstagramChannel,
   isAVoiceChannel,
   isATiktokChannel,
@@ -61,9 +60,6 @@ const showStatusIndicator = computed(() => {
 
 const isSent = computed(() => {
   if (!showStatusIndicator.value) return false;
-
-  // Messages will be marked as sent for the Email channel if they have a source ID.
-  if (isAnEmailChannel.value) return !!sourceId.value;
 
   if (
     isAWhatsAppChannel.value ||

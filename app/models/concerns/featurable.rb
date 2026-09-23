@@ -26,14 +26,12 @@ module Featurable
     template_builder
     integrations
     channel_whatsapp
-    channel_email
     channel_api
     channel_telegram
     channel_line
     channel_instagram
     channel_voice
   ].freeze
-
 
   FEATURE_LIST = YAML.safe_load(Rails.root.join('config/features.yml').read).freeze
 
@@ -90,7 +88,7 @@ module Featurable
   def disabled_features
     all_features.select { |_feature, enabled| enabled == false }
   end
-  
+
   def feature_names
     enabled_features.keys
   end
@@ -98,7 +96,7 @@ module Featurable
   def feature_names=(names)
     # Ensure names is an array of strings
     names = Array(names).map(&:to_s)
-    
+
     FEATURE_LIST.each do |feature|
       feature_name = feature['name']
       is_enabled = names.include?(feature_name)
@@ -109,5 +107,4 @@ module Featurable
   def enable_default_features
     enable_features(*DEFAULT_PLAN_FEATURES)
   end
-
 end

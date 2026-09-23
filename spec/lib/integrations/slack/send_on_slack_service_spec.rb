@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe Integrations::Slack::SendOnSlackService do
   let!(:contact) { create(:contact) }
-  let(:channel_email) { create(:channel_email) }
-  let!(:conversation) { create(:conversation, inbox: channel_email.inbox, contact: contact, identifier: nil) }
+  let(:channel_widget) { create(:channel_widget) }
+  let!(:conversation) { create(:conversation, inbox: channel_widget.inbox, contact: contact, identifier: nil) }
   let(:account) { conversation.account }
   let!(:hook) { create(:integrations_hook, account: account) }
   let!(:message) do

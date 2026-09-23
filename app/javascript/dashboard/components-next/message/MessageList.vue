@@ -12,7 +12,6 @@ import MessageApi from 'dashboard/api/inbox/message.js';
  * @property {Array} readMessages - Array of read messages
  * @property {Array} unReadMessages - Array of unread messages
  * @property {Number} currentUserId - ID of the current user
- * @property {Boolean} isAnEmailChannel - Whether this is an email channel
  * @property {Object} inboxSupportsReplyTo - Inbox reply support configuration
  * @property {Array} messages - Array of all messages [These are not in camelcase]
  */
@@ -24,10 +23,6 @@ const props = defineProps({
   firstUnreadId: {
     type: Number,
     default: null,
-  },
-  isAnEmailChannel: {
-    type: Boolean,
-    default: false,
   },
   inboxSupportsReplyTo: {
     type: Object,
@@ -236,7 +231,6 @@ const getInReplyToMessage = parentMessage => {
       />
       <Message
         v-bind="message"
-        :is-email-inbox="isAnEmailChannel"
         :in-reply-to="getInReplyToMessage(message)"
         :group-with-next="shouldGroupWithNext(index, allMessages)"
         :inbox-supports-reply-to="inboxSupportsReplyTo"

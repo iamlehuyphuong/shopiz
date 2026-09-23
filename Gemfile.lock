@@ -136,10 +136,6 @@ GEM
     audited (5.4.1)
       activerecord (>= 5.0, < 7.7)
       activesupport (>= 5.0, < 7.7)
-    aws-actionmailbox-ses (0.1.0)
-      actionmailbox (>= 7.1.0)
-      aws-sdk-s3 (~> 1, >= 1.123.0)
-      aws-sdk-sns (~> 1, >= 1.61.0)
     aws-eventstream (1.4.0)
     aws-partitions (1.1198.0)
     aws-sdk-core (3.240.0)
@@ -157,9 +153,6 @@ GEM
       aws-sdk-core (~> 3, >= 3.234.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.5)
-    aws-sdk-sns (1.70.0)
-      aws-sdk-core (~> 3, >= 3.188.0)
-      aws-sigv4 (~> 1.1)
     aws-sigv4 (1.12.1)
       aws-eventstream (~> 1, >= 1.0.2)
     barnes (0.0.9)
@@ -287,7 +280,6 @@ GEM
       http (>= 3.0)
       ruby2_keywords
     email-provider-info (0.0.1)
-    email_reply_trimmer (0.1.13)
     erubi (1.13.0)
     et-orbi (1.2.11)
       tzinfo
@@ -360,8 +352,6 @@ GEM
       ostruct
     globalid (1.2.1)
       activesupport (>= 6.1)
-    gmail_xoauth (0.4.3)
-      oauth (>= 0.3.6)
     google-apis-calendar_v3 (0.56.0)
       google-apis-core (>= 0.15.0, < 2.a)
     google-apis-core (0.15.1)
@@ -444,8 +434,6 @@ GEM
     hash_diff (1.1.1)
     hashdiff (1.1.0)
     hashie (5.0.0)
-    html2text (0.4.0)
-      nokogiri (>= 1.0, < 2.0)
     htmlentities (4.4.2)
     http (5.1.1)
       addressable (~> 2.8)
@@ -1059,7 +1047,6 @@ DEPENDENCIES
   annotaterb
   attr_extras
   audited (~> 5.4, >= 5.4.1)
-  aws-actionmailbox-ses (~> 0)
   aws-sdk-s3
   azure-storage-blob!
   barnes
@@ -1085,7 +1072,6 @@ DEPENDENCIES
   down
   elastic-apm
   email-provider-info
-  email_reply_trimmer
   facebook-messenger
   factory_bot_rails (>= 6.4.3)
   faker
@@ -1094,7 +1080,6 @@ DEPENDENCIES
   flag_shih_tzu
   foreman
   geocoder
-  gmail_xoauth
   google-apis-calendar_v3
   google-cloud-dialogflow-v2 (>= 0.24.0)
   google-cloud-storage (>= 1.48.0)
@@ -1105,7 +1090,6 @@ DEPENDENCIES
   haikunator
   hairtrigger
   hashie
-  html2text
   image_processing
   iso-639
   jbuilder
@@ -1126,7 +1110,6 @@ DEPENDENCIES
   mini_magick
   mock_redis
   neighbor
-  net-smtp (~> 0.3.4)
   newrelic-sidekiq-metrics (>= 1.6.2)
   newrelic_rpm
   omniauth (>= 2.1.2)

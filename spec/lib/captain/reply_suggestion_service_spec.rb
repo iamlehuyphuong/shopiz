@@ -54,41 +54,5 @@ RSpec.describe Captain::ReplySuggestionService do
         expect(system_prompt).not_to include('EMAIL conversation')
       end
     end
-
-    context 'with email channel' do
-      let(:email_channel) { create(:channel_email, account: account) }
-      let(:inbox) { create(:inbox, account: account, channel: email_channel) }
-
-      it 'uses email-specific instructions' do
-        service.perform
-
-        system_prompt = captured_messages.find { |m| m[:role] == 'system' }[:content]
-        expect(system_prompt).to include('EMAIL conversation')
-        expect(system_prompt).to include('professional email')
-        expect(system_prompt).not_to include('CHAT conversation')
-      end
-
-      context 'when agent has a signature' do
-        let(:agent) { create(:user, account: account, name: 'Jane Smith', message_signature: "Best,\nJane Smith") }
-
-        it 'includes the signature in the prompt' do
-          service.perform
-
-          system_prompt = captured_messages.find { |m| m[:role] == 'system' }[:content]
-          expect(system_prompt).to include("Best,\nJane Smith")
-        end
-      end
-
-      context 'when agent has no signature' do
-        let(:agent) { create(:user, account: account, name: 'Jane Smith', message_signature: nil) }
-
-        it 'falls back to agent name for sign-off' do
-          service.perform
-
-          system_prompt = captured_messages.find { |m| m[:role] == 'system' }[:content]
-          expect(system_prompt).to include("sign-off using the agent's name: Jane Smith")
-        end
-      end
-    end
   end
 end

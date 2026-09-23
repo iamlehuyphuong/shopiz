@@ -9,10 +9,11 @@
 - name: inbound_emails
   display_name: Inbound Emails
   enabled: false
+  deprecated: true
 - name: channel_email
   display_name: Email Channel
   enabled: false
-  help_url: https://help.shopiz.pro/hc/email
+  deprecated: true
 - name: channel_facebook
   display_name: Facebook Channel
   enabled: true
@@ -31,6 +32,7 @@
 - name: email_continuity_on_api_channel
   display_name: Email Continuity on API Channel
   enabled: false
+  deprecated: true
 - name: help_center
   display_name: Help Center
   enabled: true
@@ -97,9 +99,11 @@
 - name: custom_reply_email
   display_name: Custom Reply Email
   enabled: true
+  deprecated: true
 - name: custom_reply_domain
   display_name: Custom Reply Domain
   enabled: true
+  deprecated: true
 - name: audit_logs
   display_name: Audit Logs
   enabled: false
@@ -217,14 +221,13 @@
   premium: true
   #chatwoot_internal: true
 - name: reply_mailer_migration
-  # This feature is temporary only to migrate reply mailer to new email builder
-  # Once the migration is done, this feature can be removed
   display_name: Reply Mailer Migration
   enabled: false
-  #chatwoot_internal: true
+  deprecated: true
 - name: quoted_email_reply
   display_name: Quoted Email Reply
   enabled: false
+  deprecated: true
 - name: companies
   display_name: Companies
   enabled: false

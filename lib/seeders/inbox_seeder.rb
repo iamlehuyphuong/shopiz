@@ -22,7 +22,6 @@ class Seeders::InboxSeeder
     seed_twitter_inbox
     seed_whatsapp_inbox
     seed_sms_inbox
-    seed_email_inbox
     seed_api_inbox
     seed_telegram_inbox
     seed_line_inbox
@@ -84,21 +83,6 @@ class Seeders::InboxSeeder
   def seed_sms_inbox
     channel = Channel::Sms.create!(account: @account, phone_number: Faker::PhoneNumber.cell_phone_in_e164)
     Inbox.create!(channel: channel, account: @account, name: "#{@company_data['name']} Mobile")
-  end
-
-  def seed_email_inbox
-    channel = Channel::Email.create!(account: @account, email: "test#{SecureRandom.hex}@#{@company_data['domain']}",
-                                     forward_to_email: "test_fwd#{SecureRandom.hex}@#{@company_data['domain']}")
-    Inbox.create!(
-      channel: channel,
-      account: @account,
-      name: "#{@company_data['name']} Email",
-      csat_survey_enabled: true,
-      csat_config: {
-        'display_type' => 'emoji',
-        'message' => 'How was your support experience today?'
-      }
-    )
   end
 
   def seed_api_inbox

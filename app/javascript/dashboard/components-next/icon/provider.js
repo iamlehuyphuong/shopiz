@@ -3,7 +3,6 @@ import { computed } from 'vue';
 export function useChannelIcon(inbox) {
   const channelTypeIconMap = {
     'Channel::Api': 'i-woot-api',
-    'Channel::Email': 'i-woot-mail',
     'Channel::FacebookPage': 'i-woot-messenger',
     'Channel::Line': 'i-woot-line',
     'Channel::Sms': 'i-woot-sms',
@@ -20,21 +19,10 @@ export function useChannelIcon(inbox) {
     'Channel::TiktokShop': 'i-woot-tiktok-shop',
   };
 
-  const providerIconMap = {
-    microsoft: 'i-woot-outlook',
-    google: 'i-woot-gmail',
-  };
-
   const channelIcon = computed(() => {
     const inboxDetails = inbox.value || inbox;
     const type = inboxDetails.channel_type;
     let icon = channelTypeIconMap[type];
-
-    if (type === 'Channel::Email' && inboxDetails.provider) {
-      if (Object.keys(providerIconMap).includes(inboxDetails.provider)) {
-        icon = providerIconMap[inboxDetails.provider];
-      }
-    }
 
     // Special case for Twilio whatsapp
     if (type === 'Channel::TwilioSms' && inboxDetails.medium === 'whatsapp') {

@@ -23,8 +23,6 @@ export const state = {
     isCreating: false,
     isUpdating: false,
     isDeleting: false,
-    isUpdatingIMAP: false,
-    isUpdatingSMTP: false,
   },
 };
 
@@ -110,18 +108,6 @@ export const getters = {
       return true;
     });
   },
-  getNewConversationInboxes($state) {
-    return $state.records.filter(inbox => {
-      const { channel_type: channelType, phone_number: phoneNumber = '' } =
-        inbox;
-
-      const isEmailChannel = channelType === INBOX_TYPES.EMAIL;
-      const isSmsChannel =
-        channelType === INBOX_TYPES.TWILIO &&
-        phoneNumber.startsWith('whatsapp');
-      return isEmailChannel || isSmsChannel;
-    });
-  },
   getInbox: $state => inboxId => {
     const [inbox] = $state.records.filter(
       record => record.id === Number(inboxId)
@@ -186,9 +172,7 @@ export const getters = {
     );
   },
   dialogFlowEnabledInboxes($state) {
-    return $state.records.filter(
-      item => item.channel_type !== INBOX_TYPES.EMAIL
-    );
+    return $state.records;
   },
   getFacebookInboxByInstagramId: $state => instagramId => {
     return $state.records.find(
@@ -391,28 +375,6 @@ export const actions = {
       commit(types.default.SET_INBOXES_UI_FLAG, { isUpdating: false });
     } catch (error) {
       commit(types.default.SET_INBOXES_UI_FLAG, { isUpdating: false });
-      throwErrorMessage(error);
-    }
-  },
-  updateInboxIMAP: async ({ commit }, { id, ...inboxParams }) => {
-    commit(types.default.SET_INBOXES_UI_FLAG, { isUpdatingIMAP: true });
-    try {
-      const response = await InboxesAPI.update(id, inboxParams);
-      commit(types.default.EDIT_INBOXES, response.data);
-      commit(types.default.SET_INBOXES_UI_FLAG, { isUpdatingIMAP: false });
-    } catch (error) {
-      commit(types.default.SET_INBOXES_UI_FLAG, { isUpdatingIMAP: false });
-      throwErrorMessage(error);
-    }
-  },
-  updateInboxSMTP: async ({ commit }, { id, ...inboxParams }) => {
-    commit(types.default.SET_INBOXES_UI_FLAG, { isUpdatingSMTP: true });
-    try {
-      const response = await InboxesAPI.update(id, inboxParams);
-      commit(types.default.EDIT_INBOXES, response.data);
-      commit(types.default.SET_INBOXES_UI_FLAG, { isUpdatingSMTP: false });
-    } catch (error) {
-      commit(types.default.SET_INBOXES_UI_FLAG, { isUpdatingSMTP: false });
       throwErrorMessage(error);
     }
   },

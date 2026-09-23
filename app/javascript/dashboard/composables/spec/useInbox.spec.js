@@ -30,12 +30,6 @@ const mockStore = createStore({
             2: { id: 2, channel_type: INBOX_TYPES.FB },
             3: { id: 3, channel_type: INBOX_TYPES.TWILIO, medium: 'sms' },
             4: { id: 4, channel_type: INBOX_TYPES.TWILIO, medium: 'whatsapp' },
-            5: {
-              id: 5,
-              channel_type: INBOX_TYPES.EMAIL,
-              provider: 'microsoft',
-            },
-            6: { id: 6, channel_type: INBOX_TYPES.EMAIL, provider: 'google' },
             7: {
               id: 7,
               channel_type: INBOX_TYPES.WHATSAPP,
@@ -144,26 +138,6 @@ describe('useInbox', () => {
       expect(wrapper.vm.isAWhatsAppCloudChannel).toBe(false);
     });
 
-    it('identifies Microsoft email inbox correctly', () => {
-      const wrapper = mount(createTestComponent(5), {
-        global: { plugins: [mockStore] },
-      });
-
-      expect(wrapper.vm.isAnEmailChannel).toBe(true);
-      expect(wrapper.vm.isAMicrosoftInbox).toBe(true);
-      expect(wrapper.vm.isAGoogleInbox).toBe(false);
-    });
-
-    it('identifies Google email inbox correctly', () => {
-      const wrapper = mount(createTestComponent(6), {
-        global: { plugins: [mockStore] },
-      });
-
-      expect(wrapper.vm.isAnEmailChannel).toBe(true);
-      expect(wrapper.vm.isAGoogleInbox).toBe(true);
-      expect(wrapper.vm.isAMicrosoftInbox).toBe(false);
-    });
-
     it('identifies 360Dialog WhatsApp channel correctly', () => {
       const wrapper = mount(createTestComponent(7), {
         global: { plugins: [mockStore] },
@@ -266,12 +240,9 @@ describe('useInbox', () => {
         'isATwilioChannel',
         'isAWebWidgetInbox',
         'isAWhatsAppChannel',
-        'isAMicrosoftInbox',
-        'isAGoogleInbox',
         'isATwilioWhatsAppChannel',
         'isAWhatsAppCloudChannel',
         'is360DialogWhatsAppChannel',
-        'isAnEmailChannel',
         'isAnInstagramChannel',
         'isATiktokChannel',
         'isAVoiceChannel',

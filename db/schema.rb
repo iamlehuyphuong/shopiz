@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_09_16_031643) do
+ActiveRecord::Schema[7.1].define(version: 2026_09_23_181257) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -585,35 +585,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_16_031643) do
     t.index ["identifier"], name: "index_channel_api_on_identifier", unique: true
   end
 
-  create_table "channel_email", force: :cascade do |t|
-    t.integer "account_id", null: false
-    t.string "email", null: false
-    t.string "forward_to_email", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.boolean "imap_enabled", default: false
-    t.string "imap_address", default: ""
-    t.integer "imap_port", default: 0
-    t.string "imap_login", default: ""
-    t.string "imap_password", default: ""
-    t.boolean "imap_enable_ssl", default: true
-    t.boolean "smtp_enabled", default: false
-    t.string "smtp_address", default: ""
-    t.integer "smtp_port", default: 0
-    t.string "smtp_login", default: ""
-    t.string "smtp_password", default: ""
-    t.string "smtp_domain", default: ""
-    t.boolean "smtp_enable_starttls_auto", default: true
-    t.string "smtp_authentication", default: "login"
-    t.string "smtp_openssl_verify_mode", default: "none"
-    t.boolean "smtp_enable_ssl_tls", default: false
-    t.jsonb "provider_config", default: {}
-    t.string "provider"
-    t.boolean "verified_for_sending", default: false, null: false
-    t.index ["email"], name: "index_channel_email_on_email", unique: true
-    t.index ["forward_to_email"], name: "index_channel_email_on_forward_to_email", unique: true
-  end
-
   create_table "channel_facebook_pages", id: :serial, force: :cascade do |t|
     t.string "page_id", null: false
     t.string "user_access_token", null: false
@@ -747,7 +718,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_16_031643) do
     t.boolean "pre_chat_form_enabled", default: false
     t.jsonb "pre_chat_form_options", default: {}
     t.boolean "hmac_mandatory", default: false
-    t.boolean "continuity_via_email", default: true, null: false
     t.text "allowed_domains", default: ""
     t.index ["hmac_token"], name: "index_channel_web_widgets_on_hmac_token", unique: true
     t.index ["website_token"], name: "index_channel_web_widgets_on_website_token", unique: true
@@ -1183,7 +1153,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_16_031643) do
     t.boolean "working_hours_enabled", default: false
     t.string "out_of_office_message"
     t.string "timezone", default: "UTC"
-    t.boolean "enable_email_collect", default: true
     t.boolean "csat_survey_enabled", default: false
     t.boolean "allow_messages_after_resolved", default: true
     t.jsonb "auto_assignment_config", default: {}

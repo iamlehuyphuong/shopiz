@@ -55,8 +55,6 @@ export default {
       id: '',
       name: '',
       locale: window.navigator?.language?.startsWith('vi') ? 'vi' : 'en',
-      domain: '',
-      supportEmail: '',
       features: {},
       customEmailConfig: {},
       typeId: 'personal',
@@ -101,19 +99,6 @@ export default {
     isUpdating() {
       return this.uiFlags.isUpdating;
     },
-    featureInboundEmailEnabled() {
-      return !!this.features?.inbound_emails;
-    },
-    featureCustomReplyDomainEnabled() {
-      return (
-        this.featureInboundEmailEnabled && !!this.features.custom_reply_domain
-      );
-    },
-    featureCustomReplyEmailEnabled() {
-      return (
-        this.featureInboundEmailEnabled && !!this.features.custom_reply_email
-      );
-    },
     currentAccount() {
       return this.getAccount(this.accountId) || {};
     },
@@ -144,8 +129,6 @@ export default {
           name,
           locale,
           id,
-          domain,
-          support_email,
           features,
           settings,
           type_id,
@@ -161,8 +144,6 @@ export default {
         this.name = name;
         this.locale = locale;
         this.id = id;
-        this.domain = domain;
-        this.supportEmail = support_email;
         this.features = features;
         this.customEmailConfig = settings?.custom_email_config || {};
         this.typeId = type_id || 'personal';
@@ -187,8 +168,6 @@ export default {
         await this.$store.dispatch('accounts/update', {
           locale: this.locale,
           name: this.name,
-          domain: this.domain,
-          support_email: this.supportEmail,
           type_id: this.typeId,
           id_number: this.idNumber,
           address: this.address,
@@ -276,43 +255,6 @@ export default {
                 {{ 'Tiếng Việt' }}
               </span>
             </div>
-          </WithLabel>
-          <WithLabel
-            v-if="featureCustomReplyDomainEnabled"
-            name="custom-domain"
-            :label="$t('GENERAL_SETTINGS.FORM.DOMAIN.LABEL')"
-          >
-            <NextInput
-              v-model="domain"
-              type="text"
-              class="w-full"
-              :placeholder="$t('GENERAL_SETTINGS.FORM.DOMAIN.PLACEHOLDER')"
-            />
-            <template #help>
-              {{
-                featureInboundEmailEnabled &&
-                $t('GENERAL_SETTINGS.FORM.FEATURES.INBOUND_EMAIL_ENABLED')
-              }}
-
-              {{
-                featureCustomReplyDomainEnabled &&
-                $t('GENERAL_SETTINGS.FORM.FEATURES.CUSTOM_EMAIL_DOMAIN_ENABLED')
-              }}
-            </template>
-          </WithLabel>
-          <WithLabel
-            v-if="featureCustomReplyEmailEnabled"
-            name="support-email"
-            :label="$t('GENERAL_SETTINGS.FORM.SUPPORT_EMAIL.LABEL')"
-          >
-            <NextInput
-              v-model="supportEmail"
-              type="text"
-              class="w-full"
-              :placeholder="
-                $t('GENERAL_SETTINGS.FORM.SUPPORT_EMAIL.PLACEHOLDER')
-              "
-            />
           </WithLabel>
           <div>
             <NextButton blue :is-loading="isUpdating" type="submit">

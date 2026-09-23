@@ -20,7 +20,6 @@
   - medium
   - default
   - mailers
-  - action_mailbox_routing
   - low
   - scheduled_jobs
   - deferred
@@ -30,7 +29,6 @@
   - bulk_reindex_low
   - active_storage_analysis
   - active_storage_purge
-  - action_mailbox_incineration
 
 # you can override concurrency based on environment
 production:

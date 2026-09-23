@@ -11,8 +11,6 @@ describe Contacts::ContactableInboxesService do
   let!(:twilio_sms_inbox) { create(:inbox, channel: twilio_sms, account: account) }
   let!(:twilio_whatsapp) { create(:channel_twilio_sms, medium: :whatsapp, account: account) }
   let!(:twilio_whatsapp_inbox) { create(:inbox, channel: twilio_whatsapp, account: account) }
-  let!(:email_channel) { create(:channel_email, account: account) }
-  let!(:email_inbox) { create(:inbox, channel: email_channel, account: account) }
   let!(:api_channel) { create(:channel_api, account: account) }
   let!(:api_inbox) { create(:inbox, channel: api_channel, account: account) }
   let!(:website_inbox) { create(:inbox, channel: create(:channel_widget, account: account), account: account) }
@@ -24,7 +22,6 @@ describe Contacts::ContactableInboxesService do
 
       expect(contactable_inboxes).to include({ source_id: contact.phone_number, inbox: twilio_sms_inbox })
       expect(contactable_inboxes).to include({ source_id: "whatsapp:#{contact.phone_number}", inbox: twilio_whatsapp_inbox })
-      expect(contactable_inboxes).to include({ source_id: contact.email, inbox: email_inbox })
       expect(contactable_inboxes).to include({ source_id: contact.phone_number, inbox: sms_inbox })
     end
 

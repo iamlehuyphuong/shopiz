@@ -25,11 +25,6 @@ export const MACRO_ACTION_TYPES = [
     inputType: null,
   },
   {
-    key: 'send_email_transcript',
-    label: 'SEND_EMAIL_TRANSCRIPT',
-    inputType: 'email',
-  },
-  {
     key: 'mute_conversation',
     label: 'MUTE_CONVERSATION',
     inputType: null,

@@ -235,12 +235,6 @@ export const responsesList = [
 
 export const inboxes = [
   {
-    id: 7,
-    name: 'Email Support',
-    channel_type: INBOX_TYPES.EMAIL,
-    email: 'support@company.com',
-  },
-  {
     id: 1,
     name: 'Website Chat',
     channel_type: INBOX_TYPES.WEB,

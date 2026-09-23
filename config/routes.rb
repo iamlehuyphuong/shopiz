@@ -17,16 +17,13 @@ Rails.application.routes.draw do
     get '/app', to: 'dashboard#index'
     get '/app/*params', to: 'dashboard#index'
     get '/app/accounts/:account_id/settings/inboxes/new/twitter', to: 'dashboard#index', as: 'app_new_twitter_inbox'
-    get '/app/accounts/:account_id/settings/inboxes/new/microsoft', to: 'dashboard#index', as: 'app_new_microsoft_inbox'
     get '/app/accounts/:account_id/settings/inboxes/new/instagram', to: 'dashboard#index', as: 'app_new_instagram_inbox'
     get '/app/accounts/:account_id/settings/inboxes/new/tiktok', to: 'dashboard#index', as: 'app_new_tiktok_inbox'
     get '/app/accounts/:account_id/settings/inboxes/new/:inbox_id/agents', to: 'dashboard#index', as: 'app_twitter_inbox_agents'
-    get '/app/accounts/:account_id/settings/inboxes/new/:inbox_id/agents', to: 'dashboard#index', as: 'app_email_inbox_agents'
     get '/app/accounts/:account_id/settings/inboxes/new/:inbox_id/agents', to: 'dashboard#index', as: 'app_instagram_inbox_agents'
     get '/app/accounts/:account_id/settings/inboxes/new/:inbox_id/agents', to: 'dashboard#index', as: 'app_tiktok_inbox_agents'
     get '/app/accounts/:account_id/settings/inboxes/:inbox_id', to: 'dashboard#index', as: 'app_instagram_inbox_settings'
     get '/app/accounts/:account_id/settings/inboxes/:inbox_id', to: 'dashboard#index', as: 'app_tiktok_inbox_settings'
-    get '/app/accounts/:account_id/settings/inboxes/:inbox_id', to: 'dashboard#index', as: 'app_email_inbox_settings'
 
     resource :widget, only: [:show]
     namespace :survey do
@@ -197,7 +194,6 @@ Rails.application.routes.draw do
             member do
               post :mute
               post :unmute
-              post :transcript
               post :toggle_status
               post :toggle_priority
               post :toggle_typing_status
@@ -349,14 +345,6 @@ Rails.application.routes.draw do
           end
 
           namespace :twitter do
-            resource :authorization, only: [:create]
-          end
-
-          namespace :microsoft do
-            resource :authorization, only: [:create]
-          end
-
-          namespace :google do
             resource :authorization, only: [:create]
           end
 
@@ -562,7 +550,6 @@ Rails.application.routes.draw do
             post :set_custom_attributes
             post :update_last_seen
             post :toggle_typing
-            post :transcript
             get  :toggle_status
           end
         end
@@ -673,7 +660,6 @@ Rails.application.routes.draw do
               delete :destroy
             end
           end
-          resources :email_channel_migrations, only: [:create]
         end
       end
     end
@@ -775,8 +761,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'microsoft/callback', to: 'microsoft/callbacks#show'
-  get 'google/callback', to: 'google/callbacks#show'
   get 'instagram/callback', to: 'instagram/callbacks#show'
   get 'tiktok/callback', to: 'tiktok/callbacks#show'
   get 'notion/callback', to: 'notion/callbacks#show'
@@ -785,7 +769,6 @@ Rails.application.routes.draw do
   # Routes for external service verifications
   get '.well-known/assetlinks.json' => 'android_app#assetlinks'
   get '.well-known/apple-app-site-association' => 'apple_app#site_association'
-  get '.well-known/microsoft-identity-association.json' => 'microsoft#identity_association'
   get '.well-known/cf-custom-hostname-challenge/:id', to: 'custom_domains#verify'
 
   # ----------------------------------------------------------------------

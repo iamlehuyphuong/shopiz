@@ -12,8 +12,8 @@ export const getters = {
 
 export const actions = {
   update: async (
-    { commit, dispatch, getters: { getUIFlags: uiFlags } },
-    { email, messageId, submittedValues }
+    { commit, getters: { getUIFlags: uiFlags } },
+    { messageId, submittedValues }
   ) => {
     if (uiFlags.isUpdating) {
       return;
@@ -21,7 +21,6 @@ export const actions = {
     commit('toggleUpdateStatus', true);
     try {
       await MessageAPI.update({
-        email,
         messageId,
         values: submittedValues,
       });
@@ -30,13 +29,11 @@ export const actions = {
         {
           id: messageId,
           content_attributes: {
-            submitted_email: email,
-            submitted_values: email ? null : submittedValues,
+            submitted_values: submittedValues,
           },
         },
         { root: true }
       );
-      dispatch('contacts/get', {}, { root: true });
     } catch (error) {
       // Ignore error
     }

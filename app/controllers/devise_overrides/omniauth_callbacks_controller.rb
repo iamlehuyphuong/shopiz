@@ -1,6 +1,4 @@
 class DeviseOverrides::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCallbacksController
-  include EmailHelper
-
   def omniauth_success
     get_resource_from_auth_hash
 

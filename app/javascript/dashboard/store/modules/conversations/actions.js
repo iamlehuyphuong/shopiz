@@ -505,9 +505,6 @@ const actions = {
     }
   },
 
-  sendEmailTranscript: async (_, { conversationId, email }) => {
-    await ConversationApi.sendEmailTranscript({ conversationId, email });
-  },
 
   updateCustomAttributes: async (
     { commit },

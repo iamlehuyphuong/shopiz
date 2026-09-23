@@ -77,24 +77,12 @@ export const useInbox = (inboxId = null) => {
     return channelType.value === INBOX_TYPES.LINE;
   });
 
-  const isAnEmailChannel = computed(() => {
-    return channelType.value === INBOX_TYPES.EMAIL;
-  });
-
   const isATelegramChannel = computed(() => {
     return channelType.value === INBOX_TYPES.TELEGRAM;
   });
 
   const whatsAppAPIProvider = computed(() => {
     return inbox.value?.provider || '';
-  });
-
-  const isAMicrosoftInbox = computed(() => {
-    return isAnEmailChannel.value && inbox.value?.provider === 'microsoft';
-  });
-
-  const isAGoogleInbox = computed(() => {
-    return isAnEmailChannel.value && inbox.value?.provider === 'google';
   });
 
   const isATwilioSMSChannel = computed(() => {
@@ -155,12 +143,9 @@ export const useInbox = (inboxId = null) => {
     isATwilioChannel,
     isAWebWidgetInbox,
     isAWhatsAppChannel,
-    isAMicrosoftInbox,
-    isAGoogleInbox,
     isATwilioWhatsAppChannel,
     isAWhatsAppCloudChannel,
     is360DialogWhatsAppChannel,
-    isAnEmailChannel,
     isAnInstagramChannel,
     isATiktokChannel,
     isAVoiceChannel,

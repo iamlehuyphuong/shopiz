@@ -1,15 +1,4 @@
 module Seeders::MessageSeeder
-  def self.create_sample_email_collect_message(conversation)
-    Message.create!(
-      account: conversation.account,
-      inbox: conversation.inbox,
-      conversation: conversation,
-      message_type: :template,
-      content_type: :input_email,
-      content: 'Get notified by email'
-    )
-  end
-
   def self.create_sample_csat_collect_message(conversation)
     Message.create!(
       account: conversation.account,

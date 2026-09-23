@@ -102,32 +102,6 @@ describe('useChannelIcon', () => {
     });
   });
 
-  describe('Email channel', () => {
-    it('returns mail icon for generic email channel', () => {
-      const inbox = { channel_type: 'Channel::Email' };
-      const { value: icon } = useChannelIcon(inbox);
-      expect(icon).toBe('i-woot-mail');
-    });
-
-    it('returns Microsoft icon for Microsoft email provider', () => {
-      const inbox = {
-        channel_type: 'Channel::Email',
-        provider: 'microsoft',
-      };
-      const { value: icon } = useChannelIcon(inbox);
-      expect(icon).toBe('i-woot-outlook');
-    });
-
-    it('returns Google icon for Google email provider', () => {
-      const inbox = {
-        channel_type: 'Channel::Email',
-        provider: 'google',
-      };
-      const { value: icon } = useChannelIcon(inbox);
-      expect(icon).toBe('i-woot-gmail');
-    });
-  });
-
   it('returns default icon for unknown channel type', () => {
     const inbox = { channel_type: 'Channel::Unknown' };
     const { value: icon } = useChannelIcon(inbox);

@@ -1,6 +1,4 @@
 class ActionService
-  include EmailHelper
-
   def initialize(conversation)
     @conversation = conversation.reload
     @account = @conversation.account
@@ -80,20 +78,6 @@ class ActionService
 
   def remove_assigned_team(_params)
     @conversation.update!(team_id: nil)
-  end
-
-  def send_email_transcript(emails)
-    return unless @account.email_transcript_enabled?
-
-    emails = emails[0].gsub(/\s+/, '').split(',')
-
-    emails.each do |email|
-      break unless @account.within_email_rate_limit?
-
-      email = parse_email_variables(@conversation, email)
-      ConversationReplyMailer.with(account: @conversation.account).conversation_transcript(@conversation, email)&.deliver_later
-      @account.increment_email_sent_count
-    end
   end
 
   private

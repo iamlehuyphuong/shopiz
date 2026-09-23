@@ -6,7 +6,6 @@ export const INBOX_TYPES = {
   VOICE: 'Channel::Voice',
   WHATSAPP: 'Channel::Whatsapp',
   API: 'Channel::Api',
-  EMAIL: 'Channel::Email',
   TELEGRAM: 'Channel::Telegram',
   LINE: 'Channel::Line',
   SMS: 'Channel::Sms',
@@ -29,7 +28,6 @@ const INBOX_ICON_MAP_FILL = {
   [INBOX_TYPES.TWITTER]: 'i-woot-x',
   [INBOX_TYPES.WHATSAPP]: 'i-woot-whatsapp',
   [INBOX_TYPES.API]: 'i-woot-api',
-  [INBOX_TYPES.EMAIL]: 'i-woot-mail',
   [INBOX_TYPES.TELEGRAM]: 'i-woot-telegram',
   [INBOX_TYPES.LINE]: 'i-woot-line',
   [INBOX_TYPES.ZALO_OA]: 'i-woot-zalo-oa',
@@ -48,7 +46,6 @@ const INBOX_ICON_MAP_LINE = {
   [INBOX_TYPES.TWITTER]: 'i-woot-x',
   [INBOX_TYPES.WHATSAPP]: 'i-woot-whatsapp',
   [INBOX_TYPES.API]: 'i-woot-api',
-  [INBOX_TYPES.EMAIL]: 'i-woot-mail',
   [INBOX_TYPES.TELEGRAM]: 'i-woot-telegram',
   [INBOX_TYPES.LINE]: 'i-woot-line',
   [INBOX_TYPES.ZALO_OA]: 'i-woot-zalo-oa',
@@ -70,9 +67,6 @@ export const getInboxSource = (type, phoneNumber, inbox) => {
     case INBOX_TYPES.WHATSAPP:
     case INBOX_TYPES.VOICE:
       return phoneNumber || '';
-
-    case INBOX_TYPES.EMAIL:
-      return inbox.email || '';
 
     default:
       return '';
@@ -109,9 +103,6 @@ export const getReadableInboxByType = (type, phoneNumber) => {
 
     case INBOX_TYPES.API:
       return 'api';
-
-    case INBOX_TYPES.EMAIL:
-      return 'email';
 
     case INBOX_TYPES.TELEGRAM:
       return 'telegram';
@@ -151,9 +142,6 @@ export const getInboxClassByType = (type, phoneNumber) => {
 
     case INBOX_TYPES.API:
       return 'cloud';
-
-    case INBOX_TYPES.EMAIL:
-      return 'mail';
 
     case INBOX_TYPES.TELEGRAM:
       return 'brand-telegram';
@@ -199,7 +187,7 @@ export const getInboxIconByType = (type, medium, variant = 'fill') => {
 };
 
 export const getInboxWarningIconClass = (type, reauthorizationRequired) => {
-  const allowedInboxTypes = [INBOX_TYPES.FB, INBOX_TYPES.EMAIL];
+  const allowedInboxTypes = [INBOX_TYPES.FB];
   if (allowedInboxTypes.includes(type) && reauthorizationRequired) {
     return 'warning';
   }

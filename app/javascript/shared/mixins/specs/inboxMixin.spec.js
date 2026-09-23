@@ -133,12 +133,6 @@ describe('inboxMixin', () => {
     });
   });
 
-  it('isAnEmailChannel returns true if channel type is email', () => {
-    const Component = getComponentConfigForInbox('Channel::Email');
-    const wrapper = shallowMount(Component);
-    expect(wrapper.vm.isAnEmailChannel).toBe(true);
-  });
-
   it('isTwitterInboxTweet returns true if Twitter channel type is tweet', () => {
     const Component = getComponentConfigForChat({
       channel_type: 'Channel::TwitterProfile',
@@ -214,9 +208,9 @@ describe('inboxMixin', () => {
     });
 
     it('inboxBadge returns the channelType when no specific condition is true', () => {
-      const Component = getComponentConfigForInbox('Channel::Email');
+      const Component = getComponentConfigForInbox('Channel::Unknown');
       const wrapper = shallowMount(Component);
-      expect(wrapper.vm.inboxBadge).toBe('Channel::Email');
+      expect(wrapper.vm.inboxBadge).toBe('Channel::Unknown');
     });
   });
 

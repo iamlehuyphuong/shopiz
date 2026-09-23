@@ -13,16 +13,7 @@ class Api::V1::Widget::MessagesController < Api::V1::Widget::BaseController
   end
 
   def update
-    if @message.content_type == 'input_email'
-      @message.update!(submitted_email: contact_email)
-      ContactIdentifyAction.new(
-        contact: @contact,
-        params: { email: contact_email, name: contact_name },
-        retain_original_contact_name: true
-      ).perform
-    else
-      @message.update!(message_update_params[:message])
-    end
+    @message.update!(message_update_params[:message])
   rescue StandardError => e
     render json: { error: @contact.errors, message: e.message }.to_json, status: :internal_server_error
   end

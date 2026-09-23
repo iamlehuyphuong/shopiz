@@ -4,7 +4,6 @@
 #
 #  id                    :integer          not null, primary key
 #  allowed_domains       :text             default("")
-#  continuity_via_email  :boolean          default(TRUE), not null
 #  feature_flags         :integer          default(7), not null
 #  hmac_mandatory        :boolean          default(FALSE)
 #  hmac_token            :string
@@ -32,7 +31,7 @@ class Channel::WebWidget < ApplicationRecord
 
   self.table_name = 'channel_web_widgets'
   EDITABLE_ATTRS = [:website_url, :widget_color, :welcome_title, :welcome_tagline, :reply_time, :pre_chat_form_enabled,
-                    :continuity_via_email, :hmac_mandatory, :allowed_domains, :bubble_avatar, :close_bubble_avatar,
+                    :hmac_mandatory, :allowed_domains, :bubble_avatar, :close_bubble_avatar,
                     { pre_chat_form_options: [:pre_chat_message, :require_email,
                                               { pre_chat_fields:
                                                 [:field_type, :label, :placeholder, :name, :enabled, :type, :enabled, :required,
@@ -66,21 +65,19 @@ class Channel::WebWidget < ApplicationRecord
     host = ENV.fetch('FRONTEND_URL', nil)
 
     if bubble_avatar.content_type == 'image/svg+xml' || bubble_avatar.filename.to_s.downcase.end_with?('.svg')
-      if host.present?
-        return Rails.application.routes.url_helpers.url_for(bubble_avatar, host: host)
-      else
-        return Rails.application.routes.url_helpers.url_for(bubble_avatar)
-      end
+      return Rails.application.routes.url_helpers.url_for(bubble_avatar, host: host) if host.present?
+
+      return Rails.application.routes.url_helpers.url_for(bubble_avatar)
+
     end
 
     if bubble_avatar.representable?
       begin
-        if host.present?
-          return Rails.application.routes.url_helpers.url_for(bubble_avatar.representation(resize_to_fill: [250, nil]), host: host)
-        else
-          return Rails.application.routes.url_helpers.url_for(bubble_avatar.representation(resize_to_fill: [250, nil]))
-        end
-      rescue => e
+        return Rails.application.routes.url_helpers.url_for(bubble_avatar.representation(resize_to_fill: [250, nil]), host: host) if host.present?
+
+        return Rails.application.routes.url_helpers.url_for(bubble_avatar.representation(resize_to_fill: [250, nil]))
+
+      rescue StandardError
         # fallback to direct url if representation fails
       end
     end
@@ -98,21 +95,21 @@ class Channel::WebWidget < ApplicationRecord
     host = ENV.fetch('FRONTEND_URL', nil)
 
     if close_bubble_avatar.content_type == 'image/svg+xml' || close_bubble_avatar.filename.to_s.downcase.end_with?('.svg')
-      if host.present?
-        return Rails.application.routes.url_helpers.url_for(close_bubble_avatar, host: host)
-      else
-        return Rails.application.routes.url_helpers.url_for(close_bubble_avatar)
-      end
+      return Rails.application.routes.url_helpers.url_for(close_bubble_avatar, host: host) if host.present?
+
+      return Rails.application.routes.url_helpers.url_for(close_bubble_avatar)
+
     end
 
     if close_bubble_avatar.representable?
       begin
         if host.present?
           return Rails.application.routes.url_helpers.url_for(close_bubble_avatar.representation(resize_to_fill: [250, nil]), host: host)
-        else
-          return Rails.application.routes.url_helpers.url_for(close_bubble_avatar.representation(resize_to_fill: [250, nil]))
         end
-      rescue => e
+
+        return Rails.application.routes.url_helpers.url_for(close_bubble_avatar.representation(resize_to_fill: [250, nil]))
+
+      rescue StandardError
         # fallback to direct url if representation fails
       end
     end

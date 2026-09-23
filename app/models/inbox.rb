@@ -13,7 +13,6 @@
 #  csat_survey_enabled           :boolean          default(FALSE)
 #  email_address                 :string
 #  enable_auto_assignment        :boolean          default(TRUE)
-#  enable_email_collect          :boolean          default(TRUE)
 #  greeting_enabled              :boolean          default(FALSE)
 #  greeting_message              :string
 #  is_load_all_conversation      :boolean
@@ -128,14 +127,13 @@ class Inbox < ApplicationRecord
     update_account_cache
   end
 
-  # Sanitizes inbox name for balanced email provider compatibility
+  # Sanitizes inbox name for balanced provider compatibility
   # ALLOWS: /'._- and Unicode letters/numbers/emojis
   # REMOVES: Forbidden chars (\<>@") + spam-trigger symbols (!#$%&*+=?^`{|}~)
   def sanitized_name
-    return default_name_for_blank_name if name.blank?
+    return '' if name.blank?
 
-    sanitized = apply_sanitization_rules(name)
-    sanitized.blank? && email? ? display_name_from_email : sanitized
+    apply_sanitization_rules(name)
   end
 
   def sms?
@@ -164,10 +162,6 @@ class Inbox < ApplicationRecord
 
   def api?
     channel_type == 'Channel::Api'
-  end
-
-  def email?
-    channel_type == 'Channel::Email'
   end
 
   def twilio?
@@ -259,20 +253,12 @@ class Inbox < ApplicationRecord
 
   private
 
-  def default_name_for_blank_name
-    email? ? display_name_from_email : ''
-  end
-
   def apply_sanitization_rules(name)
     name.gsub(/[\\<>@"!#$%&*+=?^`{|}~:;]/, '')         # Remove forbidden chars
         .gsub(/[\x00-\x1F\x7F]/, ' ')                   # Replace control chars with spaces
         .gsub(/\A[[:punct:]]+|[[:punct:]]+\z/, '')      # Remove leading/trailing punctuation
         .gsub(/\s+/, ' ')                               # Normalize spaces
         .strip
-  end
-
-  def display_name_from_email
-    channel.email.split('@').first.parameterize.titleize
   end
 
   def dispatch_create_event
@@ -300,10 +286,6 @@ class Inbox < ApplicationRecord
 
   def delete_round_robin_agents
     ::AutoAssignment::InboxRoundRobinService.new(inbox: self).clear_queue
-  end
-
-  def check_channel_type?
-    ['Channel::Email', 'Channel::Api', 'Channel::WebWidget'].include?(channel_type)
   end
 
   def auto_load_old_conversation

@@ -18,8 +18,6 @@ class Contacts::ContactableInboxesService
       whatsapp_contactable_inbox(inbox)
     when 'Channel::Sms'
       sms_contactable_inbox(inbox)
-    when 'Channel::Email'
-      email_contactable_inbox(inbox)
     when 'Channel::Api'
       api_contactable_inbox(inbox)
     when 'Channel::WebWidget'
@@ -43,12 +41,6 @@ class Contacts::ContactableInboxesService
     source_id = latest_contact_inbox&.source_id || SecureRandom.uuid
 
     { source_id: source_id, inbox: inbox }
-  end
-
-  def email_contactable_inbox(inbox)
-    return if @contact.email.blank?
-
-    { source_id: @contact.email, inbox: inbox }
   end
 
   def whatsapp_contactable_inbox(inbox)

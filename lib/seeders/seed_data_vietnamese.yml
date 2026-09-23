@@ -376,7 +376,7 @@ contacts:
     email: "cdalinderc@msn.test"
     gender: 'male'
     conversations:
-      - channel: Channel::Email
+      - channel: Channel::WebWidget
         source_id: "cdalinderc@msn.test"
         messages:
           - message_type: incoming
@@ -388,7 +388,7 @@ contacts:
     email: "mpetrukd@wunderground.test"
     gender: 'female'
     conversations:
-      - channel: Channel::Email
+      - channel: Channel::WebWidget
         source_id: "mpetrukd@wunderground.test"
         priority: urgent
         messages:
@@ -461,7 +461,7 @@ contacts:
     email: "cmathersonj@va.test"
     gender: 'female'
     conversations:
-      - channel: Channel::Email
+      - channel: Channel::WebWidget
         priority: urgent
         source_id: "cmathersonj@va.test"
         assignee: michael_scott@shopiz.test
@@ -515,7 +515,7 @@ contacts:
     email: "dchen@sample.test"
     gender: 'male'
     conversations:
-      - channel: Channel::Email
+      - channel: Channel::WebWidget
         source_id: "dchen@sample.test"
         assignee: ben@shopiz.test
         messages:

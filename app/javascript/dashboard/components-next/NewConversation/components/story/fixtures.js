@@ -48,7 +48,7 @@ export const activeContact = {
       label: 'PaperLayer Email (testba@paperlayer.test)',
       name: 'PaperLayer Email',
       email: 'testba@paperlayer.test',
-      channelType: 'Channel::Email',
+      channelType: 'Channel::WebWidget',
     },
     {
       id: 8,
@@ -158,7 +158,7 @@ export const emailInbox = {
   label: 'PaperLayer Email (testba@paperlayer.test)',
   name: 'PaperLayer Email',
   email: 'testba@paperlayer.test',
-  channelType: 'Channel::Email',
+  channelType: 'Channel::WebWidget',
 };
 
 export const currentUser = {

@@ -338,18 +338,6 @@ describe('#actions', () => {
     });
   });
 
-  describe('#sendEmailTranscript', () => {
-    it('sends correct mutations if api is successful', async () => {
-      axios.post.mockResolvedValue({});
-      await actions.sendEmailTranscript(
-        { commit },
-        { conversationId: 1, email: 'testemail@example.com' }
-      );
-      expect(commit).toHaveBeenCalledTimes(0);
-      expect(commit.mock.calls).toEqual([]);
-    });
-  });
-
   describe('#assignAgent', () => {
     it('sends correct mutations if assignment is successful', async () => {
       axios.post.mockResolvedValue({

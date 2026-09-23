@@ -13,15 +13,6 @@ describe('composeConversationHelper', () => {
       phoneNumber: '+1234567890',
     };
 
-    it('generates label for email inbox', () => {
-      expect(
-        helpers.generateLabelForContactableInboxesList({
-          ...contact,
-          channelType: INBOX_TYPES.EMAIL,
-        })
-      ).toBe('John Doe (john@example.com)');
-    });
-
     it('generates label for twilio inbox', () => {
       expect(
         helpers.generateLabelForContactableInboxesList({
@@ -60,23 +51,21 @@ describe('composeConversationHelper', () => {
       const inboxes = [
         {
           id: 1,
-          name: 'Email Inbox',
-          email: 'support@example.com',
-          channelType: INBOX_TYPES.EMAIL,
-          phoneNumber: null,
+          name: 'WhatsApp Inbox',
+          channelType: INBOX_TYPES.WHATSAPP,
+          phoneNumber: '+1234567890',
         },
       ];
 
       const result = helpers.buildContactableInboxesList(inboxes);
       expect(result[0]).toMatchObject({
         id: 1,
-        icon: 'i-woot-mail',
-        label: 'Email Inbox (support@example.com)',
+        icon: 'i-woot-whatsapp',
+        label: 'WhatsApp Inbox (+1234567890)',
         action: 'inbox',
         value: 1,
-        name: 'Email Inbox',
-        email: 'support@example.com',
-        channelType: INBOX_TYPES.EMAIL,
+        name: 'WhatsApp Inbox',
+        channelType: INBOX_TYPES.WHATSAPP,
       });
     });
   });
@@ -127,7 +116,7 @@ describe('composeConversationHelper', () => {
         {
           id: 1,
           name: 'Inbox 1',
-          channel_type: 'Channel::Email',
+          channel_type: 'Channel::WebWidget',
           channel_id: 10,
           phone_number: null,
         },
@@ -154,7 +143,7 @@ describe('composeConversationHelper', () => {
         id: 1,
         sourceId: 'source1',
         name: 'Inbox 1',
-        channelType: 'Channel::Email',
+        channelType: 'Channel::WebWidget',
         channelId: 10,
         phoneNumber: null,
       });
@@ -179,7 +168,7 @@ describe('composeConversationHelper', () => {
         {
           id: 1,
           name: 'Inbox 1',
-          channel_type: 'Channel::Email',
+          channel_type: 'Channel::WebWidget',
         },
       ];
 
@@ -191,7 +180,7 @@ describe('composeConversationHelper', () => {
         id: 1,
         sourceId: 'source1',
         name: 'Inbox 1',
-        channelType: 'Channel::Email',
+        channelType: 'Channel::WebWidget',
       });
 
       expect(result[1]).toMatchObject({
@@ -210,7 +199,7 @@ describe('composeConversationHelper', () => {
         {
           id: 1,
           name: 'Inbox 1',
-          channel_type: 'Channel::Email',
+          channel_type: 'Channel::WebWidget',
           avatar_url: 'https://example.com/avatar.png',
           working_hours: [
             {
@@ -227,7 +216,7 @@ describe('composeConversationHelper', () => {
         id: 1,
         sourceId: 'source1',
         name: 'Inbox 1',
-        channelType: 'Channel::Email',
+        channelType: 'Channel::WebWidget',
         avatarUrl: 'https://example.com/avatar.png',
       });
 
@@ -246,14 +235,14 @@ describe('composeConversationHelper', () => {
         {
           id: 1,
           name: 'List Name',
-          channel_type: 'Channel::Email',
+          channel_type: 'Channel::WebWidget',
         },
       ];
 
       const result = helpers.mergeInboxDetails(inboxesData, inboxesList);
 
       expect(result[0].name).toBe('Original Name');
-      expect(result[0].channelType).toBe('Channel::Email');
+      expect(result[0].channelType).toBe('Channel::WebWidget');
     });
   });
 
@@ -290,23 +279,15 @@ describe('composeConversationHelper', () => {
       });
     });
 
-    it('includes optional fields when provided', () => {
+    it('includes attachments when provided', () => {
       const result = helpers.prepareNewMessagePayload({
         ...baseParams,
-        subject: 'Test',
-        ccEmails: 'cc@test.com',
-        bccEmails: 'bcc@test.com',
         attachedFiles: [{ blobSignedId: 'file1' }],
         directUploadsEnabled: true,
       });
 
       expect(result).toMatchObject({
-        mailSubject: 'Test',
-        message: {
-          content: 'Hello',
-          cc_emails: 'cc@test.com',
-          bcc_emails: 'bcc@test.com',
-        },
+        message: { content: 'Hello' },
         files: ['file1'],
       });
     });
@@ -639,14 +620,14 @@ describe('compareInboxes', () => {
   it('should sort inboxes by channel priority', () => {
     const inboxes = [
       { channelType: 'Channel::Api', name: 'API Inbox' },
-      { channelType: 'Channel::Email', name: 'Email Inbox' },
       { channelType: 'Channel::WebWidget', name: 'Widget' },
       { channelType: 'Channel::Whatsapp', name: 'WhatsApp' },
+      { channelType: 'Channel::ZaloPersonal', name: 'Zalo' },
     ];
 
     const sorted = [...inboxes].sort(helpers.compareInboxes);
 
-    expect(sorted[0].channelType).toBe('Channel::Email');
+    expect(sorted[0].channelType).toBe('Channel::ZaloPersonal');
     expect(sorted[1].channelType).toBe('Channel::Whatsapp');
     expect(sorted[2].channelType).toBe('Channel::WebWidget');
     expect(sorted[3].channelType).toBe('Channel::Api');
@@ -666,9 +647,9 @@ describe('compareInboxes', () => {
 
   it('should sort by name when channel types are same', () => {
     const inboxes = [
-      { channelType: 'Channel::Email', name: 'Support' },
-      { channelType: 'Channel::Email', name: 'Marketing' },
-      { channelType: 'Channel::Email', name: 'Billing' },
+      { channelType: 'Channel::WebWidget', name: 'Support' },
+      { channelType: 'Channel::WebWidget', name: 'Marketing' },
+      { channelType: 'Channel::WebWidget', name: 'Billing' },
     ];
 
     const sorted = [...inboxes].sort(helpers.compareInboxes);
@@ -683,7 +664,7 @@ describe('compareInboxes', () => {
   it('should put channels without priority at the end', () => {
     const inboxes = [
       { channelType: 'Channel::Unknown', name: 'Unknown' },
-      { channelType: 'Channel::Email', name: 'Email' },
+      { channelType: 'Channel::WebWidget', name: 'Widget' },
       { channelType: 'Channel::LineChannel', name: 'Line' },
       { channelType: 'Channel::Whatsapp', name: 'WhatsApp' },
     ];
@@ -691,9 +672,8 @@ describe('compareInboxes', () => {
     const sorted = [...inboxes].sort(helpers.compareInboxes);
 
     expect(sorted.map(i => i.channelType)).toEqual([
-      'Channel::Email',
       'Channel::Whatsapp',
-
+      'Channel::WebWidget',
       'Channel::LineChannel',
       'Channel::Unknown',
     ]);

@@ -10,9 +10,6 @@ class SendReplyJob < ApplicationJob
     'Channel::Sms' => ::Sms::SendOnSmsService,
     'Channel::Instagram' => ::Instagram::SendOnInstagramService,
     'Channel::Tiktok' => ::Tiktok::SendOnTiktokService,
-    'Channel::Email' => ::Email::SendOnEmailService,
-    'Channel::WebWidget' => ::Messages::SendEmailNotificationService,
-    'Channel::Api' => ::Messages::SendEmailNotificationService,
     'Channel::ZaloOa' => ::Zalo::SendOnZaloService,
     'Channel::ZaloPersonal' => ::ZaloPersonal::SendOnZaloService,
     'Channel::TiktokShop' => ::TiktokShop::SendOnTiktokService

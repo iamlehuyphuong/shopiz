@@ -3,21 +3,6 @@
 // nodes: block structures (bulletList, orderedList, codeBlock, blockquote)
 export const FORMATTING = {
   // Channel formatting
-  'Channel::Email': {
-    marks: ['strong', 'em', 'code', 'link'],
-    nodes: ['bulletList', 'orderedList', 'codeBlock', 'blockquote', 'image'],
-    menu: [
-      'copilot',
-      'strong',
-      'em',
-      'code',
-      'link',
-      'bulletList',
-      'orderedList',
-      'undo',
-      'redo',
-    ],
-  },
   'Channel::WebWidget': {
     marks: ['strong', 'em', 'code', 'link', 'strike'],
     nodes: ['bulletList', 'orderedList', 'codeBlock', 'blockquote', 'image'],

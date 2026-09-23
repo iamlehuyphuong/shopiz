@@ -50,31 +50,6 @@ RSpec.describe Account do
     end
   end
 
-  describe 'inbound_email_domain' do
-    let(:account) { create(:account) }
-
-    it 'returns the domain from inbox if inbox value is present' do
-      account.update(domain: 'test.com')
-      with_modified_env MAILER_INBOUND_EMAIL_DOMAIN: 'test2.com' do
-        expect(account.inbound_email_domain).to eq('test.com')
-      end
-    end
-
-    it 'returns the domain from ENV if inbox value is nil' do
-      account.update(domain: nil)
-      with_modified_env MAILER_INBOUND_EMAIL_DOMAIN: 'test.com' do
-        expect(account.inbound_email_domain).to eq('test.com')
-      end
-    end
-
-    it 'returns the domain from ENV if inbox value is empty string' do
-      account.update(domain: '')
-      with_modified_env MAILER_INBOUND_EMAIL_DOMAIN: 'test.com' do
-        expect(account.inbound_email_domain).to eq('test.com')
-      end
-    end
-  end
-
   describe 'support_email' do
     let(:account) { create(:account) }
 

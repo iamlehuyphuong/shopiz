@@ -7,7 +7,6 @@ import QRCode from 'qrcode';
 import EmptyState from '../../../../components/widgets/EmptyState.vue';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import DuplicateInboxBanner from './channels/instagram/DuplicateInboxBanner.vue';
-import EmailInboxFinish from './channels/emailChannels/EmailInboxFinish.vue';
 import { useInbox } from 'dashboard/composables/useInbox';
 import { INBOX_TYPES } from 'dashboard/helper/inbox';
 
@@ -31,7 +30,6 @@ const {
   isATwilioChannel,
   isASmsInbox,
   isALineChannel,
-  isAnEmailChannel,
   isAWhatsAppChannel,
   isAFacebookInbox,
   isATelegramChannel,
@@ -173,7 +171,7 @@ onMounted(() => {
     />
     <EmptyState
       :title="$t('INBOX_MGMT.FINISH.TITLE')"
-      :message="isAnEmailChannel && !currentInbox.provider ? '' : message"
+      :message="message"
       :button-text="$t('INBOX_MGMT.FINISH.BUTTON_TEXT')"
     >
       <div class="w-full text-center">
@@ -224,11 +222,6 @@ onMounted(() => {
             :script="currentInbox.callback_webhook_url"
           />
         </div>
-        <EmailInboxFinish
-          v-if="isAnEmailChannel && !currentInbox.provider"
-          :inbox="currentInbox"
-          :inbox-id="$route.params.inbox_id"
-        />
         <div
           v-if="isAWhatsAppChannel && qrCodes.whatsapp"
           class="flex flex-col gap-3 items-center mt-8"

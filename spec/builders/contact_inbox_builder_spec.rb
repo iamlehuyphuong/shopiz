@@ -236,64 +236,6 @@ describe ContactInboxBuilder do
       end
     end
 
-    describe 'email inbox' do
-      let!(:email_channel) { create(:channel_email, account: account) }
-      let!(:email_inbox) { create(:inbox, channel: email_channel, account: account) }
-
-      it 'does not create contact inbox when contact inbox already exists with the source id provided' do
-        existing_contact_inbox = create(:contact_inbox, contact: contact, inbox: email_inbox, source_id: contact.email)
-        contact_inbox = described_class.new(
-          contact: contact,
-          inbox: email_inbox,
-          source_id: contact.email
-        ).perform
-
-        expect(contact_inbox.id).to eq(existing_contact_inbox.id)
-      end
-
-      it 'does not create contact inbox when contact inbox already exists with email and source id is not provided' do
-        existing_contact_inbox = create(:contact_inbox, contact: contact, inbox: email_inbox, source_id: contact.email)
-        contact_inbox = described_class.new(
-          contact: contact,
-          inbox: email_inbox
-        ).perform
-
-        expect(contact_inbox.id).to eq(existing_contact_inbox.id)
-      end
-
-      it 'creates a new contact inbox when different source id is provided' do
-        existing_contact_inbox = create(:contact_inbox, contact: contact, inbox: email_inbox, source_id: contact.email)
-        contact_inbox = described_class.new(
-          contact: contact,
-          inbox: email_inbox,
-          source_id: 'xyc@xyc.com'
-        ).perform
-
-        expect(contact_inbox.id).not_to eq(existing_contact_inbox.id)
-        expect(contact_inbox.source_id).to eq('xyc@xyc.com')
-      end
-
-      it 'creates a contact inbox with contact email when source id not provided and no contact inbox exists' do
-        contact_inbox = described_class.new(
-          contact: contact,
-          inbox: email_inbox
-        ).perform
-
-        expect(contact_inbox.source_id).to eq(contact.email)
-      end
-
-      it 'raises error when contact email is not present and no source id is provided' do
-        contact.update!(email: nil)
-
-        expect do
-          described_class.new(
-            contact: contact,
-            inbox: email_inbox
-          ).perform
-        end.to raise_error(ActionController::ParameterMissing, 'param is missing or the value is empty: contact email')
-      end
-    end
-
     describe 'api inbox' do
       let!(:api_channel) { create(:channel_api, account: account) }
       let!(:api_inbox) { create(:inbox, channel: api_channel, account: account) }
@@ -335,7 +277,7 @@ describe ContactInboxBuilder do
       let(:account) { create(:account) }
       let(:contact) { create(:contact, account: account) }
       let(:contact2) { create(:contact, account: account) }
-      let(:channel) { create(:channel_email, account: account) }
+      let(:channel) { create(:channel_api, account: account) }
       let(:channel_api) { create(:channel_api, account: account) }
       let(:source_id) { 'source_123' }
 

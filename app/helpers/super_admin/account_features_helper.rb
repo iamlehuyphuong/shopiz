@@ -1,7 +1,7 @@
 module SuperAdmin::AccountFeaturesHelper
   FEATURE_CATEGORIES = {
     'Kênh kết nối (Channels)' => %w[
-      inbound_emails channel_email channel_facebook channel_twitter channel_website
+      channel_facebook channel_twitter channel_website
       channel_instagram channel_zalo channel_zalopersonal channel_telegram
       channel_line channel_whatsapp channel_tiktok_shop channel_tiktok
     ],
@@ -24,10 +24,9 @@ module SuperAdmin::AccountFeaturesHelper
       captain_integration captain_integration_v2 captain_tasks
     ],
     'Hệ thống & Giao diện (System & Interface)' => %w[
-      ip_lookup disable_branding email_continuity_on_api_channel help_center
+      ip_lookup disable_branding help_center
       help_center_embedding_search chatwoot_v4 search_with_gin
-      advanced_search advanced_search_indexing saml reply_mailer_migration quoted_email_reply
-      custom_reply_domain custom_reply_email message_reply_to insert_article_in_reply
+      advanced_search advanced_search_indexing saml message_reply_to insert_article_in_reply
     ],
     'Khác (Others)' => %w[
       whatsapp_embedded_signup whatsapp_campaign twilio_content_templates
@@ -97,16 +96,20 @@ module SuperAdmin::AccountFeaturesHelper
     attributes.each do |attr|
       # attr.data should be a hash with one key (the feature name)
       # based on existing show.html.erb logic: attr.data.keys.first
-      feature_name = attr.data.keys.first.to_s rescue nil
+      feature_name = begin
+        attr.data.keys.first.to_s
+      rescue StandardError
+        nil
+      end
       next unless feature_name
 
       category_found = false
       FEATURE_CATEGORIES.each do |category, features|
-        if features.include?(feature_name)
-          categorized[category] << attr
-          category_found = true
-          break
-        end
+        next unless features.include?(feature_name)
+
+        categorized[category] << attr
+        category_found = true
+        break
       end
 
       categorized['Chưa phân loại (Uncategorized)'] << attr unless category_found
@@ -134,11 +137,11 @@ module SuperAdmin::AccountFeaturesHelper
     features_hash.each do |feature_name, enabled|
       category_found = false
       FEATURE_CATEGORIES.each do |category, features|
-        if features.include?(feature_name.to_s)
-          categorized[category] << [feature_name.to_s, enabled]
-          category_found = true
-          break
-        end
+        next unless features.include?(feature_name.to_s)
+
+        categorized[category] << [feature_name.to_s, enabled]
+        category_found = true
+        break
       end
 
       categorized['Chưa phân loại (Uncategorized)'] << [feature_name.to_s, enabled] unless category_found

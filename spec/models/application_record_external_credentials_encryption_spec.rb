@@ -4,16 +4,6 @@ require 'rails_helper'
 
 RSpec.describe ApplicationRecord do
   it_behaves_like 'encrypted external credential',
-                  factory: :channel_email,
-                  attribute: :smtp_password,
-                  value: 'smtp-secret'
-
-  it_behaves_like 'encrypted external credential',
-                  factory: :channel_email,
-                  attribute: :imap_password,
-                  value: 'imap-secret'
-
-  it_behaves_like 'encrypted external credential',
                   factory: :channel_twilio_sms,
                   attribute: :auth_token,
                   value: 'twilio-secret'
@@ -62,34 +52,6 @@ RSpec.describe ApplicationRecord do
                   factory: :channel_twitter_profile,
                   attribute: :twitter_access_token_secret,
                   value: 'twitter-secret-secret'
-
-  context 'when backfilling legacy plaintext' do
-    before do
-      skip('encryption keys missing; see run_mfa_spec workflow') unless Chatwoot.encryption_configured?
-    end
-
-    it 'reads existing plaintext and encrypts on update' do
-      account = create(:account)
-      channel = create(:channel_email, account: account, smtp_password: nil)
-
-      # Simulate legacy plaintext by updating the DB directly
-      sql = ActiveRecord::Base.send(
-        :sanitize_sql_array,
-        ['UPDATE channel_email SET smtp_password = ? WHERE id = ?', 'legacy-plain', channel.id]
-      )
-      ActiveRecord::Base.connection.execute(sql)
-
-      legacy_record = Channel::Email.find(channel.id)
-      expect(legacy_record.smtp_password).to eq('legacy-plain')
-
-      legacy_record.update!(smtp_password: 'encrypted-now')
-
-      stored_value = legacy_record.reload.read_attribute_before_type_cast(:smtp_password)
-      expect(stored_value).to be_present
-      expect(stored_value).not_to include('encrypted-now')
-      expect(legacy_record.smtp_password).to eq('encrypted-now')
-    end
-  end
 
   context 'when looking up telegram legacy records' do
     before do

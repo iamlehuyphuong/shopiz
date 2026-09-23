@@ -60,9 +60,7 @@ const messageContent = computed(() => {
 });
 
 const insertIntoRichEditor = computed(() => {
-  return [INBOX_TYPES.WEB, INBOX_TYPES.EMAIL].includes(
-    props.conversationInboxType
-  );
+  return [INBOX_TYPES.WEB].includes(props.conversationInboxType);
 });
 
 const useCopilotResponse = () => {

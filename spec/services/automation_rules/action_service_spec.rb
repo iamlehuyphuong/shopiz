@@ -88,36 +88,6 @@ RSpec.describe AutomationRules::ActionService do
       end
     end
 
-    describe '#perform with send_email_transcript action' do
-      before do
-        rule.actions << { action_name: 'send_email_transcript', action_params: ['contact@example.com, agent@example.com,agent1@example.com'] }
-        rule.save
-      end
-
-      it 'will send email to transcript to action params emails' do
-        mailer = double
-        allow(ConversationReplyMailer).to receive(:with).and_return(mailer)
-        allow(mailer).to receive(:conversation_transcript).with(conversation, 'contact@example.com')
-        allow(mailer).to receive(:conversation_transcript).with(conversation, 'agent@example.com')
-        allow(mailer).to receive(:conversation_transcript).with(conversation, 'agent1@example.com')
-
-        described_class.new(rule, account, conversation).perform
-        expect(mailer).to have_received(:conversation_transcript).exactly(3).times
-      end
-
-      it 'will send email to transcript to contacts' do
-        rule.actions = [{ action_name: 'send_email_transcript', action_params: ['{{contact.email}}'] }]
-        rule.save
-
-        mailer = double
-        allow(ConversationReplyMailer).to receive(:with).and_return(mailer)
-        allow(mailer).to receive(:conversation_transcript).with(conversation, conversation.contact.email)
-
-        described_class.new(rule.reload, account, conversation).perform
-        expect(mailer).to have_received(:conversation_transcript).exactly(1).times
-      end
-    end
-
     describe '#perform with add_label action' do
       before do
         rule.actions << { action_name: 'add_label', action_params: %w[bug feature] }

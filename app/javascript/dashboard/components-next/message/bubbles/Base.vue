@@ -39,7 +39,6 @@ const varaintBaseMap = {
   [MESSAGE_VARIANTS.BOT]: 'bg-n-solid-iris text-n-slate-12',
   [MESSAGE_VARIANTS.TEMPLATE]: 'bg-n-solid-iris text-n-slate-12',
   [MESSAGE_VARIANTS.ERROR]: 'bg-n-ruby-4 text-n-ruby-12',
-  [MESSAGE_VARIANTS.EMAIL]: 'w-full',
   [MESSAGE_VARIANTS.UNSUPPORTED]:
     'bg-n-solid-amber/70 border border-dashed border-n-amber-12 text-n-amber-12',
 };
@@ -137,7 +136,6 @@ const showSenderInGroup = computed(() => {
     :class="[
       messageClass,
       {
-        'max-w-lg': variant !== MESSAGE_VARIANTS.EMAIL,
       },
     ]"
   >
@@ -173,7 +171,6 @@ const showSenderInGroup = computed(() => {
       v-if="shouldShowMeta"
       :class="[
         flexOrientationClass,
-        variant === MESSAGE_VARIANTS.EMAIL ? 'px-3 pb-3' : '',
         variant === MESSAGE_VARIANTS.PRIVATE
           ? 'text-n-amber-12/50'
           : 'text-n-slate-11',

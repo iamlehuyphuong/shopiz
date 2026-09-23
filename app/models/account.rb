@@ -128,9 +128,13 @@ class Account < ApplicationRecord
   store_accessor :settings, :keep_pending_on_bot_failure
   store_accessor :settings, :captain_auto_resolve_mode
   store_accessor :settings, :active_ecommerce_platform, :ai_allow_create_order, :order_notification_templates
-  
+
   def parsed_encrypted_settings
-    val = self.encrypted_settings.dup rescue self.encrypted_settings
+    val = begin
+      encrypted_settings.dup
+    rescue StandardError
+      encrypted_settings
+    end
     if val.is_a?(String)
       begin
         val = JSON.parse(val)
@@ -182,7 +186,6 @@ class Account < ApplicationRecord
   has_many :custom_filters, dependent: :destroy_async
   has_many :dashboard_apps, dependent: :destroy_async
   has_many :data_imports, dependent: :destroy_async
-  has_many :email_channels, dependent: :destroy_async, class_name: '::Channel::Email'
   has_many :facebook_pages, dependent: :destroy_async, class_name: '::Channel::FacebookPage'
   has_many :zalo_oas, dependent: :destroy_async, class_name: '::Channel::ZaloOa'
   has_many :zalo_message_templates, dependent: :destroy_async
@@ -268,11 +271,6 @@ class Account < ApplicationRecord
     }
   end
 
-  def inbound_email_domain
-    domain.presence || GlobalConfig.get('MAILER_INBOUND_EMAIL_DOMAIN')['MAILER_INBOUND_EMAIL_DOMAIN'] || ENV.fetch('MAILER_INBOUND_EMAIL_DOMAIN',
-                                                                                                                   false)
-  end
-
   def support_email
     super.presence || ENV.fetch('MAILER_SENDER_EMAIL') { GlobalConfig.get('MAILER_SUPPORT_EMAIL')['MAILER_SUPPORT_EMAIL'] }
   end
@@ -313,21 +311,19 @@ class Account < ApplicationRecord
   def move_secrets_to_encrypted_settings
     return unless settings.is_a?(Hash)
 
-    if self.encrypted_settings.is_a?(String)
+    if encrypted_settings.is_a?(String)
       begin
-        self.encrypted_settings = JSON.parse(self.encrypted_settings)
+        self.encrypted_settings = JSON.parse(encrypted_settings)
       rescue JSON::ParserError
         self.encrypted_settings = {}
       end
     end
 
     self.encrypted_settings ||= {}
-    if settings.key?('sales_payment_config')
-      self.encrypted_settings['sales_payment_config'] = settings.delete('sales_payment_config')
-    end
-    if settings.key?('custom_email_config')
-      self.encrypted_settings['custom_email_config'] = settings.delete('custom_email_config')
-    end
+    self.encrypted_settings['sales_payment_config'] = settings.delete('sales_payment_config') if settings.key?('sales_payment_config')
+    return unless settings.key?('custom_email_config')
+
+    self.encrypted_settings['custom_email_config'] = settings.delete('custom_email_config')
   end
 
   def validate_reporting_timezone

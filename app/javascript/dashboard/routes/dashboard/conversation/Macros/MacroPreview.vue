@@ -31,7 +31,6 @@ const getActionValue = (key, params) => {
     remove_assigned_team: null,
     send_webhook_event: params[0],
     send_message: params[0],
-    send_email_transcript: params[0],
     add_private_note: params[0],
   };
   return actionsMap[key] || '';

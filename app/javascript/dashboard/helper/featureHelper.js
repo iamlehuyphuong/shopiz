@@ -4,7 +4,6 @@ const FEATURE_HELP_URLS = {
   audit_logs: 'https://chwt.app/hc/audit-logs',
   campaigns: 'https://chwt.app/hc/campaigns',
   canned_responses: 'https://chwt.app/hc/canned',
-  channel_email: 'https://chwt.app/hc/email',
   channel_facebook: 'https://chwt.app/hc/fb',
   custom_attributes: 'https://chwt.app/hc/custom-attributes',
   dashboard_apps: 'https://chwt.app/hc/dashboard-apps',

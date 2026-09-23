@@ -97,11 +97,6 @@
 # ------- End of Account Related Config ------- #
 
 # ------- Email Related Config ------- #
-- name: MAILER_INBOUND_EMAIL_DOMAIN
-  display_title: 'Inbound Email Domain'
-  value:
-  description: 'The domain name to be used for generating conversation continuity emails (reply+id@domain.com)'
-  locked: false
 - name: MAILER_SUPPORT_EMAIL
   display_title: 'Support Email'
   value:
@@ -164,17 +159,6 @@
   value: 'v22.0'
   locked: false
 # ------- End of WhatsApp Channel Related Config ------- #
-
-# MARK: Microsoft Email Channel Config
-- name: AZURE_APP_ID
-  display_title: 'Azure App ID'
-  description: 'The App ID that will be used to authenticate with customer Microsoft accounts. Find more details on setting up Azure here: https://www.shopiz.pro/dev/ms'
-  locked: false
-- name: AZURE_APP_SECRET
-  display_title: 'Azure App Secret'
-  locked: false
-  type: secret
-# End of Microsoft Email Channel Config
 
 # MARK: Captain Config
 - name: CAPTAIN_OPEN_AI_API_BASE_URL

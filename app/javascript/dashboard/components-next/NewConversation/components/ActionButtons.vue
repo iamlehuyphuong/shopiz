@@ -18,7 +18,7 @@ const props = defineProps({
   attachedFiles: { type: Array, default: () => [] },
   isWhatsappInbox: { type: Boolean, default: false },
   isVoiceInbox: { type: Boolean, default: false },
-  isEmailOrWebWidgetInbox: { type: Boolean, default: false },
+  isWebWidgetInbox: { type: Boolean, default: false },
   isTwilioSmsInbox: { type: Boolean, default: false },
   isTwilioWhatsAppInbox: { type: Boolean, default: false },
   isZaloPersonalInbox: { type: Boolean, default: false },
@@ -108,7 +108,7 @@ const toggleMessageSignature = () => {
 };
 
 // Added this watch to dynamically set signature on target inbox change.
-// Only targetInbox has value and is Advance Editor(used by isEmailOrWebWidgetInbox)
+// Only targetInbox has value and is Advance Editor(used by isWebWidgetInbox)
 // Set the signature only if the inbox based flag is true
 watch(
   () => props.hasSelectedInbox,
@@ -182,7 +182,7 @@ const keyboardEvents = {
 useKeyboardEvents(keyboardEvents);
 
 const onPaste = e => {
-  if (!props.isEmailOrWebWidgetInbox) return;
+  if (!props.isWebWidgetInbox) return;
 
   const files = e.clipboardData?.files;
   if (!files?.length) return;
@@ -235,7 +235,7 @@ useEventListener(document, 'paste', onPaste);
         />
       </div>
       <FileUpload
-        v-if="isEmailOrWebWidgetInbox"
+        v-if="isWebWidgetInbox"
         ref="uploadAttachment"
         input-id="composeNewConversationAttachment"
         :size="4096 * 4096"
