@@ -16,10 +16,6 @@ properties:
     type: string
     description: Greeting message to be displayed on the widget
     example: Hello, how can I help you?
-  enable_email_collect:
-    type: boolean
-    description: Enable email collection
-    example: true
   csat_survey_enabled:
     type: boolean
     description: Enable CSAT survey

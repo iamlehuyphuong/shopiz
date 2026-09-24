@@ -39,10 +39,7 @@ class Messages::SearchDataPresenter < SimpleDelegator
   end
 
   def content_attributes_data
-    email_subject = content_attributes.dig(:email, :subject)
-    return {} if email_subject.blank?
-
-    { email: { subject: email_subject } }
+    {}
   end
 
   def conversation_data

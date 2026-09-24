@@ -15,21 +15,17 @@ class MessageDrop < BaseDrop
   end
 
   def html_content
-    if @obj.content_attributes.present? && @obj.content_attributes.dig('email', 'html_content', 'reply').present?
-      @obj.content_attributes.dig('email', 'html_content', 'reply')
-    else
-      @obj.try(:outgoing_content)
-    end
+    @obj.try(:outgoing_content)
   end
 
   def attachments
-    if @obj.attachments.present?
-      @obj.attachments.map do |attachment|
-        {
-          'file_url' => attachment.file_url,
-          'filename' => attachment.file.filename.to_s
-        }
-      end
+    return unless @obj.attachments.present?
+
+    @obj.attachments.map do |attachment|
+      {
+        'file_url' => attachment.file_url,
+        'filename' => attachment.file.filename.to_s
+      }
     end
   end
 

@@ -51,9 +51,6 @@ properties:
   working_hours_enabled:
     type: boolean
     description: The flag which shows whether working hours feature is enabled
-  enable_email_collect:
-    type: boolean
-    description: The flag to enable collecting email from contacts
   csat_survey_enabled:
     type: boolean
     description: The flag to enable CSAT survey

@@ -5,28 +5,19 @@ RSpec.describe Account::ConversationsResolutionSchedulerJob, type: :job do
   let(:assistant) { create(:captain_assistant, account: account) }
 
   describe '#perform - captain resolutions' do
-    context 'when handling different inbox types' do
+    context 'when captain is enabled on an inbox' do
       let!(:regular_inbox) { create(:inbox, account: account) }
-      let!(:email_inbox) { create(:inbox, account: account) }
 
       before do
         create(:captain_inbox, captain_assistant: assistant, inbox: regular_inbox)
-        create(:captain_inbox, captain_assistant: assistant, inbox: email_inbox)
       end
 
-      it 'enqueues resolution jobs only for non-email inboxes with captain enabled' do
+      it 'enqueues resolution jobs for inboxes with captain enabled' do
         expect do
           described_class.perform_now
         end.to have_enqueued_job(Captain::InboxPendingConversationsResolutionJob)
           .with(regular_inbox)
           .exactly(:once)
-      end
-
-      it 'does not enqueue resolution jobs for email inboxes even with captain enabled' do
-        expect do
-          described_class.perform_now
-        end.not_to have_enqueued_job(Captain::InboxPendingConversationsResolutionJob)
-          .with(email_inbox)
       end
     end
 

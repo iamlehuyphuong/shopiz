@@ -8518,10 +8518,6 @@
             "type": "boolean",
             "description": "The flag which shows whether working hours feature is enabled"
           },
-          "enable_email_collect": {
-            "type": "boolean",
-            "description": "The flag to enable collecting email from contacts"
-          },
           "csat_survey_enabled": {
             "type": "boolean",
             "description": "The flag to enable CSAT survey"
@@ -10543,11 +10539,6 @@
             "description": "Greeting message to be displayed on the widget",
             "example": "Hello, how can I help you?"
           },
-          "enable_email_collect": {
-            "type": "boolean",
-            "description": "Enable email collection",
-            "example": true
-          },
           "csat_survey_enabled": {
             "type": "boolean",
             "description": "Enable CSAT survey",
@@ -10611,7 +10602,6 @@
                 "enum": [
                   "web_widget",
                   "api",
-                  "email",
                   "line",
                   "telegram",
                   "whatsapp",
@@ -10665,11 +10655,6 @@
             "type": "string",
             "description": "Greeting message to be displayed on the widget",
             "example": "Hello, how can I help you?"
-          },
-          "enable_email_collect": {
-            "type": "boolean",
-            "description": "Enable email collection",
-            "example": true
           },
           "csat_survey_enabled": {
             "type": "boolean",
