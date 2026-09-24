@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_09_24_015657) do
+ActiveRecord::Schema[7.1].define(version: 2026_09_24_022828) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -240,33 +240,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_24_015657) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["embedding"], name: "index_article_embeddings_on_embedding", using: :ivfflat
-  end
-
-  create_table "articles", force: :cascade do |t|
-    t.integer "account_id", null: false
-    t.integer "portal_id", null: false
-    t.integer "category_id"
-    t.integer "folder_id"
-    t.string "title"
-    t.text "description"
-    t.text "content"
-    t.integer "status"
-    t.integer "views"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.bigint "author_id"
-    t.bigint "associated_article_id"
-    t.jsonb "meta", default: {}
-    t.string "slug", null: false
-    t.integer "position"
-    t.string "locale", default: "en", null: false
-    t.index ["account_id"], name: "index_articles_on_account_id"
-    t.index ["associated_article_id"], name: "index_articles_on_associated_article_id"
-    t.index ["author_id"], name: "index_articles_on_author_id"
-    t.index ["portal_id"], name: "index_articles_on_portal_id"
-    t.index ["slug"], name: "index_articles_on_slug", unique: true
-    t.index ["status"], name: "index_articles_on_status"
-    t.index ["views"], name: "index_articles_on_views"
   end
 
   create_table "assignment_policies", force: :cascade do |t|
@@ -541,26 +514,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_24_015657) do
     t.index ["assistant_id", "enabled"], name: "index_captain_scenarios_on_assistant_id_and_enabled"
     t.index ["assistant_id"], name: "index_captain_scenarios_on_assistant_id"
     t.index ["enabled"], name: "index_captain_scenarios_on_enabled"
-  end
-
-  create_table "categories", force: :cascade do |t|
-    t.integer "account_id", null: false
-    t.integer "portal_id", null: false
-    t.string "name"
-    t.text "description"
-    t.integer "position"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.string "locale", default: "en"
-    t.string "slug", null: false
-    t.bigint "parent_category_id"
-    t.bigint "associated_category_id"
-    t.string "icon", default: ""
-    t.index ["associated_category_id"], name: "index_categories_on_associated_category_id"
-    t.index ["locale", "account_id"], name: "index_categories_on_locale_and_account_id"
-    t.index ["locale"], name: "index_categories_on_locale"
-    t.index ["parent_category_id"], name: "index_categories_on_parent_category_id"
-    t.index ["slug", "locale", "portal_id"], name: "index_categories_on_slug_and_locale_and_portal_id", unique: true
   end
 
   create_table "channel_api", force: :cascade do |t|
@@ -1148,7 +1101,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_24_015657) do
     t.boolean "allow_messages_after_resolved", default: true
     t.jsonb "auto_assignment_config", default: {}
     t.boolean "lock_to_single_conversation", default: false, null: false
-    t.bigint "portal_id"
     t.integer "sender_name_type", default: 0, null: false
     t.string "business_name"
     t.jsonb "csat_config", default: {}, null: false
@@ -1163,7 +1115,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_24_015657) do
     t.index ["account_id"], name: "index_inboxes_on_account_id"
     t.index ["channel_id", "channel_type"], name: "index_inboxes_on_channel_id_and_channel_type"
     t.index ["ecommerce_integration_id"], name: "index_inboxes_on_ecommerce_integration_id"
-    t.index ["portal_id"], name: "index_inboxes_on_portal_id"
   end
 
   create_table "installation_configs", force: :cascade do |t|
@@ -1400,26 +1351,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_24_015657) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
-  create_table "portals", force: :cascade do |t|
-    t.integer "account_id", null: false
-    t.string "name", null: false
-    t.string "slug", null: false
-    t.string "custom_domain"
-    t.string "color"
-    t.string "homepage_link"
-    t.string "page_title"
-    t.text "header_text"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.jsonb "config", default: {"allowed_locales" => ["en"]}
-    t.boolean "archived", default: false
-    t.bigint "channel_web_widget_id"
-    t.jsonb "ssl_settings", default: {}, null: false
-    t.index ["channel_web_widget_id"], name: "index_portals_on_channel_web_widget_id"
-    t.index ["custom_domain"], name: "index_portals_on_custom_domain", unique: true
-    t.index ["slug"], name: "index_portals_on_slug", unique: true
-  end
-
   create_table "portals_members", id: false, force: :cascade do |t|
     t.bigint "portal_id", null: false
     t.bigint "user_id", null: false
@@ -1466,15 +1397,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_24_015657) do
     t.index ["account_id", "external_id"], name: "index_products_on_account_id_and_external_id", unique: true
     t.index ["account_id", "name"], name: "index_products_on_account_id_and_name"
     t.index ["account_id"], name: "index_products_on_account_id"
-  end
-
-  create_table "related_categories", force: :cascade do |t|
-    t.bigint "category_id"
-    t.bigint "related_category_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["category_id", "related_category_id"], name: "index_related_categories_on_category_id_and_related_category_id", unique: true
-    t.index ["related_category_id", "category_id"], name: "index_related_categories_on_related_category_id_and_category_id", unique: true
   end
 
   create_table "reporting_events", force: :cascade do |t|
@@ -1761,7 +1683,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_24_015657) do
   add_foreign_key "inbox_label_mappings", "inboxes"
   add_foreign_key "inbox_label_mappings", "labels"
   add_foreign_key "inboxes", "integrations_hooks", column: "ecommerce_integration_id"
-  add_foreign_key "inboxes", "portals"
   add_foreign_key "omicall_sip_infos", "accounts"
   add_foreign_key "omicall_sip_infos", "users"
   add_foreign_key "product_variants", "accounts"

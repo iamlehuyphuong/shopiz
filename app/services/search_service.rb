@@ -13,10 +13,9 @@ class SearchService
       { conversations: filter_conversations }
     when 'Contact'
       { contacts: filter_contacts }
-    when 'Article'
-      { articles: filter_articles }
+
     else
-      { contacts: filter_contacts, messages: filter_messages, conversations: filter_conversations, articles: filter_articles }
+      { contacts: filter_contacts, messages: filter_messages, conversations: filter_conversations }
     end
   end
 
@@ -174,12 +173,6 @@ class SearchService
     ).order_on_last_activity_at('desc').page(params[:page]).per(15)
   end
 
-  def filter_articles
-    articles_query = current_account.articles.text_search(search_query)
-    articles_query = apply_time_filter(articles_query, 'updated_at') if current_account.feature_enabled?('advanced_search')
-
-    @articles = articles_query.page(params[:page]).per(15)
-  end
 
   def apply_time_filter(query, column_name)
     return query if params[:since].blank? && params[:until].blank?

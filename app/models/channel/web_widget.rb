@@ -41,7 +41,6 @@ class Channel::WebWidget < ApplicationRecord
   before_validation :validate_pre_chat_options
   validates :website_url, presence: true
   validates :widget_color, presence: true
-  has_many :portals, foreign_key: 'channel_web_widget_id', dependent: :nullify, inverse_of: :channel_web_widget
 
   has_one_attached :bubble_avatar
   has_one_attached :close_bubble_avatar

@@ -211,7 +211,6 @@ Rails.application.routes.draw do
               get :conversations
               get :messages
               get :contacts
-              get :articles
             end
           end
 
@@ -462,21 +461,6 @@ Rails.application.routes.draw do
           end
           resources :working_hours, only: [:update]
 
-          resources :portals do
-            member do
-              patch :archive
-              delete :logo
-              post :send_instructions
-              get :ssl_status
-            end
-            resources :categories do
-              post :reorder, on: :collection
-            end
-            resources :articles do
-              post :reorder, on: :collection
-            end
-          end
-
           resources :upload, only: [:create]
 
           resources :products_search, only: [:index]
@@ -692,15 +676,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'hc/:slug', to: 'public/api/v1/portals#show'
-  get 'hc/:slug/sitemap.xml', to: 'public/api/v1/portals#sitemap'
-  get 'hc/:slug/:locale', to: 'public/api/v1/portals#show'
-  get 'hc/:slug/:locale/articles', to: 'public/api/v1/portals/articles#index'
-  get 'hc/:slug/:locale/categories', to: 'public/api/v1/portals/categories#index'
-  get 'hc/:slug/:locale/categories/:category_slug', to: 'public/api/v1/portals/categories#show'
-  get 'hc/:slug/:locale/categories/:category_slug/articles', to: 'public/api/v1/portals/articles#index'
-  get 'hc/:slug/articles/:article_slug.png', to: 'public/api/v1/portals/articles#tracking_pixel'
-  get 'hc/:slug/articles/:article_slug', to: 'public/api/v1/portals/articles#show'
 
   # ----------------------------------------------------------------------
   # Used in mailer templates
