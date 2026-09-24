@@ -5,7 +5,6 @@ import { useMapGetter } from 'dashboard/composables/store';
 import { useI18n } from 'vue-i18n';
 import Avatar from 'next/avatar/Avatar.vue';
 import SidebarProfileMenuStatus from './SidebarProfileMenuStatus.vue';
-import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 
 import {
   DropdownContainer,
@@ -43,26 +42,8 @@ const isFeatureEnabledonAccount = useMapGetter(
   'accounts/isFeatureEnabledonAccount'
 );
 
-const showChatSupport = computed(() => {
-  return (
-    isFeatureEnabledonAccount.value(
-      accountId.value,
-      FEATURE_FLAGS.CONTACT_CHATWOOT_SUPPORT_TEAM
-    ) && globalConfig.value.chatwootInboxToken
-  );
-});
-
 const menuItems = computed(() => {
   return [
-    {
-      show: showChatSupport.value,
-      showOnCustomBrandedInstance: false,
-      label: t('SIDEBAR_ITEMS.CONTACT_SUPPORT'),
-      icon: 'i-lucide-life-buoy',
-      click: () => {
-        window.$shopiz.toggle();
-      },
-    },
     {
       show: true,
       showOnCustomBrandedInstance: true,

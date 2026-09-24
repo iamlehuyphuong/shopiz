@@ -16,7 +16,6 @@ module Featurable
     macros
     reports
     report_v4
-    chatwoot_v4
     channel_website
   ].freeze
 

@@ -25,12 +25,11 @@ module SuperAdmin::AccountFeaturesHelper
     ],
     'Hệ thống & Giao diện (System & Interface)' => %w[
       ip_lookup disable_branding
-      chatwoot_v4 search_with_gin
+      search_with_gin
       advanced_search advanced_search_indexing saml message_reply_to
     ],
     'Khác (Others)' => %w[
       whatsapp_embedded_signup whatsapp_campaign
-      contact_chatwoot_support_team
     ]
   }.freeze
 
