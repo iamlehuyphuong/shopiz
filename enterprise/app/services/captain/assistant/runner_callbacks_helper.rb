@@ -14,7 +14,7 @@ module Captain::Assistant::RunnerCallbacksHelper
       tracing = context_wrapper&.context&.dig(:__otel_tracing)
       next unless tracing
 
-      trace_input = context_wrapper.context[:captain_v2_trace_current_input]
+      trace_input = context_wrapper.context[:captain_trace_current_input]
       tracing[:pending_llm_input] = trace_input if trace_input.present?
     end
   end

@@ -43,7 +43,7 @@ class SubscriptionPlan < ApplicationRecord
     subscription_tier&.name_vi
   end
 
-  AI_FEATURES = %w[captain captain_v2 captain_task].freeze
+  AI_FEATURES = %w[captain captain_task].freeze
   AI_LIMITS = %w[captain_assistants captain_responses captain_documents captain_faqs].freeze
 
   def features

@@ -21,7 +21,7 @@ module SuperAdmin::AccountFeaturesHelper
       integrations linear_integration shopify_integration notion_integration crm_integration
     ],
     'AI & ShopizAI (AI & Captain)' => %w[
-      captain_integration captain_integration_v2 captain_tasks
+      captain_integration captain_tasks
     ],
     'Hệ thống & Giao diện (System & Interface)' => %w[
       ip_lookup disable_branding

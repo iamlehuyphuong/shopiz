@@ -17,11 +17,7 @@ class Captain::Conversation::FollowupBuilderJob < ApplicationJob
 
     Current.executed_by = @assistant
 
-    if captain_v2_enabled?
-      generate_response_with_v2
-    else
-      generate_and_process_response
-    end
+    generate_and_process_response
   rescue ActiveStorage::FileNotFoundError, Faraday::BadRequestError => e
     handle_error(e)
     raise e
@@ -36,15 +32,6 @@ class Captain::Conversation::FollowupBuilderJob < ApplicationJob
   delegate :account, :inbox, to: :@conversation
 
   def generate_and_process_response
-    @response = Captain::Llm::AssistantChatService.new(assistant: @assistant, conversation: @conversation).generate_response(
-      message_history: collect_previous_messages,
-      additional_message: followup_system_prompt,
-      role: 'system'
-    )
-    process_response
-  end
-
-  def generate_response_with_v2
     history = collect_previous_messages
     # V2 AgentRunnerService doesn't explicitly accept 'additional_message' keyword parameter out of the box,
     # so we append the instruction at the end of the history.
@@ -167,12 +154,8 @@ class Captain::Conversation::FollowupBuilderJob < ApplicationJob
     ChatwootExceptionTracker.new(error, account: account).capture_exception
   end
 
-  def captain_v2_enabled?
-    account.feature_enabled?('captain_integration_v2')
-  end
-
   def followup_system_prompt
-    "System Instruction: The customer has not replied to our last message. " \
+    'System Instruction: The customer has not replied to our last message. ' \
       "Here is the predefined follow-up message: '#{@base_message}'. " \
       'Please read the conversation context and rewrite this predefined message so it sounds natural, ' \
       'polite, and personalized to the customer\'s situation. ' \
