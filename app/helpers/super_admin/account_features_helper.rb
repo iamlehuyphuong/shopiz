@@ -93,6 +93,8 @@ module SuperAdmin::AccountFeaturesHelper
     FEATURE_CATEGORIES.each_key { |category| categorized[category] = [] }
     categorized['Chưa phân loại (Uncategorized)'] = []
 
+    deprecated_features = account_features.select { |f| f['deprecated'] }.pluck('name')
+
     attributes.each do |attr|
       # attr.data should be a hash with one key (the feature name)
       # based on existing show.html.erb logic: attr.data.keys.first
@@ -102,6 +104,7 @@ module SuperAdmin::AccountFeaturesHelper
         nil
       end
       next unless feature_name
+      next if deprecated_features.include?(feature_name)
 
       category_found = false
       FEATURE_CATEGORIES.each do |category, features|
@@ -134,7 +137,11 @@ module SuperAdmin::AccountFeaturesHelper
     FEATURE_CATEGORIES.each_key { |category| categorized[category] = [] }
     categorized['Chưa phân loại (Uncategorized)'] = []
 
+    deprecated_features = account_features.select { |f| f['deprecated'] }.pluck('name')
+
     features_hash.each do |feature_name, enabled|
+      next if deprecated_features.include?(feature_name.to_s)
+
       category_found = false
       FEATURE_CATEGORIES.each do |category, features|
         next unless features.include?(feature_name.to_s)

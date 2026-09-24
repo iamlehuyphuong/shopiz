@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_09_23_181257) do
+ActiveRecord::Schema[7.1].define(version: 2026_09_24_015657) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -126,15 +126,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_23_181257) do
     t.text "encrypted_settings"
     t.index ["partner_sso_id"], name: "index_accounts_on_partner_sso_id"
     t.index ["status"], name: "index_accounts_on_status"
-  end
-
-  create_table "action_mailbox_inbound_emails", force: :cascade do |t|
-    t.integer "status", default: 0, null: false
-    t.string "message_id", null: false
-    t.string "message_checksum", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["message_id", "message_checksum"], name: "index_action_mailbox_inbound_emails_uniqueness", unique: true
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
