@@ -17,23 +17,23 @@ const [showDeletePopup, toggleDeletePopup] = useToggle();
 
 const confirmPlaceHolderText = computed(() => {
   return `${t('GENERAL_SETTINGS.ACCOUNT_DELETE_SECTION.CONFIRM.PLACE_HOLDER', {
-    accountName: currentAccount.value.name,
+    accountName: currentAccount.value?.name || '',
   })}`;
 });
 
 const isMarkedForDeletion = computed(() => {
-  const { custom_attributes = {} } = currentAccount.value;
+  const { custom_attributes = {} } = currentAccount.value || {};
   return !!custom_attributes.marked_for_deletion_at;
 });
 
 const markedForDeletionDate = computed(() => {
-  const { custom_attributes = {} } = currentAccount.value;
+  const { custom_attributes = {} } = currentAccount.value || {};
   if (!custom_attributes.marked_for_deletion_at) return null;
   return new Date(custom_attributes.marked_for_deletion_at);
 });
 
 const markedForDeletionReason = computed(() => {
-  const { custom_attributes = {} } = currentAccount.value;
+  const { custom_attributes = {} } = currentAccount.value || {};
   return custom_attributes.marked_for_deletion_reason || 'manual_deletion';
 });
 

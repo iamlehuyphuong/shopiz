@@ -16,8 +16,13 @@ const props = defineProps({
 const emit = defineEmits(['close', 'mouseenter', 'mouseleave']);
 
 const router = useRouter();
-const { isAllowed, isLocked, sidebarWidth, openLockedModal } =
-  useSidebarContext();
+const {
+  isAllowed,
+  isLocked,
+  resolveFeatureFlag,
+  sidebarWidth,
+  openLockedModal,
+} = useSidebarContext();
 
 const expandedSubGroup = ref(null);
 const popoverRef = ref(null);
@@ -31,7 +36,7 @@ const toggleSubGroup = name => {
 
 const navigateAndClose = child => {
   if (isLocked(child.to)) {
-    openLockedModal(child.label, child.to?.featureFlag || '');
+    openLockedModal(child.label, resolveFeatureFlag(child.to));
     return;
   }
   router.push(child.to);

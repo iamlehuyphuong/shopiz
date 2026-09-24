@@ -25,6 +25,7 @@ const {
   resolvePath,
   isAllowed,
   isLocked,
+  resolveFeatureFlag,
   isCollapsed,
   isResizing,
   openLockedModal,
@@ -164,9 +165,11 @@ const activeChild = computed(() => {
       return rankedPage ?? activeOnPages[0];
     }
 
-    return navigableChildren.value.find(
-      child => child.to && route.path.startsWith(resolvePath(child.to))
-    );
+    return navigableChildren.value.find(child => {
+      if (!child.to) return false;
+      const childPath = resolvePath(child.to);
+      return route.path === childPath || route.path.startsWith(`${childPath}/`);
+    });
   } catch (e) {
     console.error(
       '[SidebarGroup] activeChild computation failed for:',
@@ -189,6 +192,8 @@ const handleCollapsedClick = () => {
 };
 
 const toggleTrigger = () => {
+  if (!isExpandable.value) return;
+
   if (
     hasAccessibleChildren.value &&
     !isExpanded.value &&
@@ -231,21 +236,17 @@ onUnmounted(() => {
   }
 });
 
-watch(
-  hasActiveChild,
-  hasNewActiveChild => {
-    if (hasNewActiveChild && !isExpanded.value) {
-      setExpandedItem(props.name);
-    }
-  },
-  { once: true }
-);
+watch(hasActiveChild, hasNewActiveChild => {
+  if (hasNewActiveChild && !isExpanded.value) {
+    setExpandedItem(props.name);
+  }
+});
 </script>
 
 <!-- eslint-disable-next-line vue/no-root-v-if -->
 <template>
   <li
-    v-if="!hasChildren || hasAccessibleChildren"
+    v-if="hasChildren ? hasAccessibleChildren : isAllowed(to) || isLocked(to)"
     class="grid gap-1 text-sm cursor-pointer select-none min-w-0"
   >
     <!-- Collapsed State -->
@@ -300,7 +301,7 @@ watch(
         :expandable="hasChildren"
         :is-expanded="isExpanded"
         :is-locked="isLocked(to)"
-        :feature-flag="to?.featureFlag || ''"
+        :feature-flag="resolveFeatureFlag(to)"
         @toggle="toggleTrigger"
         @toggle-locked="onToggleLocked(label, $event)"
       />
@@ -324,7 +325,7 @@ watch(
             v-bind="child"
             :active="activeChild?.name === child.name"
             :is-locked="isLocked(child.to)"
-            :feature-flag="child.to?.featureFlag || ''"
+            :feature-flag="resolveFeatureFlag(child.to)"
             @toggle-locked="onToggleLocked(child.label, $event)"
           />
         </template>

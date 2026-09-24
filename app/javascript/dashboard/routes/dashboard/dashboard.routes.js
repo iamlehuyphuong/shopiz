@@ -12,7 +12,7 @@ import AppContainer from './Dashboard.vue';
 import Suspended from './suspended/Index.vue';
 import NoAccounts from './noAccounts/Index.vue';
 import { routes as salesRoutes } from './sales/sales.routes';
-import { routes as utilitiesRoutes } from './utilities/utilities.routes';
+
 export default {
   routes: [
     {
@@ -29,7 +29,6 @@ export default {
         ...notificationRoutes,
         ...campaignsRoutes.routes,
         ...salesRoutes,
-        ...utilitiesRoutes,
       ],
     },
     {

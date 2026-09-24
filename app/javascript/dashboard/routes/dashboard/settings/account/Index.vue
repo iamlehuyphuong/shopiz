@@ -138,7 +138,7 @@ export default {
           company_address,
           company_email,
           company_tax_id,
-        } = this.getAccount(this.accountId);
+        } = this.getAccount(this.accountId) || {};
 
         this.$root.$i18n.locale = this.uiSettings?.locale || locale;
         this.name = name;

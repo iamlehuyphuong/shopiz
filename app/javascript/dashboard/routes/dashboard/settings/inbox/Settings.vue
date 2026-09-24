@@ -201,10 +201,6 @@ export default {
             key: 'business-hours',
             name: this.$t('INBOX_MGMT.TABS.BUSINESS_HOURS'),
           },
-          {
-            key: 'csat',
-            name: this.$t('INBOX_MGMT.TABS.CSAT'),
-          },
         ];
       }
 
@@ -301,7 +297,6 @@ export default {
         'collaborators',
         'bot-configuration',
         'business-hours',
-        'csat',
         'posts-and-comments',
         'label-sync',
       ];
@@ -1737,9 +1732,7 @@ export default {
             />
           </div>
         </div>
-        <div v-if="selectedTabKey === 'csat'">
-          <CustomerSatisfactionPage :inbox="inbox" />
-        </div>
+
         <div v-if="selectedTabKey === 'pre-chat-form'">
           <PreChatFormSettings :inbox="inbox" />
         </div>

@@ -13,9 +13,15 @@ const props = defineProps({
   hasActiveChild: { type: Boolean, default: false },
   getterKeys: { type: Object, default: () => ({}) },
   isLocked: { type: Boolean, default: false },
+  featureFlag: { type: String, default: '' },
 });
 
-const emit = defineEmits(['toggle']);
+const emit = defineEmits(['toggle', 'toggleLocked']);
+
+// A locked group should not navigate, it opens the paywall modal instead
+const renderAsLink = computed(
+  () => Boolean(props.to) && !props.expandable && !props.isLocked
+);
 
 const showBadge = useMapGetter(props.getterKeys.badge);
 const dynamicCount = useMapGetter(props.getterKeys.count);
@@ -26,11 +32,11 @@ const count = computed(() =>
 
 <template>
   <component
-    :is="to && !expandable ? 'router-link' : 'div'"
+    :is="renderAsLink ? 'router-link' : 'div'"
     class="flex items-center gap-2 px-1.5 py-1 rounded-lg h-8 min-w-0 transition-opacity duration-200"
     role="button"
     draggable="false"
-    :to="to && !expandable ? to : undefined"
+    :to="renderAsLink ? to : undefined"
     :title="label"
     :class="{
       'text-n-slate-12 bg-n-alpha-2 font-medium': isActive && !hasActiveChild,
@@ -38,7 +44,7 @@ const count = computed(() =>
       'text-n-slate-11 hover:bg-n-alpha-2': !isActive && !hasActiveChild,
       'opacity-50 pointer-events-auto cursor-pointer': isLocked,
     }"
-    @click.stop="isLocked ? undefined : emit('toggle')"
+    @click.stop="isLocked ? emit('toggleLocked', featureFlag) : emit('toggle')"
   >
     <div v-if="icon" class="relative flex items-center gap-2">
       <Icon v-if="icon" :icon="icon" class="size-4" />

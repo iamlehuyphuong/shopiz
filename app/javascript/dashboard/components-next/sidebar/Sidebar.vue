@@ -166,6 +166,27 @@ const isTeamManagementEnabled = computed(() =>
     FEATURE_FLAGS.TEAM_MANAGEMENT
   )
 );
+const isAgentBotsEnabled = computed(() =>
+  isFeatureEnabledonAccount.value(
+    route.params.accountId,
+    FEATURE_FLAGS.AGENT_BOTS
+  )
+);
+const isSlaEnabled = computed(() =>
+  isFeatureEnabledonAccount.value(route.params.accountId, FEATURE_FLAGS.SLA)
+);
+const isCustomRolesEnabled = computed(() =>
+  isFeatureEnabledonAccount.value(
+    route.params.accountId,
+    FEATURE_FLAGS.CUSTOM_ROLES
+  )
+);
+const isConversationWorkflowEnabled = computed(() =>
+  isFeatureEnabledonAccount.value(
+    route.params.accountId,
+    FEATURE_FLAGS.CONVERSATION_REQUIRED_ATTRIBUTES
+  )
+);
 
 const sortedInboxes = computed(() =>
   inboxes.value.slice().sort((a, b) => a.name.localeCompare(b.name))
@@ -484,18 +505,17 @@ const menuItems = computed(() => {
           to: accountScopedRoute('conversation_reports'),
         },
         ...reportRoutes.value,
-        {
-          name: 'Reports CSAT',
-          label: t('SIDEBAR.CSAT'),
-          icon: 'i-lucide-smile',
-          to: accountScopedRoute('csat_reports'),
-        },
-        {
-          name: 'Reports SLA',
-          label: t('SIDEBAR.REPORTS_SLA'),
-          icon: 'i-lucide-timer',
-          to: accountScopedRoute('sla_reports'),
-        },
+
+        ...(isSlaEnabled.value
+          ? [
+              {
+                name: 'Reports SLA',
+                label: t('SIDEBAR.REPORTS_SLA'),
+                icon: 'i-lucide-timer',
+                to: accountScopedRoute('sla_reports'),
+              },
+            ]
+          : []),
         {
           name: 'Reports Bot',
           label: t('SIDEBAR.REPORTS_BOT'),
@@ -566,16 +586,6 @@ const menuItems = computed(() => {
                 label: 'Telegram',
                 icon: 'i-woot-telegram',
                 to: accountScopedRoute('campaigns_telegram_index'),
-              },
-            ]
-          : []),
-        ...(isChannelActive('CHANNEL_STATUS_LINE')
-          ? [
-              {
-                name: 'LINE',
-                label: 'LINE',
-                icon: 'i-woot-line',
-                to: accountScopedRoute('campaigns_line_index'),
               },
             ]
           : []),
@@ -666,22 +676,7 @@ const menuItems = computed(() => {
         },
       ],
     },
-    {
-      name: 'Utilities',
-      label: t('SIDEBAR.UTILITIES'),
-      icon: 'i-lucide-pencil-ruler',
-      activeOn: ['utilities_conversation_summary'],
-      to: accountScopedRoute('utilities_conversation_summary'),
-      children: [
-        {
-          name: 'AI Summary',
-          label: t('SIDEBAR.AI_SUMMARY'),
-          icon: 'i-woot-summary',
-          activeOn: ['utilities_conversation_summary'],
-          to: accountScopedRoute('utilities_conversation_summary'),
-        },
-      ],
-    },
+
     /*
     {
       name: 'Help Center',
@@ -835,12 +830,16 @@ const menuItems = computed(() => {
           icon: 'i-lucide-repeat',
           to: accountScopedRoute('automation_list'),
         },
-        {
-          name: 'Settings Agent Bots',
-          label: t('SIDEBAR.AGENT_BOTS'),
-          icon: 'i-lucide-bot',
-          to: accountScopedRoute('agent_bots'),
-        },
+        ...(isAgentBotsEnabled.value
+          ? [
+              {
+                name: 'Settings Agent Bots',
+                label: t('SIDEBAR.AGENT_BOTS'),
+                icon: 'i-lucide-bot',
+                to: accountScopedRoute('agent_bots'),
+              },
+            ]
+          : []),
         {
           name: 'Settings Macros',
           label: t('SIDEBAR.MACROS'),
@@ -886,31 +885,37 @@ const menuItems = computed(() => {
           icon: 'i-lucide-clipboard-list',
           to: accountScopedRoute('auditlogs_list'),
         },
-        {
-          name: 'Settings Security',
-          label: `${t('SECURITY_SETTINGS.TITLE')} (SAML SSO)`,
-          icon: 'i-lucide-shield',
-          activeOn: ['security_settings_index'],
-          to: accountScopedRoute('security_settings_index'),
-        },
-        {
-          name: 'Settings Custom Roles',
-          label: t('SIDEBAR.CUSTOM_ROLES'),
-          icon: 'i-lucide-shield-plus',
-          to: accountScopedRoute('custom_roles_list'),
-        },
-        {
-          name: 'Settings Sla',
-          label: t('SIDEBAR.SLA'),
-          icon: 'i-lucide-clock-alert',
-          to: accountScopedRoute('sla_list'),
-        },
-        {
-          name: 'Conversation Workflow',
-          label: t('SIDEBAR.CONVERSATION_WORKFLOW'),
-          icon: 'i-lucide-workflow',
-          to: accountScopedRoute('conversation_workflow_index'),
-        },
+
+        ...(isCustomRolesEnabled.value
+          ? [
+              {
+                name: 'Settings Custom Roles',
+                label: t('SIDEBAR.CUSTOM_ROLES'),
+                icon: 'i-lucide-shield-plus',
+                to: accountScopedRoute('custom_roles_list'),
+              },
+            ]
+          : []),
+        ...(isSlaEnabled.value
+          ? [
+              {
+                name: 'Settings Sla',
+                label: t('SIDEBAR.SLA'),
+                icon: 'i-lucide-clock-alert',
+                to: accountScopedRoute('sla_list'),
+              },
+            ]
+          : []),
+        ...(isConversationWorkflowEnabled.value
+          ? [
+              {
+                name: 'Conversation Workflow',
+                label: t('SIDEBAR.CONVERSATION_WORKFLOW'),
+                icon: 'i-lucide-workflow',
+                to: accountScopedRoute('conversation_workflow_index'),
+              },
+            ]
+          : []),
         ...(isAdmin.value
           ? [
               {
@@ -928,55 +933,31 @@ const menuItems = computed(() => {
   return filterMenuByPermission(items);
 });
 
-const syncActiveCategory = () => {
-  const currentRouteName = route.name;
-  let matchedCategory = null;
+const matchesCurrentRoute = item =>
+  item.activeOn?.includes(route.name) || item.to?.name === route.name;
 
-  for (const item of menuItems.value) {
-    if (item.activeOn?.includes(route.name) || item.to?.name === route.name) {
-      matchedCategory = item.name;
-      break;
-    }
-    if (item.children) {
-      let childMatch = false;
-      for (const child of item.children) {
-        if (
-          child.activeOn?.includes(route.name) ||
-          child.to?.name === route.name
-        ) {
-          childMatch = true;
-          break;
-        }
-        if (child.children) {
-          for (const grandChild of child.children) {
-            if (
-              grandChild.activeOn?.includes(route.name) ||
-              grandChild.to?.name === route.name
-            ) {
-              childMatch = true;
-              break;
-            }
-          }
-        }
-        if (childMatch) break;
-      }
-      if (childMatch) {
-        matchedCategory = item.name;
-        break;
-      }
-    }
-  }
+const matchedCategory = computed(() => {
+  const matchedItem = menuItems.value.find(
+    item =>
+      matchesCurrentRoute(item) ||
+      item.children?.some(
+        child =>
+          matchesCurrentRoute(child) ||
+          child.children?.some(grandChild => matchesCurrentRoute(grandChild))
+      )
+  );
 
-  if (matchedCategory) {
-    activeCategory.value = matchedCategory;
-  }
-};
+  return matchedItem?.name ?? null;
+});
 
+// The menu is built from async data (inboxes, labels, teams, custom views), so the
+// match has to be re-evaluated whenever the menu itself changes, not only on navigation
 watch(
-  () => route.path,
-  () => {
-    syncActiveCategory();
-  }
+  matchedCategory,
+  name => {
+    if (name) activeCategory.value = name;
+  },
+  { immediate: true }
 );
 
 // Get clientX from mouse or touch event
@@ -1030,7 +1011,6 @@ useEventListener(document, 'touchmove', onResizeMove, { passive: false });
 useEventListener(document, 'touchend', onResizeEnd);
 
 onMounted(() => {
-  syncActiveCategory();
   store.dispatch('labels/get');
   store.dispatch('inboxes/get');
   store.dispatch('notifications/unReadCount');
@@ -1046,13 +1026,16 @@ const closeMobileSidebar = () => {
 };
 
 // Calculate active menu items
-const activeMainMenuName = computed(() => {
-  return activeCategory.value || menuItems.value[0]?.name;
+// Fall back to the first item, the selected category can disappear from the menu
+// when permissions, feature flags or async data change
+const activeMainMenuItem = computed(() => {
+  return (
+    menuItems.value.find(item => item.name === activeCategory.value) ??
+    menuItems.value[0]
+  );
 });
 
-const activeMainMenuItem = computed(() => {
-  return menuItems.value.find(item => item.name === activeMainMenuName.value);
-});
+const activeMainMenuName = computed(() => activeMainMenuItem.value?.name);
 
 const handleMainMenuClick = item => {
   activeCategory.value = item.name;
