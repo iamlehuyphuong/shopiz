@@ -13,14 +13,8 @@ class ContactInboxBuilder
 
   def generate_source_id
     case @inbox.channel_type
-    when 'Channel::TwilioSms'
-      twilio_source_id
     when 'Channel::Whatsapp'
       wa_source_id
-    when 'Channel::Sms'
-      phone_source_id
-    when 'Channel::Voice'
-      phone_source_id # Voice uses phone number as source ID
     when 'Channel::Api', 'Channel::WebWidget'
       SecureRandom.uuid
     else
@@ -29,7 +23,7 @@ class ContactInboxBuilder
   end
 
   def phone_source_id
-    unless @contact.phone_number.present?
+    if @contact.phone_number.blank?
       # For voice channels, we'll create a fallback source ID if phone number is missing
       return SecureRandom.uuid if @inbox.channel_type == 'Channel::Voice'
 

@@ -6,8 +6,6 @@ class CsatSurveyService
 
     if whatsapp_channel? && template_available_and_approved?
       send_whatsapp_template_survey
-    elsif inbox.twilio_whatsapp? && twilio_template_available_and_approved?
-      send_twilio_whatsapp_template_survey
     elsif within_messaging_window?
       ::MessageTemplates::Template::CsatSurvey.new(conversation: conversation).perform
     else
@@ -88,22 +86,6 @@ class CsatSurveyService
     false
   end
 
-  def twilio_template_available_and_approved?
-    template_config = inbox.csat_config&.dig('template')
-    return false unless template_config
-
-    content_sid = template_config['content_sid']
-    return false unless content_sid
-
-    template_service = Twilio::CsatTemplateService.new(inbox.channel)
-    status_result = template_service.get_template_status(content_sid)
-
-    status_result[:success] && status_result[:template][:status] == 'approved'
-  rescue StandardError => e
-    Rails.logger.error "Error checking Twilio CSAT template status: #{e.message}"
-    false
-  end
-
   def send_whatsapp_template_survey
     template_config = inbox.csat_config&.dig('template')
     template_name = template_config['name'] || CsatTemplateNameService.csat_template_name(inbox.id)
@@ -146,26 +128,6 @@ class CsatSurveyService
 
   def csat_config
     inbox.csat_config || {}
-  end
-
-  def send_twilio_whatsapp_template_survey
-    template_config = inbox.csat_config&.dig('template')
-    content_sid = template_config['content_sid']
-
-    phone_number = conversation.contact_inbox.source_id
-    content_variables = { '1' => conversation.uuid }
-    message = build_csat_message
-
-    send_service = Twilio::SendOnTwilioService.new(message: message)
-    result = send_service.send_csat_template_message(
-      phone_number: phone_number,
-      content_sid: content_sid,
-      content_variables: content_variables
-    )
-
-    message.update!(source_id: result[:message_id]) if result[:success] && result[:message_id].present?
-  rescue StandardError => e
-    Rails.logger.error "Error sending Twilio WhatsApp CSAT template for conversation #{conversation.id}: #{e.message}"
   end
 
   def create_csat_not_sent_activity_message

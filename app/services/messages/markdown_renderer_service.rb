@@ -4,11 +4,8 @@ class Messages::MarkdownRendererService
     'Channel::Telegram' => :render_telegram_html,
     'Channel::Whatsapp' => :render_whatsapp,
     'Channel::FacebookPage' => :render_instagram,
-    'Channel::Instagram' => :render_instagram,
-    'Channel::Line' => :render_line,
-    'Channel::TwitterProfile' => :render_plain_text,
-    'Channel::Sms' => :render_plain_text,
-    'Channel::TwilioSms' => :render_plain_text
+    'Channel::Instagram' => :render_instagram
+
   }.freeze
 
   def initialize(content, channel_type, channel = nil)
@@ -27,12 +24,7 @@ class Messages::MarkdownRendererService
   private
 
   def effective_channel_type
-    # For Twilio SMS channel, check if it's actually WhatsApp
-    if @channel_type == 'Channel::TwilioSms' && @channel&.whatsapp?
-      'Channel::Whatsapp'
-    else
-      @channel_type
-    end
+    @channel_type
   end
 
   def commonmarker_doc
@@ -70,16 +62,6 @@ class Messages::MarkdownRendererService
     normalized_content = @content.gsub(/^[ \t]+$/m, '')
     content_with_preserved_newlines = preserve_multiple_newlines(normalized_content)
     renderer = Messages::MarkdownRenderers::InstagramRenderer.new
-    doc = CommonMarker.render_doc(content_with_preserved_newlines, [:DEFAULT, :STRIKETHROUGH_DOUBLE_TILDE])
-    result = renderer.render(doc).gsub(/\n+\z/, '')
-    restore_multiple_newlines(result)
-  end
-
-  def render_line
-    # Strip whitespace from whitespace-only lines to normalize newlines
-    normalized_content = @content.gsub(/^[ \t]+$/m, '')
-    content_with_preserved_newlines = preserve_multiple_newlines(normalized_content)
-    renderer = Messages::MarkdownRenderers::LineRenderer.new
     doc = CommonMarker.render_doc(content_with_preserved_newlines, [:DEFAULT, :STRIKETHROUGH_DOUBLE_TILDE])
     result = renderer.render(doc).gsub(/\n+\z/, '')
     restore_multiple_newlines(result)

@@ -1,9 +1,9 @@
 module SuperAdmin::AccountFeaturesHelper
   FEATURE_CATEGORIES = {
     'Kênh kết nối (Channels)' => %w[
-      channel_facebook channel_twitter channel_website
+      channel_facebook channel_website
       channel_instagram channel_zalo channel_zalopersonal channel_telegram
-      channel_line channel_whatsapp channel_tiktok_shop channel_tiktok
+      channel_whatsapp channel_tiktok_shop channel_tiktok
     ],
     'Quản lý & CRM (Management & CRM)' => %w[
       agent_management team_management inbox_management crm crm_v2 companies labels
@@ -24,13 +24,13 @@ module SuperAdmin::AccountFeaturesHelper
       captain_integration captain_integration_v2 captain_tasks
     ],
     'Hệ thống & Giao diện (System & Interface)' => %w[
-      ip_lookup disable_branding help_center
-      help_center_embedding_search chatwoot_v4 search_with_gin
-      advanced_search advanced_search_indexing saml message_reply_to insert_article_in_reply
+      ip_lookup disable_branding
+      chatwoot_v4 search_with_gin
+      advanced_search advanced_search_indexing saml message_reply_to
     ],
     'Khác (Others)' => %w[
-      whatsapp_embedded_signup whatsapp_campaign twilio_content_templates
-      contact_chatwoot_support_team deprecated_feature_64
+      whatsapp_embedded_signup whatsapp_campaign
+      contact_chatwoot_support_team
     ]
   }.freeze
 

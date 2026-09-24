@@ -16,10 +16,10 @@ Rails.application.routes.draw do
 
     get '/app', to: 'dashboard#index'
     get '/app/*params', to: 'dashboard#index'
-    get '/app/accounts/:account_id/settings/inboxes/new/twitter', to: 'dashboard#index', as: 'app_new_twitter_inbox'
+
     get '/app/accounts/:account_id/settings/inboxes/new/instagram', to: 'dashboard#index', as: 'app_new_instagram_inbox'
     get '/app/accounts/:account_id/settings/inboxes/new/tiktok', to: 'dashboard#index', as: 'app_new_tiktok_inbox'
-    get '/app/accounts/:account_id/settings/inboxes/new/:inbox_id/agents', to: 'dashboard#index', as: 'app_twitter_inbox_agents'
+
     get '/app/accounts/:account_id/settings/inboxes/new/:inbox_id/agents', to: 'dashboard#index', as: 'app_instagram_inbox_agents'
     get '/app/accounts/:account_id/settings/inboxes/new/:inbox_id/agents', to: 'dashboard#index', as: 'app_tiktok_inbox_agents'
     get '/app/accounts/:account_id/settings/inboxes/:inbox_id', to: 'dashboard#index', as: 'app_instagram_inbox_settings'
@@ -126,17 +126,7 @@ Rails.application.routes.draw do
           resources :calendar_integrations, only: [:index, :create, :destroy]
           resource :booking_configurations, only: [:show, :update]
           namespace :channels do
-            resource :twilio_channel, only: [:create]
-            namespace :voice do
-              # Voice webhooks using resource scope to avoid plural/singular confusion
-              resource :webhooks, only: [], controller: 'webhooks' do
-                collection do
-                  post :incoming
-                  match :conference_status, via: [:post, :options]  # Allow both POST and OPTIONS
-                  match :incoming, via: [:post, :options]           # Allow both POST and OPTIONS
-                end
-              end
-            end
+
             resource :zalo_channel, only: [] do
               collection do
                 post :create
@@ -341,10 +331,6 @@ Rails.application.routes.draw do
 
           resources :inboxes, only: [] do
             resource :assignment_policy, only: [:show, :create, :destroy], module: :inboxes
-          end
-
-          namespace :twitter do
-            resource :authorization, only: [:create]
           end
 
           namespace :instagram do
@@ -676,7 +662,6 @@ Rails.application.routes.draw do
     end
   end
 
-
   # ----------------------------------------------------------------------
   # Used in mailer templates
   resource :app, only: [:index] do
@@ -688,11 +673,9 @@ Rails.application.routes.draw do
   # ----------------------------------------------------------------------
   # Routes for channel integrations
   mount Facebook::Messenger::Server, at: 'bot'
-  get 'webhooks/twitter', to: 'api/v1/webhooks#twitter_crc'
-  post 'webhooks/twitter', to: 'api/v1/webhooks#twitter_events'
-  post 'webhooks/line/:line_channel_id', to: 'webhooks/line#process_payload'
+
   post 'webhooks/telegram/:bot_token', to: 'webhooks/telegram#process_payload'
-  post 'webhooks/sms/:phone_number', to: 'webhooks/sms#process_payload'
+
   get 'webhooks/whatsapp/:phone_number', to: 'webhooks/whatsapp#verify'
   post 'webhooks/whatsapp/:phone_number', to: 'webhooks/whatsapp#process_payload'
   get 'webhooks/instagram', to: 'webhooks/instagram#verify'
@@ -713,10 +696,6 @@ Rails.application.routes.draw do
   post 'webhooks/calendly', to: 'webhooks/calendly#events'
   post 'webhooks/omicall', to: 'webhooks/omicall#events'
 
-  namespace :twitter do
-    resource :callback, only: [:show]
-  end
-
   namespace :linear do
     resource :callback, only: [:show]
   end
@@ -725,16 +704,7 @@ Rails.application.routes.draw do
     resource :callback, only: [:show]
   end
 
-  namespace :twilio do
-    resources :callback, only: [:create]
-    resources :delivery_status, only: [:create]
 
-    if ChatwootApp.enterprise?
-      post 'voice/call/:phone', to: 'voice#call_twiml', as: :voice_call
-      post 'voice/status/:phone', to: 'voice#status', as: :voice_status
-      post 'voice/conference_status/:phone', to: 'voice#conference_status', as: :voice_conference_status
-    end
-  end
 
   get 'instagram/callback', to: 'instagram/callbacks#show'
   get 'tiktok/callback', to: 'tiktok/callbacks#show'

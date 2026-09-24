@@ -195,19 +195,17 @@ class Account < ApplicationRecord
   has_many :inboxes, dependent: :destroy_async
   has_many :inbox_daily_summaries, dependent: :destroy
   has_many :labels, dependent: :destroy_async
-  has_many :line_channels, dependent: :destroy_async, class_name: '::Channel::Line'
+
   has_many :mentions, dependent: :destroy_async
   has_many :messages, dependent: :destroy_async
   has_many :message_templates, dependent: :destroy_async
   has_many :notes, dependent: :destroy_async
   has_many :notification_settings, dependent: :destroy_async
   has_many :notifications, dependent: :destroy_async
-  has_many :sms_channels, dependent: :destroy_async, class_name: '::Channel::Sms'
+
   has_many :teams, dependent: :destroy_async
   has_many :telegram_channels, dependent: :destroy_async, class_name: '::Channel::Telegram'
-  has_many :twilio_sms, dependent: :destroy_async, class_name: '::Channel::TwilioSms'
-  has_many :voice_channels, dependent: :destroy_async, class_name: '::Channel::Voice'
-  has_many :twitter_profiles, dependent: :destroy_async, class_name: '::Channel::TwitterProfile'
+
   has_many :users, through: :account_users
   has_many :web_widgets, dependent: :destroy_async, class_name: '::Channel::WebWidget'
   has_many :webhooks, dependent: :destroy_async

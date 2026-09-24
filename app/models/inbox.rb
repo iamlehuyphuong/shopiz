@@ -136,10 +136,6 @@ class Inbox < ApplicationRecord
     apply_sanitization_rules(name)
   end
 
-  def sms?
-    channel_type == 'Channel::Sms'
-  end
-
   def facebook?
     channel_type == 'Channel::FacebookPage'
   end
@@ -164,14 +160,6 @@ class Inbox < ApplicationRecord
     channel_type == 'Channel::Api'
   end
 
-  def twilio?
-    channel_type == 'Channel::TwilioSms'
-  end
-
-  def twitter?
-    channel_type == 'Channel::TwitterProfile'
-  end
-
   def telegram?
     channel_type == 'Channel::Telegram'
   end
@@ -186,10 +174,6 @@ class Inbox < ApplicationRecord
 
   def zalo_oa?
     channel_type == 'Channel::ZaloOa'
-  end
-
-  def twilio_whatsapp?
-    channel_type == 'Channel::TwilioSms' && channel.medium == 'whatsapp'
   end
 
   def assignable_agents
@@ -232,12 +216,7 @@ class Inbox < ApplicationRecord
 
   def callback_webhook_url
     case channel_type
-    when 'Channel::TwilioSms'
-      "#{ENV.fetch('FRONTEND_URL', nil)}/twilio/callback"
-    when 'Channel::Sms'
-      "#{ENV.fetch('FRONTEND_URL', nil)}/webhooks/sms/#{channel.phone_number.delete_prefix('+')}"
-    when 'Channel::Line'
-      "#{ENV.fetch('FRONTEND_URL', nil)}/webhooks/line/#{channel.line_channel_id}"
+
     when 'Channel::Whatsapp'
       "#{ENV.fetch('FRONTEND_URL', nil)}/webhooks/whatsapp/#{channel.phone_number}"
     end

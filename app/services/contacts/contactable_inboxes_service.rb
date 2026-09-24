@@ -22,8 +22,6 @@ class Contacts::ContactableInboxesService
       api_contactable_inbox(inbox)
     when 'Channel::WebWidget'
       website_contactable_inbox(inbox)
-    when 'Channel::Voice'
-      voice_contactable_inbox(inbox)
     end
   end
 
@@ -46,34 +44,10 @@ class Contacts::ContactableInboxesService
   def whatsapp_contactable_inbox(inbox)
     return if @contact.phone_number.blank?
 
-    # Remove the plus since thats the format 360 dialog uses
     { source_id: @contact.phone_number.delete('+'), inbox: inbox }
   end
 
-  def sms_contactable_inbox(inbox)
-    return if @contact.phone_number.blank?
-
-    { source_id: @contact.phone_number, inbox: inbox }
-  end
-
   def zalo_personal_contactable_inbox(inbox)
-    return if @contact.phone_number.blank?
-
-    { source_id: @contact.phone_number, inbox: inbox }
-  end
-
-  def twilio_contactable_inbox(inbox)
-    return if @contact.phone_number.blank?
-
-    case inbox.channel.medium
-    when 'sms'
-      { source_id: @contact.phone_number, inbox: inbox }
-    when 'whatsapp'
-      { source_id: "whatsapp:#{@contact.phone_number}", inbox: inbox }
-    end
-  end
-
-  def voice_contactable_inbox(inbox)
     return if @contact.phone_number.blank?
 
     { source_id: @contact.phone_number, inbox: inbox }
