@@ -13,7 +13,7 @@ import { throwErrorMessage } from '../utils/api';
 import AnalyticsHelper from '../../helper/AnalyticsHelper';
 import camelcaseKeys from 'camelcase-keys';
 import { ACCOUNT_EVENTS } from '../../helper/AnalyticsHelper/events';
-import { channelActions, buildInboxData } from './inboxes/channelActions';
+import { buildInboxData } from './inboxes/channelActions';
 
 export const state = {
   records: [],
@@ -141,11 +141,6 @@ export const getters = {
   getWhatsAppInboxes($state) {
     return $state.records.filter(
       item => item.channel_type === INBOX_TYPES.WHATSAPP
-    );
-  },
-  getVoiceInboxes($state) {
-    return $state.records.filter(
-      item => item.channel_type === INBOX_TYPES.VOICE
     );
   },
   getZaloPersonalInboxes($state) {
@@ -305,33 +300,6 @@ export const actions = {
       throw error;
     }
   },
-  createVoiceChannel: async ({ commit }, params) => {
-    try {
-      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: true });
-
-      // Create a formatted payload for the voice channel
-      const inboxParams = {
-        name: params.voice.name || `Voice (${params.voice.phone_number})`,
-        channel: {
-          type: 'voice',
-          phone_number: params.voice.phone_number,
-          provider: params.voice.provider,
-          provider_config: params.voice.provider_config,
-        },
-      };
-
-      // Use InboxesAPI to create the channel which handles authentication properly
-      const response = await InboxesAPI.create(inboxParams);
-
-      commit(types.default.ADD_INBOXES, response.data);
-      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
-      sendAnalyticsEvent('voice');
-      return response.data;
-    } catch (error) {
-      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
-      throw error;
-    }
-  },
   createFBChannel: async ({ commit }, params) => {
     try {
       commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: true });
@@ -358,7 +326,6 @@ export const actions = {
       throw error;
     }
   },
-  ...channelActions,
   // TODO: Extract other create channel methods to separate files to reduce file size
   // - createChannel
   // - createWebsiteChannel

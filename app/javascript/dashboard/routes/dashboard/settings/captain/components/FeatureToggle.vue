@@ -43,9 +43,7 @@ const title = computed(() => {
   if (props.featureKey.toUpperCase() === 'AUDIO_TRANSCRIPTION') {
     return t('CAPTAIN_SETTINGS.FEATURES.AUDIO_TRANSCRIPTION.TITLE');
   }
-  if (props.featureKey.toUpperCase() === 'HELP_CENTER_SEARCH') {
-    return t('CAPTAIN_SETTINGS.FEATURES.HELP_CENTER_SEARCH.TITLE');
-  }
+
   if (props.featureKey.toUpperCase() === 'LABEL_SUGGESTION') {
     return t('CAPTAIN_SETTINGS.FEATURES.LABEL_SUGGESTION.TITLE');
   }
@@ -56,9 +54,7 @@ const description = computed(() => {
   if (props.featureKey.toUpperCase() === 'AUDIO_TRANSCRIPTION') {
     return t('CAPTAIN_SETTINGS.FEATURES.AUDIO_TRANSCRIPTION.DESCRIPTION');
   }
-  if (props.featureKey.toUpperCase() === 'HELP_CENTER_SEARCH') {
-    return t('CAPTAIN_SETTINGS.FEATURES.HELP_CENTER_SEARCH.DESCRIPTION');
-  }
+
   if (props.featureKey.toUpperCase() === 'LABEL_SUGGESTION') {
     return t('CAPTAIN_SETTINGS.FEATURES.LABEL_SUGGESTION.DESCRIPTION');
   }
@@ -69,9 +65,7 @@ const modelTitle = computed(() => {
   if (props.featureKey.toUpperCase() === 'AUDIO_TRANSCRIPTION') {
     return t('CAPTAIN_SETTINGS.FEATURES.AUDIO_TRANSCRIPTION.MODEL_TITLE');
   }
-  if (props.featureKey.toUpperCase() === 'HELP_CENTER_SEARCH') {
-    return t('CAPTAIN_SETTINGS.FEATURES.HELP_CENTER_SEARCH.MODEL_TITLE');
-  }
+
   if (props.featureKey.toUpperCase() === 'LABEL_SUGGESTION') {
     return t('CAPTAIN_SETTINGS.FEATURES.LABEL_SUGGESTION.MODEL_TITLE');
   }
@@ -82,9 +76,7 @@ const modelDescription = computed(() => {
   if (props.featureKey.toUpperCase() === 'AUDIO_TRANSCRIPTION') {
     return t('CAPTAIN_SETTINGS.FEATURES.AUDIO_TRANSCRIPTION.MODEL_DESCRIPTION');
   }
-  if (props.featureKey.toUpperCase() === 'HELP_CENTER_SEARCH') {
-    return t('CAPTAIN_SETTINGS.FEATURES.HELP_CENTER_SEARCH.MODEL_DESCRIPTION');
-  }
+
   if (props.featureKey.toUpperCase() === 'LABEL_SUGGESTION') {
     return t('CAPTAIN_SETTINGS.FEATURES.LABEL_SUGGESTION.MODEL_DESCRIPTION');
   }

@@ -34,7 +34,7 @@ module Api::V1::Accounts::Concerns::WhatsappHealthManagement
   end
 
   def whatsapp_channel?
-    @inbox.whatsapp? || (@inbox.twilio? && @inbox.channel.whatsapp?)
+    @inbox.whatsapp?
   end
 
 end

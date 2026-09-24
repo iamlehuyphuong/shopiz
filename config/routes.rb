@@ -126,7 +126,6 @@ Rails.application.routes.draw do
           resources :calendar_integrations, only: [:index, :create, :destroy]
           resource :booking_configurations, only: [:show, :update]
           namespace :channels do
-
             resource :zalo_channel, only: [] do
               collection do
                 post :create
@@ -229,7 +228,6 @@ Rails.application.routes.draw do
               resources :contact_inboxes, only: [:create]
               resources :labels, only: [:create, :index]
               resources :notes
-              post :call, on: :member, to: 'calls#create' if ChatwootApp.enterprise?
             end
           end
           resources :csat_survey_responses, only: [:index] do
@@ -265,33 +263,11 @@ Rails.application.routes.draw do
             post :sync_friends, on: :member
             get :health, on: :member
             post :register_webhook, on: :member
-            if ChatwootApp.enterprise?
-              resource :conference, only: %i[create destroy], controller: 'conference' do
-                get :token, on: :member
-              end
-            end
-
             resource :csat_template, only: [:show, :create], controller: 'inbox_csat_templates' do
               post :analyze, on: :collection
             end
           end
 
-          # Voice call management - using resource to avoid plural/singular confusion
-          resource :voice, only: [], controller: 'voice' do
-            member do
-              post :end_call
-              post :join_call
-              post :reject_call
-              get :call_status
-              # Explicitly set the format for TwiML to ensure proper Content-Type headers
-              match :twiml_for_client, via: [:get, :post, :options], defaults: { format: :xml } # Allow GET, POST, and OPTIONS
-            end
-          end
-
-          # Voice call client SDK support
-          namespace :voice do
-            resources :tokens, only: [:create]
-          end
           resources :inbox_members, only: [:create, :show], param: :inbox_id do
             collection do
               delete :destroy
@@ -704,8 +680,6 @@ Rails.application.routes.draw do
     resource :callback, only: [:show]
   end
 
-
-
   get 'instagram/callback', to: 'instagram/callbacks#show'
   get 'tiktok/callback', to: 'tiktok/callbacks#show'
   get 'notion/callback', to: 'notion/callbacks#show'
@@ -714,7 +688,6 @@ Rails.application.routes.draw do
   # Routes for external service verifications
   get '.well-known/assetlinks.json' => 'android_app#assetlinks'
   get '.well-known/apple-app-site-association' => 'apple_app#site_association'
-  get '.well-known/cf-custom-hostname-challenge/:id', to: 'custom_domains#verify'
 
   # ----------------------------------------------------------------------
   # Internal Monitoring Routes

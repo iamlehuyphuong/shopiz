@@ -33,7 +33,15 @@ class ActionView::Template::Handlers::Liquid
 
   def drops
     droppables = @controller.send(:liquid_droppables) if @controller.respond_to?(:liquid_droppables, true)
-    droppables.update(droppables) { |_, obj| obj.try(:to_drop) || nil }
+    droppables.update(droppables) do |_, obj|
+      if obj.respond_to?(:to_drop)
+        obj.to_drop
+      elsif obj.is_a?(Enumerable)
+        obj.map { |o| o.respond_to?(:to_drop) ? o.to_drop : o }
+      else
+        obj
+      end
+    end
   end
 
   def filters

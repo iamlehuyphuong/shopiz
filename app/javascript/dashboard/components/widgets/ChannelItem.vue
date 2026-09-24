@@ -81,15 +81,6 @@ const isActive = computed(() => {
     return props.enabledFeatures.channel_tiktok && hasTiktokConfigured.value;
   }
 
-  if (key === 'voice') {
-    return props.enabledFeatures.channel_voice;
-  }
-  if (key === 'twitter') {
-    return (
-      props.enabledFeatures.channel_twitter &&
-      window.shopizConfig?.twitterConsumerKey
-    );
-  }
 
   return [
     'website',
@@ -98,14 +89,11 @@ const isActive = computed(() => {
     'whatsapp',
     'sms',
     'telegram',
-    'line',
     'instagram',
-    'twitter',
     'zalo',
     'zalopersonal',
     'tiktok_shop',
     'tiktok',
-    'voice',
   ].includes(key);
 });
 

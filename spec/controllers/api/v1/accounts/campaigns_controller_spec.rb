@@ -128,7 +128,7 @@ RSpec.describe 'Campaigns API', type: :request do
       end
 
       it 'creates a new oneoff campaign' do
-        twilio_sms = create(:channel_twilio_sms, account: account)
+        twilio_sms = create(:channel_whatsapp, account: account, sync_templates: false, validate_provider_config: false)
         twilio_inbox = create(:inbox, channel: twilio_sms, account: account)
         label1 = create(:label, account: account)
         label2 = create(:label, account: account)

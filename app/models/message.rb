@@ -92,11 +92,9 @@ class Message < ApplicationRecord
     input_select: 4,
     cards: 5,
     form: 6,
-    article: 7,
     input_csat: 9,
     integrations: 10,
-    sticker: 11,
-    voice_call: 12
+    sticker: 11
   }
   enum status: { sent: 0, delivered: 1, read: 2, failed: 3 }
   # [:items, :submitted_values] : Used for bot message types
@@ -292,6 +290,14 @@ class Message < ApplicationRecord
     return "[Voice Message] #{audio_transcription}" if audio_transcription.present?
 
     '[Attachment]' if attachments.any?
+  end
+
+  def email_notifiable_message?
+    return false if private?
+    return false if %w[outgoing template].exclude?(message_type)
+    return false if template? && %w[input_csat text].exclude?(content_type)
+
+    true
   end
 
   private

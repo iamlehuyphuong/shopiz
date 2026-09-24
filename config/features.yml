@@ -210,8 +210,6 @@
   enabled: false
   deprecated: true
   help_url: https://help.shopiz.pro/hc/api
-
-
 - name: channel_whatsapp
   display_name: Whatsapp Channel
   enabled: false

@@ -249,8 +249,6 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   def trigger_template_sync
     if @inbox.whatsapp?
       Channels::Whatsapp::TemplatesSyncJob.perform_later(@inbox.channel)
-    elsif @inbox.twilio? && @inbox.channel.whatsapp?
-      Channels::Twilio::TemplatesSyncJob.perform_later(@inbox.channel)
     elsif @inbox.channel_type == 'Channel::ZaloOa'
       Channels::Zalo::TemplatesSyncJob.perform_later(@inbox.channel)
     elsif @inbox.channel_type == 'Channel::TiktokShop'

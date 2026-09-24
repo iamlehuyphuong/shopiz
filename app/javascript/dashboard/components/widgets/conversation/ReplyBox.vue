@@ -11,7 +11,6 @@ import AttachmentPreview from 'dashboard/components/widgets/AttachmentsPreview.v
 import ReplyTopPanel from 'dashboard/components/widgets/WootWriter/ReplyTopPanel.vue';
 import ReplyBottomPanel from 'dashboard/components/widgets/WootWriter/ReplyBottomPanel.vue';
 import CopilotReplyBottomPanel from 'dashboard/components/widgets/WootWriter/CopilotReplyBottomPanel.vue';
-import ArticleSearchPopover from 'dashboard/routes/dashboard/helpcenter/components/ArticleSearch/SearchPopover.vue';
 import CopilotEditorSection from './CopilotEditorSection.vue';
 import MessageSignatureMissingAlert from './MessageSignatureMissingAlert.vue';
 import ReplyBoxBanner from './ReplyBoxBanner.vue';
@@ -55,7 +54,6 @@ const EmojiInput = defineAsyncComponent(
 
 export default {
   components: {
-    ArticleSearchPopover,
     AttachmentPreview,
     AudioRecorder,
     ReplyBoxBanner,
@@ -124,7 +122,6 @@ export default {
       showCannedMenu: false,
       showVariablesMenu: false,
       newConversationModalActive: false,
-      showArticleSearchPopover: false,
       hasRecordedAudio: false,
       copilotAcceptedMessages: {},
     };
@@ -372,11 +369,6 @@ export default {
       });
       return variables;
     },
-    connectedPortalSlug() {
-      const { help_center: portal = {} } = this.inbox;
-      const { slug = '' } = portal;
-      return slug;
-    },
     isDefaultEditorMode() {
       return !this.showAudioRecorderEditor && !this.copilot.isActive.value;
     },
@@ -481,19 +473,6 @@ export default {
     clearCopilotAcceptedMessage(replyType = this.replyType) {
       const key = this.getDraftKey(this.conversationIdByRoute, replyType);
       delete this.copilotAcceptedMessages[key];
-    },
-    handleInsert(article) {
-      const { url, title } = article;
-      // Removing empty lines from the title
-      const lines = title.split('\n');
-      const nonEmptyLines = lines.filter(line => line.trim() !== '');
-      const filteredMarkdown = nonEmptyLines.join(' ');
-      emitter.emit(
-        BUS_EVENTS.INSERT_INTO_RICH_EDITOR,
-        `[${filteredMarkdown}](${url})`
-      );
-
-      useTrack(CONVERSATION_EVENTS.INSERT_ARTICLE_LINK);
     },
     resetRecorderAndClearAttachments() {
       // Reset audio recorder UI state
@@ -1092,12 +1071,6 @@ export default {
       // When new conversation modal is open
       this.newConversationModalActive = isActive;
     },
-    onSearchPopoverClose() {
-      this.showArticleSearchPopover = false;
-    },
-    toggleInsertArticle() {
-      this.showArticleSearchPopover = !this.showArticleSearchPopover;
-    },
     resetAudioRecorderInput() {
       this.recordingAudioDurationText = '00:00';
       this.isRecordingAudio = false;
@@ -1140,12 +1113,6 @@ export default {
       @toggle-popout="togglePopout"
       @toggle-copilot="copilot.toggleEditor"
       @execute-copilot-action="executeCopilotAction"
-    />
-    <ArticleSearchPopover
-      v-if="showArticleSearchPopover && connectedPortalSlug"
-      :selected-portal-slug="connectedPortalSlug"
-      @insert="handleInsert"
-      @close="onSearchPopoverClose"
     />
     <Transition
       mode="out-in"
@@ -1287,12 +1254,10 @@ export default {
         :toggle-audio-recorder="toggleAudioRecorder"
         :toggle-emoji-picker="toggleEmojiPicker"
         :message="message"
-        :portal-slug="connectedPortalSlug"
         :new-conversation-modal-active="newConversationModalActive"
         @select-whatsapp-template="openWhatsappTemplateModal"
         @select-content-template="openContentTemplateModal"
         @replace-text="replaceText"
-        @toggle-insert-article="toggleInsertArticle"
       />
     </Transition>
 

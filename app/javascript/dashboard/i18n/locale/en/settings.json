@@ -589,9 +589,7 @@
     "REPORTS_CONVERSATION": "Conversations",
     "CSAT": "CSAT",
     "LIVE_CHAT": "Live Chat",
-    "SMS": "SMS",
     "WHATSAPP": "WhatsApp",
-    "VOICE": "Voice",
     "SURVEY": "Survey",
     "ZALO_PERSONAL": "Zalo Personal",
     "LANDING_PAGE": "Landing Page",
@@ -623,14 +621,6 @@
     "REPORTS_OVERVIEW": "Overview",
     "REAUTHORIZE": "Your inbox connection has expired, please reconnect\n to continue receiving and sending messages",
     "RECONNECT": "Reconnect",
-    "HELP_CENTER": {
-      "TITLE": "Help Center",
-      "LANDING_PAGE": "Landing Page",
-      "ARTICLES": "Articles",
-      "CATEGORIES": "Categories",
-      "LOCALES": "Locales",
-      "SETTINGS": "Settings"
-    },
     "CHANNELS": "Channels",
     "SET_AUTO_OFFLINE": {
       "TEXT": "Mark offline automatically",
@@ -678,10 +668,6 @@
       "AUDIO_TRANSCRIPTION": {
         "TITLE": "Audio Transcription",
         "DESCRIPTION": "Automatically convert voice messages and call recordings into searchable text transcripts."
-      },
-      "HELP_CENTER_SEARCH": {
-        "TITLE": "Help Center Search Indexing",
-        "DESCRIPTION": "Use AI for context aware search inside your help center articles."
       },
       "LABEL_SUGGESTION": {
         "TITLE": "AI Labeling",
@@ -835,8 +821,7 @@
           "TIKTOK": "Tiktok",
           "TIKTOK_SHOP": "Tiktok Shop",
           "TELEGRAM": "Telegram",
-          "LINE": "Line",
-          "TWITTER": "Twitter (X)"
+          "LINE": "Line"
         },
         "FEATURES": {
           "CANNED_RESPONSES": "Canned Responses",

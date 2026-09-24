@@ -262,7 +262,7 @@ contacts:
       email: "mkeatch2@reuters.test"
       gender: 'female'
       conversations:
-        - channel: Channel::TwitterProfile
+        - channel: Channel::WebWidget
           messages:
           - message_type: incoming
             content: Hi, I think I accidentally deleted some important files. Can you help me recover them?
@@ -285,7 +285,7 @@ contacts:
       email: "vcorp4@instagram.test"
       gender: 'female'
       conversations:
-        - channel: Channel::Sms
+        - channel: Channel::Telegram
           source_id: "+1234567"
           messages:
           - message_type: incoming
@@ -297,7 +297,7 @@ contacts:
       email: "dpittway5@chron.test"
       gender: 'male'
       conversations:
-        - channel: Channel::Line
+        - channel: Channel::Api
           messages:
           - message_type: incoming
             content: Hi, I'm trying to update my account information but it won't save.
@@ -319,7 +319,7 @@ contacts:
       email: "bcusworth7@arstechnica.test"
       gender: 'male'
       conversations:
-        - channel: Channel::TwitterProfile
+        - channel: Channel::WebWidget
           messages:
           - message_type: incoming
             content: Hi, I accidentally placed an order for the wrong item. Can I cancel it?
@@ -365,7 +365,7 @@ contacts:
       email: "bjanewayb@ustream.tv"
       gender: 'male'
       conversations:
-        - channel: Channel::Line
+        - channel: Channel::Api
           messages:
           - message_type: incoming
             content: Hi, I have a question about your product features.

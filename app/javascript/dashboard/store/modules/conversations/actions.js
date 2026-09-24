@@ -12,10 +12,6 @@ import {
 import messageReadActions from './actions/messageReadActions';
 import messageTranslateActions from './actions/messageTranslateActions';
 import * as Sentry from '@sentry/vue';
-import {
-  handleVoiceCallCreated,
-  handleVoiceCallUpdated,
-} from 'dashboard/helper/voice';
 
 export const hasMessageFailedWithExternalError = pendingMessage => {
   // This helper is used to check if the message has failed with an external error.
@@ -363,12 +359,10 @@ const actions = {
       });
       commit(types.ADD_CONVERSATION_ATTACHMENTS, message);
     }
-    handleVoiceCallCreated(message, rootGetters?.getCurrentUserID);
   },
 
   updateMessage({ commit, rootGetters }, message) {
     commit(types.ADD_MESSAGE, message);
-    handleVoiceCallUpdated(commit, message, rootGetters?.getCurrentUserID);
   },
 
   deleteMessage: async function deleteLabels(

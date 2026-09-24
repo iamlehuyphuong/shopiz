@@ -101,9 +101,6 @@
     "CALL_INITIATED": "Calling the contact…",
     "CALL_FAILED": "Unable to start the call. Please try again.",
     "REQUEST_FRIEND": "Send a friend request",
-    "VOICE_INBOX_PICKER": {
-      "TITLE": "Choose a voice inbox"
-    },
     "GENDERS": {
       "male": "Male",
       "female": "Female"
@@ -225,10 +222,6 @@
         "FACEBOOK": {
           "PLACEHOLDER": "Enter the Facebook username",
           "LABEL": "Facebook"
-        },
-        "TWITTER": {
-          "PLACEHOLDER": "Enter the Twitter username",
-          "LABEL": "Twitter"
         },
         "LINKEDIN": {
           "PLACEHOLDER": "Enter the LinkedIn username",
@@ -565,9 +558,6 @@
           },
           "LINKEDIN": {
             "PLACEHOLDER": "Add LinkedIn"
-          },
-          "TWITTER": {
-            "PLACEHOLDER": "Add Twitter"
           }
         }
       },
@@ -740,15 +730,6 @@
         "TEMPLATE_PARSER": {
           "TEMPLATE_NAME": "WhatsApp template: {templateName}",
           "VARIABLES": "Variables",
-          "BACK": "Go back",
-          "SEND_MESSAGE": "Send message"
-        }
-      },
-      "TWILIO_OPTIONS": {
-        "LABEL": "Select template",
-        "SEARCH_PLACEHOLDER": "Search templates",
-        "EMPTY_STATE": "No templates found",
-        "TEMPLATE_PARSER": {
           "BACK": "Go back",
           "SEND_MESSAGE": "Send message"
         }

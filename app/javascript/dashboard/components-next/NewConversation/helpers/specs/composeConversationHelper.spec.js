@@ -633,17 +633,7 @@ describe('compareInboxes', () => {
     expect(sorted[3].channelType).toBe('Channel::Api');
   });
 
-  it('should sort SMS channels correctly', () => {
-    const inboxes = [
-      { channelType: 'Channel::TwilioSms', name: 'Twilio' },
-      { channelType: 'Channel::Sms', name: 'Regular SMS' },
-    ];
 
-    const sorted = [...inboxes].sort(helpers.compareInboxes);
-
-    expect(sorted[0].channelType).toBe('Channel::Sms');
-    expect(sorted[1].channelType).toBe('Channel::TwilioSms');
-  });
 
   it('should sort by name when channel types are same', () => {
     const inboxes = [
@@ -665,7 +655,7 @@ describe('compareInboxes', () => {
     const inboxes = [
       { channelType: 'Channel::Unknown', name: 'Unknown' },
       { channelType: 'Channel::WebWidget', name: 'Widget' },
-      { channelType: 'Channel::LineChannel', name: 'Line' },
+      { channelType: 'Channel::Whatsapp', name: 'Line' },
       { channelType: 'Channel::Whatsapp', name: 'WhatsApp' },
     ];
 
@@ -674,7 +664,7 @@ describe('compareInboxes', () => {
     expect(sorted.map(i => i.channelType)).toEqual([
       'Channel::Whatsapp',
       'Channel::WebWidget',
-      'Channel::LineChannel',
+      'Channel::Whatsapp',
       'Channel::Unknown',
     ]);
   });

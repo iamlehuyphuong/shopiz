@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe ConversationBuilder do
   let(:account) { create(:account) }
-  let!(:sms_channel) { create(:channel_sms, account: account) }
+  let!(:sms_channel) { create(:channel_telegram, account: account) }
   let!(:api_channel) { create(:channel_api, account: account) }
   let!(:sms_inbox) { create(:inbox, channel: sms_channel, account: account) }
   let!(:api_inbox) { create(:inbox, channel: api_channel, account: account) }

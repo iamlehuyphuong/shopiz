@@ -44,12 +44,7 @@ export default {
       );
     },
     showBackButton() {
-      return ['article-viewer', 'messages', 'prechat-form'].includes(
-        this.$route.name
-      );
-    },
-    isOnArticleViewer() {
-      return ['article-viewer'].includes(this.$route.name);
+      return ['messages', 'prechat-form'].includes(this.$route.name);
     },
     isOnHomeView() {
       return ['home'].includes(this.$route.name);
@@ -138,7 +133,7 @@ export default {
       <Banner />
       <router-view />
 
-      <Branding v-if="!isOnArticleViewer" :disable-branding="disableBranding" />
+      <Branding :disable-branding="disableBranding" />
     </div>
   </div>
 </template>

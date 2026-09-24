@@ -106,10 +106,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    portalSlug: {
-      type: String,
-      required: true,
-    },
     conversationType: {
       type: String,
       default: '',
@@ -119,12 +115,7 @@ export default {
       default: false,
     },
   },
-  emits: [
-    'replaceText',
-    'toggleInsertArticle',
-    'selectWhatsappTemplate',
-    'selectContentTemplate',
-  ],
+  emits: ['replaceText', 'selectWhatsappTemplate', 'selectContentTemplate'],
   setup(props) {
     const { setSignatureFlagForInbox, fetchSignatureFlagFromUISettings } =
       useUISettings();
@@ -249,9 +240,6 @@ export default {
         ? this.$t('CONVERSATION.FOOTER.DISABLE_SIGN_TOOLTIP')
         : this.$t('CONVERSATION.FOOTER.ENABLE_SIGN_TOOLTIP');
     },
-    enableInsertArticleInReply() {
-      return this.portalSlug;
-    },
     isFetchingAppIntegrations() {
       return this.uiFlags.isFetching;
     },
@@ -265,9 +253,6 @@ export default {
     },
     replaceText(text) {
       this.$emit('replaceText', text);
-    },
-    toggleInsertArticle() {
-      this.$emit('toggleInsertArticle');
     },
   },
 };
@@ -374,15 +359,6 @@ export default {
           </h4>
         </div>
       </transition>
-      <NextButton
-        v-if="enableInsertArticleInReply"
-        v-tooltip.top-end="$t('HELP_CENTER.ARTICLE_SEARCH.OPEN_ARTICLE_SEARCH')"
-        icon="i-ph-article-ny-times"
-        slate
-        faded
-        sm
-        @click="toggleInsertArticle"
-      />
     </div>
     <div class="right-wrap">
       <NextButton

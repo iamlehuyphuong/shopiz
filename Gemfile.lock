@@ -524,7 +524,6 @@ GEM
       ffi (~> 1.0)
     libddwaf (1.24.1.0.3-x86_64-linux)
       ffi (~> 1.0)
-    line-bot-api (1.28.0)
     lint_roller (1.1.0)
     liquid (5.4.0)
     listen (3.8.0)
@@ -595,12 +594,6 @@ GEM
       racc (~> 1.4)
     nokogiri (1.19.1-x86_64-linux-gnu)
       racc (~> 1.4)
-    oauth (1.1.0)
-      oauth-tty (~> 1.0, >= 1.0.1)
-      snaky_hash (~> 2.0)
-      version_gem (~> 1.1)
-    oauth-tty (1.0.5)
-      version_gem (~> 1.1, >= 1.1.1)
     oauth2 (2.0.9)
       faraday (>= 0.17.3, < 3.0)
       jwt (>= 1.0, < 3.0)
@@ -967,12 +960,6 @@ GEM
       i18n
     timeout (0.4.3)
     trailblazer-option (0.1.2)
-    twilio-ruby (7.6.0)
-      faraday (>= 0.9, < 3.0)
-      jwt (>= 1.5, < 3.0)
-      nokogiri (>= 1.6, < 2.0)
-    twitty (0.1.5)
-      oauth
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     tzinfo-data (1.2023.3)
@@ -1101,7 +1088,6 @@ DEPENDENCIES
   kaminari
   koala
   letter_opener
-  line-bot-api
   liquid
   listen
   lograge (~> 0.14.0)
@@ -1175,8 +1161,6 @@ DEPENDENCIES
   test-prof
   tidewave
   time_diff
-  twilio-ruby
-  twitty (~> 0.1.5)
   tzinfo-data
   uglifier
   valid_email2

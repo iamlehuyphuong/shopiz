@@ -15,7 +15,6 @@ export const FEATURE_FLAGS = {
   INTEGRATIONS: 'integrations',
   LABELS: 'labels',
   MACROS: 'macros',
-  HELP_CENTER: 'help_center',
   REPORTS: 'reports',
   TEAM_MANAGEMENT: 'team_management',
   VOICE_RECORDER: 'voice_recorder',
@@ -48,7 +47,6 @@ export const FEATURE_FLAGS = {
 export const PREMIUM_FEATURES = [
   FEATURE_FLAGS.CAPTAIN,
   FEATURE_FLAGS.AUDIT_LOGS,
-  FEATURE_FLAGS.HELP_CENTER,
   FEATURE_FLAGS.CONVERSATION_REQUIRED_ATTRIBUTES,
   FEATURE_FLAGS.ADVANCED_ASSIGNMENT,
 ];

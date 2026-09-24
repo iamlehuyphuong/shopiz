@@ -64,9 +64,8 @@ class Messages::MessageBuilder
   end
 
   def message_type
-    # Allow incoming messages in both API and Voice channels
-    if !['Channel::Api', 'Channel::Voice'].include?(@conversation.inbox.channel_type) && @message_type == 'incoming'
-      raise StandardError, 'Incoming messages are only allowed in Api and Voice inboxes'
+    if @conversation.inbox.channel_type != 'Channel::Api' && @message_type == 'incoming'
+      raise StandardError, 'Incoming messages are only allowed in Api inboxes'
     end
 
     @message_type

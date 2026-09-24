@@ -31,7 +31,7 @@ export default [
     },
     inbox: {
       id: 2,
-      channel_type: 'Channel::TwilioSms',
+      channel_type: 'Channel::Whatsapp',
       name: 'Twilio SMS',
     },
     created_at: '2021-05-03T08:15:35.828Z',
@@ -91,7 +91,7 @@ export default [
     trigger_rules: {},
     inbox: {
       id: 5,
-      channel_type: 'Channel::Sms',
+      channel_type: 'Channel::Whatsapp',
       name: 'SMS Channel',
     },
     created_at: '2021-05-03T14:15:35.828Z',

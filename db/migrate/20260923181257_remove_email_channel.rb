@@ -21,6 +21,11 @@ class RemoveEmailChannel < ActiveRecord::Migration[7.1]
     inbox_ids = 'SELECT id FROM inboxes WHERE channel_type = \'Channel::Email\''
     conversation_ids = "SELECT id FROM conversations WHERE inbox_id IN (#{inbox_ids})"
 
+    # Tables holding a foreign key to conversations must go first, or the
+    # conversation delete aborts on a constraint violation.
+    execute "DELETE FROM bookings WHERE conversation_id IN (#{conversation_ids})"
+    execute "DELETE FROM zalo_group_members WHERE conversation_id IN (#{conversation_ids})"
+
     execute "DELETE FROM reporting_events WHERE conversation_id IN (#{conversation_ids})"
     execute "DELETE FROM notifications WHERE primary_actor_type = 'Conversation' AND primary_actor_id IN (#{conversation_ids})"
     execute "DELETE FROM messages WHERE inbox_id IN (#{inbox_ids})"

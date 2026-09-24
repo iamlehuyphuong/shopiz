@@ -22,7 +22,7 @@ class CsatSurveyService
   end
 
   def conversation_allows_csat?
-    conversation.resolved? && !conversation.tweet?
+    conversation.resolved?
   end
 
   def csat_enabled?

@@ -23,12 +23,7 @@ class ContactInboxBuilder
   end
 
   def phone_source_id
-    if @contact.phone_number.blank?
-      # For voice channels, we'll create a fallback source ID if phone number is missing
-      return SecureRandom.uuid if @inbox.channel_type == 'Channel::Voice'
-
-      raise ActionController::ParameterMissing, 'contact phone number'
-    end
+    raise ActionController::ParameterMissing, 'contact phone number' if @contact.phone_number.blank?
 
     @contact.phone_number
   end
@@ -38,17 +33,6 @@ class ContactInboxBuilder
 
     # whatsapp doesn't want the + in e164 format
     @contact.phone_number.delete('+').to_s
-  end
-
-  def twilio_source_id
-    raise ActionController::ParameterMissing, 'contact phone number' unless @contact.phone_number
-
-    case @inbox.channel.medium
-    when 'sms'
-      @contact.phone_number
-    when 'whatsapp'
-      "whatsapp:#{@contact.phone_number}"
-    end
   end
 
   def create_contact_inbox
@@ -85,7 +69,7 @@ class ContactInboxBuilder
   end
 
   def new_source_id
-    if @inbox.whatsapp? || @inbox.sms? || @inbox.twilio?
+    if @inbox.whatsapp?
       "whatsapp:#{@source_id}#{rand(100)}"
     else
       "#{rand(10)}#{@source_id}"
@@ -93,7 +77,7 @@ class ContactInboxBuilder
   end
 
   def allowed_channels?
-    @inbox.sms? || @inbox.twilio? || @inbox.whatsapp? || @inbox.channel_type == 'Channel::Voice'
+    @inbox.whatsapp?
   end
 end
 

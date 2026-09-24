@@ -112,32 +112,6 @@ RSpec.describe 'Inboxes API', type: :request do
         expect(data[:hmac_token]).to be_nil
       end
 
-      context 'when it is a Twilio inbox' do
-        let(:twilio_channel) { create(:channel_twilio_sms, account: account, account_sid: 'AC123', auth_token: 'secrettoken') }
-        let(:twilio_inbox) { create(:inbox, channel: twilio_channel, account: account) }
-
-        it 'returns auth_token and account_sid for admin' do
-          get "/api/v1/accounts/#{account.id}/inboxes/#{twilio_inbox.id}",
-              headers: admin.create_new_auth_token,
-              as: :json
-          expect(response).to have_http_status(:success)
-          data = JSON.parse(response.body, symbolize_names: true)
-          expect(data[:auth_token]).to eq('secrettoken')
-          expect(data[:account_sid]).to eq('AC123')
-        end
-
-        it "doesn't return auth_token and account_sid for agent" do
-          create(:inbox_member, user: agent, inbox: twilio_inbox)
-          get "/api/v1/accounts/#{account.id}/inboxes/#{twilio_inbox.id}",
-              headers: agent.create_new_auth_token,
-              as: :json
-          expect(response).to have_http_status(:success)
-          data = JSON.parse(response.body, symbolize_names: true)
-          expect(data[:auth_token]).to be_nil
-          expect(data[:account_sid]).to be_nil
-        end
-      end
-
       it 'fetch API inbox without hmac token when agent' do
         api_channel = create(:channel_api, account: account)
         api_inbox = create(:inbox, channel: api_channel, account: account)
@@ -413,8 +387,7 @@ RSpec.describe 'Inboxes API', type: :request do
 
     context 'when it is an authenticated user' do
       let(:admin) { create(:user, account: account, role: :administrator) }
-      let!(:portal) { create(:portal, account_id: account.id) }
-      let(:valid_params) { { name: 'new test inbox', enable_auto_assignment: false, portal_id: portal.id } }
+      let(:valid_params) { { name: 'new test inbox', enable_auto_assignment: false } }
 
       it 'will not update inbox for agent' do
         agent = create(:user, account: account, role: :agent)
@@ -436,7 +409,6 @@ RSpec.describe 'Inboxes API', type: :request do
         expect(response).to have_http_status(:success)
         expect(response).to conform_schema(200)
         expect(inbox.reload.enable_auto_assignment).to be_falsey
-        expect(inbox.reload.portal_id).to eq(portal.id)
         expect(response.parsed_body['name']).to eq 'new test inbox'
       end
 
@@ -472,35 +444,6 @@ RSpec.describe 'Inboxes API', type: :request do
         expect(whatsapp_inbox.reload.enable_auto_assignment).to be_falsey
         expect(whatsapp_channel.reload.provider_config['api_key']).to eq('new_key')
         expect(whatsapp_channel.reload).not_to be_reauthorization_required
-      end
-
-      it 'updates twitter inbox when administrator' do
-        twitter_channel = create(:channel_twitter_profile, account: account, tweets_enabled: true)
-        twitter_inbox = create(:inbox, channel: twitter_channel, account: account)
-
-        patch "/api/v1/accounts/#{account.id}/inboxes/#{twitter_inbox.id}",
-              headers: admin.create_new_auth_token,
-              params: { channel: { tweets_enabled: false } },
-              as: :json
-
-        expect(response).to have_http_status(:success)
-        expect(twitter_channel.reload.tweets_enabled).to be(false)
-      end
-
-      it 'updates twilio sms inbox when administrator' do
-        twilio_sms_channel = create(:channel_twilio_sms, account: account)
-        twilio_sms_inbox = create(:inbox, channel: twilio_sms_channel, account: account)
-        expect(twilio_sms_inbox.reload.channel.account_sid).not_to eq('account_sid')
-        expect(twilio_sms_inbox.reload.channel.auth_token).not_to eq('new_auth_token')
-
-        patch "/api/v1/accounts/#{account.id}/inboxes/#{twilio_sms_inbox.id}",
-              headers: admin.create_new_auth_token,
-              params: { channel: { account_sid: 'account_sid', auth_token: 'new_auth_token' } },
-              as: :json
-
-        expect(response).to have_http_status(:success)
-        expect(twilio_sms_inbox.reload.channel.account_sid).to eq('account_sid')
-        expect(twilio_sms_inbox.reload.channel.auth_token).to eq('new_auth_token')
       end
 
       it 'updates avatar when administrator' do

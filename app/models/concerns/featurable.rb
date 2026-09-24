@@ -19,7 +19,6 @@ module Featurable
     report_v4
     chatwoot_v4
     channel_website
-    help_center
   ].freeze
 
   DISABLED_FEATURES = %w[
@@ -28,9 +27,7 @@ module Featurable
     channel_whatsapp
     channel_api
     channel_telegram
-    channel_line
     channel_instagram
-    channel_voice
   ].freeze
 
   FEATURE_LIST = YAML.safe_load(Rails.root.join('config/features.yml').read).freeze

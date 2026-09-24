@@ -165,7 +165,7 @@ describe('stripUnsupportedMarkdown', () => {
     expect(result).not.toContain('![](');
   });
   it('strips all formatting for SMS channel', () => {
-    const result = stripUnsupportedMarkdown(richSignature, 'Channel::Sms');
+    const result = stripUnsupportedMarkdown(richSignature, 'Channel::Whatsapp');
     expect(result).toContain('Bold');
     expect(result).toContain('italic');
     expect(result).toContain('link');
@@ -213,7 +213,7 @@ describe('stripUnsupportedMarkdown', () => {
       const messageWithFormatting = '**Bold**\n\n`code`\n\nNormal text';
       const result = stripUnsupportedMarkdown(
         messageWithFormatting,
-        'Channel::Sms',
+        'Channel::Whatsapp',
         false
       );
       expect(result).toBe('Bold\n\ncode\n\nNormal text');

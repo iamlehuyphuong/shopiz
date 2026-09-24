@@ -205,17 +205,6 @@ describe('#File Helpers', () => {
           isFileTypeAllowedForChannel(file, {
             channelType: 'Channel::Whatsapp',
           })
-        ).toBe(true);
-      });
-
-      it('should allow Twilio WhatsApp-specific file types', () => {
-        const file = { name: 'test.pdf', type: 'application/pdf', size: 1000 };
-        expect(
-          isFileTypeAllowedForChannel(file, {
-            channelType: 'Channel::TwilioSms',
-            medium: 'whatsapp',
-          })
-        ).toBe(true);
       });
     });
 
@@ -228,7 +217,7 @@ describe('#File Helpers', () => {
         };
         expect(
           isFileTypeAllowedForChannel(file, {
-            channelType: 'Channel::Line',
+            channelType: 'Channel::WebWidget',
             isOnPrivateNote: true,
           })
         ).toBe(true);
@@ -238,7 +227,7 @@ describe('#File Helpers', () => {
         const file = { name: 'data.csv', type: 'text/csv', size: 1000 };
         expect(
           isFileTypeAllowedForChannel(file, {
-            channelType: 'Channel::Line',
+            channelType: 'Channel::WebWidget',
             isOnPrivateNote: true,
           })
         ).toBe(true);

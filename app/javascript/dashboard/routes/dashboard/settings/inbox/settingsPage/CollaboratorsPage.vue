@@ -696,38 +696,6 @@ onMounted(() => {
       </div>
     </woot-modal>
 
-    <SettingsSection
-      v-if="inbox.channel_type === 'Channel::Voice'"
-      :title="$t('INBOX_MGMT.SETTINGS_POPUP.VOICE_CALL_ROUTING')"
-      :sub-title="$t('INBOX_MGMT.SETTINGS_POPUP.VOICE_CALL_ROUTING_SUB_TEXT')"
-    >
-      <label class="w-3/4 settings-item">
-        <div class="flex items-center gap-2">
-          <input
-            id="enablePersonalPhoneRouting"
-            v-model="enablePersonalPhoneRouting"
-            type="checkbox"
-          />
-          <label for="enablePersonalPhoneRouting">
-            {{ $t('INBOX_MGMT.SETTINGS_POPUP.PERSONAL_PHONE_ROUTING') }}
-          </label>
-        </div>
 
-        <p class="pb-1 text-sm not-italic text-n-slate-11">
-          {{ $t('INBOX_MGMT.SETTINGS_POPUP.PERSONAL_PHONE_ROUTING_SUB_TEXT') }}
-        </p>
-      </label>
-
-      <div v-if="enablePersonalPhoneRouting" class="agent-phone-container">
-        <p class="pb-4 italic text-sm text-n-slate-11">
-          {{ $t('INBOX_MGMT.SETTINGS_POPUP.AGENT_PHONE_SETTINGS_INFO') }}
-        </p>
-        <NextButton
-          :label="$t('INBOX_MGMT.SETTINGS_POPUP.UPDATE')"
-          :is-loading="isVoiceRoutingUpdating"
-          @click="updateVoiceRouting"
-        />
-      </div>
-    </SettingsSection>
   </div>
 </template>

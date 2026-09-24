@@ -657,9 +657,7 @@ en:
         video_missed: Video call
         video_outgoing: Outgoing video call
         video_incoming: Incoming video call
-        voice_missed: Voice call
-        voice_outgoing: Outgoing voice call
-        voice_incoming: Incoming voice call
+
       duration: "%{mins} minutes %{seconds} seconds"
     group_events:
       user_info: " (User ID: %{members})"

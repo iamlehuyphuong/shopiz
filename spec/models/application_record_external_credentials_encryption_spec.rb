@@ -4,11 +4,6 @@ require 'rails_helper'
 
 RSpec.describe ApplicationRecord do
   it_behaves_like 'encrypted external credential',
-                  factory: :channel_twilio_sms,
-                  attribute: :auth_token,
-                  value: 'twilio-secret'
-
-  it_behaves_like 'encrypted external credential',
                   factory: :integrations_hook,
                   attribute: :access_token,
                   value: 'hook-secret'
@@ -29,29 +24,9 @@ RSpec.describe ApplicationRecord do
                   value: 'ig-secret'
 
   it_behaves_like 'encrypted external credential',
-                  factory: :channel_line,
-                  attribute: :line_channel_secret,
-                  value: 'line-secret'
-
-  it_behaves_like 'encrypted external credential',
-                  factory: :channel_line,
-                  attribute: :line_channel_token,
-                  value: 'line-token-secret'
-
-  it_behaves_like 'encrypted external credential',
                   factory: :channel_telegram,
                   attribute: :bot_token,
                   value: 'telegram-secret'
-
-  it_behaves_like 'encrypted external credential',
-                  factory: :channel_twitter_profile,
-                  attribute: :twitter_access_token,
-                  value: 'twitter-access-secret'
-
-  it_behaves_like 'encrypted external credential',
-                  factory: :channel_twitter_profile,
-                  attribute: :twitter_access_token_secret,
-                  value: 'twitter-secret-secret'
 
   context 'when looking up telegram legacy records' do
     before do

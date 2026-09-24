@@ -209,7 +209,7 @@ RSpec.describe MessageTemplate do
         build(:message_template,
               account: account,
               inbox: inbox,
-              channel_type: 'Channel::Sms')
+              channel_type: 'Channel::Telegram')
       end
 
       it 'returns false' do

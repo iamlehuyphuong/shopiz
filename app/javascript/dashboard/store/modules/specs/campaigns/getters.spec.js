@@ -30,8 +30,7 @@ describe('#getters', () => {
     const state = { records: campaigns };
     expect(
       getters.getCampaigns(state)('one_off', [
-        'Channel::TwilioSms',
-        'Channel::Sms',
+        'Channel::Whatsapp',
       ])
     ).toEqual([campaigns[1], campaigns[4]]);
   });

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_09_24_022828) do
+ActiveRecord::Schema[7.1].define(version: 2026_09_24_120001) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -636,17 +636,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_24_022828) do
     t.index ["account_id", "profile_id"], name: "index_channel_twitter_profiles_on_account_id_and_profile_id", unique: true
   end
 
-  create_table "channel_voice", force: :cascade do |t|
-    t.string "phone_number", null: false
-    t.string "provider", default: "twilio", null: false
-    t.jsonb "provider_config", null: false
-    t.integer "account_id", null: false
-    t.jsonb "additional_attributes", default: {}
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["phone_number"], name: "index_channel_voice_on_phone_number", unique: true
-  end
-
   create_table "channel_web_widgets", id: :serial, force: :cascade do |t|
     t.string "website_url"
     t.integer "account_id"
@@ -663,6 +652,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_24_022828) do
     t.jsonb "pre_chat_form_options", default: {}
     t.boolean "hmac_mandatory", default: false
     t.text "allowed_domains", default: ""
+    t.boolean "continuity_via_email", default: true, null: false
     t.index ["hmac_token"], name: "index_channel_web_widgets_on_hmac_token", unique: true
     t.index ["website_token"], name: "index_channel_web_widgets_on_website_token", unique: true
   end
@@ -1019,14 +1009,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_24_022828) do
     t.index ["name", "account_id"], name: "index_email_templates_on_name_and_account_id", unique: true
   end
 
-  create_table "folders", force: :cascade do |t|
-    t.integer "account_id", null: false
-    t.integer "category_id", null: false
-    t.string "name"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-  end
-
   create_table "inbox_assignment_policies", force: :cascade do |t|
     t.bigint "inbox_id", null: false
     t.bigint "assignment_policy_id", null: false
@@ -1112,6 +1094,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_24_022828) do
     t.jsonb "sales_config", default: {}
     t.jsonb "zalo_auto_message_config", default: {}
     t.boolean "label_suggestion_enabled", default: false, null: false
+    t.boolean "enable_email_collect", default: true
     t.index ["account_id"], name: "index_inboxes_on_account_id"
     t.index ["channel_id", "channel_type"], name: "index_inboxes_on_channel_id_and_channel_type"
     t.index ["ecommerce_integration_id"], name: "index_inboxes_on_ecommerce_integration_id"

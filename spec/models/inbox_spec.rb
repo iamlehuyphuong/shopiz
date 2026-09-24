@@ -179,32 +179,14 @@ RSpec.describe Inbox do
         inbox.name = 'inbox_name.and_1'
         expect(inbox).to be_valid
       end
-
-      context 'when special characters allowed for some channel' do
-        let!(:tw_channel_val) { FactoryBot.create(:channel_twitter_profile) }
-        let(:inbox) { create(:inbox, channel: tw_channel_val) }
-
-        it 'does allow special chacters like /\@<> for Facebook Channel' do
-          inbox.name = 'inbox@name'
-          expect(inbox).to be_valid
-        end
-      end
     end
   end
 
   describe '#update' do
     let!(:inbox) { FactoryBot.create(:inbox) }
-    let!(:portal) { FactoryBot.create(:portal) }
 
     before do
       allow(Rails.configuration.dispatcher).to receive(:dispatch)
-    end
-
-    it 'set portal id in inbox' do
-      inbox.portal_id = portal.id
-      inbox.save
-
-      expect(inbox.portal).to eq(portal)
     end
 
     it 'sends the inbox_created event if ENABLE_INBOX_EVENTS is true' do

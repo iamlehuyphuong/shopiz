@@ -10,7 +10,6 @@ import {
   ROLES,
   CONVERSATION_PERMISSIONS,
   CONTACT_PERMISSIONS,
-  PORTAL_PERMISSIONS,
 } from 'dashboard/constants/permissions.js';
 import { usePolicy } from 'dashboard/composables/usePolicy';
 import { FEATURE_FLAGS } from 'dashboard/featureFlags';
@@ -23,7 +22,6 @@ import SearchTabs from './SearchTabs.vue';
 import SearchResultConversationsList from './SearchResultConversationsList.vue';
 import SearchResultMessagesList from './SearchResultMessagesList.vue';
 import SearchResultContactsList from './SearchResultContactsList.vue';
-import SearchResultArticlesList from './SearchResultArticlesList.vue';
 
 const router = useRouter();
 const route = useRoute();
@@ -37,7 +35,6 @@ const pages = ref({
   contacts: 1,
   conversations: 1,
   messages: 1,
-  articles: 1,
 });
 
 const contactRecords = useMapGetter('conversationSearch/getContactRecords');
@@ -45,7 +42,6 @@ const conversationRecords = useMapGetter(
   'conversationSearch/getConversationRecords'
 );
 const messageRecords = useMapGetter('conversationSearch/getMessageRecords');
-const articleRecords = useMapGetter('conversationSearch/getArticleRecords');
 const uiFlags = useMapGetter('conversationSearch/getUIFlags');
 
 const addTypeToRecords = (records, type) =>
@@ -59,9 +55,6 @@ const mappedConversations = computed(() =>
 );
 const mappedMessages = computed(() =>
   addTypeToRecords(messageRecords, 'message')
-);
-const mappedArticles = computed(() =>
-  addTypeToRecords(articleRecords, 'article')
 );
 
 const isSelectedTabAll = computed(() => selectedTab.value === 'all');
@@ -77,7 +70,6 @@ const sliceRecordsIfAllTab = items =>
 const contacts = computed(() => sliceRecordsIfAllTab(mappedContacts));
 const conversations = computed(() => sliceRecordsIfAllTab(mappedConversations));
 const messages = computed(() => sliceRecordsIfAllTab(mappedMessages));
-const articles = computed(() => sliceRecordsIfAllTab(mappedArticles));
 
 const filterByTab = tab =>
   computed(() => selectedTab.value === tab || isSelectedTabAll.value);
@@ -85,18 +77,12 @@ const filterByTab = tab =>
 const filterContacts = filterByTab('contacts');
 const filterConversations = filterByTab('conversations');
 const filterMessages = filterByTab('messages');
-const filterArticles = filterByTab('articles');
 
 const { shouldShow, isFeatureFlagEnabled } = usePolicy();
 
 const TABS_CONFIG = {
   all: {
-    permissions: [
-      CONTACT_PERMISSIONS,
-      ...ROLES,
-      ...CONVERSATION_PERMISSIONS,
-      PORTAL_PERMISSIONS,
-    ],
+    permissions: [CONTACT_PERMISSIONS, ...ROLES, ...CONVERSATION_PERMISSIONS],
     count: () => null, // No count for all tab
   },
   contacts: {
@@ -110,11 +96,6 @@ const TABS_CONFIG = {
   messages: {
     permissions: [...ROLES, ...CONVERSATION_PERMISSIONS],
     count: () => mappedMessages.value.length,
-  },
-  articles: {
-    permissions: [...ROLES, PORTAL_PERMISSIONS],
-    featureFlag: FEATURE_FLAGS.HELP_CENTER,
-    count: () => mappedArticles.value.length,
   },
 };
 
@@ -151,11 +132,6 @@ const totalSearchResultsCount = computed(() => {
       permissions: [...ROLES, ...CONVERSATION_PERMISSIONS],
       count: () => conversations.value.length + messages.value.length,
     },
-    {
-      permissions: [...ROLES, PORTAL_PERMISSIONS],
-      featureFlag: FEATURE_FLAGS.HELP_CENTER,
-      count: () => articles.value.length,
-    },
   ];
 
   return permissionCounts
@@ -182,13 +158,12 @@ const activeTabIndex = computed(() => {
 });
 
 const isFetchingAny = computed(() => {
-  const { contact, message, conversation, article, isFetching } = uiFlags.value;
+  const { contact, message, conversation, isFetching } = uiFlags.value;
   return (
     isFetching ||
     contact.isFetching ||
     message.isFetching ||
-    conversation.isFetching ||
-    article.isFetching
+    conversation.isFetching
   );
 });
 
@@ -216,7 +191,6 @@ const showLoadMore = computed(() => {
     contacts: mappedContacts.value,
     conversations: mappedConversations.value,
     messages: mappedMessages.value,
-    articles: mappedArticles.value,
   }[selectedTab.value];
 
   return (
@@ -231,7 +205,6 @@ const showViewMore = computed(() => ({
   conversations:
     mappedConversations.value?.length > 5 && isSelectedTabAll.value,
   messages: mappedMessages.value?.length > 5 && isSelectedTabAll.value,
-  articles: mappedArticles.value?.length > 5 && isSelectedTabAll.value,
 }));
 
 const filters = ref({
@@ -241,7 +214,7 @@ const filters = ref({
 });
 
 const clearSearchResult = () => {
-  pages.value = { contacts: 1, conversations: 1, messages: 1, articles: 1 };
+  pages.value = { contacts: 1, conversations: 1, messages: 1 };
   store.dispatch('conversationSearch/clearSearchResults');
 };
 
@@ -314,7 +287,6 @@ const loadMore = () => {
     contacts: 'conversationSearch/contactSearch',
     conversations: 'conversationSearch/conversationSearch',
     messages: 'conversationSearch/messageSearch',
-    articles: 'conversationSearch/articleSearch',
   };
 
   if (uiFlags.value.isFetching || selectedTab.value === 'all') return;
@@ -455,31 +427,6 @@ onUnmounted(() => {
                 sm
                 outline
                 @click="selectedTab = 'conversations'"
-              />
-            </Policy>
-
-            <Policy
-              v-if="isFeatureFlagEnabled(FEATURE_FLAGS.HELP_CENTER)"
-              :permissions="[...ROLES, PORTAL_PERMISSIONS]"
-              :feature-flag="FEATURE_FLAGS.HELP_CENTER"
-              class="flex flex-col justify-center"
-            >
-              <SearchResultArticlesList
-                v-if="filterArticles"
-                :is-fetching="uiFlags.article.isFetching"
-                :articles="articles"
-                :query="query"
-                :show-title="isSelectedTabAll"
-                :class="searchResultSectionClass"
-              />
-              <NextButton
-                v-if="showViewMore.articles"
-                :label="t(`SEARCH.VIEW_MORE`)"
-                icon="i-lucide-eye"
-                slate
-                sm
-                outline
-                @click="selectedTab = 'articles'"
               />
             </Policy>
 

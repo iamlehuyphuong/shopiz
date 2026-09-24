@@ -13,7 +13,6 @@ import CardLabels from './conversationCardComponents/CardLabels.vue';
 import PriorityMark from './PriorityMark.vue';
 import SLACardLabel from './components/SLACardLabel.vue';
 import ContextMenu from 'dashboard/components/ui/ContextMenu.vue';
-import VoiceCallStatus from './VoiceCallStatus.vue';
 
 const props = defineProps({
   activeLabel: { type: String, default: '' },
@@ -94,11 +93,6 @@ const hasUnread = computed(() => unreadCount.value > 0);
 const isInboxNameVisible = computed(() => !activeInbox.value);
 
 const lastMessageInChat = computed(() => getLastMessage(props.chat));
-
-const voiceCallData = computed(() => ({
-  status: props.chat.additional_attributes?.call_status,
-  direction: props.chat.additional_attributes?.call_direction,
-}));
 
 const inboxId = computed(() => props.chat.inbox_id);
 
@@ -429,22 +423,8 @@ const deleteConversation = () => {
           {{ chat?.additional_attributes?.group?.name || currentContact.name }}
         </h4>
       </div>
-      <div
-        v-if="callStatus"
-        key="voice-status-row"
-        class="my-0 mx-2 leading-6 h-6 flex-1 min-w-0 text-sm overflow-hidden text-ellipsis whitespace-nowrap"
-        :class="messagePreviewClass"
-      >
-        <span
-          class="inline-block -mt-0.5 align-middle text-[16px] i-lucide-phone-incoming"
-          :class="[voiceIconColor]"
-        />
-        <span class="mx-1">
-          {{ $t(voiceLabelKey) }}
-        </span>
-      </div>
       <MessagePreview
-        v-else-if="lastMessageInChat"
+        v-if="lastMessageInChat"
         key="message-preview"
         :message="lastMessageInChat"
         class="my-0 mx-2 leading-6 h-6 flex-1 min-w-0 text-sm"

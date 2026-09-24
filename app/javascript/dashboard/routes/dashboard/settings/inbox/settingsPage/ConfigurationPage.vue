@@ -226,42 +226,8 @@ export default {
 </script>
 
 <template>
-  <div v-if="isATwilioChannel">
-    <SettingsFieldSection
-      :label="$t('INBOX_MGMT.ADD.TWILIO.API_CALLBACK.TITLE')"
-      :help-text="$t('INBOX_MGMT.ADD.TWILIO.API_CALLBACK.SUBTITLE')"
-    >
-      <woot-code :script="inbox.callback_webhook_url" lang="html" />
-    </SettingsFieldSection>
-  </div>
-  <div v-else-if="isAVoiceChannel">
-    <SettingsFieldSection
-      :label="$t('INBOX_MGMT.ADD.VOICE.CONFIGURATION.TWILIO_VOICE_URL_TITLE')"
-      :help-text="
-        $t('INBOX_MGMT.ADD.VOICE.CONFIGURATION.TWILIO_VOICE_URL_SUBTITLE')
-      "
-    >
-      <woot-code :script="inbox.voice_call_webhook_url" lang="html" />
-    </SettingsFieldSection>
-    <SettingsFieldSection
-      :label="$t('INBOX_MGMT.ADD.VOICE.CONFIGURATION.TWILIO_STATUS_URL_TITLE')"
-      :help-text="
-        $t('INBOX_MGMT.ADD.VOICE.CONFIGURATION.TWILIO_STATUS_URL_SUBTITLE')
-      "
-    >
-      <woot-code :script="inbox.voice_status_webhook_url" lang="html" />
-    </SettingsFieldSection>
-  </div>
 
-  <div v-else-if="isALineChannel">
-    <SettingsFieldSection
-      :label="$t('INBOX_MGMT.ADD.LINE_CHANNEL.API_CALLBACK.TITLE')"
-      :help-text="$t('INBOX_MGMT.ADD.LINE_CHANNEL.API_CALLBACK.SUBTITLE')"
-    >
-      <woot-code :script="inbox.callback_webhook_url" lang="html" />
-    </SettingsFieldSection>
-  </div>
-  <div v-else-if="isAZaloPersonalChannel">
+  <div v-if="isAZaloPersonalChannel">
     <SettingsFieldSection
       :label="$t('INBOX_MGMT.SETTINGS_POPUP.PROXY_CONFIGURATION.TITLE')"
       :help-text="$t('INBOX_MGMT.SETTINGS_POPUP.PROXY_CONFIGURATION.SUBTITLE')"
@@ -391,7 +357,7 @@ export default {
       </div>
     </SettingsFieldSection>
   </div>
-  <div v-else-if="isAWhatsAppChannel && !isATwilioChannel">
+  <div v-else-if="isAWhatsAppChannel">
     <div v-if="inbox.provider_config">
       <!-- Embedded Signup Section -->
       <template v-if="isEmbeddedSignupWhatsApp">

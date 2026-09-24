@@ -10,10 +10,6 @@ defineProps({
     type: Boolean,
     default: false,
   },
-  isVoiceType: {
-    type: Boolean,
-    default: false,
-  },
   isZaloPersonalType: {
     type: Boolean,
     default: false,
@@ -43,7 +39,6 @@ const handleDelete = campaign => emit('delete', campaign);
       :inbox="campaign.inbox"
       :scheduled-at="campaign.scheduled_at"
       :is-live-chat-type="isLiveChatType"
-      :is-voice-type="isVoiceType"
       :is-zalo-personal-type="isZaloPersonalType"
       :is-facebook-type="isFacebookType"
       :campaign="campaign"

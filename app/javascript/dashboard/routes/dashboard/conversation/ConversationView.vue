@@ -127,7 +127,6 @@ export default {
     if (!this.$store.getters['agents/getAgents'].length) {
       this.$store.dispatch('agents/get');
     }
-    this.$store.dispatch('portals/index');
     this.initialize();
     this.$watch('$store.state.route', () => this.initialize());
     this.$watch('chatList.length', () => {

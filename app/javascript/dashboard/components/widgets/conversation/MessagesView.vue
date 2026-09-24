@@ -111,10 +111,7 @@ export default {
     inbox() {
       return this.$store.getters['inboxes/getInbox'](this.inboxId);
     },
-    isAVoiceChannel() {
-      // Use inbox.channel_type to match backend conventions
-      return this.inbox?.channel_type === 'Channel::Voice';
-    },
+
     typingUsersList() {
       const userList = this.$store.getters[
         'conversationTypingStatus/getUserList'
@@ -566,11 +563,7 @@ export default {
           />
         </div>
       </div>
-      <VoiceTimelineView
-        v-if="isAVoiceChannel"
-        :conversation-id="currentChat.id"
-        class="mb-4"
-      />
+
       <ReplyBox
         :pop-out-reply-box="isPopOutReplyBox"
         @update:pop-out-reply-box="isPopOutReplyBox = $event"

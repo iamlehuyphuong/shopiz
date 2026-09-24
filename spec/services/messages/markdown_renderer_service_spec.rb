@@ -184,98 +184,6 @@ RSpec.describe Messages::MarkdownRendererService, type: :service do
       end
     end
 
-    context 'when channel is Channel::Line' do
-      let(:channel_type) { 'Channel::Line' }
-
-      it 'adds spaces around bold markers' do
-        content = '**bold**'
-        result = described_class.new(content, channel_type).render
-        expect(result).to include(' *bold* ')
-      end
-
-      it 'adds spaces around italic markers' do
-        content = '_italic_'
-        result = described_class.new(content, channel_type).render
-        expect(result).to include(' _italic_ ')
-      end
-
-      it 'adds spaces around code markers' do
-        content = '`code`'
-        result = described_class.new(content, channel_type).render
-        expect(result).to include(' `code` ')
-      end
-    end
-
-    context 'when channel is Channel::Sms' do
-      let(:channel_type) { 'Channel::Sms' }
-
-      it 'strips all markdown formatting' do
-        content = '**bold** _italic_ `code`'
-        result = described_class.new(content, channel_type).render
-        expect(result.strip).to eq('bold italic code')
-      end
-
-      it 'preserves URLs from links in plain text format' do
-        content = '[link text](https://example.com)'
-        result = described_class.new(content, channel_type).render
-        expect(result).to eq('link text https://example.com')
-      end
-
-      it 'preserves URLs in messages with multiple links' do
-        content = 'Visit [our site](https://example.com) or [help center](https://help.example.com)'
-        result = described_class.new(content, channel_type).render
-        expect(result).to eq('Visit our site https://example.com or help center https://help.example.com')
-      end
-
-      it 'preserves link text and URL when both are present' do
-        content = '[Reset password](https://example.com/reset)'
-        result = described_class.new(content, channel_type).render
-        expect(result).to eq('Reset password https://example.com/reset')
-      end
-
-      it 'handles complex markdown' do
-        content = "# Heading\n\n**bold** _italic_ [link](https://example.com)"
-        result = described_class.new(content, channel_type).render
-        expect(result).to include('Heading')
-        expect(result).to include('bold')
-        expect(result).to include('italic')
-        expect(result).to include('link https://example.com')
-        expect(result).not_to include('**')
-        expect(result).not_to include('_')
-        expect(result).not_to include('[')
-      end
-
-      it 'preserves bullet list markers' do
-        content = "- first item\n- second item\n- third item"
-        result = described_class.new(content, channel_type).render
-        expect(result).to include('- first item')
-        expect(result).to include('- second item')
-        expect(result).to include('- third item')
-      end
-
-      it 'preserves ordered list markers with numbering' do
-        content = "1. first step\n2. second step\n3. third step"
-        result = described_class.new(content, channel_type).render
-        expect(result).to include('1. first step')
-        expect(result).to include('2. second step')
-        expect(result).to include('3. third step')
-      end
-
-      it 'preserves newlines in plain text without list markers' do
-        content = "Line 1\nLine 2\nLine 3"
-        result = described_class.new(content, channel_type).render
-        expect(result).to include("Line 1\nLine 2\nLine 3")
-        expect(result).not_to include('Line 1 Line 2')
-      end
-
-      it 'preserves multiple consecutive newlines for spacing' do
-        content = "Para 1\n\n\n\nPara 2"
-        result = described_class.new(content, channel_type).render
-        expect(result.scan("\n").count).to eq(4)
-        expect(result).to include("Para 1\n\n\n\nPara 2")
-      end
-    end
-
     context 'when channel is Channel::Telegram' do
       let(:channel_type) { 'Channel::Telegram' }
 
@@ -400,55 +308,6 @@ RSpec.describe Messages::MarkdownRendererService, type: :service do
       end
     end
 
-    context 'when channel is Channel::TwilioSms' do
-      let(:channel_type) { 'Channel::TwilioSms' }
-
-      it 'strips all markdown like SMS when medium is sms' do
-        content = '**bold** _italic_'
-        channel = instance_double(Channel::TwilioSms, whatsapp?: false)
-        result = described_class.new(content, channel_type, channel).render
-        expect(result.strip).to eq('bold italic')
-      end
-
-      it 'uses WhatsApp renderer when medium is whatsapp' do
-        content = '**bold** _italic_ [link](https://example.com)'
-        channel = instance_double(Channel::TwilioSms, whatsapp?: true)
-        result = described_class.new(content, channel_type, channel).render
-        expect(result.strip).to eq('*bold* _italic_ https://example.com')
-      end
-
-      it 'preserves newlines in Twilio WhatsApp' do
-        content = "Line 1\nLine 2\nLine 3"
-        channel = instance_double(Channel::TwilioSms, whatsapp?: true)
-        result = described_class.new(content, channel_type, channel).render
-        expect(result).to include("Line 1\nLine 2\nLine 3")
-      end
-
-      it 'preserves ordered list markers with numbering in Twilio WhatsApp' do
-        content = "1. first step\n2. second step\n3. third step"
-        channel = instance_double(Channel::TwilioSms, whatsapp?: true)
-        result = described_class.new(content, channel_type, channel).render
-        expect(result).to include('1. first step')
-        expect(result).to include('2. second step')
-        expect(result).to include('3. third step')
-      end
-
-      it 'preserves unordered list markers in Twilio WhatsApp' do
-        content = "- item 1\n- item 2\n- item 3"
-        channel = instance_double(Channel::TwilioSms, whatsapp?: true)
-        result = described_class.new(content, channel_type, channel).render
-        expect(result).to include('- item 1')
-        expect(result).to include('- item 2')
-        expect(result).to include('- item 3')
-      end
-
-      it 'backwards compatible when channel is not provided' do
-        content = '**bold** _italic_'
-        result = described_class.new(content, channel_type).render
-        expect(result.strip).to eq('bold italic')
-      end
-    end
-
     context 'when channel is Channel::Api' do
       let(:channel_type) { 'Channel::Api' }
 
@@ -468,25 +327,6 @@ RSpec.describe Messages::MarkdownRendererService, type: :service do
         content = "- Item 1\n- Item 2"
         result = described_class.new(content, channel_type).render
         expect(result).to eq("- Item 1\n- Item 2")
-      end
-    end
-
-    context 'when channel is Channel::TwitterProfile' do
-      let(:channel_type) { 'Channel::TwitterProfile' }
-
-      it 'strips all markdown like SMS' do
-        content = '**bold** [link](https://example.com)'
-        result = described_class.new(content, channel_type).render
-        expect(result).to include('bold')
-        expect(result).to include('link https://example.com')
-        expect(result).not_to include('**')
-        expect(result).not_to include('[')
-      end
-
-      it 'preserves URLs from links' do
-        content = '[Reset password](https://example.com/reset)'
-        result = described_class.new(content, channel_type).render
-        expect(result).to eq('Reset password https://example.com/reset')
       end
     end
 
@@ -523,8 +363,6 @@ RSpec.describe Messages::MarkdownRendererService, type: :service do
         Channel::Whatsapp
         Channel::Instagram
         Channel::FacebookPage
-        Channel::Line
-        Channel::Sms
       ].each do |channel_type|
         context "when channel is #{channel_type}" do
           it 'normalizes whitespace-only lines and preserves multiple newlines' do
@@ -535,14 +373,6 @@ RSpec.describe Messages::MarkdownRendererService, type: :service do
             # Should not collapse everything to just 1-2 newlines
             expect(result.scan("\n").count).to be > 5
           end
-        end
-      end
-
-      context 'when channel is Channel::TwilioSms with WhatsApp' do
-        it 'normalizes whitespace-only lines and preserves multiple newlines' do
-          channel = instance_double(Channel::TwilioSms, whatsapp?: true)
-          result = described_class.new(content_with_whitespace_newlines, 'Channel::TwilioSms', channel).render
-          expect(result.scan("\n").count).to be >= 10
         end
       end
     end

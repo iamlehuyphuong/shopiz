@@ -8,7 +8,6 @@ import CardLayout from 'dashboard/components-next/CardLayout.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 import LiveChatCampaignDetails from './LiveChatCampaignDetails.vue';
 import SMSCampaignDetails from './SMSCampaignDetails.vue';
-import VoiceCampaignDetails from './VoiceCampaignDetails.vue';
 import ZaloPersonalCampaignDetails from './ZaloPersonalCampaignDetails.vue';
 import FacebookCampaignDetails from './FacebookCampaignDetails.vue';
 
@@ -22,10 +21,6 @@ const props = defineProps({
     default: '',
   },
   isLiveChatType: {
-    type: Boolean,
-    default: false,
-  },
-  isVoiceType: {
     type: Boolean,
     default: false,
   },
@@ -90,12 +85,6 @@ const campaignStatus = computed(() => {
       : t('CAMPAIGN.LIVE_CHAT.CARD.STATUS.DISABLED');
   }
 
-  if (props.isVoiceType) {
-    return props.status === STATUS_COMPLETED
-      ? t('CAMPAIGN.VOICE.CARD.STATUS.COMPLETED')
-      : t('CAMPAIGN.VOICE.CARD.STATUS.SCHEDULED');
-  }
-
   return props.status === STATUS_COMPLETED
     ? t('CAMPAIGN.SMS.CARD.STATUS.COMPLETED')
     : t('CAMPAIGN.SMS.CARD.STATUS.SCHEDULED');
@@ -136,12 +125,6 @@ const inboxIcon = computed(() => {
           :inbox-name="inboxName"
           :inbox-icon="inboxIcon"
         />
-        <VoiceCampaignDetails
-          v-else-if="isVoiceType"
-          :sender="sender"
-          :inbox-name="inboxName"
-          :inbox-icon="inboxIcon"
-        />
         <ZaloPersonalCampaignDetails
           v-else-if="isZaloPersonalType"
           :sender="sender"
@@ -169,7 +152,6 @@ const inboxIcon = computed(() => {
       <Button
         v-if="
           isLiveChatType ||
-          isVoiceType ||
           (isZaloPersonalType && status == 'active') ||
           (isFacebookType && status == 'active')
         "

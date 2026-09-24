@@ -68,8 +68,7 @@ class Account < ApplicationRecord
             'assistant': { 'type': %w[string null] },
             'copilot': { 'type': %w[string null] },
             'label_suggestion': { 'type': %w[string null] },
-            'audio_transcription': { 'type': %w[string null] },
-            'help_center_search': { 'type': %w[string null] }
+            'audio_transcription': { 'type': %w[string null] }
           },
           'additionalProperties': false
         },
@@ -80,8 +79,7 @@ class Account < ApplicationRecord
             'assistant': { 'type': %w[boolean null] },
             'copilot': { 'type': %w[boolean null] },
             'label_suggestion': { 'type': %w[boolean null] },
-            'audio_transcription': { 'type': %w[boolean null] },
-            'help_center_search': { 'type': %w[boolean null] }
+            'audio_transcription': { 'type': %w[boolean null] }
           },
           'additionalProperties': false
         },
@@ -264,6 +262,10 @@ class Account < ApplicationRecord
       id: id,
       name: name
     }
+  end
+
+  def inbound_email_domain
+    domain.presence || GlobalConfig.get('MAILER_INBOUND_EMAIL_DOMAIN')['MAILER_INBOUND_EMAIL_DOMAIN'] || ENV.fetch('MAILER_INBOUND_EMAIL_DOMAIN', false)
   end
 
   def support_email

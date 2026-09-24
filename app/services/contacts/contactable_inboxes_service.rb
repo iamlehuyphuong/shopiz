@@ -12,12 +12,8 @@ class Contacts::ContactableInboxesService
     case inbox.channel_type
     when 'Channel::ZaloPersonal'
       zalo_personal_contactable_inbox(inbox)
-    when 'Channel::TwilioSms'
-      twilio_contactable_inbox(inbox)
     when 'Channel::Whatsapp'
       whatsapp_contactable_inbox(inbox)
-    when 'Channel::Sms'
-      sms_contactable_inbox(inbox)
     when 'Channel::Api'
       api_contactable_inbox(inbox)
     when 'Channel::WebWidget'

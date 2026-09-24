@@ -262,7 +262,7 @@ contacts:
     email: "mkeatch2@reuters.test"
     gender: 'female'
     conversations:
-      - channel: Channel::TwitterProfile
+      - channel: Channel::WebWidget
         messages:
           - message_type: incoming
             content: Xin chào, tôi nghĩ mình đã xóa nhầm một số tệp quan trọng. Bạn có thể giúp tôi khôi phục không?
@@ -285,7 +285,7 @@ contacts:
     email: "vcorp4@instagram.test"
     gender: 'female'
     conversations:
-      - channel: Channel::Sms
+      - channel: Channel::Telegram
         source_id: "+1234567"
         messages:
           - message_type: incoming
@@ -297,7 +297,7 @@ contacts:
     email: "dpittway5@chron.test"
     gender: 'male'
     conversations:
-    - channel: Channel::Line
+    - channel: Channel::Api
       messages:
         - message_type: incoming
           content: Xin chào, tôi đang cố cập nhật thông tin tài khoản nhưng không lưu được.
@@ -319,7 +319,7 @@ contacts:
     email: "bcusworth7@arstechnica.test"
     gender: 'male'
     conversations:
-      - channel: Channel::TwitterProfile
+      - channel: Channel::WebWidget
         messages:
           - message_type: incoming
             content: Xin chào, tôi lỡ đặt nhầm sản phẩm. Tôi có thể hủy đơn hàng không?
@@ -365,7 +365,7 @@ contacts:
     email: "bjanewayb@ustream.tv"
     gender: 'male'
     conversations:
-      - channel: Channel::Line
+      - channel: Channel::Api
         messages:
           - message_type: incoming
             content: Xin chào, tôi có câu hỏi về các tính năng của sản phẩm.

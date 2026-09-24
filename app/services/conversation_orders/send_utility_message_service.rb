@@ -2,7 +2,7 @@ class ConversationOrders::SendUtilityMessageService
   attr_reader :order, :conversation
 
   SUPPORTED_CHANNELS = %w[Channel::FacebookPage Channel::Telegram Channel::ZaloPersonal Channel::ZaloOa Channel::Whatsapp Channel::Instagram
-                          Channel::Tiktok Channel::TiktokShop Channel::Line].freeze
+                          Channel::Tiktok Channel::TiktokShop].freeze
 
   def initialize(order:, conversation:)
     @order = order

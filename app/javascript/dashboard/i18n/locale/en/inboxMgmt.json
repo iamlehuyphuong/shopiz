@@ -118,13 +118,6 @@
         "ERROR_MESSAGE": "There was an error connecting to TikTok, please try again",
         "ERROR_AUTH": "There was an error connecting to TikTok, please try again"
       },
-      "TWITTER": {
-        "HELP": "To add your Twitter profile as a channel, you need to authenticate your Twitter Profile by clicking on 'Sign in with Twitter' ",
-        "ERROR_MESSAGE": "There was an error connecting to Twitter, please try again",
-        "TWEETS": {
-          "ENABLE": "Create conversations from mentioned Tweets"
-        }
-      },
       "WEBSITE_CHANNEL": {
         "TITLE": "Website channel",
         "DESC": "Create a channel for your website and start supporting your customers via our website widget.",
@@ -175,152 +168,14 @@
           "ERROR_MESSAGE": "We were not able to create a website channel, please try again"
         }
       },
-      "TWILIO": {
-        "TITLE": "Twilio SMS/WhatsApp Channel",
-        "DESC": "Integrate Twilio and start supporting your customers via SMS or WhatsApp.",
-        "ACCOUNT_SID": {
-          "LABEL": "Account SID",
-          "PLACEHOLDER": "Please enter your Twilio Account SID",
-          "ERROR": "This field is required"
-        },
-        "API_KEY": {
-          "USE_API_KEY": "Use API Key Authentication",
-          "LABEL": "API Key SID",
-          "PLACEHOLDER": "Please enter your API Key SID",
-          "ERROR": "This field is required"
-        },
-        "API_KEY_SECRET": {
-          "LABEL": "API Key Secret",
-          "PLACEHOLDER": "Please enter your API Key Secret",
-          "ERROR": "This field is required"
-        },
-        "MESSAGING_SERVICE_SID": {
-          "LABEL": "Messaging Service SID",
-          "PLACEHOLDER": "Please enter your Twilio Messaging Service SID",
-          "ERROR": "This field is required",
-          "USE_MESSAGING_SERVICE": "Use a Twilio Messaging Service"
-        },
-        "CHANNEL_TYPE": {
-          "LABEL": "Channel Type",
-          "ERROR": "Please select your Channel Type"
-        },
-        "AUTH_TOKEN": {
-          "LABEL": "Auth Token",
-          "PLACEHOLDER": "Please enter your Twilio Auth Token",
-          "ERROR": "This field is required"
-        },
-        "CHANNEL_NAME": {
-          "LABEL": "Inbox Name",
-          "PLACEHOLDER": "Please enter a inbox name",
-          "ERROR": "This field is required"
-        },
-        "PHONE_NUMBER": {
-          "LABEL": "Phone Number",
-          "PLACEHOLDER": "Please enter the phone number from which message will be sent.",
-          "ERROR": "Please provide a valid phone number that starts with a `+` sign and does not contain any spaces."
-        },
-        "API_CALLBACK": {
-          "TITLE": "Callback URL",
-          "SUBTITLE": "You have to configure the message callback URL in Twilio with the URL mentioned here."
-        },
-        "SUBMIT_BUTTON": "Create Twilio Channel",
-        "API": {
-          "ERROR_MESSAGE": "We were not able to authenticate Twilio credentials, please try again"
-        }
-      },
-      "SMS": {
-        "TITLE": "SMS Channel",
-        "DESC": "Start supporting your customers via SMS.",
-        "PROVIDERS": {
-          "LABEL": "API Provider",
-          "TWILIO": "Twilio",
-          "BANDWIDTH": "Bandwidth"
-        },
-        "API": {
-          "ERROR_MESSAGE": "We were not able to save the SMS channel"
-        },
-        "BANDWIDTH": {
-          "ACCOUNT_ID": {
-            "LABEL": "Account ID",
-            "PLACEHOLDER": "Please enter your Bandwidth Account ID",
-            "ERROR": "This field is required"
-          },
-          "API_KEY": {
-            "LABEL": "API Key",
-            "PLACEHOLDER": "Please enter your Bandwidth API Key",
-            "ERROR": "This field is required"
-          },
-          "API_SECRET": {
-            "LABEL": "API Secret",
-            "PLACEHOLDER": "Please enter your Bandwidth API Secret",
-            "ERROR": "This field is required"
-          },
-          "APPLICATION_ID": {
-            "LABEL": "Application ID",
-            "PLACEHOLDER": "Please enter your Bandwidth Application ID",
-            "ERROR": "This field is required"
-          },
-          "INBOX_NAME": {
-            "LABEL": "Inbox Name",
-            "PLACEHOLDER": "Please enter a inbox name",
-            "ERROR": "This field is required"
-          },
-          "PHONE_NUMBER": {
-            "LABEL": "Phone number",
-            "PLACEHOLDER": "Please enter the phone number from which message will be sent.",
-            "ERROR": "Please provide a valid phone number that starts with a `+` sign and does not contain any spaces."
-          },
-          "SUBMIT_BUTTON": "Create Bandwidth Channel",
-          "API": {
-            "ERROR_MESSAGE": "We were not able to authenticate Bandwidth credentials, please try again"
-          },
-          "API_CALLBACK": {
-            "TITLE": "Callback URL",
-            "SUBTITLE": "You have to configure the message callback URL in Bandwidth with the URL mentioned here."
-          }
-        }
-      },
-      "VOICE": {
-        "TITLE": "Voice Channel",
-        "DESC": "Integrate voice calling capabilities with your preferred provider.",
-        "PROVIDER": {
-          "LABEL": "Provider",
-          "PLACEHOLDER": "Select a voice provider"
-        },
-        "PHONE_NUMBER": {
-          "LABEL": "Phone Number",
-          "PLACEHOLDER": "Please enter the phone number from which calls will be made.",
-          "REQUIRED": "This field is required",
-          "ERROR": "Please provide a valid phone number that starts with a `+` sign and does not contain any spaces."
-        },
-        "TWILIO": {
-          "ACCOUNT_SID": {
-            "LABEL": "Account SID",
-            "PLACEHOLDER": "Please enter your Twilio Account SID",
-            "REQUIRED": "This field is required"
-          },
-          "AUTH_TOKEN": {
-            "LABEL": "Auth Token",
-            "PLACEHOLDER": "Please enter your Twilio Auth Token",
-            "REQUIRED": "This field is required"
-          }
-        },
-        "SUBMIT_BUTTON": "Create Voice Channel",
-        "API": {
-          "SUCCESS_MESSAGE": "Voice channel registered successfully",
-          "ERROR_MESSAGE": "Unable to create voice channel. Please try again."
-        }
-      },
       "WHATSAPP": {
         "TITLE": "WhatsApp Channel",
         "DESC": "Start supporting your customers via WhatsApp.",
         "PROVIDERS": {
           "LABEL": "API Provider",
           "WHATSAPP_EMBEDDED": "WhatsApp Business",
-          "TWILIO": "Twilio",
           "WHATSAPP_CLOUD": "WhatsApp Cloud",
           "WHATSAPP_CLOUD_DESC": "Quick setup through Meta",
-          "TWILIO_DESC": "Connect via Twilio credentials",
           "360_DIALOG": "360Dialog"
         },
         "SELECT_PROVIDER": {
@@ -397,47 +252,6 @@
           "ERROR_MESSAGE": "We were not able to save the WhatsApp channel"
         }
       },
-      "VOICE": {
-        "TITLE": "Voice Channel",
-        "DESC": "Integrate Twilio Voice and start supporting your customers via phone calls.",
-        "PHONE_NUMBER": {
-          "LABEL": "Phone Number",
-          "PLACEHOLDER": "Enter your phone number (e.g. +1234567890)",
-          "ERROR": "Please provide a valid phone number in E.164 format (e.g. +1234567890)"
-        },
-        "TWILIO": {
-          "ACCOUNT_SID": {
-            "LABEL": "Account SID",
-            "PLACEHOLDER": "Enter your Twilio Account SID",
-            "REQUIRED": "Account SID is required"
-          },
-          "AUTH_TOKEN": {
-            "LABEL": "Auth Token",
-            "PLACEHOLDER": "Enter your Twilio Auth Token",
-            "REQUIRED": "Auth Token is required"
-          },
-          "API_KEY_SID": {
-            "LABEL": "API Key SID",
-            "PLACEHOLDER": "Enter your Twilio API Key SID",
-            "REQUIRED": "API Key SID is required"
-          },
-          "API_KEY_SECRET": {
-            "LABEL": "API Key Secret",
-            "PLACEHOLDER": "Enter your Twilio API Key Secret",
-            "REQUIRED": "API Key Secret is required"
-          }
-        },
-        "CONFIGURATION": {
-          "TWILIO_VOICE_URL_TITLE": "Twilio Voice URL",
-          "TWILIO_VOICE_URL_SUBTITLE": "Configure this URL as the Voice URL on your Twilio phone number and TwiML App.",
-          "TWILIO_STATUS_URL_TITLE": "Twilio Status Callback URL",
-          "TWILIO_STATUS_URL_SUBTITLE": "Configure this URL as the Status Callback URL on your Twilio phone number."
-        },
-        "SUBMIT_BUTTON": "Create Voice Channel",
-        "API": {
-          "ERROR_MESSAGE": "We were not able to create the voice channel"
-        }
-      },
       "API_CHANNEL": {
         "TITLE": "API Channel",
         "DESC": "Integrate with API channel and start supporting your customers.",
@@ -454,35 +268,6 @@
         "SUBMIT_BUTTON": "Create API Channel",
         "API": {
           "ERROR_MESSAGE": "We were not able to save the api channel"
-        }
-      },
-      "LINE_CHANNEL": {
-        "TITLE": "LINE Channel",
-        "DESC": "Integrate with LINE channel and start supporting your customers.",
-        "CHANNEL_NAME": {
-          "LABEL": "Channel Name",
-          "PLACEHOLDER": "Please enter a channel name",
-          "ERROR": "This field is required"
-        },
-        "LINE_CHANNEL_ID": {
-          "LABEL": "LINE Channel ID",
-          "PLACEHOLDER": "LINE Channel ID"
-        },
-        "LINE_CHANNEL_SECRET": {
-          "LABEL": "LINE Channel Secret",
-          "PLACEHOLDER": "LINE Channel Secret"
-        },
-        "LINE_CHANNEL_TOKEN": {
-          "LABEL": "LINE Channel Token",
-          "PLACEHOLDER": "LINE Channel Token"
-        },
-        "SUBMIT_BUTTON": "Create LINE Channel",
-        "API": {
-          "ERROR_MESSAGE": "We were not able to save the LINE channel"
-        },
-        "API_CALLBACK": {
-          "TITLE": "Callback URL",
-          "SUBTITLE": "You have to configure the webhook URL in LINE application with the URL mentioned here."
         }
       },
       "TELEGRAM_CHANNEL": {
@@ -516,10 +301,6 @@
             "TITLE": "WhatsApp",
             "DESCRIPTION": "Support your customers on WhatsApp"
           },
-          "SMS": {
-            "TITLE": "SMS",
-            "DESCRIPTION": "Integrate SMS channel with Twilio or bandwidth"
-          },
           "API": {
             "TITLE": "API",
             "DESCRIPTION": "Make a custom channel using our API"
@@ -536,17 +317,9 @@
             "TITLE": "Instagram",
             "DESCRIPTION": "Connect your instagram account"
           },
-          "TWITTER": {
-            "TITLE": "Twitter",
-            "DESCRIPTION": "Connect your twitter account"
-          },
           "TIKTOK": {
             "TITLE": "TikTok",
             "DESCRIPTION": "Connect your TikTok account"
-          },
-          "VOICE": {
-            "TITLE": "Voice",
-            "DESCRIPTION": "Integrate with Twilio Voice"
           },
           "ZALO_OA": {
             "TITLE": "Zalo OA",
@@ -905,7 +678,8 @@
         "ENABLE_DESC": "Automatically contact via Zalo Personal when customers leave their phone number in this Inbox.",
         "SELECT_INBOX": "Select Zalo Personal",
         "SELECT_INBOX_DESC": "Select the Zalo Personal channels that will be used to send friend requests/messages (Round robin)."
-      },      "MESSENGER_HEADING": "Messenger Script",
+      },
+      "MESSENGER_HEADING": "Messenger Script",
       "MESSENGER_SUB_HEAD": "Place this button inside your body tag",
       "ALLOWED_DOMAINS": {
         "TITLE": "Allowed Domains",
@@ -928,8 +702,6 @@
       "INBOX_AGENTS_SUB_TEXT": "Add or remove agents from this inbox",
       "AGENT_ASSIGNMENT": "Conversation Assignment",
       "AGENT_ASSIGNMENT_SUB_TEXT": "Update conversation assignment settings",
-      "VOICE_CALL_ROUTING": "Call Routing",
-      "VOICE_CALL_ROUTING_SUB_TEXT": "Configure how calls are handled when agents are unavailable",
       "PERSONAL_PHONE_ROUTING": "Enable routing to personal phone",
       "PERSONAL_PHONE_ROUTING_SUB_TEXT": "When an agent is not online in Shopiz, route incoming calls to their personal phone number",
       "AGENT_PHONE_SETTINGS_INFO": "Each agent can configure their personal phone number in their profile settings page",
@@ -1011,14 +783,6 @@
       "WHATSAPP_TEMPLATES_SYNC_BUTTON": "Sync Templates",
       "WHATSAPP_TEMPLATES_SYNC_SUCCESS": "Templates sync initiated successfully. It may take a couple of minutes to update.",
       "UPDATE_PRE_CHAT_FORM_SETTINGS": "Update Pre Chat Form Settings"
-    },
-    "HELP_CENTER": {
-      "LABEL": "Help Center",
-      "PLACEHOLDER": "Select Help Center",
-      "SELECT_PLACEHOLDER": "Select Help Center",
-      "NONE": "None",
-      "REMOVE": "Remove Help Center",
-      "SUB_TEXT": "Attach a Help Center with the inbox"
     },
     "AUTO_ASSIGNMENT": {
       "MAX_ASSIGNMENT_LIMIT": "Auto assignment limit",
@@ -1336,11 +1100,7 @@
     "CHANNELS": {
       "MESSENGER": "Messenger",
       "WEB_WIDGET": "Website",
-      "TWITTER_PROFILE": "Twitter",
-      "TWILIO_SMS": "Twilio SMS",
-      "VOICE": "Voice",
       "WHATSAPP": "WhatsApp",
-      "SMS": "SMS",
       "TELEGRAM": "Telegram",
       "LINE": "Line",
       "API": "API Channel",

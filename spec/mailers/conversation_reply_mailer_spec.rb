@@ -1,0 +1,456 @@
+# frozen_string_literal: true
+
+require 'rails_helper'
+
+RSpec.describe ConversationReplyMailer do
+  describe 'reply' do
+    let!(:account) { create(:account) }
+    let!(:agent) { create(:user, email: 'agent1@example.com', account: account) }
+    let(:class_instance) { described_class.new }
+
+
+    before do
+      allow(described_class).to receive(:new).and_return(class_instance)
+      allow(class_instance).to receive(:smtp_config_set_or_development?).and_return(true)
+    end
+
+    context 'with summary' do
+      let(:conversation) { create(:conversation, account: account, assignee: agent) }
+      let(:message) do
+        create(:message,
+               account: account,
+               conversation: conversation,
+               content_attributes: {
+                 cc_emails: 'agent_cc1@example.com',
+                 bcc_emails: 'agent_bcc1@example.com'
+               })
+      end
+      let(:new_message) do
+        create(:message,
+               account: account,
+               conversation: conversation,
+               content_attributes: {
+                 cc_emails: 'agent_cc2@example.com',
+                 bcc_emails: 'agent_bcc2@example.com'
+               })
+      end
+      let(:cc_message) do
+        create(:message,
+               account: account,
+               message_type: :outgoing,
+               conversation: conversation,
+               content_attributes: {
+                 cc_emails: 'agent_cc1@example.com',
+                 bcc_emails: 'agent_bcc1@example.com'
+               })
+      end
+
+      let(:private_message) { create(:message, account: account, content: 'This is a private message', conversation: conversation) }
+      let(:mail) { described_class.reply_with_summary(message.conversation, message.id).deliver_now }
+      let(:cc_mail) { described_class.reply_with_summary(cc_message.conversation, message.id).deliver_now }
+
+      it 'renders the default subject' do
+        expect(mail.subject).to eq("[##{message.conversation.display_id}] New messages on this conversation")
+      end
+
+      it 'renders the subject in conversation as reply' do
+        conversation.additional_attributes = { 'mail_subject': 'Mail Subject' }
+        conversation.save!
+        new_message.save!
+        expect(mail.subject).to eq('Re: Mail Subject')
+      end
+
+      it 'not have private notes' do
+        # make the message private
+        private_message.private = true
+        private_message.save!
+
+        expect(mail.body.decoded).not_to include(private_message.content)
+        expect(mail.body.decoded).to include(message.content)
+      end
+
+      it 'will not send email if conversation is already viewed by contact' do
+        create(:message, message_type: 'outgoing', account: account, conversation: conversation)
+        conversation.update(contact_last_seen_at: Time.zone.now)
+        expect(mail).to be_nil
+      end
+
+      it 'will send email to cc and bcc email addresses' do
+        expect(cc_mail.cc.first).to eq(cc_message.content_attributes[:cc_emails])
+        expect(cc_mail.bcc.first).to eq(cc_message.content_attributes[:bcc_emails])
+      end
+    end
+
+    context 'without assignee' do
+      let(:conversation) { create(:conversation, assignee: nil) }
+      let(:message) { create(:message, message_type: :outgoing, conversation: conversation) }
+      let(:mail) { described_class.reply_with_summary(message.conversation, message.id).deliver_now }
+
+      it 'has correct name' do
+        expect(mail[:from].display_names).to eq(["#{message.sender.available_name} from #{message.conversation.inbox.sanitized_name}"])
+      end
+    end
+
+    context 'without summary' do
+      let(:conversation) { create(:conversation, assignee: agent, account: account).reload }
+      let(:message_1) { create(:message, conversation: conversation, account: account, content: 'Outgoing Message 1').reload }
+      let(:message_2) { build(:message, conversation: conversation, account: account, message_type: 'outgoing', content: 'Outgoing Message 2') }
+      let(:private_message) do
+        create(:message,
+               content: 'This is a private message',
+               conversation: conversation,
+               account: account,
+               message_type: 'outgoing').reload
+      end
+      let(:mail) { described_class.reply_without_summary(message_2.conversation, message_2.id).deliver_now }
+
+      before do
+        message_2.save!
+      end
+
+      it 'renders the default subject' do
+        expect(mail.subject).to eq("[##{message_2.conversation.display_id}] New messages on this conversation")
+      end
+
+      it 'renders the subject in conversation' do
+        conversation.additional_attributes = { 'mail_subject': 'Mail Subject' }
+        conversation.save!
+        expect(mail.subject).to eq('Mail Subject')
+      end
+
+      it 'not have private notes' do
+        # make the message private
+        private_message.private = true
+        private_message.save!
+        expect(mail.body.decoded).not_to include(private_message.content)
+      end
+
+      it 'onlies have the messages sent by the agent' do
+        expect(mail.body.decoded).not_to include(message_1.content)
+        expect(mail.body.decoded).to include(message_2.content)
+      end
+
+      it 'will not send email if conversation is already viewed by contact' do
+        create(:message, message_type: 'outgoing', account: account, conversation: conversation)
+        conversation.update(contact_last_seen_at: Time.zone.now)
+        expect(mail).to be_nil
+      end
+    end
+
+    context 'with references header' do
+      let(:conversation) { create(:conversation, assignee: agent, account: account).reload }
+      let(:message) { create(:message, conversation: conversation, account: account, message_type: 'outgoing', content: 'Outgoing Message 2') }
+      let(:mail) { described_class.email_reply(message).deliver_now }
+
+      context 'when starting a new conversation' do
+        let(:first_outgoing_message) do
+          create(:message,
+                 conversation: conversation,
+                 account: account,
+                 message_type: 'outgoing',
+                 content: 'First outgoing message')
+        end
+        let(:mail) { described_class.email_reply(first_outgoing_message).deliver_now }
+
+        it 'has only the conversation reference' do
+          # When starting a conversation, references will have the default conversation ID
+          # Extract domain from the actual references header to handle dynamic domain selection
+          actual_domain = mail.references.split('@').last
+          expected_reference = "account/#{account.id}/conversation/#{conversation.uuid}@#{actual_domain}"
+          expect(mail.references).to eq(expected_reference)
+        end
+      end
+
+      context 'when replying to a message with no references' do
+        let(:incoming_message) do
+          create(:message,
+                 conversation: conversation,
+                 account: account,
+                 message_type: 'incoming',
+                 source_id: '<incoming-123@example.com>',
+                 content: 'Incoming message',
+                 content_attributes: {
+                   'email' => {
+                     'message_id' => 'incoming-123@example.com'
+                   }
+                 })
+        end
+        let(:reply_message) do
+          create(:message,
+                 conversation: conversation,
+                 account: account,
+                 message_type: 'outgoing',
+                 content: 'Reply to incoming')
+        end
+        let(:mail) { described_class.email_reply(reply_message).deliver_now }
+
+        before do
+          incoming_message
+        end
+
+        it 'includes only the in_reply_to id in references' do
+          # References should only have the incoming message ID when no prior references exist
+          expect(mail.references).to eq('incoming-123@example.com')
+        end
+      end
+
+      context 'when replying to a message that has references' do
+        let(:incoming_message_with_refs) do
+          create(:message,
+                 conversation: conversation,
+                 account: account,
+                 message_type: 'incoming',
+                 source_id: '<incoming-456@example.com>',
+                 content: 'Incoming with references',
+                 content_attributes: {
+                   'email' => {
+                     'message_id' => 'incoming-456@example.com',
+                     'references' => ['<ref-1@example.com>', '<ref-2@example.com>']
+                   }
+                 })
+        end
+        let(:reply_message) do
+          create(:message,
+                 conversation: conversation,
+                 account: account,
+                 message_type: 'outgoing',
+                 content: 'Reply to message with refs')
+        end
+        let(:mail) { described_class.email_reply(reply_message).deliver_now }
+
+        before do
+          incoming_message_with_refs
+        end
+
+        it 'includes existing references plus the in_reply_to id' do
+          # Rails returns references as an array when multiple values are present
+          expected_references = ['ref-1@example.com', 'ref-2@example.com', 'incoming-456@example.com']
+          expect(mail.references).to eq(expected_references)
+        end
+      end
+    end
+
+    context 'with email reply' do
+      let(:conversation) { create(:conversation, assignee: agent, account: account).reload }
+      let(:message) { create(:message, conversation: conversation, account: account, message_type: 'outgoing', content: 'Outgoing Message 2') }
+      let(:mail) { described_class.email_reply(message).deliver_now }
+
+      it 'renders the subject' do
+        expect(mail.subject).to eq("[##{message.conversation.display_id}] New messages on this conversation")
+      end
+
+      it 'renders the body' do
+        expect(mail.decoded).to include message.content
+      end
+
+      it 'builds messageID properly' do
+        expect(mail.message_id).to eq("conversation/#{conversation.uuid}/messages/#{message.id}@#{conversation.account.domain}")
+      end
+
+      context 'when message is a CSAT survey' do
+        let(:api_channel) { create(:channel_api, account: account) }
+        let(:api_conversation) { create(:conversation, assignee: agent, inbox: api_channel.inbox, account: account).reload }
+        let(:csat_message) do
+          create(:message, conversation: api_conversation, account: account, message_type: 'template',
+                           content_type: 'input_csat', content: 'How would you rate our support?', sender: agent)
+        end
+
+        it 'includes CSAT survey URL in outgoing_content' do
+          with_modified_env 'FRONTEND_URL' => 'https://app.shopiz.pro' do
+            mail = described_class.email_reply(csat_message).deliver_now
+            expect(mail.decoded).to include "https://app.shopiz.pro/survey/responses/#{api_conversation.uuid}"
+          end
+        end
+
+        it 'uses outgoing_content for CSAT message body' do
+          with_modified_env 'FRONTEND_URL' => 'https://app.shopiz.pro' do
+            mail = described_class.email_reply(csat_message).deliver_now
+            expect(mail.body.encoded).to include "https://app.shopiz.pro/survey/responses/#{api_conversation.uuid}"
+          end
+        end
+      end
+
+      context 'with email attachments' do
+        it 'includes small attachments as email attachments' do
+          message_with_attachment = create(:message, conversation: conversation, account: account, message_type: 'outgoing',
+                                                     content: 'Message with small attachment')
+          attachment = message_with_attachment.attachments.new(account_id: account.id, file_type: :file)
+          attachment.file.attach(io: Rails.root.join('spec/assets/avatar.png').open, filename: 'avatar.png', content_type: 'image/png')
+          attachment.save!
+
+          mail = described_class.email_reply(message_with_attachment).deliver_now
+
+          # Should be attached to the email
+          expect(mail.attachments.map(&:filename).map(&:to_s)).to include('avatar.png')
+          # Should not be in large_attachments
+          expect(mail.body.encoded).not_to include('Attachments:')
+        end
+
+        it 'renders large attachments as links in the email body' do
+          message_with_large_attachment = create(:message, conversation: conversation, account: account, message_type: 'outgoing',
+                                                           content: 'Message with large attachment')
+          attachment = message_with_large_attachment.attachments.new(account_id: account.id, file_type: :file)
+          attachment.file.attach(io: Rails.root.join('spec/assets/large_file.pdf').open, filename: 'large_file.pdf', content_type: 'application/pdf')
+          attachment.save!
+
+          mail = described_class.email_reply(message_with_large_attachment).deliver_now
+
+          # Should NOT be attached to the email
+          expect(mail.attachments.map(&:filename).map(&:to_s)).not_to include('large_file.pdf')
+          # Should be rendered as a link in the body
+          expect(mail.body.encoded).to include('Attachments:')
+          expect(mail.body.encoded).to include('large_file.pdf')
+          # Should render a link with large_file.pdf as the link text
+          expect(mail.body.encoded).to match(%r{<a [^>]*>large_file\.pdf</a>})
+          # Small file should not be rendered as a link in the body
+          expect(mail.body.encoded).not_to match(%r{<a [^>]*>avatar\.png</a>})
+        end
+
+        it 'handles both small and large attachments correctly' do
+          message_with_mixed_attachments = create(:message, conversation: conversation, account: account, message_type: 'outgoing',
+                                                            content: 'Message with mixed attachments')
+
+          # Small attachment
+          small_attachment = message_with_mixed_attachments.attachments.new(account_id: account.id, file_type: :file)
+          small_attachment.file.attach(io: Rails.root.join('spec/assets/avatar.png').open, filename: 'avatar.png', content_type: 'image/png')
+          small_attachment.save!
+
+          # Large attachment
+          large_attachment = message_with_mixed_attachments.attachments.new(account_id: account.id, file_type: :file)
+          large_attachment.file.attach(io: Rails.root.join('spec/assets/large_file.pdf').open, filename: 'large_file.pdf',
+                                       content_type: 'application/pdf')
+          large_attachment.save!
+
+          mail = described_class.email_reply(message_with_mixed_attachments).deliver_now
+
+          # Small file should be attached
+          expect(mail.attachments.map(&:filename).map(&:to_s)).to include('avatar.png')
+          # Large file should NOT be attached
+          expect(mail.attachments.map(&:filename).map(&:to_s)).not_to include('large_file.pdf')
+
+          # Large file should be rendered as a link in the body
+          expect(mail.body.encoded).to include('Attachments:')
+          expect(mail.body.encoded).to include('large_file.pdf')
+          # Should render a link with large_file.pdf as the link text
+          expect(mail.body.encoded).to match(%r{<a [^>]*>large_file\.pdf</a>})
+          # Small file should not be rendered as a link in the body
+          expect(mail.body.encoded).not_to match(%r{<a [^>]*>avatar\.png</a>})
+        end
+      end
+
+      context 'with custom email content' do
+        it 'uses custom HTML content when available and creates multipart email' do
+          message_with_custom_content = create(:message,
+                                               conversation: conversation,
+                                               account: account,
+                                               message_type: 'outgoing',
+                                               content: 'Regular message content',
+                                               content_attributes: {
+                                                 email: {
+                                                   html_content: {
+                                                     reply: '<p>Custom <strong>HTML</strong> content for email</p>'
+                                                   },
+                                                   text_content: {
+                                                     reply: 'Custom text content for email'
+                                                   }
+                                                 }
+                                               })
+
+          mail = described_class.email_reply(message_with_custom_content).deliver_now
+
+          # Check HTML part contains custom HTML content
+          html_part = mail.html_part || mail
+          expect(html_part.body.encoded).to include('<p>Custom <strong>HTML</strong> content for email</p>')
+          expect(html_part.body.encoded).not_to include('Regular message content')
+
+          # Check text part contains custom text content
+          text_part = mail.text_part
+          if text_part
+            expect(text_part.body.encoded).to include('Custom text content for email')
+            expect(text_part.body.encoded).not_to include('Regular message content')
+          end
+        end
+
+        it 'falls back to markdown rendering when custom HTML content is not available' do
+          message_without_custom_content = create(:message,
+                                                  conversation: conversation,
+                                                  account: account,
+                                                  message_type: 'outgoing',
+                                                  content: 'Regular **markdown** content')
+
+          mail = described_class.email_reply(message_without_custom_content).deliver_now
+
+          html_part = mail.html_part || mail
+          expect(html_part.body.encoded).to include('<strong>markdown</strong>')
+          expect(html_part.body.encoded).to include('Regular')
+        end
+
+        it 'handles empty custom HTML content gracefully' do
+          message_with_empty_content = create(:message,
+                                              conversation: conversation,
+                                              account: account,
+                                              message_type: 'outgoing',
+                                              content: 'Regular **markdown** content',
+                                              content_attributes: {
+                                                email: {
+                                                  html_content: {
+                                                    reply: ''
+                                                  }
+                                                }
+                                              })
+
+          mail = described_class.email_reply(message_with_empty_content).deliver_now
+
+          html_part = mail.html_part || mail
+          expect(html_part.body.encoded).to include('<strong>markdown</strong>')
+          expect(html_part.body.encoded).to include('Regular')
+        end
+
+        it 'handles nil custom HTML content gracefully' do
+          message_with_nil_content = create(:message,
+                                            conversation: conversation,
+                                            account: account,
+                                            message_type: 'outgoing',
+                                            content: 'Regular **markdown** content',
+                                            content_attributes: {
+                                              email: {
+                                                html_content: {
+                                                  reply: nil
+                                                }
+                                              }
+                                            })
+
+          mail = described_class.email_reply(message_with_nil_content).deliver_now
+
+          expect(mail.body.encoded).to include('<strong>markdown</strong>')
+          expect(mail.body.encoded).to include('Regular')
+        end
+
+        it 'uses custom text content in text part when only text is provided' do
+          message_with_text_only = create(:message,
+                                          conversation: conversation,
+                                          account: account,
+                                          message_type: 'outgoing',
+                                          content: 'Regular message content',
+                                          content_attributes: {
+                                            email: {
+                                              text_content: {
+                                                reply: 'Custom text content only'
+                                              }
+                                            }
+                                          })
+
+          mail = described_class.email_reply(message_with_text_only).deliver_now
+
+          text_part = mail.text_part
+          if text_part
+            expect(text_part.body.encoded).to include('Custom text content only')
+            expect(text_part.body.encoded).not_to include('Regular message content')
+          end
+        end
+      end
+    end
+
+
+  end
+end

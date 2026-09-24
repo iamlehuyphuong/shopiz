@@ -92,12 +92,6 @@ class ActionService
   def team_belongs_to_account?(team_ids)
     @account.team_ids.include?(team_ids[0])
   end
-
-  def conversation_a_tweet?
-    return false if @conversation.additional_attributes.blank?
-
-    @conversation.additional_attributes['type'] == 'tweet'
-  end
 end
 
 ActionService.include_mod_with('ActionService')

@@ -4,7 +4,6 @@ import CampaignsPageRouteView from './pages/CampaignsPageRouteView.vue';
 import LiveChatCampaignsPage from './pages/LiveChatCampaignsPage.vue';
 import SMSCampaignsPage from './pages/SMSCampaignsPage.vue';
 import WhatsAppCampaignsPage from './pages/WhatsAppCampaignsPage.vue';
-import VoiceCampaignsPage from './pages/VoiceCampaignsPage.vue';
 import ZaloPersonalCampaignsPage from './pages/ZaloPersonalCampaignsPage.vue';
 import ZaloOaCampaignsPage from './pages/ZaloOaCampaignsPage.vue';
 import FacebookCampaignsPage from './pages/FacebookCampaignsPage.vue';
@@ -81,12 +80,6 @@ const campaignsRoutes = {
             featureFlag: FEATURE_FLAGS.WHATSAPP_CAMPAIGNS,
           },
           component: WhatsAppCampaignsPage,
-        },
-        {
-          path: 'voice',
-          name: 'campaigns_voice_index',
-          meta,
-          component: VoiceCampaignsPage,
         },
         {
           path: 'facebook',

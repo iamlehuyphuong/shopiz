@@ -2,14 +2,12 @@ class SendReplyJob < ApplicationJob
   queue_as :high
 
   CHANNEL_SERVICES = {
-    'Channel::TwitterProfile' => ::Twitter::SendOnTwitterService,
-
-    'Channel::Line' => ::Line::SendOnLineService,
     'Channel::Telegram' => ::Telegram::SendOnTelegramService,
     'Channel::Whatsapp' => ::Whatsapp::SendOnWhatsappService,
-    'Channel::Sms' => ::Sms::SendOnSmsService,
     'Channel::Instagram' => ::Instagram::SendOnInstagramService,
     'Channel::Tiktok' => ::Tiktok::SendOnTiktokService,
+    'Channel::WebWidget' => ::Messages::SendEmailNotificationService,
+    'Channel::Api' => ::Messages::SendEmailNotificationService,
     'Channel::ZaloOa' => ::Zalo::SendOnZaloService,
     'Channel::ZaloPersonal' => ::ZaloPersonal::SendOnZaloService,
     'Channel::TiktokShop' => ::TiktokShop::SendOnTiktokService

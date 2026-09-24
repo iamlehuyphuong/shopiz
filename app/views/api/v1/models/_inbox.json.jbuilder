@@ -36,17 +36,8 @@ else
   json.ecommerce_integration nil
 end
 
-if resource.portal.present?
-  json.help_center do
-    json.name resource.portal.name
-    json.slug resource.portal.slug
-  end
-end
-
 ## Channel specific settings
 ## TODO : Clean up and move the attributes into channel sub section
-
-json.tweets_enabled resource.channel.try(:tweets_enabled) if resource.twitter?
 
 ## WebWidget Attributes
 json.allowed_domains resource.channel.try(:allowed_domains)
@@ -104,11 +95,6 @@ if resource.whatsapp?
 end
 
 ## Voice Channel Attributes
-if resource.channel_type == 'Channel::Voice'
-  json.voice_call_webhook_url resource.channel.try(:voice_call_webhook_url)
-  json.voice_status_webhook_url resource.channel.try(:voice_status_webhook_url)
-end
-
 if resource.zalo_personal?
   json.reauthorization_required resource.channel.try(:reauthorization_required?)
   json.provider_config resource.channel.try(:provider_config)
