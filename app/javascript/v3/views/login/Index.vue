@@ -14,7 +14,7 @@ import SimpleDivider from '../../components/Divider/SimpleDivider.vue';
 import FormInput from '../../components/Form/Input.vue';
 import GoogleOAuthButton from '../../components/GoogleOauth/Button.vue';
 import Spinner from 'shared/components/Spinner.vue';
-import Icon from 'dashboard/components-next/icon/Icon.vue';
+
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import MfaVerification from 'dashboard/components/auth/MfaVerification.vue';
 import NetworkIllustration from 'v3/components/NetworkIllustration.vue';
@@ -22,8 +22,6 @@ import NetworkIllustration from 'v3/components/NetworkIllustration.vue';
 const ERROR_MESSAGES = {
   'no-account-found': 'LOGIN.OAUTH.NO_ACCOUNT_FOUND',
   'business-account-only': 'LOGIN.OAUTH.BUSINESS_ACCOUNTS_ONLY',
-  'saml-authentication-failed': 'LOGIN.SAML.API.ERROR_MESSAGE',
-  'saml-not-enabled': 'LOGIN.SAML.API.ERROR_MESSAGE',
 };
 
 const IMPERSONATION_URL_SEARCH_KEY = 'impersonation';
@@ -36,7 +34,7 @@ export default {
     NextButton,
     SimpleDivider,
     MfaVerification,
-    Icon,
+
     NetworkIllustration,
   },
   props: {
@@ -100,9 +98,6 @@ export default {
     },
     showSignupLink() {
       return window.shopizConfig.signupEnabled === 'true';
-    },
-    showSamlLogin() {
-      return this.allowedLoginMethods.includes('saml');
     },
   },
   created() {
@@ -273,22 +268,9 @@ export default {
           <div v-if="!email">
             <div class="flex flex-col gap-4">
               <GoogleOAuthButton v-if="showGoogleOAuth" />
-              <div v-if="showSamlLogin" class="text-center">
-                <router-link
-                  to="/app/login/sso"
-                  class="inline-flex justify-center w-full px-4 py-3 items-center bg-n-background rounded-md shadow-sm ring-1 ring-inset ring-n-container focus:outline-offset-0 hover:bg-n-alpha-2"
-                >
-                  <Icon
-                    icon="i-lucide-lock-keyhole"
-                    class="size-5 text-n-slate-11"
-                  />
-                  <span class="ml-2 text-base font-medium text-n-slate-12">
-                    {{ $t('LOGIN.SAML.LABEL') }}
-                  </span>
-                </router-link>
-              </div>
+
               <SimpleDivider
-                v-if="showGoogleOAuth || showSamlLogin"
+                v-if="showGoogleOAuth"
                 :label="$t('COMMON.OR')"
                 class="uppercase"
               />

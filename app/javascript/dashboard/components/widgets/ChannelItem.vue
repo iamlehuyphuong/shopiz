@@ -81,7 +81,6 @@ const isActive = computed(() => {
     return props.enabledFeatures.channel_tiktok && hasTiktokConfigured.value;
   }
 
-
   return [
     'website',
     'twilio',

@@ -859,75 +859,7 @@
   },
   "SECURITY_SETTINGS": {
     "TITLE": "Bảo mật",
-    "DESCRIPTION": "Quản lý các cài đặt bảo mật tài khoản.",
-    "LINK_TEXT": "Tìm hiểu thêm về SAML SSO",
-    "SAML_DISABLED_MESSAGE": "SAML SSO hiện đang bị vô hiệu hoá. Vui lòng liên hệ với quản trị viên để bật tính năng này.",
-    "SAML": {
-      "TITLE": "SAML SSO",
-      "NOTE": "Cấu hình đăng nhập một lần SAML cho tài khoản. Người dùng sẽ đăng nhập thông qua nhà cung cấp danh tính thay vì email/mật khẩu.",
-      "ACS_URL": {
-        "LABEL": "ACS URL",
-        "TOOLTIP": "Assertion Consumer Service URL - cấu hình URL này trong IdP để nhận phản hồi SAML"
-      },
-      "SSO_URL": {
-        "LABEL": "SSO URL",
-        "HELP": "URL nơi gửi yêu cầu xác thực SAML",
-        "PLACEHOLDER": "https://your-idp.com/saml/sso"
-      },
-      "CERTIFICATE": {
-        "LABEL": "Chứng chỉ ký (PEM)",
-        "HELP": "Chứng chỉ công khai từ IdP của bạn để xác minh phản hồi SAML",
-        "PLACEHOLDER": "-----BEGIN CERTIFICATE-----\nMIIC..."
-      },
-      "FINGERPRINT": {
-        "LABEL": "Dấu vân tay chứng chỉ",
-        "TOOLTIP": "Dấu vân tay SHA-1 dùng để xác minh chứng chỉ trong IdP"
-      },
-      "COPY_SUCCESS": "Đã sao chép vào clipboard",
-      "SP_ENTITY_ID": {
-        "LABEL": "SP Entity ID",
-        "HELP": "Mã định danh duy nhất của Shopiz với vai trò Service Provider.",
-        "TOOLTIP": "Định danh duy nhất của Shopiz với tư cách Nhà cung cấp Dịch vụ"
-      },
-      "IDP_ENTITY_ID": {
-        "LABEL": "Định danh IdP",
-        "HELP": "Định danh duy nhất của nhà cung cấp danh tính (IdP)",
-        "PLACEHOLDER": "https://your-idp.com/saml"
-      },
-      "UPDATE_BUTTON": "Cập nhật cài đặt SAML",
-      "API": {
-        "SUCCESS": "Cập nhật cài đặt SAML thành công",
-        "ERROR": "Không thể cập nhật cài đặt SAML",
-        "ERROR_LOADING": "Không thể tải cài đặt SAML",
-        "DISABLED": "Đã tắt SAML thành công"
-      },
-      "VALIDATION": {
-        "REQUIRED_FIELDS": "SSO URL, Định danh IdP và Chứng chỉ là bắt buộc",
-        "SSO_URL_ERROR": "Vui lòng nhập SSO URL hợp lệ",
-        "CERTIFICATE_ERROR": "Chứng chỉ là bắt buộc",
-        "IDP_ENTITY_ID_ERROR": "Định danh IdP là bắt buộc"
-      },
-      "ENTERPRISE_PAYWALL": {
-        "AVAILABLE_ON": "Tính năng SAML SSO chỉ khả dụng trên gói Enterprise.",
-        "UPGRADE_PROMPT": "Nâng cấp lên gói Enterprise để dùng SAML SSO và các tính năng bảo mật nâng cao.",
-        "ASK_ADMIN": "Liên hệ quản trị viên để nâng cấp."
-      },
-      "PAYWALL": {
-        "TITLE": "Nâng cấp để bật SAML SSO",
-        "AVAILABLE_ON": "Tính năng chỉ có trên gói Enterprise.",
-        "UPGRADE_PROMPT": "Nâng cấp để sử dụng SAML SSO và tính năng nâng cao.",
-        "UPGRADE_NOW": "Nâng cấp ngay",
-        "CANCEL_ANYTIME": "Bạn có thể thay đổi hoặc hủy gói bất kỳ lúc nào"
-      },
-      "ATTRIBUTE_MAPPING": {
-        "TITLE": "Thiết lập thuộc tính SAML",
-        "DESCRIPTION": "Các ánh xạ thuộc tính sau phải được cấu hình trong IdP của bạn"
-      },
-      "INFO_SECTION": {
-        "TITLE": "Thông tin Nhà cung cấp dịch vụ",
-        "TOOLTIP": "Sao chép các giá trị này và cấu hình trong IdP của bạn"
-      }
-    }
+    "DESCRIPTION": "Quản lý các cài đặt bảo mật tài khoản."
   },
   "CONVERSATION_WORKFLOW": {
     "INDEX": {

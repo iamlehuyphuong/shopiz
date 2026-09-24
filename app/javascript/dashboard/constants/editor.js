@@ -131,7 +131,6 @@ export const FORMATTING = {
   },
 };
 
-
 /**
  * Markdown formatting patterns for stripping unsupported formatting.
  *

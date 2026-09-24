@@ -213,9 +213,8 @@ watch(
               'Mô tả kịch bản để AI tạo tự động'
             "
             :placeholder="
-              t(
-                'CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.AI_PROMPT_PLACEHOLDER'
-              ) || 'Ví dụ: Tạo kịch bản tra cứu đơn hàng...'
+              t('CAPTAIN.ASSISTANTS.SCENARIOS.ADD.NEW.AI_PROMPT_PLACEHOLDER') ||
+              'Ví dụ: Tạo kịch bản tra cứu đơn hàng...'
             "
             :rows="3"
             class="w-full"

@@ -226,7 +226,6 @@ export default {
 </script>
 
 <template>
-
   <div v-if="isAZaloPersonalChannel">
     <SettingsFieldSection
       :label="$t('INBOX_MGMT.SETTINGS_POPUP.PROXY_CONFIGURATION.TITLE')"

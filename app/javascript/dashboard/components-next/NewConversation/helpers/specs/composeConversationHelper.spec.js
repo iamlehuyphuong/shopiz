@@ -633,8 +633,6 @@ describe('compareInboxes', () => {
     expect(sorted[3].channelType).toBe('Channel::Api');
   });
 
-
-
   it('should sort by name when channel types are same', () => {
     const inboxes = [
       { channelType: 'Channel::WebWidget', name: 'Support' },

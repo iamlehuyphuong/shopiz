@@ -21,6 +21,7 @@ import {
   hasPermissions,
   getUserPermissions,
 } from 'dashboard/helper/permissionsHelper';
+import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 
 const props = defineProps({
   isMobileSidebarOpen: {
@@ -156,6 +157,15 @@ const contactCustomViews = useMapGetter('customViews/getContactCustomViews');
 const conversationCustomViews = useMapGetter(
   'customViews/getConversationCustomViews'
 );
+const isFeatureEnabledonAccount = useMapGetter(
+  'accounts/isFeatureEnabledonAccount'
+);
+const isTeamManagementEnabled = computed(() =>
+  isFeatureEnabledonAccount.value(
+    route.params.accountId,
+    FEATURE_FLAGS.TEAM_MANAGEMENT
+  )
+);
 
 const sortedInboxes = computed(() =>
   inboxes.value.slice().sort((a, b) => a.name.localeCompare(b.name))
@@ -182,13 +192,17 @@ const newReportRoutes = () => [
     to: accountScopedRoute('inbox_reports_index'),
     activeOn: ['inbox_reports_show'],
   },
-  {
-    name: 'Reports Team',
-    label: t('SIDEBAR.REPORTS_TEAM'),
-    icon: 'i-lucide-users',
-    to: accountScopedRoute('team_reports_index'),
-    activeOn: ['team_reports_show'],
-  },
+  ...(isTeamManagementEnabled.value
+    ? [
+        {
+          name: 'Reports Team',
+          label: t('SIDEBAR.REPORTS_TEAM'),
+          icon: 'i-lucide-users',
+          to: accountScopedRoute('team_reports_index'),
+          activeOn: ['team_reports_show'],
+        },
+      ]
+    : []),
 ];
 
 const globalConfig = window.globalConfig || {};
@@ -254,18 +268,24 @@ const menuItems = computed(() => {
             to: accountScopedRoute('folder_conversations', { id: view.id }),
           })),
         },
-        {
-          name: 'Teams',
-          label: t('SIDEBAR.TEAMS'),
-          icon: 'i-lucide-users',
-          activeOn: ['conversations_through_team'],
-          children: teams.value.map(team => ({
-            name: `${team.name}-${team.id}`,
-            label: team.name,
-            icon: 'i-lucide-users',
-            to: accountScopedRoute('team_conversations', { teamId: team.id }),
-          })),
-        },
+        ...(isTeamManagementEnabled.value
+          ? [
+              {
+                name: 'Teams',
+                label: t('SIDEBAR.TEAMS'),
+                icon: 'i-lucide-users',
+                activeOn: ['conversations_through_team'],
+                children: teams.value.map(team => ({
+                  name: `${team.name}-${team.id}`,
+                  label: team.name,
+                  icon: 'i-lucide-users',
+                  to: accountScopedRoute('team_conversations', {
+                    teamId: team.id,
+                  }),
+                })),
+              },
+            ]
+          : []),
         {
           name: 'Channels',
           label: t('SIDEBAR.CHANNELS'),
@@ -748,22 +768,26 @@ const menuItems = computed(() => {
           icon: 'i-lucide-square-user',
           to: accountScopedRoute('agent_list'),
         },
-        {
-          name: 'Settings Teams',
-          label: t('SIDEBAR.TEAMS'),
-          icon: 'i-lucide-users',
-          activeOn: [
-            'settings_teams_list',
-            'settings_teams_new',
-            'settings_teams_finish',
-            'settings_teams_add_agents',
-            'settings_teams_show',
-            'settings_teams_edit',
-            'settings_teams_edit_members',
-            'settings_teams_edit_finish',
-          ],
-          to: accountScopedRoute('settings_teams_list'),
-        },
+        ...(isTeamManagementEnabled.value
+          ? [
+              {
+                name: 'Settings Teams',
+                label: t('SIDEBAR.TEAMS'),
+                icon: 'i-lucide-users',
+                activeOn: [
+                  'settings_teams_list',
+                  'settings_teams_new',
+                  'settings_teams_finish',
+                  'settings_teams_add_agents',
+                  'settings_teams_show',
+                  'settings_teams_edit',
+                  'settings_teams_edit_members',
+                  'settings_teams_edit_finish',
+                ],
+                to: accountScopedRoute('settings_teams_list'),
+              },
+            ]
+          : []),
         {
           name: 'Settings Agent Assignment',
           label: t('SIDEBAR.AGENT_ASSIGNMENT'),

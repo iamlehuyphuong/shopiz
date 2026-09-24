@@ -19,8 +19,6 @@ export function useChannelIcon(inbox) {
     const type = inboxDetails.channel_type;
     let icon = channelTypeIconMap[type];
 
-
-
     return icon ?? 'i-ri-global-fill';
   });
 

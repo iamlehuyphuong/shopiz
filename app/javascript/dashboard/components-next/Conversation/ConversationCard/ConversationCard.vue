@@ -63,10 +63,6 @@ const lastNonActivityMessage = computed(() => {
   return props.conversation?.lastNonActivityMessage || {};
 });
 
-
-
-
-
 const showMessagePreviewWithoutMeta = computed(() => {
   const { labels = [] } = props.conversation;
   return (
@@ -100,7 +96,6 @@ const onCardClick = e => {
     class="flex w-full gap-3 px-3 py-4 transition-all duration-300 ease-in-out cursor-pointer relative"
     @click="onCardClick"
   >
-
     <Avatar
       :name="currentContactName"
       :src="currentContactThumbnail"
@@ -130,18 +125,16 @@ const onCardClick = e => {
         </div>
       </div>
 
-
-        <CardMessagePreview
-          v-show="showMessagePreviewWithoutMeta"
-          :conversation="conversation"
-        />
-        <CardMessagePreviewWithMeta
-          v-show="!showMessagePreviewWithoutMeta"
-          ref="cardMessagePreviewWithMetaRef"
-          :conversation="conversation"
-          :account-labels="accountLabels"
-        />
-
+      <CardMessagePreview
+        v-show="showMessagePreviewWithoutMeta"
+        :conversation="conversation"
+      />
+      <CardMessagePreviewWithMeta
+        v-show="!showMessagePreviewWithoutMeta"
+        ref="cardMessagePreviewWithMetaRef"
+        :conversation="conversation"
+        :account-labels="accountLabels"
+      />
     </div>
   </div>
 </template>

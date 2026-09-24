@@ -27,16 +27,11 @@ vi:
       success: Kênh đã được cấp lại quyền truy cập thành công
       not_required: Không cần cấp lại quyền truy cập cho hộp thư này
       invalid_channel: Loại kênh không hợp lệ để cấp lại quyền truy cập
-  auth:
-    saml:
-      invalid_email: Vui lòng nhập một địa chỉ email hợp lệ
-      authentication_failed: Xác thực thất bại. Vui lòng kiểm tra thông tin đăng nhập của bạn và thử lại.
+
   messages:
     reset_password_success: Chà! Yêu cầu đặt lại mật khẩu thành công. Kiểm tra thư của bạn để biết hướng dẫn.
     reset_password_failure: Uh ho! Chúng tôi không thể tìm thấy bất kỳ người dùng nào có email được chỉ định.
-    reset_password_saml_user: Tài khoản này sử dụng xác thực SAML. Không thể đặt lại mật khẩu. Vui lòng liên hệ với quản trị viên của bạn.
-    login_saml_user: Tài khoản này sử dụng xác thực SAML. Vui lòng đăng nhập qua nhà cung cấp SAML của tổ chức bạn.
-    saml_not_available: Xác thực SAML không khả dụng trong cài đặt này.
+
     inbox_deletetion_response: Yêu cầu xoá hộp thư của bạn sẽ được xử lý.
   errors:
     messages:
@@ -60,9 +55,7 @@ vi:
       not_found: Chính sách phân công không được tìm thấy
     attachments:
       invalid: Tệp đính kèm không hợp lệ
-    saml:
-      feature_not_enabled: Tính năng SAML không được bật cho tài khoản này
-      sso_not_enabled: SAML SSO chưa được bật cho bản cài đặt này
+
     data_import:
       data_type:
         invalid: Kiểu dữ liệu không hợp lệ
@@ -156,8 +149,7 @@ vi:
     mfa:
       enabled: MFA đã được bật
       disabled: MFA đã được tắt
-    account_saml_settings:
-      invalid_certificate: phải là một chứng chỉ X.509 hợp lệ ở định dạng PEM
+
   reports:
     period: Thời gian báo cáo từ %{since} đến %{until}
     utc_warning: Báo cáo đã được tạo với múi giờ UTC

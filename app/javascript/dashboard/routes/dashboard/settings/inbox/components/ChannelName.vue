@@ -30,8 +30,6 @@ const i18nMap = {
   'Channel::TiktokShop': 'TIKTOK_SHOP',
 };
 
-
-
 const readableChannelName = computed(() => {
   if (props.channelType === 'Channel::Api') {
     return globalConfig.value.apiChannelName || t('INBOX_MGMT.CHANNELS.API');

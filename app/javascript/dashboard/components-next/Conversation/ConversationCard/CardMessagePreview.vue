@@ -18,15 +18,11 @@ const { checkPermissions } = usePolicy();
 const maskContactInfo = computed(() => !checkPermissions(['contact_manage']));
 const { getPlainText } = useMessageFormatter(maskContactInfo);
 
-
-
 // Return proper message content based on message type
 const lastNonActivityMessageContent = computed(() => {
   const { lastNonActivityMessage = {}, customAttributes = {} } =
     props.conversation;
   const { email: { subject } = {} } = customAttributes;
-
-
 
   return getPlainText(
     subject || lastNonActivityMessage?.content || t('CHAT_LIST.NO_CONTENT')
@@ -51,9 +47,7 @@ const unreadMessagesCount = computed(() => {
 <template>
   <div class="flex items-end w-full gap-2 pb-1">
     <!-- Regular Message -->
-    <p
-      class="w-full mb-0 text-sm leading-7 text-n-slate-12 line-clamp-2"
-    >
+    <p class="w-full mb-0 text-sm leading-7 text-n-slate-12 line-clamp-2">
       {{ lastNonActivityMessageContent }}
     </p>
 
@@ -78,6 +72,4 @@ const unreadMessagesCount = computed(() => {
   </div>
 </template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

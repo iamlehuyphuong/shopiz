@@ -499,7 +499,6 @@ const actions = {
     }
   },
 
-
   updateCustomAttributes: async (
     { commit },
     { conversationId, customAttributes }

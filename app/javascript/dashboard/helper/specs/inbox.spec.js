@@ -89,6 +89,5 @@ describe('#Inbox Helpers', () => {
         );
       });
     });
-
   });
 });

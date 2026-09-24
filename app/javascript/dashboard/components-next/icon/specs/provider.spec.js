@@ -19,8 +19,6 @@ describe('useChannelIcon', () => {
     expect(icon).toBe('i-woot-whatsapp');
   });
 
-
-
   it('returns correct icon for WebWidget channel', () => {
     const inbox = { channel_type: 'Channel::WebWidget' };
     const { value: icon } = useChannelIcon(inbox);
@@ -38,7 +36,6 @@ describe('useChannelIcon', () => {
     const { value: icon } = useChannelIcon(inbox);
     expect(icon).toBe('i-woot-tiktok');
   });
-
 
   it('returns default icon for unknown channel type', () => {
     const inbox = { channel_type: 'Channel::Unknown' };

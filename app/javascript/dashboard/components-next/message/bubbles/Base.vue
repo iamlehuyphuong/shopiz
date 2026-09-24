@@ -131,14 +131,7 @@ const showSenderInGroup = computed(() => {
 </script>
 
 <template>
-  <div
-    class="text-sm"
-    :class="[
-      messageClass,
-      {
-      },
-    ]"
-  >
+  <div class="text-sm" :class="[messageClass, {}]">
     <div
       v-if="inReplyTo"
       class="p-2 -mx-1 mb-2 rounded-lg cursor-pointer bg-n-alpha-black1"

@@ -80,7 +80,7 @@ Rails.application.routes.draw do
               post :follow_up
             end
           end
-          resource :saml_settings, only: [:show, :create, :update, :destroy]
+
           resources :agent_bots, only: [:index, :create, :show, :update, :destroy] do
             delete :avatar, on: :member
             post :reset_access_token, on: :member
@@ -459,9 +459,6 @@ Rails.application.routes.draw do
       namespace :integrations do
         resources :webhooks, only: [:create]
       end
-
-      # Frontend API endpoint to trigger SAML authentication flow
-      post 'auth/saml_login', to: 'auth#saml_login'
 
       resource :profile, only: [:show, :update] do
         delete :avatar, on: :collection

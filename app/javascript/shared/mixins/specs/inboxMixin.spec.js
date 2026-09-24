@@ -41,10 +41,6 @@ describe('inboxMixin', () => {
     expect(wrapper.vm.isAPIInbox).toBe(true);
   });
 
-
-
-
-
   describe('Badges', () => {
     it('inboxBadge returns string Channel::Telegram if isATwilioChannel and isATwitterInbox is false', () => {
       const Component = getComponentConfigForInbox('Channel::Telegram');
@@ -59,8 +55,6 @@ describe('inboxMixin', () => {
       const wrapper = shallowMount(Component);
       expect(wrapper.vm.inboxBadge).toBe('whatsapp');
     });
-
-
 
     it('inboxBadge returns "whatsapp" when isAWhatsAppChannel is true', () => {
       const Component = getComponentConfigForInbox('Channel::Whatsapp');
@@ -82,8 +76,6 @@ describe('inboxMixin', () => {
       expect(wrapper.vm.inboxHasFeature('replyTo')).toBe(true);
       expect(wrapper.vm.inboxHasFeature('feature-does-not-exist')).toBe(false);
     });
-
-
   });
 
   describe('WhatsApp channel', () => {
@@ -124,7 +116,5 @@ describe('inboxMixin', () => {
       const wrapper = shallowMount(Component);
       expect(wrapper.vm.isAWhatsAppChannel).toBe(true);
     });
-
-
   });
 });

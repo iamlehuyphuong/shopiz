@@ -36,7 +36,6 @@ export default {
     };
   },
   computed: {
-
     messageByAgent() {
       const { message_type: messageType } = this.message;
       return messageType === MESSAGE_TYPE.OUTGOING;

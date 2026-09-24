@@ -695,7 +695,5 @@ onMounted(() => {
         </div>
       </div>
     </woot-modal>
-
-
   </div>
 </template>
