@@ -191,10 +191,8 @@ class Contact < ApplicationRecord
     }
   end
 
-  def self.resolved_contacts(use_crm_v2: false)
-    return where(contact_type: 'lead') if use_crm_v2
-
-    where("contacts.email <> '' OR contacts.phone_number <> '' OR contacts.identifier <> ''")
+  def self.resolved_contacts
+    where(contact_type: %w[lead customer])
   end
 
   def discard_invalid_attrs

@@ -149,7 +149,7 @@ class Api::V1::Accounts::ContactsController < Api::V1::Accounts::BaseController
   def resolved_contacts
     return @resolved_contacts if @resolved_contacts
 
-    @resolved_contacts = Current.account.contacts.resolved_contacts(use_crm_v2: Current.account.feature_enabled?('crm_v2'))
+    @resolved_contacts = Current.account.contacts.resolved_contacts
 
     @resolved_contacts = @resolved_contacts.tagged_with(params[:labels], any: true) if params[:labels].present?
     @resolved_contacts
@@ -245,7 +245,7 @@ class Api::V1::Accounts::ContactsController < Api::V1::Accounts::BaseController
     if contact.errors.added?(:phone_number, :taken)
       Current.account.contacts.find_by(phone_number: contact.phone_number)
     elsif contact.errors.added?(:email, :taken)
-      Current.account.contacts.find_by(email: contact.email)
+      Current.account.contacts.from_email(contact.email)
     elsif contact.errors.added?(:identifier, :taken)
       Current.account.contacts.find_by(identifier: contact.identifier)
     end

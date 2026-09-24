@@ -19,7 +19,7 @@ class Account::ContactsExportJob < ApplicationJob
     workbook.add_worksheet(name: 'Contacts') do |sheet|
       sheet.add_row headers
       contacts.each do |contact|
-        sheet.add_row headers.map { |header| contact.send(header) }
+        sheet.add_row(headers.map { |header| contact.send(header) })
       end
     end
 
@@ -28,13 +28,13 @@ class Account::ContactsExportJob < ApplicationJob
 
   def contacts
     scope = if @params.present? && @params[:payload].present? && @params[:payload].any?
-      result = ::Contacts::FilterService.new(@account, @account_user, @params).perform
-      result[:contacts]
-    elsif @params[:label].present?
-      @account.contacts.resolved_contacts(use_crm_v2: @account.feature_enabled?('crm_v2')).tagged_with(@params[:label], any: true)
-    else
-      @account.contacts.resolved_contacts(use_crm_v2: @account.feature_enabled?('crm_v2'))
-    end
+              result = ::Contacts::FilterService.new(@account, @account_user, @params).perform
+              result[:contacts]
+            elsif @params[:label].present?
+              @account.contacts.resolved_contacts.tagged_with(@params[:label], any: true)
+            else
+              @account.contacts.resolved_contacts
+            end
     scope.includes(:inboxes)
   end
 

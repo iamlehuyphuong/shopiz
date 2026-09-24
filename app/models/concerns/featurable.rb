@@ -9,7 +9,6 @@ module Featurable
   DEFAULT_PLAN_FEATURES = %w[
     canned_responses
     crm
-    crm_v2
     channel_facebook
     inbox_view
     inbox_management
