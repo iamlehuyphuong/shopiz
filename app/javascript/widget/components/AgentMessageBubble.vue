@@ -5,7 +5,6 @@ import ChatForm from 'shared/components/ChatForm.vue';
 import ChatOptions from 'shared/components/ChatOptions.vue';
 import ChatArticle from './template/Article.vue';
 import CustomerSatisfaction from 'shared/components/CustomerSatisfaction.vue';
-import IntegrationCard from './template/IntegrationCard.vue';
 
 export default {
   name: 'AgentMessageBubble',
@@ -15,7 +14,6 @@ export default {
     ChatForm,
     ChatOptions,
     CustomerSatisfaction,
-    IntegrationCard,
   },
   props: {
     message: { type: String, default: null },
@@ -56,9 +54,6 @@ export default {
     isCSAT() {
       return this.contentType === 'input_csat';
     },
-    isIntegrations() {
-      return this.contentType === 'integrations';
-    },
   },
   methods: {
     onResponse(messageResponse) {
@@ -95,11 +90,6 @@ export default {
       <div
         v-dompurify-html="formatMessage(message, false)"
         class="message-content text-n-slate-12"
-      />
-      <IntegrationCard
-        v-if="isIntegrations"
-        :message-id="messageId"
-        :meeting-data="messageContentAttributes.data"
       />
     </div>
     <div v-if="isOptions">

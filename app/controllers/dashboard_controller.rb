@@ -73,7 +73,6 @@ class DashboardController < ActionController::Base
       ZALO_SECRET_KEY: GlobalConfigService.load('ZALO_SECRET_KEY', ''),
       TIKTOK_SHOP_APP_ID: GlobalConfigService.load('TIKTOK_SHOP_APP_ID', ''),
       TIKTOK_SHOP_APP_SECRET: GlobalConfigService.load('TIKTOK_SHOP_APP_SECRET', ''),
-      TWITTER_CONSUMER_KEY: GlobalConfigService.load('TWITTER_CONSUMER_KEY', ''),
       GIT_SHA: GIT_HASH,
       ALLOWED_LOGIN_METHODS: allowed_login_methods,
       GOOGLE_OAUTH_CLIENT_ID: GlobalConfigService.load('GOOGLE_OAUTH_CLIENT_ID', nil),
@@ -86,8 +85,6 @@ class DashboardController < ActionController::Base
       CHANNEL_STATUS_WHATSAPP: GlobalConfigService.load('CHANNEL_STATUS_WHATSAPP', 'published'),
       CHANNEL_STATUS_INSTAGRAM: GlobalConfigService.load('CHANNEL_STATUS_INSTAGRAM', 'published'),
       CHANNEL_STATUS_TELEGRAM: GlobalConfigService.load('CHANNEL_STATUS_TELEGRAM', 'published'),
-      CHANNEL_STATUS_LINE: GlobalConfigService.load('CHANNEL_STATUS_LINE', 'published'),
-      CHANNEL_STATUS_TWITTER: GlobalConfigService.load('CHANNEL_STATUS_TWITTER', 'published'),
       CHANNEL_STATUS_WEBSITE: GlobalConfigService.load('CHANNEL_STATUS_WEBSITE', 'published')
     }
   end
@@ -95,7 +92,6 @@ class DashboardController < ActionController::Base
   def allowed_login_methods
     methods = ['email']
     methods << 'google_oauth' if GlobalConfigService.load('ENABLE_GOOGLE_OAUTH_LOGIN', 'true').to_s != 'false'
-    methods << 'saml' if ChatwootHub.pricing_plan != 'community' && GlobalConfigService.load('ENABLE_SAML_SSO_LOGIN', 'true').to_s != 'false'
     methods
   end
 

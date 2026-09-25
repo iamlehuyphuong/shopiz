@@ -276,13 +276,6 @@
       "UPDATE_SUCCESS": "The channel is connected successfully",
       "FAILED_TO_FETCH_CHANNELS": "There was an error fetching the channels from Slack, please try again"
     },
-    "DYTE": {
-      "CLICK_HERE_TO_JOIN": "Click here to join",
-      "LEAVE_THE_ROOM": "Leave the room",
-      "START_VIDEO_CALL_HELP_TEXT": "Start a new video call with the customer",
-      "JOIN_ERROR": "There was an error joining the call, please try again",
-      "CREATE_ERROR": "There was an error creating a meeting link, please try again"
-    },
     "OPEN_AI": {
       "AI_ASSIST": "AI Assist",
       "WITH_AI": " {option} with AI ",
@@ -367,7 +360,6 @@
     "CONNECT": {
       "BUTTON_TEXT": "Connect"
     },
-
     "LINEAR": {
       "HEADER": "Linear",
       "ADD_OR_LINK_BUTTON": "Create/Link Linear Issue",

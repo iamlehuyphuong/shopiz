@@ -26,7 +26,7 @@ module SuperAdmin::AccountFeaturesHelper
     'Hệ thống & Giao diện (System & Interface)' => %w[
       ip_lookup disable_branding
       search_with_gin
-      advanced_search advanced_search_indexing saml message_reply_to
+      advanced_search advanced_search_indexing message_reply_to
     ],
     'Khác (Others)' => %w[
       whatsapp_embedded_signup whatsapp_campaign

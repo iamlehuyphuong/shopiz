@@ -177,9 +177,6 @@ export default {
       if (this.is360DialogWhatsAppChannel) {
         return this.$t('INBOX_MGMT.ADD.WHATSAPP.PROVIDERS.360_DIALOG');
       }
-      if (this.isATwilioWhatsAppChannel) {
-        return this.$t('INBOX_MGMT.ADD.WHATSAPP.PROVIDERS.TWILIO');
-      }
       return '';
     },
     tabs() {
@@ -215,8 +212,6 @@ export default {
       }
 
       if (
-        this.isATwilioChannel ||
-        this.isALineChannel ||
         this.isAZaloPersonalChannel ||
         this.isAPIInbox ||
         this.isAVoiceChannel ||
@@ -325,7 +320,6 @@ export default {
         this.isAFacebookInbox ||
         this.isAPIInbox ||
         this.isAnInstagramChannel ||
-        this.isALineChannel ||
         this.isATiktokChannel ||
         this.isATelegramChannel
       );
@@ -344,8 +338,6 @@ export default {
     },
     textAreaChannels() {
       if (
-        this.isATwilioChannel ||
-        this.isATwitterInbox ||
         this.isAFacebookInbox
       )
         return true;

@@ -227,10 +227,6 @@
           "PLACEHOLDER": "Tên người dùng Facebook",
           "LABEL": "Facebook"
         },
-        "TWITTER": {
-          "PLACEHOLDER": "Tên người dùng Twitter",
-          "LABEL": "Twitter"
-        },
         "LINKEDIN": {
           "PLACEHOLDER": "Tên người dùng LinkedIn",
           "LABEL": "LinkedIn"
@@ -566,9 +562,6 @@
           },
           "LINKEDIN": {
             "PLACEHOLDER": "Thêm LinkedIn"
-          },
-          "TWITTER": {
-            "PLACEHOLDER": "Thêm Twitter"
           }
         }
       },
@@ -741,15 +734,6 @@
         "TEMPLATE_PARSER": {
           "TEMPLATE_NAME": "Mẫu WhatsApp: {templateName}",
           "VARIABLES": "Biến",
-          "BACK": "Quay lại",
-          "SEND_MESSAGE": "Gửi tin nhắn"
-        }
-      },
-      "TWILIO_OPTIONS": {
-        "LABEL": "Chọn mẫu",
-        "SEARCH_PLACEHOLDER": "Tìm mẫu",
-        "EMPTY_STATE": "Không tìm thấy mẫu",
-        "TEMPLATE_PARSER": {
           "BACK": "Quay lại",
           "SEND_MESSAGE": "Gửi tin nhắn"
         }

@@ -156,7 +156,7 @@ export default {
       return !!(templates && templates.length) && !this.isPrivate;
     },
     showContentTemplates() {
-      return this.isATwilioWhatsAppChannel && !this.isPrivate;
+      return false;
     },
     isPrivate() {
       if (
@@ -212,7 +212,6 @@ export default {
     },
     isReplyButtonDisabled() {
       if (this.isEditorDisabled) return true;
-      if (this.isATwitterInbox) return true;
       if (this.hasAttachments || this.hasRecordedAudio) return false;
 
       return (
@@ -251,17 +250,8 @@ export default {
       if (this.isATiktokChannel) {
         return MESSAGE_MAX_LENGTH.TIKTOK;
       }
-      if (this.isATwilioWhatsAppChannel) {
-        return MESSAGE_MAX_LENGTH.TWILIO_WHATSAPP;
-      }
-      if (this.isAWhatsAppCloudChannel) {
-        return MESSAGE_MAX_LENGTH.WHATSAPP_CLOUD;
-      }
       if (this.isASmsInbox) {
-        return MESSAGE_MAX_LENGTH.TWILIO_SMS;
-      }
-      if (this.isATwilioSMSChannel) {
-        return MESSAGE_MAX_LENGTH.TWILIO_SMS;
+        return MESSAGE_MAX_LENGTH.BANDWIDTH_SMS;
       }
       if (this.isAWhatsAppChannel) {
         return MESSAGE_MAX_LENGTH.WHATSAPP_CLOUD;
@@ -276,7 +266,6 @@ export default {
         this.isAPIInbox ||
         this.isASmsInbox ||
         this.isATelegramChannel ||
-        this.isALineChannel ||
         this.isAnInstagramChannel ||
         this.isATiktokChannel ||
         this.isAZaloOaChannel ||
@@ -636,7 +625,6 @@ export default {
       if (!this.showMentions) {
         const copilotAcceptedMessage = this.getCopilotAcceptedMessage();
         const isOnWhatsApp =
-          this.isATwilioWhatsAppChannel ||
           this.isAWhatsAppCloudChannel ||
           this.is360DialogWhatsAppChannel;
         // Instagram and TikTok do not support sending text and attachments in the same message.

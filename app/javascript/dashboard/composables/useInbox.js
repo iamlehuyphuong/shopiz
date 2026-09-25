@@ -14,7 +14,6 @@ export const INBOX_FEATURE_MAP = {
   [INBOX_FEATURES.REPLY_TO]: [
     INBOX_TYPES.FB,
     INBOX_TYPES.WEB,
-    INBOX_TYPES.TWITTER,
     INBOX_TYPES.WHATSAPP,
     INBOX_TYPES.TELEGRAM,
     INBOX_TYPES.TIKTOK,
@@ -23,7 +22,6 @@ export const INBOX_FEATURE_MAP = {
   ],
   [INBOX_FEATURES.REPLY_TO_OUTGOING]: [
     INBOX_TYPES.WEB,
-    INBOX_TYPES.TWITTER,
     INBOX_TYPES.WHATSAPP,
     INBOX_TYPES.TELEGRAM,
     INBOX_TYPES.TIKTOK,
@@ -69,14 +67,6 @@ export const useInbox = (inboxId = null) => {
     return channelType.value === INBOX_TYPES.WEB;
   });
 
-  const isATwilioChannel = computed(() => {
-    return channelType.value === INBOX_TYPES.TWILIO;
-  });
-
-  const isALineChannel = computed(() => {
-    return channelType.value === INBOX_TYPES.LINE;
-  });
-
   const isATelegramChannel = computed(() => {
     return channelType.value === INBOX_TYPES.TELEGRAM;
   });
@@ -85,18 +75,8 @@ export const useInbox = (inboxId = null) => {
     return inbox.value?.provider || '';
   });
 
-  const isATwilioSMSChannel = computed(() => {
-    const { medium: medium = '' } = inbox.value || {};
-    return isATwilioChannel.value && medium === 'sms';
-  });
-
   const isASmsInbox = computed(() => {
-    return channelType.value === INBOX_TYPES.SMS || isATwilioSMSChannel.value;
-  });
-
-  const isATwilioWhatsAppChannel = computed(() => {
-    const { medium: medium = '' } = inbox.value || {};
-    return isATwilioChannel.value && medium === 'whatsapp';
+    return channelType.value === INBOX_TYPES.SMS;
   });
 
   const isAWhatsAppCloudChannel = computed(() => {
@@ -114,10 +94,7 @@ export const useInbox = (inboxId = null) => {
   });
 
   const isAWhatsAppChannel = computed(() => {
-    return (
-      channelType.value === INBOX_TYPES.WHATSAPP ||
-      isATwilioWhatsAppChannel.value
-    );
+    return channelType.value === INBOX_TYPES.WHATSAPP;
   });
 
   const isAnInstagramChannel = computed(() => {
@@ -136,14 +113,11 @@ export const useInbox = (inboxId = null) => {
     inbox,
     isAFacebookInbox,
     isAZaloPersonal,
-    isALineChannel,
     isAPIInbox,
     isASmsInbox,
     isATelegramChannel,
-    isATwilioChannel,
     isAWebWidgetInbox,
     isAWhatsAppChannel,
-    isATwilioWhatsAppChannel,
     isAWhatsAppCloudChannel,
     is360DialogWhatsAppChannel,
     isAnInstagramChannel,

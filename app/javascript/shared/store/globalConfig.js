@@ -32,7 +32,6 @@ const {
   ENABLE_CHANNEL_INSTAGRAM: enableChannelInstagram,
   ENABLE_CHANNEL_TELEGRAM: enableChannelTelegram,
   ENABLE_CHANNEL_LINE: enableChannelLine,
-  ENABLE_CHANNEL_TWITTER: enableChannelTwitter,
   ENABLE_CHANNEL_WEBSITE: enableChannelWebsite,
 } = window.globalConfig || {};
 

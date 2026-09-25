@@ -7,7 +7,6 @@ import FBChannel from '../../api/channel/fbChannel';
 import ZaloChannel from '../../api/channel/zaloChannel';
 import ZaloPersonalChannel from '../../api/channel/zalopersonalChannel';
 import TiktokShopChannel from '../../api/channel/tiktokShopChannel';
-import TwilioChannel from '../../api/channel/twilioChannel';
 import WhatsappChannel from '../../api/channel/whatsappChannel';
 import { throwErrorMessage } from '../utils/api';
 import AnalyticsHelper from '../../helper/AnalyticsHelper';
@@ -126,18 +125,7 @@ export const getters = {
   getWebsiteInboxes($state) {
     return $state.records.filter(item => item.channel_type === INBOX_TYPES.WEB);
   },
-  getTwilioInboxes($state) {
-    return $state.records.filter(
-      item => item.channel_type === INBOX_TYPES.TWILIO
-    );
-  },
-  getSMSInboxes($state) {
-    return $state.records.filter(
-      item =>
-        item.channel_type === INBOX_TYPES.SMS ||
-        (item.channel_type === INBOX_TYPES.TWILIO && item.medium === 'sms')
-    );
-  },
+
   getWhatsAppInboxes($state) {
     return $state.records.filter(
       item => item.channel_type === INBOX_TYPES.WHATSAPP
@@ -287,19 +275,6 @@ export const actions = {
       return throwErrorMessage(error);
     }
   },
-  createTwilioChannel: async ({ commit }, params) => {
-    try {
-      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: true });
-      const response = await TwilioChannel.create(params);
-      commit(types.default.ADD_INBOXES, response.data);
-      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
-      sendAnalyticsEvent('twilio');
-      return response.data;
-    } catch (error) {
-      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
-      throw error;
-    }
-  },
   createFBChannel: async ({ commit }, params) => {
     try {
       commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: true });
@@ -329,7 +304,6 @@ export const actions = {
   // TODO: Extract other create channel methods to separate files to reduce file size
   // - createChannel
   // - createWebsiteChannel
-  // - createTwilioChannel
   // - createFBChannel
   updateInbox: async ({ commit }, { id, formData = true, ...inboxParams }) => {
     commit(types.default.SET_INBOXES_UI_FLAG, { isUpdating: true });

@@ -2,12 +2,10 @@ import { frontendURL } from 'dashboard/helper/URLHelper.js';
 
 import CampaignsPageRouteView from './pages/CampaignsPageRouteView.vue';
 import LiveChatCampaignsPage from './pages/LiveChatCampaignsPage.vue';
-import SMSCampaignsPage from './pages/SMSCampaignsPage.vue';
 import WhatsAppCampaignsPage from './pages/WhatsAppCampaignsPage.vue';
 import ZaloPersonalCampaignsPage from './pages/ZaloPersonalCampaignsPage.vue';
 import ZaloOaCampaignsPage from './pages/ZaloOaCampaignsPage.vue';
 import FacebookCampaignsPage from './pages/FacebookCampaignsPage.vue';
-import LineCampaignsPage from './pages/LineCampaignsPage.vue';
 import TelegramCampaignsPage from './pages/TelegramCampaignsPage.vue';
 
 import { FEATURE_FLAGS } from 'dashboard/featureFlags';
@@ -42,7 +40,7 @@ const campaignsRoutes = {
           name: 'campaigns_one_off_index',
           meta,
           redirect: to => {
-            return { name: 'campaigns_sms_index', params: to.params };
+            return { name: 'campaigns_whatsapp_index', params: to.params };
           },
         },
         {
@@ -64,12 +62,6 @@ const campaignsRoutes = {
           component: ZaloOaCampaignsPage,
         },
         {
-          path: 'sms',
-          name: 'campaigns_sms_index',
-          meta,
-          component: SMSCampaignsPage,
-        },
-        {
           path: 'whatsapp',
           name: 'campaigns_whatsapp_index',
           meta,
@@ -86,12 +78,6 @@ const campaignsRoutes = {
           name: 'campaigns_telegram_index',
           meta,
           component: TelegramCampaignsPage,
-        },
-        {
-          path: 'line',
-          name: 'campaigns_line_index',
-          meta,
-          component: LineCampaignsPage,
         },
       ],
     },

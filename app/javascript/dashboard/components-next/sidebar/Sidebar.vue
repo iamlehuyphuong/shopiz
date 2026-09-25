@@ -886,7 +886,6 @@ const menuItems = computed(() => {
             'settings_integrations_sapo',
             'settings_integrations_nhanhvn',
             'settings_integrations_webhook',
-            'settings_integrations_dashboard_apps',
           ],
           to: accountScopedRoute('settings_applications'),
         },

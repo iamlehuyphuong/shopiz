@@ -12,7 +12,6 @@ export const INBOX_FEATURE_MAP = {
   [INBOX_FEATURES.REPLY_TO]: [
     INBOX_TYPES.FB,
     INBOX_TYPES.WEB,
-    INBOX_TYPES.TWITTER,
     INBOX_TYPES.WHATSAPP,
     INBOX_TYPES.TELEGRAM,
     INBOX_TYPES.TIKTOK,
@@ -23,7 +22,6 @@ export const INBOX_FEATURE_MAP = {
   ],
   [INBOX_FEATURES.REPLY_TO_OUTGOING]: [
     INBOX_TYPES.WEB,
-    INBOX_TYPES.TWITTER,
     INBOX_TYPES.WHATSAPP,
     INBOX_TYPES.TELEGRAM,
     INBOX_TYPES.TIKTOK,
@@ -46,9 +44,7 @@ export default {
     isAPIInbox() {
       return this.channelType === INBOX_TYPES.API;
     },
-    isATwitterInbox() {
-      return this.channelType === INBOX_TYPES.TWITTER;
-    },
+
     isAFacebookInbox() {
       return this.channelType === INBOX_TYPES.FB;
     },
@@ -64,29 +60,16 @@ export default {
     isAWebWidgetInbox() {
       return this.channelType === INBOX_TYPES.WEB;
     },
-    isATwilioChannel() {
-      return this.channelType === INBOX_TYPES.TWILIO;
-    },
+
     isAVoiceChannel() {
       return this.channelType === INBOX_TYPES.VOICE;
     },
-    isALineChannel() {
-      return this.channelType === INBOX_TYPES.LINE;
-    },
+
     isATelegramChannel() {
       return this.channelType === INBOX_TYPES.TELEGRAM;
     },
-    isATwilioSMSChannel() {
-      const { medium: medium = '' } = this.inbox;
-      return this.isATwilioChannel && medium === 'sms';
-    },
-    isASmsInbox() {
-      return this.channelType === INBOX_TYPES.SMS || this.isATwilioSMSChannel;
-    },
-    isATwilioWhatsAppChannel() {
-      const { medium: medium = '' } = this.inbox;
-      return this.isATwilioChannel && medium === 'whatsapp';
-    },
+
+
     isAWhatsAppCloudChannel() {
       return (
         this.channelType === INBOX_TYPES.WHATSAPP &&
@@ -103,26 +86,14 @@ export default {
       const { additional_attributes: additionalAttributes } = this.chat || {};
       return additionalAttributes || {};
     },
-    isTwitterInboxTweet() {
-      return this.chatAdditionalAttributes.type === 'tweet';
-    },
-    twilioBadge() {
-      return `${this.isATwilioSMSChannel ? 'sms' : 'whatsapp'}`;
-    },
-    twitterBadge() {
-      return `${this.isTwitterInboxTweet ? 'twitter-tweet' : 'twitter-dm'}`;
-    },
+
     facebookBadge() {
       return this.chatAdditionalAttributes.type || 'facebook';
     },
     inboxBadge() {
       let badgeKey = '';
-      if (this.isATwitterInbox) {
-        badgeKey = this.twitterBadge;
-      } else if (this.isAFacebookInbox) {
+      if (this.isAFacebookInbox) {
         badgeKey = this.facebookBadge;
-      } else if (this.isATwilioChannel) {
-        badgeKey = this.twilioBadge;
       } else if (this.isAWhatsAppChannel) {
         badgeKey = 'whatsapp';
       } else if (this.isATiktokChannel) {
@@ -131,10 +102,7 @@ export default {
       return badgeKey || this.channelType;
     },
     isAWhatsAppChannel() {
-      return (
-        this.channelType === INBOX_TYPES.WHATSAPP ||
-        this.isATwilioWhatsAppChannel
-      );
+      return this.channelType === INBOX_TYPES.WHATSAPP;
     },
     isAnInstagramChannel() {
       return this.channelType === INBOX_TYPES.INSTAGRAM;

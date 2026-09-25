@@ -73,8 +73,6 @@ export default {
     },
     isRichEditorEnabled() {
       if (
-        this.isATwilioChannel ||
-        this.isATwitterInbox ||
         this.isAFacebookInbox
       )
         return false;

@@ -174,7 +174,7 @@ export default {
 
     replyWindowBannerMessage() {
       if (this.isAWhatsAppChannel) {
-        return this.$t('CONVERSATION.TWILIO_WHATSAPP_CAN_REPLY');
+        return this.$t('CONVERSATION.WHATSAPP_CAN_REPLY');
       }
       if (this.isAPIInbox) {
         const { additional_attributes: additionalAttributes = {} } = this.inbox;
@@ -204,8 +204,8 @@ export default {
       if (this.isATiktokChannel) {
         return REPLY_POLICY.TIKTOK;
       }
-      if (!this.isAPIInbox) {
-        return REPLY_POLICY.TWILIO_WHATSAPP;
+      if (this.isAWhatsAppChannel) {
+        return REPLY_POLICY.WHATSAPP_CLOUD;
       }
       return '';
     },
@@ -219,9 +219,6 @@ export default {
       }
       if (this.isATiktokChannel) {
         return this.$t('CONVERSATION.48_HOURS_WINDOW');
-      }
-      if (!this.isAPIInbox) {
-        return this.$t('CONVERSATION.TWILIO_WHATSAPP_24_HOURS_WINDOW');
       }
       return '';
     },

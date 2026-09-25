@@ -15,11 +15,9 @@ const { t } = useI18n();
 const {
   isAFacebookInbox,
   isAZaloPersonal,
-  isALineChannel,
   isAPIInbox,
   isASmsInbox,
   isATelegramChannel,
-  isATwilioChannel,
   isAWebWidgetInbox,
   isAWhatsAppChannel,
   isAnInstagramChannel,
@@ -63,7 +61,6 @@ const isSent = computed(() => {
 
   if (
     isAWhatsAppChannel.value ||
-    isATwilioChannel.value ||
     isAFacebookInbox.value ||
     isASmsInbox.value ||
     isATelegramChannel.value ||
@@ -77,9 +74,6 @@ const isSent = computed(() => {
   // API inbox messages use real sent/delivered/read status values from the external system.
   if (isAPIInbox.value) return status.value === MESSAGE_STATUS.SENT;
 
-  // All messages will be mark as sent for the Line channel, as there is no source ID.
-  if (isALineChannel.value) return true;
-
   return false;
 });
 
@@ -88,7 +82,6 @@ const isDelivered = computed(() => {
 
   if (
     isAWhatsAppChannel.value ||
-    isATwilioChannel.value ||
     isASmsInbox.value ||
     isAFacebookInbox.value ||
     isAZaloPersonal.value ||
@@ -103,10 +96,6 @@ const isDelivered = computed(() => {
   if (isAWebWidgetInbox.value) {
     return status.value === MESSAGE_STATUS.SENT;
   }
-  if (isALineChannel.value) {
-    return status.value === MESSAGE_STATUS.DELIVERED;
-  }
-
   return false;
 });
 
@@ -115,7 +104,6 @@ const isRead = computed(() => {
 
   if (
     isAWhatsAppChannel.value ||
-    isATwilioChannel.value ||
     isAFacebookInbox.value ||
     isAnInstagramChannel.value ||
     isATiktokChannel.value

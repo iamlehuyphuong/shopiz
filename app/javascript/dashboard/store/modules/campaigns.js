@@ -37,7 +37,7 @@ export const getters = {
       return filteredRecords.sort((a1, a2) => a1.id - a2.id);
     },
   getSMSCampaigns: (_state, _getters) => {
-    const smsChannelTypes = [INBOX_TYPES.SMS, INBOX_TYPES.TWILIO];
+    const smsChannelTypes = [INBOX_TYPES.SMS];
     return _getters.getCampaigns(CAMPAIGN_TYPES.ONE_OFF, smsChannelTypes);
   },
   getWhatsAppCampaigns: (_state, _getters) => {

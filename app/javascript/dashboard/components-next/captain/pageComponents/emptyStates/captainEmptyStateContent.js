@@ -247,8 +247,8 @@ export const inboxes = [
   {
     id: 5,
     name: 'SMS Service',
-    channel_type: INBOX_TYPES.TWILIO,
-    messaging_service_sid: 'MGxxxxxx',
+    channel_type: INBOX_TYPES.SMS,
+    phone_number: '+1234567890',
   },
   {
     id: 6,

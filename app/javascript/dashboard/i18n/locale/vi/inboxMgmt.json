@@ -118,13 +118,6 @@
         "ERROR_MESSAGE": "Đã xảy ra lỗi khi kết nối với TikTok, vui lòng thử lại.",
         "ERROR_AUTH": "Đã xảy ra lỗi khi xác thực TikTok, vui lòng thử lại."
       },
-      "TWITTER": {
-        "HELP": "Để thêm Twitter, hãy xác thực bằng cách nhấn 'Đăng nhập với Twitter'.",
-        "ERROR_MESSAGE": "Không thể kết nối với Twitter, vui lòng thử lại.",
-        "TWEETS": {
-          "ENABLE": "Tạo cuộc trò chuyện từ các Tweet được nhắc đến"
-        }
-      },
       "WEBSITE_CHANNEL": {
         "TITLE": "Kênh Website",
         "DESC": "Tạo kênh website và hỗ trợ khách hàng qua widget chat.",
@@ -175,65 +168,11 @@
           "ERROR_MESSAGE": "Không thể tạo kênh website, vui lòng thử lại."
         }
       },
-      "TWILIO": {
-        "TITLE": "Kênh Twilio SMS/WhatsApp",
-        "DESC": "Tích hợp Twilio để hỗ trợ khách qua SMS hoặc WhatsApp.",
-        "ACCOUNT_SID": {
-          "LABEL": "Account SID",
-          "PLACEHOLDER": "Nhập Twilio Account SID",
-          "ERROR": "Trường này là bắt buộc"
-        },
-        "API_KEY": {
-          "USE_API_KEY": "Sử dụng API Key Authentication",
-          "LABEL": "API Key SID",
-          "PLACEHOLDER": "Nhập API Key SID",
-          "ERROR": "Trường này là bắt buộc"
-        },
-        "API_KEY_SECRET": {
-          "LABEL": "API Key Secret",
-          "PLACEHOLDER": "Nhập API Key Secret",
-          "ERROR": "Trường này là bắt buộc"
-        },
-        "MESSAGING_SERVICE_SID": {
-          "LABEL": "Messaging Service SID",
-          "PLACEHOLDER": "Nhập Messaging Service SID",
-          "ERROR": "Trường này là bắt buộc",
-          "USE_MESSAGING_SERVICE": "Sử dụng dịch vụ nhắn tin Twilio"
-        },
-        "CHANNEL_TYPE": {
-          "LABEL": "Loại kênh",
-          "ERROR": "Vui lòng chọn loại kênh"
-        },
-        "AUTH_TOKEN": {
-          "LABEL": "Auth Token",
-          "PLACEHOLDER": "Nhập Auth Token",
-          "ERROR": "Trường này là bắt buộc"
-        },
-        "CHANNEL_NAME": {
-          "LABEL": "Tên hộp thư",
-          "PLACEHOLDER": "Nhập tên hộp thư",
-          "ERROR": "Trường này là bắt buộc"
-        },
-        "PHONE_NUMBER": {
-          "LABEL": "Số điện thoại",
-          "PLACEHOLDER": "Nhập số điện thoại gửi tin nhắn",
-          "ERROR": "Vui lòng nhập số theo chuẩn E.164 bắt đầu bằng dấu '+'."
-        },
-        "API_CALLBACK": {
-          "TITLE": "Callback URL",
-          "SUBTITLE": "Cấu hình Callback URL trong Twilio theo URL này."
-        },
-        "SUBMIT_BUTTON": "Tạo kênh Twilio",
-        "API": {
-          "ERROR_MESSAGE": "Không thể xác thực thông tin Twilio, vui lòng thử lại."
-        }
-      },
       "SMS": {
         "TITLE": "Kênh SMS",
         "DESC": "Hỗ trợ khách hàng qua SMS.",
         "PROVIDERS": {
           "LABEL": "Nhà cung cấp API",
-          "TWILIO": "Twilio",
           "BANDWIDTH": "Bandwidth"
         },
         "API": {
@@ -288,34 +227,7 @@
           "PLACEHOLDER": "Nhập số điện thoại (ví dụ: +1234567890)",
           "ERROR": "Vui lòng nhập số theo chuẩn E.164"
         },
-        "TWILIO": {
-          "ACCOUNT_SID": {
-            "LABEL": "Account SID",
-            "PLACEHOLDER": "Nhập Account SID",
-            "REQUIRED": "Bắt buộc"
-          },
-          "AUTH_TOKEN": {
-            "LABEL": "Mã xác thực (Auth Token)",
-            "PLACEHOLDER": "Nhập mã xác thực",
-            "REQUIRED": "Bắt buộc"
-          },
-          "API_KEY_SID": {
-            "LABEL": "API Key SID",
-            "PLACEHOLDER": "Nhập API Key SID",
-            "REQUIRED": "Bắt buộc"
-          },
-          "API_KEY_SECRET": {
-            "LABEL": "API Key Secret",
-            "PLACEHOLDER": "Nhập API Key Secret",
-            "REQUIRED": "Bắt buộc"
-          }
-        },
-        "CONFIGURATION": {
-          "TWILIO_VOICE_URL_TITLE": "Twilio Voice URL",
-          "TWILIO_VOICE_URL_SUBTITLE": "Cấu hình URL này trong phần Voice URL của Twilio.",
-          "TWILIO_STATUS_URL_TITLE": "Status Callback URL",
-          "TWILIO_STATUS_URL_SUBTITLE": "Cấu hình Status Callback URL trong Twilio."
-        },
+        "CONFIGURATION": {},
         "SUBMIT_BUTTON": "Tạo kênh thoại",
         "API": {
           "ERROR_MESSAGE": "Không thể tạo kênh thoại."
@@ -327,10 +239,8 @@
         "PROVIDERS": {
           "LABEL": "Nhà cung cấp API",
           "WHATSAPP_EMBEDDED": "WhatsApp Business",
-          "TWILIO": "Twilio",
           "WHATSAPP_CLOUD": "WhatsApp Cloud",
           "WHATSAPP_CLOUD_DESC": "Thiết lập nhanh qua Meta",
-          "TWILIO_DESC": "Kết nối bằng thông tin Twilio",
           "360_DIALOG": "360Dialog"
         },
         "SELECT_PROVIDER": {
@@ -448,35 +358,6 @@
         "CONFIGURE_SMTP_IMAP_LINK": "Click vào đây",
         "CONFIGURE_SMTP_IMAP_TEXT": " để cấu hình IMAP và SMTP"
       },
-      "LINE_CHANNEL": {
-        "TITLE": "Kênh LINE",
-        "DESC": "Tích hợp LINE để hỗ trợ khách hàng.",
-        "CHANNEL_NAME": {
-          "LABEL": "Tên kênh",
-          "PLACEHOLDER": "Nhập tên kênh",
-          "ERROR": "Bắt buộc"
-        },
-        "LINE_CHANNEL_ID": {
-          "LABEL": "ID Kênh LINE",
-          "PLACEHOLDER": "Nhập ID Kênh LINE"
-        },
-        "LINE_CHANNEL_SECRET": {
-          "LABEL": "Mã bảo mật Kênh LINE",
-          "PLACEHOLDER": "Nhập mã bảo mật Kênh LINE"
-        },
-        "LINE_CHANNEL_TOKEN": {
-          "LABEL": "Mã thông báo Kênh LINE",
-          "PLACEHOLDER": "Nhập mã thông báo Kênh LINE"
-        },
-        "SUBMIT_BUTTON": "Tạo kênh LINE",
-        "API": {
-          "ERROR_MESSAGE": "Không thể lưu kênh LINE."
-        },
-        "API_CALLBACK": {
-          "TITLE": "Callback URL",
-          "SUBTITLE": "Cấu hình URL webhook trong LINE App."
-        }
-      },
       "TELEGRAM_CHANNEL": {
         "TITLE": "Kênh Telegram",
         "DESC": "Tích hợp Telegram để hỗ trợ khách hàng.",
@@ -531,10 +412,6 @@
           "INSTAGRAM": {
             "TITLE": "Instagram",
             "DESCRIPTION": "Kết nối tài khoản Instagram"
-          },
-          "TWITTER": {
-            "TITLE": "Twitter",
-            "DESCRIPTION": "Kết nối tài khoản Twitter"
           },
           "TIKTOK": {
             "TITLE": "TikTok",
@@ -927,7 +804,8 @@
         "ENABLE_DESC": "Tự động liên hệ qua Zalo Cá Nhân khi khách hàng để lại số điện thoại trong Inbox này.",
         "SELECT_INBOX": "Chọn Zalo Cá Nhân",
         "SELECT_INBOX_DESC": "Chọn các kênh Zalo Cá Nhân sẽ được sử dụng để gửi kết bạn/tin nhắn (luân phiên - Round robin)."
-      },      "MESSENGER_HEADING": "Mã nhúng",
+      },
+      "MESSENGER_HEADING": "Mã nhúng",
       "MESSENGER_SUB_HEAD": "Đặt đoạn mã này trong thẻ <body>",
       "ALLOWED_DOMAINS": {
         "TITLE": "Domains được phép",
@@ -1448,8 +1326,6 @@
     "CHANNELS": {
       "MESSENGER": "Messenger",
       "WEB_WIDGET": "Website",
-      "TWITTER_PROFILE": "Twitter",
-      "TWILIO_SMS": "Twilio SMS",
       "VOICE": "Gọi thoại (Voice)",
       "WHATSAPP": "WhatsApp",
       "SMS": "SMS",

@@ -69,19 +69,11 @@ const state = props.formState || {
   attachedFiles: [],
 };
 
-const inboxTypes = computed(() => ({
-  isTwilio: props.targetInbox?.channelType === INBOX_TYPES.TWILIO,
   isWhatsapp: props.targetInbox?.channelType === INBOX_TYPES.WHATSAPP,
   isWebWidget: props.targetInbox?.channelType === INBOX_TYPES.WEB,
   isApi: props.targetInbox?.channelType === INBOX_TYPES.API,
   isVoice: props.targetInbox?.channelType === INBOX_TYPES.VOICE,
   isZaloPersonal: props.targetInbox?.channelType == INBOX_TYPES.ZALO_PERSONAL,
-  isTwilioSMS:
-    props.targetInbox?.channelType === INBOX_TYPES.TWILIO &&
-    props.targetInbox?.medium === 'sms',
-  isTwilioWhatsapp:
-    props.targetInbox?.channelType === INBOX_TYPES.TWILIO &&
-    props.targetInbox?.medium === 'whatsapp',
 }));
 
 const whatsappMessageTemplates = computed(() =>

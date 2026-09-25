@@ -27,13 +27,10 @@ const currentInbox = computed(() =>
 // Use useInbox composable with the inbox ID
 const {
   isAWhatsAppCloudChannel,
-  isATwilioChannel,
   isASmsInbox,
-  isALineChannel,
   isAWhatsAppChannel,
   isAFacebookInbox,
   isATelegramChannel,
-  isATwilioWhatsAppChannel,
 } = useInbox(route.params.inbox_id);
 
 const hasDuplicateInstagramInbox = computed(() => {
@@ -61,24 +58,6 @@ const isWhatsAppEmbeddedSignup = computed(() => {
 });
 
 const message = computed(() => {
-  if (isATwilioChannel.value) {
-    return `${t('INBOX_MGMT.FINISH.MESSAGE')}. ${t(
-      'INBOX_MGMT.ADD.TWILIO.API_CALLBACK.SUBTITLE'
-    )}`;
-  }
-
-  if (isASmsInbox.value) {
-    return `${t('INBOX_MGMT.FINISH.MESSAGE')}. ${t(
-      'INBOX_MGMT.ADD.SMS.BANDWIDTH.API_CALLBACK.SUBTITLE'
-    )}`;
-  }
-
-  if (isALineChannel.value) {
-    return `${t('INBOX_MGMT.FINISH.MESSAGE')}. ${t(
-      'INBOX_MGMT.ADD.LINE_CHANNEL.API_CALLBACK.SUBTITLE'
-    )}`;
-  }
-
   if (isAWhatsAppCloudChannel.value && shouldShowWhatsAppWebhookDetails.value) {
     return `${t('INBOX_MGMT.FINISH.MESSAGE')}. ${t(
       'INBOX_MGMT.ADD.WHATSAPP.API_CALLBACK.SUBTITLE'
@@ -208,13 +187,7 @@ onMounted(() => {
             :script="currentInbox.provider_config.webhook_verify_token"
           />
         </div>
-        <div class="w-[50%] max-w-[50%] ml-[25%]">
-          <woot-code
-            v-if="isALineChannel"
-            lang="html"
-            :script="currentInbox.callback_webhook_url"
-          />
-        </div>
+
         <div class="w-[50%] max-w-[50%] ml-[25%]">
           <woot-code
             v-if="isASmsInbox"

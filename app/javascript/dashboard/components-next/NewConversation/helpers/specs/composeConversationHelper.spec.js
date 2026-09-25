@@ -12,16 +12,6 @@ describe('composeConversationHelper', () => {
       email: 'john@example.com',
       phoneNumber: '+1234567890',
     };
-
-    it('generates label for twilio inbox', () => {
-      expect(
-        helpers.generateLabelForContactableInboxesList({
-          ...contact,
-          channelType: INBOX_TYPES.TWILIO,
-        })
-      ).toBe('John Doe (+1234567890)');
-    });
-
     it('generates label for whatsapp inbox', () => {
       expect(
         helpers.generateLabelForContactableInboxesList({

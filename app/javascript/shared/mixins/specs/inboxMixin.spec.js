@@ -42,14 +42,11 @@ describe('inboxMixin', () => {
   });
 
   describe('Badges', () => {
-    it('inboxBadge returns string Channel::Telegram if isATwilioChannel and isATwitterInbox is false', () => {
+    it('inboxBadge returns string Channel::Telegram if channel is Telegram', () => {
       const Component = getComponentConfigForInbox('Channel::Telegram');
       const wrapper = shallowMount(Component);
-      expect(wrapper.vm.isATwilioChannel).toBe(false);
-      expect(wrapper.vm.isATwitterInbox).toBe(false);
       expect(wrapper.vm.channelType).toBe('Channel::Telegram');
     });
-
     it('inboxBadge returns correct badge for WhatsApp channel', () => {
       const Component = getComponentConfigForInbox('Channel::Whatsapp');
       const wrapper = shallowMount(Component);

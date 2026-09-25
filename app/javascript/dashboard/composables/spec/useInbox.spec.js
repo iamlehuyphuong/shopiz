@@ -27,17 +27,7 @@ const mockStore = createStore({
               channel_type: INBOX_TYPES.WHATSAPP,
               provider: 'whatsapp_cloud',
             },
-            2: { id: 2, channel_type: INBOX_TYPES.FB },
-            3: { id: 3, channel_type: INBOX_TYPES.TWILIO, medium: 'sms' },
-            4: { id: 4, channel_type: INBOX_TYPES.TWILIO, medium: 'whatsapp' },
-            7: {
-              id: 7,
-              channel_type: INBOX_TYPES.WHATSAPP,
-              provider: 'default',
-            },
-            8: { id: 8, channel_type: INBOX_TYPES.TELEGRAM },
-            9: { id: 9, channel_type: INBOX_TYPES.LINE },
-            10: { id: 10, channel_type: INBOX_TYPES.WEB },
+            3: { id: 3, channel_type: INBOX_TYPES.SMS, medium: 'sms' },
             11: { id: 11, channel_type: INBOX_TYPES.API },
             12: { id: 12, channel_type: INBOX_TYPES.SMS },
             13: { id: 13, channel_type: INBOX_TYPES.INSTAGRAM },
@@ -117,27 +107,6 @@ describe('useInbox', () => {
       expect(wrapper.vm.isAWhatsAppChannel).toBe(false);
     });
 
-    it('identifies Twilio SMS channel correctly', () => {
-      const wrapper = mount(createTestComponent(3), {
-        global: { plugins: [mockStore] },
-      });
-
-      expect(wrapper.vm.isATwilioChannel).toBe(true);
-      expect(wrapper.vm.isASmsInbox).toBe(true);
-      expect(wrapper.vm.isAWhatsAppChannel).toBe(false);
-    });
-
-    it('identifies Twilio WhatsApp channel correctly', () => {
-      const wrapper = mount(createTestComponent(4), {
-        global: { plugins: [mockStore] },
-      });
-
-      expect(wrapper.vm.isATwilioChannel).toBe(true);
-      expect(wrapper.vm.isAWhatsAppChannel).toBe(true);
-      expect(wrapper.vm.isATwilioWhatsAppChannel).toBe(true);
-      expect(wrapper.vm.isAWhatsAppCloudChannel).toBe(false);
-    });
-
     it('identifies 360Dialog WhatsApp channel correctly', () => {
       const wrapper = mount(createTestComponent(7), {
         global: { plugins: [mockStore] },
@@ -154,12 +123,6 @@ describe('useInbox', () => {
         global: { plugins: [mockStore] },
       });
       expect(wrapper.vm.isATelegramChannel).toBe(true);
-
-      // Test Line
-      wrapper = mount(createTestComponent(9), {
-        global: { plugins: [mockStore] },
-      });
-      expect(wrapper.vm.isALineChannel).toBe(true);
 
       // Test Web Widget
       wrapper = mount(createTestComponent(10), {
@@ -233,14 +196,11 @@ describe('useInbox', () => {
       const expectedProperties = [
         'inbox',
         'isAFacebookInbox',
-        'isALineChannel',
         'isAPIInbox',
         'isASmsInbox',
         'isATelegramChannel',
-        'isATwilioChannel',
         'isAWebWidgetInbox',
         'isAWhatsAppChannel',
-        'isATwilioWhatsAppChannel',
         'isAWhatsAppCloudChannel',
         'is360DialogWhatsAppChannel',
         'isAnInstagramChannel',

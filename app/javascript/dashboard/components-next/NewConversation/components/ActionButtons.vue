@@ -12,15 +12,12 @@ import { INBOX_TYPES } from 'dashboard/helper/inbox';
 
 import Button from 'dashboard/components-next/button/Button.vue';
 import WhatsAppOptions from './WhatsAppOptions.vue';
-import ContentTemplateSelector from './ContentTemplateSelector.vue';
 
 const props = defineProps({
   attachedFiles: { type: Array, default: () => [] },
   isWhatsappInbox: { type: Boolean, default: false },
   isVoiceInbox: { type: Boolean, default: false },
   isWebWidgetInbox: { type: Boolean, default: false },
-  isTwilioSmsInbox: { type: Boolean, default: false },
-  isTwilioWhatsAppInbox: { type: Boolean, default: false },
   isZaloPersonalInbox: { type: Boolean, default: false },
   messageTemplates: { type: Array, default: () => [] },
   channelType: { type: String, default: '' },
@@ -38,7 +35,7 @@ const emit = defineEmits([
   'discard',
   'sendMessage',
   'sendWhatsappMessage',
-  'sendTwilioMessage',
+
   'insertEmoji',
   'addSignature',
   'removeSignature',
@@ -71,18 +68,12 @@ const sendWithSignature = computed(() => {
   return fetchSignatureFlagFromUISettings(props.channelType);
 });
 
-const showTwilioContentTemplates = computed(() => {
-  return props.isTwilioWhatsAppInbox && props.inboxId;
-});
-
 const shouldShowEmojiButton = computed(() => {
-  return (
-    !props.isWhatsappInbox && !props.isTwilioWhatsAppInbox && !props.hasNoInbox
-  );
+  return !props.isWhatsappInbox && !props.hasNoInbox;
 });
 
 const isRegularMessageMode = computed(() => {
-  return !props.isWhatsappInbox && !props.isTwilioWhatsAppInbox;
+  return !props.isWhatsappInbox;
 });
 
 const isVoiceInbox = computed(() => props.channelType === INBOX_TYPES.VOICE);
@@ -210,11 +201,6 @@ useEventListener(document, 'paste', onPaste);
         :inbox-id="inboxId"
         :message-templates="messageTemplates"
         @send-message="emit('sendWhatsappMessage', $event)"
-      />
-      <ContentTemplateSelector
-        v-if="showTwilioContentTemplates"
-        :inbox-id="inboxId"
-        @send-message="emit('sendTwilioMessage', $event)"
       />
       <div
         v-if="shouldShowEmojiButton"

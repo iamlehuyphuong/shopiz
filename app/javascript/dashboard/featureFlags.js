@@ -33,7 +33,6 @@ export const FEATURE_FLAGS = {
   CHANNEL_TIKTOK: 'channel_tiktok',
   CAPTAIN_TASKS: 'captain_tasks',
   TEMPLATE_BUILDER: 'template_builder',
-  SAML: 'saml',
   COMPANIES: 'companies',
   ADVANCED_SEARCH: 'advanced_search',
   CONVERSATION_REQUIRED_ATTRIBUTES: 'conversation_required_attributes',

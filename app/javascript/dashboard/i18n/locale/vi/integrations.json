@@ -275,13 +275,6 @@
       "UPDATE_SUCCESS": "Kênh đã được kết nối thành công",
       "FAILED_TO_FETCH_CHANNELS": "Có lỗi khi lấy các kênh từ Slack, vui lòng thử lại"
     },
-    "DYTE": {
-      "CLICK_HERE_TO_JOIN": "Nhấp vào đây để tham gia",
-      "LEAVE_THE_ROOM": "Rời khỏi phòng",
-      "START_VIDEO_CALL_HELP_TEXT": "Bắt đầu cuộc gọi video mới với khách hàng",
-      "JOIN_ERROR": "Có lỗi khi tham gia cuộc gọi, vui lòng thử lại",
-      "CREATE_ERROR": "Có lỗi khi tạo liên kết cuộc họp, vui lòng thử lại"
-    },
     "OPEN_AI": {
       "AI_ASSIST": "Hỗ trợ AI",
       "WITH_AI": " {option} cùng AI ",
@@ -366,7 +359,6 @@
     "CONNECT": {
       "BUTTON_TEXT": "Kết nối"
     },
-
     "LINEAR": {
       "HEADER": "Linear",
       "ADD_OR_LINK_BUTTON": "Tạo/ Liên kết Vấn đề Linear",
