@@ -84,9 +84,19 @@
   display_name: Audit Logs
   enabled: false
   premium: true
-
-
-
+- name: response_bot
+  display_name: Response Bot
+  enabled: true
+  deprecated: true
+- name: message_reply_to
+  display_name: Message Reply To
+  enabled: true
+  help_url: https://help.shopiz.pro/hc/reply-to
+  deprecated: true
+- name: insert_article_in_reply
+  display_name: Insert Article in Reply
+  enabled: true
+  deprecated: true
 - name: inbox_view
   display_name: Inbox View
   enabled: true
@@ -107,9 +117,17 @@
   display_name: Custom Roles
   enabled: false
   premium: true
-
-
-
+- name: chatwoot_v4
+  display_name: Shopiz V4
+  enabled: true
+- name: report_v4
+  display_name: Report V4
+  enabled: false
+  deprecated: true
+- name: contact_chatwoot_support_team
+  display_name: Contact Shopiz Support Team
+  enabled: true
+  chatwoot_internal: false
 - name: shopify_integration
   display_name: Shopify Integration
   enabled: true
@@ -123,11 +141,19 @@
 - name: crm_integration
   display_name: CRM Integration
   enabled: false
-
+- name: channel_voice
+  display_name: Voice Channel
+  enabled: false
+  premium: true
+  deprecated: true
+  help_url: https://help.shopiz.pro/hc/voice
 - name: notion_integration
   display_name: Notion Integration
   enabled: true
-
+- name: whatsapp_embedded_signup
+  display_name: WhatsApp Embedded Signup
+  enabled: false
+  deprecated: true
 - name: whatsapp_campaign
   display_name: WhatsApp Campaign
   enabled: false
@@ -168,7 +194,11 @@
   display_name: Telegram Channel
   enabled: false
   help_url: https://help.shopiz.pro/hc/telegram
-
+- name: channel_api
+  display_name: API Channel
+  enabled: false
+  deprecated: true
+  help_url: https://help.shopiz.pro/hc/api
 - name: channel_whatsapp
   display_name: Whatsapp Channel
   enabled: false
