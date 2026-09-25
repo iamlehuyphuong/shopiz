@@ -7,7 +7,6 @@
     "CSAT_REPLY_MESSAGE": "Please rate the conversation",
     "404": "Sorry, we cannot find the conversation. Please try again",
     "SWITCH_VIEW_LAYOUT": "Switch the layout",
-
     "UNVERIFIED_SESSION": "The identity of this user is not verified",
     "NO_MESSAGE_1": "Uh oh! Looks like there are no messages from customers in your inbox.",
     "NO_MESSAGE_2": " to send a message to your page!",
@@ -78,6 +77,17 @@
     "CARD": {
       "SHOW_LABELS": "Show labels",
       "HIDE_LABELS": "Hide labels"
+    },
+    "VOICE_CALL": {
+      "INCOMING_CALL": "Incoming call",
+      "OUTGOING_CALL": "Outgoing call",
+      "CALL_IN_PROGRESS": "Call in progress",
+      "NO_ANSWER": "No answer",
+      "MISSED_CALL": "Missed call",
+      "CALL_ENDED": "Call ended",
+      "NOT_ANSWERED_YET": "Not answered yet",
+      "THEY_ANSWERED": "They answered",
+      "YOU_ANSWERED": "You answered"
     },
     "VIDEO_CALL": {
       "TITLE": "Video Call",

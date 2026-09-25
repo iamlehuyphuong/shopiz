@@ -269,7 +269,7 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   end
 
   def allowed_channel_types
-    %w[web_widget api line telegram whatsapp sms]
+    %w[web_widget api telegram whatsapp]
   end
 
   def update_inbox_working_hours
@@ -322,13 +322,13 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   def inbox_attributes
     [:name, :avatar, :greeting_enabled, :greeting_message, :csat_survey_enabled,
      :enable_auto_assignment, :working_hours_enabled, :out_of_office_message, :timezone, :allow_messages_after_resolved,
-     :lock_to_single_conversation, :portal_id, :sender_name_type, :business_name, :ecommerce_integration_id, :auto_label_enabled, :label_suggestion_enabled,
+     :lock_to_single_conversation, :sender_name_type, :business_name, :ecommerce_integration_id, :auto_label_enabled, :label_suggestion_enabled,
      { auto_follow_up_config: [:enabled, :delay_seconds, :action_type, :ai_rewrite, :max_attempts, :interval_hours, :time_mode,
                                :fixed_time, :timezone, :predefined_message, :custom_ai_prompt, :macro_id,
                                { predefined_messages: [] }, { macros: [] }, { custom_ai_prompts: [] }] },
      { csat_config: [:display_type, :message, :button_text, :language,
                      { survey_rules: [:operator, { values: [] }],
-                       template: [:name, :template_id, :friendly_name, :content_sid, :approval_sid, :created_at, :language, :status] }] },
+                       template: [:name, :template_id, :created_at, :language, :status] }] },
      { sales_config: [:ai_allow_create_order, :platform,
                       { order_notification_templates: [:confirmed, :processing, :shipped, :delivered, :cancelled] }] },
      { zalo_auto_message_config: [:zalo_auto_message_enabled, { zalo_auto_message_inbox_ids: [] }] }]
@@ -342,7 +342,7 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   end
 
   def index_includes
-    [:channel, :portal, :agent_bot_inbox, :hooks, :ecommerce_integration, { avatar_attachment: [:blob] }]
+    [:channel, :agent_bot_inbox, :hooks, :ecommerce_integration, { avatar_attachment: [:blob] }]
   end
 
   def channel_type_from_params
@@ -358,5 +358,3 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
     channel_type.constantize.const_defined?(:EDITABLE_ATTRS) ? channel_type.constantize::EDITABLE_ATTRS.presence : []
   end
 end
-
-Api::V1::Accounts::InboxesController.prepend_mod_with('Api::V1::Accounts::InboxesController')

@@ -36,7 +36,7 @@ class ConversationReplyMailer < ApplicationMailer
 
   def email_reply(message)
     init_conversation_attributes(message.conversation)
-    return unless smtp_config_set_or_development? || email_smtp_enabled? || (email_imap_enabled? && email_oauth_enabled?)
+    return unless smtp_config_set_or_development?
 
     @message = message
     prepare_mail(true)
@@ -68,10 +68,6 @@ class ConversationReplyMailer < ApplicationMailer
     @agent = @conversation.assignee
     @inbox = @conversation.inbox
     @channel = @inbox.channel
-  end
-
-  def should_use_conversation_email_address?
-    @inbox.inbox_type == 'Email' || inbound_email_enabled?
   end
 
   def conversation_already_viewed?
@@ -108,7 +104,7 @@ class ConversationReplyMailer < ApplicationMailer
   end
 
   def from_email
-    should_use_conversation_email_address? ? parse_email(@account.support_email) : parse_email(inbox_from_email_address)
+    parse_email(inbox_from_email_address)
   end
 
   def mail_subject
@@ -124,19 +120,11 @@ class ConversationReplyMailer < ApplicationMailer
   end
 
   def reply_email
-    if should_use_conversation_email_address?
-      sender_name("reply+#{@conversation.uuid}@#{@account.inbound_email_domain}")
-    else
-      @inbox.email_address || @agent&.email
-    end
+    @inbox.email_address || @agent&.email
   end
 
   def from_email_with_name
     sender_name(from_email)
-  end
-
-  def channel_email_with_name
-    sender_name(@channel.email)
   end
 
   def parse_email(email_string)
@@ -195,10 +183,6 @@ class ConversationReplyMailer < ApplicationMailer
   def to_emails
     # if there is no to_emails from content_attributes, send it to @contact&.email
     to_emails_from_content_attributes.presence || [@contact&.email]
-  end
-
-  def inbound_email_enabled?
-    false
   end
 
   def choose_layout

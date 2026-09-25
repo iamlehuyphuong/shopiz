@@ -534,24 +534,6 @@
       "CONFIRM_YES": "Xác nhận"
     }
   },
-  "EMAIL_TRANSCRIPT": {
-    "TITLE": "Gửi bản sao hội thoại",
-    "DESC": "Gửi bản sao nội dung hội thoại đến email chỉ định",
-    "SUBMIT": "Gửi",
-    "CANCEL": "Hủy",
-    "SEND_EMAIL_SUCCESS": "Đã gửi bản sao hội thoại thành công",
-    "SEND_EMAIL_ERROR": "Có lỗi xảy ra, vui lòng thử lại",
-    "SEND_EMAIL_PAYMENT_REQUIRED": "Gửi bản ghi email không có sẵn trong gói hiện tại của bạn. Vui lòng nâng cấp để sử dụng tính năng này.",
-    "FORM": {
-      "SEND_TO_CONTACT": "Gửi bản sao cho khách hàng",
-      "SEND_TO_AGENT": "Gửi bản sao cho nhân viên được giao",
-      "SEND_TO_OTHER_EMAIL_ADDRESS": "Gửi bản sao đến email khác",
-      "EMAIL": {
-        "PLACEHOLDER": "Nhập email",
-        "ERROR": "Vui lòng nhập địa chỉ email hợp lệ"
-      }
-    }
-  },
   "ONBOARDING": {
     "TITLE": "Chào mừng 👋, đến với {installationName}!",
     "DESCRIPTION": "Cảm ơn bạn đã đăng ký. Chúng tôi muốn bạn tận dụng tối đa {installationName}. Dưới đây là những việc bạn có thể làm để trải nghiệm tốt hơn.",

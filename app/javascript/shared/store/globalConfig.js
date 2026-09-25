@@ -31,7 +31,6 @@ const {
   ENABLE_CHANNEL_WHATSAPP: enableChannelWhatsapp,
   ENABLE_CHANNEL_INSTAGRAM: enableChannelInstagram,
   ENABLE_CHANNEL_TELEGRAM: enableChannelTelegram,
-  ENABLE_CHANNEL_LINE: enableChannelLine,
   ENABLE_CHANNEL_WEBSITE: enableChannelWebsite,
 } = window.globalConfig || {};
 
@@ -65,8 +64,6 @@ const state = {
   enableChannelWhatsapp: parseBoolean(enableChannelWhatsapp ?? true),
   enableChannelInstagram: parseBoolean(enableChannelInstagram ?? true),
   enableChannelTelegram: parseBoolean(enableChannelTelegram ?? true),
-  enableChannelLine: parseBoolean(enableChannelLine ?? true),
-  enableChannelTwitter: parseBoolean(enableChannelTwitter ?? true),
   enableChannelWebsite: parseBoolean(enableChannelWebsite ?? true),
 };
 

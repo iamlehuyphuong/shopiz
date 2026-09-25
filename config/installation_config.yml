@@ -246,10 +246,6 @@
   display_title: 'Blocked Email Domains'
   description: 'Add a domain per line to block them from signing up, accepts Regex'
   type: code
-- name: SKIP_INCOMING_BCC_PROCESSING
-  value:
-  display_title: 'Skip BCC Processing For'
-  description: 'Comma-separated list of account IDs that should be skipped from incoming BCC processing'
 - name: INACTIVE_WHATSAPP_NUMBERS
   value: ''
   display_title: 'Inactive WhatsApp Numbers'
@@ -627,20 +623,6 @@
 ## ------ End of Configs added for Google OAuth ------ ##
 
 
-## ------ Configs added for Cloudflare ------ ##
-- name: CLOUDFLARE_API_KEY
-  display_title: 'Cloudflare API Key'
-  value:
-  locked: false
-  description: 'API key for Cloudflare account authentication'
-  type: secret
-- name: CLOUDFLARE_ZONE_ID
-  display_title: 'Cloudflare Zone ID'
-  value:
-  locked: false
-  description: 'Zone ID for the Cloudflare domain'
-## ------ End of Configs added for Cloudflare ------ ##
-
 ## ------ Customizations for Customers ------ ##
 - name: WIDGET_TOKEN_EXPIRY
   display_title: 'Widget Token Expiry'
@@ -754,28 +736,6 @@
   locked: false
 - name: CHANNEL_STATUS_TELEGRAM
   display_title: Telegram Channel Status
-  value: published
-  type: select
-  options:
-    published: Published
-    beta: Beta
-    coming_soon: Coming Soon
-    draft: Draft
-    deprecated: Deprecated
-  locked: false
-- name: CHANNEL_STATUS_LINE
-  display_title: Line Channel Status
-  value: published
-  type: select
-  options:
-    published: Published
-    beta: Beta
-    coming_soon: Coming Soon
-    draft: Draft
-    deprecated: Deprecated
-  locked: false
-- name: CHANNEL_STATUS_TWITTER
-  display_title: Twitter Channel Status
   value: published
   type: select
   options:

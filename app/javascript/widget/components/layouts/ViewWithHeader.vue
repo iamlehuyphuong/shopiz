@@ -29,9 +29,6 @@ export default {
       appConfig: 'appConfig/getAppConfig',
       availableAgents: 'agent/availableAgents',
     }),
-    portal() {
-      return window.chatwootWebChannel.portal;
-    },
     isHeaderCollapsed() {
       if (!this.hasIntroText) {
         return true;

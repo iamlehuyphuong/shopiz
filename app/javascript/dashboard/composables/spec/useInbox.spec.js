@@ -27,11 +27,8 @@ const mockStore = createStore({
               channel_type: INBOX_TYPES.WHATSAPP,
               provider: 'whatsapp_cloud',
             },
-            3: { id: 3, channel_type: INBOX_TYPES.SMS, medium: 'sms' },
             11: { id: 11, channel_type: INBOX_TYPES.API },
-            12: { id: 12, channel_type: INBOX_TYPES.SMS },
             13: { id: 13, channel_type: INBOX_TYPES.INSTAGRAM },
-            14: { id: 14, channel_type: INBOX_TYPES.VOICE },
             15: { id: 15, channel_type: INBOX_TYPES.TIKTOK },
           };
           return inboxes[id] || null;
@@ -136,23 +133,11 @@ describe('useInbox', () => {
       });
       expect(wrapper.vm.isAPIInbox).toBe(true);
 
-      // Test SMS
-      wrapper = mount(createTestComponent(12), {
-        global: { plugins: [mockStore] },
-      });
-      expect(wrapper.vm.isASmsInbox).toBe(true);
-
       // Test Instagram
       wrapper = mount(createTestComponent(13), {
         global: { plugins: [mockStore] },
       });
       expect(wrapper.vm.isAnInstagramChannel).toBe(true);
-
-      // Test Voice
-      wrapper = mount(createTestComponent(14), {
-        global: { plugins: [mockStore] },
-      });
-      expect(wrapper.vm.isAVoiceChannel).toBe(true);
 
       // Test Tiktok
       wrapper = mount(createTestComponent(15), {
@@ -197,7 +182,6 @@ describe('useInbox', () => {
         'inbox',
         'isAFacebookInbox',
         'isAPIInbox',
-        'isASmsInbox',
         'isATelegramChannel',
         'isAWebWidgetInbox',
         'isAWhatsAppChannel',
@@ -205,7 +189,6 @@ describe('useInbox', () => {
         'is360DialogWhatsAppChannel',
         'isAnInstagramChannel',
         'isATiktokChannel',
-        'isAVoiceChannel',
       ];
 
       expectedProperties.forEach(prop => {

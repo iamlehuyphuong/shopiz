@@ -39,7 +39,6 @@ const sourceLabel = source => {
     woocommerce: 'WooCommerce',
     nhanhvn: 'NhanhVN',
     shopiz: 'Shopiz',
-    helpcenter: 'Help Center',
     other: 'Other',
   };
   return labels[source] || source;

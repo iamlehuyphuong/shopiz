@@ -309,10 +309,6 @@
             "TITLE": "Telegram",
             "DESCRIPTION": "Configure Telegram channel using Bot token"
           },
-          "LINE": {
-            "TITLE": "Line",
-            "DESCRIPTION": "Integrate your Line channel"
-          },
           "INSTAGRAM": {
             "TITLE": "Instagram",
             "DESCRIPTION": "Connect your instagram account"
@@ -1102,7 +1098,6 @@
       "WEB_WIDGET": "Website",
       "WHATSAPP": "WhatsApp",
       "TELEGRAM": "Telegram",
-      "LINE": "Line",
       "API": "API Channel",
       "INSTAGRAM": "Instagram",
       "TIKTOK": "TikTok",

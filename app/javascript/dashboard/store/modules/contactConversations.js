@@ -2,7 +2,6 @@ import * as types from '../mutation-types';
 import ContactAPI from '../../api/contacts';
 import ConversationApi from '../../api/conversations';
 import camelcaseKeys from 'camelcase-keys';
-import axios from 'axios';
 
 export const createMessagePayload = (payload, message) => {
   const { content, cc_emails, bcc_emails } = message;
@@ -83,7 +82,7 @@ export const getters = {
 };
 
 export const actions = {
-  create: async ({ commit }, { params, isFromWhatsApp, isVoiceCall }) => {
+  create: async ({ commit }, { params, isFromWhatsApp }) => {
     commit(types.default.SET_CONTACT_CONVERSATIONS_UI_FLAG, {
       isCreating: true,
     });
@@ -97,33 +96,7 @@ export const actions = {
         files,
       });
 
-      // If this is a voice call, adjust the endpoint to trigger voice
-      let data;
-
-      if (isVoiceCall) {
-        const accountId = window.store.getters['accounts/getCurrentAccountId'];
-
-        if (contactId) {
-          // Use the regular contacts call endpoint for existing contacts
-          const response = await axios.post(
-            `/api/v1/accounts/${accountId}/contacts/${contactId}/call`
-          );
-          data = response.data;
-        } else {
-          // For direct phone calls without a contact, use a special endpoint
-          // Add phoneNumber to the payload for voice call
-          payload.phone_number = params.phoneNumber || '';
-          const response = await axios.post(
-            `/api/v1/accounts/${accountId}/conversations/trigger_voice`,
-            payload
-          );
-          data = response.data;
-        }
-      } else {
-        // Regular conversation creation
-        const response = await ConversationApi.create(payload);
-        data = response.data;
-      }
+      const { data } = await ConversationApi.create(payload);
 
       if (contactId) {
         commit(types.default.ADD_CONTACT_CONVERSATION, {

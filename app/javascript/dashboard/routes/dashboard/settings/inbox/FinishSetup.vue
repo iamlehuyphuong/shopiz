@@ -27,7 +27,6 @@ const currentInbox = computed(() =>
 // Use useInbox composable with the inbox ID
 const {
   isAWhatsAppCloudChannel,
-  isASmsInbox,
   isAWhatsAppChannel,
   isAFacebookInbox,
   isATelegramChannel,
@@ -160,13 +159,6 @@ onMounted(() => {
             :script="currentInbox.web_widget_script"
           />
         </div>
-        <div class="w-[50%] max-w-[50%] ml-[25%]">
-          <woot-code
-            v-if="isATwilioWhatsAppChannel"
-            lang="html"
-            :script="currentInbox.callback_webhook_url"
-          />
-        </div>
         <div
           v-if="shouldShowWhatsAppWebhookDetails"
           class="w-[50%] max-w-[50%] ml-[25%]"
@@ -185,14 +177,6 @@ onMounted(() => {
           <woot-code
             lang="html"
             :script="currentInbox.provider_config.webhook_verify_token"
-          />
-        </div>
-
-        <div class="w-[50%] max-w-[50%] ml-[25%]">
-          <woot-code
-            v-if="isASmsInbox"
-            lang="html"
-            :script="currentInbox.callback_webhook_url"
           />
         </div>
         <div

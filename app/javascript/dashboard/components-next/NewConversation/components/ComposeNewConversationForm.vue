@@ -69,10 +69,10 @@ const state = props.formState || {
   attachedFiles: [],
 };
 
+const inboxTypes = computed(() => ({
   isWhatsapp: props.targetInbox?.channelType === INBOX_TYPES.WHATSAPP,
   isWebWidget: props.targetInbox?.channelType === INBOX_TYPES.WEB,
   isApi: props.targetInbox?.channelType === INBOX_TYPES.API,
-  isVoice: props.targetInbox?.channelType === INBOX_TYPES.VOICE,
   isZaloPersonal: props.targetInbox?.channelType == INBOX_TYPES.ZALO_PERSONAL,
 }));
 
@@ -94,9 +94,7 @@ const validationRules = computed(() => ({
   selectedContact: { required },
   targetInbox: { required },
   message: {
-    required: requiredIf(
-      !inboxTypes.value.isWhatsapp && !inboxTypes.value.isVoice
-    ),
+    required: requiredIf(!inboxTypes.value.isWhatsapp),
   },
 }));
 
@@ -285,26 +283,8 @@ const handleSendWhatsappMessage = async ({ message, templateParams }) => {
   });
 };
 
-const handleSendTwilioMessage = async ({ message, templateParams }) => {
-  const twilioMessagePayload = prepareWhatsAppMessagePayload({
-    targetInbox: props.targetInbox,
-    selectedContact: props.selectedContact,
-    message,
-    templateParams,
-    currentUser: props.currentUser,
-  });
-  await emit('createConversation', {
-    payload: twilioMessagePayload,
-    isFromWhatsApp: true,
-  });
-};
-
 const shouldShowMessageEditor = computed(() => {
-  return (
-    !inboxTypes.value.isWhatsapp &&
-    !showNoInboxAlert.value &&
-    !inboxTypes.value.isTwilioWhatsapp
-  );
+  return !inboxTypes.value.isWhatsapp && !showNoInboxAlert.value;
 });
 
 const isCopilotActive = computed(() => copilot.isActive?.value ?? false);
@@ -373,7 +353,7 @@ useKeyboardEvents({
       />
 
       <AttachmentPreviews
-        v-if="state.attachedFiles.length > 0 && !inboxTypes.isVoice"
+        v-if="state.attachedFiles.length > 0"
         :attachments="state.attachedFiles"
         @update:attachments="state.attachedFiles = $event"
       />
@@ -390,10 +370,7 @@ useKeyboardEvents({
       v-else
       :attached-files="state.attachedFiles"
       :is-whatsapp-inbox="inboxTypes.isWhatsapp"
-      :is-voice-inbox="inboxTypes.isVoice"
       :is-web-widget-inbox="inboxTypes.isWebWidget"
-      :is-twilio-sms-inbox="inboxTypes.isTwilioSMS"
-      :is-twilio-whats-app-inbox="inboxTypes.isTwilioWhatsapp"
       :is-zalo-personal-inbox="inboxTypes.isZaloPersonal"
       :message-templates="whatsappMessageTemplates"
       :channel-type="inboxChannelType"
@@ -413,7 +390,6 @@ useKeyboardEvents({
       @send-message="handleSendMessage"
       @add-friend="handleRequestFriend"
       @send-whatsapp-message="handleSendWhatsappMessage"
-      @send-twilio-message="handleSendTwilioMessage"
     />
   </div>
 </template>

@@ -6,7 +6,6 @@ const FEATURE_HELP_URLS = {
   canned_responses: 'https://chwt.app/hc/canned',
   channel_facebook: 'https://chwt.app/hc/fb',
   custom_attributes: 'https://chwt.app/hc/custom-attributes',
-  help_center: 'https://chwt.app/hc/help-center',
   inboxes: 'https://chwt.app/hc/inboxes',
   integrations: 'https://chwt.app/hc/integrations',
   labels: 'https://chwt.app/hc/labels',

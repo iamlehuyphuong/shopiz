@@ -189,17 +189,11 @@ export default {
           key: 'collaborators',
           name: this.$t('INBOX_MGMT.TABS.COLLABORATORS'),
         },
+        {
+          key: 'business-hours',
+          name: this.$t('INBOX_MGMT.TABS.BUSINESS_HOURS'),
+        },
       ];
-
-      if (!this.isAVoiceChannel) {
-        visibleToAllChannelTabs = [
-          ...visibleToAllChannelTabs,
-          {
-            key: 'business-hours',
-            name: this.$t('INBOX_MGMT.TABS.BUSINESS_HOURS'),
-          },
-        ];
-      }
 
       if (this.isAWebWidgetInbox) {
         visibleToAllChannelTabs = [
@@ -214,7 +208,6 @@ export default {
       if (
         this.isAZaloPersonalChannel ||
         this.isAPIInbox ||
-        this.isAVoiceChannel ||
         this.shouldShowWhatsAppConfiguration ||
         this.isAWebWidgetInbox ||
         this.isAFacebookInbox ||
@@ -303,11 +296,6 @@ export default {
       return 'max-w-7xl';
     },
     inboxName() {
-      if (this.isATwilioSMSChannel || this.isATwilioWhatsAppChannel) {
-        return `${this.inbox.name} (${
-          this.inbox.messaging_service_sid || this.inbox.phone_number
-        })`;
-      }
       if (this.isAWhatsAppChannel) {
         return `${this.inbox.name} (${this.inbox.phone_number})`;
       }
@@ -315,7 +303,6 @@ export default {
     },
     canLocktoSingleConversation() {
       return (
-        this.isASmsInbox ||
         this.isAWhatsAppChannel ||
         this.isAFacebookInbox ||
         this.isAPIInbox ||
@@ -398,7 +385,6 @@ export default {
       if (
         this.isAWhatsAppChannel ||
         this.isAWhatsAppCloudChannel ||
-        this.isATwilioWhatsAppChannel ||
         this.is360DialogWhatsAppChannel
       ) {
         upperLimit = 24;
@@ -408,7 +394,7 @@ export default {
         upperLimit = 999; // ZaloPersonal không giới hạn thời gian gửi tin
       } else if (this.isAnInstagramChannel || this.isAFacebookInbox) {
         upperLimit = 168; // 7 days with HUMAN_AGENT tag
-      } else if (this.isATwilioSMSChannel || this.isAWebWidgetInbox) {
+      } else if (this.isAWebWidgetInbox) {
         upperLimit = 999;
       }
 

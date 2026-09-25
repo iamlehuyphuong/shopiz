@@ -16,12 +16,10 @@ const {
   isAFacebookInbox,
   isAZaloPersonal,
   isAPIInbox,
-  isASmsInbox,
   isATelegramChannel,
   isAWebWidgetInbox,
   isAWhatsAppChannel,
   isAnInstagramChannel,
-  isAVoiceChannel,
   isATiktokChannel,
 } = useInbox();
 
@@ -47,8 +45,6 @@ const showStatusIndicator = computed(() => {
   if (status.value === MESSAGE_STATUS.FAILED) return false;
   // Don't show status for deleted messages
   if (contentAttributes.value?.deleted) return false;
-  // Don't show status for transcription messages
-  if (isAVoiceChannel.value) return false;
 
   if (messageType.value === MESSAGE_TYPES.OUTGOING) return true;
   if (messageType.value === MESSAGE_TYPES.TEMPLATE) return true;
@@ -62,7 +58,6 @@ const isSent = computed(() => {
   if (
     isAWhatsAppChannel.value ||
     isAFacebookInbox.value ||
-    isASmsInbox.value ||
     isATelegramChannel.value ||
     isAnInstagramChannel.value ||
     isATiktokChannel.value ||
@@ -82,7 +77,6 @@ const isDelivered = computed(() => {
 
   if (
     isAWhatsAppChannel.value ||
-    isASmsInbox.value ||
     isAFacebookInbox.value ||
     isAZaloPersonal.value ||
     isAnInstagramChannel.value ||

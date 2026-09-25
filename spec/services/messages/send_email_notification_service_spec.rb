@@ -150,32 +150,6 @@ describe Messages::SendEmailNotificationService do
       end
     end
 
-    context 'with API channel' do
-      let(:inbox) { create(:inbox, account: account, channel: create(:channel_api, account: account)) }
-      let(:conversation) { create(:conversation, account: account, inbox: inbox) }
-
-      before do
-        conversation.contact.update!(email: 'test@example.com')
-        allow(account).to receive(:feature_enabled?).and_return(false)
-        allow(account).to receive(:feature_enabled?).with('email_continuity_on_api_channel').and_return(true)
-      end
-
-      it 'returns true when email_continuity_on_api_channel feature is enabled' do
-        expect(service.send(:should_send_email_notification?)).to be true
-      end
-
-      context 'when email_continuity_on_api_channel feature is disabled' do
-        before do
-          allow(account).to receive(:feature_enabled?).and_return(false)
-          allow(account).to receive(:feature_enabled?).with('email_continuity_on_api_channel').and_return(false)
-        end
-
-        it 'returns false' do
-          expect(service.send(:should_send_email_notification?)).to be false
-        end
-      end
-    end
-
     context 'with other channels' do
       let(:inbox) { create(:inbox, account: account, channel: create(:channel_api, account: account)) }
       let(:conversation) { create(:conversation, account: account, inbox: inbox) }

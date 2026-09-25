@@ -336,31 +336,6 @@ RSpec.describe 'Inboxes API', type: :request do
         expect(response.body).to include('API Inbox')
       end
 
-      it 'creates a line inbox when administrator' do
-        post "/api/v1/accounts/#{account.id}/inboxes",
-             headers: admin.create_new_auth_token,
-             params: { name: 'Line Inbox',
-                       channel: { type: 'line', line_channel_id: SecureRandom.uuid, line_channel_secret: SecureRandom.uuid,
-                                  line_channel_token: SecureRandom.uuid } },
-             as: :json
-
-        expect(response).to have_http_status(:success)
-        expect(response.body).to include('Line Inbox')
-        expect(response.body).to include('callback_webhook_url')
-      end
-
-      it 'creates a sms inbox when administrator' do
-        post "/api/v1/accounts/#{account.id}/inboxes",
-             headers: admin.create_new_auth_token,
-             params: { name: 'Sms Inbox',
-                       channel: { type: 'sms', phone_number: '+123456789', provider_config: { test: 'test' } } },
-             as: :json
-
-        expect(response).to have_http_status(:success)
-        expect(response.body).to include('Sms Inbox')
-        expect(response.body).to include('+123456789')
-      end
-
       it 'creates the webwidget inbox that allow messages after conversation is resolved' do
         post "/api/v1/accounts/#{account.id}/inboxes",
              headers: admin.create_new_auth_token,

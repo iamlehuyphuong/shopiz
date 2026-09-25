@@ -628,7 +628,6 @@
       "INFO_SHORT": "Automatically mark offline when you aren't using the app."
     },
     "DOCS": "Read docs",
-    "SECURITY": "Security",
     "CAPTAIN_AI": "ShopizAI",
     "CONVERSATION_WORKFLOW": "Conversation Workflow",
     "UTILITIES": "Utilities",
@@ -820,8 +819,7 @@
           "INSTAGRAM": "Instagram",
           "TIKTOK": "Tiktok",
           "TIKTOK_SHOP": "Tiktok Shop",
-          "TELEGRAM": "Telegram",
-          "LINE": "Line"
+          "TELEGRAM": "Telegram"
         },
         "FEATURES": {
           "CANNED_RESPONSES": "Canned Responses",
@@ -842,10 +840,6 @@
       }
     },
     "BILLING_HISTORY": "Billing History"
-  },
-  "SECURITY_SETTINGS": {
-    "TITLE": "Security",
-    "DESCRIPTION": "Manage your account security settings."
   },
   "CONVERSATION_WORKFLOW": {
     "INDEX": {

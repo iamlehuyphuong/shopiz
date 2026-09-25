@@ -8,7 +8,6 @@ import { useEventListener } from '@vueuse/core';
 import { ALLOWED_FILE_TYPES } from 'shared/constants/messages';
 import { useKeyboardEvents } from 'dashboard/composables/useKeyboardEvents';
 import FileUpload from 'vue-upload-component';
-import { INBOX_TYPES } from 'dashboard/helper/inbox';
 
 import Button from 'dashboard/components-next/button/Button.vue';
 import WhatsAppOptions from './WhatsAppOptions.vue';
@@ -16,7 +15,6 @@ import WhatsAppOptions from './WhatsAppOptions.vue';
 const props = defineProps({
   attachedFiles: { type: Array, default: () => [] },
   isWhatsappInbox: { type: Boolean, default: false },
-  isVoiceInbox: { type: Boolean, default: false },
   isWebWidgetInbox: { type: Boolean, default: false },
   isZaloPersonalInbox: { type: Boolean, default: false },
   messageTemplates: { type: Array, default: () => [] },
@@ -35,7 +33,6 @@ const emit = defineEmits([
   'discard',
   'sendMessage',
   'sendWhatsappMessage',
-
   'insertEmoji',
   'addSignature',
   'removeSignature',
@@ -76,12 +73,8 @@ const isRegularMessageMode = computed(() => {
   return !props.isWhatsappInbox;
 });
 
-const isVoiceInbox = computed(() => props.channelType === INBOX_TYPES.VOICE);
-
 const shouldShowSignatureButton = computed(() => {
-  return (
-    props.hasSelectedInbox && isRegularMessageMode.value && !isVoiceInbox.value
-  );
+  return props.hasSelectedInbox && isRegularMessageMode.value;
 });
 
 const setSignature = () => {
@@ -105,7 +98,7 @@ watch(
   () => props.hasSelectedInbox,
   newValue => {
     nextTick(() => {
-      if (newValue && !isVoiceInbox.value) setSignature();
+      if (newValue) setSignature();
     });
   },
   { immediate: true }
@@ -116,7 +109,6 @@ const onClickInsertEmoji = emoji => {
 };
 
 const { onFileUpload } = useFileUpload({
-  isATwilioSMSChannel: props.isTwilioSmsInbox,
   attachFile: ({ blob, file }) => {
     if (!file) return;
     const reader = new FileReader();
@@ -134,12 +126,6 @@ const { onFileUpload } = useFileUpload({
 });
 
 const sendButtonLabel = computed(() => {
-  // For voice inboxes, show "Make a Call" instead of "Send"
-  if (props.isVoiceInbox) {
-    return t('COMPOSE_NEW_CONVERSATION.FORM.ACTION_BUTTONS.MAKE_CALL');
-  }
-
-  // For all other inboxes, show the standard "Send" label
   const keyCode = isEditorHotKeyEnabled('cmd_enter') ? '⌘ + ↵' : '↵';
   return t('COMPOSE_NEW_CONVERSATION.FORM.ACTION_BUTTONS.SEND', {
     keyCode,

@@ -216,8 +216,6 @@ class BillingPresenter
       GlobalConfig.get('INSTAGRAM_APP_ID')['INSTAGRAM_APP_ID'].present?
     when 'channel_tiktok'
       GlobalConfig.get('TIKTOK_APP_ID')['TIKTOK_APP_ID'].present?
-    when 'channel_twitter'
-      GlobalConfig.get('TWITTER_CONSUMER_KEY')['TWITTER_CONSUMER_KEY'].present?
     else
       true
     end
@@ -248,9 +246,7 @@ class BillingPresenter
       { key: 'channel_instagram', label: 'INSTAGRAM' },
       { key: 'channel_tiktok', label: 'TIKTOK' },
       { key: 'channel_tiktok_shop', label: 'TIKTOK_SHOP' },
-      { key: 'channel_telegram', label: 'TELEGRAM' },
-      { key: 'channel_line', label: 'LINE' },
-      { key: 'channel_twitter', label: 'TWITTER' }
+      { key: 'channel_telegram', label: 'TELEGRAM' }
     ].each do |ch|
       next unless plan.features.is_a?(Hash)
 

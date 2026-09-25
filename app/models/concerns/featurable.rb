@@ -36,7 +36,7 @@ module Featurable
 
   included do
     include FlagShihTzu
-    # We split features across two columns since bigint is 64-bit and we have 69 features.
+    # We split features across two columns since bigint is 64-bit; positions 64+ go to feature_flags_2.
     # We use 63 bits per column to avoid issues with the sign bit in PostgreSQL/ActiveRecord.
     has_flags FEATURES.select { |k, _v| k <= 63 }.merge(column: 'feature_flags').merge(QUERY_MODE)
     has_flags FEATURES.select { |k, _v| k > 63 }.transform_keys { |k| k - 63 }.merge(column: 'feature_flags_2').merge(QUERY_MODE)

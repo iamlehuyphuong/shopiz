@@ -70,7 +70,7 @@ const isImproving = ref(false);
 const { processEvent } = useCaptain();
 
 const sendersAndBotList = computed(() => [
-  { value: 0, label: t('CAMPAIGN.VOICE.CARD.CAMPAIGN_DETAILS.BOT') },
+  { value: 0, label: t('CAMPAIGN.CARD.CAMPAIGN_DETAILS.BOT') },
   ...mapToOptions(senderList.value, 'id', 'name'),
 ]);
 

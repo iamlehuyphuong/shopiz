@@ -26,7 +26,6 @@ import {
   replaceVariablesInMessage,
 } from '@chatwoot/utils';
 import WhatsappTemplates from './WhatsappTemplates/Modal.vue';
-import ContentTemplates from './ContentTemplates/ContentTemplatesModal.vue';
 import { MESSAGE_MAX_LENGTH } from 'shared/helpers/MessageTypeHelper';
 import inboxMixin, { INBOX_FEATURES } from 'shared/mixins/inboxMixin';
 import { trimContent, debounce } from '@chatwoot/utils';
@@ -62,7 +61,6 @@ export default {
     ReplyBottomPanel,
     ReplyToMessage,
     ReplyTopPanel,
-    ContentTemplates,
     WhatsappTemplates,
     WootMessageEditor,
     CopilotEditorSection,
@@ -114,7 +112,6 @@ export default {
       hasSlashCommand: false,
       doAutoSaveDraft: () => {},
       showWhatsAppTemplatesModal: false,
-      showContentTemplatesModal: false,
       updateEditorSelectionWith: '',
       undefinedVariableMessage: '',
       showMentions: false,
@@ -154,9 +151,6 @@ export default {
         this.inboxId
       );
       return !!(templates && templates.length) && !this.isPrivate;
-    },
-    showContentTemplates() {
-      return false;
     },
     isPrivate() {
       if (
@@ -250,9 +244,6 @@ export default {
       if (this.isATiktokChannel) {
         return MESSAGE_MAX_LENGTH.TIKTOK;
       }
-      if (this.isASmsInbox) {
-        return MESSAGE_MAX_LENGTH.BANDWIDTH_SMS;
-      }
       if (this.isAWhatsAppChannel) {
         return MESSAGE_MAX_LENGTH.WHATSAPP_CLOUD;
       }
@@ -264,7 +255,6 @@ export default {
         this.isAFacebookInbox ||
         this.isAWhatsAppChannel ||
         this.isAPIInbox ||
-        this.isASmsInbox ||
         this.isATelegramChannel ||
         this.isAnInstagramChannel ||
         this.isATiktokChannel ||
@@ -612,12 +602,6 @@ export default {
     hideWhatsappTemplatesModal() {
       this.showWhatsAppTemplatesModal = false;
     },
-    openContentTemplateModal() {
-      this.showContentTemplatesModal = true;
-    },
-    hideContentTemplatesModal() {
-      this.showContentTemplatesModal = false;
-    },
     confirmOnSendReply() {
       if (this.isReplyButtonDisabled) {
         return;
@@ -625,8 +609,7 @@ export default {
       if (!this.showMentions) {
         const copilotAcceptedMessage = this.getCopilotAcceptedMessage();
         const isOnWhatsApp =
-          this.isAWhatsAppCloudChannel ||
-          this.is360DialogWhatsAppChannel;
+          this.isAWhatsAppCloudChannel || this.is360DialogWhatsAppChannel;
         // Instagram and TikTok do not support sending text and attachments in the same message.
         // For Instagram, combining them causes duplicate messages due to separate echo events per component.
         // For TikTok, the API rejects messages that mix text and media.
@@ -761,13 +744,6 @@ export default {
         ...messagePayload,
       });
       this.hideWhatsappTemplatesModal();
-    },
-    async onSendContentTemplateReply(messagePayload) {
-      this.sendMessage({
-        conversationId: this.currentChat.id,
-        ...messagePayload,
-      });
-      this.hideContentTemplatesModal();
     },
     replaceText(message) {
       if (this.sendWithSignature && !this.private) {
@@ -1222,7 +1198,6 @@ export default {
         :conversation-id="conversationId"
         :enable-multiple-file-upload="enableMultipleFileUpload"
         :enable-whats-app-templates="showWhatsappTemplates"
-        :enable-content-templates="showContentTemplates"
         :inbox="inbox"
         :is-on-private-note="isOnPrivateNote"
         :is-recording-audio="isRecordingAudio"
@@ -1244,7 +1219,6 @@ export default {
         :message="message"
         :new-conversation-modal-active="newConversationModalActive"
         @select-whatsapp-template="openWhatsappTemplateModal"
-        @select-content-template="openContentTemplateModal"
         @replace-text="replaceText"
       />
     </Transition>
@@ -1255,14 +1229,6 @@ export default {
       @close="hideWhatsappTemplatesModal"
       @on-send="onSendWhatsAppReply"
       @cancel="hideWhatsappTemplatesModal"
-    />
-
-    <ContentTemplates
-      :inbox-id="inbox.id"
-      :show="showContentTemplatesModal"
-      @close="hideContentTemplatesModal"
-      @on-send="onSendContentTemplateReply"
-      @cancel="hideContentTemplatesModal"
     />
 
     <woot-confirm-modal

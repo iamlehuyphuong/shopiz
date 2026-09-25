@@ -88,25 +88,25 @@ FactoryBot.define do
 
     transient do
       sync_templates { true }
-      validate_provider_config { true }
+      validate_provider_config { false }
     end
 
     before(:create) do |channel_whatsapp, options|
       # since factory already has the required message templates, we just need to bypass it getting updated
       channel_whatsapp.define_singleton_method(:sync_templates) { nil } unless options.sync_templates
       channel_whatsapp.define_singleton_method(:validate_provider_config) { nil } unless options.validate_provider_config
-      if channel_whatsapp.provider == 'whatsapp_cloud'
-        # Add 'source' => 'embedded_signup' to skip after_commit :setup_webhooks callback in tests
-        # The callback is for manual setup flow; embedded signup handles webhook setup explicitly
-        # Only set source if not already provided (allows tests to override)
-        default_config = {
-          'api_key' => 'test_key',
-          'phone_number_id' => '123456789',
-          'business_account_id' => '123456789'
-        }
-        default_config['source'] = 'embedded_signup' unless channel_whatsapp.provider_config.key?('source')
-        channel_whatsapp.provider_config = channel_whatsapp.provider_config.merge(default_config)
-      end
+      channel_whatsapp.provider = 'whatsapp_cloud' if channel_whatsapp.provider.blank? || channel_whatsapp.provider == 'default'
+      
+      # Add 'source' => 'embedded_signup' to skip after_commit :setup_webhooks callback in tests
+      # The callback is for manual setup flow; embedded signup handles webhook setup explicitly
+      # Only set source if not already provided (allows tests to override)
+      default_config = {
+        'api_key' => 'test_key',
+        'phone_number_id' => '123456789',
+        'business_account_id' => '123456789'
+      }
+      default_config['source'] = 'embedded_signup' unless channel_whatsapp.provider_config.key?('source')
+      channel_whatsapp.provider_config = channel_whatsapp.provider_config.merge(default_config)
     end
 
     after(:create) do |channel_whatsapp|

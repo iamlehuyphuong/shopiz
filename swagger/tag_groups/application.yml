@@ -50,8 +50,6 @@ tags:
     description: Manage webhooks
   - name: Automation Rule
     description: Manage automation rules
-  - name: Help Center
-    description: Manage help center
 paths:
   $ref: ../paths/index.yml
 components:

@@ -245,12 +245,6 @@ export const inboxes = [
     channel_type: INBOX_TYPES.FB,
   },
   {
-    id: 5,
-    name: 'SMS Service',
-    channel_type: INBOX_TYPES.SMS,
-    phone_number: '+1234567890',
-  },
-  {
     id: 6,
     name: 'WhatsApp Support',
     channel_type: INBOX_TYPES.WHATSAPP,
@@ -262,19 +256,8 @@ export const inboxes = [
     channel_type: INBOX_TYPES.TELEGRAM,
   },
   {
-    id: 9,
-    name: 'LINE Support',
-    channel_type: INBOX_TYPES.LINE,
-  },
-  {
     id: 10,
     name: 'API Channel',
     channel_type: INBOX_TYPES.API,
-  },
-  {
-    id: 11,
-    name: 'SMS Basic',
-    channel_type: INBOX_TYPES.SMS,
-    phone_number: '+1555555555',
   },
 ];

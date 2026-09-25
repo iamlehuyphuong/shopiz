@@ -12,11 +12,6 @@ FactoryBot.define do
       settings { { project_id: 'test', credentials: {}, region: 'global' } }
     end
 
-    trait :dyte do
-      app_id { 'dyte' }
-      settings { { api_key: 'api_key', organization_id: 'org_id' } }
-    end
-
     trait :google_translate do
       app_id { 'google_translate' }
       settings { { project_id: 'test', credentials: {} } }

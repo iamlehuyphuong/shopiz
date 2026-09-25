@@ -22,12 +22,6 @@ class ContactInboxBuilder
     end
   end
 
-  def phone_source_id
-    raise ActionController::ParameterMissing, 'contact phone number' if @contact.phone_number.blank?
-
-    @contact.phone_number
-  end
-
   def wa_source_id
     raise ActionController::ParameterMissing, 'contact phone number' unless @contact.phone_number
 
@@ -80,5 +74,3 @@ class ContactInboxBuilder
     @inbox.whatsapp?
   end
 end
-
-ContactInboxBuilder.prepend_mod_with('ContactInboxBuilder')

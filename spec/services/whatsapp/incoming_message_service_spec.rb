@@ -459,7 +459,7 @@ describe Whatsapp::IncomingMessageService do
         # Create contact with human name
         existing_contact = create(:contact,
                                   account: whatsapp_channel.inbox.account,
-                                  name: 'John Doe',
+                                  name: 'Alice',
                                   phone_number: phone_number)
         create(:contact_inbox,
                contact: existing_contact,
@@ -474,7 +474,7 @@ describe Whatsapp::IncomingMessageService do
 
         described_class.new(inbox: whatsapp_channel.inbox, params: params).perform
         existing_contact.reload
-        expect(existing_contact.name).to eq('John Doe') # Should not change
+        expect(existing_contact.name).to eq('Alice') # Should not change
       end
 
       it 'updates contact name when current name matches formatted phone number' do

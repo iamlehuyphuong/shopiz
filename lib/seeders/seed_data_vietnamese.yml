@@ -199,7 +199,6 @@ custom_roles:
   - name: 'Quản lý Kiến thức'
     description: 'Quản lý kho kiến thức và tham gia hội thoại'
     permissions:
-      - 'knowledge_base_manage'
       - 'conversation_participating_manage'
   - name: 'Nhân viên Mới'
     description: 'Nhân viên cấp đầu với quyền truy cập hội thoại cơ bản'

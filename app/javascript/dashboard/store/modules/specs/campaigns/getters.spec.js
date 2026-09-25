@@ -33,17 +33,6 @@ describe('#getters', () => {
     ).toEqual([campaigns[1], campaigns[4]]);
   });
 
-  it('get SMS campaigns', () => {
-    const state = { records: campaigns };
-    const mockGetters = {
-      getCampaigns: getters.getCampaigns(state),
-    };
-    expect(getters.getSMSCampaigns(state, mockGetters)).toEqual([
-      campaigns[1],
-      campaigns[4],
-    ]);
-  });
-
   it('get WhatsApp campaigns', () => {
     const state = { records: campaigns };
     const mockGetters = {

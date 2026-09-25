@@ -589,9 +589,7 @@
     "REPORTS_CONVERSATION": "Cuộc hội thoại",
     "CSAT": "CSAT",
     "LIVE_CHAT": "Live Chat",
-    "SMS": "SMS",
     "WHATSAPP": "WhatsApp",
-    "VOICE": "Gọi thoại (Voice)",
     "SURVEY": "Khảo sát",
     "ZALO_PERSONAL": "Zalo cá nhân",
     "LANDING_PAGE": "Trang đích",
@@ -622,14 +620,6 @@
     "BETA": "Beta",
     "REPORTS_OVERVIEW": "Tổng quan",
     "REAUTHORIZE": "Kết nối hộp thư đã hết hạn, hãy kết nối lại để tiếp tục nhận và gửi tin nhắn",
-    "HELP_CENTER": {
-      "TITLE": "Trung tâm trợ giúp",
-      "LANDING_PAGE": "Trang chính",
-      "ARTICLES": "Bài viết",
-      "CATEGORIES": "Danh mục",
-      "LOCALES": "Ngôn ngữ",
-      "SETTINGS": "Cài đặt"
-    },
     "CHANNELS": "Kênh",
     "SET_AUTO_OFFLINE": {
       "TEXT": "Tự động chuyển offline",
@@ -637,7 +627,6 @@
       "INFO_SHORT": "Tự động offline khi không hoạt động."
     },
     "DOCS": "Xem tài liệu",
-    "SECURITY": "Bảo mật",
     "CAPTAIN_AI": "ShopizAI",
     "CONVERSATION_WORKFLOW": "Quy trình hội thoại",
     "UTILITIES": "Tiện ích",
@@ -833,8 +822,7 @@
           "INSTAGRAM": "Instagram",
           "TIKTOK": "Tiktok",
           "TIKTOK_SHOP": "Tiktok Shop",
-          "TELEGRAM": "Telegram",
-          "LINE": "Line"
+          "TELEGRAM": "Telegram"
         },
         "FEATURES": {
           "CANNED_RESPONSES": "Tin nhắn mẫu",
@@ -855,10 +843,6 @@
       }
     },
     "BILLING_HISTORY": "Lịch sử thanh toán"
-  },
-  "SECURITY_SETTINGS": {
-    "TITLE": "Bảo mật",
-    "DESCRIPTION": "Quản lý các cài đặt bảo mật tài khoản."
   },
   "CONVERSATION_WORKFLOW": {
     "INDEX": {

@@ -125,7 +125,6 @@ export const getters = {
   getWebsiteInboxes($state) {
     return $state.records.filter(item => item.channel_type === INBOX_TYPES.WEB);
   },
-
   getWhatsAppInboxes($state) {
     return $state.records.filter(
       item => item.channel_type === INBOX_TYPES.WHATSAPP
@@ -147,11 +146,6 @@ export const getters = {
   getTelegramInboxes($state) {
     return $state.records.filter(
       item => item.channel_type === INBOX_TYPES.TELEGRAM
-    );
-  },
-  getLineInboxes($state) {
-    return $state.records.filter(
-      item => item.channel_type === INBOX_TYPES.LINE
     );
   },
   dialogFlowEnabledInboxes($state) {

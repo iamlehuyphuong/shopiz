@@ -134,5 +134,3 @@ class Messages::MessageBuilder
     message_attrs[:content_attributes] = message_attrs[:content_attributes].merge('target_comment_id' => comment_id)
   end
 end
-
-Messages::MessageBuilder.prepend_mod_with('Messages::MessageBuilder')

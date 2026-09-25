@@ -3,13 +3,11 @@ import { useMessageFormatter } from 'shared/composables/useMessageFormatter';
 import ChatCard from 'shared/components/ChatCard.vue';
 import ChatForm from 'shared/components/ChatForm.vue';
 import ChatOptions from 'shared/components/ChatOptions.vue';
-import ChatArticle from './template/Article.vue';
 import CustomerSatisfaction from 'shared/components/CustomerSatisfaction.vue';
 
 export default {
   name: 'AgentMessageBubble',
   components: {
-    ChatArticle,
     ChatCard,
     ChatForm,
     ChatOptions,
@@ -48,9 +46,6 @@ export default {
     isForm() {
       return this.contentType === 'form';
     },
-    isArticle() {
-      return this.contentType === 'article';
-    },
     isCSAT() {
       return this.contentType === 'input_csat';
     },
@@ -82,9 +77,7 @@ export default {
 <template>
   <div class="chat-bubble-wrap">
     <div
-      v-if="
-        !isCards && !isOptions && !isForm && !isArticle && !isCards && !isCSAT
-      "
+      v-if="!isCards && !isOptions && !isForm && !isCSAT"
       class="chat-bubble agent bg-n-background dark:bg-n-solid-3 text-n-slate-12"
     >
       <div
@@ -116,9 +109,6 @@ export default {
         :description="item.description"
         :actions="item.actions"
       />
-    </div>
-    <div v-if="isArticle">
-      <ChatArticle :items="messageContentAttributes.items" />
     </div>
     <CustomerSatisfaction
       v-if="isCSAT"

@@ -7,7 +7,7 @@ import { getInboxIconByType } from 'dashboard/helper/inbox';
 import CardLayout from 'dashboard/components-next/CardLayout.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 import LiveChatCampaignDetails from './LiveChatCampaignDetails.vue';
-import SMSCampaignDetails from './SMSCampaignDetails.vue';
+import CampaignDetails from './CampaignDetails.vue';
 import ZaloPersonalCampaignDetails from './ZaloPersonalCampaignDetails.vue';
 import FacebookCampaignDetails from './FacebookCampaignDetails.vue';
 
@@ -86,8 +86,8 @@ const campaignStatus = computed(() => {
   }
 
   return props.status === STATUS_COMPLETED
-    ? t('CAMPAIGN.SMS.CARD.STATUS.COMPLETED')
-    : t('CAMPAIGN.SMS.CARD.STATUS.SCHEDULED');
+    ? t('CAMPAIGN.CARD.STATUS.COMPLETED')
+    : t('CAMPAIGN.CARD.STATUS.SCHEDULED');
 });
 
 const inboxName = computed(() => props.inbox?.name || '');
@@ -140,7 +140,7 @@ const inboxIcon = computed(() => {
           :scheduled-at="scheduledAt"
           :campaign="campaign"
         />
-        <SMSCampaignDetails
+        <CampaignDetails
           v-else
           :inbox-name="inboxName"
           :inbox-icon="inboxIcon"

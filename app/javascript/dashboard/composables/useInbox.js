@@ -75,10 +75,6 @@ export const useInbox = (inboxId = null) => {
     return inbox.value?.provider || '';
   });
 
-  const isASmsInbox = computed(() => {
-    return channelType.value === INBOX_TYPES.SMS;
-  });
-
   const isAWhatsAppCloudChannel = computed(() => {
     return (
       channelType.value === INBOX_TYPES.WHATSAPP &&
@@ -105,16 +101,11 @@ export const useInbox = (inboxId = null) => {
     return channelType.value === INBOX_TYPES.TIKTOK;
   });
 
-  const isAVoiceChannel = computed(() => {
-    return channelType.value === INBOX_TYPES.VOICE;
-  });
-
   return {
     inbox,
     isAFacebookInbox,
     isAZaloPersonal,
     isAPIInbox,
-    isASmsInbox,
     isATelegramChannel,
     isAWebWidgetInbox,
     isAWhatsAppChannel,
@@ -122,6 +113,5 @@ export const useInbox = (inboxId = null) => {
     is360DialogWhatsAppChannel,
     isAnInstagramChannel,
     isATiktokChannel,
-    isAVoiceChannel,
   };
 };

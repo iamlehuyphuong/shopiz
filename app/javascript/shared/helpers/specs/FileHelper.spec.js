@@ -205,6 +205,7 @@ describe('#File Helpers', () => {
           isFileTypeAllowedForChannel(file, {
             channelType: 'Channel::Whatsapp',
           })
+        ).toBe(true);
       });
     });
 

@@ -93,10 +93,6 @@
   enabled: true
   help_url: https://help.shopiz.pro/hc/reply-to
   deprecated: true
-- name: insert_article_in_reply
-  display_name: Insert Article in Reply
-  enabled: true
-  deprecated: true
 - name: inbox_view
   display_name: Inbox View
   enabled: true
@@ -117,17 +113,10 @@
   display_name: Custom Roles
   enabled: false
   premium: true
-- name: chatwoot_v4
-  display_name: Shopiz V4
-  enabled: true
 - name: report_v4
   display_name: Report V4
   enabled: false
   deprecated: true
-- name: contact_chatwoot_support_team
-  display_name: Contact Shopiz Support Team
-  enabled: true
-  chatwoot_internal: false
 - name: shopify_integration
   display_name: Shopify Integration
   enabled: true
@@ -141,12 +130,6 @@
 - name: crm_integration
   display_name: CRM Integration
   enabled: false
-- name: channel_voice
-  display_name: Voice Channel
-  enabled: false
-  premium: true
-  deprecated: true
-  help_url: https://help.shopiz.pro/hc/voice
 - name: notion_integration
   display_name: Notion Integration
   enabled: true

@@ -31,8 +31,6 @@ class Messages::SendEmailNotificationService
     case inbox.channel.class.to_s
     when 'Channel::WebWidget'
       inbox.channel.continuity_via_email
-    when 'Channel::Api'
-      inbox.account.feature_enabled?('email_continuity_on_api_channel')
     else
       false
     end

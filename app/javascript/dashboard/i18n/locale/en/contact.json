@@ -736,8 +736,7 @@
       },
       "ACTION_BUTTONS": {
         "DISCARD": "Discard",
-        "SEND": "Send ({keyCode})",
-        "MAKE_CALL": "Make a Call"
+        "SEND": "Send ({keyCode})"
       }
     }
   },

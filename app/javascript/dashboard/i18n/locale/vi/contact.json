@@ -740,8 +740,7 @@
       },
       "ACTION_BUTTONS": {
         "DISCARD": "Hủy bỏ",
-        "SEND": "Gửi ({keyCode})",
-        "MAKE_CALL": "Gọi điện"
+        "SEND": "Gửi ({keyCode})"
       }
     }
   },

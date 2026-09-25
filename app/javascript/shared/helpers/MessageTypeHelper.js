@@ -13,8 +13,6 @@ export const MESSAGE_MAX_LENGTH = {
 
   // https://developers.facebook.com/docs/whatsapp/cloud-api/reference/messages#text-object
   WHATSAPP_CLOUD: 4096,
-  // https://support.bandwidth.com/hc/en-us/articles/360010235373-What-are-Bandwidth-s-SMS-character-limits-and-concatenation-practices
-  BANDWIDTH_SMS: 160,
   // https://core.telegram.org/bots/api#sendmessage
   TELEGRAM: 4096,
 

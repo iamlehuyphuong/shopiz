@@ -83,10 +83,8 @@ const isActive = computed(() => {
 
   return [
     'website',
-    'twilio',
     'api',
     'whatsapp',
-    'sms',
     'telegram',
     'instagram',
     'zalo',

@@ -81,8 +81,6 @@ tags:
     description: Event notification webhooks
   - name: Automation Rule
     description: Workflow automation rules
-  - name: Help Center
-    description: Knowledge base management
   - name: Contacts API
     description: Public contact APIs
   - name: Conversations API
@@ -121,7 +119,6 @@ x-tagGroups:
       - Teams
       - Webhooks
       - Automation Rule
-      - Help Center
   - name: Client
     tags:
       - Contacts API

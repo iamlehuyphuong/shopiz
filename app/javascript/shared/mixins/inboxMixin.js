@@ -3,7 +3,6 @@ import { INBOX_TYPES } from 'dashboard/helper/inbox';
 export const INBOX_FEATURES = {
   REPLY_TO: 'replyTo',
   REPLY_TO_OUTGOING: 'replyToOutgoing',
-  VOICE_CALL: 'voiceCall',
 };
 
 // This is a single source of truth for inbox features
@@ -16,7 +15,6 @@ export const INBOX_FEATURE_MAP = {
     INBOX_TYPES.TELEGRAM,
     INBOX_TYPES.TIKTOK,
     INBOX_TYPES.API,
-    INBOX_TYPES.VOICE,
     INBOX_TYPES.TIKTOK_SHOP,
     INBOX_TYPES.ZALO_PERSONAL,
   ],
@@ -26,11 +24,9 @@ export const INBOX_FEATURE_MAP = {
     INBOX_TYPES.TELEGRAM,
     INBOX_TYPES.TIKTOK,
     INBOX_TYPES.API,
-    INBOX_TYPES.VOICE,
     INBOX_TYPES.TIKTOK_SHOP,
     INBOX_TYPES.ZALO_PERSONAL,
   ],
-  [INBOX_FEATURES.VOICE_CALL]: [INBOX_TYPES.VOICE],
 };
 
 export default {
@@ -61,15 +57,9 @@ export default {
       return this.channelType === INBOX_TYPES.WEB;
     },
 
-    isAVoiceChannel() {
-      return this.channelType === INBOX_TYPES.VOICE;
-    },
-
     isATelegramChannel() {
       return this.channelType === INBOX_TYPES.TELEGRAM;
     },
-
-
     isAWhatsAppCloudChannel() {
       return (
         this.channelType === INBOX_TYPES.WHATSAPP &&

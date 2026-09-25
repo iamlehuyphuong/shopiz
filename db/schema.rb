@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_09_25_000957) do
+ActiveRecord::Schema[7.1].define(version: 2026_09_25_100002) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -54,18 +54,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_25_000957) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_account_onboardings_on_account_id"
-  end
-
-  create_table "account_saml_settings", force: :cascade do |t|
-    t.bigint "account_id", null: false
-    t.string "sso_url"
-    t.text "certificate"
-    t.string "sp_entity_id"
-    t.string "idp_entity_id"
-    t.json "role_mappings", default: {}
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_account_saml_settings_on_account_id"
   end
 
   create_table "account_subscriptions", force: :cascade do |t|
@@ -231,15 +219,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_25_000957) do
     t.index ["account_id"], name: "index_appointments_on_account_id"
     t.index ["contact_id"], name: "index_appointments_on_contact_id"
     t.index ["product_id"], name: "index_appointments_on_product_id"
-  end
-
-  create_table "article_embeddings", force: :cascade do |t|
-    t.bigint "article_id", null: false
-    t.text "term", null: false
-    t.vector "embedding", limit: 1536
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["embedding"], name: "index_article_embeddings_on_embedding", using: :ivfflat
   end
 
   create_table "assignment_policies", force: :cascade do |t|
@@ -553,26 +532,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_25_000957) do
     t.index ["instagram_id"], name: "index_channel_instagram_on_instagram_id", unique: true
   end
 
-  create_table "channel_line", force: :cascade do |t|
-    t.integer "account_id", null: false
-    t.string "line_channel_id", null: false
-    t.string "line_channel_secret", null: false
-    t.string "line_channel_token", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["line_channel_id"], name: "index_channel_line_on_line_channel_id", unique: true
-  end
-
-  create_table "channel_sms", force: :cascade do |t|
-    t.integer "account_id", null: false
-    t.string "phone_number", null: false
-    t.string "provider", default: "default"
-    t.jsonb "provider_config", default: {}
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["phone_number"], name: "index_channel_sms_on_phone_number", unique: true
-  end
-
   create_table "channel_telegram", force: :cascade do |t|
     t.string "bot_name"
     t.integer "account_id", null: false
@@ -606,34 +565,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_25_000957) do
     t.datetime "updated_at", null: false
     t.index ["shop_cipher"], name: "index_channel_tiktok_on_shop_cipher", unique: true
     t.index ["shop_id"], name: "index_channel_tiktok_on_shop_id", unique: true
-  end
-
-  create_table "channel_twilio_sms", force: :cascade do |t|
-    t.string "phone_number"
-    t.string "auth_token", null: false
-    t.string "account_sid", null: false
-    t.integer "account_id", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.integer "medium", default: 0
-    t.string "messaging_service_sid"
-    t.string "api_key_sid"
-    t.jsonb "content_templates", default: {}
-    t.datetime "content_templates_last_updated"
-    t.index ["account_sid", "phone_number"], name: "index_channel_twilio_sms_on_account_sid_and_phone_number", unique: true
-    t.index ["messaging_service_sid"], name: "index_channel_twilio_sms_on_messaging_service_sid", unique: true
-    t.index ["phone_number"], name: "index_channel_twilio_sms_on_phone_number", unique: true
-  end
-
-  create_table "channel_twitter_profiles", force: :cascade do |t|
-    t.string "profile_id", null: false
-    t.string "twitter_access_token", null: false
-    t.string "twitter_access_token_secret", null: false
-    t.integer "account_id", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.boolean "tweets_enabled", default: true
-    t.index ["account_id", "profile_id"], name: "index_channel_twitter_profiles_on_account_id_and_profile_id", unique: true
   end
 
   create_table "channel_web_widgets", id: :serial, force: :cascade do |t|
@@ -1321,14 +1252,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_25_000957) do
     t.string "name", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-  end
-
-  create_table "portals_members", id: false, force: :cascade do |t|
-    t.bigint "portal_id", null: false
-    t.bigint "user_id", null: false
-    t.index ["portal_id", "user_id"], name: "index_portals_members_on_portal_id_and_user_id", unique: true
-    t.index ["portal_id"], name: "index_portals_members_on_portal_id"
-    t.index ["user_id"], name: "index_portals_members_on_user_id"
   end
 
   create_table "product_variants", force: :cascade do |t|
