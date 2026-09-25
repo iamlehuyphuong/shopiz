@@ -29,7 +29,6 @@ Rails.application.routes.draw do
     namespace :survey do
       resources :responses, only: [:show]
     end
-    resource :slack_uploads, only: [:show]
   end
 
   get '/health', to: 'health#show'
@@ -332,11 +331,7 @@ Rails.application.routes.draw do
                 post :process_event
               end
             end
-            resource :slack, only: [:create, :update, :destroy], controller: 'slack' do
-              member do
-                get :list_all_channels
-              end
-            end
+
             resource :omicall, only: [], controller: 'omicall' do
               post :click_to_call
               post :request_callbot

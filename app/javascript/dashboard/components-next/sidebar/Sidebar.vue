@@ -807,7 +807,6 @@ const menuItems = computed(() => {
           activeOn: [
             'settings_applications',
             'settings_applications_integration',
-            'settings_integrations_slack',
             'settings_integrations_linear',
             'settings_integrations_notion',
             'settings_integrations_shopify',
