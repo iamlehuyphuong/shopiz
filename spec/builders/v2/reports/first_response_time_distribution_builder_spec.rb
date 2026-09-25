@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe V2::Reports::FirstResponseTimeDistributionBuilder do
   let!(:account) { create(:account) }
   let!(:web_widget_inbox) { create(:inbox, account: account, channel: create(:channel_widget, account: account)) }
-  let!(:email_inbox) { create(:inbox, account: account, channel: create(:channel_email, account: account)) }
+  let!(:api_inbox) { create(:inbox, account: account, channel: create(:channel_api, account: account)) }
   let(:params) do
     {
       since: 1.week.ago.beginning_of_day.to_i.to_s,
@@ -27,10 +27,10 @@ RSpec.describe V2::Reports::FirstResponseTimeDistributionBuilder do
         create(:reporting_event, account: account, inbox: web_widget_inbox, name: 'first_response',
                                  value: 21_600, created_at: 3.days.ago)
         # Email: 8-24h bucket (12 hours = 43200 seconds)
-        create(:reporting_event, account: account, inbox: email_inbox, name: 'first_response',
+        create(:reporting_event, account: account, inbox: api_inbox, name: 'first_response',
                                  value: 43_200, created_at: 2.days.ago)
         # Email: 24h+ bucket (48 hours = 172800 seconds)
-        create(:reporting_event, account: account, inbox: email_inbox, name: 'first_response',
+        create(:reporting_event, account: account, inbox: api_inbox, name: 'first_response',
                                  value: 172_800, created_at: 1.day.ago)
       end
 
@@ -44,14 +44,14 @@ RSpec.describe V2::Reports::FirstResponseTimeDistributionBuilder do
                                                    })
       end
 
-      it 'returns correct distribution for email channel' do
-        expect(report['Channel::Email']).to eq({
-                                                 '0-1h' => 0,
-                                                 '1-4h' => 0,
-                                                 '4-8h' => 0,
-                                                 '8-24h' => 1,
-                                                 '24h+' => 1
-                                               })
+      it 'returns correct distribution for api channel' do
+        expect(report['Channel::Api']).to eq({
+                                               '0-1h' => 0,
+                                               '1-4h' => 0,
+                                               '4-8h' => 0,
+                                               '8-24h' => 1,
+                                               '24h+' => 1
+                                             })
       end
     end
 

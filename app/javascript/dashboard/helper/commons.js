@@ -77,13 +77,6 @@ export const convertToCategorySlug = text => {
     .replace(/ +/g, '-');
 };
 
-export const convertToPortalSlug = text => {
-  return text
-    .toLowerCase()
-    .replace(/[^\w ]+/g, '')
-    .replace(/ +/g, '-');
-};
-
 /**
  * Strip curly braces, commas and leading/trailing whitespace from a search key.
  * Eg. "{{contact.name}}," => "contact.name"

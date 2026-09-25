@@ -51,9 +51,6 @@ properties:
   working_hours_enabled:
     type: boolean
     description: The flag which shows whether working hours feature is enabled
-  enable_email_collect:
-    type: boolean
-    description: The flag to enable collecting email from contacts
   csat_survey_enabled:
     type: boolean
     description: The flag to enable CSAT survey
@@ -135,19 +132,11 @@ properties:
   reply_time:
     type: string
     description: Expected reply time
-  messaging_service_sid:
-    type:
-      - string
-      - 'null'
-    description: Messaging service SID for SMS providers
   phone_number:
     type:
       - string
       - 'null'
     description: Phone number associated with the inbox
-  medium:
-    type: string
-    description: Medium of communication (e.g., sms, email)
   provider:
     type:
       - string

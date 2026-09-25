@@ -24,20 +24,6 @@
     "CREATE_NEW_ACCOUNT": "Tạo tài khoản mới",
     "CREATE_NEW_ACCOUNT_LABEL": "Chưa có tài khoản?",
     "SUBMIT": "Đăng nhập",
-    "SAML": {
-      "LABEL": "Đăng nhập qua SSO",
-      "TITLE": "Bắt đầu đăng nhập một lần (SSO)",
-      "SUBTITLE": "Nhập email của bạn để truy cập vào tổ chức",
-      "BACK_TO_LOGIN": "Đăng nhập bằng mật khẩu",
-      "WORK_EMAIL": {
-        "LABEL": "Email",
-        "PLACEHOLDER": "Nhập email của bạn"
-      },
-      "SUBMIT": "Tiếp tục với SSO",
-      "API": {
-        "ERROR_MESSAGE": "Xác thực SSO không thành công. Vui lòng kiểm tra thông tin và thử lại."
-      }
-    },
     "ILLUSTRATION": {
       "TITLE_GRAY": "Giải pháp chăm sóc khách hàng đa kênh",
       "TITLE_ORANGE": "Kết nối đa sàn, Chatbot AI & Automation"

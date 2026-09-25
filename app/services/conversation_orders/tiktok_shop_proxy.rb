@@ -18,7 +18,7 @@ class ConversationOrders::TiktokShopProxy < ConversationOrders::PlatformProxy
   def fetch_products(page = 1)
     page_size = 50
     result = tiktok_shop_post('/product/202309/products/search', { page_size: page_size, page_number: page })
-    
+
     products = result&.dig('data', 'products')
     return [[], false] if products.blank?
 

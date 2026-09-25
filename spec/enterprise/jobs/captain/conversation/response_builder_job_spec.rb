@@ -8,97 +8,61 @@ RSpec.describe Captain::Conversation::ResponseBuilderJob, type: :job do
 
   describe '#perform' do
     let(:conversation) { create(:conversation, inbox: inbox, account: account, status: :pending) }
-    let(:mock_llm_chat_service) { instance_double(Captain::Llm::AssistantChatService) }
     let(:mock_agent_runner_service) { instance_double(Captain::Assistant::AgentRunnerService) }
 
     before do
       create(:message, conversation: conversation, content: 'Hello', message_type: :incoming)
 
       allow(inbox).to receive(:captain_active?).and_return(true)
-      allow(Captain::Llm::AssistantChatService).to receive(:new).and_return(mock_llm_chat_service)
-      allow(mock_llm_chat_service).to receive(:generate_response).and_return({ 'response' => 'Hey, welcome to Captain Specs' })
+      account.update!(limits: { captain_responses: 100 })
+      allow(account).to receive(:feature_enabled?).and_call_original
+      allow(account).to receive(:feature_enabled?).with('captain_integration').and_return(true)
       allow(Captain::Assistant::AgentRunnerService).to receive(:new).and_return(mock_agent_runner_service)
       allow(mock_agent_runner_service).to receive(:generate_response).and_return({ 'response' => 'Hey, welcome to Captain V2' })
     end
 
-    context 'when captain_v2 is disabled' do
-      before do
-        allow(account).to receive(:feature_enabled?).and_return(false)
-        allow(account).to receive(:feature_enabled?).with('captain_integration_v2').and_return(false)
-      end
+    it 'uses Captain::Assistant::AgentRunnerService' do
+      expect(Captain::Assistant::AgentRunnerService).to receive(:new).with(
+        assistant: assistant,
+        conversation: conversation
+      )
 
-      it 'uses Captain::Llm::AssistantChatService' do
-        expect(Captain::Llm::AssistantChatService).to receive(:new).with(assistant: assistant, conversation: conversation)
-        expect(Captain::Assistant::AgentRunnerService).not_to receive(:new)
-
-        described_class.perform_now(conversation, assistant)
-        expect(conversation.messages.last.content).to eq('Hey, welcome to Captain Specs')
-      end
-
-      it 'generates and processes response' do
-        described_class.perform_now(conversation, assistant)
-        expect(conversation.messages.count).to eq(2)
-        expect(conversation.messages.outgoing.count).to eq(1)
-        expect(conversation.messages.last.content).to eq('Hey, welcome to Captain Specs')
-      end
-
-      it 'increments usage response' do
-        described_class.perform_now(conversation, assistant)
-        account.reload
-        expect(account.usage_limits[:captain][:responses][:consumed]).to eq(1)
-      end
-
-      it 'does not send a response when the conversation is no longer pending' do
-        conversation.open!
-
-        expect(mock_llm_chat_service).not_to receive(:generate_response)
-        expect do
-          described_class.perform_now(conversation, assistant)
-        end.not_to(change { conversation.messages.outgoing.count })
-      end
+      described_class.perform_now(conversation, assistant)
+      expect(conversation.messages.last.content).to eq('Hey, welcome to Captain V2')
     end
 
-    context 'when captain_v2 is enabled' do
-      before do
-        allow(account).to receive(:feature_enabled?).and_return(false)
-        allow(account).to receive(:feature_enabled?).with('captain_integration_v2').and_return(true)
-      end
+    it 'passes message history to agent runner service' do
+      expected_messages = [
+        { content: 'Hello', role: 'user' }
+      ]
 
-      it 'uses Captain::Assistant::AgentRunnerService' do
-        expect(Captain::Assistant::AgentRunnerService).to receive(:new).with(
-          assistant: assistant,
-          conversation: conversation
-        )
-        expect(Captain::Llm::AssistantChatService).not_to receive(:new)
+      expect(mock_agent_runner_service).to receive(:generate_response).with(
+        message_history: expected_messages
+      )
 
+      described_class.perform_now(conversation, assistant)
+    end
+
+    it 'generates and processes response' do
+      described_class.perform_now(conversation, assistant)
+      expect(conversation.messages.count).to eq(2)
+      expect(conversation.messages.outgoing.count).to eq(1)
+      expect(conversation.messages.last.content).to eq('Hey, welcome to Captain V2')
+    end
+
+    it 'increments usage response' do
+      described_class.perform_now(conversation, assistant)
+      account.reload
+      expect(account.usage_limits[:captain][:responses][:consumed]).to eq(1)
+    end
+
+    it 'does not send a response when the conversation is no longer pending' do
+      conversation.open!
+
+      expect(mock_agent_runner_service).not_to receive(:generate_response)
+      expect do
         described_class.perform_now(conversation, assistant)
-        expect(conversation.messages.last.content).to eq('Hey, welcome to Captain V2')
-      end
-
-      it 'passes message history to agent runner service' do
-        expected_messages = [
-          { content: 'Hello', role: 'user' }
-        ]
-
-        expect(mock_agent_runner_service).to receive(:generate_response).with(
-          message_history: expected_messages
-        )
-
-        described_class.perform_now(conversation, assistant)
-      end
-
-      it 'generates and processes response' do
-        described_class.perform_now(conversation, assistant)
-        expect(conversation.messages.count).to eq(2)
-        expect(conversation.messages.outgoing.count).to eq(1)
-        expect(conversation.messages.last.content).to eq('Hey, welcome to Captain V2')
-      end
-
-      it 'increments usage response' do
-        described_class.perform_now(conversation, assistant)
-        account.reload
-        expect(account.usage_limits[:captain][:responses][:consumed]).to eq(1)
-      end
+      end.not_to(change { conversation.messages.outgoing.count })
     end
 
     # Regression (PR #13417): wrapping create_handoff_message and bot_handoff! in the
@@ -111,8 +75,7 @@ RSpec.describe Captain::Conversation::ResponseBuilderJob, type: :job do
 
       before do
         allow(account).to receive(:feature_enabled?).and_return(false)
-        allow(account).to receive(:feature_enabled?).with('captain_integration_v2').and_return(false)
-        allow(mock_llm_chat_service).to receive(:generate_response).and_return({ 'response' => 'conversation_handoff' })
+        allow(mock_agent_runner_service).to receive(:generate_response).and_return({ 'response' => 'conversation_handoff' })
       end
 
       it 'sets waiting_since to approximately the handoff time' do
@@ -149,7 +112,7 @@ RSpec.describe Captain::Conversation::ResponseBuilderJob, type: :job do
 
       it 'includes image URL directly in the message content for OpenAI vision analysis' do
         # Expect the generate_response to receive multimodal content with image URL
-        expect(mock_llm_chat_service).to receive(:generate_response) do |**kwargs|
+        expect(mock_agent_runner_service).to receive(:generate_response) do |**kwargs|
           history = kwargs[:message_history]
           last_entry = history.last
           expect(last_entry[:content]).to be_an(Array)
@@ -167,15 +130,15 @@ RSpec.describe Captain::Conversation::ResponseBuilderJob, type: :job do
 
   describe 'retry mechanisms for image processing' do
     let(:conversation) { create(:conversation, inbox: inbox, account: account, status: :pending) }
-    let(:mock_llm_chat_service) { instance_double(Captain::Llm::AssistantChatService) }
+    let(:mock_agent_runner_service) { instance_double(Captain::Assistant::AgentRunnerService) }
     let(:mock_message_builder) { instance_double(Captain::OpenAiMessageBuilderService) }
 
     before do
       create(:message, conversation: conversation, content: 'Hello with image', message_type: :incoming)
-      allow(Captain::Llm::AssistantChatService).to receive(:new).and_return(mock_llm_chat_service)
+      allow(Captain::Assistant::AgentRunnerService).to receive(:new).and_return(mock_agent_runner_service)
       allow(Captain::OpenAiMessageBuilderService).to receive(:new).with(message: anything).and_return(mock_message_builder)
       allow(mock_message_builder).to receive(:generate_content).and_return('Hello with image')
-      allow(mock_llm_chat_service).to receive(:generate_response).and_return({ 'response' => 'Test response' })
+      allow(mock_agent_runner_service).to receive(:generate_response).and_return({ 'response' => 'Test response' })
     end
 
     context 'when ActiveStorage::FileNotFoundError occurs' do
@@ -204,7 +167,7 @@ RSpec.describe Captain::Conversation::ResponseBuilderJob, type: :job do
 
     context 'when Faraday::BadRequestError occurs' do
       it 'handles API errors and triggers handoff' do
-        allow(mock_llm_chat_service).to receive(:generate_response)
+        allow(mock_agent_runner_service).to receive(:generate_response)
           .and_raise(Faraday::BadRequestError, 'Bad request to image service')
 
         described_class.perform_now(conversation, assistant)
@@ -213,7 +176,7 @@ RSpec.describe Captain::Conversation::ResponseBuilderJob, type: :job do
 
       it 'succeeds when no error occurs' do
         # Don't raise any error, should succeed normally
-        allow(mock_llm_chat_service).to receive(:generate_response)
+        allow(mock_agent_runner_service).to receive(:generate_response)
           .and_return({ 'response' => 'Response after retry' })
 
         described_class.perform_now(conversation, assistant)
@@ -245,7 +208,7 @@ RSpec.describe Captain::Conversation::ResponseBuilderJob, type: :job do
       let(:standard_error) { StandardError.new('Generic error') }
 
       before do
-        allow(mock_llm_chat_service).to receive(:generate_response).and_raise(standard_error)
+        allow(mock_agent_runner_service).to receive(:generate_response).and_raise(standard_error)
       end
 
       it 'handles error and triggers handoff' do
@@ -275,42 +238,16 @@ RSpec.describe Captain::Conversation::ResponseBuilderJob, type: :job do
     it 'defines MAX_MESSAGE_LENGTH constant' do
       expect(described_class::MAX_MESSAGE_LENGTH).to eq(10_000)
     end
-
-    context 'when message contains an image' do
-      let(:message_with_image) { create(:message, conversation: conversation, message_type: :incoming, content: 'Can you help with this error?') }
-      let(:image_attachment) { message_with_image.attachments.create!(account: account, file_type: :image, external_url: 'https://example.com/error.jpg') }
-
-      before do
-        image_attachment
-      end
-
-      it 'includes image URL directly in the message content for OpenAI vision analysis' do
-        # Expect the generate_response to receive multimodal content with image URL
-        expect(mock_llm_chat_service).to receive(:generate_response) do |**kwargs|
-          history = kwargs[:message_history]
-          last_entry = history.last
-          expect(last_entry[:content]).to be_an(Array)
-          expect(last_entry[:content].any? { |part| part[:type] == 'text' && part[:text] == 'Can you help with this error?' }).to be true
-          expect(last_entry[:content].any? do |part|
-            part[:type] == 'image_url' && part[:image_url][:url] == 'https://example.com/error.jpg'
-          end).to be true
-          { 'response' => 'I can see the error in your image. It appears to be a database connection issue.' }
-        end
-
-        described_class.perform_now(conversation, assistant)
-      end
-    end
   end
 
   describe 'out of office message after handoff' do
     let(:conversation) { create(:conversation, inbox: inbox, account: account, status: :pending) }
-    let(:mock_llm_chat_service) { instance_double(Captain::Llm::AssistantChatService) }
+    let(:mock_agent_runner_service) { instance_double(Captain::Assistant::AgentRunnerService) }
 
     before do
       create(:message, conversation: conversation, content: 'Hello', message_type: :incoming)
-      allow(Captain::Llm::AssistantChatService).to receive(:new).and_return(mock_llm_chat_service)
-      allow(account).to receive(:feature_enabled?).and_return(false)
-      allow(account).to receive(:feature_enabled?).with('captain_integration_v2').and_return(false)
+      allow(account).to receive(:feature_enabled?).and_call_original
+      allow(account).to receive(:feature_enabled?).with('captain_integration').and_return(true)
     end
 
     context 'when handoff occurs outside business hours' do
@@ -323,7 +260,7 @@ RSpec.describe Captain::Conversation::ResponseBuilderJob, type: :job do
           closed_all_day: true,
           open_all_day: false
         )
-        allow(mock_llm_chat_service).to receive(:generate_response).and_return({ 'response' => 'conversation_handoff' })
+        allow(mock_agent_runner_service).to receive(:generate_response).and_return({ 'response' => 'conversation_handoff' })
       end
 
       it 'sends out of office message after handoff' do
@@ -347,7 +284,7 @@ RSpec.describe Captain::Conversation::ResponseBuilderJob, type: :job do
           open_all_day: true,
           closed_all_day: false
         )
-        allow(mock_llm_chat_service).to receive(:generate_response).and_return({ 'response' => 'conversation_handoff' })
+        allow(mock_agent_runner_service).to receive(:generate_response).and_return({ 'response' => 'conversation_handoff' })
       end
 
       it 'does not send out of office message after handoff' do
@@ -369,7 +306,7 @@ RSpec.describe Captain::Conversation::ResponseBuilderJob, type: :job do
           closed_all_day: true,
           open_all_day: false
         )
-        allow(mock_llm_chat_service).to receive(:generate_response).and_raise(StandardError, 'API error')
+        allow(mock_agent_runner_service).to receive(:generate_response).and_raise(StandardError, 'API error')
       end
 
       it 'sends out of office message after error-triggered handoff' do
@@ -393,7 +330,7 @@ RSpec.describe Captain::Conversation::ResponseBuilderJob, type: :job do
           closed_all_day: true,
           open_all_day: false
         )
-        allow(mock_llm_chat_service).to receive(:generate_response).and_return({ 'response' => 'conversation_handoff' })
+        allow(mock_agent_runner_service).to receive(:generate_response).and_return({ 'response' => 'conversation_handoff' })
       end
 
       it 'does not send out of office message' do

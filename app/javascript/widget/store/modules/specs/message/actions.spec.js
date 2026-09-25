@@ -8,11 +8,8 @@ describe('#actions', () => {
   describe('#update', () => {
     it('sends correct actions', async () => {
       const user = {
-        email: 'john@acme.inc',
         messageId: 10,
-        submittedValues: {
-          email: 'john@acme.inc',
-        },
+        submittedValues: [{ name: 'email', value: 'john@acme.inc' }],
       };
       API.patch.mockResolvedValue({
         data: { contact: { pubsub_token: '8npuMUfDgizrwVoqcK1t7FMY' } },
@@ -35,8 +32,7 @@ describe('#actions', () => {
           {
             id: 10,
             content_attributes: {
-              submitted_email: 'john@acme.inc',
-              submitted_values: null,
+              submitted_values: [{ name: 'email', value: 'john@acme.inc' }],
             },
           },
           { root: true },

@@ -17,7 +17,7 @@ class Sales::ProductsSyncService
     loop do
       Rails.logger.info("ProductsSyncService: Fetching page #{page} from #{@platform} proxy")
       products_data, has_more = proxy.fetch_products(page)
-      
+
       Rails.logger.info("ProductsSyncService: Fetched #{products_data&.size || 0} products on page #{page}. has_more: #{has_more}")
       break if products_data.blank?
 
@@ -56,7 +56,7 @@ class Sales::ProductsSyncService
 
       begin
         product = @account.products.find_or_initialize_by(external_id: data[:external_id])
-        
+
         product.assign_attributes(
           name: data[:name],
           description: data[:description],
@@ -67,7 +67,7 @@ class Sales::ProductsSyncService
           status: data[:status] || 'active',
           meta: (product.meta || {}).merge('source' => @platform, 'images' => data[:images] || [])
         )
-        
+
         # Handle variants if any
         if data[:variants].present? && data[:variants].is_a?(Array)
           data[:variants].each do |v_data|
@@ -92,7 +92,7 @@ class Sales::ProductsSyncService
         errors << error_msg
       end
     end
-    
+
     # Could optionally return or record errors for Partial Success notification
     errors
   end

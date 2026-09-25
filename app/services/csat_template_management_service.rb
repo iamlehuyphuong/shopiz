@@ -10,11 +10,7 @@ class CsatTemplateManagementService
     template = @inbox.csat_config&.dig('template')
     return { template_exists: false } unless template
 
-    if @inbox.twilio_whatsapp?
-      get_twilio_template_status(template)
-    else
-      get_whatsapp_template_status(template)
-    end
+    get_whatsapp_template_status(template)
   rescue StandardError => e
     Rails.logger.error "Error fetching CSAT template status: #{e.message}"
     { service_error: e.message }
@@ -41,17 +37,7 @@ class CsatTemplateManagementService
   end
 
   def create_template_via_provider(template_params)
-    if @inbox.twilio_whatsapp?
-      create_twilio_template(template_params)
-    else
-      create_whatsapp_template(template_params)
-    end
-  end
-
-  def create_twilio_template(template_params)
-    template_config = build_template_config(template_params)
-    template_service = Twilio::CsatTemplateService.new(@inbox.channel)
-    template_service.create_template(template_config)
+    create_whatsapp_template(template_params)
   end
 
   def create_whatsapp_template(template_params)
@@ -77,22 +63,7 @@ class CsatTemplateManagementService
   end
 
   def build_template_data_from_result(result)
-    if @inbox.twilio_whatsapp?
-      build_twilio_template_data(result)
-    else
-      build_whatsapp_cloud_template_data(result)
-    end
-  end
-
-  def build_twilio_template_data(result)
-    {
-      'friendly_name' => result[:friendly_name],
-      'content_sid' => result[:content_sid],
-      'approval_sid' => result[:approval_sid],
-      'language' => result[:language],
-      'status' => result[:whatsapp_status] || result[:status],
-      'created_at' => Time.current.iso8601
-    }.compact
+    build_whatsapp_cloud_template_data(result)
   end
 
   def build_whatsapp_cloud_template_data(result)
@@ -102,30 +73,6 @@ class CsatTemplateManagementService
       'language' => result[:language],
       'created_at' => Time.current.iso8601
     }
-  end
-
-  def get_twilio_template_status(template)
-    content_sid = template['content_sid']
-    return { template_exists: false } unless content_sid
-
-    template_service = Twilio::CsatTemplateService.new(@inbox.channel)
-    status_result = template_service.get_template_status(content_sid)
-    return { template_exists: false, error: 'Template not found' } unless status_result.is_a?(Hash)
-
-    if status_result[:success]
-      {
-        template_exists: true,
-        friendly_name: template['friendly_name'],
-        content_sid: template['content_sid'],
-        status: status_result[:template][:status],
-        language: template['language']
-      }
-    else
-      {
-        template_exists: false,
-        error: 'Template not found'
-      }
-    end
   end
 
   def get_whatsapp_template_status(template)
@@ -152,30 +99,10 @@ class CsatTemplateManagementService
     template = @inbox.csat_config&.dig('template')
     return true if template.blank?
 
-    if @inbox.twilio_whatsapp?
-      delete_existing_twilio_template(template)
-    else
-      delete_existing_whatsapp_template(template)
-    end
+    delete_existing_whatsapp_template(template)
   rescue StandardError => e
     Rails.logger.error "Error during template deletion for inbox #{@inbox.id}: #{e.message}"
     false
-  end
-
-  def delete_existing_twilio_template(template)
-    content_sid = template['content_sid']
-    return true if content_sid.blank?
-
-    template_service = Twilio::CsatTemplateService.new(@inbox.channel)
-    deletion_result = template_service.delete_template(nil, content_sid)
-
-    if deletion_result[:success]
-      Rails.logger.info "Deleted existing Twilio CSAT template '#{content_sid}' for inbox #{@inbox.id}"
-      true
-    else
-      Rails.logger.warn "Failed to delete existing Twilio CSAT template '#{content_sid}' for inbox #{@inbox.id}: #{deletion_result[:response_body]}"
-      false
-    end
   end
 
   def delete_existing_whatsapp_template(template)

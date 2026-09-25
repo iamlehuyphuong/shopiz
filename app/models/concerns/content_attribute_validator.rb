@@ -3,7 +3,6 @@ class ContentAttributeValidator < ActiveModel::Validator
   ALLOWED_CARD_ITEM_KEYS = [:title, :description, :media_url, :actions].freeze
   ALLOWED_CARD_ITEM_ACTION_KEYS = [:text, :type, :payload, :uri].freeze
   ALLOWED_FORM_ITEM_KEYS = [:type, :placeholder, :label, :name, :options, :default, :required, :pattern, :title, :pattern_error].freeze
-  ALLOWED_ARTICLE_KEYS = [:title, :description, :link].freeze
 
   def validate(record)
     case record.content_type
@@ -17,9 +16,6 @@ class ContentAttributeValidator < ActiveModel::Validator
     when 'form'
       validate_items!(record)
       validate_item_attributes!(record, ALLOWED_FORM_ITEM_KEYS)
-    when 'article'
-      validate_items!(record)
-      validate_item_attributes!(record, ALLOWED_ARTICLE_KEYS)
     end
   end
 

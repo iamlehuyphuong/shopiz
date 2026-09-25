@@ -125,10 +125,12 @@ module ActivityMessageHandler
 
   def activity_message_params(content, translation_key = nil, translation_values = nil)
     params = { account_id: account_id, inbox_id: inbox_id, message_type: :activity, content: content }
-    params[:content_attributes] = {
-      translation_key: translation_key,
-      translation_values: translation_values
-    } if translation_key.present?
+    if translation_key.present?
+      params[:content_attributes] = {
+        translation_key: translation_key,
+        translation_values: translation_values
+      }
+    end
     params
   end
 

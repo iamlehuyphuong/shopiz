@@ -16,8 +16,8 @@ RSpec.describe Enterprise::AutoAssignment::AssignmentService, type: :service do
     # Link inbox to assignment policy
     create(:inbox_assignment_policy, inbox: inbox, assignment_policy: assignment_policy)
 
-    # Enable assignment_v2 (base) and advanced_assignment (premium) features
-    account.enable_features('assignment_v2')
+    # Enable advanced_assignment feature
+    account.enable_features('advanced_assignment')
     account.save!
 
     # Set agents as online

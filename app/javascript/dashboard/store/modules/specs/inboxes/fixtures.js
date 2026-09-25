@@ -48,7 +48,7 @@ export default [
     id: 5,
     channel_id: 5,
     name: 'Test Widget 5',
-    channel_type: 'Channel::TwilioSms',
+    channel_type: 'Channel::Whatsapp',
     avatar_url: null,
     medium: 'sms',
     page_id: null,
@@ -60,7 +60,7 @@ export default [
     id: 6,
     channel_id: 6,
     name: 'Test Widget 6',
-    channel_type: 'Channel::Sms',
+    channel_type: 'Channel::Whatsapp',
     provider: 'default',
   },
   {

@@ -52,8 +52,8 @@ RSpec.describe Enterprise::AutoAssignment::CapacityService, type: :service do
                                                                              agent_at_capacity.id.to_s => 'online'
                                                                            })
 
-    # Enable assignment_v2 (base) and advanced_assignment (premium) features
-    account.enable_features('assignment_v2', 'advanced_assignment')
+    # Enable advanced_assignment feature
+    account.enable_features('advanced_assignment')
     account.save!
 
     # Create existing assignments for agent_at_capacity (at limit)

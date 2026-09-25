@@ -71,145 +71,12 @@
   description: Search previous conversations of the current contact (Tra cứu lại các
     lịch sử hội thoại trước đó của khách)
   icon: history
-- id: shopify_search_orders
-  title: 'Shopify: Search Orders'
-  description: Search Shopify orders for the current contact
-  icon: shopping-bag
-  hidden: true
-- id: shopify_get_product
-  title: 'Shopify: Get Product'
-  description: Search Shopify products by name or keyword
-  icon: box
-  hidden: true
-- id: shopify_create_order_draft
-  title: 'Shopify: Create Order Draft'
-  description: Create a draft order with Shopify products for the current contact
-  icon: cart-plus
-  hidden: true
-- id: shopify_suggest_products
-  title: 'Shopify: Suggest Products'
-  description: Suggest upsell and cross-sell products based on current product selection
-  icon: lightbulb
-  hidden: true
-- id: kiotviet_search_orders
-  title: 'KiotViet: Search Orders'
-  description: Search KiotViet orders (invoices) for the current contact
-  icon: shopping-bag
-  hidden: true
-- id: kiotviet_get_product
-  title: 'KiotViet: Get Product'
-  description: Search KiotViet products by name or keyword
-  icon: box
-  hidden: true
-- id: kiotviet_create_order_draft
-  title: 'KiotViet: Create Order Draft'
-  description: Create a draft order with KiotViet products for the current contact
-  icon: cart-plus
-  hidden: true
-- id: kiotviet_suggest_products
-  title: 'KiotViet: Suggest Products'
-  description: Suggest upsell and cross-sell products based on current product selection
-    and conversation context
-  icon: lightbulb
-  hidden: true
-- id: haravan_search_orders
-  title: 'Haravan: Search Orders'
-  description: Search Haravan orders for the current contact
-  icon: shopping-bag
-  hidden: true
-- id: haravan_get_product
-  title: 'Haravan: Get Product'
-  description: Search Haravan products by name or keyword
-  icon: box
-  hidden: true
-- id: haravan_create_order_draft
-  title: 'Haravan: Create Order Draft'
-  description: Create a draft order with Haravan products for the current contact
-  icon: cart-plus
-  hidden: true
-- id: haravan_suggest_products
-  title: 'Haravan: Suggest Products'
-  description: Suggest upsell and cross-sell products based on current product selection
-    and conversation context
-  icon: lightbulb
-  hidden: true
-- id: woocommerce_search_orders
-  title: 'WooCommerce: Search Orders'
-  description: Search WooCommerce orders for the current contact
-  icon: shopping-bag
-  hidden: true
-- id: woocommerce_get_product
-  title: 'WooCommerce: Get Product'
-  description: Search WooCommerce products by name or keyword
-  icon: box
-  hidden: true
-- id: woocommerce_create_order_draft
-  title: 'WooCommerce: Create Order Draft'
-  description: Create a draft order with WooCommerce products for the current contact
-  icon: cart-plus
-  hidden: true
-- id: woocommerce_suggest_products
-  title: 'WooCommerce: Suggest Products'
-  description: Suggest upsell and cross-sell products based on current product selection
-  icon: lightbulb
-  hidden: true
-- id: sapo_search_orders
-  title: 'Sapo: Search Orders'
-  description: Search Sapo orders for the current contact
-  icon: shopping-bag
-  hidden: true
-- id: sapo_get_product
-  title: 'Sapo: Get Product'
-  description: Search Sapo products by name or keyword
-  icon: box
-  hidden: true
-- id: sapo_create_order_draft
-  title: 'Sapo: Create Order Draft'
-  description: Create a draft order with Sapo products for the current contact
-  icon: cart-plus
-  hidden: true
-- id: sapo_suggest_products
-  title: 'Sapo: Suggest Products'
-  description: Suggest upsell and cross-sell products based on current product selection
-    and conversation context
-  icon: lightbulb
-  hidden: true
-- id: nhanhvn_search_orders
-  title: 'Nhanh.vn: Search Orders'
-  description: Search Nhanh.vn orders for the current contact
-  icon: shopping-bag
-  hidden: true
-- id: nhanhvn_get_product
-  title: 'Nhanh.vn: Get Product'
-  description: Search Nhanh.vn products by name or keyword
-  icon: box
-  hidden: true
-- id: nhanhvn_create_order_draft
-  title: 'Nhanh.vn: Create Order Draft'
-  description: Create a draft order with Nhanh.vn products for the current contact
-  icon: cart-plus
-  hidden: true
-- id: nhanhvn_suggest_products
-  title: 'Nhanh.vn: Suggest Products'
-  description: Suggest upsell and cross-sell products based on current product selection
-    and conversation context
-  icon: lightbulb
-  hidden: true
+
 - id: send_marketing_optin
   title: Send Marketing Opt-in (Gửi yêu cầu nhận tin Marketing)
   description: Send a Meta Marketing Messages Opt-in request to the customer (Gửi yêu cầu đăng ký nhận tin nhắn tiếp thị qua Meta/Facebook)
   icon: mail-open
-- id: tiktok_shop_suggest_products
-  title: 'TikTok Shop: Suggest Products'
-  description: Suggest products to buyers from TikTok Shop based on chat context
-  icon: lightbulb
-  hidden: true
-- id: tiktok_shop_search_orders
-  title: 'TikTok Shop: Search Orders'
-  description: Look up order details on TikTok Shop by Order ID to provide status,
-    packing, and shipping information
-  icon: shopping-bag
-  hidden: true
+
 - id: search_products
   title: Search Products (Tìm kiếm sản phẩm)
   description: Search products by keyword (auto-routes to connected e-commerce platform,
@@ -249,31 +116,7 @@
   description: Execute an automation macro on the current conversation (Kích hoạt
     chạy một kịch bản tự động/Macro trên cuộc hội thoại hiện tại)
   icon: lightning
-- id: calendly_list_event_types
-  title: 'Calendly: List Event Types (Danh sách dịch vụ)'
-  description: List available Calendly appointment types/services for booking (Liệt
-    kê các loại cuộc hẹn/dịch vụ có sẵn trên Calendly)
-  icon: calendar
-- id: calendly_get_available_times
-  title: 'Calendly: Check Availability (Kiểm tra lịch trống)'
-  description: Get available time slots from Calendly for a specific appointment type
-    (Kiểm tra các khung giờ trống cho một dịch vụ cụ thể)
-  icon: clock
-- id: calendly_book_appointment
-  title: 'Calendly: Book Appointment (Đặt lịch hẹn)'
-  description: Book a Calendly appointment for the customer with selected time slot
-    (Đặt lịch hẹn cho khách hàng theo khung giờ đã chọn)
-  icon: calendar-checkmark
-- id: calendly_get_scheduled_events
-  title: 'Calendly: View Appointments (Xem lịch hẹn)'
-  description: Get upcoming scheduled Calendly appointments, optionally filtered by
-    customer email (Xem các cuộc hẹn sắp tới trên Calendly)
-  icon: calendar-list
-- id: calendly_manage_booking
-  title: 'Calendly: Manage Booking (Quản lý lịch hẹn)'
-  description: Get reschedule or cancel link for an existing Calendly booking (Lấy
-    link dời lịch hoặc hủy cuộc hẹn đã đặt)
-  icon: calendar-edit
+
 - id: search_documentation
   title: Search Documentation (Tra cứu FAQ)
   description: Search documentation and FAQ to answer customer queries.
@@ -294,10 +137,6 @@
   title: Create Customer (Tạo thông tin KH)
   description: Create a new customer profile.
   icon: person-add
-- id: search_articles
-  title: Search Articles (Tìm bài viết)
-  description: Search knowledge base articles.
-  icon: book
 - id: book_meeting
   title: Book Appointment (Đặt lịch)
   description: Book an appointment for the customer.
@@ -338,11 +177,7 @@
   title: Update Order (Cập nhật đơn hàng)
   description: Update customer information of an existing order and sync to external platform (Cập nhật thông tin đơn hàng)
   icon: arrow-sync
-- id: shopiz_create_order_draft
-  title: 'Shopiz: Create Order Draft'
-  description: Create a draft order natively within Shopiz (Tạo đơn hàng nội bộ Shopiz)
-  icon: cart-plus
-  hidden: true
+
 - id: send_product_info
   title: Send Product Info (Gửi thông tin sản phẩm)
   description: Send product details to the customer as a text message in the conversation (Gửi thông tin sản phẩm cho khách hàng)

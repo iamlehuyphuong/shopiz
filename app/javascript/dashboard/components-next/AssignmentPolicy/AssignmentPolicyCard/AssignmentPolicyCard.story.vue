@@ -10,9 +10,9 @@ const mockInboxes = [
   },
   {
     id: 2,
-    name: 'Email Support',
-    channel_type: 'Channel::Email',
-    inbox_type: 'Email',
+    name: 'Telegram Support',
+    channel_type: 'Channel::Telegram',
+    inbox_type: 'Telegram',
   },
   {
     id: 3,

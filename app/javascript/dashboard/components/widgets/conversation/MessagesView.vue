@@ -111,10 +111,7 @@ export default {
     inbox() {
       return this.$store.getters['inboxes/getInbox'](this.inboxId);
     },
-    isAVoiceChannel() {
-      // Use inbox.channel_type to match backend conventions
-      return this.inbox?.channel_type === 'Channel::Voice';
-    },
+
     typingUsersList() {
       const userList = this.$store.getters[
         'conversationTypingStatus/getUserList'
@@ -177,7 +174,7 @@ export default {
 
     replyWindowBannerMessage() {
       if (this.isAWhatsAppChannel) {
-        return this.$t('CONVERSATION.TWILIO_WHATSAPP_CAN_REPLY');
+        return this.$t('CONVERSATION.WHATSAPP_CAN_REPLY');
       }
       if (this.isAPIInbox) {
         const { additional_attributes: additionalAttributes = {} } = this.inbox;
@@ -207,8 +204,8 @@ export default {
       if (this.isATiktokChannel) {
         return REPLY_POLICY.TIKTOK;
       }
-      if (!this.isAPIInbox) {
-        return REPLY_POLICY.TWILIO_WHATSAPP;
+      if (this.isAWhatsAppChannel) {
+        return REPLY_POLICY.WHATSAPP_CLOUD;
       }
       return '';
     },
@@ -222,9 +219,6 @@ export default {
       }
       if (this.isATiktokChannel) {
         return this.$t('CONVERSATION.48_HOURS_WINDOW');
-      }
-      if (!this.isAPIInbox) {
-        return this.$t('CONVERSATION.TWILIO_WHATSAPP_24_HOURS_WINDOW');
       }
       return '';
     },
@@ -504,7 +498,6 @@ export default {
       class="conversation-panel flex-shrink flex-grow basis-px flex flex-col overflow-y-auto relative h-full m-0 pb-4"
       :current-user-id="currentUserId"
       :first-unread-id="unReadMessages[0]?.id"
-      :is-an-email-channel="isAnEmailChannel"
       :inbox-supports-reply-to="inboxSupportsReplyTo"
       :messages="getMessages"
       @retry="handleMessageRetry"
@@ -567,11 +560,7 @@ export default {
           />
         </div>
       </div>
-      <VoiceTimelineView
-        v-if="isAVoiceChannel"
-        :conversation-id="currentChat.id"
-        class="mb-4"
-      />
+
       <ReplyBox
         :pop-out-reply-box="isPopOutReplyBox"
         @update:pop-out-reply-box="isPopOutReplyBox = $event"

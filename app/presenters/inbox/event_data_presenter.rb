@@ -10,7 +10,6 @@ class Inbox::EventDataPresenter < SimpleDelegator
       enable_auto_assignment: enable_auto_assignment,
 
       # Feature flag for message events
-      enable_email_collect: enable_email_collect,
       greeting_enabled: greeting_enabled,
       greeting_message: greeting_message,
       csat_survey_enabled: csat_survey_enabled,

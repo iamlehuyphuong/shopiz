@@ -67,16 +67,6 @@ RSpec.describe Message do
         expect(message.errors[:source_id]).to include('is too long (maximum is 20000 characters)')
       end
 
-      it 'handles long email Message-ID headers correctly' do
-        # Simulate a long Message-ID like some email systems generate
-        long_message_id = "msg-#{SecureRandom.hex(240)}@verylongdomainname.example.com"[0...500]
-        message.source_id = long_message_id
-        message.content_type = 'incoming_email'
-
-        expect(message.valid?).to be true
-        expect(message.source_id.length).to eq(500)
-      end
-
       it 'allows nil source_id' do
         message.source_id = nil
         expect(message.valid?).to be true
@@ -119,6 +109,7 @@ RSpec.describe Message do
 
         account_id: message.account_id,
         additional_attributes: message.additional_attributes,
+        can_undo: false,
         content_attributes: message.content_attributes,
         content_type: message.content_type,
         content: message.content,
@@ -439,56 +430,6 @@ RSpec.describe Message do
       expect(MessageTemplates::HookExecutionService).to have_received(:new).with(message: message)
       expect(hook_execution_service).to have_received(:perform)
     end
-
-    context 'with conversation continuity' do
-      let(:inbox_with_continuity) do
-        create(:inbox, account: message.account,
-                       channel: build(:channel_widget, account: message.account, continuity_via_email: true))
-      end
-
-      it 'schedules email notification for outgoing messages in website channel' do
-        message.inbox = inbox_with_continuity
-        message.conversation.update!(inbox: inbox_with_continuity)
-        message.conversation.contact.update!(email: 'test@example.com')
-        message.message_type = 'outgoing'
-
-        ActiveJob::Base.queue_adapter = :test
-        allow(Redis::Alfred).to receive(:set).and_return(true)
-        perform_enqueued_jobs(only: SendReplyJob) do
-          expect { message.save! }.to have_enqueued_job(ConversationReplyEmailJob).with(message.conversation.id, kind_of(Integer)).on_queue('mailers')
-        end
-      end
-
-      it 'does not schedule email for website channel if continuity is disabled' do
-        inbox_without_continuity = create(:inbox, account: message.account,
-                                                  channel: build(:channel_widget, account: message.account, continuity_via_email: false))
-        message.inbox = inbox_without_continuity
-        message.conversation.update!(inbox: inbox_without_continuity)
-        message.conversation.contact.update!(email: 'test@example.com')
-        message.message_type = 'outgoing'
-
-        ActiveJob::Base.queue_adapter = :test
-        expect { message.save! }.not_to have_enqueued_job(ConversationReplyEmailJob)
-      end
-
-      it 'does not schedule email for private notes' do
-        message.inbox = inbox_with_continuity
-        message.conversation.update!(inbox: inbox_with_continuity)
-        message.conversation.contact.update!(email: 'test@example.com')
-        message.private = true
-        message.message_type = 'outgoing'
-
-        ActiveJob::Base.queue_adapter = :test
-        expect { message.save! }.not_to have_enqueued_job(ConversationReplyEmailJob)
-      end
-
-      it 'calls SendReplyJob for all channels' do
-        allow(SendReplyJob).to receive(:perform_later).and_return(true)
-        message.message_type = 'outgoing'
-        message.save!
-        expect(SendReplyJob).to have_received(:perform_later).with(message.id)
-      end
-    end
   end
 
   context 'when content_type is blank' do
@@ -519,42 +460,6 @@ RSpec.describe Message do
       end
 
       expect(message.errors.messages).to eq({ attachments: ['exceeded maximum allowed'] })
-    end
-  end
-
-  context 'when email notifiable message' do
-    let(:message) { build(:message, content_type: nil, account: create(:account)) }
-
-    it 'return false if private message' do
-      message.private = true
-      message.message_type = 'outgoing'
-      expect(message.email_notifiable_message?).to be false
-    end
-
-    it 'return false if incoming message' do
-      message.private = false
-      message.message_type = 'incoming'
-      expect(message.email_notifiable_message?).to be false
-    end
-
-    it 'return false if activity message' do
-      message.private = false
-      message.message_type = 'activity'
-      expect(message.email_notifiable_message?).to be false
-    end
-
-    it 'return false if message type is template and content type is not input_csat or text' do
-      message.private = false
-      message.message_type = 'template'
-      message.content_type = 'incoming_email'
-      expect(message.email_notifiable_message?).to be false
-    end
-
-    it 'return true if not private and not incoming and message content type is input_csat or text' do
-      message.private = false
-      message.message_type = 'template'
-      message.content_type = 'text'
-      expect(message.email_notifiable_message?).to be true
     end
   end
 
@@ -686,71 +591,6 @@ RSpec.describe Message do
       expect(message.outgoing_content).to eq('Presented content')
       expect(MessageContentPresenter).to have_received(:new).with(message)
       expect(presenter).to have_received(:outgoing_content)
-    end
-  end
-
-  describe '#auto_reply_email?' do
-    context 'when message is not an incoming email and inbox is not email' do
-      let(:conversation) { create(:conversation) }
-      let(:message) { create(:message, conversation: conversation, message_type: :outgoing) }
-
-      it 'returns false' do
-        expect(message.auto_reply_email?).to be false
-      end
-    end
-
-    context 'when message is an incoming email' do
-      let(:email_channel) { create(:channel_email) }
-      let(:email_inbox) { create(:inbox, channel: email_channel) }
-      let(:conversation) { create(:conversation, inbox: email_inbox) }
-
-      it 'returns false when auto_reply is not set to true' do
-        message = create(
-          :message,
-          conversation: conversation,
-          message_type: :incoming,
-          content_type: 'incoming_email',
-          content_attributes: {}
-        )
-        expect(message.auto_reply_email?).to be false
-      end
-
-      it 'returns true when auto_reply is set to true' do
-        message = create(
-          :message,
-          conversation: conversation,
-          message_type: :incoming,
-          content_type: 'incoming_email',
-          content_attributes: { email: { auto_reply: true } }
-        )
-        expect(message.auto_reply_email?).to be true
-      end
-    end
-
-    context 'when inbox is email' do
-      let(:email_channel) { create(:channel_email) }
-      let(:email_inbox) { create(:inbox, channel: email_channel) }
-      let(:conversation) { create(:conversation, inbox: email_inbox) }
-
-      it 'returns false when auto_reply is not set to true' do
-        message = create(
-          :message,
-          conversation: conversation,
-          message_type: :outgoing,
-          content_attributes: {}
-        )
-        expect(message.auto_reply_email?).to be false
-      end
-
-      it 'returns true when auto_reply is set to true' do
-        message = create(
-          :message,
-          conversation: conversation,
-          message_type: :outgoing,
-          content_attributes: { email: { auto_reply: true } }
-        )
-        expect(message.auto_reply_email?).to be true
-      end
     end
   end
 

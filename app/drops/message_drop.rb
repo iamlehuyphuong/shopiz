@@ -15,21 +15,31 @@ class MessageDrop < BaseDrop
   end
 
   def html_content
-    if @obj.content_attributes.present? && @obj.content_attributes.dig('email', 'html_content', 'reply').present?
-      @obj.content_attributes.dig('email', 'html_content', 'reply')
+    if @obj.content_attributes.present? && @obj.content_attributes.with_indifferent_access.dig(:email, :html_content, :reply).present?
+      @obj.content_attributes.with_indifferent_access.dig(:email, :html_content, :reply)
     else
       @obj.try(:outgoing_content)
     end
   end
 
   def attachments
-    if @obj.attachments.present?
-      @obj.attachments.map do |attachment|
-        {
-          'file_url' => attachment.file_url,
-          'filename' => attachment.file.filename.to_s
-        }
+    return unless @obj.attachments.present?
+
+    @obj.attachments.map do |attachment|
+      file_url = begin
+        attachment.file_url
+      rescue ArgumentError => e
+        if e.message.include?('Missing host')
+          Rails.application.routes.url_helpers.url_for(attachment.file.tap { |f| f.class.default_url_options[:host] = 'localhost:3000' })
+        else
+          ''
+        end
       end
+
+      {
+        'file_url' => file_url,
+        'filename' => attachment.file.filename.to_s
+      }
     end
   end
 

@@ -43,7 +43,7 @@ class SubscriptionPlan < ApplicationRecord
     subscription_tier&.name_vi
   end
 
-  AI_FEATURES = %w[captain captain_v2 captain_task].freeze
+  AI_FEATURES = %w[captain captain_task].freeze
   AI_LIMITS = %w[captain_assistants captain_responses captain_documents captain_faqs].freeze
 
   def features
@@ -72,8 +72,8 @@ class SubscriptionPlan < ApplicationRecord
   private
 
   def ensure_single_default_plan
-    if is_default_for_new_account? && is_default_for_new_account_changed?
-      SubscriptionPlan.where.not(id: id).update_all(is_default_for_new_account: false)
-    end
+    return unless is_default_for_new_account? && is_default_for_new_account_changed?
+
+    SubscriptionPlan.where.not(id: id).update_all(is_default_for_new_account: false)
   end
 end

@@ -97,9 +97,9 @@ class Facebook::CommentHandlerService
     api_version = GlobalConfigService.load('INSTAGRAM_API_VERSION', 'v22.0')
     url = "https://graph.instagram.com/#{api_version}/#{@post_id}?fields=permalink&access_token=#{@channel.access_token}"
     response = HTTParty.get(url, timeout: 5)
-    
+
     return nil unless response.success?
-    
+
     permalink = response.parsed_response['permalink']
     permalink.present? ? "#{permalink}\n" : nil
   rescue StandardError => e

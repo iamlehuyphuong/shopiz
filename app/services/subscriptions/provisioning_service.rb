@@ -7,7 +7,7 @@ class Subscriptions::ProvisioningService
 
   def execute
     active_subscription = @account.active_subscription
-    
+
     if active_subscription.nil?
       reset_to_defaults
       return
@@ -34,17 +34,15 @@ class Subscriptions::ProvisioningService
     current_attrs = @account.custom_attributes || {}
     last_reset_period = current_attrs['last_captain_reset_period']
 
-    if last_reset_period != current_period
-      @account.reset_response_usage
-      @account.assign_attributes(custom_attributes: current_attrs.merge('last_captain_reset_period' => current_period))
-    end
-  end
+    return unless last_reset_period != current_period
 
-  private
+    @account.reset_response_usage
+    @account.assign_attributes(custom_attributes: current_attrs.merge('last_captain_reset_period' => current_period))
+  end
 
   def reset_to_defaults
     default_plan = SubscriptionPlan.free_plan.first
-    
+
     if default_plan
       Rails.logger.info "Resetting Account #{@account.id} to default plan: #{default_plan.name_en}"
       apply_limits(default_plan, [])
@@ -64,13 +62,13 @@ class Subscriptions::ProvisioningService
       'contacts' => 1000,
       'automations' => 0
     }
-    
+
     @account.assign_attributes(limits: default_limits)
     # Disable all current features before applying default ones
     all_feature_names = Featurable::FEATURE_LIST.map { |f| f['name'] }
     @account.disable_features(*all_feature_names)
     @account.enable_features(*Featurable::DEFAULT_PLAN_FEATURES)
-    
+
     current_attrs = @account.custom_attributes || {}
     @account.assign_attributes(custom_attributes: current_attrs)
     @account.save!
@@ -78,7 +76,7 @@ class Subscriptions::ProvisioningService
 
   def apply_limits(plan, addons)
     base_limits = plan.limits || {}
-    
+
     # Initialize limits with base plan limits
     final_limits = {
       'agents' => base_limits['agents'].to_i,
@@ -109,10 +107,10 @@ class Subscriptions::ProvisioningService
 
   def apply_features(plan)
     plan_features = plan.features || {}
-    
+
     # Get all available features from Featurable
     all_feature_names = Featurable::FEATURE_LIST.map { |f| f['name'] }
-    
+
     features_to_enable = []
     features_to_disable = []
 
@@ -126,10 +124,8 @@ class Subscriptions::ProvisioningService
     end
 
     Rails.logger.info "Provisioning features for Account #{@account.id} (Plan: #{plan.name_en}): Enabling #{features_to_enable.size}, Disabling #{features_to_disable.size}"
-    
+
     @account.enable_features(*features_to_enable)
     @account.disable_features(*features_to_disable)
   end
-
-
 end

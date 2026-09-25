@@ -29,22 +29,8 @@ describe('#getters', () => {
   it('get campaigns by multiple channel types', () => {
     const state = { records: campaigns };
     expect(
-      getters.getCampaigns(state)('one_off', [
-        'Channel::TwilioSms',
-        'Channel::Sms',
-      ])
+      getters.getCampaigns(state)('one_off', ['Channel::Whatsapp'])
     ).toEqual([campaigns[1], campaigns[4]]);
-  });
-
-  it('get SMS campaigns', () => {
-    const state = { records: campaigns };
-    const mockGetters = {
-      getCampaigns: getters.getCampaigns(state),
-    };
-    expect(getters.getSMSCampaigns(state, mockGetters)).toEqual([
-      campaigns[1],
-      campaigns[4],
-    ]);
   });
 
   it('get WhatsApp campaigns', () => {

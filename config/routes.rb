@@ -16,17 +16,14 @@ Rails.application.routes.draw do
 
     get '/app', to: 'dashboard#index'
     get '/app/*params', to: 'dashboard#index'
-    get '/app/accounts/:account_id/settings/inboxes/new/twitter', to: 'dashboard#index', as: 'app_new_twitter_inbox'
-    get '/app/accounts/:account_id/settings/inboxes/new/microsoft', to: 'dashboard#index', as: 'app_new_microsoft_inbox'
+
     get '/app/accounts/:account_id/settings/inboxes/new/instagram', to: 'dashboard#index', as: 'app_new_instagram_inbox'
     get '/app/accounts/:account_id/settings/inboxes/new/tiktok', to: 'dashboard#index', as: 'app_new_tiktok_inbox'
-    get '/app/accounts/:account_id/settings/inboxes/new/:inbox_id/agents', to: 'dashboard#index', as: 'app_twitter_inbox_agents'
-    get '/app/accounts/:account_id/settings/inboxes/new/:inbox_id/agents', to: 'dashboard#index', as: 'app_email_inbox_agents'
+
     get '/app/accounts/:account_id/settings/inboxes/new/:inbox_id/agents', to: 'dashboard#index', as: 'app_instagram_inbox_agents'
     get '/app/accounts/:account_id/settings/inboxes/new/:inbox_id/agents', to: 'dashboard#index', as: 'app_tiktok_inbox_agents'
     get '/app/accounts/:account_id/settings/inboxes/:inbox_id', to: 'dashboard#index', as: 'app_instagram_inbox_settings'
     get '/app/accounts/:account_id/settings/inboxes/:inbox_id', to: 'dashboard#index', as: 'app_tiktok_inbox_settings'
-    get '/app/accounts/:account_id/settings/inboxes/:inbox_id', to: 'dashboard#index', as: 'app_email_inbox_settings'
 
     resource :widget, only: [:show]
     namespace :survey do
@@ -83,7 +80,7 @@ Rails.application.routes.draw do
               post :follow_up
             end
           end
-          resource :saml_settings, only: [:show, :create, :update, :destroy]
+
           resources :agent_bots, only: [:index, :create, :show, :update, :destroy] do
             delete :avatar, on: :member
             post :reset_access_token, on: :member
@@ -125,21 +122,10 @@ Rails.application.routes.draw do
             end
           end
           resources :campaigns, only: [:index, :create, :show, :update, :destroy]
-          resources :dashboard_apps, only: [:index, :show, :create, :update, :destroy]
+
           resources :calendar_integrations, only: [:index, :create, :destroy]
           resource :booking_configurations, only: [:show, :update]
           namespace :channels do
-            resource :twilio_channel, only: [:create]
-            namespace :voice do
-              # Voice webhooks using resource scope to avoid plural/singular confusion
-              resource :webhooks, only: [], controller: 'webhooks' do
-                collection do
-                  post :incoming
-                  match :conference_status, via: [:post, :options]  # Allow both POST and OPTIONS
-                  match :incoming, via: [:post, :options]           # Allow both POST and OPTIONS
-                end
-              end
-            end
             resource :zalo_channel, only: [] do
               collection do
                 post :create
@@ -175,7 +161,6 @@ Rails.application.routes.draw do
                   get :load_more_history
                 end
               end
-              post :call, on: :member
               resources :assignments, only: [:create]
               resources :labels, only: [:create, :index]
               resource :participants, only: [:show, :create, :update, :destroy]
@@ -197,7 +182,6 @@ Rails.application.routes.draw do
             member do
               post :mute
               post :unmute
-              post :transcript
               post :toggle_status
               post :toggle_priority
               post :toggle_typing_status
@@ -215,7 +199,6 @@ Rails.application.routes.draw do
               get :conversations
               get :messages
               get :contacts
-              get :articles
             end
           end
 
@@ -244,7 +227,6 @@ Rails.application.routes.draw do
               resources :contact_inboxes, only: [:create]
               resources :labels, only: [:create, :index]
               resources :notes
-              post :call, on: :member, to: 'calls#create' if ChatwootApp.enterprise?
             end
           end
           resources :csat_survey_responses, only: [:index] do
@@ -280,33 +262,11 @@ Rails.application.routes.draw do
             post :sync_friends, on: :member
             get :health, on: :member
             post :register_webhook, on: :member
-            if ChatwootApp.enterprise?
-              resource :conference, only: %i[create destroy], controller: 'conference' do
-                get :token, on: :member
-              end
-            end
-
             resource :csat_template, only: [:show, :create], controller: 'inbox_csat_templates' do
               post :analyze, on: :collection
             end
           end
 
-          # Voice call management - using resource to avoid plural/singular confusion
-          resource :voice, only: [], controller: 'voice' do
-            member do
-              post :end_call
-              post :join_call
-              post :reject_call
-              get :call_status
-              # Explicitly set the format for TwiML to ensure proper Content-Type headers
-              match :twiml_for_client, via: [:get, :post, :options], defaults: { format: :xml } # Allow GET, POST, and OPTIONS
-            end
-          end
-
-          # Voice call client SDK support
-          namespace :voice do
-            resources :tokens, only: [:create]
-          end
           resources :inbox_members, only: [:create, :show], param: :inbox_id do
             collection do
               delete :destroy
@@ -348,18 +308,6 @@ Rails.application.routes.draw do
             resource :assignment_policy, only: [:show, :create, :destroy], module: :inboxes
           end
 
-          namespace :twitter do
-            resource :authorization, only: [:create]
-          end
-
-          namespace :microsoft do
-            resource :authorization, only: [:create]
-          end
-
-          namespace :google do
-            resource :authorization, only: [:create]
-          end
-
           namespace :instagram do
             resource :authorization, only: [:create]
           end
@@ -396,12 +344,7 @@ Rails.application.routes.draw do
               get :extensions
               post :map_extension
             end
-            resource :dyte, controller: 'dyte', only: [] do
-              collection do
-                post :create_a_meeting
-                post :add_participant_to_meeting
-              end
-            end
+
             resource :shopify, controller: 'shopify', only: [:destroy] do
               collection do
                 post :auth
@@ -474,21 +417,6 @@ Rails.application.routes.draw do
           end
           resources :working_hours, only: [:update]
 
-          resources :portals do
-            member do
-              patch :archive
-              delete :logo
-              post :send_instructions
-              get :ssl_status
-            end
-            resources :categories do
-              post :reorder, on: :collection
-            end
-            resources :articles do
-              post :reorder, on: :collection
-            end
-          end
-
           resources :upload, only: [:create]
 
           resources :products_search, only: [:index]
@@ -526,9 +454,6 @@ Rails.application.routes.draw do
         resources :webhooks, only: [:create]
       end
 
-      # Frontend API endpoint to trigger SAML authentication flow
-      post 'auth/saml_login', to: 'auth#saml_login'
-
       resource :profile, only: [:show, :update] do
         delete :avatar, on: :collection
         member do
@@ -562,7 +487,6 @@ Rails.application.routes.draw do
             post :set_custom_attributes
             post :update_last_seen
             post :toggle_typing
-            post :transcript
             get  :toggle_status
           end
         end
@@ -575,11 +499,6 @@ Rails.application.routes.draw do
         resources :inbox_members, only: [:index]
         resources :labels, only: [:create, :destroy]
         namespace :integrations do
-          resource :dyte, controller: 'dyte', only: [] do
-            collection do
-              post :add_participant_to_meeting
-            end
-          end
         end
       end
     end
@@ -673,7 +592,6 @@ Rails.application.routes.draw do
               delete :destroy
             end
           end
-          resources :email_channel_migrations, only: [:create]
         end
       end
     end
@@ -706,16 +624,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'hc/:slug', to: 'public/api/v1/portals#show'
-  get 'hc/:slug/sitemap.xml', to: 'public/api/v1/portals#sitemap'
-  get 'hc/:slug/:locale', to: 'public/api/v1/portals#show'
-  get 'hc/:slug/:locale/articles', to: 'public/api/v1/portals/articles#index'
-  get 'hc/:slug/:locale/categories', to: 'public/api/v1/portals/categories#index'
-  get 'hc/:slug/:locale/categories/:category_slug', to: 'public/api/v1/portals/categories#show'
-  get 'hc/:slug/:locale/categories/:category_slug/articles', to: 'public/api/v1/portals/articles#index'
-  get 'hc/:slug/articles/:article_slug.png', to: 'public/api/v1/portals/articles#tracking_pixel'
-  get 'hc/:slug/articles/:article_slug', to: 'public/api/v1/portals/articles#show'
-
   # ----------------------------------------------------------------------
   # Used in mailer templates
   resource :app, only: [:index] do
@@ -727,11 +635,9 @@ Rails.application.routes.draw do
   # ----------------------------------------------------------------------
   # Routes for channel integrations
   mount Facebook::Messenger::Server, at: 'bot'
-  get 'webhooks/twitter', to: 'api/v1/webhooks#twitter_crc'
-  post 'webhooks/twitter', to: 'api/v1/webhooks#twitter_events'
-  post 'webhooks/line/:line_channel_id', to: 'webhooks/line#process_payload'
+
   post 'webhooks/telegram/:bot_token', to: 'webhooks/telegram#process_payload'
-  post 'webhooks/sms/:phone_number', to: 'webhooks/sms#process_payload'
+
   get 'webhooks/whatsapp/:phone_number', to: 'webhooks/whatsapp#verify'
   post 'webhooks/whatsapp/:phone_number', to: 'webhooks/whatsapp#process_payload'
   get 'webhooks/instagram', to: 'webhooks/instagram#verify'
@@ -752,10 +658,6 @@ Rails.application.routes.draw do
   post 'webhooks/calendly', to: 'webhooks/calendly#events'
   post 'webhooks/omicall', to: 'webhooks/omicall#events'
 
-  namespace :twitter do
-    resource :callback, only: [:show]
-  end
-
   namespace :linear do
     resource :callback, only: [:show]
   end
@@ -764,19 +666,6 @@ Rails.application.routes.draw do
     resource :callback, only: [:show]
   end
 
-  namespace :twilio do
-    resources :callback, only: [:create]
-    resources :delivery_status, only: [:create]
-
-    if ChatwootApp.enterprise?
-      post 'voice/call/:phone', to: 'voice#call_twiml', as: :voice_call
-      post 'voice/status/:phone', to: 'voice#status', as: :voice_status
-      post 'voice/conference_status/:phone', to: 'voice#conference_status', as: :voice_conference_status
-    end
-  end
-
-  get 'microsoft/callback', to: 'microsoft/callbacks#show'
-  get 'google/callback', to: 'google/callbacks#show'
   get 'instagram/callback', to: 'instagram/callbacks#show'
   get 'tiktok/callback', to: 'tiktok/callbacks#show'
   get 'notion/callback', to: 'notion/callbacks#show'
@@ -785,8 +674,6 @@ Rails.application.routes.draw do
   # Routes for external service verifications
   get '.well-known/assetlinks.json' => 'android_app#assetlinks'
   get '.well-known/apple-app-site-association' => 'apple_app#site_association'
-  get '.well-known/microsoft-identity-association.json' => 'microsoft#identity_association'
-  get '.well-known/cf-custom-hostname-challenge/:id', to: 'custom_domains#verify'
 
   # ----------------------------------------------------------------------
   # Internal Monitoring Routes

@@ -25,7 +25,7 @@ class ContactInboxWithContactBuilder
       ].include?(@contact.name) || @contact.name.to_s.match?(/^(Khách hàng|Customer) - /)
 
       is_new_name_present_and_different = contact_attributes[:name].present? && contact_attributes[:name] != @contact.name
-      
+
       is_new_name_not_default = !contact_attributes[:name].to_s.match?(/^(Khách hàng|Customer) - /) &&
                                 contact_attributes[:name] != Channel::Instagram::DEFAULT_USER_NAME
 

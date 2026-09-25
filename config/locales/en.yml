@@ -10,29 +10,19 @@ en:
     zalo:
       unsupported_message: Unsupported message type
       interaction:
-        chatnow_clicked: 'User clicked "Chat Now" button on OA profile.'
+        chatnow_clicked: User clicked "Chat Now" button on OA profile.
         other_interaction: 'User interaction: %{event_name}'
   inbox:
     reauthorization:
       success: Channel reauthorized successfully
       not_required: Reauthorization is not required for this inbox
       invalid_channel: Invalid channel type for reauthorization
-  auth:
-    saml:
-      invalid_email: Please enter a valid email address
-      authentication_failed: Authentication failed. Please check your credentials
-        and try again.
   messages:
     reset_password: Shopiz! Request for password reset is successful. An email with
       instructions will be sent to your email if it exists.
     reset_password_success: Shopiz! Request for password reset is successful. Check
       your mail for instructions.
     reset_password_failure: Uh ho! We could not find any user with the specified email.
-    reset_password_saml_user: This account uses SAML authentication. Password reset
-      is not available. Please contact your administrator.
-    login_saml_user: This account uses SAML authentication. Please sign in through
-      your organization's SAML provider.
-    saml_not_available: SAML authentication is not available in this installation.
     inbox_deletetion_response: Your inbox deletion request will be processed in some
       time.
   errors:
@@ -55,9 +45,6 @@ en:
       not_found: Assignment policy not found
     attachments:
       invalid: Invalid attachment
-    saml:
-      feature_not_enabled: SAML feature not enabled for this account
-      sso_not_enabled: SAML SSO is not enabled for this installation
     data_import:
       data_type:
         invalid: Invalid data type
@@ -81,8 +68,6 @@ en:
     categories:
       locale:
         unique: should be unique in the category and portal
-    dyte:
-      invalid_message_type: Invalid message type. Action not permitted
     slack:
       invalid_channel_id: Invalid slack channel. Please try again
     whatsapp:
@@ -110,26 +95,14 @@ en:
         Private replies are only allowed for comments made within the last 7 days."
       comment_handler:
         comment_hidden: Comment has been automatically hidden
-        public_comment: "Reply comment: %{text}"
-        instagram_comment_fallback: "You just received a comment on a post\n"
+        public_comment: 'Reply comment: %{text}'
+        instagram_comment_fallback: 'You just received a comment on a post
+
+          '
         private_reply_label: Private Reply
         private_reply_hint: The next message you send will be delivered as a private
           reply to this comment.
     inboxes:
-      imap:
-        socket_error: Please check the network connection, IMAP address and try again.
-        no_response_error: Please check the IMAP credentials and try again.
-        host_unreachable_error: Host unreachable, Please check the IMAP address, IMAP
-          port and try again.
-        connection_timed_out_error: Connection timed out for %{address}:%{port}
-        connection_closed_error: Connection closed.
-      smtp:
-        authentication_error: SMTP authentication failed. Please verify your login
-          credentials.
-        connection_error: Could not connect to SMTP server. Please check the server
-          address and port.
-        ssl_error: SSL/TLS error. Please verify your encryption settings.
-        smtp_error: SMTP server error. Please check your configuration and try again.
       validations:
         name: should not start or end with symbols, and it should not have < > / \
           @ characters.
@@ -172,8 +145,6 @@ en:
     mfa:
       enabled: MFA enabled successfully
       disabled: MFA disabled successfully
-    account_saml_settings:
-      invalid_certificate: must be a valid X.509 certificate in PEM format
   reports:
     period: Reporting period %{since} to %{until}
     utc_warning: The report generated is in UTC timezone
@@ -257,82 +228,95 @@ en:
     scenario_templates:
       case_studies:
         ecommerce_pack:
-          name: "E-commerce & Retail Pack"
-          description: "This pack is designed for online stores and direct sales. The sub-scenarios form a complete sales funnel from product inquiry to post-purchase care."
+          name: E-commerce & Retail Pack
+          description: This pack is designed for online stores and direct sales. The
+            sub-scenarios form a complete sales funnel from product inquiry to post-purchase
+            care.
           scenarios:
             ecom_product_advisory:
-              title: "Product Advisory"
-              description: "Purpose: Handle inquiries like 'I want to buy a shirt/dress...' or 'Is there any product for acne-prone skin?'"
+              title: Product Advisory
+              description: 'Purpose: Handle inquiries like ''I want to buy a shirt/dress...''
+                or ''Is there any product for acne-prone skin?'''
               instruction: |-
                 Step 1: Ask for specific needs (product type, budget, preferences).
                 Step 2: Use the [suggest_products](tool://suggest_products) tool to suggest suitable products, or [get_product_details](tool://get_product_details) to fetch details of a specific product.
                 Step 3: Advise on pros/cons, compare, and invite the customer to place an order.
             ecom_order_creation:
-              title: "Order Creation / Draft Order"
-              description: "Purpose: The customer is satisfied and wants to place an order."
+              title: Order Creation / Draft Order
+              description: 'Purpose: The customer is satisfied and wants to place
+                an order.'
               instruction: |-
                 Step 1: Collect shipping information (Name, Phone number, Address).
                 Step 2: Re-confirm the cart (Quantity, product variants).
                 Step 3: Use the [create_order_draft](tool://create_order_draft) tool to create a draft order in the system.
                 Step 4: Send the order code or payment link to the customer.
             ecom_order_tracking:
-              title: "Order Tracking"
-              description: "Purpose: The customer asks 'When will my order arrive?' or 'Please check order #1234'."
+              title: Order Tracking
+              description: 'Purpose: The customer asks ''When will my order arrive?''
+                or ''Please check order #1234''.'
               instruction: |-
                 Step 1: Ask the customer for the order code or the phone number used for the order.
                 Step 2: Use the [search_orders](tool://search_orders) tool to search for the order, then use [get_order_detail](tool://get_order_detail) to get the order status (Shipping, Delivered...).
                 Step 3: Reply with a friendly status update and the estimated delivery date.
             ecom_returns_escalation:
-              title: "Returns & Escalation"
-              description: "Purpose: The customer reports a product defect, wants a return, or is dissatisfied."
+              title: Returns & Escalation
+              description: 'Purpose: The customer reports a product defect, wants
+                a return, or is dissatisfied.'
               instruction: |-
                 Step 1: Apologize and empathize with the customer. Ask for photos/videos of the product's condition.
                 Step 2: If the issue is complex, use the [handoff](tool://handoff) tool to transfer the conversation directly to a human customer care agent for further handling.
         service_booking_pack:
-          name: "Service & Booking Pack"
-          description: "This pack is designed for service models (Spa, Dental, Beauty Clinic, Expert Consultation). Focuses on converting inquiries into appointments."
+          name: Service & Booking Pack
+          description: This pack is designed for service models (Spa, Dental, Beauty
+            Clinic, Expert Consultation). Focuses on converting inquiries into appointments.
           scenarios:
             service_faq:
-              title: "Service FAQ & Consultation"
-              description: "Purpose: The customer asks about pricing, treatments, and policies."
+              title: Service FAQ & Consultation
+              description: 'Purpose: The customer asks about pricing, treatments,
+                and policies.'
               instruction: |-
                 Step 1: Understand the customer's problem (e.g., acne-prone skin, rhinoplasty consultation).
                 Step 2: Use the [faq_lookup](tool://faq_lookup) tool to look up standard treatments and pricing from the Knowledge Base.
                 Step 3: Answer concisely and tactfully guide the customer to book an examination/consultation appointment.
             service_booking:
-              title: "Check Availability & Book Appointment"
-              description: "Purpose: The customer wants to schedule a service appointment."
+              title: Check Availability & Book Appointment
+              description: 'Purpose: The customer wants to schedule a service appointment.'
               instruction: |-
                 Step 1: Ask the customer for their preferred location, date, and time.
                 Step 2: Use the [check_availability](tool://check_availability) tool to see if doctors/technicians are available at that time.
                 Step 3: If available, ask for their phone number and use the [book_meeting](tool://book_meeting) tool to log the appointment into the system.
             service_reschedule_cancel:
-              title: "Lookup, Reschedule & Cancel Booking"
-              description: "Purpose: The customer has a sudden conflict and wants to change their appointment time."
+              title: Lookup, Reschedule & Cancel Booking
+              description: 'Purpose: The customer has a sudden conflict and wants
+                to change their appointment time.'
               instruction: |-
                 Step 1: Ask for their phone number and use the [search_meetings](tool://search_meetings) tool to look up their current appointments.
                 Step 2: Ask if they want to reschedule to a new time or cancel.
                 Step 3: Use the [cancel_meeting](tool://cancel_meeting) tool to cancel the old appointment, and (if rescheduling) use [book_meeting](tool://book_meeting) again to create a new one. Notify the customer of the successful update.
         edtech_pack:
-          name: "EdTech & Course Consultation Pack"
-          description: "Designed for English Centers and online training platforms. The consultation process requires more thorough data (Lead) collection."
+          name: EdTech & Course Consultation Pack
+          description: Designed for English Centers and online training platforms.
+            The consultation process requires more thorough data (Lead) collection.
           scenarios:
             edtech_lead_capture:
-              title: "Lead Capture & Course Advisory"
-              description: "Purpose: Inquire about proficiency, introduce courses, and save potential customer information."
+              title: Lead Capture & Course Advisory
+              description: 'Purpose: Inquire about proficiency, introduce courses,
+                and save potential customer information.'
               instruction: |-
                 Step 1: Quick survey: Learning goal (IELTS, Communication), age, current proficiency level.
                 Step 2: Use [faq_lookup](tool://faq_lookup) to look up suitable course information.
                 Step 3: Ask for their name and phone number to send tuition info. Use [update_contact](tool://update_contact) to update the phone number and [add_label_to_conversation](tool://add_label_to_conversation) to categorize the lead.
             edtech_schedule_lookup:
-              title: "Student Info & Schedule Lookup"
-              description: "Purpose: An existing student asks for this week's schedule or requests a class transfer."
+              title: Student Info & Schedule Lookup
+              description: 'Purpose: An existing student asks for this week''s schedule
+                or requests a class transfer.'
               instruction: |-
                 Step 1: Ask for their phone number and use [get_contact_detail](tool://get_contact_detail) to identify the student.
                 Step 2: Provide the class schedule. If they need to transfer classes or request a leave, use [add_private_note](tool://add_private_note) to log the request for Academic Affairs or use [execute_macro](tool://execute_macro) (if an automated macro exists).
             edtech_tech_support:
-              title: "Platform Tech Support"
-              description: "Purpose: The student cannot log into the app, or a video is broken (for online learning)."
+              title: Platform Tech Support
+              description: 'Purpose: The student cannot log into the app, or a video
+                is broken (for online learning).'
               instruction: |-
                 Step 1: Ask for symptoms and request a screenshot.
                 Step 2: Use [faq_lookup](tool://faq_lookup) to look up troubleshooting steps (e.g., forgot password, change device).
@@ -432,10 +416,6 @@ en:
           reply_with_name: "%{assignee_name} from %{inbox_name} <reply+%{reply_email}>"
           friendly_name: "%{sender_name} from %{business_name} <%{from_email}>"
           professional_name: "%{business_name} <%{from_email}>"
-      channel_email:
-        header:
-          reply_with_name: "%{assignee_name} from %{inbox_name} <%{from_email}>"
-          reply_with_inbox_name: "%{inbox_name} <%{from_email}>"
       email_subject: New messages on this conversation
       transcript_subject: Conversation Transcript
     survey:
@@ -445,18 +425,6 @@ en:
     online:
       delete: "%{contact_name} is Online, please try again later"
   integration_apps:
-    dashboard_apps:
-      name: Dashboard Apps
-      description: Dashboard Apps allow you to create and embed applications that
-        display user information, orders, or payment history, providing more context
-        to your customer support agents.
-    dyte:
-      name: Dyte
-      short_description: Start video/voice calls with customers directly from Shopiz.
-      description: Dyte is a product that integrates audio and video functionalities
-        into your application. With this integration, your agents can start video/voice
-        calls with your customers directly from Shopiz.
-      meeting_name: "%{agent_name} has started a meeting"
     slack:
       name: Slack
       short_description: Receive notifications and respond to conversations directly
@@ -546,13 +514,15 @@ en:
     calendly:
       name: Calendly
       short_description: Appointment scheduling via Calendly directly within conversations.
-      description: Connect your Calendly account to enable appointment booking directly from the chat interface.
+      description: Connect your Calendly account to enable appointment booking directly
+        from the chat interface.
     google_calendar:
       name: Google Calendar
-      short_description: Appointment scheduling via Google Calendar directly within conversations.
-      description: Connect your Google Calendar account to enable appointment booking and availability checks.
-        within conversations. List available services, check time slots, and book
-        appointments on behalf of customers.
+      short_description: Appointment scheduling via Google Calendar directly within
+        conversations.
+      description: Connect your Google Calendar account to enable appointment booking
+        and availability checks. within conversations. List available services, check
+        time slots, and book appointments on behalf of customers.
     leadsquared:
       name: LeadSquared
       short_description: Sync your contacts and conversations with LeadSquared CRM.
@@ -573,26 +543,33 @@ en:
         false: 'No'
   captain:
     copilot:
-      using_tool: 'Using tool: %{function_name}...'
-      completed_tool_call: 'Completed using tool: %{function_name}'
+      using_tool: Using tool %{function_name}
+      completed_tool_call: Completed %{function_name} tool call
+      invalid_tool_call: Invalid tool call
+      tool_not_available: Tool not available
+      empty_message: There was an error generating the response. Please try again.
     tools:
       send_product_info:
-        header: "Product information:\n"
-        price: 'Price'
-        stock: 'In stock'
-        contact_for_price: 'Contact'
+        header: 'Product information:
+
+          '
+        price: Price
+        stock: In stock
+        contact_for_price: Contact
       order_summary:
-        header: "Order information #%{order_id}\n"
+        header: 'Order information #%{order_id}
+
+          '
         product_list: 'Product list:'
-        subtotal: 'Subtotal'
-        shipping_fee: 'Shipping fee'
-        tax: 'Tax'
-        discount: 'Discount'
-        total: 'Total'
-        customer: 'Customer'
-        phone: 'Phone'
-        address: 'Address'
-        note: 'Note'
+        subtotal: Subtotal
+        shipping_fee: Shipping fee
+        tax: Tax
+        discount: Discount
+        total: Total
+        customer: Customer
+        phone: Phone
+        address: Address
+        note: Note
     copilot_message_required: Message is required
     copilot_error: Please connect an assistant to this inbox to use Copilot
     copilot_limit: You are out of Copilot credits. You can buy more credits from the
@@ -600,12 +577,6 @@ en:
     upgrade: Upgrade your plan to enable ShopizAI
     disabled: ShopizAI is disabled for this account.
     api_key_missing: ShopizAI API key is not configured.
-    copilot:
-      using_tool: Using tool %{function_name}
-      completed_tool_call: Completed %{function_name} tool call
-      invalid_tool_call: Invalid tool call
-      tool_not_available: Tool not available
-      empty_message: "There was an error generating the response. Please try again."
     documents:
       limit_exceeded: Document limit exceeded
       pdf_format_error: must be a PDF file
@@ -630,42 +601,6 @@ en:
       page_processing_error: 'Error processing pages %{start}-%{end}: %{error}'
     custom_tool:
       slug_generation_failed: Unable to generate unique slug after 5 attempts
-  public_portal:
-    search:
-      search_placeholder: Search for article by title or body...
-      empty_placeholder: No results found.
-      loading_placeholder: Searching...
-      results_title: Search results
-    toc_header: On this page
-    hero:
-      sub_title: Search for the articles here or browse the categories below.
-    common:
-      home: Home
-      last_updated_on: Last updated on %{last_updated_on}
-      view_all_articles: View all
-      article: article
-      articles: articles
-      author: author
-      authors: authors
-      other: other
-      others: others
-      by: By
-      no_articles: There are no articles here
-    footer:
-      made_with: Made with
-    header:
-      go_to_homepage: Website
-      visit_website: Visit website
-      appearance:
-        system: System
-        light: Light
-        dark: Dark
-      featured_articles: Featured Articles
-      uncategorized: Uncategorized
-    404:
-      title: Page not found
-      description: We couldn't find the page you were looking for.
-      back_to_home: Go to home page
   slack_unfurl:
     fields:
       name: Name
@@ -715,15 +650,6 @@ en:
       %{format_messages}
   agent_capacity_policy:
     inbox_already_assigned: Inbox has already been assigned to this policy
-  portals:
-    send_instructions:
-      email_required: Email is required
-      invalid_email_format: Invalid email format
-      custom_domain_not_configured: Custom domain is not configured
-      instructions_sent_successfully: Instructions sent successfully
-      subject: Finish setting up %{custom_domain}
-    ssl_status:
-      custom_domain_not_configured: Custom domain is not configured
   common:
     over_limit: Account limit exceeded. Upgrade to a higher plan
   billing_histories:
@@ -764,22 +690,19 @@ en:
         video_missed: Video call
         video_outgoing: Outgoing video call
         video_incoming: Incoming video call
-        voice_missed: Voice call
-        voice_outgoing: Outgoing voice call
-        voice_incoming: Incoming voice call
       duration: "%{mins} minutes %{seconds} seconds"
     group_events:
       user_info: " (User ID: %{members})"
-      member_joined: "Group event: Member joined the group%{user_info}"
-      member_left: "Group event: Member left the group%{user_info}"
-      member_removed: "Group event: Member removed/blocked from the group%{user_info}"
-      admin_added: "Group event: New admin added%{user_info}"
-      admin_removed: "Group event: Admin rights removed%{user_info}"
-      group_updated: "Group event: Group info/settings updated"
-      pin_updated: "Group event: Pinned message updated"
-      board_updated: "Group event: Group notice/poll updated"
-      remind_updated: "Group event: Reminder updated"
-      default: "Group event: %{event}"
+      member_joined: 'Group event: Member joined the group%{user_info}'
+      member_left: 'Group event: Member left the group%{user_info}'
+      member_removed: 'Group event: Member removed/blocked from the group%{user_info}'
+      admin_added: 'Group event: New admin added%{user_info}'
+      admin_removed: 'Group event: Admin rights removed%{user_info}'
+      group_updated: 'Group event: Group info/settings updated'
+      pin_updated: 'Group event: Pinned message updated'
+      board_updated: 'Group event: Group notice/poll updated'
+      remind_updated: 'Group event: Reminder updated'
+      default: 'Group event: %{event}'
   daily_summary_mailer:
     report_email:
       subject: 'Automated AI Report: %{inbox_names}'

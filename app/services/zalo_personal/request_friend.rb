@@ -7,7 +7,7 @@ class ZaloPersonal::RequestFriend
 
   def execute
     return { status: false } unless @inbox&.zalo_personal?
-    
+
     user_info = load_user_info
     return { status: false } unless user_info
 

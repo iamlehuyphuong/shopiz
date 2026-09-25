@@ -14,8 +14,6 @@ RSpec.describe Account do
   it { is_expected.to have_many(:webhooks).dependent(:destroy_async) }
   it { is_expected.to have_many(:notification_settings).dependent(:destroy_async) }
   it { is_expected.to have_many(:reporting_events) }
-  it { is_expected.to have_many(:portals).dependent(:destroy_async) }
-  it { is_expected.to have_many(:categories).dependent(:destroy_async) }
   it { is_expected.to have_many(:teams).dependent(:destroy_async) }
 
   # This validation happens in ApplicationRecord
@@ -47,31 +45,6 @@ RSpec.describe Account do
     it 'returns ChatwootApp.max limits' do
       expect(account.usage_limits[:agents]).to eq(ChatwootApp.max_limit)
       expect(account.usage_limits[:inboxes]).to eq(ChatwootApp.max_limit)
-    end
-  end
-
-  describe 'inbound_email_domain' do
-    let(:account) { create(:account) }
-
-    it 'returns the domain from inbox if inbox value is present' do
-      account.update(domain: 'test.com')
-      with_modified_env MAILER_INBOUND_EMAIL_DOMAIN: 'test2.com' do
-        expect(account.inbound_email_domain).to eq('test.com')
-      end
-    end
-
-    it 'returns the domain from ENV if inbox value is nil' do
-      account.update(domain: nil)
-      with_modified_env MAILER_INBOUND_EMAIL_DOMAIN: 'test.com' do
-        expect(account.inbound_email_domain).to eq('test.com')
-      end
-    end
-
-    it 'returns the domain from ENV if inbox value is empty string' do
-      account.update(domain: '')
-      with_modified_env MAILER_INBOUND_EMAIL_DOMAIN: 'test.com' do
-        expect(account.inbound_email_domain).to eq('test.com')
-      end
     end
   end
 
@@ -113,9 +86,9 @@ RSpec.describe Account do
 
   describe 'locale' do
     it 'returns correct language if the value is set' do
-      account = create(:account, locale: 'fr')
-      expect(account.locale).to eq('fr')
-      expect(account.locale_english_name).to eq('french')
+      account = create(:account, locale: 'vi')
+      expect(account.locale).to eq('vi')
+      expect(account.locale_english_name).to eq('vietnamese')
     end
 
     it 'returns english if the value is not set' do
@@ -128,12 +101,6 @@ RSpec.describe Account do
       account = create(:account, locale: '')
       expect(account.locale).to be_nil
       expect(account.locale_english_name).to eq('english')
-    end
-
-    it 'returns correct language if the value has country code' do
-      account = create(:account, locale: 'pt_BR')
-      expect(account.locale).to eq('pt_BR')
-      expect(account.locale_english_name).to eq('portuguese')
     end
   end
 

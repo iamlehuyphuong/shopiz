@@ -8,19 +8,14 @@ import { useEventListener } from '@vueuse/core';
 import { ALLOWED_FILE_TYPES } from 'shared/constants/messages';
 import { useKeyboardEvents } from 'dashboard/composables/useKeyboardEvents';
 import FileUpload from 'vue-upload-component';
-import { INBOX_TYPES } from 'dashboard/helper/inbox';
 
 import Button from 'dashboard/components-next/button/Button.vue';
 import WhatsAppOptions from './WhatsAppOptions.vue';
-import ContentTemplateSelector from './ContentTemplateSelector.vue';
 
 const props = defineProps({
   attachedFiles: { type: Array, default: () => [] },
   isWhatsappInbox: { type: Boolean, default: false },
-  isVoiceInbox: { type: Boolean, default: false },
-  isEmailOrWebWidgetInbox: { type: Boolean, default: false },
-  isTwilioSmsInbox: { type: Boolean, default: false },
-  isTwilioWhatsAppInbox: { type: Boolean, default: false },
+  isWebWidgetInbox: { type: Boolean, default: false },
   isZaloPersonalInbox: { type: Boolean, default: false },
   messageTemplates: { type: Array, default: () => [] },
   channelType: { type: String, default: '' },
@@ -38,7 +33,6 @@ const emit = defineEmits([
   'discard',
   'sendMessage',
   'sendWhatsappMessage',
-  'sendTwilioMessage',
   'insertEmoji',
   'addSignature',
   'removeSignature',
@@ -71,26 +65,16 @@ const sendWithSignature = computed(() => {
   return fetchSignatureFlagFromUISettings(props.channelType);
 });
 
-const showTwilioContentTemplates = computed(() => {
-  return props.isTwilioWhatsAppInbox && props.inboxId;
-});
-
 const shouldShowEmojiButton = computed(() => {
-  return (
-    !props.isWhatsappInbox && !props.isTwilioWhatsAppInbox && !props.hasNoInbox
-  );
+  return !props.isWhatsappInbox && !props.hasNoInbox;
 });
 
 const isRegularMessageMode = computed(() => {
-  return !props.isWhatsappInbox && !props.isTwilioWhatsAppInbox;
+  return !props.isWhatsappInbox;
 });
 
-const isVoiceInbox = computed(() => props.channelType === INBOX_TYPES.VOICE);
-
 const shouldShowSignatureButton = computed(() => {
-  return (
-    props.hasSelectedInbox && isRegularMessageMode.value && !isVoiceInbox.value
-  );
+  return props.hasSelectedInbox && isRegularMessageMode.value;
 });
 
 const setSignature = () => {
@@ -108,13 +92,13 @@ const toggleMessageSignature = () => {
 };
 
 // Added this watch to dynamically set signature on target inbox change.
-// Only targetInbox has value and is Advance Editor(used by isEmailOrWebWidgetInbox)
+// Only targetInbox has value and is Advance Editor(used by isWebWidgetInbox)
 // Set the signature only if the inbox based flag is true
 watch(
   () => props.hasSelectedInbox,
   newValue => {
     nextTick(() => {
-      if (newValue && !isVoiceInbox.value) setSignature();
+      if (newValue) setSignature();
     });
   },
   { immediate: true }
@@ -125,7 +109,6 @@ const onClickInsertEmoji = emoji => {
 };
 
 const { onFileUpload } = useFileUpload({
-  isATwilioSMSChannel: props.isTwilioSmsInbox,
   attachFile: ({ blob, file }) => {
     if (!file) return;
     const reader = new FileReader();
@@ -143,12 +126,6 @@ const { onFileUpload } = useFileUpload({
 });
 
 const sendButtonLabel = computed(() => {
-  // For voice inboxes, show "Make a Call" instead of "Send"
-  if (props.isVoiceInbox) {
-    return t('COMPOSE_NEW_CONVERSATION.FORM.ACTION_BUTTONS.MAKE_CALL');
-  }
-
-  // For all other inboxes, show the standard "Send" label
   const keyCode = isEditorHotKeyEnabled('cmd_enter') ? '⌘ + ↵' : '↵';
   return t('COMPOSE_NEW_CONVERSATION.FORM.ACTION_BUTTONS.SEND', {
     keyCode,
@@ -182,7 +159,7 @@ const keyboardEvents = {
 useKeyboardEvents(keyboardEvents);
 
 const onPaste = e => {
-  if (!props.isEmailOrWebWidgetInbox) return;
+  if (!props.isWebWidgetInbox) return;
 
   const files = e.clipboardData?.files;
   if (!files?.length) return;
@@ -211,11 +188,6 @@ useEventListener(document, 'paste', onPaste);
         :message-templates="messageTemplates"
         @send-message="emit('sendWhatsappMessage', $event)"
       />
-      <ContentTemplateSelector
-        v-if="showTwilioContentTemplates"
-        :inbox-id="inboxId"
-        @send-message="emit('sendTwilioMessage', $event)"
-      />
       <div
         v-if="shouldShowEmojiButton"
         v-on-click-outside="() => (isEmojiPickerOpen = false)"
@@ -235,7 +207,7 @@ useEventListener(document, 'paste', onPaste);
         />
       </div>
       <FileUpload
-        v-if="isEmailOrWebWidgetInbox"
+        v-if="isWebWidgetInbox"
         ref="uploadAttachment"
         input-id="composeNewConversationAttachment"
         :size="4096 * 4096"

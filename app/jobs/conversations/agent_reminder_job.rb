@@ -35,7 +35,7 @@ class Conversations::AgentReminderJob < ApplicationJob
       I18n.with_locale(conversation.account.locale || I18n.default_locale) do
         content = I18n.t('conversations.reminder.message')
         content += "\n\n#{I18n.t('conversations.reminder.note', note: note)}" if note.present?
-        
+
         conversation.messages.create!(
           account_id: conversation.account_id,
           inbox_id: conversation.inbox_id,

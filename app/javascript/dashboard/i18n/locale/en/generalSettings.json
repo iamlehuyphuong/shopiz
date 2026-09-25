@@ -12,7 +12,6 @@
       "UPGRADE_PROMPT_CAMPAIGNS": "Campaigns are available on a higher plan. Upgrade to start reaching more customers with pro-active messaging.",
       "UPGRADE_PROMPT_REPORTS": "Advanced reports and analytics are available on a higher plan. Upgrade to gain deeper insights into your business.",
       "UPGRADE_PROMPT_AUTOMATIONS": "Automations and workflows are available on a higher plan. Upgrade to save time and scale your operations.",
-      "UPGRADE_PROMPT_SAML": "SAML SSO is not available in your current plan. Upgrade to enhance your team's security with single sign-on.",
       "UPGRADE_PROMPT_SLA": "Service Level Agreements (SLA) are not available in your current plan. Upgrade to start tracking and enforcing response times.",
       "UPGRADE_PROMPT_CUSTOM_ROLES": "Custom Roles are not available in your current plan. Upgrade to manage granular permissions for your team members.",
       "UPGRADE_PROMPT_CAPTAIN": "ShopizAI is not available in your current plan. Please upgrade to access this and other premium features.",
@@ -22,8 +21,7 @@
       "UPGRADE_PROMPT_AGENT_BOTS": "Agent Bots are not available in your current plan. Please upgrade to access this and other premium features.",
       "UPGRADE_PROMPT_TEMPLATE_BUILDER": "The Template Builder feature is not available in your current plan. Please upgrade to access this and other premium features.",
       "UPGRADE_PROMPT_INTEGRATIONS": "Integrations are not available in your current plan. Please upgrade to access this and other premium features.",
-      "UPGRADE_PROMPT_AUDIT_LOGS": "Audit Logs are not available in your current plan. Please upgrade to access this and other premium features.",
-      "UPGRADE_PROMPT_HELP_CENTER": "Help Center is not available in your current plan. Please upgrade to access this and other premium features."
+      "UPGRADE_PROMPT_AUDIT_LOGS": "Audit Logs are not available in your current plan. Please upgrade to access this and other premium features."
     },
     "TITLE": "Account settings",
     "SUBMIT": "Update settings",
@@ -312,7 +310,6 @@
       "REMOVE_LABEL_FROM_CONVERSATION": "Remove label from the conversation",
       "REOPEN_CONVERSATION": "Reopen conversation",
       "RESOLVE_CONVERSATION": "Resolve conversation",
-      "SEND_TRANSCRIPT": "Send an email transcript",
       "SNOOZE_CONVERSATION": "Snooze Conversation",
       "UNTIL_NEXT_REPLY": "Until next reply",
       "UNTIL_NEXT_WEEK": "Until next week",
@@ -327,9 +324,7 @@
       "SNOOZE_NOTIFICATION": "Snooze Notification"
     }
   },
-  "DASHBOARD_APPS": {
-    "LOADING_MESSAGE": "Loading Dashboard App..."
-  },
+
   "COMMON": {
     "OR": "Or",
     "CLICK_HERE": "click here"

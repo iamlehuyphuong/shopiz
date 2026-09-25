@@ -16,7 +16,7 @@ class Zalo::GroupManagementService
       user_ids: Array(user_ids)
     }
     response = @client.invite_member(body)
-    
+
     sync_members if response['error'] == 0
     response
   end

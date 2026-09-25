@@ -44,10 +44,7 @@ const featureToggles = computed(() => [
   {
     key: 'label_suggestion',
   },
-  {
-    key: 'help_center_search',
-    enterprise: true,
-  },
+
   {
     key: 'audio_transcription',
     enterprise: true,

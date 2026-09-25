@@ -261,9 +261,9 @@ class Captain::Assistant::AgentRunnerService
     Agents::Instrumentation.install(
       runner,
       tracer: OpentelemetryConfig.tracer,
-      trace_name: 'llm.captain_v2',
+      trace_name: 'llm.captain',
       span_attributes: {
-        ATTR_LANGFUSE_TAGS => ['captain_v2'].to_json
+        ATTR_LANGFUSE_TAGS => ['captain'].to_json
       },
       attribute_provider: ->(context_wrapper) { dynamic_trace_attributes(context_wrapper) }
     )
@@ -273,7 +273,7 @@ class Captain::Assistant::AgentRunnerService
   def dynamic_trace_attributes(context_wrapper)
     state = context_wrapper&.context&.dig(:state) || {}
     conversation = state[:conversation] || {}
-    trace_input = context_wrapper&.context&.dig(:captain_v2_trace_input)
+    trace_input = context_wrapper&.context&.dig(:captain_trace_input)
 
     {
       ATTR_LANGFUSE_USER_ID => state[:account_id],
@@ -321,14 +321,14 @@ class Captain::Assistant::AgentRunnerService
     return unless context_wrapper&.context
     return unless tool_name.to_s == handoff_tool_name
 
-    context_wrapper.context[:captain_v2_handoff_tool_called] = true
+    context_wrapper.context[:captain_handoff_tool_called] = true
   end
 
   def write_credits_used_metadata(context_wrapper)
     root_span = context_wrapper&.context&.dig(:__otel_tracing, :root_span)
     return unless root_span
 
-    credit_used = !context_wrapper.context[:captain_v2_handoff_tool_called]
+    credit_used = !context_wrapper.context[:captain_handoff_tool_called]
     root_span.set_attribute(format(ATTR_LANGFUSE_METADATA, 'credit_used'), credit_used.to_s)
   end
 

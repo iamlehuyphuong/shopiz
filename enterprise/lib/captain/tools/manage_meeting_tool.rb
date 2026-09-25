@@ -30,7 +30,7 @@ class Captain::Tools::ManageMeetingTool < Captain::Tools::BasePublicTool
     return 'No meeting found at the specified time.' unless booking
 
     manager = CalendarService::EventManager.new(conversation.account)
-    
+
     if action == 'cancel'
       if booking.provider == 'google' && booking.google_event_id
         success = manager.delete_event(booking.google_event_id)
@@ -40,28 +40,30 @@ class Captain::Tools::ManageMeetingTool < Captain::Tools::BasePublicTool
       booking.update!(status: :cancelled)
       log_tool_usage('cancel_meeting', { conversation_id: conversation.id, booking_id: booking.id })
       "Meeting at #{start_time} successfully cancelled."
-      
+
     elsif action == 'reschedule'
       return 'new_start_time is required for rescheduling' if new_start_time.blank?
+
       parsed_new = Time.zone.parse(new_start_time)
       return 'Invalid new start time format' unless parsed_new
 
       if booking.provider == 'google' && booking.google_event_id
         manager.delete_event(booking.google_event_id)
-        
+
         config = conversation.account.booking_configurations.find_by(is_active: true)
         duration = config&.meeting_duration || 30
         parsed_end = parsed_new + duration.minutes
-        
+
         event_id = manager.create_event(
           start_time: parsed_new,
           end_time: parsed_end,
           guest_email: booking.guest_email,
           guest_name: booking.guest_name,
-          description: reason || "Rescheduled via Agent"
+          description: reason || 'Rescheduled via Agent'
         )
-        
+
         return 'Failed to reschedule meeting on Google Calendar' unless event_id
+
         booking.update!(start_time: parsed_new, end_time: parsed_end, google_event_id: event_id)
       else
         duration = booking.end_time - booking.start_time

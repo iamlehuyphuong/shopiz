@@ -118,13 +118,6 @@
         "ERROR_MESSAGE": "Đã xảy ra lỗi khi kết nối với TikTok, vui lòng thử lại.",
         "ERROR_AUTH": "Đã xảy ra lỗi khi xác thực TikTok, vui lòng thử lại."
       },
-      "TWITTER": {
-        "HELP": "Để thêm Twitter, hãy xác thực bằng cách nhấn 'Đăng nhập với Twitter'.",
-        "ERROR_MESSAGE": "Không thể kết nối với Twitter, vui lòng thử lại.",
-        "TWEETS": {
-          "ENABLE": "Tạo cuộc trò chuyện từ các Tweet được nhắc đến"
-        }
-      },
       "WEBSITE_CHANNEL": {
         "TITLE": "Kênh Website",
         "DESC": "Tạo kênh website và hỗ trợ khách hàng qua widget chat.",
@@ -175,162 +168,14 @@
           "ERROR_MESSAGE": "Không thể tạo kênh website, vui lòng thử lại."
         }
       },
-      "TWILIO": {
-        "TITLE": "Kênh Twilio SMS/WhatsApp",
-        "DESC": "Tích hợp Twilio để hỗ trợ khách qua SMS hoặc WhatsApp.",
-        "ACCOUNT_SID": {
-          "LABEL": "Account SID",
-          "PLACEHOLDER": "Nhập Twilio Account SID",
-          "ERROR": "Trường này là bắt buộc"
-        },
-        "API_KEY": {
-          "USE_API_KEY": "Sử dụng API Key Authentication",
-          "LABEL": "API Key SID",
-          "PLACEHOLDER": "Nhập API Key SID",
-          "ERROR": "Trường này là bắt buộc"
-        },
-        "API_KEY_SECRET": {
-          "LABEL": "API Key Secret",
-          "PLACEHOLDER": "Nhập API Key Secret",
-          "ERROR": "Trường này là bắt buộc"
-        },
-        "MESSAGING_SERVICE_SID": {
-          "LABEL": "Messaging Service SID",
-          "PLACEHOLDER": "Nhập Messaging Service SID",
-          "ERROR": "Trường này là bắt buộc",
-          "USE_MESSAGING_SERVICE": "Sử dụng dịch vụ nhắn tin Twilio"
-        },
-        "CHANNEL_TYPE": {
-          "LABEL": "Loại kênh",
-          "ERROR": "Vui lòng chọn loại kênh"
-        },
-        "AUTH_TOKEN": {
-          "LABEL": "Auth Token",
-          "PLACEHOLDER": "Nhập Auth Token",
-          "ERROR": "Trường này là bắt buộc"
-        },
-        "CHANNEL_NAME": {
-          "LABEL": "Tên hộp thư",
-          "PLACEHOLDER": "Nhập tên hộp thư",
-          "ERROR": "Trường này là bắt buộc"
-        },
-        "PHONE_NUMBER": {
-          "LABEL": "Số điện thoại",
-          "PLACEHOLDER": "Nhập số điện thoại gửi tin nhắn",
-          "ERROR": "Vui lòng nhập số theo chuẩn E.164 bắt đầu bằng dấu '+'."
-        },
-        "API_CALLBACK": {
-          "TITLE": "Callback URL",
-          "SUBTITLE": "Cấu hình Callback URL trong Twilio theo URL này."
-        },
-        "SUBMIT_BUTTON": "Tạo kênh Twilio",
-        "API": {
-          "ERROR_MESSAGE": "Không thể xác thực thông tin Twilio, vui lòng thử lại."
-        }
-      },
-      "SMS": {
-        "TITLE": "Kênh SMS",
-        "DESC": "Hỗ trợ khách hàng qua SMS.",
-        "PROVIDERS": {
-          "LABEL": "Nhà cung cấp API",
-          "TWILIO": "Twilio",
-          "BANDWIDTH": "Bandwidth"
-        },
-        "API": {
-          "ERROR_MESSAGE": "Không thể lưu kênh SMS."
-        },
-        "BANDWIDTH": {
-          "ACCOUNT_ID": {
-            "LABEL": "Account ID",
-            "PLACEHOLDER": "Nhập Bandwidth Account ID",
-            "ERROR": "Trường này là bắt buộc"
-          },
-          "API_KEY": {
-            "LABEL": "API Key",
-            "PLACEHOLDER": "Nhập Bandwidth API Key",
-            "ERROR": "Trường này là bắt buộc"
-          },
-          "API_SECRET": {
-            "LABEL": "API Secret",
-            "PLACEHOLDER": "Nhập Bandwidth API Secret",
-            "ERROR": "Trường này là bắt buộc"
-          },
-          "APPLICATION_ID": {
-            "LABEL": "Application ID",
-            "PLACEHOLDER": "Nhập Bandwidth Application ID",
-            "ERROR": "Trường này là bắt buộc"
-          },
-          "INBOX_NAME": {
-            "LABEL": "Tên hộp thư",
-            "PLACEHOLDER": "Nhập tên hộp thư",
-            "ERROR": "Trường này là bắt buộc"
-          },
-          "PHONE_NUMBER": {
-            "LABEL": "Số điện thoại",
-            "PLACEHOLDER": "Nhập số điện thoại gửi tin nhắn",
-            "ERROR": "Vui lòng nhập số hợp lệ theo chuẩn E.164"
-          },
-          "SUBMIT_BUTTON": "Tạo kênh Bandwidth",
-          "API": {
-            "ERROR_MESSAGE": "Không thể xác thực Bandwidth, vui lòng thử lại."
-          },
-          "API_CALLBACK": {
-            "TITLE": "Callback URL",
-            "SUBTITLE": "Cấu hình Callback URL trong Bandwidth theo URL này."
-          }
-        }
-      },
-      "VOICE": {
-        "TITLE": "Kênh thoại",
-        "DESC": "Tích hợp Twilio Voice để hỗ trợ khách hàng qua cuộc gọi.",
-        "PHONE_NUMBER": {
-          "LABEL": "Số điện thoại",
-          "PLACEHOLDER": "Nhập số điện thoại (ví dụ: +1234567890)",
-          "ERROR": "Vui lòng nhập số theo chuẩn E.164"
-        },
-        "TWILIO": {
-          "ACCOUNT_SID": {
-            "LABEL": "Account SID",
-            "PLACEHOLDER": "Nhập Account SID",
-            "REQUIRED": "Bắt buộc"
-          },
-          "AUTH_TOKEN": {
-            "LABEL": "Mã xác thực (Auth Token)",
-            "PLACEHOLDER": "Nhập mã xác thực",
-            "REQUIRED": "Bắt buộc"
-          },
-          "API_KEY_SID": {
-            "LABEL": "API Key SID",
-            "PLACEHOLDER": "Nhập API Key SID",
-            "REQUIRED": "Bắt buộc"
-          },
-          "API_KEY_SECRET": {
-            "LABEL": "API Key Secret",
-            "PLACEHOLDER": "Nhập API Key Secret",
-            "REQUIRED": "Bắt buộc"
-          }
-        },
-        "CONFIGURATION": {
-          "TWILIO_VOICE_URL_TITLE": "Twilio Voice URL",
-          "TWILIO_VOICE_URL_SUBTITLE": "Cấu hình URL này trong phần Voice URL của Twilio.",
-          "TWILIO_STATUS_URL_TITLE": "Status Callback URL",
-          "TWILIO_STATUS_URL_SUBTITLE": "Cấu hình Status Callback URL trong Twilio."
-        },
-        "SUBMIT_BUTTON": "Tạo kênh thoại",
-        "API": {
-          "ERROR_MESSAGE": "Không thể tạo kênh thoại."
-        }
-      },
       "WHATSAPP": {
         "TITLE": "Kênh WhatsApp",
         "DESC": "Hỗ trợ khách hàng qua WhatsApp.",
         "PROVIDERS": {
           "LABEL": "Nhà cung cấp API",
           "WHATSAPP_EMBEDDED": "WhatsApp Business",
-          "TWILIO": "Twilio",
           "WHATSAPP_CLOUD": "WhatsApp Cloud",
           "WHATSAPP_CLOUD_DESC": "Thiết lập nhanh qua Meta",
-          "TWILIO_DESC": "Kết nối bằng thông tin Twilio",
           "360_DIALOG": "360Dialog"
         },
         "SELECT_PROVIDER": {
@@ -425,58 +270,6 @@
           "ERROR_MESSAGE": "Không thể lưu kênh API."
         }
       },
-      "EMAIL_CHANNEL": {
-        "TITLE": "Kênh Email",
-        "DESC": "Tích hợp hộp thư email của bạn.",
-        "CHANNEL_NAME": {
-          "LABEL": "Tên kênh",
-          "PLACEHOLDER": "Nhập tên kênh",
-          "ERROR": "Bắt buộc"
-        },
-        "EMAIL": {
-          "LABEL": "Email",
-          "SUBTITLE": "Nhập email khách hàng sẽ gửi yêu cầu hỗ trợ.",
-          "PLACEHOLDER": "Email"
-        },
-        "SUBMIT_BUTTON": "Tạo kênh Email",
-        "API": {
-          "ERROR_MESSAGE": "Không thể lưu kênh Email."
-        },
-        "FINISH_MESSAGE": "Hãy chuyển tiếp email về địa chỉ sau:",
-        "FINISH_MESSAGE_NO_FORWARDING": "Hộp thư email của bạn đã được tạo thành công! Bạn cần cấu hình thông tin đăng nhập SMTP và IMAP để gửi và nhận email. Nếu không có các cài đặt này, không có email nào sẽ được xử lý.",
-        "FORWARDING_ADDRESS_LABEL": "Chuyển tiếp email đến địa chỉ này:",
-        "CONFIGURE_SMTP_IMAP_LINK": "Click vào đây",
-        "CONFIGURE_SMTP_IMAP_TEXT": " để cấu hình IMAP và SMTP"
-      },
-      "LINE_CHANNEL": {
-        "TITLE": "Kênh LINE",
-        "DESC": "Tích hợp LINE để hỗ trợ khách hàng.",
-        "CHANNEL_NAME": {
-          "LABEL": "Tên kênh",
-          "PLACEHOLDER": "Nhập tên kênh",
-          "ERROR": "Bắt buộc"
-        },
-        "LINE_CHANNEL_ID": {
-          "LABEL": "ID Kênh LINE",
-          "PLACEHOLDER": "Nhập ID Kênh LINE"
-        },
-        "LINE_CHANNEL_SECRET": {
-          "LABEL": "Mã bảo mật Kênh LINE",
-          "PLACEHOLDER": "Nhập mã bảo mật Kênh LINE"
-        },
-        "LINE_CHANNEL_TOKEN": {
-          "LABEL": "Mã thông báo Kênh LINE",
-          "PLACEHOLDER": "Nhập mã thông báo Kênh LINE"
-        },
-        "SUBMIT_BUTTON": "Tạo kênh LINE",
-        "API": {
-          "ERROR_MESSAGE": "Không thể lưu kênh LINE."
-        },
-        "API_CALLBACK": {
-          "TITLE": "Callback URL",
-          "SUBTITLE": "Cấu hình URL webhook trong LINE App."
-        }
-      },
       "TELEGRAM_CHANNEL": {
         "TITLE": "Kênh Telegram",
         "DESC": "Tích hợp Telegram để hỗ trợ khách hàng.",
@@ -512,10 +305,6 @@
             "TITLE": "Email",
             "DESCRIPTION": "Kết nối Gmail, Outlook hoặc nhà cung cấp khác"
           },
-          "SMS": {
-            "TITLE": "SMS",
-            "DESCRIPTION": "Tích hợp SMS qua Twilio hoặc Bandwidth"
-          },
           "API": {
             "TITLE": "API",
             "DESCRIPTION": "Tạo kênh tùy chỉnh bằng API"
@@ -524,25 +313,13 @@
             "TITLE": "Telegram",
             "DESCRIPTION": "Tích hợp bằng Bot Token"
           },
-          "LINE": {
-            "TITLE": "Line",
-            "DESCRIPTION": "Kết nối kênh Line"
-          },
           "INSTAGRAM": {
             "TITLE": "Instagram",
             "DESCRIPTION": "Kết nối tài khoản Instagram"
           },
-          "TWITTER": {
-            "TITLE": "Twitter",
-            "DESCRIPTION": "Kết nối tài khoản Twitter"
-          },
           "TIKTOK": {
             "TITLE": "TikTok",
             "DESCRIPTION": "Kết nối tài khoản TikTok"
-          },
-          "VOICE": {
-            "TITLE": "Gọi thoại (Voice)",
-            "DESCRIPTION": "Tích hợp Twilio Voice"
           },
           "ZALO_OA": {
             "TITLE": "Zalo OA",
@@ -575,20 +352,6 @@
       "EMAIL_PROVIDER": {
         "TITLE": "Chọn nhà cung cấp email",
         "DESCRIPTION": "Chọn một nhà cung cấp email từ danh sách bên dưới. Nếu không thấy trong danh sách, hãy chọn tùy chọn 'khác' và nhập thông tin IMAP/SMTP."
-      },
-      "MICROSOFT": {
-        "TITLE": "Email Microsoft",
-        "DESCRIPTION": "Nhấp 'Đăng nhập với Microsoft' để bắt đầu. Bạn sẽ được chuyển tới trang đăng nhập email và sau khi cấp quyền, hệ thống sẽ đưa bạn trở lại bước tạo hộp thư.",
-        "EMAIL_PLACEHOLDER": "Nhập địa chỉ email",
-        "SIGN_IN": "Đăng nhập với Microsoft",
-        "ERROR_MESSAGE": "Không thể kết nối với Microsoft, vui lòng thử lại"
-      },
-      "GOOGLE": {
-        "TITLE": "Email Google",
-        "DESCRIPTION": "Nhấp 'Đăng nhập với Google' để bắt đầu. Sau khi chấp thuận quyền truy cập, bạn sẽ được đưa trở lại bước tạo hộp thư.",
-        "SIGN_IN": "Đăng nhập với Google",
-        "EMAIL_PLACEHOLDER": "Nhập địa chỉ email",
-        "ERROR_MESSAGE": "Không thể kết nối với Google, vui lòng thử lại"
       }
     },
     "DETAILS": {
@@ -927,7 +690,8 @@
         "ENABLE_DESC": "Tự động liên hệ qua Zalo Cá Nhân khi khách hàng để lại số điện thoại trong Inbox này.",
         "SELECT_INBOX": "Chọn Zalo Cá Nhân",
         "SELECT_INBOX_DESC": "Chọn các kênh Zalo Cá Nhân sẽ được sử dụng để gửi kết bạn/tin nhắn (luân phiên - Round robin)."
-      },      "MESSENGER_HEADING": "Mã nhúng",
+      },
+      "MESSENGER_HEADING": "Mã nhúng",
       "MESSENGER_SUB_HEAD": "Đặt đoạn mã này trong thẻ <body>",
       "ALLOWED_DOMAINS": {
         "TITLE": "Domains được phép",
@@ -1040,14 +804,6 @@
       "WHATSAPP_TEMPLATES_SYNC_BUTTON": "Đồng bộ",
       "WHATSAPP_TEMPLATES_SYNC_SUCCESS": "Đã bắt đầu đồng bộ template. Quá trình có thể mất vài phút.",
       "UPDATE_PRE_CHAT_FORM_SETTINGS": "Cập nhật biểu mẫu trước khi chat"
-    },
-    "HELP_CENTER": {
-      "LABEL": "Trung tâm trợ giúp",
-      "PLACEHOLDER": "Chọn Help Center",
-      "SELECT_PLACEHOLDER": "Chọn Help Center",
-      "NONE": "Không có",
-      "REMOVE": "Gỡ Help Center",
-      "SUB_TEXT": "Gắn Help Center vào hộp thư này"
     },
     "AUTO_ASSIGNMENT": {
       "MAX_ASSIGNMENT_LIMIT": "Giới hạn phân công tự động",
@@ -1258,75 +1014,6 @@
       },
       "ALL_DAY": "Cả ngày"
     },
-    "IMAP": {
-      "TITLE": "IMAP",
-      "SUBTITLE": "Cấu hình IMAP",
-      "NOTE_TEXT": "Để bật SMTP, bạn phải cấu hình IMAP.",
-      "UPDATE": "Cập nhật IMAP",
-      "TOGGLE_AVAILABILITY": "Bật IMAP cho hộp thư",
-      "TOGGLE_HELP": "IMAP cho phép hộp thư nhận email",
-      "EDIT": {
-        "SUCCESS_MESSAGE": "Cập nhật IMAP thành công",
-        "ERROR_MESSAGE": "Không thể cập nhật IMAP"
-      },
-      "ADDRESS": {
-        "LABEL": "Địa chỉ",
-        "PLACE_HOLDER": "Ví dụ: imap.gmail.com"
-      },
-      "PORT": {
-        "LABEL": "Cổng",
-        "PLACE_HOLDER": "Cổng (Port)"
-      },
-      "LOGIN": {
-        "LABEL": "Đăng nhập",
-        "PLACE_HOLDER": "Email hoặc username"
-      },
-      "PASSWORD": {
-        "LABEL": "Mật khẩu",
-        "PLACE_HOLDER": "Mật khẩu"
-      },
-      "ENABLE_SSL": "Bật SSL"
-    },
-    "MICROSOFT": {
-      "TITLE": "Microsoft",
-      "SUBTITLE": "Uỷ quyền lại tài khoản MICROSOFT của bạn"
-    },
-    "SMTP": {
-      "TITLE": "SMTP",
-      "SUBTITLE": "Cấu hình SMTP",
-      "UPDATE": "Cập nhật SMTP",
-      "TOGGLE_AVAILABILITY": "Bật SMTP cho hộp thư",
-      "TOGGLE_HELP": "SMTP cho phép gửi email",
-      "EDIT": {
-        "SUCCESS_MESSAGE": "Cập nhật SMTP thành công",
-        "ERROR_MESSAGE": "Không thể cập nhật SMTP"
-      },
-      "ADDRESS": {
-        "LABEL": "Địa chỉ",
-        "PLACE_HOLDER": "Ví dụ: smtp.gmail.com"
-      },
-      "PORT": {
-        "LABEL": "Cổng",
-        "PLACE_HOLDER": "Cổng (Port)"
-      },
-      "LOGIN": {
-        "LABEL": "Đăng nhập",
-        "PLACE_HOLDER": "Email hoặc username"
-      },
-      "PASSWORD": {
-        "LABEL": "Mật khẩu",
-        "PLACE_HOLDER": "Mật khẩu"
-      },
-      "DOMAIN": {
-        "LABEL": "Tên miền (Domain)",
-        "PLACE_HOLDER": "Tên miền (Domain)"
-      },
-      "ENCRYPTION": "Mã hóa",
-      "SSL_TLS": "SSL/TLS",
-      "START_TLS": "STARTTLS",
-      "OPEN_SSL_VERIFY_MODE": "Open SSL Verify Mode",
-      "AUTH_MECHANISM": "Xác thực (Authentication)"
-    },
     "NOTE": "Lưu ý: ",
     "WIDGET_BUILDER": {
       "WIDGET_OPTIONS": {
@@ -1431,31 +1118,12 @@
       "BRANDING_TEXT": "Được hỗ trợ bởi Shopiz",
       "SCRIPT_SETTINGS": "\nwindow.shopizSettings = {options};"
     },
-    "EMAIL_PROVIDERS": {
-      "MICROSOFT": {
-        "TITLE": "Microsoft",
-        "DESCRIPTION": "Kết nối với Microsoft"
-      },
-      "GOOGLE": {
-        "TITLE": "Google",
-        "DESCRIPTION": "Kết nối với Google"
-      },
-      "OTHER_PROVIDERS": {
-        "TITLE": "Nhà cung cấp khác",
-        "DESCRIPTION": "Kết nối với nhà cung cấp khác"
-      }
-    },
     "CHANNELS": {
       "MESSENGER": "Messenger",
       "WEB_WIDGET": "Website",
-      "TWITTER_PROFILE": "Twitter",
-      "TWILIO_SMS": "Twilio SMS",
-      "VOICE": "Gọi thoại (Voice)",
       "WHATSAPP": "WhatsApp",
-      "SMS": "SMS",
       "EMAIL": "Email",
       "TELEGRAM": "Telegram",
-      "LINE": "Line",
       "API": "Kênh API",
       "INSTAGRAM": "Instagram",
       "TIKTOK": "TikTok",

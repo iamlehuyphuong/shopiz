@@ -21,7 +21,8 @@ RSpec.describe 'Message Templates API', type: :request do
       before do
         create(:message_template, account: account, inbox: inbox, name: 'template1', channel_type: 'Channel::Whatsapp', language: 'en',
                                   status: 'approved')
-        create(:message_template, account: account, inbox: inbox, name: 'template2', channel_type: 'Channel::Sms', language: 'es', status: 'draft')
+        create(:message_template, account: account, inbox: inbox, name: 'template2', channel_type: 'Channel::Telegram', language: 'es',
+                                  status: 'draft')
         create(:message_template, account: account, inbox: inbox2, name: 'template3', channel_type: 'Channel::Whatsapp', language: 'en',
                                   status: 'pending')
       end
@@ -175,7 +176,7 @@ RSpec.describe 'Message Templates API', type: :request do
           inbox_id: inbox.id,
           category: 'marketing',
           language: 'en',
-          channel_type: 'Channel::Sms', # TODO: channel type to be whatsapp
+          channel_type: 'Channel::Telegram', # TODO: channel type to be whatsapp
           status: 'draft',
           parameter_format: 'positional',
           content: {

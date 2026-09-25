@@ -45,23 +45,23 @@ RSpec.describe Captain::Documents::ResponseBuilderJob, type: :job do
     end
 
     context 'with different locales' do
-      let(:spanish_account) { create(:account, locale: 'pt') }
-      let(:spanish_assistant) { create(:captain_assistant, account: spanish_account) }
-      let(:spanish_document) { create(:captain_document, assistant: spanish_assistant, account: spanish_account) }
-      let(:spanish_faq_generator) { instance_double(Captain::Llm::FaqGeneratorService) }
+      let(:localized_account) { create(:account, locale: 'vi') }
+      let(:localized_assistant) { create(:captain_assistant, account: localized_account) }
+      let(:localized_document) { create(:captain_document, assistant: localized_assistant, account: localized_account) }
+      let(:localized_faq_generator) { instance_double(Captain::Llm::FaqGeneratorService) }
 
       before do
         allow(Captain::Llm::FaqGeneratorService).to receive(:new)
-          .with(spanish_document.content, 'portuguese', account_id: spanish_document.account_id)
-          .and_return(spanish_faq_generator)
-        allow(spanish_faq_generator).to receive(:generate).and_return(faqs)
+          .with(localized_document.content, 'vietnamese', account_id: localized_document.account_id)
+          .and_return(localized_faq_generator)
+        allow(localized_faq_generator).to receive(:generate).and_return(faqs)
       end
 
       it 'passes the correct locale to FAQ generator' do
-        described_class.new.perform(spanish_document)
+        described_class.new.perform(localized_document)
 
         expect(Captain::Llm::FaqGeneratorService).to have_received(:new)
-          .with(spanish_document.content, 'portuguese', account_id: spanish_document.account_id)
+          .with(localized_document.content, 'vietnamese', account_id: localized_document.account_id)
       end
     end
 

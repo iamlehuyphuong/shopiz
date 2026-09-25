@@ -11,7 +11,6 @@ json.website_channel_config do
   json.enabled_languages available_locales_with_name
   json.locale @web_widget.account.locale
   json.out_of_office_message @web_widget.inbox.out_of_office_message
-  json.portal @web_widget.inbox.portal
   json.pre_chat_form_enabled @web_widget.pre_chat_form_enabled
   json.pre_chat_form_options @web_widget.pre_chat_form_options
   has_active_bot = @web_widget.inbox.active_bot?

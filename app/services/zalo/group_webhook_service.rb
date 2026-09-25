@@ -61,7 +61,7 @@ class Zalo::GroupWebhookService
     # TODO: Handle attachments if needed, for now just text
     message_content = params.dig(:message, :text) || ''
     sender_id = params.dig(:sender, :id) || 'Unknown'
-    
+
     content = "[#{sender_id}]: #{message_content}"
 
     @conversation.messages.create!(
@@ -92,8 +92,8 @@ class Zalo::GroupWebhookService
       add_group_admin remove_group_admin update_group_info
     ]
 
-    if sync_events.include?(params[:event_name])
-      Zalo::SyncGroupMembersJob.perform_later(@conversation.id)
-    end
+    return unless sync_events.include?(params[:event_name])
+
+    Zalo::SyncGroupMembersJob.perform_later(@conversation.id)
   end
 end

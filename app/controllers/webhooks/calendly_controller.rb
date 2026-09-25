@@ -104,7 +104,7 @@ class Webhooks::CalendlyController < ActionController::API
   def build_created_note(invitee_name:, invitee_email:, event_name:, start_time:, end_time:, reschedule_url:, cancel_url:)
     formatted_time = format_time(start_time)
     lines = [
-      "📅 **Calendly: Lịch hẹn mới**",
+      '📅 **Calendly: Lịch hẹn mới**',
       "• Dịch vụ: #{event_name}",
       "• Khách: #{invitee_name} (#{invitee_email})",
       "• Thời gian: #{formatted_time}"
@@ -117,7 +117,7 @@ class Webhooks::CalendlyController < ActionController::API
   def build_canceled_note(invitee_name:, invitee_email:, event_name:, start_time:, reason:)
     formatted_time = format_time(start_time)
     lines = [
-      "❌ **Calendly: Lịch hẹn đã hủy**",
+      '❌ **Calendly: Lịch hẹn đã hủy**',
       "• Dịch vụ: #{event_name}",
       "• Khách: #{invitee_name} (#{invitee_email})",
       "• Thời gian: #{formatted_time}"

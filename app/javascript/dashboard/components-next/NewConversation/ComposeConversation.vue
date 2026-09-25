@@ -66,17 +66,11 @@ const showComposeNewConversation = ref(false);
 
 const formState = reactive({
   message: '',
-  subject: '',
-  ccEmails: '',
-  bccEmails: '',
   attachedFiles: [],
 });
 
 const clearFormState = () => {
   Object.assign(formState, {
-    subject: '',
-    ccEmails: '',
-    bccEmails: '',
     attachedFiles: [],
   });
 };

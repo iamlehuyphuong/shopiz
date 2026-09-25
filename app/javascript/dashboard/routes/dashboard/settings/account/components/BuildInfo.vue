@@ -10,7 +10,7 @@ const { t } = useI18n();
 const { currentAccount } = useAccount();
 
 const latestChatwootVersion = computed(() => {
-  return currentAccount.value.latest_chatwoot_version;
+  return currentAccount.value?.latest_chatwoot_version || '';
 });
 
 const globalConfig = useMapGetter('globalConfig/get');

@@ -7,13 +7,12 @@ import FBChannel from '../../api/channel/fbChannel';
 import ZaloChannel from '../../api/channel/zaloChannel';
 import ZaloPersonalChannel from '../../api/channel/zalopersonalChannel';
 import TiktokShopChannel from '../../api/channel/tiktokShopChannel';
-import TwilioChannel from '../../api/channel/twilioChannel';
 import WhatsappChannel from '../../api/channel/whatsappChannel';
 import { throwErrorMessage } from '../utils/api';
 import AnalyticsHelper from '../../helper/AnalyticsHelper';
 import camelcaseKeys from 'camelcase-keys';
 import { ACCOUNT_EVENTS } from '../../helper/AnalyticsHelper/events';
-import { channelActions, buildInboxData } from './inboxes/channelActions';
+import { buildInboxData } from './inboxes/channelActions';
 
 export const state = {
   records: [],
@@ -23,8 +22,6 @@ export const state = {
     isCreating: false,
     isUpdating: false,
     isDeleting: false,
-    isUpdatingIMAP: false,
-    isUpdatingSMTP: false,
   },
 };
 
@@ -110,18 +107,6 @@ export const getters = {
       return true;
     });
   },
-  getNewConversationInboxes($state) {
-    return $state.records.filter(inbox => {
-      const { channel_type: channelType, phone_number: phoneNumber = '' } =
-        inbox;
-
-      const isEmailChannel = channelType === INBOX_TYPES.EMAIL;
-      const isSmsChannel =
-        channelType === INBOX_TYPES.TWILIO &&
-        phoneNumber.startsWith('whatsapp');
-      return isEmailChannel || isSmsChannel;
-    });
-  },
   getInbox: $state => inboxId => {
     const [inbox] = $state.records.filter(
       record => record.id === Number(inboxId)
@@ -140,26 +125,9 @@ export const getters = {
   getWebsiteInboxes($state) {
     return $state.records.filter(item => item.channel_type === INBOX_TYPES.WEB);
   },
-  getTwilioInboxes($state) {
-    return $state.records.filter(
-      item => item.channel_type === INBOX_TYPES.TWILIO
-    );
-  },
-  getSMSInboxes($state) {
-    return $state.records.filter(
-      item =>
-        item.channel_type === INBOX_TYPES.SMS ||
-        (item.channel_type === INBOX_TYPES.TWILIO && item.medium === 'sms')
-    );
-  },
   getWhatsAppInboxes($state) {
     return $state.records.filter(
       item => item.channel_type === INBOX_TYPES.WHATSAPP
-    );
-  },
-  getVoiceInboxes($state) {
-    return $state.records.filter(
-      item => item.channel_type === INBOX_TYPES.VOICE
     );
   },
   getZaloPersonalInboxes($state) {
@@ -180,15 +148,8 @@ export const getters = {
       item => item.channel_type === INBOX_TYPES.TELEGRAM
     );
   },
-  getLineInboxes($state) {
-    return $state.records.filter(
-      item => item.channel_type === INBOX_TYPES.LINE
-    );
-  },
   dialogFlowEnabledInboxes($state) {
-    return $state.records.filter(
-      item => item.channel_type !== INBOX_TYPES.EMAIL
-    );
+    return $state.records;
   },
   getFacebookInboxByInstagramId: $state => instagramId => {
     return $state.records.find(
@@ -308,46 +269,6 @@ export const actions = {
       return throwErrorMessage(error);
     }
   },
-  createTwilioChannel: async ({ commit }, params) => {
-    try {
-      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: true });
-      const response = await TwilioChannel.create(params);
-      commit(types.default.ADD_INBOXES, response.data);
-      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
-      sendAnalyticsEvent('twilio');
-      return response.data;
-    } catch (error) {
-      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
-      throw error;
-    }
-  },
-  createVoiceChannel: async ({ commit }, params) => {
-    try {
-      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: true });
-
-      // Create a formatted payload for the voice channel
-      const inboxParams = {
-        name: params.voice.name || `Voice (${params.voice.phone_number})`,
-        channel: {
-          type: 'voice',
-          phone_number: params.voice.phone_number,
-          provider: params.voice.provider,
-          provider_config: params.voice.provider_config,
-        },
-      };
-
-      // Use InboxesAPI to create the channel which handles authentication properly
-      const response = await InboxesAPI.create(inboxParams);
-
-      commit(types.default.ADD_INBOXES, response.data);
-      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
-      sendAnalyticsEvent('voice');
-      return response.data;
-    } catch (error) {
-      commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: false });
-      throw error;
-    }
-  },
   createFBChannel: async ({ commit }, params) => {
     try {
       commit(types.default.SET_INBOXES_UI_FLAG, { isCreating: true });
@@ -374,11 +295,9 @@ export const actions = {
       throw error;
     }
   },
-  ...channelActions,
   // TODO: Extract other create channel methods to separate files to reduce file size
   // - createChannel
   // - createWebsiteChannel
-  // - createTwilioChannel
   // - createFBChannel
   updateInbox: async ({ commit }, { id, formData = true, ...inboxParams }) => {
     commit(types.default.SET_INBOXES_UI_FLAG, { isUpdating: true });
@@ -391,28 +310,6 @@ export const actions = {
       commit(types.default.SET_INBOXES_UI_FLAG, { isUpdating: false });
     } catch (error) {
       commit(types.default.SET_INBOXES_UI_FLAG, { isUpdating: false });
-      throwErrorMessage(error);
-    }
-  },
-  updateInboxIMAP: async ({ commit }, { id, ...inboxParams }) => {
-    commit(types.default.SET_INBOXES_UI_FLAG, { isUpdatingIMAP: true });
-    try {
-      const response = await InboxesAPI.update(id, inboxParams);
-      commit(types.default.EDIT_INBOXES, response.data);
-      commit(types.default.SET_INBOXES_UI_FLAG, { isUpdatingIMAP: false });
-    } catch (error) {
-      commit(types.default.SET_INBOXES_UI_FLAG, { isUpdatingIMAP: false });
-      throwErrorMessage(error);
-    }
-  },
-  updateInboxSMTP: async ({ commit }, { id, ...inboxParams }) => {
-    commit(types.default.SET_INBOXES_UI_FLAG, { isUpdatingSMTP: true });
-    try {
-      const response = await InboxesAPI.update(id, inboxParams);
-      commit(types.default.EDIT_INBOXES, response.data);
-      commit(types.default.SET_INBOXES_UI_FLAG, { isUpdatingSMTP: false });
-    } catch (error) {
-      commit(types.default.SET_INBOXES_UI_FLAG, { isUpdatingSMTP: false });
       throwErrorMessage(error);
     }
   },

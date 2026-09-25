@@ -13,14 +13,13 @@ RSpec.describe 'SwitchLocale Concern', type: :controller do
     end
   end
 
-  let(:account) { create(:account, locale: 'es') }
-  let(:portal) { create(:portal, custom_domain: 'custom.example.com', config: { default_locale: 'fr_FR' }) }
+  let(:account) { create(:account, locale: 'vi') }
 
   describe '#switch_locale' do
     context 'when locale is provided in params' do
       it 'sets locale from params' do
-        get :index, params: { locale: 'es' }
-        expect(response.body).to eq('es')
+        get :index, params: { locale: 'vi' }
+        expect(response.body).to eq('vi')
       end
 
       it 'falls back to default locale if invalid' do
@@ -30,12 +29,12 @@ RSpec.describe 'SwitchLocale Concern', type: :controller do
     end
 
     context 'when user has a locale set in ui_settings' do
-      let(:user) { create(:user, ui_settings: { 'locale' => 'es' }) }
+      let(:user) { create(:user, ui_settings: { 'locale' => 'vi' }) }
 
       before { controller.instance_variable_set(:@user, user) }
 
       it 'returns the user locale' do
-        expect(controller.send(:locale_from_user)).to eq('es')
+        expect(controller.send(:locale_from_user)).to eq('vi')
       end
     end
 
@@ -49,25 +48,11 @@ RSpec.describe 'SwitchLocale Concern', type: :controller do
       end
     end
 
-    context 'when request is from custom domain' do
-      before { request.host = portal.custom_domain }
-
-      it 'sets locale from portal' do
-        get :index
-        expect(response.body).to eq('fr')
-      end
-
-      it 'overrides portal locale with param' do
-        get :index, params: { locale: 'es' }
-        expect(response.body).to eq('es')
-      end
-    end
-
     context 'when locale is not provided anywhere' do
       it 'sets locale from environment variable' do
-        with_modified_env(DEFAULT_LOCALE: 'de_DE') do
+        with_modified_env(DEFAULT_LOCALE: 'vi_VN') do
           get :index
-          expect(response.body).to eq('de')
+          expect(response.body).to eq('vi')
         end
       end
 
@@ -89,7 +74,7 @@ RSpec.describe 'SwitchLocale Concern', type: :controller do
         result = I18n.locale.to_s
       end
 
-      expect(result).to eq('es')
+      expect(result).to eq('vi')
     end
   end
 end

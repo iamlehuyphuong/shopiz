@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe Integrations::Slack::SlackLinkUnfurlService do
   let!(:contact) { create(:contact, name: 'Contact 1', email: nil, phone_number: nil) }
-  let(:channel_email) { create(:channel_email) }
-  let!(:conversation) { create(:conversation, inbox: channel_email.inbox, contact: contact, identifier: nil) }
+  let(:channel_widget) { create(:channel_widget) }
+  let!(:conversation) { create(:conversation, inbox: channel_widget.inbox, contact: contact, identifier: nil) }
   let(:account) { conversation.account }
   let!(:hook) { create(:integrations_hook, account: account) }
 
@@ -96,8 +96,8 @@ describe Integrations::Slack::SlackLinkUnfurlService do
                        '{"type":"mrkdwn","text":"*Email:*\\n---"},' \
                        '{"type":"mrkdwn","text":"*Phone:*\\n---"},' \
                        '{"type":"mrkdwn","text":"*Company:*\\n---"},' \
-                       "{\"type\":\"mrkdwn\",\"text\":\"*Inbox:*\\n#{channel_email.inbox.name}\"}," \
-                       "{\"type\":\"mrkdwn\",\"text\":\"*Inbox Type:*\\n#{channel_email.inbox.channel.name}\"}]}," \
+                       "{\"type\":\"mrkdwn\",\"text\":\"*Inbox:*\\n#{channel_widget.inbox.name}\"}," \
+                       "{\"type\":\"mrkdwn\",\"text\":\"*Inbox Type:*\\n#{channel_widget.inbox.channel.name}\"}]}," \
                        '{"type":"actions","elements":[{' \
                        '"type":"button",' \
                        '"text":{"type":"plain_text","text":"Open conversation","emoji":true},' \
@@ -145,8 +145,8 @@ describe Integrations::Slack::SlackLinkUnfurlService do
                        '{"type":"mrkdwn","text":"*Email:*\\n---"},' \
                        '{"type":"mrkdwn","text":"*Phone:*\\n---"},' \
                        '{"type":"mrkdwn","text":"*Company:*\\n---"},' \
-                       "{\"type\":\"mrkdwn\",\"text\":\"*Inbox:*\\n#{channel_email.inbox.name}\"}," \
-                       "{\"type\":\"mrkdwn\",\"text\":\"*Inbox Type:*\\n#{channel_email.inbox.channel.name}\"}]}," \
+                       "{\"type\":\"mrkdwn\",\"text\":\"*Inbox:*\\n#{channel_widget.inbox.name}\"}," \
+                       "{\"type\":\"mrkdwn\",\"text\":\"*Inbox Type:*\\n#{channel_widget.inbox.channel.name}\"}]}," \
                        '{"type":"actions","elements":[{' \
                        '"type":"button",' \
                        '"text":{"type":"plain_text","text":"Open conversation","emoji":true},' \

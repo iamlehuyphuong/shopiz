@@ -22,12 +22,12 @@ RSpec.describe Captain::ScenarioTemplateLoader do
   describe '.apply_pack!' do
     context 'when pack exists' do
       it 'creates scenarios for the assistant' do
-        expect {
+        expect do
           described_class.apply_pack!('ecommerce_pack', assistant: assistant)
-        }.to change { assistant.scenarios.count }.by(4)
+        end.to change { assistant.scenarios.count }.by(4)
 
         # Audit some values of the created scenarios
-        scenario = assistant.scenarios.find_by(title: "Sales Assistant & General FAQ")
+        scenario = assistant.scenarios.find_by(title: 'Sales Assistant & General FAQ')
         expect(scenario).to be_present
         expect(scenario.tools).to include('faq_lookup')
         expect(scenario.instruction).to include('[faq_lookup](tool://faq_lookup)')
@@ -35,18 +35,18 @@ RSpec.describe Captain::ScenarioTemplateLoader do
 
       it 'does not duplicate scenarios if applied twice' do
         described_class.apply_pack!('ecommerce_pack', assistant: assistant)
-        
-        expect {
+
+        expect do
           described_class.apply_pack!('ecommerce_pack', assistant: assistant)
-        }.not_to change { assistant.scenarios.count }
+        end.not_to(change { assistant.scenarios.count })
       end
     end
 
     context 'when pack does not exist' do
       it 'raises an error' do
-        expect {
+        expect do
           described_class.apply_pack!('non_existent_pack', assistant: assistant)
-        }.to raise_error(RuntimeError, /Pack not found: non_existent_pack/)
+        end.to raise_error(RuntimeError, /Pack not found: non_existent_pack/)
       end
     end
   end

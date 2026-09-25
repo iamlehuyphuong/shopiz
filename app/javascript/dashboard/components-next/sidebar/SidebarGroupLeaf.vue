@@ -9,11 +9,17 @@ const props = defineProps({
   active: { type: Boolean, default: false },
   component: { type: Function, default: null },
   isLocked: { type: Boolean, default: false },
+  featureFlag: { type: String, default: '' },
 });
+
+const emit = defineEmits(['toggleLocked']);
 
 const shouldRenderComponent = computed(() => {
   return typeof props.component === 'function' || isVNode(props.component);
 });
+
+// A locked item should not navigate, it opens the paywall modal instead
+const renderAsLink = computed(() => Boolean(props.to) && !props.isLocked);
 </script>
 
 <!-- eslint-disable-next-line vue/no-root-v-if -->
@@ -23,13 +29,14 @@ const shouldRenderComponent = computed(() => {
     :class="{ 'opacity-50': isLocked }"
   >
     <component
-      :is="to ? 'router-link' : 'div'"
-      :to="to ? to : undefined"
+      :is="renderAsLink ? 'router-link' : 'div'"
+      :to="renderAsLink ? to : undefined"
       :title="label"
       class="flex h-8 items-center gap-2 px-2 py-1 rounded-lg w-full hover:bg-gradient-to-r from-transparent via-n-slate-3/70 to-n-slate-3/70 group relative"
       :class="{
         'text-n-slate-12 bg-n-alpha-2 active': active,
       }"
+      @click="isLocked ? emit('toggleLocked', featureFlag) : undefined"
     >
       <component
         :is="component"

@@ -139,7 +139,7 @@ class Api::V2::Accounts::ReportsController < Api::V1::Accounts::BaseController
         sheet.add_row [I18n.t('reports.period', since: Date.strptime(params[:since], '%s'), until: Date.strptime(params[:until], '%s'))]
         sheet.add_row headers if headers.present?
       end
-      
+
       report_data.each do |row|
         sheet.add_row row
       end

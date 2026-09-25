@@ -1,13 +1,13 @@
 module SuperAdmin::AccountFeaturesHelper
   FEATURE_CATEGORIES = {
     'Kênh kết nối (Channels)' => %w[
-      inbound_emails channel_email channel_facebook channel_twitter channel_website
+      channel_facebook channel_website
       channel_instagram channel_zalo channel_zalopersonal channel_telegram
-      channel_line channel_whatsapp channel_tiktok_shop channel_tiktok
+      channel_whatsapp channel_tiktok_shop channel_tiktok
     ],
     'Quản lý & CRM (Management & CRM)' => %w[
-      agent_management team_management inbox_management crm crm_v2 companies labels
-      custom_attributes custom_roles sales assignment_v2 inbox_view
+      agent_management team_management inbox_management crm companies labels
+      custom_attributes custom_roles sales inbox_view
     ],
     'Năng suất & Tự động hóa (Productivity & Automation)' => %w[
       macros automations canned_responses response_bot auto_resolve_conversations
@@ -21,17 +21,15 @@ module SuperAdmin::AccountFeaturesHelper
       integrations linear_integration shopify_integration notion_integration crm_integration
     ],
     'AI & ShopizAI (AI & Captain)' => %w[
-      captain_integration captain_integration_v2 captain_tasks
+      captain_integration captain_tasks
     ],
     'Hệ thống & Giao diện (System & Interface)' => %w[
-      ip_lookup disable_branding email_continuity_on_api_channel help_center
-      help_center_embedding_search chatwoot_v4 search_with_gin
-      advanced_search advanced_search_indexing saml reply_mailer_migration quoted_email_reply
-      custom_reply_domain custom_reply_email message_reply_to insert_article_in_reply
+      ip_lookup disable_branding
+      search_with_gin
+      advanced_search advanced_search_indexing message_reply_to
     ],
     'Khác (Others)' => %w[
-      whatsapp_embedded_signup whatsapp_campaign twilio_content_templates
-      contact_chatwoot_support_team deprecated_feature_64
+      whatsapp_embedded_signup whatsapp_campaign
     ]
   }.freeze
 
@@ -94,19 +92,26 @@ module SuperAdmin::AccountFeaturesHelper
     FEATURE_CATEGORIES.each_key { |category| categorized[category] = [] }
     categorized['Chưa phân loại (Uncategorized)'] = []
 
+    deprecated_features = account_features.select { |f| f['deprecated'] }.pluck('name')
+
     attributes.each do |attr|
       # attr.data should be a hash with one key (the feature name)
       # based on existing show.html.erb logic: attr.data.keys.first
-      feature_name = attr.data.keys.first.to_s rescue nil
+      feature_name = begin
+        attr.data.keys.first.to_s
+      rescue StandardError
+        nil
+      end
       next unless feature_name
+      next if deprecated_features.include?(feature_name)
 
       category_found = false
       FEATURE_CATEGORIES.each do |category, features|
-        if features.include?(feature_name)
-          categorized[category] << attr
-          category_found = true
-          break
-        end
+        next unless features.include?(feature_name)
+
+        categorized[category] << attr
+        category_found = true
+        break
       end
 
       categorized['Chưa phân loại (Uncategorized)'] << attr unless category_found
@@ -131,14 +136,18 @@ module SuperAdmin::AccountFeaturesHelper
     FEATURE_CATEGORIES.each_key { |category| categorized[category] = [] }
     categorized['Chưa phân loại (Uncategorized)'] = []
 
+    deprecated_features = account_features.select { |f| f['deprecated'] }.pluck('name')
+
     features_hash.each do |feature_name, enabled|
+      next if deprecated_features.include?(feature_name.to_s)
+
       category_found = false
       FEATURE_CATEGORIES.each do |category, features|
-        if features.include?(feature_name.to_s)
-          categorized[category] << [feature_name.to_s, enabled]
-          category_found = true
-          break
-        end
+        next unless features.include?(feature_name.to_s)
+
+        categorized[category] << [feature_name.to_s, enabled]
+        category_found = true
+        break
       end
 
       categorized['Chưa phân loại (Uncategorized)'] << [feature_name.to_s, enabled] unless category_found

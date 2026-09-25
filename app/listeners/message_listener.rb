@@ -3,9 +3,6 @@ class MessageListener < BaseListener
     message = extract_message_and_account(event)[0]
     return if message.nil?
 
-    # Voice message delivery functionality has been removed for now
-    # This would be where we'd handle delivering agent messages to voice calls
-
     # Extract contact info from message content
     ::Contacts::ContactInfoExtractorService.new(message).perform
 

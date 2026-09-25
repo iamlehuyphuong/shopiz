@@ -20,33 +20,23 @@ vi:
       expired: Hết hạn
       completed: Hoàn thành
     content:
-      package: "Gói %{product_name} - %{month} tháng"
-      credit: "Gói %{product_name}"
+      package: Gói %{product_name} - %{month} tháng
+      credit: Gói %{product_name}
   inbox:
     reauthorization:
       success: Kênh đã được cấp lại quyền truy cập thành công
       not_required: Không cần cấp lại quyền truy cập cho hộp thư này
       invalid_channel: Loại kênh không hợp lệ để cấp lại quyền truy cập
-  auth:
-    saml:
-      invalid_email: Vui lòng nhập một địa chỉ email hợp lệ
-      authentication_failed: Xác thực thất bại. Vui lòng kiểm tra thông tin đăng nhập
-        của bạn và thử lại.
   messages:
     reset_password_success: Chà! Yêu cầu đặt lại mật khẩu thành công. Kiểm tra thư
       của bạn để biết hướng dẫn.
     reset_password_failure: Uh ho! Chúng tôi không thể tìm thấy bất kỳ người dùng
       nào có email được chỉ định.
-    reset_password_saml_user: Tài khoản này sử dụng xác thực SAML. Không thể đặt lại
-      mật khẩu. Vui lòng liên hệ với quản trị viên của bạn.
-    login_saml_user: Tài khoản này sử dụng xác thực SAML. Vui lòng đăng nhập qua nhà
-      cung cấp SAML của tổ chức bạn.
-    saml_not_available: Xác thực SAML không khả dụng trong cài đặt này.
     inbox_deletetion_response: Yêu cầu xoá hộp thư của bạn sẽ được xử lý.
   errors:
     messages:
-      blank: không được để trống
-      required: bắt buộc phải có
+      search:
+        time_range_limit_exceeded: Tìm kiếm bị giới hạn trong %{days} ngày qua
     account:
       reporting_timezone:
         invalid: không phải là múi giờ hợp lệ
@@ -66,9 +56,6 @@ vi:
       not_found: Chính sách phân công không được tìm thấy
     attachments:
       invalid: Tệp đính kèm không hợp lệ
-    saml:
-      feature_not_enabled: Tính năng SAML không được bật cho tài khoản này
-      sso_not_enabled: SAML SSO chưa được bật cho bản cài đặt này
     data_import:
       data_type:
         invalid: Kiểu dữ liệu không hợp lệ
@@ -86,14 +73,9 @@ vi:
         invalid: phải là một tên miền hợp lệ
       search:
         query_missing: Chỉ định chuỗi tìm kiếm với tham số q
-    messages:
-      search:
-        time_range_limit_exceeded: Tìm kiếm bị giới hạn trong %{days} ngày qua
     categories:
       locale:
         unique: phải là duy nhất trong danh mục và cổng thông tin
-    dyte:
-      invalid_message_type: Loại tin nhắn không hợp lệ. Hành động không được phép
     slack:
       invalid_channel_id: Channel ID không hợp lệ
     whatsapp:
@@ -122,8 +104,10 @@ vi:
         vòng 7 ngày qua."
       comment_handler:
         comment_hidden: Comment đã được tự động ẩn
-        public_comment: "Trả lời bình luận: %{text}"
-        instagram_comment_fallback: "Bạn vừa nhận được bình luận trên bài viết\n"
+        public_comment: 'Trả lời bình luận: %{text}'
+        instagram_comment_fallback: 'Bạn vừa nhận được bình luận trên bài viết
+
+          '
         private_reply_label: Phản hồi riêng tư (Private Reply)
         private_reply_hint: Tin nhắn tiếp theo bạn gửi sẽ được gửi dưới dạng phản
           hồi riêng tư cho bình luận này.
@@ -131,7 +115,7 @@ vi:
       zalo:
         unsupported_message: Định dạng tin nhắn không được hỗ trợ
         interaction:
-          chatnow_clicked: 'Người dùng đã nhấn nút "Nhắn tin" trên OA.'
+          chatnow_clicked: Người dùng đã nhấn nút "Nhắn tin" trên OA.
           other_interaction: 'Người dùng tương tác: %{event_name}'
       imap:
         socket_error: Vui lòng kiểm tra kết nối mạng, địa chỉ IMAP và thử lại.
@@ -190,8 +174,6 @@ vi:
     mfa:
       enabled: MFA đã được bật
       disabled: MFA đã được tắt
-    account_saml_settings:
-      invalid_certificate: phải là một chứng chỉ X.509 hợp lệ ở định dạng PEM
   reports:
     period: Thời gian báo cáo từ %{since} đến %{until}
     utc_warning: Báo cáo đã được tạo với múi giờ UTC
@@ -377,10 +359,6 @@ vi:
           reply_with_name: "%{assignee_name} từ %{inbox_name} <reply+%{reply_email}>"
           friendly_name: "%{sender_name} từ %{business_name} <%{from_email}>"
           professional_name: "%{business_name} <%{from_email}>"
-      channel_email:
-        header:
-          reply_with_name: "%{assignee_name} từ %{inbox_name} <%{from_email}>"
-          reply_with_inbox_name: "%{inbox_name} <%{from_email}>"
       email_subject: Tin nhắn mới về cuộc trò chuyện này
       transcript_subject: Bản ghi cuộc hội thoại
     survey:
@@ -390,19 +368,6 @@ vi:
     online:
       delete: "%{contact_name} đang online, vui lòng thử lại sau"
   integration_apps:
-    dashboard_apps:
-      name: Ứng dụng bảng điều khiển
-      description: Ứng dụng bảng điều khiển cho phép bạn tạo và nhúng các ứng dụng
-        hiển thị thông tin người dùng, đơn hàng hoặc lịch sử thanh toán, cung cấp
-        thêm bối cảnh cho nhân viên hỗ trợ khách hàng.
-    dyte:
-      name: Dyte
-      short_description: Bắt đầu cuộc gọi video/âm thanh với khách hàng trực tiếp
-        từ Shopiz.
-      description: Dyte là một sản phẩm tích hợp chức năng âm thanh và video vào ứng
-        dụng của bạn. Với tính năng này, nhân viên của bạn có thể bắt đầu cuộc gọi
-        video/âm thanh với khách hàng trực tiếp từ Shopiz.
-      meeting_name: "%{agent_name} đã bắt đầu một cuộc họp"
     slack:
       name: Slack
       short_description: Nhận thông báo và trả lời cuộc trò chuyện trực tiếp trên
@@ -499,11 +464,13 @@ vi:
     calendly:
       name: Calendly
       short_description: Đặt lịch hẹn qua Calendly trực tiếp trong hộp thoại.
-      description: Kết nối tài khoản Calendly để tự động đặt lịch hẹn trực tiếp từ hộp thoại.
+      description: Kết nối tài khoản Calendly để tự động đặt lịch hẹn trực tiếp từ
+        hộp thoại.
     google_calendar:
       name: Google Calendar
       short_description: Đặt lịch hẹn qua Google Calendar trực tiếp trong hộp thoại.
-      description: Kết nối tài khoản Google Calendar để tự động đặt lịch hẹn và kiểm tra giờ trống.
+      description: Kết nối tài khoản Google Calendar để tự động đặt lịch hẹn và kiểm
+        tra giờ trống.
     leadsquared:
       name: LeadSquared
       short_description: Đồng bộ hóa danh bạ và cuộc trò chuyện của bạn với CRM LeadSquared.
@@ -525,22 +492,26 @@ vi:
   captain:
     tools:
       send_product_info:
-        header: "Thông tin sản phẩm:\n"
-        price: 'Giá'
-        stock: 'Tồn kho'
-        contact_for_price: 'Liên hệ'
+        header: 'Thông tin sản phẩm:
+
+          '
+        price: Giá
+        stock: Tồn kho
+        contact_for_price: Liên hệ
       order_summary:
-        header: "Thông tin đơn hàng #%{order_id}\n"
+        header: 'Thông tin đơn hàng #%{order_id}
+
+          '
         product_list: 'Danh sách sản phẩm:'
-        subtotal: 'Tạm tính'
-        shipping_fee: 'Phí vận chuyển'
-        tax: 'Thuế'
-        discount: 'Giảm giá'
-        total: 'Tổng cộng'
-        customer: 'Khách hàng'
-        phone: 'SĐT'
-        address: 'Địa chỉ'
-        note: 'Ghi chú'
+        subtotal: Tạm tính
+        shipping_fee: Phí vận chuyển
+        tax: Thuế
+        discount: Giảm giá
+        total: Tổng cộng
+        customer: Khách hàng
+        phone: SĐT
+        address: Địa chỉ
+        note: Ghi chú
     copilot_message_required: Thông điệp bắt buộc
     copilot_error: Đã xảy ra lỗi với Copilot. Vui lòng thử lại.
     copilot_limit: Bạn đã hết tín dụng Copilot. Bạn có thể mua thêm tín dụng từ phần
@@ -578,90 +549,93 @@ vi:
       page_processing_error: 'Lỗi khi xử lý các trang %{start}-%{end}: %{error}'
     custom_tool:
       slug_generation_failed: Không thể tạo slug duy nhất sau 5 lần thử
-  public_portal:
-    search:
-      search_placeholder: Tìm bài viết theo tiêu đề hoặc nội dung...
-      empty_placeholder: Không tìm thấy kết quả.
-      loading_placeholder: Đang tìm kiếm...
-      resscenario_templates:
   case_studies:
     ecommerce_pack:
-      name: "Bộ Kịch bản Thương mại điện tử & Bán lẻ"
-      description: "Bộ kịch bản này thiết kế cho các gian hàng online, chốt sale trực tiếp. Các kịch bản con tạo thành phễu bán hàng hoàn chỉnh từ lúc hỏi thăm sản phẩm đến chăm sóc sau mua."
+      name: Bộ Kịch bản Thương mại điện tử & Bán lẻ
+      description: Bộ kịch bản này thiết kế cho các gian hàng online, chốt sale trực
+        tiếp. Các kịch bản con tạo thành phễu bán hàng hoàn chỉnh từ lúc hỏi thăm
+        sản phẩm đến chăm sóc sau mua.
       scenarios:
         ecom_product_advisory:
-          title: "Tư vấn Sản phẩm"
-          description: "Mục đích: Xử lý khi khách hỏi 'Mình muốn mua áo/váy...', 'Có loại nào cho da mụn không?'"
+          title: Tư vấn Sản phẩm
+          description: 'Mục đích: Xử lý khi khách hỏi ''Mình muốn mua áo/váy...'',
+            ''Có loại nào cho da mụn không?'''
           instruction: |-
             Bước 1: Hỏi nhu cầu cụ thể (loại sản phẩm, ngân sách, sở thích).
             Bước 2: Dùng tool [suggest_products](tool://suggest_products) để gợi ý sản phẩm phù hợp, hoặc [get_product_details](tool://get_product_details) để lấy chi tiết 1 sản phẩm cụ thể.
             Bước 3: Tư vấn ưu nhược điểm, so sánh và mời khách chốt.
         ecom_order_creation:
-          title: "Lên đơn nháp / Tạo đơn hàng"
-          description: "Mục đích: Khách đã ưng ý và muốn đặt hàng."
+          title: Lên đơn nháp / Tạo đơn hàng
+          description: 'Mục đích: Khách đã ưng ý và muốn đặt hàng.'
           instruction: |-
             Bước 1: Thu thập thông tin giao hàng (Tên, SĐT, Địa chỉ).
             Bước 2: Xác nhận lại giỏ hàng (Số lượng, biến thể sản phẩm).
             Bước 3: Dùng tool [create_order_draft](tool://create_order_draft) để tạo đơn nháp trên hệ thống.
             Bước 4: Gửi mã đơn hoặc link thanh toán cho khách.
         ecom_order_tracking:
-          title: "Tra cứu & Kiểm tra đơn hàng"
-          description: "Mục đích: Khách hỏi 'Đơn hàng của mình bao giờ tới?', 'Check giúp mình đơn mã #1234'."
+          title: Tra cứu & Kiểm tra đơn hàng
+          description: 'Mục đích: Khách hỏi ''Đơn hàng của mình bao giờ tới?'', ''Check
+            giúp mình đơn mã #1234''.'
           instruction: |-
             Bước 1: Hỏi khách mã đơn hàng hoặc SĐT đặt hàng.
             Bước 2: Dùng tool [search_orders](tool://search_orders) để tìm kiếm đơn, sau đó dùng [get_order_detail](tool://get_order_detail) để lấy tình trạng đơn (Đang giao, đã lấy hàng...).
             Bước 3: Phản hồi trạng thái thân thiện, cập nhật ngày giao dự kiến.
         ecom_returns_escalation:
-          title: "Đổi trả & Xử lý khiếu nại"
-          description: "Mục đích: Khách báo lỗi sản phẩm, muốn trả hàng hoặc không hài lòng."
+          title: Đổi trả & Xử lý khiếu nại
+          description: 'Mục đích: Khách báo lỗi sản phẩm, muốn trả hàng hoặc không
+            hài lòng.'
           instruction: |-
             Bước 1: Xin lỗi và đồng cảm với khách hàng. Xin hình ảnh/video tình trạng sản phẩm.
             Bước 2: Nếu phức tạp, dùng tool [handoff](tool://handoff) để chuyển hội thoại trực tiếp cho nhân viên chăm sóc khách hàng (người thật) xử lý tiếp.
     service_booking_pack:
-      name: "Bộ Kịch bản Dịch vụ & Đặt lịch hẹn"
-      description: "Bộ này thiết kế cho mô hình dịch vụ (Spa, Nha khoa, Thẩm mỹ viện, Cố vấn chuyên gia). Tập trung vào chuyển đổi ra cuộc hẹn."
+      name: Bộ Kịch bản Dịch vụ & Đặt lịch hẹn
+      description: Bộ này thiết kế cho mô hình dịch vụ (Spa, Nha khoa, Thẩm mỹ viện,
+        Cố vấn chuyên gia). Tập trung vào chuyển đổi ra cuộc hẹn.
       scenarios:
         service_faq:
-          title: "Tư vấn Dịch vụ & Hỏi đáp chung"
-          description: "Mục đích: Khách hỏi về bảng giá, liệu trình, chính sách."
+          title: Tư vấn Dịch vụ & Hỏi đáp chung
+          description: 'Mục đích: Khách hỏi về bảng giá, liệu trình, chính sách.'
           instruction: |-
             Bước 1: Tìm hiểu vấn đề của khách (VD: Da mụn, muốn tư vấn nâng mũi).
             Bước 2: Dùng tool [faq_lookup](tool://faq_lookup) để tra cứu liệu trình chuẩn, mức giá từ thư viện Knowledge Base.
             Bước 3: Trả lời súc tích và khéo léo dẫn dắt khách sang việc đặt lịch soi khám.
         service_booking:
-          title: "Kiểm tra lịch trống & Đặt lịch"
-          description: "Mục đích: Khách muốn hẹn tới làm dịch vụ."
+          title: Kiểm tra lịch trống & Đặt lịch
+          description: 'Mục đích: Khách muốn hẹn tới làm dịch vụ.'
           instruction: |-
             Bước 1: Hỏi khách muốn tới cơ sở nào, ngày giờ nào.
             Bước 2: Dùng tool [check_availability](tool://check_availability) để xem giờ đó còn trống bác sĩ/kỹ thuật viên không.
             Bước 3: Nếu còn, xin SĐT và dùng tool [book_meeting](tool://book_meeting) để chốt lịch vào hệ thống.
         service_reschedule_cancel:
-          title: "Tra cứu, Dời & Hủy lịch"
-          description: "Mục đích: Khách bận đột xuất muốn đổi giờ."
+          title: Tra cứu, Dời & Hủy lịch
+          description: 'Mục đích: Khách bận đột xuất muốn đổi giờ.'
           instruction: |-
             Bước 1: Xin SĐT để dùng tool [search_meetings](tool://search_meetings) tra cứu lịch hẹn hiện tại của khách.
             Bước 2: Hỏi khách muốn dời sang khi nào, hoặc muốn hủy.
             Bước 3: Dùng tool [cancel_meeting](tool://cancel_meeting) để hủy lịch cũ và (nếu dời) dùng lại [book_meeting](tool://book_meeting) để tạo lịch mới. Thông báo thành công cho khách.
     edtech_pack:
-      name: "Bộ Kịch bản Giáo dục & Tư vấn Khóa học"
-      description: "Dành cho Trung tâm Tiếng Anh, nền tảng đào tạo online. Quá trình tư vấn cần thu thập dữ liệu (Lead) kỹ lưỡng hơn."
+      name: Bộ Kịch bản Giáo dục & Tư vấn Khóa học
+      description: Dành cho Trung tâm Tiếng Anh, nền tảng đào tạo online. Quá trình
+        tư vấn cần thu thập dữ liệu (Lead) kỹ lưỡng hơn.
       scenarios:
         edtech_lead_capture:
-          title: "Thu thập Lead & Tư vấn Lộ trình"
-          description: "Mục đích: Hỏi thăm trình độ, giới thiệu khóa học, lưu thông tin khách tiềm năng."
+          title: Thu thập Lead & Tư vấn Lộ trình
+          description: 'Mục đích: Hỏi thăm trình độ, giới thiệu khóa học, lưu thông
+            tin khách tiềm năng.'
           instruction: |-
             Bước 1: Khảo sát nhanh: Mục tiêu học (IELTS, Giao tiếp), độ tuổi, trình độ hiện tại.
             Bước 2: Dùng [faq_lookup](tool://faq_lookup) tra cứu thông tin khóa học phù hợp.
             Bước 3: Xin tên, SĐT để gửi thông tin học phí, dùng tool [update_contact](tool://update_contact) để cập nhật SĐT, và [add_label_to_conversation](tool://add_label_to_conversation) để gắn tag phân loại khách.
         edtech_schedule_lookup:
-          title: "Tra cứu thông tin học viên & Lịch học"
-          description: "Mục đích: Học viên cũ hỏi lịch học tuần này, xin đổi lớp."
+          title: Tra cứu thông tin học viên & Lịch học
+          description: 'Mục đích: Học viên cũ hỏi lịch học tuần này, xin đổi lớp.'
           instruction: |-
             Bước 1: Xin SĐT và dùng [get_contact_detail](tool://get_contact_detail) để định danh học viên.
             Bước 2: Báo lịch học. Nếu cần hỗ trợ đổi lớp hoặc xin nghỉ, dùng [add_private_note](tool://add_private_note) để ghi chú lại yêu cầu cho Giáo vụ hoặc dùng [execute_macro](tool://execute_macro) (nếu có macro xử lý tự động).
         edtech_tech_support:
-          title: "Hỗ trợ kỹ thuật nền tảng học"
-          description: "Mục đích: Học viên không đăng nhập được app, video lỗi (đối với học online)."
+          title: Hỗ trợ kỹ thuật nền tảng học
+          description: 'Mục đích: Học viên không đăng nhập được app, video lỗi (đối
+            với học online).'
           instruction: |-
             Bước 1: Hỏi biểu hiện lỗi, xin ảnh chụp màn hình.
             Bước 2: Dùng tool [faq_lookup](tool://faq_lookup) tra cứu cách fix lỗi (VD: Quên mật khẩu, đổi thiết bị).
@@ -669,13 +643,13 @@ vi:
   zalo_personal:
     group_events:
       user_info: " (User ID: %{members})"
-      member_joined: "Sự kiện nhóm: Thành viên đã tham gia nhóm%{user_info}"
-      member_left: "Sự kiện nhóm: Thành viên đã rời nhóm%{user_info}"
-      member_removed: "Sự kiện nhóm: Thành viên bị xóa/chặn khỏi nhóm%{user_info}"
-      admin_added: "Sự kiện nhóm: Thêm quản trị viên mới%{user_info}"
-      admin_removed: "Sự kiện nhóm: Xóa quyền quản trị viên%{user_info}"
-      group_updated: "Sự kiện nhóm: Nhóm đã được cập nhật thông tin/cài đặt"
-      pin_updated: "Sự kiện nhóm: Cập nhật ghim tin nhắn"
-      board_updated: "Sự kiện nhóm: Cập nhật thông báo/bình chọn nhóm"
-      remind_updated: "Sự kiện nhóm: Cập nhật nhắc hẹn"
-      default: "Sự kiện nhóm: %{event}"
+      member_joined: 'Sự kiện nhóm: Thành viên đã tham gia nhóm%{user_info}'
+      member_left: 'Sự kiện nhóm: Thành viên đã rời nhóm%{user_info}'
+      member_removed: 'Sự kiện nhóm: Thành viên bị xóa/chặn khỏi nhóm%{user_info}'
+      admin_added: 'Sự kiện nhóm: Thêm quản trị viên mới%{user_info}'
+      admin_removed: 'Sự kiện nhóm: Xóa quyền quản trị viên%{user_info}'
+      group_updated: 'Sự kiện nhóm: Nhóm đã được cập nhật thông tin/cài đặt'
+      pin_updated: 'Sự kiện nhóm: Cập nhật ghim tin nhắn'
+      board_updated: 'Sự kiện nhóm: Cập nhật thông báo/bình chọn nhóm'
+      remind_updated: 'Sự kiện nhóm: Cập nhật nhắc hẹn'
+      default: 'Sự kiện nhóm: %{event}'

@@ -5,7 +5,6 @@ const {
   API_CHANNEL_NAME: apiChannelName,
   API_CHANNEL_THUMBNAIL: apiChannelThumbnail,
   APP_VERSION: appVersion,
-  AZURE_APP_ID: azureAppId,
   BRAND_NAME: brandName,
   CHATWOOT_INBOX_TOKEN: chatwootInboxToken,
   CREATE_NEW_ACCOUNT_FROM_DASHBOARD: createNewAccountFromDashboard,
@@ -32,8 +31,6 @@ const {
   ENABLE_CHANNEL_WHATSAPP: enableChannelWhatsapp,
   ENABLE_CHANNEL_INSTAGRAM: enableChannelInstagram,
   ENABLE_CHANNEL_TELEGRAM: enableChannelTelegram,
-  ENABLE_CHANNEL_LINE: enableChannelLine,
-  ENABLE_CHANNEL_TWITTER: enableChannelTwitter,
   ENABLE_CHANNEL_WEBSITE: enableChannelWebsite,
 } = window.globalConfig || {};
 
@@ -41,7 +38,6 @@ const state = {
   apiChannelName,
   apiChannelThumbnail,
   appVersion,
-  azureAppId,
   brandName,
   chatwootInboxToken,
   deploymentEnv,
@@ -68,8 +64,6 @@ const state = {
   enableChannelWhatsapp: parseBoolean(enableChannelWhatsapp ?? true),
   enableChannelInstagram: parseBoolean(enableChannelInstagram ?? true),
   enableChannelTelegram: parseBoolean(enableChannelTelegram ?? true),
-  enableChannelLine: parseBoolean(enableChannelLine ?? true),
-  enableChannelTwitter: parseBoolean(enableChannelTwitter ?? true),
   enableChannelWebsite: parseBoolean(enableChannelWebsite ?? true),
 };
 

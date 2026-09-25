@@ -72,16 +72,6 @@ class Api::V1::Accounts::ConversationsController < Api::V1::Accounts::BaseContro
     head :ok
   end
 
-  def transcript
-    render json: { error: 'email param missing' }, status: :unprocessable_entity and return if params[:email].blank?
-    return render_payment_required('Email transcript is not available on your plan') unless @conversation.account.email_transcript_enabled?
-    return head :too_many_requests unless @conversation.account.within_email_rate_limit?
-
-    ConversationReplyMailer.with(account: @conversation.account).conversation_transcript(@conversation, params[:email])&.deliver_later
-    @conversation.account.increment_email_sent_count
-    head :ok
-  end
-
   def toggle_status
     # FIXME: move this logic into a service object
     if pending_to_open_by_bot?

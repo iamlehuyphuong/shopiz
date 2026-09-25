@@ -11,7 +11,7 @@ class Channels::TiktokShop::TemplatesSyncJob < ApplicationJob
       template_id = template_data['template_id'] || template_data['id']
       template_name = template_data['name'] || "TiktokShop Template #{template_id}"
       status_str = template_data['status']&.downcase || 'active'
-      
+
       # Determine MessageTemplate status
       status = if status_str == 'approved' || status_str == 'active'
                  :approved
@@ -32,7 +32,7 @@ class Channels::TiktokShop::TemplatesSyncJob < ApplicationJob
         platform_template_id: template_id,
         content: template_data
       )
-      
+
       message_template.save!
     end
   end

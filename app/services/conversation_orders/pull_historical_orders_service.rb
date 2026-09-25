@@ -92,7 +92,8 @@ class ConversationOrders::PullHistoricalOrdersService
       name = "#{raw_order.dig('billing', 'first_name')} #{raw_order.dig('billing', 'last_name')}".strip
       if name.present?
         contact = account.contacts.find_or_create_by!(name: name, email: email, phone_number: normalized_phone, account_id: account.id)
-        address = [raw_order.dig('billing', 'address_1'), raw_order.dig('billing', 'city'), raw_order.dig('billing', 'country')].compact_blank.join(', ')
+        address = [raw_order.dig('billing', 'address_1'), raw_order.dig('billing', 'city'),
+                   raw_order.dig('billing', 'country')].compact_blank.join(', ')
         contact.update(location: address) if address.present?
         return contact
       end
@@ -101,7 +102,7 @@ class ConversationOrders::PullHistoricalOrdersService
     nil
   end
 
-  def upsert_items(order, proxy, platform, raw_order)
+  def upsert_items(order, proxy, _platform, raw_order)
     items_data = proxy.extract_line_items(raw_order)
     return if items_data.blank?
 
@@ -155,7 +156,7 @@ class ConversationOrders::PullHistoricalOrdersService
       (raw_order['orderDetails'] || []).each do |detail|
         product_name = detail['productName']
         item = existing_items.delete(product_name) || order.items.build(product_name: product_name)
-        
+
         product_code = detail['productCode']
         if product_code.present?
           product = account.products.find_by(sku: product_code)
@@ -183,7 +184,7 @@ class ConversationOrders::PullHistoricalOrdersService
       (raw_order['line_items'] || []).each do |li|
         product_name = li['name']
         item = existing_items.delete(product_name) || order.items.build(product_name: product_name)
-        
+
         sku = li['sku']
         if sku.present?
           product = account.products.find_by(sku: sku)

@@ -13,8 +13,8 @@ module Avatarable
   def avatar_url
     return url_for(avatar.representation(resize_to_fill: [250, nil])) if avatar.attached? && avatar.representable?
 
-    if respond_to?(:additional_attributes) && additional_attributes.present?
-      return additional_attributes['avatar_url'] if additional_attributes['avatar_url'].present?
+    if respond_to?(:additional_attributes) && additional_attributes.present? && additional_attributes['avatar_url'].present?
+      return additional_attributes['avatar_url']
     end
 
     ''

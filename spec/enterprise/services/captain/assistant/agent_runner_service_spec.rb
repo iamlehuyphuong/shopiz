@@ -13,7 +13,7 @@ RSpec.describe Captain::Assistant::AgentRunnerService do
   let(:mock_runner) { instance_double(Agents::AgentRunner) }
   let(:mock_agent) { instance_double(Agents::Agent) }
   let(:mock_scenario_agent) { instance_double(Agents::Agent) }
-  let(:mock_result) { instance_double(Agents::RunResult, output: { 'response' => 'Test response' }, context: nil) }
+  let(:mock_result) { instance_double(Agents::RunResult, output: { 'response' => 'Test response' }, context: nil, error: nil) }
 
   let(:message_history) do
     [
@@ -24,6 +24,10 @@ RSpec.describe Captain::Assistant::AgentRunnerService do
   end
 
   before do
+    allow_any_instance_of(described_class).to receive(:responses_available?).and_return(true)
+    account.update!(limits: { captain_responses: 100 })
+    allow(account).to receive(:feature_enabled?).and_call_original
+    allow(account).to receive(:feature_enabled?).with('captain_integration').and_return(true)
     allow(assistant).to receive(:agent).and_return(mock_agent)
     scenarios_relation = instance_double(Captain::Scenario)
     allow(scenarios_relation).to receive(:enabled).and_return([scenario])
@@ -31,6 +35,7 @@ RSpec.describe Captain::Assistant::AgentRunnerService do
     allow(scenario).to receive(:agent).and_return(mock_scenario_agent)
     allow(Agents::Runner).to receive(:with_agents).and_return(mock_runner)
     allow(mock_runner).to receive(:run).and_return(mock_result)
+    allow(mock_runner).to receive(:on_tool_start).and_return(mock_runner)
     allow(mock_runner).to receive(:on_tool_complete).and_return(mock_runner)
     allow(mock_runner).to receive(:on_run_complete).and_return(mock_runner)
     allow(mock_agent).to receive(:register_handoffs)
@@ -79,7 +84,7 @@ RSpec.describe Captain::Assistant::AgentRunnerService do
       expected_context = hash_including(
         session_id: "#{account.id}_#{conversation.display_id}",
         conversation_history: [
-          { role: :user, content: 'Hello there', agent_name: nil },
+          { role: :user, content: 'Hello there' },
           { role: :assistant, content: 'Hi! How can I help you?', agent_name: 'Assistant' }
         ],
         state: hash_including(
@@ -118,7 +123,7 @@ RSpec.describe Captain::Assistant::AgentRunnerService do
           expect(input).to be_a(RubyLLM::Content)
           expect(input.text).to eq('What does this error mean?')
           expect(input.attachments.first.source.to_s).to eq('https://example.com/error.png')
-          expect(context[:conversation_history]).to eq([{ role: :assistant, content: 'Please share a screenshot', agent_name: nil }])
+          expect(context[:conversation_history]).to eq([{ role: :assistant, content: 'Please share a screenshot' }])
           expect(max_turns).to eq(100)
         end
 
@@ -155,8 +160,8 @@ RSpec.describe Captain::Assistant::AgentRunnerService do
 
       it 'stores multimodal trace payloads in runner context' do
         expect(mock_runner).to receive(:run) do |_input, context:, max_turns:|
-          expect(context[:captain_v2_trace_input]).to include('image_url')
-          expect(context[:captain_v2_trace_current_input]).to include('image_url')
+          expect(context[:captain_trace_input]).to include('image_url')
+          expect(context[:captain_trace_current_input]).to include('image_url')
           expect(max_turns).to eq(100)
         end
 
@@ -186,7 +191,7 @@ RSpec.describe Captain::Assistant::AgentRunnerService do
     end
 
     context 'when agent result is a string' do
-      let(:mock_result) { instance_double(Agents::RunResult, output: 'Simple string response', context: nil) }
+      let(:mock_result) { instance_double(Agents::RunResult, output: 'Simple string response', context: nil, error: nil) }
 
       it 'formats string response correctly' do
         result = service.generate_response(message_history: message_history)
@@ -204,8 +209,8 @@ RSpec.describe Captain::Assistant::AgentRunnerService do
 
       before do
         allow(mock_runner).to receive(:run).and_raise(error)
-    allow(mock_runner).to receive(:on_tool_complete).and_return(mock_runner)
-    allow(mock_runner).to receive(:on_run_complete).and_return(mock_runner)
+        allow(mock_runner).to receive(:on_tool_complete).and_return(mock_runner)
+        allow(mock_runner).to receive(:on_run_complete).and_return(mock_runner)
         allow(ChatwootExceptionTracker).to receive(:new).and_return(
           instance_double(ChatwootExceptionTracker, capture_exception: true)
         )
@@ -351,7 +356,7 @@ RSpec.describe Captain::Assistant::AgentRunnerService do
           assistant_id: assistant.id,
           conversation: { id: conversation.id, display_id: conversation.display_id }
         },
-        captain_v2_trace_input: '[{"role":"user","content":[{"type":"image_url","image_url":{"url":"https://example.com/image.jpg"}}]}]'
+        captain_trace_input: '[{"role":"user","content":[{"type":"image_url","image_url":{"url":"https://example.com/image.jpg"}}]}]'
       }
       context_wrapper = Struct.new(:context).new(context)
 
@@ -466,6 +471,9 @@ RSpec.describe Captain::Assistant::AgentRunnerService do
       context_wrapper = Struct.new(:context).new({ __otel_tracing: { root_span: root_span } })
 
       allow(ChatwootApp).to receive(:otel_enabled?).and_return(true)
+      allow(runner).to receive(:on_tool_start) do
+        runner
+      end
       allow(runner).to receive(:on_tool_complete) do |&block|
         tool_complete_callback = block
         runner
@@ -494,6 +502,9 @@ RSpec.describe Captain::Assistant::AgentRunnerService do
       context_wrapper = Struct.new(:context).new({ __otel_tracing: { root_span: root_span } })
 
       allow(ChatwootApp).to receive(:otel_enabled?).and_return(true)
+      allow(runner).to receive(:on_tool_start) do
+        runner
+      end
       allow(runner).to receive(:on_tool_complete).and_return(runner)
       allow(runner).to receive(:on_run_complete) do |&block|
         run_complete_callback = block

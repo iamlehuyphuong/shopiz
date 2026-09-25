@@ -28,7 +28,7 @@ module Enterprise::Account::PlanUsageAndLimits # rubocop:disable Metrics/ModuleL
   def captain_response_summary
     monthly_limit = limits['captain_responses'].to_i
     credit_limit = limits['captain_responses_credit'].to_i
-    
+
     monthly_consumed = custom_attributes[CAPTAIN_RESPONSES_USAGE].to_i
     credit_consumed = custom_attributes[CAPTAIN_RESPONSES_CREDIT_USAGE].to_i
 
@@ -62,7 +62,7 @@ module Enterprise::Account::PlanUsageAndLimits # rubocop:disable Metrics/ModuleL
 
   def increment_response_usage
     summary = captain_response_summary
-    
+
     if summary[:monthly_available] > 0
       current_usage = custom_attributes[CAPTAIN_RESPONSES_USAGE].to_i || 0
       custom_attributes[CAPTAIN_RESPONSES_USAGE] = current_usage + 1
@@ -82,13 +82,6 @@ module Enterprise::Account::PlanUsageAndLimits # rubocop:disable Metrics/ModuleL
     # this will ensure that the document count is always accurate
     custom_attributes[CAPTAIN_DOCUMENTS_USAGE] = captain_documents.count
     save
-  end
-
-  def email_transcript_enabled?
-    default_plan = InstallationConfig.find_by(name: 'CHATWOOT_CLOUD_PLANS')&.value&.first
-    return true if default_plan.blank?
-
-    plan_name.present? && plan_name != default_plan['name']
   end
 
   def email_rate_limit

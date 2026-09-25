@@ -21,6 +21,7 @@ import {
   hasPermissions,
   getUserPermissions,
 } from 'dashboard/helper/permissionsHelper';
+import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 
 const props = defineProps({
   isMobileSidebarOpen: {
@@ -156,6 +157,43 @@ const contactCustomViews = useMapGetter('customViews/getContactCustomViews');
 const conversationCustomViews = useMapGetter(
   'customViews/getConversationCustomViews'
 );
+const isFeatureEnabledonAccount = useMapGetter(
+  'accounts/isFeatureEnabledonAccount'
+);
+const isTeamManagementEnabled = computed(() =>
+  isFeatureEnabledonAccount.value(
+    route.params.accountId,
+    FEATURE_FLAGS.TEAM_MANAGEMENT
+  )
+);
+const isAgentBotsEnabled = computed(() =>
+  isFeatureEnabledonAccount.value(
+    route.params.accountId,
+    FEATURE_FLAGS.AGENT_BOTS
+  )
+);
+const isSlaEnabled = computed(() =>
+  isFeatureEnabledonAccount.value(route.params.accountId, FEATURE_FLAGS.SLA)
+);
+const isCustomRolesEnabled = computed(() =>
+  isFeatureEnabledonAccount.value(
+    route.params.accountId,
+    FEATURE_FLAGS.CUSTOM_ROLES
+  )
+);
+const isConversationWorkflowEnabled = computed(() =>
+  isFeatureEnabledonAccount.value(
+    route.params.accountId,
+    FEATURE_FLAGS.CONVERSATION_REQUIRED_ATTRIBUTES
+  )
+);
+
+const isTemplateBuilderEnabled = computed(() =>
+  isFeatureEnabledonAccount.value(
+    route.params.accountId,
+    FEATURE_FLAGS.TEMPLATE_BUILDER
+  )
+);
 
 const sortedInboxes = computed(() =>
   inboxes.value.slice().sort((a, b) => a.name.localeCompare(b.name))
@@ -182,13 +220,17 @@ const newReportRoutes = () => [
     to: accountScopedRoute('inbox_reports_index'),
     activeOn: ['inbox_reports_show'],
   },
-  {
-    name: 'Reports Team',
-    label: t('SIDEBAR.REPORTS_TEAM'),
-    icon: 'i-lucide-users',
-    to: accountScopedRoute('team_reports_index'),
-    activeOn: ['team_reports_show'],
-  },
+  ...(isTeamManagementEnabled.value
+    ? [
+        {
+          name: 'Reports Team',
+          label: t('SIDEBAR.REPORTS_TEAM'),
+          icon: 'i-lucide-users',
+          to: accountScopedRoute('team_reports_index'),
+          activeOn: ['team_reports_show'],
+        },
+      ]
+    : []),
 ];
 
 const globalConfig = window.globalConfig || {};
@@ -200,20 +242,20 @@ const reportRoutes = computed(() => newReportRoutes());
 const menuItems = computed(() => {
   const items = [
     {
-      name: 'Inbox',
-      label: t('SIDEBAR.INBOX'),
-      icon: 'i-lucide-inbox',
-      to: accountScopedRoute('inbox_view'),
-      activeOn: ['inbox_view', 'inbox_view_conversation'],
-      getterKeys: {
-        count: 'notifications/getUnreadCount',
-      },
-    },
-    {
       name: 'Conversation',
       label: t('SIDEBAR.CONVERSATIONS'),
       icon: 'i-lucide-message-circle',
       children: [
+        {
+          name: 'Inbox',
+          label: t('SIDEBAR.INBOX'),
+          icon: 'i-lucide-inbox',
+          to: accountScopedRoute('inbox_view'),
+          activeOn: ['inbox_view', 'inbox_view_conversation'],
+          getterKeys: {
+            count: 'notifications/getUnreadCount',
+          },
+        },
         {
           name: 'All',
           label: t('SIDEBAR.ALL_CONVERSATIONS'),
@@ -254,18 +296,24 @@ const menuItems = computed(() => {
             to: accountScopedRoute('folder_conversations', { id: view.id }),
           })),
         },
-        {
-          name: 'Teams',
-          label: t('SIDEBAR.TEAMS'),
-          icon: 'i-lucide-users',
-          activeOn: ['conversations_through_team'],
-          children: teams.value.map(team => ({
-            name: `${team.name}-${team.id}`,
-            label: team.name,
-            icon: 'i-lucide-users',
-            to: accountScopedRoute('team_conversations', { teamId: team.id }),
-          })),
-        },
+        ...(isTeamManagementEnabled.value
+          ? [
+              {
+                name: 'Teams',
+                label: t('SIDEBAR.TEAMS'),
+                icon: 'i-lucide-users',
+                activeOn: ['conversations_through_team'],
+                children: teams.value.map(team => ({
+                  name: `${team.name}-${team.id}`,
+                  label: team.name,
+                  icon: 'i-lucide-users',
+                  to: accountScopedRoute('team_conversations', {
+                    teamId: team.id,
+                  }),
+                })),
+              },
+            ]
+          : []),
         {
           name: 'Channels',
           label: t('SIDEBAR.CHANNELS'),
@@ -464,18 +512,17 @@ const menuItems = computed(() => {
           to: accountScopedRoute('conversation_reports'),
         },
         ...reportRoutes.value,
-        {
-          name: 'Reports CSAT',
-          label: t('SIDEBAR.CSAT'),
-          icon: 'i-lucide-smile',
-          to: accountScopedRoute('csat_reports'),
-        },
-        {
-          name: 'Reports SLA',
-          label: t('SIDEBAR.REPORTS_SLA'),
-          icon: 'i-lucide-timer',
-          to: accountScopedRoute('sla_reports'),
-        },
+
+        ...(isSlaEnabled.value
+          ? [
+              {
+                name: 'Reports SLA',
+                label: t('SIDEBAR.REPORTS_SLA'),
+                icon: 'i-lucide-timer',
+                to: accountScopedRoute('sla_reports'),
+              },
+            ]
+          : []),
         {
           name: 'Reports Bot',
           label: t('SIDEBAR.REPORTS_BOT'),
@@ -546,16 +593,6 @@ const menuItems = computed(() => {
                 label: 'Telegram',
                 icon: 'i-woot-telegram',
                 to: accountScopedRoute('campaigns_telegram_index'),
-              },
-            ]
-          : []),
-        ...(isChannelActive('CHANNEL_STATUS_LINE')
-          ? [
-              {
-                name: 'LINE',
-                label: 'LINE',
-                icon: 'i-woot-line',
-                to: accountScopedRoute('campaigns_line_index'),
               },
             ]
           : []),
@@ -646,91 +683,7 @@ const menuItems = computed(() => {
         },
       ],
     },
-    {
-      name: 'Utilities',
-      label: t('SIDEBAR.UTILITIES'),
-      icon: 'i-lucide-pencil-ruler',
-      activeOn: ['utilities_conversation_summary'],
-      to: accountScopedRoute('utilities_conversation_summary'),
-      children: [
-        {
-          name: 'AI Summary',
-          label: t('SIDEBAR.AI_SUMMARY'),
-          icon: 'i-woot-summary',
-          activeOn: ['utilities_conversation_summary'],
-          to: accountScopedRoute('utilities_conversation_summary'),
-        },
-      ],
-    },
-    /*
-    {
-      name: 'Help Center',
-      label: t('SIDEBAR.HELP_CENTER.TITLE'),
-      icon: 'i-lucide-book',
-      to: accountScopedRoute('portals_index', {
-        navigationPath: 'portals_articles_index',
-      }),
-      activeOn: [
-        'portals_index',
-        'portals_articles_index',
-        'portals_articles_new',
-        'portals_articles_edit',
-        'portals_landing_pages_index',
-        'portals_categories_index',
-        'portals_categories_articles_index',
-        'portals_categories_articles_edit',
-        'portals_locales_index',
-        'portals_settings_index',
-        'portals_new',
-      ],
-      children: [
-        {
-          name: 'Articles',
-          label: t('SIDEBAR.HELP_CENTER.ARTICLES'),
-          icon: 'i-lucide-file-text',
-          activeOn: [
-            'portals_articles_index',
-            'portals_articles_new',
-            'portals_articles_edit',
-          ],
-          to: accountScopedRoute('portals_index', {
-            navigationPath: 'portals_articles_index',
-          }),
-        },
-        {
-          name: 'Categories',
-          label: t('SIDEBAR.HELP_CENTER.CATEGORIES'),
-          icon: 'i-lucide-folder',
-          activeOn: [
-            'portals_categories_index',
-            'portals_categories_articles_index',
-            'portals_categories_articles_edit',
-          ],
-          to: accountScopedRoute('portals_index', {
-            navigationPath: 'portals_categories_index',
-          }),
-        },
-        {
-          name: 'Locales',
-          label: t('SIDEBAR.HELP_CENTER.LOCALES'),
-          icon: 'i-lucide-languages',
-          activeOn: ['portals_locales_index'],
-          to: accountScopedRoute('portals_index', {
-            navigationPath: 'portals_locales_index',
-          }),
-        },
-        {
-          name: 'Settings',
-          label: t('SIDEBAR.HELP_CENTER.SETTINGS'),
-          icon: 'i-lucide-settings-2',
-          activeOn: ['portals_settings_index'],
-          to: accountScopedRoute('portals_index', {
-            navigationPath: 'portals_settings_index',
-          }),
-        },
-      ],
-    },
-    */
+
     {
       name: 'Settings',
       label: t('SIDEBAR.SETTINGS'),
@@ -748,22 +701,26 @@ const menuItems = computed(() => {
           icon: 'i-lucide-square-user',
           to: accountScopedRoute('agent_list'),
         },
-        {
-          name: 'Settings Teams',
-          label: t('SIDEBAR.TEAMS'),
-          icon: 'i-lucide-users',
-          activeOn: [
-            'settings_teams_list',
-            'settings_teams_new',
-            'settings_teams_finish',
-            'settings_teams_add_agents',
-            'settings_teams_show',
-            'settings_teams_edit',
-            'settings_teams_edit_members',
-            'settings_teams_edit_finish',
-          ],
-          to: accountScopedRoute('settings_teams_list'),
-        },
+        ...(isTeamManagementEnabled.value
+          ? [
+              {
+                name: 'Settings Teams',
+                label: t('SIDEBAR.TEAMS'),
+                icon: 'i-lucide-users',
+                activeOn: [
+                  'settings_teams_list',
+                  'settings_teams_new',
+                  'settings_teams_finish',
+                  'settings_teams_add_agents',
+                  'settings_teams_show',
+                  'settings_teams_edit',
+                  'settings_teams_edit_members',
+                  'settings_teams_edit_finish',
+                ],
+                to: accountScopedRoute('settings_teams_list'),
+              },
+            ]
+          : []),
         {
           name: 'Settings Agent Assignment',
           label: t('SIDEBAR.AGENT_ASSIGNMENT'),
@@ -811,12 +768,16 @@ const menuItems = computed(() => {
           icon: 'i-lucide-repeat',
           to: accountScopedRoute('automation_list'),
         },
-        {
-          name: 'Settings Agent Bots',
-          label: t('SIDEBAR.AGENT_BOTS'),
-          icon: 'i-lucide-bot',
-          to: accountScopedRoute('agent_bots'),
-        },
+        ...(isAgentBotsEnabled.value
+          ? [
+              {
+                name: 'Settings Agent Bots',
+                label: t('SIDEBAR.AGENT_BOTS'),
+                icon: 'i-lucide-bot',
+                to: accountScopedRoute('agent_bots'),
+              },
+            ]
+          : []),
         {
           name: 'Settings Macros',
           label: t('SIDEBAR.MACROS'),
@@ -829,12 +790,16 @@ const menuItems = computed(() => {
           icon: 'i-lucide-message-square-quote',
           to: accountScopedRoute('canned_list'),
         },
-        {
-          name: 'Settings Templates',
-          label: t('SIDEBAR.TEMPLATES'),
-          icon: 'i-lucide-file-text',
-          to: accountScopedRoute('templates_list'),
-        },
+        ...(isTemplateBuilderEnabled.value
+          ? [
+              {
+                name: 'Settings Templates',
+                label: t('SIDEBAR.TEMPLATES'),
+                icon: 'i-lucide-file-text',
+                to: accountScopedRoute('templates_list'),
+              },
+            ]
+          : []),
         {
           name: 'Settings Integrations',
           label: t('SIDEBAR.INTEGRATIONS'),
@@ -852,7 +817,6 @@ const menuItems = computed(() => {
             'settings_integrations_sapo',
             'settings_integrations_nhanhvn',
             'settings_integrations_webhook',
-            'settings_integrations_dashboard_apps',
           ],
           to: accountScopedRoute('settings_applications'),
         },
@@ -862,31 +826,37 @@ const menuItems = computed(() => {
           icon: 'i-lucide-clipboard-list',
           to: accountScopedRoute('auditlogs_list'),
         },
-        {
-          name: 'Settings Security',
-          label: `${t('SECURITY_SETTINGS.TITLE')} (SAML SSO)`,
-          icon: 'i-lucide-shield',
-          activeOn: ['security_settings_index'],
-          to: accountScopedRoute('security_settings_index'),
-        },
-        {
-          name: 'Settings Custom Roles',
-          label: t('SIDEBAR.CUSTOM_ROLES'),
-          icon: 'i-lucide-shield-plus',
-          to: accountScopedRoute('custom_roles_list'),
-        },
-        {
-          name: 'Settings Sla',
-          label: t('SIDEBAR.SLA'),
-          icon: 'i-lucide-clock-alert',
-          to: accountScopedRoute('sla_list'),
-        },
-        {
-          name: 'Conversation Workflow',
-          label: t('SIDEBAR.CONVERSATION_WORKFLOW'),
-          icon: 'i-lucide-workflow',
-          to: accountScopedRoute('conversation_workflow_index'),
-        },
+
+        ...(isCustomRolesEnabled.value
+          ? [
+              {
+                name: 'Settings Custom Roles',
+                label: t('SIDEBAR.CUSTOM_ROLES'),
+                icon: 'i-lucide-shield-plus',
+                to: accountScopedRoute('custom_roles_list'),
+              },
+            ]
+          : []),
+        ...(isSlaEnabled.value
+          ? [
+              {
+                name: 'Settings Sla',
+                label: t('SIDEBAR.SLA'),
+                icon: 'i-lucide-clock-alert',
+                to: accountScopedRoute('sla_list'),
+              },
+            ]
+          : []),
+        ...(isConversationWorkflowEnabled.value
+          ? [
+              {
+                name: 'Conversation Workflow',
+                label: t('SIDEBAR.CONVERSATION_WORKFLOW'),
+                icon: 'i-lucide-workflow',
+                to: accountScopedRoute('conversation_workflow_index'),
+              },
+            ]
+          : []),
         ...(isAdmin.value
           ? [
               {
@@ -904,55 +874,31 @@ const menuItems = computed(() => {
   return filterMenuByPermission(items);
 });
 
-const syncActiveCategory = () => {
-  const currentRouteName = route.name;
-  let matchedCategory = null;
+const matchesCurrentRoute = item =>
+  item.activeOn?.includes(route.name) || item.to?.name === route.name;
 
-  for (const item of menuItems.value) {
-    if (item.activeOn?.includes(route.name) || item.to?.name === route.name) {
-      matchedCategory = item.name;
-      break;
-    }
-    if (item.children) {
-      let childMatch = false;
-      for (const child of item.children) {
-        if (
-          child.activeOn?.includes(route.name) ||
-          child.to?.name === route.name
-        ) {
-          childMatch = true;
-          break;
-        }
-        if (child.children) {
-          for (const grandChild of child.children) {
-            if (
-              grandChild.activeOn?.includes(route.name) ||
-              grandChild.to?.name === route.name
-            ) {
-              childMatch = true;
-              break;
-            }
-          }
-        }
-        if (childMatch) break;
-      }
-      if (childMatch) {
-        matchedCategory = item.name;
-        break;
-      }
-    }
-  }
+const matchedCategory = computed(() => {
+  const matchedItem = menuItems.value.find(
+    item =>
+      matchesCurrentRoute(item) ||
+      item.children?.some(
+        child =>
+          matchesCurrentRoute(child) ||
+          child.children?.some(grandChild => matchesCurrentRoute(grandChild))
+      )
+  );
 
-  if (matchedCategory) {
-    activeCategory.value = matchedCategory;
-  }
-};
+  return matchedItem?.name ?? null;
+});
 
+// The menu is built from async data (inboxes, labels, teams, custom views), so the
+// match has to be re-evaluated whenever the menu itself changes, not only on navigation
 watch(
-  () => route.path,
-  () => {
-    syncActiveCategory();
-  }
+  matchedCategory,
+  name => {
+    if (name) activeCategory.value = name;
+  },
+  { immediate: true }
 );
 
 // Get clientX from mouse or touch event
@@ -1006,7 +952,6 @@ useEventListener(document, 'touchmove', onResizeMove, { passive: false });
 useEventListener(document, 'touchend', onResizeEnd);
 
 onMounted(() => {
-  syncActiveCategory();
   store.dispatch('labels/get');
   store.dispatch('inboxes/get');
   store.dispatch('notifications/unReadCount');
@@ -1022,13 +967,16 @@ const closeMobileSidebar = () => {
 };
 
 // Calculate active menu items
-const activeMainMenuName = computed(() => {
-  return activeCategory.value || menuItems.value[0]?.name;
+// Fall back to the first item, the selected category can disappear from the menu
+// when permissions, feature flags or async data change
+const activeMainMenuItem = computed(() => {
+  return (
+    menuItems.value.find(item => item.name === activeCategory.value) ??
+    menuItems.value[0]
+  );
 });
 
-const activeMainMenuItem = computed(() => {
-  return menuItems.value.find(item => item.name === activeMainMenuName.value);
-});
+const activeMainMenuName = computed(() => activeMainMenuItem.value?.name);
 
 const handleMainMenuClick = item => {
   activeCategory.value = item.name;

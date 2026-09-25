@@ -49,7 +49,7 @@ class Subscriptions::SubscribeService
       status: :invoiced,
       transaction_date_time: Time.current.to_s,
       description: "Subscription to #{@plan.name_en} (#{@plan.duration_days} days)",
-      metadata: { 
+      metadata: {
         type: 'subscription',
         plan_id: @plan.id,
         duration: @plan.duration_days

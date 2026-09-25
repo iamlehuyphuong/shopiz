@@ -110,7 +110,7 @@ export const ONE_OFF_CAMPAIGN_EMPTY_STATE_CONTENT = [
     inbox: {
       id: 6,
       name: 'Shopiz Mobile',
-      channel_type: 'Channel::Sms',
+      channel_type: 'Channel::Whatsapp',
       phone_number: '+29818373149903',
       provider: 'default',
     },
@@ -136,7 +136,7 @@ export const ONE_OFF_CAMPAIGN_EMPTY_STATE_CONTENT = [
     inbox: {
       id: 6,
       name: 'Shopiz Mobile',
-      channel_type: 'Channel::Sms',
+      channel_type: 'Channel::Whatsapp',
       phone_number: '+29818373149903',
       provider: 'default',
     },
@@ -163,7 +163,7 @@ export const ONE_OFF_CAMPAIGN_EMPTY_STATE_CONTENT = [
     inbox: {
       id: 6,
       name: 'Shopiz Mobile',
-      channel_type: 'Channel::Sms',
+      channel_type: 'Channel::Whatsapp',
       phone_number: '+29818373149903',
       provider: 'default',
     },
@@ -191,7 +191,7 @@ export const ONE_OFF_CAMPAIGN_EMPTY_STATE_CONTENT = [
     inbox: {
       id: 6,
       name: 'Shopiz Mobile',
-      channel_type: 'Channel::Sms',
+      channel_type: 'Channel::Whatsapp',
       phone_number: '+29818373149903',
       provider: 'default',
     },
@@ -209,235 +209,5 @@ export const ONE_OFF_CAMPAIGN_EMPTY_STATE_CONTENT = [
     trigger_only_during_business_hours: false,
     created_at: '2024-10-29T16:14:10.374Z',
     updated_at: '2024-10-30T16:15:03.157Z',
-  },
-];
-
-export const VOICE_CAMPAIGN_EMPTY_STATE_CONTENT = [
-  {
-    id: 1,
-    title: 'Signup Confirmation Call',
-    inbox: {
-      id: 10,
-      name: 'Shopiz Phone Support',
-      channel_type: 'Channel::Voice',
-      avatar_url: '',
-      phone_number: '+14155552671',
-    },
-    message:
-      'Hello! 👋 Thanks for signing up with Shopiz. I am calling to confirm your account setup and see if you have any questions about getting started.',
-    campaign_status: 'scheduled',
-    enabled: true,
-    campaign_type: 'voice',
-    scheduled_at: new Date('2024-11-16T20:43:08.000Z').getTime(),
-    audience: [
-      { id: 4, type: 'Label', title: 'Support Customers' },
-      { id: 5, type: 'Label', title: 'Active Users' },
-    ],
-    sender: {
-      id: 1,
-      name: 'Tyler Ross',
-      thumbnail: 'TR',
-    },
-    created_at: '2024-11-15T13:13:08.496Z',
-    updated_at: '2024-11-15T13:15:38.698Z',
-  },
-  {
-    id: 3,
-    title: 'Support Ticket Follow-Up',
-    inbox: {
-      id: 10,
-      name: 'Shopiz Phone Support',
-      channel_type: 'Channel::Voice',
-      avatar_url: '',
-      phone_number: '+14155552671',
-    },
-    message:
-      'Hi, this is Shopiz support calling to follow up on your recent ticket #12345. Has your issue been resolved to your satisfaction? If not, I can connect you with a specialist right away.',
-    campaign_status: 'completed',
-    enabled: true,
-    campaign_type: 'voice',
-    scheduled_at: new Date('2024-11-10T15:30:00.000Z').getTime(),
-    audience: [
-      { id: 1, type: 'Label', title: 'Enterprise' },
-      { id: 6, type: 'Label', title: 'Premium' },
-    ],
-    sender: {
-      id: 2,
-      name: 'Megan Cole',
-      thumbnail: 'MC',
-    },
-    created_at: '2024-11-10T13:14:00.168Z',
-    updated_at: '2024-11-10T13:15:38.707Z',
-  },
-  {
-    id: 2,
-    title: 'Appointment Reminder',
-    inbox: {
-      id: 10,
-      name: 'Shopiz Phone Support',
-      channel_type: 'Channel::Voice',
-      avatar_url: '',
-      phone_number: '+14155552671',
-    },
-    message:
-      'Hello, this is a reminder about your upcoming consultation scheduled for tomorrow at 2:00 PM. Would you like to confirm this appointment or would you prefer to reschedule?',
-    campaign_status: 'scheduled',
-    enabled: true,
-    campaign_type: 'voice',
-    scheduled_at: new Date('2024-11-20T18:00:00.000Z').getTime(),
-    audience: [
-      { id: 7, type: 'Label', title: 'Consultation Clients' },
-      { id: 8, type: 'Label', title: 'New Customers' },
-    ],
-    sender: {
-      id: 3,
-      name: 'Brandon Lee',
-      thumbnail: 'BL',
-    },
-    created_at: '2024-11-12T09:30:45.123Z',
-    updated_at: '2024-11-12T09:30:45.123Z',
-  },
-  {
-    id: 4,
-    title: 'Customer Feedback Survey',
-    inbox: {
-      id: 10,
-      name: 'Shopiz Phone Support',
-      channel_type: 'Channel::Voice',
-      avatar_url: '',
-      phone_number: '+14155552671',
-    },
-    message:
-      "Hello, this is Shopiz reaching out for your valuable feedback. We noticed you've been using our service for 30 days now. I'd like to ask a few quick questions about your experience. Your feedback helps us improve our service. Would you have a moment to share your thoughts?",
-    campaign_status: 'scheduled',
-    enabled: true,
-    campaign_type: 'voice',
-    scheduled_at: new Date('2024-11-25T14:15:00.000Z').getTime(),
-    audience: [
-      { id: 9, type: 'Label', title: 'Active 30+ Days' },
-      { id: 10, type: 'Label', title: 'Product Users' },
-    ],
-    sender: {
-      id: 4,
-      name: 'Alex Morgan',
-      thumbnail: 'AM',
-    },
-    created_at: '2024-11-18T10:45:23.789Z',
-    updated_at: '2024-11-18T10:45:23.789Z',
-  },
-];
-
-export const SURVEY_CAMPAIGN_EMPTY_STATE_CONTENT = [
-  {
-    id: 1,
-    title: 'Signup Confirmation Call',
-    inbox: {
-      id: 10,
-      name: 'Shopiz Phone Support',
-      channel_type: 'Channel::Voice',
-      avatar_url: '',
-      phone_number: '+14155552671',
-    },
-    message:
-      'Hello! 👋 Thanks for signing up with Shopiz. I am calling to confirm your account setup and see if you have any questions about getting started.',
-    campaign_status: 'scheduled',
-    enabled: true,
-    campaign_type: 'voice',
-    scheduled_at: new Date('2024-11-16T20:43:08.000Z').getTime(),
-    audience: [
-      { id: 4, type: 'Label', title: 'Support Customers' },
-      { id: 5, type: 'Label', title: 'Active Users' },
-    ],
-    sender: {
-      id: 1,
-      name: 'Tyler Ross',
-      thumbnail: 'TR',
-    },
-    created_at: '2024-11-15T13:13:08.496Z',
-    updated_at: '2024-11-15T13:15:38.698Z',
-  },
-  {
-    id: 3,
-    title: 'Support Ticket Follow-Up',
-    inbox: {
-      id: 10,
-      name: 'Shopiz Phone Support',
-      channel_type: 'Channel::Voice',
-      avatar_url: '',
-      phone_number: '+14155552671',
-    },
-    message:
-      'Hi, this is Shopiz support calling to follow up on your recent ticket #12345. Has your issue been resolved to your satisfaction? If not, I can connect you with a specialist right away.',
-    campaign_status: 'completed',
-    enabled: true,
-    campaign_type: 'voice',
-    scheduled_at: new Date('2024-11-10T15:30:00.000Z').getTime(),
-    audience: [
-      { id: 1, type: 'Label', title: 'Enterprise' },
-      { id: 6, type: 'Label', title: 'Premium' },
-    ],
-    sender: {
-      id: 2,
-      name: 'Megan Cole',
-      thumbnail: 'MC',
-    },
-    created_at: '2024-11-10T13:14:00.168Z',
-    updated_at: '2024-11-10T13:15:38.707Z',
-  },
-  {
-    id: 2,
-    title: 'Appointment Reminder',
-    inbox: {
-      id: 10,
-      name: 'Shopiz Phone Support',
-      channel_type: 'Channel::Voice',
-      avatar_url: '',
-      phone_number: '+14155552671',
-    },
-    message:
-      'Hello, this is a reminder about your upcoming consultation scheduled for tomorrow at 2:00 PM. Would you like to confirm this appointment or would you prefer to reschedule?',
-    campaign_status: 'scheduled',
-    enabled: true,
-    campaign_type: 'voice',
-    scheduled_at: new Date('2024-11-20T18:00:00.000Z').getTime(),
-    audience: [
-      { id: 7, type: 'Label', title: 'Consultation Clients' },
-      { id: 8, type: 'Label', title: 'New Customers' },
-    ],
-    sender: {
-      id: 3,
-      name: 'Brandon Lee',
-      thumbnail: 'BL',
-    },
-    created_at: '2024-11-12T09:30:45.123Z',
-    updated_at: '2024-11-12T09:30:45.123Z',
-  },
-  {
-    id: 4,
-    title: 'Customer Feedback Survey',
-    inbox: {
-      id: 10,
-      name: 'Shopiz Phone Support',
-      channel_type: 'Channel::Voice',
-      avatar_url: '',
-      phone_number: '+14155552671',
-    },
-    message:
-      "Hello, this is Shopiz reaching out for your valuable feedback. We noticed you've been using our service for 30 days now. I'd like to ask a few quick questions about your experience. Your feedback helps us improve our service. Would you have a moment to share your thoughts?",
-    campaign_status: 'scheduled',
-    enabled: true,
-    campaign_type: 'voice',
-    scheduled_at: new Date('2024-11-25T14:15:00.000Z').getTime(),
-    audience: [
-      { id: 9, type: 'Label', title: 'Active 30+ Days' },
-      { id: 10, type: 'Label', title: 'Product Users' },
-    ],
-    sender: {
-      id: 4,
-      name: 'Alex Morgan',
-      thumbnail: 'AM',
-    },
-    created_at: '2024-11-18T10:45:23.789Z',
-    updated_at: '2024-11-18T10:45:23.789Z',
   },
 ];

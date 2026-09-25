@@ -6,7 +6,8 @@ class Api::V1::Accounts::Integrations::OmicallController < Api::V1::Accounts::Ba
     extension = sip_info&.sip_user
 
     if extension.blank?
-      return render json: { error: I18n.t('integrations.omicall.errors.sip_not_configured') || 'OmiCall SIP configuration not found for this user' }, status: :unprocessable_entity
+      return render json: { error: I18n.t('integrations.omicall.errors.sip_not_configured') || 'OmiCall SIP configuration not found for this user' },
+                    status: :unprocessable_entity
     end
 
     response = call_service.click2call(

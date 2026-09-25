@@ -1,4 +1,5 @@
-json.settings resource.settings.to_h.merge({ 'sales_payment_config' => resource.sales_payment_config, 'custom_email_config' => resource.custom_email_config }.compact)
+json.settings resource.settings.to_h.merge({ 'sales_payment_config' => resource.sales_payment_config,
+                                             'custom_email_config' => resource.custom_email_config }.compact)
 json.created_at resource.created_at
 json.custom_attributes do
   if resource.active_subscription.present?

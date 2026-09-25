@@ -14,7 +14,8 @@ const props = defineProps({
   activeChild: { type: Object, default: undefined },
 });
 
-const { isAllowed, isLocked, openLockedModal } = useSidebarContext();
+const { isAllowed, isLocked, resolveFeatureFlag, openLockedModal } =
+  useSidebarContext();
 const scrollableContainer = ref(null);
 
 const accessibleItems = computed(() =>
@@ -72,7 +73,7 @@ useEventListener(scrollableContainer, 'scroll', () => {
         :key="child.name"
         :active="activeChild?.name === child.name"
         :is-locked="isLocked(child.to)"
-        :feature-flag="child.to?.featureFlag || ''"
+        :feature-flag="resolveFeatureFlag(child.to)"
         @toggle-locked="onToggleLocked(child.label, $event)"
       />
     </div>

@@ -5,16 +5,13 @@ import agentBots from './modules/agentBots';
 import agentCapacityPolicies from './modules/agentCapacityPolicies';
 import agents from './modules/agents';
 import assignmentPolicies from './modules/assignmentPolicies';
-import articles from './modules/helpCenterArticles';
 import attributes from './modules/attributes';
 import auditlogs from './modules/auditlogs';
 import auth from './modules/auth';
 import automations from './modules/automations';
 import bulkActions from './modules/bulkActions';
-import calls from './modules/calls';
 import campaigns from './modules/campaigns';
 import cannedResponse from './modules/cannedResponse';
-import categories from './modules/helpCenterCategories';
 import contactConversations from './modules/contactConversations';
 import contactLabels from './modules/contactLabels';
 import contactNotes from './modules/contactNotes';
@@ -32,7 +29,7 @@ import conversationWatchers from './modules/conversationWatchers';
 import csat from './modules/csat';
 import customRole from './modules/customRole';
 import customViews from './modules/customViews';
-import dashboardApps from './modules/dashboardApps';
+
 import draftMessages from './modules/draftMessages';
 import globalConfig from 'shared/store/globalConfig';
 import inboxAssignableAgents from './modules/inboxAssignableAgents';
@@ -44,7 +41,6 @@ import labels from './modules/labels';
 import macros from './modules/macros';
 import messageTemplates from './modules/messageTemplates';
 import notifications from './modules/notifications';
-import portals from './modules/helpCenterPortals';
 import reports from './modules/reports';
 import sla from './modules/sla';
 import slaReports from './modules/SLAReports';
@@ -74,16 +70,13 @@ export default createStore({
     agentCapacityPolicies,
     agents,
     assignmentPolicies,
-    articles,
     attributes,
     auditlogs,
     auth,
     automations,
     bulkActions,
-    calls,
     campaigns,
     cannedResponse,
-    categories,
     contactConversations,
     contactLabels,
     contactNotes,
@@ -101,7 +94,7 @@ export default createStore({
     csat,
     customRole,
     customViews,
-    dashboardApps,
+
     draftMessages,
     globalConfig,
     inboxAssignableAgents,
@@ -113,7 +106,6 @@ export default createStore({
     macros,
     messageTemplates,
     notifications,
-    portals,
     reports,
     sla,
     slaReports,

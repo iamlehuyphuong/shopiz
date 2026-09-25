@@ -50,20 +50,20 @@ RSpec.describe 'Platform Accounts API', type: :request do
                                                                                                     'enabled' => true },
                                                                                                   { 'name' => 'disable_branding',
                                                                                                     'enabled' => true },
-                                                                                                  { 'name' => 'help_center',
+                                                                                                  { 'name' => 'linear_integration',
                                                                                                     'enabled' => false }])
 
         post '/platform/api/v1/accounts', params: { name: 'Test Account', features: {
           ip_lookup: true,
-          help_center: true,
+          linear_integration: true,
           disable_branding: false
         } }, headers: { api_access_token: platform_app.access_token.token }, as: :json
 
         json_response = response.parsed_body
         created_account = Account.find(json_response['id'])
-        expect(created_account.enabled_features.keys).to match_array(%w[inbox_management ip_lookup help_center])
+        expect(created_account.enabled_features.keys).to match_array(%w[inbox_management ip_lookup linear_integration])
         expect(json_response['name']).to include('Test Account')
-        expect(json_response['features'].keys).to match_array(%w[inbox_management ip_lookup help_center])
+        expect(json_response['features'].keys).to match_array(%w[inbox_management ip_lookup linear_integration])
       end
 
       it 'creates an account with limits settings' do
@@ -183,7 +183,7 @@ RSpec.describe 'Platform Accounts API', type: :request do
           name: 'Test Account',
           features: {
             ip_lookup: true,
-            help_center: true,
+            linear_integration: true,
             channel_facebook: false
           },
           limits: { agents: 5, inboxes: 10 }
@@ -192,7 +192,7 @@ RSpec.describe 'Platform Accounts API', type: :request do
         expect(response).to have_http_status(:success)
         account.reload
         expect(account.name).to eq('Test Account')
-        expect(account.enabled_features.keys).to match_array(%w[inbox_management ip_lookup help_center])
+        expect(account.enabled_features.keys).to match_array(%w[inbox_management ip_lookup linear_integration])
         expect(account.enabled_features['channel_facebook']).to be_nil
         expect(account.limits['agents']).to eq(5)
         expect(account.limits['inboxes']).to eq(10)

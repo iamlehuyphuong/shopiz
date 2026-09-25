@@ -34,15 +34,6 @@ class Api::V1::Widget::ConversationsController < Api::V1::Widget::BaseController
     head :ok
   end
 
-  def transcript
-    return head :too_many_requests if conversation.blank?
-    return head :payment_required unless conversation.account.email_transcript_enabled?
-    return head :too_many_requests unless conversation.account.within_email_rate_limit?
-
-    send_transcript_email
-    head :ok
-  end
-
   def toggle_typing
     case permitted_params[:typing_status]
     when 'on'
@@ -75,16 +66,6 @@ class Api::V1::Widget::ConversationsController < Api::V1::Widget::BaseController
   end
 
   private
-
-  def send_transcript_email
-    return if conversation.contact&.email.blank?
-
-    ConversationReplyMailer.with(account: conversation.account).conversation_transcript(
-      conversation,
-      conversation.contact.email
-    )&.deliver_later
-    conversation.account.increment_email_sent_count
-  end
 
   def trigger_typing_event(event)
     Rails.configuration.dispatcher.dispatch(event, Time.zone.now, conversation: conversation, user: @contact)

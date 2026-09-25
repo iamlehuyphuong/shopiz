@@ -1,13 +1,13 @@
 namespace :data_migrations do
-  desc "Migrate invoice info from users to accounts"
+  desc 'Migrate invoice info from users to accounts'
   task migrate_invoice_info: :environment do
-    puts "Starting data migration..."
-    
+    puts 'Starting data migration...'
+
     # We use raw SQL because the columns might have been dropped from the schema in User model
     # This safely copies data from users table to accounts table by joining on account_users
     sql = <<-SQL
       UPDATE accounts a
-      SET 
+      SET#{' '}
         type_id = u.type_id,
         address = u.address,
         company_name = u.company_name,

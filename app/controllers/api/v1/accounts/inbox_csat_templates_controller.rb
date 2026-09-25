@@ -50,9 +50,9 @@ class Api::V1::Accounts::InboxCsatTemplatesController < Api::V1::Accounts::BaseC
   end
 
   def validate_whatsapp_channel
-    return if @inbox.whatsapp? || @inbox.twilio_whatsapp?
+    return if @inbox.whatsapp?
 
-    render json: { error: 'CSAT template operations only available for WhatsApp and Twilio WhatsApp channels' },
+    render json: { error: 'CSAT template operations only available for WhatsApp channels' },
            status: :bad_request
   end
 
@@ -81,25 +81,14 @@ class Api::V1::Accounts::InboxCsatTemplatesController < Api::V1::Accounts::BaseC
   end
 
   def render_successful_template_creation(result)
-    if @inbox.twilio_whatsapp?
-      render json: {
-        template: {
-          friendly_name: result[:friendly_name],
-          content_sid: result[:content_sid],
-          status: result[:status] || 'pending',
-          language: result[:language] || 'en'
-        }
-      }, status: :created
-    else
-      render json: {
-        template: {
-          name: result[:template_name],
-          template_id: result[:template_id],
-          status: 'PENDING',
-          language: result[:language] || 'en'
-        }
-      }, status: :created
-    end
+    render json: {
+      template: {
+        name: result[:template_name],
+        template_id: result[:template_id],
+        status: 'PENDING',
+        language: result[:language] || 'en'
+      }
+    }, status: :created
   end
 
   def render_failed_template_creation(result)

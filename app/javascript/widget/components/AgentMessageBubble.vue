@@ -3,21 +3,15 @@ import { useMessageFormatter } from 'shared/composables/useMessageFormatter';
 import ChatCard from 'shared/components/ChatCard.vue';
 import ChatForm from 'shared/components/ChatForm.vue';
 import ChatOptions from 'shared/components/ChatOptions.vue';
-import ChatArticle from './template/Article.vue';
-import EmailInput from './template/EmailInput.vue';
 import CustomerSatisfaction from 'shared/components/CustomerSatisfaction.vue';
-import IntegrationCard from './template/IntegrationCard.vue';
 
 export default {
   name: 'AgentMessageBubble',
   components: {
-    ChatArticle,
     ChatCard,
     ChatForm,
     ChatOptions,
-    EmailInput,
     CustomerSatisfaction,
-    IntegrationCard,
   },
   props: {
     message: { type: String, default: null },
@@ -43,9 +37,6 @@ export default {
     isTemplate() {
       return this.messageType === 3;
     },
-    isTemplateEmail() {
-      return this.contentType === 'input_email';
-    },
     isCards() {
       return this.contentType === 'cards';
     },
@@ -55,14 +46,8 @@ export default {
     isForm() {
       return this.contentType === 'form';
     },
-    isArticle() {
-      return this.contentType === 'article';
-    },
     isCSAT() {
       return this.contentType === 'input_csat';
-    },
-    isIntegrations() {
-      return this.contentType === 'integrations';
     },
   },
   methods: {
@@ -92,25 +77,12 @@ export default {
 <template>
   <div class="chat-bubble-wrap">
     <div
-      v-if="
-        !isCards && !isOptions && !isForm && !isArticle && !isCards && !isCSAT
-      "
+      v-if="!isCards && !isOptions && !isForm && !isCSAT"
       class="chat-bubble agent bg-n-background dark:bg-n-solid-3 text-n-slate-12"
     >
       <div
         v-dompurify-html="formatMessage(message, false)"
         class="message-content text-n-slate-12"
-      />
-      <EmailInput
-        v-if="isTemplateEmail"
-        :message-id="messageId"
-        :message-content-attributes="messageContentAttributes"
-      />
-
-      <IntegrationCard
-        v-if="isIntegrations"
-        :message-id="messageId"
-        :meeting-data="messageContentAttributes.data"
       />
     </div>
     <div v-if="isOptions">
@@ -137,9 +109,6 @@ export default {
         :description="item.description"
         :actions="item.actions"
       />
-    </div>
-    <div v-if="isArticle">
-      <ChatArticle :items="messageContentAttributes.items" />
     </div>
     <CustomerSatisfaction
       v-if="isCSAT"

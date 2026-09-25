@@ -13,25 +13,6 @@ const { replaceInstallationName } = useBranding();
 
 const globalConfig = useMapGetter('globalConfig/get');
 
-const ALL_CHANNEL_ICONS = [
-  'i-woot-line',
-  'i-woot-facebook',
-  'i-woot-whatsapp',
-  'i-woot-instagram',
-  'i-woot-messenger',
-  'i-woot-website',
-  'i-woot-mail',
-  'i-woot-sms',
-  'i-woot-telegram',
-  'i-woot-api',
-  'i-woot-twilio',
-  'i-woot-gmail',
-  'i-woot-outlook',
-  'i-woot-tiktok-shop',
-  'i-woot-zalo-oa',
-  'i-woot-zalo-personal',
-];
-
 const createFlowSteps = computed(() => {
   const steps = ['CHANNEL', 'INBOX', 'AGENT', 'FINISH'];
 

@@ -54,10 +54,6 @@ const isActive = computed(() => {
   if (key === 'facebook') {
     return props.enabledFeatures.channel_facebook && hasFbConfigured.value;
   }
-  if (key === 'email') {
-    return props.enabledFeatures.channel_email;
-  }
-
   if (key === 'zalo') {
     return props.enabledFeatures.channel_zalo && hasZaloConfigured.value;
   }
@@ -85,31 +81,16 @@ const isActive = computed(() => {
     return props.enabledFeatures.channel_tiktok && hasTiktokConfigured.value;
   }
 
-  if (key === 'voice') {
-    return props.enabledFeatures.channel_voice;
-  }
-  if (key === 'twitter') {
-    return (
-      props.enabledFeatures.channel_twitter &&
-      window.shopizConfig?.twitterConsumerKey
-    );
-  }
-
   return [
     'website',
-    'twilio',
     'api',
     'whatsapp',
-    'sms',
     'telegram',
-    'line',
     'instagram',
-    'twitter',
     'zalo',
     'zalopersonal',
     'tiktok_shop',
     'tiktok',
-    'voice',
   ].includes(key);
 });
 

@@ -6,7 +6,6 @@ import {
 import { replaceVariablesInMessage } from '@chatwoot/utils';
 import * as Sentry from '@sentry/vue';
 import { FORMATTING, MARKDOWN_PATTERNS } from 'dashboard/constants/editor';
-import { INBOX_TYPES, TWILIO_CHANNEL_MEDIUM } from 'dashboard/helper/inbox';
 import camelcaseKeys from 'camelcase-keys';
 
 /**
@@ -135,18 +134,11 @@ export function findSignatureInBody(body, signature) {
 
 /**
  * Gets the effective channel type for formatting purposes.
- * For Twilio channels, returns WhatsApp or Twilio based on medium.
  *
  * @param {string} channelType - The channel type
- * @param {string} medium - Optional. The medium for Twilio channels (sms/whatsapp)
  * @returns {string} - The effective channel type for formatting
  */
-export function getEffectiveChannelType(channelType, medium) {
-  if (channelType === INBOX_TYPES.TWILIO) {
-    return medium === TWILIO_CHANNEL_MEDIUM.WHATSAPP
-      ? INBOX_TYPES.WHATSAPP
-      : INBOX_TYPES.TWILIO;
-  }
+export function getEffectiveChannelType(channelType) {
   return channelType;
 }
 

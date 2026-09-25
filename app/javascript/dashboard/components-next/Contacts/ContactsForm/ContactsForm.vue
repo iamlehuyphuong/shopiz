@@ -49,7 +49,6 @@ const SOCIAL_CONFIG = {
   INSTAGRAM: 'i-ri-instagram-line',
   TELEGRAM: 'i-ri-telegram-fill',
   TIKTOK: 'i-woot-tiktok',
-  TWITTER: 'i-woot-x',
 };
 
 const defaultState = {

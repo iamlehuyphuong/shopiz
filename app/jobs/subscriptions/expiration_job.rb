@@ -52,6 +52,4 @@ class Subscriptions::ExpirationJob < ApplicationJob
       Subscriptions::ProvisioningService.new(addon.account).execute
     end
   end
-
-
 end

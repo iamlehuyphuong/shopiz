@@ -11,14 +11,10 @@ json.platform_template_id message_template.platform_template_id
 json.content message_template.content
 json.metadata message_template.metadata
 json.created_by do
-  if message_template.created_by
-    json.partial! 'api/v1/models/agent', formats: [:json], resource: message_template.created_by
-  end
+  json.partial! 'api/v1/models/agent', formats: [:json], resource: message_template.created_by if message_template.created_by
 end
 json.updated_by do
-  if message_template.updated_by
-    json.partial! 'api/v1/models/agent', formats: [:json], resource: message_template.updated_by
-  end
+  json.partial! 'api/v1/models/agent', formats: [:json], resource: message_template.updated_by if message_template.updated_by
 end
 json.created_at message_template.created_at.to_i
 json.updated_at message_template.updated_at.to_i

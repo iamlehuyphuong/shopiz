@@ -19,6 +19,6 @@ class SubscriptionPlanFeaturesField < Administrate::Field::Base
   end
 
   def feature_enabled?(feature_name)
-    (data || {})[feature_name.to_s].to_s == "true"
+    (data || {})[feature_name.to_s].to_s == 'true'
   end
 end

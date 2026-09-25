@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'csv'
 
 class SuperAdmin::SubscriptionTiersController < SuperAdmin::ApplicationController
@@ -14,7 +15,7 @@ class SuperAdmin::SubscriptionTiersController < SuperAdmin::ApplicationControlle
         package = ::Axlsx::Package.new
         workbook = package.workbook
         workbook.add_worksheet(name: 'Subscription Tiers') do |sheet|
-          sheet.add_row ["id", "name_en", "name_vi", "description_en", "description_vi", "limits", "features", "visible", "is_free"]
+          sheet.add_row %w[id name_en name_vi description_en description_vi limits features visible is_free]
           SubscriptionTier.find_each do |record|
             sheet.add_row [
               record.id,
@@ -29,7 +30,8 @@ class SuperAdmin::SubscriptionTiersController < SuperAdmin::ApplicationControlle
             ]
           end
         end
-        send_data package.to_stream.read, filename: "subscription_tiers_#{Date.today}.xlsx", type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        send_data package.to_stream.read, filename: "subscription_tiers_#{Date.today}.xlsx",
+                                          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       end
     end
   end
@@ -39,27 +41,27 @@ class SuperAdmin::SubscriptionTiersController < SuperAdmin::ApplicationControlle
       begin
         xlsx = Roo::Excelx.new(params[:file].path)
         headers = xlsx.row(1).map { |h| h.to_s.strip }
-        
-        return redirect_to super_admin_subscription_tiers_path, flash: { error: "File trống" } if xlsx.last_row.nil? || xlsx.last_row < 2
-        
+
+        return redirect_to super_admin_subscription_tiers_path, flash: { error: 'File trống' } if xlsx.last_row.nil? || xlsx.last_row < 2
+
         (2..xlsx.last_row).each do |i|
           row = Hash[[headers, xlsx.row(i)].transpose]
-          tier = SubscriptionTier.find_or_initialize_by(name_en: row["name_en"])
-          tier.name_vi = row["name_vi"] if row["name_vi"].present?
-          tier.description_en = row["description_en"]
-          tier.description_vi = row["description_vi"]
-          tier.limits = row["limits"].present? ? JSON.parse(row["limits"]) : {}
-          tier.features = row["features"].present? ? JSON.parse(row["features"]) : {}
-          tier.visible = row["visible"] == "true" || row["visible"] == "1" if row["visible"].present?
-          tier.is_free = row["is_free"] == "true" || row["is_free"] == "1" if row["is_free"].present?
+          tier = SubscriptionTier.find_or_initialize_by(name_en: row['name_en'])
+          tier.name_vi = row['name_vi'] if row['name_vi'].present?
+          tier.description_en = row['description_en']
+          tier.description_vi = row['description_vi']
+          tier.limits = row['limits'].present? ? JSON.parse(row['limits']) : {}
+          tier.features = row['features'].present? ? JSON.parse(row['features']) : {}
+          tier.visible = row['visible'] == 'true' || row['visible'] == '1' if row['visible'].present?
+          tier.is_free = row['is_free'] == 'true' || row['is_free'] == '1' if row['is_free'].present?
           tier.save!
         end
-        flash[:notice] = "Nhập dữ liệu Tiers thành công."
-      rescue => e
+        flash[:notice] = 'Nhập dữ liệu Tiers thành công.'
+      rescue StandardError => e
         flash[:error] = "Lỗi khi nhập XLSX: #{e.message}"
       end
     else
-      flash[:error] = "Vui lòng chọn tệp XLSX để tải lên."
+      flash[:error] = 'Vui lòng chọn tệp XLSX để tải lên.'
     end
     redirect_to super_admin_subscription_tiers_path
   end

@@ -6,8 +6,7 @@ RSpec.describe ReferencesHeaderBuilder do
   include described_class
 
   let(:account) { create(:account) }
-  let(:email_channel) { create(:channel_email, account: account) }
-  let(:inbox) { create(:inbox, channel: email_channel, account: account) }
+  let(:inbox) { create(:inbox, account: account) }
   let(:conversation) { create(:conversation, account: account, inbox: inbox) }
 
   describe '#build_references_header' do

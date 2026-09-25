@@ -20,7 +20,6 @@ import { useKeyboardEvents } from 'dashboard/composables/useKeyboardEvents';
 
 import ContactSelector from './ContactSelector.vue';
 import InboxSelector from './InboxSelector.vue';
-import EmailOptions from './EmailOptions.vue';
 import MessageEditor from './MessageEditor.vue';
 import ActionButtons from './ActionButtons.vue';
 import InboxEmptyState from './InboxEmptyState.vue';
@@ -62,36 +61,19 @@ const copilot = useCopilotReply();
 
 const showContactsDropdown = ref(false);
 const showInboxesDropdown = ref(false);
-const showCcEmailsDropdown = ref(false);
-const showBccEmailsDropdown = ref(false);
 
 const isCreating = computed(() => props.contactConversationsUiFlags.isCreating);
 
 const state = props.formState || {
   message: '',
-  subject: '',
-  ccEmails: '',
-  bccEmails: '',
   attachedFiles: [],
 };
 
 const inboxTypes = computed(() => ({
-  isEmail: props.targetInbox?.channelType === INBOX_TYPES.EMAIL,
-  isTwilio: props.targetInbox?.channelType === INBOX_TYPES.TWILIO,
   isWhatsapp: props.targetInbox?.channelType === INBOX_TYPES.WHATSAPP,
   isWebWidget: props.targetInbox?.channelType === INBOX_TYPES.WEB,
   isApi: props.targetInbox?.channelType === INBOX_TYPES.API,
-  isVoice: props.targetInbox?.channelType === INBOX_TYPES.VOICE,
   isZaloPersonal: props.targetInbox?.channelType == INBOX_TYPES.ZALO_PERSONAL,
-  isEmailOrWebWidget:
-    props.targetInbox?.channelType === INBOX_TYPES.EMAIL ||
-    props.targetInbox?.channelType === INBOX_TYPES.WEB,
-  isTwilioSMS:
-    props.targetInbox?.channelType === INBOX_TYPES.TWILIO &&
-    props.targetInbox?.medium === 'sms',
-  isTwilioWhatsapp:
-    props.targetInbox?.channelType === INBOX_TYPES.TWILIO &&
-    props.targetInbox?.medium === 'whatsapp',
 }));
 
 const whatsappMessageTemplates = computed(() =>
@@ -112,37 +94,29 @@ const validationRules = computed(() => ({
   selectedContact: { required },
   targetInbox: { required },
   message: {
-    required: requiredIf(
-      !inboxTypes.value.isWhatsapp && !inboxTypes.value.isVoice
-    ),
+    required: requiredIf(!inboxTypes.value.isWhatsapp),
   },
-  subject: { required: requiredIf(inboxTypes.value.isEmail) },
 }));
 
 const v$ = useVuelidate(validationRules, {
   selectedContact: computed(() => props.selectedContact),
   targetInbox: computed(() => props.targetInbox),
   message: computed(() => state.message),
-  subject: computed(() => state.subject),
 });
 
 const validationStates = computed(() => ({
   isContactInvalid:
     v$.value.selectedContact.$dirty && v$.value.selectedContact.$invalid,
   isInboxInvalid: v$.value.targetInbox.$dirty && v$.value.targetInbox.$invalid,
-  isSubjectInvalid: v$.value.subject.$dirty && v$.value.subject.$invalid,
   isMessageInvalid: v$.value.message.$dirty && v$.value.message.$invalid,
 }));
 
 const newMessagePayload = () => {
-  const { message, subject, ccEmails, bccEmails, attachedFiles } = state;
+  const { message, attachedFiles } = state;
   return prepareNewMessagePayload({
     targetInbox: props.targetInbox,
     selectedContact: props.selectedContact,
     message,
-    subject,
-    ccEmails,
-    bccEmails,
     currentUser: props.currentUser,
     attachedFiles,
     directUploadsEnabled: props.isDirectUploadsEnabled,
@@ -163,12 +137,7 @@ const showNoInboxAlert = computed(() => {
 });
 
 const isAnyDropdownActive = computed(() => {
-  return (
-    showContactsDropdown.value ||
-    showInboxesDropdown.value ||
-    showCcEmailsDropdown.value ||
-    showBccEmailsDropdown.value
-  );
+  return showContactsDropdown.value || showInboxesDropdown.value;
 });
 
 const handleContactSearch = value => {
@@ -177,27 +146,7 @@ const handleContactSearch = value => {
 };
 
 const handleDropdownUpdate = (type, value) => {
-  if (type === 'cc') {
-    showCcEmailsDropdown.value = value;
-  } else if (type === 'bcc') {
-    showBccEmailsDropdown.value = value;
-  } else {
-    showContactsDropdown.value = value;
-  }
-};
-
-const searchCcEmails = value => {
-  showBccEmailsDropdown.value = false;
-  emit('resetContactSearch');
-  showCcEmailsDropdown.value = value.trim().length >= 2;
-  emit('searchContacts', value);
-};
-
-const searchBccEmails = value => {
-  showCcEmailsDropdown.value = false;
-  emit('resetContactSearch');
-  showBccEmailsDropdown.value = value.trim().length >= 2;
-  emit('searchContacts', value);
+  showContactsDropdown.value = value;
 };
 
 const setSelectedContact = async ({ value, action, ...rest }) => {
@@ -287,9 +236,6 @@ const clearForm = () => {
   copilot.reset(false);
   Object.assign(state, {
     message: '',
-    subject: '',
-    ccEmails: '',
-    bccEmails: '',
     attachedFiles: [],
   });
   v$.value.$reset();
@@ -337,26 +283,8 @@ const handleSendWhatsappMessage = async ({ message, templateParams }) => {
   });
 };
 
-const handleSendTwilioMessage = async ({ message, templateParams }) => {
-  const twilioMessagePayload = prepareWhatsAppMessagePayload({
-    targetInbox: props.targetInbox,
-    selectedContact: props.selectedContact,
-    message,
-    templateParams,
-    currentUser: props.currentUser,
-  });
-  await emit('createConversation', {
-    payload: twilioMessagePayload,
-    isFromWhatsApp: true,
-  });
-};
-
 const shouldShowMessageEditor = computed(() => {
-  return (
-    !inboxTypes.value.isWhatsapp &&
-    !showNoInboxAlert.value &&
-    !inboxTypes.value.isTwilioWhatsapp
-  );
+  return !inboxTypes.value.isWhatsapp && !showNoInboxAlert.value;
 });
 
 const isCopilotActive = computed(() => copilot.isActive?.value ?? false);
@@ -412,21 +340,6 @@ useKeyboardEvents({
         @handle-inbox-action="handleInboxAction"
       />
 
-      <EmailOptions
-        v-if="inboxTypes.isEmail"
-        v-model:cc-emails="state.ccEmails"
-        v-model:bcc-emails="state.bccEmails"
-        v-model:subject="state.subject"
-        :contacts="contacts"
-        :show-cc-emails-dropdown="showCcEmailsDropdown"
-        :show-bcc-emails-dropdown="showBccEmailsDropdown"
-        :is-loading="isLoading"
-        :has-errors="validationStates.isSubjectInvalid"
-        @search-cc-emails="searchCcEmails"
-        @search-bcc-emails="searchBccEmails"
-        @update-dropdown="handleDropdownUpdate"
-      />
-
       <MessageEditor
         v-if="shouldShowMessageEditor"
         v-model="state.message"
@@ -440,7 +353,7 @@ useKeyboardEvents({
       />
 
       <AttachmentPreviews
-        v-if="state.attachedFiles.length > 0 && !inboxTypes.isVoice"
+        v-if="state.attachedFiles.length > 0"
         :attachments="state.attachedFiles"
         @update:attachments="state.attachedFiles = $event"
       />
@@ -457,10 +370,7 @@ useKeyboardEvents({
       v-else
       :attached-files="state.attachedFiles"
       :is-whatsapp-inbox="inboxTypes.isWhatsapp"
-      :is-voice-inbox="inboxTypes.isVoice"
-      :is-email-or-web-widget-inbox="inboxTypes.isEmailOrWebWidget"
-      :is-twilio-sms-inbox="inboxTypes.isTwilioSMS"
-      :is-twilio-whats-app-inbox="inboxTypes.isTwilioWhatsapp"
+      :is-web-widget-inbox="inboxTypes.isWebWidget"
       :is-zalo-personal-inbox="inboxTypes.isZaloPersonal"
       :message-templates="whatsappMessageTemplates"
       :channel-type="inboxChannelType"
@@ -480,7 +390,6 @@ useKeyboardEvents({
       @send-message="handleSendMessage"
       @add-friend="handleRequestFriend"
       @send-whatsapp-message="handleSendWhatsappMessage"
-      @send-twilio-message="handleSendTwilioMessage"
     />
   </div>
 </template>

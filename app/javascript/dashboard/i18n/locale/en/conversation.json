@@ -7,7 +7,6 @@
     "CSAT_REPLY_MESSAGE": "Please rate the conversation",
     "404": "Sorry, we cannot find the conversation. Please try again",
     "SWITCH_VIEW_LAYOUT": "Switch the layout",
-    "DASHBOARD_APP_TAB_MESSAGES": "Messages",
     "UNVERIFIED_SESSION": "The identity of this user is not verified",
     "NO_MESSAGE_1": "Uh oh! Looks like there are no messages from customers in your inbox.",
     "NO_MESSAGE_2": " to send a message to your page!",
@@ -45,8 +44,6 @@
     "BOT_HANDOFF_REOPEN_ACTION": "Mark conversation open",
     "BOT_HANDOFF_SUCCESS": "Conversation has been handed over to you",
     "BOT_HANDOFF_ERROR": "Failed to take over the conversation. Please try again.",
-    "TWILIO_WHATSAPP_CAN_REPLY": "You can only reply to this conversation using a template message due to",
-    "TWILIO_WHATSAPP_24_HOURS_WINDOW": "24 hour message window restriction",
     "OLD_INSTAGRAM_INBOX_REPLY_BANNER": "This Instagram account was migrated to the new Instagram channel inbox. All new messages will show up there. You won’t be able to send messages from this conversation anymore.",
     "REPLYING_TO": "You are replying to:",
     "REMOVE_SELECTION": "Remove Selection",
@@ -80,6 +77,17 @@
     "CARD": {
       "SHOW_LABELS": "Show labels",
       "HIDE_LABELS": "Hide labels"
+    },
+    "VOICE_CALL": {
+      "INCOMING_CALL": "Incoming call",
+      "OUTGOING_CALL": "Outgoing call",
+      "CALL_IN_PROGRESS": "Call in progress",
+      "NO_ANSWER": "No answer",
+      "MISSED_CALL": "Missed call",
+      "CALL_ENDED": "Call ended",
+      "NOT_ANSWERED_YET": "Not answered yet",
+      "THEY_ANSWERED": "They answered",
+      "YOU_ANSWERED": "You answered"
     },
     "VIDEO_CALL": {
       "TITLE": "Video Call",
@@ -116,42 +124,6 @@
       "JOIN_CALL": "Join call",
       "REJECT_CALL": "Reject",
       "END_CALL": "End"
-    },
-    "VOICE_CALL": {
-      "TITLE": "Call",
-      "RINGING": "Ringing",
-      "ACTIVE": "Call in progress",
-      "MISSED": "Missed Call",
-      "ENDED": "Call Ended",
-      "INCOMING": "Incoming call",
-      "OUTGOING": "Call started...",
-      "INCOMING_CALL": "Incoming call",
-      "OUTGOING_CALL": "Outgoing call",
-      "CALL_IN_PROGRESS": "Call in progress",
-      "NO_ANSWER": "No answer",
-      "MISSED_CALL": "Missed call",
-      "CALL_ENDED": "Call ended",
-      "DURATION": "{duration}",
-      "UNKNOWN": "Unknown",
-      "UNKNOWN_CALLER": "Unknown caller",
-      "UNKNOWN_NUMBER": "Unknown number",
-      "CALL_ERROR": "Failed to initiate call. Please try again.",
-      "CALL_INITIATED": "Call initiated successfully.",
-      "NOT_ANSWERED_YET": "Not answered yet",
-      "YOU_CALLED": "You called",
-      "THEY_ANSWERED": "They answered",
-      "YOU_ANSWERED": "You answered",
-      "YOU_DIDNT_ANSWER": "You didn't answer",
-      "RINGING_STATUS": "Ringing",
-      "ACTIVE_STATUS": "Call in progress",
-      "MISSED_STATUS": "Missed Call",
-      "ENDED_STATUS": "Call Ended",
-      "CALL_DURATION": "Duration: {duration}",
-      "INCOMING_FROM": "Incoming from {name}",
-      "OUTGOING_TO": "Outgoing to {name}",
-      "JOIN_CALL": "Join call",
-      "REJECT_CALL": "Reject call",
-      "END_CALL": "End call"
     },
     "HEADER": {
       "RESOLVE_ACTION": "Resolve",
@@ -241,7 +213,6 @@
       "OPEN_IN_NEW_TAB": "Open in new tab",
       "COPY_LINK": "Copy conversation link",
       "COPY_LINK_SUCCESS": "Conversation link copied to clipboard",
-      "CANCEL_AUTO_FOLLOW_UP": "Cancel Auto Follow-up",
       "API": {
         "AGENT_ASSIGNMENT": {
           "SUCCESFUL": "Conversation id {conversationId} assigned to \"{agentName}\"",
@@ -313,13 +284,6 @@
           "YES": "Send",
           "CANCEL": "Cancel"
         }
-      },
-      "QUOTED_REPLY": {
-        "ENABLE_TOOLTIP": "Include quoted email thread",
-        "DISABLE_TOOLTIP": "Don't include quoted email thread",
-        "REMOVE_PREVIEW": "Remove quoted email thread",
-        "COLLAPSE": "Collapse preview",
-        "EXPAND": "Expand preview"
       },
       "PRIVATE_REPLY_HINT": "The next message you send will be delivered as a private reply to this comment."
     },
@@ -537,24 +501,6 @@
       "LOADING": "Loading products...",
       "PRODUCT_INSERTED": "Product info inserted into message",
       "ADDED_TO_ORDER": "Product added to order"
-    }
-  },
-  "EMAIL_TRANSCRIPT": {
-    "TITLE": "Send conversation transcript",
-    "DESC": "Send a copy of the conversation transcript to the specified email address",
-    "SUBMIT": "Submit",
-    "CANCEL": "Cancel",
-    "SEND_EMAIL_SUCCESS": "The chat transcript was sent successfully",
-    "SEND_EMAIL_ERROR": "There was an error, please try again",
-    "SEND_EMAIL_PAYMENT_REQUIRED": "Email transcript is not available on your current plan. Please upgrade to use this feature.",
-    "FORM": {
-      "SEND_TO_CONTACT": "Send the transcript to the customer",
-      "SEND_TO_AGENT": "Send the transcript to the assigned agent",
-      "SEND_TO_OTHER_EMAIL_ADDRESS": "Send the transcript to another email address",
-      "EMAIL": {
-        "PLACEHOLDER": "Enter an email address",
-        "ERROR": "Please enter a valid email address"
-      }
     }
   },
   "ONBOARDING": {

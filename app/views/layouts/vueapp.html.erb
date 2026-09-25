@@ -51,7 +51,6 @@
     <script>
       window.shopizConfig = {
         hostURL: '<%= ENV.fetch('FRONTEND_URL', '') %>',
-        helpCenterURL: '<%= ENV.fetch('HELPCENTER_URL', '') %>',
         fbAppId: '<%= @global_config['FB_APP_ID'] %>',
         zaloAppId: '<%= @global_config['ZALO_OA_APP_ID'] %>',
         zaloAppSecret: '<%= @global_config['ZALO_OA_APP_SECRET'] %>',
@@ -60,7 +59,6 @@
         tiktokShopAppSecret: '<%= @global_config['TIKTOK_SHOP_APP_SECRET'] %>',
         instagramAppId: '<%= @global_config['INSTAGRAM_APP_ID'] %>',
         tiktokAppId: '<%= @global_config['TIKTOK_APP_ID'] %>',
-        twitterConsumerKey: '<%= @global_config['TWITTER_CONSUMER_KEY'] %>',
         googleOAuthClientId: '<%= @global_config['GOOGLE_OAUTH_CLIENT_ID'] %>',
         googleOAuthCallbackUrl: '<%= @global_config['GOOGLE_OAUTH_REDIRECT_URI'] %>',
         allowedLoginMethods: <%= @global_config['ALLOWED_LOGIN_METHODS'].to_json.html_safe %>,

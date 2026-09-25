@@ -21,9 +21,6 @@ class Api::V1::Accounts::ProductsSearchController < Api::V1::Accounts::BaseContr
       end
     end
 
-    # Search Help Center articles as products
-    sources.concat(search_help_center_products(query)) if query.present?
-
     # Prioritize active platform
     sources.sort_by! { |p| p[:source] == active_platform ? 0 : 1 }
 
@@ -56,7 +53,7 @@ class Api::V1::Accounts::ProductsSearchController < Api::V1::Accounts::BaseContr
     escaped_query = ActiveRecord::Base.sanitize_sql_like(query)
     products = Current.account.products.where("meta->>'source' IS NULL OR meta->>'source' = 'shopiz'").includes(:product_variants)
     products = products.where('name ILIKE ? OR description ILIKE ?', "%#{escaped_query}%", "%#{escaped_query}%") if query.present?
-    
+
     results = []
     products.limit(20).each do |product|
       thumbnail = product.meta&.dig('image') || product.meta&.dig('images')&.first
@@ -297,26 +294,5 @@ class Api::V1::Accounts::ProductsSearchController < Api::V1::Accounts::BaseContr
       access_token: parsed['access_token'],
       settings: hook.settings.merge('token_expires_at' => (Time.current + parsed['expires_in'].to_i.seconds).iso8601)
     )
-  end
-
-  # --- Help Center ---
-  def search_help_center_products(query)
-    escaped_query = ActiveRecord::Base.sanitize_sql_like(query)
-    articles = Current.account.articles
-                      .where('title ILIKE ? OR description ILIKE ?', "%#{escaped_query}%", "%#{escaped_query}%")
-                      .limit(10)
-    articles.map do |article|
-      {
-        id: "article_#{article.id}",
-        name: article.title,
-        price: 0,
-        thumbnail: nil,
-        source: 'helpcenter',
-        metadata: { article_id: article.id, slug: article.slug }
-      }
-    end
-  rescue StandardError => e
-    Rails.logger.error("Help Center product search error: #{e.message}")
-    []
   end
 end

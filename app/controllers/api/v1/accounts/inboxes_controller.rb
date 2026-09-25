@@ -77,7 +77,6 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
     render status: :internal_server_error, json: { error: e.message }
   end
 
-
   def create
     ActiveRecord::Base.transaction do
       channel = create_channel
@@ -163,7 +162,11 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
         body: body.to_json
       )
 
-      parsed_res = JSON.parse(res.body) rescue {}
+      parsed_res = begin
+        JSON.parse(res.body)
+      rescue StandardError
+        {}
+      end
 
       Rails.logger.info "[ZaloPersonal] getLabels response for inbox #{@inbox.id}: #{res.body}"
 
@@ -171,7 +174,7 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
         label_data = parsed_res.dig('data', 'labelData') || []
 
         mappings = @inbox.inbox_label_mappings.to_a
-        
+
         label_data.each do |zalo_label|
           mapping = mappings.find { |m| m.native_label_id == zalo_label['id'].to_s }
           zalo_label['mapped_label_id'] = mapping&.label_id
@@ -246,8 +249,6 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   def trigger_template_sync
     if @inbox.whatsapp?
       Channels::Whatsapp::TemplatesSyncJob.perform_later(@inbox.channel)
-    elsif @inbox.twilio? && @inbox.channel.whatsapp?
-      Channels::Twilio::TemplatesSyncJob.perform_later(@inbox.channel)
     elsif @inbox.channel_type == 'Channel::ZaloOa'
       Channels::Zalo::TemplatesSyncJob.perform_later(@inbox.channel)
     elsif @inbox.channel_type == 'Channel::TiktokShop'
@@ -268,7 +269,7 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   end
 
   def allowed_channel_types
-    %w[web_widget api email line telegram whatsapp sms]
+    %w[web_widget api telegram whatsapp]
   end
 
   def update_inbox_working_hours
@@ -279,20 +280,11 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
     channel_attributes = get_channel_attributes(@inbox.channel_type)
     return if permitted_params(channel_attributes)[:channel].blank?
 
-    validate_and_update_email_channel(channel_attributes) if @inbox.inbox_type == 'Email'
-
     reauthorize_and_update_channel(channel_attributes)
   end
 
-
   def channel_update_required?
     permitted_params(get_channel_attributes(@inbox.channel_type))[:channel].present?
-  end
-
-  def validate_and_update_email_channel(channel_attributes)
-    validate_email_channel(channel_attributes)
-  rescue StandardError => e
-    render json: { message: e }, status: :unprocessable_entity and return
   end
 
   def reauthorize_and_update_channel(channel_attributes)
@@ -328,15 +320,15 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   end
 
   def inbox_attributes
-    [:name, :avatar, :greeting_enabled, :greeting_message, :enable_email_collect, :csat_survey_enabled,
+    [:name, :avatar, :greeting_enabled, :greeting_message, :csat_survey_enabled,
      :enable_auto_assignment, :working_hours_enabled, :out_of_office_message, :timezone, :allow_messages_after_resolved,
-     :lock_to_single_conversation, :portal_id, :sender_name_type, :business_name, :ecommerce_integration_id, :auto_label_enabled, :label_suggestion_enabled,
+     :lock_to_single_conversation, :sender_name_type, :business_name, :ecommerce_integration_id, :auto_label_enabled, :label_suggestion_enabled,
      { auto_follow_up_config: [:enabled, :delay_seconds, :action_type, :ai_rewrite, :max_attempts, :interval_hours, :time_mode,
-                         :fixed_time, :timezone, :predefined_message, :custom_ai_prompt, :macro_id,
-                         { predefined_messages: [] }, { macros: [] }, { custom_ai_prompts: [] }] },
+                               :fixed_time, :timezone, :predefined_message, :custom_ai_prompt, :macro_id,
+                               { predefined_messages: [] }, { macros: [] }, { custom_ai_prompts: [] }] },
      { csat_config: [:display_type, :message, :button_text, :language,
-                      { survey_rules: [:operator, { values: [] }],
-                        template: [:name, :template_id, :friendly_name, :content_sid, :approval_sid, :created_at, :language, :status] }] },
+                     { survey_rules: [:operator, { values: [] }],
+                       template: [:name, :template_id, :created_at, :language, :status] }] },
      { sales_config: [:ai_allow_create_order, :platform,
                       { order_notification_templates: [:confirmed, :processing, :shipped, :delivered, :cancelled] }] },
      { zalo_auto_message_config: [:zalo_auto_message_enabled, { zalo_auto_message_inbox_ids: [] }] }]
@@ -350,19 +342,15 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   end
 
   def index_includes
-    [:channel, :portal, :agent_bot_inbox, :hooks, :ecommerce_integration, { avatar_attachment: [:blob] }]
+    [:channel, :agent_bot_inbox, :hooks, :ecommerce_integration, { avatar_attachment: [:blob] }]
   end
 
   def channel_type_from_params
     {
       'web_widget' => Channel::WebWidget,
       'api' => Channel::Api,
-      'email' => Channel::Email,
-      'line' => Channel::Line,
       'telegram' => Channel::Telegram,
-      'whatsapp' => Channel::Whatsapp,
-      'sms' => Channel::Sms,
-      'voice' => Channel::Voice
+      'whatsapp' => Channel::Whatsapp
     }[permitted_params[:channel][:type]]
   end
 
@@ -370,5 +358,3 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
     channel_type.constantize.const_defined?(:EDITABLE_ATTRS) ? channel_type.constantize::EDITABLE_ATTRS.presence : []
   end
 end
-
-Api::V1::Accounts::InboxesController.prepend_mod_with('Api::V1::Accounts::InboxesController')

@@ -1,8 +1,8 @@
 <p><%= I18n.t('daily_summary_mailer.report_email.greeting') %></p>
-<p><%= raw ChatwootMarkdownRenderer.new(I18n.t('daily_summary_mailer.report_email.description', inbox_names: @inbox_names, account_name: @account.name)).render_article %></p>
+<p><%= raw ChatwootMarkdownRenderer.new(I18n.t('daily_summary_mailer.report_email.description', inbox_names: @inbox_names, account_name: @account.name)).render_document %></p>
 <hr/>
 <div style="margin-top: 20px; line-height: 1.6;">
-  <%= ChatwootMarkdownRenderer.new(@content).render_article %>
+  <%= ChatwootMarkdownRenderer.new(@content).render_document %>
 </div>
 <hr/>
 <p style="font-size: 12px; color: #666; margin-top: 20px;">

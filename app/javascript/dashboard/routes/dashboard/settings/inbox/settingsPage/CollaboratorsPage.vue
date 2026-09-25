@@ -84,12 +84,8 @@ const hasAdvancedAssignment = computed(() => {
   return isFeatureEnabled('advanced_assignment');
 });
 
-const hasAssignmentV2 = computed(() => {
-  return isFeatureEnabled('assignment_v2');
-});
-
 const showAdvancedAssignmentUI = computed(() => {
-  return hasAdvancedAssignment.value && hasAssignmentV2.value;
+  return hasAdvancedAssignment.value;
 });
 
 const assignmentOrderLabel = computed(() => {
@@ -407,11 +403,11 @@ onMounted(() => {
         @update:model-value="handleToggleAutoAssignment"
       >
         <template
-          v-if="enableAutoAssignment && (isEnterprise || hasAssignmentV2)"
+          v-if="enableAutoAssignment && (isEnterprise || hasAdvancedAssignment)"
           #editor
         >
-          <!-- assignment_v2 UI -->
-          <template v-if="hasAssignmentV2">
+          <!-- advanced_assignment UI -->
+          <template v-if="hasAdvancedAssignment">
             <!-- Policy Card - When policy is attached -->
             <div
               v-if="showAdvancedAssignmentUI && assignmentPolicy"
@@ -636,7 +632,7 @@ onMounted(() => {
             </div>
           </template>
 
-          <!-- Old UI for non-assignment_v2 -->
+          <!-- Old UI for non-advanced_assignment -->
           <template v-else-if="isEnterprise">
             <div class="p-4">
               <woot-input
@@ -695,39 +691,5 @@ onMounted(() => {
         </div>
       </div>
     </woot-modal>
-
-    <SettingsSection
-      v-if="inbox.channel_type === 'Channel::Voice'"
-      :title="$t('INBOX_MGMT.SETTINGS_POPUP.VOICE_CALL_ROUTING')"
-      :sub-title="$t('INBOX_MGMT.SETTINGS_POPUP.VOICE_CALL_ROUTING_SUB_TEXT')"
-    >
-      <label class="w-3/4 settings-item">
-        <div class="flex items-center gap-2">
-          <input
-            id="enablePersonalPhoneRouting"
-            v-model="enablePersonalPhoneRouting"
-            type="checkbox"
-          />
-          <label for="enablePersonalPhoneRouting">
-            {{ $t('INBOX_MGMT.SETTINGS_POPUP.PERSONAL_PHONE_ROUTING') }}
-          </label>
-        </div>
-
-        <p class="pb-1 text-sm not-italic text-n-slate-11">
-          {{ $t('INBOX_MGMT.SETTINGS_POPUP.PERSONAL_PHONE_ROUTING_SUB_TEXT') }}
-        </p>
-      </label>
-
-      <div v-if="enablePersonalPhoneRouting" class="agent-phone-container">
-        <p class="pb-4 italic text-sm text-n-slate-11">
-          {{ $t('INBOX_MGMT.SETTINGS_POPUP.AGENT_PHONE_SETTINGS_INFO') }}
-        </p>
-        <NextButton
-          :label="$t('INBOX_MGMT.SETTINGS_POPUP.UPDATE')"
-          :is-loading="isVoiceRoutingUpdating"
-          @click="updateVoiceRouting"
-        />
-      </div>
-    </SettingsSection>
   </div>
 </template>

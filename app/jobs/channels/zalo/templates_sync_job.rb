@@ -11,7 +11,7 @@ class Channels::Zalo::TemplatesSyncJob < ApplicationJob
       # ZNS Template API structure mapping
       template_name = template_data['templateName'] || template_data['template_name']
       status_str = template_data['status']&.downcase || 'active'
-      
+
       # Determine ZaloTemplate status
       status = if status_str == 'approved' || status_str == 'active'
                  :active
@@ -33,7 +33,7 @@ class Channels::Zalo::TemplatesSyncJob < ApplicationJob
         language: 'VI',
         template_content: { params: content, raw: template_data }
       )
-      
+
       zalo_template.save!
     end
   end

@@ -53,7 +53,7 @@ module CalendarService
 
           while slot_start + duration.minutes <= close_time
             slot_end = slot_start + duration.minutes
-            
+
             # Check against busy periods
             is_busy = busy_periods.any? do |busy|
               busy_start = busy.start.in_time_zone
@@ -62,9 +62,7 @@ module CalendarService
               slot_start < busy_end && slot_end > busy_start
             end
 
-            unless is_busy
-              available_slots << { start: slot_start, end: slot_end }
-            end
+            available_slots << { start: slot_start, end: slot_end } unless is_busy
 
             slot_start = slot_end + buffer.minutes
           end

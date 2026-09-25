@@ -80,8 +80,6 @@ class Captain::Copilot::ChatService < Llm::BaseAiService
     Captain::Tools::SearchDocumentationService,
     Captain::Tools::Copilot::GetConversationService,
     Captain::Tools::Copilot::SearchConversationsService,
-    Captain::Tools::Copilot::GetArticleService,
-    Captain::Tools::Copilot::SearchArticlesService,
     Captain::Tools::Copilot::GetContactService,
     Captain::Tools::Copilot::SearchContactsService,
     Captain::Tools::Copilot::SearchLinearIssuesService,

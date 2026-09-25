@@ -5,28 +5,18 @@ import ContactAPI from 'dashboard/api/contacts';
 
 const CHANNEL_PRIORITY = {
   'Channel::ZaloPersonal': 1,
-  'Channel::Email': 2,
   'Channel::Whatsapp': 3,
-  'Channel::Sms': 4,
-  'Channel::TwilioSms': 5,
-  'Channel::Voice': 6,
   'Channel::WebWidget': 7,
   'Channel::Api': 8,
 };
 
 export const generateLabelForContactableInboxesList = ({
   name,
-  email,
   channelType,
   phoneNumber,
 }) => {
-  if (channelType === INBOX_TYPES.EMAIL) {
-    return `${name} (${email})`;
-  }
   if (
-    channelType === INBOX_TYPES.TWILIO ||
     channelType === INBOX_TYPES.WHATSAPP ||
-    channelType === INBOX_TYPES.VOICE ||
     channelType === INBOX_TYPES.ZALO_PERSONAL
   ) {
     return phoneNumber ? `${name} (${phoneNumber})` : name;
@@ -47,7 +37,6 @@ const transformInbox = ({
   icon: getInboxIconByType(channelType, medium, 'line'),
   label: generateLabelForContactableInboxesList({
     name,
-    email,
     channelType,
     phoneNumber,
   }),
@@ -127,9 +116,6 @@ export const prepareNewMessagePayload = ({
   targetInbox,
   selectedContact,
   message,
-  subject,
-  ccEmails,
-  bccEmails,
   currentUser,
   attachedFiles = [],
   directUploadsEnabled = false,
@@ -147,18 +133,6 @@ export const prepareNewMessagePayload = ({
       attachedFiles,
       directUploadsEnabled
     );
-  }
-
-  if (subject) {
-    payload.mailSubject = subject;
-  }
-
-  if (ccEmails) {
-    payload.message.cc_emails = ccEmails;
-  }
-
-  if (bccEmails) {
-    payload.message.bcc_emails = bccEmails;
   }
 
   return payload;

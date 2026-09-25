@@ -83,20 +83,6 @@ RSpec.describe 'Contacts API', type: :request do
         expect(first_inbox).to be_a(Hash)
         expect(first_inbox).to include('id', 'channel_id', 'channel_type', 'name', 'avatar_url', 'provider')
 
-        expect(first_inbox).not_to include('imap_login',
-                                           'imap_password',
-                                           'imap_address',
-                                           'imap_port',
-                                           'imap_enabled',
-                                           'imap_enable_ssl')
-
-        expect(first_inbox).not_to include('smtp_login',
-                                           'smtp_password',
-                                           'smtp_address',
-                                           'smtp_port',
-                                           'smtp_enabled',
-                                           'smtp_domain')
-
         expect(first_inbox).not_to include('hmac_token', 'provider_config')
       end
 
@@ -519,10 +505,10 @@ RSpec.describe 'Contacts API', type: :request do
 
     context 'when it is an authenticated user' do
       let(:agent) { create(:user, account: account, role: :agent) }
-      let!(:twilio_sms) { create(:channel_twilio_sms, account: account) }
-      let!(:twilio_sms_inbox) { create(:inbox, channel: twilio_sms, account: account) }
-      let!(:twilio_whatsapp) { create(:channel_twilio_sms, medium: :whatsapp, account: account) }
-      let!(:twilio_whatsapp_inbox) { create(:inbox, channel: twilio_whatsapp, account: account) }
+      let!(:api_channel) { create(:channel_api, account: account) }
+      let!(:twilio_sms_inbox) { create(:inbox, channel: api_channel, account: account) }
+      let!(:telegram_channel) { create(:channel_telegram, account: account) }
+      let!(:twilio_whatsapp_inbox) { create(:inbox, channel: telegram_channel, account: account) }
 
       it 'shows the contactable inboxes which the user has access to' do
         create(:inbox_member, user: agent, inbox: twilio_whatsapp_inbox)

@@ -1,4 +1,3 @@
-import { MESSAGE_TYPE } from 'shared/constants/messages';
 import { applyPageFilters, applyRoleFilter, sortComparator } from './helpers';
 import filterQueryGenerator from 'dashboard/helper/filterQueryGenerator';
 import { matchesFilters } from './helpers/filterHelpers';
@@ -58,20 +57,6 @@ const getters = {
     return attachments[selectedChatId] || [];
   },
   getChatListFilters: ({ conversationFilters }) => conversationFilters,
-  getLastEmailInSelectedChat: (stage, _getters) => {
-    const selectedChat = _getters.getSelectedChat;
-    const { messages = [] } = selectedChat;
-    const lastEmail = [...messages].reverse().find(message => {
-      const { message_type: messageType } = message;
-      if (message.private) return false;
-
-      return [MESSAGE_TYPE.OUTGOING, MESSAGE_TYPE.INCOMING].includes(
-        messageType
-      );
-    });
-
-    return lastEmail;
-  },
   getMineChats: (_state, _, __, rootGetters) => activeFilters => {
     const currentUserID = rootGetters.getCurrentUser?.id;
 

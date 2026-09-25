@@ -27,9 +27,6 @@ class Integrations::Slack::SendOnSlackService < Base::SendOnChannelService
   private
 
   def valid_channel_for_slack?
-    # slack wouldn't be an ideal interface to reply to tweets, hence disabling that case
-    return false if channel.is_a?(Channel::TwitterProfile) && conversation.additional_attributes['type'] == 'tweet'
-
     true
   end
 
@@ -53,7 +50,7 @@ class Integrations::Slack::SendOnSlackService < Base::SendOnChannelService
     if conversation.identifier.present?
       "#{private_indicator}#{sanitized_content}"
     else
-      "#{formatted_inbox_name}#{formatted_conversation_link}#{email_subject_line}\n#{sanitized_content}"
+      "#{formatted_inbox_name}#{formatted_conversation_link}\n#{sanitized_content}"
     end
   end
 
@@ -77,15 +74,6 @@ class Integrations::Slack::SendOnSlackService < Base::SendOnChannelService
 
   def formatted_conversation_link
     "#{link_to_conversation} to view the conversation.\n"
-  end
-
-  def email_subject_line
-    return '' unless message.inbox.email?
-
-    email_payload = message.content_attributes['email']
-    return "*Subject:* #{email_payload['subject']}\n\n" if email_payload.present? && email_payload['subject'].present?
-
-    ''
   end
 
   def avatar_url(sender)

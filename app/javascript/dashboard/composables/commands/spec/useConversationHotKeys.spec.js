@@ -177,12 +177,8 @@ describe('useConversationHotKeys', () => {
     const muteAction = conversationHotKeys.value.find(
       action => action.id === 'mute_conversation'
     );
-    const sendTranscriptAction = conversationHotKeys.value.find(
-      action => action.id === 'send_transcript'
-    );
 
     expect(muteAction).toBeDefined();
-    expect(sendTranscriptAction).toBeDefined();
   });
 
   it('should return unmute action when conversation is muted', () => {

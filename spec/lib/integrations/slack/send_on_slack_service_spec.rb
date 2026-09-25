@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe Integrations::Slack::SendOnSlackService do
   let!(:contact) { create(:contact) }
-  let(:channel_email) { create(:channel_email) }
-  let!(:conversation) { create(:conversation, inbox: channel_email.inbox, contact: contact, identifier: nil) }
+  let(:channel_widget) { create(:channel_widget) }
+  let!(:conversation) { create(:conversation, inbox: channel_widget.inbox, contact: contact, identifier: nil) }
   let(:account) { conversation.account }
   let!(:hook) { create(:integrations_hook, account: account) }
   let!(:message) do
@@ -49,34 +49,6 @@ describe Integrations::Slack::SendOnSlackService do
         builder.perform
 
         expect(conversation.reload.identifier).to eq '12345.6789'
-      end
-
-      context 'with subject line in email' do
-        let(:message) do
-          create(:message,
-                 content_attributes: { 'email': { 'subject': 'Sample subject line' } },
-                 content: 'Sample Body',
-                 account: conversation.account,
-                 inbox: conversation.inbox, conversation: conversation)
-        end
-
-        it 'creates slack message with subject line' do
-          inbox = conversation.inbox
-
-          expect(slack_client).to receive(:chat_postMessage).with(
-            channel: hook.reference_id,
-            text: "\n*Inbox:* #{inbox.name} (#{inbox.inbox_type})\n#{conversation_link}\n" \
-                  "*Subject:* Sample subject line\n\n\n#{message.content}",
-            username: "#{message.sender.name} (Contact)",
-            thread_ts: nil,
-            icon_url: anything,
-            unfurl_links: false
-          ).and_return(slack_message)
-
-          builder.perform
-
-          expect(conversation.reload.identifier).to eq '12345.6789'
-        end
       end
     end
 

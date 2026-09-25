@@ -15,14 +15,14 @@ class DataImport
         if name.blank?
           # If name is blank, we can't create a product, reject all rows
           group_rows.each do |row|
-            row['errors'] = I18n.t('errors.data_import.product.name_missing', default: "Name is missing")
+            row['errors'] = I18n.t('errors.data_import.product.name_missing', default: 'Name is missing')
             rejected_records << row
           end
           next
         end
 
         product, errors = build_product_with_variants(name, group_rows)
-        
+
         if errors.empty? && product.save
           records << product
         else
@@ -40,7 +40,7 @@ class DataImport
 
     def build_product_with_variants(name, group_rows)
       first_row = group_rows.first
-      
+
       product = @account.products.find_or_initialize_by(name: name)
 
       # Only update main attributes if it's a new product or we want to overwrite
@@ -49,10 +49,8 @@ class DataImport
       product.price = first_row[:price] if first_row[:price].present?
       product.currency = first_row[:currency] || 'VND'
       product.status = first_row[:status] || 'draft'
-      
-      if first_row[:images].present?
-        product.images = first_row[:images].split(',').map(&:strip)
-      end
+
+      product.images = first_row[:images].split(',').map(&:strip) if first_row[:images].present?
 
       meta = product.meta || {}
       meta['product_type'] = first_row[:product_type] if first_row[:product_type].present?
@@ -72,7 +70,7 @@ class DataImport
       # Process variants
       group_rows.each do |row|
         next if row[:variant_name].blank? && row[:variant_sku].blank? && row[:variant_color].blank? && row[:variant_size].blank?
-        
+
         # Determine variant identifier
         variant = if row[:variant_sku].present?
                     product.product_variants.find_or_initialize_by(sku: row[:variant_sku])
@@ -95,9 +93,7 @@ class DataImport
         variant_meta['height'] = row[:variant_height] if row[:variant_height].present?
         variant.meta = variant_meta
 
-        unless variant.valid?
-          errors.concat(variant.errors.full_messages)
-        end
+        errors.concat(variant.errors.full_messages) unless variant.valid?
       end
 
       [product, errors]

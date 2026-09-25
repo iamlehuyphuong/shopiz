@@ -32,17 +32,11 @@ const inboxName = computed(() => {
     return '';
   }
 
-  const isTwilioChannel = inbox.channel_type === INBOX_TYPES.TWILIO;
   const isWhatsAppChannel = inbox.channel_type === INBOX_TYPES.WHATSAPP;
-  const isEmailChannel = inbox.channel_type === INBOX_TYPES.EMAIL;
 
-  if (isTwilioChannel || isWhatsAppChannel) {
+  if (isWhatsAppChannel) {
     const identifier = inbox.messaging_service_sid || inbox.phone_number;
     return identifier ? `${inbox.name} (${identifier})` : inbox.name;
-  }
-
-  if (isEmailChannel && inbox.email) {
-    return `${inbox.name} (${inbox.email})`;
   }
 
   return inbox.name;

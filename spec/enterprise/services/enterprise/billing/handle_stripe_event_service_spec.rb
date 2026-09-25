@@ -56,8 +56,6 @@ describe Enterprise::Billing::HandleStripeEventService do
       )
 
       # Verify premium features are disabled for default plan
-      expect(account).not_to be_feature_enabled('channel_email')
-      expect(account).not_to be_feature_enabled('help_center')
       expect(account).not_to be_feature_enabled('sla')
       expect(account).not_to be_feature_enabled('custom_roles')
       expect(account).not_to be_feature_enabled('audit_logs')
@@ -241,7 +239,6 @@ describe Enterprise::Billing::HandleStripeEventService do
 
         # But other premium features should be disabled
         expect(account).not_to be_feature_enabled('channel_instagram')
-        expect(account).not_to be_feature_enabled('help_center')
       end
     end
   end
@@ -328,7 +325,6 @@ describe Enterprise::Billing::HandleStripeEventService do
         account.reload
         # Spot check that premium features are disabled
         expect(account).not_to be_feature_enabled('channel_instagram')
-        expect(account).not_to be_feature_enabled('help_center')
       end
     end
   end

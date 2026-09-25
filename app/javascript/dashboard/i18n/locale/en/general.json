@@ -19,8 +19,7 @@
     "REPORT_SHORT_DATE_FORMAT": "dd-MMM",
     "REPORT_MONTH_YEAR_FORMAT": "MMM-yyyy",
     "DATE_FORMAT_STINGY": "MMM d",
-    "DATE_FORMAT_WITH_SHORT_DAY": "EEE, MMM d, yyyy 'at' p",
-    "QUOTED_EMAIL_HEADER": "On %{date} %{sender} wrote:"
+    "DATE_FORMAT_WITH_SHORT_DAY": "EEE, MMM d, yyyy 'at' p"
   },
   "CHOICE_TOGGLE": {
     "YES": "Yes",

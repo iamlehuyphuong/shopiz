@@ -30,7 +30,7 @@ class Api::V1::Accounts::Channels::TiktokShopChannelsController < Api::V1::Accou
   end
 
   def data_from_redis
-    @redis = Redis.new(url: ENV["REDIS_URL"])
+    @redis = Redis.new(url: ENV.fetch('REDIS_URL', nil))
     channel_data_json = @redis.get("tiktok_session:#{params[:tiktok_session_id]}")
 
     JSON.parse(channel_data_json)

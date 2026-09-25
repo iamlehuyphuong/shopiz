@@ -12,7 +12,8 @@ class Sepay::EinvoiceClient
     @client_secret = GlobalConfig.get_value('SEPAY_EINVOICE_CLIENT_SECRET').presence || ENV.fetch('SEPAY_EINVOICE_CLIENT_SECRET', nil)
     @template_code = GlobalConfig.get_value('SEPAY_EINVOICE_TEMPLATE_CODE').presence || ENV.fetch('SEPAY_EINVOICE_TEMPLATE_CODE', nil)
     @invoice_series = GlobalConfig.get_value('SEPAY_EINVOICE_INVOICE_SERIES').presence || ENV.fetch('SEPAY_EINVOICE_INVOICE_SERIES', nil)
-    @provider_account_id = GlobalConfig.get_value('SEPAY_EINVOICE_PROVIDER_ACCOUNT_ID').presence || ENV.fetch('SEPAY_EINVOICE_PROVIDER_ACCOUNT_ID', nil)
+    @provider_account_id = GlobalConfig.get_value('SEPAY_EINVOICE_PROVIDER_ACCOUNT_ID').presence || ENV.fetch('SEPAY_EINVOICE_PROVIDER_ACCOUNT_ID',
+                                                                                                              nil)
 
     raise Error, 'Missing client_id for SePay eInvoice' if @client_id.blank?
     raise Error, 'Missing client_secret for SePay eInvoice' if @client_secret.blank?
@@ -25,12 +26,12 @@ class Sepay::EinvoiceClient
 
     product_name = billing_history.product_name || 'Dịch vụ phần mềm'
     amount = billing_history.price_amount
-    
+
     buyer_email = account.email
     buyer_tax_code = account.custom_attributes['tax_code'].to_s.strip
     buyer_address = account.custom_attributes['address'].to_s.strip
     buyer_name_raw = account.name.to_s.strip.presence || account.email
-    
+
     if buyer_tax_code.present?
       buyer_type = 'business'
       buyer_name = buyer_name_raw

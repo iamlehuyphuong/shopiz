@@ -43,7 +43,7 @@ class ZaloPersonal::SyncLabelsService
       next unless mapping && mapping.label
 
       shopiz_label = mapping.label
-      
+
       # 1. Update Shopiz label status (color, description)
       update_shopiz_label(mapping, shopiz_label, zalo_label)
 
@@ -53,9 +53,7 @@ class ZaloPersonal::SyncLabelsService
   end
 
   def update_shopiz_label(mapping, shopiz_label, zalo_label)
-    if zalo_label['text'].present? && mapping.native_label_name != zalo_label['text']
-      mapping.update(native_label_name: zalo_label['text'])
-    end
+    mapping.update(native_label_name: zalo_label['text']) if zalo_label['text'].present? && mapping.native_label_name != zalo_label['text']
 
     updates = {}
     updates[:description] = zalo_label['text'] if zalo_label['text'].present?
@@ -73,7 +71,7 @@ class ZaloPersonal::SyncLabelsService
                                       .where('conversations.external_source_id IN (:ids) OR contact_inboxes.source_id IN (:ids)', ids: external_source_ids)
                                       .pluck(:id)
                               end
-    
+
     current_conversation_ids = @inbox.conversations.tagged_with(shopiz_label.title).pluck(:id)
 
     to_add_ids = target_conversation_ids - current_conversation_ids
@@ -87,13 +85,13 @@ class ZaloPersonal::SyncLabelsService
     end
 
     to_remove_ids = current_conversation_ids - target_conversation_ids
-    if to_remove_ids.any?
-      Conversation.where(id: to_remove_ids).find_each do |conv|
-        old_labels = conv.label_list.dup
-        conv.label_list.remove(shopiz_label.title)
-        conv.save
-        conv.send(:dispatch_label_update_event, old_labels, conv.label_list) if conv.respond_to?(:dispatch_label_update_event, true)
-      end
+    return unless to_remove_ids.any?
+
+    Conversation.where(id: to_remove_ids).find_each do |conv|
+      old_labels = conv.label_list.dup
+      conv.label_list.remove(shopiz_label.title)
+      conv.save
+      conv.send(:dispatch_label_update_event, old_labels, conv.label_list) if conv.respond_to?(:dispatch_label_update_event, true)
     end
   end
 end

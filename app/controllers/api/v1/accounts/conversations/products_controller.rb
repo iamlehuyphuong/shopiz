@@ -10,8 +10,8 @@ class Api::V1::Accounts::Conversations::ProductsController < Api::V1::Accounts::
                       end
 
     products = fetch_synced_products(platform, params[:q].to_s.strip, params[:page].to_i)
-    
-    render json: { 
+
+    render json: {
       products: products,
       has_synced_data: has_synced_data
     }

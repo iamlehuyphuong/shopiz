@@ -19,7 +19,10 @@ class Payos::Client
   end
 
   def create_payment_link(payload)
-    raise PaymentError, 'PayOS not configured: missing client_id, api_key, or checksum_key' if client_id.blank? || api_key.blank? || checksum_key.blank?
+    if client_id.blank? || api_key.blank? || checksum_key.blank?
+      raise PaymentError,
+            'PayOS not configured: missing client_id, api_key, or checksum_key'
+    end
 
     payload[:signature] = Payos::Signature.generate(payload, checksum_key)
 

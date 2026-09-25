@@ -35,7 +35,7 @@ class Api::V1::Accounts::CsatSurveyResponsesController < Api::V1::Accounts::Base
       ]
       headers << I18n.t('reports.csat.headers.review_notes') if ChatwootApp.enterprise?
       sheet.add_row headers
-      
+
       @csat_survey_responses.each do |csat_response|
         assigned_agent = csat_response.assigned_agent
         contact = csat_response.contact

@@ -62,28 +62,6 @@ describe('#actions', () => {
     });
   });
 
-  describe('#createVoiceChannel', () => {
-    it('sends correct actions if API is success', async () => {
-      axios.post.mockResolvedValue({ data: inboxList[0] });
-      await actions.createVoiceChannel({ commit }, inboxList[0]);
-      expect(commit.mock.calls).toEqual([
-        [types.default.SET_INBOXES_UI_FLAG, { isCreating: true }],
-        [types.default.ADD_INBOXES, inboxList[0]],
-        [types.default.SET_INBOXES_UI_FLAG, { isCreating: false }],
-      ]);
-    });
-    it('sends correct actions if API is error', async () => {
-      axios.post.mockRejectedValue({ message: 'Incorrect header' });
-      await expect(actions.createVoiceChannel({ commit })).rejects.toThrow(
-        Error
-      );
-      expect(commit.mock.calls).toEqual([
-        [types.default.SET_INBOXES_UI_FLAG, { isCreating: true }],
-        [types.default.SET_INBOXES_UI_FLAG, { isCreating: false }],
-      ]);
-    });
-  });
-
   describe('#createFBChannel', () => {
     it('sends correct actions if API is success', async () => {
       axios.post.mockResolvedValue({ data: inboxList[0] });
@@ -131,66 +109,6 @@ describe('#actions', () => {
       expect(commit.mock.calls).toEqual([
         [types.default.SET_INBOXES_UI_FLAG, { isUpdating: true }],
         [types.default.SET_INBOXES_UI_FLAG, { isUpdating: false }],
-      ]);
-    });
-  });
-
-  describe('#updateInboxIMAP', () => {
-    it('sends correct actions if API is success', async () => {
-      const updatedInbox = inboxList[0];
-
-      axios.patch.mockResolvedValue({ data: updatedInbox });
-      await actions.updateInboxIMAP(
-        { commit },
-        { id: updatedInbox.id, inbox: { channel: { imap_enabled: true } } }
-      );
-      expect(commit.mock.calls).toEqual([
-        [types.default.SET_INBOXES_UI_FLAG, { isUpdatingIMAP: true }],
-        [types.default.EDIT_INBOXES, updatedInbox],
-        [types.default.SET_INBOXES_UI_FLAG, { isUpdatingIMAP: false }],
-      ]);
-    });
-    it('sends correct actions if API is error', async () => {
-      axios.patch.mockRejectedValue({ message: 'Incorrect header' });
-      await expect(
-        actions.updateInboxIMAP(
-          { commit },
-          { id: inboxList[0].id, inbox: { channel: { imap_enabled: true } } }
-        )
-      ).rejects.toThrow(Error);
-      expect(commit.mock.calls).toEqual([
-        [types.default.SET_INBOXES_UI_FLAG, { isUpdatingIMAP: true }],
-        [types.default.SET_INBOXES_UI_FLAG, { isUpdatingIMAP: false }],
-      ]);
-    });
-  });
-
-  describe('#updateInboxSMTP', () => {
-    it('sends correct actions if API is success', async () => {
-      const updatedInbox = inboxList[0];
-
-      axios.patch.mockResolvedValue({ data: updatedInbox });
-      await actions.updateInboxSMTP(
-        { commit },
-        { id: updatedInbox.id, inbox: { channel: { smtp_enabled: true } } }
-      );
-      expect(commit.mock.calls).toEqual([
-        [types.default.SET_INBOXES_UI_FLAG, { isUpdatingSMTP: true }],
-        [types.default.EDIT_INBOXES, updatedInbox],
-        [types.default.SET_INBOXES_UI_FLAG, { isUpdatingSMTP: false }],
-      ]);
-    });
-    it('sends correct actions if API is error', async () => {
-      axios.patch.mockRejectedValue({ message: 'Incorrect header' });
-      await expect(
-        actions.updateInboxSMTP(
-          { commit },
-          { id: inboxList[0].id, inbox: { channel: { smtp_enabled: true } } }
-        )
-      ).rejects.toThrow(Error);
-      expect(commit.mock.calls).toEqual([
-        [types.default.SET_INBOXES_UI_FLAG, { isUpdatingSMTP: true }],
-        [types.default.SET_INBOXES_UI_FLAG, { isUpdatingSMTP: false }],
       ]);
     });
   });

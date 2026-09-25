@@ -60,7 +60,7 @@ const senderThumbnail = computed(() => props.sender?.thumbnail || '');
       </span>
     </div>
     <span class="flex-shrink-0 text-sm text-n-slate-11 whitespace-nowrap">
-      {{ t('CAMPAIGN.SMS.CARD.CAMPAIGN_DETAILS.ON') }}
+      {{ t('CAMPAIGN.CARD.CAMPAIGN_DETAILS.ON') }}
     </span>
     <span class="flex-1 text-sm font-medium truncate text-n-slate-12">
       {{

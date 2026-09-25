@@ -4,8 +4,6 @@ import inboxMixin from 'shared/mixins/inboxMixin';
 import SettingsFieldSection from 'dashboard/components-next/Settings/SettingsFieldSection.vue';
 import SettingsToggleSection from 'dashboard/components-next/Settings/SettingsToggleSection.vue';
 import SettingsAccordion from 'dashboard/components-next/Settings/SettingsAccordion.vue';
-import ImapSettings from '../ImapSettings.vue';
-import SmtpSettings from '../SmtpSettings.vue';
 import { useVuelidate } from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import NextButton from 'dashboard/components-next/button/Button.vue';
@@ -19,8 +17,6 @@ export default {
     SettingsFieldSection,
     SettingsToggleSection,
     SettingsAccordion,
-    ImapSettings,
-    SmtpSettings,
     NextButton,
     TextArea,
     WhatsappReauthorize,
@@ -58,9 +54,6 @@ export default {
     },
     whatsappAppId() {
       return window.shopizConfig?.whatsappAppId;
-    },
-    isForwardingEnabled() {
-      return !!this.inbox.forwarding_enabled;
     },
     allInboxes() {
       return this.$store.getters['inboxes/getInboxes'];
@@ -233,42 +226,7 @@ export default {
 </script>
 
 <template>
-  <div v-if="isATwilioChannel">
-    <SettingsFieldSection
-      :label="$t('INBOX_MGMT.ADD.TWILIO.API_CALLBACK.TITLE')"
-      :help-text="$t('INBOX_MGMT.ADD.TWILIO.API_CALLBACK.SUBTITLE')"
-    >
-      <woot-code :script="inbox.callback_webhook_url" lang="html" />
-    </SettingsFieldSection>
-  </div>
-  <div v-else-if="isAVoiceChannel">
-    <SettingsFieldSection
-      :label="$t('INBOX_MGMT.ADD.VOICE.CONFIGURATION.TWILIO_VOICE_URL_TITLE')"
-      :help-text="
-        $t('INBOX_MGMT.ADD.VOICE.CONFIGURATION.TWILIO_VOICE_URL_SUBTITLE')
-      "
-    >
-      <woot-code :script="inbox.voice_call_webhook_url" lang="html" />
-    </SettingsFieldSection>
-    <SettingsFieldSection
-      :label="$t('INBOX_MGMT.ADD.VOICE.CONFIGURATION.TWILIO_STATUS_URL_TITLE')"
-      :help-text="
-        $t('INBOX_MGMT.ADD.VOICE.CONFIGURATION.TWILIO_STATUS_URL_SUBTITLE')
-      "
-    >
-      <woot-code :script="inbox.voice_status_webhook_url" lang="html" />
-    </SettingsFieldSection>
-  </div>
-
-  <div v-else-if="isALineChannel">
-    <SettingsFieldSection
-      :label="$t('INBOX_MGMT.ADD.LINE_CHANNEL.API_CALLBACK.TITLE')"
-      :help-text="$t('INBOX_MGMT.ADD.LINE_CHANNEL.API_CALLBACK.SUBTITLE')"
-    >
-      <woot-code :script="inbox.callback_webhook_url" lang="html" />
-    </SettingsFieldSection>
-  </div>
-  <div v-else-if="isAZaloPersonalChannel">
+  <div v-if="isAZaloPersonalChannel">
     <SettingsFieldSection
       :label="$t('INBOX_MGMT.SETTINGS_POPUP.PROXY_CONFIGURATION.TITLE')"
       :help-text="$t('INBOX_MGMT.SETTINGS_POPUP.PROXY_CONFIGURATION.SUBTITLE')"
@@ -398,34 +356,7 @@ export default {
       </div>
     </SettingsFieldSection>
   </div>
-  <div v-else-if="isAnEmailChannel">
-    <div>
-      <SettingsFieldSection
-        :label="$t('INBOX_MGMT.SETTINGS_POPUP.FORWARD_EMAIL_TITLE')"
-        :help-text="
-          isForwardingEnabled
-            ? $t('INBOX_MGMT.SETTINGS_POPUP.FORWARD_EMAIL_SUB_TEXT')
-            : ''
-        "
-      >
-        <woot-code
-          v-if="isForwardingEnabled"
-          :script="inbox.forward_to_email"
-        />
-        <div
-          v-else
-          class="py-2 px-3 bg-n-amber-3 outline-n-amber-4 text-n-amber-11 outline outline-1 -outline-offset-1 rounded-xl"
-        >
-          <p class="text-body-para mb-0">
-            {{ $t('INBOX_MGMT.SETTINGS_POPUP.FORWARD_EMAIL_NOT_CONFIGURED') }}
-          </p>
-        </div>
-      </SettingsFieldSection>
-    </div>
-    <ImapSettings :inbox="inbox" />
-    <SmtpSettings v-if="inbox.imap_enabled" :inbox="inbox" />
-  </div>
-  <div v-else-if="isAWhatsAppChannel && !isATwilioChannel">
+  <div v-else-if="isAWhatsAppChannel">
     <div v-if="inbox.provider_config">
       <!-- Embedded Signup Section -->
       <template v-if="isEmbeddedSignupWhatsApp">

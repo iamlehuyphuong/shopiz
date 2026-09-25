@@ -48,9 +48,7 @@ class Captain::Tools::Copilot::Kiotviet::SearchOrdersService < Captain::Tools::B
     return nil if phone.blank? && code.blank?
 
     found = find_customer_by_code(code) || find_customer_by_phone(phone)
-    if found && contact && (phone.blank? || contact.phone_number == phone)
-      save_external_customer_id(contact, 'kiotviet', found)
-    end
+    save_external_customer_id(contact, 'kiotviet', found) if found && contact && (phone.blank? || contact.phone_number == phone)
 
     found
   end

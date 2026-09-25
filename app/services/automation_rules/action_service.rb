@@ -23,8 +23,6 @@ class AutomationRules::ActionService < ActionService
   private
 
   def send_attachment(blob_ids)
-    return if conversation_a_tweet?
-
     return unless @rule.files.attached?
 
     blobs = ActiveStorage::Blob.where(id: blob_ids)
@@ -41,8 +39,6 @@ class AutomationRules::ActionService < ActionService
   end
 
   def send_message(message)
-    return if conversation_a_tweet?
-
     params = { content: message[0], private: false, content_attributes: { automation_rule_id: @rule.id } }
     Messages::MessageBuilder.new(nil, @conversation, params).perform
   end
@@ -60,8 +56,6 @@ class AutomationRules::ActionService < ActionService
   end
 
   def send_facebook_utility_message(message_content)
-    return if conversation_a_tweet?
-
     content_attributes = { automation_rule_id: @rule.id }
 
     if @conversation.additional_attributes && @conversation.additional_attributes['comment_id'].present?
@@ -77,8 +71,6 @@ class AutomationRules::ActionService < ActionService
   end
 
   def add_private_note(message)
-    return if conversation_a_tweet?
-
     params = { content: message[0], private: true, content_attributes: { automation_rule_id: @rule.id } }
     Messages::MessageBuilder.new(nil, @conversation.reload, params).perform
   end

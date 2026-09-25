@@ -97,11 +97,6 @@
 # ------- End of Account Related Config ------- #
 
 # ------- Email Related Config ------- #
-- name: MAILER_INBOUND_EMAIL_DOMAIN
-  display_title: 'Inbound Email Domain'
-  value:
-  description: 'The domain name to be used for generating conversation continuity emails (reply+id@domain.com)'
-  locked: false
 - name: MAILER_SUPPORT_EMAIL
   display_title: 'Support Email'
   value:
@@ -164,17 +159,6 @@
   value: 'v22.0'
   locked: false
 # ------- End of WhatsApp Channel Related Config ------- #
-
-# MARK: Microsoft Email Channel Config
-- name: AZURE_APP_ID
-  display_title: 'Azure App ID'
-  description: 'The App ID that will be used to authenticate with customer Microsoft accounts. Find more details on setting up Azure here: https://www.shopiz.pro/dev/ms'
-  locked: false
-- name: AZURE_APP_SECRET
-  display_title: 'Azure App Secret'
-  locked: false
-  type: secret
-# End of Microsoft Email Channel Config
 
 # MARK: Captain Config
 - name: CAPTAIN_OPEN_AI_API_BASE_URL
@@ -262,10 +246,6 @@
   display_title: 'Blocked Email Domains'
   description: 'Add a domain per line to block them from signing up, accepts Regex'
   type: code
-- name: SKIP_INCOMING_BCC_PROCESSING
-  value:
-  display_title: 'Skip BCC Processing For'
-  description: 'Comma-separated list of account IDs that should be skipped from incoming BCC processing'
 - name: INACTIVE_WHATSAPP_NUMBERS
   value: ''
   display_title: 'Inactive WhatsApp Numbers'
@@ -642,28 +622,6 @@
   type: boolean
 ## ------ End of Configs added for Google OAuth ------ ##
 
-## ------ Configs added for SAML SSO ------ ##
-- name: ENABLE_SAML_SSO_LOGIN
-  display_title: 'Enable SAML SSO login'
-  value: true
-  locked: false
-  description: 'Show SAML SSO as a login option. Cannot be disabled if any users are using SAML authentication.'
-  type: boolean
-## ------ End of Configs added for SAML SSO ------ ##
-
-## ------ Configs added for Cloudflare ------ ##
-- name: CLOUDFLARE_API_KEY
-  display_title: 'Cloudflare API Key'
-  value:
-  locked: false
-  description: 'API key for Cloudflare account authentication'
-  type: secret
-- name: CLOUDFLARE_ZONE_ID
-  display_title: 'Cloudflare Zone ID'
-  value:
-  locked: false
-  description: 'Zone ID for the Cloudflare domain'
-## ------ End of Configs added for Cloudflare ------ ##
 
 ## ------ Customizations for Customers ------ ##
 - name: WIDGET_TOKEN_EXPIRY
@@ -787,28 +745,6 @@
     draft: Draft
     deprecated: Deprecated
   locked: false
-- name: CHANNEL_STATUS_LINE
-  display_title: Line Channel Status
-  value: published
-  type: select
-  options:
-    published: Published
-    beta: Beta
-    coming_soon: Coming Soon
-    draft: Draft
-    deprecated: Deprecated
-  locked: false
-- name: CHANNEL_STATUS_TWITTER
-  display_title: Twitter Channel Status
-  value: published
-  type: select
-  options:
-    published: Published
-    beta: Beta
-    coming_soon: Coming Soon
-    draft: Draft
-    deprecated: Deprecated
-  locked: false
 - name: CHANNEL_STATUS_WEBSITE
   display_title: Website Channel Status
   value: published
@@ -831,17 +767,7 @@
     draft: Draft
     deprecated: Deprecated
   locked: false
-- name: INTEGRATION_STATUS_DASHBOARD_APPS
-  display_title: Dashboard_apps Integration Status
-  value: published
-  type: select
-  options:
-    published: Published
-    beta: Beta
-    coming_soon: Coming Soon
-    draft: Draft
-    deprecated: Deprecated
-  locked: false
+
 - name: INTEGRATION_STATUS_OPENAI
   display_title: Openai Integration Status
   value: published
@@ -908,17 +834,7 @@
     draft: Draft
     deprecated: Deprecated
   locked: false
-- name: INTEGRATION_STATUS_DYTE
-  display_title: Dyte Integration Status
-  value: published
-  type: select
-  options:
-    published: Published
-    beta: Beta
-    coming_soon: Coming Soon
-    draft: Draft
-    deprecated: Deprecated
-  locked: false
+
 - name: INTEGRATION_STATUS_SHOPIFY
   display_title: Shopify Integration Status
   value: published

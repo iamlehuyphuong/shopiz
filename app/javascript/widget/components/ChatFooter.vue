@@ -5,7 +5,6 @@ import CustomButton from 'shared/components/Button.vue';
 import FooterReplyTo from 'widget/components/FooterReplyTo.vue';
 import ChatInputWrap from 'widget/components/ChatInputWrap.vue';
 import { BUS_EVENTS } from 'shared/constants/busEvents';
-import { sendEmailTranscript } from 'widget/api/conversation';
 import { useRouter } from 'vue-router';
 import { IFrameHelper } from '../helpers/utils';
 import { CHATWOOT_ON_START_CONVERSATION } from '../constants/sdkEvents';
@@ -41,12 +40,6 @@ export default {
       const { allowMessagesAfterResolved } = window.chatwootWebChannel;
       const { status } = this.conversationAttributes;
       return !allowMessagesAfterResolved && status === 'resolved';
-    },
-    showEmailTranscriptButton() {
-      return this.hasEmail;
-    },
-    hasEmail() {
-      return this.currentUser && this.currentUser.has_email;
     },
     hasReplyTo() {
       return (
@@ -90,21 +83,6 @@ export default {
     toggleReplyTo(message) {
       this.inReplyTo = message;
     },
-    async sendTranscript() {
-      if (this.hasEmail) {
-        try {
-          await sendEmailTranscript();
-          emitter.emit(BUS_EVENTS.SHOW_ALERT, {
-            message: this.$t('EMAIL_TRANSCRIPT.SEND_EMAIL_SUCCESS'),
-            type: 'success',
-          });
-        } catch (error) {
-          emitter.$emit(BUS_EVENTS.SHOW_ALERT, {
-            message: this.$t('EMAIL_TRANSCRIPT.SEND_EMAIL_ERROR'),
-          });
-        }
-      }
-    },
   },
 };
 </script>
@@ -139,14 +117,6 @@ export default {
       @click="startNewConversation"
     >
       {{ $t('START_NEW_CONVERSATION') }}
-    </CustomButton>
-    <CustomButton
-      v-if="showEmailTranscriptButton"
-      type="clear"
-      class="font-normal"
-      @click="sendTranscript"
-    >
-      {{ $t('EMAIL_TRANSCRIPT.BUTTON_TEXT') }}
     </CustomButton>
   </div>
 </template>

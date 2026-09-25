@@ -1,5 +1,5 @@
 <script>
-import { defineAsyncComponent, ref, computed, watch } from 'vue';
+import { defineAsyncComponent, ref, computed } from 'vue';
 
 import NextSidebar from 'next/sidebar/Sidebar.vue';
 import TopHeader from 'next/TopHeader.vue';
@@ -17,14 +17,9 @@ const CommandBar = defineAsyncComponent(
   () => import('./commands/commandbar.vue')
 );
 
-const FloatingCallWidget = defineAsyncComponent(
-  () => import('dashboard/components/widgets/FloatingCallWidget.vue')
-);
-
 import CopilotLauncher from 'dashboard/components-next/copilot/CopilotLauncher.vue';
 
 import MobileSidebarLauncher from 'dashboard/components-next/sidebar/MobileSidebarLauncher.vue';
-import { useCallsStore } from 'dashboard/stores/calls';
 import { useRoute } from 'vue-router';
 import { usePolicy } from 'dashboard/composables/usePolicy';
 import FeatureLockOverlay from 'dashboard/routes/dashboard/upgrade/FeatureLockOverlay.vue';
@@ -39,7 +34,6 @@ export default {
     UpgradePage,
     CopilotLauncher,
 
-    FloatingCallWidget,
     MobileSidebarLauncher,
     FeatureLockOverlay,
     OnboardingModal: defineAsyncComponent(
@@ -54,7 +48,6 @@ export default {
     const { uiSettings, updateUISettings } = useUISettings();
     const { accountId } = useAccount();
     const { width: windowWidth } = useWindowSize();
-    const callsStore = useCallsStore();
     const route = useRoute();
     const { shouldShowPaywall } = usePolicy();
 
@@ -90,8 +83,6 @@ export default {
       accountId,
       upgradePageRef,
       windowWidth,
-      hasActiveCall: computed(() => callsStore.hasActiveCall),
-      hasIncomingCall: computed(() => callsStore.hasIncomingCall),
       route,
       isFeatureLocked,
       shouldShowOnboardingModal,
@@ -225,8 +216,6 @@ export default {
             :is-mobile-sidebar-open="isMobileSidebarOpen"
             @toggle="toggleMobileSidebar"
           />
-
-          <FloatingCallWidget v-if="hasActiveCall || hasIncomingCall" />
         </template>
         <AddAccountModal
           :show="showCreateAccountModal"
