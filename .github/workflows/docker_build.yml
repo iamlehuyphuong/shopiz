@@ -58,7 +58,7 @@ jobs:
           platforms: ${{ matrix.platform }}
           outputs: type=image,name=ghcr.io/iamlehuyphuong/shopiz,push-by-digest=true,name-canonical=true,push=true
           cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-to: type=gha,mode=min
 
       - name: Export digest
         run: |
