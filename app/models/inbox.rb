@@ -219,8 +219,8 @@ class Inbox < ApplicationRecord
     members.ids
   end
 
-  def auto_assignment_v2_enabled?
-    account.feature_enabled?('assignment_v2')
+  def advanced_assignment_enabled?
+    account.feature_enabled?('advanced_assignment')
   end
 
   private

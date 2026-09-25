@@ -39,18 +39,12 @@ const agentAssignments = computed(() => {
     },
   ];
 
-  // Only show Agent Capacity if BOTH assignment_v2 AND advanced_assignment are enabled
-  // advanced_assignment identifies premium users
-  const hasAssignmentV2 = isFeatureEnabledonAccount.value(
-    accountId.value,
-    'assignment_v2'
-  );
   const hasAdvancedAssignment = isFeatureEnabledonAccount.value(
     accountId.value,
     'advanced_assignment'
   );
 
-  if (hasAssignmentV2 && hasAdvancedAssignment) {
+  if (hasAdvancedAssignment) {
     assignments.push({
       key: 'agent_capacity_policy_index',
       title: t('ASSIGNMENT_POLICY.INDEX.AGENT_CAPACITY_POLICY.TITLE'),

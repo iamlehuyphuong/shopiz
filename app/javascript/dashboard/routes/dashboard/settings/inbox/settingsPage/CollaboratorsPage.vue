@@ -84,12 +84,8 @@ const hasAdvancedAssignment = computed(() => {
   return isFeatureEnabled('advanced_assignment');
 });
 
-const hasAssignmentV2 = computed(() => {
-  return isFeatureEnabled('assignment_v2');
-});
-
 const showAdvancedAssignmentUI = computed(() => {
-  return hasAdvancedAssignment.value && hasAssignmentV2.value;
+  return hasAdvancedAssignment.value;
 });
 
 const assignmentOrderLabel = computed(() => {
@@ -407,11 +403,11 @@ onMounted(() => {
         @update:model-value="handleToggleAutoAssignment"
       >
         <template
-          v-if="enableAutoAssignment && (isEnterprise || hasAssignmentV2)"
+          v-if="enableAutoAssignment && (isEnterprise || hasAdvancedAssignment)"
           #editor
         >
-          <!-- assignment_v2 UI -->
-          <template v-if="hasAssignmentV2">
+          <!-- advanced_assignment UI -->
+          <template v-if="hasAdvancedAssignment">
             <!-- Policy Card - When policy is attached -->
             <div
               v-if="showAdvancedAssignmentUI && assignmentPolicy"
@@ -636,7 +632,7 @@ onMounted(() => {
             </div>
           </template>
 
-          <!-- Old UI for non-assignment_v2 -->
+          <!-- Old UI for non-advanced_assignment -->
           <template v-else-if="isEnterprise">
             <div class="p-4">
               <woot-input

@@ -12,9 +12,9 @@ RSpec.describe AutoAssignment::PeriodicAssignmentJob, type: :job do
   end
 
   describe '#perform' do
-    context 'when account has assignment_v2 feature enabled' do
+    context 'when account has advanced_assignment feature enabled' do
       before do
-        account.enable_features('assignment_v2')
+        account.enable_features('advanced_assignment')
         account.save!
         allow(Account).to receive(:find_in_batches).and_yield([account])
       end
@@ -41,7 +41,7 @@ RSpec.describe AutoAssignment::PeriodicAssignmentJob, type: :job do
           policy2 = create(:assignment_policy, account: account2)
           create(:inbox_assignment_policy, inbox: inbox2, assignment_policy: policy2)
 
-          account2.enable_features('assignment_v2')
+          account2.enable_features('advanced_assignment')
           account2.save!
 
           inbox_relation2 = instance_double(ActiveRecord::Relation)
@@ -72,7 +72,7 @@ RSpec.describe AutoAssignment::PeriodicAssignmentJob, type: :job do
       end
     end
 
-    context 'when account does not have assignment_v2 feature enabled' do
+    context 'when account does not have advanced_assignment feature enabled' do
       before do
         allow(Account).to receive(:find_in_batches).and_yield([account])
       end
@@ -90,7 +90,7 @@ RSpec.describe AutoAssignment::PeriodicAssignmentJob, type: :job do
         # Create multiple accounts
         5.times do |_i|
           acc = create(:account)
-          acc.enable_features('assignment_v2')
+          acc.enable_features('advanced_assignment')
           acc.save!
           inb = create(:inbox, account: acc, enable_auto_assignment: true)
           policy = create(:assignment_policy, account: acc)
