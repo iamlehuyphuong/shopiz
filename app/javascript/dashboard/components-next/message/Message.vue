@@ -488,8 +488,17 @@ const avatarInfo = computed(() => {
   const { sender } = props;
   const { name, type, avatarUrl, thumbnail } = sender || {};
 
+  if (type === SENDER_TYPES.CAPTAIN_ASSISTANT) {
+    return {
+      name: name ?? '',
+      src: '',
+      iconName: 'i-woot-captain',
+      colorIndex: 4, // Iris
+    };
+  }
+
   // If sender type is agent bot, use avatarUrl
-  if ([SENDER_TYPES.AGENT_BOT, SENDER_TYPES.CAPTAIN_ASSISTANT].includes(type)) {
+  if (type === SENDER_TYPES.AGENT_BOT) {
     return {
       name: name ?? '',
       src: avatarUrl ?? '',

@@ -188,6 +188,13 @@ const isConversationWorkflowEnabled = computed(() =>
   )
 );
 
+const isTemplateBuilderEnabled = computed(() =>
+  isFeatureEnabledonAccount.value(
+    route.params.accountId,
+    FEATURE_FLAGS.TEMPLATE_BUILDER
+  )
+);
+
 const sortedInboxes = computed(() =>
   inboxes.value.slice().sort((a, b) => a.name.localeCompare(b.name))
 );
@@ -235,20 +242,20 @@ const reportRoutes = computed(() => newReportRoutes());
 const menuItems = computed(() => {
   const items = [
     {
-      name: 'Inbox',
-      label: t('SIDEBAR.INBOX'),
-      icon: 'i-lucide-inbox',
-      to: accountScopedRoute('inbox_view'),
-      activeOn: ['inbox_view', 'inbox_view_conversation'],
-      getterKeys: {
-        count: 'notifications/getUnreadCount',
-      },
-    },
-    {
       name: 'Conversation',
       label: t('SIDEBAR.CONVERSATIONS'),
       icon: 'i-lucide-message-circle',
       children: [
+        {
+          name: 'Inbox',
+          label: t('SIDEBAR.INBOX'),
+          icon: 'i-lucide-inbox',
+          to: accountScopedRoute('inbox_view'),
+          activeOn: ['inbox_view', 'inbox_view_conversation'],
+          getterKeys: {
+            count: 'notifications/getUnreadCount',
+          },
+        },
         {
           name: 'All',
           label: t('SIDEBAR.ALL_CONVERSATIONS'),
@@ -852,12 +859,16 @@ const menuItems = computed(() => {
           icon: 'i-lucide-message-square-quote',
           to: accountScopedRoute('canned_list'),
         },
-        {
-          name: 'Settings Templates',
-          label: t('SIDEBAR.TEMPLATES'),
-          icon: 'i-lucide-file-text',
-          to: accountScopedRoute('templates_list'),
-        },
+        ...(isTemplateBuilderEnabled.value
+          ? [
+              {
+                name: 'Settings Templates',
+                label: t('SIDEBAR.TEMPLATES'),
+                icon: 'i-lucide-file-text',
+                to: accountScopedRoute('templates_list'),
+              },
+            ]
+          : []),
         {
           name: 'Settings Integrations',
           label: t('SIDEBAR.INTEGRATIONS'),

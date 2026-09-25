@@ -54,10 +54,7 @@ const campaignsRoutes = {
         {
           path: 'zalo_personal',
           name: 'campaigns_zalo_personal_index',
-          meta: {
-            ...meta,
-            featureFlag: FEATURE_FLAGS.CHANNEL_ZALO_PERSONAL,
-          },
+          meta,
           component: ZaloPersonalCampaignsPage,
         },
         {
@@ -75,10 +72,7 @@ const campaignsRoutes = {
         {
           path: 'whatsapp',
           name: 'campaigns_whatsapp_index',
-          meta: {
-            ...meta,
-            featureFlag: FEATURE_FLAGS.WHATSAPP_CAMPAIGNS,
-          },
+          meta,
           component: WhatsAppCampaignsPage,
         },
         {
