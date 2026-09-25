@@ -65,7 +65,7 @@ class Omicall::WebhookProcessorService
     if transaction_id.present?
       source_id = "omicall_#{transaction_id}"
       existing_message = conversation.messages.find_by(source_id: source_id)
-      
+
       if existing_message
         existing_message.update!(content_attributes: existing_message.content_attributes.merge(content_attributes))
       else
@@ -97,10 +97,10 @@ class Omicall::WebhookProcessorService
       )
     end
 
-    if tags.present? && tags.any?
-      lowercase_tags = tags.map(&:downcase)
-      existing_labels = conversation.account.labels.where(title: lowercase_tags).pluck(:title)
-      conversation.add_labels(existing_labels) if existing_labels.any?
-    end
+    return unless tags.present? && tags.any?
+
+    lowercase_tags = tags.map(&:downcase)
+    existing_labels = conversation.account.labels.where(title: lowercase_tags).pluck(:title)
+    conversation.add_labels(existing_labels) if existing_labels.any?
   end
 end

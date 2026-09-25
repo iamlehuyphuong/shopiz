@@ -1,7 +1,7 @@
 class Account::ProductsExportJob < ApplicationJob
   queue_as :low
 
-  def perform(account_id, user_id, column_names = nil, filter_params = nil)
+  def perform(account_id, user_id, _column_names = nil, filter_params = nil)
     @account = Account.find(account_id)
     @account_user = @account.users.find(user_id)
     @filter_params = filter_params || {}
@@ -14,10 +14,10 @@ class Account::ProductsExportJob < ApplicationJob
 
   def generate_csv
     headers = default_headers
-    
+
     csv_data = CSV.generate do |csv|
       csv << headers
-      
+
       products.each do |product|
         base_data = [
           product.name,

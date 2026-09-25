@@ -243,8 +243,6 @@ class Whatsapp::Providers::WhatsappCloudService < Whatsapp::Providers::BaseServi
     handle_template_error(response, parsed_response)
   end
 
-  private
-
   def handle_template_error(response, parsed_response)
     error = parsed_response['error'] || {}
     error_message =

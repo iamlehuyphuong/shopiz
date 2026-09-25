@@ -8,7 +8,7 @@ class DataImportJob < ApplicationJob
   def perform(data_import)
     @data_import = data_import
     @manager = "DataImport::#{@data_import.data_type.singularize.camelize}Manager".constantize.new(@data_import.account)
-    
+
     begin
       process_import_file
       send_import_notification_to_admin
@@ -21,7 +21,7 @@ class DataImportJob < ApplicationJob
 
   def process_import_file
     @data_import.update!(status: :processing)
-    
+
     records = []
     rejected_records = []
 
@@ -44,7 +44,7 @@ class DataImportJob < ApplicationJob
           end
         end
       end
-      
+
       # For contacts, we bulk import them here
       # <struct ActiveRecord::Import::Result failed_instances=[], num_inserts=1, ids=[444, 445], results=[]>
       Contact.import(records, synchronize: records, on_duplicate_key_ignore: true, track_validation_failures: true, validate: true, batch_size: 1000)
@@ -68,7 +68,7 @@ class DataImportJob < ApplicationJob
     return if xlsx_data.blank?
 
     @data_import.failed_records.attach(
-      io: StringIO.new(xlsx_data), 
+      io: StringIO.new(xlsx_data),
       filename: "#{Time.zone.today.strftime('%Y%m%d')}_#{@data_import.data_type}.xlsx",
       content_type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
@@ -84,10 +84,10 @@ class DataImportJob < ApplicationJob
     workbook.add_worksheet(name: 'Errors') do |sheet|
       sheet.add_row headers
       rejected_records.each do |record|
-        sheet.add_row headers.map { |h| record[h] }
+        sheet.add_row(headers.map { |h| record[h] })
       end
     end
-    
+
     package.to_stream.read
   end
 

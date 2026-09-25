@@ -25,7 +25,7 @@ class Captain::Tools::Copilot::BookMeetingService < Captain::Tools::BaseTool
         customer_email: customer_email,
         timezone: timezone
       }.compact
-      
+
       result = delegate_to_booking_tool(**args)
       return result if result
     end
@@ -46,7 +46,7 @@ class Captain::Tools::Copilot::BookMeetingService < Captain::Tools::BaseTool
       end_time: parsed_end,
       guest_email: customer_email || @conversation.contact&.email,
       guest_name: customer_name || @conversation.contact&.name,
-      description: "Booked via Copilot"
+      description: 'Booked via Copilot'
     )
 
     return 'Failed to book meeting on the calendar.' unless event_id

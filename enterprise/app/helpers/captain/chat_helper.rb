@@ -17,7 +17,9 @@ module Captain::ChatHelper
     end
   rescue StandardError => e
     Rails.logger.error "#{self.class.name} Assistant: #{@assistant.id}, Error in chat completion: #{e}"
-    persist_message({ 'content' => I18n.t('captain.copilot.empty_message', default: "There was an error generating the response. Please try again.") }, 'assistant')
+    persist_message(
+      { 'content' => I18n.t('captain.copilot.empty_message', default: 'There was an error generating the response. Please try again.') }, 'assistant'
+    )
     raise e
   end
 

@@ -18,7 +18,7 @@ class Captain::Tools::Shopify::SearchOrdersTool < Captain::Tools::BasePublicTool
     if customer_id.blank?
       customers = search_customers(contact)
       return 'No matching Shopify customer found' if customers.blank?
-      
+
       customer_id = customers.first['id']
       save_external_customer_id(contact, 'shopify', customer_id)
     end

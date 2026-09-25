@@ -71,11 +71,11 @@ class Messages::Facebook::MessageBuilder < Messages::Messenger::MessageBuilder
 
     # Continue on the old conversation from the comment
     @conversation = private_reply_message.conversation
-    
+
     # Ensure the conversation uses the PSID contact_inbox so replies go to the PSID
-    if @conversation.contact_inbox_id != @contact_inbox.id
-      @conversation.update!(contact_inbox_id: @contact_inbox.id)
-    end
+    return unless @conversation.contact_inbox_id != @contact_inbox.id
+
+    @conversation.update!(contact_inbox_id: @contact_inbox.id)
   end
 
   def build_message

@@ -8,7 +8,6 @@ RSpec.describe ConversationReplyMailer do
     let!(:agent) { create(:user, email: 'agent1@example.com', account: account) }
     let(:class_instance) { described_class.new }
 
-
     before do
       allow(described_class).to receive(:new).and_return(class_instance)
       allow(class_instance).to receive(:smtp_config_set_or_development?).and_return(true)
@@ -450,7 +449,5 @@ RSpec.describe ConversationReplyMailer do
         end
       end
     end
-
-
   end
 end

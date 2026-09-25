@@ -325,9 +325,7 @@
       "SNOOZE_NOTIFICATION": "Snooze Notification"
     }
   },
-  "DASHBOARD_APPS": {
-    "LOADING_MESSAGE": "Loading Dashboard App..."
-  },
+
   "COMMON": {
     "OR": "Or",
     "CLICK_HERE": "click here"

@@ -106,8 +106,6 @@ RSpec.describe 'Api::V1::Accounts::Captain::Assistants', type: :request do
         expect(json_response[:guardrails]).to eq(['No harmful content', 'Stay on topic'])
         expect(response).to have_http_status(:success)
       end
-
-
     end
   end
 

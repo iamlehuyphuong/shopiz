@@ -157,11 +157,11 @@ class Tiktok::IncomingCommentService
 
     template = Liquid::Template.parse(message)
     template.render({
-      'contact' => ContactDrop.new(conversation.contact),
-      'conversation' => ConversationDrop.new(conversation),
-      'inbox' => InboxDrop.new(conversation.inbox),
-      'account' => AccountDrop.new(conversation.account)
-    })
+                      'contact' => ContactDrop.new(conversation.contact),
+                      'conversation' => ConversationDrop.new(conversation),
+                      'inbox' => InboxDrop.new(conversation.inbox),
+                      'account' => AccountDrop.new(conversation.account)
+                    })
   rescue Liquid::Error
     message
   end

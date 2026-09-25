@@ -20,8 +20,8 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
     end
 
     trial_package = presenter.send(:plans_data)
-                     .flat_map { |tier| tier[:packages] }
-                     .find { |p| p[:is_default_for_new_account] }
+                             .flat_map { |tier| tier[:packages] }
+                             .find { |p| p[:is_default_for_new_account] }
 
     plan = if trial_package
              SubscriptionPlan.find(trial_package[:id])
@@ -174,10 +174,10 @@ class Enterprise::Api::V1::AccountsController < Api::BaseController
         attempt_checkout(fallback)
       rescue StandardError => fallback_error
         Rails.logger.error("[Checkout] Fallback #{fallback} also failed: #{fallback_error.message}")
-        render_could_not_create_error("Payment failed. Please try again later.")
+        render_could_not_create_error('Payment failed. Please try again later.')
       end
     else
-      render_could_not_create_error("Payment failed. Please try again later.")
+      render_could_not_create_error('Payment failed. Please try again later.')
     end
   end
 

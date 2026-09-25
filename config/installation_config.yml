@@ -807,17 +807,7 @@
     draft: Draft
     deprecated: Deprecated
   locked: false
-- name: INTEGRATION_STATUS_DASHBOARD_APPS
-  display_title: Dashboard_apps Integration Status
-  value: published
-  type: select
-  options:
-    published: Published
-    beta: Beta
-    coming_soon: Coming Soon
-    draft: Draft
-    deprecated: Deprecated
-  locked: false
+
 - name: INTEGRATION_STATUS_OPENAI
   display_title: Openai Integration Status
   value: published
@@ -884,17 +874,7 @@
     draft: Draft
     deprecated: Deprecated
   locked: false
-- name: INTEGRATION_STATUS_DYTE
-  display_title: Dyte Integration Status
-  value: published
-  type: select
-  options:
-    published: Published
-    beta: Beta
-    coming_soon: Coming Soon
-    draft: Draft
-    deprecated: Deprecated
-  locked: false
+
 - name: INTEGRATION_STATUS_SHOPIFY
   display_title: Shopify Integration Status
   value: published

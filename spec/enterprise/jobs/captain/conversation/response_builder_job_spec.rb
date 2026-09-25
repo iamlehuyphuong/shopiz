@@ -238,8 +238,6 @@ RSpec.describe Captain::Conversation::ResponseBuilderJob, type: :job do
     it 'defines MAX_MESSAGE_LENGTH constant' do
       expect(described_class::MAX_MESSAGE_LENGTH).to eq(10_000)
     end
-
-
   end
 
   describe 'out of office message after handoff' do

@@ -14,7 +14,7 @@ class Captain::Tools::BasePublicTool < Agents::Tool
       if required_permissions.any?
         conversation = find_conversation(tool_context.state)
         user = tool_context.state[:user] || (conversation && conversation.assignee)
-        
+
         # We enforce permissions if a user is acting, e.g. copilot or human agent context.
         # AI assistants typically bypass these if configured, but let's log and enforce if user exists.
         if user&.respond_to?(:permissions)
@@ -25,7 +25,7 @@ class Captain::Tools::BasePublicTool < Agents::Tool
           end
         end
       end
-      
+
       super
     end
   end

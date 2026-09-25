@@ -16,6 +16,5 @@ module Enterprise::Concerns::Account
 
     has_many :copilot_threads, dependent: :destroy_async
     has_many :companies, dependent: :destroy_async
-
   end
 end

@@ -15,6 +15,6 @@ class CreateZaloMessageTemplates < ActiveRecord::Migration[7.1]
     add_index :zalo_message_templates, :account_id
     add_index :zalo_message_templates, :channel_id
     add_index :zalo_message_templates, [:account_id, :template_name, :channel_id], unique: true,
-                                                                                    name: 'idx_zalo_templates_unique'
+                                                                                   name: 'idx_zalo_templates_unique'
   end
 end

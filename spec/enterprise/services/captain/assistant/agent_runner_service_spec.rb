@@ -209,8 +209,8 @@ RSpec.describe Captain::Assistant::AgentRunnerService do
 
       before do
         allow(mock_runner).to receive(:run).and_raise(error)
-    allow(mock_runner).to receive(:on_tool_complete).and_return(mock_runner)
-    allow(mock_runner).to receive(:on_run_complete).and_return(mock_runner)
+        allow(mock_runner).to receive(:on_tool_complete).and_return(mock_runner)
+        allow(mock_runner).to receive(:on_run_complete).and_return(mock_runner)
         allow(ChatwootExceptionTracker).to receive(:new).and_return(
           instance_double(ChatwootExceptionTracker, capture_exception: true)
         )
@@ -471,7 +471,7 @@ RSpec.describe Captain::Assistant::AgentRunnerService do
       context_wrapper = Struct.new(:context).new({ __otel_tracing: { root_span: root_span } })
 
       allow(ChatwootApp).to receive(:otel_enabled?).and_return(true)
-      allow(runner).to receive(:on_tool_start) do |&block|
+      allow(runner).to receive(:on_tool_start) do
         runner
       end
       allow(runner).to receive(:on_tool_complete) do |&block|
@@ -502,7 +502,7 @@ RSpec.describe Captain::Assistant::AgentRunnerService do
       context_wrapper = Struct.new(:context).new({ __otel_tracing: { root_span: root_span } })
 
       allow(ChatwootApp).to receive(:otel_enabled?).and_return(true)
-      allow(runner).to receive(:on_tool_start) do |&block|
+      allow(runner).to receive(:on_tool_start) do
         runner
       end
       allow(runner).to receive(:on_tool_complete).and_return(runner)

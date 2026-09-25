@@ -19,7 +19,7 @@ class Enterprise::Billing::HandlePolarEventService
     order_id = metadata['order_id']
 
     if order_id.blank?
-      Rails.logger.warn("[Polar] No order_id found in metadata. Cannot process.")
+      Rails.logger.warn('[Polar] No order_id found in metadata. Cannot process.')
       return
     end
 
@@ -62,6 +62,7 @@ class Enterprise::Billing::HandlePolarEventService
 
   def same_tier?(current_plan, new_plan)
     return false unless current_plan&.subscription_tier_id && new_plan&.subscription_tier_id
+
     current_plan.subscription_tier_id == new_plan.subscription_tier_id
   end
 
@@ -77,11 +78,15 @@ class Enterprise::Billing::HandlePolarEventService
   end
 
   def save_billing_history(payload)
-    amount_paid = payload.dig('data', 'amount') || payload.dig('data', 'checkout', 'amount')
+    payload.dig('data', 'amount') || payload.dig('data', 'checkout', 'amount')
     transaction_ref = payload.dig('data', 'id')
     created_at = payload.dig('data', 'created_at')
 
-    parsed_paid_at = Time.zone.parse(created_at.to_s) rescue Time.current
+    parsed_paid_at = begin
+      Time.zone.parse(created_at.to_s)
+    rescue StandardError
+      Time.current
+    end
 
     @pending_bill.update!(
       status: :completed,

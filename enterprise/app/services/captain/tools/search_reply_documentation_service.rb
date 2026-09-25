@@ -21,7 +21,7 @@ class Captain::Tools::SearchReplyDocumentationService < RubyLLM::Tool
     @call_count = (@call_count || 0) + 1
 
     if @call_count > MAX_CALLS
-      return 'Maximum search attempts reached. No additional relevant documentation found. '\
+      return 'Maximum search attempts reached. No additional relevant documentation found. ' \
              'Please compose your reply based on the conversation context alone.'
     end
 
@@ -34,7 +34,7 @@ class Captain::Tools::SearchReplyDocumentationService < RubyLLM::Tool
     responses = search_responses(translated_query)
 
     if responses.empty?
-      return 'No FAQs found for the given query. Do not retry with a different query. '\
+      return 'No FAQs found for the given query. Do not retry with a different query. ' \
              'Compose your reply based on the conversation context alone.'
     end
 

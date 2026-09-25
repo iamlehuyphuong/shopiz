@@ -34,7 +34,6 @@ module Enterprise::Account
     custom_attributes.delete('marked_for_deletion_at') && custom_attributes.delete('marked_for_deletion_reason') && save
   end
 
-
   private
 
   def sync_assignment_features

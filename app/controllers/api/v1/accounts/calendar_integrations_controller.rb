@@ -8,7 +8,7 @@ class Api::V1::Accounts::CalendarIntegrationsController < Api::V1::Accounts::Bas
   def create
     @integration = Current.account.calendar_integrations.find_or_initialize_by(provider: params[:provider])
     @integration.assign_attributes(integration_params)
-    
+
     if @integration.save
       render json: @integration
     else

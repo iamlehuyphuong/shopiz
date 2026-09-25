@@ -36,7 +36,7 @@ RSpec.describe ConversationOrders::KiotvietProxy do
 
   describe '#extract_order_id' do
     it 'extracts id from response payload' do
-      expect(proxy.extract_order_id({ 'id' => 12345 })).to eq('12345')
+      expect(proxy.extract_order_id({ 'id' => 12_345 })).to eq('12345')
     end
   end
 
@@ -46,5 +46,4 @@ RSpec.describe ConversationOrders::KiotvietProxy do
       expect(proxy.extract_error({})).to include('failed for Kiotviet')
     end
   end
-
 end

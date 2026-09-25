@@ -14,7 +14,7 @@ class Captain::Conversation::CommentReplyBuilderJob < ApplicationJob
     return if comment_too_old?(comment_id, comment_created_at)
 
     generated_text = generate_reply_text(message, post_id, platform, reply_type)
-    
+
     if generated_text.blank?
       msg = @conversation.messages.create!(
         account_id: @conversation.account_id,
@@ -53,12 +53,10 @@ class Captain::Conversation::CommentReplyBuilderJob < ApplicationJob
   def send_reply(comment_id, text, reply_type)
     if @channel.is_a?(Channel::Tiktok)
       send_tiktok_comment_reply(comment_id, text)
+    elsif reply_type == 'public'
+      action_service_for_channel.reply_comment_and_log(comment_id, text, @conversation)
     else
-      if reply_type == 'public'
-        action_service_for_channel.reply_comment_and_log(comment_id, text, @conversation)
-      else
-        action_service_for_channel.send_private_reply_and_log(comment_id, text, @conversation)
-      end
+      action_service_for_channel.send_private_reply_and_log(comment_id, text, @conversation)
     end
   end
 

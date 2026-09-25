@@ -1,6 +1,4 @@
 module Enterprise::DeviseOverrides::SessionsController
-
-
   def create
     super
   end

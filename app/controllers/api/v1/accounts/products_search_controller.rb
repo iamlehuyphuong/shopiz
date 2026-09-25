@@ -56,7 +56,7 @@ class Api::V1::Accounts::ProductsSearchController < Api::V1::Accounts::BaseContr
     escaped_query = ActiveRecord::Base.sanitize_sql_like(query)
     products = Current.account.products.where("meta->>'source' IS NULL OR meta->>'source' = 'shopiz'").includes(:product_variants)
     products = products.where('name ILIKE ? OR description ILIKE ?', "%#{escaped_query}%", "%#{escaped_query}%") if query.present?
-    
+
     results = []
     products.limit(20).each do |product|
       thumbnail = product.meta&.dig('image') || product.meta&.dig('images')&.first

@@ -122,7 +122,7 @@ Rails.application.routes.draw do
             end
           end
           resources :campaigns, only: [:index, :create, :show, :update, :destroy]
-          resources :dashboard_apps, only: [:index, :show, :create, :update, :destroy]
+
           resources :calendar_integrations, only: [:index, :create, :destroy]
           resource :booking_configurations, only: [:show, :update]
           namespace :channels do
@@ -345,12 +345,7 @@ Rails.application.routes.draw do
               get :extensions
               post :map_extension
             end
-            resource :dyte, controller: 'dyte', only: [] do
-              collection do
-                post :create_a_meeting
-                post :add_participant_to_meeting
-              end
-            end
+
             resource :shopify, controller: 'shopify', only: [:destroy] do
               collection do
                 post :auth
@@ -505,11 +500,6 @@ Rails.application.routes.draw do
         resources :inbox_members, only: [:index]
         resources :labels, only: [:create, :destroy]
         namespace :integrations do
-          resource :dyte, controller: 'dyte', only: [] do
-            collection do
-              post :add_participant_to_meeting
-            end
-          end
         end
       end
     end

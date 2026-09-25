@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Captain::Tools::PdfProcessingService do
+  subject { described_class.new(document) }
+
   let(:account) { create(:account) }
   let(:assistant) { create(:captain_assistant, account: account) }
   let(:document) do
@@ -10,8 +12,6 @@ RSpec.describe Captain::Tools::PdfProcessingService do
       document_type: :pdf
     )
   end
-
-  subject { described_class.new(document) }
 
   describe '#process' do
     context 'when document is not a PDF' do
@@ -32,10 +32,10 @@ RSpec.describe Captain::Tools::PdfProcessingService do
         allow(Dir).to receive(:mktmpdir).and_return('/tmp/pdf_images')
         allow(Dir).to receive(:glob).and_return(['/tmp/image1.png', '/tmp/image2.png'])
         allow(FileUtils).to receive(:rm_rf)
-        
+
         allow(Captain::Tools::PdfPageBatcherService).to receive(:new).and_return(mock_batcher)
         allow(mock_batcher).to receive(:batch_pages).and_return(['/tmp/batched1.png'])
-        
+
         allow(Captain::Tools::VisionTextExtractorService).to receive(:new).and_return(mock_vision)
         allow(mock_vision).to receive(:extract_text_from_multiple_images).and_return('Extracted text content')
       end
@@ -67,7 +67,7 @@ RSpec.describe Captain::Tools::PdfProcessingService do
 
       it 'logs error and updates document with error message' do
         expect(Rails.logger).to receive(:error).with(/PDF processing failed/)
-        
+
         expect { subject.process }.to raise_error(StandardError)
         expect(document.reload.content).to include('Error processing PDF')
       end

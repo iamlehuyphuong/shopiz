@@ -27,6 +27,4 @@ RSpec.describe ConversationOrders::PlatformProxy do
       expect(proxy.extract_error({ 'message' => 'Error' })).to eq('Error')
     end
   end
-
-
 end

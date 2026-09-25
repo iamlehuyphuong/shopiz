@@ -23,9 +23,7 @@ class Captain::Tools::Copilot::Sapo::CreateCustomerService < Captain::Tools::Bas
     customer = result['customer']
     return 'Sapo returned an error.' if customer.nil?
 
-    if @conversation&.contact
-      save_external_customer_id(@conversation.contact, 'sapo', customer['id'])
-    end
+    save_external_customer_id(@conversation.contact, 'sapo', customer['id']) if @conversation&.contact
 
     format_success(customer)
   end

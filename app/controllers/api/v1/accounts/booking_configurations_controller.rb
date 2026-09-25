@@ -12,7 +12,7 @@ class Api::V1::Accounts::BookingConfigurationsController < Api::V1::Accounts::Ba
   def update
     @configuration ||= Current.account.build_booking_configuration
     @configuration.assign_attributes(configuration_params)
-    
+
     # Generate booking link hash if empty
     @configuration.booking_link_hash = SecureRandom.hex(10) if @configuration.booking_link_hash.blank?
 

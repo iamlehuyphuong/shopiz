@@ -72,8 +72,6 @@ json.instagram_id resource.channel.try(:instagram_id) if resource.instagram?
 ## Tiktok Attributes
 json.reauthorization_required resource.channel.try(:reauthorization_required?) if resource.tiktok?
 
-
-
 ## API Channel Attributes
 if resource.api?
   json.hmac_token resource.channel.try(:hmac_token) if Current.account_user&.administrator?

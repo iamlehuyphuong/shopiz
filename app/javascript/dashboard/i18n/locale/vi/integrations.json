@@ -366,57 +366,7 @@
     "CONNECT": {
       "BUTTON_TEXT": "Kết nối"
     },
-    "DASHBOARD_APPS": {
-      "TITLE": "Ứng dụng Dashboard",
-      "HEADER_BTN_TXT": "Thêm ứng dụng dashboard mới",
-      "SIDEBAR_TXT": "<p><b>Ứng dụng Dashboard</b></p><p>Ứng dụng Dashboard cho phép tổ chức nhúng một ứng dụng bên trong bảng điều khiển của Shopiz để cung cấp ngữ cảnh cho nhân viên hỗ trợ khách hàng. Tính năng này cho phép bạn tạo ứng dụng độc lập và nhúng nó để hiển thị thông tin người dùng, đơn hàng hoặc lịch sử thanh toán.</p><p>Khi bạn nhúng ứng dụng vào bảng điều khiển Shopiz, ứng dụng sẽ nhận ngữ cảnh của cuộc đối thoại và thông tin liên hệ qua các sự kiện. Hãy triển khai trình lắng nghe sự kiện message trên trang của bạn để nhận dữ liệu ngữ cảnh.</p><p>Để thêm ứng dụng dashboard mới, nhấp vào nút 'Thêm ứng dụng dashboard mới'.</p>",
-      "DESCRIPTION": "Ứng dụng Dashboard cho phép tổ chức nhúng một ứng dụng vào bảng điều khiển để cung cấp ngữ cảnh cho nhân viên hỗ trợ khách hàng. Tính năng này cho phép bạn tạo ứng dụng độc lập và nhúng nó để hiển thị thông tin người dùng, đơn hàng hoặc lịch sử thanh toán.",
-      "LEARN_MORE": "Tìm hiểu thêm về ứng dụng Dashboard",
-      "COUNT": "Có {n} ứng dụng bảng điều khiển",
-      "SEARCH_PLACEHOLDER": "Tìm kiếm ứng dụng dashboard...",
-      "NO_RESULTS": "Không tìm thấy ứng dụng dashboard nào khớp với tìm kiếm của bạn",
-      "LIST": {
-        "404": "Chưa có ứng dụng dashboard nào được cấu hình cho tài khoản này",
-        "LOADING": "Đang lấy ứng dụng dashboard...",
-        "TABLE_HEADER": {
-          "NAME": "Tên",
-          "ENDPOINT": "Đích",
-          "ACTIONS": "Hành động"
-        },
-        "EDIT_TOOLTIP": "Chỉnh sửa ứng dụng",
-        "DELETE_TOOLTIP": "Xóa ứng dụng"
-      },
-      "FORM": {
-        "TITLE_LABEL": "Tên",
-        "TITLE_PLACEHOLDER": "Nhập tên ứng dụng dashboard của bạn",
-        "TITLE_ERROR": "Bắt buộc phải nhập tên cho ứng dụng dashboard",
-        "URL_LABEL": "Đích",
-        "URL_PLACEHOLDER": "Nhập URL nơi ứng dụng của bạn được lưu trữ",
-        "URL_ERROR": "Bắt buộc phải nhập URL hợp lệ"
-      },
-      "CREATE": {
-        "HEADER": "Thêm ứng dụng dashboard mới",
-        "FORM_SUBMIT": "Gửi",
-        "FORM_CANCEL": "Hủy",
-        "API_SUCCESS": "Ứng dụng dashboard đã được cấu hình thành công",
-        "API_ERROR": "Không thể tạo ứng dụng. Vui lòng thử lại sau"
-      },
-      "UPDATE": {
-        "HEADER": "Chỉnh sửa ứng dụng dashboard",
-        "FORM_SUBMIT": "Cập nhật",
-        "FORM_CANCEL": "Hủy",
-        "API_SUCCESS": "Ứng dụng dashboard đã được cập nhật thành công",
-        "API_ERROR": "Không thể cập nhật ứng dụng. Vui lòng thử lại sau"
-      },
-      "DELETE": {
-        "CONFIRM_YES": "Vâng, xóa",
-        "CONFIRM_NO": "Không, giữ lại",
-        "TITLE": "Xác nhận xóa",
-        "MESSAGE": "Bạn có chắc chắn muốn xóa ứng dụng - {appName}?",
-        "API_SUCCESS": "Ứng dụng dashboard đã được xóa thành công",
-        "API_ERROR": "Không thể xóa ứng dụng. Vui lòng thử lại sau"
-      }
-    },
+
     "LINEAR": {
       "HEADER": "Linear",
       "ADD_OR_LINK_BUTTON": "Tạo/ Liên kết Vấn đề Linear",

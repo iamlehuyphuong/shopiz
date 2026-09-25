@@ -5,7 +5,8 @@ OmniAuth.config.path_prefix = '/auth'
 
 GOOGLE_OAUTH_SETUP_PROC = proc do |env|
   env['omniauth.strategy'].options[:client_id] = GlobalConfigService.load('GOOGLE_OAUTH_CLIENT_ID', ENV.fetch('GOOGLE_OAUTH_CLIENT_ID', ''))
-  env['omniauth.strategy'].options[:client_secret] = GlobalConfigService.load('GOOGLE_OAUTH_CLIENT_SECRET', ENV.fetch('GOOGLE_OAUTH_CLIENT_SECRET', ''))
+  env['omniauth.strategy'].options[:client_secret] =
+    GlobalConfigService.load('GOOGLE_OAUTH_CLIENT_SECRET', ENV.fetch('GOOGLE_OAUTH_CLIENT_SECRET', ''))
 end
 
 Rails.application.config.middleware.use OmniAuth::Builder do

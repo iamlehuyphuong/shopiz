@@ -69,7 +69,7 @@ class TiktokShop::Client
     url = 'https://open-api.tiktokglobalshop.com/customer_engagement/202412/message_templates'
     params = default_params.except(:shop_cipher)
     signed_url = signature_service.signed_url(url, params: params, content_type: 'application/json')
-    
+
     response = HTTParty.get(signed_url, headers: headers)
     JSON.parse(response.body)
   end
@@ -79,7 +79,7 @@ class TiktokShop::Client
   def get(path, params: {})
     url = build_url(path)
     signed_url = signature_service.signed_url(url, params: default_params.merge(params), content_type: 'application/json')
-    
+
     response = HTTParty.get(signed_url, headers: headers)
     JSON.parse(response.body)
   end
@@ -87,9 +87,9 @@ class TiktokShop::Client
   def post(path, body: {}, params: {}, content_type: 'application/json')
     url = build_url(path)
     signed_url = signature_service.signed_url(
-      url, 
-      params: default_params.merge(params), 
-      body: body, 
+      url,
+      params: default_params.merge(params),
+      body: body,
       content_type: content_type
     )
 
@@ -137,7 +137,7 @@ class TiktokShop::Client
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
 
-    request = Net::HTTP::Post.new(uri.path + "?" + uri.query)
+    request = Net::HTTP::Post.new(uri.path + '?' + uri.query)
     request['x-tts-access-token'] = channel.access_token
     request['content-type'] = 'multipart/form-data'
     request.set_form([['data', data]], 'multipart/form-data')

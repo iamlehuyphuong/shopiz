@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_09_24_145929) do
+ActiveRecord::Schema[7.1].define(version: 2026_09_25_000957) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -973,17 +973,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_24_145929) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_custom_roles_on_account_id"
-  end
-
-  create_table "dashboard_apps", force: :cascade do |t|
-    t.string "title", null: false
-    t.jsonb "content", default: []
-    t.bigint "account_id", null: false
-    t.bigint "user_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["account_id"], name: "index_dashboard_apps_on_account_id"
-    t.index ["user_id"], name: "index_dashboard_apps_on_user_id"
   end
 
   create_table "data_imports", force: :cascade do |t|

@@ -54,7 +54,7 @@ class Api::V1::Accounts::Sales::ProductsController < Api::V1::Accounts::BaseCont
   def export
     column_names = params['column_names']
     filter_params = params.permit!['filter']
-    
+
     if current_account.custom_email_config.present? && current_account.custom_email_config['smtp_address'].present?
       Account::ProductsExportJob.perform_later(current_account.id, current_user.id, column_names, filter_params)
       render json: { message: I18n.t('errors.contacts.export.success') }

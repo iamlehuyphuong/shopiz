@@ -97,7 +97,7 @@ class Api::V1::Accounts::Conversations::OrdersController < Api::V1::Accounts::Co
       items_attributes: [
         :id, :product_name, :product_id, :product_source, :quantity,
         :unit_price, :product_thumbnail, :variant_id, :_destroy,
-        product_metadata: {}
+        { product_metadata: {} }
       ]
     )
   end

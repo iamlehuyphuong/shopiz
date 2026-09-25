@@ -4,7 +4,7 @@ end
 
 module RubyLLM
   class << self
-    alias_method :original_config, :config
+    alias original_config config
 
     def config
       Thread.current[:ruby_llm_config] || original_config

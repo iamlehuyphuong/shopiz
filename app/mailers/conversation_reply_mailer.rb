@@ -209,23 +209,25 @@ class ConversationReplyMailer < ApplicationMailer
 
   def liquid_droppables
     super.merge({
-      message: @message || @messages&.last,
-      messages: @messages || [@message].compact,
-      large_attachments: (@large_attachments || []).map do |attachment|
-        file_url = begin
-          attachment.file_url
-        rescue ArgumentError => e
-          if e.message.include?('Missing host')
-            Rails.application.routes.url_helpers.url_for(attachment.file.tap { |f| f.class.default_url_options[:host] = 'localhost:3000' })
-          else
-            ''
-          end
-        end
-        {
-          'file_url' => file_url,
-          'filename' => attachment.file.filename.to_s
-        }
-      end
-    })
+                  message: @message || @messages&.last,
+                  messages: @messages || [@message].compact,
+                  large_attachments: (@large_attachments || []).map do |attachment|
+                    file_url = begin
+                      attachment.file_url
+                    rescue ArgumentError => e
+                      if e.message.include?('Missing host')
+                        Rails.application.routes.url_helpers.url_for(attachment.file.tap do |f|
+                          f.class.default_url_options[:host] = 'localhost:3000'
+                        end)
+                      else
+                        ''
+                      end
+                    end
+                    {
+                      'file_url' => file_url,
+                      'filename' => attachment.file.filename.to_s
+                    }
+                  end
+                })
   end
 end

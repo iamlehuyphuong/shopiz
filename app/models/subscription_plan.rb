@@ -72,8 +72,8 @@ class SubscriptionPlan < ApplicationRecord
   private
 
   def ensure_single_default_plan
-    if is_default_for_new_account? && is_default_for_new_account_changed?
-      SubscriptionPlan.where.not(id: id).update_all(is_default_for_new_account: false)
-    end
+    return unless is_default_for_new_account? && is_default_for_new_account_changed?
+
+    SubscriptionPlan.where.not(id: id).update_all(is_default_for_new_account: false)
   end
 end

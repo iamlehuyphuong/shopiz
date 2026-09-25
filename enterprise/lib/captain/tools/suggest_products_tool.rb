@@ -26,14 +26,14 @@ class Captain::Tools::SuggestProductsTool < Captain::Tools::BasePublicTool
     base_product = account.products.find_by(id: product_identifier) || account.products.find_by(sku: product_identifier)
 
     query = account.products.where(status: :active)
-    
+
     active_platform = account.active_ecommerce_platform.presence || 'shopiz'
     query = if active_platform == 'shopiz'
               query.where("meta->>'source' IS NULL OR meta->>'source' = 'shopiz'")
             else
               query.where("meta->>'source' = ?", active_platform)
             end
-            
+
     query = query.where.not(id: base_product.id) if base_product
 
     # Extract keywords from context and build an OR search

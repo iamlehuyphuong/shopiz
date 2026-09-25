@@ -44,15 +44,15 @@ _last_message = conversation.messages
 # The nested `conversation` data inside messages is not needed in the list context;
 # `unread_count` is already a top-level field on the conversation payload.
 _last_message_event_data = if _last_message
-  data = _last_message.attributes.symbolize_keys.merge(
-    created_at: _last_message.created_at.to_i,
-    message_type: _last_message.message_type_before_type_cast,
-    conversation_id: conversation.display_id
-  )
-  data[:attachments] = _last_message.attachments.map(&:push_event_data) if _last_message.attachments.present?
-  data[:can_undo] = _last_message.can_undo?
-  _last_message.merge_sender_attributes(data)
-end
+                             data = _last_message.attributes.symbolize_keys.merge(
+                               created_at: _last_message.created_at.to_i,
+                               message_type: _last_message.message_type_before_type_cast,
+                               conversation_id: conversation.display_id
+                             )
+                             data[:attachments] = _last_message.attachments.map(&:push_event_data) if _last_message.attachments.present?
+                             data[:can_undo] = _last_message.can_undo?
+                             _last_message.merge_sender_attributes(data)
+                           end
 json.messages _last_message_event_data ? [_last_message_event_data] : []
 
 json.account_id conversation.account_id
@@ -89,7 +89,10 @@ _last_non_activity_event_data = if _last_message && _last_message.message_type !
                                       message_type: _non_activity_msg.message_type_before_type_cast,
                                       conversation_id: conversation.display_id
                                     )
-                                    na_data[:attachments] = _non_activity_msg.attachments.map(&:push_event_data) if _non_activity_msg.attachments.present?
+                                    if _non_activity_msg.attachments.present?
+                                      na_data[:attachments] =
+                                        _non_activity_msg.attachments.map(&:push_event_data)
+                                    end
                                     na_data[:can_undo] = _non_activity_msg.can_undo?
                                     _non_activity_msg.merge_sender_attributes(na_data)
                                   end

@@ -32,10 +32,10 @@ class ConversationOrders::PushService
 
     if external_id.present?
       @order.update!(external_order_id: external_id, status: :confirmed)
-      
+
       # Try to cache the customer ID mapping for future fast lookups
       cache_customer_id(proxy_class, result)
-      
+
       send_success_message
       log_activity(:pushed)
       { success: true, order: @order }
@@ -170,7 +170,7 @@ class ConversationOrders::PushService
     ).perform
   end
 
-  def cache_customer_id(proxy_class, result)
+  def cache_customer_id(_proxy_class, result)
     platform = @order.external_source
     customer_id = nil
 

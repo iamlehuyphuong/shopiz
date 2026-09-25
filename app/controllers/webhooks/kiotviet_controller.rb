@@ -5,14 +5,12 @@ class Webhooks::KiotvietController < ActionController::API
 
   def events
     notifications = params[:Notifications] || []
-    
+
     notifications.each do |notification|
       data = notification[:Data] || []
       data.each do |item|
         order_id = item[:Id]&.to_s
-        if order_id.present?
-          ConversationOrders::WebhookSyncJob.perform_later(platform: 'kiotviet', external_order_id: order_id)
-        end
+        ConversationOrders::WebhookSyncJob.perform_later(platform: 'kiotviet', external_order_id: order_id) if order_id.present?
       end
     end
 

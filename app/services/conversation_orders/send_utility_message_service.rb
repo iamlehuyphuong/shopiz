@@ -28,10 +28,8 @@ class ConversationOrders::SendUtilityMessageService
       private: false
     }
 
-    if conversation.inbox.channel_type == 'Channel::FacebookPage'
-      if conversation.additional_attributes && conversation.additional_attributes['comment_id'].present?
-        message_params[:content_attributes] = { target_comment_id: conversation.additional_attributes['comment_id'] }
-      end
+    if (conversation.inbox.channel_type == 'Channel::FacebookPage') && conversation.additional_attributes && conversation.additional_attributes['comment_id'].present?
+      message_params[:content_attributes] = { target_comment_id: conversation.additional_attributes['comment_id'] }
     end
 
     Messages::MessageBuilder.new(nil, conversation, message_params).perform

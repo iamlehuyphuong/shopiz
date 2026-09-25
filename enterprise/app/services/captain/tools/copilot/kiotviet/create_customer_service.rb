@@ -24,9 +24,7 @@ class Captain::Tools::Copilot::Kiotviet::CreateCustomerService < Captain::Tools:
     return 'Failed to create customer on KiotViet. Please check the connection and try again.' if result.nil?
     return "KiotViet error: #{result['responseStatus']&.dig('message') || result['message'] || 'Unknown error'}" if result['id'].blank?
 
-    if @conversation&.contact
-      save_external_customer_id(@conversation.contact, 'kiotviet', result['id'])
-    end
+    save_external_customer_id(@conversation.contact, 'kiotviet', result['id']) if @conversation&.contact
 
     format_result(result)
   end

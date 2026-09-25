@@ -76,8 +76,7 @@ vi:
     categories:
       locale:
         unique: phải là duy nhất trong danh mục và cổng thông tin
-    dyte:
-      invalid_message_type: Loại tin nhắn không hợp lệ. Hành động không được phép
+
     slack:
       invalid_channel_id: Channel ID không hợp lệ
     whatsapp:
@@ -319,14 +318,7 @@ vi:
     online:
       delete: "%{contact_name} đang online, vui lòng thử lại sau"
   integration_apps:
-    dashboard_apps:
-      name: Ứng dụng bảng điều khiển
-      description: Ứng dụng bảng điều khiển cho phép bạn tạo và nhúng các ứng dụng hiển thị thông tin người dùng, đơn hàng hoặc lịch sử thanh toán, cung cấp thêm bối cảnh cho nhân viên hỗ trợ khách hàng.
-    dyte:
-      name: Dyte
-      short_description: Bắt đầu cuộc gọi video/âm thanh với khách hàng trực tiếp từ Shopiz.
-      description: Dyte là một sản phẩm tích hợp chức năng âm thanh và video vào ứng dụng của bạn. Với tính năng này, nhân viên của bạn có thể bắt đầu cuộc gọi video/âm thanh với khách hàng trực tiếp từ Shopiz.
-      meeting_name: "%{agent_name} đã bắt đầu một cuộc họp"
+
     slack:
       name: Slack
       short_description: Nhận thông báo và trả lời cuộc trò chuyện trực tiếp trên Slack.

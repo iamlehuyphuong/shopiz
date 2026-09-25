@@ -39,7 +39,7 @@ class Zalo::SyncGroupMembersService
       # Fetch detail to get avatar, name, gender, dob. It might fail if user blocked OA.
       user_res = client.get_user_detail(uid)
       profile = user_res['error'] == 0 ? (user_res['data'] || {}) : {}
-      
+
       is_admin = admin_ids.include?(uid) || creator_id == uid
 
       gender_str = case profile['user_gender'] || profile['gender']
