@@ -14,6 +14,11 @@ RUN apk update && apk add --no-cache \
 
 RUN npm install -g pnpm@10.2.0
 
+# Clean up upstream Chatwoot source code before copying our own
+# This prevents stale files (like saml initializers) from the base image
+# from leaking into our build and causing errors like NameError.
+RUN rm -rf /app/app /app/db /app/lib /app/enterprise /app/public /app/config /app/theme
+
 COPY ./app /app/app
 COPY ./db /app/db
 COPY ./lib /app/lib
