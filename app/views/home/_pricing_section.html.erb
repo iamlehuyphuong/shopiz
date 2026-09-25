@@ -1,0 +1,133 @@
+<!-- 6. Pricing Section -->
+<section id="bang-gia" class="py-24 relative">
+  <div class="container mx-auto px-4 max-w-5xl">
+    <div class="text-center mb-12">
+      <h3 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Bảng giá linh hoạt</h3>
+      <p class="text-slate-500 max-w-2xl mx-auto mb-8">Tiết kiệm hơn khi thanh toán dài hạn. Đầy đủ tính năng cao cấp.</p>
+      
+      <!-- Toggle -->
+      <div class="flex justify-center">
+        <div class="inline-flex items-center p-1 rounded-full bg-white border border-slate-200 shadow-sm">
+          <button id="btn-6-months" class="px-6 py-2 rounded-full text-sm font-medium bg-primary-500 text-white shadow-sm transition">6 Tháng</button>
+          <button id="btn-1-year" class="px-6 py-2 rounded-full text-sm font-medium text-slate-500 hover:text-slate-900 transition">1 Năm</button>
+        </div>
+      </div>
+    </div>
+    
+    <%
+      basic_tier = @subscription_tiers.to_a.find { |t| t.name_en == 'Basic' }
+      pro_tier = @subscription_tiers.to_a.find { |t| t.name_en == 'Pro' }
+      biz_tier = @subscription_tiers.to_a.find { |t| t.name_en == 'Biz' }
+      tiers_to_display = [basic_tier, pro_tier, biz_tier].compact
+    %>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch max-w-6xl mx-auto">
+      <% tiers_to_display.each do |tier| %>
+        <% 
+           plan_6m = tier.subscription_plans.find { |p| p.duration_days == 180 && p.ai_included } || tier.subscription_plans.find { |p| p.duration_days == 180 }
+           plan_12m = tier.subscription_plans.find { |p| p.duration_days == 365 && p.ai_included } || tier.subscription_plans.find { |p| p.duration_days == 365 }
+           
+           price_6m = plan_6m&.price_amount || 0
+           price_12m = plan_12m&.price_amount || 0
+           monthly_6m = price_6m > 0 ? price_6m / 6 : 0
+           monthly_12m = price_12m > 0 ? price_12m / 12 : 0
+
+           is_pro = tier.name_en == 'Pro'
+        %>
+        
+        <div class="relative flex flex-col p-8 rounded-3xl bg-white <%= is_pro ? 'border-2 border-primary-500 shadow-xl shadow-primary-500/10 md:-translate-y-4 pt-12' : 'border border-slate-200 shadow-sm mt-4' %> transition-all h-full">
+          <% if is_pro %>
+            <div class="absolute top-0 left-0 right-0 bg-primary-500 text-white text-xs font-bold uppercase tracking-wider py-2 text-center rounded-t-2xl">
+              Phổ biến nhất
+            </div>
+          <% end %>
+          
+          <div class="text-center mb-8">
+            <h4 class="text-lg font-medium text-slate-500 uppercase tracking-widest mb-4"><%= tier.name_en %></h4>
+            <div class="mb-2">
+              <span class="text-4xl font-bold text-slate-900 price-display" data-price-6m="<%= number_to_currency(price_6m, precision: 0, unit: '', delimiter: '.') %>" data-price-12m="<%= number_to_currency(price_12m, precision: 0, unit: '', delimiter: '.') %>">
+                <%= number_to_currency(price_6m, precision: 0, unit: '', delimiter: '.') %>
+              </span>
+              <span class="text-2xl font-bold text-slate-900"> đ</span>
+            </div>
+            <div class="text-sm text-slate-400 price-monthly-display" data-monthly-6m="<%= number_to_currency(monthly_6m, precision: 0, unit: '', delimiter: '.') %>" data-monthly-12m="<%= number_to_currency(monthly_12m, precision: 0, unit: '', delimiter: '.') %>">
+              tương đương <%= number_to_currency(monthly_6m, precision: 0, unit: '', delimiter: '.') %> đ/tháng
+            </div>
+          </div>
+          
+          <ul class="space-y-4 mb-8 flex-1">
+            <li class="flex items-start gap-3 text-sm text-slate-600">
+              <svg class="w-5 h-5 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+              <%= tier.limits['inboxes'] %> Hộp thư & <%= tier.limits['agents'] %> Nhân viên
+            </li>
+            <li class="flex items-start gap-3 text-sm text-slate-600">
+              <svg class="w-5 h-5 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+              <%= tier.limits['contacts'] %> Liên hệ
+            </li>
+            <li class="flex items-start gap-3 text-sm text-slate-600">
+              <svg class="w-5 h-5 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+              <%= tier.limits['automations'] %> Quy tắc tự động
+            </li>
+            <li class="flex items-start gap-3 text-sm text-slate-600">
+              <svg class="w-5 h-5 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+              <%= tier.limits['captain_assistants'] %> Trợ lý ShopizAI
+            </li>
+          </ul>
+          
+          <div class="mt-auto flex justify-center">
+            <a href="/app/login" class="inline-block px-8 py-2.5 text-sm font-medium rounded-xl transition <%= is_pro ? 'bg-primary-500 text-white hover:bg-primary-600 shadow-md shadow-primary-500/30' : 'bg-slate-100 text-slate-700 hover:bg-slate-200' %>">
+              Đăng ký ngay
+            </a>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    
+    <div class="text-center mt-8">
+      <a href="#" class="text-sm font-medium text-primary-500 hover:text-primary-600 transition flex items-center justify-center gap-1">
+        Xem đầy đủ bảng giá và tính năng chi tiết
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+      </a>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const btn6Months = document.getElementById('btn-6-months');
+        const btn1Year = document.getElementById('btn-1-year');
+        const priceDisplays = document.querySelectorAll('.price-display');
+        const priceMonthlyDisplays = document.querySelectorAll('.price-monthly-display');
+
+        function setPlan(duration) {
+          if (duration === '6m') {
+            btn6Months.className = 'px-6 py-2 rounded-full text-sm font-medium bg-primary-500 text-white shadow-sm transition';
+            btn1Year.className = 'px-6 py-2 rounded-full text-sm font-medium text-slate-500 hover:text-slate-900 transition';
+            
+            priceDisplays.forEach(el => {
+              el.innerText = el.getAttribute('data-price-6m');
+            });
+            priceMonthlyDisplays.forEach(el => {
+              el.innerText = 'tương đương ' + el.getAttribute('data-monthly-6m') + ' đ/tháng';
+            });
+          } else {
+            btn1Year.className = 'px-6 py-2 rounded-full text-sm font-medium bg-primary-500 text-white shadow-sm transition';
+            btn6Months.className = 'px-6 py-2 rounded-full text-sm font-medium text-slate-500 hover:text-slate-900 transition';
+            
+            priceDisplays.forEach(el => {
+              el.innerText = el.getAttribute('data-price-12m');
+            });
+            priceMonthlyDisplays.forEach(el => {
+              el.innerText = 'tương đương ' + el.getAttribute('data-monthly-12m') + ' đ/tháng';
+            });
+          }
+        }
+
+        if (btn6Months && btn1Year) {
+          btn6Months.addEventListener('click', () => setPlan('6m'));
+          btn1Year.addEventListener('click', () => setPlan('12m'));
+        }
+      });
+    </script>
+    </div>
+  </div>
+</section>
+
