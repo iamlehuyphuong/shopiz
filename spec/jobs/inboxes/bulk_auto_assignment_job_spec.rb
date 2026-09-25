@@ -15,7 +15,7 @@ RSpec.describe Inboxes::BulkAutoAssignmentJob do
     context 'when inbox has inbox members' do
       before do
         create(:inbox_member, user: agent, inbox: inbox)
-        account.enable_features!('assignment_v2')
+        account.enable_features!('advanced_assignment')
         inbox.update!(enable_auto_assignment: true)
       end
 
@@ -65,7 +65,7 @@ RSpec.describe Inboxes::BulkAutoAssignmentJob do
 
     context 'when inbox has no members' do
       before do
-        account.enable_features!('assignment_v2')
+        account.enable_features!('advanced_assignment')
         inbox.update!(enable_auto_assignment: true)
       end
 
@@ -77,9 +77,9 @@ RSpec.describe Inboxes::BulkAutoAssignmentJob do
       end
     end
 
-    context 'when assignment_v2 feature is disabled' do
+    context 'when advanced_assignment feature is disabled' do
       before do
-        account.disable_features!('assignment_v2')
+        account.disable_features!('advanced_assignment')
       end
 
       it 'skips auto assignment' do

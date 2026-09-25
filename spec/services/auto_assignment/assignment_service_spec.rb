@@ -10,8 +10,8 @@ RSpec.describe AutoAssignment::AssignmentService do
   let(:conversation) { create(:conversation, inbox: inbox, assignee: nil) }
 
   before do
-    # Enable assignment_v2 feature for the account (basic assignment features)
-    account.enable_features('assignment_v2')
+    # Enable advanced_assignment feature for the account (basic assignment features)
+    account.enable_features('advanced_assignment')
     account.save!
     # Link inbox to assignment policy
     create(:inbox_assignment_policy, inbox: inbox, assignment_policy: assignment_policy)

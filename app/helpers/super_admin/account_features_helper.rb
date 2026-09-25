@@ -7,7 +7,7 @@ module SuperAdmin::AccountFeaturesHelper
     ],
     'Quản lý & CRM (Management & CRM)' => %w[
       agent_management team_management inbox_management crm companies labels
-      custom_attributes custom_roles sales assignment_v2 inbox_view
+      custom_attributes custom_roles sales inbox_view
     ],
     'Năng suất & Tự động hóa (Productivity & Automation)' => %w[
       macros automations canned_responses response_bot auto_resolve_conversations

@@ -3,11 +3,7 @@ module Enterprise::Account
   # this is a temporary method since current administrate doesn't support virtual attributes
   def manually_managed_features; end
 
-  # Auto-sync advanced_assignment with assignment_v2 when features are bulk-updated via admin UI
-  def feature_names=(names)
-    super
-    sync_assignment_features
-  end
+
 
   def mark_for_deletion(reason = 'manual_deletion')
     reason = reason.to_s == 'manual_deletion' ? 'manual_deletion' : 'inactivity'
@@ -36,15 +32,7 @@ module Enterprise::Account
 
   private
 
-  def sync_assignment_features
-    if feature_enabled?('assignment_v2')
-      # Enable advanced_assignment for Business/Enterprise plans
-      send('feature_advanced_assignment=', true) if business_or_enterprise_plan?
-    else
-      # Disable advanced_assignment when assignment_v2 is disabled
-      send('feature_advanced_assignment=', false)
-    end
-  end
+
 
   def business_or_enterprise_plan?
     plan_name = custom_attributes['plan_name']

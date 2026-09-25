@@ -9,12 +9,12 @@ module AutoAssignmentHandler
   private
 
   def run_auto_assignment
-    # Assignment V2: Also trigger assignment when conversation is resolved or snoozed,
+    # Advanced Assignment: Also trigger assignment when conversation is resolved or snoozed,
     # bypassing the open-only condition so the AssignmentJob can redistribute capacity.
     return unless conversation_status_changed_to_open? || conversation_status_changed_to_resolved_or_snoozed?
     return unless should_run_auto_assignment?
 
-    if inbox.auto_assignment_v2_enabled?
+    if inbox.advanced_assignment_enabled?
       # Use new assignment system
       AutoAssignment::AssignmentJob.perform_later(inbox_id: inbox.id)
     else
@@ -26,7 +26,7 @@ module AutoAssignmentHandler
   end
 
   def conversation_status_changed_to_resolved_or_snoozed?
-    inbox.auto_assignment_v2_enabled? && saved_change_to_status? && (resolved? || snoozed?)
+    inbox.advanced_assignment_enabled? && saved_change_to_status? && (resolved? || snoozed?)
   end
 
   def team_member_ids_with_capacity
@@ -37,7 +37,7 @@ module AutoAssignmentHandler
 
   def should_run_auto_assignment?
     return false unless inbox.enable_auto_assignment?
-    # Assignment V2: Resolved/snoozed conversations still have an assignee, so bypass the
+    # Advanced Assignment: Resolved/snoozed conversations still have an assignee, so bypass the
     # assignee-blank check below. The AssignmentJob needs to run to rebalance assignments.
     return true if conversation_status_changed_to_resolved_or_snoozed?
 

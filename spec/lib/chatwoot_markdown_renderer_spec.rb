@@ -15,12 +15,12 @@ RSpec.describe ChatwootMarkdownRenderer do
     allow(markdown_renderer).to receive(:render).with(doc).and_return(html_content)
   end
 
-  describe '#render_article' do
+  describe '#render_document' do
     before do
       allow(CommonMarker).to receive(:render_doc).with(markdown_content, :DEFAULT, [:table]).and_return(doc)
     end
 
-    let(:rendered_content) { renderer.render_article }
+    let(:rendered_content) { renderer.render_document }
 
     it 'renders the markdown content to html' do
       expect(rendered_content.to_s).to eq(html_content)

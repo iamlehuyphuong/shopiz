@@ -667,10 +667,6 @@
         "TITLE": "Chuyển giọng nói thành văn bản (Transcription)",
         "DESCRIPTION": "Tự động chuyển đổi tin nhắn thoại và bản ghi cuộc gọi thành văn bản có thể tìm kiếm."
       },
-      "HELP_CENTER_SEARCH": {
-        "TITLE": "Lập chỉ mục tìm kiếm Help Center",
-        "DESCRIPTION": "Sử dụng AI để tìm kiếm theo ngữ cảnh bên trong các bài viết trong trung tâm trợ giúp của bạn."
-      },
       "LABEL_SUGGESTION": {
         "TITLE": "Gắn nhãn bằng AI",
         "DESCRIPTION": "Tự động đề xuất hoặc áp dụng các nhãn phù hợp cho cuộc hội thoại dựa trên phân tích nội dung và ngữ cảnh. (Cấu hình tại Cài đặt Inbox)",

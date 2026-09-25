@@ -2,7 +2,7 @@ class AutoAssignment::AssignmentService
   pattr_initialize [:inbox!]
 
   def perform_bulk_assignment(limit: 100)
-    return 0 unless inbox.auto_assignment_v2_enabled?
+    return 0 unless inbox.advanced_assignment_enabled?
     return 0 unless inbox.enable_auto_assignment?
 
     assigned_count = 0
