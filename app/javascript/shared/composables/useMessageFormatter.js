@@ -20,7 +20,6 @@ export const useMessageFormatter = (maskContactInfo = false) => {
     const shouldMask = unref(maskContactInfo);
     const messageFormatter = new MessageFormatter(
       message,
-      isATweet,
       isAPrivateNote,
       linkify,
       shouldMask
@@ -39,9 +38,8 @@ export const useMessageFormatter = (maskContactInfo = false) => {
     const shouldMask = unref(maskContactInfo);
     const messageFormatter = new MessageFormatter(
       message,
-      isATweet,
-      false,
-      true,
+      false, // isAPrivateNote
+      true, // linkify
       shouldMask
     );
     return messageFormatter.plainText;

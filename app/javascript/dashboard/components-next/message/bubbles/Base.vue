@@ -107,7 +107,6 @@ const replyToPreview = computed(() => {
     return new MessageFormatter(
       content,
       false,
-      false,
       true,
       maskContactInfo.value
     ).formattedMessage;

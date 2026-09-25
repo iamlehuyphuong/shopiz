@@ -17,7 +17,7 @@ describe('#MessageFormatter', () => {
     });
     it('should not convert template variables to links when linkify is disabled', () => {
       const message = 'Hey {{customer.name}}, check https://www.shopiz.pro';
-      const formatter = new MessageFormatter(message, false, false, false);
+      const formatter = new MessageFormatter(message, false, false);
       expect(formatter.formattedMessage).toMatch(
         '<p>Hey {{customer.name}}, check https://www.shopiz.pro</p>'
       );
@@ -60,31 +60,7 @@ describe('#MessageFormatter', () => {
     });
   });
 
-  describe('tweets', () => {
-    it('should return the same string if not tags or @mentions', () => {
-      const message = 'Chatwoot is an opensource tool';
-      expect(new MessageFormatter(message).formattedMessage).toMatch(message);
-    });
 
-    it('should add links to @mentions', () => {
-      const message =
-        '@chatwootapp is an opensource tool thanks @longnonexistenttwitterusername';
-      expect(
-        new MessageFormatter(message, true, false).formattedMessage
-      ).toMatch(
-        '<p><a href="http://twitter.com/chatwootapp" class="link" rel="noreferrer noopener nofollow" target="_blank">@chatwootapp</a> is an opensource tool thanks @longnonexistenttwitterusername</p>'
-      );
-    });
-
-    it('should add links to #tags', () => {
-      const message = '#chatwootapp is an opensource tool';
-      expect(
-        new MessageFormatter(message, true, false).formattedMessage
-      ).toMatch(
-        '<p><a href="https://twitter.com/hashtag/chatwootapp" class="link" rel="noreferrer noopener nofollow" target="_blank">#chatwootapp</a> is an opensource tool</p>'
-      );
-    });
-  });
 
   describe('private notes', () => {
     it('should return the same string if not tags or @mentions', () => {
@@ -96,14 +72,14 @@ describe('#MessageFormatter', () => {
       const message =
         '@chatwootapp is an opensource tool thanks @longnonexistenttwitterusername';
       expect(
-        new MessageFormatter(message, false, true).formattedMessage
+        new MessageFormatter(message, true).formattedMessage
       ).toMatch(message);
     });
 
     it('should add links to #tags', () => {
       const message = '#chatwootapp is an opensource tool';
       expect(
-        new MessageFormatter(message, false, true).formattedMessage
+        new MessageFormatter(message, true).formattedMessage
       ).toMatch(message);
     });
   });

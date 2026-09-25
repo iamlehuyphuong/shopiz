@@ -202,9 +202,8 @@ export default {
       if (!text) return '';
       const formatter = new MessageFormatter(
         text,
-        false,
-        false,
-        true,
+        false, // isAPrivateNote
+        true, // linkify
         this.maskContactInfo
       );
       return formatter.plainText;

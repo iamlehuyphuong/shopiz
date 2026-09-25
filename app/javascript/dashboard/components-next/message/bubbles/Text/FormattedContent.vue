@@ -25,7 +25,6 @@ const formattedContent = computed(() => {
   return new MessageFormatter(
     props.content,
     false,
-    false,
     true,
     maskContactInfo.value,
     contentAttributes.value?.mentions
