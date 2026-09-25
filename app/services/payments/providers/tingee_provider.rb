@@ -28,7 +28,7 @@ module Payments
           'x-signature' => signature
         }
 
-        url = "https://open-api.tingee.vn/v1/payment-gateway/create-link"
+        url = 'https://open-api.tingee.vn/v1/payment-gateway/create-link'
         response = HTTParty.post(url, headers: headers, body: request_body)
 
         parsed_response = response.parsed_response
@@ -61,7 +61,7 @@ module Payments
       def extract_webhook_data(payload)
         transaction_id = payload['orderId'] || payload['transactionId'] || payload['id']
         amount = payload['amount'] || payload['transferAmount']
-        
+
         # Tingee status could be true/false, 'SUCCESS', '00', etc. Let's be flexible.
         status = payload['status'] == 'success' || payload['status'] == 'SUCCESS' || payload['code'] == '00' ? 'success' : 'failed'
 

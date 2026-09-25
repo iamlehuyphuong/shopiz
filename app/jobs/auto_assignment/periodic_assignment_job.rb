@@ -4,11 +4,11 @@ class AutoAssignment::PeriodicAssignmentJob < ApplicationJob
   def perform
     Account.find_in_batches do |accounts|
       accounts.each do |account|
-        next unless account.feature_enabled?('assignment_v2')
+        next unless account.feature_enabled?('advanced_assignment')
 
         account.inboxes.joins(:assignment_policy).find_in_batches do |inboxes|
           inboxes.each do |inbox|
-            next unless inbox.auto_assignment_v2_enabled?
+            next unless inbox.advanced_assignment_enabled?
 
             AutoAssignment::AssignmentJob.perform_later(inbox_id: inbox.id)
           end

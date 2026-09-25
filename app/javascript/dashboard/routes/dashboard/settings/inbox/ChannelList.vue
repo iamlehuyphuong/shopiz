@@ -84,20 +84,6 @@ const channelList = computed(() => {
       icon: 'i-woot-telegram',
       status: globalConfig.CHANNEL_STATUS_TELEGRAM || 'published',
     },
-    {
-      key: 'line',
-      title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.LINE.TITLE'),
-      description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.LINE.DESCRIPTION'),
-      icon: 'i-woot-line',
-      status: globalConfig.CHANNEL_STATUS_LINE || 'published',
-    },
-    {
-      key: 'twitter',
-      title: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TWITTER.TITLE'),
-      description: t('INBOX_MGMT.ADD.AUTH.CHANNEL.TWITTER.DESCRIPTION'),
-      icon: 'i-ri-twitter-x-fill',
-      status: globalConfig.CHANNEL_STATUS_TWITTER || 'published',
-    },
   ];
 
   const filteredChannels = channels.filter(
@@ -105,8 +91,8 @@ const channelList = computed(() => {
   );
 
   return filteredChannels.sort((a, b) => {
-    const aComingSoon = a.status === 'coming_soon' || ['voice'].includes(a.key);
-    const bComingSoon = b.status === 'coming_soon' || ['voice'].includes(b.key);
+    const aComingSoon = a.status === 'coming_soon';
+    const bComingSoon = b.status === 'coming_soon';
 
     if (aComingSoon && !bComingSoon) return 1;
     if (!aComingSoon && bComingSoon) return -1;

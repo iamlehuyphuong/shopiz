@@ -132,7 +132,7 @@ RSpec.describe Captain::Llm::ConversationFaqService do
 
   describe 'language handling' do
     context 'when conversation has different language' do
-      let(:account) { create(:account, locale: 'fr') }
+      let(:account) { create(:account, locale: 'vi') }
       let(:conversation) do
         create(:conversation, account: account, first_reply_created_at: Time.zone.now)
       end
@@ -144,7 +144,7 @@ RSpec.describe Captain::Llm::ConversationFaqService do
 
       it 'uses account language for system prompt' do
         expect(Captain::Llm::SystemPromptsService).to receive(:conversation_faq_generator)
-          .with('french')
+          .with('vietnamese')
           .at_least(:once)
           .and_call_original
 

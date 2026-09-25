@@ -2,8 +2,8 @@ module Captain::Assistant::TracePayloadHelper
   private
 
   def enrich_context_with_trace_payload!(context, message_history, message_to_process)
-    context[:captain_v2_trace_input] = serialize_trace_messages(message_history)
-    context[:captain_v2_trace_current_input] = serialize_trace_content(message_to_process)
+    context[:captain_trace_input] = serialize_trace_messages(message_history)
+    context[:captain_trace_current_input] = serialize_trace_content(message_to_process)
   end
 
   def serialize_trace_messages(message_history)

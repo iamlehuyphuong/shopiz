@@ -6,7 +6,6 @@ json.channel_type resource.channel_type
 json.greeting_enabled resource.greeting_enabled
 json.greeting_message resource.greeting_message
 json.working_hours_enabled resource.working_hours_enabled
-json.enable_email_collect resource.enable_email_collect
 json.csat_survey_enabled resource.csat_survey_enabled
 json.csat_config resource.csat_config
 json.enable_auto_assignment resource.enable_auto_assignment
@@ -37,17 +36,8 @@ else
   json.ecommerce_integration nil
 end
 
-if resource.portal.present?
-  json.help_center do
-    json.name resource.portal.name
-    json.slug resource.portal.slug
-  end
-end
-
 ## Channel specific settings
 ## TODO : Clean up and move the attributes into channel sub section
-
-json.tweets_enabled resource.channel.try(:tweets_enabled) if resource.twitter?
 
 ## WebWidget Attributes
 json.allowed_domains resource.channel.try(:allowed_domains)
@@ -66,7 +56,6 @@ if resource.web_widget?
   json.hmac_token resource.channel.try(:hmac_token) if Current.account_user&.administrator?
   json.pre_chat_form_enabled resource.channel.try(:pre_chat_form_enabled)
   json.pre_chat_form_options resource.channel.try(:pre_chat_form_options)
-  json.continuity_via_email resource.channel.try(:continuity_via_email)
 end
 
 ## Facebook Attributes
@@ -82,53 +71,6 @@ json.instagram_id resource.channel.try(:instagram_id) if resource.instagram?
 
 ## Tiktok Attributes
 json.reauthorization_required resource.channel.try(:reauthorization_required?) if resource.tiktok?
-
-## Twilio Attributes
-json.messaging_service_sid resource.channel.try(:messaging_service_sid)
-json.phone_number resource.channel.try(:phone_number)
-json.medium resource.channel.try(:medium) if resource.twilio?
-if resource.twilio?
-  json.content_templates resource.channel.try(:content_templates)
-  if Current.account_user&.administrator?
-    json.auth_token resource.channel.try(:auth_token)
-    json.account_sid resource.channel.try(:account_sid)
-  end
-end
-
-if resource.email?
-  ## Email Channel Attributes
-  json.email resource.channel.try(:email)
-  json.forwarding_enabled ENV.fetch('MAILER_INBOUND_EMAIL_DOMAIN', '').present?
-  json.forward_to_email resource.channel.try(:forward_to_email) if ENV.fetch('MAILER_INBOUND_EMAIL_DOMAIN', '').present?
-
-  ## IMAP
-  if Current.account_user&.administrator?
-    json.imap_login resource.channel.try(:imap_login)
-    json.imap_password resource.channel.try(:imap_password)
-    json.imap_address resource.channel.try(:imap_address)
-    json.imap_port resource.channel.try(:imap_port)
-    json.imap_enabled resource.channel.try(:imap_enabled)
-    json.imap_enable_ssl resource.channel.try(:imap_enable_ssl)
-
-    if resource.channel.try(:microsoft?) || resource.channel.try(:google?) || resource.channel.try(:legacy_google?)
-      json.reauthorization_required resource.channel.try(:provider_config).empty? || resource.channel.try(:reauthorization_required?)
-    end
-  end
-
-  ## SMTP
-  if Current.account_user&.administrator?
-    json.smtp_login resource.channel.try(:smtp_login)
-    json.smtp_password resource.channel.try(:smtp_password)
-    json.smtp_address resource.channel.try(:smtp_address)
-    json.smtp_port resource.channel.try(:smtp_port)
-    json.smtp_enabled resource.channel.try(:smtp_enabled)
-    json.smtp_domain resource.channel.try(:smtp_domain)
-    json.smtp_enable_ssl_tls resource.channel.try(:smtp_enable_ssl_tls)
-    json.smtp_enable_starttls_auto resource.channel.try(:smtp_enable_starttls_auto)
-    json.smtp_openssl_verify_mode resource.channel.try(:smtp_openssl_verify_mode)
-    json.smtp_authentication resource.channel.try(:smtp_authentication)
-  end
-end
 
 ## API Channel Attributes
 if resource.api?
@@ -151,11 +93,6 @@ if resource.whatsapp?
 end
 
 ## Voice Channel Attributes
-if resource.channel_type == 'Channel::Voice'
-  json.voice_call_webhook_url resource.channel.try(:voice_call_webhook_url)
-  json.voice_status_webhook_url resource.channel.try(:voice_status_webhook_url)
-end
-
 if resource.zalo_personal?
   json.reauthorization_required resource.channel.try(:reauthorization_required?)
   json.provider_config resource.channel.try(:provider_config)

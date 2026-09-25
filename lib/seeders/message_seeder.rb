@@ -1,15 +1,4 @@
 module Seeders::MessageSeeder
-  def self.create_sample_email_collect_message(conversation)
-    Message.create!(
-      account: conversation.account,
-      inbox: conversation.inbox,
-      conversation: conversation,
-      message_type: :template,
-      content_type: :input_email,
-      content: 'Get notified by email'
-    )
-  end
-
   def self.create_sample_csat_collect_message(conversation)
     Message.create!(
       account: conversation.account,
@@ -102,22 +91,5 @@ module Seeders::MessageSeeder
                                                                             { label: '🍝 Pasta', value: 'Pasta' }] }
       ]
     }
-  end
-
-  def self.create_sample_articles_message(conversation)
-    Message.create!(
-      account: conversation.account,
-      inbox: conversation.inbox,
-      conversation: conversation,
-      message_type: :template,
-      content: 'Tech Companies',
-      content_type: 'article',
-      content_attributes: {
-        items: [
-          { title: 'Acme Hardware', description: 'Hardware reimagined', link: 'http://acme-hardware.inc' },
-          { title: 'Acme Search', description: 'The best Search Engine', link: 'http://acme-search.inc' }
-        ]
-      }
-    )
   end
 end

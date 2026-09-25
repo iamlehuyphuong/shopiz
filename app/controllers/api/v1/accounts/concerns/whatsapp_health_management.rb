@@ -7,7 +7,6 @@ module Api::V1::Accounts::Concerns::WhatsappHealthManagement
     before_action :validate_whatsapp_cloud_channel, only: [:health, :register_webhook]
   end
 
-
   def health
     health_data = Whatsapp::HealthService.new(@inbox.channel).fetch_health_status
     render json: health_data
@@ -34,7 +33,6 @@ module Api::V1::Accounts::Concerns::WhatsappHealthManagement
   end
 
   def whatsapp_channel?
-    @inbox.whatsapp? || (@inbox.twilio? && @inbox.channel.whatsapp?)
+    @inbox.whatsapp?
   end
-
 end

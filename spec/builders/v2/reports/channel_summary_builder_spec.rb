@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe V2::Reports::ChannelSummaryBuilder do
   let!(:account) { create(:account) }
   let!(:web_widget_inbox) { create(:inbox, account: account) }
-  let!(:email_inbox) { create(:inbox, :with_email, account: account) }
+  let!(:api_inbox) { create(:inbox, account: account, channel: create(:channel_api, account: account)) }
   let(:params) do
     {
       since: 1.week.ago.beginning_of_day,
@@ -24,10 +24,10 @@ RSpec.describe V2::Reports::ChannelSummaryBuilder do
         create(:conversation, account: account, inbox: web_widget_inbox, status: :pending, created_at: 1.day.ago)
         create(:conversation, account: account, inbox: web_widget_inbox, status: :snoozed, created_at: 1.day.ago)
 
-        # Email conversations
-        create(:conversation, account: account, inbox: email_inbox, status: :open, created_at: 2.days.ago)
-        create(:conversation, account: account, inbox: email_inbox, status: :resolved, created_at: 1.day.ago)
-        create(:conversation, account: account, inbox: email_inbox, status: :resolved, created_at: 3.days.ago)
+        # API conversations
+        create(:conversation, account: account, inbox: api_inbox, status: :open, created_at: 2.days.ago)
+        create(:conversation, account: account, inbox: api_inbox, status: :resolved, created_at: 1.day.ago)
+        create(:conversation, account: account, inbox: api_inbox, status: :resolved, created_at: 3.days.ago)
       end
 
       it 'returns correct counts grouped by channel type' do
@@ -39,7 +39,7 @@ RSpec.describe V2::Reports::ChannelSummaryBuilder do
           total: 5
         )
 
-        expect(report['Channel::Email']).to eq(
+        expect(report['Channel::Api']).to eq(
           open: 1,
           resolved: 2,
           pending: 0,

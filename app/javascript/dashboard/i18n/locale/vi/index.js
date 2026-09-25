@@ -19,7 +19,7 @@ import datePicker from './datePicker.json';
 import emoji from './emoji.json';
 import general from './general.json';
 import generalSettings from './generalSettings.json';
-import helpCenter from './helpCenter.json';
+
 import inbox from './inbox.json';
 import inboxMgmt from './inboxMgmt.json';
 import integrationApps from './integrationApps.json';
@@ -34,12 +34,12 @@ import setNewPassword from './setNewPassword.json';
 import settings from './settings.json';
 import signup from './signup.json';
 import sla from './sla.json';
+import snooze from './snooze.json';
 import teamsSettings from './teamsSettings.json';
 import whatsappTemplates from './whatsappTemplates.json';
+import mfa from './mfa.json';
 import sales from './sales.json';
-import fixtures from './fixtures.json';
-
-import utilities from './utilities.json';
+import yearInReview from './yearInReview.json';
 
 export default {
   ...advancedFilters,
@@ -63,7 +63,7 @@ export default {
   ...emoji,
   ...general,
   ...generalSettings,
-  ...helpCenter,
+
   ...inbox,
   ...inboxMgmt,
   ...integrationApps,
@@ -76,11 +76,12 @@ export default {
   ...search,
   ...setNewPassword,
   ...settings,
-  ...utilities,
   ...signup,
   ...sla,
+  ...snooze,
   ...teamsSettings,
   ...whatsappTemplates,
+  ...mfa,
   ...sales,
-  ...fixtures,
+  ...yearInReview,
 };

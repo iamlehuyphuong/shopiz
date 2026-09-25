@@ -35,10 +35,9 @@ import AudioBubble from './bubbles/Audio.vue';
 import VideoBubble from './bubbles/Video.vue';
 import EmbedBubble from './bubbles/Embed.vue';
 import InstagramStoryBubble from './bubbles/InstagramStory.vue';
-import EmailBubble from './bubbles/Email/Index.vue';
 import UnsupportedBubble from './bubbles/Unsupported.vue';
 import ContactBubble from './bubbles/Contact.vue';
-import DyteBubble from './bubbles/Dyte.vue';
+
 import LocationBubble from './bubbles/Location.vue';
 import CSATBubble from './bubbles/CSAT.vue';
 import FormBubble from './bubbles/Form.vue';
@@ -98,7 +97,6 @@ import { useBranding } from 'shared/composables/useBranding';
  * @property {string} content - The message content
  * @property {boolean} [groupWithNext=false] - Whether the message should be grouped with the next message
  * @property {Object|null} [inReplyTo=null] - The message to which this message is a reply
- * @property {boolean} [isEmailInbox=false] - Whether the message is from an email inbox
  * @property {number} conversationId - The ID of the conversation to which the message belongs
  * @property {number} inboxId - The ID of the inbox to which the message belongs
  */
@@ -131,7 +129,6 @@ const props = defineProps({
   inboxId: { type: Number, default: null }, // eslint-disable-line vue/no-unused-properties
   inboxSupportsReplyTo: { type: Object, default: () => ({}) },
   inReplyTo: { type: Object, default: null }, // eslint-disable-line vue/no-unused-properties
-  isEmailInbox: { type: Boolean, default: false },
   private: { type: Boolean, default: false },
   additionalAttributes: { type: Object, default: () => ({}) }, // eslint-disable-line vue/no-unused-properties
   sender: { type: Object, default: null },
@@ -158,17 +155,6 @@ const { replaceInstallationName } = useBranding();
  */
 const variant = computed(() => {
   if (props.private) return MESSAGE_VARIANTS.PRIVATE;
-
-  if (props.isEmailInbox) {
-    const emailInboxTypes = [MESSAGE_TYPES.INCOMING, MESSAGE_TYPES.OUTGOING];
-    if (emailInboxTypes.includes(props.messageType)) {
-      return MESSAGE_VARIANTS.EMAIL;
-    }
-  }
-
-  if (props.contentType === CONTENT_TYPES.INCOMING_EMAIL) {
-    return MESSAGE_VARIANTS.EMAIL;
-  }
 
   if (props.status === MESSAGE_STATUS.FAILED) return MESSAGE_VARIANTS.ERROR;
   if (props.contentAttributes?.isUnsupported)
@@ -291,11 +277,6 @@ const shouldShowAvatar = computed(() => {
 const processedContent = computed(() => props.content || '');
 
 const componentToRender = computed(() => {
-  if (props.isEmailInbox && !props.private) {
-    const emailInboxTypes = [MESSAGE_TYPES.INCOMING, MESSAGE_TYPES.OUTGOING];
-    if (emailInboxTypes.includes(props.messageType)) return EmailBubble;
-  }
-
   if (props.contentType === CONTENT_TYPES.INPUT_CSAT) {
     return CSATBubble;
   }
@@ -310,17 +291,10 @@ const componentToRender = computed(() => {
     return VoiceCallBubble;
   }
 
-  if (props.contentType === CONTENT_TYPES.INCOMING_EMAIL) {
-    return EmailBubble;
-  }
-
   if (props.contentAttributes?.isUnsupported) {
     return UnsupportedBubble;
   }
 
-  if (props.contentAttributes.type === 'dyte') {
-    return DyteBubble;
-  }
 
   const instagramSharedTypes = [
     ATTACHMENT_TYPES.STORY_MENTION,
@@ -437,7 +411,6 @@ const contextMenuEnabledOptions = computed(() => {
 
 const shouldRenderMessage = computed(() => {
   const hasAttachments = !!(props.attachments && props.attachments.length > 0);
-  const isEmailContentType = props.contentType === CONTENT_TYPES.INCOMING_EMAIL;
   const isUnsupported = props.contentAttributes?.isUnsupported;
   const isAnIntegrationMessage =
     props.contentType === CONTENT_TYPES.INTEGRATIONS;
@@ -447,7 +420,6 @@ const shouldRenderMessage = computed(() => {
   return (
     hasAttachments ||
     processedContent.value ||
-    isEmailContentType ||
     isUnsupported ||
     isAnIntegrationMessage ||
     isFailedMessage ||
@@ -513,8 +485,17 @@ const avatarInfo = computed(() => {
   const { sender } = props;
   const { name, type, avatarUrl, thumbnail } = sender || {};
 
+  if (type === SENDER_TYPES.CAPTAIN_ASSISTANT) {
+    return {
+      name: name ?? '',
+      src: '',
+      iconName: 'i-woot-captain',
+      colorIndex: 4, // Iris
+    };
+  }
+
   // If sender type is agent bot, use avatarUrl
-  if ([SENDER_TYPES.AGENT_BOT, SENDER_TYPES.CAPTAIN_ASSISTANT].includes(type)) {
+  if (type === SENDER_TYPES.AGENT_BOT) {
     return {
       name: name ?? '',
       src: avatarUrl ?? '',
@@ -597,7 +578,6 @@ provideMessageContext({
         gridClass,
         {
           'gap-y-2': contentAttributes.externalError,
-          'w-full': variant === MESSAGE_VARIANTS.EMAIL,
         },
       ]"
       class="gap-x-2"
@@ -617,7 +597,6 @@ provideMessageContext({
         :class="{
           'ltr:ml-8 rtl:mr-8 justify-end': orientation === ORIENTATION.RIGHT,
           'ltr:mr-8 rtl:ml-8': orientation === ORIENTATION.LEFT,
-          'min-w-0': variant === MESSAGE_VARIANTS.EMAIL,
           'min-w-0 max-w-full': componentToRender === VoiceCallBubble,
         }"
         @contextmenu="openContextMenu($event)"
@@ -633,7 +612,6 @@ provideMessageContext({
         :class="{
           'ltr:ml-8 rtl:mr-8 justify-end': orientation === ORIENTATION.LEFT,
           'ltr:mr-8 rtl:ml-8': orientation === ORIENTATION.RIGHT,
-          'min-w-0': variant === MESSAGE_VARIANTS.EMAIL,
           'min-w-0 max-w-full': componentToRender === VoiceCallBubble,
         }"
         :style="{

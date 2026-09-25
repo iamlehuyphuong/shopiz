@@ -33,7 +33,6 @@ import {
   OPEN_CONVERSATION_ACTIONS,
   SNOOZE_CONVERSATION_ACTIONS,
   RESOLVED_CONVERSATION_ACTIONS,
-  SEND_TRANSCRIPT_ACTION,
   UNMUTE_ACTION,
   MUTE_ACTION,
 } from 'dashboard/helper/commandbar/actions';
@@ -329,10 +328,7 @@ export function useConversationHotKeys() {
 
   const conversationAdditionalActions = computed(() => {
     return prepareActions(
-      [
-        currentChat.value.muted ? UNMUTE_ACTION : MUTE_ACTION,
-        SEND_TRANSCRIPT_ACTION,
-      ],
+      [currentChat.value.muted ? UNMUTE_ACTION : MUTE_ACTION],
       t
     );
   });

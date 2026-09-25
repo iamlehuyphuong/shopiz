@@ -24,20 +24,6 @@
     "CREATE_NEW_ACCOUNT": "Create a new account",
     "CREATE_NEW_ACCOUNT_LABEL": "Don't have an account?",
     "SUBMIT": "Login",
-    "SAML": {
-      "LABEL": "Login via SSO",
-      "TITLE": "Initiate Single Sign-on (SSO)",
-      "SUBTITLE": "Enter your email to access your organization",
-      "BACK_TO_LOGIN": "Login via Password",
-      "WORK_EMAIL": {
-        "LABEL": "Email",
-        "PLACEHOLDER": "Enter your email"
-      },
-      "SUBMIT": "Continue with SSO",
-      "API": {
-        "ERROR_MESSAGE": "SSO authentication failed. Please check your credentials and try again."
-      }
-    },
     "ILLUSTRATION": {
       "TITLE_GRAY": "Omnichannel customer service solution",
       "TITLE_ORANGE": "Multi-channel integration, AI Chatbot & Automation"

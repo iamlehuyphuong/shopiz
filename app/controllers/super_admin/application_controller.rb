@@ -39,7 +39,6 @@ class SuperAdmin::ApplicationController < Administrate::ApplicationController
     content_tag(:div, '', html_options)
   end
 
-
   def invalid_action_perfomed
     # rubocop:disable Rails/I18nLocaleTexts
     flash[:error] = 'Invalid action performed'

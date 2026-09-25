@@ -9,13 +9,7 @@ captain:
   icon: 'i-lucide-bot-message-square'
   config_key: 'captain'
   enterprise: true
-saml:
-  name: 'SAML SSO'
-  description: 'Configuration for controlling SAML Single Sign-On availability'
-  enabled: <%= ChatwootApp.enterprise? %>
-  icon: 'icon-lock-line'
-  config_key: 'saml'
-  enterprise: true
+
 custom_branding:
   name: 'Custom Branding'
   description: 'Apply your own branding to this installation.'
@@ -43,11 +37,6 @@ disable_branding:
   enterprise: true
 
 # ------- Product Features ------- #
-help_center:
-  name: 'Help Center'
-  description: 'Allow agents to create help center articles and publish them in a portal.'
-  enabled: true
-  icon: 'icon-book-2-line'
 captain:
   name: 'Captain'
   description: 'Enable AI-powered conversations with your customers.'
@@ -67,17 +56,8 @@ live_chat:
   description: 'Improve your customer experience using a live chat on your website.'
   enabled: true
   icon: 'icon-chat-smile-3-line'
-email:
-  name: 'Email'
-  description: 'Manage your email customer interactions from Shopiz.'
-  enabled: true
-  icon: 'icon-mail-send-fill'
-  config_key: 'email'
-sms:
-  name: 'SMS'
-  description: 'Manage your SMS customer interactions from Chatwoot.'
-  enabled: true
-  icon: 'icon-message-line'
+
+
 messenger:
   name: 'Messenger'
   description: 'Stay connected with your customers on Facebook & Instagram.'
@@ -106,11 +86,7 @@ telegram:
   description: 'Manage your Telegram customer interactions from Shopiz.'
   enabled: true
   icon: 'icon-telegram-line'
-line:
-  name: 'Line'
-  description: 'Manage your Line customer interactions from Shopiz.'
-  enabled: true
-  icon: 'icon-line-line'
+
 
 # ------- OAuth & Authentication ------- #
 google:
@@ -119,12 +95,7 @@ google:
   enabled: true
   icon: 'icon-google'
   config_key: 'google'
-microsoft:
-  name: 'Microsoft'
-  description: 'Configuration for setting up Microsoft Email'
-  enabled: true
-  icon: 'icon-microsoft'
-  config_key: 'microsoft'
+
 
 # ------- Third-party Integrations ------- #
 linear:

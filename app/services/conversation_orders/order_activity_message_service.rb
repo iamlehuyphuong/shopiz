@@ -56,11 +56,13 @@ class ConversationOrders::OrderActivityMessageService
       message_type: :activity,
       content: content
     }
-    params[:content_attributes] = {
-      translation_key: translation_key,
-      translation_values: translation_values
-    } if translation_key.present?
-    
+    if translation_key.present?
+      params[:content_attributes] = {
+        translation_key: translation_key,
+        translation_values: translation_values
+      }
+    end
+
     params
   end
 

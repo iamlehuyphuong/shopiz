@@ -1,6 +1,6 @@
 class Captain::Conversation::CommentReplyService < Captain::BaseTaskService
   attr_accessor :customer_message, :post_id, :platform, :reply_type
-  
+
   def initialize(account:, conversation:, customer_message:, post_id:, platform:, reply_type:)
     super(account: account, conversation_display_id: conversation.display_id)
     @customer_message = customer_message
@@ -18,14 +18,14 @@ class Captain::Conversation::CommentReplyService < Captain::BaseTaskService
         { role: 'user', content: 'Please generate a reply message based on my comment.' }
       ]
     )
-    
+
     return nil if response.is_a?(Hash) && response[:error].present?
-    
+
     response[:message]&.strip
   end
-  
+
   private
-  
+
   def build_system_prompt
     channel = conversation.inbox.channel
     base_message = if reply_type == 'public'
@@ -34,15 +34,15 @@ class Captain::Conversation::CommentReplyService < Captain::BaseTaskService
                      channel.auto_reply_message
                    end
     base_message = 'Hello, how can we help you?' if base_message.blank?
-    
+
     reply_method = if platform == 'tiktok' || reply_type == 'public'
                      'public comment'
                    else
                      'private direct message (DM)'
                    end
-                   
+
     contact_name = conversation.contact.name
-                   
+
     <<~PROMPT
       You are a customer service assistant for our #{platform.capitalize} page.
       Your task: Reply to the customer's comment via a #{reply_method}.
@@ -50,7 +50,7 @@ class Captain::Conversation::CommentReplyService < Captain::BaseTaskService
       Below is the default reply template configured for our store:
       "#{base_message}"
 
-      Please rewrite this default template to be natural, friendly, and contextually relevant to the customer's comment. 
+      Please rewrite this default template to be natural, friendly, and contextually relevant to the customer's comment.#{' '}
       You MUST maintain the core meaning and intent of the default template.
 
       Guidelines:

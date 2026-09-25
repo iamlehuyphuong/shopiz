@@ -116,10 +116,10 @@ class Zalo::LoadHistoryConversationService
              user_id
            end
 
-    avatar_url = if conv_data['from_id'] != @channel.oa_id
-                   conv_data['from_avatar']
-                 else
+    avatar_url = if conv_data['from_id'] == @channel.oa_id
                    conv_data['to_avatar']
+                 else
+                   conv_data['from_avatar']
                  end
 
     { name: name, avatar_url: avatar_url }.compact

@@ -136,7 +136,7 @@ describe Whatsapp::TemplateCreationService do
                                  inbox: inbox,
                                  name: 'test_template_invalid_channel',
                                  platform_template_id: nil,
-                                 channel_type: 'Channel::Email',
+                                 channel_type: 'Channel::Telegram',
                                  content: { 'components' => [{ 'type' => 'BODY', 'text' => 'Hello!' }] })
 
         service = described_class.new(message_template: message_template)

@@ -6,8 +6,8 @@ class CannedResponses::ImportService
 
   def perform
     xlsx = Roo::Excelx.new(@file.path)
-    headers = xlsx.row(1).map { |h| h.to_s.strip.downcase.gsub(' ', '_') }
-    
+    headers = xlsx.row(1).map { |h| h.to_s.strip.downcase.tr(' ', '_') }
+
     created_count = 0
     updated_count = 0
     errors = []
@@ -15,22 +15,20 @@ class CannedResponses::ImportService
     ActiveRecord::Base.transaction do
       (2..xlsx.last_row).each do |i|
         row = Hash[[headers, xlsx.row(i)].transpose]
-        
+
         # Skip empty rows
         next if row['short_code'].blank? || row['content'].blank?
 
         canned_response = nil
-        if row['id'].present?
-          canned_response = @account.canned_responses.find_by(id: row['id'])
-        end
-        
+        canned_response = @account.canned_responses.find_by(id: row['id']) if row['id'].present?
+
         canned_response ||= @account.canned_responses.find_by(short_code: row['short_code']) || @account.canned_responses.new
-        
+
         is_new = canned_response.new_record?
-        
+
         canned_response.short_code = row['short_code']
         canned_response.content = row['content']
-        
+
         if canned_response.save
           is_new ? created_count += 1 : updated_count += 1
         else

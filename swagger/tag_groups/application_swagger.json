@@ -2374,389 +2374,6 @@
         }
       }
     },
-    "/api/v1/accounts/{account_id}/portals": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/account_id"
-        }
-      ],
-      "post": {
-        "tags": [
-          "Help Center"
-        ],
-        "operationId": "add-new-portal-to-account",
-        "summary": "Add a new portal",
-        "description": "Add a new portal to account",
-        "security": [
-          {
-            "userApiKey": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/portal_create_update_payload"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/portal"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Access denied",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/bad_request_error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Help Center"
-        ],
-        "operationId": "get-portal",
-        "summary": "List all portals in an account",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/account_id"
-          }
-        ],
-        "description": "Get details of portals in an Account",
-        "security": [
-          {
-            "userApiKey": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/portal"
-                },
-                "example": {
-                  "payload": [
-                    {
-                      "id": 4,
-                      "color": "#1F93FF",
-                      "custom_domain": "shopiz.help",
-                      "header_text": "Handbook",
-                      "homepage_link": "https://www.shopiz.pro",
-                      "name": "Handbook",
-                      "page_title": "Handbook",
-                      "slug": "handbook",
-                      "archived": false,
-                      "account_id": 1,
-                      "config": {
-                        "allowed_locales": [
-                          {
-                            "code": "en",
-                            "articles_count": 32,
-                            "categories_count": 9
-                          }
-                        ]
-                      },
-                      "inbox": {
-                        "id": 37,
-                        "avatar_url": "https://example.com/avatar.png",
-                        "channel_id": 1,
-                        "name": "Shopiz",
-                        "channel_type": "Channel::WebWidget",
-                        "greeting_enabled": true,
-                        "widget_color": "#1F93FF",
-                        "website_url": "shopiz.pro"
-                      },
-                      "logo": {
-                        "id": 19399916,
-                        "portal_id": 4,
-                        "file_type": "image/png",
-                        "account_id": 1,
-                        "file_url": "https://example.com/logo.png",
-                        "blob_id": 21239614,
-                        "filename": "square.png"
-                      },
-                      "meta": {
-                        "all_articles_count": 0,
-                        "categories_count": 9,
-                        "default_locale": "en"
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Access denied",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/bad_request_error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/accounts/{account_id}/portals/{id}": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/account_id"
-        },
-        {
-          "$ref": "#/components/parameters/portal_id"
-        }
-      ],
-      "patch": {
-        "tags": [
-          "Help Center"
-        ],
-        "operationId": "update-portal-to-account",
-        "summary": "Update a portal",
-        "description": "Update a portal to account",
-        "security": [
-          {
-            "userApiKey": []
-          }
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/account_id"
-          },
-          {
-            "$ref": "#/components/parameters/portal_id"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/portal_create_update_payload"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/portal_single"
-                },
-                "example": {
-                  "payload": {
-                    "id": 123,
-                    "archived": false,
-                    "color": "#1F93FF",
-                    "config": {
-                      "allowed_locales": [
-                        {
-                          "code": "en",
-                          "articles_count": 32,
-                          "categories_count": 9
-                        }
-                      ]
-                    },
-                    "custom_domain": "shopiz.help",
-                    "header_text": "Handbook",
-                    "homepage_link": "https://www.shopiz.pro",
-                    "name": "Handbook",
-                    "slug": "handbook",
-                    "page_title": "Handbook",
-                    "account_id": 123,
-                    "inbox": {
-                      "id": 123,
-                      "name": "Shopiz",
-                      "website_url": "shopiz.pro",
-                      "channel_type": "Channel::WebWidget",
-                      "avatar_url": "https://example.com/avatar.png",
-                      "widget_color": "#1F93FF",
-                      "website_token": "4cWzuf9i9jxN9tbnv8K9STKU",
-                      "enable_auto_assignment": true,
-                      "web_widget_script": "<script>...</script>",
-                      "welcome_title": "Hi there ! 🙌🏼",
-                      "welcome_tagline": "We make it simple to connect with us.",
-                      "greeting_enabled": true,
-                      "greeting_message": "Hey there 👋, Thank you for reaching out to us.",
-                      "channel_id": 123,
-                      "working_hours_enabled": true,
-                      "enable_email_collect": true,
-                      "csat_survey_enabled": true,
-                      "timezone": "America/Los_Angeles",
-                      "business_name": "Shopiz",
-                      "hmac_mandatory": true
-                    },
-                    "logo": {
-                      "id": 123,
-                      "portal_id": 123,
-                      "file_type": "image/png",
-                      "account_id": 123,
-                      "file_url": "https://example.com/logo.png",
-                      "blob_id": 123,
-                      "filename": "square.png"
-                    },
-                    "meta": {
-                      "all_articles_count": 32,
-                      "categories_count": 9,
-                      "default_locale": "en"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Access denied",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/bad_request_error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Portal not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/bad_request_error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/accounts/{account_id}/portals/{id}/categories": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/account_id"
-        },
-        {
-          "$ref": "#/components/parameters/portal_id"
-        }
-      ],
-      "post": {
-        "tags": [
-          "Help Center"
-        ],
-        "operationId": "add-new-category-to-account",
-        "summary": "Add a new category",
-        "description": "Add a new category to portal",
-        "security": [
-          {
-            "userApiKey": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/category_create_update_payload"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/category"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Access denied",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/bad_request_error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/accounts/{account_id}/portals/{id}/articles": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/account_id"
-        },
-        {
-          "$ref": "#/components/parameters/portal_id"
-        }
-      ],
-      "post": {
-        "tags": [
-          "Help Center"
-        ],
-        "operationId": "add-new-article-to-account",
-        "summary": "Add a new article",
-        "description": "Add a new article to portal",
-        "security": [
-          {
-            "userApiKey": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/article_create_update_payload"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/article"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Access denied",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/bad_request_error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/v1/accounts/{account_id}/conversations/meta": {
       "parameters": [
         {
@@ -7606,272 +7223,6 @@
           }
         }
       },
-      "portal": {
-        "type": "object",
-        "properties": {
-          "payload": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/portal_item"
-            }
-          }
-        }
-      },
-      "portal_single": {
-        "type": "object",
-        "properties": {
-          "payload": {
-            "$ref": "#/components/schemas/portal_item"
-          }
-        }
-      },
-      "portal_config": {
-        "type": "object",
-        "description": "Configuration settings for the portal",
-        "properties": {
-          "allowed_locales": {
-            "type": "array",
-            "description": "List of allowed locales for the portal",
-            "items": {
-              "type": "object",
-              "properties": {
-                "code": {
-                  "type": "string",
-                  "description": "The language code"
-                },
-                "articles_count": {
-                  "type": "integer",
-                  "description": "Number of articles in this locale"
-                },
-                "categories_count": {
-                  "type": "integer",
-                  "description": "Number of categories in this locale"
-                }
-              }
-            }
-          }
-        }
-      },
-      "portal_logo": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "description": "ID of the logo file"
-          },
-          "portal_id": {
-            "type": "integer",
-            "description": "ID of the portal this logo belongs to"
-          },
-          "file_type": {
-            "type": "string",
-            "description": "MIME type of the file"
-          },
-          "account_id": {
-            "type": "integer",
-            "description": "ID of the account"
-          },
-          "file_url": {
-            "type": "string",
-            "description": "URL to access the logo file"
-          },
-          "blob_id": {
-            "type": "integer",
-            "description": "ID of the blob"
-          },
-          "filename": {
-            "type": "string",
-            "description": "Name of the file"
-          }
-        }
-      },
-      "portal_meta": {
-        "type": "object",
-        "properties": {
-          "all_articles_count": {
-            "type": "integer",
-            "description": "Total number of articles"
-          },
-          "archived_articles_count": {
-            "type": [
-              "integer",
-              "null"
-            ],
-            "description": "Number of archived articles"
-          },
-          "published_count": {
-            "type": [
-              "integer",
-              "null"
-            ],
-            "description": "Number of published articles"
-          },
-          "draft_articles_count": {
-            "type": [
-              "integer",
-              "null"
-            ],
-            "description": "Number of draft articles"
-          },
-          "categories_count": {
-            "type": "integer",
-            "description": "Number of categories"
-          },
-          "default_locale": {
-            "type": "string",
-            "description": "Default locale for the portal"
-          }
-        }
-      },
-      "portal_item": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "description": "The ID of the portal"
-          },
-          "archived": {
-            "type": "boolean",
-            "description": "Whether the portal is archived"
-          },
-          "color": {
-            "type": "string",
-            "description": "The color code for the portal"
-          },
-          "config": {
-            "$ref": "#/components/schemas/portal_config"
-          },
-          "custom_domain": {
-            "type": "string",
-            "description": "Custom domain for the portal"
-          },
-          "header_text": {
-            "type": "string",
-            "description": "The header text for the portal"
-          },
-          "homepage_link": {
-            "type": "string",
-            "description": "Homepage link for the portal"
-          },
-          "name": {
-            "type": "string",
-            "description": "Name of the portal"
-          },
-          "slug": {
-            "type": "string",
-            "description": "URL slug for the portal"
-          },
-          "page_title": {
-            "type": "string",
-            "description": "Page title for the portal"
-          },
-          "account_id": {
-            "type": "integer",
-            "description": "ID of the account the portal belongs to"
-          },
-          "inbox": {
-            "$ref": "#/components/schemas/inbox"
-          },
-          "logo": {
-            "$ref": "#/components/schemas/portal_logo"
-          },
-          "meta": {
-            "$ref": "#/components/schemas/portal_meta"
-          }
-        }
-      },
-      "category": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "description": {
-            "type": "string",
-            "description": "The text content."
-          },
-          "locale": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "slug": {
-            "type": "string"
-          },
-          "position": {
-            "type": "integer"
-          },
-          "portal_id": {
-            "type": "integer"
-          },
-          "account_id": {
-            "type": "integer"
-          },
-          "associated_category_id": {
-            "type": "integer",
-            "description": "To associate similar categories to each other, e.g same category of product documentation in different languages"
-          },
-          "parent_category_id": {
-            "type": "integer",
-            "description": "To define parent category, e.g product documentation has multiple level features in sales category or in engineering category."
-          }
-        }
-      },
-      "article": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "content": {
-            "type": "string",
-            "description": "The text content."
-          },
-          "meta": {
-            "type": "object"
-          },
-          "position": {
-            "type": "integer"
-          },
-          "status": {
-            "type": "integer",
-            "enum": [
-              "draft",
-              "published",
-              "archived"
-            ]
-          },
-          "title": {
-            "type": "string"
-          },
-          "slug": {
-            "type": "string"
-          },
-          "views": {
-            "type": "integer"
-          },
-          "portal_id": {
-            "type": "integer"
-          },
-          "account_id": {
-            "type": "integer"
-          },
-          "author_id": {
-            "type": "integer"
-          },
-          "category_id": {
-            "type": "integer"
-          },
-          "folder_id": {
-            "type": "integer"
-          },
-          "associated_article_id": {
-            "type": "integer",
-            "description": "To associate similar articles to each other, e.g to provide the link for the reference."
-          }
-        }
-      },
       "contact": {
         "type": "object",
         "properties": {
@@ -8169,12 +7520,9 @@
               "text",
               "input_text",
               "input_textarea",
-              "input_email",
               "input_select",
               "cards",
               "form",
-              "article",
-              "incoming_email",
               "input_csat",
               "integrations",
               "sticker",
@@ -8518,10 +7866,6 @@
             "type": "boolean",
             "description": "The flag which shows whether working hours feature is enabled"
           },
-          "enable_email_collect": {
-            "type": "boolean",
-            "description": "The flag to enable collecting email from contacts"
-          },
           "csat_survey_enabled": {
             "type": "boolean",
             "description": "The flag to enable CSAT survey"
@@ -8634,23 +7978,12 @@
             "type": "string",
             "description": "Expected reply time"
           },
-          "messaging_service_sid": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "Messaging service SID for SMS providers"
-          },
           "phone_number": {
             "type": [
               "string",
               "null"
             ],
             "description": "Phone number associated with the inbox"
-          },
-          "medium": {
-            "type": "string",
-            "description": "Medium of communication (e.g., sms, email)"
           },
           "provider": {
             "type": [
@@ -10403,11 +9736,9 @@
             "type": "string",
             "enum": [
               "text",
-              "input_email",
               "cards",
               "input_select",
-              "form",
-              "article"
+              "form"
             ],
             "description": "Content type of the message",
             "example": "text"
@@ -10543,11 +9874,6 @@
             "description": "Greeting message to be displayed on the widget",
             "example": "Hello, how can I help you?"
           },
-          "enable_email_collect": {
-            "type": "boolean",
-            "description": "Enable email collection",
-            "example": true
-          },
           "csat_survey_enabled": {
             "type": "boolean",
             "description": "Enable CSAT survey",
@@ -10583,11 +9909,6 @@
             "description": "Lock to single conversation",
             "example": true
           },
-          "portal_id": {
-            "type": "integer",
-            "description": "Id of the help center portal to attach to the inbox",
-            "example": 1
-          },
           "sender_name_type": {
             "type": "string",
             "description": "Sender name type for the inbox",
@@ -10611,11 +9932,8 @@
                 "enum": [
                   "web_widget",
                   "api",
-                  "email",
-                  "line",
                   "telegram",
-                  "whatsapp",
-                  "sms"
+                  "whatsapp"
                 ],
                 "example": "web_widget"
               },
@@ -10666,11 +9984,6 @@
             "description": "Greeting message to be displayed on the widget",
             "example": "Hello, how can I help you?"
           },
-          "enable_email_collect": {
-            "type": "boolean",
-            "description": "Enable email collection",
-            "example": true
-          },
           "csat_survey_enabled": {
             "type": "boolean",
             "description": "Enable CSAT survey",
@@ -10705,11 +10018,6 @@
             "type": "boolean",
             "description": "Lock to single conversation",
             "example": true
-          },
-          "portal_id": {
-            "type": "integer",
-            "description": "Id of the help center portal to attach to the inbox",
-            "example": 1
           },
           "sender_name_type": {
             "type": "string",
@@ -10951,173 +10259,6 @@
                   "help"
                 ]
               }
-            }
-          }
-        }
-      },
-      "portal_create_update_payload": {
-        "type": "object",
-        "properties": {
-          "color": {
-            "type": "string",
-            "description": "Header color for help-center in hex format",
-            "example": "#FFFFFF"
-          },
-          "custom_domain": {
-            "type": "string",
-            "description": "Custom domain to display help center.",
-            "example": "shopiz.help"
-          },
-          "header_text": {
-            "type": "string",
-            "description": "Help center header",
-            "example": "Handbook"
-          },
-          "homepage_link": {
-            "type": "string",
-            "description": "link to main dashboard",
-            "example": "https://www.shopiz.pro/"
-          },
-          "name": {
-            "type": "string",
-            "description": "Name for the portal",
-            "example": "Handbook"
-          },
-          "page_title": {
-            "type": "string",
-            "description": "Page title for the portal",
-            "example": "Handbook"
-          },
-          "slug": {
-            "type": "string",
-            "description": "Slug for the portal to display in link",
-            "example": "handbook"
-          },
-          "archived": {
-            "type": "boolean",
-            "description": "Status to check if portal is live",
-            "example": false
-          },
-          "config": {
-            "type": "object",
-            "description": "Configuration about supporting locales",
-            "example": {
-              "allowed_locales": [
-                "en",
-                "es"
-              ],
-              "default_locale": "en"
-            }
-          }
-        }
-      },
-      "category_create_update_payload": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "The name of the category",
-            "example": "Category Name"
-          },
-          "description": {
-            "type": "string",
-            "description": "A description for the category",
-            "example": "Category description"
-          },
-          "position": {
-            "type": "integer",
-            "description": "Category position in the portal list to sort",
-            "example": 1
-          },
-          "slug": {
-            "type": "string",
-            "description": "The category slug used in the URL",
-            "example": "category-name"
-          },
-          "locale": {
-            "type": "string",
-            "description": "The locale of the category",
-            "example": "en"
-          },
-          "icon": {
-            "type": "string",
-            "description": "The icon of the category as a string (emoji)",
-            "example": "📚"
-          },
-          "parent_category_id": {
-            "type": "integer",
-            "description": "To define parent category, e.g product documentation has multiple level features in sales category or in engineering category.",
-            "example": 1
-          },
-          "associated_category_id": {
-            "type": "integer",
-            "description": "To associate similar categories to each other, e.g same category of product documentation in different languages",
-            "example": 2
-          }
-        }
-      },
-      "article_create_update_payload": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string",
-            "description": "The title of the article",
-            "example": "Article Title"
-          },
-          "slug": {
-            "type": "string",
-            "description": "The slug of the article",
-            "example": "article-title"
-          },
-          "position": {
-            "type": "integer",
-            "description": "article position in category",
-            "example": 1
-          },
-          "content": {
-            "type": "string",
-            "description": "The text content.",
-            "example": "This is the content of the article"
-          },
-          "description": {
-            "type": "string",
-            "description": "The description of the article",
-            "example": "This is the description of the article"
-          },
-          "category_id": {
-            "type": "integer",
-            "description": "The category id of the article",
-            "example": 1
-          },
-          "author_id": {
-            "type": "integer",
-            "description": "The author agent id of the article",
-            "example": 1
-          },
-          "associated_article_id": {
-            "type": "integer",
-            "description": "To associate similar articles to each other, e.g to provide the link for the reference.",
-            "example": 2
-          },
-          "status": {
-            "type": "integer",
-            "description": "The status of the article. 0 for draft, 1 for published, 2 for archived",
-            "example": 1
-          },
-          "locale": {
-            "type": "string",
-            "description": "The locale of the article",
-            "example": "en"
-          },
-          "meta": {
-            "type": "object",
-            "description": "Use for search",
-            "example": {
-              "tags": [
-                "article_name"
-              ],
-              "title": "article title",
-              "description": "article description"
             }
           }
         }
@@ -12230,12 +11371,9 @@
               "text",
               "input_text",
               "input_textarea",
-              "input_email",
               "input_select",
               "cards",
               "form",
-              "article",
-              "incoming_email",
               "input_csat",
               "integrations",
               "sticker",
@@ -13050,7 +12188,7 @@
         "schema": {
           "type": "string"
         },
-        "description": "Id of the session for which the conversation is created.\n\n\n\n Source Ids can be obtained through contactable inboxes API or via generated.<br/><br/>Website: Shopiz generated string which can be obtained from webhook events. <br/> Phone Channels(Twilio): Phone number in e164 format <br/> Email Channels: Contact Email address <br/> API Channel: Any Random String"
+        "description": "Id of the session for which the conversation is created.\n\n\n\n Source Ids can be obtained through contactable inboxes API or via generated.<br/><br/>Website: Shopiz generated string which can be obtained from webhook events. <br/> API Channel: Any Random String"
       },
       "contact_sort_param": {
         "in": "query",
@@ -13185,15 +12323,6 @@
         },
         "required": true,
         "description": "The source id of contact obtained on contact create"
-      },
-      "portal_id": {
-        "in": "path",
-        "name": "id",
-        "schema": {
-          "type": "string"
-        },
-        "required": true,
-        "description": "The slug identifier of the portal"
       }
     },
     "securitySchemes": {
@@ -13293,10 +12422,6 @@
     {
       "name": "Automation Rule",
       "description": "Workflow automation rules"
-    },
-    {
-      "name": "Help Center",
-      "description": "Knowledge base management"
     }
   ],
   "x-tagGroups": [
@@ -13332,8 +12457,7 @@
         "Reports",
         "Teams",
         "Webhooks",
-        "Automation Rule",
-        "Help Center"
+        "Automation Rule"
       ]
     },
     {

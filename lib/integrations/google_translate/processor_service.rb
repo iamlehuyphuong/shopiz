@@ -27,41 +27,12 @@ class Integrations::GoogleTranslate::ProcessorService
     target_language.tr('_', '-')
   end
 
-  def email_channel?
-    message&.inbox&.email?
-  end
-
-  def email_content
-    @email_content ||= {
-      html: message.content_attributes.dig('email', 'html_content', 'full'),
-      text: message.content_attributes.dig('email', 'text_content', 'full'),
-      content_type: message.content_attributes.dig('email', 'content_type')
-    }
-  end
-
-  def html_content_available?
-    email_content[:html].present?
-  end
-
-  def plain_text_content_available?
-    email_content[:content_type]&.include?('text/plain') &&
-      email_content[:text].present?
-  end
-
   def translation_content
-    return message.content unless email_channel?
-    return email_content[:html] if html_content_available?
-    return email_content[:text] if plain_text_content_available?
-
     message.content
   end
 
   def mime_type
-    if email_channel? && html_content_available?
-      'text/html'
-    else
-      'text/plain'
-    end
+    'text/plain'
   end
 
   def hook

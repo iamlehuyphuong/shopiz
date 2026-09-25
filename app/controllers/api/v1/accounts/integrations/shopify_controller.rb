@@ -26,8 +26,8 @@ class Api::V1::Accounts::Integrations::ShopifyController < Api::V1::Accounts::Ba
     return render json: { orders: [] } if customers.empty?
 
     orders = fetch_orders({
-      customer_id: customers.first['id']
-    })
+                            customer_id: customers.first['id']
+                          })
     render json: { orders: orders }
   rescue ShopifyAPI::Errors::HttpResponseError => e
     render json: { error: e.message }, status: :unprocessable_entity
@@ -50,6 +50,7 @@ class Api::V1::Accounts::Integrations::ShopifyController < Api::V1::Accounts::Ba
   def products
     products = fetch_products
     return render json: { products: [] } if products.empty?
+
     render json: { products: products }
   rescue ShopifyAPI::Errors::HttpResponseError => e
     render json: { error: e.message }, status: :unprocessable_entity
@@ -121,7 +122,7 @@ class Api::V1::Accounts::Integrations::ShopifyController < Api::V1::Accounts::Ba
         else
           'Out Of Stock'
         end
-      product.merge('stock' => total_stock,'stock_status' => stock_status)
+      product.merge('stock' => total_stock, 'stock_status' => stock_status)
     end
   end
 

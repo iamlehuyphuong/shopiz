@@ -71,7 +71,7 @@ RSpec.describe Captain::Tools::VisionTextExtractorService do
 
   describe '#extract_text_from_multiple_images' do
     let(:image_paths) { ['/tmp/image1.png', '/tmp/image2.png'] }
-    
+
     before do
       allow(Google::Cloud::Vision).to receive(:image_annotator).and_return(double('vision'))
       allow(subject).to receive(:extract_text_from_image).with('/tmp/image1.png').and_return('Text from page 1')
@@ -85,7 +85,7 @@ RSpec.describe Captain::Tools::VisionTextExtractorService do
 
     it 'skips empty results' do
       allow(subject).to receive(:extract_text_from_image).with('/tmp/image2.png').and_return('')
-      
+
       result = subject.extract_text_from_multiple_images(image_paths)
       expect(result).to eq('Text from page 1')
     end

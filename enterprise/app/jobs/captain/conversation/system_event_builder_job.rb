@@ -16,11 +16,7 @@ class Captain::Conversation::SystemEventBuilderJob < ApplicationJob
 
     Current.executed_by = @assistant
 
-    if captain_v2_enabled?
-      generate_response_with_v2
-    else
-      generate_and_process_response
-    end
+    generate_and_process_response
   rescue ActiveStorage::FileNotFoundError, Faraday::BadRequestError => e
     handle_error(e)
     raise e
@@ -35,15 +31,6 @@ class Captain::Conversation::SystemEventBuilderJob < ApplicationJob
   delegate :account, :inbox, to: :@conversation
 
   def generate_and_process_response
-    @response = Captain::Llm::AssistantChatService.new(assistant: @assistant, conversation: @conversation).generate_response(
-      message_history: collect_previous_messages,
-      additional_message: system_event_prompt,
-      role: 'system'
-    )
-    process_response
-  end
-
-  def generate_response_with_v2
     history = collect_previous_messages
     history << { role: 'user', content: system_event_prompt }
 
@@ -148,10 +135,6 @@ class Captain::Conversation::SystemEventBuilderJob < ApplicationJob
 
   def log_error(error)
     ChatwootExceptionTracker.new(error, account: account).capture_exception
-  end
-
-  def captain_v2_enabled?
-    account.feature_enabled?('captain_integration_v2')
   end
 
   def system_event_prompt

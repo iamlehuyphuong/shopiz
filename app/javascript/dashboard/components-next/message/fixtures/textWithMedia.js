@@ -130,21 +130,6 @@ export default camelcaseKeys(
       source_id: null,
     },
     {
-      id: 5298,
-      content: 'Get notified by email',
-      inbox_id: 486,
-      conversation_id: 1016,
-      message_type: 3,
-      content_type: 'input_email',
-      status: 'read',
-      content_attributes: {
-        submitted_email: 'anthony@example.com',
-      },
-      created_at: 1732710572,
-      private: false,
-      source_id: null,
-    },
-    {
       conversation_id: 1016,
       status: 'read',
       content_type: 'text',

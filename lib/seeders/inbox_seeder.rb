@@ -19,13 +19,9 @@ class Seeders::InboxSeeder
   def perform!
     seed_website_inbox
     seed_facebook_inbox
-    seed_twitter_inbox
     seed_whatsapp_inbox
-    seed_sms_inbox
-    seed_email_inbox
     seed_api_inbox
     seed_telegram_inbox
-    seed_line_inbox
   end
 
   def seed_website_inbox
@@ -57,12 +53,6 @@ class Seeders::InboxSeeder
     )
   end
 
-  def seed_twitter_inbox
-    channel = Channel::TwitterProfile.create!(account: @account, twitter_access_token: SecureRandom.hex,
-                                              twitter_access_token_secret: SecureRandom.hex, profile_id: '123')
-    Inbox.create!(channel: channel, account: @account, name: "#{@company_data['name']} Twitter")
-  end
-
   def seed_whatsapp_inbox
     # rubocop:disable Rails/SkipsModelValidations
     Channel::Whatsapp.insert(
@@ -79,26 +69,6 @@ class Seeders::InboxSeeder
     channel = Channel::Whatsapp.find_by(account_id: @account.id)
 
     Inbox.create!(channel: channel, account: @account, name: "#{@company_data['name']} Whatsapp")
-  end
-
-  def seed_sms_inbox
-    channel = Channel::Sms.create!(account: @account, phone_number: Faker::PhoneNumber.cell_phone_in_e164)
-    Inbox.create!(channel: channel, account: @account, name: "#{@company_data['name']} Mobile")
-  end
-
-  def seed_email_inbox
-    channel = Channel::Email.create!(account: @account, email: "test#{SecureRandom.hex}@#{@company_data['domain']}",
-                                     forward_to_email: "test_fwd#{SecureRandom.hex}@#{@company_data['domain']}")
-    Inbox.create!(
-      channel: channel,
-      account: @account,
-      name: "#{@company_data['name']} Email",
-      csat_survey_enabled: true,
-      csat_config: {
-        'display_type' => 'emoji',
-        'message' => 'How was your support experience today?'
-      }
-    )
   end
 
   def seed_api_inbox
@@ -122,11 +92,5 @@ class Seeders::InboxSeeder
     channel = Channel::Telegram.find_by(bot_token: bot_token)
     Inbox.create!(channel: channel, account: @account, name: "#{@company_data['name']} Telegram")
     # rubocop:enable Rails/SkipsModelValidations
-  end
-
-  def seed_line_inbox
-    channel = Channel::Line.create!(account: @account, line_channel_id: SecureRandom.hex, line_channel_secret: SecureRandom.hex,
-                                    line_channel_token: SecureRandom.hex)
-    Inbox.create!(channel: channel, account: @account, name: "#{@company_data['name']} Line")
   end
 end

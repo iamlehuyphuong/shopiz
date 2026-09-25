@@ -31,7 +31,7 @@ RSpec.describe TriggerScheduledItemsJob do
   end
 
   context 'when unexecuted Scheduled campaign jobs' do
-    let!(:twilio_sms) { create(:channel_twilio_sms, account: account) }
+    let!(:twilio_sms) { create(:channel_whatsapp, account: account, sync_templates: false, validate_provider_config: false) }
     let!(:twilio_inbox) { create(:inbox, channel: twilio_sms, account: account) }
 
     it 'triggers Campaigns::TriggerOneoffCampaignJob' do

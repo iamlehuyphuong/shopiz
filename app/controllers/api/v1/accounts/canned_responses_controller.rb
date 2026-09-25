@@ -32,7 +32,8 @@ class Api::V1::Accounts::CannedResponsesController < Api::V1::Accounts::BaseCont
         sheet.add_row [cr.id, cr.short_code, cr.content, cr.account_id, cr.created_at, cr.updated_at]
       end
     end
-    send_data package.to_stream.read, filename: "canned_responses_#{Time.now.to_i}.xlsx", type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    send_data package.to_stream.read, filename: "canned_responses_#{Time.now.to_i}.xlsx",
+                                      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
   end
 
   def import

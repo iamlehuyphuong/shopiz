@@ -11,7 +11,7 @@ import { mapGetters } from 'vuex';
 // composables
 import { useUISettings } from 'dashboard/composables/useUISettings';
 import { useAlert } from 'dashboard/composables';
-import { required, requiredIf } from '@vuelidate/validators';
+import { required } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 
 // mixins
@@ -22,8 +22,6 @@ import inboxMixin from 'shared/mixins/inboxMixin';
 import AttachmentPreview from 'dashboard/components/widgets/AttachmentsPreview.vue';
 import CannedResponse from 'dashboard/components/widgets/conversation/CannedResponse.vue';
 import InboxDropdownItem from 'dashboard/components/widgets/InboxDropdownItem.vue';
-import MessageSignatureMissingAlert from 'dashboard/components/widgets/conversation/MessageSignatureMissingAlert.vue';
-import ReplyEmailHead from 'dashboard/components/widgets/conversation/ReplyEmailHead.vue';
 import WootMessageEditor from 'dashboard/components/widgets/WootWriter/Editor.vue';
 import Thumbnail from 'dashboard/components/widgets/Thumbnail.vue';
 import FileUpload from 'vue-upload-component';
@@ -38,13 +36,11 @@ export default {
   components: {
     Thumbnail,
     WootMessageEditor,
-    ReplyEmailHead,
     CannedResponse,
     WhatsappTemplates,
     InboxDropdownItem,
     FileUpload,
     AttachmentPreview,
-    MessageSignatureMissingAlert,
   },
   mixins: [inboxMixin, fileUploadMixin],
   props: {
@@ -59,14 +55,12 @@ export default {
   },
   emits: ['cancel', 'success'],
   setup() {
-    const { fetchSignatureFlagFromUISettings, setSignatureFlagForInbox } =
-      useUISettings();
+    const { fetchSignatureFlagFromUISettings } = useUISettings();
     const v$ = useVuelidate();
     const uploadAttachment = ref(false);
 
     return {
       fetchSignatureFlagFromUISettings,
-      setSignatureFlagForInbox,
       v$,
       uploadAttachment,
     };
@@ -74,12 +68,9 @@ export default {
   data() {
     return {
       name: '',
-      subject: '',
       message: '',
       showCannedResponseMenu: false,
       cannedResponseSearchKey: '',
-      bccEmails: '',
-      ccEmails: '',
       targetInbox: {},
       whatsappTemplateSelected: false,
       attachedFiles: [],
@@ -87,9 +78,6 @@ export default {
   },
   validations() {
     return {
-      subject: {
-        required: requiredIf(this.isAnEmailInbox),
-      },
       message: {
         required,
       },
@@ -119,7 +107,6 @@ export default {
         sourceId: this.targetInbox.sourceId,
         contactId: this.contact.id,
         message: { content: this.message },
-        mailSubject: this.subject,
         assigneeId: this.currentUser.id,
       };
 
@@ -128,13 +115,6 @@ export default {
         this.setAttachmentPayload(payload);
       }
 
-      if (this.ccEmails) {
-        payload.message.cc_emails = this.ccEmails;
-      }
-
-      if (this.bccEmails) {
-        payload.message.bcc_emails = this.bccEmails;
-      }
       return payload;
     },
     selectedInbox: {
@@ -174,15 +154,6 @@ export default {
       }
       return this.inboxes.length === 0 && !this.uiFlags.isFetchingInboxes;
     },
-    isSignatureEnabledForInbox() {
-      return this.isAnEmailInbox && this.sendWithSignature;
-    },
-    signatureToggleTooltip() {
-      return this.sendWithSignature
-        ? this.$t('CONVERSATION.FOOTER.DISABLE_SIGN_TOOLTIP')
-        : this.$t('CONVERSATION.FOOTER.ENABLE_SIGN_TOOLTIP');
-    },
-
     inboxes() {
       const inboxList = this.contact.contact_inboxes || [];
       if (!inboxList.length) return [];
@@ -199,20 +170,11 @@ export default {
         };
       });
     },
-    isAnEmailInbox() {
-      return (
-        this.selectedInbox &&
-        this.selectedInbox.inbox.channel_type === INBOX_TYPES.EMAIL
-      );
-    },
     isAnWebWidgetInbox() {
       return (
         this.selectedInbox &&
         this.selectedInbox.inbox.channel_type === INBOX_TYPES.WEB
       );
-    },
-    isEmailOrWebWidgetInbox() {
-      return this.isAnEmailInbox || this.isAnWebWidgetInbox;
     },
     hasWhatsappTemplates() {
       return !!this.selectedInbox.inbox?.message_templates;
@@ -229,7 +191,7 @@ export default {
   },
   watch: {
     message(value) {
-      this.hasSlashCommand = value[0] === '/' && !this.isEmailOrWebWidgetInbox;
+      this.hasSlashCommand = value[0] === '/' && !this.isAnWebWidgetInbox;
       const hasNextWord = value.includes(' ');
       const isShortCodeActive = this.hasSlashCommand && !hasNextWord;
       if (isShortCodeActive) {
@@ -354,10 +316,6 @@ export default {
       );
       return classByType;
     },
-    toggleMessageSignature() {
-      this.setSignatureFlagForInbox(this.channelType, !this.sendWithSignature);
-      this.setSignature();
-    },
   },
 };
 </script>
@@ -443,22 +401,6 @@ export default {
           </label>
         </div>
       </div>
-      <div v-if="isAnEmailInbox" class="w-full">
-        <div class="w-full">
-          <label :class="{ error: v$.subject.$error }">
-            {{ $t('NEW_CONVERSATION.FORM.SUBJECT.LABEL') }}
-            <input
-              v-model="subject"
-              type="text"
-              :placeholder="$t('NEW_CONVERSATION.FORM.SUBJECT.PLACEHOLDER')"
-              @input="v$.subject.$touch"
-            />
-            <span v-if="v$.subject.$error" class="message">
-              {{ $t('NEW_CONVERSATION.FORM.SUBJECT.ERROR') }}
-            </span>
-          </label>
-        </div>
-      </div>
       <div class="w-full">
         <div class="w-full">
           <div class="relative">
@@ -468,15 +410,10 @@ export default {
               @replace="replaceTextWithCannedResponse"
             />
           </div>
-          <div v-if="isEmailOrWebWidgetInbox">
+          <div v-if="isAnWebWidgetInbox">
             <label>
               {{ $t('NEW_CONVERSATION.FORM.MESSAGE.LABEL') }}
             </label>
-            <ReplyEmailHead
-              v-if="isAnEmailInbox"
-              v-model:cc-emails="ccEmails"
-              v-model:bcc-emails="bccEmails"
-            />
             <div class="editor-wrap">
               <WootMessageEditor
                 v-model="message"
@@ -488,25 +425,7 @@ export default {
                 :placeholder="$t('NEW_CONVERSATION.FORM.MESSAGE.PLACEHOLDER')"
                 @toggle-canned-menu="toggleCannedMenu"
                 @blur="v$.message.$touch"
-              >
-                <template #footer>
-                  <MessageSignatureMissingAlert
-                    v-if="isSignatureEnabledForInbox && !messageSignature"
-                    class="!mx-0 mb-1"
-                  />
-                  <div v-if="isAnEmailInbox" class="mt-px mb-3">
-                    <woot-button
-                      v-tooltip.top-end="signatureToggleTooltip"
-                      icon="signature"
-                      color-scheme="secondary"
-                      variant="smooth"
-                      size="small"
-                      :title="signatureToggleTooltip"
-                      @click.prevent="toggleMessageSignature"
-                    />
-                  </div>
-                </template>
-              </WootMessageEditor>
+              />
               <span v-if="v$.message.$error" class="editor-warning__message">
                 {{ $t('NEW_CONVERSATION.FORM.MESSAGE.ERROR') }}
               </span>
@@ -531,7 +450,7 @@ export default {
               {{ $t('NEW_CONVERSATION.FORM.MESSAGE.ERROR') }}
             </span>
           </label>
-          <div v-if="isEmailOrWebWidgetInbox" class="flex flex-col">
+          <div v-if="isAnWebWidgetInbox" class="flex flex-col">
             <FileUpload
               ref="uploadAttachment"
               input-id="newConversationAttachment"
@@ -589,7 +508,7 @@ export default {
       </woot-button>
     </div>
 
-    <transition v-if="isEmailOrWebWidgetInbox" name="modal-fade">
+    <transition v-if="isAnWebWidgetInbox" name="modal-fade">
       <div
         v-show="uploadAttachment && uploadAttachment.dropActive"
         class="absolute top-0 bottom-0 left-0 right-0 z-30 flex flex-col items-center justify-center w-full h-full gap-2 bg-white/80 dark:bg-slate-700/80"

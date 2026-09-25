@@ -40,20 +40,6 @@ namespace :search do
       )
     end
 
-    # Email inbox
-    unless account.inboxes.exists?(channel_type: 'Channel::Email')
-      puts '  Creating Email inbox...'
-      account.inboxes.create!(
-        name: 'Search Test Email',
-        channel: Channel::Email.create!(
-          account: account,
-          email: 'search-test@example.com',
-          imap_enabled: false,
-          smtp_enabled: false
-        )
-      )
-    end
-
     inboxes = account.inboxes.to_a
     puts "✅ Using #{inboxes.count} inbox(es):"
     inboxes.each { |i| puts "   - #{i.name} (ID: #{i.id}, Type: #{i.channel_type})" }

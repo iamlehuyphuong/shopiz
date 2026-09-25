@@ -179,32 +179,14 @@ RSpec.describe Inbox do
         inbox.name = 'inbox_name.and_1'
         expect(inbox).to be_valid
       end
-
-      context 'when special characters allowed for some channel' do
-        let!(:tw_channel_val) { FactoryBot.create(:channel_twitter_profile) }
-        let(:inbox) { create(:inbox, channel: tw_channel_val) }
-
-        it 'does allow special chacters like /\@<> for Facebook Channel' do
-          inbox.name = 'inbox@name'
-          expect(inbox).to be_valid
-        end
-      end
     end
   end
 
   describe '#update' do
     let!(:inbox) { FactoryBot.create(:inbox) }
-    let!(:portal) { FactoryBot.create(:portal) }
 
     before do
       allow(Rails.configuration.dispatcher).to receive(:dispatch)
-    end
-
-    it 'set portal id in inbox' do
-      inbox.portal_id = portal.id
-      inbox.save
-
-      expect(inbox.portal).to eq(portal)
     end
 
     it 'sends the inbox_created event if ENABLE_INBOX_EVENTS is true' do
@@ -299,21 +281,7 @@ RSpec.describe Inbox do
     end
 
     context 'when inbox name becomes empty after sanitization' do
-      context 'with email channel' do
-        it 'falls back to email local part' do
-          email_channel = FactoryBot.build(:channel_email, email: 'support@example.com')
-          inbox = FactoryBot.build(:inbox, name: '\\<>@"', channel: email_channel)
-          expect(inbox.sanitized_name).to eq('Support')
-        end
-
-        it 'handles email with complex local part' do
-          email_channel = FactoryBot.build(:channel_email, email: 'help-desk_team@example.com')
-          inbox = FactoryBot.build(:inbox, name: '!!!@@@', channel: email_channel)
-          expect(inbox.sanitized_name).to eq('Help Desk Team')
-        end
-      end
-
-      context 'with non-email channel' do
+      context 'with any channel' do
         it 'returns empty string when name becomes blank' do
           web_widget_channel = FactoryBot.build(:channel_widget)
           inbox = FactoryBot.build(:inbox, name: '\\<>@"', channel: web_widget_channel)
@@ -323,15 +291,7 @@ RSpec.describe Inbox do
     end
 
     context 'when inbox name is blank initially' do
-      context 'with email channel' do
-        it 'uses email local part as fallback' do
-          email_channel = FactoryBot.build(:channel_email, email: 'customer-care@example.com')
-          inbox = FactoryBot.build(:inbox, name: '', channel: email_channel)
-          expect(inbox.sanitized_name).to eq('Customer Care')
-        end
-      end
-
-      context 'with non-email channel' do
+      context 'with any channel' do
         it 'returns empty string' do
           api_channel = FactoryBot.build(:channel_api)
           inbox = FactoryBot.build(:inbox, name: '', channel: api_channel)

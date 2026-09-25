@@ -3,21 +3,6 @@
 // nodes: block structures (bulletList, orderedList, codeBlock, blockquote)
 export const FORMATTING = {
   // Channel formatting
-  'Channel::Email': {
-    marks: ['strong', 'em', 'code', 'link'],
-    nodes: ['bulletList', 'orderedList', 'codeBlock', 'blockquote', 'image'],
-    menu: [
-      'copilot',
-      'strong',
-      'em',
-      'code',
-      'link',
-      'bulletList',
-      'orderedList',
-      'undo',
-      'redo',
-    ],
-  },
   'Channel::WebWidget': {
     marks: ['strong', 'em', 'code', 'link', 'strike'],
     nodes: ['bulletList', 'orderedList', 'codeBlock', 'blockquote', 'image'],
@@ -54,21 +39,7 @@ export const FORMATTING = {
       'redo',
     ],
   },
-  'Channel::TwitterProfile': {
-    marks: [],
-    nodes: [],
-    menu: [],
-  },
-  'Channel::TwilioSms': {
-    marks: [],
-    nodes: [],
-    menu: [],
-  },
-  'Channel::Sms': {
-    marks: [],
-    nodes: [],
-    menu: [],
-  },
+
   'Channel::Whatsapp': {
     marks: ['strong', 'em', 'code', 'strike'],
     nodes: ['bulletList', 'orderedList', 'codeBlock'],
@@ -84,11 +55,7 @@ export const FORMATTING = {
       'redo',
     ],
   },
-  'Channel::Line': {
-    marks: ['strong', 'em', 'code', 'strike'],
-    nodes: ['codeBlock'],
-    menu: ['copilot', 'strong', 'em', 'code', 'strike', 'undo', 'redo'],
-  },
+
   'Channel::Telegram': {
     marks: ['strong', 'em', 'link', 'code'],
     nodes: [],
@@ -109,11 +76,7 @@ export const FORMATTING = {
       'redo',
     ],
   },
-  'Channel::Voice': {
-    marks: [],
-    nodes: [],
-    menu: [],
-  },
+
   'Channel::Tiktok': {
     marks: [],
     nodes: [],
@@ -167,22 +130,6 @@ export const FORMATTING = {
     menu: [],
   },
 };
-
-// Editor menu options for Full Editor
-export const ARTICLE_EDITOR_MENU_OPTIONS = [
-  'strong',
-  'em',
-  'link',
-  'undo',
-  'redo',
-  'bulletList',
-  'orderedList',
-  'h1',
-  'h2',
-  'h3',
-  'imageUpload',
-  'code',
-];
 
 /**
  * Markdown formatting patterns for stripping unsupported formatting.

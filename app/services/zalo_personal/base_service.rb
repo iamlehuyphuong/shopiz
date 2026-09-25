@@ -260,11 +260,11 @@ class ZaloPersonal::BaseService
     msg = parsed_params['msg'] || {}
     template = msg['vi'] || msg['en'] || poll_text
 
-    if template.include?('%1$s')
-      poll_text = template.gsub('%1$s', parsed_params['dName'].to_s).gsub('%2$s', parsed_params['question'].to_s)
-    else
-      poll_text = template
-    end
+    poll_text = if template.include?('%1$s')
+                  template.gsub('%1$s', parsed_params['dName'].to_s).gsub('%2$s', parsed_params['question'].to_s)
+                else
+                  template
+                end
 
     @message = @conversation.messages.build(message_params.merge(
                                               content: poll_text,

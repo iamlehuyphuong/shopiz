@@ -21,9 +21,7 @@ class Api::V1::Accounts::Channels::ZaloChannelsController < Api::V1::Accounts::B
           'https://openapi.zalo.me/v3.0/oa/getoa',
           headers: { 'access_token' => access_token }
         )
-        if response.success? && response['error'].to_i == 0
-          avatar_url = response.dig('data', 'avatar')
-        end
+        avatar_url = response.dig('data', 'avatar') if response.success? && response['error'].to_i == 0
       rescue StandardError => e
         Rails.logger.error("Failed to fetch Zalo OA profile for avatar: #{e.message}")
       end

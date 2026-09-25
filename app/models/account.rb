@@ -68,8 +68,7 @@ class Account < ApplicationRecord
             'assistant': { 'type': %w[string null] },
             'copilot': { 'type': %w[string null] },
             'label_suggestion': { 'type': %w[string null] },
-            'audio_transcription': { 'type': %w[string null] },
-            'help_center_search': { 'type': %w[string null] }
+            'audio_transcription': { 'type': %w[string null] }
           },
           'additionalProperties': false
         },
@@ -80,8 +79,7 @@ class Account < ApplicationRecord
             'assistant': { 'type': %w[boolean null] },
             'copilot': { 'type': %w[boolean null] },
             'label_suggestion': { 'type': %w[boolean null] },
-            'audio_transcription': { 'type': %w[boolean null] },
-            'help_center_search': { 'type': %w[boolean null] }
+            'audio_transcription': { 'type': %w[boolean null] }
           },
           'additionalProperties': false
         },
@@ -128,9 +126,13 @@ class Account < ApplicationRecord
   store_accessor :settings, :keep_pending_on_bot_failure
   store_accessor :settings, :captain_auto_resolve_mode
   store_accessor :settings, :active_ecommerce_platform, :ai_allow_create_order, :order_notification_templates
-  
+
   def parsed_encrypted_settings
-    val = self.encrypted_settings.dup rescue self.encrypted_settings
+    val = begin
+      encrypted_settings.dup
+    rescue StandardError
+      encrypted_settings
+    end
     if val.is_a?(String)
       begin
         val = JSON.parse(val)
@@ -167,22 +169,19 @@ class Account < ApplicationRecord
   has_many :agent_bot_inboxes, dependent: :destroy_async
   has_many :agent_bots, dependent: :destroy_async
   has_many :api_channels, dependent: :destroy_async, class_name: '::Channel::Api'
-  has_many :articles, dependent: :destroy_async, class_name: '::Article'
   has_many :assignment_policies, dependent: :destroy_async
   has_many :automation_rules, dependent: :destroy_async
   has_many :macros, dependent: :destroy_async
   has_many :campaigns, dependent: :destroy_async
   has_many :canned_responses, dependent: :destroy_async
-  has_many :categories, dependent: :destroy_async, class_name: '::Category'
   has_many :contacts, dependent: :destroy_async
   has_many :conversations, dependent: :destroy_async
   has_many :conversation_orders, dependent: :destroy_async
   has_many :csat_survey_responses, dependent: :destroy_async
   has_many :custom_attribute_definitions, dependent: :destroy_async
   has_many :custom_filters, dependent: :destroy_async
-  has_many :dashboard_apps, dependent: :destroy_async
+
   has_many :data_imports, dependent: :destroy_async
-  has_many :email_channels, dependent: :destroy_async, class_name: '::Channel::Email'
   has_many :facebook_pages, dependent: :destroy_async, class_name: '::Channel::FacebookPage'
   has_many :zalo_oas, dependent: :destroy_async, class_name: '::Channel::ZaloOa'
   has_many :zalo_message_templates, dependent: :destroy_async
@@ -194,20 +193,17 @@ class Account < ApplicationRecord
   has_many :inboxes, dependent: :destroy_async
   has_many :inbox_daily_summaries, dependent: :destroy
   has_many :labels, dependent: :destroy_async
-  has_many :line_channels, dependent: :destroy_async, class_name: '::Channel::Line'
+
   has_many :mentions, dependent: :destroy_async
   has_many :messages, dependent: :destroy_async
   has_many :message_templates, dependent: :destroy_async
   has_many :notes, dependent: :destroy_async
   has_many :notification_settings, dependent: :destroy_async
   has_many :notifications, dependent: :destroy_async
-  has_many :portals, dependent: :destroy_async, class_name: '::Portal'
-  has_many :sms_channels, dependent: :destroy_async, class_name: '::Channel::Sms'
+
   has_many :teams, dependent: :destroy_async
   has_many :telegram_channels, dependent: :destroy_async, class_name: '::Channel::Telegram'
-  has_many :twilio_sms, dependent: :destroy_async, class_name: '::Channel::TwilioSms'
-  has_many :voice_channels, dependent: :destroy_async, class_name: '::Channel::Voice'
-  has_many :twitter_profiles, dependent: :destroy_async, class_name: '::Channel::TwitterProfile'
+
   has_many :users, through: :account_users
   has_many :web_widgets, dependent: :destroy_async, class_name: '::Channel::WebWidget'
   has_many :webhooks, dependent: :destroy_async
@@ -313,21 +309,19 @@ class Account < ApplicationRecord
   def move_secrets_to_encrypted_settings
     return unless settings.is_a?(Hash)
 
-    if self.encrypted_settings.is_a?(String)
+    if encrypted_settings.is_a?(String)
       begin
-        self.encrypted_settings = JSON.parse(self.encrypted_settings)
+        self.encrypted_settings = JSON.parse(encrypted_settings)
       rescue JSON::ParserError
         self.encrypted_settings = {}
       end
     end
 
     self.encrypted_settings ||= {}
-    if settings.key?('sales_payment_config')
-      self.encrypted_settings['sales_payment_config'] = settings.delete('sales_payment_config')
-    end
-    if settings.key?('custom_email_config')
-      self.encrypted_settings['custom_email_config'] = settings.delete('custom_email_config')
-    end
+    self.encrypted_settings['sales_payment_config'] = settings.delete('sales_payment_config') if settings.key?('sales_payment_config')
+    return unless settings.key?('custom_email_config')
+
+    self.encrypted_settings['custom_email_config'] = settings.delete('custom_email_config')
   end
 
   def validate_reporting_timezone

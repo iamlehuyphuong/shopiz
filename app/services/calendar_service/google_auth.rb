@@ -16,11 +16,11 @@ module CalendarService
 
       uri = URI('https://oauth2.googleapis.com/token')
       response = Net::HTTP.post_form(uri, {
-        'client_id' => ENV.fetch('GOOGLE_OAUTH_CLIENT_ID', ''),
-        'client_secret' => ENV.fetch('GOOGLE_OAUTH_CLIENT_SECRET', ''),
-        'refresh_token' => @calendar_integration.refresh_token,
-        'grant_type' => 'refresh_token'
-      })
+                                       'client_id' => ENV.fetch('GOOGLE_OAUTH_CLIENT_ID', ''),
+                                       'client_secret' => ENV.fetch('GOOGLE_OAUTH_CLIENT_SECRET', ''),
+                                       'refresh_token' => @calendar_integration.refresh_token,
+                                       'grant_type' => 'refresh_token'
+                                     })
 
       if response.is_a?(Net::HTTPSuccess)
         data = JSON.parse(response.body)

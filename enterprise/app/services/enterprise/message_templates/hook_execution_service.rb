@@ -21,12 +21,6 @@ module Enterprise::MessageTemplates::HookExecutionService
     super
   end
 
-  def should_send_email_collect?
-    return false if captain_handling_conversation?
-
-    super
-  end
-
   private
 
   def schedule_captain_response

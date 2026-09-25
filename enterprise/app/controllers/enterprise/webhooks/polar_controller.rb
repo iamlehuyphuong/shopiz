@@ -7,7 +7,7 @@ class Enterprise::Webhooks::PolarController < ActionController::API
 
     # Verify standard webhooks signature
     unless client.verify_webhook_signature?(payload_body, headers)
-      Rails.logger.error("[Polar Webhook] Invalid signature")
+      Rails.logger.error('[Polar Webhook] Invalid signature')
       head :unauthorized
       return
     end

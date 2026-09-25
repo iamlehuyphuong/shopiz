@@ -13,7 +13,6 @@ export const MESSAGE_VARIANTS = {
   BOT: 'bot',
   ERROR: 'error',
   TEMPLATE: 'template',
-  EMAIL: 'email',
   UNSUPPORTED: 'unsupported',
 };
 
@@ -60,12 +59,10 @@ export const CONTENT_TYPES = {
   TEXT: 'text',
   INPUT_TEXT: 'input_text',
   INPUT_TEXTAREA: 'input_textarea',
-  INPUT_EMAIL: 'input_email',
   INPUT_SELECT: 'input_select',
   CARDS: 'cards',
   FORM: 'form',
   ARTICLE: 'article',
-  INCOMING_EMAIL: 'incoming_email',
   INPUT_CSAT: 'input_csat',
   INTEGRATIONS: 'integrations',
   STICKER: 'sticker',

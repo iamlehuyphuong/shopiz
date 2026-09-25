@@ -5,7 +5,7 @@ RSpec.describe ConversationOrders::SendUtilityMessageService do
 
   let(:account) { create(:account) }
   let(:contact) { create(:contact, account: account) }
-  let(:order) { create(:conversation_order, account: account, status: 'confirmed', total_amount: 150000) }
+  let(:order) { create(:conversation_order, account: account, status: 'confirmed', total_amount: 150_000) }
 
   describe '#perform' do
     let(:inbox) { create(:inbox, account: account) }

@@ -1,5 +1,4 @@
 class Webhooks::OmicallController < ActionController::API
-
   def events
     Omicall::WebhookProcessorService.new(webhook_params).perform
 

@@ -201,7 +201,7 @@ class Whatsapp::IncomingMessageBaseService
     note_content = "Tin nhắn bắt nguồn từ Quảng cáo Click-to-WhatsApp:\n"
     note_content += "- **Tiêu đề:** #{referral[:headline] || 'N/A'}\n"
     note_content += "- **Nguồn:** #{referral[:source_url] || 'N/A'}\n"
-    
+
     media_url = referral[:video_url] || referral[:image_url]
     note_content += "- **Media:** #{media_url}\n" if media_url.present?
 

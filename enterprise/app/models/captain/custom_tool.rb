@@ -70,7 +70,7 @@ class Captain::CustomTool < ApplicationRecord
   end
 
   def auth_config
-    val = self.encrypted_auth_config || {}
+    val = encrypted_auth_config || {}
     if val.is_a?(String)
       begin
         val = JSON.parse(val)

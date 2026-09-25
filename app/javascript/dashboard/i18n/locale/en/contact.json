@@ -101,9 +101,6 @@
     "CALL_INITIATED": "Calling the contact…",
     "CALL_FAILED": "Unable to start the call. Please try again.",
     "REQUEST_FRIEND": "Send a friend request",
-    "VOICE_INBOX_PICKER": {
-      "TITLE": "Choose a voice inbox"
-    },
     "GENDERS": {
       "male": "Male",
       "female": "Female"
@@ -137,7 +134,6 @@
     "UNMUTE_CONTACT": "Unblock Contact",
     "MUTED_SUCCESS": "This contact is blocked successfully. You will not be notified of any future conversations.",
     "UNMUTED_SUCCESS": "This contact is unblocked successfully.",
-    "SEND_TRANSCRIPT": "Send Transcript",
     "EDIT_LABEL": "Edit",
     "SIDEBAR_SECTIONS": {
       "CUSTOM_ATTRIBUTES": "Custom Attributes",
@@ -226,10 +222,6 @@
         "FACEBOOK": {
           "PLACEHOLDER": "Enter the Facebook username",
           "LABEL": "Facebook"
-        },
-        "TWITTER": {
-          "PLACEHOLDER": "Enter the Twitter username",
-          "LABEL": "Twitter"
         },
         "LINKEDIN": {
           "PLACEHOLDER": "Enter the LinkedIn username",
@@ -566,9 +558,6 @@
           },
           "LINKEDIN": {
             "PLACEHOLDER": "Add LinkedIn"
-          },
-          "TWITTER": {
-            "PLACEHOLDER": "Add Twitter"
           }
         }
       },
@@ -745,19 +734,9 @@
           "SEND_MESSAGE": "Send message"
         }
       },
-      "TWILIO_OPTIONS": {
-        "LABEL": "Select template",
-        "SEARCH_PLACEHOLDER": "Search templates",
-        "EMPTY_STATE": "No templates found",
-        "TEMPLATE_PARSER": {
-          "BACK": "Go back",
-          "SEND_MESSAGE": "Send message"
-        }
-      },
       "ACTION_BUTTONS": {
         "DISCARD": "Discard",
-        "SEND": "Send ({keyCode})",
-        "MAKE_CALL": "Make a Call"
+        "SEND": "Send ({keyCode})"
       }
     }
   },

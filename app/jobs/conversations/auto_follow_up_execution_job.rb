@@ -117,8 +117,6 @@ class Conversations::AutoFollowUpExecutionJob < ApplicationJob
     Captain::Conversation::FollowupBuilderJob.perform_later(conversation, assistant, attempt_count, base_message)
   end
 
-
-
   def trigger_predefined_message(conversation, content, attempt_count)
     # Re-read count inside lock to avoid stale reads from concurrent jobs
     conversation.with_lock do

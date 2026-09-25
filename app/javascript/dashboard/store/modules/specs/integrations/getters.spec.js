@@ -4,12 +4,7 @@ describe('#getters', () => {
   it('getAppIntegrations', () => {
     const state = {
       records: [
-        {
-          id: 'dyte',
-          name: 'dyte',
-          logo: 'test',
-          enabled: true,
-        },
+
         {
           id: 'dialogflow',
           name: 'test2',
@@ -19,12 +14,7 @@ describe('#getters', () => {
       ],
     };
     expect(getters.getAppIntegrations(state)).toEqual([
-      {
-        id: 'dyte',
-        name: 'dyte',
-        logo: 'test',
-        enabled: true,
-      },
+
       {
         id: 'dialogflow',
         name: 'test2',

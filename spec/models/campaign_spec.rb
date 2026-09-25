@@ -24,7 +24,7 @@ RSpec.describe Campaign do
     end
   end
 
-  context 'when Inbox other then Website or Twilio SMS' do
+  context 'when Inbox type is unsupported' do
     before do
       stub_request(:post, /graph.facebook.com/)
     end
@@ -57,56 +57,11 @@ RSpec.describe Campaign do
     end
 
     it 'cant be triggered' do
-      expect(Twilio::OneoffSmsCampaignService).not_to receive(:new).with(campaign: campaign)
       expect(campaign.trigger!).to be_nil
     end
   end
 
   describe 'ensure_correct_campaign_attributes' do
-    context 'when Twilio SMS campaign' do
-      let(:account) { create(:account) }
-      let!(:twilio_sms) { create(:channel_twilio_sms, account: account) }
-      let!(:twilio_inbox) { create(:inbox, channel: twilio_sms, account: account) }
-      let(:campaign) { build(:campaign, account: account, inbox: twilio_inbox) }
-
-      it 'only saves campaign type as oneoff and wont leave scheduled_at empty' do
-        campaign.campaign_type = 'ongoing'
-        campaign.save!
-        expect(campaign.reload.campaign_type).to eq 'one_off'
-        expect(campaign.scheduled_at.present?).to be true
-      end
-
-      it 'calls twilio service on trigger!' do
-        sms_service = double
-        expect(Twilio::OneoffSmsCampaignService).to receive(:new).with(campaign: campaign).and_return(sms_service)
-        expect(sms_service).to receive(:perform)
-        campaign.save!
-        campaign.trigger!
-      end
-    end
-
-    context 'when SMS campaign' do
-      let(:account) { create(:account) }
-      let!(:sms_channel) { create(:channel_sms, account: account) }
-      let!(:sms_inbox) { create(:inbox, channel: sms_channel, account: account) }
-      let(:campaign) { build(:campaign, account: account, inbox: sms_inbox) }
-
-      it 'only saves campaign type as oneoff and wont leave scheduled_at empty' do
-        campaign.campaign_type = 'ongoing'
-        campaign.save!
-        expect(campaign.reload.campaign_type).to eq 'one_off'
-        expect(campaign.scheduled_at.present?).to be true
-      end
-
-      it 'calls sms service on trigger!' do
-        sms_service = double
-        expect(Sms::OneoffSmsCampaignService).to receive(:new).with(campaign: campaign).and_return(sms_service)
-        expect(sms_service).to receive(:perform)
-        campaign.save!
-        campaign.trigger!
-      end
-    end
-
     context 'when Website campaign' do
       let(:campaign) { build(:campaign) }
 

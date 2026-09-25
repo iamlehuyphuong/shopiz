@@ -213,36 +213,6 @@ describe('#getters', () => {
     });
   });
 
-  describe('#getLastEmailInSelectedChat', () => {
-    it('Returns cc in last email', () => {
-      const state = {};
-      const getSelectedChat = {
-        messages: [
-          {
-            message_type: 1,
-            content_attributes: {
-              email: {
-                from: 'why@how.my',
-                cc: ['nithin@me.co', 'we@who.why'],
-              },
-            },
-          },
-        ],
-      };
-      expect(
-        getters.getLastEmailInSelectedChat(state, { getSelectedChat })
-      ).toEqual({
-        message_type: 1,
-        content_attributes: {
-          email: {
-            from: 'why@how.my',
-            cc: ['nithin@me.co', 'we@who.why'],
-          },
-        },
-      });
-    });
-  });
-
   describe('#getSelectedChatAttachments', () => {
     it('Returns attachments in selected chat', () => {
       const attachments = {

@@ -11,7 +11,6 @@ export const CONVERSATION_EVENTS = Object.freeze({
   SEARCH_CONVERSATION: 'Searched conversations',
   APPLY_FILTER: 'Applied filters in the conversation list',
   CHANGE_PRIORITY: 'Assigned priority to a conversation',
-  INSERT_ARTICLE_LINK: 'Inserted article into reply via article search',
 });
 
 export const ACCOUNT_EVENTS = Object.freeze({
@@ -70,30 +69,6 @@ export const CAMPAIGNS_EVENTS = Object.freeze({
   CREATE_CAMPAIGN: 'Created a new campaign',
   UPDATE_CAMPAIGN: 'Updated a campaign',
   DELETE_CAMPAIGN: 'Deleted a campaign',
-});
-
-// PORTAL EVENTS
-export const PORTALS_EVENTS = Object.freeze({
-  ONBOARD_BASIC_INFORMATION: 'New Portal: Completed basic information',
-  ONBOARD_CUSTOMIZATION: 'New portal: Completed customization',
-  CREATE_PORTAL: 'Created a portal',
-  DELETE_PORTAL: 'Deleted a portal',
-  UPDATE_PORTAL: 'Updated a portal',
-
-  CREATE_LOCALE: 'Created a portal locale',
-  SET_DEFAULT_LOCALE: 'Set default portal locale',
-  DELETE_LOCALE: 'Deleted a portal locale',
-  SWITCH_LOCALE: 'Switched portal locale',
-
-  CREATE_CATEGORY: 'Created a portal category',
-  DELETE_CATEGORY: 'Deleted a portal category',
-  EDIT_CATEGORY: 'Edited a portal category',
-
-  CREATE_ARTICLE: 'Created an article',
-  PUBLISH_ARTICLE: 'Published an article',
-  ARCHIVE_ARTICLE: 'Archived an article',
-  DELETE_ARTICLE: 'Deleted an article',
-  PREVIEW_ARTICLE: 'Previewed article',
 });
 
 export const CAPTAIN_EVENTS = Object.freeze({

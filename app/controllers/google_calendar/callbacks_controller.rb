@@ -23,7 +23,7 @@ class GoogleCalendar::CallbacksController < OauthCallbackController
       expires_at: Time.current + parsed_body['expires_in'].to_i.seconds,
       email: email
     )
-    
+
     @integration.save!
 
     redirect_to frontend_url("/app/accounts/#{account.id}/sales/tools/google_calendar")

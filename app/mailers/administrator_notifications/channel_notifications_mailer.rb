@@ -19,11 +19,6 @@ class AdministratorNotifications::ChannelNotificationsMailer < AdministratorNoti
     send_notification(subject, action_url: inbox_url(inbox))
   end
 
-  def email_disconnect(inbox)
-    subject = 'Your email inbox has been disconnected. Please update the credentials for SMTP/IMAP'
-    send_notification(subject, action_url: inbox_url(inbox))
-  end
-
   def zalo_personal_disconnect(inbox)
     subject = 'Your Zalo Personal connection has expired'
     send_notification(subject, action_url: inbox_url(inbox))

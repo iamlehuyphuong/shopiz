@@ -23,7 +23,7 @@ const conversationWithoutMeta = {
       last_activity_at: 1712127410,
       created_at: 1712127389,
     },
-    channel: 'Channel::Email',
+    channel: 'Channel::WebWidget',
     assignee: {
       id: 1,
       accountId: 2,
@@ -160,7 +160,7 @@ const conversationWithMeta = {
       lastActivityAt: 1712127410,
       createdAt: 1712127389,
     },
-    channel: 'Channel::Email',
+    channel: 'Channel::WebWidget',
     assignee: {
       id: 1,
       accountId: 2,

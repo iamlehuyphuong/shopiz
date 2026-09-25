@@ -19,7 +19,7 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
     end
   rescue Facebook::Messenger::FacebookError => e
     handle_facebook_error(e)
-    
+
     error_hash = {
       'error' => {
         'message' => e.message,
@@ -27,7 +27,7 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
         'error_subcode' => e.subcode
       }
     }
-    
+
     translated_error = external_error(error_hash)
     Messages::StatusUpdateService.new(message, 'failed', translated_error).perform
     track_campaign_metric(:failed)
@@ -38,7 +38,7 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
     return if parsed_result.nil?
 
     message.update!(source_id: parsed_result['message_id']) if parsed_result['message_id'].present?
-    
+
     # Mark the message as a private reply so the frontend can style it appropriately.
     # Clear conversation-level comment_id hint after successful delivery to prevent
     # subsequent messages from also being sent as private replies.
@@ -53,17 +53,25 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
   def deliver_message(delivery_params)
     if delivery_params.dig(:recipient, :comment_id).present?
       response = Facebook::CommentActionService.new(channel: channel)
-                   .send_private_reply(delivery_params[:recipient][:comment_id], delivery_params[:message])
-      
+                                               .send_private_reply(delivery_params[:recipient][:comment_id], delivery_params[:message])
+
       unless response&.success?
-        body = JSON.parse(response.body) rescue {}
+        body = begin
+          JSON.parse(response.body)
+        rescue StandardError
+          {}
+        end
         error_msg = body.dig('error', 'message') || 'Facebook was unable to process this request'
         Messages::StatusUpdateService.new(message, 'failed', error_msg).perform
         Rails.logger.error "Facebook::SendOnFacebookService: Error sending private reply : Page - #{channel.page_id} : #{response.body}"
         return nil
       end
-      
-      body = JSON.parse(response.body) rescue {}
+
+      body = begin
+        JSON.parse(response.body)
+      rescue StandardError
+        {}
+      end
       return { 'message_id' => body['message_id'] || body['id'] }
     end
 
@@ -154,9 +162,7 @@ class Facebook::SendOnFacebookService < Base::SendOnChannelService
       return I18n.t('errors.facebook.private_reply_timeout', error_code: error_code, error_message: error_message)
     end
 
-    if error_code == 10901
-      conversation.update!(additional_attributes: conversation.additional_attributes.except('comment_id')) if is_private_reply
-    end
+    conversation.update!(additional_attributes: conversation.additional_attributes.except('comment_id')) if (error_code == 10_901) && is_private_reply
 
     "#{error_code} - #{error_message}"
   end

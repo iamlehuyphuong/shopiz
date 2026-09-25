@@ -1,5 +1,4 @@
 class ZaloPersonal::IncomingMessageService < ZaloPersonal::BaseService
-
   private
 
   def message_type

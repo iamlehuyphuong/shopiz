@@ -24,18 +24,11 @@ export default {
     WAITING_SINCE_DESC: 'waiting_since_desc',
     PRIORITY_DESC_CREATED_AT_ASC: 'priority_desc_created_at_asc',
   },
-  ARTICLE_STATUS_TYPES: {
-    DRAFT: 0,
-    PUBLISH: 1,
-    ARCHIVE: 2,
-  },
   LAYOUT_TYPES: {
     CONDENSED: 'condensed',
     EXPANDED: 'expanded',
   },
   DOCS_URL: 'https://www.shopiz.pro/docs/product/',
-  HELP_CENTER_DOCS_URL:
-    'https://www.chatwoot.com/docs/product/others/help-center',
   TESTIMONIAL_URL:
     'https://testimonials.cdn.chatwoot.com/testimonial-content.json',
   WHATSAPP_EMBEDDED_SIGNUP_DOCS_URL:

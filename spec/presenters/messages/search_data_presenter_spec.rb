@@ -45,19 +45,6 @@ RSpec.describe Messages::SearchDataPresenter do
       end
     end
 
-    context 'with email content attributes' do
-      before do
-        message.update(
-          content_attributes: { email: { subject: 'Test Subject' } }
-        )
-      end
-
-      it 'includes email subject' do
-        content_attrs = presenter.search_data[:content_attributes]
-        expect(content_attrs[:email][:subject]).to eq('Test Subject')
-      end
-    end
-
     context 'with campaign and automation data' do
       before do
         message.update(

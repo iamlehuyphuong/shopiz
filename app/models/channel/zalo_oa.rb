@@ -65,7 +65,7 @@ class Channel::ZaloOa < ApplicationRecord
     if message.content.present?
       body = message_body(target_id, message.content, target_id_key)
       body[:message][:quote_message_id] = message.content_attributes[:in_reply_to_external_id] if message.content_attributes[:in_reply_to_external_id]
-      
+
       return is_group ? client.send_group_message(body) : client.send_cs_message(body)
     end
 
@@ -116,7 +116,7 @@ class Channel::ZaloOa < ApplicationRecord
            else
              attachment_body(target_id, data['data']['token'], target_id_key)
            end
-           
+
     is_group ? client.send_group_message(body) : client.send_cs_message(body)
   end
 

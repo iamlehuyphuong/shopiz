@@ -72,50 +72,26 @@ RSpec.describe Macros::ExecutionService, type: :service do
   end
 
   describe '#add_private_note' do
-    context 'when conversation is not a tweet' do
-      it 'creates a new private message' do
-        expect do
-          service.send(:add_private_note, ['Test private note'])
-        end.to change(Message, :count).by(1)
+    it 'creates a new private message' do
+      expect do
+        service.send(:add_private_note, ['Test private note'])
+      end.to change(Message, :count).by(1)
 
-        message = Message.last
-        expect(message.content).to eq('Test private note')
-        expect(message.private).to be(true)
-      end
-    end
-
-    context 'when conversation is a tweet' do
-      before { allow(service).to receive(:conversation_a_tweet?).and_return(true) }
-
-      it 'does not create a new message' do
-        expect do
-          service.send(:add_private_note, ['Test private note'])
-        end.not_to change(Message, :count)
-      end
+      message = Message.last
+      expect(message.content).to eq('Test private note')
+      expect(message.private).to be(true)
     end
   end
 
   describe '#send_message' do
-    context 'when conversation is not a tweet' do
-      it 'creates a new public message' do
-        expect do
-          service.send(:send_message, ['Test message'])
-        end.to change(Message, :count).by(1)
+    it 'creates a new public message' do
+      expect do
+        service.send(:send_message, ['Test message'])
+      end.to change(Message, :count).by(1)
 
-        message = Message.last
-        expect(message.content).to eq('Test message')
-        expect(message.private).to be(false)
-      end
-    end
-
-    context 'when conversation is a tweet' do
-      before { allow(service).to receive(:conversation_a_tweet?).and_return(true) }
-
-      it 'does not create a new message' do
-        expect do
-          service.send(:send_message, ['Test message'])
-        end.not_to change(Message, :count)
-      end
+      message = Message.last
+      expect(message.content).to eq('Test message')
+      expect(message.private).to be(false)
     end
   end
 
@@ -125,27 +101,13 @@ RSpec.describe Macros::ExecutionService, type: :service do
       macro.save!
     end
 
-    context 'when conversation is not a tweet and macro has files attached' do
-      before { allow(service).to receive(:conversation_a_tweet?).and_return(false) }
+    it 'creates a new message with attachments' do
+      expect do
+        service.send(:send_attachment, [macro.files.first.blob_id])
+      end.to change(Message, :count).by(1)
 
-      it 'creates a new message with attachments' do
-        expect do
-          service.send(:send_attachment, [macro.files.first.blob_id])
-        end.to change(Message, :count).by(1)
-
-        message = Message.last
-        expect(message.attachments).to be_present
-      end
-    end
-
-    context 'when conversation is a tweet or macro has no files attached' do
-      before { allow(service).to receive(:conversation_a_tweet?).and_return(true) }
-
-      it 'does not create a new message' do
-        expect do
-          service.send(:send_attachment, [macro.files.first.blob_id])
-        end.not_to change(Message, :count)
-      end
+      message = Message.last
+      expect(message.attachments).to be_present
     end
   end
 

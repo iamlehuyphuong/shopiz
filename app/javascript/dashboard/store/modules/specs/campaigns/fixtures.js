@@ -31,7 +31,7 @@ export default [
     },
     inbox: {
       id: 2,
-      channel_type: 'Channel::TwilioSms',
+      channel_type: 'Channel::Sms',
       name: 'Twilio SMS',
     },
     created_at: '2021-05-03T08:15:35.828Z',

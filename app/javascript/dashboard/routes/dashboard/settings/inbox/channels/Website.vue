@@ -29,15 +29,6 @@ export default {
     ...mapGetters({
       uiFlags: 'inboxes/getUIFlags',
     }),
-    textAreaChannels() {
-      if (
-        this.isATwilioChannel ||
-        this.isATwitterInbox ||
-        this.isAFacebookInbox
-      )
-        return true;
-      return false;
-    },
   },
   methods: {
     async createChannel() {
@@ -187,7 +178,7 @@ export default {
             'INBOX_MGMT.ADD.WEBSITE_CHANNEL.CHANNEL_GREETING_MESSAGE.PLACEHOLDER'
           )
         "
-        :richtext="!textAreaChannels"
+        :richtext="true"
       />
       <div class="flex flex-row justify-end w-full gap-2 px-0 py-2 mt-4">
         <div class="w-full">

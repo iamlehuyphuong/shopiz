@@ -5,7 +5,6 @@ import attributesMgmt from './attributesMgmt.json';
 import auditLogs from './auditLogs.json';
 import automation from './automation.json';
 import bulkActions from './bulkActions.json';
-import callModal from './callModal.json';
 import campaign from './campaign.json';
 import cannedMgmt from './cannedMgmt.json';
 import chatlist from './chatlist.json';
@@ -20,7 +19,7 @@ import datePicker from './datePicker.json';
 import emoji from './emoji.json';
 import general from './general.json';
 import generalSettings from './generalSettings.json';
-import helpCenter from './helpCenter.json';
+
 import inbox from './inbox.json';
 import inboxMgmt from './inboxMgmt.json';
 import integrationApps from './integrationApps.json';
@@ -38,12 +37,9 @@ import sla from './sla.json';
 import snooze from './snooze.json';
 import teamsSettings from './teamsSettings.json';
 import whatsappTemplates from './whatsappTemplates.json';
-import contentTemplates from './contentTemplates.json';
 import mfa from './mfa.json';
 import sales from './sales.json';
 import yearInReview from './yearInReview.json';
-
-import utilities from './utilities.json';
 
 export default {
   ...advancedFilters,
@@ -53,7 +49,6 @@ export default {
   ...auditLogs,
   ...automation,
   ...bulkActions,
-  ...callModal,
   ...campaign,
   ...cannedMgmt,
   ...chatlist,
@@ -68,7 +63,7 @@ export default {
   ...emoji,
   ...general,
   ...generalSettings,
-  ...helpCenter,
+
   ...inbox,
   ...inboxMgmt,
   ...integrationApps,
@@ -81,13 +76,11 @@ export default {
   ...search,
   ...setNewPassword,
   ...settings,
-  ...utilities,
   ...signup,
   ...sla,
   ...snooze,
   ...teamsSettings,
   ...whatsappTemplates,
-  ...contentTemplates,
   ...mfa,
   ...sales,
   ...yearInReview,

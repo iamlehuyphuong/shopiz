@@ -113,10 +113,6 @@ export const AUTOMATIONS = {
         name: 'SEND_FACEBOOK_ACCOUNT_UPDATE',
       },
       {
-        key: 'send_email_transcript',
-        name: 'SEND_EMAIL_TRANSCRIPT',
-      },
-      {
         key: 'mute_conversation',
         name: 'MUTE_CONVERSATION',
       },
@@ -247,10 +243,6 @@ export const AUTOMATIONS = {
       {
         key: 'send_facebook_account_update',
         name: 'SEND_FACEBOOK_ACCOUNT_UPDATE',
-      },
-      {
-        key: 'send_email_transcript',
-        name: 'SEND_EMAIL_TRANSCRIPT',
       },
       {
         key: 'mute_conversation',
@@ -393,10 +385,6 @@ export const AUTOMATIONS = {
         name: 'SEND_FACEBOOK_ACCOUNT_UPDATE',
       },
       {
-        key: 'send_email_transcript',
-        name: 'SEND_EMAIL_TRANSCRIPT',
-      },
-      {
         key: 'mute_conversation',
         name: 'MUTE_CONVERSATION',
       },
@@ -531,10 +519,6 @@ export const AUTOMATIONS = {
         name: 'SEND_FACEBOOK_ACCOUNT_UPDATE',
       },
       {
-        key: 'send_email_transcript',
-        name: 'SEND_EMAIL_TRANSCRIPT',
-      },
-      {
         key: 'mute_conversation',
         name: 'MUTE_CONVERSATION',
       },
@@ -655,10 +639,6 @@ export const AUTOMATIONS = {
         name: 'SEND_FACEBOOK_ACCOUNT_UPDATE',
       },
       {
-        key: 'send_email_transcript',
-        name: 'SEND_EMAIL_TRANSCRIPT',
-      },
-      {
         key: 'send_webhook_event',
         name: 'SEND_WEBHOOK_EVENT',
       },
@@ -718,11 +698,6 @@ export const AUTOMATION_ACTION_TYPES = [
     key: 'send_email_to_team',
     label: 'SEND_EMAIL_TO_TEAM',
     inputType: 'team_message',
-  },
-  {
-    key: 'send_email_transcript',
-    label: 'SEND_EMAIL_TRANSCRIPT',
-    inputType: 'email',
   },
   {
     key: 'mute_conversation',

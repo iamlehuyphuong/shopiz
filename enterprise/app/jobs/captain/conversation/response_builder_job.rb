@@ -14,11 +14,7 @@ class Captain::Conversation::ResponseBuilderJob < ApplicationJob
 
     Current.executed_by = @assistant
 
-    if captain_v2_enabled?
-      generate_response_with_v2
-    else
-      generate_and_process_response
-    end
+    generate_and_process_response
   rescue ActiveStorage::FileNotFoundError, Faraday::BadRequestError => e
     handle_error(e)
     raise e
@@ -33,13 +29,6 @@ class Captain::Conversation::ResponseBuilderJob < ApplicationJob
   delegate :account, :inbox, to: :@conversation
 
   def generate_and_process_response
-    @response = Captain::Llm::AssistantChatService.new(assistant: @assistant, conversation: @conversation).generate_response(
-      message_history: collect_previous_messages
-    )
-    process_response
-  end
-
-  def generate_response_with_v2
     @response = Captain::Assistant::AgentRunnerService.new(assistant: @assistant, conversation: @conversation).generate_response(
       message_history: collect_previous_messages
     )
@@ -145,10 +134,6 @@ class Captain::Conversation::ResponseBuilderJob < ApplicationJob
 
   def log_error(error)
     ChatwootExceptionTracker.new(error, account: account).capture_exception
-  end
-
-  def captain_v2_enabled?
-    account.feature_enabled?('captain_integration_v2')
   end
 
   def conversation_pending?

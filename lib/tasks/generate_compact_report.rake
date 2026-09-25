@@ -13,7 +13,7 @@ namespace :email_templates do
 
     report = "# Kết Quả Kiểm Tra Syntax Mail Template\n\n"
     report += "Hệ thống đã render 39+ templates kết hợp mock_data qua Liquid và kiểm tra tính hợp lệ bằng Nokogiri HTML Parser.\n\n"
-    
+
     report += "## ⚡ Lỗi Chung Phát Hiện và Khắc Phục\n\n"
     report += "Trong quá trình kiểm tra, phát hiện **1 lỗi cấu trúc layout diện rộng** ảnh hưởng tới toàn bộ 39 template:\n"
     report += "- Layout cũ: `{{ content_for_layout }}` được đặt trực tiếp bên trong `<table>` mà không được bọc trong thẻ `<tr><td>`.\n"
@@ -28,36 +28,38 @@ namespace :email_templates do
     report += "|-------------|------------|---------------|\n"
 
     templates.each do |template|
-      begin
-        liquid_template = Liquid::Template.parse(template.body)
-        content = liquid_template.render(mock_data, strict_variables: false)
+      liquid_template = Liquid::Template.parse(template.body)
+      content = liquid_template.render(mock_data, strict_variables: false)
 
-        liquid_layout = Liquid::Template.parse(layout.body)
-        final_html = liquid_layout.render('content_for_layout' => content, strict_variables: false)
+      liquid_layout = Liquid::Template.parse(layout.body)
+      final_html = liquid_layout.render('content_for_layout' => content, :strict_variables => false)
 
-        doc = Nokogiri::HTML::Document.parse(final_html)
-        errors = doc.errors.reject { |e| e.message.include?('htmlParseEntityRef: no name') || e.message.include?('htmlParseEntityRef: expecting') || e.message.include?('error parsing attribute name') || e.message.include?('Unexpected end tag : p') } 
-        
-        status = errors.any? ? "❌ Lỗi" : "✅ Chuẩn"
-        error_msg = errors.any? ? errors.map(&:message).join(", ") : "-"
-
-        report += "| `#{template.name}` | #{status} | #{error_msg} |\n"
-      rescue => e
-        report += "| `#{template.name}` | ❌ Render Fail | #{e.message} |\n"
+      doc = Nokogiri::HTML::Document.parse(final_html)
+      errors = doc.errors.reject do |e|
+        e.message.include?('htmlParseEntityRef: no name') || e.message.include?('htmlParseEntityRef: expecting') || e.message.include?('error parsing attribute name') || e.message.include?('Unexpected end tag : p')
       end
+
+      status = errors.any? ? '❌ Lỗi' : '✅ Chuẩn'
+      error_msg = errors.any? ? errors.map(&:message).join(', ') : '-'
+
+      report += "| `#{template.name}` | #{status} | #{error_msg} |\n"
+    rescue StandardError => e
+      report += "| `#{template.name}` | ❌ Render Fail | #{e.message} |\n"
     end
 
     report += "\n## 📩 Code HTML Mẫu (Email Final)\n\n"
     report += "Dưới đây là một trong những đoạn HTML final code mẫu sau khi đã khắc phục cấu trúc layout:\n\n"
-    
-    sample_template = templates.find { |t| t.name.include?("message_created") }
+
+    sample_template = templates.find { |t| t.name.include?('message_created') }
     if sample_template
-      html_content = Liquid::Template.parse(layout.body).render('content_for_layout' => Liquid::Template.parse(sample_template.body).render(mock_data, strict_variables: false))
+      html_content = Liquid::Template.parse(layout.body).render('content_for_layout' => Liquid::Template.parse(sample_template.body).render(
+        mock_data, strict_variables: false
+      ))
       report += "### `#{sample_template.name}`\n\n"
       report += "```html\n#{html_content}\n```\n"
     end
 
     File.write('compact_email_report.md', report)
-    puts "Report generated at compact_email_report.md"
+    puts 'Report generated at compact_email_report.md'
   end
 end

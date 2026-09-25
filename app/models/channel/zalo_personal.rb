@@ -43,7 +43,7 @@ class Channel::ZaloPersonal < ApplicationRecord
   def send_message(user_id, message)
     images = message.attachments.to_a.select { |a| a.file_type == 'image' }
     other_attachments = message.attachments.to_a.reject { |a| a.file_type == 'image' }
-    
+
     last_response = nil
 
     if images.any?
@@ -57,11 +57,11 @@ class Channel::ZaloPersonal < ApplicationRecord
 
     other_attachments.each do |attachment|
       last_response = send_attachment(user_id, attachment, message.conversation.zalo_group?)
-      if last_response && last_response['error'].to_i.zero?
-        additional_attributes = message.additional_attributes || {}
-        additional_attributes['attachment_msg_id'] = last_response.dig('data', 'message_id')
-        message.update_columns(additional_attributes: additional_attributes)
-      end
+      next unless last_response && last_response['error'].to_i.zero?
+
+      additional_attributes = message.additional_attributes || {}
+      additional_attributes['attachment_msg_id'] = last_response.dig('data', 'message_id')
+      message.update_columns(additional_attributes: additional_attributes)
     end
 
     return last_response if message.content.blank? && last_response
@@ -370,7 +370,7 @@ class Channel::ZaloPersonal < ApplicationRecord
       headers: ZaloPersonal::ApiHelper.request_headers,
       body: body.to_json
     )
-    
+
     if response['error'].present? && response['error'].to_s != '0'
       Rails.logger.error "ZaloPersonal send_images error: #{response['message']}"
       check_disconnection!

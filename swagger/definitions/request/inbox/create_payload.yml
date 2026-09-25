@@ -16,10 +16,6 @@ properties:
     type: string
     description: Greeting message to be displayed on the widget
     example: Hello, how can I help you?
-  enable_email_collect:
-    type: boolean
-    description: Enable email collection
-    example: true
   csat_survey_enabled:
     type: boolean
     description: Enable CSAT survey
@@ -48,10 +44,6 @@ properties:
     type: boolean
     description: Lock to single conversation
     example: true
-  portal_id:
-    type: integer
-    description: Id of the help center portal to attach to the inbox
-    example: 1
   sender_name_type:
     type: string
     description: Sender name type for the inbox
@@ -68,7 +60,7 @@ properties:
         type: string
         description: Type of the channel
         enum:
-          ['web_widget', 'api', 'email', 'line', 'telegram', 'whatsapp', 'sms']
+          ['web_widget', 'api', 'telegram', 'whatsapp']
         example: web_widget
       website_url:
         type: string

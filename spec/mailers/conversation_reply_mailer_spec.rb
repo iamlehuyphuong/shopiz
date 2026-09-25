@@ -7,7 +7,6 @@ RSpec.describe ConversationReplyMailer do
     let!(:account) { create(:account) }
     let!(:agent) { create(:user, email: 'agent1@example.com', account: account) }
     let(:class_instance) { described_class.new }
-    let(:email_channel) { create(:channel_email, account: account) }
 
     before do
       allow(described_class).to receive(:new).and_return(class_instance)
@@ -138,7 +137,7 @@ RSpec.describe ConversationReplyMailer do
     end
 
     context 'with references header' do
-      let(:conversation) { create(:conversation, assignee: agent, inbox: email_channel.inbox, account: account).reload }
+      let(:conversation) { create(:conversation, assignee: agent, account: account).reload }
       let(:message) { create(:message, conversation: conversation, account: account, message_type: 'outgoing', content: 'Outgoing Message 2') }
       let(:mail) { described_class.email_reply(message).deliver_now }
 
@@ -231,7 +230,7 @@ RSpec.describe ConversationReplyMailer do
     end
 
     context 'with email reply' do
-      let(:conversation) { create(:conversation, assignee: agent, inbox: email_channel.inbox, account: account).reload }
+      let(:conversation) { create(:conversation, assignee: agent, account: account).reload }
       let(:message) { create(:message, conversation: conversation, account: account, message_type: 'outgoing', content: 'Outgoing Message 2') }
       let(:mail) { described_class.email_reply(message).deliver_now }
 
@@ -248,22 +247,24 @@ RSpec.describe ConversationReplyMailer do
       end
 
       context 'when message is a CSAT survey' do
+        let(:api_channel) { create(:channel_api, account: account) }
+        let(:api_conversation) { create(:conversation, assignee: agent, inbox: api_channel.inbox, account: account).reload }
         let(:csat_message) do
-          create(:message, conversation: conversation, account: account, message_type: 'template',
+          create(:message, conversation: api_conversation, account: account, message_type: 'template',
                            content_type: 'input_csat', content: 'How would you rate our support?', sender: agent)
         end
 
         it 'includes CSAT survey URL in outgoing_content' do
           with_modified_env 'FRONTEND_URL' => 'https://app.shopiz.pro' do
             mail = described_class.email_reply(csat_message).deliver_now
-            expect(mail.decoded).to include "https://app.shopiz.pro/survey/responses/#{conversation.uuid}"
+            expect(mail.decoded).to include "https://app.shopiz.pro/survey/responses/#{api_conversation.uuid}"
           end
         end
 
         it 'uses outgoing_content for CSAT message body' do
           with_modified_env 'FRONTEND_URL' => 'https://app.shopiz.pro' do
             mail = described_class.email_reply(csat_message).deliver_now
-            expect(mail.decoded).to include csat_message.outgoing_content
+            expect(mail.body.encoded).to include "https://app.shopiz.pro/survey/responses/#{api_conversation.uuid}"
           end
         end
       end
@@ -446,275 +447,6 @@ RSpec.describe ConversationReplyMailer do
             expect(text_part.body.encoded).not_to include('Regular message content')
           end
         end
-      end
-    end
-
-    context 'when smtp enabled for email channel' do
-      let(:smtp_channel) do
-        create(:channel_email, smtp_enabled: true, smtp_address: 'smtp.gmail.com', smtp_port: 587, smtp_login: 'smtp@gmail.com',
-                               smtp_password: 'password', smtp_domain: 'smtp.gmail.com', account: account)
-      end
-      let(:conversation) { create(:conversation, assignee: agent, inbox: smtp_channel.inbox, account: account).reload }
-      let(:message) { create(:message, conversation: conversation, account: account, message_type: 'outgoing', content: 'Outgoing Message 2') }
-
-      it 'use smtp mail server' do
-        mail = described_class.email_reply(message)
-        expect(mail.delivery_method.settings.empty?).to be false
-        expect(mail.delivery_method.settings[:address]).to eq 'smtp.gmail.com'
-        expect(mail.delivery_method.settings[:port]).to eq 587
-      end
-
-      it 'renders sender name in the from address' do
-        mail = described_class.email_reply(message)
-        expect(mail['from'].value).to eq "#{message.sender.available_name} from #{smtp_channel.inbox.sanitized_name} <#{smtp_channel.email}>"
-      end
-
-      it 'renders sender name even when assignee is not present' do
-        conversation.update(assignee_id: nil)
-        mail = described_class.email_reply(message)
-        expect(mail['from'].value).to eq "#{message.sender.available_name} from #{smtp_channel.inbox.sanitized_name} <#{smtp_channel.email}>"
-      end
-
-      it 'renders assignee name in the from address when sender_name not available' do
-        message.update(sender_id: nil)
-        mail = described_class.email_reply(message)
-        expect(mail['from'].value).to eq "#{conversation.assignee.available_name} from #{smtp_channel.inbox.sanitized_name} <#{smtp_channel.email}>"
-      end
-
-      it 'renders inbox name as sender and assignee or business_name not present' do
-        message.update(sender_id: nil)
-        conversation.update(assignee_id: nil)
-
-        mail = described_class.email_reply(message)
-        expect(mail['from'].value).to eq "Notifications from #{smtp_channel.inbox.sanitized_name} <#{smtp_channel.email}>"
-      end
-
-      context 'when friendly name enabled' do
-        before do
-          conversation.inbox.update(sender_name_type: 0)
-          conversation.inbox.update(business_name: 'Business Name')
-        end
-
-        it 'renders sender name as sender and assignee and business_name not present' do
-          message.update(sender_id: nil)
-          conversation.update(assignee_id: nil)
-          conversation.inbox.update(business_name: nil)
-
-          mail = described_class.email_reply(message)
-
-          expect(mail['from'].value).to eq "Notifications from #{conversation.inbox.sanitized_name} <#{smtp_channel.email}>"
-        end
-
-        it 'renders sender name as sender and assignee nil and business_name present' do
-          message.update(sender_id: nil)
-          conversation.update(assignee_id: nil)
-
-          mail = described_class.email_reply(message)
-
-          expect(mail['from'].value).to eq(
-            "Notifications from #{conversation.inbox.business_name} <#{smtp_channel.email}>"
-          )
-        end
-
-        it 'renders sender name as sender nil and assignee and business_name present' do
-          message.update(sender_id: nil)
-          conversation.update(assignee_id: agent.id)
-
-          mail = described_class.email_reply(message)
-          expect(mail['from'].value).to eq "#{agent.available_name} from #{conversation.inbox.business_name} <#{smtp_channel.email}>"
-        end
-
-        it 'renders sender name as sender and assignee and business_name present' do
-          agent_2 = create(:user, email: 'agent2@example.com', account: account)
-          message.update(sender_id: agent_2.id)
-          conversation.update(assignee_id: agent.id)
-
-          mail = described_class.email_reply(message)
-          expect(mail['from'].value).to eq "#{agent_2.available_name} from #{conversation.inbox.business_name} <#{smtp_channel.email}>"
-        end
-      end
-
-      context 'when friendly name disabled' do
-        before do
-          conversation.inbox.update(sender_name_type: 1)
-          conversation.inbox.update(business_name: 'Business Name')
-        end
-
-        it 'renders sender name as business_name not present' do
-          message.update(sender_id: nil)
-          conversation.update(assignee_id: nil)
-          conversation.inbox.update(business_name: nil)
-
-          mail = described_class.email_reply(message)
-
-          expect(mail['from'].value).to eq "#{conversation.inbox.sanitized_name} <#{smtp_channel.email}>"
-        end
-
-        it 'renders sender name as business_name present' do
-          message.update(sender_id: nil)
-          conversation.update(assignee_id: nil)
-
-          mail = described_class.email_reply(message)
-
-          expect(mail['from'].value).to eq "#{conversation.inbox.business_name} <#{smtp_channel.email}>"
-        end
-      end
-    end
-
-    context 'when smtp enabled for microsoft email channel' do
-      let(:ms_smtp_channel) do
-        create(:channel_email, imap_login: 'smtp@outlook.com',
-                               imap_enabled: true, account: account, provider: 'microsoft', provider_config: { access_token: 'access_token' })
-      end
-      let(:conversation) { create(:conversation, assignee: agent, inbox: ms_smtp_channel.inbox, account: account).reload }
-      let(:message) { create(:message, conversation: conversation, account: account, message_type: 'outgoing', content: 'Outgoing Message 2') }
-
-      it 'use smtp mail server' do
-        mail = described_class.email_reply(message)
-        expect(mail.delivery_method.settings.empty?).to be false
-        expect(mail.delivery_method.settings[:address]).to eq 'smtp.office365.com'
-        expect(mail.delivery_method.settings[:port]).to eq 587
-      end
-    end
-
-    context 'when smtp enabled for google email channel' do
-      let(:ms_smtp_channel) do
-        create(:channel_email, imap_login: 'smtp@gmail.com',
-                               imap_enabled: true, account: account, provider: 'google', provider_config: { access_token: 'access_token' })
-      end
-      let(:conversation) { create(:conversation, assignee: agent, inbox: ms_smtp_channel.inbox, account: account).reload }
-      let(:message) { create(:message, conversation: conversation, account: account, message_type: 'outgoing', content: 'Outgoing Message 2') }
-
-      it 'use smtp mail server' do
-        mail = described_class.email_reply(message)
-        expect(mail.delivery_method.settings.empty?).to be false
-        expect(mail.delivery_method.settings[:address]).to eq 'smtp.gmail.com'
-        expect(mail.delivery_method.settings[:port]).to eq 587
-      end
-
-      it 'uses inbox oauth smtp when global smtp config is unavailable' do
-        allow(class_instance).to receive(:smtp_config_set_or_development?).and_return(false)
-
-        mail = described_class.email_reply(message)
-
-        expect(mail).not_to be_nil
-        expect(mail.delivery_method.settings[:address]).to eq 'smtp.gmail.com'
-        expect(mail.delivery_method.settings[:port]).to eq 587
-      end
-    end
-
-    context 'when oauth provider is set but imap is disabled' do
-      let(:google_channel) do
-        create(:channel_email, imap_enabled: false, account: account, provider: 'google', provider_config: { access_token: 'access_token' })
-      end
-      let(:conversation) { create(:conversation, assignee: agent, inbox: google_channel.inbox, account: account).reload }
-      let(:message) { create(:message, conversation: conversation, account: account, message_type: 'outgoing', content: 'Outgoing Message 2') }
-
-      it 'does not build the mail without global smtp' do
-        allow(class_instance).to receive(:smtp_config_set_or_development?).and_return(false)
-
-        expect(described_class.email_reply(message).deliver_now).to be_nil
-      end
-    end
-
-    context 'when smtp disabled for email channel', :test do
-      let(:conversation) { create(:conversation, assignee: agent, inbox: email_channel.inbox, account: account).reload }
-      let(:message) { create(:message, conversation: conversation, account: account, message_type: 'outgoing', content: 'Outgoing Message 2') }
-
-      it 'use default mail server' do
-        mail = described_class.email_reply(message)
-        expect(mail.delivery_method.settings).to be_empty
-      end
-    end
-
-    context 'when custom domain and email is not enabled' do
-      let(:inbox) { create(:inbox, account: account) }
-      let(:inbox_member) { create(:inbox_member, user: agent, inbox: inbox) }
-      let(:conversation) { create(:conversation, assignee: agent, inbox: inbox_member.inbox, account: account) }
-      let!(:message) { create(:message, conversation: conversation, account: account) }
-      let(:mail) { described_class.reply_with_summary(message.conversation, message.id).deliver_now }
-      let(:domain) { account.inbound_email_domain }
-
-      it 'renders the receiver email' do
-        expect(mail.to).to eq([message&.conversation&.contact&.email])
-      end
-
-      it 'renders the reply to email' do
-        expect(mail.reply_to).to eq([message&.conversation&.assignee&.email])
-      end
-
-      it 'sets the correct custom message id' do
-        expect(mail.message_id).to eq("conversation/#{conversation.uuid}/messages/#{message.id}@#{domain}")
-      end
-
-      it 'sets the correct in reply to id' do
-        expect(mail.in_reply_to).to eq("account/#{conversation.account.id}/conversation/#{conversation.uuid}@#{domain}")
-      end
-    end
-
-    context 'when inbox email address is available' do
-      let(:inbox) { create(:inbox, account: account, email_address: 'noreply@shopiz.pro') }
-      let(:conversation) { create(:conversation, assignee: agent, inbox: inbox, account: account) }
-      let!(:message) { create(:message, conversation: conversation, account: account) }
-      let(:mail) { described_class.reply_with_summary(message.conversation, message.id).deliver_now }
-
-      it 'set reply to email address as inbox email address' do
-        expect(mail.from).to eq([inbox.email_address])
-        expect(mail.reply_to).to eq([inbox.email_address])
-      end
-    end
-
-    context 'when the custom domain emails are enabled' do
-      let(:account) { create(:account) }
-      let(:conversation) { create(:conversation, assignee: agent, account: account).reload }
-      let(:message) { create(:message, message_type: :outgoing, conversation: conversation, account: account, inbox: conversation.inbox) }
-      let(:mail) { described_class.reply_with_summary(message.conversation, message.id).deliver_now }
-
-      before do
-        account = conversation.account
-        account.domain = 'example.com'
-        account.support_email = 'support@example.com'
-        account.enable_features('inbound_emails')
-        account.save!
-      end
-
-      it 'sets reply to email to be based on the domain' do
-        reply_to_email = "reply+#{message.conversation.uuid}@#{conversation.account.domain}"
-        reply_to = "#{message.sender.available_name} from #{conversation.inbox.sanitized_name} <#{reply_to_email}>"
-        expect(mail['REPLY-TO'].value).to eq(reply_to)
-        expect(mail.reply_to).to eq([reply_to_email])
-      end
-
-      it 'sets the from email to be the support email' do
-        expect(mail['FROM'].value).to eq("#{conversation.messages.last.sender.available_name} from Inbox <#{conversation.account.support_email}>")
-        expect(mail.from).to eq([conversation.account.support_email])
-      end
-
-      it 'sets the correct custom message id' do
-        expect(mail.message_id).to eq("conversation/#{conversation.uuid}/messages/#{message.id}@#{conversation.account.domain}")
-      end
-
-      it 'sets the correct in reply to id' do
-        expect(mail.in_reply_to).to eq("account/#{conversation.account.id}/conversation/#{conversation.uuid}@#{conversation.account.domain}")
-      end
-    end
-
-    context 'when inbound email domain is not enabled' do
-      let(:new_account) { create(:account, domain: nil) }
-      let!(:email_channel) { create(:channel_email, account: new_account) }
-      let!(:inbox) { create(:inbox, channel: email_channel, account: new_account) }
-      let(:inbox_member) { create(:inbox_member, user: agent, inbox: inbox) }
-      let(:conversation) { create(:conversation, assignee: agent, inbox: inbox_member.inbox, account: new_account) }
-      let!(:message) { create(:message, conversation: conversation, account: new_account) }
-      let(:mail) { described_class.reply_with_summary(message.conversation, message.id).deliver_now }
-      let(:domain) { inbox.channel.email.split('@').last }
-
-      it 'sets the correct custom message id' do
-        expect(mail.message_id).to eq("conversation/#{conversation.uuid}/messages/#{message.id}@#{domain}")
-      end
-
-      it 'sets the correct in reply to id' do
-        expect(mail.in_reply_to).to eq("account/#{conversation.account.id}/conversation/#{conversation.uuid}@#{domain}")
       end
     end
   end

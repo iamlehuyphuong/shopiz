@@ -38,7 +38,7 @@ class Webhooks::ZaloPersonalEventsJob < ApplicationJob
     signature == "mac=#{hash}"
   end
 
-  def process_event_params(channel, params) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
+  def process_event_params(channel, params)
     event_params = normalize_payload(params)
 
     case event_params[:_eventType]
@@ -62,10 +62,8 @@ class Webhooks::ZaloPersonalEventsJob < ApplicationJob
 
     normalized = params.merge(params[:data])
     normalized[:chat_type] = params[:type] if params.key?(:type)
-    
-    if normalized.dig(:propertyExt, :type).present?
-      normalized[:type] = normalized.dig(:propertyExt, :type).to_i
-    end
+
+    normalized[:type] = normalized.dig(:propertyExt, :type).to_i if normalized.dig(:propertyExt, :type).present?
 
     normalized.with_indifferent_access
   end

@@ -36,13 +36,6 @@ export default {
     };
   },
   computed: {
-    shouldShowCallStatus() {
-      // Always show call status for voice channels if present
-      return (
-        this.conversation?.meta?.channel === 'Channel::Voice' &&
-        !!this.conversation?.additional_attributes?.call_status
-      );
-    },
     messageByAgent() {
       const { message_type: messageType } = this.message;
       return messageType === MESSAGE_TYPE.OUTGOING;
@@ -55,126 +48,7 @@ export default {
       const { private: isPrivate } = this.message;
       return isPrivate;
     },
-    // Simple check: Is this a voice channel conversation?
-    isVoiceChannel() {
-      return this.conversation?.meta?.channel === 'Channel::Voice';
-    },
-    // Check if this is a voice call message
-    isVoiceCall() {
-      return this.message?.content_type === 'voice_call';
-    },
-    // Get call direction for voice calls
-    isIncomingCall() {
-      if (!this.isVoiceChannel) return false;
-
-      // First check conversation attributes
-      const direction =
-        this.conversation?.additional_attributes?.call_direction;
-      if (direction) {
-        return direction === 'inbound';
-      }
-      return false;
-    },
-    // Get normalized call status
-    callStatus() {
-      if (!this.isVoiceChannel) return null;
-
-      // Get raw status from conversation
-      const status = this.conversation?.additional_attributes?.call_status;
-
-      // Map status to normalized values
-      if (status === 'in-progress') return 'active';
-      if (status === 'completed') return 'ended';
-      if (status === 'canceled') return 'ended';
-      if (status === 'failed') return 'ended';
-      if (status === 'busy') return 'no-answer';
-      if (status === 'no-answer')
-        return this.isIncomingCall ? 'missed' : 'no-answer';
-
-      // Return explicit status values as-is
-      if (status === 'active') return 'active';
-      if (status === 'missed') return 'missed';
-      if (status === 'ended') return 'ended';
-      if (status === 'ringing') return 'ringing';
-
-      // Default status
-      return 'active';
-    },
-    // Voice call icon based on status
-    voiceCallIcon() {
-      if (!this.isVoiceChannel) return null;
-
-      const status = this.callStatus;
-      const isIncoming = this.isIncomingCall;
-
-      if (status === 'missed' || status === 'no-answer') {
-        return 'phone-missed-call';
-      }
-
-      if (status === 'active') {
-        return 'phone-in-talk';
-      }
-
-      if (status === 'ended') {
-        return isIncoming ? 'phone-incoming' : 'phone-outgoing';
-      }
-
-      if (status === 'ringing') {
-        return isIncoming ? 'phone-incoming' : 'phone-outgoing';
-      }
-
-      // Default based on direction
-      return isIncoming ? 'phone-incoming' : 'phone-outgoing';
-    },
     parsedLastMessage() {
-      // For voice calls, return status text
-      if (this.isVoiceChannel) {
-        // Get status-based text
-        const status = this.callStatus;
-        const isIncoming = this.isIncomingCall;
-
-        // Return appropriate status text based on call status and direction
-        if (status === 'active') {
-          // return last message content if message is not activity and not voice call
-          if (!this.isMessageAnActivity && !this.isVoiceCall) {
-            return this.getPlainText(this.message.content);
-          }
-          return this.$t('CONVERSATION.VOICE_CALL.CALL_IN_PROGRESS');
-        }
-
-        if (isIncoming) {
-          if (status === 'ringing') {
-            return this.$t('CONVERSATION.VOICE_CALL.INCOMING_CALL');
-          }
-
-          if (status === 'missed') {
-            return this.$t('CONVERSATION.VOICE_CALL.MISSED_CALL');
-          }
-
-          if (status === 'ended') {
-            return this.$t('CONVERSATION.VOICE_CALL.CALL_ENDED');
-          }
-        } else {
-          if (status === 'ringing') {
-            return this.$t('CONVERSATION.VOICE_CALL.OUTGOING_CALL');
-          }
-
-          if (status === 'no-answer') {
-            return this.$t('CONVERSATION.VOICE_CALL.NO_ANSWER');
-          }
-
-          if (status === 'ended') {
-            return this.$t('CONVERSATION.VOICE_CALL.CALL_ENDED');
-          }
-        }
-
-        // Default fallback based on direction
-        return isIncoming
-          ? this.$t('CONVERSATION.VOICE_CALL.INCOMING_CALL')
-          : this.$t('CONVERSATION.VOICE_CALL.OUTGOING_CALL');
-      }
-
-      // Default behavior for non-voice calls
       const { content_attributes: contentAttributes } = this.message;
       const { email: { subject } = {} } = contentAttributes || {};
       return this.getPlainText(subject || this.message.content);

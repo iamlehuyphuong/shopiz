@@ -7,7 +7,7 @@ class Captain::Tools::Copilot::SuggestScenarioService < Captain::Tools::BaseTool
 
   description <<~DESC
     Call this tool to suggest a single consultation scenario (kịch bản tư vấn) for the user to review.
-    
+
     [IMPORTANT] You MUST follow this 2-step process when designing a scenario:
     Step 1: WHEN THE USER REQUESTS A NEW SCENARIO
     - DO NOT CALL THIS TOOL. Simply reply with normal text to propose a "Scenario Title" and "Description" based on the request.
@@ -21,8 +21,10 @@ class Captain::Tools::Copilot::SuggestScenarioService < Captain::Tools::BaseTool
   DESC
 
   param :title, type: :string, desc: 'Short and concise scenario title', required: true
-  param :description, type: :string, desc: 'Clear trigger condition helping Captain AI know exactly WHEN to use this scenario in real operations (e.g., "Use this when...")', required: true
-  param :instruction, type: :string, desc: 'Step-by-step process content in Markdown format (remind AI to use the corresponding tools)', required: true
+  param :description, type: :string,
+                      desc: 'Clear trigger condition helping Captain AI know exactly WHEN to use this scenario in real operations (e.g., "Use this when...")', required: true
+  param :instruction, type: :string, desc: 'Step-by-step process content in Markdown format (remind AI to use the corresponding tools)',
+                      required: true
 
   def execute(title:, description:, instruction:)
     {

@@ -112,6 +112,3 @@ features:
   audio_transcription:
     models: [whisper-1]
     default: whisper-1
-  help_center_search:
-    models: [text-embedding-3-small]
-    default: text-embedding-3-small

@@ -199,7 +199,6 @@ custom_roles:
   - name: 'Knowledge Manager'
     description: 'Manages knowledge base and participates in conversations'
     permissions:
-      - 'knowledge_base_manage'
       - 'conversation_participating_manage'
   - name: 'Junior Agent'
     description: 'Entry-level agent with basic conversation access'
@@ -262,7 +261,7 @@ contacts:
       email: "mkeatch2@reuters.test"
       gender: 'female'
       conversations:
-        - channel: Channel::TwitterProfile
+        - channel: Channel::WebWidget
           messages:
           - message_type: incoming
             content: Hi, I think I accidentally deleted some important files. Can you help me recover them?
@@ -285,7 +284,7 @@ contacts:
       email: "vcorp4@instagram.test"
       gender: 'female'
       conversations:
-        - channel: Channel::Sms
+        - channel: Channel::Telegram
           source_id: "+1234567"
           messages:
           - message_type: incoming
@@ -297,7 +296,7 @@ contacts:
       email: "dpittway5@chron.test"
       gender: 'male'
       conversations:
-        - channel: Channel::Line
+        - channel: Channel::Api
           messages:
           - message_type: incoming
             content: Hi, I'm trying to update my account information but it won't save.
@@ -319,7 +318,7 @@ contacts:
       email: "bcusworth7@arstechnica.test"
       gender: 'male'
       conversations:
-        - channel: Channel::TwitterProfile
+        - channel: Channel::WebWidget
           messages:
           - message_type: incoming
             content: Hi, I accidentally placed an order for the wrong item. Can I cancel it?
@@ -365,7 +364,7 @@ contacts:
       email: "bjanewayb@ustream.tv"
       gender: 'male'
       conversations:
-        - channel: Channel::Line
+        - channel: Channel::Api
           messages:
           - message_type: incoming
             content: Hi, I have a question about your product features.
@@ -376,7 +375,7 @@ contacts:
       email: "cdalinderc@msn.test"
       gender: 'male'
       conversations:
-        - channel: Channel::Email
+        - channel: Channel::WebWidget
           source_id: "cdalinderc@msn.test"
           messages:
           - message_type: incoming
@@ -388,7 +387,7 @@ contacts:
       email: "mpetrukd@wunderground.test"
       gender: 'female'
       conversations:
-        - channel: Channel::Email
+        - channel: Channel::WebWidget
           source_id: "mpetrukd@wunderground.test"
           priority: urgent
           messages:
@@ -461,7 +460,7 @@ contacts:
       email: "cmathersonj@va.test"
       gender: 'female'
       conversations:
-        - channel: Channel::Email
+        - channel: Channel::WebWidget
           priority: urgent
           source_id: "cmathersonj@va.test"
           assignee: alex_morgan@shopiz.pro
@@ -515,7 +514,7 @@ contacts:
       email: "dchen@sample.test"
       gender: 'male'
       conversations:
-        - channel: Channel::Email
+        - channel: Channel::WebWidget
           source_id: "dchen@sample.test"
           assignee: brandon@shopiz.pro
           messages:

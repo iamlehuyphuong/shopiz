@@ -24,8 +24,7 @@ class Channel::Whatsapp < ApplicationRecord
   self.table_name = 'channel_whatsapp'
   EDITABLE_ATTRS = [:phone_number, :provider, { provider_config: {} }].freeze
 
-  # default at the moment is 360dialog lets change later.
-  PROVIDERS = %w[default whatsapp_cloud].freeze
+  PROVIDERS = %w[whatsapp_cloud].freeze
   before_validation :ensure_webhook_verify_token
 
   validates :provider, inclusion: { in: PROVIDERS }
@@ -41,11 +40,7 @@ class Channel::Whatsapp < ApplicationRecord
   end
 
   def provider_service
-    if provider == 'whatsapp_cloud'
-      Whatsapp::Providers::WhatsappCloudService.new(whatsapp_channel: self)
-    else
-      Whatsapp::Providers::Whatsapp360DialogService.new(whatsapp_channel: self)
-    end
+    Whatsapp::Providers::WhatsappCloudService.new(whatsapp_channel: self)
   end
 
   def mark_message_templates_updated

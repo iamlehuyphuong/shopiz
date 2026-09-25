@@ -36,10 +36,8 @@ class Captain::Tools::Kiotviet::SearchOrdersTool < Captain::Tools::BasePublicToo
     customer ||= search_by_email(contact.email) if contact.email.present?
     customer ||= search_by_name(contact.name) if contact.name.present?
 
-    if customer.present?
-      save_external_customer_id(contact, 'kiotviet', customer['id'])
-    end
-    
+    save_external_customer_id(contact, 'kiotviet', customer['id']) if customer.present?
+
     customer
   end
 

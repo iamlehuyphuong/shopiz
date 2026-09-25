@@ -9,7 +9,6 @@ module Featurable
   DEFAULT_PLAN_FEATURES = %w[
     canned_responses
     crm
-    crm_v2
     channel_facebook
     inbox_view
     inbox_management
@@ -17,23 +16,17 @@ module Featurable
     macros
     reports
     report_v4
-    chatwoot_v4
     channel_website
-    help_center
   ].freeze
 
   DISABLED_FEATURES = %w[
     template_builder
     integrations
     channel_whatsapp
-    channel_email
     channel_api
     channel_telegram
-    channel_line
     channel_instagram
-    channel_voice
   ].freeze
-
 
   FEATURE_LIST = YAML.safe_load(Rails.root.join('config/features.yml').read).freeze
 
@@ -43,7 +36,7 @@ module Featurable
 
   included do
     include FlagShihTzu
-    # We split features across two columns since bigint is 64-bit and we have 69 features.
+    # We split features across two columns since bigint is 64-bit; positions 64+ go to feature_flags_2.
     # We use 63 bits per column to avoid issues with the sign bit in PostgreSQL/ActiveRecord.
     has_flags FEATURES.select { |k, _v| k <= 63 }.merge(column: 'feature_flags').merge(QUERY_MODE)
     has_flags FEATURES.select { |k, _v| k > 63 }.transform_keys { |k| k - 63 }.merge(column: 'feature_flags_2').merge(QUERY_MODE)
@@ -90,7 +83,7 @@ module Featurable
   def disabled_features
     all_features.select { |_feature, enabled| enabled == false }
   end
-  
+
   def feature_names
     enabled_features.keys
   end
@@ -98,7 +91,7 @@ module Featurable
   def feature_names=(names)
     # Ensure names is an array of strings
     names = Array(names).map(&:to_s)
-    
+
     FEATURE_LIST.each do |feature|
       feature_name = feature['name']
       is_enabled = names.include?(feature_name)
@@ -109,5 +102,4 @@ module Featurable
   def enable_default_features
     enable_features(*DEFAULT_PLAN_FEATURES)
   end
-
 end

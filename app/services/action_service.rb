@@ -1,6 +1,4 @@
 class ActionService
-  include EmailHelper
-
   def initialize(conversation)
     @conversation = conversation.reload
     @account = @conversation.account
@@ -82,20 +80,6 @@ class ActionService
     @conversation.update!(team_id: nil)
   end
 
-  def send_email_transcript(emails)
-    return unless @account.email_transcript_enabled?
-
-    emails = emails[0].gsub(/\s+/, '').split(',')
-
-    emails.each do |email|
-      break unless @account.within_email_rate_limit?
-
-      email = parse_email_variables(@conversation, email)
-      ConversationReplyMailer.with(account: @conversation.account).conversation_transcript(@conversation, email)&.deliver_later
-      @account.increment_email_sent_count
-    end
-  end
-
   private
 
   def agent_belongs_to_inbox?(agent_ids)
@@ -107,12 +91,6 @@ class ActionService
 
   def team_belongs_to_account?(team_ids)
     @account.team_ids.include?(team_ids[0])
-  end
-
-  def conversation_a_tweet?
-    return false if @conversation.additional_attributes.blank?
-
-    @conversation.additional_attributes['type'] == 'tweet'
   end
 end
 

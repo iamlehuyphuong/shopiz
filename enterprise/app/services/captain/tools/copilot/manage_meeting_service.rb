@@ -27,7 +27,7 @@ class Captain::Tools::Copilot::ManageMeetingService < Captain::Tools::BaseTool
         reason: reason,
         timezone: timezone
       }.compact
-      
+
       result = delegate_to_booking_tool(**args)
       return result if result
     end
@@ -40,7 +40,7 @@ class Captain::Tools::Copilot::ManageMeetingService < Captain::Tools::BaseTool
     return 'No meeting found at the specified time.' unless booking
 
     manager = CalendarService::EventManager.new(@conversation.account)
-    
+
     if action == 'cancel'
       if booking.provider == 'google' && booking.google_event_id
         success = manager.delete_event(booking.google_event_id)
@@ -51,26 +51,28 @@ class Captain::Tools::Copilot::ManageMeetingService < Captain::Tools::BaseTool
       "Meeting at #{start_time} successfully cancelled."
     elsif action == 'reschedule'
       return 'new_start_time is required for rescheduling' if new_start_time.blank?
+
       parsed_new = Time.zone.parse(new_start_time)
       return 'Invalid new start time format' unless parsed_new
 
       if booking.provider == 'google' && booking.google_event_id
         # Simple reschedule: delete old and create new
         manager.delete_event(booking.google_event_id)
-        
+
         config = @conversation.account.booking_configurations.find_by(is_active: true)
         duration = config&.meeting_duration || 30
         parsed_end = parsed_new + duration.minutes
-        
+
         event_id = manager.create_event(
           start_time: parsed_new,
           end_time: parsed_end,
           guest_email: booking.guest_email,
           guest_name: booking.guest_name,
-          description: reason || "Rescheduled via Copilot"
+          description: reason || 'Rescheduled via Copilot'
         )
-        
+
         return 'Failed to reschedule meeting on Google Calendar' unless event_id
+
         booking.update!(start_time: parsed_new, end_time: parsed_end, google_event_id: event_id)
       else
         duration = booking.end_time - booking.start_time

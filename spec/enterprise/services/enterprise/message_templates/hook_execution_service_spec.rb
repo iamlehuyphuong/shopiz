@@ -141,7 +141,7 @@ RSpec.describe MessageTemplates::HookExecutionService do
       end
 
       it 'does not create greeting message in conversation' do
-        inbox.update!(greeting_enabled: true, greeting_message: 'Hello! How can we help you?', enable_email_collect: false)
+        inbox.update!(greeting_enabled: true, greeting_message: 'Hello! How can we help you?')
 
         expect do
           create(:message, conversation: conversation, message_type: :incoming, account: account)
@@ -151,8 +151,7 @@ RSpec.describe MessageTemplates::HookExecutionService do
       it 'does not create out of office message in conversation' do
         inbox.update!(
           working_hours_enabled: true,
-          out_of_office_message: 'We are currently closed',
-          enable_email_collect: false
+          out_of_office_message: 'We are currently closed'
         )
         inbox.working_hours.find_by(day_of_week: Time.current.in_time_zone(inbox.timezone).wday).update!(
           closed_all_day: true,
@@ -171,7 +170,7 @@ RSpec.describe MessageTemplates::HookExecutionService do
       end
 
       it 'creates greeting message in conversation' do
-        inbox.update!(greeting_enabled: true, greeting_message: 'Hello! How can we help you?', enable_email_collect: false)
+        inbox.update!(greeting_enabled: true, greeting_message: 'Hello! How can we help you?')
 
         expect do
           create(:message, conversation: conversation, message_type: :incoming, account: account)
@@ -184,8 +183,7 @@ RSpec.describe MessageTemplates::HookExecutionService do
       it 'creates out of office message when outside business hours' do
         inbox.update!(
           working_hours_enabled: true,
-          out_of_office_message: 'We are currently closed',
-          enable_email_collect: false
+          out_of_office_message: 'We are currently closed'
         )
         inbox.working_hours.find_by(day_of_week: Time.current.in_time_zone(inbox.timezone).wday).update!(
           closed_all_day: true,
@@ -208,7 +206,7 @@ RSpec.describe MessageTemplates::HookExecutionService do
     end
 
     it 'creates greeting message in conversation' do
-      inbox.update!(greeting_enabled: true, greeting_message: 'Hello! How can we help you?', enable_email_collect: false)
+      inbox.update!(greeting_enabled: true, greeting_message: 'Hello! How can we help you?')
 
       expect do
         create(:message, conversation: conversation, message_type: :incoming, account: account)
@@ -221,8 +219,7 @@ RSpec.describe MessageTemplates::HookExecutionService do
     it 'creates out of office message when outside business hours' do
       inbox.update!(
         working_hours_enabled: true,
-        out_of_office_message: 'We are currently closed',
-        enable_email_collect: false
+        out_of_office_message: 'We are currently closed'
       )
       inbox.working_hours.find_by(day_of_week: Time.current.in_time_zone(inbox.timezone).wday).update!(
         closed_all_day: true,
@@ -249,7 +246,7 @@ RSpec.describe MessageTemplates::HookExecutionService do
     end
 
     it 'does not send greeting template on campaign conversations' do
-      inbox.update!(greeting_enabled: true, greeting_message: 'Hello! How can we help you?', enable_email_collect: false)
+      inbox.update!(greeting_enabled: true, greeting_message: 'Hello! How can we help you?')
 
       greeting_service = instance_double(MessageTemplates::Template::Greeting)
       allow(MessageTemplates::Template::Greeting).to receive(:new).and_return(greeting_service)
@@ -274,19 +271,6 @@ RSpec.describe MessageTemplates::HookExecutionService do
       create(:message, conversation: campaign_conversation, message_type: :incoming, account: account)
 
       expect(MessageTemplates::Template::OutOfOffice).not_to have_received(:new)
-    end
-
-    it 'does not send email collect template on campaign conversations' do
-      contact.update!(email: nil)
-      inbox.update!(enable_email_collect: true)
-
-      email_collect_service = instance_double(MessageTemplates::Template::EmailCollect)
-      allow(MessageTemplates::Template::EmailCollect).to receive(:new).and_return(email_collect_service)
-      allow(email_collect_service).to receive(:perform).and_return(true)
-
-      create(:message, conversation: campaign_conversation, message_type: :incoming, account: account)
-
-      expect(MessageTemplates::Template::EmailCollect).not_to have_received(:new)
     end
 
     it 'does not send out of office template after handoff on campaign conversations when quota is exceeded' do
@@ -321,8 +305,7 @@ RSpec.describe MessageTemplates::HookExecutionService do
       before do
         inbox.update!(
           working_hours_enabled: true,
-          out_of_office_message: 'We are currently closed. Please leave your email.',
-          enable_email_collect: false
+          out_of_office_message: 'We are currently closed. Please leave your email.'
         )
         inbox.working_hours.find_by(day_of_week: Time.current.in_time_zone(inbox.timezone).wday).update!(
           closed_all_day: true,
@@ -345,8 +328,7 @@ RSpec.describe MessageTemplates::HookExecutionService do
       before do
         inbox.update!(
           working_hours_enabled: true,
-          out_of_office_message: 'We are currently closed.',
-          enable_email_collect: false
+          out_of_office_message: 'We are currently closed.'
         )
         inbox.working_hours.find_by(day_of_week: Time.current.in_time_zone(inbox.timezone).wday).update!(
           open_all_day: true,

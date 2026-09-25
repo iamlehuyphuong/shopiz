@@ -11,7 +11,6 @@ const { t } = useI18n();
 
 const PROVIDER_TYPES = {
   WHATSAPP: 'whatsapp',
-  TWILIO: 'twilio',
   WHATSAPP_CLOUD: 'whatsapp_cloud',
   WHATSAPP_EMBEDDED: 'whatsapp_embedded',
   WHATSAPP_MANUAL: 'whatsapp_manual',

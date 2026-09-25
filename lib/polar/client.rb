@@ -56,7 +56,7 @@ module Polar
 
       # Construct the signed content per Standard Webhooks protocol
       signed_content = "#{msg_id}.#{msg_timestamp}.#{payload}"
-      
+
       # Base64 decode the secret to get the raw bytes
       decoded_secret = Base64.strict_decode64(secret.gsub(/^whsec_/, ''))
 

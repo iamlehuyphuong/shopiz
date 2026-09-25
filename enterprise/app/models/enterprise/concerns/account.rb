@@ -16,8 +16,5 @@ module Enterprise::Concerns::Account
 
     has_many :copilot_threads, dependent: :destroy_async
     has_many :companies, dependent: :destroy_async
-    has_many :voice_channels, dependent: :destroy_async, class_name: '::Channel::Voice'
-
-    has_one :saml_settings, dependent: :destroy_async, class_name: 'AccountSamlSettings'
   end
 end

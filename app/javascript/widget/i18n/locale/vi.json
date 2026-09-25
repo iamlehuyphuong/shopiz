@@ -111,22 +111,6 @@
     "SUBMITTED_TITLE": "Cảm ơn bạn đã phản hồi",
     "PLACEHOLDER": "Hãy chia sẻ thêm trải nghiệm của bạn..."
   },
-  "EMAIL_TRANSCRIPT": {
-    "BUTTON_TEXT": "Nhận bản ghi hội thoại qua email",
-    "SEND_EMAIL_SUCCESS": "Bản ghi hội thoại đã được gửi thành công",
-    "SEND_EMAIL_ERROR": "Có lỗi xảy ra, vui lòng thử lại sau"
-  },
-  "INTEGRATIONS": {
-    "DYTE": {
-      "CLICK_HERE_TO_JOIN": "Nhấn để tham gia cuộc gọi",
-      "LEAVE_THE_ROOM": "Rời cuộc gọi"
-    }
-  },
-  "PORTAL": {
-    "POPULAR_ARTICLES": "Bài viết nổi bật",
-    "VIEW_ALL_ARTICLES": "Xem tất cả bài viết",
-    "IFRAME_LOAD_ERROR": "Có lỗi khi tải nội dung, vui lòng tải lại trang."
-  },
   "ATTACHMENTS": {
     "image": {
       "CONTENT": "Hình ảnh"

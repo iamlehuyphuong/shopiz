@@ -8,14 +8,13 @@ import inboxMixin from 'shared/mixins/inboxMixin';
 import { FEATURE_FLAGS } from 'dashboard/featureFlags';
 import { getAllowedFileTypesByChannel } from '@chatwoot/utils';
 import { ALLOWED_FILE_TYPES } from 'shared/constants/messages';
-import VideoCallButton from '../VideoCallButton.vue';
 import { INBOX_TYPES } from 'dashboard/helper/inbox';
 import { mapGetters } from 'vuex';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 
 export default {
   name: 'ReplyBottomPanel',
-  components: { NextButton, FileUpload, VideoCallButton },
+  components: { NextButton, FileUpload },
   mixins: [inboxMixin],
   props: {
     isNote: {
@@ -89,10 +88,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    enableContentTemplates: {
-      type: Boolean,
-      default: false,
-    },
     conversationId: {
       type: Number,
       required: true,
@@ -106,34 +101,16 @@ export default {
       type: Boolean,
       default: false,
     },
-    portalSlug: {
-      type: String,
-      required: true,
-    },
     conversationType: {
       type: String,
       default: '',
-    },
-    showQuotedReplyToggle: {
-      type: Boolean,
-      default: false,
-    },
-    quotedReplyEnabled: {
-      type: Boolean,
-      default: false,
     },
     isEditorDisabled: {
       type: Boolean,
       default: false,
     },
   },
-  emits: [
-    'replaceText',
-    'toggleInsertArticle',
-    'selectWhatsappTemplate',
-    'selectContentTemplate',
-    'toggleQuotedReply',
-  ],
+  emits: ['replaceText', 'selectWhatsappTemplate'],
   setup(props) {
     const { setSignatureFlagForInbox, fetchSignatureFlagFromUISettings } =
       useUISettings();
@@ -189,7 +166,7 @@ export default {
     },
     showAudioRecorderButton() {
       if (this.isEditorDisabled) return false;
-      if (this.isALineChannel || this.isATiktokChannel) {
+      if (this.isATiktokChannel) {
         return false;
       }
       // Disable audio recorder for safari browser as recording is not supported
@@ -258,16 +235,8 @@ export default {
         ? this.$t('CONVERSATION.FOOTER.DISABLE_SIGN_TOOLTIP')
         : this.$t('CONVERSATION.FOOTER.ENABLE_SIGN_TOOLTIP');
     },
-    enableInsertArticleInReply() {
-      return this.portalSlug;
-    },
     isFetchingAppIntegrations() {
       return this.uiFlags.isFetching;
-    },
-    quotedReplyToggleTooltip() {
-      return this.quotedReplyEnabled
-        ? this.$t('CONVERSATION.REPLYBOX.QUOTED_REPLY.DISABLE_TOOLTIP')
-        : this.$t('CONVERSATION.REPLYBOX.QUOTED_REPLY.ENABLE_TOOLTIP');
     },
   },
   mounted() {
@@ -279,9 +248,6 @@ export default {
     },
     replaceText(text) {
       this.$emit('replaceText', text);
-    },
-    toggleInsertArticle() {
-      this.$emit('toggleInsertArticle');
     },
   },
 };
@@ -352,16 +318,6 @@ export default {
         @click="toggleMessageSignature"
       />
       <NextButton
-        v-if="showQuotedReplyToggle"
-        v-tooltip.top-end="quotedReplyToggleTooltip"
-        icon="i-ph-quotes"
-        :variant="quotedReplyEnabled ? 'solid' : 'faded'"
-        color="slate"
-        sm
-        :aria-pressed="quotedReplyEnabled"
-        @click="$emit('toggleQuotedReply')"
-      />
-      <NextButton
         v-if="enableWhatsAppTemplates"
         v-tooltip.top-end="$t('CONVERSATION.FOOTER.WHATSAPP_TEMPLATES')"
         icon="i-ph-whatsapp-logo"
@@ -369,23 +325,6 @@ export default {
         faded
         sm
         @click="$emit('selectWhatsappTemplate')"
-      />
-      <NextButton
-        v-if="enableContentTemplates"
-        v-tooltip.top-end="'Content Templates'"
-        icon="i-ph-whatsapp-logo"
-        slate
-        faded
-        sm
-        @click="$emit('selectContentTemplate')"
-      />
-      <VideoCallButton
-        v-if="
-          (isAWebWidgetInbox || isAPIInbox) &&
-          !isOnPrivateNote &&
-          !isEditorDisabled
-        "
-        :conversation-id="conversationId"
       />
       <transition name="modal-fade">
         <div
@@ -398,15 +337,6 @@ export default {
           </h4>
         </div>
       </transition>
-      <NextButton
-        v-if="enableInsertArticleInReply"
-        v-tooltip.top-end="$t('HELP_CENTER.ARTICLE_SEARCH.OPEN_ARTICLE_SEARCH')"
-        icon="i-ph-article-ny-times"
-        slate
-        faded
-        sm
-        @click="toggleInsertArticle"
-      />
     </div>
     <div class="right-wrap">
       <NextButton

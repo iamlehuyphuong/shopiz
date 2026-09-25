@@ -62,7 +62,7 @@ const MessageControl = Symbol('MessageControl');
  * @property {string} data.roomName - Name of the room
  * @property {string} data.messageId - ID of the message
  * @property {'story_mention'} [imageType] - Flag to indicate this is a story mention
- * @property {'dyte'} [type] - Flag to indicate this is a dyte call
+
  * @property {EmailContent} [email] - Email content and metadata
  * @property {string|null} [ccEmail] - CC email addresses
  * @property {string|null} [bccEmail] - BCC email addresses
@@ -70,10 +70,10 @@ const MessageControl = Symbol('MessageControl');
 
 /**
  * @typedef {'sent'|'delivered'|'read'|'failed'|'progress'} MessageStatus
- * @typedef {'text'|'input_text'|'input_textarea'|'input_email'|'input_select'|'cards'|'form'|'article'|'incoming_email'|'input_csat'|'integrations'|'sticker'} MessageContentType
+ * @typedef {'text'|'input_text'|'input_textarea'|'input_select'|'cards'|'form'|'article'|'input_csat'|'integrations'|'sticker'} MessageContentType
  * @typedef {0|1|2|3} MessageType
  * @typedef {'contact'|'user'|'Contact'|'User'} SenderType
- * @typedef {'user'|'agent'|'activity'|'private'|'bot'|'error'|'template'|'email'|'unsupported'} MessageVariant
+ * @typedef {'user'|'agent'|'activity'|'private'|'bot'|'error'|'template'|'unsupported'} MessageVariant
  * @typedef {'left'|'center'|'right'} MessageOrientation
 
  * @typedef {Object} MessageContext
@@ -84,7 +84,6 @@ const MessageControl = Symbol('MessageControl');
  * @property {import('vue').Ref<number>} id - The unique identifier for the message
  * @property {import('vue').Ref<number>} inboxId - The ID of the inbox to which the message belongs
  * @property {import('vue').Ref<boolean>} [groupWithNext=false] - Whether the message should be grouped with the next message
- * @property {import('vue').Ref<boolean>} [isEmailInbox=false] - Whether the message is from an email inbox
  * @property {import('vue').Ref<boolean>} [private=false] - Whether the message is private
  * @property {import('vue').Ref<number|null>} [senderId=null] - The ID of the sender
  * @property {import('vue').Ref<string|null>} [error=null] - Error message if the message failed to send

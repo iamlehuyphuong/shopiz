@@ -235,12 +235,6 @@ export const responsesList = [
 
 export const inboxes = [
   {
-    id: 7,
-    name: 'Email Support',
-    channel_type: INBOX_TYPES.EMAIL,
-    email: 'support@company.com',
-  },
-  {
     id: 1,
     name: 'Website Chat',
     channel_type: INBOX_TYPES.WEB,
@@ -249,12 +243,6 @@ export const inboxes = [
     id: 2,
     name: 'Facebook Support',
     channel_type: INBOX_TYPES.FB,
-  },
-  {
-    id: 5,
-    name: 'SMS Service',
-    channel_type: INBOX_TYPES.TWILIO,
-    messaging_service_sid: 'MGxxxxxx',
   },
   {
     id: 6,
@@ -268,19 +256,8 @@ export const inboxes = [
     channel_type: INBOX_TYPES.TELEGRAM,
   },
   {
-    id: 9,
-    name: 'LINE Support',
-    channel_type: INBOX_TYPES.LINE,
-  },
-  {
     id: 10,
     name: 'API Channel',
     channel_type: INBOX_TYPES.API,
-  },
-  {
-    id: 11,
-    name: 'SMS Basic',
-    channel_type: INBOX_TYPES.SMS,
-    phone_number: '+1555555555',
   },
 ];

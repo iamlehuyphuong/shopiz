@@ -15,16 +15,11 @@ const { t } = useI18n();
 const {
   isAFacebookInbox,
   isAZaloPersonal,
-  isALineChannel,
   isAPIInbox,
-  isASmsInbox,
   isATelegramChannel,
-  isATwilioChannel,
   isAWebWidgetInbox,
   isAWhatsAppChannel,
-  isAnEmailChannel,
   isAnInstagramChannel,
-  isAVoiceChannel,
   isATiktokChannel,
 } = useInbox();
 
@@ -50,8 +45,6 @@ const showStatusIndicator = computed(() => {
   if (status.value === MESSAGE_STATUS.FAILED) return false;
   // Don't show status for deleted messages
   if (contentAttributes.value?.deleted) return false;
-  // Don't show status for transcription messages
-  if (isAVoiceChannel.value) return false;
 
   if (messageType.value === MESSAGE_TYPES.OUTGOING) return true;
   if (messageType.value === MESSAGE_TYPES.TEMPLATE) return true;
@@ -62,14 +55,9 @@ const showStatusIndicator = computed(() => {
 const isSent = computed(() => {
   if (!showStatusIndicator.value) return false;
 
-  // Messages will be marked as sent for the Email channel if they have a source ID.
-  if (isAnEmailChannel.value) return !!sourceId.value;
-
   if (
     isAWhatsAppChannel.value ||
-    isATwilioChannel.value ||
     isAFacebookInbox.value ||
-    isASmsInbox.value ||
     isATelegramChannel.value ||
     isAnInstagramChannel.value ||
     isATiktokChannel.value ||
@@ -81,9 +69,6 @@ const isSent = computed(() => {
   // API inbox messages use real sent/delivered/read status values from the external system.
   if (isAPIInbox.value) return status.value === MESSAGE_STATUS.SENT;
 
-  // All messages will be mark as sent for the Line channel, as there is no source ID.
-  if (isALineChannel.value) return true;
-
   return false;
 });
 
@@ -92,8 +77,6 @@ const isDelivered = computed(() => {
 
   if (
     isAWhatsAppChannel.value ||
-    isATwilioChannel.value ||
-    isASmsInbox.value ||
     isAFacebookInbox.value ||
     isAZaloPersonal.value ||
     isAnInstagramChannel.value ||
@@ -107,10 +90,6 @@ const isDelivered = computed(() => {
   if (isAWebWidgetInbox.value) {
     return status.value === MESSAGE_STATUS.SENT;
   }
-  if (isALineChannel.value) {
-    return status.value === MESSAGE_STATUS.DELIVERED;
-  }
-
   return false;
 });
 
@@ -119,7 +98,6 @@ const isRead = computed(() => {
 
   if (
     isAWhatsAppChannel.value ||
-    isATwilioChannel.value ||
     isAFacebookInbox.value ||
     isAnInstagramChannel.value ||
     isATiktokChannel.value

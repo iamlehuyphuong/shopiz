@@ -64,7 +64,7 @@ class User < ApplicationRecord
          :confirmable,
          :password_has_required_content,
          :two_factor_authenticatable,
-         :omniauthable, omniauth_providers: [:google_oauth2, :saml]
+         :omniauthable, omniauth_providers: [:google_oauth2]
 
   # TODO: remove in a future version once online status is moved to account users
   # remove the column availability from users
@@ -101,7 +101,7 @@ class User < ApplicationRecord
   has_many :invitees, through: :account_users, class_name: 'User', foreign_key: 'inviter_id', source: :inviter, dependent: :nullify
 
   has_many :custom_filters, dependent: :destroy_async
-  has_many :dashboard_apps, dependent: :nullify
+
   has_many :mentions, dependent: :destroy_async
   has_many :notes, dependent: :nullify
   has_many :notification_settings, dependent: :destroy_async
@@ -109,7 +109,6 @@ class User < ApplicationRecord
   has_many :notifications, dependent: :destroy_async
   has_many :team_members, dependent: :destroy_async
   has_many :teams, through: :team_members
-  has_many :articles, foreign_key: 'author_id', dependent: :nullify, inverse_of: :author
   # rubocop:disable Rails/HasManyOrHasOneDependent
   # we are handling this in `remove_macros` callback
   has_many :macros, foreign_key: 'created_by_id', inverse_of: :created_by

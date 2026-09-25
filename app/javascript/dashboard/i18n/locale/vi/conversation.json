@@ -7,7 +7,6 @@
     "CSAT_REPLY_MESSAGE": "Vui lòng đánh giá cuộc hội thoại",
     "404": "Rất tiếc, không tìm thấy cuộc hội thoại. Vui lòng thử lại",
     "SWITCH_VIEW_LAYOUT": "Chuyển chế độ xem",
-    "DASHBOARD_APP_TAB_MESSAGES": "Tin nhắn",
     "UNVERIFIED_SESSION": "Danh tính của người dùng này chưa được xác minh",
     "NO_MESSAGE_1": "Ôi! Không có tin nhắn nào từ khách hàng trong hộp thư của bạn.",
     "NO_MESSAGE_2": " để gửi tin nhắn đến trang của bạn!",
@@ -45,8 +44,6 @@
     "BOT_HANDOFF_REOPEN_ACTION": "Mở lại hội thoại",
     "BOT_HANDOFF_SUCCESS": "Đã chuyển giao cuộc hội thoại cho bạn",
     "BOT_HANDOFF_ERROR": "Không thể tiếp quản cuộc hội thoại. Vui lòng thử lại.",
-    "TWILIO_WHATSAPP_CAN_REPLY": "Bạn chỉ có thể trả lời bằng mẫu tin nhắn do",
-    "TWILIO_WHATSAPP_24_HOURS_WINDOW": "giới hạn cửa sổ 24 giờ",
     "OLD_INSTAGRAM_INBOX_REPLY_BANNER": "Tài khoản Instagram này đã được chuyển sang hộp thư Instagram mới. Các tin nhắn mới sẽ xuất hiện ở đó. Bạn không thể trả lời trong cuộc hội thoại này nữa.",
     "REPLYING_TO": "Bạn đang trả lời:",
     "REMOVE_SELECTION": "Xóa lựa chọn",
@@ -225,7 +222,7 @@
       "MARK_AS_UNREAD": "Đánh dấu chưa đọc",
       "MARK_AS_READ": "Đánh dấu đã đọc",
       "REOPEN": "Mở lại cuộc hội thoại",
-      "CANCEL_AUTO_FOLLOW_UP": "Huỷ Auto Follow-up",
+      "CANCEL_AUTO_FOLLOW_UP": "Hủy gửi tin nhắn đeo bám",
       "RESTORE_AUTO_FOLLOW_UP": "Bật lại Auto Follow-up",
       "SNOOZE": {
         "TITLE": "Tạm hoãn",
@@ -241,7 +238,6 @@
       "OPEN_IN_NEW_TAB": "Mở trong tab mới",
       "COPY_LINK": "Sao chép link cuộc hội thoại",
       "COPY_LINK_SUCCESS": "Đã sao chép link vào clipboard",
-      "CANCEL_AUTO_FOLLOW_UP": "Hủy gửi tin nhắn đeo bám",
       "API": {
         "AGENT_ASSIGNMENT": {
           "SUCCESFUL": "Đã gán cuộc hội thoại {conversationId} cho \"{agentName}\"",
@@ -536,24 +532,6 @@
       "DELETE_CONFIRM_YES": "Có, xóa đơn hàng",
       "DELETE_CONFIRM_NO": "Không, giữ lại đơn hàng",
       "CONFIRM_YES": "Xác nhận"
-    }
-  },
-  "EMAIL_TRANSCRIPT": {
-    "TITLE": "Gửi bản sao hội thoại",
-    "DESC": "Gửi bản sao nội dung hội thoại đến email chỉ định",
-    "SUBMIT": "Gửi",
-    "CANCEL": "Hủy",
-    "SEND_EMAIL_SUCCESS": "Đã gửi bản sao hội thoại thành công",
-    "SEND_EMAIL_ERROR": "Có lỗi xảy ra, vui lòng thử lại",
-    "SEND_EMAIL_PAYMENT_REQUIRED": "Gửi bản ghi email không có sẵn trong gói hiện tại của bạn. Vui lòng nâng cấp để sử dụng tính năng này.",
-    "FORM": {
-      "SEND_TO_CONTACT": "Gửi bản sao cho khách hàng",
-      "SEND_TO_AGENT": "Gửi bản sao cho nhân viên được giao",
-      "SEND_TO_OTHER_EMAIL_ADDRESS": "Gửi bản sao đến email khác",
-      "EMAIL": {
-        "PLACEHOLDER": "Nhập email",
-        "ERROR": "Vui lòng nhập địa chỉ email hợp lệ"
-      }
     }
   },
   "ONBOARDING": {

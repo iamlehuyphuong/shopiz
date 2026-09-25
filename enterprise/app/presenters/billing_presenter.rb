@@ -36,10 +36,10 @@ class BillingPresenter
   def custom_attributes
     @custom_attributes ||= @account.custom_attributes
   end
-  
+
   def current_subscription
     sub = @account.active_subscription
-    
+
     if sub
       tier_name = (sub.subscription_plan.subscription_tier&.name_en || '').downcase
       rank = PRODUCT_TYPES.index(tier_name) || -1
@@ -59,9 +59,9 @@ class BillingPresenter
 
     sku = @account.custom_attributes['sku']
     plan = SubscriptionPlan.find_by(sku: sku) if sku.present?
-    
+
     return nil unless plan
-    
+
     tier_name = (plan.subscription_tier&.name_en || '').downcase
     rank = PRODUCT_TYPES.index(tier_name) || -1
     {
@@ -110,22 +110,20 @@ class BillingPresenter
                                 .includes(:subscription_tier).to_a
 
     tiers = all_plans.group_by { |p| p.subscription_tier_id }
-    
+
     formatted_tiers = tiers.map do |_tier_id, tier_plans|
       sorted_plans = tier_plans.sort_by { |p| [p.duration_days.to_i, p.ai_included? ? 1 : 0] }
       base_plan = sorted_plans.find { |p| p.duration_days == 180 && !p.ai_included? } || sorted_plans.first
       tier = base_plan&.subscription_tier
 
       tier_key = (tier&.name_en || 'other').downcase
-      
+
       base_price_monthly = 0.0
-      if base_plan && base_plan.duration_days.to_i > 0
-        base_price_monthly = base_plan.price_amount.to_f / (base_plan.duration_days / 30.0).round
-      end
+      base_price_monthly = base_plan.price_amount.to_f / (base_plan.duration_days / 30.0).round if base_plan && base_plan.duration_days.to_i > 0
 
       packages = sorted_plans.map do |plan|
         normalized = normalize_subscription_plan(plan)
-        
+
         # Calculate discount correctly
         if base_price_monthly > 0 && plan.duration_days.to_i > 0
           expected_price = base_price_monthly * (plan.duration_days / 30.0).round
@@ -139,13 +137,13 @@ class BillingPresenter
         else
           normalized[:discount_percent] = 0
         end
-        
+
         # Determine benefits specifically for this plan
         normalized[:benefits] = generate_benefits(plan)
-        
+
         normalized
       end
-      
+
       tier_rank = PRODUCT_TYPES.index(tier_key) || -1
 
       {
@@ -157,7 +155,7 @@ class BillingPresenter
         packages: packages
       }
     end
-    
+
     formatted_tiers.sort_by { |t| t[:rank] }
   end
 
@@ -218,8 +216,6 @@ class BillingPresenter
       GlobalConfig.get('INSTAGRAM_APP_ID')['INSTAGRAM_APP_ID'].present?
     when 'channel_tiktok'
       GlobalConfig.get('TIKTOK_APP_ID')['TIKTOK_APP_ID'].present?
-    when 'channel_twitter'
-      GlobalConfig.get('TWITTER_CONSUMER_KEY')['TWITTER_CONSUMER_KEY'].present?
     else
       true
     end
@@ -233,7 +229,9 @@ class BillingPresenter
     LIMIT_KEYS_ORDER.each do |key|
       value = plan.limits[key]
       next if value.blank? || value.to_i <= 0
-      limit_items << { id: "limit_#{key}", description: "BILLING_SETTINGS.PRICING_PACKAGES.BENEFITS.LIMITS.#{key.upcase}", count: value, included: true }
+
+      limit_items << { id: "limit_#{key}", description: "BILLING_SETTINGS.PRICING_PACKAGES.BENEFITS.LIMITS.#{key.upcase}", count: value,
+                       included: true }
     end
     categories << { name: 'BILLING_SETTINGS.PRICING_PACKAGES.BENEFITS.CATEGORIES.LIMITATIONS', items: limit_items } if limit_items.any?
 
@@ -248,18 +246,17 @@ class BillingPresenter
       { key: 'channel_instagram', label: 'INSTAGRAM' },
       { key: 'channel_tiktok', label: 'TIKTOK' },
       { key: 'channel_tiktok_shop', label: 'TIKTOK_SHOP' },
-      { key: 'channel_telegram', label: 'TELEGRAM' },
-      { key: 'channel_line', label: 'LINE' },
-      { key: 'channel_twitter', label: 'TWITTER' }
+      { key: 'channel_telegram', label: 'TELEGRAM' }
     ].each do |ch|
-      if plan.features.is_a?(Hash)
-        status = GlobalConfigService.load("CHANNEL_STATUS_#{ch[:label]}", 'published').to_s
-        status = 'coming_soon' unless channel_configured?(ch[:key])
-        next unless %w[beta published].include?(status)
+      next unless plan.features.is_a?(Hash)
 
-        is_enabled = plan.features[ch[:key]] == "true" || plan.features[ch[:key]] == true
-        channel_items << { id: "feature_#{ch[:key]}", description: "BILLING_SETTINGS.PRICING_PACKAGES.BENEFITS.CHANNELS.#{ch[:label]}", included: is_enabled, status: status }
-      end
+      status = GlobalConfigService.load("CHANNEL_STATUS_#{ch[:label]}", 'published').to_s
+      status = 'coming_soon' unless channel_configured?(ch[:key])
+      next unless %w[beta published].include?(status)
+
+      is_enabled = plan.features[ch[:key]] == 'true' || plan.features[ch[:key]] == true
+      channel_items << { id: "feature_#{ch[:key]}", description: "BILLING_SETTINGS.PRICING_PACKAGES.BENEFITS.CHANNELS.#{ch[:label]}",
+                         included: is_enabled, status: status }
     end
     categories << { name: 'BILLING_SETTINGS.PRICING_PACKAGES.BENEFITS.CATEGORIES.CHANNELS', items: channel_items } if channel_items.any?
 
@@ -272,26 +269,28 @@ class BillingPresenter
       { key: ['agent_bots'], label: 'AGENT_BOTS' },
       { key: ['reports'], label: 'REPORTS' },
       { key: ['labels'], label: 'LABELS' },
-      { key: ['channel_whatsapp', 'templates'], label: 'CHANNEL_WHATSAPP' },
+      { key: %w[channel_whatsapp templates], label: 'CHANNEL_WHATSAPP' },
       { key: ['integrations'], label: 'INTEGRATIONS' },
-      { key: ['csat_review_notes', 'csat'], label: 'CSAT_REVIEW_NOTES' },
+      { key: %w[csat_review_notes csat], label: 'CSAT_REVIEW_NOTES' },
       { key: ['sla'], label: 'SLA' },
       { key: ['campaigns'], label: 'CAMPAIGNS' },
       { key: ['custom_roles'], label: 'CUSTOM_ROLES' },
       { key: ['custom_attributes'], label: 'CUSTOM_ATTRIBUTES' },
       { key: ['audit_logs'], label: 'AUDIT_LOGS' }
     ]
-    
+
     if plan.features.is_a?(Hash)
       feature_list.each do |feature_map|
-        is_enabled = feature_map[:key].any? { |k| plan.features[k] == "true" || plan.features[k] == true }
-        feature_items << { id: "feature_#{feature_map[:key].first}", description: "BILLING_SETTINGS.PRICING_PACKAGES.BENEFITS.FEATURES.#{feature_map[:label]}", included: is_enabled }
+        is_enabled = feature_map[:key].any? { |k| plan.features[k] == 'true' || plan.features[k] == true }
+        feature_items << { id: "feature_#{feature_map[:key].first}",
+                           description: "BILLING_SETTINGS.PRICING_PACKAGES.BENEFITS.FEATURES.#{feature_map[:label]}", included: is_enabled }
       end
     end
     categories << { name: 'BILLING_SETTINGS.PRICING_PACKAGES.BENEFITS.CATEGORIES.FEATURES', items: feature_items } if feature_items.any?
 
     categories
   end
+
   def all_addon_packages
     AddonPackage.visible.ai_messages.where('price_amount > 0').order(:price_amount).map { |p| normalize_addon_package(p) }
   end
@@ -387,6 +386,7 @@ class BillingPresenter
     usage = @account.custom_attributes['captain_responses_credit_usage'].to_i
     remaining = limit - usage
     return nil if limit <= 0
+
     remaining.to_s
   end
 

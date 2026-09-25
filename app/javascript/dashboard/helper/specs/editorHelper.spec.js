@@ -149,13 +149,6 @@ describe('stripUnsupportedMarkdown', () => {
   const richSignature =
     '**Bold** _italic_ [link](http://example.com) ![](http://localhost:3000/image.png)';
 
-  it('keeps all formatting for Email channel (supports image, link, strong, em)', () => {
-    const result = stripUnsupportedMarkdown(richSignature, 'Channel::Email');
-    expect(result).toContain('**Bold**');
-    expect(result).toContain('_italic_');
-    expect(result).toContain('[link](http://example.com)');
-    expect(result).toContain('![](http://localhost:3000/image.png)');
-  });
   it('strips images but keeps bold/italic for Api channel', () => {
     const result = stripUnsupportedMarkdown(richSignature, 'Channel::Api');
     expect(result).toContain('**Bold**');
@@ -172,7 +165,7 @@ describe('stripUnsupportedMarkdown', () => {
     expect(result).not.toContain('![](');
   });
   it('strips all formatting for SMS channel', () => {
-    const result = stripUnsupportedMarkdown(richSignature, 'Channel::Sms');
+    const result = stripUnsupportedMarkdown(richSignature, 'Channel::Whatsapp');
     expect(result).toContain('Bold');
     expect(result).toContain('italic');
     expect(result).toContain('link');
@@ -220,7 +213,7 @@ describe('stripUnsupportedMarkdown', () => {
       const messageWithFormatting = '**Bold**\n\n`code`\n\nNormal text';
       const result = stripUnsupportedMarkdown(
         messageWithFormatting,
-        'Channel::Sms',
+        'Channel::Whatsapp',
         false
       );
       expect(result).toBe('Bold\n\ncode\n\nNormal text');
@@ -235,14 +228,6 @@ describe('appendSignature with channelType', () => {
   const signatureWithImage =
     'Thanks\n![](http://localhost:3000/image.png?cw_image_height=24px)';
 
-  it('keeps images for Email channel', () => {
-    const result = appendSignature(
-      'Hello',
-      signatureWithImage,
-      'Channel::Email'
-    );
-    expect(result).toContain('![](http://localhost:3000/image.png');
-  });
   it('keeps images for WebWidget channel', () => {
     const result = appendSignature(
       'Hello',
@@ -843,7 +828,7 @@ describe('getFormattingForEditor', () => {
 
   describe('return value structure', () => {
     it('always returns an object with marks, nodes, and menu properties', () => {
-      const result = getFormattingForEditor('Channel::Email');
+      const result = getFormattingForEditor('Channel::WebWidget');
 
       expect(result).toHaveProperty('marks');
       expect(result).toHaveProperty('nodes');

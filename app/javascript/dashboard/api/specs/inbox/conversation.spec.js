@@ -17,7 +17,6 @@ describe('#ConversationAPI', () => {
     expect(conversationAPI).toHaveProperty('mute');
     expect(conversationAPI).toHaveProperty('unmute');
     expect(conversationAPI).toHaveProperty('meta');
-    expect(conversationAPI).toHaveProperty('sendEmailTranscript');
     expect(conversationAPI).toHaveProperty('filter');
   });
 
@@ -160,19 +159,6 @@ describe('#ConversationAPI', () => {
           labels: [],
         },
       });
-    });
-
-    it('#sendEmailTranscript', () => {
-      conversationAPI.sendEmailTranscript({
-        conversationId: 45,
-        email: 'john@acme.inc',
-      });
-      expect(axiosMock.post).toHaveBeenCalledWith(
-        '/api/v1/conversations/45/transcript',
-        {
-          email: 'john@acme.inc',
-        }
-      );
     });
 
     it('#updateCustomAttributes', () => {

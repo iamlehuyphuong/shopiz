@@ -17,12 +17,10 @@ import FacebookPostsAndComments from './facebook/PostsAndComments.vue';
 import InstagramReauthorize from './channels/instagram/Reauthorize.vue';
 import TiktokReauthorize from './channels/tiktok/Reauthorize.vue';
 import DuplicateInboxBanner from './channels/instagram/DuplicateInboxBanner.vue';
-import MicrosoftReauthorize from './channels/microsoft/Reauthorize.vue';
 import ZaloReauthorize from './channels/zalo/Reauthorize.vue';
 import ZaloPersonalLabelSync from './channels/zalo/LabelSync.vue';
 import TextArea from 'next/textarea/TextArea.vue';
 
-import GoogleReauthorize from './channels/google/Reauthorize.vue';
 import WhatsappReauthorize from './channels/whatsapp/Reauthorize.vue';
 import InboxHealthAPI from 'dashboard/api/inboxHealth';
 import PreChatFormSettings from './PreChatForm/Settings.vue';
@@ -72,11 +70,9 @@ export default {
     WeeklyAvailability,
     SenderNameExamplePreview,
     LockToSingleConversationPreview,
-    MicrosoftReauthorize,
     ZaloReauthorize,
     ZaloPersonalLabelSync,
 
-    GoogleReauthorize,
     NextButton,
     SpinnerLoader,
     InstagramReauthorize,
@@ -117,12 +113,10 @@ export default {
       bubbleAvatarUrl: '',
       greetingEnabled: true,
       greetingMessage: '',
-      emailCollectEnabled: false,
       senderNameType: 'friendly',
       businessName: '',
       locktoSingleConversation: false,
       allowMessagesAfterResolved: true,
-      continuityViaEmail: true,
       selectedInboxName: '',
       channelWebsiteUrl: '',
       webhookUrl: '',
@@ -131,7 +125,6 @@ export default {
       selectedFeatureFlags: [],
       replyTime: '',
       selectedTabIndex: 0,
-      selectedPortalSlug: '',
       showBusinessNameInput: false,
       healthData: null,
       isLoadingHealth: false,
@@ -163,7 +156,6 @@ export default {
       accountId: 'getCurrentAccountId',
       isFeatureEnabledonAccount: 'accounts/isFeatureEnabledonAccount',
       uiFlags: 'inboxes/getUIFlags',
-      portals: 'portals/allPortals',
       macros: 'macros/getMacros',
     }),
     isCaptainEnabled() {
@@ -185,9 +177,6 @@ export default {
       if (this.is360DialogWhatsAppChannel) {
         return this.$t('INBOX_MGMT.ADD.WHATSAPP.PROVIDERS.360_DIALOG');
       }
-      if (this.isATwilioWhatsAppChannel) {
-        return this.$t('INBOX_MGMT.ADD.WHATSAPP.PROVIDERS.TWILIO');
-      }
       return '';
     },
     tabs() {
@@ -200,21 +189,11 @@ export default {
           key: 'collaborators',
           name: this.$t('INBOX_MGMT.TABS.COLLABORATORS'),
         },
+        {
+          key: 'business-hours',
+          name: this.$t('INBOX_MGMT.TABS.BUSINESS_HOURS'),
+        },
       ];
-
-      if (!this.isAVoiceChannel) {
-        visibleToAllChannelTabs = [
-          ...visibleToAllChannelTabs,
-          {
-            key: 'business-hours',
-            name: this.$t('INBOX_MGMT.TABS.BUSINESS_HOURS'),
-          },
-          {
-            key: 'csat',
-            name: this.$t('INBOX_MGMT.TABS.CSAT'),
-          },
-        ];
-      }
 
       if (this.isAWebWidgetInbox) {
         visibleToAllChannelTabs = [
@@ -227,12 +206,8 @@ export default {
       }
 
       if (
-        this.isATwilioChannel ||
-        this.isALineChannel ||
         this.isAZaloPersonalChannel ||
         this.isAPIInbox ||
-        this.isAVoiceChannel ||
-        (this.isAnEmailChannel && !this.inbox.provider) ||
         this.shouldShowWhatsAppConfiguration ||
         this.isAWebWidgetInbox ||
         this.isAFacebookInbox ||
@@ -310,7 +285,6 @@ export default {
         'collaborators',
         'bot-configuration',
         'business-hours',
-        'csat',
         'posts-and-comments',
         'label-sync',
       ];
@@ -322,27 +296,17 @@ export default {
       return 'max-w-7xl';
     },
     inboxName() {
-      if (this.isATwilioSMSChannel || this.isATwilioWhatsAppChannel) {
-        return `${this.inbox.name} (${
-          this.inbox.messaging_service_sid || this.inbox.phone_number
-        })`;
-      }
       if (this.isAWhatsAppChannel) {
         return `${this.inbox.name} (${this.inbox.phone_number})`;
-      }
-      if (this.isAnEmailChannel) {
-        return `${this.inbox.name} (${this.inbox.email})`;
       }
       return this.inbox.name;
     },
     canLocktoSingleConversation() {
       return (
-        this.isASmsInbox ||
         this.isAWhatsAppChannel ||
         this.isAFacebookInbox ||
         this.isAPIInbox ||
         this.isAnInstagramChannel ||
-        this.isALineChannel ||
         this.isATiktokChannel ||
         this.isATelegramChannel
       );
@@ -361,8 +325,6 @@ export default {
     },
     textAreaChannels() {
       if (
-        this.isATwilioChannel ||
-        this.isATwitterInbox ||
         this.isAFacebookInbox
       )
         return true;
@@ -387,21 +349,8 @@ export default {
 
       return this.inbox.channel_type === INBOX_TYPES.FB && instagramInbox;
     },
-    microsoftUnauthorized() {
-      return this.isAMicrosoftInbox && this.inbox.reauthorization_required;
-    },
     facebookUnauthorized() {
       return this.isAFacebookInbox && this.inbox.reauthorization_required;
-    },
-    googleUnauthorized() {
-      const isLegacyInbox = ['imap.gmail.com', 'imap.google.com'].includes(
-        this.inbox.imap_address
-      );
-
-      return (
-        (this.isAGoogleInbox || isLegacyInbox) &&
-        this.inbox.reauthorization_required
-      );
     },
     isEmbeddedSignupWhatsApp() {
       return this.inbox.provider_config?.source === 'embedded_signup';
@@ -436,7 +385,6 @@ export default {
       if (
         this.isAWhatsAppChannel ||
         this.isAWhatsAppCloudChannel ||
-        this.isATwilioWhatsAppChannel ||
         this.is360DialogWhatsAppChannel
       ) {
         upperLimit = 24;
@@ -446,11 +394,7 @@ export default {
         upperLimit = 999; // ZaloPersonal không giới hạn thời gian gửi tin
       } else if (this.isAnInstagramChannel || this.isAFacebookInbox) {
         upperLimit = 168; // 7 days with HUMAN_AGENT tag
-      } else if (
-        this.isATwilioSMSChannel ||
-        this.isAnEmailChannel ||
-        this.isAWebWidgetInbox
-      ) {
+      } else if (this.isAWebWidgetInbox) {
         upperLimit = 999;
       }
 
@@ -579,7 +523,6 @@ export default {
       this.$store.dispatch('agents/get');
       this.$store.dispatch('teams/get');
       this.$store.dispatch('labels/get');
-      this.$store.dispatch('portals/index');
       this.$store.dispatch('macros/get');
     },
     syncInboxData() {
@@ -591,21 +534,16 @@ export default {
       this.webhookUrl = this.inbox.webhook_url;
       this.greetingEnabled = this.inbox.greeting_enabled || false;
       this.greetingMessage = this.inbox.greeting_message || '';
-      this.emailCollectEnabled = this.inbox.enable_email_collect;
       this.senderNameType = this.inbox.sender_name_type;
       this.businessName = this.inbox.business_name;
       this.allowMessagesAfterResolved =
         this.inbox.allow_messages_after_resolved;
-      this.continuityViaEmail = this.inbox.continuity_via_email;
       this.channelWebsiteUrl = this.inbox.website_url;
       this.channelWelcomeTitle = this.inbox.welcome_title;
       this.channelWelcomeTagline = this.inbox.welcome_tagline || '';
       this.selectedFeatureFlags = this.inbox.selected_feature_flags || [];
       this.replyTime = this.inbox.reply_time;
       this.locktoSingleConversation = this.inbox.lock_to_single_conversation;
-      this.selectedPortalSlug = this.inbox.help_center
-        ? this.inbox.help_center.slug
-        : '';
 
       const savedBubbleSettings = LocalStorage.get(
         this.widgetBuilderStorageKey
@@ -740,15 +678,9 @@ export default {
         const payload = {
           id: this.currentInboxId,
           name: this.selectedInboxName?.trim(),
-          enable_email_collect: this.emailCollectEnabled,
           allow_messages_after_resolved: this.allowMessagesAfterResolved,
           greeting_enabled: this.greetingEnabled,
           greeting_message: this.greetingMessage || '',
-          portal_id: this.selectedPortalSlug
-            ? this.portals.find(
-                portal => portal.slug === this.selectedPortalSlug
-              )?.id || null
-            : null,
           lock_to_single_conversation: this.locktoSingleConversation,
           sender_name_type: this.senderNameType,
           business_name: this.businessName || null,
@@ -786,7 +718,6 @@ export default {
             welcome_tagline: this.channelWelcomeTagline || '',
             selectedFeatureFlags: this.selectedFeatureFlags,
             reply_time: this.replyTime || 'in_a_few_minutes',
-            continuity_via_email: this.continuityViaEmail,
             ...(this.isAZaloPersonalChannel && {
               default_friend_request_message:
                 this.zaloPersonalDefaultFriendRequestMessage,
@@ -925,20 +856,8 @@ export default {
     </SettingIntroBanner>
     <section class="w-full overflow-auto py-8">
       <div class="max-w-7xl mx-auto w-full">
-        <MicrosoftReauthorize
-          v-if="microsoftUnauthorized"
-          :inbox="inbox"
-          class="mb-4"
-          :class="bannerMaxWidth"
-        />
         <FacebookReauthorize
           v-if="facebookUnauthorized"
-          :inbox="inbox"
-          class="mb-4"
-          :class="bannerMaxWidth"
-        />
-        <GoogleReauthorize
-          v-if="googleUnauthorized"
           :inbox="inbox"
           class="mb-4"
           :class="bannerMaxWidth"
@@ -1097,21 +1016,6 @@ export default {
             </SettingsFieldSection>
 
             <SettingsFieldSection
-              v-if="!isAVoiceChannel"
-              :label="$t('INBOX_MGMT.HELP_CENTER.LABEL')"
-              :help-text="$t('INBOX_MGMT.HELP_CENTER.SUB_TEXT')"
-            >
-              <FilterSelect
-                v-model="selectedPortalSlug"
-                :options="[
-                  { value: '', label: $t('INBOX_MGMT.HELP_CENTER.NONE') },
-                  ...portals.map(p => ({ value: p.slug, label: p.name })),
-                ]"
-                class="w-full mt-1 !mb-0 [&_button]:w-full [&_button]:justify-between [&>.absolute]:w-full [&_.min-w-56]:!min-w-full [&_.min-w-56]:!w-full [&_button]:!h-[38px] [&_button]:!border-n-weak [&_button]:!bg-n-alpha-1"
-              />
-            </SettingsFieldSection>
-
-            <SettingsFieldSection
               v-if="canLocktoSingleConversation"
               :label="
                 $t('INBOX_MGMT.SETTINGS_POPUP.LOCK_TO_SINGLE_CONVERSATION')
@@ -1127,7 +1031,7 @@ export default {
             </SettingsFieldSection>
 
             <SettingsFieldSection
-              v-if="isAWebWidgetInbox || isAnEmailChannel"
+              v-if="isAWebWidgetInbox"
               :label="$t('INBOX_MGMT.EDIT.SENDER_NAME_SECTION.TITLE')"
               class="[&>div>div]:justify-end [&>div>div]:flex lg:[&>div:first-child]:h-12 [&>div:first-child]:h-16"
             >
@@ -1458,19 +1362,6 @@ export default {
 
               <SettingsToggleSection
                 v-if="isAWebWidgetInbox"
-                v-model="emailCollectEnabled"
-                :header="
-                  $t('INBOX_MGMT.SETTINGS_POPUP.ENABLE_EMAIL_COLLECT_BOX')
-                "
-                :description="
-                  $t(
-                    'INBOX_MGMT.SETTINGS_POPUP.ENABLE_EMAIL_COLLECT_BOX_SUB_TEXT'
-                  )
-                "
-              />
-
-              <SettingsToggleSection
-                v-if="isAWebWidgetInbox"
                 v-model="allowMessagesAfterResolved"
                 :header="
                   $t('INBOX_MGMT.SETTINGS_POPUP.ALLOW_MESSAGES_AFTER_RESOLVED')
@@ -1478,19 +1369,6 @@ export default {
                 :description="
                   $t(
                     'INBOX_MGMT.SETTINGS_POPUP.ALLOW_MESSAGES_AFTER_RESOLVED_SUB_TEXT'
-                  )
-                "
-              />
-
-              <SettingsToggleSection
-                v-if="isAWebWidgetInbox"
-                v-model="continuityViaEmail"
-                :header="
-                  $t('INBOX_MGMT.SETTINGS_POPUP.ENABLE_CONTINUITY_VIA_EMAIL')
-                "
-                :description="
-                  $t(
-                    'INBOX_MGMT.SETTINGS_POPUP.ENABLE_CONTINUITY_VIA_EMAIL_SUB_TEXT'
                   )
                 "
               />
@@ -1832,9 +1710,7 @@ export default {
             />
           </div>
         </div>
-        <div v-if="selectedTabKey === 'csat'">
-          <CustomerSatisfactionPage :inbox="inbox" />
-        </div>
+
         <div v-if="selectedTabKey === 'pre-chat-form'">
           <PreChatFormSettings :inbox="inbox" />
         </div>

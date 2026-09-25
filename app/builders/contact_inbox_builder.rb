@@ -13,16 +13,8 @@ class ContactInboxBuilder
 
   def generate_source_id
     case @inbox.channel_type
-    when 'Channel::TwilioSms'
-      twilio_source_id
     when 'Channel::Whatsapp'
       wa_source_id
-    when 'Channel::Email'
-      email_source_id
-    when 'Channel::Sms'
-      phone_source_id
-    when 'Channel::Voice'
-      phone_source_id # Voice uses phone number as source ID
     when 'Channel::Api', 'Channel::WebWidget'
       SecureRandom.uuid
     else
@@ -30,39 +22,11 @@ class ContactInboxBuilder
     end
   end
 
-  def email_source_id
-    raise ActionController::ParameterMissing, 'contact email' unless @contact.email
-
-    @contact.email
-  end
-
-  def phone_source_id
-    unless @contact.phone_number.present?
-      # For voice channels, we'll create a fallback source ID if phone number is missing
-      return SecureRandom.uuid if @inbox.channel_type == 'Channel::Voice'
-
-      raise ActionController::ParameterMissing, 'contact phone number'
-    end
-
-    @contact.phone_number
-  end
-
   def wa_source_id
     raise ActionController::ParameterMissing, 'contact phone number' unless @contact.phone_number
 
     # whatsapp doesn't want the + in e164 format
     @contact.phone_number.delete('+').to_s
-  end
-
-  def twilio_source_id
-    raise ActionController::ParameterMissing, 'contact phone number' unless @contact.phone_number
-
-    case @inbox.channel.medium
-    when 'sms'
-      @contact.phone_number
-    when 'whatsapp'
-      "whatsapp:#{@contact.phone_number}"
-    end
   end
 
   def create_contact_inbox
@@ -99,7 +63,7 @@ class ContactInboxBuilder
   end
 
   def new_source_id
-    if @inbox.whatsapp? || @inbox.sms? || @inbox.twilio?
+    if @inbox.whatsapp?
       "whatsapp:#{@source_id}#{rand(100)}"
     else
       "#{rand(10)}#{@source_id}"
@@ -107,8 +71,6 @@ class ContactInboxBuilder
   end
 
   def allowed_channels?
-    @inbox.email? || @inbox.sms? || @inbox.twilio? || @inbox.whatsapp? || @inbox.channel_type == 'Channel::Voice'
+    @inbox.whatsapp?
   end
 end
-
-ContactInboxBuilder.prepend_mod_with('ContactInboxBuilder')

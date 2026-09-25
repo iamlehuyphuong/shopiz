@@ -48,7 +48,7 @@ describe Whatsapp::OneoffCampaignService do
       end
 
       it 'raises error when campaign is not a WhatsApp campaign' do
-        sms_channel = create(:channel_sms, account: account)
+        sms_channel = create(:channel_telegram, account: account)
         sms_inbox = create(:inbox, channel: sms_channel, account: account)
         invalid_campaign = create(:campaign, inbox: sms_inbox, account: account)
 

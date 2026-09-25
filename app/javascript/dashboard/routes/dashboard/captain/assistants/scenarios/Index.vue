@@ -453,7 +453,7 @@ onMounted(() => {
         </SuggestedScenarios>
       </div>
     </template>
-    
+
     <woot-confirm-delete-modal
       v-if="showDeleteConfirm"
       v-model:show="showDeleteConfirm"
@@ -462,7 +462,11 @@ onMounted(() => {
       :confirm-text="t('CAPTAIN.ASSISTANTS.SCENARIOS.DELETE.CONFIRM.YES')"
       :reject-text="t('CAPTAIN.ASSISTANTS.SCENARIOS.DELETE.CONFIRM.NO')"
       :confirm-value="scenarioToDelete?.title"
-      :confirm-place-holder-text="t('CAPTAIN.ASSISTANTS.SCENARIOS.DELETE.CONFIRM.PLACE_HOLDER', { scenarioTitle: scenarioToDelete?.title })"
+      :confirm-place-holder-text="
+        t('CAPTAIN.ASSISTANTS.SCENARIOS.DELETE.CONFIRM.PLACE_HOLDER', {
+          scenarioTitle: scenarioToDelete?.title,
+        })
+      "
       @on-confirm="deleteScenario"
       @on-close="closeDeleteConfirm"
     />

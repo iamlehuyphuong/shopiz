@@ -19,7 +19,7 @@ const { t } = useI18n();
 const { isCloudFeatureEnabled } = useAccount();
 
 const isCaptainV2Enabled = computed(() =>
-  isCloudFeatureEnabled(FEATURE_FLAGS.CAPTAIN_V2)
+  isCloudFeatureEnabled(FEATURE_FLAGS.CAPTAIN)
 );
 const route = useRoute();
 const router = useRouter();

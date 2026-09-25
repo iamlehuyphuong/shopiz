@@ -1,6 +1,6 @@
 class Public::Api::V1::BookingsController < PublicController
   before_action :fetch_configuration
-  
+
   # GET /public/api/v1/bookings/:hash
   def show
     render json: {
@@ -14,7 +14,7 @@ class Public::Api::V1::BookingsController < PublicController
   def create
     start_time = Time.zone.parse(params[:start_time])
     end_time = start_time + @configuration.meeting_duration.minutes
-    
+
     manager = CalendarService::EventManager.new(@configuration.account)
     event_id = manager.create_event(
       start_time: start_time,

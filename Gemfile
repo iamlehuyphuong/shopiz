@@ -48,10 +48,6 @@ gem 'json_refs'
 gem 'rack-attack', '>= 6.7.0'
 # a utility tool for streaming, flexible and safe downloading of remote files
 gem 'down'
-# authentication type to fetch and send mail over oauth2.0
-gem 'gmail_xoauth'
-# Lock net-smtp to 0.3.4 to avoid issues with gmail_xoauth2
-gem 'net-smtp',  '~> 0.3.4'
 # Prevent CSV injection
 gem 'csv-safe'
 
@@ -66,9 +62,6 @@ gem 'aws-sdk-s3', require: false
 gem 'azure-storage-blob', git: 'https://github.com/chatwoot/azure-storage-ruby', branch: 'chatwoot', require: false
 gem 'google-cloud-storage', '>= 1.48.0', require: false
 gem 'image_processing'
-
-##-- for actionmailbox --##
-gem 'aws-actionmailbox-ses', '~> 0'
 
 ##-- gems for database --#
 gem 'groupdate'
@@ -111,11 +104,6 @@ gem 'wisper', '2.0.0'
 
 ##--- gems for channels ---##
 gem 'facebook-messenger'
-gem 'line-bot-api'
-gem 'twilio-ruby'
-# twitty will handle subscription of twitter account events
-# gem 'twitty', git: 'https://github.com/chatwoot/twitty'
-gem 'twitty', '~> 0.1.5'
 # facebook client
 gem 'koala'
 # slack client
@@ -163,11 +151,6 @@ gem 'hairtrigger'
 
 gem 'procore-sift'
 
-# parse email
-gem 'email_reply_trimmer'
-
-gem 'html2text'
-
 # to calculate working hours
 gem 'working_hours'
 
@@ -191,7 +174,6 @@ gem 'audited', '~> 5.4', '>= 5.4.1'
 
 # need for google auth
 gem 'omniauth', '>= 2.1.2'
-gem 'omniauth-saml'
 gem 'omniauth-google-oauth2', '>= 1.1.3'
 gem 'omniauth-rails_csrf_protection', '~> 1.0', '>= 1.0.2'
 
@@ -285,5 +267,3 @@ group :development, :test do
   gem 'spring'
   gem 'spring-watcher-listen'
 end
-
-

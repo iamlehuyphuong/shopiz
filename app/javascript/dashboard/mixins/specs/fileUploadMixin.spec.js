@@ -47,7 +47,6 @@ describe('FileUploadMixin', () => {
           globalConfig: mockGlobalConfig,
           currentChat: mockCurrentChat,
           currentUser: mockCurrentUser,
-          isATwilioSMSChannel: false,
         };
       },
       methods: {

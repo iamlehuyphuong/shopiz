@@ -20,14 +20,8 @@ RSpec.describe ConversationReplyEmailJob, type: :job do
     end.to have_enqueued_job(described_class).on_queue('mailers')
   end
 
-  it 'calls reply_with_summary when last incoming message was not email' do
+  it 'calls reply_with_summary' do
     described_class.perform_now(conversation.id, 123)
     expect(mailer).to have_received(:reply_with_summary)
-  end
-
-  it 'calls reply_without_summary when last incoming message was email' do
-    create(:message, conversation: conversation, message_type: :incoming, content_type: 'incoming_email')
-    described_class.perform_now(conversation.id, 123)
-    expect(mailer).to have_received(:reply_without_summary)
   end
 end

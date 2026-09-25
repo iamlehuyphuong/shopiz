@@ -38,7 +38,7 @@ class Addons::PurchaseService
   end
 
   def log_transaction
-    # Note: BillingHistory model expects product_id, product_name, sku, status, price_amount, price_currency, transaction_date_time, etc.
+    # NOTE: BillingHistory model expects product_id, product_name, sku, status, price_amount, price_currency, transaction_date_time, etc.
     BillingHistory.create!(
       account: @account,
       product_id: "ADDON_#{@addon_package.id}",
@@ -49,7 +49,7 @@ class Addons::PurchaseService
       status: :invoiced,
       transaction_date_time: Time.current.to_s,
       description: "Purchased Addon: #{@addon_package.name} (Qty: #{@addon_package.quantity})",
-      metadata: { 
+      metadata: {
         type: 'addon',
         addon_id: @addon_package.id,
         quantity: @addon_package.quantity,

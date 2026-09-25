@@ -1,4 +1,4 @@
-require "administrate/base_dashboard"
+require 'administrate/base_dashboard'
 
 class AddonPackageDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -9,9 +9,12 @@ class AddonPackageDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    addon_type: Field::Select.with_options(searchable: false, collection: ->(field) { field.resource.class.send(field.attribute.to_s.pluralize).keys }),
+    addon_type: Field::Select.with_options(searchable: false, collection: lambda { |field|
+      field.resource.class.send(field.attribute.to_s.pluralize).keys
+    }),
     currency: Field::String,
-    duration_days: Field::Select.with_options(collection: [['Không có hạn sử dụng', nil], ['6 Tháng (180)', 180], ['1 Năm (365)', 365], ['2 Năm (730)', 730]]),
+    duration_days: Field::Select.with_options(collection: [['Không có hạn sử dụng', nil], ['6 Tháng (180)', 180], ['1 Năm (365)', 365],
+                                                           ['2 Năm (730)', 730]]),
     name: Field::String,
     name_en: Field::String,
     name_vi: Field::String,
@@ -20,7 +23,7 @@ class AddonPackageDashboard < Administrate::BaseDashboard
     sku: Field::String,
     visible: Field::Boolean,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES

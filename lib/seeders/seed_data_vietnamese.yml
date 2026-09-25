@@ -199,7 +199,6 @@ custom_roles:
   - name: 'Quản lý Kiến thức'
     description: 'Quản lý kho kiến thức và tham gia hội thoại'
     permissions:
-      - 'knowledge_base_manage'
       - 'conversation_participating_manage'
   - name: 'Nhân viên Mới'
     description: 'Nhân viên cấp đầu với quyền truy cập hội thoại cơ bản'
@@ -262,7 +261,7 @@ contacts:
     email: "mkeatch2@reuters.test"
     gender: 'female'
     conversations:
-      - channel: Channel::TwitterProfile
+      - channel: Channel::WebWidget
         messages:
           - message_type: incoming
             content: Xin chào, tôi nghĩ mình đã xóa nhầm một số tệp quan trọng. Bạn có thể giúp tôi khôi phục không?
@@ -285,7 +284,7 @@ contacts:
     email: "vcorp4@instagram.test"
     gender: 'female'
     conversations:
-      - channel: Channel::Sms
+      - channel: Channel::Telegram
         source_id: "+1234567"
         messages:
           - message_type: incoming
@@ -297,7 +296,7 @@ contacts:
     email: "dpittway5@chron.test"
     gender: 'male'
     conversations:
-    - channel: Channel::Line
+    - channel: Channel::Api
       messages:
         - message_type: incoming
           content: Xin chào, tôi đang cố cập nhật thông tin tài khoản nhưng không lưu được.
@@ -319,7 +318,7 @@ contacts:
     email: "bcusworth7@arstechnica.test"
     gender: 'male'
     conversations:
-      - channel: Channel::TwitterProfile
+      - channel: Channel::WebWidget
         messages:
           - message_type: incoming
             content: Xin chào, tôi lỡ đặt nhầm sản phẩm. Tôi có thể hủy đơn hàng không?
@@ -365,7 +364,7 @@ contacts:
     email: "bjanewayb@ustream.tv"
     gender: 'male'
     conversations:
-      - channel: Channel::Line
+      - channel: Channel::Api
         messages:
           - message_type: incoming
             content: Xin chào, tôi có câu hỏi về các tính năng của sản phẩm.
@@ -376,7 +375,7 @@ contacts:
     email: "cdalinderc@msn.test"
     gender: 'male'
     conversations:
-      - channel: Channel::Email
+      - channel: Channel::WebWidget
         source_id: "cdalinderc@msn.test"
         messages:
           - message_type: incoming
@@ -388,7 +387,7 @@ contacts:
     email: "mpetrukd@wunderground.test"
     gender: 'female'
     conversations:
-      - channel: Channel::Email
+      - channel: Channel::WebWidget
         source_id: "mpetrukd@wunderground.test"
         priority: urgent
         messages:
@@ -461,7 +460,7 @@ contacts:
     email: "cmathersonj@va.test"
     gender: 'female'
     conversations:
-      - channel: Channel::Email
+      - channel: Channel::WebWidget
         priority: urgent
         source_id: "cmathersonj@va.test"
         assignee: michael_scott@shopiz.test
@@ -515,7 +514,7 @@ contacts:
     email: "dchen@sample.test"
     gender: 'male'
     conversations:
-      - channel: Channel::Email
+      - channel: Channel::WebWidget
         source_id: "dchen@sample.test"
         assignee: ben@shopiz.test
         messages:

@@ -16,7 +16,6 @@
         bubbleAvatarUrl: '<%= @web_widget.bubble_avatar_url %>',
         closeBubbleAvatarUrl: '<%= @web_widget.close_bubble_avatar_url %>',
         widgetColor: '<%= @web_widget.widget_color %>',
-        portal: <%= @web_widget.inbox.portal.to_json.html_safe %>,
         enabledFeatures: <%= @web_widget.selected_feature_flags.to_json.html_safe %>,
         enabledLanguages: <%= available_locales_with_name.to_json.html_safe %>,
         replyTime: '<%= @web_widget.reply_time %>',

@@ -13,7 +13,6 @@
 #  csat_survey_enabled           :boolean          default(FALSE)
 #  email_address                 :string
 #  enable_auto_assignment        :boolean          default(TRUE)
-#  enable_email_collect          :boolean          default(TRUE)
 #  greeting_enabled              :boolean          default(FALSE)
 #  greeting_message              :string
 #  is_load_all_conversation      :boolean
@@ -28,17 +27,11 @@
 #  updated_at                    :datetime         not null
 #  account_id                    :integer          not null
 #  channel_id                    :integer          not null
-#  portal_id                     :bigint
 #
 # Indexes
 #
 #  index_inboxes_on_account_id                   (account_id)
 #  index_inboxes_on_channel_id_and_channel_type  (channel_id,channel_type)
-#  index_inboxes_on_portal_id                    (portal_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (portal_id => portals.id)
 #
 
 class Inbox < ApplicationRecord
@@ -79,7 +72,6 @@ class Inbox < ApplicationRecord
   store_accessor :zalo_auto_message_config, :zalo_auto_message_enabled, :zalo_auto_message_inbox_ids
 
   belongs_to :account
-  belongs_to :portal, optional: true
   belongs_to :ecommerce_integration, class_name: 'Integrations::Hook', optional: true
 
   belongs_to :channel, polymorphic: true, dependent: :destroy
@@ -128,18 +120,13 @@ class Inbox < ApplicationRecord
     update_account_cache
   end
 
-  # Sanitizes inbox name for balanced email provider compatibility
+  # Sanitizes inbox name for balanced provider compatibility
   # ALLOWS: /'._- and Unicode letters/numbers/emojis
   # REMOVES: Forbidden chars (\<>@") + spam-trigger symbols (!#$%&*+=?^`{|}~)
   def sanitized_name
-    return default_name_for_blank_name if name.blank?
+    return '' if name.blank?
 
-    sanitized = apply_sanitization_rules(name)
-    sanitized.blank? && email? ? display_name_from_email : sanitized
-  end
-
-  def sms?
-    channel_type == 'Channel::Sms'
+    apply_sanitization_rules(name)
   end
 
   def facebook?
@@ -166,18 +153,6 @@ class Inbox < ApplicationRecord
     channel_type == 'Channel::Api'
   end
 
-  def email?
-    channel_type == 'Channel::Email'
-  end
-
-  def twilio?
-    channel_type == 'Channel::TwilioSms'
-  end
-
-  def twitter?
-    channel_type == 'Channel::TwitterProfile'
-  end
-
   def telegram?
     channel_type == 'Channel::Telegram'
   end
@@ -192,10 +167,6 @@ class Inbox < ApplicationRecord
 
   def zalo_oa?
     channel_type == 'Channel::ZaloOa'
-  end
-
-  def twilio_whatsapp?
-    channel_type == 'Channel::TwilioSms' && channel.medium == 'whatsapp'
   end
 
   def assignable_agents
@@ -238,12 +209,7 @@ class Inbox < ApplicationRecord
 
   def callback_webhook_url
     case channel_type
-    when 'Channel::TwilioSms'
-      "#{ENV.fetch('FRONTEND_URL', nil)}/twilio/callback"
-    when 'Channel::Sms'
-      "#{ENV.fetch('FRONTEND_URL', nil)}/webhooks/sms/#{channel.phone_number.delete_prefix('+')}"
-    when 'Channel::Line'
-      "#{ENV.fetch('FRONTEND_URL', nil)}/webhooks/line/#{channel.line_channel_id}"
+
     when 'Channel::Whatsapp'
       "#{ENV.fetch('FRONTEND_URL', nil)}/webhooks/whatsapp/#{channel.phone_number}"
     end
@@ -253,15 +219,11 @@ class Inbox < ApplicationRecord
     members.ids
   end
 
-  def auto_assignment_v2_enabled?
-    account.feature_enabled?('assignment_v2')
+  def advanced_assignment_enabled?
+    account.feature_enabled?('advanced_assignment')
   end
 
   private
-
-  def default_name_for_blank_name
-    email? ? display_name_from_email : ''
-  end
 
   def apply_sanitization_rules(name)
     name.gsub(/[\\<>@"!#$%&*+=?^`{|}~:;]/, '')         # Remove forbidden chars
@@ -269,10 +231,6 @@ class Inbox < ApplicationRecord
         .gsub(/\A[[:punct:]]+|[[:punct:]]+\z/, '')      # Remove leading/trailing punctuation
         .gsub(/\s+/, ' ')                               # Normalize spaces
         .strip
-  end
-
-  def display_name_from_email
-    channel.email.split('@').first.parameterize.titleize
   end
 
   def dispatch_create_event
@@ -300,10 +258,6 @@ class Inbox < ApplicationRecord
 
   def delete_round_robin_agents
     ::AutoAssignment::InboxRoundRobinService.new(inbox: self).clear_queue
-  end
-
-  def check_channel_type?
-    ['Channel::Email', 'Channel::Api', 'Channel::WebWidget'].include?(channel_type)
   end
 
   def auto_load_old_conversation

@@ -26,7 +26,7 @@ export default {
           name: 'assignment_policy_index',
           component: AssignmentPolicyIndex,
           meta: {
-            featureFlag: FEATURE_FLAGS.ASSIGNMENT_V2,
+            featureFlag: FEATURE_FLAGS.ADVANCED_ASSIGNMENT,
             permissions: ['administrator'],
           },
         },
@@ -35,7 +35,7 @@ export default {
           name: 'agent_assignment_policy_index',
           component: AgentAssignmentIndex,
           meta: {
-            featureFlag: FEATURE_FLAGS.ASSIGNMENT_V2,
+            featureFlag: FEATURE_FLAGS.ADVANCED_ASSIGNMENT,
             permissions: ['administrator'],
           },
         },
@@ -44,7 +44,7 @@ export default {
           name: 'agent_assignment_policy_create',
           component: AgentAssignmentCreate,
           meta: {
-            featureFlag: FEATURE_FLAGS.ASSIGNMENT_V2,
+            featureFlag: FEATURE_FLAGS.ADVANCED_ASSIGNMENT,
             permissions: ['administrator'],
           },
         },
@@ -53,7 +53,7 @@ export default {
           name: 'agent_assignment_policy_edit',
           component: AgentAssignmentEdit,
           meta: {
-            featureFlag: FEATURE_FLAGS.ASSIGNMENT_V2,
+            featureFlag: FEATURE_FLAGS.ADVANCED_ASSIGNMENT,
             permissions: ['administrator'],
           },
         },

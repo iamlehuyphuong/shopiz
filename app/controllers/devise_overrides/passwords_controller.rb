@@ -40,5 +40,3 @@ class DeviseOverrides::PasswordsController < Devise::PasswordsController
     }, status: status
   end
 end
-
-DeviseOverrides::PasswordsController.prepend_mod_with('DeviseOverrides::PasswordsController')

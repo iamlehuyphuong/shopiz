@@ -10,7 +10,7 @@ class Enterprise::Billing::CheckSepayEinvoiceJob < ApplicationJob
     client = Sepay::EinvoiceClient.new
     response = client.check_invoice_creation(tracking_code)
 
-    if !response[:success]
+    unless response[:success]
       # API might return success: false if there is an error during creation
       mark_as_failed(billing_history, response)
       return
@@ -42,7 +42,7 @@ class Enterprise::Billing::CheckSepayEinvoiceJob < ApplicationJob
       metadata = billing_history.metadata || {}
       metadata['einvoice_status'] = 'success'
       metadata['einvoice_url'] = pdf_url if pdf_url.present?
-      
+
       billing_history.update!(metadata: metadata)
     else
       mark_as_failed(billing_history, response)

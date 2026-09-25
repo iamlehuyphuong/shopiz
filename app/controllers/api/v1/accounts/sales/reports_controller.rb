@@ -62,8 +62,6 @@ class Api::V1::Accounts::Sales::ReportsController < Api::V1::Accounts::BaseContr
     scope
   end
 
-
-
   def build_metrics(range)
     current_orders = orders_scope.where(created_at: range)
     revenue_orders = current_orders.where(status: [:confirmed, :delivered])
@@ -98,8 +96,8 @@ class Api::V1::Accounts::Sales::ReportsController < Api::V1::Accounts::BaseContr
     # status enum: { draft: 0, confirmed: 1, processing: 2, shipped: 3, delivered: 4, cancelled: 5 }
     orders_scope
       .where(created_at: range)
-      .group("DATE(created_at)")
-      .select("DATE(created_at) as date, SUM(CASE WHEN status IN (1, 4) THEN total_amount ELSE 0 END) as revenue, COUNT(*) as orders")
+      .group('DATE(created_at)')
+      .select('DATE(created_at) as date, SUM(CASE WHEN status IN (1, 4) THEN total_amount ELSE 0 END) as revenue, COUNT(*) as orders')
       .map { |r| { date: r.date.to_s, revenue: r.revenue.to_f, orders: r.orders } }
       .sort_by { |d| d[:date] }
   end

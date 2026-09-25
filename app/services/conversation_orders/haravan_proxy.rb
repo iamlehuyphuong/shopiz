@@ -19,7 +19,7 @@ class ConversationOrders::HaravanProxy < ConversationOrders::PlatformProxy
   def fetch_products(page = 1)
     limit = 50
     result = haravan_get("products.json?limit=#{limit}&page=#{page}")
-    
+
     products = result&.dig('products')
     return [[], false] if products.blank?
 

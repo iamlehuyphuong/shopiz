@@ -94,13 +94,5 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
-  # Set this to appropriate ingress service for which the options are :
-  # :relay for Exim, Postfix, Qmail
-  # :mailgun for Mailgun
-  # :mandrill for Mandrill
-  # :postmark for Postmark
-  # :sendgrid for Sendgrid
-  config.action_mailbox.ingress = ENV.fetch('RAILS_INBOUND_EMAIL_SERVICE', 'relay').to_sym
-
   Rails.application.routes.default_url_options = { host: ENV['FRONTEND_URL'] }
 end
