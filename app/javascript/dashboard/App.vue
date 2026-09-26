@@ -202,6 +202,9 @@ export default {
     },
     setLocale(locale) {
       this.$root.$i18n.locale = locale;
+      if (window.shopizConfig) {
+        window.shopizConfig.selectedLocale = locale;
+      }
     },
     async initializeAccount() {
       await this.$store.dispatch('accounts/get');

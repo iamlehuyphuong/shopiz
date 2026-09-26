@@ -45,7 +45,7 @@ export const dynamicTime = time => {
   const options = { addSuffix: true };
   if (
     typeof window !== 'undefined' &&
-    window.chatwootConfig?.selectedLocale === 'vi'
+    window.shopizConfig?.selectedLocale === 'vi'
   ) {
     options.locale = vi;
   }
