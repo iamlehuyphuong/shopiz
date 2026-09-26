@@ -49,6 +49,8 @@ class Contact < ApplicationRecord
   include Labelable
   include LlmFormattable
 
+  attr_accessor :skip_auto_merge
+
   validates :account_id, presence: true
   validates :email, allow_blank: true, uniqueness: { scope: [:account_id], case_sensitive: false },
                     format: { with: Devise.email_regexp, message: I18n.t('errors.contacts.email.invalid') }
@@ -205,6 +207,7 @@ class Contact < ApplicationRecord
   end
 
   def trigger_auto_merge
+    return if skip_auto_merge
     return unless saved_change_to_phone_number? || saved_change_to_email?
     return if phone_number.blank? && email.blank?
     # Skip if no duplicate exists — avoids unnecessary job after ContactMergeAction#update!

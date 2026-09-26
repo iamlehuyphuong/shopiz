@@ -80,6 +80,33 @@ describe ContactMergeAction do
       end
     end
 
+    context 'when mergee contact has other associations' do
+      it 'moves csat_survey_responses to base contact' do
+        create(:csat_survey_response, contact: mergee_contact)
+        contact_merge
+        expect(base_contact.reload.csat_survey_responses.count).to eq 1
+      end
+
+      it 'moves bookings to base contact' do
+        Booking.new(contact_id: mergee_contact.id, account_id: account.id).save(validate: false)
+        contact_merge
+        expect(base_contact.reload.bookings.count).to eq 1
+      end
+
+      it 'moves conversation_orders to base contact' do
+        ConversationOrder.new(contact_id: mergee_contact.id, account_id: account.id).save(validate: false)
+        contact_merge
+        expect(base_contact.reload.conversation_orders.count).to eq 1
+      end
+
+      it 'moves contact_optins to base contact' do
+        inbox = create(:inbox, account: account)
+        ContactOptin.new(contact_id: mergee_contact.id, inbox_id: inbox.id, token: 'fake-token').save(validate: false)
+        contact_merge
+        expect(base_contact.reload.contact_optins.count).to eq 1
+      end
+    end
+
     context 'when contacts belong to a different account' do
       it 'throws an exception' do
         new_account = create(:account)

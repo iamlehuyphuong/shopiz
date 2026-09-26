@@ -16,6 +16,10 @@ class ContactMergeAction
       merge_messages
       merge_contact_inboxes
       merge_contact_notes
+      merge_csat_survey_responses
+      merge_bookings
+      merge_conversation_orders
+      merge_contact_optins
       merge_and_remove_mergee_contact
     end
     @base_contact
@@ -53,6 +57,22 @@ class ContactMergeAction
     ContactInbox.where(contact_id: @mergee_contact.id).update_all(contact_id: @base_contact.id)
   end
 
+  def merge_csat_survey_responses
+    CsatSurveyResponse.where(contact_id: @mergee_contact.id).update_all(contact_id: @base_contact.id)
+  end
+
+  def merge_bookings
+    Booking.where(contact_id: @mergee_contact.id).update_all(contact_id: @base_contact.id)
+  end
+
+  def merge_conversation_orders
+    ConversationOrder.where(contact_id: @mergee_contact.id).update_all(contact_id: @base_contact.id)
+  end
+
+  def merge_contact_optins
+    ContactOptin.where(contact_id: @mergee_contact.id).update_all(contact_id: @base_contact.id)
+  end
+
   def merge_and_remove_mergee_contact
     mergable_attribute_keys = %w[identifier name email phone_number additional_attributes custom_attributes]
     base_contact_attributes = base_contact.attributes.slice(*mergable_attribute_keys).compact_blank
@@ -80,7 +100,9 @@ class ContactMergeAction
 
     @mergee_contact.reload.destroy!
     Rails.configuration.dispatcher.dispatch(CONTACT_MERGED, Time.zone.now, contact: @base_contact,
-                                                                           tokens: [@base_contact.contact_inboxes.filter_map(&:pubsub_token)])
+                                                                           tokens: [@base_contact.contact_inboxes.filter_map(&:pubsub_token)],
+                                                                           mergee_contact_id: @mergee_contact.id)
+    @base_contact.skip_auto_merge = true
     @base_contact.update!(merged_attributes)
   end
 end

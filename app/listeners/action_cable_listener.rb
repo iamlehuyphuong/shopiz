@@ -155,7 +155,9 @@ class ActionCableListener < BaseListener
 
   def contact_merged(event)
     contact, account = extract_contact_and_account(event)
-    broadcast(account, [account_token(account)], CONTACT_MERGED, contact.push_event_data)
+    payload = contact.push_event_data
+    payload[:mergee_contact_id] = event.data[:mergee_contact_id] if event.data[:mergee_contact_id].present?
+    broadcast(account, [account_token(account)], CONTACT_MERGED, payload)
   end
 
   def contact_deleted(event)
