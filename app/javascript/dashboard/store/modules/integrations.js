@@ -13,9 +13,6 @@ const state = {
     isUpdating: false,
     isCreatingHook: false,
     isDeletingHook: false,
-    isCreatingSlack: false,
-    isUpdatingSlack: false,
-    isFetchingSlackChannels: false,
   },
 };
 
@@ -46,47 +43,6 @@ export const actions = {
     } catch (error) {
       commit(types.default.SET_INTEGRATIONS_UI_FLAG, { isFetching: false });
     }
-  },
-
-  connectSlack: async ({ commit }, code) => {
-    commit(types.default.SET_INTEGRATIONS_UI_FLAG, { isCreatingSlack: true });
-    try {
-      const response = await IntegrationsAPI.connectSlack(code);
-      commit(types.default.ADD_INTEGRATION, response.data);
-    } catch (error) {
-      throwErrorMessage(error);
-    } finally {
-      commit(types.default.SET_INTEGRATIONS_UI_FLAG, {
-        isCreatingSlack: false,
-      });
-    }
-  },
-  updateSlack: async ({ commit }, slackObj) => {
-    commit(types.default.SET_INTEGRATIONS_UI_FLAG, { isUpdatingSlack: true });
-    try {
-      const response = await IntegrationsAPI.updateSlack(slackObj);
-      commit(types.default.ADD_INTEGRATION, response.data);
-    } catch (error) {
-      throwErrorMessage(error);
-    } finally {
-      commit(types.default.SET_INTEGRATIONS_UI_FLAG, {
-        isUpdatingSlack: false,
-      });
-    }
-  },
-  listAllSlackChannels: async ({ commit }) => {
-    commit(types.default.SET_INTEGRATIONS_UI_FLAG, {
-      isFetchingSlackChannels: true,
-    });
-    try {
-      const response = await IntegrationsAPI.listAllSlackChannels();
-      return response.data;
-    } catch (error) {
-      commit(types.default.SET_INTEGRATIONS_UI_FLAG, {
-        isFetchingSlackChannels: false,
-      });
-    }
-    return null;
   },
 
   deleteIntegration: async ({ commit }, integrationId) => {

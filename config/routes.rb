@@ -12,7 +12,9 @@ Rails.application.routes.draw do
   if ActiveModel::Type::Boolean.new.cast(ENV.fetch('CW_API_ONLY_SERVER', false))
     root to: 'api#index'
   else
-    root to: 'dashboard#index'
+    root to: 'home#index'
+    get '/privacy-policy', to: 'home#privacy_policy'
+    get '/terms-of-service', to: 'home#terms_of_service'
 
     get '/app', to: 'dashboard#index'
     get '/app/*params', to: 'dashboard#index'
@@ -29,7 +31,6 @@ Rails.application.routes.draw do
     namespace :survey do
       resources :responses, only: [:show]
     end
-    resource :slack_uploads, only: [:show]
   end
 
   get '/health', to: 'health#show'
@@ -332,11 +333,7 @@ Rails.application.routes.draw do
                 post :process_event
               end
             end
-            resource :slack, only: [:create, :update, :destroy], controller: 'slack' do
-              member do
-                get :list_all_channels
-              end
-            end
+
             resource :omicall, only: [], controller: 'omicall' do
               post :click_to_call
               post :request_callbot

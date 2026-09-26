@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0">
+  <title>Shopiz - Nền tảng Chăm sóc khách hàng Đa kênh Toàn diện</title>
+  
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN for Landing Page -->
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        container: {
+          center: true,
+          screens: {
+            sm: '100%',
+            md: '768px',
+            lg: '1024px',
+            xl: '1200px',
+            '2xl': '1200px',
+          }
+        },
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              50: '#fff7ed',
+              100: '#ffedd5',
+              400: '#fb923c',
+              500: '#f97316',
+              600: '#E06720', // App's brand color
+              700: '#c2410c',
+            },
+            dark: {
+              bg: '#050a15',
+              card: '#0f172a',
+              border: '#1e293b'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #f8fafc;
+      color: #0f172a;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    /* Hiệu ứng mờ nền phía sau hero */
+    .hero-glow {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 400px;
+      background: radial-gradient(circle, rgba(224, 103, 32, 0.15) 0%, rgba(5, 10, 21, 0) 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body class="antialiased min-h-screen text-slate-600">
+  <%= render 'home/header_navigation' %>
+  <%= yield %>
+  <%= render 'home/footer' %>
+</body>
+</html>

@@ -5,7 +5,7 @@ import IntegrationHooks from './IntegrationHooks.vue';
 import Index from './Index.vue';
 import Webhook from './Webhooks/Index.vue';
 
-import Slack from './Slack.vue';
+
 import Linear from './Linear.vue';
 import Notion from './Notion.vue';
 import Shopify from './Shopify.vue';
@@ -48,16 +48,7 @@ export default {
       path: frontendURL('accounts/:accountId/settings/integrations'),
       component: SettingsWrapper,
       children: [
-        {
-          path: 'slack',
-          name: 'settings_integrations_slack',
-          component: Slack,
-          meta: {
-            featureFlag: FEATURE_FLAGS.INTEGRATIONS,
-            permissions: ['administrator'],
-          },
-          props: route => ({ code: route.query.code }),
-        },
+
         {
           path: 'linear',
           name: 'settings_integrations_linear',
