@@ -12,7 +12,9 @@ Rails.application.routes.draw do
   if ActiveModel::Type::Boolean.new.cast(ENV.fetch('CW_API_ONLY_SERVER', false))
     root to: 'api#index'
   else
-    root to: 'dashboard#index'
+    root to: 'home#index'
+    get '/privacy-policy', to: 'home#privacy_policy'
+    get '/terms-of-service', to: 'home#terms_of_service'
 
     get '/app', to: 'dashboard#index'
     get '/app/*params', to: 'dashboard#index'
