@@ -99,6 +99,60 @@ RSpec.describe Captain::OpenAiMessageBuilderService do
       end
     end
 
+    context 'with sticker attachment' do
+      before do
+        attachment = message.attachments.build(account_id: message.account_id, file_type: :sticker, external_url: 'https://example.com/sticker.webp')
+        attachment.save!
+      end
+
+      it 'does not treat sticker as image (current behavior)' do
+        result = service.send(:attachment_parts, attachments)
+        expect(result).not_to include(hash_including(type: 'image_url'))
+        expect(result).to include({ type: 'text', text: 'User has shared an attachment' })
+      end
+    end
+
+    context 'with video attachment' do
+      before do
+        attachment = message.attachments.build(account_id: message.account_id, file_type: :video, external_url: 'https://example.com/video.mp4')
+        attachment.save!
+      end
+
+      it 'includes generic attachment message for video' do
+        result = service.send(:attachment_parts, attachments)
+        expect(result).not_to include(hash_including(type: 'image_url'))
+        expect(result).to include({ type: 'text', text: 'User has shared an attachment' })
+      end
+    end
+
+    context 'with ig_reel attachment' do
+      before do
+        attachment = message.attachments.build(account_id: message.account_id, file_type: :ig_reel, external_url: 'https://example.com/reel.mp4')
+        attachment.save!
+      end
+
+      it 'does not treat ig_reel as image (current behavior)' do
+        result = service.send(:attachment_parts, attachments)
+        expect(result).not_to include(hash_including(type: 'image_url'))
+        expect(result).to include({ type: 'text', text: 'User has shared an attachment' })
+      end
+    end
+
+    context 'with ig_post attachment' do
+      before do
+        attachment = message.attachments.build(account_id: message.account_id, file_type: :ig_post, external_url: 'https://example.com/ig_post.jpg')
+        attachment.save!
+      end
+
+      it 'does not treat ig_post as image (current behavior - potential gap)' do
+        result = service.send(:attachment_parts, attachments)
+        # NOTE: ig_post often contains images but is not processed by vision.
+        # This documents current behavior as a potential feature gap.
+        expect(result).not_to include(hash_including(type: 'image_url'))
+        expect(result).to include({ type: 'text', text: 'User has shared an attachment' })
+      end
+    end
+
     context 'with mixed attachment types' do
       let(:image_attachment) do
         attachment = message.attachments.build(account_id: message.account_id, file_type: :image, external_url: 'https://example.com/image.jpg')
