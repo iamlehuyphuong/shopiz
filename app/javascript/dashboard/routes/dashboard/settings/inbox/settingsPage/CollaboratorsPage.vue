@@ -122,13 +122,13 @@ const rules = {
 const v$ = useVuelidate(rules, { maxAssignmentLimit });
 
 const assignmentHeader = computed(() =>
-  hasAssignmentV2.value
+  hasAdvancedAssignment.value
     ? t('INBOX_MGMT.ASSIGNMENT.ENABLE_AUTO_ASSIGNMENT')
     : t('INBOX_MGMT.SETTINGS_POPUP.AUTO_ASSIGNMENT')
 );
 
 const assignmentDescription = computed(() =>
-  hasAssignmentV2.value
+  hasAdvancedAssignment.value
     ? t('INBOX_MGMT.ASSIGNMENT.DESCRIPTION')
     : t('INBOX_MGMT.SETTINGS_POPUP.AUTO_ASSIGNMENT_SUB_TEXT')
 );
