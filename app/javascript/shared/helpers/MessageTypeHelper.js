@@ -15,5 +15,4 @@ export const MESSAGE_MAX_LENGTH = {
   WHATSAPP_CLOUD: 4096,
   // https://core.telegram.org/bots/api#sendmessage
   TELEGRAM: 4096,
-
 };

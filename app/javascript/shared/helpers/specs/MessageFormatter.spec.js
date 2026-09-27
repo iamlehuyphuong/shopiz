@@ -60,8 +60,6 @@ describe('#MessageFormatter', () => {
     });
   });
 
-
-
   describe('private notes', () => {
     it('should return the same string if not tags or @mentions', () => {
       const message = 'Chatwoot is an opensource tool';
@@ -71,16 +69,16 @@ describe('#MessageFormatter', () => {
     it('should add links to @mentions', () => {
       const message =
         '@chatwootapp is an opensource tool thanks @longnonexistenttwitterusername';
-      expect(
-        new MessageFormatter(message, true).formattedMessage
-      ).toMatch(message);
+      expect(new MessageFormatter(message, true).formattedMessage).toMatch(
+        message
+      );
     });
 
     it('should add links to #tags', () => {
       const message = '#chatwootapp is an opensource tool';
-      expect(
-        new MessageFormatter(message, true).formattedMessage
-      ).toMatch(message);
+      expect(new MessageFormatter(message, true).formattedMessage).toMatch(
+        message
+      );
     });
   });
 

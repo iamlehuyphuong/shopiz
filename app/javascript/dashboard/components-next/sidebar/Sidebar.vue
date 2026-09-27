@@ -261,7 +261,10 @@ const menuItems = computed(() => {
           name: 'Folders',
           label: t('SIDEBAR.ADVANCED_FILTERS'),
           icon: 'i-lucide-list-filter',
-          activeOn: ['conversations_through_folders', 'conversation_through_mentions'],
+          activeOn: [
+            'conversations_through_folders',
+            'conversation_through_mentions',
+          ],
           children: [
             {
               name: 'Mentions',

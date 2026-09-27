@@ -180,8 +180,6 @@ const location = computed(() =>
     ...baseSenderData.value,
   })
 );
-
-
 </script>
 
 <template>
@@ -232,6 +230,5 @@ const location = computed(() =>
         <Message :current-user-id="1" v-bind="location" />
       </div>
     </Variant>
-
   </Story>
 </template>

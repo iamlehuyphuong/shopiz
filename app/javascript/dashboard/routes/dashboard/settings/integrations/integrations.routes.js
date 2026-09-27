@@ -5,7 +5,6 @@ import IntegrationHooks from './IntegrationHooks.vue';
 import Index from './Index.vue';
 import Webhook from './Webhooks/Index.vue';
 
-
 import Linear from './Linear.vue';
 import Notion from './Notion.vue';
 import Shopify from './Shopify.vue';
@@ -48,7 +47,6 @@ export default {
       path: frontendURL('accounts/:accountId/settings/integrations'),
       component: SettingsWrapper,
       children: [
-
         {
           path: 'linear',
           name: 'settings_integrations_linear',

@@ -244,12 +244,12 @@ onMounted(() => {
     <template #search>
       <div
         v-if="bulkSelectedIds.size === 0"
-        class="flex gap-3 justify-between w-full items-center"
+        class="flex gap-3 justify-between w-full flex-1 items-center"
       >
         <Input
           v-model="searchQuery"
           :placeholder="$t('CAPTAIN.RESPONSES.SEARCH_PLACEHOLDER')"
-          class="w-64"
+          class="w-full md:w-64"
           size="sm"
           type="search"
           autofocus

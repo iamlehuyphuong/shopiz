@@ -159,4 +159,3 @@ export const ATTACHMENT_ICONS = {
   location: 'location',
   fallback: 'link',
 };
-

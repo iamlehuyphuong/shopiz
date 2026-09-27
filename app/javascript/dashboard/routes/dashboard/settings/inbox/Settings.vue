@@ -324,10 +324,7 @@ export default {
       return this.$t('INBOX_MGMT.ADD.CHANNEL_NAME.PLACEHOLDER');
     },
     textAreaChannels() {
-      if (
-        this.isAFacebookInbox
-      )
-        return true;
+      if (this.isAFacebookInbox) return true;
       return false;
     },
     instagramUnauthorized() {

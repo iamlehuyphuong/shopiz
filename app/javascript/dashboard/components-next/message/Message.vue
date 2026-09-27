@@ -295,7 +295,6 @@ const componentToRender = computed(() => {
     return UnsupportedBubble;
   }
 
-
   const instagramSharedTypes = [
     ATTACHMENT_TYPES.STORY_MENTION,
     ATTACHMENT_TYPES.IG_STORY,

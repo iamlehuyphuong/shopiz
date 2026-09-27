@@ -72,10 +72,7 @@ export default {
       },
     },
     isRichEditorEnabled() {
-      if (
-        this.isAFacebookInbox
-      )
-        return false;
+      if (this.isAFacebookInbox) return false;
       return true;
     },
   },

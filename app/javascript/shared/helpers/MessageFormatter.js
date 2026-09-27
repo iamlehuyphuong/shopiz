@@ -53,7 +53,6 @@ const createMarkdownInstance = (linkify = true) => {
     });
 };
 
-
 const EMAIL_REGEX = /\b[A-Za-z0-9._%+-]+@(?:[A-Za-z0-9-]+\.)+[A-Za-z]{2,}\b/g;
 const VN_PHONE_REGEX = /(?:\+84|0)(?:[\s\-.]?\d{2,4}){2,4}\b/g;
 
@@ -174,7 +173,6 @@ class MessageFormatter {
         return `<strong class="highlight-link underline cursor-pointer text-n-orange-10 hover:text-n-orange dark:text-n-orange-5 transition-colors" data-type="phone" data-value="${match}"><u>${displayValue}</u></strong>`;
       }
     );
-
 
     return renderedMessage;
   }

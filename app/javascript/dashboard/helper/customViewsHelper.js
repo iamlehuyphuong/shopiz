@@ -120,11 +120,15 @@ export const generateValuesForEditCustomViews = (filter, params) => {
       allCustomAttributes
     );
     return filterInputTypes === 'string'
-      ? values[0] ? values[0].toString() : ''
+      ? values[0]
+        ? values[0].toString()
+        : ''
       : { id: values[0], name: values[0] };
   }
 
   return inputType === 'multi_select' || inputType === 'search_select'
     ? getValuesForFilter(filter, params)
-    : values[0] ? values[0].toString() : '';
+    : values[0]
+      ? values[0].toString()
+      : '';
 };

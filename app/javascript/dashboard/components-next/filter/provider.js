@@ -3,9 +3,7 @@ import { useI18n } from 'vue-i18n';
 import { useOperators } from './operators';
 import { useMapGetter } from 'dashboard/composables/store.js';
 import { useChannelIcon } from 'next/icon/provider';
-import {
-  CONVERSATION_ATTRIBUTES,
-} from './helper/filterHelper';
+import { CONVERSATION_ATTRIBUTES } from './helper/filterHelper';
 
 /**
  * @typedef {Object} FilterOption
@@ -60,8 +58,6 @@ export function useConversationFilterContext() {
     dateOperators,
     getOperatorTypes,
   } = useOperators();
-
-
 
   /**
    * @type {import('vue').ComputedRef<FilterType[]>}
@@ -207,7 +203,6 @@ export function useConversationFilterContext() {
       filterOperators: presenceOnlyOperators.value,
       attributeModel: 'standard',
     },
-
   ]);
 
   return { filterTypes };

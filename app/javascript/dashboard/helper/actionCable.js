@@ -183,7 +183,10 @@ class ActionCableConnector extends BaseActionCableConnector {
   onContactMerge = data => {
     this.app.$store.dispatch('contacts/updateContact', data);
     if (data.mergee_contact_id) {
-      this.app.$store.dispatch('contacts/deleteContactThroughConversations', data.mergee_contact_id);
+      this.app.$store.dispatch(
+        'contacts/deleteContactThroughConversations',
+        data.mergee_contact_id
+      );
     }
     this.fetchConversationStats();
   };

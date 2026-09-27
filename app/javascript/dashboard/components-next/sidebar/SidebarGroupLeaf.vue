@@ -37,7 +37,13 @@ const renderAsLink = computed(() => Boolean(props.to) && !props.isLocked);
       :class="{
         'text-n-slate-12 bg-n-alpha-2 active': active,
       }"
-      @click="isLocked ? emit('toggleLocked', featureFlag) : (action ? action() : undefined)"
+      @click="
+        isLocked
+          ? emit('toggleLocked', featureFlag)
+          : action
+            ? action()
+            : undefined
+      "
     >
       <component
         :is="component"

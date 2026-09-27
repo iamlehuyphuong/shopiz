@@ -427,7 +427,6 @@ function openLastSavedItemInFolder() {
   });
 }
 
-
 function onApplyFilter(payload, folderName) {
   if (isFilterCreateMode.value && folderName) {
     const transformedPayload = useSnakeCase(payload);
@@ -458,8 +457,6 @@ function onApplyFilter(payload, folderName) {
   store.dispatch('emptyAllConversations');
   fetchFilteredConversations(payload);
 }
-
-
 
 function onUpdateSavedFilter(payload, folderName) {
   const transformedPayload = useSnakeCase(payload);
@@ -675,7 +672,6 @@ function onBasicFilterChange(value, type) {
   }
   resetAndFetchData();
 }
-
 
 function openLastItemAfterDeleteInFolder() {
   if (folders.value.length > 0) {
