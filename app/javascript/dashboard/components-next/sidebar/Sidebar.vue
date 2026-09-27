@@ -1018,17 +1018,16 @@ const handleMainMenuClick = item => {
   >
     <!-- Column 1: Main Menu Icons -->
     <nav
-      class="flex flex-col items-center py-4 w-16 bg-n-solid-2 border-r border-n-weak flex-shrink-0 relative h-full overflow-y-auto no-scrollbar"
+      class="flex flex-col items-center py-3 w-[72px] bg-n-solid-2 border-r border-n-weak flex-shrink-0 relative h-full overflow-y-auto no-scrollbar"
     >
-      <ul class="flex flex-col gap-2 w-full px-2 list-none m-0" role="menu">
+      <ul class="flex flex-col gap-1 w-full px-1.5 list-none m-0" role="menu">
         <li
           v-for="item in menuItems"
           :key="item.name"
           class="w-full flex justify-center relative"
         >
           <button
-            v-tooltip.right="item.label"
-            class="flex items-center justify-center rounded-xl transition-all w-10 h-10 relative flex-shrink-0 outline-none"
+            class="flex flex-col items-center justify-center rounded-xl transition-all w-full py-2.5 px-1 relative flex-shrink-0 outline-none gap-1"
             :class="[
               activeMainMenuName === item.name
                 ? 'bg-[#E06720] text-white shadow-sm dark:bg-[#E06720]'
@@ -1036,7 +1035,12 @@ const handleMainMenuClick = item => {
             ]"
             @click="handleMainMenuClick(item)"
           >
-            <span :class="item.icon" class="size-4" />
+            <span :class="item.icon" class="size-4 flex-shrink-0" />
+            <span
+              class="text-[10px] leading-tight font-medium w-full text-center truncate"
+            >
+              {{ item.label }}
+            </span>
           </button>
         </li>
       </ul>
