@@ -31,15 +31,16 @@ const isFeatureEnabledonAccount = useMapGetter(
 );
 
 const showCopilotLauncher = computed(() => {
-  const isCaptainEnabled = isFeatureEnabledonAccount.value(
-    currentAccountId.value,
-    FEATURE_FLAGS.CAPTAIN
-  );
-  return (
-    isCaptainEnabled &&
-    !uiSettings.value.is_copilot_panel_open &&
-    !isConversationRoute.value
-  );
+  return false;
+  // const isCaptainEnabled = isFeatureEnabledonAccount.value(
+  //   currentAccountId.value,
+  //   FEATURE_FLAGS.CAPTAIN
+  // );
+  // return (
+  //   isCaptainEnabled &&
+  //   !uiSettings.value.is_copilot_panel_open &&
+  //   !isConversationRoute.value
+  // );
 });
 const toggleSidebar = () => {
   updateUISettings({
