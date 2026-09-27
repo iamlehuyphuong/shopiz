@@ -1,5 +1,5 @@
 <script setup>
-import { useTemplateRef, onBeforeUnmount, computed, ref } from 'vue';
+import { useTemplateRef, onBeforeUnmount, computed, ref, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useTrack } from 'dashboard/composables';
 import { useStore } from 'dashboard/composables/store';
@@ -58,6 +58,12 @@ const addFilter = () => {
   filters.value.push({ ...DEFAULT_FILTER });
 };
 
+onMounted(() => {
+  if (filters.value.length === 0) {
+    addFilter();
+  }
+});
+
 const conditionsRef = useTemplateRef('conditionsRef');
 
 const isConditionsValid = () => {
@@ -79,7 +85,7 @@ function validateAndSubmit() {
     'setConversationFilters',
     useSnakeCase(JSON.parse(JSON.stringify(filters.value)))
   );
-  emit('applyFilter', filters.value);
+  emit('applyFilter', filters.value, folderNameLocal.value);
   useTrack(CONVERSATION_EVENTS.APPLY_FILTER, {
     appliedFilters: filters.value.map(filter => ({
       key: filter.attributeKey,
@@ -110,14 +116,12 @@ const outsideClickHandler = [
     <h3 class="text-base font-medium leading-6 text-n-slate-12">
       {{ filterModalHeaderTitle }}
     </h3>
-    <div v-if="props.isFolderView">
-      <div class="border-b border-n-weak pb-6">
-        <Input
-          v-model="folderNameLocal"
-          :label="t('FILTER.FOLDER_LABEL')"
-          :placeholder="t('FILTER.INPUT_PLACEHOLDER')"
-        />
-      </div>
+    <div class="border-b border-n-weak pb-6">
+      <Input
+        v-model="folderNameLocal"
+        :label="t('FILTER.FOLDER_LABEL')"
+        :placeholder="t('FILTER.INPUT_PLACEHOLDER')"
+      />
     </div>
     <ul class="grid gap-4 list-none">
       <template v-for="(filter, index) in filters" :key="filter.id">

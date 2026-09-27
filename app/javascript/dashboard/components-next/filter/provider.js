@@ -4,10 +4,8 @@ import { useOperators } from './operators';
 import { useMapGetter } from 'dashboard/composables/store.js';
 import { useChannelIcon } from 'next/icon/provider';
 import {
-  buildAttributesFilterTypes,
   CONVERSATION_ATTRIBUTES,
 } from './helper/filterHelper';
-import languages from 'dashboard/components/widgets/conversation/advancedFilterItems/languages.js';
 
 /**
  * @typedef {Object} FilterOption
@@ -50,15 +48,9 @@ import languages from 'dashboard/components/widgets/conversation/advancedFilterI
 export function useConversationFilterContext() {
   const { t } = useI18n();
 
-  const conversationAttributes = useMapGetter(
-    'attributes/getConversationAttributes'
-  );
-
   const labels = useMapGetter('labels/getLabels');
   const agents = useMapGetter('agents/getAgents');
   const inboxes = useMapGetter('inboxes/getInboxes');
-  const teams = useMapGetter('teams/getTeams');
-  const campaigns = useMapGetter('campaigns/getAllCampaigns');
 
   const {
     equalityOperators,
@@ -69,16 +61,7 @@ export function useConversationFilterContext() {
     getOperatorTypes,
   } = useOperators();
 
-  /**
-   * @type {import('vue').ComputedRef<FilterType[]>}
-   */
-  const customFilterTypes = computed(() =>
-    buildAttributesFilterTypes(
-      conversationAttributes.value,
-      getOperatorTypes,
-      'conversation'
-    )
-  );
+
 
   /**
    * @type {import('vue').ComputedRef<FilterType[]>}
@@ -148,41 +131,7 @@ export function useConversationFilterContext() {
       filterOperators: presenceOperators.value,
       attributeModel: 'standard',
     },
-    {
-      attributeKey: CONVERSATION_ATTRIBUTES.TEAM_ID,
-      value: CONVERSATION_ATTRIBUTES.TEAM_ID,
-      attributeName: t('FILTER.ATTRIBUTES.TEAM_NAME'),
-      label: t('FILTER.ATTRIBUTES.TEAM_NAME'),
-      inputType: 'searchSelect',
-      options: teams.value,
-      dataType: 'number',
-      filterOperators: presenceOperators.value,
-      attributeModel: 'standard',
-    },
-    {
-      attributeKey: CONVERSATION_ATTRIBUTES.DISPLAY_ID,
-      value: CONVERSATION_ATTRIBUTES.DISPLAY_ID,
-      attributeName: t('FILTER.ATTRIBUTES.CONVERSATION_IDENTIFIER'),
-      label: t('FILTER.ATTRIBUTES.CONVERSATION_IDENTIFIER'),
-      inputType: 'number',
-      dataType: 'number',
-      filterOperators: containmentOperators.value,
-      attributeModel: 'standard',
-    },
-    {
-      attributeKey: CONVERSATION_ATTRIBUTES.CAMPAIGN_ID,
-      value: CONVERSATION_ATTRIBUTES.CAMPAIGN_ID,
-      attributeName: t('FILTER.ATTRIBUTES.CAMPAIGN_NAME'),
-      label: t('FILTER.ATTRIBUTES.CAMPAIGN_NAME'),
-      inputType: 'searchSelect',
-      options: campaigns.value.map(campaign => ({
-        id: campaign.id,
-        name: campaign.title,
-      })),
-      dataType: 'number',
-      filterOperators: presenceOperators.value,
-      attributeModel: 'standard',
-    },
+
     {
       attributeKey: CONVERSATION_ATTRIBUTES.LABELS,
       value: CONVERSATION_ATTRIBUTES.LABELS,
@@ -207,17 +156,7 @@ export function useConversationFilterContext() {
       filterOperators: presenceOperators.value,
       attributeModel: 'standard',
     },
-    {
-      attributeKey: CONVERSATION_ATTRIBUTES.BROWSER_LANGUAGE,
-      value: CONVERSATION_ATTRIBUTES.BROWSER_LANGUAGE,
-      attributeName: t('FILTER.ATTRIBUTES.BROWSER_LANGUAGE'),
-      label: t('FILTER.ATTRIBUTES.BROWSER_LANGUAGE'),
-      inputType: 'searchSelect',
-      options: languages,
-      dataType: 'text',
-      filterOperators: equalityOperators.value,
-      attributeModel: 'additional',
-    },
+
     {
       attributeKey: CONVERSATION_ATTRIBUTES.REFERER,
       value: CONVERSATION_ATTRIBUTES.REFERER,
@@ -268,7 +207,7 @@ export function useConversationFilterContext() {
       filterOperators: presenceOnlyOperators.value,
       attributeModel: 'standard',
     },
-    ...customFilterTypes.value,
+
   ]);
 
   return { filterTypes };

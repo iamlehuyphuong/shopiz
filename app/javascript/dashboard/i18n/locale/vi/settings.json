@@ -536,13 +536,15 @@
     }
   },
   "SIDEBAR": {
+    "ADVANCED_FILTERS": "Bộ lọc nâng cao",
+    "FILTER_BY_LABELS": "Lọc theo nhãn",
     "NO_ITEMS": "Không có mục nào",
     "CURRENTLY_VIEWING_ACCOUNT": "Đang xem:",
     "SWITCH": "Chuyển",
     "INBOX_VIEW": "Xem hộp thư",
     "CONVERSATIONS": "Cuộc hội thoại",
     "INBOX": "Hộp thư của tôi",
-    "ALL_CONVERSATIONS": "Tất cả cuộc hội thoại",
+    "ALL_CONVERSATIONS": "Tất cả hội thoại",
     "MENTIONED_CONVERSATIONS": "Được nhắc đến",
     "PARTICIPATING_CONVERSATIONS": "Đang tham gia",
     "UNATTENDED_CONVERSATIONS": "Chưa xử lý",

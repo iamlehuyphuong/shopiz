@@ -10,6 +10,7 @@ import { vOnClickOutside } from '@vueuse/components';
 import { useRouter, useRoute } from 'vue-router';
 import { watch } from 'vue';
 import { useWindowSize, useEventListener } from '@vueuse/core';
+import { emitter } from 'shared/helpers/mitt';
 
 import SidebarGroup from './SidebarGroup.vue';
 import SidebarChangelogCard from './SidebarChangelogCard.vue';
@@ -248,7 +249,7 @@ const menuItems = computed(() => {
       children: [
         {
           name: 'Inbox',
-          label: t('SIDEBAR.INBOX'),
+          label: t('SIDEBAR.NOTIFICATIONS'),
           icon: 'i-lucide-inbox',
           to: accountScopedRoute('inbox_view'),
           activeOn: ['inbox_view', 'inbox_view_conversation'],
@@ -257,44 +258,33 @@ const menuItems = computed(() => {
           },
         },
         {
-          name: 'All',
-          label: t('SIDEBAR.ALL_CONVERSATIONS'),
-          icon: 'i-lucide-list',
-          activeOn: ['inbox_conversation'],
-          to: accountScopedRoute('home'),
-        },
-        {
-          name: 'Mentions',
-          label: t('SIDEBAR.MENTIONED_CONVERSATIONS'),
-          icon: 'i-lucide-at-sign',
-          activeOn: ['conversation_through_mentions'],
-          to: accountScopedRoute('conversation_mentions'),
-        },
-        {
-          name: 'Participating',
-          label: t('SIDEBAR.PARTICIPATING_CONVERSATIONS'),
-          icon: 'i-lucide-user-check',
-          activeOn: ['conversation_through_participating'],
-          to: accountScopedRoute('conversation_participating'),
-        },
-        {
-          name: 'Unattended',
-          activeOn: ['conversation_through_unattended'],
-          label: t('SIDEBAR.UNATTENDED_CONVERSATIONS'),
-          icon: 'i-lucide-clock-3',
-          to: accountScopedRoute('conversation_unattended'),
-        },
-        {
           name: 'Folders',
-          label: t('SIDEBAR.CUSTOM_VIEWS_FOLDER'),
-          icon: 'i-lucide-folder',
-          activeOn: ['conversations_through_folders'],
-          children: conversationCustomViews.value.map(view => ({
-            name: `${view.name}-${view.id}`,
-            label: view.name,
-            icon: 'i-lucide-hash',
-            to: accountScopedRoute('folder_conversations', { id: view.id }),
-          })),
+          label: t('SIDEBAR.ADVANCED_FILTERS'),
+          icon: 'i-lucide-list-filter',
+          activeOn: ['conversations_through_folders', 'conversation_through_mentions'],
+          children: [
+            {
+              name: 'Mentions',
+              label: t('SIDEBAR.MENTIONED_CONVERSATIONS'),
+              icon: 'i-lucide-at-sign',
+              activeOn: ['conversation_through_mentions'],
+              to: accountScopedRoute('conversation_mentions'),
+            },
+            ...conversationCustomViews.value.map(view => ({
+              name: `${view.name}-${view.id}`,
+              label: view.name,
+              icon: 'i-lucide-hash',
+              to: accountScopedRoute('folder_conversations', { id: view.id }),
+            })),
+            {
+              name: 'AddFilter',
+              label: t('FILTER.ADD_NEW_FILTER'),
+              icon: 'i-lucide-plus',
+              action: () => {
+                emitter.emit('open_conversation_filter', { mode: 'create' });
+              },
+            },
+          ],
         },
         ...(isTeamManagementEnabled.value
           ? [
@@ -315,26 +305,8 @@ const menuItems = computed(() => {
             ]
           : []),
         {
-          name: 'Channels',
-          label: t('SIDEBAR.CHANNELS'),
-          icon: 'i-lucide-mailbox',
-          activeOn: ['conversation_through_inbox'],
-          children: sortedInboxes.value.map(inbox => ({
-            name: `${inbox.name}-${inbox.id}`,
-            label: inbox.name,
-            icon: h(ChannelIcon, { inbox, class: 'size-[16px]' }),
-            to: accountScopedRoute('inbox_dashboard', { inbox_id: inbox.id }),
-            component: leafProps =>
-              h(ChannelLeaf, {
-                label: leafProps.label,
-                active: leafProps.active,
-                inbox,
-              }),
-          })),
-        },
-        {
           name: 'Labels',
-          label: t('SIDEBAR.LABELS'),
+          label: t('SIDEBAR.FILTER_BY_LABELS'),
           icon: 'i-lucide-tag',
           activeOn: ['conversations_through_label'],
           children: labels.value.map(label => ({
@@ -348,6 +320,46 @@ const menuItems = computed(() => {
               label: label.title,
             }),
           })),
+        },
+        {
+          name: 'Channels',
+          label: t('SIDEBAR.INBOXES'),
+          icon: 'i-lucide-mailbox',
+          forceExpanded: true,
+          activeOn: ['conversation_through_inbox'],
+          children: [
+            {
+              name: 'All',
+              label: t('SIDEBAR.ALL_CONVERSATIONS'),
+              icon: 'i-lucide-list',
+              activeOn: ['inbox_conversation'],
+              to: accountScopedRoute('home'),
+            },
+            ...sortedInboxes.value.map(inbox => ({
+              name: `${inbox.name}-${inbox.id}`,
+              label: inbox.name,
+              icon: h(ChannelIcon, { inbox, class: 'size-[16px]' }),
+              to: accountScopedRoute('inbox_dashboard', { inbox_id: inbox.id }),
+              component: leafProps =>
+                h(ChannelLeaf, {
+                  label: leafProps.label,
+                  active: leafProps.active,
+                  inbox,
+                }),
+            })),
+            ...(isAdmin.value
+              ? [
+                  {
+                    name: 'AddInbox',
+                    label: t('SETTINGS.INBOXES.NEW_INBOX'),
+                    icon: 'i-lucide-plus',
+                    action: () => {
+                      router.push(accountScopedRoute('settings_inbox_new'));
+                    },
+                  },
+                ]
+              : []),
+          ],
         },
       ],
     },

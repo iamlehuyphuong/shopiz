@@ -17,6 +17,7 @@ const props = defineProps({
   activeOn: { type: Array, default: () => [] },
   children: { type: Array, default: undefined },
   getterKeys: { type: Object, default: () => ({}) },
+  forceExpanded: { type: Boolean, default: false },
 });
 
 const {
@@ -49,8 +50,8 @@ const navigableChildren = computed(() => {
 
 const route = useRoute();
 const router = useRouter();
-const isExpanded = computed(() => expandedItem.value === props.name);
-const isExpandable = computed(() => props.children);
+const isExpanded = computed(() => props.forceExpanded || expandedItem.value === props.name);
+const isExpandable = computed(() => props.children && !props.forceExpanded);
 const hasChildren = computed(
   () => Array.isArray(props.children) && props.children.length > 0
 );
@@ -109,7 +110,7 @@ const accessibleItems = computed(() => {
     // If a item has no link, it means it's just a subgroup header
     // So we don't need to check for permissions here, because there's nothing to
     // access here anyway
-    return child.to && (isAllowed(child.to) || isLocked(child.to));
+    return (child.to && (isAllowed(child.to) || isLocked(child.to))) || child.action;
   });
 });
 
@@ -298,7 +299,7 @@ watch(hasActiveChild, hasNewActiveChild => {
         :getter-keys="getterKeys"
         :is-active="isActive"
         :has-active-child="hasActiveChild"
-        :expandable="hasChildren"
+        :expandable="isExpandable"
         :is-expanded="isExpanded"
         :is-locked="isLocked(to)"
         :feature-flag="resolveFeatureFlag(to)"
@@ -320,7 +321,7 @@ watch(hasActiveChild, hasNewActiveChild => {
             :active-child="activeChild"
           />
           <SidebarGroupLeaf
-            v-else-if="isAllowed(child.to) || isLocked(child.to)"
+            v-else-if="(child.to && (isAllowed(child.to) || isLocked(child.to))) || child.action"
             v-show="isExpanded || activeChild?.name === child.name"
             v-bind="child"
             :active="activeChild?.name === child.name"

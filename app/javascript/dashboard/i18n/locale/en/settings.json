@@ -536,6 +536,8 @@
     }
   },
   "SIDEBAR": {
+    "ADVANCED_FILTERS": "Advanced Filters",
+    "FILTER_BY_LABELS": "Filter by labels",
     "NO_ITEMS": "No items",
     "CURRENTLY_VIEWING_ACCOUNT": "Currently viewing:",
     "SWITCH": "Switch",

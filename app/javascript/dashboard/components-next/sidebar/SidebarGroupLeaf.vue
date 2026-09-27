@@ -4,7 +4,8 @@ import Icon from 'next/icon/Icon.vue';
 
 const props = defineProps({
   label: { type: String, required: true },
-  to: { type: [String, Object], required: true },
+  to: { type: [String, Object], default: null },
+  action: { type: Function, default: null },
   icon: { type: [String, Object], default: null },
   active: { type: Boolean, default: false },
   component: { type: Function, default: null },
@@ -36,7 +37,7 @@ const renderAsLink = computed(() => Boolean(props.to) && !props.isLocked);
       :class="{
         'text-n-slate-12 bg-n-alpha-2 active': active,
       }"
-      @click="isLocked ? emit('toggleLocked', featureFlag) : undefined"
+      @click="isLocked ? emit('toggleLocked', featureFlag) : (action ? action() : undefined)"
     >
       <component
         :is="component"

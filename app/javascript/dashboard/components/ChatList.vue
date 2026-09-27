@@ -93,6 +93,7 @@ const activeAssigneeTab = ref(wootConstants.ASSIGNEE_TYPE.ALL);
 const activeStatus = ref(wootConstants.STATUS_TYPE.OPEN);
 const activeSortBy = ref(wootConstants.SORT_BY_TYPE.LAST_ACTIVITY_AT_DESC);
 const showAdvancedFilters = ref(false);
+const isFilterCreateMode = ref(false);
 // chatsOnView is to store the chats that are currently visible on the screen,
 // which mirrors the conversationList.
 const chatsOnView = ref([]);
@@ -412,7 +413,44 @@ function fetchSavedFilteredConversations(payload) {
     .then(emitConversationLoaded);
 }
 
-function onApplyFilter(payload) {
+function closeAdvanceFiltersModal() {
+  showAdvancedFilters.value = false;
+  appliedFilter.value = [];
+}
+
+function openLastSavedItemInFolder() {
+  const lastItemOfFolder = folders.value[folders.value.length - 1];
+  const lastItemId = lastItemOfFolder.id;
+  router.push({
+    name: 'folder_conversations',
+    params: { id: lastItemId },
+  });
+}
+
+
+function onApplyFilter(payload, folderName) {
+  if (isFilterCreateMode.value && folderName) {
+    const transformedPayload = useSnakeCase(payload);
+    store
+      .dispatch('customViews/create', {
+        name: folderName,
+        filter_type: 0,
+        query: filterQueryGenerator(transformedPayload),
+      })
+      .then(() => {
+        useAlert(t('FILTER.CUSTOM_VIEWS.ADD.API_FOLDERS.SUCCESS_MESSAGE'));
+        openLastSavedItemInFolder();
+      })
+      .catch(error => {
+        useAlert(
+          error?.message ||
+            t('FILTER.CUSTOM_VIEWS.ADD.API_FOLDERS.ERROR_MESSAGE')
+        );
+      });
+    closeAdvanceFiltersModal();
+    return;
+  }
+
   payload = useSnakeCase(payload);
   resetBulkActions();
   foldersQuery.value = filterQueryGenerator(payload);
@@ -421,10 +459,7 @@ function onApplyFilter(payload) {
   fetchFilteredConversations(payload);
 }
 
-function closeAdvanceFiltersModal() {
-  showAdvancedFilters.value = false;
-  appliedFilter.value = [];
-}
+
 
 function onUpdateSavedFilter(payload, folderName) {
   const transformedPayload = useSnakeCase(payload);
@@ -547,20 +582,26 @@ function initalizeAppliedFiltersToModal() {
   appliedFilter.value = [...appliedFilters.value];
 }
 
-function onToggleAdvanceFiltersModal() {
+function onToggleAdvanceFiltersModal(options = {}) {
   if (showAdvancedFilters.value === true) {
     closeAdvanceFiltersModal();
     return;
   }
 
-  if (!hasAppliedFilters.value && !hasActiveFolders.value) {
-    initializeExistingFilterToModal();
-  }
-  if (hasActiveFolders.value) {
-    initializeFolderToFilterModal(activeFolder.value);
-  }
-  if (hasAppliedFilters.value) {
-    initalizeAppliedFiltersToModal();
+  isFilterCreateMode.value = options.mode === 'create';
+
+  if (!isFilterCreateMode.value) {
+    if (!hasAppliedFilters.value && !hasActiveFolders.value) {
+      initializeExistingFilterToModal();
+    }
+    if (hasActiveFolders.value) {
+      initializeFolderToFilterModal(activeFolder.value);
+    }
+    if (hasAppliedFilters.value) {
+      initalizeAppliedFiltersToModal();
+    }
+  } else {
+    appliedFilter.value = [];
   }
 
   showAdvancedFilters.value = true;
@@ -635,14 +676,6 @@ function onBasicFilterChange(value, type) {
   resetAndFetchData();
 }
 
-function openLastSavedItemInFolder() {
-  const lastItemOfFolder = folders.value[folders.value.length - 1];
-  const lastItemId = lastItemOfFolder.id;
-  router.push({
-    name: 'folder_conversations',
-    params: { id: lastItemId },
-  });
-}
 
 function openLastItemAfterDeleteInFolder() {
   if (folders.value.length > 0) {
@@ -817,6 +850,12 @@ function toggleSelectAll(check) {
 useEmitter('fetch_conversation_stats', () => {
   if (hasAppliedFiltersOrActiveFolders.value) return;
   store.dispatch('conversationStats/get', conversationFilters.value);
+});
+
+useEmitter('open_conversation_filter', options => {
+  if (!showAdvancedFilters.value) {
+    onToggleAdvanceFiltersModal(options);
+  }
 });
 
 onMounted(() => {
@@ -1040,19 +1079,19 @@ watch(conversationFilters, (newVal, oldVal) => {
       @confirm="deleteConversation"
       @close="selectedConversationId = null"
     />
-    <TeleportWithDirection
+    <div
       v-if="showAdvancedFilters"
-      to="#conversationFilterTeleportTarget"
+      class="fixed inset-0 z-[100] flex items-center justify-center bg-n-slate-12/20 backdrop-blur-sm"
     >
       <ConversationFilter
         v-model="appliedFilter"
-        :folder-name="activeFolderName"
-        :is-folder-view="hasActiveFolders"
+        :folder-name="!isFilterCreateMode ? activeFolderName : ''"
+        :is-folder-view="hasActiveFolders && !isFilterCreateMode"
         @apply-filter="onApplyFilter"
         @update-folder="onUpdateSavedFilter"
         @close="closeAdvanceFiltersModal"
       />
-    </TeleportWithDirection>
+    </div>
     <ConversationResolveAttributesModal
       ref="resolveAttributesModalRef"
       @submit="handleResolveWithAttributes"

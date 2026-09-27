@@ -5,6 +5,7 @@ import { useAccount } from 'dashboard/composables/useAccount';
 import Icon from 'next/icon/Icon.vue';
 import ChannelIcon from 'next/icon/ChannelIcon.vue';
 import Dialog from 'dashboard/components-next/dialog/Dialog.vue';
+import { useAdmin } from 'dashboard/composables/useAdmin';
 
 const props = defineProps({
   label: {
@@ -24,6 +25,7 @@ const props = defineProps({
 
 const router = useRouter();
 const { accountScopedRoute } = useAccount();
+const { isAdmin } = useAdmin();
 
 const reauthorizationRequired = computed(() => {
   return props.inbox.reauthorization_required;
@@ -58,6 +60,13 @@ const onReauthConfirm = () => {
     @click.prevent.stop="onReauthIconClick"
   >
     <Icon icon="i-woot-alert" class="size-3 text-n-ruby-9" />
+  </div>
+  <div
+    v-else-if="isAdmin"
+    class="grid place-content-center size-5 rounded-full cursor-pointer hover:bg-n-slate-3 transition-colors opacity-0 group-hover:opacity-100"
+    @click.prevent.stop="navigateToSettings"
+  >
+    <Icon icon="i-lucide-settings" class="size-3 text-n-slate-11" />
   </div>
 
   <Dialog
