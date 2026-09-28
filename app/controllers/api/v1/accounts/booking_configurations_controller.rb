@@ -10,7 +10,7 @@ class Api::V1::Accounts::BookingConfigurationsController < Api::V1::Accounts::Ba
   end
 
   def update
-    @configuration ||= Current.account.build_booking_configuration
+    @configuration ||= Current.account.booking_configurations.build
     @configuration.assign_attributes(configuration_params)
 
     # Generate booking link hash if empty
@@ -27,7 +27,7 @@ class Api::V1::Accounts::BookingConfigurationsController < Api::V1::Accounts::Ba
   private
 
   def fetch_configuration
-    @configuration = Current.account.booking_configuration
+    @configuration = Current.account.booking_configurations.first
   end
 
   def configuration_params
