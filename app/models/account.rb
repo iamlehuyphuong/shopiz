@@ -162,7 +162,7 @@ class Account < ApplicationRecord
 
   has_one :onboarding, class_name: 'AccountOnboarding', dependent: :destroy
   has_many :calendar_integrations, dependent: :destroy_async
-  has_one :booking_configuration, dependent: :destroy
+  has_many :booking_configurations, dependent: :destroy_async
   has_many :bookings, dependent: :destroy_async
   has_many :account_users, dependent: :destroy_async
   has_many :omicall_sip_infos, dependent: :destroy
