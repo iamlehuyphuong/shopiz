@@ -269,12 +269,8 @@ class BillingPresenter
       { key: ['agent_bots'], label: 'AGENT_BOTS' },
       { key: ['reports'], label: 'REPORTS' },
       { key: ['labels'], label: 'LABELS' },
-      { key: %w[channel_whatsapp templates], label: 'CHANNEL_WHATSAPP' },
       { key: ['integrations'], label: 'INTEGRATIONS' },
-      { key: %w[csat_review_notes csat], label: 'CSAT_REVIEW_NOTES' },
-      { key: ['sla'], label: 'SLA' },
       { key: ['campaigns'], label: 'CAMPAIGNS' },
-      { key: ['custom_roles'], label: 'CUSTOM_ROLES' },
       { key: ['custom_attributes'], label: 'CUSTOM_ATTRIBUTES' },
       { key: ['audit_logs'], label: 'AUDIT_LOGS' }
     ]
