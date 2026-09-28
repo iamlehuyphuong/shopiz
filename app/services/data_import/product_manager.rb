@@ -49,6 +49,8 @@ class DataImport
       product.price = first_row[:price] if first_row[:price].present?
       product.currency = first_row[:currency] || 'VND'
       product.status = first_row[:status] || 'draft'
+      product.sku = first_row[:sku] if first_row[:sku].present?
+      product.barcode = first_row[:barcode] if first_row[:barcode].present?
 
       product.images = first_row[:images].split(',').map(&:strip) if first_row[:images].present?
 

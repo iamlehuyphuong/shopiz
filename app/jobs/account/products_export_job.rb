@@ -24,11 +24,15 @@ class Account::ProductsExportJob < ApplicationJob
           product.description,
           product.price,
           product.currency,
+          product.sku,
+          product.barcode,
           product.images&.join(','),
           product.status,
           product.meta&.dig('product_type'),
           product.meta&.dig('category'),
-          product.meta&.dig('brand')
+          product.meta&.dig('brand'),
+          product.meta&.dig('style'),
+          product.meta&.dig('attributes')
         ]
 
         if product.product_variants.any?
@@ -95,7 +99,7 @@ class Account::ProductsExportJob < ApplicationJob
 
   def default_headers
     %w[
-      name description price currency images status product_type category brand
+      name description price currency sku barcode images status product_type category brand style attributes
       variant_name variant_sku variant_barcode variant_price variant_weight
       variant_color variant_size variant_length variant_width variant_height
     ]
