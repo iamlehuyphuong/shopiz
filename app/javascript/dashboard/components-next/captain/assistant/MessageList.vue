@@ -90,7 +90,7 @@ watch(() => props.messages.length, scrollToBottom);
           class="flex flex-col gap-2 min-w-0"
           :class="[isUserMessage(message.sender) ? 'items-end' : 'items-start']"
         >
-          <div v-if="false" class="flex flex-col gap-2 w-full mb-1">
+          <div v-if="message.reasoning" class="flex flex-col gap-2 w-full mb-1">
             <div
               class="bg-n-background outline outline-1 outline-n-weak text-n-slate-11 text-xs rounded-xl font-mono break-words shadow-sm overflow-hidden"
             >

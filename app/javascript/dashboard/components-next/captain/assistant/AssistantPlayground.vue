@@ -67,8 +67,16 @@ const sendMessage = async () => {
       messageHistory: formatMessagesForApi(),
     });
 
+    let content = data.response || data.content || 'Không có phản hồi từ AI';
+    if (content === 'conversation_handoff') {
+      content = 'Chuyển tư vấn viên (Handoff)';
+      if (data.reasoning) {
+        content += `\n\nLý do: ${data.reasoning}`;
+      }
+    }
+
     messages.value.push({
-      content: data.response || data.content || 'Không có phản hồi từ AI',
+      content,
       sender: 'assistant',
       agentName: data.agent_name,
       toolCalls: data.tool_execution_trace || [],
