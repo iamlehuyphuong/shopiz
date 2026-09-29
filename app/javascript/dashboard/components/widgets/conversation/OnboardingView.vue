@@ -27,10 +27,8 @@ const greetingMessage = computed(() => {
 </script>
 
 <template>
-  <div
-    class="min-h-screen lg:max-w-5xl max-w-4xl mx-auto grid grid-cols-2 grid-rows-[auto_1fr_1fr] auto-rows-min gap-4 p-8 w-full overflow-auto"
-  >
-    <div class="col-span-full self-start">
+  <div class="h-full lg:max-w-5xl max-w-4xl mx-auto flex flex-col p-8 w-full overflow-auto">
+    <div class="flex-shrink-0">
       <p class="text-xl font-semibold text-n-slate-12 tracking-[0.3px]">
         {{ greetingMessage }}
       </p>
@@ -42,37 +40,41 @@ const greetingMessage = computed(() => {
         }}
       </p>
     </div>
-    <OnboardingFeatureCard
-      image-src="/dashboard/images/onboarding/omnichannel-inbox.png"
-      image-alt="Omnichannel"
-      to="settings_inbox_new"
-      :title="$t('ONBOARDING.ALL_CONVERSATION.TITLE')"
-      :description="$t('ONBOARDING.ALL_CONVERSATION.DESCRIPTION')"
-      :link-text="$t('ONBOARDING.ALL_CONVERSATION.NEW_LINK')"
-    />
-    <OnboardingFeatureCard
-      image-src="/dashboard/images/onboarding/team.png"
-      image-alt="Teams"
-      to="settings_teams_new"
-      :title="$t('ONBOARDING.TEAM_MEMBERS.TITLE')"
-      :description="$t('ONBOARDING.TEAM_MEMBERS.DESCRIPTION')"
-      :link-text="$t('ONBOARDING.TEAM_MEMBERS.NEW_LINK')"
-    />
-    <OnboardingFeatureCard
-      image-src="/dashboard/images/onboarding/canned-responses.png"
-      image-alt="Canned responses"
-      to="canned_list"
-      :title="$t('ONBOARDING.CANNED_RESPONSES.TITLE')"
-      :description="$t('ONBOARDING.CANNED_RESPONSES.DESCRIPTION')"
-      :link-text="$t('ONBOARDING.CANNED_RESPONSES.NEW_LINK')"
-    />
-    <OnboardingFeatureCard
-      image-src="/dashboard/images/onboarding/labels.png"
-      image-alt="Labels"
-      to="labels_list"
-      :title="$t('ONBOARDING.LABELS.TITLE')"
-      :description="$t('ONBOARDING.LABELS.DESCRIPTION')"
-      :link-text="$t('ONBOARDING.LABELS.NEW_LINK')"
-    />
+    <div class="flex-1 flex items-center justify-center min-h-0">
+      <div class="grid grid-cols-2 auto-rows-max gap-4 w-full pt-8 pb-4">
+        <OnboardingFeatureCard
+          image-src="/dashboard/images/onboarding/omnichannel-inbox.png"
+          image-alt="Omnichannel"
+          to="settings_inbox_new"
+          :title="$t('ONBOARDING.ALL_CONVERSATION.TITLE')"
+          :description="$t('ONBOARDING.ALL_CONVERSATION.DESCRIPTION')"
+          :link-text="$t('ONBOARDING.ALL_CONVERSATION.NEW_LINK')"
+        />
+        <OnboardingFeatureCard
+          image-src="/dashboard/images/onboarding/team.png"
+          image-alt="Teams"
+          to="settings_teams_new"
+          :title="$t('ONBOARDING.TEAM_MEMBERS.TITLE')"
+          :description="$t('ONBOARDING.TEAM_MEMBERS.DESCRIPTION')"
+          :link-text="$t('ONBOARDING.TEAM_MEMBERS.NEW_LINK')"
+        />
+        <OnboardingFeatureCard
+          image-src="/dashboard/images/onboarding/canned-responses.png"
+          image-alt="Canned responses"
+          to="canned_list"
+          :title="$t('ONBOARDING.CANNED_RESPONSES.TITLE')"
+          :description="$t('ONBOARDING.CANNED_RESPONSES.DESCRIPTION')"
+          :link-text="$t('ONBOARDING.CANNED_RESPONSES.NEW_LINK')"
+        />
+        <OnboardingFeatureCard
+          image-src="/dashboard/images/onboarding/labels.png"
+          image-alt="Labels"
+          to="labels_list"
+          :title="$t('ONBOARDING.LABELS.TITLE')"
+          :description="$t('ONBOARDING.LABELS.DESCRIPTION')"
+          :link-text="$t('ONBOARDING.LABELS.NEW_LINK')"
+        />
+      </div>
+    </div>
   </div>
 </template>
