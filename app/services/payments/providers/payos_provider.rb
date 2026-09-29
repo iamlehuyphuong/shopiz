@@ -24,7 +24,7 @@ module Payments
         }
       end
 
-      def verify_webhook(payload, _headers = {})
+      def verify_webhook(payload, _headers = {}, _raw_body = nil)
         client = Payos::Client.new(
           client_id: config['client_id'],
           api_key: config['api_key'],

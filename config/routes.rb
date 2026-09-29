@@ -566,7 +566,7 @@ Rails.application.routes.draw do
       post 'webhooks/payos', to: 'webhooks/payos#process_payload'
       post 'webhooks/sepay', to: 'webhooks/sepay#process_payload'
       post 'webhooks/polar', to: 'webhooks/polar#process_payload'
-      post 'webhooks/sales_payments/:provider/:account_id', to: 'webhooks/payments#create'
+      match 'webhooks/sales_payments/:provider/:account_id', to: 'webhooks/payments#create', via: [:get, :post]
     end
   end
 

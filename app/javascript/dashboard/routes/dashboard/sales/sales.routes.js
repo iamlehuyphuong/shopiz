@@ -121,15 +121,6 @@ export const routes = [
         component: () => import('./settings/tabs/Tool.vue'),
       },
       {
-        path: 'assistant',
-        name: 'sales_settings_assistant',
-        meta: {
-          permissions: ['administrator', 'sales_manage'],
-          featureFlag: FEATURE_FLAGS.SALES,
-        },
-        component: () => import('./settings/tabs/Assistant.vue'),
-      },
-      {
         path: 'payment',
         name: 'sales_settings_payment',
         meta: {
@@ -137,6 +128,15 @@ export const routes = [
           featureFlag: FEATURE_FLAGS.SALES,
         },
         component: () => import('./settings/tabs/Payment.vue'),
+      },
+      {
+        path: 'assistant',
+        name: 'sales_settings_assistant',
+        meta: {
+          permissions: ['administrator', 'sales_manage'],
+          featureFlag: FEATURE_FLAGS.SALES,
+        },
+        component: () => import('./settings/tabs/Assistant.vue'),
       },
     ],
   },

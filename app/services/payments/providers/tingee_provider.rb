@@ -41,14 +41,15 @@ module Payments
         parsed_response.dig('data', 'qrCodeImage')
       end
 
-      def verify_webhook(payload, headers = {})
+      def verify_webhook(payload, headers = {}, raw_body = nil)
         timestamp = headers['x-request-timestamp'] || headers['X-Request-Timestamp']
         provided_signature = headers['x-signature'] || headers['X-Signature']
 
         return false if timestamp.blank? || provided_signature.blank? || config['api_key'].blank?
 
         # Tingee Webhook sends POST request with JSON body.
-        request_body = payload.to_json
+        # Use raw_body (minified JSON string) from request.raw_post if available to ensure accurate signature matching.
+        request_body = raw_body || payload.to_json
         signature_data = "#{timestamp}:#{request_body}"
         expected_signature = OpenSSL::HMAC.hexdigest('SHA512', config['api_key'].to_s, signature_data)
 

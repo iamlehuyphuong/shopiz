@@ -13,7 +13,7 @@ module Payments
       end
 
       # Should return boolean indicating if webhook signature is valid
-      def verify_webhook(payload, headers = {})
+      def verify_webhook(payload, headers = {}, raw_body = nil)
         raise NotImplementedError
       end
 

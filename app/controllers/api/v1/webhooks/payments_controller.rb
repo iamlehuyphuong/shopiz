@@ -12,13 +12,21 @@ module Api
           provider_class = Payments::ProviderRegistry.provider_for(provider_name)
           return head :not_found unless provider_class
 
+          if request.get?
+            if provider_name == 'tingee'
+              return render json: { code: '00', message: 'Success' }, status: :ok
+            else
+              return render json: { success: true }, status: :ok
+            end
+          end
+
           config = account.sales_payment_config&.dig(provider_name) || {}
           provider = provider_class.new(config)
 
           begin
             payload_data = request.request_parameters
 
-            unless provider.verify_webhook(payload_data, request.headers)
+            unless provider.verify_webhook(payload_data, request.headers, request.raw_post)
               Rails.logger.warn("Payments Webhook invalid signature for #{provider_name} - account #{account.id}")
               return render json: { error: 'Invalid signature' }, status: :unauthorized
             end
@@ -34,7 +42,11 @@ module Api
               ).perform
             end
 
-            render json: { success: true }, status: :ok
+            if provider_name == 'tingee'
+              render json: { code: '00', message: 'Success' }, status: :ok
+            else
+              render json: { success: true }, status: :ok
+            end
           rescue StandardError => e
             Rails.logger.error("Payments Webhook failed: #{e.message}")
             render json: { error: e.message }, status: :unprocessable_entity

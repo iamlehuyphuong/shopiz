@@ -14,7 +14,7 @@ module Payments
         )
       end
 
-      def verify_webhook(_payload, headers = {})
+      def verify_webhook(_payload, headers = {}, _raw_body = nil)
         provided_key = headers['Authorization'].to_s.gsub(/Bearer\s+|Apikey\s+/i, '').strip
         provided_key = headers['X-Secret-Key'].to_s.strip if provided_key.blank?
         return false if provided_key.blank?
