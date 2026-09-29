@@ -35,7 +35,7 @@
                     
                     <tr>
                         <td class="header-box" style="background: linear-gradient(180deg, #FFF7ED 0%, #FFFFFF 100%); padding: 30px 20px; text-align: center;">
-                            <img src="https://shopiz.pro/Logo.png" width="80" alt="Shopiz" style="display: block; margin: 0 auto;" />
+                            <img src="{% if frontend_url %}{{ frontend_url }}{% else %}https://shopiz.pro{% endif %}/brand-assets/logo_thumbnail.svg" width="80" alt="Shopiz" style="display: block; margin: 0 auto;" />
                             
                             <div style="margin-top: 8px; color: #F97316; font-size: 12px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;">
                                 {% if global_config['BRAND_NAME'] != blank %}{{ global_config['BRAND_NAME'] }}{% else %}Shopiz{% endif %}
