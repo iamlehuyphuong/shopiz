@@ -138,15 +138,6 @@ export const routes = [
         },
         component: () => import('./settings/tabs/Payment.vue'),
       },
-      {
-        path: 'invoice',
-        name: 'sales_settings_invoice',
-        meta: {
-          permissions: ['administrator', 'sales_manage'],
-          featureFlag: FEATURE_FLAGS.SALES,
-        },
-        component: () => import('./settings/tabs/Invoice.vue'),
-      },
     ],
   },
   {

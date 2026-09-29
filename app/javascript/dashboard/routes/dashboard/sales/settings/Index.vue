@@ -14,19 +14,14 @@ const mainTabs = [
     routeName: 'sales_settings_tool',
   },
   {
-    key: 'assistant',
-    label: t('SALES.SETTINGS.TABS.ASSISTANT'),
-    routeName: 'sales_settings_assistant',
-  },
-  {
     key: 'payment',
     label: t('SALES.SETTINGS.TABS.PAYMENT'),
     routeName: 'sales_settings_payment',
   },
   {
-    key: 'invoice',
-    label: t('SALES.SETTINGS.TABS.INVOICE'),
-    routeName: 'sales_settings_invoice',
+    key: 'assistant',
+    label: t('SALES.SETTINGS.TABS.ASSISTANT'),
+    routeName: 'sales_settings_assistant',
   },
 ];
 

@@ -696,8 +696,7 @@
       "TABS": {
         "TOOL": "Phần mềm bán hàng",
         "ASSISTANT": "Trợ lý AI",
-        "PAYMENT": "Cổng thanh toán",
-        "INVOICE": "Hoá đơn điện tử"
+        "PAYMENT": "Cổng thanh toán"
       },
       "HEADER": {
         "TITLE": "Cài đặt bán hàng",
@@ -755,12 +754,6 @@
         "DEFAULT_PLATFORM": "Phần mềm bán hàng mặc định:",
         "LIST_TITLE": "Danh sách ứng dụng",
         "SHOPIZ": "Shopiz"
-      },
-      "INVOICE": {
-        "HEADER_TITLE": "Tích hợp hoá đơn điện tử",
-        "HEADER_DESC": "Kết nối với các phần mềm hoá đơn điện tử để tự động xuất và gửi hoá đơn cho khách hàng.",
-        "DEFAULT_PLATFORM": "Phần mềm hoá đơn mặc định:",
-        "LIST_TITLE": "Danh sách phần mềm hoá đơn"
       }
     }
   }

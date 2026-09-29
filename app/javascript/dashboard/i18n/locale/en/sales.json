@@ -699,8 +699,7 @@
       "TABS": {
         "TOOL": "Sales software",
         "ASSISTANT": "AI Assistant",
-        "PAYMENT": "Payment gateways",
-        "INVOICE": "E-invoice"
+        "PAYMENT": "Payment gateways"
       },
       "HEADER": {
         "TITLE": "Sales settings"
@@ -762,12 +761,6 @@
         "DEFAULT_PLATFORM": "Default sales software:",
         "LIST_TITLE": "Apps list",
         "SHOPIZ": "Shopiz"
-      },
-      "INVOICE": {
-        "HEADER_TITLE": "E-invoice integration",
-        "HEADER_DESC": "Connect with e-invoice software to automatically issue and send invoices to customers.",
-        "DEFAULT_PLATFORM": "Default e-invoice software:",
-        "LIST_TITLE": "E-invoice software list"
       }
     }
   }
