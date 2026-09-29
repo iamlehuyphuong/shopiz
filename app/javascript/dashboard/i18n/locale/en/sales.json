@@ -746,6 +746,8 @@
           "PLACEHOLDER_SECRET_KEY": "Enter secret key",
           "PLACEHOLDER_CLIENT_ID": "Enter client ID",
           "PLACEHOLDER_API_KEY": "Enter API key",
+          "TINGEE_SECRET_TOKEN": "Secret Token",
+          "PLACEHOLDER_TINGEE_SECRET_TOKEN": "Enter secret token",
           "PLACEHOLDER_CHECKSUM_KEY": "Enter checksum key",
           "PLACEHOLDER_BANK_BIN": "Enter Bank BIN",
           "PLACEHOLDER_ACCOUNT_NUMBER": "Enter Account Number"
@@ -753,7 +755,8 @@
         "HEADER_TITLE": "Payment gateways integration",
         "HEADER_DESC": "Connect your bank account or online payment gateways to automatically confirm payments for orders.",
         "WEBHOOK_URL": "Webhook URL",
-        "WEBHOOK_COPIED": "Webhook URL copied"
+        "WEBHOOK_COPIED": "Webhook URL copied",
+        "TINGEE_WEBHOOK_HELPER": "On the Tingee Portal, please select API Credentials as the authentication method when configuring the Webhook."
       },
       "TOOL": {
         "HEADER_TITLE": "Sales software integration",

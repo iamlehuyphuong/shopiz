@@ -3,7 +3,7 @@ module Payments
     class TingeeProvider < BaseProvider
       def create_checkout(amount:, order_id:, description:, return_url:, cancel_url: nil)
         # For Static QR, we generate the QR code on the fly when the user visits the checkout link.
-        { checkout_url: '', form_params: nil }
+        { checkout_url: "#{return_url}/api/v1/payments/tingee_checkout/#{order_id}", form_params: nil }
       end
 
       def generate_static_qr(bank_bin:, account_number:, amount:, content:)

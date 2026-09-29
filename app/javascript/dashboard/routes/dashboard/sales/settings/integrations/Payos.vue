@@ -23,6 +23,7 @@ const showDeletePopup = ref(false);
 const clientId = ref('');
 const apiKey = ref('');
 const checksumKey = ref('');
+const isActive = ref(false);
 
 const webhookUrl = computed(() => {
   return `${window.shopizConfig.hostURL}/api/v1/webhooks/sales_payments/payos/${currentAccount.value.id}`;
@@ -37,13 +38,12 @@ const copyWebhook = () => {
 
 // Dummy integration object to match the props expected by Integration.vue
 const integration = computed(() => {
-  const active = !!(apiKey.value && checksumKey.value && clientId.value);
   return {
     id: 'payos',
     logo: '/dashboard/images/integrations/payos.png', // Assuming we have this logo or similar
     name: 'PayOS',
     description: t('SALES.SETTINGS.PAYMENT.PAYOS_DESC'),
-    enabled: active,
+    enabled: isActive.value,
   };
 });
 
@@ -66,6 +66,7 @@ const handleDisconnect = async () => {
     clientId.value = '';
     apiKey.value = '';
     checksumKey.value = '';
+    isActive.value = false;
   } catch (error) {
     useAlert(error.message || t('SALES.SETTINGS.PAYMENT.DISCONNECT_ERROR'));
   }
@@ -88,11 +89,13 @@ const handleConnect = async () => {
     const existingConfig =
       currentAccount.value?.settings?.sales_payment_config || {};
 
+    const isFormValid = !!(apiKey.value && checksumKey.value && clientId.value);
+
     const payload = {
       sales_payment_config: {
         ...existingConfig,
         payos: {
-          active: !!(apiKey.value && checksumKey.value && clientId.value),
+          active: isFormValid,
           client_id: clientId.value,
           api_key: apiKey.value,
           checksum_key: checksumKey.value,
@@ -101,6 +104,7 @@ const handleConnect = async () => {
     };
 
     await store.dispatch('accounts/update', payload);
+    isActive.value = isFormValid;
     useAlert(t('GENERAL_SETTINGS.UPDATE.SUCCESS') || 'Updated successfully');
     dialogRef.value?.close();
     hideConnectModal();
@@ -122,7 +126,8 @@ const loadConfig = () => {
 
   clientId.value = payosConfig.client_id || '';
   apiKey.value = payosConfig.api_key || '';
-  checksumKey.value = checksumKey.value || payosConfig.checksum_key || ''; // Keep secret key if already entered? No, load it
+  checksumKey.value = payosConfig.checksum_key || '';
+  isActive.value = !!payosConfig.active;
 };
 
 onMounted(() => {
@@ -140,7 +145,7 @@ onMounted(() => {
         description=""
         feature-name="sales_payment_payos"
         :back-button-label="t('SALES.SETTINGS.PAYMENT.BACK_BUTTON')"
-        back-button-link="/app/accounts/1/sales/settings"
+        :back-button-link="`/app/accounts/${currentAccount.id}/sales/settings`"
       />
     </template>
     <template #body>

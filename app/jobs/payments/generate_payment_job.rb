@@ -34,7 +34,7 @@ class Payments::GeneratePaymentJob < ApplicationJob
     ) + "\n#{checkout_link}"
 
     attachments = []
-    
+
     qr_blob = generate_qr_blob(order)
     attachments << qr_blob if qr_blob
 
@@ -66,9 +66,10 @@ class Payments::GeneratePaymentJob < ApplicationJob
       content: order.payment_transaction_id
     )
 
-    if base64_data.start_with?('data:image')
-      base64_data = base64_data.split(',').last
-    end
+    base64_data = base64_data.split(',').last if base64_data.start_with?('data:image')
+
+    # Cache it to order to avoid duplicate Tingee API calls
+    order.update_column(:payment_qr_data, base64_data)
 
     ActiveStorage::Blob.create_and_upload!(
       io: StringIO.new(Base64.decode64(base64_data)),

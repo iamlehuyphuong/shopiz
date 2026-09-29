@@ -24,6 +24,7 @@ const clientId = ref('');
 const apiKey = ref('');
 const bankBin = ref('');
 const accountNumber = ref('');
+const isActive = ref(false);
 
 // Dummy integration object to match the props expected by Integration.vue
 const webhookUrl = computed(() => {
@@ -38,13 +39,12 @@ const copyWebhook = () => {
 };
 
 const integration = computed(() => {
-  const active = !!(apiKey.value && clientId.value && bankBin.value && accountNumber.value);
   return {
     id: 'tingee',
     logo: '/dashboard/images/integrations/tingee.png', // Assuming we have this logo or similar
     name: 'Tingee',
     description: t('SALES.SETTINGS.PAYMENT.TINGEE_DESC'),
-    enabled: active,
+    enabled: isActive.value,
   };
 });
 
@@ -65,6 +65,7 @@ const handleDisconnect = async () => {
     useAlert(t('SALES.SETTINGS.PAYMENT.DISCONNECT_SUCCESS'));
     showDeletePopup.value = false;
     clientId.value = '';
+    isActive.value = false;
   } catch (error) {
     useAlert(error.message || t('SALES.SETTINGS.PAYMENT.DISCONNECT_ERROR'));
   }
@@ -87,11 +88,18 @@ const handleConnect = async () => {
     const existingConfig =
       currentAccount.value?.settings?.sales_payment_config || {};
 
+    const isFormValid = !!(
+      apiKey.value &&
+      clientId.value &&
+      bankBin.value &&
+      accountNumber.value
+    );
+
     const payload = {
       sales_payment_config: {
         ...existingConfig,
         tingee: {
-          active: !!(apiKey.value && clientId.value && bankBin.value && accountNumber.value),
+          active: isFormValid,
           client_id: clientId.value,
           api_key: apiKey.value,
           bank_bin: bankBin.value,
@@ -101,6 +109,7 @@ const handleConnect = async () => {
     };
 
     await store.dispatch('accounts/update', payload);
+    isActive.value = isFormValid;
     useAlert(t('GENERAL_SETTINGS.UPDATE.SUCCESS') || 'Updated successfully');
     dialogRef.value?.close();
     hideConnectModal();
@@ -124,6 +133,7 @@ const loadConfig = () => {
   apiKey.value = tingeeConfig.api_key || '';
   bankBin.value = tingeeConfig.bank_bin || '';
   accountNumber.value = tingeeConfig.account_number || '';
+  isActive.value = !!tingeeConfig.active;
 };
 
 onMounted(() => {
@@ -141,7 +151,7 @@ onMounted(() => {
         description=""
         feature-name="sales_payment_tingee"
         :back-button-label="t('SALES.SETTINGS.PAYMENT.BACK_BUTTON')"
-        back-button-link="/app/accounts/1/sales/settings"
+        :back-button-link="`/app/accounts/${currentAccount.id}/sales/settings`"
       />
     </template>
     <template #body>
@@ -233,6 +243,9 @@ onMounted(() => {
                   <i class="i-lucide-copy text-sm text-n-slate-11" />
                 </button>
               </div>
+              <p class="text-xs text-n-slate-10 mt-1">
+                {{ t('SALES.SETTINGS.PAYMENT.TINGEE_WEBHOOK_HELPER') }}
+              </p>
             </div>
             <Input
               v-model="clientId"
@@ -243,9 +256,9 @@ onMounted(() => {
             />
             <Input
               v-model="apiKey"
-              :label="t('SALES.SETTINGS.PAYMENT.FORM.API_KEY')"
+              :label="t('SALES.SETTINGS.PAYMENT.FORM.TINGEE_SECRET_TOKEN')"
               :placeholder="
-                t('SALES.SETTINGS.PAYMENT.FORM.PLACEHOLDER_API_KEY')
+                t('SALES.SETTINGS.PAYMENT.FORM.PLACEHOLDER_TINGEE_SECRET_TOKEN')
               "
             />
             <Input

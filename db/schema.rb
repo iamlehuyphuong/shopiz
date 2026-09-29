@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_09_26_163427) do
+ActiveRecord::Schema[7.1].define(version: 2026_09_29_042359) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -745,6 +745,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_26_163427) do
     t.string "payment_provider"
     t.string "payment_transaction_id"
     t.string "payment_qr_url"
+    t.text "payment_qr_data"
     t.index ["account_id", "contact_id"], name: "index_conversation_orders_on_account_id_and_contact_id"
     t.index ["account_id", "conversation_id"], name: "index_conversation_orders_on_account_id_and_conversation_id"
     t.index ["account_id", "created_at"], name: "index_conversation_orders_on_account_id_and_created_at"

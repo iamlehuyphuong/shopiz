@@ -729,6 +729,8 @@
           "PLACEHOLDER_CLIENT_ID": "Nhập mã đối tác",
           "API_KEY": "API Key",
           "PLACEHOLDER_API_KEY": "Nhập API Key",
+          "TINGEE_SECRET_TOKEN": "Mã bí mật (Secret Token)",
+          "PLACEHOLDER_TINGEE_SECRET_TOKEN": "Nhập mã bí mật",
           "CHECKSUM_KEY": "Checksum Key",
           "PLACEHOLDER_CHECKSUM_KEY": "Nhập Checksum Key",
           "BANK_BIN": "Mã ngân hàng (Bank BIN)",
@@ -746,7 +748,8 @@
         "PAYOS_DESC": "Miễn phí khởi tạo, miễn phí duy trì, miễn phí giao dịch không giới hạn. Hỗ trợ cá nhân và doanh nghiệp, tích hợp đơn giản trong 05 phút, tiền về trực tiếp tài khoản ngân hàng.",
         "TINGEE_DESC": "Tạo link thanh toán qua Tingee để khách hàng dễ dàng thanh toán. Hệ thống tự động phát hiện biến động số dư và ghi nhận đơn hàng.",
         "WEBHOOK_URL": "Webhook URL",
-        "WEBHOOK_COPIED": "Đã sao chép Webhook URL"
+        "WEBHOOK_COPIED": "Đã sao chép Webhook URL",
+        "TINGEE_WEBHOOK_HELPER": "Trên Tingee Portal, vui lòng chọn kiểu chứng thực API Credentials khi cấu hình Webhook."
       },
       "TOOL": {
         "HEADER_TITLE": "Tích hợp phần mềm bán hàng",

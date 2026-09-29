@@ -15,18 +15,27 @@ class Api::V1::Payments::TingeeCheckoutController < ApplicationController
       return
     end
 
-    provider = Payments::Providers::TingeeProvider.new(config)
-
     amount = @order.total_amount.to_i
     content = @order.payment_transaction_id
 
     begin
-      @qr_base64 = provider.generate_static_qr(
-        bank_bin: bank_bin,
-        account_number: account_number,
-        amount: amount,
-        content: content
-      )
+      if @order.payment_qr_data.present?
+        @qr_base64 = "data:image/png;base64,#{@order.payment_qr_data}"
+      else
+        provider = Payments::Providers::TingeeProvider.new(config)
+        @qr_base64 = provider.generate_static_qr(
+          bank_bin: bank_bin,
+          account_number: account_number,
+          amount: amount,
+          content: content
+        )
+
+        # Cache it if missing
+        if @qr_base64.present?
+          base64_data = @qr_base64.start_with?('data:image') ? @qr_base64.split(',').last : @qr_base64
+          @order.update_column(:payment_qr_data, base64_data)
+        end
+      end
       render layout: false
     rescue StandardError => e
       render plain: "Lỗi tạo mã QR: #{e.message}", status: :internal_server_error

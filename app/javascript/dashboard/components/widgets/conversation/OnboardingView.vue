@@ -27,7 +27,9 @@ const greetingMessage = computed(() => {
 </script>
 
 <template>
-  <div class="h-full lg:max-w-5xl max-w-4xl mx-auto flex flex-col p-8 w-full overflow-auto">
+  <div
+    class="h-full lg:max-w-5xl max-w-4xl mx-auto flex flex-col p-8 w-full overflow-auto"
+  >
     <div class="flex-shrink-0">
       <p class="text-xl font-semibold text-n-slate-12 tracking-[0.3px]">
         {{ greetingMessage }}

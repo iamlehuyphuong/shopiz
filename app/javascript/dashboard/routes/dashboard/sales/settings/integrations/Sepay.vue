@@ -23,6 +23,7 @@ const showDeletePopup = ref(false);
 const companyName = ref('');
 const companyCode = ref('');
 const secretKey = ref('');
+const isActive = ref(false);
 
 const webhookUrl = computed(() => {
   return `${window.shopizConfig.hostURL}/api/v1/webhooks/sales_payments/sepay/${currentAccount.value.id}`;
@@ -37,13 +38,12 @@ const copyWebhook = () => {
 
 // Dummy integration object to match the props expected by Integration.vue
 const integration = computed(() => {
-  const active = !!(companyCode.value && secretKey.value && companyName.value);
   return {
     id: 'sepay',
     logo: '/dashboard/images/integrations/sepay.png', // Assuming we have this logo or similar
     name: 'SePay',
     description: t('SALES.SETTINGS.PAYMENT.SEPAY_DESC'),
-    enabled: active,
+    enabled: isActive.value,
   };
 });
 
@@ -66,6 +66,7 @@ const handleDisconnect = async () => {
     companyCode.value = '';
     secretKey.value = '';
     companyName.value = '';
+    isActive.value = false;
   } catch (error) {
     useAlert(error.message || t('SALES.SETTINGS.PAYMENT.DISCONNECT_ERROR'));
   }
@@ -88,11 +89,17 @@ const handleConnect = async () => {
     const existingConfig =
       currentAccount.value?.settings?.sales_payment_config || {};
 
+    const isFormValid = !!(
+      companyCode.value &&
+      secretKey.value &&
+      companyName.value
+    );
+
     const payload = {
       sales_payment_config: {
         ...existingConfig,
         sepay: {
-          active: !!(companyCode.value && secretKey.value && companyName.value),
+          active: isFormValid,
           company_name: companyName.value,
           company_code: companyCode.value,
           secret_key: secretKey.value,
@@ -101,6 +108,7 @@ const handleConnect = async () => {
     };
 
     await store.dispatch('accounts/update', payload);
+    isActive.value = isFormValid;
     useAlert(t('GENERAL_SETTINGS.UPDATE.SUCCESS') || 'Updated successfully');
     dialogRef.value?.close();
     hideConnectModal();
@@ -122,7 +130,8 @@ const loadConfig = () => {
 
   companyName.value = sepayConfig.company_name || '';
   companyCode.value = sepayConfig.company_code || '';
-  secretKey.value = secretKey.value || sepayConfig.secret_key || ''; // Keep secret key if already entered? No, load it
+  secretKey.value = sepayConfig.secret_key || '';
+  isActive.value = !!sepayConfig.active;
 };
 
 onMounted(() => {
@@ -140,7 +149,7 @@ onMounted(() => {
         description=""
         feature-name="sales_payment_sepay"
         :back-button-label="t('SALES.SETTINGS.PAYMENT.BACK_BUTTON')"
-        back-button-link="/app/accounts/1/sales/settings"
+        :back-button-link="`/app/accounts/${currentAccount.id}/sales/settings`"
       />
     </template>
     <template #body>
@@ -237,14 +246,14 @@ onMounted(() => {
               v-model="companyName"
               :label="t('SALES.SETTINGS.PAYMENT.FORM.COMPANY_NAME')"
               :placeholder="
-                t('SALES.SETTINGS.PAYMENT.FORM.PLACEHOLDER_CLIENT_ID')
+                t('SALES.SETTINGS.PAYMENT.FORM.PLACEHOLDER_COMPANY_NAME')
               "
             />
             <Input
               v-model="companyCode"
               :label="t('SALES.SETTINGS.PAYMENT.FORM.COMPANY_CODE')"
               :placeholder="
-                t('SALES.SETTINGS.PAYMENT.FORM.PLACEHOLDER_API_KEY')
+                t('SALES.SETTINGS.PAYMENT.FORM.PLACEHOLDER_COMPANY_CODE')
               "
             />
             <Input

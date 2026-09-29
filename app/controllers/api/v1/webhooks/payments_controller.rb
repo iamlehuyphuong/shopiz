@@ -13,11 +13,10 @@ module Api
           return head :not_found unless provider_class
 
           if request.get?
-            if provider_name == 'tingee'
-              return render json: { code: '00', message: 'Success' }, status: :ok
-            else
-              return render json: { success: true }, status: :ok
-            end
+            return render json: { code: '00', message: 'Success' }, status: :ok if provider_name == 'tingee'
+
+            return render json: { success: true }, status: :ok
+
           end
 
           config = account.sales_payment_config&.dig(provider_name) || {}
@@ -34,6 +33,20 @@ module Api
             payload = provider.extract_webhook_data(payload_data)
 
             order = account.conversation_orders.find_by(payment_transaction_id: payload[:transaction_id])
+
+            if order.blank? && payload[:amount].to_i > 0
+              # Fallback fuzzy matching for cases where content is missing or modified
+              order = account.conversation_orders
+                             .where(payment_method: provider_name, payment_status: 'unpaid')
+                             .where(total_amount: payload[:amount].to_i)
+                             .where('created_at >= ?', 3.hours.ago)
+                             .order(created_at: :desc)
+                             .first
+
+              if order
+                Rails.logger.warn("Payments Webhook: Fuzzy matched order #{order.id} for amount #{payload[:amount]} (content: #{payload[:transaction_id]})")
+              end
+            end
 
             if order
               Payments::HandlePaymentEventService.new(
