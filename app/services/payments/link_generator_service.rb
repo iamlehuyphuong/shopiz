@@ -36,8 +36,11 @@ class Payments::LinkGeneratorService
       return_url: return_url
     )
 
-    checkout_link = if @provider_name == 'sepay'
+    checkout_link = case @provider_name
+                    when 'sepay'
                       "#{return_url}/api/v1/payments/sepay_checkout/#{transaction_id}"
+                    when 'tingee'
+                      "#{return_url}/api/v1/payments/tingee_checkout/#{transaction_id}"
                     else
                       result[:checkout_url]
                     end

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Thanh toán đơn hàng</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #f8fafc;
+      color: #334155;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 20px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+    }
+    .amount {
+      font-size: 24px;
+      font-weight: bold;
+      color: #1e293b;
+      margin: 10px 0;
+    }
+    .instruction {
+      font-size: 14px;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Thanh toán đơn hàng</h2>
+    <div class="amount"><%= number_to_currency(@order.total_amount, precision: 0, unit: 'đ', format: '%n %u') %></div>
+    <div class="instruction">Quét mã QR bằng ứng dụng ngân hàng để thanh toán</div>
+    <img src="<%= @qr_base64 %>" alt="QR Code">
+    <div style="margin-top: 15px; font-size: 14px;">
+      <strong>Nội dung:</strong> <%= @order.payment_transaction_id %>
+    </div>
+  </div>
+</body>
+</html>

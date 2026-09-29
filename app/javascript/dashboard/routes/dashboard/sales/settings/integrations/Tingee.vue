@@ -22,7 +22,8 @@ const showDeletePopup = ref(false);
 
 const clientId = ref('');
 const apiKey = ref('');
-const checksumKey = ref('');
+const bankBin = ref('');
+const accountNumber = ref('');
 
 // Dummy integration object to match the props expected by Integration.vue
 const webhookUrl = computed(() => {
@@ -37,7 +38,7 @@ const copyWebhook = () => {
 };
 
 const integration = computed(() => {
-  const active = !!(apiKey.value && checksumKey.value && clientId.value);
+  const active = !!(apiKey.value && clientId.value && bankBin.value && accountNumber.value);
   return {
     id: 'tingee',
     logo: '/dashboard/images/integrations/tingee.png', // Assuming we have this logo or similar
@@ -90,10 +91,11 @@ const handleConnect = async () => {
       sales_payment_config: {
         ...existingConfig,
         tingee: {
-          active: !!(apiKey.value && checksumKey.value && clientId.value),
+          active: !!(apiKey.value && clientId.value && bankBin.value && accountNumber.value),
           client_id: clientId.value,
           api_key: apiKey.value,
-          checksum_key: checksumKey.value,
+          bank_bin: bankBin.value,
+          account_number: accountNumber.value,
         },
       },
     };
@@ -120,7 +122,8 @@ const loadConfig = () => {
 
   clientId.value = tingeeConfig.client_id || '';
   apiKey.value = tingeeConfig.api_key || '';
-  checksumKey.value = checksumKey.value || tingeeConfig.checksum_key || ''; // Keep secret key if already entered? No, load it
+  bankBin.value = tingeeConfig.bank_bin || '';
+  accountNumber.value = tingeeConfig.account_number || '';
 };
 
 onMounted(() => {
@@ -246,11 +249,17 @@ onMounted(() => {
               "
             />
             <Input
-              v-model="checksumKey"
-              type="password"
-              :label="t('SALES.SETTINGS.PAYMENT.FORM.CHECKSUM_KEY')"
+              v-model="bankBin"
+              :label="t('SALES.SETTINGS.PAYMENT.FORM.BANK_BIN')"
               :placeholder="
-                t('SALES.SETTINGS.PAYMENT.FORM.PLACEHOLDER_CHECKSUM_KEY')
+                t('SALES.SETTINGS.PAYMENT.FORM.PLACEHOLDER_BANK_BIN')
+              "
+            />
+            <Input
+              v-model="accountNumber"
+              :label="t('SALES.SETTINGS.PAYMENT.FORM.ACCOUNT_NUMBER')"
+              :placeholder="
+                t('SALES.SETTINGS.PAYMENT.FORM.PLACEHOLDER_ACCOUNT_NUMBER')
               "
             />
           </div>

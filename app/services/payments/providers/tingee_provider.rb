@@ -2,24 +2,25 @@ module Payments
   module Providers
     class TingeeProvider < BaseProvider
       def create_checkout(amount:, order_id:, description:, return_url:, cancel_url: nil)
+        # For Static QR, we generate the QR code on the fly when the user visits the checkout link.
+        { checkout_url: '', form_params: nil }
+      end
+
+      def generate_static_qr(bank_bin:, account_number:, amount:, content:)
         payload = {
-          requestId: SecureRandom.uuid,
-          orderId: order_id.to_s,
+          bankBin: bank_bin.to_s,
+          accountNumber: account_number.to_s,
           amount: amount.to_i,
-          description: description,
-          returnUrl: return_url
+          content: content.to_s
         }
 
         # Add merchantId if configured (for master merchant)
         payload[:merchantId] = config['merchant_id'].to_i if config['merchant_id'].present?
 
-        # Minified JSON string
         request_body = payload.to_json
-
-        # Tingee requires UTC+7 for timestamp. %L is milliseconds.
         timestamp = Time.now.in_time_zone('Asia/Ho_Chi_Minh').strftime('%Y%m%d%H%M%S%L')
         signature_data = "#{timestamp}:#{request_body}"
-        signature = OpenSSL::HMAC.hexdigest('SHA512', config['checksum_key'].to_s, signature_data)
+        signature = OpenSSL::HMAC.hexdigest('SHA512', config['api_key'].to_s, signature_data)
 
         headers = {
           'Content-Type' => 'application/json',
@@ -28,7 +29,7 @@ module Payments
           'x-signature' => signature
         }
 
-        url = 'https://open-api.tingee.vn/v1/payment-gateway/create-link'
+        url = 'https://open-api.tingee.vn/v1/generate-viet-qr'
         response = HTTParty.post(url, headers: headers, body: request_body)
 
         parsed_response = response.parsed_response
@@ -37,39 +38,42 @@ module Payments
           raise StandardError, "Tingee API Error: #{error_message}"
         end
 
-        {
-          checkout_url: parsed_response['data'],
-          form_params: nil
-        }
+        parsed_response.dig('data', 'qrCodeImage')
       end
 
       def verify_webhook(payload, headers = {})
         timestamp = headers['x-request-timestamp'] || headers['X-Request-Timestamp']
         provided_signature = headers['x-signature'] || headers['X-Signature']
 
-        return false if timestamp.blank? || provided_signature.blank? || config['checksum_key'].blank?
+        return false if timestamp.blank? || provided_signature.blank? || config['api_key'].blank?
 
         # Tingee Webhook sends POST request with JSON body.
-        # Re-stringify the payload to match the raw body.
         request_body = payload.to_json
         signature_data = "#{timestamp}:#{request_body}"
-        expected_signature = OpenSSL::HMAC.hexdigest('SHA512', config['checksum_key'].to_s, signature_data)
+        expected_signature = OpenSSL::HMAC.hexdigest('SHA512', config['api_key'].to_s, signature_data)
 
         ActiveSupport::SecurityUtils.secure_compare(provided_signature, expected_signature)
       end
 
       def extract_webhook_data(payload)
-        transaction_id = payload['orderId'] || payload['transactionId'] || payload['id']
-        amount = payload['amount'] || payload['transferAmount']
+        # Tingee Webhook IPN payload:
+        # {
+        #   "transactionCode": "12345",
+        #   "amount": 100000,
+        #   "content": "transaction_id_123",
+        #   "type": "credit" or "debit"
+        # }
+        transaction_id = payload['content'].to_s.strip
+        amount = payload['amount'].to_i
 
-        # Tingee status could be true/false, 'SUCCESS', '00', etc. Let's be flexible.
-        status = payload['status'] == 'success' || payload['status'] == 'SUCCESS' || payload['code'] == '00' ? 'success' : 'failed'
+        # Only process 'credit' as success. If it's a refund ('debit') or something else, mark as failed.
+        status = payload['type'] == 'credit' ? 'success' : 'failed'
 
         {
-          transaction_id: transaction_id.to_s,
-          amount: amount.to_i,
+          transaction_id: transaction_id,
+          amount: amount,
           status: status,
-          gateway_transaction_id: payload['transactionId'].to_s,
+          gateway_transaction_id: payload['transactionCode'].to_s,
           raw_data: payload
         }
       end

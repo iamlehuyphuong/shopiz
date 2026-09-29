@@ -445,6 +445,7 @@ Rails.application.routes.draw do
 
       namespace :payments do
         get 'sepay_checkout/:id', to: 'sepay_checkout#show', as: :sepay_checkout
+        get 'tingee_checkout/:id', to: 'tingee_checkout#show', as: :tingee_checkout
       end
 
       namespace :integrations do
