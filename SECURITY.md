@@ -1,56 +1,49 @@
-Chatwoot is looking forward to working with security researchers worldwide to keep Chatwoot and our users safe. If you have found an issue in our systems/applications, please reach out to us.
+# Security Policy
 
-## Reporting a Vulnerability
+Thank you for helping keep Shopiz and its users safe.
 
-We use Github to track the security issues that affect our project. If you believe you have found a vulnerability, please disclose it via this [form](https://github.com/chatwoot/chatwoot/security/advisories/new). This will enable us to review the vulnerability, fix it promptly, and reward you for your efforts.
+## Reporting a vulnerability
 
-If you have any questions about the process, contact security@shopiz.pro. 
+Please report vulnerabilities privately through [GitHub Security Advisories](https://github.com/iamlehuyphuong/shopiz/security/advisories/new). Do not open public issues or post details on social media before a fix is released.
 
-Please try your best to describe a clear and realistic impact for your report, and please don't open any public issues on GitHub or social media; we're doing our best to respond through Github as quickly as possible.
+A good report includes:
 
-> Note: Please use the email for questions related to the process. Disclosures should be done via [Github](https://github.com/chatwoot/chatwoot/security/advisories/new)
+- The affected feature, endpoint or file.
+- Steps to reproduce, ideally against a fresh self-hosted instance.
+- A clear, realistic description of the impact.
+
+Shopiz is maintained by volunteers. We will acknowledge your report as soon as we can, keep you updated on the fix, and credit you in the advisory if you wish. We do not run a paid bug bounty.
+
+If the issue also affects upstream Chatwoot (code we have not modified), please report it to Chatwoot as well through their [security advisory form](https://github.com/chatwoot/chatwoot/security/advisories/new).
+
 ## Supported versions
 
-| Version | Supported        |
-| ------- | --------------   |
-| latest   | ️✅               |
-| <latest   | ❌               |
+Only the latest commit on the `main` branch receives security fixes.
 
+## In scope
 
-## Vulnerabilities we care about 🫣
-> Note: Please do not perform testing against Chatwoot production services. Use a `self-hosted instance` to perform tests.
-- Remote command execution
-- SQL Injection
+> Test only against your own self-hosted instance. Do not test against production services you do not own.
+
+- Remote code execution
+- SQL injection
 - Authentication bypass
-- Privilege Escalation
+- Privilege escalation, including access to data from another account
 - Cross-site scripting (XSS)
-- Performing limited admin actions without authorization
 - CSRF
+- Leaks of stored credentials (API keys, payment gateway keys, channel tokens)
+- Payment webhook forgery (SePay, PayOS, Tingee)
 
-You can learn more about our triaging process [here](https://www.shopiz.pro/docs/contributing-guide/security-reports).
-
-## Non-Qualifying Vulnerabilities
-
-We consider the following out of scope, though there may be exceptions.
+## Out of scope
 
 - Missing HTTP security headers
-- Incomplete/Missing SPF/DKIM
-- Reports from automated tools or scanners
+- Missing or incomplete SPF/DKIM
+- Reports from automated scanners without a working proof of concept
 - Theoretical attacks without proof of exploitability
-- Social engineering
+- Social engineering and physical attacks
 - Reflected file download
-- Physical attacks
 - Weak SSL/TLS/SSH algorithms or protocols
-- Attacks involving physical access to a user's device or a device or network that's already seriously compromised (e.g., man-in-the-middle).
-- The user attacks themselves
-- Incomplete/Missing SPF/DKIM
-- Denial of Service attacks
-- Brute force attacks
+- Attacks that need physical access to a device or an already compromised network
+- Users attacking themselves
+- Denial of service and brute-force attacks
 - DNSSEC
-
-If you are unsure about the scope, please create a [report](https://github.com/chatwoot/chatwoot/security/advisories/new).
-
-
-## Thanks
-
-Thank you for keeping Chatwoot and our users safe. 🙇
+- Account restrictions applied by Zalo to accounts that use the unofficial Zalo Personal integration

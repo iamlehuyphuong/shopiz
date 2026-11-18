@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Report a security issue
-    url: https://www.shopiz.pro/docs/contributing-guide/security-reports/
-    about: Guidelines and steps to report a security vulnerability. Please report security vulnerabilities here.
-  - name: Product Documentation
-    url: https://www.shopiz.pro/help-center
-    about: If you have questions, are confused, or just want to understand our product better, please check out our documentation.
+    url: https://github.com/iamlehuyphuong/shopiz/security/advisories/new
+    about: Please report security vulnerabilities privately here, not in a public issue.
+  - name: Chatwoot documentation
+    url: https://www.chatwoot.com/help-center
+    about: Shopiz is built on Chatwoot. Most core features (inbox, automation, reports) work as described in the Chatwoot docs.
