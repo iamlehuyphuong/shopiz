@@ -13,6 +13,13 @@ class ZaloChannel extends ApiClient {
     );
   }
 
+  exchangeToken(code) {
+    return axios.post(
+      `${this.url.replace(this.resource, '')}channels/zalo_channel/exchange_token`,
+      { code }
+    );
+  }
+
   reauthorizeZaloOa({ omniauthToken, inboxId }) {
     return axios.post(`${this.baseUrl()}/zalo/reauthorize_oa`, {
       omniauth_token: omniauthToken,

@@ -6,6 +6,7 @@ import LoadingState from 'dashboard/components/widgets/LoadingState.vue';
 import { useAccount } from 'dashboard/composables/useAccount';
 import { useAlert } from 'dashboard/composables';
 import axios from 'axios';
+import ZaloChannel from 'dashboard/api/channel/zaloChannel';
 import PageHeader from '../../SettingsSubPageHeader.vue';
 import router from '../../../../index';
 import Button from 'dashboard/components-next/button/Button.vue';
@@ -68,19 +69,7 @@ export default {
     },
     getAccessToken() {
       this.hasLoginStarted = true;
-      const url = 'https://oauth.zaloapp.com/v4/oa/access_token';
-      const data = new URLSearchParams();
-      data.append('code', this.$route.query.code);
-      data.append('app_id', window.shopizConfig.zaloAppId);
-      data.append('grant_type', 'authorization_code');
-      const config = {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          secret_key: window.shopizConfig.zaloAppSecret,
-        },
-      };
-      axios
-        .post(url, data, config)
+      ZaloChannel.exchangeToken(this.$route.query.code)
         .then(response => {
           // if (!response.data.error) {
           this.access_token = response.data.access_token;

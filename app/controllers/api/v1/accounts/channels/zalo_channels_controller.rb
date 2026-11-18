@@ -1,4 +1,20 @@
 class Api::V1::Accounts::Channels::ZaloChannelsController < Api::V1::Accounts::BaseController
+  def exchange_token
+    response = HTTParty.post(
+      'https://oauth.zaloapp.com/v4/oa/access_token',
+      headers: {
+        'Content-Type' => 'application/x-www-form-urlencoded',
+        'secret_key' => GlobalConfigService.load('ZALO_OA_APP_SECRET', '')
+      },
+      body: {
+        code: params[:code],
+        app_id: GlobalConfigService.load('ZALO_OA_APP_ID', ''),
+        grant_type: 'authorization_code'
+      }
+    )
+    render json: response.parsed_response.slice('access_token', 'refresh_token', 'expires_in', 'error', 'error_name', 'error_description')
+  end
+
   def create
     oa_id = params[:oa_id]
     access_token = params[:access_token]

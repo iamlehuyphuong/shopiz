@@ -131,6 +131,7 @@ Rails.application.routes.draw do
               collection do
                 post :create
                 get :create
+                post :exchange_token
               end
             end
             resource :zalo_personal_channel, only: [] do
